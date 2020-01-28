@@ -492,7 +492,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPER_ACCOUNT = "antol.peshkov@gmail.com";
 				DEVELOPMENT_TEAM = CDVQN43CHN;
-				INFOPLIST_FILE = "$(SRCROOT)/SmartYard/Resources/Info.plist";
+				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -516,7 +516,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPER_ACCOUNT = "antol.peshkov@gmail.com";
 				DEVELOPMENT_TEAM = CDVQN43CHN;
-				INFOPLIST_FILE = "$(SRCROOT)/SmartYard/Resources/Info.plist";
+				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
