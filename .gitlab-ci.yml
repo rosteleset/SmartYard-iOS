@@ -42,7 +42,7 @@ tf:
   environment:
     name: ci
 
-manual_firebase:
+manual_tf:
   stage: build
   when: manual
   tags:
