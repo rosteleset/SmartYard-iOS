@@ -18,7 +18,7 @@ target 'SmartYard' do
   pod 'RxViewController'
 
   # Utilities
-  pod 'SwiftLint'
+  pod 'SwiftLint', '0.35'
   pod 'SwifterSwift', '4.6'
   
   # UI

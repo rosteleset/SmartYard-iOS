@@ -130,7 +130,7 @@ PODS:
   - SwifterSwift/SpriteKit (4.6.0)
   - SwifterSwift/SwiftStdlib (4.6.0)
   - SwifterSwift/UIKit (4.6.0)
-  - SwiftLint (0.38.2)
+  - SwiftLint (0.35.0)
   - TouchAreaInsets (1.1.0)
   - XCoordinator (2.0.6):
     - XCoordinator/Core (= 2.0.6)
@@ -155,7 +155,7 @@ DEPENDENCIES:
   - RxSwift
   - RxViewController
   - SwifterSwift (= 4.6)
-  - SwiftLint
+  - SwiftLint (= 0.35)
   - TouchAreaInsets
   - XCoordinator
   - XCoordinator/RxSwift
@@ -232,10 +232,10 @@ SPEC CHECKSUMS:
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
   SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
-  SwiftLint: 8f5d2f903e1c9bcbc832fd16771e80a263ac6cbb
+  SwiftLint: 5553187048b900c91aa03552807681bb6b027846
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: d1aac783fb6010312ad2f4f2147e4c940457f333
+PODFILE CHECKSUM: 53e255559b9b13891fcb97c935fb4618e1de33f8
 
 COCOAPODS: 1.8.4
