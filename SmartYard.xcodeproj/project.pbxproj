@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84B9EC8C23E085AE00979C39 /* Observable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9EC8B23E085AE00979C39 /* Observable+Extensions.swift */; };
+		84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */; };
+		84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9EC8F23E0884400979C39 /* LinphoneDelegate.swift */; };
+		84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9EC9023E0884400979C39 /* LinphoneService.swift */; };
+		84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */ = {isa = PBXBuildFile; fileRef = 84B9EC9123E0884400979C39 /* linphonerc_factory */; };
+		84B9EC9723E0884400979C39 /* linphonerc_default in Resources */ = {isa = PBXBuildFile; fileRef = 84B9EC9223E0884400979C39 /* linphonerc_default */; };
+		84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9EC9923E0888B00979C39 /* SipConfig.swift */; };
+		84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84B9EC9B23E089C500979C39 /* GoogleService-Info.plist */; };
 		84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F840D523E07DA5008DBE50 /* AppDelegate.swift */; };
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
@@ -16,6 +24,15 @@
 /* Begin PBXFileReference section */
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E82B501F734243E965E787 /* Pods-SmartYard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.debug.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.debug.xcconfig"; sourceTree = "<group>"; };
+		84B9EC8B23E085AE00979C39 /* Observable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Extensions.swift"; sourceTree = "<group>"; };
+		84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		84B9EC8F23E0884400979C39 /* LinphoneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinphoneDelegate.swift; sourceTree = "<group>"; };
+		84B9EC9023E0884400979C39 /* LinphoneService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinphoneService.swift; sourceTree = "<group>"; };
+		84B9EC9123E0884400979C39 /* linphonerc_factory */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = linphonerc_factory; sourceTree = "<group>"; };
+		84B9EC9223E0884400979C39 /* linphonerc_default */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = linphonerc_default; sourceTree = "<group>"; };
+		84B9EC9323E0884400979C39 /* SmartYard-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SmartYard-Bridging-Header.h"; sourceTree = "<group>"; };
+		84B9EC9923E0888B00979C39 /* SipConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SipConfig.swift; sourceTree = "<group>"; };
+		84B9EC9B23E089C500979C39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84F840D223E07DA5008DBE50 /* SmartYard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartYard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F840D523E07DA5008DBE50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84F840DC23E07DA5008DBE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -40,8 +57,11 @@
 			isa = PBXGroup;
 			children = (
 				84F840DC23E07DA5008DBE50 /* Assets.xcassets */,
+				84B9EC9B23E089C500979C39 /* GoogleService-Info.plist */,
 				84F840E123E07DA5008DBE50 /* Info.plist */,
-				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
+				84B9EC9223E0884400979C39 /* linphonerc_default */,
+				84B9EC9123E0884400979C39 /* linphonerc_factory */,
+				84B9EC9323E0884400979C39 /* SmartYard-Bridging-Header.h */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -49,6 +69,7 @@
 		84B9EC8623E0844500979C39 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				84B9EC8B23E085AE00979C39 /* Observable+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -70,6 +91,7 @@
 		84B9EC8923E0846400979C39 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				84B9EC9823E0886000979C39 /* LinphoneService */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -77,8 +99,20 @@
 		84B9EC8A23E0846900979C39 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */,
+				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
 			);
 			path = Flows;
+			sourceTree = "<group>";
+		};
+		84B9EC9823E0886000979C39 /* LinphoneService */ = {
+			isa = PBXGroup;
+			children = (
+				84B9EC8F23E0884400979C39 /* LinphoneDelegate.swift */,
+				84B9EC9023E0884400979C39 /* LinphoneService.swift */,
+				84B9EC9923E0888B00979C39 /* SipConfig.swift */,
+			);
+			path = LinphoneService;
 			sourceTree = "<group>";
 		};
 		84F840C923E07DA5008DBE50 = {
@@ -191,7 +225,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
+				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
+				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +299,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
+				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
+				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
+				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
+				84B9EC8C23E085AE00979C39 /* Observable+Extensions.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
