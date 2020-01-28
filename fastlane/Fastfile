@@ -1,0 +1,22 @@
+fastlane_version "2.128.0"
+import_from_git(url: 'git@gitlab.com:madbrains/util/fastlane-scripts.git', branch: 'v2', path: 'Fastfile')
+default_platform :ios
+
+platform :ios do
+
+   lane :firebase_release do
+    firebase(
+      firebase_app_id: 'TODO!!!!!!!!',
+      scheme: 'TODO!!!!!!!!',
+      test_groups: 'TODO!!!!!!!!'
+    )
+  end
+
+  lane :tf_release do
+    tf(
+      scheme: 'TODO!!!!!!!!',
+      app_store_connect_team_id: 'TODO!!!!!!!!'
+    )
+  end
+
+end
