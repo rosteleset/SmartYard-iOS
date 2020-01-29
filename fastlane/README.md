@@ -69,6 +69,8 @@ Parameters:
 :test_groups - test groups in Firebase to test build for
 
 :export_options - additional options for build_ios_app (gym lane)
+
+:xcode_version - specify Xcode version if needed
 ### ios tf
 ```
 fastlane ios tf
