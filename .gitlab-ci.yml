@@ -8,7 +8,7 @@ firebase:
   tags:
     - mac
   script:
-    - git remote set-url --push origin git@gitlab.com:madbrains/TODO!!!!!!!!!!
+    - git remote set-url --push origin git@gitlab.com:madbrains/lanta/smart-yard-ios.git
     - git remote get-url --push origin
     - bundle install
     - bundle exec fastlane firebase_release
@@ -21,7 +21,7 @@ manual_firebase:
   tags:
     - mac
   script:
-    - git remote set-url --push origin git@gitlab.com:madbrains/TODO!!!!!!!!!!
+    - git remote set-url --push origin git@gitlab.com:madbrains/lanta/smart-yard-ios.git
     - git remote get-url --push origin
     - bundle install
     - bundle exec fastlane firebase_release
@@ -35,7 +35,7 @@ tf:
   tags:
     - mac
   script:
-    - git remote set-url --push origin git@gitlab.com:madbrains/TODO!!!!!!!!!!
+    - git remote set-url --push origin git@gitlab.com:madbrains/lanta/smart-yard-ios.git
     - git remote get-url --push origin
     - bundle install
     - bundle exec fastlane tf_release
@@ -48,7 +48,7 @@ manual_tf:
   tags:
     - mac
   script:
-    - git remote set-url --push origin git@gitlab.com:madbrains/TODO!!!!!!!!!!
+    - git remote set-url --push origin git@gitlab.com:madbrains/lanta/smart-yard-ios.git
     - git remote get-url --push origin
     - bundle install
     - bundle exec fastlane tf_release
