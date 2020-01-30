@@ -7,6 +7,9 @@
 //
 
 import XCoordinator
+import AVKit
+import RxSwift
+import RxCocoa
 
 enum AppRoute: Route {
     
@@ -16,15 +19,42 @@ enum AppRoute: Route {
 
 class AppCoordinator: NavigationCoordinator<AppRoute> {
     
+    private let disposeBag = DisposeBag()
+    
+    private let apiService = APIService()
+    private let apiWrapper: APIWrapper
+    
     init() {
+        apiWrapper = APIWrapper(apiService: apiService)
+        
         super.init(initialRoute: .main)
         rootViewController.setNavigationBarHidden(true, animated: false)
+        
+        AVCaptureDevice.requestAccess(for: .video) { _ in }
     }
     
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
         case .main: return .none()
         }
+    }
+    
+    func activateToken(token: String, tokenType: TokenType) {
+        Completable
+            .concat(
+                apiWrapper.sendToken(token: token, tokenType: tokenType),
+                apiWrapper.updateTokenState(token: token, isEnabled: true),
+                apiWrapper.checkTokenState(token: token)
+            )
+            .subscribe(
+                onCompleted: {
+                    print("DEBUG / \(tokenType) \(token) is now ACTIVE")
+                },
+                onError: { error in
+                    print(error)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

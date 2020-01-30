@@ -1,0 +1,82 @@
+//
+//  CallPayload.swift
+//  SmartYard
+//
+//  Created by admin on 30/01/2020.
+//  Copyright © 2020 Mad Brains. All rights reserved.
+//
+
+import linphonesw
+
+struct CallPayload {
+    
+    let username: String
+    let password: String
+    let server: String
+    let port: String
+    let transport: TransportType
+    let liveImage: String
+    
+    let domophoneId: String?
+    let flatId: String?
+    
+    var asPushNotificationPayload: [AnyHashable: Any] {
+        var mainPayload: [AnyHashable: Any] = [
+            "extension": username,
+            "pass": password,
+            "server": server,
+            "port": port,
+            "rawTransport": transport.rawValue,
+            "live": liveImage
+        ]
+        
+        if let domophoneId = domophoneId {
+            mainPayload["domophone_id"] = domophoneId
+        }
+        
+        if let flatId = flatId {
+            mainPayload["flat_id"] = flatId
+        }
+        
+        return mainPayload
+    }
+    
+    var domophoneString: String? {
+        guard let domophoneId = domophoneId else {
+            return nil
+        }
+        
+        return "ID домофона: \(domophoneId)"
+    }
+    
+    var flatString: String? {
+        guard let flatId = flatId else {
+            return nil
+        }
+        
+        return "ID квартиры: \(flatId)"
+    }
+    
+    init?(pushNotificationPayload data: [AnyHashable: Any]) {
+        guard let username = data["extension"] as? String,
+            let password = data["pass"] as? String,
+            let server = data["server"] as? String,
+            let port = data["port"] as? String,
+            let rawTransport = data["transport"] as? String,
+            let transport = TransportType(rawString: rawTransport),
+            let liveImage = data["live"] as? String else {
+            return nil
+        }
+        
+        self.username = username
+        self.password = password
+        self.server = server
+        self.port = port
+        self.transport = transport
+        self.liveImage = liveImage
+        
+        self.domophoneId = data["domophone_id"] as? String
+        self.flatId = data["flat_id"] as? String
+    }
+    
+}
