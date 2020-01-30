@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var mainWindow = UIWindow()
     
     private let appCoordinator = AppCoordinator()
+    private let apiService = APIService()
 
     func application(
         _ application: UIApplication,
@@ -62,24 +63,31 @@ extension AppDelegate: PKPushRegistryDelegate {
         let token = pushCredentials.token.map { String(format: "%02.2hhx", $0) }.joined()
         print(token)
         
-        sendTokenToBackend(token: token) { [weak self] result in
-            guard result.value == true else {
-                return
-            }
-            
-            self?.enableTokenOnBackend(token: token) { result in
-                guard result.value == true else {
-                    return
-                }
-                
-                self?.checkTokenOnBackend(token: token) { result in
-                    switch result {
-                    case .success(let value): print("DEBUG / IS TOKEN ACTIVE : \(value)")
-                    case .failure(let error): print(error.localizedDescription)
-                    }
-                }
-            }
+        apiService.performSendTokenRequest(
+            SendTokenRequest(login: "f70392", password: "d342a76ec", token: token, tokenType: .apnsDebug)
+        ) { result in
+            print(result)
         }
+        
+        
+//        sendTokenToBackend(token: token) { [weak self] result in
+//            guard result.value == true else {
+//                return
+//            }
+//
+//            self?.enableTokenOnBackend(token: token) { result in
+//                guard result.value == true else {
+//                    return
+//                }
+//
+//                self?.checkTokenOnBackend(token: token) { result in
+//                    switch result {
+//                    case .success(let value): print("DEBUG / IS TOKEN ACTIVE : \(value)")
+//                    case .failure(let error): print(error.localizedDescription)
+//                    }
+//                }
+//            }
+//        }
     }
     
     func pushRegistry(
@@ -87,7 +95,7 @@ extension AppDelegate: PKPushRegistryDelegate {
         didReceiveIncomingPushWith payload: PKPushPayload,
         for type: PKPushType,
         completion: @escaping () -> Void
-        ) {
+    ) {
         print(payload.dictionaryPayload)
         
         guard let data = payload.dictionaryPayload["data"] as? [AnyHashable: Any],
@@ -177,7 +185,7 @@ extension AppDelegate: PKPushRegistryDelegate {
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
-        ) {
+    ) {
         completionHandler([.alert, .badge, .sound])
     }
     
@@ -185,7 +193,7 @@ extension AppDelegate: PKPushRegistryDelegate {
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
-        ) {
+    ) {
         let request = response.notification.request
         
         if request.identifier == "IncomingCall" {
