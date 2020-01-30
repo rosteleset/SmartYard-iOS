@@ -202,7 +202,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if let callPayload = CallPayload(
             pushNotificationPayload: response.notification.request.content.userInfo
         ) {
-            // Показать окно с глазком или еще что-то
+            appCoordinator.showIncomingCall(callPayload: callPayload)
         }
         
         completionHandler()

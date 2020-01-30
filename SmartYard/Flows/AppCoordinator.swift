@@ -14,6 +14,7 @@ import RxCocoa
 enum AppRoute: Route {
     
     case main
+    case incomingCall
     
 }
 
@@ -35,7 +36,10 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
-        case .main: return .none()
+        case .main:
+            return .none()
+        case .incomingCall:
+            return .none()
         }
     }
     
@@ -55,6 +59,10 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    func showIncomingCall(callPayload: CallPayload) {
+        
     }
     
 }
