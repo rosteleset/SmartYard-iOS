@@ -14,7 +14,7 @@ import RxCocoa
 enum AppRoute: Route {
     
     case main
-    case incomingCall
+    case incomingCall(callPayload: CallPayload)
     
 }
 
@@ -38,8 +38,11 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         switch route {
         case .main:
             return .none()
-        case .incomingCall:
-            return .none()
+            
+        case let .incomingCall(callPayload):
+            let vm = IncomingCallPreviewViewModel(callPayload: callPayload)
+            let vc = IncomingCallPreviewViewController(viewModel: vm)
+            return .present(vc)
         }
     }
     
@@ -62,7 +65,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     }
     
     func showIncomingCall(callPayload: CallPayload) {
-        
+        trigger(.incomingCall(callPayload: callPayload))
     }
     
 }

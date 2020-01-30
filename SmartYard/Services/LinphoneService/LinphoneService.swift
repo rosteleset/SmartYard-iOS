@@ -9,14 +9,26 @@
 import Foundation
 import linphonesw
 
-class LinphoneService {
+class LinphoneService: CoreDelegate {
     
     static let shared = LinphoneService()
     
     private(set) var core: Core? = nil
     private var timer: Timer? = nil
     
-    private init() {
+    override private init() {}
+    
+    override func onRegistrationStateChanged(
+        lc: Core,
+        cfg: ProxyConfig,
+        cstate: RegistrationState,
+        message: String
+    ) {
+        
+    }
+    
+    override func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
+        
     }
     
     func start() {
@@ -46,9 +58,9 @@ class LinphoneService {
                 systemContext: nil
             )
             
-            core?.avpfMode = .Enabled
-            
             try core?.start()
+            
+            core?.addDelegate(delegate: self)
             
             timer = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { timer in
                 self.core?.iterate()
