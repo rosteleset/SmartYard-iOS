@@ -30,6 +30,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let apiService = APIService()
     private let apiWrapper: APIWrapper
     
+    private var currentCallPreviewData: Data?
     private var currentCallPreviewURL: URL?
     private var currentCallPayload: CallPayload?
     private var currentCall: Call?
@@ -150,6 +151,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 return
             }
             
+            self?.currentCallPreviewData = pngData
             self?.currentCallPreviewURL = imgTarget
             content.attachments = [attachment]
             finishHandler()
@@ -165,17 +167,30 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 .request
                 .content
             
+            // MARK: Удаляем уведомление о входящем вызове
+            
+            self?.notificationCenter
+                .removeDeliveredNotifications(withIdentifiers: ["IncomingCall"])
+            
             // MARK: Создаем контент для нового уведомления из частей старого
             
             let newContent = UNMutableNotificationContent()
             newContent.title = "Пропущенный звонок"
             newContent.body = incomingCallContent?.body ?? ""
-            newContent.attachments = incomingCallContent?.attachments ?? []
             
-            // MARK: Удаляем уведомление о входящем вызове
-            
-            self?.notificationCenter
-                .removeDeliveredNotifications(withIdentifiers: ["IncomingCall"])
+            if let imgTarget = FileManager.default
+                .urls(for: .libraryDirectory, in: .userDomainMask)
+                .first?
+                .appendingPathComponent("DomophonePreview\(UUID().uuidString).png"),
+                let pngData = self?.currentCallPreviewData,
+                (try? pngData.write(to: imgTarget)) != nil,
+                let attachment = try? UNNotificationAttachment(
+                    identifier: "DomophonePreviewwww",
+                    url: imgTarget,
+                    options: nil
+                ) {
+                newContent.attachments = [attachment]
+            }
             
             let newRequest = UNNotificationRequest(
                 identifier: "MissedCall" + UUID().uuidString,
