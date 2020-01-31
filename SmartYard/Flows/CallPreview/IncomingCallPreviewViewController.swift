@@ -9,10 +9,12 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import XCoordinator
 
 class IncomingCallPreviewViewController: BaseViewController {
     
     @IBOutlet private weak var connectButton: UIButton!
+    @IBOutlet private weak var rejectButton: UIButton!
     @IBOutlet private weak var liveImageView: UIImageView!
     
     let viewModel: IncomingCallPreviewViewModel
@@ -33,6 +35,14 @@ class IncomingCallPreviewViewController: BaseViewController {
     }
     
     private func bind() {
+        rejectButton.rx.tap
+            .subscribe(
+                onNext: { [weak self] in
+                    self?.dismiss(animated: true, completion: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let input = IncomingCallPreviewViewModel.Input(
             connectTrigger: connectButton.rx.tap.asDriver()
         )

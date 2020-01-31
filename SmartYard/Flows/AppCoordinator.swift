@@ -47,7 +47,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             )
             
             let vc = IncomingCallPreviewViewController(viewModel: vm)
-            return .present(vc)
+            return .present(vc, animation: .fade)
         }
     }
     
