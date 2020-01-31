@@ -137,7 +137,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             guard let imageResult = try? result.get(),
                 let pngData = imageResult.image.pngData(),
                 let imgTarget = FileManager.default
-                    .urls(for: .libraryDirectory, in: .userDomainMask)
+                    .urls(for: .cachesDirectory, in: .userDomainMask)
                     .first?
                     .appendingPathComponent("DomophonePreview\(UUID().uuidString).png"),
                 (try? pngData.write(to: imgTarget)) != nil,
@@ -170,14 +170,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             let newContent = UNMutableNotificationContent()
             newContent.title = "Пропущенный звонок"
             newContent.body = incomingCallContent?.body ?? ""
-            
-            if let previewURL = self?.currentCallPreviewURL, let attachment = try? UNNotificationAttachment(
-                identifier: "DomophonePreview",
-                url: previewURL,
-                options: nil
-            ) {
-                newContent.attachments = [attachment]
-            }
+            newContent.attachments = incomingCallContent?.attachments ?? []
             
             // MARK: Удаляем уведомление о входящем вызове
             
