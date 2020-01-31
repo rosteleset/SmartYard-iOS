@@ -10,32 +10,43 @@ import Kingfisher
 import RxSwift
 import RxCocoa
 import UIKit
+import linphonesw
 
 class IncomingCallPreviewViewModel: BaseViewModel {
     
     private let linphoneService: LinphoneService
     private let callPayload: CallPayload
+    private let call: Call
     
     private let latestPreview = BehaviorSubject<UIImage?>(value: nil)
     
-    init(linphoneService: LinphoneService, callPayload: CallPayload) {
+    init(linphoneService: LinphoneService, callPayload: CallPayload, call: Call) {
         self.linphoneService = linphoneService
         self.callPayload = callPayload
+        self.call = call
     }
     
     func transform(input: Input) -> Output {
-        input.connectTrigger
+        input.acceptTrigger
             .drive(
                 onNext: { [weak self] in
                     guard let self = self else {
                         return
                     }
                     
-                    self.linphoneService.connect(
-                        config: self.callPayload.sipConfig,
-                        videoView: UIView(),
-                        cameraView: UIView()
-                    )
+                    print("accept call here")
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.rejectTrigger
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    print("reject call here")
                 }
             )
             .disposed(by: disposeBag)
@@ -76,7 +87,8 @@ class IncomingCallPreviewViewModel: BaseViewModel {
 extension IncomingCallPreviewViewModel {
     
     struct Input {
-        let connectTrigger: Driver<Void>
+        let acceptTrigger: Driver<Void>
+        let rejectTrigger: Driver<Void>
     }
     
     struct Output {

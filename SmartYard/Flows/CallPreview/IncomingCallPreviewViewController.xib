@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IncomingCallPreviewViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
-                <outlet property="connectButton" destination="IKH-Hr-dOt" id="Abf-az-jAM"/>
+                <outlet property="acceptButton" destination="IKH-Hr-dOt" id="ZVx-U7-ngG"/>
                 <outlet property="liveImageView" destination="flc-pJ-40H" id="f4H-7w-Upc"/>
                 <outlet property="rejectButton" destination="Y0e-Rg-OO7" id="959-ds-7K9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

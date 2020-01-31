@@ -13,7 +13,7 @@ import XCoordinator
 
 class IncomingCallPreviewViewController: BaseViewController {
     
-    @IBOutlet private weak var connectButton: UIButton!
+    @IBOutlet private weak var acceptButton: UIButton!
     @IBOutlet private weak var rejectButton: UIButton!
     @IBOutlet private weak var liveImageView: UIImageView!
     
@@ -44,7 +44,8 @@ class IncomingCallPreviewViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         let input = IncomingCallPreviewViewModel.Input(
-            connectTrigger: connectButton.rx.tap.asDriver()
+            acceptTrigger: acceptButton.rx.tap.asDriver(),
+            rejectTrigger: rejectButton.rx.tap.asDriver()
         )
         
         let output = viewModel.transform(input: input)

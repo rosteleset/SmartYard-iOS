@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import PushKit
-import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -68,66 +67,10 @@ extension AppDelegate: PKPushRegistryDelegate {
             return
         }
         
-        createCallNotification(
+        appCoordinator.processCallRequest(
             callPayload: callPayload,
             completion: completion
         )
-    }
-    
-    private func createCallNotification(
-        callPayload: CallPayload,
-        completion: @escaping () -> Void
-    ) {
-        let content = UNMutableNotificationContent()
-        
-        content.title = "Звонок в домофон"
-        
-        content.body = [callPayload.domophoneString, callPayload.flatString]
-            .compactMap { $0 }
-            .joined(separator: ". ")
-        
-        content.sound = UNNotificationSound.default
-        content.userInfo = callPayload.asPushNotificationPayload
-        
-        let finishHandler = {
-            let request = UNNotificationRequest(
-                identifier: "IncomingCall",
-                content: content,
-                trigger: nil
-            )
-            
-            UNUserNotificationCenter
-                .current()
-                .add(request, withCompletionHandler: nil)
-            
-            completion()
-        }
-        
-        guard let url = URL(string: callPayload.liveImage) else {
-            finishHandler()
-            return
-        }
-        
-        KingfisherManager.shared.retrieveImage(with: url) { result in
-            guard let imageResult = try? result.get(),
-                let pngData = imageResult.image.pngData(),
-                let imgTarget = FileManager.default
-                    .urls(for: .libraryDirectory, in: .userDomainMask)
-                    .first?
-                    .appendingPathComponent("DomophonePreview.png"),
-                (try? pngData.write(to: imgTarget)) != nil,
-                let attachment = try? UNNotificationAttachment(
-                    identifier: "DomophonePreview",
-                    url: imgTarget,
-                    options: nil
-                ) else {
-                finishHandler()
-                return
-            }
-            
-            content.attachments = [attachment]
-            finishHandler()
-        }
     }
     
     private func configureVoIPNotifications() {
@@ -199,10 +142,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        if let callPayload = CallPayload(
-            pushNotificationPayload: response.notification.request.content.userInfo
-        ) {
-            appCoordinator.showIncomingCall(callPayload: callPayload)
+        if response.notification.request.identifier == "IncomingCall" {
+            appCoordinator.showIncomingCall()
         }
         
         completionHandler()
