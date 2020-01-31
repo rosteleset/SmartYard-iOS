@@ -9,18 +9,37 @@
 import Kingfisher
 import RxSwift
 import RxCocoa
+import UIKit
 
 class IncomingCallPreviewViewModel: BaseViewModel {
     
+    private let linphoneService: LinphoneService
     private let callPayload: CallPayload
     
     private let latestPreview = BehaviorSubject<UIImage?>(value: nil)
     
-    init(callPayload: CallPayload) {
+    init(linphoneService: LinphoneService, callPayload: CallPayload) {
+        self.linphoneService = linphoneService
         self.callPayload = callPayload
     }
     
     func transform(input: Input) -> Output {
+        input.connectTrigger
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.linphoneService.connect(
+                        config: self.callPayload.sipConfig,
+                        videoView: UIView(),
+                        cameraView: UIView()
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+        
         guard let liveUrl = URL(string: callPayload.liveImage) else {
             return Output(preview: .just(nil))
         }
@@ -57,6 +76,7 @@ class IncomingCallPreviewViewModel: BaseViewModel {
 extension IncomingCallPreviewViewModel {
     
     struct Input {
+        let connectTrigger: Driver<Void>
     }
     
     struct Output {

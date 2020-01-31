@@ -22,6 +22,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     private let disposeBag = DisposeBag()
     
+    private let linphoneService = LinphoneService()
     private let apiService = APIService()
     private let apiWrapper: APIWrapper
     
@@ -40,7 +41,11 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .none()
             
         case let .incomingCall(callPayload):
-            let vm = IncomingCallPreviewViewModel(callPayload: callPayload)
+            let vm = IncomingCallPreviewViewModel(
+                linphoneService: linphoneService,
+                callPayload: callPayload
+            )
+            
             let vc = IncomingCallPreviewViewController(viewModel: vm)
             return .present(vc)
         }

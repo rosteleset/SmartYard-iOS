@@ -58,7 +58,12 @@ struct CallPayload {
     }
     
     var sipConfig: SipConfig {
-        return SipConfig(domain: server, username: username, password: password, transport: transport)
+        return SipConfig(
+            domain: "\(server):\(port)",
+            username: username,
+            password: password,
+            transport: transport
+        )
     }
     
     init?(pushNotificationPayload data: [AnyHashable: Any]) {

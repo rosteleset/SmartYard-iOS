@@ -12,6 +12,7 @@ import RxCocoa
 
 class IncomingCallPreviewViewController: BaseViewController {
     
+    @IBOutlet private weak var connectButton: UIButton!
     @IBOutlet private weak var liveImageView: UIImageView!
     
     let viewModel: IncomingCallPreviewViewModel
@@ -32,7 +33,10 @@ class IncomingCallPreviewViewController: BaseViewController {
     }
     
     private func bind() {
-        let input = IncomingCallPreviewViewModel.Input()
+        let input = IncomingCallPreviewViewModel.Input(
+            connectTrigger: connectButton.rx.tap.asDriver()
+        )
+        
         let output = viewModel.transform(input: input)
         
         output.preview

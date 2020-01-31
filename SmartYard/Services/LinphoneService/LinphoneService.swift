@@ -55,9 +55,10 @@ class LinphoneService: CoreDelegate {
                 systemContext: nil
             )
             
-            core?.avpfMode = .Enabled
-            
             try core?.start()
+            
+            core?.clearAllAuthInfo()
+            core?.clearProxyConfig()
             
             core?.addDelegate(delegate: self)
             
@@ -72,6 +73,8 @@ class LinphoneService: CoreDelegate {
     func stop() {
         timer?.invalidate()
         timer = nil
+        
+        try? core?.currentCall?.terminate()
         
         core?.removeDelegate(delegate: self)
         core?.stop()
@@ -101,16 +104,6 @@ class LinphoneService: CoreDelegate {
         core.videoPayloadTypes.forEach {
             _ = $0.enable(enabled: $0.mimeType == "H264")
         }
-    }
-    
-    func disconnect() {
-        guard let core = core else {
-            return
-        }
-        
-        core.clearProxyConfig()
-        try? core.currentCall?.terminate()
-        stop()
     }
     
     private func bridge<T: AnyObject>(obj : T) -> UnsafeRawPointer {

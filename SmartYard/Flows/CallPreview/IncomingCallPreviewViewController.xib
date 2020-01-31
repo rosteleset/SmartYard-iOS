@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IncomingCallPreviewViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="connectButton" destination="IKH-Hr-dOt" id="Abf-az-jAM"/>
                 <outlet property="liveImageView" destination="flc-pJ-40H" id="f4H-7w-Upc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -27,12 +28,18 @@
                         <constraint firstAttribute="width" secondItem="flc-pJ-40H" secondAttribute="height" multiplier="1:1" id="0hK-Gc-u3O"/>
                     </constraints>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IKH-Hr-dOt">
+                    <rect key="frame" x="180.5" y="699" width="53" height="30"/>
+                    <state key="normal" title="Созвон"/>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="flc-pJ-40H" secondAttribute="trailing" constant="50" id="9Ii-EW-2NE"/>
+                <constraint firstItem="IKH-Hr-dOt" firstAttribute="top" secondItem="flc-pJ-40H" secondAttribute="bottom" constant="89" id="K8B-sz-Vk7"/>
                 <constraint firstItem="flc-pJ-40H" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="Moz-Jd-Dr6"/>
                 <constraint firstItem="flc-pJ-40H" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="50" id="iZB-0Y-Xoa"/>
+                <constraint firstItem="IKH-Hr-dOt" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="pRV-lD-D7w"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
