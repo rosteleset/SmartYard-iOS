@@ -26,7 +26,7 @@ struct CallPayload {
             "pass": password,
             "server": server,
             "port": port,
-            "rawTransport": transport.rawValue,
+            "transport": transport.rawString,
             "live": liveImage
         ]
         
@@ -55,6 +55,10 @@ struct CallPayload {
         }
         
         return "ID квартиры: \(flatId)"
+    }
+    
+    var sipConfig: SipConfig {
+        return SipConfig(domain: server, username: username, password: password, transport: transport)
     }
     
     init?(pushNotificationPayload data: [AnyHashable: Any]) {
