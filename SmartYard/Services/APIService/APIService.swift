@@ -65,7 +65,7 @@ class APIService {
                 do {
                     let mappedResponse = try response.map(BaseAPIResponse.self)
                     
-                    guard mappedResponse.message == "хорошо" else {
+                    guard mappedResponse.code == 200 else {
                         completion?(.failure(NSError.APIServiceError.unknownError))
                         return
                     }

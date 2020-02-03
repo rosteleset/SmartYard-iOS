@@ -31,7 +31,6 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let apiWrapper: APIWrapper
     
     private var currentCallPreviewData: Data?
-    private var currentCallPreviewURL: URL?
     private var currentCallPayload: CallPayload?
     private var currentCall: Call?
     
@@ -83,8 +82,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         callPayload: CallPayload,
         completion: @escaping () -> Void
     ) {
+        // MARK: Если на данный момент уже есть звонок, то пока ничего не делаем (хз какая будет логика)
         guard currentCallPayload == nil, currentCall == nil else {
-            print("Has incoming call already")
+            print("DEBUG / ANOTHER INCOMING CALL / CAN'T ACCEPT TWO CALLS AT ONCE")
             completion()
             return
         }
@@ -103,11 +103,27 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         trigger(.incomingCall(callPayload: callPayload, call: call))
     }
     
-    private func createIncomingCallNotification() {
-        guard let callPayload = currentCallPayload else {
-            return
+    // MARK: Создание картинки-превью для Push-уведомления
+    // UNNotificationAttachment работает только с локальными файлами, использованная картинка при этом удаляется
+    // Поэтому для начала нам надо записать скачанную картинку как png файл на диск
+    private func createNotificationAttachment(fromPngData pngData: Data) -> UNNotificationAttachment? {
+        guard let imgTarget = FileManager.default
+            .urls(for: .libraryDirectory, in: .userDomainMask)
+            .first?
+            .appendingPathComponent("DomophonePreview\(UUID().uuidString).png"),
+            (try? pngData.write(to: imgTarget)) != nil,
+            let attachment = try? UNNotificationAttachment(
+                identifier: "DomophonePreview",
+                url: imgTarget,
+                options: nil
+            ) else {
+            return nil
         }
         
+        return attachment
+    }
+    
+    private func createIncomingCallNotification(withCallPayload callPayload: CallPayload) {
         let content = UNMutableNotificationContent()
         
         content.title = "Звонок в домофон"
@@ -137,22 +153,12 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
             guard let imageResult = try? result.get(),
                 let pngData = imageResult.image.pngData(),
-                let imgTarget = FileManager.default
-                    .urls(for: .cachesDirectory, in: .userDomainMask)
-                    .first?
-                    .appendingPathComponent("DomophonePreview\(UUID().uuidString).png"),
-                (try? pngData.write(to: imgTarget)) != nil,
-                let attachment = try? UNNotificationAttachment(
-                    identifier: "DomophonePreview",
-                    url: imgTarget,
-                    options: nil
-                ) else {
+                let attachment = self?.createNotificationAttachment(fromPngData: pngData) else {
                 finishHandler()
                 return
             }
             
             self?.currentCallPreviewData = pngData
-            self?.currentCallPreviewURL = imgTarget
             content.attachments = [attachment]
             finishHandler()
         }
@@ -168,6 +174,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 .content
             
             // MARK: Удаляем уведомление о входящем вызове
+            // Обязательно нужно удалить старое уведомление до создания нового
+            // Иначе какой-то внутренний кэш не позволит создать уведомление с той же самой превью-картинкой
             
             self?.notificationCenter
                 .removeDeliveredNotifications(withIdentifiers: ["IncomingCall"])
@@ -178,17 +186,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             newContent.title = "Пропущенный звонок"
             newContent.body = incomingCallContent?.body ?? ""
             
-            if let imgTarget = FileManager.default
-                .urls(for: .libraryDirectory, in: .userDomainMask)
-                .first?
-                .appendingPathComponent("DomophonePreview\(UUID().uuidString).png"),
-                let pngData = self?.currentCallPreviewData,
-                (try? pngData.write(to: imgTarget)) != nil,
-                let attachment = try? UNNotificationAttachment(
-                    identifier: "DomophonePreviewwww",
-                    url: imgTarget,
-                    options: nil
-                ) {
+            if let pngData = self?.currentCallPreviewData,
+                let attachment = self?.createNotificationAttachment(fromPngData: pngData) {
                 newContent.attachments = [attachment]
             }
             
@@ -209,18 +208,25 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
 extension AppCoordinator: LinphoneDelegate {
     
     func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: RegistrationState, message: String) {
-        print(cstate)
+        print("DEBUG / REGISTRATION STATE: \(cstate)")
     }
     
     func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
-        print(cstate)
+        print("DEBUG / CALL STATE: \(cstate)")
         
         switch cstate {
+        // MARK: При поступлении входящего звонка создаем для пользователя локальное уведомление
         case .IncomingReceived:
-            createIncomingCallNotification()
-                        
-            currentCall = call
+            guard let callPayload = currentCallPayload else {
+                break
+            }
             
+            createIncomingCallNotification(withCallPayload: callPayload)
+            currentCall = call
+        
+        // MARK: При завершении звонка - заменяем это уведомление на "Пропущенный звонок"
+        // TODO: Отработать кейс, когда звонок будет принят и завершится успешно (не нужно показывать пропущенный)
+        // TODO: Отработать кейс, когда звонок не будет сброшен за 30 секунд (нужно показать пропущенный)
         case .End:
             updateIncomingCallNotificationToMissed()
             
