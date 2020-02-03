@@ -216,13 +216,20 @@ extension AppCoordinator: LinphoneDelegate {
         
         switch cstate {
         // MARK: При поступлении входящего звонка создаем для пользователя локальное уведомление
+        // Либо сразу показываем входящий вызов, если находимся в foreground
         case .IncomingReceived:
             guard let callPayload = currentCallPayload else {
-                break
+                fatalError("CALL PAYLOAD WAS SOMEHOW DELETED")
             }
             
-            createIncomingCallNotification(withCallPayload: callPayload)
             currentCall = call
+            
+            switch UIApplication.shared.applicationState {
+            case .active:
+                showIncomingCall()
+            default:
+                createIncomingCallNotification(withCallPayload: callPayload)
+            }
         
         // MARK: При завершении звонка - заменяем это уведомление на "Пропущенный звонок"
         // TODO: Отработать кейс, когда звонок будет принят и завершится успешно (не нужно показывать пропущенный)
