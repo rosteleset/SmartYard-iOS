@@ -161,7 +161,7 @@ DEPENDENCIES:
   - XCoordinator/RxSwift
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Alamofire
     - Cartography
     - Crashlytics
