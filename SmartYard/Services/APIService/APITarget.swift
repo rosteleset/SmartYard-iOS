@@ -10,9 +10,12 @@ import Moya
 
 enum APITarget {
     
-    case sendToken(request: SendTokenRequest)
-    case updateTokenState(request: UpdateTokenStateRequest)
-    case checkTokenState(request: CheckTokenStateRequest)
+    case confirmCode(request: ConfirmCodeRequest)
+    case getVerifyedAddresses(request: GetVerifyedAddressesRequest)
+    case login(request: LoginRequest)
+    case intercomToken(request: IntercomTokenRequest)
+    case registerToken(request: RegisterTokenRequest)
+    case requestCode(request: RequestCodeRequest)
     
 }
 
@@ -23,7 +26,14 @@ extension APITarget: TargetType {
     }
     
     var path: String {
-        return ""
+        switch self {
+        case .confirmCode(_): return "user/confirmCode"
+        case .getVerifyedAddresses(_): return "user/getVerifyedAddresses"
+        case .login(_): return "user/login"
+        case .intercomToken(_): return "user/intercomToken"
+        case .registerToken(_): return "user/registerToken"
+        case .requestCode(_): return "user/requestCode"
+        }
     }
     
     var method: Moya.Method {
@@ -31,18 +41,38 @@ extension APITarget: TargetType {
     }
     
     var headers: [String: String]? {
-        return nil
+        let defaultHeaders = [
+            "Content-type": "application/json"
+        ]
+        
+        let authorization: String? = {
+            switch self {
+            case .getVerifyedAddresses(let request): return request.accessToken
+            case .intercomToken(let request): return request.accessToken
+            case .registerToken(let request): return request.accessToken
+            default: return nil
+            }
+        }()
+        
+        guard let token = authorization else {
+            return defaultHeaders
+        }
+        
+        return defaultHeaders.merging(["Authorization": "Bearer " + token]) { _, new in new }
     }
     
     var task: Task {
-        return .requestParameters(parameters: requestParameters, encoding: URLEncoding.queryString)
+        return .requestParameters(parameters: requestParameters, encoding: JSONEncoding.default)
     }
     
     var requestParameters: [String: Any] {
         switch self {
-        case let .sendToken(request): return request.requestParameters
-        case let .updateTokenState(request): return request.requestParameters
-        case let .checkTokenState(request): return request.requestParameters
+        case .confirmCode(let request): return request.requestParameters
+        case .getVerifyedAddresses(let request): return request.requestParameters
+        case .login(let request): return request.requestParameters
+        case .intercomToken(let request): return request.requestParameters
+        case .registerToken(let request): return request.requestParameters
+        case .requestCode(let request): return request.requestParameters
         }
     }
     

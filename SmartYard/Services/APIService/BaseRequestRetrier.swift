@@ -19,7 +19,7 @@ class BaseRequestRetrier: RequestAdapter, RequestRetrier {
         retry request: Request,
         with error: Error,
         completion: RequestRetryCompletion
-        ) {
+    ) {
         // If task failed 5 attempts to finish, everything is very bad (connection is dead). TODO: Add Reachability
         guard request.retryCount < 5 else {
             print("REQUEST RETRIER: Task failed to finish in 5 attempts. RIP")

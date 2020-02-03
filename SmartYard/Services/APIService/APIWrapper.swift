@@ -17,6 +17,7 @@ class APIWrapper {
     
     let login = "f70392"
     let password = "d342a76ec"
+    let phone = "89278339622"
     
     init(apiService: APIService) {
         self.apiService = apiService
