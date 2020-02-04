@@ -14,4 +14,8 @@ class BaseViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
 }

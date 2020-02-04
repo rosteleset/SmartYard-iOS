@@ -58,6 +58,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             )
             
             let vc = IncomingCallViewController(viewModel: vm)
+            vc.modalPresentationCapturesStatusBarAppearance = true
+            
             return .present(vc, animation: .fade)
         }
     }
