@@ -1,8 +1,8 @@
 //
-//  IncomingCallPreviewViewModel.swift
+//  IncomingCallViewModel.swift
 //  SmartYard
 //
-//  Created by admin on 30/01/2020.
+//  Created by admin on 04/02/2020.
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
@@ -12,18 +12,16 @@ import RxCocoa
 import UIKit
 import linphonesw
 
-class IncomingCallPreviewViewModel: BaseViewModel {
+class IncomingCallViewModel: BaseViewModel {
     
     private let linphoneService: LinphoneService
     private let callPayload: CallPayload
-    private let call: Call
     
     private let latestPreview = BehaviorSubject<UIImage?>(value: nil)
     
-    init(linphoneService: LinphoneService, callPayload: CallPayload, call: Call) {
+    init(linphoneService: LinphoneService, callPayload: CallPayload) {
         self.linphoneService = linphoneService
         self.callPayload = callPayload
-        self.call = call
     }
     
     func transform(input: Input) -> Output {
@@ -76,7 +74,7 @@ class IncomingCallPreviewViewModel: BaseViewModel {
     
 }
 
-extension IncomingCallPreviewViewModel {
+extension IncomingCallViewModel {
     
     struct Input {
         let acceptTrigger: Driver<Void>
