@@ -15,6 +15,7 @@ struct CallPayload {
     let server: String
     let port: String
     let transport: TransportType
+    let image: String
     let liveImage: String
     
     let domophoneId: String?
@@ -27,7 +28,8 @@ struct CallPayload {
             "server": server,
             "port": port,
             "transport": transport.rawString,
-            "live": liveImage
+            "live": liveImage,
+            "image": image
         ]
         
         if let domophoneId = domophoneId {
@@ -73,7 +75,8 @@ struct CallPayload {
             let port = data["port"] as? String,
             let rawTransport = data["transport"] as? String,
             let transport = TransportType(rawString: rawTransport),
-            let liveImage = data["live"] as? String else {
+            let liveImage = data["live"] as? String,
+            let image = data["image"] as? String else {
             return nil
         }
         
@@ -83,6 +86,7 @@ struct CallPayload {
         self.port = port
         self.transport = transport
         self.liveImage = liveImage
+        self.image = image
         
         self.domophoneId = data["domophone_id"] as? String
         self.flatId = data["flat_id"] as? String

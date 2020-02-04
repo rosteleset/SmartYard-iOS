@@ -23,6 +23,9 @@
 		844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallViewController.swift */; };
 		844AC39E23E987360066006D /* IncomingCallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC39C23E987360066006D /* IncomingCallViewController.xib */; };
 		844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39F23E987400066006D /* IncomingCallViewModel.swift */; };
+		844AC3A923E9A07C0066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3A723E99C4C0066006D /* SourceSansPro-Regular.ttf */; };
+		844AC3AA23E9A07E0066006D /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3A823E99C4C0066006D /* SourceSansPro-Bold.ttf */; };
+		844AC3AB23E9A0810066006D /* SourceSansPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3A623E99C4C0066006D /* SourceSansPro-SemiBold.ttf */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4523E2CD3F001B3B43 /* APIService.swift */; };
@@ -68,6 +71,9 @@
 		844AC39B23E987360066006D /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
 		844AC39C23E987360066006D /* IncomingCallViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncomingCallViewController.xib; sourceTree = "<group>"; };
 		844AC39F23E987400066006D /* IncomingCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewModel.swift; sourceTree = "<group>"; };
+		844AC3A623E99C4C0066006D /* SourceSansPro-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-SemiBold.ttf"; sourceTree = "<group>"; };
+		844AC3A723E99C4C0066006D /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
+		844AC3A823E99C4C0066006D /* SourceSansPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Bold.ttf"; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
 		84AA8D4523E2CD3F001B3B43 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -203,6 +209,16 @@
 			path = IncomingCall;
 			sourceTree = "<group>";
 		};
+		844AC3A523E99C430066006D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3A723E99C4C0066006D /* SourceSansPro-Regular.ttf */,
+				844AC3A823E99C4C0066006D /* SourceSansPro-Bold.ttf */,
+				844AC3A623E99C4C0066006D /* SourceSansPro-SemiBold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		84950CF723E431B700F3C550 /* Base Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +252,7 @@
 		84B9EC8523E0843D00979C39 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				844AC3A523E99C430066006D /* Fonts */,
 				84F840DC23E07DA5008DBE50 /* Assets.xcassets */,
 				84B9EC9B23E089C500979C39 /* GoogleService-Info.plist */,
 				84F840E123E07DA5008DBE50 /* Info.plist */,
@@ -425,9 +442,12 @@
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				844AC39E23E987360066006D /* IncomingCallViewController.xib in Resources */,
+				844AC3AB23E9A0810066006D /* SourceSansPro-SemiBold.ttf in Resources */,
+				844AC3A923E9A07C0066006D /* SourceSansPro-Regular.ttf in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
+				844AC3AA23E9A07E0066006D /* SourceSansPro-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
