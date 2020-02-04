@@ -29,11 +29,7 @@ class IncomingCallPreviewViewModel: BaseViewModel {
     func transform(input: Input) -> Output {
         input.acceptTrigger
             .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
+                onNext: {
                     print("accept call here")
                 }
             )
@@ -41,11 +37,7 @@ class IncomingCallPreviewViewModel: BaseViewModel {
         
         input.rejectTrigger
             .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
+                onNext: {
                     print("reject call here")
                 }
             )

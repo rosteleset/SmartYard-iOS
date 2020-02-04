@@ -9,6 +9,6 @@
 struct ConfirmCodeResponseData: Decodable {
     
     let accessToken: String
-    let name: Bool
+    let names: Bool
     
 }

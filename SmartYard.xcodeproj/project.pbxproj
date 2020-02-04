@@ -18,6 +18,8 @@
 		844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38D23E867840066006D /* IntercomTokenRequest.swift */; };
 		844AC39023E867950066006D /* IntercomTokenResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38F23E867950066006D /* IntercomTokenResponseData.swift */; };
 		844AC39223E872F80066006D /* EmptyAPIResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39123E872F80066006D /* EmptyAPIResponseData.swift */; };
+		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
+		844AC39723E9788D0066006D /* APIAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39623E9788D0066006D /* APIAddress.swift */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4523E2CD3F001B3B43 /* APIService.swift */; };
@@ -61,6 +63,8 @@
 		844AC38D23E867840066006D /* IntercomTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTokenRequest.swift; sourceTree = "<group>"; };
 		844AC38F23E867950066006D /* IntercomTokenResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTokenResponseData.swift; sourceTree = "<group>"; };
 		844AC39123E872F80066006D /* EmptyAPIResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyAPIResponseData.swift; sourceTree = "<group>"; };
+		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
+		844AC39623E9788D0066006D /* APIAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAddress.swift; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
 		84AA8D4523E2CD3F001B3B43 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -158,6 +162,37 @@
 			path = IntercomToken;
 			sourceTree = "<group>";
 		};
+		844AC39323E9776F0066006D /* AccessService */ = {
+			isa = PBXGroup;
+			children = (
+				844AC39423E977810066006D /* AccessService.swift */,
+			);
+			path = AccessService;
+			sourceTree = "<group>";
+		};
+		844AC39823E979AB0066006D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				844AC39623E9788D0066006D /* APIAddress.swift */,
+				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
+				844AC39123E872F80066006D /* EmptyAPIResponseData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		844AC39923E979BA0066006D /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				844AC37F23E8636D0066006D /* ConfirmCode */,
+				844AC37823E8619A0066006D /* GetVerifyedAddresses */,
+				844AC38423E8651B0066006D /* Login */,
+				844AC38C23E867720066006D /* IntercomToken */,
+				844AC38923E866630066006D /* RegisterToken */,
+				844AC37123E85C4A0066006D /* RequestCode */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
 		84950CF723E431B700F3C550 /* Base Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,15 +216,9 @@
 				84AA8D4523E2CD3F001B3B43 /* APIService.swift */,
 				84AA8D4723E2CD48001B3B43 /* APITarget.swift */,
 				84AA8D5F23E2E622001B3B43 /* APIWrapper.swift */,
-				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
 				84AA8D4923E2CD5E001B3B43 /* BaseRequestRetrier.swift */,
-				844AC39123E872F80066006D /* EmptyAPIResponseData.swift */,
-				844AC37F23E8636D0066006D /* ConfirmCode */,
-				844AC37823E8619A0066006D /* GetVerifyedAddresses */,
-				844AC38423E8651B0066006D /* Login */,
-				844AC38C23E867720066006D /* IntercomToken */,
-				844AC38923E866630066006D /* RegisterToken */,
-				844AC37123E85C4A0066006D /* RequestCode */,
+				844AC39823E979AB0066006D /* Models */,
+				844AC39923E979BA0066006D /* Requests */,
 			);
 			path = APIService;
 			sourceTree = "<group>";
@@ -248,6 +277,7 @@
 		84B9EC8923E0846400979C39 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				844AC39323E9776F0066006D /* AccessService */,
 				84AA8D4423E2CD0C001B3B43 /* APIService */,
 				84B9EC9823E0886000979C39 /* LinphoneService */,
 			);
@@ -515,11 +545,13 @@
 				844AC38123E8637B0066006D /* ConfirmCodeRequest.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
 				844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */,
+				844AC39723E9788D0066006D /* APIAddress.swift in Sources */,
 				844AC38323E8641B0066006D /* ConfirmCodeResponseData.swift in Sources */,
 				84AA8D5B23E2CEC5001B3B43 /* BaseAPIResponse.swift in Sources */,
 				84AA8D4823E2CD48001B3B43 /* APITarget.swift in Sources */,
 				84AA8D7823E30A20001B3B43 /* IncomingCallPreviewViewController.swift in Sources */,
 				84AA8D7B23E30A31001B3B43 /* IncomingCallPreviewViewModel.swift in Sources */,
+				844AC39523E977810066006D /* AccessService.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,

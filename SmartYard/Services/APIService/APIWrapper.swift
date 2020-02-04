@@ -14,15 +14,14 @@ import RxCocoa
 class APIWrapper {
     
     let apiService: APIService
+    let accessService: AccessService
     
     let login = "f70392"
     let password = "d342a76ec"
-    let phone = "89278339622"
-    let accessToken = "79902143-88e4-46fd-a2ed-2bd0b132c433:6ebba629d6adbace8fbb974fd0aa4795"
-    let clientId = "75549"
     
-    init(apiService: APIService) {
+    init(apiService: APIService, accessService: AccessService) {
         self.apiService = apiService
+        self.accessService = accessService
     }
     
     func requestCode(userPhone: String) -> Completable {
@@ -46,6 +45,10 @@ class APIWrapper {
     }
     
     func confirmCode(userPhone: String, smsCode: String) -> Single<ConfirmCodeResponseData> {
+        guard accessService.accessToken == nil && accessService.clientId == nil else {
+            return .error(NSError.APIWrapperError.alreadyLoggedInError)
+        }
+        
         let request = ConfirmCodeRequest(userPhone: userPhone, smsCode: smsCode)
         
         return Single.create { [weak self] single in
@@ -54,10 +57,15 @@ class APIWrapper {
                 return Disposables.create()
             }
             
-            self.apiService.performConfirmCodeRequest(request) { result in
+            self.apiService.performConfirmCodeRequest(request) { [weak self] result in
                 switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+                case let .success(data):
+                    self?.accessService.accessToken = data.accessToken
+                    
+                    single(.success(data))
+                    
+                case let .failure(error):
+                    single(.error(error))
                 }
             }
             
@@ -66,6 +74,10 @@ class APIWrapper {
     }
     
     func login(login: String, password: String) -> Single<LoginResponseData> {
+        guard accessService.accessToken == nil && accessService.clientId == nil else {
+            return .error(NSError.APIWrapperError.alreadyLoggedInError)
+        }
+        
         let request = LoginRequest(login: login, password: password)
         
         return Single.create { [weak self] single in
@@ -74,10 +86,16 @@ class APIWrapper {
                 return Disposables.create()
             }
             
-            self.apiService.performLoginRequest(request) { result in
+            self.apiService.performLoginRequest(request) { [weak self] result in
                 switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+                case let .success(data):
+                    self?.accessService.accessToken = data.accessToken
+                    self?.accessService.clientId = data.clientId
+                    
+                    single(.success(data))
+                    
+                case let .failure(error):
+                    single(.error(error))
                 }
             }
             
@@ -86,6 +104,10 @@ class APIWrapper {
     }
     
     func getVerifyedAddresses() -> Single<GetVerifyedAddressesResponseData> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
         let request = GetVerifyedAddressesRequest(accessToken: accessToken)
         
         return Single.create { [weak self] single in
@@ -106,6 +128,14 @@ class APIWrapper {
     }
     
     func registerToken(pushToken: String, type: TokenType) -> Completable {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        guard let clientId = accessService.clientId else {
+            return .error(NSError.APIWrapperError.clientIdMissingError)
+        }
+        
         let request = RegisterTokenRequest(
             accessToken: accessToken,
             pushToken: pushToken,
@@ -131,6 +161,14 @@ class APIWrapper {
     }
     
     func updateTokenState(pushToken: String, newState: TokenState) -> Completable {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        guard let clientId = accessService.clientId else {
+            return .error(NSError.APIWrapperError.clientIdMissingError)
+        }
+        
         let request = IntercomTokenRequest(
             accessToken: accessToken,
             pushToken: pushToken,
@@ -156,6 +194,14 @@ class APIWrapper {
     }
     
     func checkTokenState(pushToken: String) -> Single<IntercomTokenResponseData> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        guard let clientId = accessService.clientId else {
+            return .error(NSError.APIWrapperError.clientIdMissingError)
+        }
+        
         let request = IntercomTokenRequest(
             accessToken: accessToken,
             pushToken: pushToken,

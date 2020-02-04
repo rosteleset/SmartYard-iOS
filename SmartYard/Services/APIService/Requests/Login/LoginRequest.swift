@@ -16,7 +16,10 @@ struct LoginRequest {
 extension LoginRequest {
     
     var requestParameters: [String: Any] {
-        return [:]
+        return [
+            "login": login,
+            "password": password
+        ]
     }
     
 }

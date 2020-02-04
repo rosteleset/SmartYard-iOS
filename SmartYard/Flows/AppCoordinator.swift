@@ -28,6 +28,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let notificationCenter = UNUserNotificationCenter.current()
     private let linphoneService = LinphoneService()
     private let apiService = APIService()
+    private let accessService = AccessService()
     private let apiWrapper: APIWrapper
     
     private var currentCallPreviewData: Data?
@@ -35,7 +36,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private var currentCall: Call?
     
     init() {
-        apiWrapper = APIWrapper(apiService: apiService)
+        apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
         
         super.init(initialRoute: .main)
         rootViewController.setNavigationBarHidden(true, animated: false)

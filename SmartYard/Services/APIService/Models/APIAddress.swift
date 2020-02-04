@@ -1,12 +1,12 @@
 //
-//  GetVerifyedAddressesResponseData.swift
+//  APIAddress.swift
 //  SmartYard
 //
-//  Created by admin on 03/02/2020.
+//  Created by admin on 04/02/2020.
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
-struct GetVerifyedAddressesResponseData: Decodable {
+struct APIAddress: Decodable {
     
     let clientId: String
     let login: String

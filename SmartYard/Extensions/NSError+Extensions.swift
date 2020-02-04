@@ -67,3 +67,43 @@ extension NSError {
     }
     
 }
+
+extension NSError {
+    
+    enum APIWrapperError {
+        
+        private static let domain = "APIWrapperError"
+        
+        static let accessTokenMissingError: NSError = {
+            let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден access token. Выполнить запрос невозможно"]
+            
+            return NSError(
+                domain: domain,
+                code: 3001,
+                userInfo: errorUserInfo
+            )
+        }()
+        
+        static let clientIdMissingError: NSError = {
+            let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден client id. Выполнить запрос невозможно"]
+            
+            return NSError(
+                domain: domain,
+                code: 3002,
+                userInfo: errorUserInfo
+            )
+        }()
+        
+        static let alreadyLoggedInError: NSError = {
+            let errorUserInfo = [NSLocalizedDescriptionKey: "Пользователь уже авторизован"]
+            
+            return NSError(
+                domain: domain,
+                code: 3003,
+                userInfo: errorUserInfo
+            )
+        }()
+        
+    }
+    
+}
