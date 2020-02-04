@@ -36,6 +36,10 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private var currentCall: Call?
     
     init() {
+        // MARK: Замоканные данные. Убрать после добавления флоу авторизации
+        accessService.accessToken = "79902143-88e4-46fd-a2ed-2bd0b132c433:6ebba629d6adbace8fbb974fd0aa4795"
+        accessService.clientId = "75549"
+        
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
         
         super.init(initialRoute: .main)
