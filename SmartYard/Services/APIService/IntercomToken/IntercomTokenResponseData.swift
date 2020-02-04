@@ -12,10 +12,14 @@ struct IntercomTokenResponseData: Decodable {
     
     let state: TokenState
     
+    private enum CodingKeys: String, CodingKey {
+        case state
+    }
+    
     init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
+        let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        let stateRawValue = try container.decode(String.self)
+        let stateRawValue = try container.decode(String.self, forKey: .state)
         let state = try TokenState(rawValue: stateRawValue).unwrapped(or: NSError.APIServiceError.mappingError)
         
         self.state = state

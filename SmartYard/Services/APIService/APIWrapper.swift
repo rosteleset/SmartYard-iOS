@@ -18,13 +18,15 @@ class APIWrapper {
     let login = "f70392"
     let password = "d342a76ec"
     let phone = "89278339622"
+    let accessToken = "79902143-88e4-46fd-a2ed-2bd0b132c433:6ebba629d6adbace8fbb974fd0aa4795"
+    let clientId = "75549"
     
     init(apiService: APIService) {
         self.apiService = apiService
     }
     
-    func sendToken(token: String, tokenType: TokenType) -> Completable {
-        let request = SendTokenRequest(login: login, password: password, token: token, tokenType: tokenType)
+    func requestCode(userPhone: String) -> Completable {
+        let request = RequestCodeRequest(userPhone: userPhone)
         
         return Completable.create { [weak self] completable in
             guard let self = self else {
@@ -32,7 +34,7 @@ class APIWrapper {
                 return Disposables.create()
             }
             
-            self.apiService.performSendTokenRequest(request) { result in
+            self.apiService.performRequestCodeRequest(request) { result in
                 switch result {
                 case .success: completable(.completed)
                 case let .failure(error): completable(.error(error))
@@ -43,8 +45,98 @@ class APIWrapper {
         }
     }
     
-    func updateTokenState(token: String, isEnabled: Bool) -> Completable {
-        let request = UpdateTokenStateRequest(login: login, password: password, token: token, isEnabled: isEnabled)
+    func confirmCode(userPhone: String, smsCode: String) -> Single<ConfirmCodeResponseData> {
+        let request = ConfirmCodeRequest(userPhone: userPhone, smsCode: smsCode)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performConfirmCodeRequest(request) { result in
+                switch result {
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func login(login: String, password: String) -> Single<LoginResponseData> {
+        let request = LoginRequest(login: login, password: password)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performLoginRequest(request) { result in
+                switch result {
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func getVerifyedAddresses() -> Single<GetVerifyedAddressesResponseData> {
+        let request = GetVerifyedAddressesRequest(accessToken: accessToken)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performGetVerifyedAddressesRequest(request) { result in
+                switch result {
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func registerToken(pushToken: String, type: TokenType) -> Completable {
+        let request = RegisterTokenRequest(
+            accessToken: accessToken,
+            pushToken: pushToken,
+            clientId: clientId,
+            type: type
+        )
+        
+        return Completable.create { [weak self] completable in
+            guard let self = self else {
+                completable(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performRegisterTokenRequest(request) { result in
+                switch result {
+                case .success: completable(.completed)
+                case let .failure(error): completable(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func updateTokenState(pushToken: String, newState: TokenState) -> Completable {
+        let request = IntercomTokenRequest(
+            accessToken: accessToken,
+            pushToken: pushToken,
+            clientId: clientId,
+            state: newState
+        )
         
         return Completable.create { [weak self] completable in
             guard let self = self else {
@@ -63,19 +155,24 @@ class APIWrapper {
         }
     }
     
-    func checkTokenState(token: String) -> Completable {
-        let request = CheckTokenStateRequest(login: login, password: password, token: token)
+    func checkTokenState(pushToken: String) -> Single<IntercomTokenResponseData> {
+        let request = IntercomTokenRequest(
+            accessToken: accessToken,
+            pushToken: pushToken,
+            clientId: clientId,
+            state: nil
+        )
         
-        return Completable.create { [weak self] completable in
+        return Single.create { [weak self] single in
             guard let self = self else {
-                completable(.error(NSError.GenericError.selfIsDeadError))
+                single(.error(NSError.GenericError.selfIsDeadError))
                 return Disposables.create()
             }
             
             self.apiService.performCheckTokenStateRequest(request) { result in
                 switch result {
-                case .success: completable(.completed)
-                case let .failure(error): completable(.error(error))
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
                 }
             }
             

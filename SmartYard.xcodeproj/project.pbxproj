@@ -17,6 +17,7 @@
 		844AC38B23E866710066006D /* RegisterTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38A23E866710066006D /* RegisterTokenRequest.swift */; };
 		844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38D23E867840066006D /* IntercomTokenRequest.swift */; };
 		844AC39023E867950066006D /* IntercomTokenResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38F23E867950066006D /* IntercomTokenResponseData.swift */; };
+		844AC39223E872F80066006D /* EmptyAPIResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39123E872F80066006D /* EmptyAPIResponseData.swift */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4523E2CD3F001B3B43 /* APIService.swift */; };
@@ -59,6 +60,7 @@
 		844AC38A23E866710066006D /* RegisterTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTokenRequest.swift; sourceTree = "<group>"; };
 		844AC38D23E867840066006D /* IntercomTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTokenRequest.swift; sourceTree = "<group>"; };
 		844AC38F23E867950066006D /* IntercomTokenResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTokenResponseData.swift; sourceTree = "<group>"; };
+		844AC39123E872F80066006D /* EmptyAPIResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyAPIResponseData.swift; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
 		84AA8D4523E2CD3F001B3B43 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				84AA8D5F23E2E622001B3B43 /* APIWrapper.swift */,
 				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
 				84AA8D4923E2CD5E001B3B43 /* BaseRequestRetrier.swift */,
+				844AC39123E872F80066006D /* EmptyAPIResponseData.swift */,
 				844AC37F23E8636D0066006D /* ConfirmCode */,
 				844AC37823E8619A0066006D /* GetVerifyedAddresses */,
 				844AC38423E8651B0066006D /* Login */,
@@ -527,6 +530,7 @@
 				84B9EC8C23E085AE00979C39 /* Observable+Extensions.swift in Sources */,
 				84AA8D7F23E30C32001B3B43 /* BaseViewModel.swift in Sources */,
 				844AC38623E865260066006D /* LoginRequest.swift in Sources */,
+				844AC39223E872F80066006D /* EmptyAPIResponseData.swift in Sources */,
 				84AA8D6023E2E622001B3B43 /* APIWrapper.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,

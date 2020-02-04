@@ -63,13 +63,15 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     func activateToken(token: String, tokenType: TokenType) {
         Completable
             .concat(
-                apiWrapper.sendToken(token: token, tokenType: tokenType),
-                apiWrapper.updateTokenState(token: token, isEnabled: true),
-                apiWrapper.checkTokenState(token: token)
+                apiWrapper.registerToken(pushToken: token, type: tokenType),
+                apiWrapper.updateTokenState(pushToken: token, newState: .on)
+            )
+            .andThen(
+                apiWrapper.checkTokenState(pushToken: token)
             )
             .subscribe(
-                onCompleted: {
-                    print("DEBUG / \(tokenType) \(token) is now ACTIVE")
+                onSuccess: { data in
+                    print("DEBUG / \(tokenType) \(token) is now \(data.state)")
                 },
                 onError: { error in
                     print(error)

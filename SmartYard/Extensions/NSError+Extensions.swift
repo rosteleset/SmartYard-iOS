@@ -54,6 +54,16 @@ extension NSError {
             )
         }()
         
+        static let emptyDataError: NSError = {
+            let errorUserInfo = [NSLocalizedDescriptionKey: "Ошибка маппинга поля Data, либо же оно отсутствует"]
+
+            return NSError(
+                domain: domain,
+                code: 2003,
+                userInfo: errorUserInfo
+            )
+        }()
+        
     }
     
 }

@@ -27,12 +27,12 @@ extension APITarget: TargetType {
     
     var path: String {
         switch self {
-        case .confirmCode(_): return "user/confirmCode"
-        case .getVerifyedAddresses(_): return "user/getVerifyedAddresses"
-        case .login(_): return "user/login"
-        case .intercomToken(_): return "user/intercomToken"
-        case .registerToken(_): return "user/registerToken"
-        case .requestCode(_): return "user/requestCode"
+        case .confirmCode: return "user/confirmCode"
+        case .getVerifyedAddresses: return "user/getVerifyedAddresses"
+        case .login: return "user/login"
+        case .intercomToken: return "user/intercomPushToken"
+        case .registerToken: return "user/registerPushToken"
+        case .requestCode: return "user/requestCode"
         }
     }
     
