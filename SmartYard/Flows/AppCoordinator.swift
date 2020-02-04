@@ -28,6 +28,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let notificationCenter = UNUserNotificationCenter.current()
     private let linphoneService = LinphoneService()
     private let apiService = APIService()
+    private let accessService = AccessService()
     private let apiWrapper: APIWrapper
     
     private var currentCallPreviewData: Data?
@@ -35,7 +36,11 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private var currentCall: Call?
     
     init() {
-        apiWrapper = APIWrapper(apiService: apiService)
+        // MARK: Замоканные данные. Убрать после добавления флоу авторизации
+        accessService.accessToken = "79902143-88e4-46fd-a2ed-2bd0b132c433:6ebba629d6adbace8fbb974fd0aa4795"
+        accessService.clientId = "75549"
+        
+        apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
         
         super.init(initialRoute: .main)
         rootViewController.setNavigationBarHidden(true, animated: false)
@@ -63,13 +68,15 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     func activateToken(token: String, tokenType: TokenType) {
         Completable
             .concat(
-                apiWrapper.sendToken(token: token, tokenType: tokenType),
-                apiWrapper.updateTokenState(token: token, isEnabled: true),
-                apiWrapper.checkTokenState(token: token)
+                apiWrapper.registerToken(pushToken: token, type: tokenType),
+                apiWrapper.updateTokenState(pushToken: token, newState: .on)
+            )
+            .andThen(
+                apiWrapper.checkTokenState(pushToken: token)
             )
             .subscribe(
-                onCompleted: {
-                    print("DEBUG / \(tokenType) \(token) is now ACTIVE")
+                onSuccess: { data in
+                    print("DEBUG / \(tokenType) \(token) is now \(data.state)")
                 },
                 onError: { error in
                     print(error)

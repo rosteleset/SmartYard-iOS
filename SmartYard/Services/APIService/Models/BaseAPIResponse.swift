@@ -6,10 +6,11 @@
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
-struct BaseAPIResponse: Decodable {
+struct BaseAPIResponse<T: Decodable>: Decodable {
     
     let code: Int
     let name: String
     let message: String
+    let data: T?
     
 }
