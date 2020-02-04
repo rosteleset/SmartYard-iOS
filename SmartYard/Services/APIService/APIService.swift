@@ -98,6 +98,10 @@ class APIService {
         )
     }
     
+}
+
+extension APIService {
+    
     // MARK: Mapping queries with required Data block
     
     private func createInnerCompletionBlockWithData<T: Decodable>(
@@ -138,6 +142,10 @@ class APIService {
             return .failure(NSError.APIServiceError.mappingError)
         }
     }
+    
+}
+
+extension APIService {
     
     // MARK: Mapping queries with empty Data block
     
