@@ -60,6 +60,8 @@
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
 		85E437EBD8028F17EA854687 /* Pods_SmartYard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3264A75344A37C60971E215B /* Pods_SmartYard.framework */; };
+		E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */; };
+		E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +123,8 @@
 		84F840DC23E07DA5008DBE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84F840DF23E07DA5008DBE50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84F840E123E07DA5008DBE50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberViewController.swift; sourceTree = "<group>"; };
+		E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputPhoneNumberViewController.xib; sourceTree = "<group>"; };
 		F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -351,6 +355,7 @@
 			children = (
 				844AC3B423EB0FD80066006D /* UserName */,
 				844AC39A23E9871F0066006D /* IncomingCall */,
+				E99EA6B623EA9CED00BECEE6 /* Login */,
 				84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */,
 				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
 			);
@@ -415,6 +420,23 @@
 				F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E99EA6B623EA9CED00BECEE6 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				E99EA6B723EA9CF200BECEE6 /* InputPhoneNumber */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		E99EA6B723EA9CF200BECEE6 /* InputPhoneNumber */ = {
+			isa = PBXGroup;
+			children = (
+				E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */,
+				E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */,
+			);
+			path = InputPhoneNumber;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -493,6 +515,7 @@
 				844AC3A923E9A07C0066006D /* SourceSansPro-Regular.ttf in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
+				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
 				844AC3AA23E9A07E0066006D /* SourceSansPro-Bold.ttf in Resources */,
 			);
@@ -623,6 +646,7 @@
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
+				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
 				844AC38B23E866710066006D /* RegisterTokenRequest.swift in Sources */,
 				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
