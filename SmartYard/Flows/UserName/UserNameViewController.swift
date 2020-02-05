@@ -13,6 +13,7 @@ class UserNameViewController: BaseViewController {
 
     @IBOutlet private weak var nameTextField: SmartYardTextField!
     @IBOutlet private weak var middleNameTextField: SmartYardTextField!
+    @IBOutlet private weak var continueButton: UIButton!
     @IBOutlet private weak var avoidingView: UIView!
     
     let viewModel: UserNameViewModel
@@ -30,6 +31,7 @@ class UserNameViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        bind()
     }
     
     private func configureView() {
@@ -42,6 +44,20 @@ class UserNameViewController: BaseViewController {
         
         middleNameTextField.setPlaceholder(string: "Отчество")
         middleNameTextField.delegate = self
+    }
+    
+    private func bind() {
+        let input = UserNameViewModel.Input(
+            name: nameTextField.rx.text.asDriver(),
+            middleName: middleNameTextField.rx.text.asDriver(),
+            continueTrigger: continueButton.rx.tap.asDriver()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.isAbleToContinue
+            .drive(continueButton.rx.isEnabled)
+            .disposed(by: disposeBag)
     }
     
 }

@@ -69,7 +69,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .dismiss()
             
         case .userName:
-            let vm = UserNameViewModel()
+            let vm = UserNameViewModel(router: weakRouter)
             let vc = UserNameViewController(viewModel: vm)
             return .present(vc)
         }

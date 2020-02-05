@@ -21,6 +21,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserNameViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="avoidingView" destination="9oy-x5-TGN" id="v3p-Y9-jFv"/>
+                <outlet property="continueButton" destination="MyO-ec-zrb" id="CKS-Kd-iua"/>
                 <outlet property="middleNameTextField" destination="PoY-jf-rQZ" id="CcG-Xw-0E2"/>
                 <outlet property="nameTextField" destination="EEN-Gu-xjS" id="ap6-iP-yBt"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
