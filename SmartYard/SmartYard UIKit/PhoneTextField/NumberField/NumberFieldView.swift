@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
+import PMNibLinkableView
 
-class NumberFieldView: UIView {
+class NumberFieldView: PMNibLinkableView {
 
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var numberLabel: UILabel!
@@ -19,19 +20,18 @@ class NumberFieldView: UIView {
     
     private var disposeBag = DisposeBag()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override func awakeFromNib() {
+        super.awakeFromNib()
         bind()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        bind()
+    func clear() {
+        numberLabel.text = nil
     }
     
     func setNewValue(value: Int?) {
         guard let newValue = value else {
-            numberLabel.text = ""
+            numberLabel.text = nil
             return
         }
         

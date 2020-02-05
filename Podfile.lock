@@ -99,7 +99,6 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
-  - PinCodeTextField (0.1.0)
   - PinLayout (1.8.13)
   - PMNibLinkableView (0.3.0)
   - PromisesObjC (1.2.8)
@@ -150,7 +149,6 @@ DEPENDENCIES:
   - Kingfisher
   - linphone-sdk (> 4.4.0-alpha)
   - Moya
-  - PinCodeTextField
   - PinLayout
   - PMNibLinkableView
   - RxCocoa
@@ -185,7 +183,6 @@ SPEC REPOS:
     - Kingfisher
     - Moya
     - nanopb
-    - PinCodeTextField
     - PinLayout
     - PMNibLinkableView
     - PromisesObjC
@@ -225,7 +222,6 @@ SPEC CHECKSUMS:
   linphone-sdk: 82302f72c930a859a75acdcfed304272d3cfdae1
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
-  PinCodeTextField: a3c39be58bde3ed1d6888d0fb1d88b0a4a2277cc
   PinLayout: e41a50260a76508b7a7fcee8955c76639adc69bc
   PMNibLinkableView: 06ebf6128feb70c3ba589d6be232748c1b7b1767
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
@@ -240,6 +236,6 @@ SPEC CHECKSUMS:
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: 18bb4a976f073bb28d9cbb1e47ea6dc642a9d12f
+PODFILE CHECKSUM: 53e255559b9b13891fcb97c935fb4618e1de33f8
 
 COCOAPODS: 1.8.4
