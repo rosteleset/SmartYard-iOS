@@ -19,6 +19,7 @@ enum AppRoute: Route {
     case main
     case incomingCall(callPayload: CallPayload)
     case dismiss
+    case userName
     
 }
 
@@ -41,7 +42,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
         
-        super.init(initialRoute: .main)
+        super.init(initialRoute: .userName)
         rootViewController.setNavigationBarHidden(true, animated: false)
         
         AVCaptureDevice.requestAccess(for: .video) { _ in }
@@ -66,6 +67,11 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             
         case .dismiss:
             return .dismiss()
+            
+        case .userName:
+            let vm = UserNameViewModel(router: weakRouter)
+            let vc = UserNameViewController(viewModel: vm)
+            return .present(vc)
         }
     }
     

@@ -29,6 +29,13 @@
 		844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */; };
 		844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3B023EAD0930066006D /* IncomingCallState.swift */; };
 		844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */; };
+		844AC3B723EB104E0066006D /* UserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3B523EB104E0066006D /* UserNameViewController.swift */; };
+		844AC3B823EB104E0066006D /* UserNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3B623EB104E0066006D /* UserNameViewController.xib */; };
+		844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3B923EB105A0066006D /* UserNameViewModel.swift */; };
+		844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3BB23EB15ED0066006D /* UIFont+Extensions.swift */; };
+		844AC3BE23EB16F70066006D /* SmartYardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3BD23EB16F70066006D /* SmartYardTextField.swift */; };
+		844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */; };
+		844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C423EB1F840066006D /* UIView+Extensions.swift */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4523E2CD3F001B3B43 /* APIService.swift */; };
@@ -80,6 +87,13 @@
 		844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		844AC3B023EAD0930066006D /* IncomingCallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallState.swift; sourceTree = "<group>"; };
 		844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallDoorState.swift; sourceTree = "<group>"; };
+		844AC3B523EB104E0066006D /* UserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameViewController.swift; sourceTree = "<group>"; };
+		844AC3B623EB104E0066006D /* UserNameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserNameViewController.xib; sourceTree = "<group>"; };
+		844AC3B923EB105A0066006D /* UserNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameViewModel.swift; sourceTree = "<group>"; };
+		844AC3BB23EB15ED0066006D /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
+		844AC3BD23EB16F70066006D /* SmartYardTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardTextField.swift; sourceTree = "<group>"; };
+		844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
+		844AC3C423EB1F840066006D /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
 		84AA8D4523E2CD3F001B3B43 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -227,6 +241,24 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		844AC3B423EB0FD80066006D /* UserName */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3B523EB104E0066006D /* UserNameViewController.swift */,
+				844AC3B623EB104E0066006D /* UserNameViewController.xib */,
+				844AC3B923EB105A0066006D /* UserNameViewModel.swift */,
+			);
+			path = UserName;
+			sourceTree = "<group>";
+		};
+		844AC3BF23EB17000066006D /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3BD23EB16F70066006D /* SmartYardTextField.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		84950CF723E431B700F3C550 /* Base Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,10 +308,13 @@
 			isa = PBXGroup;
 			children = (
 				84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */,
+				844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */,
 				84AA8D6123E2E860001B3B43 /* NSError+Extensions.swift */,
 				84B9EC8B23E085AE00979C39 /* Observable+Extensions.swift */,
 				84AA8D6523E2F2A8001B3B43 /* TransportType+Extensions.swift */,
+				844AC3BB23EB15ED0066006D /* UIFont+Extensions.swift */,
 				844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */,
+				844AC3C423EB1F840066006D /* UIView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -296,6 +331,7 @@
 			children = (
 				84950CF823E431BD00F3C550 /* Animations */,
 				84950CF723E431B700F3C550 /* Base Classes */,
+				844AC3BF23EB17000066006D /* UI */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -313,6 +349,7 @@
 		84B9EC8A23E0846900979C39 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				844AC3B423EB0FD80066006D /* UserName */,
 				844AC39A23E9871F0066006D /* IncomingCall */,
 				84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */,
 				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
@@ -355,10 +392,10 @@
 				84F840D523E07DA5008DBE50 /* AppDelegate.swift */,
 				84B9EC8823E0844E00979C39 /* Components */,
 				84B9EC8623E0844500979C39 /* Extensions */,
-				84B9EC8A23E0846900979C39 /* Flows */,
 				84B9EC8723E0844A00979C39 /* Helpers */,
-				84B9EC8523E0843D00979C39 /* Resources */,
 				84B9EC8923E0846400979C39 /* Services */,
+				84B9EC8A23E0846900979C39 /* Flows */,
+				84B9EC8523E0843D00979C39 /* Resources */,
 			);
 			path = SmartYard;
 			sourceTree = "<group>";
@@ -448,6 +485,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				844AC3B823EB104E0066006D /* UserNameViewController.xib in Resources */,
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				844AC39E23E987360066006D /* IncomingCallViewController.xib in Resources */,
@@ -562,6 +600,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */,
 				84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */,
 				844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */,
 				844AC37E23E861D10066006D /* GetVerifyedAddressesResponseData.swift in Sources */,
@@ -572,6 +611,7 @@
 				844AC37C23E861C50066006D /* GetVerifyedAddressesRequest.swift in Sources */,
 				84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
+				844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */,
 				844AC38123E8637B0066006D /* ConfirmCodeRequest.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
 				844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */,
@@ -582,6 +622,7 @@
 				844AC39523E977810066006D /* AccessService.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
+				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
 				844AC38B23E866710066006D /* RegisterTokenRequest.swift in Sources */,
 				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
@@ -593,9 +634,12 @@
 				844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */,
 				844AC39223E872F80066006D /* EmptyAPIResponseData.swift in Sources */,
 				84AA8D6023E2E622001B3B43 /* APIWrapper.swift in Sources */,
+				844AC3B723EB104E0066006D /* UserNameViewController.swift in Sources */,
 				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
+				844AC3BE23EB16F70066006D /* SmartYardTextField.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
 				844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */,
+				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 			);
