@@ -296,7 +296,6 @@
 		84B9EC8523E0843D00979C39 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				844AC3A523E99C430066006D /* Fonts */,
 				84F840DC23E07DA5008DBE50 /* Assets.xcassets */,
 				84B9EC9B23E089C500979C39 /* GoogleService-Info.plist */,
 				84F840E123E07DA5008DBE50 /* Info.plist */,
@@ -520,7 +519,6 @@
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
-				844AC3AA23E9A07E0066006D /* SourceSansPro-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
