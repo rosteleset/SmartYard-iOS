@@ -110,7 +110,54 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        let callAcceptedEvent = currentStateSubject
+            .filter { currentState in
+                let (callState, _) = currentState
+                
+                return callState == .callAccepted
+            }
+            .take(1)
+        
+        let callFinishedEvent = currentStateSubject
+            .filter { currentState in
+                let (_, doorState) = currentState
+                
+                return doorState != .notDetermined
+            }
+            .take(1)
+        
+        let timer = callAcceptedEvent
+            .flatMap { _ -> Observable<String> in
+                let counter: Observable<String> = Observable<Int>
+                    .interval(.milliseconds(1000), scheduler: MainScheduler.instance)
+                    .map { rawSeconds in
+                        let minutes = (rawSeconds + 1) / 60
+                        let seconds = (rawSeconds + 1) % 60
+
+                        return String(format: "%02d:%02d", minutes, seconds)
+                    }
+                
+                return Observable.merge(.just("00:00"), counter)
+            }
+        
+        let disposable = timer
+            .subscribe(
+                onNext: { text in
+                    subtitleSubject.onNext(text)
+                }
+            )
+        
+        callFinishedEvent
+            .mapToVoid()
+            .subscribe(
+                onNext: {
+                    disposable.dispose()
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(state: currentState, subtitle: subtitle)
+        
 //        let snapshot = BehaviorSubject<UIImage?>(value: nil)
 //
 //        let loadNextImageTrigger = PublishSubject<Void>()
