@@ -17,7 +17,8 @@ import linphonesw
 enum AppRoute: Route {
     
     case main
-    case incomingCall(callPayload: CallPayload, call: Call)
+    case incomingCall(callPayload: CallPayload)
+    case dismiss
     
 }
 
@@ -32,8 +33,6 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let apiWrapper: APIWrapper
     
     private var currentCallPreviewData: Data?
-    private var currentCallPayload: CallPayload?
-    private var currentCall: Call?
     
     init() {
         // MARK: Замоканные данные. Убрать после добавления флоу авторизации
@@ -53,15 +52,20 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         case .main:
             return .none()
             
-        case let .incomingCall(callPayload, call):
-            let vm = IncomingCallPreviewViewModel(
+        case let .incomingCall(callPayload):
+            let vm = IncomingCallViewModel(
                 linphoneService: linphoneService,
                 callPayload: callPayload,
-                call: call
+                router: weakRouter
             )
             
-            let vc = IncomingCallPreviewViewController(viewModel: vm)
+            let vc = IncomingCallViewController(viewModel: vm)
+            vc.modalPresentationCapturesStatusBarAppearance = true
+            
             return .present(vc, animation: .fade)
+            
+        case .dismiss:
+            return .dismiss()
         }
     }
     
@@ -89,25 +93,12 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         callPayload: CallPayload,
         completion: @escaping () -> Void
     ) {
-        // MARK: Если на данный момент уже есть звонок, то пока ничего не делаем (хз какая будет логика)
-        guard currentCallPayload == nil, currentCall == nil else {
-            print("DEBUG / ANOTHER INCOMING CALL / CAN'T ACCEPT TWO CALLS AT ONCE")
-            completion()
-            return
+        switch UIApplication.shared.applicationState {
+        case .active:
+            trigger(.incomingCall(callPayload: callPayload))
+        default:
+            createIncomingCallNotification(withCallPayload: callPayload)
         }
-
-        currentCallPayload = callPayload
-
-        linphoneService.delegate = self
-        linphoneService.connect(config: callPayload.sipConfig, videoView: UIView(), cameraView: UIView())
-    }
-    
-    func showIncomingCall() {
-        guard let callPayload = currentCallPayload, let call = currentCall else {
-            return
-        }
-        
-        trigger(.incomingCall(callPayload: callPayload, call: call))
     }
     
     // MARK: Создание картинки-превью для Push-уведомления
@@ -207,47 +198,6 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             // MARK: И создаем уведомление о пропущенном вызове
             
             self?.notificationCenter.add(newRequest, withCompletionHandler: nil)
-        }
-    }
-    
-}
-
-extension AppCoordinator: LinphoneDelegate {
-    
-    func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: RegistrationState, message: String) {
-        print("DEBUG / REGISTRATION STATE: \(cstate)")
-    }
-    
-    func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
-        print("DEBUG / CALL STATE: \(cstate)")
-        
-        switch cstate {
-        // MARK: При поступлении входящего звонка создаем для пользователя локальное уведомление
-        // Либо сразу показываем входящий вызов, если находимся в foreground
-        case .IncomingReceived:
-            guard let callPayload = currentCallPayload else {
-                fatalError("CALL PAYLOAD WAS SOMEHOW DELETED")
-            }
-            
-            currentCall = call
-            
-            switch UIApplication.shared.applicationState {
-            case .active:
-                showIncomingCall()
-            default:
-                createIncomingCallNotification(withCallPayload: callPayload)
-            }
-        
-        // MARK: При завершении звонка - заменяем это уведомление на "Пропущенный звонок"
-        // TODO: Отработать кейс, когда звонок будет принят и завершится успешно (не нужно показывать пропущенный)
-        // TODO: Отработать кейс, когда звонок не будет сброшен за 30 секунд (нужно показать пропущенный)
-        case .End:
-            updateIncomingCallNotificationToMissed()
-            
-            currentCallPayload = nil
-            currentCall = nil
-        default:
-            break
         }
     }
     

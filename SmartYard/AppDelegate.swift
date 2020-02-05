@@ -142,8 +142,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        if response.notification.request.identifier == "IncomingCall" {
-            appCoordinator.showIncomingCall()
+        if let callPayload = CallPayload(
+            pushNotificationPayload: response.notification.request.content.userInfo
+        ) {
+            appCoordinator.trigger(.incomingCall(callPayload: callPayload))
         }
         
         completionHandler()
