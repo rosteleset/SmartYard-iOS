@@ -25,6 +25,8 @@ class IncomingCallViewController: BaseViewController {
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var ignoreButtonLabel: UILabel!
     
+    @IBOutlet private weak var imageView: UIImageView!
+    
     let viewModel: IncomingCallViewModel
     
     init(viewModel: IncomingCallViewModel) {
@@ -69,6 +71,10 @@ class IncomingCallViewController: BaseViewController {
             .drive(subtitleLabel.rx.text)
             .disposed(by: disposeBag)
         
+        output.image
+            .drive(imageView.rx.image)
+            .disposed(by: disposeBag)
+        
         output.state
             .drive(
                 onNext: { [weak self] state in
@@ -98,51 +104,6 @@ class IncomingCallViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
-        
-//        previewButton.rx.tap
-//            .subscribe(
-//                onNext: { [weak self] in
-//                    guard let self = self else {
-//                        return
-//                    }
-//
-//                    let newState = !self.previewButton.isSelected
-//                    self.previewButton.isSelected = newState
-//                }
-//            )
-//            .disposed(by: disposeBag)
-//
-//        callButton.rx.tap
-//            .subscribe(
-//                onNext: { [weak self] in
-//                    guard let self = self else {
-//                        return
-//                    }
-//
-//                    let newState = !self.callButton.isSelected
-//                    self.callButton.isSelected = newState
-//                }
-//            )
-//            .disposed(by: disposeBag)
-//
-//        ignoreButton.rx.tap
-//            .subscribe(
-//                onNext: { [weak self] in
-//                    self?.dismiss(animated: true, completion: nil)
-//                }
-//            )
-//            .disposed(by: disposeBag)
-//
-//        let input = IncomingCallViewModel.Input(
-//            acceptTrigger: acceptButton.rx.tap.asDriver(),
-//            rejectTrigger: rejectButton.rx.tap.asDriver()
-//        )
-//
-//        let output = viewModel.transform(input: input)
-//
-//        output.preview
-//            .drive(liveImageView.rx.image)
-//            .disposed(by: disposeBag)
     }
     
 }

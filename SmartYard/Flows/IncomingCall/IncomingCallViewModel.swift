@@ -19,24 +19,24 @@ class IncomingCallViewModel: BaseViewModel {
     private let callPayload: CallPayload
     private let router: WeakRouter<AppRoute>
     
-    private let latestPreview = BehaviorSubject<UIImage?>(value: nil)
-    
     init(linphoneService: LinphoneService, callPayload: CallPayload, router: WeakRouter<AppRoute>) {
         self.linphoneService = linphoneService
         self.callPayload = callPayload
         self.router = router
     }
     
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
+        
+        // MARK: Общий стейт экрана
+        
         let currentStateSubject = BehaviorSubject<(IncomingCallState, IncomingCallDoorState)>(
             value: (.callReceived, .notDetermined)
         )
         
         let currentState = currentStateSubject.asDriverOnErrorJustComplete()
         
-        let subtitleSubject = BehaviorSubject<String?>(value: callPayload.domophoneString)
-        let subtitle = subtitleSubject.asDriver(onErrorJustReturn: nil)
+        // MARK: Обработка нажатия на кнопку "Глазок"
         
         input.previewTrigger
             .withLatestFrom(currentState)
@@ -57,6 +57,8 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Обработка нажатия на кнопку "Звонок"
+        
         input.callTrigger
             .withLatestFrom(currentState)
             .drive(
@@ -71,6 +73,8 @@ class IncomingCallViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Открыть"
         
         input.openTrigger
             .withLatestFrom(currentState)
@@ -93,6 +97,8 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Обработка нажатия на кнопку "Игнорировать / Отклонить"
+        
         input.ignoreTrigger
             .withLatestFrom(currentState)
             .drive(
@@ -110,6 +116,79 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Загрузка изначальной превьюхи
+        
+        let initialImageSubject = BehaviorSubject<UIImage?>(value: nil)
+        let initialImage = initialImageSubject.asDriver(onErrorJustReturn: nil)
+        
+        if let url = URL(string: callPayload.image) {
+            KingfisherManager.shared.retrieveImage(with: url) { result in
+                guard let imageResult = try? result.get() else {
+                    return
+                }
+                
+                initialImageSubject.onNext(imageResult.image)
+            }
+        }
+        
+        // MARK: Картинка в лайв-режиме
+        
+        let liveImageSubject = BehaviorSubject<UIImage?>(value: nil)
+        let liveImage = liveImageSubject.asDriver(onErrorJustReturn: nil)
+        
+        let loadNextImageTrigger = PublishSubject<Void>()
+        let loadNextImage = Driver.merge(loadNextImageTrigger.asDriver(onErrorJustReturn: ()), .just(()))
+        
+        if let liveUrl = URL(string: callPayload.liveImage) {
+            Driver
+                .combineLatest(loadNextImage, currentState)
+                .debug()
+                .filter { args in
+                    let (_, currentState) = args
+                    let (callState, _) = currentState
+                    
+                    return callState == .callPreviewed || callState == .callAccepted
+                }
+                .mapToVoid()
+                .drive(
+                    onNext: {
+                        KingfisherManager.shared.retrieveImage(
+                            with: liveUrl,
+                            options: [.forceRefresh]
+                        ) { result in
+                            if let image = try? result.get().image {
+                                liveImageSubject.onNext(image)
+                            }
+                            
+                            loadNextImageTrigger.onNext(())
+                        }
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
+        
+        // MARK: Картинка в зависимости от текущего состояния
+        
+        let image: Driver<UIImage?> = Driver
+            .combineLatest(initialImage, liveImage, currentState)
+            .map { args in
+                let (initialImage, liveImage, currentState) = args
+                let (callState, _) = currentState
+                
+                switch callState {
+                case .callReceived: return initialImage
+                default: return liveImage
+                }
+            }
+            .distinctUntilChanged()
+        
+        // MARK: Дополнительный текст. Здесь либо счетчик звонка, либо адрес домофона (он пока нигде не приходит)
+        
+        let subtitleSubject = BehaviorSubject<String?>(value: callPayload.domophoneString)
+        let subtitle = subtitleSubject.asDriver(onErrorJustReturn: nil)
+        
+        // MARK: Событие начала звонка
+        
         let callAcceptedEvent = currentStateSubject
             .filter { currentState in
                 let (callState, _) = currentState
@@ -117,6 +196,8 @@ class IncomingCallViewModel: BaseViewModel {
                 return callState == .callAccepted
             }
             .take(1)
+        
+        // MARK: Cобытие завершения звонка
         
         let callFinishedEvent = currentStateSubject
             .filter { currentState in
@@ -126,7 +207,9 @@ class IncomingCallViewModel: BaseViewModel {
             }
             .take(1)
         
-        let timer = callAcceptedEvent
+        // MARK: Работа со счетчиком длительности звонка
+        
+        let callTimeCounter = callAcceptedEvent
             .flatMap { _ -> Observable<String> in
                 let counter: Observable<String> = Observable<Int>
                     .interval(.milliseconds(1000), scheduler: MainScheduler.instance)
@@ -140,7 +223,7 @@ class IncomingCallViewModel: BaseViewModel {
                 return Observable.merge(.just("00:00"), counter)
             }
         
-        let disposable = timer
+        let counterDisposable = callTimeCounter
             .subscribe(
                 onNext: { text in
                     subtitleSubject.onNext(text)
@@ -151,40 +234,16 @@ class IncomingCallViewModel: BaseViewModel {
             .mapToVoid()
             .subscribe(
                 onNext: {
-                    disposable.dispose()
+                    counterDisposable.dispose()
                 }
             )
             .disposed(by: disposeBag)
         
-        return Output(state: currentState, subtitle: subtitle)
-        
-//        let snapshot = BehaviorSubject<UIImage?>(value: nil)
-//
-//        let loadNextImageTrigger = PublishSubject<Void>()
-//
-//        Observable
-//            .merge(
-//                loadNextImageTrigger,
-//                .just(())
-//            )
-//            .delay(.milliseconds(250), scheduler: MainScheduler.instance)
-//            .subscribe(
-//                onNext: { _ in
-//                    KingfisherManager.shared.retrieveImage(
-//                        with: liveUrl,
-//                        options: [.forceRefresh]
-//                    ) { [weak self] result in
-//                        if let image = try? result.get().image {
-//                            self?.latestPreview.onNext(image)
-//                        }
-//
-//                        loadNextImageTrigger.onNext(())
-//                    }
-//                }
-//            )
-//            .disposed(by: disposeBag)
-//
-//        return Output(image: snapshot, liveImage: )
+        return Output(
+            state: currentState,
+            subtitle: subtitle,
+            image: image
+        )
     }
     
 }
@@ -201,8 +260,7 @@ extension IncomingCallViewModel {
     struct Output {
         let state: Driver<(IncomingCallState, IncomingCallDoorState)>
         let subtitle: Driver<String?>
-//        let image: Driver<UIImage?>
-//        let liveImage: Driver<UIImage?>
+        let image: Driver<UIImage?>
     }
     
 }
