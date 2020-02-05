@@ -20,8 +20,16 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IncomingCallViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="alreadyOpenedButtonContainer" destination="HE0-qo-dCf" id="q9a-xy-Dmf"/>
                 <outlet property="callButton" destination="CB9-LO-tIG" id="dbF-J2-ZLa"/>
+                <outlet property="ignoreButton" destination="fcw-Zy-IEg" id="qeU-hG-6MP"/>
+                <outlet property="ignoreButtonContainer" destination="j0j-Hn-fUG" id="wz0-Ro-Mnf"/>
+                <outlet property="ignoreButtonLabel" destination="jj8-ob-kSL" id="mHR-xi-Wwf"/>
+                <outlet property="openButton" destination="EmL-iG-h79" id="7Ij-kJ-7VN"/>
+                <outlet property="openButtonContainer" destination="lPP-Rf-bcR" id="cy4-Mr-yfm"/>
                 <outlet property="previewButton" destination="rwT-mp-rJV" id="BtZ-YJ-EHv"/>
+                <outlet property="subtitleLabel" destination="Rh6-Xt-7AB" id="kJV-nO-5XR"/>
+                <outlet property="titleLabel" destination="EaG-bR-VV0" id="SPP-lu-dvx"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

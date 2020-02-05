@@ -14,6 +14,16 @@ class IncomingCallViewController: BaseViewController {
     
     @IBOutlet private weak var previewButton: UIButton!
     @IBOutlet private weak var callButton: UIButton!
+    @IBOutlet private weak var ignoreButton: UIButton!
+    @IBOutlet private weak var openButton: UIButton!
+    
+    @IBOutlet private weak var alreadyOpenedButtonContainer: UIView!
+    @IBOutlet private weak var openButtonContainer: UIView!
+    @IBOutlet private weak var ignoreButtonContainer: UIView!
+    
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subtitleLabel: UILabel!
+    @IBOutlet private weak var ignoreButtonLabel: UILabel!
     
     let viewModel: IncomingCallViewModel
     
@@ -46,33 +56,76 @@ class IncomingCallViewController: BaseViewController {
     }
     
     private func bind() {
-        previewButton.rx.tap
-            .subscribe(
-                onNext: { [weak self] in
+        let input = IncomingCallViewModel.Input(
+            previewTrigger: previewButton.rx.tap.asDriver(),
+            callTrigger: callButton.rx.tap.asDriver(),
+            ignoreTrigger: ignoreButton.rx.tap.asDriver(),
+            openTrigger: openButton.rx.tap.asDriver()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.subtitle
+            .drive(subtitleLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.state
+            .drive(
+                onNext: { [weak self] state in
                     guard let self = self else {
                         return
                     }
                     
-                    let newState = !self.previewButton.isSelected
-                    self.previewButton.isSelected = newState
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        callButton.rx.tap
-            .subscribe(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
+                    let (callState, doorState) = state
                     
-                    let newState = !self.callButton.isSelected
-                    self.callButton.isSelected = newState
+                    self.view.isUserInteractionEnabled = doorState == .notDetermined
+                    self.previewButton.isSelected = callState == .callPreviewed && doorState == .notDetermined
+                    self.callButton.isSelected = callState == .callAccepted && doorState == .notDetermined
+                    
+                    self.alreadyOpenedButtonContainer.isHidden = doorState != .opened
+                    self.openButtonContainer.isHidden = doorState == .opened
+                    self.ignoreButtonContainer.isHidden = doorState == .opened
+                    
+                    self.ignoreButtonLabel.text = callState == .callAccepted ? "Отклонить" : "Игнорировать"
+                    
+                    self.titleLabel.text = {
+                        switch callState {
+                        case .callReceived: return "Звонок в домофон"
+                        case .callPreviewed: return "Глазок включен"
+                        case .callAccepted: return "Разговор"
+                        }
+                    }()
                 }
             )
             .disposed(by: disposeBag)
         
-//        rejectButton.rx.tap
+//        previewButton.rx.tap
+//            .subscribe(
+//                onNext: { [weak self] in
+//                    guard let self = self else {
+//                        return
+//                    }
+//
+//                    let newState = !self.previewButton.isSelected
+//                    self.previewButton.isSelected = newState
+//                }
+//            )
+//            .disposed(by: disposeBag)
+//
+//        callButton.rx.tap
+//            .subscribe(
+//                onNext: { [weak self] in
+//                    guard let self = self else {
+//                        return
+//                    }
+//
+//                    let newState = !self.callButton.isSelected
+//                    self.callButton.isSelected = newState
+//                }
+//            )
+//            .disposed(by: disposeBag)
+//
+//        ignoreButton.rx.tap
 //            .subscribe(
 //                onNext: { [weak self] in
 //                    self?.dismiss(animated: true, completion: nil)

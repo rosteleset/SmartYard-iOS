@@ -27,6 +27,8 @@
 		844AC3AA23E9A07E0066006D /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3A823E99C4C0066006D /* SourceSansPro-Bold.ttf */; };
 		844AC3AB23E9A0810066006D /* SourceSansPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3A623E99C4C0066006D /* SourceSansPro-SemiBold.ttf */; };
 		844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */; };
+		844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3B023EAD0930066006D /* IncomingCallState.swift */; };
+		844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4523E2CD3F001B3B43 /* APIService.swift */; };
@@ -76,6 +78,8 @@
 		844AC3A723E99C4C0066006D /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		844AC3A823E99C4C0066006D /* SourceSansPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Bold.ttf"; sourceTree = "<group>"; };
 		844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		844AC3B023EAD0930066006D /* IncomingCallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallState.swift; sourceTree = "<group>"; };
+		844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallDoorState.swift; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
 		84AA8D4523E2CD3F001B3B43 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -207,6 +211,8 @@
 				844AC39B23E987360066006D /* IncomingCallViewController.swift */,
 				844AC39C23E987360066006D /* IncomingCallViewController.xib */,
 				844AC39F23E987400066006D /* IncomingCallViewModel.swift */,
+				844AC3B023EAD0930066006D /* IncomingCallState.swift */,
+				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
 			);
 			path = IncomingCall;
 			sourceTree = "<group>";
@@ -557,6 +563,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */,
+				844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */,
 				844AC37E23E861D10066006D /* GetVerifyedAddressesResponseData.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				844AC38823E8652F0066006D /* LoginResponseData.swift in Sources */,
@@ -586,6 +593,7 @@
 				844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */,
 				844AC39223E872F80066006D /* EmptyAPIResponseData.swift in Sources */,
 				84AA8D6023E2E622001B3B43 /* APIWrapper.swift in Sources */,
+				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
 				844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */,
 				844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */,

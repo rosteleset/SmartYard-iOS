@@ -33,11 +33,11 @@ struct CallPayload {
         ]
         
         if let domophoneId = domophoneId {
-            mainPayload["domophone_id"] = domophoneId
+            mainPayload["domophoneId"] = domophoneId
         }
         
         if let flatId = flatId {
-            mainPayload["flat_id"] = flatId
+            mainPayload["flatId"] = flatId
         }
         
         return mainPayload
@@ -88,8 +88,8 @@ struct CallPayload {
         self.liveImage = liveImage
         self.image = image
         
-        self.domophoneId = data["domophone_id"] as? String
-        self.flatId = data["flat_id"] as? String
+        self.domophoneId = data["domophoneId"] as? String
+        self.flatId = data["flatId"] as? String
     }
     
 }

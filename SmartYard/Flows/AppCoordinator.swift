@@ -18,6 +18,7 @@ enum AppRoute: Route {
     
     case main
     case incomingCall(callPayload: CallPayload)
+    case dismiss
     
 }
 
@@ -54,13 +55,17 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         case let .incomingCall(callPayload):
             let vm = IncomingCallViewModel(
                 linphoneService: linphoneService,
-                callPayload: callPayload
+                callPayload: callPayload,
+                router: weakRouter
             )
             
             let vc = IncomingCallViewController(viewModel: vm)
             vc.modalPresentationCapturesStatusBarAppearance = true
             
             return .present(vc, animation: .fade)
+            
+        case .dismiss:
+            return .dismiss()
         }
     }
     
