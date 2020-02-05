@@ -116,21 +116,6 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        // MARK: Загрузка изначальной превьюхи
-        
-        let initialImageSubject = BehaviorSubject<UIImage?>(value: nil)
-        let initialImage = initialImageSubject.asDriver(onErrorJustReturn: nil)
-        
-        if let url = URL(string: callPayload.image) {
-            KingfisherManager.shared.retrieveImage(with: url) { result in
-                guard let imageResult = try? result.get() else {
-                    return
-                }
-                
-                initialImageSubject.onNext(imageResult.image)
-            }
-        }
-        
         // MARK: Картинка в лайв-режиме
         
         let liveImageSubject = BehaviorSubject<UIImage?>(value: nil)
@@ -166,6 +151,34 @@ class IncomingCallViewModel: BaseViewModel {
                 )
                 .disposed(by: disposeBag)
         }
+        
+        // MARK: Загрузка изначальной превьюхи
+        
+        let initialImageSubject = BehaviorSubject<UIImage?>(value: nil)
+        let initialImage = initialImageSubject.asDriver(onErrorJustReturn: nil)
+        
+        if let url = URL(string: callPayload.image) {
+            KingfisherManager.shared.retrieveImage(with: url) { result in
+                guard let imageResult = try? result.get() else {
+                    return
+                }
+                
+                initialImageSubject.onNext(imageResult.image)
+            }
+        }
+        
+        // MARK: Если загрузили изначальную превьюху, то ее же используем и как первую картинку лайва
+        
+        initialImage
+            .withLatestFrom(liveImage) { ($0, $1) }
+            .drive(
+                onNext: { initialImage, liveImage in
+                    if liveImage == nil {
+                        liveImageSubject.onNext(initialImage)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
         
         // MARK: Картинка в зависимости от текущего состояния
         
