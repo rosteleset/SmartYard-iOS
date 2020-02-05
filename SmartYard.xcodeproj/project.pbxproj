@@ -66,6 +66,8 @@
 		E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C623EACD3900BECEE6 /* PhoneTextField.xib */; };
 		E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6C823EACD4B00BECEE6 /* PhoneTextField.swift */; };
 		E99EA6CB23EAD01F00BECEE6 /* TopRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6CA23EAD01F00BECEE6 /* TopRoundedView.swift */; };
+		E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6CE23EAD2BB00BECEE6 /* NumberFieldView.xib */; };
+		E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6D023EAD2CE00BECEE6 /* NumberFieldView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -136,6 +138,8 @@
 		E99EA6C623EACD3900BECEE6 /* PhoneTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhoneTextField.xib; sourceTree = "<group>"; };
 		E99EA6C823EACD4B00BECEE6 /* PhoneTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTextField.swift; sourceTree = "<group>"; };
 		E99EA6CA23EAD01F00BECEE6 /* TopRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRoundedView.swift; sourceTree = "<group>"; };
+		E99EA6CE23EAD2BB00BECEE6 /* NumberFieldView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberFieldView.xib; sourceTree = "<group>"; };
+		E99EA6D023EAD2CE00BECEE6 /* NumberFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFieldView.swift; sourceTree = "<group>"; };
 		F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -474,6 +478,7 @@
 		E99EA6C523EACCD200BECEE6 /* PhoneTextField */ = {
 			isa = PBXGroup;
 			children = (
+				E99EA6CD23EAD29500BECEE6 /* NumberField */,
 				E99EA6C823EACD4B00BECEE6 /* PhoneTextField.swift */,
 				E99EA6C623EACD3900BECEE6 /* PhoneTextField.xib */,
 			);
@@ -486,6 +491,15 @@
 				E99EA6CA23EAD01F00BECEE6 /* TopRoundedView.swift */,
 			);
 			path = TopRoundedView;
+			sourceTree = "<group>";
+		};
+		E99EA6CD23EAD29500BECEE6 /* NumberField */ = {
+			isa = PBXGroup;
+			children = (
+				E99EA6CE23EAD2BB00BECEE6 /* NumberFieldView.xib */,
+				E99EA6D023EAD2CE00BECEE6 /* NumberFieldView.swift */,
+			);
+			path = NumberField;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -557,6 +571,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				844AC3B823EB104E0066006D /* UserNameViewController.xib in Resources */,
+				E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */,
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				844AC39E23E987360066006D /* IncomingCallViewController.xib in Resources */,
@@ -687,6 +702,7 @@
 				84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */,
+				E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */,
 				844AC38123E8637B0066006D /* ConfirmCodeRequest.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
