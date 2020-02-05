@@ -51,7 +51,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
         case .main:
-            return .none()
+            return .present(InputPhoneNumberViewController())
             
         case let .incomingCall(callPayload):
             let vm = IncomingCallViewModel(

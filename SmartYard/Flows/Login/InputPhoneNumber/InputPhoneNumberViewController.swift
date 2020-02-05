@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import PinCodeTextField
 
-class InputPhoneNumberViewController: UIViewController {
+class InputPhoneNumberViewController: BaseViewController {
 
+    @IBOutlet weak var phoneTextField: PinCodeTextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        phoneTextField.delegate = self
     }
 
+}
+
+extension InputPhoneNumberViewController: PinCodeTextFieldDelegate {
+    
 }
