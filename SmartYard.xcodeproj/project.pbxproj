@@ -63,6 +63,9 @@
 		E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */; };
 		E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */; };
 		E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6C223EAA97900BECEE6 /* InputPhoneNumberViewModel.swift */; };
+		E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C623EACD3900BECEE6 /* PhoneTextField.xib */; };
+		E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6C823EACD4B00BECEE6 /* PhoneTextField.swift */; };
+		E99EA6CB23EAD01F00BECEE6 /* TopRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6CA23EAD01F00BECEE6 /* TopRoundedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +133,9 @@
 		E99EA6C023EAA71C00BECEE6 /* SourceSansPro-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-SemiBold.ttf"; sourceTree = "<group>"; };
 		E99EA6C123EAA72800BECEE6 /* SourceSansPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Bold.ttf"; sourceTree = "<group>"; };
 		E99EA6C223EAA97900BECEE6 /* InputPhoneNumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberViewModel.swift; sourceTree = "<group>"; };
+		E99EA6C623EACD3900BECEE6 /* PhoneTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhoneTextField.xib; sourceTree = "<group>"; };
+		E99EA6C823EACD4B00BECEE6 /* PhoneTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTextField.swift; sourceTree = "<group>"; };
+		E99EA6CA23EAD01F00BECEE6 /* TopRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRoundedView.swift; sourceTree = "<group>"; };
 		F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -399,6 +405,7 @@
 		84F840D423E07DA5008DBE50 /* SmartYard */ = {
 			isa = PBXGroup;
 			children = (
+				E99EA6C423EACCC000BECEE6 /* SmartYard UIKit */,
 				84F840D523E07DA5008DBE50 /* AppDelegate.swift */,
 				84B9EC8823E0844E00979C39 /* Components */,
 				84B9EC8623E0844500979C39 /* Extensions */,
@@ -453,6 +460,32 @@
 				E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		E99EA6C423EACCC000BECEE6 /* SmartYard UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				E99EA6CC23EAD0C800BECEE6 /* TopRoundedView */,
+				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
+			);
+			path = "SmartYard UIKit";
+			sourceTree = "<group>";
+		};
+		E99EA6C523EACCD200BECEE6 /* PhoneTextField */ = {
+			isa = PBXGroup;
+			children = (
+				E99EA6C823EACD4B00BECEE6 /* PhoneTextField.swift */,
+				E99EA6C623EACD3900BECEE6 /* PhoneTextField.xib */,
+			);
+			path = PhoneTextField;
+			sourceTree = "<group>";
+		};
+		E99EA6CC23EAD0C800BECEE6 /* TopRoundedView */ = {
+			isa = PBXGroup;
+			children = (
+				E99EA6CA23EAD01F00BECEE6 /* TopRoundedView.swift */,
+			);
+			path = TopRoundedView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -535,6 +568,7 @@
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
+				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -654,6 +688,7 @@
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */,
 				844AC38123E8637B0066006D /* ConfirmCodeRequest.swift in Sources */,
+				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
 				844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */,
 				844AC39723E9788D0066006D /* APIAddress.swift in Sources */,
@@ -684,6 +719,7 @@
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
+				E99EA6CB23EAD01F00BECEE6 /* TopRoundedView.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

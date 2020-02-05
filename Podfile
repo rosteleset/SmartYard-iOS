@@ -27,7 +27,6 @@ target 'SmartYard' do
   pod 'IHKeyboardAvoiding'
   pod 'TouchAreaInsets'
   pod 'PinLayout'
-  pod 'PinCodeTextField'
   
   # Analytics
   pod 'Fabric'
