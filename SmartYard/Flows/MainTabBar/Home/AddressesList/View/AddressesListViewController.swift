@@ -19,6 +19,8 @@ class AddressesListViewController: BaseViewController {
     
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<AddressesListSectionModel>?
     
+    private let itemsCountProxy = BehaviorSubject<[Int: Int]>(value: [:])
+    
     let viewModel: AddressesListViewModel
     
     init(viewModel: AddressesListViewModel) {
@@ -39,10 +41,30 @@ class AddressesListViewController: BaseViewController {
     }
     
     private func bind() {
-        let input = AddressesListViewModel.Input()
+        let itemSelected = collectionView.rx.itemSelected
+            .map { [weak self] indexPath in
+                self?.dataSource?[indexPath].identity
+            }
+            .ignoreNil()
+        
+        let input = AddressesListViewModel.Input(itemSelected: itemSelected.asDriverOnErrorJustComplete())
+        
         let output = viewModel.transform(input)
         
         output.sectionModels
+            .do(
+                onNext: { [weak self] models in
+                    let itemsCountDict: [Int: Int] = models.enumerated().reduce([:]) { dict, enumeration in
+                        let (offset, element) = enumeration
+                        
+                        var mutableDict = dict
+                        mutableDict[offset] = element.items.count
+                        return mutableDict
+                    }
+                    
+                    self?.itemsCountProxy.onNext(itemsCountDict)
+                }
+            )
             .drive(collectionView.rx.items(dataSource: dataSource!))
             .disposed(by: disposeBag)
     }
@@ -92,8 +114,7 @@ class AddressesListViewController: BaseViewController {
             
             maskCorners(
                 ofCell: cell,
-                at: indexPath.row,
-                withTotalRowsInSection: collectionView.numberOfItems(inSection: indexPath.section)
+                at: indexPath
             )
             
             return cell
@@ -104,8 +125,7 @@ class AddressesListViewController: BaseViewController {
             
             maskCorners(
                 ofCell: cell,
-                at: indexPath.row,
-                withTotalRowsInSection: collectionView.numberOfItems(inSection: indexPath.section)
+                at: indexPath
             )
             
             return cell
@@ -114,9 +134,13 @@ class AddressesListViewController: BaseViewController {
     
     private func maskCorners(
         ofCell cell: UICollectionViewCell,
-        at row: Int,
-        withTotalRowsInSection totalRows: Int
+        at indexPath: IndexPath
     ) {
+        guard let itemsCountDict = try? itemsCountProxy.value(),
+            let totalItemsInSection = itemsCountDict[indexPath.section] else {
+            return
+        }
+        
         cell.layer.cornerRadius = 12
         cell.layer.borderWidth = 1
         cell.layer.borderColor = UIColor(hex: 0xF0F0F1)?.cgColor
@@ -124,18 +148,17 @@ class AddressesListViewController: BaseViewController {
         let maskedCorners: CACornerMask = {
             var arr = [CACornerMask]()
             
-            if row == 0 {
+            if indexPath.row == 0 {
                 arr.append(contentsOf: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
             }
             
-            if row == totalRows - 1 {
+            if indexPath.row == totalItemsInSection - 1 {
                 arr.append(contentsOf: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
             }
             
             return CACornerMask(arr)
         }()
         
-        cell.layer.cornerRadius = 12
         cell.layer.maskedCorners = maskedCorners
     }
 

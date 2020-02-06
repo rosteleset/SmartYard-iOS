@@ -8,7 +8,7 @@
 
 enum AddressesListDataItemIdentity: Hashable {
     
-    case header(id: String)
+    case header(addressId: String)
     case object(id: String)
     
 }

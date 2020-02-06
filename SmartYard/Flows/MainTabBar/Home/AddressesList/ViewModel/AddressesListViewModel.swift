@@ -11,60 +11,138 @@ import RxCocoa
 
 class AddressesListViewModel: BaseViewModel {
     
+    private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
+    
     func transform(_ input: Input) -> Output {
-        let sectionModels: Driver<[AddressesListSectionModel]> = .just(createMockSections())
+        // MARK: Скрытие / раскрытие секции
         
-        return Output(sectionModels: sectionModels)
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .header(addressId) = identity else {
+                    return .empty()
+                }
+                
+                return .just(addressId)
+            }
+            .withLatestFrom(areSectionsExpanded.asDriverOnErrorJustComplete()) { ($0, $1) }
+            .map { args in
+                var (updatedId, dict) = args
+                
+                let newState = !dict[updatedId, default: false]
+                dict[updatedId] = newState
+                
+                return dict
+            }
+            .drive(
+                onNext: { [weak self] newDict in
+                    self?.areSectionsExpanded.onNext(newDict)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        let sectionModels = areSectionsExpanded
+            .map { [weak self] dict in
+                self?.createMockSections(expansionStateDict: dict) ?? []
+            }
+        
+        return Output(sectionModels: sectionModels.asDriverOnErrorJustComplete())
     }
     
-    private func createMockSections() -> [AddressesListSectionModel] {
-        let firstSectionFirstItem: AddressesListDataItem = .header(
-            identity: .header(id: "FirstSectionHeader"),
+        // swiftlint:disable:next function_body_length
+    private func createMockSections(expansionStateDict: [String: Bool]) -> [AddressesListSectionModel] {
+        let firstAddressId = "1000"
+        let isFirstSectionExpanded = expansionStateDict[firstAddressId, default: false]
+        
+        let firstSectionHeader: AddressesListDataItem = .header(
+            identity: .header(addressId: firstAddressId),
             address: "г. Тамбов, ул. Советская, 16, кв. 4",
-            isExpanded: true
+            isExpanded: isFirstSectionExpanded
         )
         
-        let firstSectionSecondItem: AddressesListDataItem = .object(
-            identity: .object(id: "FirstSectionFirstObject"),
-            type: .barrier,
-            name: "Шлагбаум Север",
-            isOpened: false
-        )
-        
-        let firstSectionThirdItem: AddressesListDataItem = .object(
-            identity: .object(id: "FirstSectionSecondObject"),
-            type: .gate,
-            name: "Ворота Юг",
-            isOpened: false
-        )
-        
-        let firstSectionFourthItem: AddressesListDataItem = .object(
-            identity: .object(id: "FirstSectionThirdObject"),
-            type: .house,
-            name: "Подъезд 1",
-            isOpened: true
-        )
+        let firstSectionObjects: [AddressesListDataItem] = {
+            guard isFirstSectionExpanded else {
+                return []
+            }
+            
+            let firstSectionFirstObject: AddressesListDataItem = .object(
+                identity: .object(id: "FirstSectionFirstObject"),
+                type: .barrier,
+                name: "Шлагбаум Север",
+                isOpened: false
+            )
+            
+            let firstSectionSecondObject: AddressesListDataItem = .object(
+                identity: .object(id: "FirstSectionSecondObject"),
+                type: .gate,
+                name: "Ворота Юг",
+                isOpened: false
+            )
+            
+            let firstSectionThirdObject: AddressesListDataItem = .object(
+                identity: .object(id: "FirstSectionThirdObject"),
+                type: .house,
+                name: "Подъезд 1",
+                isOpened: true
+            )
+            
+            return [firstSectionFirstObject, firstSectionSecondObject, firstSectionThirdObject]
+        }()
 
         let firstSection = AddressesListSectionModel(
-            identity: "FirstSection",
-            items: [firstSectionFirstItem, firstSectionSecondItem, firstSectionThirdItem, firstSectionFourthItem]
+            identity: firstAddressId,
+            items: [firstSectionHeader] + firstSectionObjects
         )
         
-        let secondSectionFirstItem: AddressesListDataItem = .header(
-            identity: .header(id: "SecondSectionHeader"),
+        let secondAddressId = "2000"
+        let isSecondSectionExpanded = expansionStateDict[secondAddressId, default: false]
+        
+        let secondSectionHeader: AddressesListDataItem = .header(
+            identity: .header(addressId: secondAddressId),
             address: "г. Тамбов, ул. Мичуринская, 141А",
-            isExpanded: false
+            isExpanded: isSecondSectionExpanded
         )
         
-        let secondSection = AddressesListSectionModel(identity: "SecondSection", items: [secondSectionFirstItem])
+        let secondSectionObjects: [AddressesListDataItem] = {
+            guard isSecondSectionExpanded else {
+                return []
+            }
+            
+            let secondSectionFirstObject: AddressesListDataItem = .object(
+                identity: .object(id: "SecondSectionFirstObject"),
+                type: .barrier,
+                name: "Шлагбаум Север",
+                isOpened: false
+            )
+            
+            let secondSectionSecondObject: AddressesListDataItem = .object(
+                identity: .object(id: "SecondSectionSecondObject"),
+                type: .gate,
+                name: "Ворота Юг",
+                isOpened: false
+            )
+            
+            let secondSectionThirdObject: AddressesListDataItem = .object(
+                identity: .object(id: "SecondSectionThirdObject"),
+                type: .house,
+                name: "Подъезд 1",
+                isOpened: true
+            )
+            
+            return [secondSectionFirstObject, secondSectionSecondObject, secondSectionThirdObject]
+        }()
         
-        let thirdSectionFirstItem: AddressesListDataItem = .header(
-            identity: .header(id: "ThirdSectionHeader"),
+        let secondSection = AddressesListSectionModel(identity: secondAddressId, items: [secondSectionHeader] + secondSectionObjects)
+        
+        let thirdAddressId = "3000"
+        let isThirdSectionExpanded = expansionStateDict[thirdAddressId, default: false]
+        
+        let thirdSectionHeader: AddressesListDataItem = .header(
+            identity: .header(addressId: thirdAddressId),
             address: "г. Котовск, ул. Зимняя, 20",
-            isExpanded: false
+            isExpanded: isThirdSectionExpanded
         )
         
-        let thirdSection = AddressesListSectionModel(identity: "ThirdSection", items: [thirdSectionFirstItem])
+        let thirdSection = AddressesListSectionModel(identity: "3000", items: [thirdSectionHeader])
         
         return [firstSection, secondSection, thirdSection]
     }
@@ -74,7 +152,7 @@ class AddressesListViewModel: BaseViewModel {
 extension AddressesListViewModel {
     
     struct Input {
-        
+        let itemSelected: Driver<AddressesListDataItemIdentity>
     }
     
     struct Output {
