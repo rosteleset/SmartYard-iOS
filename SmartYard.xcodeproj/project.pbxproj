@@ -32,6 +32,9 @@
 		844AC3BE23EB16F70066006D /* SmartYardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3BD23EB16F70066006D /* SmartYardTextField.swift */; };
 		844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */; };
 		844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C423EB1F840066006D /* UIView+Extensions.swift */; };
+		844AC3F923EC07BE0066006D /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C123EAA72800BECEE6 /* SourceSansPro-Bold.ttf */; };
+		844AC3FA23EC07C00066006D /* SourceSansPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C023EAA71C00BECEE6 /* SourceSansPro-SemiBold.ttf */; };
+		844AC3FB23EC07C20066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4523E2CD3F001B3B43 /* APIService.swift */; };
@@ -562,7 +565,10 @@
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
+				844AC3FB23EC07C20066006D /* SourceSansPro-Regular.ttf in Resources */,
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
+				844AC3FA23EC07C00066006D /* SourceSansPro-SemiBold.ttf in Resources */,
+				844AC3F923EC07BE0066006D /* SourceSansPro-Bold.ttf in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

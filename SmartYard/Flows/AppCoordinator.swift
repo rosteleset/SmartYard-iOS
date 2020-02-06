@@ -20,6 +20,7 @@ enum AppRoute: Route {
     case incomingCall(callPayload: CallPayload)
     case dismiss
     case userName
+    case phoneNumber
     
 }
 
@@ -42,7 +43,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
         
-        super.init(initialRoute: .main)
+        super.init(initialRoute: .phoneNumber)
         rootViewController.setNavigationBarHidden(true, animated: false)
         
         AVCaptureDevice.requestAccess(for: .video) { _ in }
@@ -51,7 +52,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
         case .main:
-            return .present(InputPhoneNumberViewController())
+            return .none()
             
         case let .incomingCall(callPayload):
             let vm = IncomingCallViewModel(
@@ -72,6 +73,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             let vm = UserNameViewModel(router: weakRouter)
             let vc = UserNameViewController(viewModel: vm)
             return .present(vc)
+            
+        case .phoneNumber:
+            return .present(InputPhoneNumberViewController())
         }
     }
     
