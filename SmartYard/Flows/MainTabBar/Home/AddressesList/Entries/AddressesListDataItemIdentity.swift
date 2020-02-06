@@ -10,5 +10,6 @@ enum AddressesListDataItemIdentity: Hashable {
     
     case header(addressId: String)
     case object(id: String)
+    case cameras(addressId: String)
     
 }

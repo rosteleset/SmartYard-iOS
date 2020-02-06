@@ -81,6 +81,8 @@
 		84CC15D423EC40EE00A1CB95 /* AddressesListHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D323EC40EE00A1CB95 /* AddressesListHeaderCell.swift */; };
 		84CC15D623EC412A00A1CB95 /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D723EC42E600A1CB95 /* DomophoneObjectType.swift */; };
+		84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15DA23EC6AA800A1CB95 /* AddressesListCameraCell.swift */; };
+		84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15DB23EC6AA800A1CB95 /* AddressesListCameraCell.xib */; };
 		84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F840D523E07DA5008DBE50 /* AppDelegate.swift */; };
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
@@ -171,6 +173,8 @@
 		84CC15D323EC40EE00A1CB95 /* AddressesListHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesListHeaderCell.swift; sourceTree = "<group>"; };
 		84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesListViewController.swift; sourceTree = "<group>"; };
 		84CC15D723EC42E600A1CB95 /* DomophoneObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomophoneObjectType.swift; sourceTree = "<group>"; };
+		84CC15DA23EC6AA800A1CB95 /* AddressesListCameraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListCameraCell.swift; sourceTree = "<group>"; };
+		84CC15DB23EC6AA800A1CB95 /* AddressesListCameraCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListCameraCell.xib; sourceTree = "<group>"; };
 		84F840D223E07DA5008DBE50 /* SmartYard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartYard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F840D523E07DA5008DBE50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84F840DC23E07DA5008DBE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -636,6 +640,7 @@
 		84CC15BE23EC31D100A1CB95 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				84CC15D923EC6A9300A1CB95 /* CameraCell */,
 				84CC15CE23EC404F00A1CB95 /* ObjectCell */,
 				84CC15BF23EC31FD00A1CB95 /* HeaderCell */,
 			);
@@ -658,6 +663,15 @@
 				84CC15D023EC409500A1CB95 /* AddressesListObjectCell.xib */,
 			);
 			path = ObjectCell;
+			sourceTree = "<group>";
+		};
+		84CC15D923EC6A9300A1CB95 /* CameraCell */ = {
+			isa = PBXGroup;
+			children = (
+				84CC15DA23EC6AA800A1CB95 /* AddressesListCameraCell.swift */,
+				84CC15DB23EC6AA800A1CB95 /* AddressesListCameraCell.xib */,
+			);
+			path = CameraCell;
 			sourceTree = "<group>";
 		};
 		84F840C923E07DA5008DBE50 = {
@@ -858,6 +872,7 @@
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
+				84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */,
 				844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */,
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
@@ -1034,6 +1049,7 @@
 				84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */,
 				84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */,
 				84CC15D423EC40EE00A1CB95 /* AddressesListHeaderCell.swift in Sources */,
+				84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

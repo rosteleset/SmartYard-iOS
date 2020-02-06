@@ -80,7 +80,8 @@ class AddressesListViewController: BaseViewController {
     private func configureCollectionView() {
         [
             AddressesListHeaderCell.self,
-            AddressesListObjectCell.self
+            AddressesListObjectCell.self,
+            AddressesListCameraCell.self
         ].forEach {
             collectionView.register(nibWithCellClass: $0)
         }
@@ -111,22 +112,21 @@ class AddressesListViewController: BaseViewController {
         case let .header(_, address, isExpanded):
             let cell = collectionView.dequeueReusableCell(withClass: AddressesListHeaderCell.self, for: indexPath)
             cell.configure(address: address, isExpanded: isExpanded)
-            
-            maskCorners(
-                ofCell: cell,
-                at: indexPath
-            )
+            maskCorners(ofCell: cell, at: indexPath)
             
             return cell
             
         case let .object(_, type, name, isOpened):
             let cell = collectionView.dequeueReusableCell(withClass: AddressesListObjectCell.self, for: indexPath)
             cell.configure(objectType: type, name: name, isOpened: isOpened)
+            maskCorners(ofCell: cell, at: indexPath)
             
-            maskCorners(
-                ofCell: cell,
-                at: indexPath
-            )
+            return cell
+            
+        case let .cameras(_, numberOfCameras):
+            let cell = collectionView.dequeueReusableCell(withClass: AddressesListCameraCell.self, for: indexPath)
+            cell.configure(availableCameras: numberOfCameras)
+            maskCorners(ofCell: cell, at: indexPath)
             
             return cell
         }
