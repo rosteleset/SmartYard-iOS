@@ -11,13 +11,13 @@ import PMNibLinkableView
 
 class PinNumberField: PMNibLinkableView {
 
-    @IBOutlet private weak var numberLabel: UILabel!
-    @IBOutlet private weak var underlineView: UIView!
+    @IBOutlet weak var numberLabel: UILabel!
+    @IBOutlet weak var underlineView: UIView!
     
     func fetchValue() -> String? {
         return numberLabel.text
     }
-    
+
     func clear() {
         numberLabel.text = nil
     }
@@ -27,7 +27,7 @@ class PinNumberField: PMNibLinkableView {
     }
     
     func markValue(isCorrect: Bool) {
-        underlineView.backgroundColor = isCorrect ? .black : UIColor.SmartYard.incorrectDataRed
+        underlineView.backgroundColor = isCorrect ? .black : .incorrectPinColor
     }
 
 }

@@ -349,11 +349,11 @@
 				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
 				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
 				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
+				E9A4D48D23EC2A510070A591 /* PinTextField */,
+				E99EA6CC23EAD0C800BECEE6 /* TopRoundedView */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
-				E9A4D48D23EC2A510070A591 /* PinTextField */,
-				E99EA6CC23EAD0C800BECEE6 /* TopRoundedView */,
 			);
 			path = UI;
 			sourceTree = "<group>";

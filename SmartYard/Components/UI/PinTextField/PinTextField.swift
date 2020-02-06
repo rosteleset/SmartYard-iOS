@@ -20,9 +20,7 @@ class PinTextField: PMNibLinkableView {
     @IBOutlet private weak var thirdNumField: PinNumberField!
     @IBOutlet private weak var fourthNumField: PinNumberField!
     
-    @IBOutlet private weak var wrongPassLabel: UILabel!
-    
-    @IBOutlet weak var fakeTextField: UITextField!
+    @IBOutlet private weak var fakeTextField: UITextField!
     
     private var numberViewsCollection: [PinNumberField] {
         return [firstNumField, secondNumField, thirdNumField, fourthNumField]
@@ -38,31 +36,19 @@ class PinTextField: PMNibLinkableView {
         bind()
     }
     
-    func hideKeyboard() {
-        fakeTextField.resignFirstResponder()
-    }
-    
     func fetchInputNumber() -> String? {
         return fakeTextField.text
     }
     
-    func reset() {
-        fakeTextField.clear()
-        wrongPassLabel.isHidden = true
-        
-        numberViewsCollection.forEach { view in
-            view.clear()
-        }
-    }
-    
-    func markPass(isCorrect: Bool) {
-        wrongPassLabel.isHidden = isCorrect
-        numberViewsCollection.forEach {
-            $0.markValue(isCorrect: isCorrect)
-        }
+    func dismissKeybord() {
+        fakeTextField.resignFirstResponder()
     }
     
     @objc private func didPressNumberField() {
+        if fakeTextField.text?.count == Constants.pinLength {
+            reset()
+        }
+        
         fakeTextField.becomeFirstResponder()
     }
     
@@ -95,6 +81,14 @@ class PinTextField: PMNibLinkableView {
         }
     }
     
+    private func reset() {
+        fakeTextField.clear()
+        
+        numberViewsCollection.forEach { view in
+            view.clear()
+        }
+    }
+    
     private func configureFakeTextField() {
         fakeTextField.delegate = self
         fakeTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
@@ -109,7 +103,7 @@ extension PinTextField: UITextFieldDelegate {
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
-    ) -> Bool {
+        ) -> Bool {
         guard let textFieldText = textField.text,
             let rangeOfTextToReplace = Range(range, in: textFieldText)
             else {
@@ -124,10 +118,3 @@ extension PinTextField: UITextFieldDelegate {
     
 }
 
-extension Reactive where Base: PinTextField {
-    
-    var textControlProperty: ControlProperty<String?> {
-        return base.fakeTextField.rx.text
-    }
-    
-}
