@@ -68,6 +68,7 @@
 		E99EA6CB23EAD01F00BECEE6 /* TopRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6CA23EAD01F00BECEE6 /* TopRoundedView.swift */; };
 		E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6CE23EAD2BB00BECEE6 /* NumberFieldView.xib */; };
 		E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6D023EAD2CE00BECEE6 /* NumberFieldView.swift */; };
+		E9A4D47C23EC19110070A591 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D47B23EC19110070A591 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -137,6 +138,7 @@
 		E99EA6CE23EAD2BB00BECEE6 /* NumberFieldView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberFieldView.xib; sourceTree = "<group>"; };
 		E99EA6D023EAD2CE00BECEE6 /* NumberFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFieldView.swift; sourceTree = "<group>"; };
 		E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncomingCallViewController.xib; sourceTree = "<group>"; };
+		E9A4D47B23EC19110070A591 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -397,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				84F840D523E07DA5008DBE50 /* AppDelegate.swift */,
+				E9A4D47B23EC19110070A591 /* Constants.swift */,
 				84B9EC8823E0844E00979C39 /* Components */,
 				84B9EC8623E0844500979C39 /* Extensions */,
 				84B9EC8723E0844A00979C39 /* Helpers */,
@@ -698,6 +701,7 @@
 				84AA8D4823E2CD48001B3B43 /* APITarget.swift in Sources */,
 				844AC39523E977810066006D /* AccessService.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
+				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,

@@ -18,7 +18,7 @@ class NumberFieldView: PMNibLinkableView {
     @IBOutlet private weak var numberLabel: UILabel!
     @IBOutlet private weak var underlineView: UIView!
     
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,7 +41,7 @@ class NumberFieldView: PMNibLinkableView {
         numberLabel.rx.observe(String.self, "text")
             .subscribe(
                 onNext: { [weak self] text in
-                    self?.underlineView.isHidden = !(text?.isEmpty ?? true)
+                    self?.underlineView.isHidden = !text.isNilOrEmpty
                 }
             )
             .disposed(by: disposeBag)

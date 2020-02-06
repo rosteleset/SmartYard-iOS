@@ -176,6 +176,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="containerView" destination="zeB-3M-59c" id="vQo-xh-chC"/>
                 <outlet property="eighthNumView" destination="tPM-Ee-MIR" id="cf4-0G-Qo6"/>
                 <outlet property="fakeTextField" destination="iST-Pm-pbP" id="JjT-My-Dcn"/>
                 <outlet property="fifthNumView" destination="qZc-gn-XDr" id="dzD-i6-fS7"/>

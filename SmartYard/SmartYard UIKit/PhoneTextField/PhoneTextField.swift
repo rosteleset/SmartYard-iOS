@@ -14,6 +14,8 @@ import RxCocoa
 
 class PhoneTextField: PMNibLinkableView {
     
+    @IBOutlet private weak var containerView: UIView!
+    
     @IBOutlet private weak var firstNumView: NumberFieldView!
     @IBOutlet private weak var secondNumView: NumberFieldView!
     @IBOutlet private weak var thirdNumView: NumberFieldView!
@@ -29,15 +31,22 @@ class PhoneTextField: PMNibLinkableView {
     
     @IBOutlet private weak var fakeTextField: UITextField!
     
-    private var numberViewsCollection = [NumberFieldView]()
+    private var numberViewsCollection: [NumberFieldView] {
+        return [
+            firstNumView, secondNumView, thirdNumView,
+            fourthNumView, fifthNumView, sixthNumView,
+            seventhNumView, eighthNumView, ninthNumView,
+            tenthNumView
+        ]
+    }
     
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         configureFakeTextField()
-        configureNumberFields()
+        addViewTapGesture()
         bind()
     }
     
@@ -50,7 +59,7 @@ class PhoneTextField: PMNibLinkableView {
     }
     
     @objc private func didPressNumberField() {
-        if fakeTextField.text?.count == 10 {
+        if fakeTextField.text?.count == Constants.phoneLengthWithoutPrefix {
             reset()
         }
         
@@ -71,19 +80,9 @@ class PhoneTextField: PMNibLinkableView {
             .disposed(by: disposeBag)
     }
     
-    private func configureNumberFields() {
-        numberViewsCollection = [
-            firstNumView, secondNumView, thirdNumView,
-            fourthNumView, fifthNumView, sixthNumView,
-            seventhNumView, eighthNumView, ninthNumView,
-            tenthNumView
-        ]
-        
-        numberViewsCollection.forEach { view in
-            view.clear()
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didPressNumberField))
-            view.addGestureRecognizer(tapGesture)
-        }
+    private func addViewTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didPressNumberField))
+        containerView.addGestureRecognizer(tapGesture)
     }
     
     private func fillNumberFields(with text: String?) {
@@ -128,7 +127,7 @@ extension PhoneTextField: UITextFieldDelegate {
         let substringToReplace = textFieldText[rangeOfTextToReplace]
         let count = textFieldText.count - substringToReplace.count + string.count
         
-        return count <= 10
+        return count <= Constants.phoneLengthWithoutPrefix
     }
     
 }

@@ -18,21 +18,7 @@ class InputPhoneNumberViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bindPhoneTextView()
-    }
-    
-    func bindPhoneTextView() {
-        let tapGesture = UITapGestureRecognizer()
-        tapGesture.cancelsTouchesInView = false
-        containerView.addGestureRecognizer(tapGesture)
-        
-        tapGesture.rx.event
-            .bind(
-                onNext: { [weak self] _ in
-                    self?.phoneTextView.dismissKeybord()
-                }
-            )
-            .disposed(by: disposeBag)
+        view.hideKeyboardWhenTapped = true
     }
     
 }
