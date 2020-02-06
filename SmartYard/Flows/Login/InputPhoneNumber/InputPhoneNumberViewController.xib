@@ -9,9 +9,16 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputPhoneNumberViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="containerView" destination="lCk-sj-GES" id="vXt-Eh-MtL"/>
+                <outlet property="phoneTextView" destination="Soq-Bs-M2f" id="UFc-xt-xgK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -36,9 +43,20 @@
                                         <constraint firstAttribute="height" constant="27" id="XzS-du-5fr"/>
                                     </constraints>
                                 </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Введите номер телефона  для регистрации" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5mZ-NZ-IAo">
+                                    <rect key="frame" x="105.5" y="225" width="203" height="33"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="203" id="CAP-Cu-dgQ"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="13"/>
+                                    <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstItem="5mZ-NZ-IAo" firstAttribute="top" secondItem="Soq-Bs-M2f" secondAttribute="bottom" constant="38" id="CLZ-t6-Hhu"/>
+                                <constraint firstItem="5mZ-NZ-IAo" firstAttribute="centerX" secondItem="Soq-Bs-M2f" secondAttribute="centerX" id="dMW-jy-zjn"/>
                                 <constraint firstItem="Soq-Bs-M2f" firstAttribute="left" secondItem="EhW-0V-SYx" secondAttribute="left" constant="20" id="pvx-iu-VvM"/>
                                 <constraint firstAttribute="right" secondItem="Soq-Bs-M2f" secondAttribute="right" constant="20" id="rsD-jB-oWE"/>
                                 <constraint firstItem="Soq-Bs-M2f" firstAttribute="top" secondItem="EhW-0V-SYx" secondAttribute="top" constant="160" id="yv9-cf-OY6"/>

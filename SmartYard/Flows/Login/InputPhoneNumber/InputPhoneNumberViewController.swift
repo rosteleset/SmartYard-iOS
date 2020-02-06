@@ -7,12 +7,32 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class InputPhoneNumberViewController: BaseViewController {
+    
+    @IBOutlet private weak var containerView: UIView!
+    @IBOutlet private weak var phoneTextView: PhoneTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bindPhoneTextView()
     }
-
+    
+    func bindPhoneTextView() {
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.cancelsTouchesInView = false
+        containerView.addGestureRecognizer(tapGesture)
+        
+        tapGesture.rx.event
+            .bind(
+                onNext: { [weak self] _ in
+                    self?.phoneTextView.dismissKeybord()
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
 }
