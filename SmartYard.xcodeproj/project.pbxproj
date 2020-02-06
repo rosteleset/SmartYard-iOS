@@ -274,11 +274,9 @@
 		844AC39A23E9871F0066006D /* IncomingCall */ = {
 			isa = PBXGroup;
 			children = (
-				844AC39B23E987360066006D /* IncomingCallViewController.swift */,
-				844AC39F23E987400066006D /* IncomingCallViewModel.swift */,
-				E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */,
-				844AC3B023EAD0930066006D /* IncomingCallState.swift */,
-				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
+				844AC40223EC220C0066006D /* View */,
+				844AC40323EC22100066006D /* ViewModel */,
+				844AC40423EC22140066006D /* Entries */,
 			);
 			path = IncomingCall;
 			sourceTree = "<group>";
@@ -286,9 +284,8 @@
 		844AC3B423EB0FD80066006D /* UserName */ = {
 			isa = PBXGroup;
 			children = (
-				844AC3B523EB104E0066006D /* UserNameViewController.swift */,
-				844AC3B623EB104E0066006D /* UserNameViewController.xib */,
-				844AC3B923EB105A0066006D /* UserNameViewModel.swift */,
+				844AC40123EC22030066006D /* View */,
+				844AC40023EC21FC0066006D /* ViewModel */,
 			);
 			path = UserName;
 			sourceTree = "<group>";
@@ -451,6 +448,49 @@
 				844AC3F423EBFF900066006D /* SettingsViewController.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		844AC40023EC21FC0066006D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3B923EB105A0066006D /* UserNameViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		844AC40123EC22030066006D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3B523EB104E0066006D /* UserNameViewController.swift */,
+				844AC3B623EB104E0066006D /* UserNameViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		844AC40223EC220C0066006D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				844AC39B23E987360066006D /* IncomingCallViewController.swift */,
+				E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		844AC40323EC22100066006D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				844AC39F23E987400066006D /* IncomingCallViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		844AC40423EC22140066006D /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3B023EAD0930066006D /* IncomingCallState.swift */,
+				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
+			);
+			path = Entries;
 			sourceTree = "<group>";
 		};
 		84950CF723E431B700F3C550 /* Base Classes */ = {
