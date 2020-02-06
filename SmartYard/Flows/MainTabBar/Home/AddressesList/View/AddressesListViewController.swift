@@ -136,14 +136,11 @@ class AddressesListViewController: BaseViewController {
         ofCell cell: UICollectionViewCell,
         at indexPath: IndexPath
     ) {
-        guard let itemsCountDict = try? itemsCountProxy.value(),
+        guard let customizableCell = cell as? CustomBorderCollectionViewCell,
+            let itemsCountDict = try? itemsCountProxy.value(),
             let totalItemsInSection = itemsCountDict[indexPath.section] else {
             return
         }
-        
-        cell.layer.cornerRadius = 12
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor(hex: 0xF0F0F1)?.cgColor
         
         let maskedCorners: CACornerMask = {
             var arr = [CACornerMask]()
@@ -159,7 +156,12 @@ class AddressesListViewController: BaseViewController {
             return CACornerMask(arr)
         }()
         
-        cell.layer.maskedCorners = maskedCorners
+        customizableCell.addCustomBorder(
+            customBorderWidth: 1,
+            customBorderColor: UIColor(hex: 0xF0F0F1),
+            customCornerRadius: 12,
+            maskedCorners: maskedCorners
+        )
     }
 
 }

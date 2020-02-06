@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddressesListCameraCell: UICollectionViewCell {
+class AddressesListCameraCell: CustomBorderCollectionViewCell {
     
     @IBOutlet private weak var cameraCountLabel: UILabel!
     

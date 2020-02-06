@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddressesListObjectCell: UICollectionViewCell {
+class AddressesListObjectCell: CustomBorderCollectionViewCell {
     
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
