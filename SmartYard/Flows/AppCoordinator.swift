@@ -34,6 +34,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let accessService = AccessService()
     private let apiWrapper: APIWrapper
     
+    private var mainTabBarRouter: StrongRouter<MainTabBarRoute>?
+    
     private var currentCallPreviewData: Data?
     
     init() {
@@ -43,7 +45,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
         
-        super.init(initialRoute: .phoneNumber)
+        super.init(initialRoute: .main)
+        
         rootViewController.setNavigationBarHidden(true, animated: false)
         
         AVCaptureDevice.requestAccess(for: .video) { _ in }
@@ -52,7 +55,12 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
         case .main:
-            return .none()
+            let router = MainTabBarCoordinator(
+                apiWrapper: apiWrapper
+            ).strongRouter
+            
+            mainTabBarRouter = router
+            return .set([router])
             
         case let .incomingCall(callPayload):
             let vm = IncomingCallViewModel(
