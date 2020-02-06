@@ -105,6 +105,7 @@
 		E9A4D47C23EC19110070A591 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D47B23EC19110070A591 /* Constants.swift */; };
 		E9A4D47F23EC20860070A591 /* PinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D47D23EC20860070A591 /* PinCodeViewController.swift */; };
 		E9A4D48023EC20860070A591 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D47E23EC20860070A591 /* PinCodeViewController.xib */; };
+		E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D48223EC229F0070A591 /* PinCodeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -211,6 +212,7 @@
 		E9A4D47B23EC19110070A591 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E9A4D47D23EC20860070A591 /* PinCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeViewController.swift; sourceTree = "<group>"; };
 		E9A4D47E23EC20860070A591 /* PinCodeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
+		E9A4D48223EC229F0070A591 /* PinCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeViewModel.swift; sourceTree = "<group>"; };
 		F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -756,6 +758,7 @@
 			isa = PBXGroup;
 			children = (
 				E99EA6B723EA9CF200BECEE6 /* InputPhoneNumber */,
+				E9A4D48123EC22760070A591 /* InputPinCode */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -814,6 +817,16 @@
 				E99EA6D023EAD2CE00BECEE6 /* NumberFieldView.swift */,
 			);
 			path = NumberField;
+			sourceTree = "<group>";
+		};
+		E9A4D48123EC22760070A591 /* InputPinCode */ = {
+			isa = PBXGroup;
+			children = (
+				E9A4D47D23EC20860070A591 /* PinCodeViewController.swift */,
+				E9A4D47E23EC20860070A591 /* PinCodeViewController.xib */,
+				E9A4D48223EC229F0070A591 /* PinCodeViewModel.swift */,
+			);
+			path = InputPinCode;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -894,8 +907,6 @@
 				844AC3D323EBFDA30066006D /* AddressesViewController.xib in Resources */,
 				844AC39E23E987360066006D /* IncomingCallViewController.xib in Resources */,
 				E9A4D48023EC20860070A591 /* PinCodeViewController.xib in Resources */,
-				844AC3AB23E9A0810066006D /* SourceSansPro-SemiBold.ttf in Resources */,
-				844AC3A923E9A07C0066006D /* SourceSansPro-Regular.ttf in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
@@ -1053,6 +1064,7 @@
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
 				844AC38B23E866710066006D /* RegisterTokenRequest.swift in Sources */,
+				E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */,
 				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
