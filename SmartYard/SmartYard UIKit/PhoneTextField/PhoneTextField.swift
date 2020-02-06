@@ -31,9 +31,6 @@ class PhoneTextField: PMNibLinkableView {
     
     private var numberViewsCollection = [NumberFieldView]()
     
-    private var isFullNumbersSet = false
-    private var countInputNumbers = 0
-    
     private var disposeBag = DisposeBag()
     
     override func awakeFromNib() {
@@ -53,10 +50,8 @@ class PhoneTextField: PMNibLinkableView {
     }
     
     @objc private func didPressNumberField() {
-        guard !isFullNumbersSet else {
-            clearAllNumberFields()
-            fakeTextField.clear()
-            return
+        if fakeTextField.text?.count == 10 {
+            reset()
         }
         
         fakeTextField.becomeFirstResponder()
@@ -70,11 +65,7 @@ class PhoneTextField: PMNibLinkableView {
                         return
                     }
                     
-                    let newTextLength = text?.count ?? 0
-                    
-                    self.checkBackspacePressing(newTextLength: newTextLength)
-                    self.checkFullSet(newTextLength: newTextLength)
-                    self.fillNumberFields(with: text, position: newTextLength)
+                    self.fillNumberFields(with: text)
                 }
             )
             .disposed(by: disposeBag)
@@ -95,16 +86,19 @@ class PhoneTextField: PMNibLinkableView {
         }
     }
     
-    private func fillNumberFields(with text: String?, position: Int) {
-        guard position <= 10 else {
-            return
+    private func fillNumberFields(with text: String?) {
+        numberViewsCollection.enumerated().forEach { offset, element in
+            guard element.fetchValue() != text?[safe: offset]?.string else {
+                return
+            }
+            
+            element.setNewValue(value: text?[safe: offset]?.string)
         }
-        
-        let lastChar = text?.lastCharacterAsString
-        numberViewsCollection[safe: position - 1]?.setNewValue(value: lastChar)
     }
     
-    private func clearAllNumberFields() {
+    private func reset() {
+        fakeTextField.clear()
+        
         numberViewsCollection.forEach { view in
             view.clear()
         }
@@ -114,22 +108,6 @@ class PhoneTextField: PMNibLinkableView {
         fakeTextField.delegate = self
         fakeTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         fakeTextField.keyboardType = .numberPad
-    }
-    
-    private func checkBackspacePressing(newTextLength: Int) {
-        defer {
-            countInputNumbers = newTextLength
-        }
-        
-        guard countInputNumbers > newTextLength else {
-            return
-        }
-        
-        fillNumberFields(with: nil, position: self.countInputNumbers)
-    }
-    
-    private func checkFullSet(newTextLength: Int) {
-        isFullNumbersSet = newTextLength == 10
     }
     
 }
