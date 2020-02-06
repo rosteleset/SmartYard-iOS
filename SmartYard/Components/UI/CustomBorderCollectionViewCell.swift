@@ -27,6 +27,31 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
     }
     
     func addCustomBorder(
+        isFirstInSection: Bool,
+        isLastInSection: Bool,
+        customBorderWidth: CGFloat,
+        customBorderColor: UIColor?,
+        customCornerRadius: CGFloat
+    ) {
+        var maskedCorners = CACornerMask()
+        
+        if isFirstInSection {
+            maskedCorners.insert([.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        }
+        
+        if isLastInSection {
+            maskedCorners.insert([.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+        }
+        
+        addCustomBorder(
+            customBorderWidth: 1,
+            customBorderColor: UIColor(hex: 0xF0F0F1),
+            customCornerRadius: 12,
+            maskedCorners: maskedCorners
+        )
+    }
+    
+    private func addCustomBorder(
         customBorderWidth: CGFloat,
         customBorderColor: UIColor?,
         customCornerRadius: CGFloat,
@@ -61,7 +86,7 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         layer.addSublayer(bottomLineLayer)
     }
     
-    func removeCustomBorder() {
+    private func removeCustomBorder() {
         borderLayer.removeFromSuperlayer()
         bottomLineLayer.removeFromSuperlayer()
     }

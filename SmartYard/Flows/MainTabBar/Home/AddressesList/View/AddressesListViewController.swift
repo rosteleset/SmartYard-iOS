@@ -108,60 +108,42 @@ class AddressesListViewController: BaseViewController {
         indexPath: IndexPath,
         item: AddressesListDataItem
     ) -> UICollectionViewCell {
-        switch item {
-        case let .header(_, address, isExpanded):
-            let cell = collectionView.dequeueReusableCell(withClass: AddressesListHeaderCell.self, for: indexPath)
-            cell.configure(address: address, isExpanded: isExpanded)
-            maskCorners(ofCell: cell, at: indexPath)
-            
-            return cell
-            
-        case let .object(_, type, name, isOpened):
-            let cell = collectionView.dequeueReusableCell(withClass: AddressesListObjectCell.self, for: indexPath)
-            cell.configure(objectType: type, name: name, isOpened: isOpened)
-            maskCorners(ofCell: cell, at: indexPath)
-            
-            return cell
-            
-        case let .cameras(_, numberOfCameras):
-            let cell = collectionView.dequeueReusableCell(withClass: AddressesListCameraCell.self, for: indexPath)
-            cell.configure(availableCameras: numberOfCameras)
-            maskCorners(ofCell: cell, at: indexPath)
-            
-            return cell
-        }
-    }
-    
-    private func maskCorners(
-        ofCell cell: UICollectionViewCell,
-        at indexPath: IndexPath
-    ) {
-        guard let customizableCell = cell as? CustomBorderCollectionViewCell,
-            let itemsCountDict = try? itemsCountProxy.value(),
-            let totalItemsInSection = itemsCountDict[indexPath.section] else {
-            return
-        }
-        
-        let maskedCorners: CACornerMask = {
-            var arr = [CACornerMask]()
-            
-            if indexPath.row == 0 {
-                arr.append(contentsOf: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        let customizableCell: CustomBorderCollectionViewCell = {
+            switch item {
+            case let .header(_, address, isExpanded):
+                let cell = collectionView.dequeueReusableCell(withClass: AddressesListHeaderCell.self, for: indexPath)
+                cell.configure(address: address, isExpanded: isExpanded)
+                return cell
+                
+            case let .object(_, type, name, isOpened):
+                let cell = collectionView.dequeueReusableCell(withClass: AddressesListObjectCell.self, for: indexPath)
+                cell.configure(objectType: type, name: name, isOpened: isOpened)
+                return cell
+                
+            case let .cameras(_, numberOfCameras):
+                let cell = collectionView.dequeueReusableCell(withClass: AddressesListCameraCell.self, for: indexPath)
+                cell.configure(availableCameras: numberOfCameras)
+                return cell
             }
-            
-            if indexPath.row == totalItemsInSection - 1 {
-                arr.append(contentsOf: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
-            }
-            
-            return CACornerMask(arr)
         }()
         
+        guard let itemsCountDict = try? itemsCountProxy.value(),
+            let totalItemsInSection = itemsCountDict[indexPath.section] else {
+            return customizableCell
+        }
+        
+        let isFirstInSection = indexPath.row == 0
+        let isLastInSection = indexPath.row == totalItemsInSection - 1
+        
         customizableCell.addCustomBorder(
+            isFirstInSection: isFirstInSection,
+            isLastInSection: isLastInSection,
             customBorderWidth: 1,
             customBorderColor: UIColor(hex: 0xF0F0F1),
-            customCornerRadius: 12,
-            maskedCorners: maskedCorners
+            customCornerRadius: 12
         )
+        
+        return customizableCell
     }
 
 }
