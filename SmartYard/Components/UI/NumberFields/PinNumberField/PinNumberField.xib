@@ -24,7 +24,7 @@
                 <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0lc-nf-GsC">
                     <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yyy-2n-Zsv">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yyy-2n-Zsv">
                             <rect key="frame" x="0.0" y="0.0" width="32" height="30"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="36"/>
                             <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
