@@ -16,6 +16,7 @@ target 'SmartYard' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxViewController'
+  pod 'RxDataSources'
 
   # Utilities
   pod 'SwiftLint', '0.35'
