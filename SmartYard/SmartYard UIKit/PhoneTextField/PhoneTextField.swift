@@ -52,7 +52,7 @@ class PhoneTextField: PMNibLinkableView {
         fakeTextField.resignFirstResponder()
     }
     
-    @objc private func didPressNumberField(_ sender: UITapGestureRecognizer? = nil) {
+    @objc private func didPressNumberField() {
         guard !isFullNumbersSet else {
             clearAllNumberFields()
             fakeTextField.clear()
@@ -90,8 +90,8 @@ class PhoneTextField: PMNibLinkableView {
         
         numberViewsCollection.forEach { view in
             view.clear()
-            let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didPressNumberField(_:)))
-            view.addGestureRecognizer(singleTapGesture)
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didPressNumberField))
+            view.addGestureRecognizer(tapGesture)
         }
     }
     
@@ -136,7 +136,9 @@ class PhoneTextField: PMNibLinkableView {
 
 extension PhoneTextField: UITextFieldDelegate {
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String
+    ) -> Bool {
         guard let textFieldText = textField.text,
               let rangeOfTextToReplace = Range(range, in: textFieldText)
         else {
