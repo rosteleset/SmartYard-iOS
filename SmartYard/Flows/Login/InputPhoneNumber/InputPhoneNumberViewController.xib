@@ -37,7 +37,7 @@
                             <rect key="frame" x="0.0" y="69" width="414" height="783"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Soq-Bs-M2f" customClass="PhoneTextField" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="20" y="160" width="374" height="27"/>
+                                    <rect key="frame" x="5" y="160" width="404" height="27"/>
                                     <color key="backgroundColor" red="0.91768509511228791" green="0.95920356479104218" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="27" id="XzS-du-5fr"/>
@@ -57,8 +57,8 @@
                             <constraints>
                                 <constraint firstItem="5mZ-NZ-IAo" firstAttribute="top" secondItem="Soq-Bs-M2f" secondAttribute="bottom" constant="38" id="CLZ-t6-Hhu"/>
                                 <constraint firstItem="5mZ-NZ-IAo" firstAttribute="centerX" secondItem="Soq-Bs-M2f" secondAttribute="centerX" id="dMW-jy-zjn"/>
-                                <constraint firstItem="Soq-Bs-M2f" firstAttribute="left" secondItem="EhW-0V-SYx" secondAttribute="left" constant="20" id="pvx-iu-VvM"/>
-                                <constraint firstAttribute="right" secondItem="Soq-Bs-M2f" secondAttribute="right" constant="20" id="rsD-jB-oWE"/>
+                                <constraint firstItem="Soq-Bs-M2f" firstAttribute="left" secondItem="EhW-0V-SYx" secondAttribute="left" constant="5" id="pvx-iu-VvM"/>
+                                <constraint firstAttribute="right" secondItem="Soq-Bs-M2f" secondAttribute="right" constant="5" id="rsD-jB-oWE"/>
                                 <constraint firstItem="Soq-Bs-M2f" firstAttribute="top" secondItem="EhW-0V-SYx" secondAttribute="top" constant="160" id="yv9-cf-OY6"/>
                             </constraints>
                         </view>
