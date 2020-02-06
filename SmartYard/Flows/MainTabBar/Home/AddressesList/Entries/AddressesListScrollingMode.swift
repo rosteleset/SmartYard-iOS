@@ -22,7 +22,7 @@ enum AddressesListScrollingMode {
     
     var scrollingPosition: UICollectionView.ScrollPosition {
         switch self {
-        case .expand: return .top
+        case .expand: return .centeredVertically
         case .collapse: return []
         }
     }
