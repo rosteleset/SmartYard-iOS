@@ -157,7 +157,7 @@ class IncomingCallViewModel: BaseViewModel {
         let initialImageSubject = BehaviorSubject<UIImage?>(value: nil)
         let initialImage = initialImageSubject.asDriver(onErrorJustReturn: nil)
         
-        if let url = URL(string: callPayload.image) {
+        if let url = URL(string: callPayload.liveImage) {
             KingfisherManager.shared.retrieveImage(with: url) { result in
                 guard let imageResult = try? result.get() else {
                     return

@@ -21,11 +21,7 @@
 		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
 		844AC39723E9788D0066006D /* APIAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39623E9788D0066006D /* APIAddress.swift */; };
 		844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallViewController.swift */; };
-		844AC39E23E987360066006D /* IncomingCallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC39C23E987360066006D /* IncomingCallViewController.xib */; };
 		844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39F23E987400066006D /* IncomingCallViewModel.swift */; };
-		844AC3A923E9A07C0066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3A723E99C4C0066006D /* SourceSansPro-Regular.ttf */; };
-		844AC3AA23E9A07E0066006D /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3A823E99C4C0066006D /* SourceSansPro-Bold.ttf */; };
-		844AC3AB23E9A0810066006D /* SourceSansPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3A623E99C4C0066006D /* SourceSansPro-SemiBold.ttf */; };
 		844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */; };
 		844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3B023EAD0930066006D /* IncomingCallState.swift */; };
 		844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */; };
@@ -87,11 +83,7 @@
 		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
 		844AC39623E9788D0066006D /* APIAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAddress.swift; sourceTree = "<group>"; };
 		844AC39B23E987360066006D /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
-		844AC39C23E987360066006D /* IncomingCallViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncomingCallViewController.xib; sourceTree = "<group>"; };
 		844AC39F23E987400066006D /* IncomingCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewModel.swift; sourceTree = "<group>"; };
-		844AC3A623E99C4C0066006D /* SourceSansPro-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-SemiBold.ttf"; sourceTree = "<group>"; };
-		844AC3A723E99C4C0066006D /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
-		844AC3A823E99C4C0066006D /* SourceSansPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Bold.ttf"; sourceTree = "<group>"; };
 		844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		844AC3B023EAD0930066006D /* IncomingCallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallState.swift; sourceTree = "<group>"; };
 		844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallDoorState.swift; sourceTree = "<group>"; };
@@ -242,22 +234,11 @@
 			isa = PBXGroup;
 			children = (
 				844AC39B23E987360066006D /* IncomingCallViewController.swift */,
-				844AC39C23E987360066006D /* IncomingCallViewController.xib */,
 				844AC39F23E987400066006D /* IncomingCallViewModel.swift */,
 				844AC3B023EAD0930066006D /* IncomingCallState.swift */,
 				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
 			);
 			path = IncomingCall;
-			sourceTree = "<group>";
-		};
-		844AC3A523E99C430066006D /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				844AC3A723E99C4C0066006D /* SourceSansPro-Regular.ttf */,
-				844AC3A823E99C4C0066006D /* SourceSansPro-Bold.ttf */,
-				844AC3A623E99C4C0066006D /* SourceSansPro-SemiBold.ttf */,
-			);
-			path = Fonts;
 			sourceTree = "<group>";
 		};
 		844AC3B423EB0FD80066006D /* UserName */ = {
@@ -409,12 +390,12 @@
 		84F840D423E07DA5008DBE50 /* SmartYard */ = {
 			isa = PBXGroup;
 			children = (
-				E99EA6C423EACCC000BECEE6 /* SmartYard UIKit */,
 				84F840D523E07DA5008DBE50 /* AppDelegate.swift */,
 				84B9EC8823E0844E00979C39 /* Components */,
 				84B9EC8623E0844500979C39 /* Extensions */,
 				84B9EC8723E0844A00979C39 /* Helpers */,
 				84B9EC8923E0846400979C39 /* Services */,
+				E99EA6C423EACCC000BECEE6 /* SmartYard UIKit */,
 				84B9EC8A23E0846900979C39 /* Flows */,
 				84B9EC8523E0843D00979C39 /* Resources */,
 			);
@@ -574,12 +555,6 @@
 				E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */,
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
-				844AC39E23E987360066006D /* IncomingCallViewController.xib in Resources */,
-				844AC3AB23E9A0810066006D /* SourceSansPro-SemiBold.ttf in Resources */,
-				844AC3A923E9A07C0066006D /* SourceSansPro-Regular.ttf in Resources */,
-				844AC39E23E987360066006D /* IncomingCallViewController.xib in Resources */,
-				844AC3AB23E9A0810066006D /* SourceSansPro-SemiBold.ttf in Resources */,
-				844AC3A923E9A07C0066006D /* SourceSansPro-Regular.ttf in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
