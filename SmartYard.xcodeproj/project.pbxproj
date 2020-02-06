@@ -64,6 +64,7 @@
 		E99EA6CB23EAD01F00BECEE6 /* TopRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6CA23EAD01F00BECEE6 /* TopRoundedView.swift */; };
 		E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6CE23EAD2BB00BECEE6 /* NumberFieldView.xib */; };
 		E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6D023EAD2CE00BECEE6 /* NumberFieldView.swift */; };
+		E9A4D47A23EC04EF0070A591 /* IncomingCallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -132,6 +133,7 @@
 		E99EA6CA23EAD01F00BECEE6 /* TopRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRoundedView.swift; sourceTree = "<group>"; };
 		E99EA6CE23EAD2BB00BECEE6 /* NumberFieldView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberFieldView.xib; sourceTree = "<group>"; };
 		E99EA6D023EAD2CE00BECEE6 /* NumberFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFieldView.swift; sourceTree = "<group>"; };
+		E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncomingCallViewController.xib; sourceTree = "<group>"; };
 		F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -235,6 +237,7 @@
 			children = (
 				844AC39B23E987360066006D /* IncomingCallViewController.swift */,
 				844AC39F23E987400066006D /* IncomingCallViewModel.swift */,
+				E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */,
 				844AC3B023EAD0930066006D /* IncomingCallState.swift */,
 				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
 			);
@@ -553,6 +556,7 @@
 			files = (
 				844AC3B823EB104E0066006D /* UserNameViewController.xib in Resources */,
 				E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */,
+				E9A4D47A23EC04EF0070A591 /* IncomingCallViewController.xib in Resources */,
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
