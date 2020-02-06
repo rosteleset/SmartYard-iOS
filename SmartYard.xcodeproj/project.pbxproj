@@ -314,7 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				844AC3CE23EBFD220066006D /* HomeCoordinator.swift */,
-				844AC3CD23EBFD0A0066006D /* Main */,
+				844AC3CD23EBFD0A0066006D /* Addresses */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -346,13 +346,13 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		844AC3CD23EBFD0A0066006D /* Main */ = {
+		844AC3CD23EBFD0A0066006D /* Addresses */ = {
 			isa = PBXGroup;
 			children = (
 				844AC3DF23EBFE7E0066006D /* View */,
 				844AC3E023EBFE810066006D /* ViewModel */,
 			);
-			path = Main;
+			path = Addresses;
 			sourceTree = "<group>";
 		};
 		844AC3D623EBFDFA0066006D /* Main */ = {
