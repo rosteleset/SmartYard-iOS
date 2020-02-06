@@ -88,8 +88,40 @@ class AddressesViewController: BaseViewController {
         case let .header(_, address, isExpanded):
             let cell = collectionView.dequeueReusableCell(withClass: AddressExpandableHeaderCell.self, for: indexPath)
             cell.configure(address: address, isExpanded: isExpanded)
+            
+            maskCorners(
+                ofCell: cell,
+                at: indexPath.row,
+                withTotalRowsInSection: collectionView.numberOfItems(inSection: indexPath.section)
+            )
+            
             return cell
         }
+    }
+    
+    private func maskCorners(
+        ofCell cell: UICollectionViewCell,
+        at row: Int,
+        withTotalRowsInSection totalRows: Int
+    ) {
+        cell.layer.cornerRadius = 12
+        
+        let maskedCorners: CACornerMask = {
+            var arr = [CACornerMask]()
+            
+            if row == 0 {
+                arr.append(contentsOf: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+            }
+            
+            if row == totalRows - 1 {
+                arr.append(contentsOf: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+            }
+            
+            return CACornerMask(arr)
+        }()
+        
+        cell.layer.cornerRadius = 12
+        cell.layer.maskedCorners = maskedCorners
     }
 
 }
