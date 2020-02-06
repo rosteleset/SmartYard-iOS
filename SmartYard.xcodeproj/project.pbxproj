@@ -112,6 +112,8 @@
 		E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49923EC3E200070A591 /* BlueButton.swift */; };
 		E9A4D49F23ED4E900070A591 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */; };
 		E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */; };
+		E9A4D47F23EC20860070A591 /* PinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D47D23EC20860070A591 /* PinCodeViewController.swift */; };
+		E9A4D48023EC20860070A591 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D47E23EC20860070A591 /* PinCodeViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -226,6 +228,8 @@
 		E9A4D49923EC3E200070A591 /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
 		E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardTextField.swift; sourceTree = "<group>"; };
+		E9A4D47D23EC20860070A591 /* PinCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeViewController.swift; sourceTree = "<group>"; };
+		E9A4D47E23EC20860070A591 /* PinCodeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
 		F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -656,6 +660,8 @@
 				844AC3C623EBFC240066006D /* MainTabBar */,
 				844AC3B423EB0FD80066006D /* UserName */,
 				844AC39A23E9871F0066006D /* IncomingCall */,
+				E9A4D47D23EC20860070A591 /* PinCodeViewController.swift */,
+				E9A4D47E23EC20860070A591 /* PinCodeViewController.xib */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -954,6 +960,12 @@
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
+				844AC3D323EBFDA30066006D /* AddressesListViewController.xib in Resources */,
+				844AC3D323EBFDA30066006D /* AddressesViewController.xib in Resources */,
+				844AC39E23E987360066006D /* IncomingCallViewController.xib in Resources */,
+				E9A4D48023EC20860070A591 /* PinCodeViewController.xib in Resources */,
+				844AC3AB23E9A0810066006D /* SourceSansPro-SemiBold.ttf in Resources */,
+				844AC3A923E9A07C0066006D /* SourceSansPro-Regular.ttf in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
@@ -1126,6 +1138,7 @@
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
 				84B9EC8C23E085AE00979C39 /* Observable+Extensions.swift in Sources */,
+				E9A4D47F23EC20860070A591 /* PinCodeViewController.swift in Sources */,
 				84AA8D7F23E30C32001B3B43 /* BaseViewModel.swift in Sources */,
 				84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */,
 				844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */,
