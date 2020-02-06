@@ -8,15 +8,15 @@
 
 import RxDataSources
 
-enum AddressesDataItem: IdentifiableType, Equatable {
+enum AddressesListDataItem: IdentifiableType, Equatable {
     
-    case header(identity: AddressesDataItemIdentity, address: String, isExpanded: Bool)
+    case header(identity: AddressesListDataItemIdentity, address: String, isExpanded: Bool)
     
 }
 
-extension AddressesDataItem {
+extension AddressesListDataItem {
     
-    var identity: AddressesDataItemIdentity {
+    var identity: AddressesListDataItemIdentity {
         switch self {
         case .header(let identity, _, _):
             return identity

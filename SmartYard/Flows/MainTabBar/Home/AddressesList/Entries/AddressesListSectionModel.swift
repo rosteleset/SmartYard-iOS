@@ -8,17 +8,17 @@
 
 import RxDataSources
 
-struct AddressesSectionModel: AnimatableSectionModelType {
+struct AddressesListSectionModel: AnimatableSectionModelType {
     
     let identity: String
     
-    var items: [AddressesDataItem]
+    var items: [AddressesListDataItem]
     
 }
 
-extension AddressesSectionModel: SectionModelType {
+extension AddressesListSectionModel: SectionModelType {
     
-    init(original: AddressesSectionModel, items: [AddressesDataItem]) {
+    init(original: AddressesListSectionModel, items: [AddressesListDataItem]) {
         self = original
         self.items = items
     }

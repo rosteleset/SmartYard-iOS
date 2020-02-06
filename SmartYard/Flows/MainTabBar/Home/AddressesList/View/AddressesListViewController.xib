@@ -15,7 +15,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressesViewController" customModule="SmartYard" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressesListViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="addButton" destination="eem-hg-ddA" id="sHE-PL-rz7"/>
                 <outlet property="collectionView" destination="OvU-at-ANt" id="QJ0-LC-Cjc"/>

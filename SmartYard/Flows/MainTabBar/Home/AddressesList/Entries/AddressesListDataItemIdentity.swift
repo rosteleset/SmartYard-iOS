@@ -6,7 +6,7 @@
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
-enum AddressesDataItemIdentity: Hashable {
+enum AddressesListDataItemIdentity: Hashable {
     
     case header(address: String)
     

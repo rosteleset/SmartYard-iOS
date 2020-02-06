@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddressExpandableHeaderCell: UICollectionViewCell {
+class AddressesListHeaderCell: UICollectionViewCell {
     
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var arrowImageView: UIImageView!

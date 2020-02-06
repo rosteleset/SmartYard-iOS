@@ -9,52 +9,52 @@
 import RxSwift
 import RxCocoa
 
-class AddressesViewModel: BaseViewModel {
+class AddressesListViewModel: BaseViewModel {
     
     func transform(_ input: Input) -> Output {
-        let sectionModels: Driver<[AddressesSectionModel]> = .just(createMockSections())
+        let sectionModels: Driver<[AddressesListSectionModel]> = .just(createMockSections())
         
         return Output(sectionModels: sectionModels)
     }
     
-    private func createMockSections() -> [AddressesSectionModel] {
-        let firstSectionFirstItem: AddressesDataItem = .header(
+    private func createMockSections() -> [AddressesListSectionModel] {
+        let firstSectionFirstItem: AddressesListDataItem = .header(
             identity: .header(address: "FirstSectionHeader"),
             address: "г. Тамбов, ул. Советская, 16, кв. 4",
             isExpanded: false
         )
         
-        let firstSection = AddressesSectionModel(identity: "FirstSection", items: [firstSectionFirstItem])
+        let firstSection = AddressesListSectionModel(identity: "FirstSection", items: [firstSectionFirstItem])
         
-        let secondSectionFirstItem: AddressesDataItem = .header(
+        let secondSectionFirstItem: AddressesListDataItem = .header(
             identity: .header(address: "SecondSectionHeader"),
             address: "г. Тамбов, ул. Мичуринская, 141А",
             isExpanded: false
         )
         
-        let secondSection = AddressesSectionModel(identity: "SecondSection", items: [secondSectionFirstItem])
+        let secondSection = AddressesListSectionModel(identity: "SecondSection", items: [secondSectionFirstItem])
         
-        let thirdSectionFirstItem: AddressesDataItem = .header(
+        let thirdSectionFirstItem: AddressesListDataItem = .header(
             identity: .header(address: "ThirdSectionHeader"),
             address: "г. Котовск, ул. Зимняя, 20",
             isExpanded: false
         )
         
-        let thirdSection = AddressesSectionModel(identity: "ThirdSection", items: [thirdSectionFirstItem])
+        let thirdSection = AddressesListSectionModel(identity: "ThirdSection", items: [thirdSectionFirstItem])
         
         return [firstSection, secondSection, thirdSection]
     }
     
 }
 
-extension AddressesViewModel {
+extension AddressesListViewModel {
     
     struct Input {
         
     }
     
     struct Output {
-        let sectionModels: Driver<[AddressesSectionModel]>
+        let sectionModels: Driver<[AddressesListSectionModel]>
     }
     
 }

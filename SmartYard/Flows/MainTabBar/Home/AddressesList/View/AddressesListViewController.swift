@@ -11,17 +11,17 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class AddressesViewController: BaseViewController {
+class AddressesListViewController: BaseViewController {
     
     @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var addButton: UIButton!
     @IBOutlet private weak var collectionView: UICollectionView!
     
-    private var dataSource: RxCollectionViewSectionedAnimatedDataSource<AddressesSectionModel>?
+    private var dataSource: RxCollectionViewSectionedAnimatedDataSource<AddressesListSectionModel>?
     
-    let viewModel: AddressesViewModel
+    let viewModel: AddressesListViewModel
     
-    init(viewModel: AddressesViewModel) {
+    init(viewModel: AddressesListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -39,7 +39,7 @@ class AddressesViewController: BaseViewController {
     }
     
     private func bind() {
-        let input = AddressesViewModel.Input()
+        let input = AddressesListViewModel.Input()
         let output = viewModel.transform(input)
         
         output.sectionModels
@@ -57,12 +57,12 @@ class AddressesViewController: BaseViewController {
     
     private func configureCollectionView() {
         [
-            AddressExpandableHeaderCell.self
+            AddressesListHeaderCell.self
         ].forEach {
             collectionView.register(nibWithCellClass: $0)
         }
         
-        let dataSource = RxCollectionViewSectionedAnimatedDataSource<AddressesSectionModel>(
+        let dataSource = RxCollectionViewSectionedAnimatedDataSource<AddressesListSectionModel>(
             configureCell: { [weak self] _, collectionView, indexPath, item in
                 guard let self = self else {
                     return UICollectionViewCell()
@@ -82,11 +82,11 @@ class AddressesViewController: BaseViewController {
     private func configureCell(
         collectionView: UICollectionView,
         indexPath: IndexPath,
-        item: AddressesDataItem
+        item: AddressesListDataItem
     ) -> UICollectionViewCell {
         switch item {
         case let .header(_, address, isExpanded):
-            let cell = collectionView.dequeueReusableCell(withClass: AddressExpandableHeaderCell.self, for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withClass: AddressesListHeaderCell.self, for: indexPath)
             cell.configure(address: address, isExpanded: isExpanded)
             
             maskCorners(
@@ -128,7 +128,7 @@ class AddressesViewController: BaseViewController {
 
 }
 
-extension AddressesViewController: UICollectionViewDelegateFlowLayout {
+extension AddressesListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(
         _ collectionView: UICollectionView,
