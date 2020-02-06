@@ -105,6 +105,8 @@ class AddressesViewController: BaseViewController {
         withTotalRowsInSection totalRows: Int
     ) {
         cell.layer.cornerRadius = 12
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor(hex: 0xF0F0F1)?.cgColor
         
         let maskedCorners: CACornerMask = {
             var arr = [CACornerMask]()
