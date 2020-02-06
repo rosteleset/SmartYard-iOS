@@ -16,6 +16,9 @@ class AddressesListViewModel: BaseViewModel {
     func transform(_ input: Input) -> Output {
         // MARK: Скрытие / раскрытие секции
         
+        let scrollingModeSubject = PublishSubject<AddressesListScrollingMode>()
+        let scrollingMode = scrollingModeSubject.asDriverOnErrorJustComplete()
+        
         input.itemSelected
             .flatMap { identity -> Driver<String> in
                 guard case let .header(addressId) = identity else {
@@ -25,12 +28,31 @@ class AddressesListViewModel: BaseViewModel {
                 return .just(addressId)
             }
             .withLatestFrom(areSectionsExpanded.asDriverOnErrorJustComplete()) { ($0, $1) }
+            .map { args -> ((String, Bool), [String: Bool]) in
+                var (addressId, dict) = args
+                
+                let newState = !dict[addressId, default: false]
+                dict[addressId] = newState
+                
+                return ((addressId, newState), dict)
+            }
+            // MARK: Вынес в блок do, чтобы не делать сайд-эффектов в map
+            .do(
+                onNext: { args in
+                    let (updatedSectionInfo, _) = args
+                    let (addressId, newState) = updatedSectionInfo
+                    
+                    let identity = AddressesListDataItemIdentity.header(addressId: addressId)
+                    
+                    scrollingModeSubject.onNext(
+                        newState ?
+                            .expand(sectionWithIdentity: identity) :
+                            .collapse(sectionWithIdentity: identity)
+                    )
+                }
+            )
             .map { args in
-                var (updatedId, dict) = args
-                
-                let newState = !dict[updatedId, default: false]
-                dict[updatedId] = newState
-                
+                let (_, dict) = args
                 return dict
             }
             .drive(
@@ -45,7 +67,10 @@ class AddressesListViewModel: BaseViewModel {
                 self?.createMockSections(expansionStateDict: dict) ?? []
             }
         
-        return Output(sectionModels: sectionModels.asDriverOnErrorJustComplete())
+        return Output(
+            sectionModels: sectionModels.asDriverOnErrorJustComplete(),
+            scrollingMode: scrollingMode
+        )
     }
     
     // swiftlint:disable:next function_body_length
@@ -175,6 +200,7 @@ extension AddressesListViewModel {
     
     struct Output {
         let sectionModels: Driver<[AddressesListSectionModel]>
+        let scrollingMode: Driver<AddressesListScrollingMode>
     }
     
 }

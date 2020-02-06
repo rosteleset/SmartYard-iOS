@@ -40,6 +40,7 @@ class AddressesListViewController: BaseViewController {
         bind()
     }
     
+    // swiftlint:disable:next function_body_length
     private func bind() {
         let itemSelected = collectionView.rx.itemSelected
             .map { [weak self] indexPath in
@@ -66,6 +67,56 @@ class AddressesListViewController: BaseViewController {
                 }
             )
             .drive(collectionView.rx.items(dataSource: dataSource!))
+            .disposed(by: disposeBag)
+        
+        // MARK: Скроллим таблицу при сворачивании / разворачивании секций для лучшего UX
+        
+        let scrollingModeSubject = BehaviorSubject<AddressesListScrollingMode?>(value: nil)
+        let scrollingMode = scrollingModeSubject.asDriver(onErrorJustReturn: nil)
+        
+        output.scrollingMode
+            .drive(
+                onNext: {
+                    scrollingModeSubject.onNext($0)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        collectionView.rx
+            .observeWeakly(CGSize.self, "contentSize", options: [.new])
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            
+            // MARK: BatchUpdates проходят постепенно, поэтому contentSize меняется несколько раз
+            // Чтобы анимации не конфликтовали, ждем, пока contentSize станет стабильным
+            
+            .debounce(.milliseconds(50))
+            .withLatestFrom(scrollingMode)
+            .ignoreNil()
+            .do(
+                onNext: { _ in
+                    scrollingModeSubject.onNext(nil)
+                }
+            )
+            .withLatestFrom(output.sectionModels) { ($0, $1) }
+            .map { scrollingBehavior, sectionModels -> (UICollectionView.ScrollPosition, IndexPath)? in
+                let neededSectionOffset = sectionModels.enumerated().first { _, model in
+                    model.items.contains { $0.identity == scrollingBehavior.associatedIdentity }
+                }?.offset
+                
+                guard let section = neededSectionOffset else {
+                    return nil
+                }
+                
+                let indexPath = IndexPath(row: 0, section: section)
+                return (scrollingBehavior.scrollingPosition, indexPath)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] position, indexPath in
+                    self?.collectionView.scrollToItem(at: indexPath, at: position, animated: true)
+                }
+            )
             .disposed(by: disposeBag)
     }
     
