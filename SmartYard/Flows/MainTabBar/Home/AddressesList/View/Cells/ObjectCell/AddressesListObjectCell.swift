@@ -12,7 +12,7 @@ class AddressesListObjectCell: CustomBorderCollectionViewCell {
     
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
-    @IBOutlet private weak var openButton: UIButton!
+    @IBOutlet private weak var openButton: ObjectLockButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,6 +22,7 @@ class AddressesListObjectCell: CustomBorderCollectionViewCell {
     func configure(objectType: DomophoneObjectType, name: String?, isOpened: Bool) {
         nameLabel.text = name
         iconImageView.image = objectType.icon
+        openButton.isSelected = isOpened
     }
 
 }

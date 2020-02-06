@@ -113,7 +113,25 @@ class AddressesListViewModel: BaseViewModel {
             isExpanded: isSecondSectionExpanded
         )
         
-        let secondSection = AddressesListSectionModel(identity: secondAddressId, items: [secondSectionHeader])
+        let secondSectionObjects: [AddressesListDataItem] = {
+            guard isSecondSectionExpanded else {
+                return []
+            }
+            
+            let secondSectionFirstObject: AddressesListDataItem = .object(
+                identity: .object(id: "SecondSectionFirstObject"),
+                type: .house,
+                name: "Подъезд 1",
+                isOpened: false
+            )
+            
+            return [secondSectionFirstObject]
+        }()
+        
+        let secondSection = AddressesListSectionModel(
+            identity: secondAddressId,
+            items: [secondSectionHeader] + secondSectionObjects
+        )
         
         let thirdAddressId = "3000"
         let isThirdSectionExpanded = expansionStateDict[thirdAddressId, default: false]
@@ -124,7 +142,25 @@ class AddressesListViewModel: BaseViewModel {
             isExpanded: isThirdSectionExpanded
         )
         
-        let thirdSection = AddressesListSectionModel(identity: "3000", items: [thirdSectionHeader])
+        let thirdSectionObjects: [AddressesListDataItem] = {
+            guard isThirdSectionExpanded else {
+                return []
+            }
+            
+            let thirdSectionFirstObject: AddressesListDataItem = .object(
+                identity: .object(id: "ThirdSectionFirstObject"),
+                type: .house,
+                name: "Подъезд 1",
+                isOpened: true
+            )
+            
+            return [thirdSectionFirstObject]
+        }()
+        
+        let thirdSection = AddressesListSectionModel(
+            identity: "3000",
+            items: [thirdSectionHeader] + thirdSectionObjects
+        )
         
         return [firstSection, secondSection, thirdSection]
     }

@@ -20,7 +20,7 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         
         bottomLineLayer.frame = CGRect(
             x: bottomLineLayer.frame.height,
-            y: bounds.height - bottomLineLayer.frame.height,
+            y: 0,
             width: bounds.width - 2 * bottomLineLayer.frame.height,
             height: bottomLineLayer.frame.height
         )
@@ -44,9 +44,9 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         }
         
         addCustomBorder(
-            customBorderWidth: 1,
-            customBorderColor: UIColor(hex: 0xF0F0F1),
-            customCornerRadius: 12,
+            customBorderWidth: customBorderWidth,
+            customBorderColor: customBorderColor,
+            customCornerRadius: customCornerRadius,
             maskedCorners: maskedCorners
         )
     }
@@ -70,7 +70,7 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         borderLayer.cornerRadius = customCornerRadius
         borderLayer.maskedCorners = maskedCorners
         
-        guard !maskedCorners.contains([.layerMinXMaxYCorner, .layerMaxXMaxYCorner]) else {
+        guard !maskedCorners.contains([.layerMinXMinYCorner, .layerMaxXMinYCorner]) else {
             return
         }
         
@@ -78,7 +78,7 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         
         bottomLineLayer.frame = CGRect(
             x: customBorderWidth,
-            y: bounds.height - customBorderWidth,
+            y: 0,
             width: bounds.width - 2 * customBorderWidth,
             height: customBorderWidth
         )
