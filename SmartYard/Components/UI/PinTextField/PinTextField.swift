@@ -21,6 +21,7 @@ class PinTextField: PMNibLinkableView {
     @IBOutlet private weak var fourthNumField: PinNumberField!
     
     @IBOutlet private weak var fakeTextField: UITextField!
+    @IBOutlet private weak var wrongPassLabel: UILabel!
     
     private var numberViewsCollection: [PinNumberField] {
         return [firstNumField, secondNumField, thirdNumField, fourthNumField]
@@ -42,6 +43,22 @@ class PinTextField: PMNibLinkableView {
     
     func dismissKeybord() {
         fakeTextField.resignFirstResponder()
+    }
+    
+    func reset() {
+        fakeTextField.clear()
+        wrongPassLabel.isHidden = true
+        
+        numberViewsCollection.forEach { view in
+            view.clear()
+        }
+    }
+    
+    func markPass(isCorrect: Bool) {
+        wrongPassLabel.isHidden = isCorrect
+        numberViewsCollection.forEach {
+            $0.markValue(isCorrect: isCorrect)
+        }
     }
     
     @objc private func didPressNumberField() {
@@ -78,14 +95,6 @@ class PinTextField: PMNibLinkableView {
             }
             
             element.setNewValue(value: text?[safe: offset]?.string)
-        }
-    }
-    
-    private func reset() {
-        fakeTextField.clear()
-        
-        numberViewsCollection.forEach { view in
-            view.clear()
         }
     }
     

@@ -113,6 +113,7 @@
                 <outlet property="fourthNumField" destination="GJB-0Q-YM9" id="nrW-pt-bjg"/>
                 <outlet property="secondNumField" destination="ifG-Yq-YtT" id="h8W-sr-mbV"/>
                 <outlet property="thirdNumField" destination="bBJ-OC-nrh" id="sp2-HQ-MLE"/>
+                <outlet property="wrongPassLabel" destination="Wey-f5-5Yq" id="2Zs-9L-Moj"/>
             </connections>
             <point key="canvasLocation" x="128.98550724637681" y="-122.54464285714285"/>
         </view>
