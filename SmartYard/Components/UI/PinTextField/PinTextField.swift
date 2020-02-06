@@ -41,10 +41,6 @@ class PinTextField: PMNibLinkableView {
         return fakeTextField.text
     }
     
-    func dismissKeybord() {
-        fakeTextField.resignFirstResponder()
-    }
-    
     func reset() {
         fakeTextField.clear()
         wrongPassLabel.isHidden = true
@@ -62,10 +58,6 @@ class PinTextField: PMNibLinkableView {
     }
     
     @objc private func didPressNumberField() {
-        if fakeTextField.text?.count == Constants.pinLength {
-            reset()
-        }
-        
         fakeTextField.becomeFirstResponder()
     }
     

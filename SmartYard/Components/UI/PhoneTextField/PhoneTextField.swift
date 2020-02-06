@@ -54,10 +54,6 @@ class PhoneTextField: PMNibLinkableView {
         return fakeTextField.text
     }
     
-    func dismissKeybord() {
-        fakeTextField.resignFirstResponder()
-    }
-    
     @objc private func didPressNumberField() {
         if fakeTextField.text?.count == Constants.phoneLengthWithoutPrefix {
             reset()

@@ -58,6 +58,13 @@ class PinCodeViewController: BaseViewController {
     }
     
     private func bind() {
+        fixPhoneNumberButton.rx.tap
+            .subscribe(
+                onNext: {
+            
+            }
+        )
+        
         sendCodeAgainButton.rx.tap
             .subscribe(
                 onNext: { [weak self] _ in
