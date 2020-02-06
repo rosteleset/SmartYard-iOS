@@ -25,17 +25,16 @@ class NumberFieldView: PMNibLinkableView {
         bind()
     }
     
+    func fetchValue() -> String? {
+        return numberLabel.text
+    }
+    
     func clear() {
         numberLabel.text = nil
     }
     
-    func setNewValue(value: Int?) {
-        guard let newValue = value else {
-            numberLabel.text = nil
-            return
-        }
-        
-        numberLabel.text = String(newValue)
+    func setNewValue(value: String?) {
+        numberLabel.text = value
     }
 
     private func bind() {

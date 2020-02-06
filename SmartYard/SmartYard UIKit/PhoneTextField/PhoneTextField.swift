@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 import PMNibLinkableView
+import RxSwift
+import RxCocoa
 
 class PhoneTextField: PMNibLinkableView {
     
@@ -25,34 +27,109 @@ class PhoneTextField: PMNibLinkableView {
     @IBOutlet private weak var ninthNumView: NumberFieldView!
     @IBOutlet private weak var tenthNumView: NumberFieldView!
     
-    @IBOutlet private var numberFieldsOutletsCollection: [NumberFieldView]!
-    
     @IBOutlet private weak var fakeTextField: UITextField!
+    
+    private var numberViewsCollection = [NumberFieldView]()
+    
+    private var isFullNumbersSet = false
+    private var countInputNumbers = 0
+    
+    private var disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         configureFakeTextField()
         configureNumberFields()
+        bind()
+    }
+    
+    func fetchInputNumber() -> String? {
+        return fakeTextField.text
+    }
+    
+    func dismissKeybord() {
+        fakeTextField.resignFirstResponder()
+    }
+    
+    @objc private func didPressNumberField(_ sender: UITapGestureRecognizer? = nil) {
+        guard !isFullNumbersSet else {
+            clearAllNumberFields()
+            fakeTextField.clear()
+            return
+        }
+        
+        fakeTextField.becomeFirstResponder()
+    }
+    
+    private func bind() {
+        fakeTextField.rx.text.changed
+            .subscribe(
+                onNext: { [weak self] text in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let newTextLength = text?.count ?? 0
+                    
+                    self.checkBackspacePressing(newTextLength: newTextLength)
+                    self.checkFullSet(newTextLength: newTextLength)
+                    self.fillNumberFields(with: text, position: newTextLength)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureNumberFields() {
-        numberFieldsOutletsCollection.forEach { view in
+        numberViewsCollection = [
+            firstNumView, secondNumView, thirdNumView,
+            fourthNumView, fifthNumView, sixthNumView,
+            seventhNumView, eighthNumView, ninthNumView,
+            tenthNumView
+        ]
+        
+        numberViewsCollection.forEach { view in
             view.clear()
             let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didPressNumberField(_:)))
-            singleTapGesture.numberOfTapsRequired = 1
             view.addGestureRecognizer(singleTapGesture)
         }
     }
     
-    @objc func didPressNumberField(_ sender: UITapGestureRecognizer? = nil) {
-        print("here! \(sender)")
-        fakeTextField.becomeFirstResponder()
+    private func fillNumberFields(with text: String?, position: Int) {
+        guard position <= 10 else {
+            return
+        }
+        
+        let lastChar = text?.lastCharacterAsString
+        numberViewsCollection[safe: position - 1]?.setNewValue(value: lastChar)
+    }
+    
+    private func clearAllNumberFields() {
+        numberViewsCollection.forEach { view in
+            view.clear()
+        }
     }
     
     private func configureFakeTextField() {
         fakeTextField.delegate = self
         fakeTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         fakeTextField.keyboardType = .numberPad
+    }
+    
+    private func checkBackspacePressing(newTextLength: Int) {
+        defer {
+            countInputNumbers = newTextLength
+        }
+        
+        guard countInputNumbers > newTextLength else {
+            return
+        }
+        
+        fillNumberFields(with: nil, position: self.countInputNumbers)
+    }
+    
+    private func checkFullSet(newTextLength: Int) {
+        isFullNumbersSet = newTextLength == 10
     }
     
 }

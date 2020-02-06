@@ -175,16 +175,6 @@
                 <outlet property="sixthNumView" destination="fHp-RA-WPG" id="nht-t9-lwj"/>
                 <outlet property="tenthNumView" destination="i1f-Gw-b0j" id="WnG-C8-eJM"/>
                 <outlet property="thirdNumView" destination="eD9-2W-a2d" id="ORp-28-C5F"/>
-                <outletCollection property="numberFieldsOutletsCollection" destination="f1r-5E-mdW" collectionClass="NSMutableArray" id="HRu-XR-Ng2"/>
-                <outletCollection property="numberFieldsOutletsCollection" destination="jOh-Np-17c" collectionClass="NSMutableArray" id="x5x-6P-V1x"/>
-                <outletCollection property="numberFieldsOutletsCollection" destination="eD9-2W-a2d" collectionClass="NSMutableArray" id="Xo3-Yy-cGX"/>
-                <outletCollection property="numberFieldsOutletsCollection" destination="4wY-ed-J7L" collectionClass="NSMutableArray" id="VRi-EO-hzP"/>
-                <outletCollection property="numberFieldsOutletsCollection" destination="qZc-gn-XDr" collectionClass="NSMutableArray" id="FtD-wk-Rp8"/>
-                <outletCollection property="numberFieldsOutletsCollection" destination="fHp-RA-WPG" collectionClass="NSMutableArray" id="gCy-Xz-nsK"/>
-                <outletCollection property="numberFieldsOutletsCollection" destination="buh-kh-iq8" collectionClass="NSMutableArray" id="wRX-49-233"/>
-                <outletCollection property="numberFieldsOutletsCollection" destination="tPM-Ee-MIR" collectionClass="NSMutableArray" id="YMg-j3-Mre"/>
-                <outletCollection property="numberFieldsOutletsCollection" destination="YXT-eM-b76" collectionClass="NSMutableArray" id="Qwf-zA-0yP"/>
-                <outletCollection property="numberFieldsOutletsCollection" destination="i1f-Gw-b0j" collectionClass="NSMutableArray" id="day-SB-FSo"/>
             </connections>
             <point key="canvasLocation" x="74.637681159420296" y="-162.05357142857142"/>
         </view>
