@@ -82,6 +82,7 @@ class PhoneTextField: PMNibLinkableView {
     
     private func addViewTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didPressNumberField))
+        tapGesture.cancelsTouchesInView = false
         containerView.addGestureRecognizer(tapGesture)
     }
     

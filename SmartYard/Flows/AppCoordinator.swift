@@ -83,7 +83,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .present(vc)
             
         case .phoneNumber:
-            return .present(PinCodeViewController())
+            let vm = PinCodeViewModel()
+            return .present(PinCodeViewController(viewModel: vm))
         }
     }
     

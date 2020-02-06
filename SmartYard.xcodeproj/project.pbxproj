@@ -112,6 +112,7 @@
 		E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */; };
 		E9A4D49723EC2EE10070A591 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49623EC2EE10070A591 /* UIColor+Extensions.swift */; };
 		E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49923EC3E200070A591 /* BlueButton.swift */; };
+		E9A4D49D23EC49E40070A591 /* UIViewController+KeyboardHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49C23EC49E40070A591 /* UIViewController+KeyboardHeight.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -225,6 +226,7 @@
 		E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeViewController.swift; sourceTree = "<group>"; };
 		E9A4D49623EC2EE10070A591 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E9A4D49923EC3E200070A591 /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
+		E9A4D49C23EC49E40070A591 /* UIViewController+KeyboardHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+KeyboardHeight.swift"; sourceTree = "<group>"; };
 		F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -346,14 +348,15 @@
 			isa = PBXGroup;
 			children = (
 				E9A4D49823EC3DD00070A591 /* BlueButton */,
-				E9A4D48D23EC2A510070A591 /* PinTextField */,
+				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
 				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
-				E99EA6CC23EAD0C800BECEE6 /* TopRoundedView */,
 				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
 				844AC3BD23EB16F70066006D /* SmartYardTextField.swift */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
+				E9A4D48D23EC2A510070A591 /* PinTextField */,
+				E99EA6CC23EAD0C800BECEE6 /* TopRoundedView */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -615,6 +618,7 @@
 				844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */,
 				844AC3C423EB1F840066006D /* UIView+Extensions.swift */,
 				E9A4D49623EC2EE10070A591 /* UIColor+Extensions.swift */,
+				E9A4D49C23EC49E40070A591 /* UIViewController+KeyboardHeight.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -869,6 +873,14 @@
 			path = BlueButton;
 			sourceTree = "<group>";
 		};
+		E9A4D49B23EC424D0070A591 /* SmartYardTextField */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3BD23EB16F70066006D /* SmartYardTextField.swift */,
+			);
+			path = SmartYardTextField;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1101,6 +1113,7 @@
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				84CC15D623EC412A00A1CB95 /* AddressesListViewController.swift in Sources */,
+				E9A4D49D23EC49E40070A591 /* UIViewController+KeyboardHeight.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
