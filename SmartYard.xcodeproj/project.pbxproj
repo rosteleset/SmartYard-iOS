@@ -343,6 +343,10 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E9A4D48D23EC2A510070A591 /* PinTextField */,
+				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
+				E99EA6CC23EAD0C800BECEE6 /* TopRoundedView */,
+				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
 				844AC3BD23EB16F70066006D /* SmartYardTextField.swift */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
@@ -739,7 +743,6 @@
 				84B9EC8623E0844500979C39 /* Extensions */,
 				84B9EC8723E0844A00979C39 /* Helpers */,
 				84B9EC8923E0846400979C39 /* Services */,
-				E99EA6C423EACCC000BECEE6 /* SmartYard UIKit */,
 				84B9EC8A23E0846900979C39 /* Flows */,
 				84B9EC8523E0843D00979C39 /* Resources */,
 			);
@@ -790,17 +793,6 @@
 				E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */,
 			);
 			path = Fonts;
-			sourceTree = "<group>";
-		};
-		E99EA6C423EACCC000BECEE6 /* SmartYard UIKit */ = {
-			isa = PBXGroup;
-			children = (
-				E9A4D48D23EC2A510070A591 /* PinTextField */,
-				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
-				E99EA6CC23EAD0C800BECEE6 /* TopRoundedView */,
-				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
-			);
-			path = "SmartYard UIKit";
 			sourceTree = "<group>";
 		};
 		E99EA6C523EACCD200BECEE6 /* PhoneTextField */ = {
