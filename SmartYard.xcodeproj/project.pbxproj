@@ -111,6 +111,7 @@
 		E9A4D49423EC2CC20070A591 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D49223EC2CC10070A591 /* PinCodeViewController.xib */; };
 		E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */; };
 		E9A4D49723EC2EE10070A591 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49623EC2EE10070A591 /* UIColor+Extensions.swift */; };
+		E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49923EC3E200070A591 /* BlueButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -223,6 +224,7 @@
 		E9A4D49223EC2CC10070A591 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
 		E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeViewController.swift; sourceTree = "<group>"; };
 		E9A4D49623EC2EE10070A591 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		E9A4D49923EC3E200070A591 /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
 		F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -343,6 +345,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E9A4D49823EC3DD00070A591 /* BlueButton */,
 				E9A4D48D23EC2A510070A591 /* PinTextField */,
 				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
 				E99EA6CC23EAD0C800BECEE6 /* TopRoundedView */,
@@ -858,6 +861,14 @@
 			path = PinTextField;
 			sourceTree = "<group>";
 		};
+		E9A4D49823EC3DD00070A591 /* BlueButton */ = {
+			isa = PBXGroup;
+			children = (
+				E9A4D49923EC3E200070A591 /* BlueButton.swift */,
+			);
+			path = BlueButton;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1092,6 +1103,7 @@
 				84CC15D623EC412A00A1CB95 /* AddressesListViewController.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
+				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,

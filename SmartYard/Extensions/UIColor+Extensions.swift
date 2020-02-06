@@ -26,5 +26,9 @@ extension UIColor {
         }
     }
     
+    static var smartYardBlueColor: UIColor {
+        return UIColor(red: 0.161, green: 0.545, blue: 1, alpha: 1)
+    }
+    
 }
 
