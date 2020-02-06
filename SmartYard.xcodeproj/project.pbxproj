@@ -32,6 +32,23 @@
 		844AC3BE23EB16F70066006D /* SmartYardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3BD23EB16F70066006D /* SmartYardTextField.swift */; };
 		844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */; };
 		844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C423EB1F840066006D /* UIView+Extensions.swift */; };
+		844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C723EBFC4B0066006D /* MainTabBarCoordinator.swift */; };
+		844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3CE23EBFD220066006D /* HomeCoordinator.swift */; };
+		844AC3D223EBFDA30066006D /* AddressesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D023EBFDA30066006D /* AddressesViewController.swift */; };
+		844AC3D323EBFDA30066006D /* AddressesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesViewController.xib */; };
+		844AC3D523EBFDAF0066006D /* AddressesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D423EBFDAF0066006D /* AddressesViewModel.swift */; };
+		844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D723EBFE060066006D /* ChatCoordinator.swift */; };
+		844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D923EBFE140066006D /* ChatViewController.swift */; };
+		844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3DA23EBFE140066006D /* ChatViewController.xib */; };
+		844AC3DE23EBFE1E0066006D /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3DD23EBFE1E0066006D /* ChatViewModel.swift */; };
+		844AC3E823EBFEC50066006D /* PaymentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3E623EBFEC50066006D /* PaymentsViewController.swift */; };
+		844AC3E923EBFEC50066006D /* PaymentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3E723EBFEC50066006D /* PaymentsViewController.xib */; };
+		844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3EA23EBFED20066006D /* PaymentsViewModel.swift */; };
+		844AC3ED23EBFF0E0066006D /* PaymentsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3EC23EBFF0E0066006D /* PaymentsCoordinator.swift */; };
+		844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3EE23EBFF5E0066006D /* SettingsCoordinator.swift */; };
+		844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3F323EBFF900066006D /* SettingsViewController.swift */; };
+		844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3F423EBFF900066006D /* SettingsViewController.xib */; };
+		844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */; };
 		844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */; };
 		844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C123EAA72800BECEE6 /* SourceSansPro-Bold.ttf */; };
 		844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C023EAA71C00BECEE6 /* SourceSansPro-SemiBold.ttf */; };
@@ -99,6 +116,23 @@
 		844AC3BD23EB16F70066006D /* SmartYardTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardTextField.swift; sourceTree = "<group>"; };
 		844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		844AC3C423EB1F840066006D /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		844AC3C723EBFC4B0066006D /* MainTabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCoordinator.swift; sourceTree = "<group>"; };
+		844AC3CE23EBFD220066006D /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		844AC3D023EBFDA30066006D /* AddressesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesViewController.swift; sourceTree = "<group>"; };
+		844AC3D123EBFDA30066006D /* AddressesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesViewController.xib; sourceTree = "<group>"; };
+		844AC3D423EBFDAF0066006D /* AddressesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesViewModel.swift; sourceTree = "<group>"; };
+		844AC3D723EBFE060066006D /* ChatCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCoordinator.swift; sourceTree = "<group>"; };
+		844AC3D923EBFE140066006D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		844AC3DA23EBFE140066006D /* ChatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatViewController.xib; sourceTree = "<group>"; };
+		844AC3DD23EBFE1E0066006D /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		844AC3E623EBFEC50066006D /* PaymentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewController.swift; sourceTree = "<group>"; };
+		844AC3E723EBFEC50066006D /* PaymentsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentsViewController.xib; sourceTree = "<group>"; };
+		844AC3EA23EBFED20066006D /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
+		844AC3EC23EBFF0E0066006D /* PaymentsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsCoordinator.swift; sourceTree = "<group>"; };
+		844AC3EE23EBFF5E0066006D /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
+		844AC3F323EBFF900066006D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		844AC3F423EBFF900066006D /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
 		84AA8D4523E2CD3F001B3B43 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -240,11 +274,9 @@
 		844AC39A23E9871F0066006D /* IncomingCall */ = {
 			isa = PBXGroup;
 			children = (
-				844AC39B23E987360066006D /* IncomingCallViewController.swift */,
-				844AC39F23E987400066006D /* IncomingCallViewModel.swift */,
-				E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */,
-				844AC3B023EAD0930066006D /* IncomingCallState.swift */,
-				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
+				844AC40223EC220C0066006D /* View */,
+				844AC40323EC22100066006D /* ViewModel */,
+				844AC40423EC22140066006D /* Entries */,
 			);
 			path = IncomingCall;
 			sourceTree = "<group>";
@@ -252,9 +284,8 @@
 		844AC3B423EB0FD80066006D /* UserName */ = {
 			isa = PBXGroup;
 			children = (
-				844AC3B523EB104E0066006D /* UserNameViewController.swift */,
-				844AC3B623EB104E0066006D /* UserNameViewController.xib */,
-				844AC3B923EB105A0066006D /* UserNameViewModel.swift */,
+				844AC40123EC22030066006D /* View */,
+				844AC40023EC21FC0066006D /* ViewModel */,
 			);
 			path = UserName;
 			sourceTree = "<group>";
@@ -265,6 +296,201 @@
 				844AC3BD23EB16F70066006D /* SmartYardTextField.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		844AC3C623EBFC240066006D /* MainTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3C723EBFC4B0066006D /* MainTabBarCoordinator.swift */,
+				844AC3C923EBFCC00066006D /* Home */,
+				844AC3CA23EBFCC50066006D /* Chat */,
+				844AC3CB23EBFCCA0066006D /* Payments */,
+				844AC3CC23EBFCCF0066006D /* Settings */,
+			);
+			path = MainTabBar;
+			sourceTree = "<group>";
+		};
+		844AC3C923EBFCC00066006D /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3CE23EBFD220066006D /* HomeCoordinator.swift */,
+				844AC3CD23EBFD0A0066006D /* Main */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		844AC3CA23EBFCC50066006D /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3D723EBFE060066006D /* ChatCoordinator.swift */,
+				844AC3D623EBFDFA0066006D /* Main */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		844AC3CB23EBFCCA0066006D /* Payments */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3EC23EBFF0E0066006D /* PaymentsCoordinator.swift */,
+				844AC3E323EBFE9D0066006D /* Main */,
+			);
+			path = Payments;
+			sourceTree = "<group>";
+		};
+		844AC3CC23EBFCCF0066006D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3EE23EBFF5E0066006D /* SettingsCoordinator.swift */,
+				844AC3F023EBFF790066006D /* Main */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		844AC3CD23EBFD0A0066006D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3DF23EBFE7E0066006D /* View */,
+				844AC3E023EBFE810066006D /* ViewModel */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		844AC3D623EBFDFA0066006D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3E123EBFE8E0066006D /* View */,
+				844AC3E223EBFE920066006D /* ViewModel */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		844AC3DF23EBFE7E0066006D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3D023EBFDA30066006D /* AddressesViewController.swift */,
+				844AC3D123EBFDA30066006D /* AddressesViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		844AC3E023EBFE810066006D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3D423EBFDAF0066006D /* AddressesViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		844AC3E123EBFE8E0066006D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3D923EBFE140066006D /* ChatViewController.swift */,
+				844AC3DA23EBFE140066006D /* ChatViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		844AC3E223EBFE920066006D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3DD23EBFE1E0066006D /* ChatViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		844AC3E323EBFE9D0066006D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3E523EBFEB80066006D /* View */,
+				844AC3E423EBFEB40066006D /* ViewModel */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		844AC3E423EBFEB40066006D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3EA23EBFED20066006D /* PaymentsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		844AC3E523EBFEB80066006D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3E623EBFEC50066006D /* PaymentsViewController.swift */,
+				844AC3E723EBFEC50066006D /* PaymentsViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		844AC3F023EBFF790066006D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3F223EBFF830066006D /* View */,
+				844AC3F123EBFF7F0066006D /* ViewModel */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		844AC3F123EBFF7F0066006D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		844AC3F223EBFF830066006D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3F323EBFF900066006D /* SettingsViewController.swift */,
+				844AC3F423EBFF900066006D /* SettingsViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		844AC40023EC21FC0066006D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3B923EB105A0066006D /* UserNameViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		844AC40123EC22030066006D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3B523EB104E0066006D /* UserNameViewController.swift */,
+				844AC3B623EB104E0066006D /* UserNameViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		844AC40223EC220C0066006D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				844AC39B23E987360066006D /* IncomingCallViewController.swift */,
+				E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		844AC40323EC22100066006D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				844AC39F23E987400066006D /* IncomingCallViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		844AC40423EC22140066006D /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				844AC3B023EAD0930066006D /* IncomingCallState.swift */,
+				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
+			);
+			path = Entries;
 			sourceTree = "<group>";
 		};
 		84950CF723E431B700F3C550 /* Base Classes */ = {
@@ -357,11 +583,12 @@
 		84B9EC8A23E0846900979C39 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				844AC3B423EB0FD80066006D /* UserName */,
-				844AC39A23E9871F0066006D /* IncomingCall */,
-				E99EA6B623EA9CED00BECEE6 /* Login */,
 				84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */,
 				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
+				E99EA6B623EA9CED00BECEE6 /* Login */,
+				844AC3C623EBFC240066006D /* MainTabBar */,
+				844AC3B423EB0FD80066006D /* UserName */,
+				844AC39A23E9871F0066006D /* IncomingCall */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -563,7 +790,10 @@
 				844AC3B823EB104E0066006D /* UserNameViewController.xib in Resources */,
 				E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */,
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
+				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
+				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
+				844AC3D323EBFDA30066006D /* AddressesViewController.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
@@ -573,6 +803,7 @@
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
 				844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
+				844AC3E923EBFEC50066006D /* PaymentsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,17 +909,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */,
 				844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */,
 				84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */,
 				844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */,
 				844AC37E23E861D10066006D /* GetVerifyedAddressesResponseData.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				844AC38823E8652F0066006D /* LoginResponseData.swift in Sources */,
+				844AC3D223EBFDA30066006D /* AddressesViewController.swift in Sources */,
 				844AC39023E867950066006D /* IntercomTokenResponseData.swift in Sources */,
 				84AA8D6623E2F2A8001B3B43 /* TransportType+Extensions.swift in Sources */,
 				844AC37C23E861C50066006D /* GetVerifyedAddressesRequest.swift in Sources */,
+				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
 				84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
+				844AC3ED23EBFF0E0066006D /* PaymentsCoordinator.swift in Sources */,
 				844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */,
 				E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */,
 				844AC38123E8637B0066006D /* ConfirmCodeRequest.swift in Sources */,
@@ -699,19 +934,23 @@
 				844AC38323E8641B0066006D /* ConfirmCodeResponseData.swift in Sources */,
 				84AA8D5B23E2CEC5001B3B43 /* BaseAPIResponse.swift in Sources */,
 				84AA8D4823E2CD48001B3B43 /* APITarget.swift in Sources */,
+				844AC3D523EBFDAF0066006D /* AddressesViewModel.swift in Sources */,
 				844AC39523E977810066006D /* AccessService.swift in Sources */,
+				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
+				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
 				844AC38B23E866710066006D /* RegisterTokenRequest.swift in Sources */,
 				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
 				84B9EC8C23E085AE00979C39 /* Observable+Extensions.swift in Sources */,
 				84AA8D7F23E30C32001B3B43 /* BaseViewModel.swift in Sources */,
+				844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */,
 				844AC38623E865260066006D /* LoginRequest.swift in Sources */,
 				844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */,
 				844AC39223E872F80066006D /* EmptyAPIResponseData.swift in Sources */,
@@ -720,12 +959,17 @@
 				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
 				844AC3BE23EB16F70066006D /* SmartYardTextField.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
+				844AC3DE23EBFE1E0066006D /* ChatViewModel.swift in Sources */,
 				844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */,
+				844AC3E823EBFEC50066006D /* PaymentsViewController.swift in Sources */,
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */,
+				844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */,
+				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				E99EA6CB23EAD01F00BECEE6 /* TopRoundedView.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
+				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
