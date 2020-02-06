@@ -9,10 +9,19 @@
 import UIKit
 
 class AddressesListObjectCell: UICollectionViewCell {
-
+    
+    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var openButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        configure(objectType: .house, name: nil, isOpened: false)
+    }
+    
+    func configure(objectType: DomophoneObjectType, name: String?, isOpened: Bool) {
+        nameLabel.text = name
+        iconImageView.image = objectType.icon
     }
 
 }

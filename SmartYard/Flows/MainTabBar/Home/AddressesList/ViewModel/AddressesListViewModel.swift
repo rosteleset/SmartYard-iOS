@@ -19,15 +19,39 @@ class AddressesListViewModel: BaseViewModel {
     
     private func createMockSections() -> [AddressesListSectionModel] {
         let firstSectionFirstItem: AddressesListDataItem = .header(
-            identity: .header(address: "FirstSectionHeader"),
+            identity: .header(id: "FirstSectionHeader"),
             address: "г. Тамбов, ул. Советская, 16, кв. 4",
-            isExpanded: false
+            isExpanded: true
         )
         
-        let firstSection = AddressesListSectionModel(identity: "FirstSection", items: [firstSectionFirstItem])
+        let firstSectionSecondItem: AddressesListDataItem = .object(
+            identity: .object(id: "FirstSectionFirstObject"),
+            type: .barrier,
+            name: "Шлагбаум Север",
+            isOpened: false
+        )
+        
+        let firstSectionThirdItem: AddressesListDataItem = .object(
+            identity: .object(id: "FirstSectionSecondObject"),
+            type: .gate,
+            name: "Ворота Юг",
+            isOpened: false
+        )
+        
+        let firstSectionFourthItem: AddressesListDataItem = .object(
+            identity: .object(id: "FirstSectionThirdObject"),
+            type: .house,
+            name: "Подъезд 1",
+            isOpened: true
+        )
+
+        let firstSection = AddressesListSectionModel(
+            identity: "FirstSection",
+            items: [firstSectionFirstItem, firstSectionSecondItem, firstSectionThirdItem, firstSectionFourthItem]
+        )
         
         let secondSectionFirstItem: AddressesListDataItem = .header(
-            identity: .header(address: "SecondSectionHeader"),
+            identity: .header(id: "SecondSectionHeader"),
             address: "г. Тамбов, ул. Мичуринская, 141А",
             isExpanded: false
         )
@@ -35,7 +59,7 @@ class AddressesListViewModel: BaseViewModel {
         let secondSection = AddressesListSectionModel(identity: "SecondSection", items: [secondSectionFirstItem])
         
         let thirdSectionFirstItem: AddressesListDataItem = .header(
-            identity: .header(address: "ThirdSectionHeader"),
+            identity: .header(id: "ThirdSectionHeader"),
             address: "г. Котовск, ул. Зимняя, 20",
             isExpanded: false
         )
