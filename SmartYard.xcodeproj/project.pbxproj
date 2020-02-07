@@ -29,12 +29,10 @@
 		844AC3B823EB104E0066006D /* UserNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3B623EB104E0066006D /* UserNameViewController.xib */; };
 		844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3B923EB105A0066006D /* UserNameViewModel.swift */; };
 		844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3BB23EB15ED0066006D /* UIFont+Extensions.swift */; };
-		844AC3BE23EB16F70066006D /* SmartYardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3BD23EB16F70066006D /* SmartYardTextField.swift */; };
 		844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */; };
 		844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C423EB1F840066006D /* UIView+Extensions.swift */; };
 		844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C723EBFC4B0066006D /* MainTabBarCoordinator.swift */; };
 		844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3CE23EBFD220066006D /* HomeCoordinator.swift */; };
-		844AC3D323EBFDA30066006D /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
 		844AC3D523EBFDAF0066006D /* AddressesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D423EBFDAF0066006D /* AddressesListViewModel.swift */; };
 		844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D723EBFE060066006D /* ChatCoordinator.swift */; };
 		844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D923EBFE140066006D /* ChatViewController.swift */; };
@@ -86,7 +84,6 @@
 		84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */; };
 		84CC15E323EC86D900A1CB95 /* ObjectLockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */; };
 		84CC15E523EC999700A1CB95 /* AddressesListScrollingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E423EC999700A1CB95 /* AddressesListScrollingMode.swift */; };
-		84CC15E723ED577300A1CB95 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E623ED577300A1CB95 /* UIColor+Extensions.swift */; };
 		84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */; };
 		84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */; };
 		84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */; };
@@ -114,6 +111,7 @@
 		E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49923EC3E200070A591 /* BlueButton.swift */; };
 		E9A4D49D23EC49E40070A591 /* UIViewController+KeyboardHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49C23EC49E40070A591 /* UIViewController+KeyboardHeight.swift */; };
 		E9A4D49F23ED4E900070A591 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */; };
+		E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -141,7 +139,6 @@
 		844AC3B623EB104E0066006D /* UserNameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserNameViewController.xib; sourceTree = "<group>"; };
 		844AC3B923EB105A0066006D /* UserNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameViewModel.swift; sourceTree = "<group>"; };
 		844AC3BB23EB15ED0066006D /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
-		844AC3BD23EB16F70066006D /* SmartYardTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardTextField.swift; sourceTree = "<group>"; };
 		844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		844AC3C423EB1F840066006D /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		844AC3C723EBFC4B0066006D /* MainTabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCoordinator.swift; sourceTree = "<group>"; };
@@ -229,6 +226,7 @@
 		E9A4D49923EC3E200070A591 /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
 		E9A4D49C23EC49E40070A591 /* UIViewController+KeyboardHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+KeyboardHeight.swift"; sourceTree = "<group>"; };
 		E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
+		E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardTextField.swift; sourceTree = "<group>"; };
 		F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -353,7 +351,6 @@
 				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
 				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
 				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
-				844AC3BD23EB16F70066006D /* SmartYardTextField.swift */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
@@ -879,7 +876,7 @@
 		E9A4D49B23EC424D0070A591 /* SmartYardTextField */ = {
 			isa = PBXGroup;
 			children = (
-				844AC3BD23EB16F70066006D /* SmartYardTextField.swift */,
+				E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */,
 			);
 			path = SmartYardTextField;
 			sourceTree = "<group>";
@@ -959,8 +956,6 @@
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
-				844AC3D323EBFDA30066006D /* AddressesListViewController.xib in Resources */,
-				844AC3D323EBFDA30066006D /* AddressesViewController.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
@@ -1095,6 +1090,7 @@
 				844AC37C23E861C50066006D /* GetVerifyedAddressesRequest.swift in Sources */,
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
 				84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */,
+				E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				844AC3ED23EBFF0E0066006D /* PaymentsCoordinator.swift in Sources */,
 				844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */,
@@ -1133,7 +1129,6 @@
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
 				84B9EC8C23E085AE00979C39 /* Observable+Extensions.swift in Sources */,
 				84AA8D7F23E30C32001B3B43 /* BaseViewModel.swift in Sources */,
-				84CC15E723ED577300A1CB95 /* UIColor+Extensions.swift in Sources */,
 				84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */,
 				844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */,
 				84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */,
@@ -1144,7 +1139,6 @@
 				844AC3B723EB104E0066006D /* UserNameViewController.swift in Sources */,
 				84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */,
 				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
-				844AC3BE23EB16F70066006D /* SmartYardTextField.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
 				844AC3DE23EBFE1E0066006D /* ChatViewModel.swift in Sources */,
 				844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */,

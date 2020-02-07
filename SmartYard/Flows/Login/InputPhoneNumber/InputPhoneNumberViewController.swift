@@ -39,7 +39,7 @@ class InputPhoneNumberViewController: BaseViewController {
             inputPhoneText: phoneTextView.getPhoneTextDriver()
         )
         
-        let _ = viewModel.transform(input: input)
+        _ = viewModel.transform(input: input)
     }
     
 }
