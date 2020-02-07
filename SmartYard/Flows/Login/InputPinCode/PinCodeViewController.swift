@@ -92,7 +92,7 @@ class PinCodeViewController: BaseViewController {
         let input = PinCodeViewModel.Input(
             inputPinText: pinInputFieldView.getPinTextDriver(),
             fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(),
-            sendCodeAgainButtonDidTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete(),
+            sendCodeAgainButtonapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete(),
             viewWillAppearTrigger: rx.viewWillAppear.asDriver(onErrorJustReturn: false)
         )
         

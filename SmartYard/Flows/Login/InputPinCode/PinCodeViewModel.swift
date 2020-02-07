@@ -54,7 +54,7 @@ class PinCodeViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        input.sendCodeAgainButtonDidTapped
+        input.sendCodeAgainButtonapped
             .drive(
                 onNext: {
                     // TODO: send code again
@@ -75,7 +75,7 @@ extension PinCodeViewModel {
     struct Input {
         let inputPinText: Driver<String>
         let fixPhoneNumberButtonTapped: Driver<Void>
-        let sendCodeAgainButtonDidTapped: Driver<Void>
+        let sendCodeAgainButtonapped: Driver<Void>
         let viewWillAppearTrigger: Driver<Bool>
     }
     
