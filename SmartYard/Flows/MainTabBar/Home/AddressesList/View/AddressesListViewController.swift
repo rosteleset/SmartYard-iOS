@@ -190,7 +190,7 @@ class AddressesListViewController: BaseViewController {
             isFirstInSection: isFirstInSection,
             isLastInSection: isLastInSection,
             customBorderWidth: 1,
-            customBorderColor: UIColor(hex: 0xF0F0F1),
+            customBorderColor: UIColor.SmartYard.grayBorder,
             customCornerRadius: 12
         )
         

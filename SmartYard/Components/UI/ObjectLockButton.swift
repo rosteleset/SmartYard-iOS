@@ -36,10 +36,10 @@ class ObjectLockButton: UIButton {
         cornerRadius = 8
         titleLabel?.font = UIFont.SourceSansPro.semibold(size: 14)
         
-        setTitleColor(UIColor(hex: 0x298BFF), for: .normal)
+        setTitleColor(UIColor.SmartYard.blue, for: .normal)
         setTitle("Открыть", for: .normal)
         
-        setTitleColor(UIColor(hex: 0x298BFF)?.darken(by: 0.1), for: .highlighted)
+        setTitleColor(UIColor.SmartYard.blue.darken(by: 0.1), for: .highlighted)
         setTitle("Открыть", for: .highlighted)
         
         setTitleColor(.white, for: .selected)
@@ -56,20 +56,20 @@ class ObjectLockButton: UIButton {
         case .normal:
             backgroundColor = .white
             borderWidth = 1
-            borderColor = UIColor(hex: 0x298BFF)
-            
-        case .selected:
-            backgroundColor = UIColor(hex: 0x1FBC62)
-            borderWidth = 0
-            borderColor = .clear
+            borderColor = UIColor.SmartYard.blue
             
         case .highlighted:
             backgroundColor = UIColor.white.darken(by: 0.1)
             borderWidth = 1
-            borderColor = UIColor(hex: 0x298BFF)?.darken(by: 0.1)
+            borderColor = UIColor.SmartYard.blue.darken(by: 0.1)
+            
+        case .selected:
+            backgroundColor = UIColor.SmartYard.darkGreen
+            borderWidth = 0
+            borderColor = .clear
             
         case [.selected, .highlighted]:
-            backgroundColor = UIColor(hex: 0x1FBC62)?.darken(by: 0.1)
+            backgroundColor = UIColor.SmartYard.darkGreen.darken(by: 0.1)
             borderWidth = 0
             borderColor = .clear
             
