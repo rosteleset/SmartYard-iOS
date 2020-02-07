@@ -19,6 +19,13 @@ class AddressesListViewController: BaseViewController {
     
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<AddressesListSectionModel>?
     
+    // MARK: Это костыль для того, чтобы понять, сколько на самом деле ячеек внутри секции
+    // В методе configureCell у RxDataSource мы должны сконфигурировать ячейку
+    // Но проблема в том, что RxDataSource выполняет операции обновления и добавления ячеек отдельно
+    // Сначала выполняется обновление уже существующих ячеек, а потом добавляются новые
+    // Поэтому на момент обновления ячеек мы не можем получить актуальное количество секций через dataSource[section]
+    // Так что приходится проксировать количество ячеек в секциях в отдельный субъект и брать данные отсюда
+    
     private let itemsCountProxy = BehaviorSubject<[Int: Int]>(value: [:])
     
     let viewModel: AddressesListViewModel
@@ -51,6 +58,9 @@ class AddressesListViewController: BaseViewController {
         let input = AddressesListViewModel.Input(itemSelected: itemSelected.asDriverOnErrorJustComplete())
         
         let output = viewModel.transform(input)
+        
+        // MARK: При получении моделей сначала проксируем словарь с количеством ячеек в секциях
+        // А уже потом отправляем свежие модели в таблицу
         
         output.sectionModels
             .do(
@@ -99,6 +109,9 @@ class AddressesListViewController: BaseViewController {
                 }
             )
             .withLatestFrom(output.sectionModels) { ($0, $1) }
+            
+            // MARK: Ищем секцию, которая содержит Header с указанным идентификатором, и скроллим к нему
+            
             .map { scrollingBehavior, sectionModels -> (UICollectionView.ScrollPosition, IndexPath)? in
                 let neededSectionOffset = sectionModels.enumerated().first { _, model in
                     model.items.contains { $0.identity == scrollingBehavior.associatedIdentity }
@@ -122,7 +135,7 @@ class AddressesListViewController: BaseViewController {
     
     private func configureView() {
         mainContainerView.cornerRadius = 24
-        mainContainerView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        mainContainerView.layer.maskedCorners = .topCorners
         
         addButton.setImage(UIImage(named: "AddButtonIcon"), for: .normal)
         addButton.setImage(UIImage(named: "AddButtonIcon")?.darkened(), for: .highlighted)

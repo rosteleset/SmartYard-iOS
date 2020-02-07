@@ -8,6 +8,14 @@
 
 import UIKit
 
+// MARK: В общем, надо было сделать вокруг всей секции бордер, и между ячейками тоже разделитель
+// Сначала я просто добавил бордер однопиксельный вокруг каждой ячейки
+// И все было бы окей, но в местах, где ячейки соприкасались друг с другом, разделитель получался два пикселя
+// Поскольку мне было лень делать кастомный лайаут для CollectionView, я решил добавить качественный костыль
+// Добавил отдельный Layer для бордера, а поверх него добавил еще один, который перекрывает бордер
+// По толщине он равен толщине бордера, по цвету совпадает с бэкграундом ячейки
+// Получается, что он как бы маскирует бордер под собой и делает вид, что его "типа там нет"
+
 class CustomBorderCollectionViewCell: UICollectionViewCell {
     
     private let borderLayer = CALayer()
@@ -26,6 +34,9 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         )
     }
     
+    // MARK: Если ячейка первая в секции, то мы закругляем верхние углы
+    // Если ячейка последняя в секции, то мы закругляем нижние углы
+    // Если ячейка не первая в секции, то нам нужно замаскировать верхнюю границу, чтобы разделитель был в 1 пиксель
     func addCustomBorder(
         isFirstInSection: Bool,
         isLastInSection: Bool,
@@ -36,11 +47,11 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         var maskedCorners = CACornerMask()
         
         if isFirstInSection {
-            maskedCorners.insert([.layerMinXMinYCorner, .layerMaxXMinYCorner])
+            maskedCorners.insert(.topCorners)
         }
         
         if isLastInSection {
-            maskedCorners.insert([.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+            maskedCorners.insert(.bottomCorners)
         }
         
         addCustomBorder(
@@ -70,7 +81,8 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         borderLayer.cornerRadius = customCornerRadius
         borderLayer.maskedCorners = maskedCorners
         
-        guard !maskedCorners.contains([.layerMinXMinYCorner, .layerMaxXMinYCorner]) else {
+        // MARK: Если ячейка не первая в секции, то маскируем верхнюю границу
+        guard !maskedCorners.contains(.topCorners) else {
             return
         }
         
