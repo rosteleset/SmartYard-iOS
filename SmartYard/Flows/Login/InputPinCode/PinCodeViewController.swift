@@ -10,6 +10,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 import RxViewController
+import IHKeyboardAvoiding
 
 class PinCodeViewController: BaseViewController {
 
@@ -17,6 +18,7 @@ class PinCodeViewController: BaseViewController {
     @IBOutlet private weak var fixPhoneNumberButton: UIButton!
     @IBOutlet private weak var sendCodeAgainGroupView: UIView!
     @IBOutlet private weak var pinInputFieldView: PinTextField!
+    @IBOutlet private weak var containerView: TopRoundedView!
     
     // swiftlint:disable all
     @IBOutlet weak var timerLabel: UILabel!
@@ -52,16 +54,7 @@ class PinCodeViewController: BaseViewController {
         pinInputFieldView.reset()
         sendCodeAgainLabelView.isHidden = true
         sendCodeAgainButton.isHidden = false
-    }
-    
-    private func moveSendAgainGroup(to position: CGFloat) {
-        UIView.animate(
-            withDuration: 1,
-            animations: { [weak self] in
-                self?.sendCodeAgainGroupButtonConstraint.constant = position
-                self?.view.layoutIfNeeded()
-            }
-        )
+        KeyboardAvoiding.avoidingView = containerView
     }
     
     private func bind() {
@@ -71,20 +64,6 @@ class PinCodeViewController: BaseViewController {
                     self?.sendCodeAgainButton.isHidden.toggle()
                     self?.sendCodeAgainLabelView.isHidden.toggle()
                     self?.runCodeTimer()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        getKeyboardHeightObservable()
-            .observeOn(MainScheduler.instance)
-            .subscribe(
-                onNext: { [weak self] height in
-                    guard height != 0 else {
-                        self?.moveSendAgainGroup(to: 28)
-                        return
-                    }
-                    
-                    self?.moveSendAgainGroup(to: 5 + height)
                 }
             )
             .disposed(by: disposeBag)
