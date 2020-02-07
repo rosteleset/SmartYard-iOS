@@ -113,6 +113,8 @@
 		E9A4D49F23ED4E900070A591 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */; };
 		E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */; };
 		E9A4D49D23EC49E40070A591 /* UIViewController+KeyboardHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49C23EC49E40070A591 /* UIViewController+KeyboardHeight.swift */; };
+		E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */; };
+		E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -227,6 +229,8 @@
 		E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardTextField.swift; sourceTree = "<group>"; };
 		E9A4D49C23EC49E40070A591 /* UIViewController+KeyboardHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+KeyboardHeight.swift"; sourceTree = "<group>"; };
+		E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthByContractNumViewController.swift; sourceTree = "<group>"; };
+		E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthByContractNumViewController.xib; sourceTree = "<group>"; };
 		F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -659,6 +663,8 @@
 				844AC3C623EBFC240066006D /* MainTabBar */,
 				844AC3B423EB0FD80066006D /* UserName */,
 				844AC39A23E9871F0066006D /* IncomingCall */,
+				E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */,
+				E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -978,6 +984,7 @@
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
 				E9A4D49423EC2CC20070A591 /* PinCodeViewController.xib in Resources */,
 				844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */,
+				E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */,
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
 				844AC3E923EBFEC50066006D /* PaymentsViewController.xib in Resources */,
@@ -1115,6 +1122,7 @@
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
 				844AC39723E9788D0066006D /* APIAddress.swift in Sources */,
 				844AC38323E8641B0066006D /* ConfirmCodeResponseData.swift in Sources */,
+				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
 				84AA8D5B23E2CEC5001B3B43 /* BaseAPIResponse.swift in Sources */,
 				84AA8D4823E2CD48001B3B43 /* APITarget.swift in Sources */,
 				844AC3D523EBFDAF0066006D /* AddressesListViewModel.swift in Sources */,
