@@ -27,8 +27,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
     override func prepareTransition(for route: HomeRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = AddressesViewModel()
-            let vc = AddressesViewController(viewModel: vm)
+            let vm = AddressesListViewModel()
+            let vc = AddressesListViewController(viewModel: vm)
             return .set([vc])
         }
     }
