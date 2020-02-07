@@ -28,6 +28,7 @@ target 'SmartYard' do
   pod 'IHKeyboardAvoiding'
   pod 'TouchAreaInsets'
   pod 'PinLayout'
+  pod 'SSCustomTabbar', '2.0.2'
   
   # Analytics
   pod 'Fabric'

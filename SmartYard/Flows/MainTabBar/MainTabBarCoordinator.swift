@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import XCoordinator
+import SSCustomTabbar
 
 enum MainTabBarRoute: Route {
     case home
@@ -34,6 +35,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let paymentsTabBarItem: UITabBarItem
     private let settingsTabBarItem: UITabBarItem
     
+    // swiftlint:disable:next function_body_length
     init(
         apiWrapper: APIWrapper
     ) {
@@ -101,7 +103,19 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.paymentsRouter = paymentsCoordinator.strongRouter
         self.settingsRouter = settingsCoordinator.strongRouter
         
+        // MARK: Инициализация кастомного UITabBarController
+        
+        let nib = UINib(nibName: "CustomTabBarController", bundle: .main)
+        
+        guard let customTabBarController = nib.instantiate(
+            withOwner: nil,
+            options: nil
+        ).first as? SSCustomTabBarViewController else {
+            fatalError("Failed to load custom UITabBarController")
+        }
+        
         super.init(
+            rootViewController: customTabBarController,
             tabs: [homeRouter, chatRouter, paymentsRouter, settingsRouter],
             select: homeRouter
         )

@@ -118,6 +118,7 @@ PODS:
   - RxViewController (1.0.0):
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
+  - SSCustomTabbar (2.0.2)
   - SwifterSwift (4.6.0):
     - SwifterSwift/AppKit (= 4.6.0)
     - SwifterSwift/CoreGraphics (= 4.6.0)
@@ -160,6 +161,7 @@ DEPENDENCIES:
   - RxDataSources
   - RxSwift
   - RxViewController
+  - SSCustomTabbar (= 2.0.2)
   - SwifterSwift (= 4.6)
   - SwiftLint (= 0.35)
   - TouchAreaInsets
@@ -200,6 +202,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - RxViewController
+    - SSCustomTabbar
     - SwifterSwift
     - SwiftLint
     - TouchAreaInsets
@@ -241,11 +244,12 @@ SPEC CHECKSUMS:
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
+  SSCustomTabbar: e18f8aa256bce5c8a4742e53e638f64b33fb0e10
   SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
   SwiftLint: 5553187048b900c91aa03552807681bb6b027846
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: 73ddcc5c01299c61c1c931f8b1c6a29400998c94
+PODFILE CHECKSUM: 5d4f91e4177a945e65bca6de2e02baaa34b16cee
 
 COCOAPODS: 1.8.4
