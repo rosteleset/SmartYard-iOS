@@ -9,6 +9,14 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Bold.ttf">
+            <string>SourceSansPro-Bold</string>
+        </array>
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthByContractNumViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
@@ -20,28 +28,99 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="vyf-cd-Hpw">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="vyf-cd-Hpw">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
-                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-VH-arK">
-                    <rect key="frame" x="0.0" y="515" width="414" height="128"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-VH-arK" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="339" width="414" height="557"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1fV-QD-lmA" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="40" y="40" width="334" height="56"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="3w7-En-GbP"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hma-MD-8gc" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="40" y="112" width="334" height="56"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="rLp-2K-HVR"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ztw-Ug-GgA" customClass="WhiteButtonWithBorder" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="40" y="208" width="334" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="Hgx-z0-srN"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                            <state key="normal" title="У меня нет договора с лантой"/>
+                        </button>
+                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="1fV-QD-lmA" secondAttribute="trailing" constant="40" id="0AB-aU-2iM"/>
+                        <constraint firstItem="1fV-QD-lmA" firstAttribute="leading" secondItem="mmM-VH-arK" secondAttribute="leading" constant="40" id="3wx-m4-fWR"/>
+                        <constraint firstItem="Hma-MD-8gc" firstAttribute="top" secondItem="1fV-QD-lmA" secondAttribute="bottom" constant="16" id="GLc-dI-0N4"/>
+                        <constraint firstAttribute="trailing" secondItem="Hma-MD-8gc" secondAttribute="trailing" constant="40" id="IHw-Aj-N15"/>
+                        <constraint firstItem="Hma-MD-8gc" firstAttribute="leading" secondItem="mmM-VH-arK" secondAttribute="leading" constant="40" id="Jt4-gh-jyM"/>
+                        <constraint firstItem="ztw-Ug-GgA" firstAttribute="leading" secondItem="mmM-VH-arK" secondAttribute="leading" constant="40" id="WlY-oW-uTE"/>
+                        <constraint firstItem="ztw-Ug-GgA" firstAttribute="top" secondItem="Hma-MD-8gc" secondAttribute="bottom" constant="40" id="exU-Kn-7tP"/>
+                        <constraint firstItem="1fV-QD-lmA" firstAttribute="top" secondItem="mmM-VH-arK" secondAttribute="top" constant="40" id="lM2-WR-ngf"/>
+                        <constraint firstAttribute="trailing" secondItem="ztw-Ug-GgA" secondAttribute="trailing" constant="40" id="wnJ-Rn-Ax8"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xiT-ww-dUY">
+                    <rect key="frame" x="0.0" y="44" width="414" height="295"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="У вас есть договор в Лантой?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U90-l7-45t">
+                            <rect key="frame" x="40" y="100" width="314" height="80.5"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Введите номер и пароль договора, привязанного к данному адресу,  и управляйте услугами из этого приложения." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IL8-bB-yIA">
+                            <rect key="frame" x="40" y="200.5" width="314" height="53"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="IL8-bB-yIA" firstAttribute="leading" secondItem="xiT-ww-dUY" secondAttribute="leading" constant="40" id="3ck-S5-Y88"/>
+                        <constraint firstItem="U90-l7-45t" firstAttribute="top" secondItem="xiT-ww-dUY" secondAttribute="top" constant="100" id="641-5u-q3v"/>
+                        <constraint firstAttribute="trailing" secondItem="IL8-bB-yIA" secondAttribute="trailing" constant="60" id="ZMK-h5-HDF"/>
+                        <constraint firstItem="U90-l7-45t" firstAttribute="leading" secondItem="xiT-ww-dUY" secondAttribute="leading" constant="40" id="aRM-OF-5V7"/>
+                        <constraint firstItem="IL8-bB-yIA" firstAttribute="top" secondItem="U90-l7-45t" secondAttribute="bottom" constant="20" id="c4P-H0-9aI"/>
+                        <constraint firstAttribute="height" constant="295" id="gO7-gH-MUY"/>
+                        <constraint firstAttribute="trailing" secondItem="U90-l7-45t" secondAttribute="trailing" constant="60" id="gtO-Rb-3GT"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xiT-ww-dUY" secondAttribute="trailing" id="DNu-fZ-rff"/>
                 <constraint firstItem="vyf-cd-Hpw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="HtP-Je-H9S"/>
                 <constraint firstItem="vyf-cd-Hpw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Opi-qZ-s3O"/>
+                <constraint firstItem="xiT-ww-dUY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="S8a-xO-bkd"/>
+                <constraint firstItem="mmM-VH-arK" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="cwT-TR-Yv4"/>
                 <constraint firstItem="mmM-VH-arK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="hch-aB-D11"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="mmM-VH-arK" secondAttribute="trailing" id="n7g-nV-3Qv"/>
                 <constraint firstAttribute="bottom" secondItem="vyf-cd-Hpw" secondAttribute="bottom" id="nOi-TS-UD6"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="mmM-VH-arK" secondAttribute="bottom" id="owk-nK-kzL"/>
+                <constraint firstAttribute="bottom" secondItem="mmM-VH-arK" secondAttribute="bottom" id="owk-nK-kzL"/>
                 <constraint firstAttribute="trailing" secondItem="vyf-cd-Hpw" secondAttribute="trailing" id="q83-vV-JlC"/>
+                <constraint firstItem="xiT-ww-dUY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="wd2-xD-bBd"/>
+                <constraint firstItem="mmM-VH-arK" firstAttribute="top" secondItem="xiT-ww-dUY" secondAttribute="bottom" id="zEi-rN-bsC"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="137.68115942028987" y="110.49107142857143"/>
         </view>
     </objects>
     <resources>
-        <image name="mainBackground" width="375" height="812"/>
+        <image name="MainBackground" width="375" height="812"/>
     </resources>
 </document>
