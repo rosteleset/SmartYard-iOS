@@ -125,10 +125,10 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
         switch route {
-        case .home: return .select(homeRouter)
-        case .chat: return .select(chatRouter)
-        case .payments: return .select(paymentsRouter)
-        case .settings: return .select(settingsRouter)
+        case .home: return .selectAndCallDelegate(homeRouter)
+        case .chat: return .selectAndCallDelegate(chatRouter)
+        case .payments: return .selectAndCallDelegate(paymentsRouter)
+        case .settings: return .selectAndCallDelegate(settingsRouter)
         }
     }
     
