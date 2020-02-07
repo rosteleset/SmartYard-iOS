@@ -37,6 +37,13 @@ class PinTextField: PMNibLinkableView {
         bind()
     }
     
+    func getPinTextDriver() -> Driver<String> {
+        return fakeTextField.rx.text
+            .orEmpty
+            .observeOn(MainScheduler.asyncInstance)
+            .asDriver(onErrorJustReturn: "")
+    }
+    
     func fetchInputNumber() -> String? {
         return fakeTextField.text
     }

@@ -19,22 +19,36 @@ class PinCodeViewModel: BaseViewModel  {
         self.router = router
     }
     
+    let incorrectPinTrigger = PublishSubject<Bool>()
+    
     func transform(input: Input) -> Output {
+        // TODO: Получить реальный пин-код от API
+        input.inputPinText
+            .distinctUntilChanged()
+            .filter { $0.count == Constants.pinLength }
+            .map { $0 == "1234" }
+            .drive(
+                onNext: { [weak self] isCorrectPin in
+                    self?.incorrectPinTrigger.onNext(isCorrectPin)
+                }
+            )
+            .disposed(by: disposeBag)
         
-        return Output()
+        return Output(checkPinTrigger: incorrectPinTrigger.asDriverOnErrorJustComplete())
     }
+    
 }
 
 extension PinCodeViewModel {
     
     struct Input {
-        let pinCode: Driver<String?>
+        let inputPinText: Driver<String>
         let fixPhoneNumberButtonTapped: Driver<Void>
         let sendCodeAgainButtonDidTapped: Driver<Void>
     }
     
     struct Output {
-
+        let checkPinTrigger: Driver<Bool>
     }
     
 }

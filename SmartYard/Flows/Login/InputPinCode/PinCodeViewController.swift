@@ -58,13 +58,6 @@ class PinCodeViewController: BaseViewController {
     }
     
     private func bind() {
-        fixPhoneNumberButton.rx.tap
-            .subscribe(
-                onNext: {
-            
-            }
-        )
-        
         sendCodeAgainButton.rx.tap
             .subscribe(
                 onNext: { [weak self] _ in
@@ -85,6 +78,22 @@ class PinCodeViewController: BaseViewController {
                     }
                     
                     self?.moveKeyboard(to: 10 + height)
+                }
+            )
+            .disposed(by: disposeBag)
+
+        let input = PinCodeViewModel.Input(
+            inputPinText: pinInputFieldView.getPinTextDriver(),
+            fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(),
+            sendCodeAgainButtonDidTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.checkPinTrigger
+            .drive(
+                onNext: { [weak self] isCorrect in
+                    self?.pinInputFieldView.markPass(isCorrect: isCorrect)
                 }
             )
             .disposed(by: disposeBag)
