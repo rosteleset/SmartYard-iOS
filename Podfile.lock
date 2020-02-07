@@ -161,7 +161,7 @@ DEPENDENCIES:
   - RxDataSources
   - RxSwift
   - RxViewController
-  - SSCustomTabbar (= 2.0.2)
+  - SSCustomTabbar (from `https://github.com/MadBrains/SSCustomTabbar.git`, branch `feature/add-animation-options`)
   - SwifterSwift (= 4.6)
   - SwiftLint (= 0.35)
   - TouchAreaInsets
@@ -202,13 +202,22 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - RxViewController
-    - SSCustomTabbar
     - SwifterSwift
     - SwiftLint
     - TouchAreaInsets
     - XCoordinator
   https://gitlab.linphone.org/BC/public/podspec.git:
     - linphone-sdk
+
+EXTERNAL SOURCES:
+  SSCustomTabbar:
+    :branch: feature/add-animation-options
+    :git: https://github.com/MadBrains/SSCustomTabbar.git
+
+CHECKOUT OPTIONS:
+  SSCustomTabbar:
+    :commit: 90e83f277033d7cd2374e6fb71a926e800ce3659
+    :git: https://github.com/MadBrains/SSCustomTabbar.git
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
@@ -250,6 +259,6 @@ SPEC CHECKSUMS:
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: 5d4f91e4177a945e65bca6de2e02baaa34b16cee
+PODFILE CHECKSUM: da554837a85efb68e37224e7db8e91835714de69
 
 COCOAPODS: 1.8.4

@@ -114,6 +114,13 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             fatalError("Failed to load custom UITabBarController")
         }
         
+        customTabBarController.animationConfiguration = AnimationConfiguration(
+            duration: 0.5,
+            delay: 0,
+            springDampingRatio: 0.65,
+            initialSpringVelocity: 0
+        )
+        
         super.init(
             rootViewController: customTabBarController,
             tabs: [homeRouter, chatRouter, paymentsRouter, settingsRouter],
