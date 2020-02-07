@@ -35,18 +35,25 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fyG-BD-Iur" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="113" width="414" height="783"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Введите код из СМС,  отправленный на номер +79025308094" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDz-2O-KUv">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Введите код из СМС,  отправленный на номер +79025308094" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDz-2O-KUv">
                             <rect key="frame" x="80" y="36" width="254" height="31.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8f-g0-jL7">
+                        <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8f-g0-jL7">
                             <rect key="frame" x="107" y="96" width="200" height="30"/>
                             <state key="normal" title="Исправить номер телефона">
                                 <color key="titleColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="0.5" colorSpace="calibratedRGB"/>
                             </state>
                         </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mfp-YF-jc5" customClass="PinTextField" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="5" y="146" width="404" height="80"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="K1v-AC-dBA"/>
+                            </constraints>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8mg-56-oeR">
                             <rect key="frame" x="0.0" y="695" width="414" height="60"/>
                             <subviews>
@@ -98,13 +105,6 @@
                                 <constraint firstItem="8gN-95-GzJ" firstAttribute="centerY" secondItem="8mg-56-oeR" secondAttribute="centerY" id="vpP-rS-lOt"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mfp-YF-jc5" customClass="PinTextField" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="5" y="146" width="404" height="80"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="80" id="K1v-AC-dBA"/>
-                            </constraints>
-                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -113,9 +113,9 @@
                         <constraint firstItem="eDz-2O-KUv" firstAttribute="centerX" secondItem="fyG-BD-Iur" secondAttribute="centerX" id="6pf-y9-dOI"/>
                         <constraint firstAttribute="bottom" secondItem="8mg-56-oeR" secondAttribute="bottom" constant="28" id="6yx-V2-Gva"/>
                         <constraint firstItem="Mfp-YF-jc5" firstAttribute="leading" secondItem="fyG-BD-Iur" secondAttribute="leading" constant="5" id="G5y-Y7-nRi"/>
-                        <constraint firstItem="c8f-g0-jL7" firstAttribute="top" secondItem="fyG-BD-Iur" secondAttribute="top" constant="96" id="PtJ-WB-Yws"/>
+                        <constraint firstItem="c8f-g0-jL7" firstAttribute="top" secondItem="eDz-2O-KUv" secondAttribute="bottom" constant="28.5" id="JHg-vj-7Tb"/>
                         <constraint firstItem="Mfp-YF-jc5" firstAttribute="top" secondItem="c8f-g0-jL7" secondAttribute="bottom" constant="20" id="Qgh-Kp-abw"/>
-                        <constraint firstItem="8mg-56-oeR" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Mfp-YF-jc5" secondAttribute="bottom" priority="999" id="gsn-67-jkn"/>
+                        <constraint firstItem="8mg-56-oeR" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Mfp-YF-jc5" secondAttribute="bottom" constant="50" id="gsn-67-jkn"/>
                         <constraint firstItem="eDz-2O-KUv" firstAttribute="top" secondItem="fyG-BD-Iur" secondAttribute="top" constant="36" id="kcr-3L-fY7"/>
                         <constraint firstItem="8mg-56-oeR" firstAttribute="leading" secondItem="fyG-BD-Iur" secondAttribute="leading" id="wxS-lU-6Jo"/>
                         <constraint firstAttribute="trailing" secondItem="8mg-56-oeR" secondAttribute="trailing" id="xrr-ci-KSR"/>
@@ -126,7 +126,7 @@
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jxW-Bf-8Xa" secondAttribute="trailing" id="2Lw-vD-dKV"/>
                 <constraint firstItem="jxW-Bf-8Xa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="9Jx-Bd-Dm6"/>
-                <constraint firstItem="fyG-BD-Iur" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="69" id="C4G-6J-I0C"/>
+                <constraint firstItem="fyG-BD-Iur" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" priority="999" constant="69" id="C4G-6J-I0C"/>
                 <constraint firstAttribute="bottom" secondItem="fyG-BD-Iur" secondAttribute="bottom" id="QJh-UN-hSQ"/>
                 <constraint firstAttribute="bottom" secondItem="jxW-Bf-8Xa" secondAttribute="bottom" id="ce8-mf-TLp"/>
                 <constraint firstItem="jxW-Bf-8Xa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kFa-qT-JzD"/>

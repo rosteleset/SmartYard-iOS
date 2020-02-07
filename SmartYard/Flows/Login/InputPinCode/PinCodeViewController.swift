@@ -11,6 +11,7 @@ import RxCocoa
 import RxSwift
 import RxViewController
 import IHKeyboardAvoiding
+import RxKeyboard
 
 class PinCodeViewController: BaseViewController {
 
@@ -47,6 +48,7 @@ class PinCodeViewController: BaseViewController {
         super.viewDidLoad()
         bind()
         configureView()
+        configureRxKeyboard()
     }
 
     private func configureView() {
@@ -54,7 +56,20 @@ class PinCodeViewController: BaseViewController {
         pinInputFieldView.reset()
         sendCodeAgainLabelView.isHidden = true
         sendCodeAgainButton.isHidden = false
-        KeyboardAvoiding.avoidingView = containerView
+    }
+    
+    private func configureRxKeyboard() {
+        RxKeyboard.instance.visibleHeight
+            .drive(
+                onNext: { [weak self] keyboardVisibleHeight in
+                    self?.sendCodeAgainGroupButtonConstraint.constant = keyboardVisibleHeight + 28
+                    
+                    UIView.animate(withDuration: 1) {
+                        self?.view.layoutIfNeeded()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func bind() {
