@@ -788,8 +788,8 @@
 			isa = PBXGroup;
 			children = (
 				E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */,
-				E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */,
 				E99EA6C223EAA97900BECEE6 /* InputPhoneNumberViewModel.swift */,
+				E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */,
 			);
 			path = InputPhoneNumber;
 			sourceTree = "<group>";
@@ -834,9 +834,9 @@
 			isa = PBXGroup;
 			children = (
 				E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */,
-				E9A4D49223EC2CC10070A591 /* PinCodeViewController.xib */,
-				E9A4D48223EC229F0070A591 /* PinCodeViewModel.swift */,
 				E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */,
+				E9A4D48223EC229F0070A591 /* PinCodeViewModel.swift */,
+				E9A4D49223EC2CC10070A591 /* PinCodeViewController.xib */,
 			);
 			path = InputPinCode;
 			sourceTree = "<group>";

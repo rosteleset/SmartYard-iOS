@@ -10,7 +10,7 @@ import Foundation
 
 extension PinCodeViewController {
     
-    func runCountDownCodeTimer() {
+    func runCodeTimer() {
         timeEnd = Date(timeInterval: 60, since: Date())
         updateTimer()
         
@@ -60,7 +60,7 @@ extension PinCodeViewController {
         let min = String(minutes)
         let sec = String(seconds)
         
-        let minutesText =  min.count == 1 ? "0" + min : min
+        let minutesText = min.count == 1 ? "0" + min : min
         let secondesText = sec.count == 1 ? "0" + sec : sec
         timerLabel.text = minutesText + ":" + secondesText
     }
