@@ -21,13 +21,8 @@ extension UIColor {
         /// #F0F0F1
         static let grayBorder = UIColor(hex: 0xF0F0F1)!
         
-        static var incorrectPinColor: UIColor {
-            return UIColor(red: 1, green: 0.231, blue: 0.188, alpha: 1)
-        }
-    }
-    
-    static var smartYardBlueColor: UIColor {
-        return UIColor(red: 0.161, green: 0.545, blue: 1, alpha: 1)
+        /// #FF3B30
+        static let incorrectPinColor = UIColor(hex: 0xFF3B30)
     }
     
 }

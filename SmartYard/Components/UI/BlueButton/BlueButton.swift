@@ -15,7 +15,7 @@ class BlueButton: UIButton {
         super.layoutSubviews()
         
         cornerRadius = 12
-        backgroundColor = .smartYardBlueColor
+        backgroundColor = UIColor.SmartYard.blue
     }
     
 }
