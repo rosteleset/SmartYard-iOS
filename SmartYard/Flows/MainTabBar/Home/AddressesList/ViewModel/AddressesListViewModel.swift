@@ -11,13 +11,17 @@ import RxCocoa
 
 class AddressesListViewModel: BaseViewModel {
     
+    // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
     
     func transform(_ input: Input) -> Output {
-        // MARK: Скрытие / раскрытие секции
+        // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг
         
         let scrollingModeSubject = PublishSubject<AddressesListScrollingMode>()
         let scrollingMode = scrollingModeSubject.asDriverOnErrorJustComplete()
+        
+        // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
+        // Это приведет к обновлению секций
         
         input.itemSelected
             .flatMap { identity -> Driver<String> in
@@ -36,7 +40,9 @@ class AddressesListViewModel: BaseViewModel {
                 
                 return ((addressId, newState), dict)
             }
+            
             // MARK: Вынес в блок do, чтобы не делать сайд-эффектов в map
+            
             .do(
                 onNext: { args in
                     let (updatedSectionInfo, _) = args
@@ -75,6 +81,9 @@ class AddressesListViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     private func createMockSections(expansionStateDict: [String: Bool]) -> [AddressesListSectionModel] {
+        // MARK: Пока моки, но в принципе, нет ничего сложного прикрутить сюда реальные данные
+        // Просто будем пробегать в цикле по всем адресам и генерировать для них секции
+        
         let firstAddressId = "1000"
         let isFirstSectionExpanded = expansionStateDict[firstAddressId, default: false]
         
