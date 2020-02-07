@@ -15,12 +15,15 @@ class PinCodeViewController: BaseViewController {
     @IBOutlet private weak var hintInputPhoneLabel: UILabel!
     @IBOutlet private weak var fixPhoneNumberButton: UIButton!
     @IBOutlet private weak var sendCodeAgainGroupView: UIView!
-    @IBOutlet private weak var sendCodeAgainLabelView: UIView!
-    @IBOutlet private weak var timerLabel: UILabel!
-    @IBOutlet private weak var sendCodeAgainButton: BlueButton!
     @IBOutlet private weak var pinInputFieldView: PinTextField!
+    @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var sendCodeAgainLabelView: UIView!
+    @IBOutlet weak var sendCodeAgainButton: BlueButton!
     
     @IBOutlet private weak var sendCodeAgainGroupButtonConstraint: NSLayoutConstraint!
+    
+    var timer: Timer?
+    var timeEnd: Date?
     
     let viewModel: PinCodeViewModel
     
@@ -36,8 +39,8 @@ class PinCodeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
         bind()
+        configureView()
     }
 
     private func configureView() {
@@ -63,7 +66,7 @@ class PinCodeViewController: BaseViewController {
                 onNext: { [weak self] _ in
                     self?.sendCodeAgainButton.isHidden.toggle()
                     self?.sendCodeAgainLabelView.isHidden.toggle()
-                    self?.pinInputFieldView.markPass(isCorrect: false)
+                    self?.runCountDownCodeTimer()
                 }
             )
             .disposed(by: disposeBag)
