@@ -89,10 +89,17 @@ class PinCodeViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
 
+        let pinTextSubject = PublishSubject<String>()
+        
+        pinInputFieldView.rx.textControlProperty
+            .map { $0 ?? "" }
+            .bind(to: pinTextSubject)
+            .disposed(by: disposeBag)
+        
         let input = PinCodeViewModel.Input(
-            inputPinText: pinInputFieldView.getPinTextDriver(),
+            inputPinText: pinTextSubject.asDriver(onErrorJustReturn: ""),
             fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(),
-            sendCodeAgainButtonapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete(),
+            sendCodeAgainButtonTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete(),
             viewWillAppearTrigger: rx.viewWillAppear.asDriver(onErrorJustReturn: false)
         )
         

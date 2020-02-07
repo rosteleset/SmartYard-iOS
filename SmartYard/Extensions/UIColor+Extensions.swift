@@ -22,7 +22,7 @@ extension UIColor {
         static let grayBorder = UIColor(hex: 0xF0F0F1)!
         
         /// #FF3B30
-        static let incorrectPinColor = UIColor(hex: 0xFF3B30)
+        static let incorrectDataRed = UIColor(hex: 0xFF3B30)
     }
     
 }

@@ -20,8 +20,9 @@ class PinTextField: PMNibLinkableView {
     @IBOutlet private weak var thirdNumField: PinNumberField!
     @IBOutlet private weak var fourthNumField: PinNumberField!
     
-    @IBOutlet private weak var fakeTextField: UITextField!
     @IBOutlet private weak var wrongPassLabel: UILabel!
+    
+    @IBOutlet weak var fakeTextField: UITextField!
     
     private var numberViewsCollection: [PinNumberField] {
         return [firstNumField, secondNumField, thirdNumField, fourthNumField]
@@ -35,13 +36,6 @@ class PinTextField: PMNibLinkableView {
         configureFakeTextField()
         addViewTapGesture()
         bind()
-    }
-    
-    func getPinTextDriver() -> Driver<String> {
-        return fakeTextField.rx.text
-            .orEmpty
-            .observeOn(MainScheduler.asyncInstance)
-            .asDriver(onErrorJustReturn: "")
     }
     
     func fetchInputNumber() -> String? {
@@ -111,7 +105,7 @@ extension PinTextField: UITextFieldDelegate {
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
-        ) -> Bool {
+    ) -> Bool {
         guard let textFieldText = textField.text,
             let rangeOfTextToReplace = Range(range, in: textFieldText)
             else {
@@ -126,3 +120,10 @@ extension PinTextField: UITextFieldDelegate {
     
 }
 
+extension Reactive where Base: PinTextField {
+    
+    var textControlProperty: ControlProperty<String?> {
+        return base.fakeTextField.rx.text
+    }
+    
+}

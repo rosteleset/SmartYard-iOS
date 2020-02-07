@@ -16,6 +16,8 @@ class PhoneTextField: PMNibLinkableView {
     
     @IBOutlet private weak var containerView: UIView!
     
+    private(set) var text = ""
+    
     @IBOutlet private weak var firstNumView: NumberFieldView!
     @IBOutlet private weak var secondNumView: NumberFieldView!
     @IBOutlet private weak var thirdNumView: NumberFieldView!
@@ -29,7 +31,7 @@ class PhoneTextField: PMNibLinkableView {
     @IBOutlet private weak var ninthNumView: NumberFieldView!
     @IBOutlet private weak var tenthNumView: NumberFieldView!
     
-    @IBOutlet private weak var fakeTextField: UITextField!
+    @IBOutlet weak var fakeTextField: UITextField!
     
     private var numberViewsCollection: [NumberFieldView] {
         return [
@@ -48,13 +50,6 @@ class PhoneTextField: PMNibLinkableView {
         configureFakeTextField()
         addViewTapGesture()
         bind()
-    }
-    
-    func getPhoneTextDriver() -> Driver<String> {
-        return fakeTextField.rx.text
-            .orEmpty
-            .observeOn(MainScheduler.asyncInstance)
-            .asDriver(onErrorJustReturn: "")
     }
     
     func fetchInputNumber() -> String? {
@@ -132,6 +127,14 @@ extension PhoneTextField: UITextFieldDelegate {
         let count = textFieldText.count - substringToReplace.count + string.count
         
         return count <= Constants.phoneLengthWithoutPrefix
+    }
+    
+}
+
+extension Reactive where Base: PhoneTextField {
+    
+    var textControlProperty: ControlProperty<String?> {
+        return base.fakeTextField.rx.text
     }
     
 }

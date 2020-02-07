@@ -35,8 +35,15 @@ class InputPhoneNumberViewController: BaseViewController {
     }
     
     private func bind() {
+        let phoneTextSubject = PublishSubject<String>()
+        
+        phoneTextView.rx.textControlProperty
+            .map { $0 ?? "" }
+            .bind(to: phoneTextSubject)
+            .disposed(by: disposeBag)
+        
         let input = InputPhoneNumberViewModel.Input(
-            inputPhoneText: phoneTextView.getPhoneTextDriver()
+            inputPhoneText: phoneTextSubject.asDriver(onErrorJustReturn: "")
         )
         
         _ = viewModel.transform(input: input)
