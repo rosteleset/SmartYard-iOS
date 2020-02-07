@@ -47,7 +47,7 @@ class PinCodeViewController: BaseViewController {
         sendCodeAgainButton.isHidden = false
     }
     
-    private func moveKeyboard(to position: CGFloat) {
+    private func moveSendAgainGroup(to position: CGFloat) {
         UIView.animate(
             withDuration: 1,
             animations: { [weak self] in
@@ -73,11 +73,11 @@ class PinCodeViewController: BaseViewController {
             .subscribe(
                 onNext: { [weak self] height in
                     guard height != 0 else {
-                        self?.moveKeyboard(to: 28)
+                        self?.moveSendAgainGroup(to: 28)
                         return
                     }
                     
-                    self?.moveKeyboard(to: 10 + height)
+                    self?.moveSendAgainGroup(to: 10 + height)
                 }
             )
             .disposed(by: disposeBag)
