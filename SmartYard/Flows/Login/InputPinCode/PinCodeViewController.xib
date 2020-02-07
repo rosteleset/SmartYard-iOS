@@ -98,10 +98,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mfp-YF-jc5" customClass="PinTextField" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="5" y="174" width="404" height="100"/>
+                            <rect key="frame" x="5" y="146" width="404" height="80"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="100" id="hfA-ql-X2G"/>
+                                <constraint firstAttribute="height" constant="80" id="K1v-AC-dBA"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -113,8 +113,8 @@
                         <constraint firstAttribute="bottom" secondItem="8mg-56-oeR" secondAttribute="bottom" constant="28" id="6yx-V2-Gva"/>
                         <constraint firstItem="Mfp-YF-jc5" firstAttribute="leading" secondItem="fyG-BD-Iur" secondAttribute="leading" constant="5" id="G5y-Y7-nRi"/>
                         <constraint firstItem="c8f-g0-jL7" firstAttribute="top" secondItem="fyG-BD-Iur" secondAttribute="top" constant="96" id="PtJ-WB-Yws"/>
-                        <constraint firstItem="Mfp-YF-jc5" firstAttribute="top" secondItem="c8f-g0-jL7" secondAttribute="bottom" constant="48" id="Qgh-Kp-abw"/>
-                        <constraint firstItem="8mg-56-oeR" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Mfp-YF-jc5" secondAttribute="bottom" constant="50" id="gsn-67-jkn"/>
+                        <constraint firstItem="Mfp-YF-jc5" firstAttribute="top" secondItem="c8f-g0-jL7" secondAttribute="bottom" constant="20" id="Qgh-Kp-abw"/>
+                        <constraint firstItem="8mg-56-oeR" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Mfp-YF-jc5" secondAttribute="bottom" id="gsn-67-jkn"/>
                         <constraint firstItem="eDz-2O-KUv" firstAttribute="top" secondItem="fyG-BD-Iur" secondAttribute="top" constant="36" id="kcr-3L-fY7"/>
                         <constraint firstItem="8mg-56-oeR" firstAttribute="leading" secondItem="fyG-BD-Iur" secondAttribute="leading" id="wxS-lU-6Jo"/>
                         <constraint firstAttribute="trailing" secondItem="8mg-56-oeR" secondAttribute="trailing" id="xrr-ci-KSR"/>

@@ -84,7 +84,7 @@ class PinCodeViewController: BaseViewController {
                         return
                     }
                     
-                    self?.moveSendAgainGroup(to: 10 + height)
+                    self?.moveSendAgainGroup(to: 5 + height)
                 }
             )
             .disposed(by: disposeBag)
