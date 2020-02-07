@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import XCoordinator
+import SSCustomTabbar
 
 enum MainTabBarRoute: Route {
     case home
@@ -34,6 +35,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let paymentsTabBarItem: UITabBarItem
     private let settingsTabBarItem: UITabBarItem
     
+    // swiftlint:disable:next function_body_length
     init(
         apiWrapper: APIWrapper
     ) {
@@ -101,7 +103,26 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.paymentsRouter = paymentsCoordinator.strongRouter
         self.settingsRouter = settingsCoordinator.strongRouter
         
+        // MARK: Инициализация кастомного UITabBarController
+        
+        let nib = UINib(nibName: "CustomTabBarController", bundle: .main)
+        
+        guard let customTabBarController = nib.instantiate(
+            withOwner: nil,
+            options: nil
+        ).first as? SSCustomTabBarViewController else {
+            fatalError("Failed to load custom UITabBarController")
+        }
+        
+        customTabBarController.animationConfiguration = AnimationConfiguration(
+            duration: 0.5,
+            delay: 0,
+            springDampingRatio: 0.65,
+            initialSpringVelocity: 0
+        )
+        
         super.init(
+            rootViewController: customTabBarController,
             tabs: [homeRouter, chatRouter, paymentsRouter, settingsRouter],
             select: homeRouter
         )
@@ -111,10 +132,10 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
         switch route {
-        case .home: return .select(homeRouter)
-        case .chat: return .select(chatRouter)
-        case .payments: return .select(paymentsRouter)
-        case .settings: return .select(settingsRouter)
+        case .home: return .selectAndCallDelegate(homeRouter)
+        case .chat: return .selectAndCallDelegate(chatRouter)
+        case .payments: return .selectAndCallDelegate(paymentsRouter)
+        case .settings: return .selectAndCallDelegate(settingsRouter)
         }
     }
     
