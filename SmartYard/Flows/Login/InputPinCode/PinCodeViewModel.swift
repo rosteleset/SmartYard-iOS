@@ -11,17 +11,21 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 
-class PinCodeViewModel: BaseViewModel  {
+class PinCodeViewModel: BaseViewModel {
     
-    let router: WeakRouter<AppRoute>
+    private let router: WeakRouter<AppRoute>
+    private let phoneNumber: String
     
-    init(router: WeakRouter<AppRoute>) {
+    init(router: WeakRouter<AppRoute>, phoneNumber: String) {
         self.router = router
+        self.phoneNumber = phoneNumber
     }
     
     let incorrectPinTrigger = PublishSubject<Bool>()
     
     func transform(input: Input) -> Output {
+        let phoneNumberTrigger = PublishSubject<String>()
+        
         // TODO: Получить реальный пин-код от API
         input.inputPinText
             .distinctUntilChanged()
@@ -34,7 +38,34 @@ class PinCodeViewModel: BaseViewModel  {
             )
             .disposed(by: disposeBag)
         
-        return Output(checkPinTrigger: incorrectPinTrigger.asDriverOnErrorJustComplete())
+        input.viewWillAppearTrigger
+            .drive(
+                onNext: { [weak self] _ in
+                    phoneNumberTrigger.onNext(self?.phoneNumber ?? "")
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.fixPhoneNumberButtonTapped
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.dismiss)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.sendCodeAgainButtonDidTapped
+            .drive(
+                onNext: {
+                    // TODO: send code again
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        return Output(
+            checkPinTrigger: incorrectPinTrigger.asDriverOnErrorJustComplete(),
+            phoneNumberValueTrigger: phoneNumberTrigger.asDriver(onErrorJustReturn: "")
+        )
     }
     
 }
@@ -45,10 +76,12 @@ extension PinCodeViewModel {
         let inputPinText: Driver<String>
         let fixPhoneNumberButtonTapped: Driver<Void>
         let sendCodeAgainButtonDidTapped: Driver<Void>
+        let viewWillAppearTrigger: Driver<Bool>
     }
     
     struct Output {
         let checkPinTrigger: Driver<Bool>
+        let phoneNumberValueTrigger: Driver<String>
     }
     
 }

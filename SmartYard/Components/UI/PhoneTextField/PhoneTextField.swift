@@ -50,6 +50,13 @@ class PhoneTextField: PMNibLinkableView {
         bind()
     }
     
+    func getPhoneTextDriver() -> Driver<String> {
+        return fakeTextField.rx.text
+            .orEmpty
+            .observeOn(MainScheduler.asyncInstance)
+            .asDriver(onErrorJustReturn: "")
+    }
+    
     func fetchInputNumber() -> String? {
         return fakeTextField.text
     }

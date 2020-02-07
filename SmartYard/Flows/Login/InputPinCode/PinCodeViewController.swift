@@ -7,8 +7,9 @@
 //
 
 import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import RxViewController
 
 class PinCodeViewController: BaseViewController {
 
@@ -91,10 +92,19 @@ class PinCodeViewController: BaseViewController {
         let input = PinCodeViewModel.Input(
             inputPinText: pinInputFieldView.getPinTextDriver(),
             fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(),
-            sendCodeAgainButtonDidTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete()
+            sendCodeAgainButtonDidTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete(),
+            viewWillAppearTrigger: rx.viewWillAppear.asDriver(onErrorJustReturn: false)
         )
         
         let output = viewModel.transform(input: input)
+        
+        output.phoneNumberValueTrigger
+            .drive(
+                onNext: { phoneNumber in
+                    self.hintInputPhoneLabel.text = "Введите код из СМС,\nотправленный на номер +7\(phoneNumber)"
+                }
+            )
+            .disposed(by: disposeBag)
         
         output.checkPinTrigger
             .drive(

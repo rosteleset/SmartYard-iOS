@@ -70,7 +70,7 @@
                             </constraints>
                         </view>
                         <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oEB-e9-S3i">
-                            <rect key="frame" x="198.5" y="-60" width="5" height="5"/>
+                            <rect key="frame" x="198.5" y="0.0" width="5" height="5"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="5" id="5ug-bq-HN6"/>
                                 <constraint firstAttribute="width" constant="5" id="GN5-KT-jgs"/>
@@ -93,7 +93,7 @@
                         <constraint firstItem="YOh-qG-YaO" firstAttribute="centerY" secondItem="yz2-2I-dqA" secondAttribute="centerY" id="JgM-Uj-xg0"/>
                         <constraint firstItem="oEB-e9-S3i" firstAttribute="centerX" secondItem="yz2-2I-dqA" secondAttribute="centerX" id="b9j-O2-3Df"/>
                         <constraint firstItem="YOh-qG-YaO" firstAttribute="centerX" secondItem="yz2-2I-dqA" secondAttribute="centerX" id="gYc-jc-jg0"/>
-                        <constraint firstItem="oEB-e9-S3i" firstAttribute="top" secondItem="yz2-2I-dqA" secondAttribute="top" constant="-60" id="yOY-dM-gcZ"/>
+                        <constraint firstItem="oEB-e9-S3i" firstAttribute="top" secondItem="yz2-2I-dqA" secondAttribute="top" id="yOY-dM-gcZ"/>
                     </constraints>
                 </view>
             </subviews>

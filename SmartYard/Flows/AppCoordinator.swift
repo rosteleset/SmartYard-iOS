@@ -21,6 +21,7 @@ enum AppRoute: Route {
     case dismiss
     case userName
     case phoneNumber
+    case pinCode(phoneNumber: String)
     
 }
 
@@ -83,7 +84,11 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .present(vc)
             
         case .phoneNumber:
-            let vm = PinCodeViewModel(router: weakRouter)
+            let vm = InputPhoneNumberViewModel(router: weakRouter)
+            return .present(InputPhoneNumberViewController(viewModel: vm))
+            
+        case let .pinCode(phoneNumber):
+            let vm = PinCodeViewModel(router: weakRouter, phoneNumber: phoneNumber)
             return .present(PinCodeViewController(viewModel: vm))
         }
     }
