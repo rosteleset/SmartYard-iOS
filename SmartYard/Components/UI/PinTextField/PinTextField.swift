@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 
 class PinTextField: PMNibLinkableView {
-
+    
     @IBOutlet private weak var containerView: UIView!
     
     @IBOutlet private weak var firstNumField: PinNumberField!
@@ -20,8 +20,9 @@ class PinTextField: PMNibLinkableView {
     @IBOutlet private weak var thirdNumField: PinNumberField!
     @IBOutlet private weak var fourthNumField: PinNumberField!
     
-    @IBOutlet private weak var fakeTextField: UITextField!
     @IBOutlet private weak var wrongPassLabel: UILabel!
+    
+    @IBOutlet fileprivate weak var fakeTextField: UITextField!
     
     private var numberViewsCollection: [PinNumberField] {
         return [firstNumField, secondNumField, thirdNumField, fourthNumField]
@@ -37,12 +38,12 @@ class PinTextField: PMNibLinkableView {
         bind()
     }
     
-    func fetchInputNumber() -> String? {
-        return fakeTextField.text
+    func hideKeyboard() {
+        fakeTextField.resignFirstResponder()
     }
     
-    func dismissKeybord() {
-        fakeTextField.resignFirstResponder()
+    func fetchInputNumber() -> String? {
+        return fakeTextField.text
     }
     
     func reset() {
@@ -62,10 +63,6 @@ class PinTextField: PMNibLinkableView {
     }
     
     @objc private func didPressNumberField() {
-        if fakeTextField.text?.count == Constants.pinLength {
-            reset()
-        }
-        
         fakeTextField.becomeFirstResponder()
     }
     
@@ -123,6 +120,14 @@ extension PinTextField: UITextFieldDelegate {
         let count = textFieldText.count - substringToReplace.count + string.count
         
         return count <= Constants.pinLength
+    }
+    
+}
+
+extension Reactive where Base: PinTextField {
+    
+    var textControlProperty: ControlProperty<String?> {
+        return base.fakeTextField.rx.text
     }
     
 }
