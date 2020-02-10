@@ -19,7 +19,7 @@ class SettingsAddAddressCell: UICollectionViewCell {
     
     private func configure() {
         addAddressButton.borderWidth = 1
-        addAddressButton.borderColor = UIColor(hex: 0x298BFF)
+        addAddressButton.borderColor = UIColor.SmartYard.blue
     }
 
 }

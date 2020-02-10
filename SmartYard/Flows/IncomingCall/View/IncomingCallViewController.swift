@@ -27,7 +27,7 @@ class IncomingCallViewController: BaseViewController {
     
     @IBOutlet private weak var imageView: UIImageView!
     
-    let viewModel: IncomingCallViewModel
+    private let viewModel: IncomingCallViewModel
     
     init(viewModel: IncomingCallViewModel) {
         self.viewModel = viewModel
