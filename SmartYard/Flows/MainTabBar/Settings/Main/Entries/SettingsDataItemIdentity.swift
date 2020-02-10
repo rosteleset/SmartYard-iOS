@@ -11,5 +11,6 @@ enum SettingsDataItemIdentity: Hashable {
     case header(addressId: String)
     case controlPanel(addressId: String)
     case action(addressId: String, actionId: String)
+    case addAddress
     
 }

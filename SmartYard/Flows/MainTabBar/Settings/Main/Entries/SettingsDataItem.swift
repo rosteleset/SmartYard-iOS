@@ -21,6 +21,7 @@ enum SettingsDataItem: IdentifiableType, Equatable {
     )
     
     case action(identity: SettingsDataItemIdentity, title: String)
+    case addAddress
     
 }
 
@@ -34,6 +35,8 @@ extension SettingsDataItem {
             return identity
         case .action(let identity, _):
             return identity
+        case .addAddress:
+            return .addAddress
         }
     }
     

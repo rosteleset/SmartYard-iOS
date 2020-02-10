@@ -63,6 +63,8 @@
 		84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A9323F1555700E6B78E /* SettingsDataItemIdentity.swift */; };
 		84898A9623F1556200E6B78E /* SettingsScrollingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A9523F1556200E6B78E /* SettingsScrollingMode.swift */; };
 		84898A9823F1556B00E6B78E /* SettingsSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */; };
+		84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A9A23F17EF100E6B78E /* SettingsAddAddressCell.swift */; };
+		84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84898A9B23F17EF100E6B78E /* SettingsAddAddressCell.xib */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4523E2CD3F001B3B43 /* APIService.swift */; };
@@ -184,6 +186,8 @@
 		84898A9323F1555700E6B78E /* SettingsDataItemIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataItemIdentity.swift; sourceTree = "<group>"; };
 		84898A9523F1556200E6B78E /* SettingsScrollingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScrollingMode.swift; sourceTree = "<group>"; };
 		84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSectionModel.swift; sourceTree = "<group>"; };
+		84898A9A23F17EF100E6B78E /* SettingsAddAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAddAddressCell.swift; sourceTree = "<group>"; };
+		84898A9B23F17EF100E6B78E /* SettingsAddAddressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsAddAddressCell.xib; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
 		84AA8D4523E2CD3F001B3B43 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -596,6 +600,7 @@
 		84898A7E23F144D400E6B78E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				84898A9923F17ED500E6B78E /* AddAddressCell */,
 				84898A8B23F153F700E6B78E /* ActionCell */,
 				84898A8423F14C9300E6B78E /* ControlPanelCell */,
 				84898A8323F144FE00E6B78E /* HeaderCell */,
@@ -639,6 +644,15 @@
 				84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */,
 			);
 			path = Entries;
+			sourceTree = "<group>";
+		};
+		84898A9923F17ED500E6B78E /* AddAddressCell */ = {
+			isa = PBXGroup;
+			children = (
+				84898A9A23F17EF100E6B78E /* SettingsAddAddressCell.swift */,
+				84898A9B23F17EF100E6B78E /* SettingsAddAddressCell.xib */,
+			);
+			path = AddAddressCell;
 			sourceTree = "<group>";
 		};
 		84950CF723E431B700F3C550 /* Base Classes */ = {
@@ -1089,6 +1103,7 @@
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
 				84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */,
+				84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */,
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
 				844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */,
 				E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */,
@@ -1234,6 +1249,7 @@
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
+				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
 				844AC39723E9788D0066006D /* APIAddress.swift in Sources */,
 				844AC38323E8641B0066006D /* ConfirmCodeResponseData.swift in Sources */,
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,

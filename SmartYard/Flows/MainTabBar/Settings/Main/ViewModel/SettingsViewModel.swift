@@ -243,7 +243,12 @@ class SettingsViewModel: BaseViewModel {
             items: [thirdSectionHeader] + thirdSectionObjects
         )
         
-        return [firstSection, secondSection, thirdSection]
+        let addAddressSection = SettingsSectionModel(
+            identity: "AddAddressSection",
+            items: [SettingsDataItem.addAddress]
+        )
+        
+        return [firstSection, secondSection, thirdSection, addAddressSection]
     }
     
 }

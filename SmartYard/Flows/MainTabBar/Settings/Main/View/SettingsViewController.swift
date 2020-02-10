@@ -147,7 +147,8 @@ class SettingsViewController: BaseViewController {
         [
             SettingsHeaderCell.self,
             SettingsControlPanelCell.self,
-            SettingsActionCell.self
+            SettingsActionCell.self,
+            SettingsAddAddressCell.self
         ].forEach {
             collectionView.register(nibWithCellClass: $0)
         }
@@ -174,7 +175,7 @@ class SettingsViewController: BaseViewController {
         indexPath: IndexPath,
         item: SettingsDataItem
     ) -> UICollectionViewCell {
-        let customizableCell: CustomBorderCollectionViewCell = {
+        let cell: UICollectionViewCell = {
             switch item {
             case let .header(_, title, subtitle, isExpanded):
                 let cell = collectionView.dequeueReusableCell(withClass: SettingsHeaderCell.self, for: indexPath)
@@ -198,18 +199,21 @@ class SettingsViewController: BaseViewController {
                 let cell = collectionView.dequeueReusableCell(withClass: SettingsActionCell.self, for: indexPath)
                 cell.configure(title: title)
                 return cell
+                
+            case .addAddress:
+                return collectionView.dequeueReusableCell(withClass: SettingsAddAddressCell.self, for: indexPath)
             }
         }()
         
         guard let itemsCountDict = try? itemsCountProxy.value(),
             let totalItemsInSection = itemsCountDict[indexPath.section] else {
-                return customizableCell
+            return cell
         }
         
         let isFirstInSection = indexPath.row == 0
         let isLastInSection = indexPath.row == totalItemsInSection - 1
         
-        customizableCell.addCustomBorder(
+        (cell as? CustomBorderCollectionViewCell)?.addCustomBorder(
             isFirstInSection: isFirstInSection,
             isLastInSection: isLastInSection,
             customBorderWidth: 1,
@@ -218,7 +222,7 @@ class SettingsViewController: BaseViewController {
             separatorInset: 24
         )
         
-        return customizableCell
+        return cell
     }
 
 }
@@ -257,6 +261,7 @@ extension SettingsViewController: UICollectionViewDelegateFlowLayout {
         let topInset: CGFloat = {
             switch section {
             case 0: return 16
+            case collectionView.numberOfSections - 1: return 26
             default: return 0
             }
         }()
