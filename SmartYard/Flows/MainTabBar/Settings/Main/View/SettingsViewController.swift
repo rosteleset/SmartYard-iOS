@@ -214,7 +214,8 @@ class SettingsViewController: BaseViewController {
             isLastInSection: isLastInSection,
             customBorderWidth: 1,
             customBorderColor: UIColor.SmartYard.grayBorder,
-            customCornerRadius: 12
+            customCornerRadius: 12,
+            separatorInset: 24
         )
         
         return customizableCell
