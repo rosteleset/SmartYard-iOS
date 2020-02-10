@@ -112,6 +112,8 @@
 		E98C382923F173480010BBC1 /* ClearButtonWithDashedUnderline.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382823F173480010BBC1 /* ClearButtonWithDashedUnderline.swift */; };
 		E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382C23F180530010BBC1 /* TopRoundedView.swift */; };
 		E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C383023F181610010BBC1 /* AuthByContractNumViewModel.swift */; };
+		E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C383323F192600010BBC1 /* InputAddressViewController.swift */; };
+		E98C383623F192600010BBC1 /* InputAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C383423F192600010BBC1 /* InputAddressViewController.xib */; };
 		E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */; };
 		E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */; };
 		E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6C223EAA97900BECEE6 /* InputPhoneNumberViewModel.swift */; };
@@ -242,6 +244,8 @@
 		E98C382823F173480010BBC1 /* ClearButtonWithDashedUnderline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButtonWithDashedUnderline.swift; sourceTree = "<group>"; };
 		E98C382C23F180530010BBC1 /* TopRoundedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopRoundedView.swift; sourceTree = "<group>"; };
 		E98C383023F181610010BBC1 /* AuthByContractNumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthByContractNumViewModel.swift; sourceTree = "<group>"; };
+		E98C383323F192600010BBC1 /* InputAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewController.swift; sourceTree = "<group>"; };
+		E98C383423F192600010BBC1 /* InputAddressViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputAddressViewController.xib; sourceTree = "<group>"; };
 		E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputPhoneNumberViewController.xib; sourceTree = "<group>"; };
 		E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
@@ -754,6 +758,7 @@
 			children = (
 				84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */,
 				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
+				E98C383223F192430010BBC1 /* Address */,
 				E99EA6B623EA9CED00BECEE6 /* Login */,
 				844AC3C623EBFC240066006D /* MainTabBar */,
 				844AC3B423EB0FD80066006D /* UserName */,
@@ -898,6 +903,15 @@
 				E98C383023F181610010BBC1 /* AuthByContractNumViewModel.swift */,
 			);
 			path = AuthByContractNum;
+			sourceTree = "<group>";
+		};
+		E98C383223F192430010BBC1 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				E98C383323F192600010BBC1 /* InputAddressViewController.swift */,
+				E98C383423F192600010BBC1 /* InputAddressViewController.xib */,
+			);
+			path = Address;
 			sourceTree = "<group>";
 		};
 		E99EA6B623EA9CED00BECEE6 /* Login */ = {
@@ -1114,6 +1128,7 @@
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
 				844AC3E923EBFEC50066006D /* PaymentsViewController.xib in Resources */,
 				84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */,
+				E98C383623F192600010BBC1 /* InputAddressViewController.xib in Resources */,
 				E9A4D48C23EC28760070A591 /* PinNumberField.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1225,6 +1240,7 @@
 				84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */,
 				E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */,
 				844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */,
+				E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */,
 				844AC37E23E861D10066006D /* GetVerifyedAddressesResponseData.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				844AC38823E8652F0066006D /* LoginResponseData.swift in Sources */,
