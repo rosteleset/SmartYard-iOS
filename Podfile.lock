@@ -141,6 +141,7 @@ PODS:
   - SwifterSwift/UIKit (4.6.0)
   - SwiftLint (0.35.0)
   - TouchAreaInsets (1.1.0)
+  - TPKeyboardAvoiding (1.3.3)
   - XCoordinator (2.0.6):
     - XCoordinator/Core (= 2.0.6)
   - XCoordinator/Core (2.0.6)
@@ -169,6 +170,7 @@ DEPENDENCIES:
   - SwifterSwift (= 4.6)
   - SwiftLint (= 0.35)
   - TouchAreaInsets
+  - TPKeyboardAvoiding
   - XCoordinator
   - XCoordinator/RxSwift
 
@@ -210,6 +212,7 @@ SPEC REPOS:
     - SwifterSwift
     - SwiftLint
     - TouchAreaInsets
+    - TPKeyboardAvoiding
     - XCoordinator
   https://gitlab.linphone.org/BC/public/podspec.git:
     - linphone-sdk
@@ -263,8 +266,9 @@ SPEC CHECKSUMS:
   SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
   SwiftLint: 5553187048b900c91aa03552807681bb6b027846
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
+  TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: 9205ddbaf266e74fca19a56018e8a14ee5358cd3
+PODFILE CHECKSUM: 3ec197c4ebd22eb94562976d8668d5c0d9a83360
 
 COCOAPODS: 1.8.4

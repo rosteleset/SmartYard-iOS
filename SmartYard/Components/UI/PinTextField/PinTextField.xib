@@ -13,14 +13,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PinTextField" customModule="SmartYard" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="402" height="135"/>
+            <rect key="frame" x="0.0" y="0.0" width="402" height="172"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yz2-2I-dqA">
-                    <rect key="frame" x="0.0" y="0.0" width="402" height="85"/>
+                    <rect key="frame" x="0.0" y="0.0" width="402" height="172"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YOh-qG-YaO">
-                            <rect key="frame" x="111" y="5" width="180" height="45"/>
+                            <rect key="frame" x="111" y="63.5" width="180" height="45"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VU4-cc-TT2" customClass="PinNumberField" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="40" height="45"/>
@@ -70,7 +70,7 @@
                             </constraints>
                         </view>
                         <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oEB-e9-S3i">
-                            <rect key="frame" x="198.5" y="0.0" width="5" height="5"/>
+                            <rect key="frame" x="198.5" y="-60" width="5" height="5"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="5" id="5ug-bq-HN6"/>
                                 <constraint firstAttribute="width" constant="5" id="GN5-KT-jgs"/>
@@ -80,10 +80,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Неверный код. Попробуйте еще раз" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wey-f5-5Yq">
-                            <rect key="frame" x="86" y="64" width="230" height="16"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="16" id="qfa-Pz-nAa"/>
-                            </constraints>
+                            <rect key="frame" x="86" y="139.5" width="230" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="0.5" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -91,19 +88,19 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="Wey-f5-5Yq" secondAttribute="bottom" constant="5" id="5TW-hZ-fgH"/>
                         <constraint firstItem="Wey-f5-5Yq" firstAttribute="centerX" secondItem="yz2-2I-dqA" secondAttribute="centerX" id="BMi-A3-3bQ"/>
-                        <constraint firstItem="YOh-qG-YaO" firstAttribute="top" secondItem="oEB-e9-S3i" secondAttribute="bottom" id="CVh-QQ-UgV"/>
+                        <constraint firstItem="Wey-f5-5Yq" firstAttribute="top" secondItem="YOh-qG-YaO" secondAttribute="bottom" constant="31" id="IX8-wT-QOJ"/>
+                        <constraint firstItem="YOh-qG-YaO" firstAttribute="centerY" secondItem="yz2-2I-dqA" secondAttribute="centerY" id="JgM-Uj-xg0"/>
                         <constraint firstItem="oEB-e9-S3i" firstAttribute="centerX" secondItem="yz2-2I-dqA" secondAttribute="centerX" id="b9j-O2-3Df"/>
                         <constraint firstItem="YOh-qG-YaO" firstAttribute="centerX" secondItem="yz2-2I-dqA" secondAttribute="centerX" id="gYc-jc-jg0"/>
-                        <constraint firstAttribute="height" constant="85" id="kVc-0H-oAR"/>
-                        <constraint firstItem="oEB-e9-S3i" firstAttribute="top" secondItem="yz2-2I-dqA" secondAttribute="top" id="yOY-dM-gcZ"/>
+                        <constraint firstItem="oEB-e9-S3i" firstAttribute="top" secondItem="yz2-2I-dqA" secondAttribute="top" constant="-60" id="yOY-dM-gcZ"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="yz2-2I-dqA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Um8-kO-hWc"/>
+                <constraint firstAttribute="bottom" secondItem="yz2-2I-dqA" secondAttribute="bottom" id="ZHw-gI-2xJ"/>
                 <constraint firstAttribute="trailing" secondItem="yz2-2I-dqA" secondAttribute="trailing" id="cUd-cW-tzL"/>
                 <constraint firstItem="yz2-2I-dqA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dGU-Gm-OWG"/>
             </constraints>
@@ -118,7 +115,7 @@
                 <outlet property="thirdNumField" destination="bBJ-OC-nrh" id="sp2-HQ-MLE"/>
                 <outlet property="wrongPassLabel" destination="Wey-f5-5Yq" id="2Zs-9L-Moj"/>
             </connections>
-            <point key="canvasLocation" x="128.98550724637681" y="-136.27232142857142"/>
+            <point key="canvasLocation" x="128.98550724637681" y="-122.54464285714285"/>
         </view>
     </objects>
 </document>

@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 
 class PinTextField: PMNibLinkableView {
-
+    
     @IBOutlet private weak var containerView: UIView!
     
     @IBOutlet private weak var firstNumField: PinNumberField!
@@ -22,7 +22,7 @@ class PinTextField: PMNibLinkableView {
     
     @IBOutlet private weak var wrongPassLabel: UILabel!
     
-    @IBOutlet weak var fakeTextField: UITextField!
+    @IBOutlet fileprivate weak var fakeTextField: UITextField!
     
     private var numberViewsCollection: [PinNumberField] {
         return [firstNumField, secondNumField, thirdNumField, fourthNumField]
@@ -131,3 +131,4 @@ extension Reactive where Base: PinTextField {
     }
     
 }
+

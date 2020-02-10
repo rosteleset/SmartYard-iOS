@@ -14,7 +14,7 @@ import IHKeyboardAvoiding
 import RxKeyboard
 
 class PinCodeViewController: BaseViewController {
-
+    
     @IBOutlet private weak var hintInputPhoneLabel: UILabel!
     @IBOutlet private weak var fixPhoneNumberButton: UIButton!
     @IBOutlet private weak var sendCodeAgainGroupView: UIView!
@@ -32,7 +32,7 @@ class PinCodeViewController: BaseViewController {
     var timer: Timer?
     var timeEnd: Date?
     
-    let viewModel: PinCodeViewModel
+    private let viewModel: PinCodeViewModel
     
     init(viewModel: PinCodeViewModel) {
         self.viewModel = viewModel
@@ -50,7 +50,7 @@ class PinCodeViewController: BaseViewController {
         configureView()
         configureRxKeyboard()
     }
-
+    
     private func configureView() {
         pinInputFieldView.reset()
         sendCodeAgainLabelView.isHidden = true
@@ -88,7 +88,7 @@ class PinCodeViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
-
+        
         let pinTextSubject = PublishSubject<String>()
         
         pinInputFieldView.rx.textControlProperty
@@ -123,3 +123,4 @@ class PinCodeViewController: BaseViewController {
     }
     
 }
+

@@ -17,7 +17,7 @@ class PinNumberField: PMNibLinkableView {
     func fetchValue() -> String? {
         return numberLabel.text
     }
-    
+
     func clear() {
         numberLabel.text = nil
     }
