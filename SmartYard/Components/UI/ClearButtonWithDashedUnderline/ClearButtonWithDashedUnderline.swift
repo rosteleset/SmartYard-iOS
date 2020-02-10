@@ -43,8 +43,8 @@ class ClearButtonWithDashedUnderline: UIButton {
         shapeLayer.lineDashPattern = [3, 3]
         
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: 0, y: frame.height))
-        path.addLine(to: CGPoint(x: frame.width, y: frame.height))
+        path.move(to: CGPoint(x: 0, y: frame.height - 4))
+        path.addLine(to: CGPoint(x: frame.width, y: frame.height - 4))
         shapeLayer.path = path
         
         layer.addSublayer(shapeLayer)

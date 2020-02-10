@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Bold.ttf">
+            <string>SourceSansPro-Bold</string>
+        </array>
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputAddressViewController" customModule="SmartYard" customModuleProvider="target">
+            <connections>
+                <outlet property="buildingTextField" destination="N8p-X9-uGr" id="JNm-8T-k6G"/>
+                <outlet property="checkAvailableServicesButton" destination="P3p-cv-8sH" id="jCb-sd-mTF"/>
+                <outlet property="cityTextField" destination="VY4-bh-98W" id="ZPB-pn-dE0"/>
+                <outlet property="containerView" destination="tOA-mx-jDg" id="ixy-Uk-ZgR"/>
+                <outlet property="flatTextField" destination="WJV-KH-rtf" id="EBc-sN-RcV"/>
+                <outlet property="qrCodeButton" destination="t7w-za-uue" id="k7E-S4-oc4"/>
+                <outlet property="scrollView" destination="95v-tL-giU" id="ksm-iE-RVT"/>
+                <outlet property="streetTextField" destination="cmm-LE-hpZ" id="Jpf-KA-dYa"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="3vL-YD-f4m">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
+                </imageView>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95v-tL-giU" customClass="TPKeyboardAvoidingScrollView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="768"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tOA-mx-jDg">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="680"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DnD-0W-pW4">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Введите адрес" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEB-Xo-NYK">
+                                            <rect key="frame" x="40" y="99" width="215" height="41"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="bEB-Xo-NYK" firstAttribute="leading" secondItem="DnD-0W-pW4" secondAttribute="leading" constant="40" id="fMt-rF-Dqk"/>
+                                        <constraint firstItem="bEB-Xo-NYK" firstAttribute="top" secondItem="DnD-0W-pW4" secondAttribute="top" constant="99" id="far-9v-CQI"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DMJ-9p-DBh" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="180" width="414" height="500"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VY4-bh-98W" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="40" y="40" width="334" height="56"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="vXh-cE-YlD"/>
+                                            </constraints>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" textContentType="address-level2"/>
+                                        </textField>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cmm-LE-hpZ" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="40" y="112" width="334" height="56"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="qRK-xK-9C1"/>
+                                            </constraints>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" textContentType="address-line1"/>
+                                        </textField>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qK5-R0-4tJ">
+                                            <rect key="frame" x="206.5" y="184" width="1" height="56"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="1mA-KN-su0"/>
+                                                <constraint firstAttribute="width" constant="1" id="SFw-g8-AGY"/>
+                                            </constraints>
+                                        </view>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N8p-X9-uGr" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="40" y="184" width="159.5" height="56"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="qiB-aS-AmO"/>
+                                            </constraints>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                        </textField>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WJV-KH-rtf" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="214.5" y="184" width="159.5" height="56"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="fSZ-DS-y90"/>
+                                            </constraints>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                        </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3p-cv-8sH" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="40" y="280" width="334" height="60"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="60" id="UIU-Bb-ndi"/>
+                                            </constraints>
+                                            <state key="normal" title="Проверить доступные услуги"/>
+                                        </button>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QrCodeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="52F-f9-FuX">
+                                            <rect key="frame" x="99" y="416" width="24" height="24"/>
+                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="24" id="5wx-M2-Qza"/>
+                                                <constraint firstAttribute="width" constant="24" id="ugK-0h-qAi"/>
+                                            </constraints>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t7w-za-uue" customClass="ClearButtonWithDashedUnderline" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="137" y="413" width="116" height="30"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                                            <state key="normal" title="У меня есть QR-код"/>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="qK5-R0-4tJ" firstAttribute="centerX" secondItem="DMJ-9p-DBh" secondAttribute="centerX" id="2Gw-dE-MeV"/>
+                                        <constraint firstItem="P3p-cv-8sH" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="2Pj-gj-t9H"/>
+                                        <constraint firstAttribute="trailing" secondItem="WJV-KH-rtf" secondAttribute="trailing" constant="40" id="8MP-mO-CIa"/>
+                                        <constraint firstItem="N8p-X9-uGr" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="BXZ-v5-Kxi"/>
+                                        <constraint firstItem="VY4-bh-98W" firstAttribute="top" secondItem="DMJ-9p-DBh" secondAttribute="top" constant="40" id="Bae-Gc-g4T"/>
+                                        <constraint firstItem="VY4-bh-98W" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="EhR-sC-okg"/>
+                                        <constraint firstItem="WJV-KH-rtf" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="Fsj-ZL-1hE"/>
+                                        <constraint firstAttribute="trailing" secondItem="cmm-LE-hpZ" secondAttribute="trailing" constant="40" id="GTJ-M6-3NG"/>
+                                        <constraint firstAttribute="height" constant="500" id="IFF-ba-iGs"/>
+                                        <constraint firstItem="t7w-za-uue" firstAttribute="centerY" secondItem="52F-f9-FuX" secondAttribute="centerY" id="IN0-VJ-rFf"/>
+                                        <constraint firstItem="qK5-R0-4tJ" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="MI8-MI-fmf"/>
+                                        <constraint firstItem="WJV-KH-rtf" firstAttribute="leading" secondItem="qK5-R0-4tJ" secondAttribute="trailing" constant="7" id="NsM-OK-AK5"/>
+                                        <constraint firstItem="cmm-LE-hpZ" firstAttribute="top" secondItem="VY4-bh-98W" secondAttribute="bottom" constant="16" id="YR0-2L-W2z"/>
+                                        <constraint firstAttribute="trailing" secondItem="VY4-bh-98W" secondAttribute="trailing" constant="40" id="Ylj-V2-VeC"/>
+                                        <constraint firstItem="qK5-R0-4tJ" firstAttribute="leading" secondItem="N8p-X9-uGr" secondAttribute="trailing" constant="7" id="czk-44-sxB"/>
+                                        <constraint firstItem="52F-f9-FuX" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="99" id="rpM-vT-hNB"/>
+                                        <constraint firstItem="P3p-cv-8sH" firstAttribute="top" secondItem="N8p-X9-uGr" secondAttribute="bottom" constant="40" id="rug-eY-sJl"/>
+                                        <constraint firstAttribute="trailing" secondItem="P3p-cv-8sH" secondAttribute="trailing" constant="40" id="w1k-D1-aXi"/>
+                                        <constraint firstItem="N8p-X9-uGr" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="w21-mK-Icr"/>
+                                        <constraint firstItem="cmm-LE-hpZ" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="xJ0-zM-Mom"/>
+                                        <constraint firstItem="52F-f9-FuX" firstAttribute="top" secondItem="P3p-cv-8sH" secondAttribute="bottom" constant="76" id="xSx-Dt-QsU"/>
+                                        <constraint firstItem="t7w-za-uue" firstAttribute="leading" secondItem="52F-f9-FuX" secondAttribute="trailing" constant="14" id="zY0-wb-0zL"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="DMJ-9p-DBh" firstAttribute="top" secondItem="tOA-mx-jDg" secondAttribute="top" constant="180" id="6cj-Jo-wqh"/>
+                                <constraint firstItem="DnD-0W-pW4" firstAttribute="top" secondItem="tOA-mx-jDg" secondAttribute="top" id="A9t-hf-Q9e"/>
+                                <constraint firstAttribute="trailing" secondItem="DMJ-9p-DBh" secondAttribute="trailing" id="HhV-Kg-2am"/>
+                                <constraint firstItem="DMJ-9p-DBh" firstAttribute="leading" secondItem="tOA-mx-jDg" secondAttribute="leading" id="YUV-5V-kiF"/>
+                                <constraint firstAttribute="height" constant="680" id="eA4-zK-MIT"/>
+                                <constraint firstItem="DnD-0W-pW4" firstAttribute="leading" secondItem="tOA-mx-jDg" secondAttribute="leading" id="jiY-c6-BT5"/>
+                                <constraint firstAttribute="trailing" secondItem="DnD-0W-pW4" secondAttribute="trailing" id="jzS-mz-GqH"/>
+                                <constraint firstItem="DMJ-9p-DBh" firstAttribute="top" secondItem="DnD-0W-pW4" secondAttribute="bottom" id="sfh-w5-bBr"/>
+                                <constraint firstAttribute="bottom" secondItem="DMJ-9p-DBh" secondAttribute="bottom" id="soq-Dv-vS0"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="tOA-mx-jDg" secondAttribute="bottom" id="1X7-MK-7HD"/>
+                        <constraint firstItem="tOA-mx-jDg" firstAttribute="centerY" secondItem="95v-tL-giU" secondAttribute="centerY" id="BNi-84-9H4"/>
+                        <constraint firstItem="tOA-mx-jDg" firstAttribute="top" secondItem="95v-tL-giU" secondAttribute="top" id="ERY-MN-Ay8"/>
+                        <constraint firstItem="tOA-mx-jDg" firstAttribute="leading" secondItem="95v-tL-giU" secondAttribute="leading" id="Imf-hf-dSF"/>
+                        <constraint firstItem="tOA-mx-jDg" firstAttribute="width" secondItem="95v-tL-giU" secondAttribute="width" id="Rpd-9h-8AF"/>
+                        <constraint firstAttribute="trailing" secondItem="tOA-mx-jDg" secondAttribute="trailing" id="va6-i9-F5I"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="95v-tL-giU" secondAttribute="bottom" id="GHd-Ch-m2L"/>
+                <constraint firstItem="3vL-YD-f4m" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Un1-Vg-Itd"/>
+                <constraint firstItem="95v-tL-giU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="XJ5-Dr-cY5"/>
+                <constraint firstItem="95v-tL-giU" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="Z7u-tQ-HWO"/>
+                <constraint firstItem="95v-tL-giU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="j9n-NT-OhH"/>
+                <constraint firstItem="3vL-YD-f4m" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qGm-vQ-x6r"/>
+                <constraint firstAttribute="bottom" secondItem="3vL-YD-f4m" secondAttribute="bottom" id="wLf-4i-bw3"/>
+                <constraint firstAttribute="trailing" secondItem="3vL-YD-f4m" secondAttribute="trailing" id="yOM-0u-peX"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="73.913043478260875" y="35.491071428571423"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="MainBackground" width="375" height="812"/>
+        <image name="QrCodeIcon" width="24" height="24"/>
+    </resources>
+</document>
