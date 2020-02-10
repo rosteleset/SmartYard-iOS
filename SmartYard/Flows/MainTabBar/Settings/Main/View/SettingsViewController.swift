@@ -19,7 +19,7 @@ class SettingsViewController: BaseViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var settingsButton: UIButton!
     
-    private var dataSource: ScrollableDataSource<SettingsSectionModel>?
+    private var dataSource: RxCollectionViewSectionedAnimatedDataSource<SettingsSectionModel>?
     
     // MARK: Это костыль для того, чтобы понять, сколько на самом деле ячеек внутри секции
     // В методе configureCell у RxDataSource мы должны сконфигурировать ячейку
@@ -102,7 +102,7 @@ class SettingsViewController: BaseViewController {
             // MARK: BatchUpdates проходят постепенно, поэтому contentSize меняется несколько раз
             // Чтобы анимации не конфликтовали, ждем, пока contentSize станет стабильным
             
-            .debounce(.milliseconds(50))
+            .debounce(.milliseconds(25))
             .withLatestFrom(scrollingMode)
             .ignoreNil()
             .do(
@@ -153,7 +153,7 @@ class SettingsViewController: BaseViewController {
             collectionView.register(nibWithCellClass: $0)
         }
         
-        let dataSource = ScrollableDataSource<SettingsSectionModel>(
+        let dataSource = RxCollectionViewSectionedAnimatedDataSource<SettingsSectionModel>(
             configureCell: { [weak self] _, collectionView, indexPath, item in
                 guard let self = self else {
                     return UICollectionViewCell()
