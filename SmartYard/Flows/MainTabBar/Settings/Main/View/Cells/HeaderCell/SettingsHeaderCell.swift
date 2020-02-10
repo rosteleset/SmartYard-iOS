@@ -16,7 +16,7 @@ class SettingsHeaderCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        configure(title: String?, subtitle: String?, isExpanded: false)
+        configure(title: nil, subtitle: nil, isExpanded: false)
     }
     
     func configure(title: String?, subtitle: String?, isExpanded: Bool) {
