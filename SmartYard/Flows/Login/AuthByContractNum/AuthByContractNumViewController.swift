@@ -62,8 +62,8 @@ class AuthByContractNumViewController: UIViewController {
     }
     
     private func configureUI() {
-        contractNumberTextField.setBoldPlaceholder(string: "Номер договора")
-        passTextField.setBoldPlaceholder(string: "Пароль")
+        contractNumberTextField.setPlaceholder(string: "Номер договора", isSemiBold: true)
+        passTextField.setPlaceholder(string: "Пароль", isSemiBold: true)
         
         forgetPassButton.setLeftAlignment()
         forgetEverythingButton.setRightAlignment()
