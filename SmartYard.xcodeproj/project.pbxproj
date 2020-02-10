@@ -97,6 +97,7 @@
 		E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C382423F149F30010BBC1 /* PinCodeViewController.xib */; };
 		E98C382923F173480010BBC1 /* ClearButtonWithDotsUnderline.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382823F173480010BBC1 /* ClearButtonWithDotsUnderline.swift */; };
 		E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382C23F180530010BBC1 /* TopRoundedView.swift */; };
+		E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C383023F181610010BBC1 /* AuthByContractNumViewModel.swift */; };
 		E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */; };
 		E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */; };
 		E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6C223EAA97900BECEE6 /* InputPhoneNumberViewModel.swift */; };
@@ -211,6 +212,7 @@
 		E98C382423F149F30010BBC1 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
 		E98C382823F173480010BBC1 /* ClearButtonWithDotsUnderline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButtonWithDotsUnderline.swift; sourceTree = "<group>"; };
 		E98C382C23F180530010BBC1 /* TopRoundedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopRoundedView.swift; sourceTree = "<group>"; };
+		E98C383023F181610010BBC1 /* AuthByContractNumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthByContractNumViewModel.swift; sourceTree = "<group>"; };
 		E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputPhoneNumberViewController.xib; sourceTree = "<group>"; };
 		E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
@@ -666,8 +668,6 @@
 				844AC3C623EBFC240066006D /* MainTabBar */,
 				844AC3B423EB0FD80066006D /* UserName */,
 				844AC39A23E9871F0066006D /* IncomingCall */,
-				E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */,
-				E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -800,9 +800,20 @@
 			path = ClearButtonWithDotsUnderline;
 			sourceTree = "<group>";
 		};
+		E98C382E23F1812C0010BBC1 /* AuthByContractNum */ = {
+			isa = PBXGroup;
+			children = (
+				E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */,
+				E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */,
+				E98C383023F181610010BBC1 /* AuthByContractNumViewModel.swift */,
+			);
+			path = AuthByContractNum;
+			sourceTree = "<group>";
+		};
 		E99EA6B623EA9CED00BECEE6 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				E98C382E23F1812C0010BBC1 /* AuthByContractNum */,
 				E99EA6B723EA9CF200BECEE6 /* InputPhoneNumber */,
 				E9A4D48123EC22760070A591 /* InputPinCode */,
 			);
@@ -858,9 +869,9 @@
 		E9A4D48123EC22760070A591 /* InputPinCode */ = {
 			isa = PBXGroup;
 			children = (
+				E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */,
 				E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */,
 				E98C382423F149F30010BBC1 /* PinCodeViewController.xib */,
-				E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */,
 				E9A4D48223EC229F0070A591 /* PinCodeViewModel.swift */,
 			);
 			path = InputPinCode;
@@ -1139,6 +1150,7 @@
 				E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
+				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
 				844AC39723E9788D0066006D /* APIAddress.swift in Sources */,
