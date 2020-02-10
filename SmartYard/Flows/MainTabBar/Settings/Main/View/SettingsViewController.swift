@@ -102,7 +102,7 @@ class SettingsViewController: BaseViewController {
             // MARK: BatchUpdates проходят постепенно, поэтому contentSize меняется несколько раз
             // Чтобы анимации не конфликтовали, ждем, пока contentSize станет стабильным
             
-            .debounce(.milliseconds(25))
+            .debounce(.milliseconds(50))
             .withLatestFrom(scrollingMode)
             .ignoreNil()
             .do(
