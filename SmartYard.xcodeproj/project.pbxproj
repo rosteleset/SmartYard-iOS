@@ -96,12 +96,12 @@
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
 		E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C382423F149F30010BBC1 /* PinCodeViewController.xib */; };
 		E98C382923F173480010BBC1 /* ClearButtonWithDotsUnderline.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382823F173480010BBC1 /* ClearButtonWithDotsUnderline.swift */; };
+		E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382C23F180530010BBC1 /* TopRoundedView.swift */; };
 		E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */; };
 		E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */; };
 		E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6C223EAA97900BECEE6 /* InputPhoneNumberViewModel.swift */; };
 		E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C623EACD3900BECEE6 /* PhoneTextField.xib */; };
 		E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6C823EACD4B00BECEE6 /* PhoneTextField.swift */; };
-		E99EA6CB23EAD01F00BECEE6 /* TopRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6CA23EAD01F00BECEE6 /* TopRoundedView.swift */; };
 		E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6CE23EAD2BB00BECEE6 /* NumberFieldView.xib */; };
 		E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6D023EAD2CE00BECEE6 /* NumberFieldView.swift */; };
 		E9A4D47C23EC19110070A591 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D47B23EC19110070A591 /* Constants.swift */; };
@@ -210,6 +210,7 @@
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E98C382423F149F30010BBC1 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
 		E98C382823F173480010BBC1 /* ClearButtonWithDotsUnderline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButtonWithDotsUnderline.swift; sourceTree = "<group>"; };
+		E98C382C23F180530010BBC1 /* TopRoundedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopRoundedView.swift; sourceTree = "<group>"; };
 		E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputPhoneNumberViewController.xib; sourceTree = "<group>"; };
 		E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
@@ -218,7 +219,6 @@
 		E99EA6C223EAA97900BECEE6 /* InputPhoneNumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberViewModel.swift; sourceTree = "<group>"; };
 		E99EA6C623EACD3900BECEE6 /* PhoneTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhoneTextField.xib; sourceTree = "<group>"; };
 		E99EA6C823EACD4B00BECEE6 /* PhoneTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTextField.swift; sourceTree = "<group>"; };
-		E99EA6CA23EAD01F00BECEE6 /* TopRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRoundedView.swift; sourceTree = "<group>"; };
 		E99EA6CE23EAD2BB00BECEE6 /* NumberFieldView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberFieldView.xib; sourceTree = "<group>"; };
 		E99EA6D023EAD2CE00BECEE6 /* NumberFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFieldView.swift; sourceTree = "<group>"; };
 		E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncomingCallViewController.xib; sourceTree = "<group>"; };
@@ -364,7 +364,7 @@
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
 				E9A4D48D23EC2A510070A591 /* PinTextField */,
-				E99EA6CC23EAD0C800BECEE6 /* TopRoundedView */,
+				E99EA6CC23EAD0C800BECEE6 /* RoundedView */,
 				E9A4D4A623ED9BED0070A591 /* WhiteButtonWithBorder */,
 			);
 			path = UI;
@@ -838,12 +838,12 @@
 			path = PhoneTextField;
 			sourceTree = "<group>";
 		};
-		E99EA6CC23EAD0C800BECEE6 /* TopRoundedView */ = {
+		E99EA6CC23EAD0C800BECEE6 /* RoundedView */ = {
 			isa = PBXGroup;
 			children = (
-				E99EA6CA23EAD01F00BECEE6 /* TopRoundedView.swift */,
+				E98C382C23F180530010BBC1 /* TopRoundedView.swift */,
 			);
-			path = TopRoundedView;
+			path = RoundedView;
 			sourceTree = "<group>";
 		};
 		E99EA6CD23EAD29500BECEE6 /* NumberFields */ = {
@@ -1159,6 +1159,7 @@
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
 				E9A4D48A23EC27E20070A591 /* PinNumberField.swift in Sources */,
 				844AC38B23E866710066006D /* RegisterTokenRequest.swift in Sources */,
+				E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */,
 				E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */,
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
 				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
@@ -1188,7 +1189,6 @@
 				844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
-				E99EA6CB23EAD01F00BECEE6 /* TopRoundedView.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 				84CC15E523EC999700A1CB95 /* AddressesListScrollingMode.swift in Sources */,

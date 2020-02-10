@@ -15,16 +15,22 @@ class AuthByContractNumViewController: UIViewController {
     
     @IBOutlet private weak var contractNumberTextField: SmartYardTextField!
     @IBOutlet private weak var passTextField: SmartYardTextField!
+    @IBOutlet private weak var roundedView: UIView!
     
-    @IBOutlet weak var forgetPassButton: ClearButtonWithDotsUnderline!
-    @IBOutlet weak var forgetEverythingButton: ClearButtonWithDotsUnderline!
+    @IBOutlet private weak var forgetPassButton: ClearButtonWithDotsUnderline!
+    @IBOutlet private weak var forgetEverythingButton: ClearButtonWithDotsUnderline!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTextFieldPlaceholders()
+        configureUI()
     }
     
-    private func configureTextFieldPlaceholders() {
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        roundedView.roundCorners([.topLeft, .topRight, .bottomLeft, .bottomRight], radius: 20.0)
+    }
+    
+    private func configureUI() {
         contractNumberTextField.setBoldPlaceholder(string: "Номер договора")
         passTextField.setBoldPlaceholder(string: "Пароль")
         forgetPassButton.setLeftAlignment()

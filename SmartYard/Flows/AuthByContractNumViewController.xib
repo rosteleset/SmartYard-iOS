@@ -25,6 +25,7 @@
                 <outlet property="forgetEverythingButton" destination="L3p-t8-69e" id="FrR-zx-F3S"/>
                 <outlet property="forgetPassButton" destination="bBo-iL-hgv" id="iKh-tB-5Ue"/>
                 <outlet property="passTextField" destination="Hma-MD-8gc" id="byg-TP-z77"/>
+                <outlet property="roundedView" destination="mmM-VH-arK" id="L4s-6o-dJ8"/>
                 <outlet property="scrollView" destination="Rtx-jQ-4EM" id="WHy-1c-e60"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -70,7 +71,7 @@
                                         <constraint firstAttribute="trailing" secondItem="U90-l7-45t" secondAttribute="trailing" constant="60" id="gtO-Rb-3GT"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-VH-arK" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-VH-arK">
                                     <rect key="frame" x="0.0" y="295" width="414" height="486"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Номер договора" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1fV-QD-lmA" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
