@@ -27,7 +27,7 @@
                 <outlet property="noContractButton" destination="ztw-Ug-GgA" id="VOj-eU-JvR"/>
                 <outlet property="passTextField" destination="Hma-MD-8gc" id="byg-TP-z77"/>
                 <outlet property="roundedView" destination="mmM-VH-arK" id="L4s-6o-dJ8"/>
-                <outlet property="scrollView" destination="Rtx-jQ-4EM" id="WHy-1c-e60"/>
+                <outlet property="scrollView" destination="Rtx-jQ-4EM" id="xKu-HN-9oS"/>
                 <outlet property="signInButton" destination="aXB-Ea-sHa" id="5my-YV-oGm"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -40,7 +40,7 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="vyf-cd-Hpw">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rtx-jQ-4EM">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rtx-jQ-4EM" customClass="TPKeyboardAvoidingScrollView">
                     <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U9N-qc-vvf">

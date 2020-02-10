@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import TPKeyboardAvoiding
 
 class AuthByContractNumViewController: UIViewController {
 
-    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
     @IBOutlet private weak var containerView: UIView!
     
     @IBOutlet private weak var contractNumberTextField: SmartYardTextField!
@@ -56,14 +57,18 @@ class AuthByContractNumViewController: UIViewController {
             forgetPassTapped: forgetPassButton.rx.tap.asDriverOnErrorJustComplete(),
             forgetEverythingTapped: forgetEverythingButton.rx.tap.asDriverOnErrorJustComplete(),
             noContractTapped: noContractButton.rx.tap.asDriverOnErrorJustComplete(),
-            signInTapped: signInButton.rx.tap.asDriverOnErrorJustComplete())
+            signInTapped: signInButton.rx.tap.asDriverOnErrorJustComplete()
+        )
     }
     
     private func configureUI() {
         contractNumberTextField.setBoldPlaceholder(string: "Номер договора")
         passTextField.setBoldPlaceholder(string: "Пароль")
+        
         forgetPassButton.setLeftAlignment()
         forgetEverythingButton.setRightAlignment()
+        
+        view.hideKeyboardWhenTapped = true
     }
 
 }

@@ -15,7 +15,7 @@ class AuthByContractNumViewModel: BaseViewModel {
     
     private let router: WeakRouter<AppRoute>
     
-    init(router: WeakRouter<AppRoute>, phoneNumber: String) {
+    init(router: WeakRouter<AppRoute>) {
         self.router = router
     }
     

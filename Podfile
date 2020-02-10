@@ -30,6 +30,7 @@ target 'SmartYard' do
   pod 'TouchAreaInsets'
   pod 'PinLayout'
   pod 'SSCustomTabbar', :git => 'https://github.com/MadBrains/SSCustomTabbar.git', :branch => 'feature/add-animation-options'
+  pod 'TPKeyboardAvoiding'
   
   # Analytics
   pod 'Fabric'
