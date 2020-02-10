@@ -24,7 +24,7 @@ class AuthByContractNumViewController: UIViewController {
     @IBOutlet private weak var noContractButton: WhiteButtonWithBorder!
     @IBOutlet private weak var signInButton: BlueButton!
     
-    let viewModel: AuthByContractNumViewModel
+    private let viewModel: AuthByContractNumViewModel
     
     init(viewModel: AuthByContractNumViewModel) {
         self.viewModel = viewModel

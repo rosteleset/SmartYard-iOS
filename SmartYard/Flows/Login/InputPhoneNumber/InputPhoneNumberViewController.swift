@@ -15,7 +15,7 @@ class InputPhoneNumberViewController: BaseViewController {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var phoneTextView: PhoneTextField!
     
-    var viewModel: InputPhoneNumberViewModel
+    private var viewModel: InputPhoneNumberViewModel
     
     init(viewModel: InputPhoneNumberViewModel) {
         self.viewModel = viewModel

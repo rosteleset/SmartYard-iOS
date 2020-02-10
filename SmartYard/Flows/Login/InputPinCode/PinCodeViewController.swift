@@ -32,7 +32,7 @@ class PinCodeViewController: BaseViewController {
     var timer: Timer?
     var timeEnd: Date?
     
-    let viewModel: PinCodeViewModel
+    private let viewModel: PinCodeViewModel
     
     init(viewModel: PinCodeViewModel) {
         self.viewModel = viewModel

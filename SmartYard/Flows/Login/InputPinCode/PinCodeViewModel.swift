@@ -58,7 +58,7 @@ class PinCodeViewModel: BaseViewModel {
             .drive(
                 onNext: {
                     // TODO: send code again
-            }
+                }
             )
             .disposed(by: disposeBag)
         
