@@ -109,7 +109,7 @@ extension PinTextField: UITextFieldDelegate {
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
-        ) -> Bool {
+    ) -> Bool {
         guard let textFieldText = textField.text,
             let rangeOfTextToReplace = Range(range, in: textFieldText)
             else {

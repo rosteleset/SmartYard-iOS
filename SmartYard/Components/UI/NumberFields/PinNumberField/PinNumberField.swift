@@ -11,8 +11,8 @@ import PMNibLinkableView
 
 class PinNumberField: PMNibLinkableView {
 
-    @IBOutlet weak var numberLabel: UILabel!
-    @IBOutlet weak var underlineView: UIView!
+    @IBOutlet private weak var numberLabel: UILabel!
+    @IBOutlet private weak var underlineView: UIView!
     
     func fetchValue() -> String? {
         return numberLabel.text

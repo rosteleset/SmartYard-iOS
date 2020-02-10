@@ -111,7 +111,6 @@
 		E9A4D49123EC2A780070A591 /* PinTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D49023EC2A780070A591 /* PinTextField.xib */; };
 		E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */; };
 		E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49923EC3E200070A591 /* BlueButton.swift */; };
-		E9A4D49D23EC49E40070A591 /* UIViewController+KeyboardHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49C23EC49E40070A591 /* UIViewController+KeyboardHeight.swift */; };
 		E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */; };
 		E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */; };
 		E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */; };
@@ -229,7 +228,6 @@
 		E9A4D49023EC2A780070A591 /* PinTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinTextField.xib; sourceTree = "<group>"; };
 		E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeViewController.swift; sourceTree = "<group>"; };
 		E9A4D49923EC3E200070A591 /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
-		E9A4D49C23EC49E40070A591 /* UIViewController+KeyboardHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+KeyboardHeight.swift"; sourceTree = "<group>"; };
 		E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardTextField.swift; sourceTree = "<group>"; };
 		E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthByContractNumViewController.swift; sourceTree = "<group>"; };
@@ -625,7 +623,6 @@
 				844AC3BB23EB15ED0066006D /* UIFont+Extensions.swift */,
 				844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */,
 				844AC3C423EB1F840066006D /* UIView+Extensions.swift */,
-				E9A4D49C23EC49E40070A591 /* UIViewController+KeyboardHeight.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1143,7 +1140,6 @@
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
-				E9A4D49D23EC49E40070A591 /* UIViewController+KeyboardHeight.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
