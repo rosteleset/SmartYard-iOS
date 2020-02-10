@@ -20,6 +20,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputAddressViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="buildingTextField" destination="N8p-X9-uGr" id="JNm-8T-k6G"/>
+                <outlet property="checkAvailableServicesButton" destination="P3p-cv-8sH" id="jCb-sd-mTF"/>
+                <outlet property="cityTextField" destination="VY4-bh-98W" id="ZPB-pn-dE0"/>
+                <outlet property="flatTextField" destination="WJV-KH-rtf" id="EBc-sN-RcV"/>
+                <outlet property="qrCodeButton" destination="t7w-za-uue" id="k7E-S4-oc4"/>
+                <outlet property="streetTextField" destination="cmm-LE-hpZ" id="Jpf-KA-dYa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -28,17 +34,17 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="3vL-YD-f4m">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="3vL-YD-f4m">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="95v-tL-giU" customClass="TPKeyboardAvoidingScrollView">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95v-tL-giU" customClass="TPKeyboardAvoidingScrollView">
                     <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tOA-mx-jDg">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="852"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DMJ-9p-DBh" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="180" width="414" height="672"/>
+                                    <rect key="frame" x="0.0" y="180" width="414" height="700"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VY4-bh-98W" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="40" y="40" width="334" height="56"/>
@@ -112,6 +118,7 @@
                                         <constraint firstAttribute="trailing" secondItem="WJV-KH-rtf" secondAttribute="trailing" constant="40" id="8MP-mO-CIa"/>
                                         <constraint firstItem="N8p-X9-uGr" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="BXZ-v5-Kxi"/>
                                         <constraint firstItem="VY4-bh-98W" firstAttribute="top" secondItem="DMJ-9p-DBh" secondAttribute="top" constant="40" id="Bae-Gc-g4T"/>
+                                        <constraint firstAttribute="height" constant="700" id="C59-gG-mvH"/>
                                         <constraint firstItem="VY4-bh-98W" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="EhR-sC-okg"/>
                                         <constraint firstItem="WJV-KH-rtf" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="Fsj-ZL-1hE"/>
                                         <constraint firstAttribute="trailing" secondItem="cmm-LE-hpZ" secondAttribute="trailing" constant="40" id="GTJ-M6-3NG"/>
@@ -151,7 +158,6 @@
                             <constraints>
                                 <constraint firstItem="DMJ-9p-DBh" firstAttribute="top" secondItem="tOA-mx-jDg" secondAttribute="top" constant="180" id="6cj-Jo-wqh"/>
                                 <constraint firstItem="DnD-0W-pW4" firstAttribute="top" secondItem="tOA-mx-jDg" secondAttribute="top" id="A9t-hf-Q9e"/>
-                                <constraint firstAttribute="bottom" secondItem="DMJ-9p-DBh" secondAttribute="bottom" id="DKL-yF-ZOm"/>
                                 <constraint firstAttribute="trailing" secondItem="DMJ-9p-DBh" secondAttribute="trailing" id="HhV-Kg-2am"/>
                                 <constraint firstItem="DMJ-9p-DBh" firstAttribute="leading" secondItem="tOA-mx-jDg" secondAttribute="leading" id="YUV-5V-kiF"/>
                                 <constraint firstItem="DnD-0W-pW4" firstAttribute="leading" secondItem="tOA-mx-jDg" secondAttribute="leading" id="jiY-c6-BT5"/>
