@@ -25,7 +25,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="418" height="74"/>
                     <subviews>
                         <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iST-Pm-pbP">
-                            <rect key="frame" x="199" y="-60" width="20" height="20"/>
+                            <rect key="frame" x="199" y="0.0" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="fTh-0H-SXi"/>
                                 <constraint firstAttribute="width" constant="20" id="hZe-jg-UOG"/>
@@ -162,7 +162,7 @@
                         <constraint firstItem="Ur4-Z9-G55" firstAttribute="centerY" secondItem="zeB-3M-59c" secondAttribute="centerY" id="AyW-Ee-O2c"/>
                         <constraint firstItem="Ur4-Z9-G55" firstAttribute="centerX" secondItem="zeB-3M-59c" secondAttribute="centerX" id="X68-27-rYd"/>
                         <constraint firstItem="iST-Pm-pbP" firstAttribute="centerX" secondItem="zeB-3M-59c" secondAttribute="centerX" id="p62-V7-Mqh"/>
-                        <constraint firstItem="iST-Pm-pbP" firstAttribute="top" secondItem="zeB-3M-59c" secondAttribute="top" constant="-60" id="tNa-0n-m05"/>
+                        <constraint firstItem="iST-Pm-pbP" firstAttribute="top" secondItem="zeB-3M-59c" secondAttribute="top" id="tNa-0n-m05"/>
                     </constraints>
                 </view>
             </subviews>

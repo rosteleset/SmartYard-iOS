@@ -36,7 +36,7 @@ class NumberFieldView: PMNibLinkableView {
     func setNewValue(value: String?) {
         numberLabel.text = value
     }
-
+    
     private func bind() {
         numberLabel.rx.observe(String.self, "text")
             .subscribe(

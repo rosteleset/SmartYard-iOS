@@ -1,43 +1,31 @@
 //
-//  PhoneTextField.swift
+//  PinTextField.swift
 //  SmartYard
 //
-//  Created by Mad Brains on 05.02.2020.
+//  Created by Mad Brains on 06.02.2020.
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import PMNibLinkableView
 import RxSwift
 import RxCocoa
 
-class PhoneTextField: PMNibLinkableView {
-    
+class PinTextField: PMNibLinkableView {
+
     @IBOutlet private weak var containerView: UIView!
     
-    @IBOutlet private weak var firstNumView: NumberFieldView!
-    @IBOutlet private weak var secondNumView: NumberFieldView!
-    @IBOutlet private weak var thirdNumView: NumberFieldView!
+    @IBOutlet private weak var firstNumField: PinNumberField!
+    @IBOutlet private weak var secondNumField: PinNumberField!
+    @IBOutlet private weak var thirdNumField: PinNumberField!
+    @IBOutlet private weak var fourthNumField: PinNumberField!
     
-    @IBOutlet private weak var fourthNumView: NumberFieldView!
-    @IBOutlet private weak var fifthNumView: NumberFieldView!
-    @IBOutlet private weak var sixthNumView: NumberFieldView!
+    @IBOutlet private weak var wrongPassLabel: UILabel!
     
-    @IBOutlet private weak var seventhNumView: NumberFieldView!
-    @IBOutlet private weak var eighthNumView: NumberFieldView!
-    @IBOutlet private weak var ninthNumView: NumberFieldView!
-    @IBOutlet private weak var tenthNumView: NumberFieldView!
+    @IBOutlet weak var fakeTextField: UITextField!
     
-    @IBOutlet private weak var fakeTextField: UITextField!
-    
-    private var numberViewsCollection: [NumberFieldView] {
-        return [
-            firstNumView, secondNumView, thirdNumView,
-            fourthNumView, fifthNumView, sixthNumView,
-            seventhNumView, eighthNumView, ninthNumView,
-            tenthNumView
-        ]
+    private var numberViewsCollection: [PinNumberField] {
+        return [firstNumField, secondNumField, thirdNumField, fourthNumField]
     }
     
     private let disposeBag = DisposeBag()
@@ -50,19 +38,31 @@ class PhoneTextField: PMNibLinkableView {
         bind()
     }
     
+    func hideKeyboard() {
+        fakeTextField.resignFirstResponder()
+    }
+    
     func fetchInputNumber() -> String? {
         return fakeTextField.text
     }
     
-    func dismissKeybord() {
-        fakeTextField.resignFirstResponder()
+    func reset() {
+        fakeTextField.clear()
+        wrongPassLabel.isHidden = true
+        
+        numberViewsCollection.forEach { view in
+            view.clear()
+        }
+    }
+    
+    func markPass(isCorrect: Bool) {
+        wrongPassLabel.isHidden = isCorrect
+        numberViewsCollection.forEach {
+            $0.markValue(isCorrect: isCorrect)
+        }
     }
     
     @objc private func didPressNumberField() {
-        if fakeTextField.text?.count == Constants.phoneLengthWithoutPrefix {
-            reset()
-        }
-        
         fakeTextField.becomeFirstResponder()
     }
     
@@ -95,14 +95,6 @@ class PhoneTextField: PMNibLinkableView {
         }
     }
     
-    private func reset() {
-        fakeTextField.clear()
-        
-        numberViewsCollection.forEach { view in
-            view.clear()
-        }
-    }
-    
     private func configureFakeTextField() {
         fakeTextField.delegate = self
         fakeTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
@@ -111,7 +103,7 @@ class PhoneTextField: PMNibLinkableView {
     
 }
 
-extension PhoneTextField: UITextFieldDelegate {
+extension PinTextField: UITextFieldDelegate {
     
     func textField(
         _ textField: UITextField,
@@ -119,15 +111,23 @@ extension PhoneTextField: UITextFieldDelegate {
         replacementString string: String
     ) -> Bool {
         guard let textFieldText = textField.text,
-              let rangeOfTextToReplace = Range(range, in: textFieldText)
-        else {
-              return false
+            let rangeOfTextToReplace = Range(range, in: textFieldText)
+            else {
+                return false
         }
         
         let substringToReplace = textFieldText[rangeOfTextToReplace]
         let count = textFieldText.count - substringToReplace.count + string.count
         
-        return count <= Constants.phoneLengthWithoutPrefix
+        return count <= Constants.pinLength
+    }
+    
+}
+
+extension Reactive where Base: PinTextField {
+    
+    var textControlProperty: ControlProperty<String?> {
+        return base.fakeTextField.rx.text
     }
     
 }

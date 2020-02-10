@@ -7,7 +7,42 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
+import XCoordinator
 
-class InputPhoneNumberViewModel {
-    // TODO
+class InputPhoneNumberViewModel: BaseViewModel {
+    
+    let router: WeakRouter<AppRoute>
+    
+    init(router: WeakRouter<AppRoute>) {
+        self.router = router
+    }
+    
+    func transform(input: Input) -> Output {
+        input.inputPhoneText
+            .distinctUntilChanged()
+            .filter { $0.count == Constants.phoneLengthWithoutPrefix }
+            .drive(
+                onNext: { [weak self] phoneNumber in
+                    self?.router.trigger(.pinCode(phoneNumber: phoneNumber))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        return Output()
+    }
+    
+}
+
+extension InputPhoneNumberViewModel {
+    
+    struct Input {
+        let inputPhoneText: Driver<String>
+    }
+    
+    struct Output {
+        
+    }
+    
 }

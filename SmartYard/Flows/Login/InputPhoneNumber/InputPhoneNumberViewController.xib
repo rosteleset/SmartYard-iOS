@@ -27,7 +27,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="lJK-m8-VAn">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="lJK-m8-VAn">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lCk-sj-GES">
@@ -69,7 +69,7 @@
                                 <constraint firstAttribute="height" constant="24" id="fcU-PG-5Lp"/>
                             </constraints>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" image="closeButtonIcon"/>
+                            <state key="normal" image="CloseButtonIcon"/>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -100,7 +100,7 @@
         </view>
     </objects>
     <resources>
-        <image name="closeButtonIcon" width="24" height="24"/>
-        <image name="mainBackground" width="375" height="812"/>
+        <image name="CloseButtonIcon" width="24" height="24"/>
+        <image name="MainBackground" width="375" height="812"/>
     </resources>
 </document>
