@@ -20,8 +20,6 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>Used for VoIP video calls</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Used for VoIP calls</string>
 	<key>UIBackgroundModes</key>

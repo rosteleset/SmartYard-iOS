@@ -46,11 +46,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
         
-        super.init(initialRoute: .phoneNumber)
+        super.init(initialRoute: .main)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
-        
-        AVCaptureDevice.requestAccess(for: .video) { _ in }
     }
     
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
