@@ -57,7 +57,6 @@ class PinCodeViewController: BaseViewController {
         sendCodeAgainButton.isHidden = false
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tap.cancelsTouchesInView = true
         view.addGestureRecognizer(tap)
     }
     
