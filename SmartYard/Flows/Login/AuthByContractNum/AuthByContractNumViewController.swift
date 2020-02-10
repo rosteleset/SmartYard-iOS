@@ -18,8 +18,8 @@ class AuthByContractNumViewController: UIViewController {
     @IBOutlet private weak var passTextField: SmartYardTextField!
     @IBOutlet private weak var roundedView: UIView!
     
-    @IBOutlet private weak var forgetPassButton: ClearButtonWithDotsUnderline!
-    @IBOutlet private weak var forgetEverythingButton: ClearButtonWithDotsUnderline!
+    @IBOutlet private weak var forgetPassButton: ClearButtonWithDashedUnderline!
+    @IBOutlet private weak var forgetEverythingButton: ClearButtonWithDashedUnderline!
     
     @IBOutlet private weak var noContractButton: WhiteButtonWithBorder!
     @IBOutlet private weak var signInButton: BlueButton!

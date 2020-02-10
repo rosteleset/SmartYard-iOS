@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ClearButtonWithDotsUnderline: UIButton {
+class ClearButtonWithDashedUnderline: UIButton {
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -20,13 +20,21 @@ class ClearButtonWithDotsUnderline: UIButton {
         setUnderlinedTitle()
     }
     
+    func setLeftAlignment() {
+        titleLabel?.textAlignment = .left
+    }
+    
+    func setRightAlignment() {
+        titleLabel?.textAlignment = .right
+    }
+    
     private func setUnderlinedTitle() {
         _ = layer.sublayers?
-            .filter({ $0.name == "DashedTopLine" })
-            .map({ $0.removeFromSuperlayer() })
+            .filter { $0.name == "DashedBottomLine" }
+            .map { $0.removeFromSuperlayer() }
         
         let shapeLayer = CAShapeLayer()
-        shapeLayer.name = "DashedTopLine"
+        shapeLayer.name = "DashedBottomLine"
         shapeLayer.bounds = bounds
         shapeLayer.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
         shapeLayer.fillColor = UIColor.clear.cgColor
@@ -40,14 +48,6 @@ class ClearButtonWithDotsUnderline: UIButton {
         shapeLayer.path = path
         
         layer.addSublayer(shapeLayer)
-    }
-    
-    func setLeftAlignment() {
-        titleLabel?.textAlignment = .left
-    }
-    
-    func setRightAlignment() {
-        titleLabel?.textAlignment = .right
     }
     
 }
