@@ -20,14 +20,43 @@ class AuthByContractNumViewController: UIViewController {
     @IBOutlet private weak var forgetPassButton: ClearButtonWithDotsUnderline!
     @IBOutlet private weak var forgetEverythingButton: ClearButtonWithDotsUnderline!
     
+    @IBOutlet private weak var noContractButton: WhiteButtonWithBorder!
+    @IBOutlet private weak var signInButton: BlueButton!
+    
+    let viewModel: AuthByContractNumViewModel
+    
+    init(viewModel: AuthByContractNumViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureUI()
+        bind()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        roundedView.roundCorners([.topLeft, .topRight, .bottomLeft, .bottomRight], radius: 20.0)
+        
+        roundedView.roundCorners(
+            [.topLeft, .topRight, .bottomLeft, .bottomRight],
+            radius: 20.0
+        )
+    }
+    
+    private func bind() {
+        _ = AuthByContractNumViewModel.Input(
+            forgetPassTapped: forgetPassButton.rx.tap.asDriverOnErrorJustComplete(),
+            forgetEverythingTapped: forgetEverythingButton.rx.tap.asDriverOnErrorJustComplete(),
+            noContractTapped: noContractButton.rx.tap.asDriverOnErrorJustComplete(),
+            signInTapped: signInButton.rx.tap.asDriverOnErrorJustComplete())
     }
     
     private func configureUI() {
