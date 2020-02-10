@@ -52,10 +52,17 @@ class PinCodeViewController: BaseViewController {
     }
 
     private func configureView() {
-        view.hideKeyboardWhenTapped = true
         pinInputFieldView.reset()
         sendCodeAgainLabelView.isHidden = true
         sendCodeAgainButton.isHidden = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = true
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func dismissKeyboard() {
+        pinInputFieldView.hideKeyboard()
     }
     
     private func configureRxKeyboard() {
