@@ -52,6 +52,8 @@
 		844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */; };
 		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
+		84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */; };
+		84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4523E2CD3F001B3B43 /* APIService.swift */; };
@@ -162,6 +164,8 @@
 		844AC3F323EBFF900066006D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		844AC3F423EBFF900066006D /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderCell.swift; sourceTree = "<group>"; };
+		84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderCell.xib; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
 		84AA8D4523E2CD3F001B3B43 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -520,6 +524,7 @@
 		844AC3F223EBFF830066006D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				84898A7E23F144D400E6B78E /* Cells */,
 				844AC3F323EBFF900066006D /* SettingsViewController.swift */,
 				844AC3F423EBFF900066006D /* SettingsViewController.xib */,
 			);
@@ -567,6 +572,23 @@
 				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
 			);
 			path = Entries;
+			sourceTree = "<group>";
+		};
+		84898A7E23F144D400E6B78E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				84898A8323F144FE00E6B78E /* HeaderCell */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		84898A8323F144FE00E6B78E /* HeaderCell */ = {
+			isa = PBXGroup;
+			children = (
+				84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */,
+				84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */,
+			);
+			path = HeaderCell;
 			sourceTree = "<group>";
 		};
 		84950CF723E431B700F3C550 /* Base Classes */ = {
@@ -1005,6 +1027,7 @@
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
+				84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
@@ -1199,6 +1222,7 @@
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */,
 				844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */,
+				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
