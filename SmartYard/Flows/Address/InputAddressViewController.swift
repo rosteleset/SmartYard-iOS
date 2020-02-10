@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import TPKeyboardAvoiding
 
 class InputAddressViewController: UIViewController {
 
+    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var cityTextField: SmartYardTextField!
     @IBOutlet private weak var streetTextField: SmartYardTextField!
     @IBOutlet private weak var buildingTextField: SmartYardTextField!
@@ -18,8 +20,11 @@ class InputAddressViewController: UIViewController {
     @IBOutlet private weak var checkAvailableServicesButton: BlueButton!
     @IBOutlet private weak var qrCodeButton: ClearButtonWithDashedUnderline!
     
+    @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureUI()
     }
 
