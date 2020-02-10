@@ -16,7 +16,7 @@ class BlueButton: UIButton {
         
         cornerRadius = 12
         backgroundColor = UIColor.SmartYard.blue
-        titleLabel?.tintColor = .white
+        titleLabel?.textColor = .white
     }
     
 }

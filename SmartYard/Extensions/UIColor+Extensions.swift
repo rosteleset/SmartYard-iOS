@@ -22,7 +22,10 @@ extension UIColor {
         static let grayBorder = UIColor(hex: 0xF0F0F1)!
         
         /// #FF3B30
-        static let incorrectDataRed = UIColor(hex: 0xFF3B30)
+        static let incorrectDataRed = UIColor(hex: 0xFF3B30)!
+        
+        /// #6D7A8A
+        static let placeholderGrayText = UIColor(hex: 0x6D7A8A)!
     }
     
 }

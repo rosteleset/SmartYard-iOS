@@ -21,6 +21,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthByContractNumViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="containerView" destination="U9N-qc-vvf" id="cjP-KV-96Y"/>
+                <outlet property="contractNumberTextField" destination="1fV-QD-lmA" id="Vav-Ds-UVc"/>
+                <outlet property="forgetEverythingButton" destination="L3p-t8-69e" id="FrR-zx-F3S"/>
+                <outlet property="forgetPassButton" destination="bBo-iL-hgv" id="iKh-tB-5Ue"/>
+                <outlet property="passTextField" destination="Hma-MD-8gc" id="byg-TP-z77"/>
                 <outlet property="scrollView" destination="Rtx-jQ-4EM" id="WHy-1c-e60"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -78,10 +82,11 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBo-iL-hgv">
-                                            <rect key="frame" x="43" y="184" width="109" height="24"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBo-iL-hgv" customClass="ClearButtonWithDotsUnderline" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="43" y="184" width="110" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="4vl-eI-gET"/>
+                                                <constraint firstAttribute="width" constant="110" id="hpb-1Q-YQB"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                             <state key="normal" title="Не помню пароль"/>
@@ -102,7 +107,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3p-t8-69e">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3p-t8-69e" customClass="ClearButtonWithDotsUnderline" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="264" y="184" width="107" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="BmP-fE-5Ul"/>

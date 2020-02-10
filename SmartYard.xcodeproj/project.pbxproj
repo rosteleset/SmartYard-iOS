@@ -95,6 +95,7 @@
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
 		E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C382423F149F30010BBC1 /* PinCodeViewController.xib */; };
+		E98C382923F173480010BBC1 /* ClearButtonWithDotsUnderline.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382823F173480010BBC1 /* ClearButtonWithDotsUnderline.swift */; };
 		E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */; };
 		E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */; };
 		E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6C223EAA97900BECEE6 /* InputPhoneNumberViewModel.swift */; };
@@ -208,6 +209,7 @@
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E98C382423F149F30010BBC1 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
+		E98C382823F173480010BBC1 /* ClearButtonWithDotsUnderline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButtonWithDotsUnderline.swift; sourceTree = "<group>"; };
 		E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputPhoneNumberViewController.xib; sourceTree = "<group>"; };
 		E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
@@ -353,7 +355,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				E9A4D4A623ED9BED0070A591 /* WhiteButtonWithBorder */,
+				E98C382723F173130010BBC1 /* ClearButtonWithDotsUnderline */,
 				E9A4D49823EC3DD00070A591 /* BlueButton */,
 				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
 				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
@@ -363,6 +365,7 @@
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
 				E9A4D48D23EC2A510070A591 /* PinTextField */,
 				E99EA6CC23EAD0C800BECEE6 /* TopRoundedView */,
+				E9A4D4A623ED9BED0070A591 /* WhiteButtonWithBorder */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -789,6 +792,14 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		E98C382723F173130010BBC1 /* ClearButtonWithDotsUnderline */ = {
+			isa = PBXGroup;
+			children = (
+				E98C382823F173480010BBC1 /* ClearButtonWithDotsUnderline.swift */,
+			);
+			path = ClearButtonWithDotsUnderline;
+			sourceTree = "<group>";
+		};
 		E99EA6B623EA9CED00BECEE6 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -1171,6 +1182,7 @@
 				844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */,
 				E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */,
 				844AC3E823EBFEC50066006D /* PaymentsViewController.swift in Sources */,
+				E98C382923F173480010BBC1 /* ClearButtonWithDotsUnderline.swift in Sources */,
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */,
 				844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */,
