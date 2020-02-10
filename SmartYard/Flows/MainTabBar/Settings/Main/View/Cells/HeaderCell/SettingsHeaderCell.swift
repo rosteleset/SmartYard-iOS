@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsHeaderCell: UICollectionViewCell {
+class SettingsHeaderCell: CustomBorderCollectionViewCell {
     
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!

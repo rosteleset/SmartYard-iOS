@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsControlPanelCell: UICollectionViewCell {
+class SettingsControlPanelCell: CustomBorderCollectionViewCell {
     
     @IBOutlet private weak var wifiButton: UIButton!
     @IBOutlet private weak var monitorButton: UIButton!
