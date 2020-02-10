@@ -50,6 +50,8 @@
 		844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C123EAA72800BECEE6 /* SourceSansPro-Bold.ttf */; };
 		844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C023EAA71C00BECEE6 /* SourceSansPro-SemiBold.ttf */; };
 		844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */; };
+		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
+		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4523E2CD3F001B3B43 /* APIService.swift */; };
@@ -77,7 +79,6 @@
 		84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15CF23EC409500A1CB95 /* AddressesListObjectCell.swift */; };
 		84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15D023EC409500A1CB95 /* AddressesListObjectCell.xib */; };
 		84CC15D423EC40EE00A1CB95 /* AddressesListHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D323EC40EE00A1CB95 /* AddressesListHeaderCell.swift */; };
-		84CC15D623EC412A00A1CB95 /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D723EC42E600A1CB95 /* DomophoneObjectType.swift */; };
 		84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15DA23EC6AA800A1CB95 /* AddressesListCameraCell.swift */; };
 		84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15DB23EC6AA800A1CB95 /* AddressesListCameraCell.xib */; };
@@ -963,6 +964,7 @@
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
 				84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */,
+				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
 				E9A4D49423EC2CC20070A591 /* PinCodeViewController.xib in Resources */,
 				844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */,
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
@@ -1109,7 +1111,6 @@
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
-				84CC15D623EC412A00A1CB95 /* AddressesListViewController.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
@@ -1122,6 +1123,7 @@
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
 				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
+				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
 				84B9EC8C23E085AE00979C39 /* Observable+Extensions.swift in Sources */,
 				84AA8D7F23E30C32001B3B43 /* BaseViewModel.swift in Sources */,
