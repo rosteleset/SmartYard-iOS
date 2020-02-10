@@ -28,7 +28,7 @@ class AddressesListViewController: BaseViewController {
     
     private let itemsCountProxy = BehaviorSubject<[Int: Int]>(value: [:])
     
-    let viewModel: AddressesListViewModel
+    private let viewModel: AddressesListViewModel
     
     init(viewModel: AddressesListViewModel) {
         self.viewModel = viewModel
@@ -42,8 +42,8 @@ class AddressesListViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCollectionView()
         configureView()
+        configureCollectionView()
         bind()
     }
     

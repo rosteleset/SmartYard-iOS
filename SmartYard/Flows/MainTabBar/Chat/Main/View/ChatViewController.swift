@@ -12,7 +12,7 @@ import RxCocoa
 
 class ChatViewController: BaseViewController {
 
-    let viewModel: ChatViewModel
+    private let viewModel: ChatViewModel
     
     init(viewModel: ChatViewModel) {
         self.viewModel = viewModel

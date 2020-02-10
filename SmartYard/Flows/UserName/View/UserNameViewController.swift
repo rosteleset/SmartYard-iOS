@@ -16,7 +16,7 @@ class UserNameViewController: BaseViewController {
     @IBOutlet private weak var continueButton: UIButton!
     @IBOutlet private weak var avoidingView: UIView!
     
-    let viewModel: UserNameViewModel
+    private let viewModel: UserNameViewModel
     
     init(viewModel: UserNameViewModel) {
         self.viewModel = viewModel

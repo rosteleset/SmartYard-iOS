@@ -12,7 +12,7 @@ import RxCocoa
 
 class PaymentsViewController: BaseViewController {
 
-    let viewModel: PaymentsViewModel
+    private let viewModel: PaymentsViewModel
     
     init(viewModel: PaymentsViewModel) {
         self.viewModel = viewModel

@@ -52,6 +52,20 @@
 		844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */; };
 		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
+		84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */; };
+		84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */; };
+		84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */; };
+		84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84898A8623F14CB100E6B78E /* SettingsControlPanelCell.xib */; };
+		84898A8A23F1510600E6B78E /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A8923F1510600E6B78E /* UIButton+Extensions.swift */; };
+		84898A8E23F1540C00E6B78E /* SettingsActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A8C23F1540C00E6B78E /* SettingsActionCell.swift */; };
+		84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84898A8D23F1540C00E6B78E /* SettingsActionCell.xib */; };
+		84898A9223F1554D00E6B78E /* SettingsDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A9123F1554D00E6B78E /* SettingsDataItem.swift */; };
+		84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A9323F1555700E6B78E /* SettingsDataItemIdentity.swift */; };
+		84898A9623F1556200E6B78E /* SettingsScrollingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A9523F1556200E6B78E /* SettingsScrollingMode.swift */; };
+		84898A9823F1556B00E6B78E /* SettingsSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */; };
+		84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A9A23F17EF100E6B78E /* SettingsAddAddressCell.swift */; };
+		84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84898A9B23F17EF100E6B78E /* SettingsAddAddressCell.xib */; };
+		84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4523E2CD3F001B3B43 /* APIService.swift */; };
@@ -120,8 +134,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D7D3E7917D11E9ED556EB4E /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		66E82B501F734243E965E787 /* Pods-SmartYard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.debug.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.debug.xcconfig"; sourceTree = "<group>"; };
 		844AC37223E85C6A0066006D /* RequestCodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCodeRequest.swift; sourceTree = "<group>"; };
 		844AC37B23E861C50066006D /* GetVerifyedAddressesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVerifyedAddressesRequest.swift; sourceTree = "<group>"; };
 		844AC37D23E861D10066006D /* GetVerifyedAddressesResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVerifyedAddressesResponseData.swift; sourceTree = "<group>"; };
@@ -162,6 +176,20 @@
 		844AC3F323EBFF900066006D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		844AC3F423EBFF900066006D /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderCell.swift; sourceTree = "<group>"; };
+		84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderCell.xib; sourceTree = "<group>"; };
+		84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelCell.swift; sourceTree = "<group>"; };
+		84898A8623F14CB100E6B78E /* SettingsControlPanelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsControlPanelCell.xib; sourceTree = "<group>"; };
+		84898A8923F1510600E6B78E /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		84898A8C23F1540C00E6B78E /* SettingsActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsActionCell.swift; sourceTree = "<group>"; };
+		84898A8D23F1540C00E6B78E /* SettingsActionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsActionCell.xib; sourceTree = "<group>"; };
+		84898A9123F1554D00E6B78E /* SettingsDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataItem.swift; sourceTree = "<group>"; };
+		84898A9323F1555700E6B78E /* SettingsDataItemIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataItemIdentity.swift; sourceTree = "<group>"; };
+		84898A9523F1556200E6B78E /* SettingsScrollingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScrollingMode.swift; sourceTree = "<group>"; };
+		84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSectionModel.swift; sourceTree = "<group>"; };
+		84898A9A23F17EF100E6B78E /* SettingsAddAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAddAddressCell.swift; sourceTree = "<group>"; };
+		84898A9B23F17EF100E6B78E /* SettingsAddAddressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsAddAddressCell.xib; sourceTree = "<group>"; };
+		84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpAvoidingFlowLayout.swift; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
 		84AA8D4523E2CD3F001B3B43 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -206,6 +234,7 @@
 		84F840DC23E07DA5008DBE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84F840DF23E07DA5008DBE50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84F840E123E07DA5008DBE50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA70517603B5A2A38FB9EA1E /* Pods-SmartYard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.debug.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.debug.xcconfig"; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
@@ -237,7 +266,6 @@
 		E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthByContractNumViewController.swift; sourceTree = "<group>"; };
 		E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthByContractNumViewController.xib; sourceTree = "<group>"; };
 		E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteButtonWithBorder.swift; sourceTree = "<group>"; };
-		F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,14 +385,15 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
+				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
+				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
+				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
 				E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */,
 				E9A4D49823EC3DD00070A591 /* BlueButton */,
 				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
 				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
 				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
-				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
-				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
-				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
 				E9A4D48D23EC2A510070A591 /* PinTextField */,
 				E99EA6CC23EAD0C800BECEE6 /* RoundedView */,
 				E9A4D4A623ED9BED0070A591 /* WhiteButtonWithBorder */,
@@ -503,6 +532,7 @@
 		844AC3F023EBFF790066006D /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				84898A9023F1553900E6B78E /* Entries */,
 				844AC3F223EBFF830066006D /* View */,
 				844AC3F123EBFF7F0066006D /* ViewModel */,
 			);
@@ -520,6 +550,7 @@
 		844AC3F223EBFF830066006D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				84898A7E23F144D400E6B78E /* Cells */,
 				844AC3F323EBFF900066006D /* SettingsViewController.swift */,
 				844AC3F423EBFF900066006D /* SettingsViewController.xib */,
 			);
@@ -567,6 +598,64 @@
 				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
 			);
 			path = Entries;
+			sourceTree = "<group>";
+		};
+		84898A7E23F144D400E6B78E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				84898A9923F17ED500E6B78E /* AddAddressCell */,
+				84898A8B23F153F700E6B78E /* ActionCell */,
+				84898A8423F14C9300E6B78E /* ControlPanelCell */,
+				84898A8323F144FE00E6B78E /* HeaderCell */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		84898A8323F144FE00E6B78E /* HeaderCell */ = {
+			isa = PBXGroup;
+			children = (
+				84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */,
+				84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */,
+			);
+			path = HeaderCell;
+			sourceTree = "<group>";
+		};
+		84898A8423F14C9300E6B78E /* ControlPanelCell */ = {
+			isa = PBXGroup;
+			children = (
+				84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */,
+				84898A8623F14CB100E6B78E /* SettingsControlPanelCell.xib */,
+			);
+			path = ControlPanelCell;
+			sourceTree = "<group>";
+		};
+		84898A8B23F153F700E6B78E /* ActionCell */ = {
+			isa = PBXGroup;
+			children = (
+				84898A8C23F1540C00E6B78E /* SettingsActionCell.swift */,
+				84898A8D23F1540C00E6B78E /* SettingsActionCell.xib */,
+			);
+			path = ActionCell;
+			sourceTree = "<group>";
+		};
+		84898A9023F1553900E6B78E /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				84898A9123F1554D00E6B78E /* SettingsDataItem.swift */,
+				84898A9323F1555700E6B78E /* SettingsDataItemIdentity.swift */,
+				84898A9523F1556200E6B78E /* SettingsScrollingMode.swift */,
+				84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */,
+			);
+			path = Entries;
+			sourceTree = "<group>";
+		};
+		84898A9923F17ED500E6B78E /* AddAddressCell */ = {
+			isa = PBXGroup;
+			children = (
+				84898A9A23F17EF100E6B78E /* SettingsAddAddressCell.swift */,
+				84898A9B23F17EF100E6B78E /* SettingsAddAddressCell.xib */,
+			);
+			path = AddAddressCell;
 			sourceTree = "<group>";
 		};
 		84950CF723E431B700F3C550 /* Base Classes */ = {
@@ -625,6 +714,7 @@
 				84AA8D6123E2E860001B3B43 /* NSError+Extensions.swift */,
 				84B9EC8B23E085AE00979C39 /* Observable+Extensions.swift */,
 				84AA8D6523E2F2A8001B3B43 /* TransportType+Extensions.swift */,
+				84898A8923F1510600E6B78E /* UIButton+Extensions.swift */,
 				844AC3BB23EB15ED0066006D /* UIFont+Extensions.swift */,
 				844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */,
 				844AC3C423EB1F840066006D /* UIView+Extensions.swift */,
@@ -777,8 +867,8 @@
 		B0B71A96C6C8995993C06C49 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				66E82B501F734243E965E787 /* Pods-SmartYard.debug.xcconfig */,
-				F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */,
+				CA70517603B5A2A38FB9EA1E /* Pods-SmartYard.debug.xcconfig */,
+				2D7D3E7917D11E9ED556EB4E /* Pods-SmartYard.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1005,21 +1095,25 @@
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
+				84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
 				844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */,
+				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
 				84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */,
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
 				84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */,
+				84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */,
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
 				844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */,
 				E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */,
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
 				844AC3E923EBFEC50066006D /* PaymentsViewController.xib in Resources */,
+				84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */,
 				E9A4D48C23EC28760070A591 /* PinNumberField.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1141,18 +1235,23 @@
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
 				84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */,
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
+				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
 				E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				844AC3ED23EBFF0E0066006D /* PaymentsCoordinator.swift in Sources */,
 				844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */,
 				E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */,
 				844AC38123E8637B0066006D /* ConfirmCodeRequest.swift in Sources */,
+				84898A9823F1556B00E6B78E /* SettingsSectionModel.swift in Sources */,
 				E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */,
+				84898A8E23F1540C00E6B78E /* SettingsActionCell.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
+				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
+				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
 				844AC39723E9788D0066006D /* APIAddress.swift in Sources */,
 				844AC38323E8641B0066006D /* ConfirmCodeResponseData.swift in Sources */,
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
@@ -1163,6 +1262,7 @@
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
+				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
@@ -1177,9 +1277,11 @@
 				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
+				84898A9223F1554D00E6B78E /* SettingsDataItem.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
 				84B9EC8C23E085AE00979C39 /* Observable+Extensions.swift in Sources */,
 				84AA8D7F23E30C32001B3B43 /* BaseViewModel.swift in Sources */,
+				84898A9623F1556200E6B78E /* SettingsScrollingMode.swift in Sources */,
 				84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */,
 				844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */,
 				84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */,
@@ -1188,6 +1290,7 @@
 				844AC39223E872F80066006D /* EmptyAPIResponseData.swift in Sources */,
 				84AA8D6023E2E622001B3B43 /* APIWrapper.swift in Sources */,
 				844AC3B723EB104E0066006D /* UserNameViewController.swift in Sources */,
+				84898A8A23F1510600E6B78E /* UIButton+Extensions.swift in Sources */,
 				84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */,
 				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
@@ -1199,6 +1302,7 @@
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */,
 				844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */,
+				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
@@ -1345,7 +1449,7 @@
 		};
 		84F840E523E07DA5008DBE50 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66E82B501F734243E965E787 /* Pods-SmartYard.debug.xcconfig */;
+			baseConfigurationReference = CA70517603B5A2A38FB9EA1E /* Pods-SmartYard.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
@@ -1369,7 +1473,7 @@
 		};
 		84F840E623E07DA5008DBE50 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F8D255556B627C2FE5C0A0C1 /* Pods-SmartYard.release.xcconfig */;
+			baseConfigurationReference = 2D7D3E7917D11E9ED556EB4E /* Pods-SmartYard.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;

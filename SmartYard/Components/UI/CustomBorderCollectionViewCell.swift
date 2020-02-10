@@ -19,18 +19,40 @@ import UIKit
 class CustomBorderCollectionViewCell: UICollectionViewCell {
     
     private let borderLayer = CALayer()
-    private let bottomLineLayer = CALayer()
+    private let topLineMaskLayer = CALayer()
+    private let bottomLineMaskLayer = CALayer()
+    private let bottomLineSeparatorLayer = CALayer()
+    
+    private var separatorInset: CGFloat?
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
         borderLayer.frame = bounds
         
-        bottomLineLayer.frame = CGRect(
-            x: bottomLineLayer.frame.height,
+        topLineMaskLayer.frame = CGRect(
+            x: topLineMaskLayer.frame.height,
             y: 0,
-            width: bounds.width - 2 * bottomLineLayer.frame.height,
-            height: bottomLineLayer.frame.height
+            width: bounds.width - 2 * topLineMaskLayer.frame.height,
+            height: topLineMaskLayer.frame.height
+        )
+        
+        guard let separatorInset = separatorInset else {
+            return
+        }
+        
+        bottomLineMaskLayer.frame = CGRect(
+            x: bottomLineMaskLayer.frame.height,
+            y: bounds.height - bottomLineMaskLayer.frame.height,
+            width: bounds.width - 2 * bottomLineMaskLayer.frame.height,
+            height: bottomLineMaskLayer.frame.height
+        )
+        
+        bottomLineSeparatorLayer.frame = CGRect(
+            x: bottomLineSeparatorLayer.frame.height + separatorInset,
+            y: bounds.height - bottomLineSeparatorLayer.frame.height,
+            width: bounds.width - 2 * (bottomLineSeparatorLayer.frame.height + separatorInset),
+            height: bottomLineSeparatorLayer.frame.height
         )
     }
     
@@ -42,7 +64,8 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         isLastInSection: Bool,
         customBorderWidth: CGFloat,
         customBorderColor: UIColor?,
-        customCornerRadius: CGFloat
+        customCornerRadius: CGFloat,
+        separatorInset: CGFloat? = nil
     ) {
         var maskedCorners = CACornerMask()
         
@@ -58,7 +81,8 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
             customBorderWidth: customBorderWidth,
             customBorderColor: customBorderColor,
             customCornerRadius: customCornerRadius,
-            maskedCorners: maskedCorners
+            maskedCorners: maskedCorners,
+            separatorInset: separatorInset
         )
     }
     
@@ -66,7 +90,8 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         customBorderWidth: CGFloat,
         customBorderColor: UIColor?,
         customCornerRadius: CGFloat,
-        maskedCorners: CACornerMask
+        maskedCorners: CACornerMask,
+        separatorInset: CGFloat?
     ) {
         removeCustomBorder()
         
@@ -82,25 +107,59 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         borderLayer.maskedCorners = maskedCorners
         
         // MARK: Если ячейка не первая в секции, то маскируем верхнюю границу
-        guard !maskedCorners.contains(.topCorners) else {
-            return
+        // Таким образом, избегаем двухпиксельного разделителя между ячейками
+        
+        if !maskedCorners.contains(.topCorners) {
+            topLineMaskLayer.backgroundColor = backgroundColor?.cgColor
+            
+            topLineMaskLayer.frame = CGRect(
+                x: customBorderWidth,
+                y: 0,
+                width: bounds.width - 2 * customBorderWidth,
+                height: customBorderWidth
+            )
+            
+            layer.addSublayer(topLineMaskLayer)
         }
         
-        bottomLineLayer.backgroundColor = backgroundColor?.cgColor
+        // MARK: Если ячейка не последняя в секции, и установлен separatorInset, то маскируем еще и нижнюю границу
+        // Таким образом, устанавливаем кастомный отступ разделителя между ячейками
         
-        bottomLineLayer.frame = CGRect(
-            x: customBorderWidth,
-            y: 0,
-            width: bounds.width - 2 * customBorderWidth,
-            height: customBorderWidth
-        )
-        
-        layer.addSublayer(bottomLineLayer)
+        if !maskedCorners.contains(.bottomCorners), let separatorInset = separatorInset {
+            self.separatorInset = separatorInset
+            
+            bottomLineMaskLayer.backgroundColor = backgroundColor?.cgColor
+            
+            bottomLineMaskLayer.frame = CGRect(
+                x: customBorderWidth,
+                y: bounds.height - customBorderWidth,
+                width: bounds.width - 2 * customBorderWidth,
+                height: customBorderWidth
+            )
+            
+            layer.addSublayer(bottomLineMaskLayer)
+            
+            bottomLineSeparatorLayer.backgroundColor = customBorderColor?.cgColor
+            
+            bottomLineSeparatorLayer.frame = CGRect(
+                x: customBorderWidth + separatorInset,
+                y: bounds.height - customBorderWidth,
+                width: bounds.width - 2 * (customBorderWidth + separatorInset),
+                height: customBorderWidth
+            )
+            
+            layer.addSublayer(bottomLineSeparatorLayer)
+        }
     }
     
     private func removeCustomBorder() {
         borderLayer.removeFromSuperlayer()
-        bottomLineLayer.removeFromSuperlayer()
+        topLineMaskLayer.removeFromSuperlayer()
+        
+        bottomLineMaskLayer.removeFromSuperlayer()
+        bottomLineSeparatorLayer.removeFromSuperlayer()
+        
+        separatorInset = nil
     }
     
 }
