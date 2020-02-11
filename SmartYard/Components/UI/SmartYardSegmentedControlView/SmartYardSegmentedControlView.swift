@@ -15,7 +15,7 @@ class SmartYardSegmentedControl: UIView {
     
     let segmentControl: UISegmentedControl = {
         let control = UISegmentedControl()
-        control.backgroundColor = .clear
+        control.backgroundColor = .white
         control.tintColor = .clear
         
         let selectedControlFont = UIFont.SourceSansPro.semibold(size: 18)
@@ -45,6 +45,13 @@ class SmartYardSegmentedControl: UIView {
     let bottomBar: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.SmartYard.blue
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let bottomSeparator: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(hex: 0xF3F4FA)!
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -85,8 +92,25 @@ class SmartYardSegmentedControl: UIView {
         }
         
         addSubview(segmentControl)
+        addSubview(bottomSeparator)
         addSubview(bottomBar)
         
+        configureSegmentControlAnchors()
+        configureBottomBarAnchors()
+        configureSeparatorAnchors()
+        
+        bottomBarWidthAnchor?.isActive = true
+        
+        segmentControl.addTarget(
+            self,
+            action: #selector(segmentedControlValueChanged(_:)),
+            for: .valueChanged
+        )
+        
+        setupSegmentItems()
+    }
+    
+    private func configureSegmentControlAnchors() {
         segmentControl.widthAnchor
             .constraint(equalTo: widthAnchor)
             .isActive = true
@@ -102,13 +126,9 @@ class SmartYardSegmentedControl: UIView {
         segmentControl.bottomAnchor
             .constraint(equalTo: bottomAnchor)
             .isActive = true
-        
-        segmentControl.addTarget(
-            self,
-            action: #selector(segmentedControlValueChanged(_:)),
-            for: .valueChanged
-        )
-        
+    }
+    
+    private func configureBottomBarAnchors() {
         bottomBar.bottomAnchor
             .constraint(equalTo: bottomAnchor)
             .isActive = true
@@ -125,10 +145,24 @@ class SmartYardSegmentedControl: UIView {
             equalTo: segmentControl.widthAnchor,
             multiplier: 1 / CGFloat(segmentItems.count)
         )
+    }
+    
+    private func configureSeparatorAnchors() {
+        bottomSeparator.bottomAnchor
+            .constraint(equalTo: bottomAnchor)
+            .isActive = true
         
-        bottomBarWidthAnchor?.isActive = true
+        bottomSeparator.heightAnchor
+            .constraint(equalToConstant: 1)
+            .isActive = true
         
-        setupSegmentItems()
+        bottomSeparator.leftAnchor
+            .constraint(equalTo: segmentControl.leftAnchor)
+            .isActive = true
+        
+        bottomSeparator.rightAnchor
+            .constraint(equalTo: segmentControl.rightAnchor)
+            .isActive = true
     }
     
     private func setupSegmentItems() {
