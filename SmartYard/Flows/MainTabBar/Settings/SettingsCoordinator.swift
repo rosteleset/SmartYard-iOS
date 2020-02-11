@@ -13,6 +13,10 @@ enum SettingsRoute: Route {
     case main
     case addressSettings(address: String)
     case back
+    case dismiss
+    case serviceIsActivated
+    case serviceIsNotActivated
+    case serviceUnavailable
     
 }
 
@@ -42,6 +46,27 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
         case .back:
             return .pop()
+            
+        case .dismiss:
+            return .dismiss()
+            
+        case .serviceIsActivated:
+            let vm = ServiceIsActivatedViewModel(router: weakRouter)
+            let vc = ServiceIsActivatedViewController(viewModel: vm)
+            vc.modalPresentationStyle = .overFullScreen
+            return .present(vc, animation: .fade)
+            
+        case .serviceIsNotActivated:
+            let vm = ServiceIsNotActivatedViewModel(router: weakRouter)
+            let vc = ServiceIsNotActivatedViewController(viewModel: vm)
+            vc.modalPresentationStyle = .overFullScreen
+            return .present(vc, animation: .fade)
+            
+        case .serviceUnavailable:
+            let vm = ServiceUnavailableViewModel(router: weakRouter)
+            let vc = ServiceUnavailableViewController(viewModel: vm)
+            vc.modalPresentationStyle = .overFullScreen
+            return .present(vc, animation: .fade)
         }
     }
     

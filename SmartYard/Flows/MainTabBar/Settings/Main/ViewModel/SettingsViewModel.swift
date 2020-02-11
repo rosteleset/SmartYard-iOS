@@ -35,7 +35,7 @@ class SettingsViewModel: BaseViewModel {
             }
             .drive(
                 onNext: { [weak self] address in
-                    self?.router.trigger(.addressSettings(address: address))
+                    self?.router.trigger(.serviceUnavailable)
                 }
             )
             .disposed(by: disposeBag)
