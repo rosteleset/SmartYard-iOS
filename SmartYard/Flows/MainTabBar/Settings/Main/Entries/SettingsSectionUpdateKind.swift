@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum SettingsScrollingMode {
+enum SettingsSectionUpdateKind {
     
     case expand(sectionWithIdentity: SettingsDataItemIdentity)
     case collapse(sectionWithIdentity: SettingsDataItemIdentity)
@@ -17,13 +17,6 @@ enum SettingsScrollingMode {
         switch self {
         case let .expand(identity): return identity
         case let .collapse(identity): return identity
-        }
-    }
-    
-    var scrollingPosition: UICollectionView.ScrollPosition {
-        switch self {
-        case .expand: return .top
-        case .collapse: return []
         }
     }
     

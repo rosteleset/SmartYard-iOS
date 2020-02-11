@@ -83,13 +83,13 @@ class SettingsViewController: BaseViewController {
         
         // MARK: Скроллим таблицу при сворачивании / разворачивании секций для лучшего UX
         
-        let scrollingModeSubject = BehaviorSubject<SettingsScrollingMode?>(value: nil)
-        let scrollingMode = scrollingModeSubject.asDriver(onErrorJustReturn: nil)
+        let updateKindSubject = BehaviorSubject<SettingsSectionUpdateKind?>(value: nil)
+        let updateKind = updateKindSubject.asDriver(onErrorJustReturn: nil)
         
-        output.scrollingMode
+        output.updateKind
             .drive(
                 onNext: {
-                    scrollingModeSubject.onNext($0)
+                    updateKindSubject.onNext($0)
                 }
             )
             .disposed(by: disposeBag)
@@ -103,20 +103,20 @@ class SettingsViewController: BaseViewController {
             // Чтобы анимации не конфликтовали, ждем, пока contentSize станет стабильным
             
             .debounce(.milliseconds(50))
-            .withLatestFrom(scrollingMode)
+            .withLatestFrom(updateKind)
             .ignoreNil()
             .do(
                 onNext: { _ in
-                    scrollingModeSubject.onNext(nil)
+                    updateKindSubject.onNext(nil)
                 }
             )
             .withLatestFrom(output.sectionModels) { ($0, $1) }
             
             // MARK: Ищем секцию, которая содержит Header с указанным идентификатором, и скроллим к нему
             
-            .map { scrollingBehavior, sectionModels -> (UICollectionView.ScrollPosition, IndexPath)? in
+            .map { updateKind, sectionModels -> (SettingsSectionUpdateKind, IndexPath)? in
                 let neededSectionOffset = sectionModels.enumerated().first { _, model in
-                    model.items.contains { $0.identity == scrollingBehavior.associatedIdentity }
+                    model.items.contains { $0.identity == updateKind.associatedIdentity }
                 }?.offset
                 
                 guard let section = neededSectionOffset else {
@@ -124,15 +124,45 @@ class SettingsViewController: BaseViewController {
                 }
                 
                 let indexPath = IndexPath(row: 0, section: section)
-                return (scrollingBehavior.scrollingPosition, indexPath)
+                return (updateKind, indexPath)
             }
             .ignoreNil()
             .drive(
-                onNext: { [weak self] position, indexPath in
-                    self?.collectionView.scrollToItem(at: indexPath, at: position, animated: true)
+                onNext: { [weak self] updateKind, indexPath in
+                    self?.performScrollUpdate(updateKind: updateKind, to: indexPath)
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    private func performScrollUpdate(updateKind: SettingsSectionUpdateKind, to indexPath: IndexPath) {
+        switch updateKind {
+        case .expand:
+            guard let attributes = collectionView.collectionViewLayout.layoutAttributesForItem(at: indexPath) else {
+                return
+            }
+            
+            let contentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
+            
+            let topInset = collectionView(
+                collectionView,
+                layout: collectionView.collectionViewLayout,
+                insetForSectionAt: indexPath.section
+            ).top
+            
+            let desiredOffset = attributes.frame.origin.y - topInset
+            let maxPossibleOffset = contentHeight - collectionView.bounds.height
+            
+            let finalOffset = max(min(desiredOffset, maxPossibleOffset), 0)
+            
+            collectionView.setContentOffset(
+                CGPoint(x: 0, y: finalOffset),
+                animated: true
+            )
+            
+        case .collapse:
+            collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
+        }
     }
     
     private func configureView() {
@@ -266,15 +296,15 @@ extension SettingsViewController: UICollectionViewDelegateFlowLayout {
         let topInset: CGFloat = {
             switch section {
             case 0: return 16
-            case collectionView.numberOfSections - 1: return 26
-            default: return 0
+            case collectionView.numberOfSections - 1: return 36
+            default: return 10
             }
         }()
         
         let bottomInset: CGFloat = {
             switch section {
             case collectionView.numberOfSections - 1: return 20
-            default: return 10
+            default: return 0
             }
         }()
         

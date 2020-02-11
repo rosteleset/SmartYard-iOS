@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum AddressesListScrollingMode {
+enum AddressesListSectionUpdateKind {
     
     case expand(sectionWithIdentity: AddressesListDataItemIdentity)
     case collapse(sectionWithIdentity: AddressesListDataItemIdentity)
@@ -17,13 +17,6 @@ enum AddressesListScrollingMode {
         switch self {
         case let .expand(identity): return identity
         case let .collapse(identity): return identity
-        }
-    }
-    
-    var scrollingPosition: UICollectionView.ScrollPosition {
-        switch self {
-        case .expand: return .centeredVertically
-        case .collapse: return []
         }
     }
     
