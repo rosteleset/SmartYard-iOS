@@ -20,6 +20,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressConfirmationViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="courierView" destination="mow-Yx-2Q3" id="1tX-qN-5CY"/>
+                <outlet property="officeView" destination="BRa-A7-Ebr" id="zgl-Oz-N7O"/>
                 <outlet property="segmentControl" destination="Tbm-7a-VCj" id="STT-LN-Dus"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -68,12 +70,28 @@
                                 <constraint firstAttribute="height" constant="67" id="QKU-53-5qW"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BRa-A7-Ebr" customClass="ServiceFromOfficeView" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="67" width="414" height="624"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mow-Yx-2Q3" customClass="ServiceFromCourierView" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="67" width="414" height="624"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="Tbm-7a-VCj" firstAttribute="top" secondItem="jvI-aM-Z2y" secondAttribute="top" id="4F5-ow-KIY"/>
+                        <constraint firstItem="mow-Yx-2Q3" firstAttribute="top" secondItem="Tbm-7a-VCj" secondAttribute="bottom" id="9JX-E2-Wrg"/>
+                        <constraint firstItem="BRa-A7-Ebr" firstAttribute="top" secondItem="Tbm-7a-VCj" secondAttribute="bottom" id="J4H-hC-Ebu"/>
                         <constraint firstItem="Tbm-7a-VCj" firstAttribute="leading" secondItem="jvI-aM-Z2y" secondAttribute="leading" id="KIA-UV-w8w"/>
+                        <constraint firstItem="BRa-A7-Ebr" firstAttribute="leading" secondItem="jvI-aM-Z2y" secondAttribute="leading" id="NYY-5g-XCE"/>
+                        <constraint firstAttribute="bottom" secondItem="BRa-A7-Ebr" secondAttribute="bottom" id="dhS-7E-Qqv"/>
                         <constraint firstAttribute="trailing" secondItem="Tbm-7a-VCj" secondAttribute="trailing" id="fip-q5-q3q"/>
+                        <constraint firstItem="mow-Yx-2Q3" firstAttribute="leading" secondItem="jvI-aM-Z2y" secondAttribute="leading" id="i7f-9Y-VPj"/>
+                        <constraint firstAttribute="trailing" secondItem="BRa-A7-Ebr" secondAttribute="trailing" id="oVP-Wg-hE2"/>
+                        <constraint firstAttribute="trailing" secondItem="mow-Yx-2Q3" secondAttribute="trailing" id="pma-kf-waK"/>
+                        <constraint firstAttribute="bottom" secondItem="mow-Yx-2Q3" secondAttribute="bottom" id="scS-qh-s4d"/>
                     </constraints>
                 </view>
             </subviews>

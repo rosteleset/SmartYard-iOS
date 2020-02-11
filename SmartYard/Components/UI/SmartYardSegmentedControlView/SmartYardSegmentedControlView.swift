@@ -8,10 +8,12 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
 
 class SmartYardSegmentedControl: UIView {
     
-    let daysSegmentControl: UISegmentedControl = {
+    let segmentControl: UISegmentedControl = {
         let control = UISegmentedControl()
         control.backgroundColor = .clear
         control.tintColor = .clear
@@ -57,7 +59,7 @@ class SmartYardSegmentedControl: UIView {
             bottomBarWidthAnchor?.isActive = false
             
             bottomBarWidthAnchor = bottomBar.widthAnchor.constraint(
-                equalTo: daysSegmentControl.widthAnchor,
+                equalTo: segmentControl.widthAnchor,
                 multiplier: 1 / CGFloat(segmentItems.count)
             )
             
@@ -82,26 +84,45 @@ class SmartYardSegmentedControl: UIView {
             return
         }
         
-        addSubview(daysSegmentControl)
+        addSubview(segmentControl)
         addSubview(bottomBar)
         
-        daysSegmentControl.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        daysSegmentControl.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        daysSegmentControl.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        daysSegmentControl.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        segmentControl.widthAnchor
+            .constraint(equalTo: widthAnchor)
+            .isActive = true
         
-        daysSegmentControl.addTarget(
+        segmentControl.centerXAnchor
+            .constraint(equalTo: centerXAnchor)
+            .isActive = true
+        
+        segmentControl.topAnchor
+            .constraint(equalTo: topAnchor)
+            .isActive = true
+        
+        segmentControl.bottomAnchor
+            .constraint(equalTo: bottomAnchor)
+            .isActive = true
+        
+        segmentControl.addTarget(
             self,
             action: #selector(segmentedControlValueChanged(_:)),
             for: .valueChanged
         )
         
-        bottomBar.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        bottomBar.heightAnchor.constraint(equalToConstant: 2).isActive = true
-        bottomBar.leftAnchor.constraint(equalTo: daysSegmentControl.leftAnchor).isActive = true
+        bottomBar.bottomAnchor
+            .constraint(equalTo: bottomAnchor)
+            .isActive = true
+        
+        bottomBar.heightAnchor
+            .constraint(equalToConstant: 2)
+            .isActive = true
+        
+        bottomBar.leftAnchor
+            .constraint(equalTo: segmentControl.leftAnchor)
+            .isActive = true
         
         bottomBarWidthAnchor = bottomBar.widthAnchor.constraint(
-            equalTo: daysSegmentControl.widthAnchor,
+            equalTo: segmentControl.widthAnchor,
             multiplier: 1 / CGFloat(segmentItems.count)
         )
         
@@ -112,14 +133,14 @@ class SmartYardSegmentedControl: UIView {
     
     private func setupSegmentItems() {
         segmentItems.enumerated().forEach { offset, element in
-            daysSegmentControl.insertSegment(
+            segmentControl.insertSegment(
                 withTitle: element,
                 at: offset,
                 animated: true
             )
         }
         
-        daysSegmentControl.selectedSegmentIndex = 0
+        segmentControl.selectedSegmentIndex = 0
     }
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
@@ -128,12 +149,20 @@ class SmartYardSegmentedControl: UIView {
                 return
             }
             
-            let segmentWidth = self.daysSegmentControl.frame.width / CGFloat(self.segmentItems.count)
-            let selectedSegmentIndex = self.daysSegmentControl.selectedSegmentIndex
+            let segmentWidth = self.segmentControl.frame.width / CGFloat(self.segmentItems.count)
+            let selectedSegmentIndex = self.segmentControl.selectedSegmentIndex
             let originX = segmentWidth * CGFloat(selectedSegmentIndex)
             
             self.bottomBar.frame.origin.x = originX
         }
+    }
+    
+}
+
+extension Reactive where Base: SmartYardSegmentedControl {
+    
+    var selectedIndexControlProperty: ControlProperty<Int> {
+        return base.segmentControl.rx.selectedSegmentIndex
     }
     
 }

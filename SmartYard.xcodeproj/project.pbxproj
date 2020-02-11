@@ -138,6 +138,10 @@
 		E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */; };
 		E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */; };
 		E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */; };
+		E9E4270523F2CD0F00F5D593 /* ServiceFromCourierView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4270423F2CD0F00F5D593 /* ServiceFromCourierView.xib */; };
+		E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */; };
+		E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4270823F2CD3000F5D593 /* ServiceFromOfficeView.swift */; };
+		E9E4270B23F2CD3900F5D593 /* ServiceFromOfficeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4270A23F2CD3900F5D593 /* ServiceFromOfficeView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -280,6 +284,10 @@
 		E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthByContractNumViewController.xib; sourceTree = "<group>"; };
 		E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteButtonWithBorder.swift; sourceTree = "<group>"; };
 		E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSegmentedControlView.swift; sourceTree = "<group>"; };
+		E9E4270423F2CD0F00F5D593 /* ServiceFromCourierView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceFromCourierView.xib; sourceTree = "<group>"; };
+		E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFromCourierView.swift; sourceTree = "<group>"; };
+		E9E4270823F2CD3000F5D593 /* ServiceFromOfficeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFromOfficeView.swift; sourceTree = "<group>"; };
+		E9E4270A23F2CD3900F5D593 /* ServiceFromOfficeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceFromOfficeView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -986,6 +994,7 @@
 		E9A1D78023F27AA700234B2A /* AddressConfirmation */ = {
 			isa = PBXGroup;
 			children = (
+				E9E426FF23F2CCA200F5D593 /* Views */,
 				E9A1D78123F27AE500234B2A /* AddressConfirmationViewController.swift */,
 				E9A1D78223F27AE500234B2A /* AddressConfirmationViewController.xib */,
 				E9A1D78523F27B9A00234B2A /* AddressConfirmationViewModel.swift */,
@@ -1063,6 +1072,33 @@
 			path = SmartYardSegmentedControlView;
 			sourceTree = "<group>";
 		};
+		E9E426FF23F2CCA200F5D593 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E9E4270123F2CCC400F5D593 /* ServiceFromCourierView */,
+				E9E4270023F2CCB300F5D593 /* ServiceFromOfficeView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E9E4270023F2CCB300F5D593 /* ServiceFromOfficeView */ = {
+			isa = PBXGroup;
+			children = (
+				E9E4270823F2CD3000F5D593 /* ServiceFromOfficeView.swift */,
+				E9E4270A23F2CD3900F5D593 /* ServiceFromOfficeView.xib */,
+			);
+			path = ServiceFromOfficeView;
+			sourceTree = "<group>";
+		};
+		E9E4270123F2CCC400F5D593 /* ServiceFromCourierView */ = {
+			isa = PBXGroup;
+			children = (
+				E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */,
+				E9E4270423F2CD0F00F5D593 /* ServiceFromCourierView.xib */,
+			);
+			path = ServiceFromCourierView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1135,6 +1171,7 @@
 				844AC3B823EB104E0066006D /* UserNameViewController.xib in Resources */,
 				E9A4D49123EC2A780070A591 /* PinTextField.xib in Resources */,
 				E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */,
+				E9E4270523F2CD0F00F5D593 /* ServiceFromCourierView.xib in Resources */,
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
@@ -1152,6 +1189,7 @@
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
 				84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */,
+				E9E4270B23F2CD3900F5D593 /* ServiceFromOfficeView.xib in Resources */,
 				84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */,
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
 				844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */,
@@ -1307,6 +1345,7 @@
 				E9A1D78323F27AE500234B2A /* AddressConfirmationViewController.swift in Sources */,
 				84AA8D4823E2CD48001B3B43 /* APITarget.swift in Sources */,
 				844AC3D523EBFDAF0066006D /* AddressesListViewModel.swift in Sources */,
+				E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */,
 				844AC39523E977810066006D /* AccessService.swift in Sources */,
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
@@ -1357,6 +1396,7 @@
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
+				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 				84CC15E523EC999700A1CB95 /* AddressesListScrollingMode.swift in Sources */,
