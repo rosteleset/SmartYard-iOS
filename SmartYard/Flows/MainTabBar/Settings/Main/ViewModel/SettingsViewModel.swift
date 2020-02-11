@@ -8,11 +8,18 @@
 
 import RxSwift
 import RxCocoa
+import XCoordinator
 
 class SettingsViewModel: BaseViewModel {
     
+    private let router: WeakRouter<SettingsRoute>
+    
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
+    
+    init(router: WeakRouter<SettingsRoute>) {
+        self.router = router
+    }
     
     func transform(_ input: Input) -> Output {
         // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг

@@ -33,7 +33,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IncomingCallBackground" translatesAutoresizingMaskIntoConstraints="NO" id="CZd-t7-S4c">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="CZd-t7-S4c">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Алексеев В. Б." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k53-fj-wtE">
@@ -103,7 +103,7 @@
         </view>
     </objects>
     <resources>
-        <image name="IncomingCallBackground" width="375" height="812"/>
+        <image name="MainBackground" width="375" height="812"/>
         <image name="SettingsIcon" width="26" height="26"/>
     </resources>
 </document>

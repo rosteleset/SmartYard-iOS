@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Bold.ttf">
+            <string>SourceSansPro-Bold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressSettingsViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
@@ -19,8 +24,41 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="dYm-MG-U9t">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ga-7I-bag" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="N5y-VP-ljm"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Настройки адреса" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Eq-Xo-T29">
+                    <rect key="frame" x="40" y="100" width="334" height="40.5"/>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="dYm-MG-U9t" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5Um-cX-4kq"/>
+                <constraint firstItem="2ga-7I-bag" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="8qo-wo-60d"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8Eq-Xo-T29" secondAttribute="trailing" constant="40" id="BYb-Kh-COd"/>
+                <constraint firstItem="8Eq-Xo-T29" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="CKJ-h3-rlu"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2ga-7I-bag" secondAttribute="trailing" id="IRW-ct-0xc"/>
+                <constraint firstItem="8Eq-Xo-T29" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="56" id="PS7-7a-Tai"/>
+                <constraint firstItem="2ga-7I-bag" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="XSJ-6q-94V"/>
+                <constraint firstAttribute="trailing" secondItem="dYm-MG-U9t" secondAttribute="trailing" id="dP3-hu-OMk"/>
+                <constraint firstAttribute="bottom" secondItem="dYm-MG-U9t" secondAttribute="bottom" id="mn8-GS-EQt"/>
+                <constraint firstItem="dYm-MG-U9t" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zKz-aw-iNh"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
     </objects>
+    <resources>
+        <image name="MainBackground" width="375" height="812"/>
+    </resources>
 </document>
