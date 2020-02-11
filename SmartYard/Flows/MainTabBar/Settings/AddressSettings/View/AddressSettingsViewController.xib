@@ -13,10 +13,16 @@
         <array key="SourceSansPro-Bold.ttf">
             <string>SourceSansPro-Bold</string>
         </array>
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressSettingsViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="addressContainerView" destination="orr-Vl-FJW" id="qhI-lw-wXk"/>
+                <outlet property="addressTextField" destination="ayL-Ea-bZp" id="WgE-Ve-7E2"/>
+                <outlet property="editAddressButton" destination="Ezj-S0-0Ws" id="lcm-0z-8fz"/>
                 <outlet property="fakeNavBar" destination="2ga-7I-bag" id="4GT-Sd-dlR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -29,6 +35,12 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="dYm-MG-U9t">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Настройки адреса" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Eq-Xo-T29">
+                    <rect key="frame" x="40" y="100" width="334" height="40.5"/>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ga-7I-bag" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -36,23 +48,61 @@
                         <constraint firstAttribute="height" constant="44" id="N5y-VP-ljm"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Настройки адреса" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Eq-Xo-T29">
-                    <rect key="frame" x="40" y="100" width="334" height="40.5"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bd0-0c-fKV" userLabel="GrayBackground">
+                    <rect key="frame" x="0.0" y="194.5" width="414" height="667.5"/>
+                    <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="orr-Vl-FJW">
+                    <rect key="frame" x="16" y="173.5" width="382" height="70"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Empty" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ayL-Ea-bZp">
+                            <rect key="frame" x="24" y="23.5" width="298" height="23"/>
+                            <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ezj-S0-0Ws">
+                            <rect key="frame" x="346" y="29" width="12" height="12"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="12" id="4hm-3T-Uqj"/>
+                                <constraint firstAttribute="width" constant="12" id="JVu-ss-RDR"/>
+                            </constraints>
+                            <state key="normal" image="EditIcon"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="8XH-eH-ihg"/>
+                        <constraint firstItem="Ezj-S0-0Ws" firstAttribute="leading" secondItem="ayL-Ea-bZp" secondAttribute="trailing" constant="24" id="Bas-zh-lw0"/>
+                        <constraint firstItem="ayL-Ea-bZp" firstAttribute="leading" secondItem="orr-Vl-FJW" secondAttribute="leading" constant="24" id="I0a-zx-tvJ"/>
+                        <constraint firstAttribute="trailing" secondItem="Ezj-S0-0Ws" secondAttribute="trailing" constant="24" id="NSS-ig-xZP"/>
+                        <constraint firstItem="Ezj-S0-0Ws" firstAttribute="centerY" secondItem="orr-Vl-FJW" secondAttribute="centerY" id="Umi-cQ-nsp"/>
+                        <constraint firstItem="ayL-Ea-bZp" firstAttribute="centerY" secondItem="orr-Vl-FJW" secondAttribute="centerY" id="m6P-mj-u5U"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="dYm-MG-U9t" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5Um-cX-4kq"/>
+                <constraint firstItem="Bd0-0c-fKV" firstAttribute="top" secondItem="8Eq-Xo-T29" secondAttribute="bottom" constant="54" id="6aj-Yx-04w"/>
+                <constraint firstItem="Bd0-0c-fKV" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="8Et-SQ-bfL"/>
                 <constraint firstItem="2ga-7I-bag" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="8qo-wo-60d"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8Eq-Xo-T29" secondAttribute="trailing" constant="40" id="BYb-Kh-COd"/>
                 <constraint firstItem="8Eq-Xo-T29" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="CKJ-h3-rlu"/>
+                <constraint firstItem="Bd0-0c-fKV" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="G2Y-vd-aP0"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2ga-7I-bag" secondAttribute="trailing" id="IRW-ct-0xc"/>
+                <constraint firstItem="Bd0-0c-fKV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Nod-aj-Xij"/>
                 <constraint firstItem="8Eq-Xo-T29" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="56" id="PS7-7a-Tai"/>
                 <constraint firstItem="2ga-7I-bag" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="XSJ-6q-94V"/>
                 <constraint firstAttribute="trailing" secondItem="dYm-MG-U9t" secondAttribute="trailing" id="dP3-hu-OMk"/>
+                <constraint firstItem="Bd0-0c-fKV" firstAttribute="top" secondItem="orr-Vl-FJW" secondAttribute="top" constant="21" id="hGU-cI-hpi"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="orr-Vl-FJW" secondAttribute="trailing" constant="16" id="lyN-8C-vXk"/>
+                <constraint firstItem="orr-Vl-FJW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="meQ-XX-qMe"/>
                 <constraint firstAttribute="bottom" secondItem="dYm-MG-U9t" secondAttribute="bottom" id="mn8-GS-EQt"/>
                 <constraint firstItem="dYm-MG-U9t" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zKz-aw-iNh"/>
             </constraints>
@@ -60,6 +110,7 @@
         </view>
     </objects>
     <resources>
+        <image name="EditIcon" width="12" height="12"/>
         <image name="MainBackground" width="375" height="812"/>
     </resources>
 </document>

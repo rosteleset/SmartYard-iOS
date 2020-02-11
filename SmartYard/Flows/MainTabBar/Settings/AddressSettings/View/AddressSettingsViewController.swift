@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import TouchAreaInsets
 
 class AddressSettingsViewController: BaseViewController {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
-
+    
+    @IBOutlet private weak var addressContainerView: UIView!
+    @IBOutlet private weak var addressTextField: UITextField!
+    @IBOutlet private weak var editAddressButton: UIButton!
+    
     private let viewModel: AddressSettingsViewModel
     
     init(viewModel: AddressSettingsViewModel) {
@@ -26,13 +31,33 @@ class AddressSettingsViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView()
         bind()
+    }
+    
+    private func configureView() {
+        addressContainerView.borderWidth = 1
+        addressContainerView.borderColor = UIColor.SmartYard.grayBorder
+        
+        editAddressButton.setImage(UIImage(named: "EditIcon"), for: .normal)
+        editAddressButton.setImage(UIImage(named: "EditIcon")?.darkened(), for: .highlighted)
+        editAddressButton.touchAreaInsets = UIEdgeInsets(inset: 24)
     }
     
     private func bind() {
         let input = AddressSettingsViewModel.Input(backTrigger: fakeNavBar.rx.backButtonTap.asDriver())
         
-        _ = viewModel.transform(input)
+        let output = viewModel.transform(input)
+        
+        output.address
+            .drive(
+                onNext: { [weak self] address in
+                    self?.view.endEditing(true)
+                    self?.addressTextField.text = address
+                    self?.addressTextField.isEnabled = false
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
 }
