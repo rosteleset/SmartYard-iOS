@@ -12,6 +12,9 @@ import RxCocoa
 
 class ServiceIsNotActivatedViewController: BaseViewController {
     
+    @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var sendRequestButton: BlueButton!
+    
     private let viewModel: ServiceIsNotActivatedViewModel
     
     init(viewModel: ServiceIsNotActivatedViewModel) {
@@ -26,11 +29,31 @@ class ServiceIsNotActivatedViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView()
         bind()
     }
     
+    private func configureView() {
+        closeButton.setImage(UIImage(named: "CloseIcon"), for: .normal)
+        closeButton.setImage(UIImage(named: "CloseIcon")?.darkened(), for: .highlighted)
+    }
+    
     private func bind() {
+        let dismissGesture = UITapGestureRecognizer()
+        dismissGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(dismissGesture)
         
+        let dismissTrigger = Driver.merge(
+            dismissGesture.rx.event.asDriver().mapToVoid(),
+            closeButton.rx.tap.asDriver()
+        )
+        
+        let input = ServiceIsNotActivatedViewModel.Input(
+            dismissTrigger: dismissTrigger,
+            sendRequestTrigger: sendRequestButton.rx.tap.asDriver()
+        )
+        
+        _ = viewModel.transform(input)
     }
     
 }

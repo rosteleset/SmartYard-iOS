@@ -11,6 +11,9 @@ import RxSwift
 import RxCocoa
 
 class ServiceIsActivatedViewController: BaseViewController {
+    
+    @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var changePlanButton: BlueButton!
 
     private let viewModel: ServiceIsActivatedViewModel
     
@@ -26,11 +29,31 @@ class ServiceIsActivatedViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView()
         bind()
     }
     
+    private func configureView() {
+        closeButton.setImage(UIImage(named: "CloseIcon"), for: .normal)
+        closeButton.setImage(UIImage(named: "CloseIcon")?.darkened(), for: .highlighted)
+    }
+    
     private func bind() {
+        let dismissGesture = UITapGestureRecognizer()
+        dismissGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(dismissGesture)
         
+        let dismissTrigger = Driver.merge(
+            dismissGesture.rx.event.asDriver().mapToVoid(),
+            closeButton.rx.tap.asDriver()
+        )
+        
+        let input = ServiceIsActivatedViewModel.Input(
+            dismissTrigger: dismissTrigger,
+            changePlanTrigger: changePlanButton.rx.tap.asDriver()
+        )
+        
+        _ = viewModel.transform(input)
     }
     
 }
