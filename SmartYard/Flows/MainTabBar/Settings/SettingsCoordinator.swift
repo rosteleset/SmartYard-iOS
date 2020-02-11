@@ -9,7 +9,10 @@
 import XCoordinator
 
 enum SettingsRoute: Route {
+    
     case main
+    case addressSettings
+    
 }
 
 class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
@@ -30,6 +33,11 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             let vm = SettingsViewModel()
             let vc = SettingsViewController(viewModel: vm)
             return .set([vc])
+            
+        case .addressSettings:
+            let vm = AddressSettingsViewModel()
+            let vc = AddressSettingsViewController(viewModel: vm)
+            return .push(vc)
         }
     }
     
