@@ -17,6 +17,10 @@ class AddressSettingsViewController: BaseViewController {
     @IBOutlet private weak var addressTextField: UITextField!
     @IBOutlet private weak var editAddressButton: UIButton!
     
+    @IBOutlet private weak var notificationsContainerView: UIView!
+    
+    @IBOutlet private weak var deleteAddressButton: UIButton!
+    
     private let viewModel: AddressSettingsViewModel
     
     init(viewModel: AddressSettingsViewModel) {
@@ -42,6 +46,12 @@ class AddressSettingsViewController: BaseViewController {
         editAddressButton.setImage(UIImage(named: "EditIcon"), for: .normal)
         editAddressButton.setImage(UIImage(named: "EditIcon")?.darkened(), for: .highlighted)
         editAddressButton.touchAreaInsets = UIEdgeInsets(inset: 24)
+        
+        notificationsContainerView.borderWidth = 1
+        notificationsContainerView.borderColor = UIColor.SmartYard.grayBorder
+        
+        deleteAddressButton.borderWidth = 1
+        deleteAddressButton.borderColor = UIColor.SmartYard.grayBorder
     }
     
     private func bind() {
