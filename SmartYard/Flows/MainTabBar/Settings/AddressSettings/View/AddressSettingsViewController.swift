@@ -18,6 +18,12 @@ class AddressSettingsViewController: BaseViewController {
     @IBOutlet private weak var editAddressButton: UIButton!
     
     @IBOutlet private weak var notificationsContainerView: UIView!
+    @IBOutlet private weak var notificationsHeader: UIView!
+    @IBOutlet private weak var headerArrowImageView: UIImageView!
+    @IBOutlet private weak var expandedContainer: UIView!
+    
+    @IBOutlet private var collapsedBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private var expandedBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var deleteAddressButton: UIButton!
     
@@ -52,6 +58,36 @@ class AddressSettingsViewController: BaseViewController {
         
         deleteAddressButton.borderWidth = 1
         deleteAddressButton.borderColor = UIColor.SmartYard.grayBorder
+        
+        let tapGesture = UITapGestureRecognizer()
+        notificationsHeader.addGestureRecognizer(tapGesture)
+        
+        tapGesture.rx.event
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.toggleNotificationsSection()
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func toggleNotificationsSection() {
+        let isCollapsed = collapsedBottomConstraint.isActive
+        
+        if isCollapsed {
+            collapsedBottomConstraint.isActive = false
+            expandedBottomConstraint.isActive = true
+            headerArrowImageView.image = UIImage(named: "UpArrowIcon")
+        } else {
+            expandedBottomConstraint.isActive = false
+            collapsedBottomConstraint.isActive = true
+            headerArrowImageView.image = UIImage(named: "DownArrowIcon")
+        }
+        
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            self?.view.setNeedsLayout()
+            self?.view.layoutIfNeeded()
+        }
     }
     
     private func bind() {
