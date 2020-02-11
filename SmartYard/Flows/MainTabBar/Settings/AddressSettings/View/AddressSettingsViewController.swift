@@ -84,7 +84,7 @@ class AddressSettingsViewController: BaseViewController {
             headerArrowImageView.image = UIImage(named: "DownArrowIcon")
         }
         
-        UIView.animate(withDuration: 0.25) { [weak self] in
+        UIView.animate(withDuration: 0.35) { [weak self] in
             self?.view.setNeedsLayout()
             self?.view.layoutIfNeeded()
         }
