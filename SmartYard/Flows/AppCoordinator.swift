@@ -46,7 +46,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
         
-        super.init(initialRoute: .main)
+        super.init(initialRoute: .phoneNumber)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
@@ -82,8 +82,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .present(vc)
             
         case .phoneNumber:
-            let vm = InputPhoneNumberViewModel(router: weakRouter)
-            return .present(InputPhoneNumberViewController(viewModel: vm))
+//            let vm = InputPhoneNumberViewModel(router: weakRouter)
+//            return .present(InputPhoneNumberViewController(viewModel: vm))
+            return .present(AddressConfirmationViewController())
             
         case let .pinCode(phoneNumber):
             let vm = PinCodeViewModel(router: weakRouter, phoneNumber: phoneNumber)

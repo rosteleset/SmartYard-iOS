@@ -122,6 +122,9 @@
 		E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6C823EACD4B00BECEE6 /* PhoneTextField.swift */; };
 		E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6CE23EAD2BB00BECEE6 /* NumberFieldView.xib */; };
 		E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6D023EAD2CE00BECEE6 /* NumberFieldView.swift */; };
+		E9A1D78323F27AE500234B2A /* AddressConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A1D78123F27AE500234B2A /* AddressConfirmationViewController.swift */; };
+		E9A1D78423F27AE500234B2A /* AddressConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A1D78223F27AE500234B2A /* AddressConfirmationViewController.xib */; };
+		E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A1D78523F27B9A00234B2A /* AddressConfirmationViewModel.swift */; };
 		E9A4D47C23EC19110070A591 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D47B23EC19110070A591 /* Constants.swift */; };
 		E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D48223EC229F0070A591 /* PinCodeViewModel.swift */; };
 		E9A4D48A23EC27E20070A591 /* PinNumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D48923EC27E20070A591 /* PinNumberField.swift */; };
@@ -134,6 +137,7 @@
 		E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */; };
 		E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */; };
 		E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */; };
+		E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -258,6 +262,9 @@
 		E99EA6C823EACD4B00BECEE6 /* PhoneTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTextField.swift; sourceTree = "<group>"; };
 		E99EA6CE23EAD2BB00BECEE6 /* NumberFieldView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberFieldView.xib; sourceTree = "<group>"; };
 		E99EA6D023EAD2CE00BECEE6 /* NumberFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFieldView.swift; sourceTree = "<group>"; };
+		E9A1D78123F27AE500234B2A /* AddressConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressConfirmationViewController.swift; sourceTree = "<group>"; };
+		E9A1D78223F27AE500234B2A /* AddressConfirmationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressConfirmationViewController.xib; sourceTree = "<group>"; };
+		E9A1D78523F27B9A00234B2A /* AddressConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressConfirmationViewModel.swift; sourceTree = "<group>"; };
 		E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncomingCallViewController.xib; sourceTree = "<group>"; };
 		E9A4D47B23EC19110070A591 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E9A4D48223EC229F0070A591 /* PinCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeViewModel.swift; sourceTree = "<group>"; };
@@ -272,6 +279,7 @@
 		E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthByContractNumViewController.swift; sourceTree = "<group>"; };
 		E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthByContractNumViewController.xib; sourceTree = "<group>"; };
 		E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteButtonWithBorder.swift; sourceTree = "<group>"; };
+		E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSegmentedControlView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -391,6 +399,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
@@ -910,6 +919,7 @@
 		E98C383223F192430010BBC1 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				E9A1D78023F27AA700234B2A /* AddressConfirmation */,
 				E98C383323F192600010BBC1 /* InputAddressViewController.swift */,
 				E98C383423F192600010BBC1 /* InputAddressViewController.xib */,
 				E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */,
@@ -973,6 +983,16 @@
 			path = NumberFields;
 			sourceTree = "<group>";
 		};
+		E9A1D78023F27AA700234B2A /* AddressConfirmation */ = {
+			isa = PBXGroup;
+			children = (
+				E9A1D78123F27AE500234B2A /* AddressConfirmationViewController.swift */,
+				E9A1D78223F27AE500234B2A /* AddressConfirmationViewController.xib */,
+				E9A1D78523F27B9A00234B2A /* AddressConfirmationViewModel.swift */,
+			);
+			path = AddressConfirmation;
+			sourceTree = "<group>";
+		};
 		E9A4D48123EC22760070A591 /* InputPinCode */ = {
 			isa = PBXGroup;
 			children = (
@@ -1033,6 +1053,14 @@
 				E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */,
 			);
 			path = WhiteButtonWithBorder;
+			sourceTree = "<group>";
+		};
+		E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */ = {
+			isa = PBXGroup;
+			children = (
+				E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */,
+			);
+			path = SmartYardSegmentedControlView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1120,6 +1148,7 @@
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
 				84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */,
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
+				E9A1D78423F27AE500234B2A /* AddressConfirmationViewController.xib in Resources */,
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
 				84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */,
@@ -1275,6 +1304,7 @@
 				844AC38323E8641B0066006D /* ConfirmCodeResponseData.swift in Sources */,
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
 				84AA8D5B23E2CEC5001B3B43 /* BaseAPIResponse.swift in Sources */,
+				E9A1D78323F27AE500234B2A /* AddressConfirmationViewController.swift in Sources */,
 				84AA8D4823E2CD48001B3B43 /* APITarget.swift in Sources */,
 				844AC3D523EBFDAF0066006D /* AddressesListViewModel.swift in Sources */,
 				844AC39523E977810066006D /* AccessService.swift in Sources */,
@@ -1295,6 +1325,7 @@
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
 				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
+				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
 				84898A9223F1554D00E6B78E /* SettingsDataItem.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
@@ -1323,6 +1354,7 @@
 				844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */,
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
+				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,

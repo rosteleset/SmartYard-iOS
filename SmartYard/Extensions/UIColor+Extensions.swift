@@ -26,6 +26,9 @@ extension UIColor {
         
         /// #6D7A8A
         static let placeholderGrayText = UIColor(hex: 0x6D7A8A)!
+        
+        /// #28323E
+        static let semiBlack = UIColor(hex: 0x28323E)!
     }
     
 }
