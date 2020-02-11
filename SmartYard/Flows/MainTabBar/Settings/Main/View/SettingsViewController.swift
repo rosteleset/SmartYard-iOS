@@ -129,29 +129,40 @@ class SettingsViewController: BaseViewController {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] updateKind, indexPath in
-                    if case .expand = updateKind,
-                        let collectionView = self?.collectionView,
-                        let attributes = collectionView.collectionViewLayout.layoutAttributesForItem(at: indexPath),
-                        let inset = self?.collectionView(
-                            collectionView,
-                            layout: collectionView.collectionViewLayout,
-                            insetForSectionAt: indexPath.section
-                        ).top {
-                        let desiredOffset = attributes.frame.origin.y - collectionView.contentInset.top - inset
-                        
-                        let contentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
-                        let maxPossibleOffset = contentHeight - collectionView.bounds.height
-                        
-                        let neededOffset = max(min(desiredOffset, maxPossibleOffset), 0)
-                        
-                        collectionView.setContentOffset(
-                            CGPoint(x: 0, y: neededOffset),
-                            animated: true
-                        )
-                    }
+                    self?.performScrollUpdate(updateKind: updateKind, to: indexPath)
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    private func performScrollUpdate(updateKind: SettingsSectionUpdateKind, to indexPath: IndexPath) {
+        switch updateKind {
+        case .expand:
+            guard let attributes = collectionView.collectionViewLayout.layoutAttributesForItem(at: indexPath) else {
+                return
+            }
+            
+            let contentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
+            
+            let topInset = collectionView(
+                collectionView,
+                layout: collectionView.collectionViewLayout,
+                insetForSectionAt: indexPath.section
+            ).top
+            
+            let desiredOffset = attributes.frame.origin.y - topInset
+            let maxPossibleOffset = contentHeight - collectionView.bounds.height
+            
+            let finalOffset = max(min(desiredOffset, maxPossibleOffset), 0)
+            
+            collectionView.setContentOffset(
+                CGPoint(x: 0, y: finalOffset),
+                animated: true
+            )
+            
+        case .collapse:
+            collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
+        }
     }
     
     private func configureView() {
