@@ -9,6 +9,8 @@
 import UIKit
 
 class AddressSettingsViewController: BaseViewController {
+    
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
 
     private let viewModel: AddressSettingsViewModel
     
@@ -20,6 +22,17 @@ class AddressSettingsViewController: BaseViewController {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        bind()
+    }
+    
+    private func bind() {
+        let input = AddressSettingsViewModel.Input(backTrigger: fakeNavBar.rx.backButtonTap.asDriver())
+        
+        _ = viewModel.transform(input)
     }
 
 }

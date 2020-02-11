@@ -21,7 +21,25 @@ class SettingsViewModel: BaseViewModel {
         self.router = router
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
+        // MARK: Обработка нажатия на настройки адреса
+        
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .action(_, address, type) = identity, type == .openAddressSettings else {
+                    return .empty()
+                }
+                
+                return .just(address)
+            }
+            .drive(
+                onNext: { [weak self] address in
+                    self?.router.trigger(.addressSettings(address: address))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг
         
         let scrollingModeSubject = PublishSubject<SettingsScrollingMode>()
@@ -92,11 +110,12 @@ class SettingsViewModel: BaseViewModel {
         // Просто будем пробегать в цикле по всем адресам и генерировать для них секции
         
         let firstAddressId = "1000"
+        let firstAddress = "г. Тамбов, ул. Советская, 16, кв. 4"
         let isFirstSectionExpanded = expansionStateDict[firstAddressId, default: false]
         
         let firstSectionHeader: SettingsDataItem = .header(
             identity: .header(addressId: firstAddressId),
-            title: "г. Тамбов, ул. Советская, 16, кв. 4",
+            title: firstAddress,
             subtitle: "Номер договора: 68992",
             isExpanded: isFirstSectionExpanded
         )
@@ -117,18 +136,27 @@ class SettingsViewModel: BaseViewModel {
             )
             
             let firstSectionFirstAction: SettingsDataItem = .action(
-                identity: .action(addressId: firstAddressId, actionId: "FirstAction"),
-                title: "Настройки адреса"
+                identity: .action(
+                    addressId: firstAddressId,
+                    address: firstAddress,
+                    type: .openAddressSettings
+                )
             )
             
             let firstSectionSecondAction: SettingsDataItem = .action(
-                identity: .action(addressId: firstAddressId, actionId: "SecondAction"),
-                title: "Предоставить доступ"
+                identity: .action(
+                    addressId: firstAddressId,
+                    address: firstAddress,
+                    type: .grantAccess
+                )
             )
             
             let firstSectionThirdAction: SettingsDataItem = .action(
-                identity: .action(addressId: firstAddressId, actionId: "ThirdAction"),
-                title: "Открыть веб-версию личного кабинета"
+                identity: .action(
+                    addressId: firstAddressId,
+                    address: firstAddress,
+                    type: .openWebVersion
+                )
             )
             
             return [
@@ -145,11 +173,12 @@ class SettingsViewModel: BaseViewModel {
         )
         
         let secondAddressId = "2000"
+        let secondAddress = "г. Тамбов, ул. Мичуринская, 141А"
         let isSecondSectionExpanded = expansionStateDict[secondAddressId, default: false]
         
         let secondSectionHeader: SettingsDataItem = .header(
             identity: .header(addressId: secondAddressId),
-            title: "г. Тамбов, ул. Мичуринская, 141А",
+            title: secondAddress,
             subtitle: "Номер договора: 69325",
             isExpanded: isSecondSectionExpanded
         )
@@ -170,18 +199,27 @@ class SettingsViewModel: BaseViewModel {
             )
             
             let secondSectionFirstAction: SettingsDataItem = .action(
-                identity: .action(addressId: secondAddressId, actionId: "FirstAction"),
-                title: "Настройки адреса"
+                identity: .action(
+                    addressId: secondAddressId,
+                    address: secondAddress,
+                    type: .openAddressSettings
+                )
             )
             
             let secondSectionSecondAction: SettingsDataItem = .action(
-                identity: .action(addressId: secondAddressId, actionId: "SecondAction"),
-                title: "Предоставить доступ"
+                identity: .action(
+                    addressId: secondAddressId,
+                    address: secondAddress,
+                    type: .grantAccess
+                )
             )
             
             let secondSectionThirdAction: SettingsDataItem = .action(
-                identity: .action(addressId: secondAddressId, actionId: "ThirdAction"),
-                title: "Открыть веб-версию личного кабинета"
+                identity: .action(
+                    addressId: secondAddressId,
+                    address: secondAddress,
+                    type: .openWebVersion
+                )
             )
             
             return [
@@ -198,11 +236,12 @@ class SettingsViewModel: BaseViewModel {
         )
         
         let thirdAddressId = "3000"
+        let thirdAddress = "г. Котовск, ул. Зимняя, 20"
         let isThirdSectionExpanded = expansionStateDict[thirdAddressId, default: false]
         
         let thirdSectionHeader: SettingsDataItem = .header(
             identity: .header(addressId: thirdAddressId),
-            title: "г. Котовск, ул. Зимняя, 20",
+            title: thirdAddress,
             subtitle: "Номер договора: 69325",
             isExpanded: isThirdSectionExpanded
         )
@@ -223,18 +262,27 @@ class SettingsViewModel: BaseViewModel {
             )
             
             let thirdSectionFirstAction: SettingsDataItem = .action(
-                identity: .action(addressId: thirdAddressId, actionId: "FirstAction"),
-                title: "Настройки адреса"
+                identity: .action(
+                    addressId: thirdAddressId,
+                    address: thirdAddress,
+                    type: .openAddressSettings
+                )
             )
             
             let thirdSectionSecondAction: SettingsDataItem = .action(
-                identity: .action(addressId: thirdAddressId, actionId: "SecondAction"),
-                title: "Предоставить доступ"
+                identity: .action(
+                    addressId: thirdAddressId,
+                    address: thirdAddress,
+                    type: .grantAccess
+                )
             )
             
             let thirdSectionThirdAction: SettingsDataItem = .action(
-                identity: .action(addressId: thirdAddressId, actionId: "ThirdAction"),
-                title: "Открыть веб-версию личного кабинета"
+                identity: .action(
+                    addressId: thirdAddressId,
+                    address: thirdAddress,
+                    type: .openWebVersion
+                )
             )
             
             return [
@@ -246,7 +294,7 @@ class SettingsViewModel: BaseViewModel {
         }()
         
         let thirdSection = SettingsSectionModel(
-            identity: "3000",
+            identity: thirdAddressId,
             items: [thirdSectionHeader] + thirdSectionObjects
         )
         

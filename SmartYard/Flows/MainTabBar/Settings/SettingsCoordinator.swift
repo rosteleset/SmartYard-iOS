@@ -12,7 +12,7 @@ enum SettingsRoute: Route {
     
     case main
     case addressSettings(address: String)
-    case pop
+    case back
     
 }
 
@@ -35,12 +35,12 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             let vc = SettingsViewController(viewModel: vm)
             return .set([vc])
             
-        case .addressSettings:
-            let vm = AddressSettingsViewModel()
+        case let .addressSettings(address):
+            let vm = AddressSettingsViewModel(router: weakRouter, address: address)
             let vc = AddressSettingsViewController(viewModel: vm)
             return .push(vc)
             
-        case .pop:
+        case .back:
             return .pop()
         }
     }

@@ -17,6 +17,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressSettingsViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="fakeNavBar" destination="2ga-7I-bag" id="4GT-Sd-dlR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
