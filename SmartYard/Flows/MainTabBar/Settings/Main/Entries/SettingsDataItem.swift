@@ -20,7 +20,7 @@ enum SettingsDataItem: IdentifiableType, Equatable {
         isEyeEnabled: Bool
     )
     
-    case action(identity: SettingsDataItemIdentity, title: String)
+    case action(identity: SettingsDataItemIdentity)
     case addAddress
     
 }
@@ -33,7 +33,7 @@ extension SettingsDataItem {
             return identity
         case .controlPanel(let identity, _, _, _, _, _):
             return identity
-        case .action(let identity, _):
+        case .action(let identity):
             return identity
         case .addAddress:
             return .addAddress

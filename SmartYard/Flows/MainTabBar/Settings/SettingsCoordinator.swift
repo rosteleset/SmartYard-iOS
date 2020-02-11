@@ -9,7 +9,11 @@
 import XCoordinator
 
 enum SettingsRoute: Route {
+    
     case main
+    case addressSettings(address: String)
+    case back
+    
 }
 
 class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
@@ -27,9 +31,17 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     override func prepareTransition(for route: SettingsRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = SettingsViewModel()
+            let vm = SettingsViewModel(router: weakRouter)
             let vc = SettingsViewController(viewModel: vm)
             return .set([vc])
+            
+        case let .addressSettings(address):
+            let vm = AddressSettingsViewModel(router: weakRouter, address: address)
+            let vc = AddressSettingsViewController(viewModel: vm)
+            return .push(vc)
+            
+        case .back:
+            return .pop()
         }
     }
     

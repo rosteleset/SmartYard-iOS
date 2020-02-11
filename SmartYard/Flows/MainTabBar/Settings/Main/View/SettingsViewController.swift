@@ -175,6 +175,7 @@ class SettingsViewController: BaseViewController {
         indexPath: IndexPath,
         item: SettingsDataItem
     ) -> UICollectionViewCell {
+        // swiftlint:disable:next closure_body_length
         let cell: UICollectionViewCell = {
             switch item {
             case let .header(_, title, subtitle, isExpanded):
@@ -195,9 +196,13 @@ class SettingsViewController: BaseViewController {
                 
                 return cell
                 
-            case let .action(_, title):
+            case let .action(identity):
                 let cell = collectionView.dequeueReusableCell(withClass: SettingsActionCell.self, for: indexPath)
-                cell.configure(title: title)
+                
+                if case let .action(_, _, type) = identity {
+                    cell.configure(title: type.localizedTitle)
+                }
+                
                 return cell
                 
             case .addAddress:

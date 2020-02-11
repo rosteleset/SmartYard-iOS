@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A7A7E23F29A2900840E51 /* FakeNavBar.swift */; };
+		843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843A7A8023F29A3400840E51 /* FakeNavBar.xib */; };
 		844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC37223E85C6A0066006D /* RequestCodeRequest.swift */; };
 		844AC37C23E861C50066006D /* GetVerifyedAddressesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC37B23E861C50066006D /* GetVerifyedAddressesRequest.swift */; };
 		844AC37E23E861D10066006D /* GetVerifyedAddressesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC37D23E861D10066006D /* GetVerifyedAddressesResponseData.swift */; };
@@ -66,6 +68,10 @@
 		84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A9A23F17EF100E6B78E /* SettingsAddAddressCell.swift */; };
 		84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84898A9B23F17EF100E6B78E /* SettingsAddAddressCell.xib */; };
 		84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */; };
+		848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D1B8723F29D6100D6E368 /* AddressSettingsViewController.swift */; };
+		848D1B8A23F29D6100D6E368 /* AddressSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848D1B8823F29D6100D6E368 /* AddressSettingsViewController.xib */; };
+		848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D1B8B23F29D9B00D6E368 /* AddressSettingsViewModel.swift */; };
+		848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4523E2CD3F001B3B43 /* APIService.swift */; };
@@ -139,6 +145,8 @@
 /* Begin PBXFileReference section */
 		2D7D3E7917D11E9ED556EB4E /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		843A7A7E23F29A2900840E51 /* FakeNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNavBar.swift; sourceTree = "<group>"; };
+		843A7A8023F29A3400840E51 /* FakeNavBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FakeNavBar.xib; sourceTree = "<group>"; };
 		844AC37223E85C6A0066006D /* RequestCodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCodeRequest.swift; sourceTree = "<group>"; };
 		844AC37B23E861C50066006D /* GetVerifyedAddressesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVerifyedAddressesRequest.swift; sourceTree = "<group>"; };
 		844AC37D23E861D10066006D /* GetVerifyedAddressesResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVerifyedAddressesResponseData.swift; sourceTree = "<group>"; };
@@ -193,6 +201,10 @@
 		84898A9A23F17EF100E6B78E /* SettingsAddAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAddAddressCell.swift; sourceTree = "<group>"; };
 		84898A9B23F17EF100E6B78E /* SettingsAddAddressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsAddAddressCell.xib; sourceTree = "<group>"; };
 		84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpAvoidingFlowLayout.swift; sourceTree = "<group>"; };
+		848D1B8723F29D6100D6E368 /* AddressSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSettingsViewController.swift; sourceTree = "<group>"; };
+		848D1B8823F29D6100D6E368 /* AddressSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressSettingsViewController.xib; sourceTree = "<group>"; };
+		848D1B8B23F29D9B00D6E368 /* AddressSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSettingsViewModel.swift; sourceTree = "<group>"; };
+		848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAction.swift; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
 		84AA8D4523E2CD3F001B3B43 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -286,6 +298,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		843A7A7D23F29A0D00840E51 /* FakeNavBar */ = {
+			isa = PBXGroup;
+			children = (
+				843A7A7E23F29A2900840E51 /* FakeNavBar.swift */,
+				843A7A8023F29A3400840E51 /* FakeNavBar.xib */,
+			);
+			path = FakeNavBar;
+			sourceTree = "<group>";
+		};
 		844AC37123E85C4A0066006D /* RequestCode */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,6 +418,7 @@
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
 				E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */,
 				E9A4D49823EC3DD00070A591 /* BlueButton */,
+				843A7A7D23F29A0D00840E51 /* FakeNavBar */,
 				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
 				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
 				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
@@ -450,6 +472,7 @@
 			isa = PBXGroup;
 			children = (
 				844AC3EE23EBFF5E0066006D /* SettingsCoordinator.swift */,
+				848D1B8423F29D3F00D6E368 /* AddressSettings */,
 				844AC3F023EBFF790066006D /* Main */,
 			);
 			path = Settings;
@@ -651,6 +674,7 @@
 				84898A9323F1555700E6B78E /* SettingsDataItemIdentity.swift */,
 				84898A9523F1556200E6B78E /* SettingsScrollingMode.swift */,
 				84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */,
+				848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -662,6 +686,32 @@
 				84898A9B23F17EF100E6B78E /* SettingsAddAddressCell.xib */,
 			);
 			path = AddAddressCell;
+			sourceTree = "<group>";
+		};
+		848D1B8423F29D3F00D6E368 /* AddressSettings */ = {
+			isa = PBXGroup;
+			children = (
+				848D1B8523F29D4A00D6E368 /* View */,
+				848D1B8623F29D4E00D6E368 /* ViewModel */,
+			);
+			path = AddressSettings;
+			sourceTree = "<group>";
+		};
+		848D1B8523F29D4A00D6E368 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				848D1B8723F29D6100D6E368 /* AddressSettingsViewController.swift */,
+				848D1B8823F29D6100D6E368 /* AddressSettingsViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		848D1B8623F29D4E00D6E368 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				848D1B8B23F29D9B00D6E368 /* AddressSettingsViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		84950CF723E431B700F3C550 /* Base Classes */ = {
@@ -1125,7 +1175,9 @@
 				84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */,
 				84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */,
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
+				843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */,
 				844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */,
+				848D1B8A23F29D6100D6E368 /* AddressSettingsViewController.xib in Resources */,
 				E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */,
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
@@ -1244,6 +1296,7 @@
 				E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */,
 				844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */,
 				E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */,
+				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
 				844AC37E23E861D10066006D /* GetVerifyedAddressesResponseData.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				844AC38823E8652F0066006D /* LoginResponseData.swift in Sources */,
@@ -1263,6 +1316,7 @@
 				844AC38123E8637B0066006D /* ConfirmCodeRequest.swift in Sources */,
 				84898A9823F1556B00E6B78E /* SettingsSectionModel.swift in Sources */,
 				E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */,
+				848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */,
 				84898A8E23F1540C00E6B78E /* SettingsActionCell.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
@@ -1284,9 +1338,11 @@
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
+				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
+				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
 				E9A4D48A23EC27E20070A591 /* PinNumberField.swift in Sources */,
 				844AC38B23E866710066006D /* RegisterTokenRequest.swift in Sources */,

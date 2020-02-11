@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "IncomingCallBackground.pdf"
+      "filename" : "EditIcon.pdf"
     }
   ],
   "info" : {
@@ -10,6 +10,7 @@
     "author" : "xcode"
   },
   "properties" : {
-    "template-rendering-intent" : "original"
+    "template-rendering-intent" : "original",
+    "preserves-vector-representation" : true
   }
 }
