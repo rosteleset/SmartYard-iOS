@@ -42,8 +42,8 @@ class SettingsViewModel: BaseViewModel {
         
         // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг
         
-        let scrollingModeSubject = PublishSubject<SettingsScrollingMode>()
-        let scrollingMode = scrollingModeSubject.asDriverOnErrorJustComplete()
+        let updateKindSubject = PublishSubject<SettingsSectionUpdateKind>()
+        let updateKind = updateKindSubject.asDriverOnErrorJustComplete()
         
         // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
         // Это приведет к обновлению секций
@@ -75,7 +75,7 @@ class SettingsViewModel: BaseViewModel {
                     
                     let identity = SettingsDataItemIdentity.header(addressId: addressId)
                     
-                    scrollingModeSubject.onNext(
+                    updateKindSubject.onNext(
                         newState ?
                             .expand(sectionWithIdentity: identity) :
                             .collapse(sectionWithIdentity: identity)
@@ -100,7 +100,7 @@ class SettingsViewModel: BaseViewModel {
         
         return Output(
             sectionModels: sectionModels.asDriverOnErrorJustComplete(),
-            scrollingMode: scrollingMode
+            updateKind: updateKind
         )
     }
     
@@ -316,7 +316,7 @@ extension SettingsViewModel {
     
     struct Output {
         let sectionModels: Driver<[SettingsSectionModel]>
-        let scrollingMode: Driver<SettingsScrollingMode>
+        let updateKind: Driver<SettingsSectionUpdateKind>
     }
     
 }

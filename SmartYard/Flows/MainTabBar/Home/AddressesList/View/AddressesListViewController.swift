@@ -81,13 +81,13 @@ class AddressesListViewController: BaseViewController {
         
         // MARK: Скроллим таблицу при сворачивании / разворачивании секций для лучшего UX
         
-        let scrollingModeSubject = BehaviorSubject<AddressesListScrollingMode?>(value: nil)
-        let scrollingMode = scrollingModeSubject.asDriver(onErrorJustReturn: nil)
+        let updateKindSubject = BehaviorSubject<AddressesListSectionUpdateKind?>(value: nil)
+        let updateKind = updateKindSubject.asDriver(onErrorJustReturn: nil)
         
-        output.scrollingMode
+        output.updateKind
             .drive(
                 onNext: {
-                    scrollingModeSubject.onNext($0)
+                    updateKindSubject.onNext($0)
                 }
             )
             .disposed(by: disposeBag)
@@ -101,20 +101,20 @@ class AddressesListViewController: BaseViewController {
             // Чтобы анимации не конфликтовали, ждем, пока contentSize станет стабильным
             
             .debounce(.milliseconds(50))
-            .withLatestFrom(scrollingMode)
+            .withLatestFrom(updateKind)
             .ignoreNil()
             .do(
                 onNext: { _ in
-                    scrollingModeSubject.onNext(nil)
+                    updateKindSubject.onNext(nil)
                 }
             )
             .withLatestFrom(output.sectionModels) { ($0, $1) }
             
             // MARK: Ищем секцию, которая содержит Header с указанным идентификатором, и скроллим к нему
             
-            .map { scrollingBehavior, sectionModels -> (UICollectionView.ScrollPosition, IndexPath)? in
+            .map { updateKind, sectionModels -> (AddressesListSectionUpdateKind, IndexPath)? in
                 let neededSectionOffset = sectionModels.enumerated().first { _, model in
-                    model.items.contains { $0.identity == scrollingBehavior.associatedIdentity }
+                    model.items.contains { $0.identity == updateKind.associatedIdentity }
                 }?.offset
                 
                 guard let section = neededSectionOffset else {
@@ -122,12 +122,31 @@ class AddressesListViewController: BaseViewController {
                 }
                 
                 let indexPath = IndexPath(row: 0, section: section)
-                return (scrollingBehavior.scrollingPosition, indexPath)
+                return (updateKind, indexPath)
             }
             .ignoreNil()
             .drive(
-                onNext: { [weak self] position, indexPath in
-                    self?.collectionView.scrollToItem(at: indexPath, at: position, animated: true)
+                onNext: { [weak self] updateKind, indexPath in
+                    if case .expand = updateKind,
+                        let collectionView = self?.collectionView,
+                        let attributes = collectionView.collectionViewLayout.layoutAttributesForItem(at: indexPath),
+                        let inset = self?.collectionView(
+                            collectionView,
+                            layout: collectionView.collectionViewLayout,
+                            insetForSectionAt: indexPath.section
+                        ).top {
+                        let desiredOffset = attributes.frame.origin.y - collectionView.contentInset.top - inset
+                        
+                        let contentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
+                        let maxPossibleOffset = contentHeight - collectionView.bounds.height
+                        
+                        let neededOffset = max(min(desiredOffset, maxPossibleOffset), 0)
+                        
+                        collectionView.setContentOffset(
+                            CGPoint(x: 0, y: neededOffset),
+                            animated: true
+                        )
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -246,14 +265,14 @@ extension AddressesListViewController: UICollectionViewDelegateFlowLayout {
         let topInset: CGFloat = {
             switch section {
             case 0: return 16
-            default: return 0
+            default: return 10
             }
         }()
         
         let bottomInset: CGFloat = {
             switch section {
             case collectionView.numberOfSections - 1: return 20
-            default: return 10
+            default: return 0
             }
         }()
         

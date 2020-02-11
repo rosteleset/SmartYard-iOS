@@ -17,8 +17,8 @@ class AddressesListViewModel: BaseViewModel {
     func transform(_ input: Input) -> Output {
         // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг
         
-        let scrollingModeSubject = PublishSubject<AddressesListScrollingMode>()
-        let scrollingMode = scrollingModeSubject.asDriverOnErrorJustComplete()
+        let updateKindSubject = PublishSubject<AddressesListSectionUpdateKind>()
+        let updateKind = updateKindSubject.asDriverOnErrorJustComplete()
         
         // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
         // Это приведет к обновлению секций
@@ -50,7 +50,7 @@ class AddressesListViewModel: BaseViewModel {
                     
                     let identity = AddressesListDataItemIdentity.header(addressId: addressId)
                     
-                    scrollingModeSubject.onNext(
+                    updateKindSubject.onNext(
                         newState ?
                             .expand(sectionWithIdentity: identity) :
                             .collapse(sectionWithIdentity: identity)
@@ -75,7 +75,7 @@ class AddressesListViewModel: BaseViewModel {
         
         return Output(
             sectionModels: sectionModels.asDriverOnErrorJustComplete(),
-            scrollingMode: scrollingMode
+            updateKind: updateKind
         )
     }
     
@@ -209,7 +209,7 @@ extension AddressesListViewModel {
     
     struct Output {
         let sectionModels: Driver<[AddressesListSectionModel]>
-        let scrollingMode: Driver<AddressesListScrollingMode>
+        let updateKind: Driver<AddressesListSectionUpdateKind>
     }
     
 }
