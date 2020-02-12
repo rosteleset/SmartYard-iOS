@@ -25,7 +25,7 @@ extension UIColor {
         static let incorrectDataRed = UIColor(hex: 0xFF3B30)!
         
         /// #6D7A8A
-        static let placeholderGrayText = UIColor(hex: 0x6D7A8A)!
+        static let gray = UIColor(hex: 0x6D7A8A)!
         
         /// #28323E
         static let semiBlack = UIColor(hex: 0x28323E)!

@@ -149,6 +149,10 @@
 		E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4270823F2CD3000F5D593 /* ServiceFromOfficeView.swift */; };
 		E9E4270B23F2CD3900F5D593 /* ServiceFromOfficeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4270A23F2CD3900F5D593 /* ServiceFromOfficeView.xib */; };
 		E9E4270D23F3D62C00F5D593 /* MapPoint.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E9E4270C23F3D62C00F5D593 /* MapPoint.pdf */; };
+		E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4270F23F40D2500F5D593 /* AvailableServicesViewController.swift */; };
+		E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4271023F40D2500F5D593 /* AvailableServicesViewController.xib */; };
+		E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4271423F40DAF00F5D593 /* SmartYardCheckBoxView.swift */; };
+		E9E4271723F40E0B00F5D593 /* SmartYardCheckBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4271623F40E0B00F5D593 /* SmartYardCheckBox.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -302,6 +306,10 @@
 		E9E4270823F2CD3000F5D593 /* ServiceFromOfficeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFromOfficeView.swift; sourceTree = "<group>"; };
 		E9E4270A23F2CD3900F5D593 /* ServiceFromOfficeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceFromOfficeView.xib; sourceTree = "<group>"; };
 		E9E4270C23F3D62C00F5D593 /* MapPoint.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = MapPoint.pdf; sourceTree = "<group>"; };
+		E9E4270F23F40D2500F5D593 /* AvailableServicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableServicesViewController.swift; sourceTree = "<group>"; };
+		E9E4271023F40D2500F5D593 /* AvailableServicesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AvailableServicesViewController.xib; sourceTree = "<group>"; };
+		E9E4271423F40DAF00F5D593 /* SmartYardCheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardCheckBoxView.swift; sourceTree = "<group>"; };
+		E9E4271623F40E0B00F5D593 /* SmartYardCheckBox.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmartYardCheckBox.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -430,6 +438,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E9E4271323F40D8100F5D593 /* SmartYardCheckBoxView */,
 				E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
@@ -831,6 +840,7 @@
 				84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */,
 				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
 				E98C383223F192430010BBC1 /* Address */,
+				E9E4270E23F40D0800F5D593 /* AvailableServices */,
 				E99EA6B623EA9CED00BECEE6 /* Login */,
 				844AC3C623EBFC240066006D /* MainTabBar */,
 				844AC3B423EB0FD80066006D /* UserName */,
@@ -1152,6 +1162,24 @@
 			path = ServiceFromCourierView;
 			sourceTree = "<group>";
 		};
+		E9E4270E23F40D0800F5D593 /* AvailableServices */ = {
+			isa = PBXGroup;
+			children = (
+				E9E4270F23F40D2500F5D593 /* AvailableServicesViewController.swift */,
+				E9E4271023F40D2500F5D593 /* AvailableServicesViewController.xib */,
+			);
+			path = AvailableServices;
+			sourceTree = "<group>";
+		};
+		E9E4271323F40D8100F5D593 /* SmartYardCheckBoxView */ = {
+			isa = PBXGroup;
+			children = (
+				E9E4271423F40DAF00F5D593 /* SmartYardCheckBoxView.swift */,
+				E9E4271623F40E0B00F5D593 /* SmartYardCheckBox.xib */,
+			);
+			path = SmartYardCheckBoxView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1232,6 +1260,7 @@
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */,
+				E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
@@ -1239,6 +1268,7 @@
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
 				84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */,
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
+				E9E4271723F40E0B00F5D593 /* SmartYardCheckBox.xib in Resources */,
 				E9A1D78423F27AE500234B2A /* AddressConfirmationViewController.xib in Resources */,
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
@@ -1411,6 +1441,7 @@
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
+				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
@@ -1443,6 +1474,7 @@
 				84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */,
 				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
+				E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */,
 				844AC3DE23EBFE1E0066006D /* ChatViewModel.swift in Sources */,
 				844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */,
 				E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */,

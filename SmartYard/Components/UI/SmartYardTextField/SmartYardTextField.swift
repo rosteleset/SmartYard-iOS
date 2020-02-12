@@ -26,7 +26,7 @@ class SmartYardTextField: UITextField {
             string: string,
             attributes: [
                 .font: font,
-                .foregroundColor: UIColor.SmartYard.placeholderGrayText.withAlphaComponent(0.4) as Any
+                .foregroundColor: UIColor.SmartYard.gray.withAlphaComponent(0.4) as Any
             ]
         )
         
@@ -39,7 +39,7 @@ class SmartYardTextField: UITextField {
             string: "*",
             attributes: [
                 .font: font,
-                .foregroundColor: UIColor.SmartYard.placeholderGrayText.withAlphaComponent(0.4) as Any,
+                .foregroundColor: UIColor.SmartYard.gray.withAlphaComponent(0.4) as Any,
                 .baselineOffset: 3
             ]
         )
