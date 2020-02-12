@@ -324,6 +324,7 @@ extension SettingsViewModel {
     
     struct Input {
         let itemSelected: Driver<SettingsDataItemIdentity>
+        let serviceSelected: Driver<(SettingsDataItemIdentity, SettingsServiceType)>
     }
     
     struct Output {
