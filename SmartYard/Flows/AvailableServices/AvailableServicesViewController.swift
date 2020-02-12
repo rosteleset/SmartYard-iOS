@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class AvailableServicesViewController: UIViewController {
 
     @IBOutlet private weak var tableView: UITableView!
+    
+    let itemsProxy = BehaviorSubject<[ServiceModel]>(value: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
