@@ -9,5 +9,5 @@
 import Foundation
 
 class AddressConfirmationViewModel: BaseViewModel {
-    
+    // TODO
 }

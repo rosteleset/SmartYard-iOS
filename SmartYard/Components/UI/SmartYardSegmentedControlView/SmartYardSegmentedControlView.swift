@@ -13,7 +13,7 @@ import RxCocoa
 
 class SmartYardSegmentedControl: UIView {
     
-    let segmentControl: UISegmentedControl = {
+    fileprivate let segmentControl: UISegmentedControl = {
         let control = UISegmentedControl()
         control.backgroundColor = .white
         control.tintColor = .clear
@@ -42,19 +42,21 @@ class SmartYardSegmentedControl: UIView {
         return control
     }()
     
-    let bottomBar: UIView = {
+    private let bottomBar: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.SmartYard.blue
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let bottomSeparator: UIView = {
+    private let bottomSeparator: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(hex: 0xF3F4FA)!
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    private var bottomBarWidthAnchor: NSLayoutConstraint?
     
     var segmentItems: [String] = [] {
         didSet {
@@ -73,8 +75,6 @@ class SmartYardSegmentedControl: UIView {
             bottomBarWidthAnchor?.isActive = true
         }
     }
-    
-    var bottomBarWidthAnchor: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
