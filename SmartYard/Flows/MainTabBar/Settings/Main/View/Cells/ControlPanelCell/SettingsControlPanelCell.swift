@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class SettingsControlPanelCell: CustomBorderCollectionViewCell {
     
@@ -16,49 +18,80 @@ class SettingsControlPanelCell: CustomBorderCollectionViewCell {
     @IBOutlet private weak var keyButton: UIButton!
     @IBOutlet private weak var eyeButton: UIButton!
     
+    var disposeBag = DisposeBag()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         configureButtons()
     }
     
-    func configure(
-        isWiFiEnabled: Bool,
-        isMonitorEnabled: Bool,
-        isCallEnabled: Bool,
-        isKeyEnabled: Bool,
-        isEyeEnabled: Bool
-    ) {
-        wifiButton.isSelected = isWiFiEnabled
-        monitorButton.isSelected = isMonitorEnabled
-        callButton.isSelected = isCallEnabled
-        keyButton.isSelected = isKeyEnabled
-        eyeButton.isSelected = isEyeEnabled
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
+    
+    func bind(with outerSubject: PublishSubject<SettingsServiceType>) {
+        let internet = wifiButton.rx.tap
+            .map { _ -> SettingsServiceType in .internet }
+        
+        let tv = monitorButton.rx.tap
+            .map { _ -> SettingsServiceType in .tv }
+        
+        let phone = callButton.rx.tap
+            .map { _ -> SettingsServiceType in .phone }
+        
+        let lock = keyButton.rx.tap
+            .map { _ -> SettingsServiceType in .lock }
+        
+        let camera = eyeButton.rx.tap
+            .map { _ -> SettingsServiceType in .camera }
+        
+        Observable.merge(internet, tv, phone, lock, camera)
+            .bind(to: outerSubject)
+            .disposed(by: disposeBag)
+    }
+    
+    func configure(with serviceStates: [SettingsServiceType: SettingsServiceState]) {
+        wifiButton.isSelected = serviceStates[.internet] == .activated
+        wifiButton.isEnabled = serviceStates[.internet] != nil
+        
+        monitorButton.isSelected = serviceStates[.tv] == .activated
+        monitorButton.isEnabled = serviceStates[.tv] != nil
+        
+        callButton.isSelected = serviceStates[.phone] == .activated
+        callButton.isEnabled = serviceStates[.phone] != nil
+        
+        keyButton.isSelected = serviceStates[.lock] == .activated
+        keyButton.isEnabled = serviceStates[.lock] != nil
+        
+        eyeButton.isSelected = serviceStates[.camera] == .activated
+        eyeButton.isEnabled = serviceStates[.camera] != nil
     }
     
     private func configureButtons() {
         wifiButton.configureSelectableButton(
-            imageForNormal: UIImage(named: "SettingsWiFiUnselectedIcon"),
-            imageForSelected: UIImage(named: "SettingsWiFiSelectedIcon")
+            imageForNormal: SettingsServiceType.internet.unselectedIcon,
+            imageForSelected: SettingsServiceType.internet.selectedIcon
         )
         
         monitorButton.configureSelectableButton(
-            imageForNormal: UIImage(named: "SettingsMonitorUnselectedIcon"),
-            imageForSelected: UIImage(named: "SettingsMonitorSelectedIcon")
+            imageForNormal: SettingsServiceType.tv.unselectedIcon,
+            imageForSelected: SettingsServiceType.tv.selectedIcon
         )
         
         callButton.configureSelectableButton(
-            imageForNormal: UIImage(named: "SettingsCallUnselectedIcon"),
-            imageForSelected: UIImage(named: "SettingsCallSelectedIcon")
+            imageForNormal: SettingsServiceType.phone.unselectedIcon,
+            imageForSelected: SettingsServiceType.phone.selectedIcon
         )
         
         keyButton.configureSelectableButton(
-            imageForNormal: UIImage(named: "SettingsKeyUnselectedIcon"),
-            imageForSelected: UIImage(named: "SettingsKeySelectedIcon")
+            imageForNormal: SettingsServiceType.lock.unselectedIcon,
+            imageForSelected: SettingsServiceType.lock.selectedIcon
         )
         
         eyeButton.configureSelectableButton(
-            imageForNormal: UIImage(named: "SettingsEyeUnselectedIcon"),
-            imageForSelected: UIImage(named: "SettingsEyeSelectedIcon")
+            imageForNormal: SettingsServiceType.camera.unselectedIcon,
+            imageForSelected: SettingsServiceType.camera.selectedIcon
         )
     }
 

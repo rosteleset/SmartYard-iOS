@@ -29,6 +29,7 @@ class SettingsViewController: BaseViewController {
     // Так что приходится проксировать количество ячеек в секциях в отдельный субъект и брать данные отсюда
     
     private let itemsCountProxy = BehaviorSubject<[Int: Int]>(value: [:])
+    private let serviceButtonTapTrigger = PublishSubject<(SettingsDataItemIdentity, SettingsServiceType)>()
     
     private let viewModel: SettingsViewModel
     
@@ -57,7 +58,10 @@ class SettingsViewController: BaseViewController {
             }
             .ignoreNil()
         
-        let input = SettingsViewModel.Input(itemSelected: itemSelected.asDriverOnErrorJustComplete())
+        let input = SettingsViewModel.Input(
+            itemSelected: itemSelected.asDriverOnErrorJustComplete(),
+            serviceSelected: serviceButtonTapTrigger.asDriverOnErrorJustComplete()
+        )
         
         let output = viewModel.transform(input)
         
@@ -206,30 +210,38 @@ class SettingsViewController: BaseViewController {
         item: SettingsDataItem
     ) -> UICollectionViewCell {
         // swiftlint:disable:next closure_body_length
-        let cell: UICollectionViewCell = {
+        let cell: UICollectionViewCell = { [weak self] in
+            guard let self = self else {
+                return UICollectionViewCell()
+            }
+            
             switch item {
             case let .header(_, title, subtitle, isExpanded):
                 let cell = collectionView.dequeueReusableCell(withClass: SettingsHeaderCell.self, for: indexPath)
                 cell.configure(title: title, subtitle: subtitle, isExpanded: isExpanded)
                 return cell
                 
-            case let .controlPanel(_, isWiFiEnabled, isMonitorEnabled, isCallEnabled, isKeyEnabled, isEyeEnabled):
+            case let .controlPanel(identity, configuration):
                 let cell = collectionView.dequeueReusableCell(withClass: SettingsControlPanelCell.self, for: indexPath)
+                cell.configure(with: configuration)
                 
-                cell.configure(
-                    isWiFiEnabled: isWiFiEnabled,
-                    isMonitorEnabled: isMonitorEnabled,
-                    isCallEnabled: isCallEnabled,
-                    isKeyEnabled: isKeyEnabled,
-                    isEyeEnabled: isEyeEnabled
-                )
+                let subject = PublishSubject<SettingsServiceType>()
+                
+                subject
+                    .map { input -> (SettingsDataItemIdentity, SettingsServiceType) in
+                        (identity, input)
+                    }
+                    .bind(to: self.serviceButtonTapTrigger)
+                    .disposed(by: cell.disposeBag)
+                
+                cell.bind(with: subject)
                 
                 return cell
                 
             case let .action(identity):
                 let cell = collectionView.dequeueReusableCell(withClass: SettingsActionCell.self, for: indexPath)
                 
-                if case let .action(_, _, type) = identity {
+                if case let .action(_, type) = identity {
                     cell.configure(title: type.localizedTitle)
                 }
                 
