@@ -90,6 +90,8 @@ PODS:
   - "linphone-sdk (4.4.0-alpha.22+a27d5c6)":
     - "linphone-sdk/basic-frameworks (= 4.4.0-alpha.22+a27d5c6)"
   - "linphone-sdk/basic-frameworks (4.4.0-alpha.22+a27d5c6)"
+  - MapboxStatic.swift (0.11.0):
+    - Polyline (~> 4.2)
   - Moya (13.0.1):
     - Moya/Core (= 13.0.1)
   - Moya/Core (13.0.1):
@@ -102,6 +104,7 @@ PODS:
   - nanopb/encode (0.3.9011)
   - PinLayout (1.8.13)
   - PMNibLinkableView (0.3.0)
+  - Polyline (4.2.1)
   - PromisesObjC (1.2.8)
   - Protobuf (3.11.2)
   - Result (4.1.0)
@@ -158,6 +161,7 @@ DEPENDENCIES:
   - IHKeyboardAvoiding
   - Kingfisher
   - linphone-sdk (> 4.4.0-alpha)
+  - MapboxStatic.swift (~> 0.11)
   - Moya
   - PinLayout
   - PMNibLinkableView
@@ -196,10 +200,12 @@ SPEC REPOS:
     - GoogleUtilities
     - IHKeyboardAvoiding
     - Kingfisher
+    - MapboxStatic.swift
     - Moya
     - nanopb
     - PinLayout
     - PMNibLinkableView
+    - Polyline
     - PromisesObjC
     - Protobuf
     - Result
@@ -249,10 +255,12 @@ SPEC CHECKSUMS:
   IHKeyboardAvoiding: 4cae0880c3975feffa278495df894c5166e71ad0
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
   linphone-sdk: 82302f72c930a859a75acdcfed304272d3cfdae1
+  MapboxStatic.swift: 3a39f0b077a7fb0568fd53f27a76c402b07ef408
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PinLayout: e41a50260a76508b7a7fcee8955c76639adc69bc
   PMNibLinkableView: 06ebf6128feb70c3ba589d6be232748c1b7b1767
+  Polyline: 0e9890790292741c8186201a536b6bb6a78d02dd
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
@@ -269,6 +277,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: 3ec197c4ebd22eb94562976d8668d5c0d9a83360
+PODFILE CHECKSUM: 14c690212e0c073ea1cc3fc8599ddf4c2540a0f2
 
 COCOAPODS: 1.8.4

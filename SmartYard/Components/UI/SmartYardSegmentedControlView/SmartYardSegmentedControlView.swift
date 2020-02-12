@@ -177,7 +177,7 @@ class SmartYardSegmentedControl: UIView {
         segmentControl.selectedSegmentIndex = 0
     }
     
-    @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+    @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         UIView.animate(withDuration: 0.3) { [weak self] in
             guard let self = self else {
                 return

@@ -8,7 +8,19 @@
 
 import Foundation
 import PMNibLinkableView
+import RxSwift
+import RxCocoa
 
 class ServiceFromCourierView: PMNibLinkableView {
+    
+    @IBOutlet fileprivate weak var requestButton: BlueButton!
+    
+}
+
+extension Reactive where Base: ServiceFromCourierView {
+    
+    var requestButtonTapped: ControlEvent<Void> {
+        return base.requestButton.rx.tap
+    }
     
 }

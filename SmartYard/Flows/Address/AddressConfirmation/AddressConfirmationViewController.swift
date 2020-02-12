@@ -38,9 +38,17 @@ class AddressConfirmationViewController: BaseViewController {
         selectedSegmentIndex.asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] index in
-                    let isFirstSelected = index == 0
-                    self?.officeView.isHidden = isFirstSelected
-                    self?.courierView.isHidden = !isFirstSelected
+                    guard index == 0 else {
+                        self?.officeView.isHidden = false
+                        self?.courierView.isHidden = true
+                        
+                        self?.officeView.setPreview()
+                        return
+                    }
+                    
+                    self?.officeView.isHidden = true
+                    self?.courierView.isHidden = false
+                    
                 }
             )
             .disposed(by: disposeBag)
