@@ -6,20 +6,20 @@
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
+enum SettingsServiceState {
+    
+    case activated
+    case notActivated
+    case unavailable
+    
+}
+
 struct SettingsControlPanelConfiguration: Hashable {
     
-    enum ServiceState {
-        
-        case activated
-        case notActivated
-        case unavailable
-        
-    }
-    
-    let internetState: ServiceState
-    let tvState: ServiceState
-    let phoneState: ServiceState
-    let lockState: ServiceState
-    let cameraState: ServiceState
+    let internetState: SettingsServiceState
+    let tvState: SettingsServiceState
+    let phoneState: SettingsServiceState
+    let lockState: SettingsServiceState
+    let cameraState: SettingsServiceState
     
 }

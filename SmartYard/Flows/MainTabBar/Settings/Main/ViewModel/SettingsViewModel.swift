@@ -17,6 +17,11 @@ class SettingsViewModel: BaseViewModel {
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
     
+    // MARK: Загруженные данные (пока моковые модели)
+    private let loadedData = BehaviorSubject<[SettingsMockDataExample]>(
+        value: [.firstExample, .secondExample, .thirdExample]
+    )
+    
     init(router: WeakRouter<SettingsRoute>) {
         self.router = router
     }
@@ -27,15 +32,22 @@ class SettingsViewModel: BaseViewModel {
         
         input.itemSelected
             .flatMap { identity -> Driver<String> in
-                guard case let .action(_, address, type) = identity, type == .openAddressSettings else {
+                guard case let .action(clientId, type) = identity, type == .openAddressSettings else {
                     return .empty()
                 }
                 
-                return .just(address)
+                return .just(clientId)
             }
+            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
             .drive(
-                onNext: { [weak self] address in
-                    self?.router.trigger(.addressSettings(address: address))
+                onNext: { [weak self] args in
+                    let (clientId, loadedData) = args
+                    
+                    guard let match = (loadedData.first { $0.clientId == clientId }) else {
+                        return
+                    }
+                    
+                    self?.router.trigger(.addressSettings(address: match.address))
                 }
             )
             .disposed(by: disposeBag)
@@ -93,229 +105,90 @@ class SettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        let sectionModels = areSectionsExpanded
-            .map { [weak self] dict in
-                self?.createMockSections(expansionStateDict: dict) ?? []
+        let sectionModels: Driver<[SettingsSectionModel]> = Driver
+            .combineLatest(
+                loadedData.asDriver(onErrorJustReturn: []),
+                areSectionsExpanded.asDriver(onErrorJustReturn: [:])
+            )
+            .map { [weak self] args in
+                let (data, expansionStateDict) = args
+                
+                return self?.createMockSections(data: data, expansionStateDict: expansionStateDict) ?? []
             }
         
         return Output(
-            sectionModels: sectionModels.asDriverOnErrorJustComplete(),
+            sectionModels: sectionModels,
             updateKind: updateKind
         )
     }
     
-    // swiftlint:disable:next function_body_length
-    private func createMockSections(expansionStateDict: [String: Bool]) -> [SettingsSectionModel] {
-        // MARK: Пока моки, но в принципе, нет ничего сложного прикрутить сюда реальные данные
-        // Просто будем пробегать в цикле по всем адресам и генерировать для них секции
-        
-        let firstClientId = "1000"
-        let firstAddress = "г. Тамбов, ул. Советская, 16, кв. 4"
-        let isFirstSectionExpanded = expansionStateDict[firstClientId, default: false]
-        
-        let firstSectionHeader: SettingsDataItem = .header(
-            identity: .header(clientId: firstClientId),
-            title: firstAddress,
-            subtitle: "Номер договора: 68992",
-            isExpanded: isFirstSectionExpanded
-        )
-        
+    private func createMockSections(
+        data: [SettingsMockDataExample],
+        expansionStateDict: [String: Bool]
+    ) -> [SettingsSectionModel] {
         // swiftlint:disable:next closure_body_length
-        let firstSectionObjects: [SettingsDataItem] = {
-            guard isFirstSectionExpanded else {
-                return []
-            }
+        let mainSections: [SettingsSectionModel] = data.map { example in
+            let isExpanded = expansionStateDict[example.clientId, default: false]
             
-            let config = SettingsControlPanelConfiguration(
-                internetState: .activated,
-                tvState: .notActivated,
-                phoneState: .activated,
-                lockState: .notActivated,
-                cameraState: .unavailable
+            let header: SettingsDataItem = .header(
+                identity: .header(clientId: example.clientId),
+                address: example.address,
+                contract: example.contractNumber,
+                isExpanded: isExpanded
             )
             
-            let firstSectionControlPanel: SettingsDataItem = .controlPanel(
-                identity: .controlPanel(clientId: firstClientId),
-                config: config
-            )
-            
-            let firstSectionFirstAction: SettingsDataItem = .action(
-                identity: .action(
-                    clientId: firstClientId,
-                    address: firstAddress,
-                    type: .openAddressSettings
+            // swiftlint:disable:next closure_body_length
+            let objects: [SettingsDataItem] = {
+                guard isExpanded else {
+                    return []
+                }
+                
+                let config = SettingsControlPanelConfiguration(
+                    internetState: example.internetState,
+                    tvState: example.tvState,
+                    phoneState: example.phoneState,
+                    lockState: example.lockState,
+                    cameraState: example.cameraState
                 )
-            )
-            
-            let firstSectionSecondAction: SettingsDataItem = .action(
-                identity: .action(
-                    clientId: firstClientId,
-                    address: firstAddress,
-                    type: .grantAccess
+                
+                let controlPanel: SettingsDataItem = .controlPanel(
+                    identity: .controlPanel(clientId: example.clientId),
+                    config: config
                 )
-            )
-            
-            let firstSectionThirdAction: SettingsDataItem = .action(
-                identity: .action(
-                    clientId: firstClientId,
-                    address: firstAddress,
-                    type: .openWebVersion
+                
+                let openAddressSettingsAction: SettingsDataItem = .action(
+                    identity: .action(
+                        clientId: example.clientId,
+                        type: .openAddressSettings
+                    )
                 )
-            )
-            
-            return [
-                firstSectionControlPanel,
-                firstSectionFirstAction,
-                firstSectionSecondAction,
-                firstSectionThirdAction
-            ]
-        }()
-        
-        let firstSection = SettingsSectionModel(
-            identity: firstClientId,
-            items: [firstSectionHeader] + firstSectionObjects
-        )
-        
-        let secondClientId = "2000"
-        let secondAddress = "г. Тамбов, ул. Мичуринская, 141А"
-        let isSecondSectionExpanded = expansionStateDict[secondClientId, default: false]
-        
-        let secondSectionHeader: SettingsDataItem = .header(
-            identity: .header(clientId: secondClientId),
-            title: secondAddress,
-            subtitle: "Номер договора: 69325",
-            isExpanded: isSecondSectionExpanded
-        )
-        
-        // swiftlint:disable:next closure_body_length
-        let secondSectionObjects: [SettingsDataItem] = {
-            guard isSecondSectionExpanded else {
-                return []
-            }
-            
-            let config = SettingsControlPanelConfiguration(
-                internetState: .activated,
-                tvState: .activated,
-                phoneState: .activated,
-                lockState: .activated,
-                cameraState: .activated
-            )
-            
-            let secondSectionControlPanel: SettingsDataItem = .controlPanel(
-                identity: .controlPanel(clientId: secondClientId),
-                config: config
-            )
-            
-            let secondSectionFirstAction: SettingsDataItem = .action(
-                identity: .action(
-                    clientId: secondClientId,
-                    address: secondAddress,
-                    type: .openAddressSettings
+                
+                let grantAccessAction: SettingsDataItem = .action(
+                    identity: .action(
+                        clientId: example.clientId,
+                        type: .grantAccess
+                    )
                 )
-            )
-            
-            let secondSectionSecondAction: SettingsDataItem = .action(
-                identity: .action(
-                    clientId: secondClientId,
-                    address: secondAddress,
-                    type: .grantAccess
+                
+                let webVersionAction: SettingsDataItem = .action(
+                    identity: .action(
+                        clientId: example.clientId,
+                        type: .openWebVersion
+                    )
                 )
-            )
+                
+                return [controlPanel, openAddressSettingsAction, grantAccessAction, webVersionAction]
+            }()
             
-            let secondSectionThirdAction: SettingsDataItem = .action(
-                identity: .action(
-                    clientId: secondClientId,
-                    address: secondAddress,
-                    type: .openWebVersion
-                )
-            )
-            
-            return [
-                secondSectionControlPanel,
-                secondSectionFirstAction,
-                secondSectionSecondAction,
-                secondSectionThirdAction
-            ]
-        }()
-        
-        let secondSection = SettingsSectionModel(
-            identity: secondClientId,
-            items: [secondSectionHeader] + secondSectionObjects
-        )
-        
-        let thirdClientId = "3000"
-        let thirdAddress = "г. Котовск, ул. Зимняя, 20"
-        let isThirdSectionExpanded = expansionStateDict[thirdClientId, default: false]
-        
-        let thirdSectionHeader: SettingsDataItem = .header(
-            identity: .header(clientId: thirdClientId),
-            title: thirdAddress,
-            subtitle: "Номер договора: 69325",
-            isExpanded: isThirdSectionExpanded
-        )
-        
-        // swiftlint:disable:next closure_body_length
-        let thirdSectionObjects: [SettingsDataItem] = {
-            guard isThirdSectionExpanded else {
-                return []
-            }
-            
-            let config = SettingsControlPanelConfiguration(
-                internetState: .unavailable,
-                tvState: .unavailable,
-                phoneState: .unavailable,
-                lockState: .activated,
-                cameraState: .activated
-            )
-            
-            let thirdSectionControlPanel: SettingsDataItem = .controlPanel(
-                identity: .controlPanel(clientId: thirdClientId),
-                config: config
-            )
-            
-            let thirdSectionFirstAction: SettingsDataItem = .action(
-                identity: .action(
-                    clientId: thirdClientId,
-                    address: thirdAddress,
-                    type: .openAddressSettings
-                )
-            )
-            
-            let thirdSectionSecondAction: SettingsDataItem = .action(
-                identity: .action(
-                    clientId: thirdClientId,
-                    address: thirdAddress,
-                    type: .grantAccess
-                )
-            )
-            
-            let thirdSectionThirdAction: SettingsDataItem = .action(
-                identity: .action(
-                    clientId: thirdClientId,
-                    address: thirdAddress,
-                    type: .openWebVersion
-                )
-            )
-            
-            return [
-                thirdSectionControlPanel,
-                thirdSectionFirstAction,
-                thirdSectionSecondAction,
-                thirdSectionThirdAction
-            ]
-        }()
-        
-        let thirdSection = SettingsSectionModel(
-            identity: thirdClientId,
-            items: [thirdSectionHeader] + thirdSectionObjects
-        )
+            return SettingsSectionModel(identity: example.clientId, items: [header] + objects)
+        }
         
         let addAddressSection = SettingsSectionModel(
             identity: "AddAddressSection",
             items: [SettingsDataItem.addAddress]
         )
         
-        return [firstSection, secondSection, thirdSection, addAddressSection]
+        return mainSections + [addAddressSection]
     }
     
 }

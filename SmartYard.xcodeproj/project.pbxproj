@@ -119,6 +119,7 @@
 		84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */; };
 		84EEBC9223F3F13D00C9557F /* SettingsControlPanelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9123F3F13D00C9557F /* SettingsControlPanelConfiguration.swift */; };
 		84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */; };
+		84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */; };
 		84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F840D523E07DA5008DBE50 /* AppDelegate.swift */; };
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
@@ -275,6 +276,7 @@
 		84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTransitions.swift; sourceTree = "<group>"; };
 		84EEBC9123F3F13D00C9557F /* SettingsControlPanelConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelConfiguration.swift; sourceTree = "<group>"; };
 		84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceType.swift; sourceTree = "<group>"; };
+		84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMockDataExample.swift; sourceTree = "<group>"; };
 		84F840D223E07DA5008DBE50 /* SmartYard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartYard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F840D523E07DA5008DBE50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84F840DC23E07DA5008DBE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -714,12 +716,13 @@
 		84898A9023F1553900E6B78E /* Entries */ = {
 			isa = PBXGroup;
 			children = (
-				84B89A7B23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift */,
-				84898A9123F1554D00E6B78E /* SettingsDataItem.swift */,
-				84898A9323F1555700E6B78E /* SettingsDataItemIdentity.swift */,
-				84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */,
 				848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */,
 				84EEBC9123F3F13D00C9557F /* SettingsControlPanelConfiguration.swift */,
+				84898A9123F1554D00E6B78E /* SettingsDataItem.swift */,
+				84898A9323F1555700E6B78E /* SettingsDataItemIdentity.swift */,
+				84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */,
+				84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */,
+				84B89A7B23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift */,
 				84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */,
 			);
 			path = Entries;
@@ -1570,6 +1573,7 @@
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
+				84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,

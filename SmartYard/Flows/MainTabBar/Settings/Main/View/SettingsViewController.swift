@@ -241,7 +241,7 @@ class SettingsViewController: BaseViewController {
             case let .action(identity):
                 let cell = collectionView.dequeueReusableCell(withClass: SettingsActionCell.self, for: indexPath)
                 
-                if case let .action(_, _, type) = identity {
+                if case let .action(_, type) = identity {
                     cell.configure(title: type.localizedTitle)
                 }
                 
