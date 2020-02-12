@@ -28,6 +28,30 @@ class SettingsViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
+        // MARK: Обработка нажатия на кнопку сервиса
+        
+        input.serviceSelected
+            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (serviceSelected, loadedData) = args
+                    let (identity, serviceType) = serviceSelected
+                    
+                    guard case let .controlPanel(clientId) = identity,
+                        let match = (loadedData.first { $0.clientId == clientId }),
+                        let state = match.serviceStates[serviceType] else {
+                        return
+                    }
+                    
+                    switch state {
+                    case .activated: self?.router.trigger(.serviceIsActivated)
+                    case .notActivated: self?.router.trigger(.serviceIsNotActivated)
+                    case .unavailable: self?.router.trigger(.serviceUnavailable)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Обработка нажатия на настройки адреса
         
         input.itemSelected
@@ -144,11 +168,11 @@ class SettingsViewModel: BaseViewModel {
                 }
                 
                 let config = SettingsControlPanelConfiguration(
-                    internetState: example.internetState,
-                    tvState: example.tvState,
-                    phoneState: example.phoneState,
-                    lockState: example.lockState,
-                    cameraState: example.cameraState
+                    internetState: example.serviceStates[.internet] ?? .unavailable,
+                    tvState: example.serviceStates[.tv] ?? .unavailable,
+                    phoneState: example.serviceStates[.phone] ?? .unavailable,
+                    lockState: example.serviceStates[.lock] ?? .unavailable,
+                    cameraState: example.serviceStates[.camera] ?? .unavailable
                 )
                 
                 let controlPanel: SettingsDataItem = .controlPanel(

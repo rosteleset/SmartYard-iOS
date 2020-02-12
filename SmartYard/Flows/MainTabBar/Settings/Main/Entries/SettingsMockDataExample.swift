@@ -13,22 +13,20 @@ struct SettingsMockDataExample {
     let address: String
     let contractNumber: String
     
-    let internetState: SettingsServiceState
-    let tvState: SettingsServiceState
-    let phoneState: SettingsServiceState
-    let lockState: SettingsServiceState
-    let cameraState: SettingsServiceState
+    let serviceStates: [SettingsServiceType: SettingsServiceState]
     
     static let firstExample: SettingsMockDataExample = {
         SettingsMockDataExample(
             clientId: "10000",
             address: "г. Тамбов, ул. Советская, 16, кв. 4",
             contractNumber: "68992",
-            internetState: .activated,
-            tvState: .notActivated,
-            phoneState: .activated,
-            lockState: .notActivated,
-            cameraState: .unavailable
+            serviceStates: [
+                .internet: .activated,
+                .tv: .notActivated,
+                .phone: .activated,
+                .lock: .notActivated,
+                .camera: .unavailable
+            ]
         )
     }()
     
@@ -37,11 +35,13 @@ struct SettingsMockDataExample {
             clientId: "20000",
             address: "г. Тамбов, ул. Мичуринская, 141А",
             contractNumber: "69325",
-            internetState: .activated,
-            tvState: .activated,
-            phoneState: .activated,
-            lockState: .activated,
-            cameraState: .activated
+            serviceStates: [
+                .internet: .activated,
+                .tv: .activated,
+                .phone: .activated,
+                .lock: .activated,
+                .camera: .activated
+            ]
         )
     }()
     
@@ -50,11 +50,13 @@ struct SettingsMockDataExample {
             clientId: "30000",
             address: "г. Котовск, ул. Зимняя, 20",
             contractNumber: "69325",
-            internetState: .unavailable,
-            tvState: .unavailable,
-            phoneState: .unavailable,
-            lockState: .activated,
-            cameraState: .activated
+            serviceStates: [
+                .internet: .unavailable,
+                .tv: .unavailable,
+                .phone: .unavailable,
+                .lock: .activated,
+                .camera: .activated
+            ]
         )
     }()
     
