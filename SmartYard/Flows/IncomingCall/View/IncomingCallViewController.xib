@@ -26,6 +26,7 @@
                 <outlet property="ignoreButtonContainer" destination="j0j-Hn-fUG" id="wz0-Ro-Mnf"/>
                 <outlet property="ignoreButtonLabel" destination="jj8-ob-kSL" id="mHR-xi-Wwf"/>
                 <outlet property="imageView" destination="ws9-YM-GBC" id="yQv-xF-5mP"/>
+                <outlet property="imageViewActivityIndicator" destination="HGl-tO-Nut" id="TGl-A0-lqi"/>
                 <outlet property="openButton" destination="EmL-iG-h79" id="7Ij-kJ-7VN"/>
                 <outlet property="openButtonContainer" destination="lPP-Rf-bcR" id="cy4-Mr-yfm"/>
                 <outlet property="previewButton" destination="rwT-mp-rJV" id="BtZ-YJ-EHv"/>
@@ -60,7 +61,7 @@
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ws9-YM-GBC">
                     <rect key="frame" x="16" y="195" width="382" height="353"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                             <real key="value" value="24"/>
@@ -242,13 +243,18 @@
                         <constraint firstItem="k1Q-Rl-aYF" firstAttribute="top" secondItem="kK5-Z2-k0l" secondAttribute="top" id="s5U-JG-aE7"/>
                     </constraints>
                 </view>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="HGl-tO-Nut">
+                    <rect key="frame" x="188.5" y="353" width="37" height="37"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="HGl-tO-Nut" firstAttribute="centerX" secondItem="ws9-YM-GBC" secondAttribute="centerX" id="2cI-Pl-jIO"/>
                 <constraint firstItem="ws9-YM-GBC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="6R3-3z-0ki"/>
                 <constraint firstAttribute="trailing" secondItem="Azq-ld-lV1" secondAttribute="trailing" id="8fS-l1-xVO"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ws9-YM-GBC" secondAttribute="trailing" constant="16" id="B3L-5G-F7O"/>
                 <constraint firstAttribute="bottom" secondItem="Azq-ld-lV1" secondAttribute="bottom" id="C8r-xa-VWD"/>
+                <constraint firstItem="HGl-tO-Nut" firstAttribute="centerY" secondItem="ws9-YM-GBC" secondAttribute="centerY" id="EiM-2b-ePF"/>
                 <constraint firstItem="Rh6-Xt-7AB" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="F6G-nM-ZN5"/>
                 <constraint firstItem="kK5-Z2-k0l" firstAttribute="top" secondItem="ws9-YM-GBC" secondAttribute="bottom" constant="32" id="IJp-P8-P8F"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="EaG-bR-VV0" secondAttribute="trailing" constant="25" id="JEx-4c-nhP"/>

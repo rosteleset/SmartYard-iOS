@@ -19,6 +19,12 @@ class IncomingCallViewModel: BaseViewModel {
     private let callPayload: CallPayload
     private let router: WeakRouter<AppRoute>
     
+    private var currentCall: Call?
+    
+    private let currentStateSubject = BehaviorSubject<(IncomingCallState, IncomingCallDoorState)>(
+        value: (.callReceived, .notDetermined)
+    )
+    
     init(linphoneService: LinphoneService, callPayload: CallPayload, router: WeakRouter<AppRoute>) {
         self.linphoneService = linphoneService
         self.callPayload = callPayload
@@ -30,10 +36,6 @@ class IncomingCallViewModel: BaseViewModel {
         
         // MARK: Общий стейт экрана
         
-        let currentStateSubject = BehaviorSubject<(IncomingCallState, IncomingCallDoorState)>(
-            value: (.callReceived, .notDetermined)
-        )
-        
         let currentState = currentStateSubject.asDriverOnErrorJustComplete()
         
         // MARK: Обработка нажатия на кнопку "Глазок"
@@ -41,16 +43,16 @@ class IncomingCallViewModel: BaseViewModel {
         input.previewTrigger
             .withLatestFrom(currentState)
             .drive(
-                onNext: { currentState in
+                onNext: { [weak self] currentState in
                     let (callState, doorState) = currentState
                     
-                    guard doorState == .notDetermined else {
+                    guard let self = self, doorState == .notDetermined else {
                         return
                     }
                     
                     switch callState {
-                    case .callReceived: currentStateSubject.onNext((.callPreviewed, doorState))
-                    case .callPreviewed: currentStateSubject.onNext((.callReceived, doorState))
+                    case .callReceived: self.currentStateSubject.onNext((.callPreviewed, doorState))
+                    case .callPreviewed: self.currentStateSubject.onNext((.callReceived, doorState))
                     default: break
                     }
                 }
@@ -60,16 +62,26 @@ class IncomingCallViewModel: BaseViewModel {
         // MARK: Обработка нажатия на кнопку "Звонок"
         
         input.callTrigger
-            .withLatestFrom(currentState)
+            .withLatestFrom(currentState) { ($0, $1) }
             .drive(
-                onNext: { currentState in
+                onNext: { [weak self] args in
+                    let (views, currentState) = args
+                    let (videoView, cameraView) = views
                     let (callState, doorState) = currentState
                     
-                    guard callState != .callAccepted, doorState == .notDetermined else {
+                    guard let self = self, callState != .callAccepted, doorState == .notDetermined else {
                         return
                     }
                     
-                    currentStateSubject.onNext((.callAccepted, doorState))
+                    self.currentStateSubject.onNext((.establishingConnection, doorState))
+                    
+                    self.linphoneService.delegate = self
+                    
+                    self.linphoneService.connect(
+                        config: self.callPayload.sipConfig,
+                        videoView: videoView,
+                        cameraView: cameraView
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -79,20 +91,37 @@ class IncomingCallViewModel: BaseViewModel {
         input.openTrigger
             .withLatestFrom(currentState)
             .do(
-                onNext: { currentState in
+                onNext: { [weak self] currentState in
                     let (callState, doorState) = currentState
                     
-                    guard doorState == .notDetermined else {
+                    guard let self = self, doorState == .notDetermined else {
                         return
                     }
                     
-                    currentStateSubject.onNext((callState, .opened))
+                    self.currentStateSubject.onNext((callState, .opened))
                 }
             )
-            .delay(.milliseconds(2000))
             .drive(
                 onNext: { [weak self] _ in
-                    self?.router.trigger(.dismiss)
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    guard let currentCall = self.currentCall else {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                            self?.router.trigger(.dismiss)
+                        }
+                        
+                        return
+                    }
+                    
+                    do {
+                        try currentCall.terminate()
+                    } catch {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                            self?.router.trigger(.dismiss)
+                        }
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -101,17 +130,33 @@ class IncomingCallViewModel: BaseViewModel {
         
         input.ignoreTrigger
             .withLatestFrom(currentState)
-            .drive(
+            .do(
                 onNext: { [weak self] currentState in
                     let (callState, doorState) = currentState
                     
-                    guard doorState == .notDetermined else {
+                    guard let self = self, doorState == .notDetermined else {
                         return
                     }
                     
-                    currentStateSubject.onNext((callState, .locked))
+                    self.currentStateSubject.onNext((callState, .locked))
+                }
+            )
+            .drive(
+                onNext: { [weak self] _ in
+                    guard let self = self else {
+                        return
+                    }
                     
-                    self?.router.trigger(.dismiss)
+                    guard let currentCall = self.currentCall else {
+                        self.router.trigger(.dismiss)
+                        return
+                    }
+                    
+                    do {
+                        try currentCall.terminate()
+                    } catch {
+                        self.router.trigger(.dismiss)
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -132,7 +177,7 @@ class IncomingCallViewModel: BaseViewModel {
                     let (_, currentState) = args
                     let (callState, _) = currentState
                     
-                    return callState == .callPreviewed || callState == .callAccepted
+                    return callState == .callPreviewed
                 }
                 .mapToVoid()
                 .drive(
@@ -157,7 +202,8 @@ class IncomingCallViewModel: BaseViewModel {
         let initialImageSubject = BehaviorSubject<UIImage?>(value: nil)
         let initialImage = initialImageSubject.asDriver(onErrorJustReturn: nil)
         
-        if let url = URL(string: callPayload.image) {
+        // MARK: Здесь вместо URL liveImage должен использоваться просто image, но он иногда приходит кривой
+        if let url = URL(string: callPayload.liveImage) {
             KingfisherManager.shared.retrieveImage(with: url) { result in
                 guard let imageResult = try? result.get() else {
                     return
@@ -265,7 +311,10 @@ extension IncomingCallViewModel {
     
     struct Input {
         let previewTrigger: Driver<Void>
-        let callTrigger: Driver<Void>
+        
+        // MARK: Ну я хз, придется либо прокидывать вьюхи сюда, либо UnsafeRawPointer. И то, и то - говно
+        
+        let callTrigger: Driver<(UIView, UIView)>
         let ignoreTrigger: Driver<Void>
         let openTrigger: Driver<Void>
     }
@@ -277,3 +326,39 @@ extension IncomingCallViewModel {
     }
     
 }
+
+extension IncomingCallViewModel: LinphoneDelegate {
+    
+    func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: RegistrationState, message: String) {
+        print("DEBUG / REGISTRATION STATE: \(cstate)")
+    }
+    
+    func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
+        print("DEBUG / CALL STATE: \(cstate)")
+        
+        if cstate == .IncomingReceived, let params = try? lc.createCallParams(call: call) {
+            params.videoEnabled = true
+            params.audioEnabled = true
+            
+            currentCall = call
+            
+            do {
+                try call.acceptWithParams(params: params)
+                
+                let (_, doorState) = try currentStateSubject.value()
+                
+                currentStateSubject.onNext((.callAccepted, doorState))
+            } catch {
+                router.trigger(.dismiss)
+            }
+        }
+        
+        if cstate == .End {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                self?.router.trigger(.dismiss)
+            }
+        }
+    }
+    
+}
+

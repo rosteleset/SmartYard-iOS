@@ -10,6 +10,7 @@ enum IncomingCallState {
     
     case callReceived
     case callPreviewed
+    case establishingConnection
     case callAccepted
     
 }

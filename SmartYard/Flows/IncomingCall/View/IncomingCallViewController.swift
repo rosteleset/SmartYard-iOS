@@ -26,6 +26,7 @@ class IncomingCallViewController: BaseViewController {
     @IBOutlet private weak var ignoreButtonLabel: UILabel!
     
     @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
     
     private let viewModel: IncomingCallViewModel
     
@@ -58,9 +59,23 @@ class IncomingCallViewController: BaseViewController {
     }
     
     private func bind() {
+        let callTrigger = callButton.rx.tap
+            .flatMap { [weak self] _ -> Driver<(UIView, UIView)> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return .just((self.imageView, UIView()))
+            }
+            .do(
+                onNext: { [weak self] _ in
+                    self?.imageViewActivityIndicator.stopAnimating()
+                }
+            )
+        
         let input = IncomingCallViewModel.Input(
             previewTrigger: previewButton.rx.tap.asDriver(),
-            callTrigger: callButton.rx.tap.asDriver(),
+            callTrigger: callTrigger.asDriverOnErrorJustComplete(),
             ignoreTrigger: ignoreButton.rx.tap.asDriver(),
             openTrigger: openButton.rx.tap.asDriver()
         )
@@ -72,6 +87,13 @@ class IncomingCallViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.image
+            .do(
+                onNext: { [weak self] image in
+                    image == nil ?
+                        self?.imageViewActivityIndicator.startAnimating() :
+                        self?.imageViewActivityIndicator.stopAnimating()
+                }
+            )
             .drive(imageView.rx.image)
             .disposed(by: disposeBag)
         
@@ -98,6 +120,7 @@ class IncomingCallViewController: BaseViewController {
                         switch callState {
                         case .callReceived: return "Звонок в домофон"
                         case .callPreviewed: return "Глазок включен"
+                        case .establishingConnection: return "Соединение..."
                         case .callAccepted: return "Разговор"
                         }
                     }()
