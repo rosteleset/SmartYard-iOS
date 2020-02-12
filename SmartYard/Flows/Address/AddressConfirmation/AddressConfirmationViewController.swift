@@ -31,7 +31,7 @@ class AddressConfirmationViewController: BaseViewController {
     private func bind() {
         let selectedSegmentIndex = PublishSubject<Int>()
         
-        segmentControl.rx.selectedIndexControlProperty
+        segmentControl.rx.selectedIndex
             .bind(to: selectedSegmentIndex)
             .disposed(by: disposeBag)
         
@@ -48,7 +48,6 @@ class AddressConfirmationViewController: BaseViewController {
                     
                     self?.officeView.isHidden = true
                     self?.courierView.isHidden = false
-                    
                 }
             )
             .disposed(by: disposeBag)

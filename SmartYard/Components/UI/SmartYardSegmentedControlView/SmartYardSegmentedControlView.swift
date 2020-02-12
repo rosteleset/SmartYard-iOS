@@ -57,6 +57,7 @@ class SmartYardSegmentedControl: UIView {
     }()
     
     private var bottomBarWidthAnchor: NSLayoutConstraint?
+    private var bottomBarLeftAnchor: NSLayoutConstraint?
     
     var segmentItems: [String] = [] {
         didSet {
@@ -137,9 +138,10 @@ class SmartYardSegmentedControl: UIView {
             .constraint(equalToConstant: 2)
             .isActive = true
         
-        bottomBar.leftAnchor
+        bottomBarLeftAnchor = bottomBar.leftAnchor
             .constraint(equalTo: segmentControl.leftAnchor)
-            .isActive = true
+        
+        bottomBarLeftAnchor?.isActive = true
         
         bottomBarWidthAnchor = bottomBar.widthAnchor.constraint(
             equalTo: segmentControl.widthAnchor,
@@ -178,16 +180,14 @@ class SmartYardSegmentedControl: UIView {
     }
     
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        let segmentWidth = self.segmentControl.frame.width / CGFloat(self.segmentItems.count)
+        let selectedSegmentIndex = self.segmentControl.selectedSegmentIndex
+        let originX = segmentWidth * CGFloat(selectedSegmentIndex)
+        
+        self.bottomBarLeftAnchor?.constant = originX
+        
         UIView.animate(withDuration: 0.3) { [weak self] in
-            guard let self = self else {
-                return
-            }
-            
-            let segmentWidth = self.segmentControl.frame.width / CGFloat(self.segmentItems.count)
-            let selectedSegmentIndex = self.segmentControl.selectedSegmentIndex
-            let originX = segmentWidth * CGFloat(selectedSegmentIndex)
-            
-            self.bottomBar.frame.origin.x = originX
+            self?.layoutIfNeeded()
         }
     }
     
@@ -195,7 +195,7 @@ class SmartYardSegmentedControl: UIView {
 
 extension Reactive where Base: SmartYardSegmentedControl {
     
-    var selectedIndexControlProperty: ControlProperty<Int> {
+    var selectedIndex: ControlProperty<Int> {
         return base.segmentControl.rx.selectedSegmentIndex
     }
     

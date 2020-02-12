@@ -61,7 +61,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jvI-aM-Z2y" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="205" width="414" height="691"/>
+                    <rect key="frame" x="0.0" y="205" width="414" height="657"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tbm-7a-VCj" customClass="SmartYardSegmentedControl" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="67"/>
@@ -71,11 +71,11 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BRa-A7-Ebr" customClass="ServiceFromOfficeView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="67" width="414" height="624"/>
+                            <rect key="frame" x="0.0" y="67" width="414" height="590"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mow-Yx-2Q3" customClass="ServiceFromCourierView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="67" width="414" height="624"/>
+                            <rect key="frame" x="0.0" y="67" width="414" height="590"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                     </subviews>
@@ -99,7 +99,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="NbX-aL-bqo" secondAttribute="bottom" id="BmZ-Tb-Prm"/>
                 <constraint firstItem="jvI-aM-Z2y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="IuP-3k-uji"/>
-                <constraint firstAttribute="bottom" secondItem="jvI-aM-Z2y" secondAttribute="bottom" id="KMX-jR-9Re"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="jvI-aM-Z2y" secondAttribute="bottom" id="KMX-jR-9Re"/>
                 <constraint firstItem="NbX-aL-bqo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="U09-Pe-n7J"/>
                 <constraint firstItem="4bS-gB-f4A" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="XWL-fd-FPe"/>
                 <constraint firstItem="4bS-gB-f4A" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="h9z-IQ-itk"/>
