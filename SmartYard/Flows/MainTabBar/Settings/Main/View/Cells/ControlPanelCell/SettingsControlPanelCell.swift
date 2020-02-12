@@ -51,12 +51,21 @@ class SettingsControlPanelCell: CustomBorderCollectionViewCell {
             .disposed(by: disposeBag)
     }
     
-    func configure(with configuration: SettingsControlPanelConfiguration) {
-        wifiButton.isSelected = configuration.internetState == .activated
-        monitorButton.isSelected = configuration.tvState == .activated
-        callButton.isSelected = configuration.phoneState == .activated
-        keyButton.isSelected = configuration.lockState == .activated
-        eyeButton.isSelected = configuration.cameraState == .activated
+    func configure(with serviceStates: [SettingsServiceType: SettingsServiceState]) {
+        wifiButton.isSelected = serviceStates[.internet] == .activated
+        wifiButton.isEnabled = serviceStates[.internet] != nil
+        
+        monitorButton.isSelected = serviceStates[.tv] == .activated
+        monitorButton.isEnabled = serviceStates[.tv] != nil
+        
+        callButton.isSelected = serviceStates[.phone] == .activated
+        callButton.isEnabled = serviceStates[.phone] != nil
+        
+        keyButton.isSelected = serviceStates[.lock] == .activated
+        keyButton.isEnabled = serviceStates[.lock] != nil
+        
+        eyeButton.isSelected = serviceStates[.camera] == .activated
+        eyeButton.isEnabled = serviceStates[.camera] != nil
     }
     
     private func configureButtons() {

@@ -161,23 +161,14 @@ class SettingsViewModel: BaseViewModel {
                 isExpanded: isExpanded
             )
             
-            // swiftlint:disable:next closure_body_length
             let objects: [SettingsDataItem] = {
                 guard isExpanded else {
                     return []
                 }
                 
-                let config = SettingsControlPanelConfiguration(
-                    internetState: example.serviceStates[.internet] ?? .unavailable,
-                    tvState: example.serviceStates[.tv] ?? .unavailable,
-                    phoneState: example.serviceStates[.phone] ?? .unavailable,
-                    lockState: example.serviceStates[.lock] ?? .unavailable,
-                    cameraState: example.serviceStates[.camera] ?? .unavailable
-                )
-                
                 let controlPanel: SettingsDataItem = .controlPanel(
                     identity: .controlPanel(clientId: example.clientId),
-                    config: config
+                    serviceStates: example.serviceStates
                 )
                 
                 let openAddressSettingsAction: SettingsDataItem = .action(
