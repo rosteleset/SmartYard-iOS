@@ -8,9 +8,9 @@
 
 enum SettingsDataItemIdentity: Hashable {
     
-    case header(addressId: String)
-    case controlPanel(addressId: String)
-    case action(addressId: String, address: String, type: SettingsAction)
+    case header(clientId: String)
+    case controlPanel(clientId: String)
+    case action(clientId: String, address: String, type: SettingsAction)
     case addAddress
     
 }

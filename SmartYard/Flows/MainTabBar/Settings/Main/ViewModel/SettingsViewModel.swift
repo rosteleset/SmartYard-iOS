@@ -58,12 +58,12 @@ class SettingsViewModel: BaseViewModel {
             }
             .withLatestFrom(areSectionsExpanded.asDriverOnErrorJustComplete()) { ($0, $1) }
             .map { args -> ((String, Bool), [String: Bool]) in
-                var (addressId, dict) = args
+                var (clientId, dict) = args
                 
-                let newState = !dict[addressId, default: false]
-                dict[addressId] = newState
+                let newState = !dict[clientId, default: false]
+                dict[clientId] = newState
                 
-                return ((addressId, newState), dict)
+                return ((clientId, newState), dict)
             }
             
             // MARK: Вынес в блок do, чтобы не делать сайд-эффектов в map
@@ -71,9 +71,9 @@ class SettingsViewModel: BaseViewModel {
             .do(
                 onNext: { args in
                     let (updatedSectionInfo, _) = args
-                    let (addressId, newState) = updatedSectionInfo
+                    let (clientId, newState) = updatedSectionInfo
                     
-                    let identity = SettingsDataItemIdentity.header(addressId: addressId)
+                    let identity = SettingsDataItemIdentity.header(clientId: clientId)
                     
                     updateKindSubject.onNext(
                         newState ?
@@ -109,12 +109,12 @@ class SettingsViewModel: BaseViewModel {
         // MARK: Пока моки, но в принципе, нет ничего сложного прикрутить сюда реальные данные
         // Просто будем пробегать в цикле по всем адресам и генерировать для них секции
         
-        let firstAddressId = "1000"
+        let firstClientId = "1000"
         let firstAddress = "г. Тамбов, ул. Советская, 16, кв. 4"
-        let isFirstSectionExpanded = expansionStateDict[firstAddressId, default: false]
+        let isFirstSectionExpanded = expansionStateDict[firstClientId, default: false]
         
         let firstSectionHeader: SettingsDataItem = .header(
-            identity: .header(addressId: firstAddressId),
+            identity: .header(clientId: firstClientId),
             title: firstAddress,
             subtitle: "Номер договора: 68992",
             isExpanded: isFirstSectionExpanded
@@ -135,13 +135,13 @@ class SettingsViewModel: BaseViewModel {
             )
             
             let firstSectionControlPanel: SettingsDataItem = .controlPanel(
-                identity: .controlPanel(addressId: firstAddressId),
+                identity: .controlPanel(clientId: firstClientId),
                 config: config
             )
             
             let firstSectionFirstAction: SettingsDataItem = .action(
                 identity: .action(
-                    addressId: firstAddressId,
+                    clientId: firstClientId,
                     address: firstAddress,
                     type: .openAddressSettings
                 )
@@ -149,7 +149,7 @@ class SettingsViewModel: BaseViewModel {
             
             let firstSectionSecondAction: SettingsDataItem = .action(
                 identity: .action(
-                    addressId: firstAddressId,
+                    clientId: firstClientId,
                     address: firstAddress,
                     type: .grantAccess
                 )
@@ -157,7 +157,7 @@ class SettingsViewModel: BaseViewModel {
             
             let firstSectionThirdAction: SettingsDataItem = .action(
                 identity: .action(
-                    addressId: firstAddressId,
+                    clientId: firstClientId,
                     address: firstAddress,
                     type: .openWebVersion
                 )
@@ -172,16 +172,16 @@ class SettingsViewModel: BaseViewModel {
         }()
         
         let firstSection = SettingsSectionModel(
-            identity: firstAddressId,
+            identity: firstClientId,
             items: [firstSectionHeader] + firstSectionObjects
         )
         
-        let secondAddressId = "2000"
+        let secondClientId = "2000"
         let secondAddress = "г. Тамбов, ул. Мичуринская, 141А"
-        let isSecondSectionExpanded = expansionStateDict[secondAddressId, default: false]
+        let isSecondSectionExpanded = expansionStateDict[secondClientId, default: false]
         
         let secondSectionHeader: SettingsDataItem = .header(
-            identity: .header(addressId: secondAddressId),
+            identity: .header(clientId: secondClientId),
             title: secondAddress,
             subtitle: "Номер договора: 69325",
             isExpanded: isSecondSectionExpanded
@@ -202,13 +202,13 @@ class SettingsViewModel: BaseViewModel {
             )
             
             let secondSectionControlPanel: SettingsDataItem = .controlPanel(
-                identity: .controlPanel(addressId: secondAddressId),
+                identity: .controlPanel(clientId: secondClientId),
                 config: config
             )
             
             let secondSectionFirstAction: SettingsDataItem = .action(
                 identity: .action(
-                    addressId: secondAddressId,
+                    clientId: secondClientId,
                     address: secondAddress,
                     type: .openAddressSettings
                 )
@@ -216,7 +216,7 @@ class SettingsViewModel: BaseViewModel {
             
             let secondSectionSecondAction: SettingsDataItem = .action(
                 identity: .action(
-                    addressId: secondAddressId,
+                    clientId: secondClientId,
                     address: secondAddress,
                     type: .grantAccess
                 )
@@ -224,7 +224,7 @@ class SettingsViewModel: BaseViewModel {
             
             let secondSectionThirdAction: SettingsDataItem = .action(
                 identity: .action(
-                    addressId: secondAddressId,
+                    clientId: secondClientId,
                     address: secondAddress,
                     type: .openWebVersion
                 )
@@ -239,16 +239,16 @@ class SettingsViewModel: BaseViewModel {
         }()
         
         let secondSection = SettingsSectionModel(
-            identity: secondAddressId,
+            identity: secondClientId,
             items: [secondSectionHeader] + secondSectionObjects
         )
         
-        let thirdAddressId = "3000"
+        let thirdClientId = "3000"
         let thirdAddress = "г. Котовск, ул. Зимняя, 20"
-        let isThirdSectionExpanded = expansionStateDict[thirdAddressId, default: false]
+        let isThirdSectionExpanded = expansionStateDict[thirdClientId, default: false]
         
         let thirdSectionHeader: SettingsDataItem = .header(
-            identity: .header(addressId: thirdAddressId),
+            identity: .header(clientId: thirdClientId),
             title: thirdAddress,
             subtitle: "Номер договора: 69325",
             isExpanded: isThirdSectionExpanded
@@ -269,13 +269,13 @@ class SettingsViewModel: BaseViewModel {
             )
             
             let thirdSectionControlPanel: SettingsDataItem = .controlPanel(
-                identity: .controlPanel(addressId: thirdAddressId),
+                identity: .controlPanel(clientId: thirdClientId),
                 config: config
             )
             
             let thirdSectionFirstAction: SettingsDataItem = .action(
                 identity: .action(
-                    addressId: thirdAddressId,
+                    clientId: thirdClientId,
                     address: thirdAddress,
                     type: .openAddressSettings
                 )
@@ -283,7 +283,7 @@ class SettingsViewModel: BaseViewModel {
             
             let thirdSectionSecondAction: SettingsDataItem = .action(
                 identity: .action(
-                    addressId: thirdAddressId,
+                    clientId: thirdClientId,
                     address: thirdAddress,
                     type: .grantAccess
                 )
@@ -291,7 +291,7 @@ class SettingsViewModel: BaseViewModel {
             
             let thirdSectionThirdAction: SettingsDataItem = .action(
                 identity: .action(
-                    addressId: thirdAddressId,
+                    clientId: thirdClientId,
                     address: thirdAddress,
                     type: .openWebVersion
                 )
@@ -306,7 +306,7 @@ class SettingsViewModel: BaseViewModel {
         }()
         
         let thirdSection = SettingsSectionModel(
-            identity: thirdAddressId,
+            identity: thirdClientId,
             items: [thirdSectionHeader] + thirdSectionObjects
         )
         
