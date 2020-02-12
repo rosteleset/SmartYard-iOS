@@ -23,6 +23,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServiceUnavailableViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundView" destination="ccQ-yj-A4K" id="Dgr-mq-Etq"/>
                 <outlet property="closeButton" destination="Ca8-eQ-vwl" id="ohy-sg-jTw"/>
                 <outlet property="sendRequestButton" destination="FA4-db-bwd" id="RU1-pg-UuA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -33,6 +34,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ccQ-yj-A4K">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sFc-wx-dKG">
                     <rect key="frame" x="16" y="318" width="382" height="270"/>
                     <subviews>
@@ -87,11 +92,15 @@
                     </constraints>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="ccQ-yj-A4K" secondAttribute="bottom" id="Gss-T7-yoZ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Ca8-eQ-vwl" secondAttribute="trailing" constant="20" id="K3Y-pE-wXY"/>
                 <constraint firstItem="sFc-wx-dKG" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="akO-5A-aWm"/>
                 <constraint firstItem="sFc-wx-dKG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="dVI-cv-dDl"/>
+                <constraint firstItem="ccQ-yj-A4K" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="m3H-fU-TTT"/>
+                <constraint firstAttribute="trailing" secondItem="ccQ-yj-A4K" secondAttribute="trailing" id="mc4-8Z-B8x"/>
+                <constraint firstItem="ccQ-yj-A4K" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="nGQ-IL-y35"/>
                 <constraint firstItem="Ca8-eQ-vwl" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="uAG-Jq-FCp"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="sFc-wx-dKG" secondAttribute="trailing" constant="16" id="x1f-Ge-j0J"/>
             </constraints>

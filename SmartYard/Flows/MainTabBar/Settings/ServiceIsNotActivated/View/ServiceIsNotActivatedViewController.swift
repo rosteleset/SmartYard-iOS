@@ -14,6 +14,7 @@ class ServiceIsNotActivatedViewController: BaseViewController {
     
     @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var sendRequestButton: BlueButton!
+    @IBOutlet private weak var backgroundView: UIView!
     
     private let viewModel: ServiceIsNotActivatedViewModel
     
@@ -41,7 +42,7 @@ class ServiceIsNotActivatedViewController: BaseViewController {
     private func bind() {
         let dismissGesture = UITapGestureRecognizer()
         dismissGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(dismissGesture)
+        backgroundView.addGestureRecognizer(dismissGesture)
         
         let dismissTrigger = Driver.merge(
             dismissGesture.rx.event.asDriver().mapToVoid(),

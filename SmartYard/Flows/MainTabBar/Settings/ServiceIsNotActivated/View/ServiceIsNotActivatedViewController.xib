@@ -23,6 +23,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServiceIsNotActivatedViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundView" destination="MeN-0R-DY3" id="rA8-Wb-IQg"/>
                 <outlet property="closeButton" destination="CwM-Rp-b89" id="Jgs-aW-ehq"/>
                 <outlet property="sendRequestButton" destination="WOW-JA-L8S" id="nFD-hL-XQG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -33,6 +34,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MeN-0R-DY3">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CwM-Rp-b89">
                     <rect key="frame" x="366" y="64" width="28" height="28"/>
                     <constraints>
@@ -86,15 +91,20 @@
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="CwM-Rp-b89" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="45R-X7-Pl2"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CwM-Rp-b89" secondAttribute="trailing" constant="20" id="CzH-BM-oox"/>
                 <constraint firstItem="ueN-rf-84F" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-16" id="PJu-9G-5Cs"/>
+                <constraint firstAttribute="bottom" secondItem="MeN-0R-DY3" secondAttribute="bottom" id="Z1R-Gh-Pal"/>
+                <constraint firstAttribute="trailing" secondItem="MeN-0R-DY3" secondAttribute="trailing" id="kJ7-Xf-Ljx"/>
+                <constraint firstItem="MeN-0R-DY3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="oKt-wo-Xc6"/>
+                <constraint firstItem="MeN-0R-DY3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="oLY-Ax-FEl"/>
                 <constraint firstItem="ueN-rf-84F" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="t33-hD-cNW"/>
                 <constraint firstItem="ueN-rf-84F" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="y5F-kF-uCH"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="139" y="90"/>
         </view>
     </objects>
 </document>

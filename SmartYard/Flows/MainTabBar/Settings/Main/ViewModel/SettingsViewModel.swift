@@ -126,13 +126,17 @@ class SettingsViewModel: BaseViewModel {
                 return []
             }
             
+            let config = SettingsControlPanelConfiguration(
+                internetState: .activated,
+                tvState: .notActivated,
+                phoneState: .activated,
+                lockState: .notActivated,
+                cameraState: .unavailable
+            )
+            
             let firstSectionControlPanel: SettingsDataItem = .controlPanel(
                 identity: .controlPanel(addressId: firstAddressId),
-                isWiFiEnabled: true,
-                isMonitorEnabled: false,
-                isCallEnabled: true,
-                isKeyEnabled: false,
-                isEyeEnabled: false
+                config: config
             )
             
             let firstSectionFirstAction: SettingsDataItem = .action(
@@ -189,13 +193,17 @@ class SettingsViewModel: BaseViewModel {
                 return []
             }
             
+            let config = SettingsControlPanelConfiguration(
+                internetState: .activated,
+                tvState: .activated,
+                phoneState: .activated,
+                lockState: .activated,
+                cameraState: .activated
+            )
+            
             let secondSectionControlPanel: SettingsDataItem = .controlPanel(
                 identity: .controlPanel(addressId: secondAddressId),
-                isWiFiEnabled: true,
-                isMonitorEnabled: true,
-                isCallEnabled: true,
-                isKeyEnabled: true,
-                isEyeEnabled: true
+                config: config
             )
             
             let secondSectionFirstAction: SettingsDataItem = .action(
@@ -252,13 +260,17 @@ class SettingsViewModel: BaseViewModel {
                 return []
             }
             
+            let config = SettingsControlPanelConfiguration(
+                internetState: .unavailable,
+                tvState: .unavailable,
+                phoneState: .unavailable,
+                lockState: .activated,
+                cameraState: .activated
+            )
+            
             let thirdSectionControlPanel: SettingsDataItem = .controlPanel(
                 identity: .controlPanel(addressId: thirdAddressId),
-                isWiFiEnabled: false,
-                isMonitorEnabled: false,
-                isCallEnabled: true,
-                isKeyEnabled: true,
-                isEyeEnabled: false
+                config: config
             )
             
             let thirdSectionFirstAction: SettingsDataItem = .action(

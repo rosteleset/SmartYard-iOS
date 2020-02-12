@@ -213,17 +213,9 @@ class SettingsViewController: BaseViewController {
                 cell.configure(title: title, subtitle: subtitle, isExpanded: isExpanded)
                 return cell
                 
-            case let .controlPanel(_, isWiFiEnabled, isMonitorEnabled, isCallEnabled, isKeyEnabled, isEyeEnabled):
+            case let .controlPanel(_, configuration):
                 let cell = collectionView.dequeueReusableCell(withClass: SettingsControlPanelCell.self, for: indexPath)
-                
-                cell.configure(
-                    isWiFiEnabled: isWiFiEnabled,
-                    isMonitorEnabled: isMonitorEnabled,
-                    isCallEnabled: isCallEnabled,
-                    isKeyEnabled: isKeyEnabled,
-                    isEyeEnabled: isEyeEnabled
-                )
-                
+                cell.configure(with: configuration)
                 return cell
                 
             case let .action(identity):

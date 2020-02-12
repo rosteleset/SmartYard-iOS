@@ -21,18 +21,12 @@ class SettingsControlPanelCell: CustomBorderCollectionViewCell {
         configureButtons()
     }
     
-    func configure(
-        isWiFiEnabled: Bool,
-        isMonitorEnabled: Bool,
-        isCallEnabled: Bool,
-        isKeyEnabled: Bool,
-        isEyeEnabled: Bool
-    ) {
-        wifiButton.isSelected = isWiFiEnabled
-        monitorButton.isSelected = isMonitorEnabled
-        callButton.isSelected = isCallEnabled
-        keyButton.isSelected = isKeyEnabled
-        eyeButton.isSelected = isEyeEnabled
+    func configure(with configuration: SettingsControlPanelConfiguration) {
+        wifiButton.isSelected = configuration.internetState == .activated
+        monitorButton.isSelected = configuration.tvState == .activated
+        callButton.isSelected = configuration.phoneState == .activated
+        keyButton.isSelected = configuration.lockState == .activated
+        eyeButton.isSelected = configuration.cameraState == .activated
     }
     
     private func configureButtons() {

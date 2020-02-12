@@ -11,15 +11,7 @@ import RxDataSources
 enum SettingsDataItem: IdentifiableType, Equatable {
     
     case header(identity: SettingsDataItemIdentity, title: String, subtitle: String, isExpanded: Bool)
-    
-    case controlPanel(identity: SettingsDataItemIdentity,
-        isWiFiEnabled: Bool,
-        isMonitorEnabled: Bool,
-        isCallEnabled: Bool,
-        isKeyEnabled: Bool,
-        isEyeEnabled: Bool
-    )
-    
+    case controlPanel(identity: SettingsDataItemIdentity, config: SettingsControlPanelConfiguration)
     case action(identity: SettingsDataItemIdentity)
     case addAddress
     
@@ -31,7 +23,7 @@ extension SettingsDataItem {
         switch self {
         case .header(let identity, _, _, _):
             return identity
-        case .controlPanel(let identity, _, _, _, _, _):
+        case .controlPanel(let identity, _):
             return identity
         case .action(let identity):
             return identity

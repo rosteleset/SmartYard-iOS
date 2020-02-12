@@ -117,6 +117,7 @@
 		84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */; };
 		84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */; };
 		84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */; };
+		84EEBC9223F3F13D00C9557F /* SettingsControlPanelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9123F3F13D00C9557F /* SettingsControlPanelConfiguration.swift */; };
 		84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F840D523E07DA5008DBE50 /* AppDelegate.swift */; };
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
@@ -271,6 +272,7 @@
 		84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CACornerMask+Extensions.swift"; sourceTree = "<group>"; };
 		84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTabBarController.xib; sourceTree = "<group>"; };
 		84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTransitions.swift; sourceTree = "<group>"; };
+		84EEBC9123F3F13D00C9557F /* SettingsControlPanelConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelConfiguration.swift; sourceTree = "<group>"; };
 		84F840D223E07DA5008DBE50 /* SmartYard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartYard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F840D523E07DA5008DBE50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84F840DC23E07DA5008DBE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -715,6 +717,7 @@
 				84898A9323F1555700E6B78E /* SettingsDataItemIdentity.swift */,
 				84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */,
 				848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */,
+				84EEBC9123F3F13D00C9557F /* SettingsControlPanelConfiguration.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -1472,6 +1475,7 @@
 				E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
 				844AC37E23E861D10066006D /* GetVerifyedAddressesResponseData.swift in Sources */,
+				84EEBC9223F3F13D00C9557F /* SettingsControlPanelConfiguration.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				844AC38823E8652F0066006D /* LoginResponseData.swift in Sources */,
 				844AC39023E867950066006D /* IntercomTokenResponseData.swift in Sources */,
