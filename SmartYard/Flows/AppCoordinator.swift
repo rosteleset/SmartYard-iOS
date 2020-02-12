@@ -69,9 +69,12 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             )
             
             let vc = IncomingCallViewController(viewModel: vm)
-            vc.modalPresentationCapturesStatusBarAppearance = true
             
-            return .present(vc, animation: .fade)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalPresentationCapturesStatusBarAppearance = true
+            vc.modalTransitionStyle = .crossDissolve
+            
+            return .present(vc)
             
         case .dismiss:
             return .dismiss()
@@ -111,10 +114,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             .disposed(by: disposeBag)
     }
     
-    func processCallRequest(
-        callPayload: CallPayload,
-        completion: @escaping () -> Void
-    ) {
+    func processCallRequest(callPayload: CallPayload) {
         switch UIApplication.shared.applicationState {
         case .active:
             trigger(.incomingCall(callPayload: callPayload))
