@@ -46,7 +46,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
         
-        super.init(initialRoute: .main)
+        super.init(initialRoute: .phoneNumber)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
