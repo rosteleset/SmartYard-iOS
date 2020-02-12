@@ -12,36 +12,13 @@ import PMNibLinkableView
 import RxCocoa
 import RxSwift
 
-enum SmartYardCheckBoxStates {
-    
-    case checkedActive
-    case checkedInactive
-    case uncheckedActive
-    
-    var borderTintColor: UIColor? {
-        switch self {
-        case .checkedActive, .uncheckedActive: return UIColor.SmartYard.blue
-        case .checkedInactive: return UIColor.SmartYard.gray
-        }
-    }
-    
-    var checkTintColor: UIColor? {
-        switch self {
-        case .checkedActive: return UIColor.SmartYard.blue
-        case .uncheckedActive: return .clear
-        case .checkedInactive: return UIColor.SmartYard.gray
-        }
-    }
-    
-}
-
 class SmartYardCheckBoxView: PMNibLinkableView {
     
     @IBOutlet private weak var borderImageView: UIImageView!
     @IBOutlet private weak var checkImageView: UIImageView!
     @IBOutlet private weak var checkButton: UIButton!
     
-    private var currentState: SmartYardCheckBoxStates = .uncheckedActive {
+    private var currentState: ServiceState = .uncheckedActive {
         didSet {
             borderImageView.tintColor = currentState.borderTintColor
             checkImageView.tintColor = currentState.checkTintColor
@@ -55,7 +32,7 @@ class SmartYardCheckBoxView: PMNibLinkableView {
         bind()
     }
     
-    func setState(state: SmartYardCheckBoxStates) {
+    func setState(state: ServiceState) {
         currentState = state
     }
     

@@ -152,7 +152,12 @@
 		E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4270F23F40D2500F5D593 /* AvailableServicesViewController.swift */; };
 		E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4271023F40D2500F5D593 /* AvailableServicesViewController.xib */; };
 		E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4271423F40DAF00F5D593 /* SmartYardCheckBoxView.swift */; };
-		E9E4271723F40E0B00F5D593 /* SmartYardCheckBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4271623F40E0B00F5D593 /* SmartYardCheckBox.xib */; };
+		E9E4271723F40E0B00F5D593 /* SmartYardCheckBoxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4271623F40E0B00F5D593 /* SmartYardCheckBoxView.xib */; };
+		E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4271923F41C6600F5D593 /* AvailableServiceCell.swift */; };
+		E9E4271C23F41C6600F5D593 /* AvailableServiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4271A23F41C6600F5D593 /* AvailableServiceCell.xib */; };
+		E9E4271F23F41DDF00F5D593 /* ServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4271E23F41DDF00F5D593 /* ServiceState.swift */; };
+		E9E4272123F41F7300F5D593 /* AvailableSericesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4272023F41F7300F5D593 /* AvailableSericesViewModel.swift */; };
+		E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4272323F42A7600F5D593 /* ServiceModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -309,7 +314,12 @@
 		E9E4270F23F40D2500F5D593 /* AvailableServicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableServicesViewController.swift; sourceTree = "<group>"; };
 		E9E4271023F40D2500F5D593 /* AvailableServicesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AvailableServicesViewController.xib; sourceTree = "<group>"; };
 		E9E4271423F40DAF00F5D593 /* SmartYardCheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardCheckBoxView.swift; sourceTree = "<group>"; };
-		E9E4271623F40E0B00F5D593 /* SmartYardCheckBox.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmartYardCheckBox.xib; sourceTree = "<group>"; };
+		E9E4271623F40E0B00F5D593 /* SmartYardCheckBoxView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmartYardCheckBoxView.xib; sourceTree = "<group>"; };
+		E9E4271923F41C6600F5D593 /* AvailableServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableServiceCell.swift; sourceTree = "<group>"; };
+		E9E4271A23F41C6600F5D593 /* AvailableServiceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AvailableServiceCell.xib; sourceTree = "<group>"; };
+		E9E4271E23F41DDF00F5D593 /* ServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceState.swift; sourceTree = "<group>"; };
+		E9E4272023F41F7300F5D593 /* AvailableSericesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableSericesViewModel.swift; sourceTree = "<group>"; };
+		E9E4272323F42A7600F5D593 /* ServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1165,8 +1175,11 @@
 		E9E4270E23F40D0800F5D593 /* AvailableServices */ = {
 			isa = PBXGroup;
 			children = (
+				E9E4271D23F41D9300F5D593 /* Entries */,
+				E9E4271823F41C3B00F5D593 /* Cells */,
 				E9E4270F23F40D2500F5D593 /* AvailableServicesViewController.swift */,
 				E9E4271023F40D2500F5D593 /* AvailableServicesViewController.xib */,
+				E9E4272023F41F7300F5D593 /* AvailableSericesViewModel.swift */,
 			);
 			path = AvailableServices;
 			sourceTree = "<group>";
@@ -1175,9 +1188,27 @@
 			isa = PBXGroup;
 			children = (
 				E9E4271423F40DAF00F5D593 /* SmartYardCheckBoxView.swift */,
-				E9E4271623F40E0B00F5D593 /* SmartYardCheckBox.xib */,
+				E9E4271623F40E0B00F5D593 /* SmartYardCheckBoxView.xib */,
 			);
 			path = SmartYardCheckBoxView;
+			sourceTree = "<group>";
+		};
+		E9E4271823F41C3B00F5D593 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E9E4271923F41C6600F5D593 /* AvailableServiceCell.swift */,
+				E9E4271A23F41C6600F5D593 /* AvailableServiceCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		E9E4271D23F41D9300F5D593 /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				E9E4271E23F41DDF00F5D593 /* ServiceState.swift */,
+				E9E4272323F42A7600F5D593 /* ServiceModel.swift */,
+			);
+			path = Entries;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1268,7 +1299,7 @@
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
 				84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */,
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
-				E9E4271723F40E0B00F5D593 /* SmartYardCheckBox.xib in Resources */,
+				E9E4271723F40E0B00F5D593 /* SmartYardCheckBoxView.xib in Resources */,
 				E9A1D78423F27AE500234B2A /* AddressConfirmationViewController.xib in Resources */,
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
@@ -1276,6 +1307,7 @@
 				E9E4270B23F2CD3900F5D593 /* ServiceFromOfficeView.xib in Resources */,
 				84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */,
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
+				E9E4271C23F41C6600F5D593 /* AvailableServiceCell.xib in Resources */,
 				843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */,
 				844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */,
 				848D1B8A23F29D6100D6E368 /* AddressSettingsViewController.xib in Resources */,
@@ -1392,6 +1424,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */,
+				E9E4272123F41F7300F5D593 /* AvailableSericesViewModel.swift in Sources */,
+				E9E4271F23F41DDF00F5D593 /* ServiceState.swift in Sources */,
 				844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */,
 				84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */,
 				E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */,
@@ -1410,6 +1444,7 @@
 				84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */,
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
+				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
 				E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				844AC3ED23EBFF0E0066006D /* PaymentsCoordinator.swift in Sources */,
@@ -1443,6 +1478,7 @@
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
+				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
