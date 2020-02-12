@@ -58,6 +58,7 @@ class IncomingCallViewController: BaseViewController {
         callButton.setImage(UIImage(named: "CallSelectedIcon")?.darkened(), for: [.selected, .highlighted])
     }
     
+    // swiftlint:disable:next function_body_length
     private func bind() {
         let callTrigger = callButton.rx.tap
             .flatMap { [weak self] _ -> Driver<(UIView, UIView)> in
