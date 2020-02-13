@@ -39,20 +39,6 @@ extension AppDelegate: MessagingDelegate {
         appCoordinator.activateToken(token: fcmToken, tokenType: .fcm)
     }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-        if let messageID = userInfo["gcm.message_id"] {
-            print("DEBUG / PUSH NOTIFICATIONS / Message ID: \(messageID)")
-        }
-        
-        print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
-        
-        guard let callPayload = CallPayload(pushNotificationPayload: userInfo) else {
-            return
-        }
-        
-        appCoordinator.processCallRequest(callPayload: callPayload)
-    }
-    
     func application(
         _ application: UIApplication,
         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
@@ -65,7 +51,7 @@ extension AppDelegate: MessagingDelegate {
         print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
         
         if let callPayload = CallPayload(pushNotificationPayload: userInfo) {
-            appCoordinator.processCallRequest(callPayload: callPayload)
+            appCoordinator.trigger(.incomingCall(callPayload: callPayload))
         }
         
         completionHandler(.newData)
@@ -93,7 +79,20 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
-        completionHandler([.alert, .badge, .sound])
+        let userInfo = notification.request.content.userInfo
+        
+        if let messageID = userInfo["gcm.message_id"] {
+            print("DEBUG / PUSH NOTIFICATIONS / Message ID: \(messageID)")
+        }
+        
+        print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
+        
+        if let callPayload = CallPayload(pushNotificationPayload: userInfo) {
+            appCoordinator.trigger(.incomingCall(callPayload: callPayload))
+            completionHandler([])
+        } else {
+            completionHandler([.alert, .badge, .sound])
+        }
     }
     
     // MARK: Чтобы при нажатии на пуш происходило какое-то действие
