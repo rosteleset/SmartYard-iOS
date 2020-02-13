@@ -100,6 +100,7 @@ class IncomingCallViewController: BaseViewController {
         
         output.state
             .drive(
+                // swiftlint:disable:next closure_body_length
                 onNext: { [weak self] state in
                     guard let self = self else {
                         return
@@ -128,7 +129,7 @@ class IncomingCallViewController: BaseViewController {
                         self.titleLabel.text = "Разговор"
                         self.ignoreButtonLabel.text = "Отклонить"
                     case .callFinished:
-                        break
+                        self.titleLabel.text = "Звонок завершен"
                     }
                 }
             )
