@@ -19,7 +19,6 @@
 		844AC38B23E866710066006D /* RegisterTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38A23E866710066006D /* RegisterTokenRequest.swift */; };
 		844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38D23E867840066006D /* IntercomTokenRequest.swift */; };
 		844AC39023E867950066006D /* IntercomTokenResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38F23E867950066006D /* IntercomTokenResponseData.swift */; };
-		844AC39223E872F80066006D /* EmptyAPIResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39123E872F80066006D /* EmptyAPIResponseData.swift */; };
 		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
 		844AC39723E9788D0066006D /* APIAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39623E9788D0066006D /* APIAddress.swift */; };
 		844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallViewController.swift */; };
@@ -196,7 +195,6 @@
 		844AC38A23E866710066006D /* RegisterTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTokenRequest.swift; sourceTree = "<group>"; };
 		844AC38D23E867840066006D /* IntercomTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTokenRequest.swift; sourceTree = "<group>"; };
 		844AC38F23E867950066006D /* IntercomTokenResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTokenResponseData.swift; sourceTree = "<group>"; };
-		844AC39123E872F80066006D /* EmptyAPIResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyAPIResponseData.swift; sourceTree = "<group>"; };
 		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
 		844AC39623E9788D0066006D /* APIAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAddress.swift; sourceTree = "<group>"; };
 		844AC39B23E987360066006D /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
@@ -450,7 +448,6 @@
 			children = (
 				844AC39623E9788D0066006D /* APIAddress.swift */,
 				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
-				844AC39123E872F80066006D /* EmptyAPIResponseData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1686,7 +1683,6 @@
 				84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */,
 				844AC38623E865260066006D /* LoginRequest.swift in Sources */,
 				844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */,
-				844AC39223E872F80066006D /* EmptyAPIResponseData.swift in Sources */,
 				84AA8D6023E2E622001B3B43 /* APIWrapper.swift in Sources */,
 				844AC3B723EB104E0066006D /* UserNameViewController.swift in Sources */,
 				84898A8A23F1510600E6B78E /* UIButton+Extensions.swift in Sources */,
