@@ -165,7 +165,7 @@ extension APIService {
     }
     
     private func mapEmptyResponse(_ response: Response) -> Swift.Result<Void, Error> {
-        guard response.statusCode == 204 else {
+        guard response.statusCode == 200 || response.statusCode == 204 else {
             let error = NSError(domain: "APIServiceError", code: response.statusCode, userInfo: nil)
             return .failure(error)
         }
