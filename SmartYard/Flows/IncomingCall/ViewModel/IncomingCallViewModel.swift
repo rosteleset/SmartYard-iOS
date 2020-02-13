@@ -172,12 +172,11 @@ class IncomingCallViewModel: BaseViewModel {
         if let liveUrl = URL(string: callPayload.liveImage) {
             Driver
                 .combineLatest(loadNextImage, currentState)
-                .debug()
                 .filter { args in
                     let (_, currentState) = args
                     let (callState, _) = currentState
                     
-                    return callState == .callPreviewed
+                    return callState == .callPreviewed || callState == .callAccepted
                 }
                 .mapToVoid()
                 .drive(
@@ -243,7 +242,11 @@ class IncomingCallViewModel: BaseViewModel {
         
         // MARK: Дополнительный текст. Здесь либо счетчик звонка, либо адрес домофона (он пока нигде не приходит)
         
-        let subtitleSubject = BehaviorSubject<String?>(value: callPayload.domophoneString)
+        let tempAddressString = [callPayload.domophoneString, callPayload.flatString]
+            .compactMap { $0 }
+            .joined(separator: ". ")
+        
+        let subtitleSubject = BehaviorSubject<String?>(value: tempAddressString)
         let subtitle = subtitleSubject.asDriver(onErrorJustReturn: nil)
         
         // MARK: Событие начала звонка

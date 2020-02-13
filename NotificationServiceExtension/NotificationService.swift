@@ -10,22 +10,58 @@ import UserNotifications
 
 class NotificationService: UNNotificationServiceExtension {
 
-    var contentHandler: ((UNNotificationContent) -> Void)?
-    var bestAttemptContent: UNMutableNotificationContent?
+    private var contentHandler: ((UNNotificationContent) -> Void)?
+    private var bestAttemptContent: UNMutableNotificationContent?
 
     override func didReceive(
+        _ request: UNNotificationRequest,
+        withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
+    ) {
+        self.contentHandler = contentHandler
+        parseIncomingCallNotificationRequest(request, withContentHandler: contentHandler)
+    }
+    
+    override func serviceExtensionTimeWillExpire() {
+        if let contentHandler = contentHandler, let bestAttemptContent = bestAttemptContent {
+            contentHandler(bestAttemptContent)
+        }
+    }
+    
+    private func parseIncomingCallNotificationRequest(
         _ request: UNNotificationRequest,
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
         // TODO: Сделать по-человечески. Нужно содействие с бэком
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         
-        self.contentHandler = contentHandler
-        
         guard let bestAttemptContent = request.content.mutableCopy() as? UNMutableNotificationContent else {
             contentHandler(request.content)
             return
         }
+        
+        bestAttemptContent.title = "Звонок в домофон"
+        
+        let domophoneId: String? = {
+            guard let domophoneId = request.content.userInfo["domophoneId"] as? String else {
+                return nil
+            }
+            
+            return "ID домофона: \(domophoneId)"
+        }()
+        
+        let flatId: String? = {
+            guard let flatId = request.content.userInfo["flatId"] as? String else {
+                return nil
+            }
+            
+            return "ID квартиры: \(flatId)"
+        }()
+        
+        let body = [domophoneId, flatId].compactMap { $0 }.joined(separator: ". ")
+        
+        bestAttemptContent.body = body
+        
+        self.bestAttemptContent = bestAttemptContent
         
         guard let image = request.content.userInfo["live"] as? String, let imageUrl = URL(string: image) else {
             contentHandler(request.content)
@@ -42,12 +78,6 @@ class NotificationService: UNNotificationServiceExtension {
                 bestAttemptContent.attachments = [attachment]
             }
             
-            contentHandler(bestAttemptContent)
-        }
-    }
-    
-    override func serviceExtensionTimeWillExpire() {
-        if let contentHandler = contentHandler, let bestAttemptContent = bestAttemptContent {
             contentHandler(bestAttemptContent)
         }
     }
