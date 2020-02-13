@@ -170,6 +170,11 @@
 		E9E4271F23F41DDF00F5D593 /* ServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4271E23F41DDF00F5D593 /* ServiceState.swift */; };
 		E9E4272123F41F7300F5D593 /* AvailableSericesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4272023F41F7300F5D593 /* AvailableSericesViewModel.swift */; };
 		E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4272323F42A7600F5D593 /* ServiceModel.swift */; };
+		E9E4272823F53B5C00F5D593 /* NotAvailableServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4272623F53B5C00F5D593 /* NotAvailableServicesViewController.swift */; };
+		E9E4272923F53B5C00F5D593 /* NotAvailableServicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4272723F53B5C00F5D593 /* NotAvailableServicesViewController.xib */; };
+		E9E4272B23F540DE00F5D593 /* NotAvailableServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4272A23F540DE00F5D593 /* NotAvailableServicesViewModel.swift */; };
+		E9E4272F23F5417000F5D593 /* NotAvailableServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4272D23F5417000F5D593 /* NotAvailableServiceCell.swift */; };
+		E9E4273023F5417000F5D593 /* NotAvailableServiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4272E23F5417000F5D593 /* NotAvailableServiceCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -344,6 +349,11 @@
 		E9E4271E23F41DDF00F5D593 /* ServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceState.swift; sourceTree = "<group>"; };
 		E9E4272023F41F7300F5D593 /* AvailableSericesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableSericesViewModel.swift; sourceTree = "<group>"; };
 		E9E4272323F42A7600F5D593 /* ServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModel.swift; sourceTree = "<group>"; };
+		E9E4272623F53B5C00F5D593 /* NotAvailableServicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotAvailableServicesViewController.swift; sourceTree = "<group>"; };
+		E9E4272723F53B5C00F5D593 /* NotAvailableServicesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotAvailableServicesViewController.xib; sourceTree = "<group>"; };
+		E9E4272A23F540DE00F5D593 /* NotAvailableServicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotAvailableServicesViewModel.swift; sourceTree = "<group>"; };
+		E9E4272D23F5417000F5D593 /* NotAvailableServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotAvailableServiceCell.swift; sourceTree = "<group>"; };
+		E9E4272E23F5417000F5D593 /* NotAvailableServiceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotAvailableServiceCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -955,6 +965,7 @@
 		84B9EC8A23E0846900979C39 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				E9E4272523F53B0300F5D593 /* NotAvailableServices */,
 				84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */,
 				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
 				E98C383223F192430010BBC1 /* Address */,
@@ -1319,6 +1330,26 @@
 			path = Entries;
 			sourceTree = "<group>";
 		};
+		E9E4272523F53B0300F5D593 /* NotAvailableServices */ = {
+			isa = PBXGroup;
+			children = (
+				E9E4272C23F5413800F5D593 /* Cells */,
+				E9E4272623F53B5C00F5D593 /* NotAvailableServicesViewController.swift */,
+				E9E4272723F53B5C00F5D593 /* NotAvailableServicesViewController.xib */,
+				E9E4272A23F540DE00F5D593 /* NotAvailableServicesViewModel.swift */,
+			);
+			path = NotAvailableServices;
+			sourceTree = "<group>";
+		};
+		E9E4272C23F5413800F5D593 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E9E4272D23F5417000F5D593 /* NotAvailableServiceCell.swift */,
+				E9E4272E23F5417000F5D593 /* NotAvailableServiceCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1390,6 +1421,7 @@
 				84B89A8323F2F984009692B4 /* ServiceUnavailableViewController.xib in Resources */,
 				E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */,
 				844AC3B823EB104E0066006D /* UserNameViewController.xib in Resources */,
+				E9E4272923F53B5C00F5D593 /* NotAvailableServicesViewController.xib in Resources */,
 				E9A4D49123EC2A780070A591 /* PinTextField.xib in Resources */,
 				E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */,
 				E9E4270523F2CD0F00F5D593 /* ServiceFromCourierView.xib in Resources */,
@@ -1397,6 +1429,7 @@
 				E9E4270D23F3D62C00F5D593 /* MapPoint.pdf in Resources */,
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
+				E9E4273023F5417000F5D593 /* NotAvailableServiceCell.xib in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */,
@@ -1554,6 +1587,7 @@
 				844AC37C23E861C50066006D /* GetVerifyedAddressesRequest.swift in Sources */,
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
 				84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */,
+				E9E4272B23F540DE00F5D593 /* NotAvailableServicesViewModel.swift in Sources */,
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
@@ -1596,6 +1630,7 @@
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
+				E9E4272823F53B5C00F5D593 /* NotAvailableServicesViewController.swift in Sources */,
 				84B89A9323F2FA6E009692B4 /* ServiceIsNotActivatedViewModel.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
@@ -1645,6 +1680,7 @@
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
+				E9E4272F23F5417000F5D593 /* NotAvailableServiceCell.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 				84CC15E523EC999700A1CB95 /* AddressesListSectionUpdateKind.swift in Sources */,

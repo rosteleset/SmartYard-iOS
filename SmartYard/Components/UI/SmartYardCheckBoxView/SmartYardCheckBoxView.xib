@@ -37,7 +37,7 @@
                             <rect key="frame" x="112" y="75.5" width="28" height="28"/>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="67K-sS-eEV" firstAttribute="centerY" secondItem="2vn-G3-a0F" secondAttribute="centerY" id="3ii-ne-Mi6"/>
                         <constraint firstItem="67K-sS-eEV" firstAttribute="centerX" secondItem="2vn-G3-a0F" secondAttribute="centerX" id="6DY-KO-MI0"/>
@@ -50,7 +50,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="2vn-G3-a0F" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="6U0-P1-BsG"/>
                 <constraint firstAttribute="bottom" secondItem="2vn-G3-a0F" secondAttribute="bottom" id="V3J-Yg-foF"/>

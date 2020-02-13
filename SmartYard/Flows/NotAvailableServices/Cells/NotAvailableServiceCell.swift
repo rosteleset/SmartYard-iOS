@@ -1,0 +1,33 @@
+//
+//  NotAvailableServiceCell.swift
+//  SmartYard
+//
+//  Created by Mad Brains on 13.02.2020.
+//  Copyright © 2020 Mad Brains. All rights reserved.
+//
+
+import UIKit
+
+class NotAvailableServiceCell: UITableViewCell {
+
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var checkBox: SmartYardCheckBoxView!
+    
+    private var currentState: ServiceState = .uncheckedActive {
+        didSet {
+            titleLabel.textColor = currentState.titleTextColor
+            checkBox.setState(state: currentState)
+        }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        checkBox.setState(state: .uncheckedActive)
+    }
+
+    func configure(with item: ServiceModel) {
+        titleLabel.text = item.name
+        currentState = item.state
+    }
+    
+}
