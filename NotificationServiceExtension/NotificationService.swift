@@ -63,7 +63,12 @@ class NotificationService: UNNotificationServiceExtension {
         bestAttemptContent.sound = .default
         
         self.bestAttemptContent = bestAttemptContent
-        contentHandler(bestAttemptContent)
+        
+        // MARK: Удаление уведомлений происходит асинхронно, и иногда просто не успевает произойти до показа нового
+        // Здесь, я подозреваю, нужно будет ресерчить и разруливать как-то менее костыльно. Пока не знаю как
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            contentHandler(bestAttemptContent)
+        }
         
         // MARK: Грузится слишком долго (3+ секунды)
 //        guard let image = request.content.userInfo["live"] as? String, let imageUrl = URL(string: image) else {
