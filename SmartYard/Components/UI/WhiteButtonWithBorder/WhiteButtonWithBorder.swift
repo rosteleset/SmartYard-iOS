@@ -16,7 +16,7 @@ class WhiteButtonWithBorder: UIButton {
         
         cornerRadius = 12
         backgroundColor = .white
-        titleLabel?.tintColor = UIColor.SmartYard.blue
+        titleLabel?.textColor = UIColor.SmartYard.blue
         borderWidth = 1
         borderColor = UIColor.SmartYard.blue
     }

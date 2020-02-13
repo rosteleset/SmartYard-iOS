@@ -82,8 +82,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .present(vc)
             
         case .phoneNumber:
-            let vm = ServicesActivationRequestViewModel(router: weakRouter)
-            return .present(ServicesActivationRequestViewController(viewModel: vm))
+            return .present(ServiceWillWorkSoonViewController())
+//            let vm = ServicesActivationRequestViewModel(router: weakRouter)
+//            return .present(ServicesActivationRequestViewController(viewModel: vm))
 //            let vm = InputPhoneNumberViewModel(router: weakRouter)
 //            return .present(InputPhoneNumberViewController(viewModel: vm))
             
