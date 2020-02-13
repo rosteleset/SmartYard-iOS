@@ -121,6 +121,7 @@
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
 		85E437EBD8028F17EA854687 /* Pods_SmartYard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3264A75344A37C60971E215B /* Pods_SmartYard.framework */; };
+		E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F323F56BF800623746 /* ServiceRequestType.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -300,6 +301,7 @@
 		84F840DF23E07DA5008DBE50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84F840E123E07DA5008DBE50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA70517603B5A2A38FB9EA1E /* Pods-SmartYard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.debug.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.debug.xcconfig"; sourceTree = "<group>"; };
+		E94057F323F56BF800623746 /* ServiceRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRequestType.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -971,13 +973,13 @@
 		84B9EC8A23E0846900979C39 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				E9E4273723F5605A00F5D593 /* ServiceWillWorkSoon */,
 				84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */,
 				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
 				E98C383223F192430010BBC1 /* Address */,
 				E9E4270E23F40D0800F5D593 /* AvailableServices */,
 				E99EA6B623EA9CED00BECEE6 /* Login */,
 				844AC3C623EBFC240066006D /* MainTabBar */,
+				E9E4273723F5605A00F5D593 /* ServiceWillWorkSoon */,
 				E9E4272523F53B0300F5D593 /* NotAvailableServices */,
 				844AC3B423EB0FD80066006D /* UserName */,
 				844AC39A23E9871F0066006D /* IncomingCall */,
@@ -1094,6 +1096,14 @@
 				2D7D3E7917D11E9ED556EB4E /* Pods-SmartYard.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E94057F223F56B6400623746 /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				E94057F323F56BF800623746 /* ServiceRequestType.swift */,
+			);
+			path = Entries;
 			sourceTree = "<group>";
 		};
 		E98C381D23F141E70010BBC1 /* Recovered References */ = {
@@ -1360,6 +1370,7 @@
 		E9E4273723F5605A00F5D593 /* ServiceWillWorkSoon */ = {
 			isa = PBXGroup;
 			children = (
+				E94057F223F56B6400623746 /* Entries */,
 				E9E4273823F5609E00F5D593 /* ServiceWillWorkSoonViewController.swift */,
 				E9E4273923F5609E00F5D593 /* ServiceWillWorkSoonViewController.xib */,
 				E9E4273C23F560C400F5D593 /* ServiceWillWorkSoonViewModel.swift */,
@@ -1642,6 +1653,7 @@
 				E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */,
 				844AC39523E977810066006D /* AccessService.swift in Sources */,
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
+				E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,

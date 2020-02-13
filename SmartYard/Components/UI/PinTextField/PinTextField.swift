@@ -21,7 +21,7 @@ class PinTextField: PMNibLinkableView {
     @IBOutlet private weak var fourthNumField: PinNumberField!
     
     @IBOutlet private weak var wrongPassLabel: UILabel!
-    
+    // swiftlint:disable:next strict_fileprivate
     @IBOutlet fileprivate weak var fakeTextField: UITextField!
     
     private var numberViewsCollection: [PinNumberField] {

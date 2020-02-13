@@ -10,8 +10,68 @@ import UIKit
 
 class ServiceWillWorkSoonViewController: BaseViewController {
 
+    @IBOutlet private weak var titleImageView: UIImageView!
+    @IBOutlet private weak var hintLabel: UILabel!
+    @IBOutlet private weak var qrCodeButton: BlueButton!
+    @IBOutlet private weak var actionButton: WhiteButtonWithBorder!
+    
+    private let viewModel: ServiceWillWorkSoonViewModel
+    
+    init(viewModel: ServiceWillWorkSoonViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
+    }
+    
+    private func bind() {
+        let input = ServiceWillWorkSoonViewModel.Input(
+            qrCodeTapped: qrCodeButton.rx.tap.asDriverOnErrorJustComplete(),
+            actionTapped: actionButton.rx.tap.asDriverOnErrorJustComplete(),
+            viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.actionTextTrigger
+            .drive(
+                onNext: { [weak self] text in
+                    self?.actionButton.setTitle(text, for: .normal)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.changeVisibilityQrCodeElementsTrigger
+            .drive(
+                onNext: { [weak self] shouldHide in
+                    self?.qrCodeButton.isHidden = shouldHide
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.hintTextTrigger
+            .drive(
+                onNext: { [weak self] text in
+                    self?.hintLabel.text = text
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.titleImageTrigger
+            .drive(
+                onNext: { [weak self] image in
+                    self?.titleImageView.image = image
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
 }
