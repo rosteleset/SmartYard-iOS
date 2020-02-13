@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 
 class ServiceFromCourierView: PMNibLinkableView {
-    
+    // swiftlint:disable:next strict_fileprivate
     @IBOutlet fileprivate weak var requestButton: BlueButton!
     
 }

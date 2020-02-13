@@ -64,11 +64,14 @@ class AvailableSericesViewModel: BaseViewModel {
     
     private func getFakeModels() -> [ServiceModel] {
         return [
+            // swiftlint:disable:next line_length
             ServiceModel(id: "0", name: "Умный домофон", description: "На шлагбаум, ворота и подъезд", state: .checkedInactive),
             ServiceModel(id: "1", name: "Видеонаблюдение", description: "3 камеры", state: .checkedInactive),
             ServiceModel(id: "2", name: "Интернет и ТВ", description: "Более 250 каналов", state: .uncheckedActive),
             ServiceModel(id: "3", name: "Умный дом", description: "Дом умнее тебя", state: .uncheckedActive),
+            // swiftlint:disable:next line_length
             ServiceModel(id: "4", name: "Тревожная кнопка", description: "Не верь, не бойся, не проси", state: .uncheckedActive),
+            // swiftlint:disable:next line_length
             ServiceModel(id: "5", name: "Аренда оборудования", description: "Wi-Fi роутер, приставка для TV", state: .uncheckedActive),
             ServiceModel(id: "6", name: "FakeFakeFake", description: "Fake", state: .uncheckedActive)
         ]

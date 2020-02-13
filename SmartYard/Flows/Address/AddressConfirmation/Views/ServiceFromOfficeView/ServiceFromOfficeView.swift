@@ -16,6 +16,7 @@ import MapboxStatic
 class ServiceFromOfficeView: PMNibLinkableView {
     
     @IBOutlet private weak var mapImageView: UIImageView!
+    // swiftlint:disable:next strict_fileprivate
     @IBOutlet fileprivate weak var doSoButton: BlueButton!
     
     // TODO: ничего не понятно с этим экраном, пусть пока останется так. Это 100% будет переделано

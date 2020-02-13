@@ -13,6 +13,9 @@
         <array key="SourceSansPro-Bold.ttf">
             <string>SourceSansPro-Bold</string>
         </array>
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
         <array key="SourceSansPro-SemiBold.ttf">
             <string>SourceSansPro-Semibold</string>
         </array>
@@ -30,10 +33,6 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Yn-uI-OTo">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                    <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nl6-tX-Ye0">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <subviews>
@@ -44,10 +43,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJH-T6-aZr">
-                            <rect key="frame" x="40" y="97.5" width="334" height="142.5"/>
+                            <rect key="frame" x="40" y="97.5" width="334" height="106"/>
                             <string key="text">По данному адресу пока нет нашей сети, но мы собираем ваши заявки. Для подключения необходимо собрать несколько заявок 
 с вашего дома.   Какую услугу вы хотели бы подключить?</string>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                             <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -59,8 +58,8 @@
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                             <state key="normal" title="Оставить заявку"/>
                         </button>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NCc-qc-mWX">
-                            <rect key="frame" x="0.0" y="256" width="414" height="463"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NCc-qc-mWX">
+                            <rect key="frame" x="0.0" y="219.5" width="414" height="499.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="separatorColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                             <inset key="separatorInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
@@ -83,13 +82,9 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="5Yn-uI-OTo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Af9-ef-SZI"/>
-                <constraint firstItem="5Yn-uI-OTo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="EaW-Tn-uJd"/>
                 <constraint firstItem="nl6-tX-Ye0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="L6N-lW-dC3"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5Yn-uI-OTo" secondAttribute="trailing" id="Ork-WE-Yit"/>
-                <constraint firstAttribute="bottom" secondItem="5Yn-uI-OTo" secondAttribute="bottom" id="SPU-fL-Gtc"/>
                 <constraint firstItem="nl6-tX-Ye0" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="cAZ-Gm-fSP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="nl6-tX-Ye0" secondAttribute="bottom" id="hFZ-Du-Ms7"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="nl6-tX-Ye0" secondAttribute="trailing" id="iLp-Qj-9hf"/>
