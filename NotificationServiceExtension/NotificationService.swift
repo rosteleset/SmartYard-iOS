@@ -60,6 +60,7 @@ class NotificationService: UNNotificationServiceExtension {
         let body = [domophoneId, flatId].compactMap { $0 }.joined(separator: ". ")
         
         bestAttemptContent.body = body
+        bestAttemptContent.sound = .default
         
         self.bestAttemptContent = bestAttemptContent
         contentHandler(bestAttemptContent)
