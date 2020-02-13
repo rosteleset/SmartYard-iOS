@@ -58,19 +58,11 @@ class ServiceSoonAvailableViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.hintTextTrigger
-            .drive(
-                onNext: { [weak self] text in
-                    self?.hintLabel.text = text
-                }
-            )
+            .drive(hintLabel.rx.text)
             .disposed(by: disposeBag)
         
         output.titleImageTrigger
-            .drive(
-                onNext: { [weak self] image in
-                    self?.titleImageView.image = image
-                }
-            )
+            .drive(titleImageView.rx.image)
             .disposed(by: disposeBag)
     }
 
