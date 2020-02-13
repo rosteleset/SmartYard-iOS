@@ -24,7 +24,7 @@ class SmartYardSegmentedControl: UIView {
         control.setTitleTextAttributes(
             [
                 NSAttributedString.Key.font: unselectedControlFont,
-                NSAttributedString.Key.foregroundColor: UIColor.SmartYard.placeholderGrayText
+                NSAttributedString.Key.foregroundColor: UIColor.SmartYard.gray
             ],
             for: .normal
         )
