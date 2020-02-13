@@ -17,6 +17,9 @@ class NotificationService: UNNotificationServiceExtension {
         _ request: UNNotificationRequest,
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
+        // TODO: Сделать по-человечески. Нужно содействие с бэком
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        
         self.contentHandler = contentHandler
         
         guard let bestAttemptContent = request.content.mutableCopy() as? UNMutableNotificationContent else {
