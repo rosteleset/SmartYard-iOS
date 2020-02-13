@@ -31,7 +31,7 @@ class NotificationService: UNNotificationServiceExtension {
         _ request: UNNotificationRequest,
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
-        // TODO: Сделать по-человечески. Нужно содействие с бэком
+        // TODO: Сделать по-человечески
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         
         guard let bestAttemptContent = request.content.mutableCopy() as? UNMutableNotificationContent else {
@@ -62,24 +62,26 @@ class NotificationService: UNNotificationServiceExtension {
         bestAttemptContent.body = body
         
         self.bestAttemptContent = bestAttemptContent
+        contentHandler(bestAttemptContent)
         
-        guard let image = request.content.userInfo["live"] as? String, let imageUrl = URL(string: image) else {
-            contentHandler(request.content)
-            return
-        }
-        
-        store(imageUrl: imageUrl) { result in
-            if let path = try? result.get(),
-                let attachment = try? UNNotificationAttachment(
-                    identifier: imageUrl.absoluteString,
-                    url: path,
-                    options: nil
-                ) {
-                bestAttemptContent.attachments = [attachment]
-            }
-            
-            contentHandler(bestAttemptContent)
-        }
+        // MARK: Грузится слишком долго (3+ секунды)
+//        guard let image = request.content.userInfo["live"] as? String, let imageUrl = URL(string: image) else {
+//            contentHandler(request.content)
+//            return
+//        }
+//
+//        store(imageUrl: imageUrl) { result in
+//            if let path = try? result.get(),
+//                let attachment = try? UNNotificationAttachment(
+//                    identifier: imageUrl.absoluteString,
+//                    url: path,
+//                    options: nil
+//                ) {
+//                bestAttemptContent.attachments = [attachment]
+//            }
+//
+//            contentHandler(bestAttemptContent)
+//        }
     }
     
     private func store(imageUrl: URL, completion: ((Result<URL, Error>) -> Void)?) {
