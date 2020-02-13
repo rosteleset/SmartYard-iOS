@@ -1,5 +1,5 @@
 //
-//  NotAvailableServiceCell.swift
+//  ServicesActivationRequestСell.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 13.02.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotAvailableServiceCell: UITableViewCell {
+class ServicesActivationRequestСell: UITableViewCell {
 
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var checkBox: SmartYardCheckBoxView!

@@ -1,5 +1,5 @@
 //
-//  NotAvailableServicesViewController.swift
+//  ServicesActivationRequestViewController.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 13.02.2020.
@@ -10,17 +10,17 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class NotAvailableServicesViewController: BaseViewController {
+class ServicesActivationRequestViewController: BaseViewController {
 
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var sendRequestButton: BlueButton!
     
-    private let viewModel: NotAvailableSericesViewModel
+    private let viewModel: ServicesActivationRequestViewModel
     private let itemsProxy = BehaviorSubject<[ServiceModel]>(value: [])
     
     private let serviceStateChanged = PublishSubject<Int?>()
     
-    init(viewModel: NotAvailableSericesViewModel) {
+    init(viewModel: ServicesActivationRequestViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -38,7 +38,7 @@ class NotAvailableServicesViewController: BaseViewController {
     }
 
     private func bind() {
-        let input = NotAvailableSericesViewModel.Input(
+        let input = ServicesActivationRequestViewModel.Input(
             sendRequestTapped: sendRequestButton.rx.tap.asDriverOnErrorJustComplete(),
             serviceStateChanged: serviceStateChanged.asDriverOnErrorJustComplete(),
             viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete()
@@ -62,7 +62,7 @@ class NotAvailableServicesViewController: BaseViewController {
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(nibWithCellClass: NotAvailableServiceCell.self)
+        tableView.register(nibWithCellClass: ServicesActivationRequestСell.self)
         
         tableView.tableFooterView = UIView(
             frame: CGRect(
@@ -76,7 +76,7 @@ class NotAvailableServicesViewController: BaseViewController {
     
 }
 
-extension NotAvailableServicesViewController: UITableViewDelegate {
+extension ServicesActivationRequestViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         serviceStateChanged.onNext(indexPath.row)
@@ -88,7 +88,7 @@ extension NotAvailableServicesViewController: UITableViewDelegate {
     
 }
 
-extension NotAvailableServicesViewController: UITableViewDataSource {
+extension ServicesActivationRequestViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let data = try? itemsProxy.value() else {
@@ -103,7 +103,7 @@ extension NotAvailableServicesViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let cell = tableView.dequeueReusableCell(withClass: NotAvailableServiceCell.self, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withClass: ServicesActivationRequestСell.self, for: indexPath)
         cell.configure(with: data[indexPath.row])
         
         return cell

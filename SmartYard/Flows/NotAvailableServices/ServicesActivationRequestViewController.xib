@@ -18,7 +18,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NotAvailableServicesViewController" customModule="SmartYard" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServicesActivationRequestViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="sendRequestButton" destination="V11-jX-2gX" id="iWy-Bk-m9x"/>
                 <outlet property="tableView" destination="NCc-qc-mWX" id="CDG-SS-qEf"/>

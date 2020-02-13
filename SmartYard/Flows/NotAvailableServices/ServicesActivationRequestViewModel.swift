@@ -1,5 +1,5 @@
 //
-//  B.swift
+//  ServicesActivationRequestViewModel.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 13.02.2020.
@@ -11,7 +11,7 @@ import XCoordinator
 import RxCocoa
 import RxSwift
 
-class NotAvailableSericesViewModel: BaseViewModel {
+class ServicesActivationRequestViewModel: BaseViewModel {
     
     private let router: WeakRouter<AppRoute>
     
@@ -73,7 +73,7 @@ class NotAvailableSericesViewModel: BaseViewModel {
     
 }
 
-extension NotAvailableSericesViewModel {
+extension ServicesActivationRequestViewModel {
     
     struct Input {
         let sendRequestTapped: Driver<Void>
