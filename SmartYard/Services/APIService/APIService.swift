@@ -133,11 +133,7 @@ extension APIService {
                 return .failure(error)
             }
             
-            guard let data = mappedResponse.data else {
-                return .failure(NSError.APIServiceError.emptyDataError)
-            }
-            
-            return .success(data)
+            return .success(mappedResponse.data)
         } catch {
             return .failure(NSError.APIServiceError.mappingError)
         }
@@ -169,19 +165,12 @@ extension APIService {
     }
     
     private func mapEmptyResponse(_ response: Response) -> Swift.Result<Void, Error> {
-        do {
-            let mappedResponse = try response.map(BaseAPIResponse<EmptyAPIResponseData>.self)
-            
-            guard mappedResponse.code == 200 else {
-                let errorUserInfo = [NSLocalizedDescriptionKey: mappedResponse.name + mappedResponse.message]
-                let error = NSError(domain: "APIServiceError", code: mappedResponse.code, userInfo: errorUserInfo)
-                return .failure(error)
-            }
-            
-            return .success(())
-        } catch {
-            return .failure(NSError.APIServiceError.mappingError)
+        guard response.statusCode == 204 else {
+            let error = NSError(domain: "APIServiceError", code: response.statusCode, userInfo: nil)
+            return .failure(error)
         }
+        
+        return .success(())
     }
     
 }

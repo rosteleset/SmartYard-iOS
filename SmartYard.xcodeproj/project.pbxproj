@@ -19,7 +19,6 @@
 		844AC38B23E866710066006D /* RegisterTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38A23E866710066006D /* RegisterTokenRequest.swift */; };
 		844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38D23E867840066006D /* IntercomTokenRequest.swift */; };
 		844AC39023E867950066006D /* IntercomTokenResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38F23E867950066006D /* IntercomTokenResponseData.swift */; };
-		844AC39223E872F80066006D /* EmptyAPIResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39123E872F80066006D /* EmptyAPIResponseData.swift */; };
 		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
 		844AC39723E9788D0066006D /* APIAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39623E9788D0066006D /* APIAddress.swift */; };
 		844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallViewController.swift */; };
@@ -117,6 +116,8 @@
 		84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */; };
 		84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */; };
 		84EEBC9823F40FA600C9557F /* SettingsServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9723F40FA600C9557F /* SettingsServiceState.swift */; };
+		84EEBCA023F55A9B00C9557F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9F23F55A9B00C9557F /* NotificationService.swift */; };
+		84EEBCA423F55A9B00C9557F /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F840D523E07DA5008DBE50 /* AppDelegate.swift */; };
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
@@ -181,6 +182,30 @@
 		E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4273C23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		84EEBCA223F55A9B00C9557F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84F840CA23E07DA5008DBE50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84EEBC9C23F55A9A00C9557F;
+			remoteInfo = NotificationServiceExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		84EEBCA823F55A9B00C9557F /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				84EEBCA423F55A9B00C9557F /* NotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		2D7D3E7917D11E9ED556EB4E /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -196,7 +221,6 @@
 		844AC38A23E866710066006D /* RegisterTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTokenRequest.swift; sourceTree = "<group>"; };
 		844AC38D23E867840066006D /* IntercomTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTokenRequest.swift; sourceTree = "<group>"; };
 		844AC38F23E867950066006D /* IntercomTokenResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTokenResponseData.swift; sourceTree = "<group>"; };
-		844AC39123E872F80066006D /* EmptyAPIResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyAPIResponseData.swift; sourceTree = "<group>"; };
 		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
 		844AC39623E9788D0066006D /* APIAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAddress.swift; sourceTree = "<group>"; };
 		844AC39B23E987360066006D /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
@@ -295,6 +319,9 @@
 		84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceType.swift; sourceTree = "<group>"; };
 		84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMockDataExample.swift; sourceTree = "<group>"; };
 		84EEBC9723F40FA600C9557F /* SettingsServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceState.swift; sourceTree = "<group>"; };
+		84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		84EEBC9F23F55A9B00C9557F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		84EEBCA123F55A9B00C9557F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84F840D223E07DA5008DBE50 /* SmartYard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartYard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F840D523E07DA5008DBE50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84F840DC23E07DA5008DBE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -365,6 +392,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		84EEBC9A23F55A9A00C9557F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84F840CF23E07DA5008DBE50 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -450,7 +484,6 @@
 			children = (
 				844AC39623E9788D0066006D /* APIAddress.swift */,
 				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
-				844AC39123E872F80066006D /* EmptyAPIResponseData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1047,10 +1080,20 @@
 			path = CameraCell;
 			sourceTree = "<group>";
 		};
+		84EEBC9E23F55A9B00C9557F /* NotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				84EEBC9F23F55A9B00C9557F /* NotificationService.swift */,
+				84EEBCA123F55A9B00C9557F /* Info.plist */,
+			);
+			path = NotificationServiceExtension;
+			sourceTree = "<group>";
+		};
 		84F840C923E07DA5008DBE50 = {
 			isa = PBXGroup;
 			children = (
 				84F840D423E07DA5008DBE50 /* SmartYard */,
+				84EEBC9E23F55A9B00C9557F /* NotificationServiceExtension */,
 				84F840D323E07DA5008DBE50 /* Products */,
 				B0B71A96C6C8995993C06C49 /* Pods */,
 				9597597AA6C1CAECCA7D92F7 /* Frameworks */,
@@ -1062,6 +1105,7 @@
 			isa = PBXGroup;
 			children = (
 				84F840D223E07DA5008DBE50 /* SmartYard.app */,
+				84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1381,6 +1425,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		84EEBC9C23F55A9A00C9557F /* NotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84EEBCA723F55A9B00C9557F /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */;
+			buildPhases = (
+				84EEBC9923F55A9A00C9557F /* Sources */,
+				84EEBC9A23F55A9A00C9557F /* Frameworks */,
+				84EEBC9B23F55A9A00C9557F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationServiceExtension;
+			productName = NotificationServiceExtension;
+			productReference = 84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		84F840D123E07DA5008DBE50 /* SmartYard */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84F840E423E07DA5008DBE50 /* Build configuration list for PBXNativeTarget "SmartYard" */;
@@ -1393,10 +1454,12 @@
 				84B9ECA023E08DAD00979C39 /* Crashlytics */,
 				58FA86B7B2CC8742E2CFDBCE /* [CP] Copy Pods Resources */,
 				84B9EC9F23E08D7500979C39 /* SwiftLint */,
+				84EEBCA823F55A9B00C9557F /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				84EEBCA323F55A9B00C9557F /* PBXTargetDependency */,
 			);
 			name = SmartYard;
 			productName = SmartYard;
@@ -1413,6 +1476,9 @@
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Mad Brains";
 				TargetAttributes = {
+					84EEBC9C23F55A9A00C9557F = {
+						CreatedOnToolsVersion = 10.3;
+					};
 					84F840D123E07DA5008DBE50 = {
 						CreatedOnToolsVersion = 10.3;
 						SystemCapabilities = {
@@ -1437,11 +1503,19 @@
 			projectRoot = "";
 			targets = (
 				84F840D123E07DA5008DBE50 /* SmartYard */,
+				84EEBC9C23F55A9A00C9557F /* NotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		84EEBC9B23F55A9A00C9557F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84F840D023E07DA5008DBE50 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1592,6 +1666,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		84EEBC9923F55A9A00C9557F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84EEBCA023F55A9B00C9557F /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84F840CE23E07DA5008DBE50 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1686,7 +1768,6 @@
 				84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */,
 				844AC38623E865260066006D /* LoginRequest.swift in Sources */,
 				844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */,
-				844AC39223E872F80066006D /* EmptyAPIResponseData.swift in Sources */,
 				84AA8D6023E2E622001B3B43 /* APIWrapper.swift in Sources */,
 				844AC3B723EB104E0066006D /* UserNameViewController.swift in Sources */,
 				84898A8A23F1510600E6B78E /* UIButton+Extensions.swift in Sources */,
@@ -1727,6 +1808,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		84EEBCA323F55A9B00C9557F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84EEBC9C23F55A9A00C9557F /* NotificationServiceExtension */;
+			targetProxy = 84EEBCA223F55A9B00C9557F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -1739,6 +1828,47 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		84EEBCA523F55A9B00C9557F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CDVQN43CHN;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ru.madbrains.smartyard.NotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		84EEBCA623F55A9B00C9557F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CDVQN43CHN;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ru.madbrains.smartyard.NotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		84F840E223E07DA5008DBE50 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1859,6 +1989,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CA70517603B5A2A38FB9EA1E /* Pods-SmartYard.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -1883,6 +2014,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D7D3E7917D11E9ED556EB4E /* Pods-SmartYard.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -1908,6 +2040,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		84EEBCA723F55A9B00C9557F /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84EEBCA523F55A9B00C9557F /* Debug */,
+				84EEBCA623F55A9B00C9557F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		84F840CD23E07DA5008DBE50 /* Build configuration list for PBXProject "SmartYard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
