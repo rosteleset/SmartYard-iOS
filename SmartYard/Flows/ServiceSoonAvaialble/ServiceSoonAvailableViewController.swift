@@ -1,5 +1,5 @@
 //
-//  ServiceWillWorkSoonViewController.swift
+//  ServiceSoonAvailableViewController.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 13.02.2020.
@@ -8,16 +8,16 @@
 
 import UIKit
 
-class ServiceWillWorkSoonViewController: BaseViewController {
+class ServiceSoonAvailableViewController: BaseViewController {
 
     @IBOutlet private weak var titleImageView: UIImageView!
     @IBOutlet private weak var hintLabel: UILabel!
     @IBOutlet private weak var qrCodeButton: BlueButton!
     @IBOutlet private weak var actionButton: WhiteButtonWithBorder!
     
-    private let viewModel: ServiceWillWorkSoonViewModel
+    private let viewModel: ServiceSoonAvailableViewModel
     
-    init(viewModel: ServiceWillWorkSoonViewModel) {
+    init(viewModel: ServiceSoonAvailableViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -33,7 +33,7 @@ class ServiceWillWorkSoonViewController: BaseViewController {
     }
     
     private func bind() {
-        let input = ServiceWillWorkSoonViewModel.Input(
+        let input = ServiceSoonAvailableViewModel.Input(
             qrCodeTapped: qrCodeButton.rx.tap.asDriverOnErrorJustComplete(),
             actionTapped: actionButton.rx.tap.asDriverOnErrorJustComplete(),
             viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete()

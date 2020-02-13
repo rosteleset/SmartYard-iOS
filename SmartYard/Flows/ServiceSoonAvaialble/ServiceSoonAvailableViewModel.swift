@@ -1,5 +1,5 @@
 //
-//  ServiceWillWorkSoonViewModel.swift
+//  ServiceSoonAvailableViewModel.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 13.02.2020.
@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 
-class ServiceWillWorkSoonViewModel: BaseViewModel {
+class ServiceSoonAvailableViewModel: BaseViewModel {
     
     private let router: WeakRouter<AppRoute>
     private let requestType: ServiceRequestType
@@ -88,7 +88,7 @@ class ServiceWillWorkSoonViewModel: BaseViewModel {
     
 }
 
-extension ServiceWillWorkSoonViewModel {
+extension ServiceSoonAvailableViewModel {
     
     struct Input {
         let qrCodeTapped: Driver<Void>
