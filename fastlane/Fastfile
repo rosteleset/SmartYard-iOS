@@ -1,5 +1,5 @@
 fastlane_version "2.128.0"
-import_from_git(url: 'git@gitlab.com:madbrains/util/fastlane-scripts.git', branch: 'feature/xcode-version', path: 'Fastfile')
+import_from_git(url: 'git@gitlab.com:madbrains/util/fastlane-scripts.git', branch: 'feature/allow-full-cert-sync', path: 'Fastfile')
 default_platform :ios
 
 platform :ios do
@@ -9,7 +9,8 @@ platform :ios do
       firebase_app_id: '1:978817004542:ios:4da48f7a70a8a0f8e986af',
       scheme: 'SmartYard',
       test_groups: 'madbrains,customertesters',
-      xcode_version: '~> 10.0'
+      xcode_version: '~> 10.0',
+      force_full_cert_sync: true
     )
   end
 
@@ -17,7 +18,8 @@ platform :ios do
     tf(
       scheme: 'SmartYard',
       app_store_connect_team_id: 'TODO!!!!!!!!',
-      xcode_version: '~> 10.0'
+      xcode_version: '~> 10.0',
+      force_full_cert_sync: true
     )
   end
 
