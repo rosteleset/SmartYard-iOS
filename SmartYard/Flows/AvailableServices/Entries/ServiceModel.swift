@@ -15,4 +15,12 @@ struct ServiceModel {
     let description: String
     var state: ServiceState
     
+    mutating func toogleState() {
+        guard state != .checkedInactive else {
+            return
+        }
+        
+        state = state == .uncheckedActive ? .checkedActive : .uncheckedActive
+    }
+    
 }

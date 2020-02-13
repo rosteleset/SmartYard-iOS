@@ -16,10 +16,14 @@
         <array key="SourceSansPro-Regular.ttf">
             <string>SourceSansPro-Regular</string>
         </array>
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AvailableServicesViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="nextButton" destination="89Y-FQ-vdr" id="j07-bY-Q4r"/>
                 <outlet property="tableView" destination="w0Q-oS-zCM" id="360-rJ-Exd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -35,19 +39,30 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n8T-dr-SIH" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="204" width="414" height="658"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w0Q-oS-zCM">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="658"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w0Q-oS-zCM">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="552"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="separatorColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94509803921568625" alpha="0.5" colorSpace="calibratedRGB"/>
                             <inset key="separatorInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
                         </tableView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="89Y-FQ-vdr" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="40" y="575" width="334" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="qhT-kG-uNt"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                            <state key="normal" title="Далее"/>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="w0Q-oS-zCM" secondAttribute="bottom" id="Qkg-hK-bal"/>
+                        <constraint firstItem="89Y-FQ-vdr" firstAttribute="top" secondItem="w0Q-oS-zCM" secondAttribute="bottom" constant="23" id="305-8x-S3C"/>
+                        <constraint firstItem="89Y-FQ-vdr" firstAttribute="leading" secondItem="n8T-dr-SIH" secondAttribute="leading" constant="40" id="8jx-cT-9IA"/>
                         <constraint firstAttribute="trailing" secondItem="w0Q-oS-zCM" secondAttribute="trailing" id="R0B-bk-uWK"/>
+                        <constraint firstAttribute="trailing" secondItem="89Y-FQ-vdr" secondAttribute="trailing" constant="40" id="TBn-Vp-LYV"/>
                         <constraint firstItem="w0Q-oS-zCM" firstAttribute="top" secondItem="n8T-dr-SIH" secondAttribute="top" id="Z9M-ZP-9Z3"/>
                         <constraint firstItem="w0Q-oS-zCM" firstAttribute="leading" secondItem="n8T-dr-SIH" secondAttribute="leading" id="ntW-w8-yfq"/>
+                        <constraint firstAttribute="bottom" secondItem="89Y-FQ-vdr" secondAttribute="bottom" constant="23" id="y3I-GX-V1b"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nuY-QD-9Nd">

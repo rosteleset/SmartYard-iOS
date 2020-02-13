@@ -21,17 +21,11 @@ class AvailableServiceCell: UITableViewCell {
             checkBox.setState(state: currentState)
         }
     }
-
-    func toogleState() {
-        guard currentState != .checkedInactive else {
-            return
-        }
-        
-        currentState = currentState == .uncheckedActive ? .checkedActive : .uncheckedActive
-    }
     
-    func setState(state: ServiceState) {
-        currentState = state
+    func configure(with item: ServiceModel) {
+        titleLabel.text = item.name
+        descriptionLabel.text = item.description
+        currentState = item.state
     }
     
 }

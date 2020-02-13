@@ -10,15 +10,52 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class AvailableServicesViewController: UIViewController {
+class AvailableServicesViewController: BaseViewController {
 
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var nextButton: BlueButton!
     
-    let itemsProxy = BehaviorSubject<[ServiceModel]>(value: [])
+    private let viewModel: AvailableSericesViewModel
+    private let itemsProxy = BehaviorSubject<[ServiceModel]>(value: [])
+    
+    private let serviceStateChanged = PublishSubject<Int?>()
+    
+    init(viewModel: AvailableSericesViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
+        bind()
+    }
+    
+    private func bind() {
+        let input = AvailableSericesViewModel.Input(
+            nextTapped: nextButton.rx.tap.asDriverOnErrorJustComplete(),
+            serviceStateChanged: serviceStateChanged.asDriverOnErrorJustComplete(),
+            viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.serviceItems
+            .drive(itemsProxy)
+            .disposed(by: disposeBag)
+        
+        itemsProxy
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.tableView.reloadData()
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureTableView() {
@@ -41,8 +78,7 @@ class AvailableServicesViewController: UIViewController {
 extension AvailableServicesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withClass: AvailableServiceCell.self, for: indexPath)
-        cell.toogleState()
+        serviceStateChanged.onNext(indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -54,16 +90,20 @@ extension AvailableServicesViewController: UITableViewDelegate {
 extension AvailableServicesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        guard let data = try? itemsProxy.value() else {
+            return 0
+        }
+        
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withClass: AvailableServiceCell.self, for: indexPath)
-        
-        // fake
-        if indexPath.row == 0 {
-            cell.setState(state: .checkedInactive)
+        guard let data = try? itemsProxy.value() else {
+            return UITableViewCell()
         }
+        
+        let cell = tableView.dequeueReusableCell(withClass: AvailableServiceCell.self, for: indexPath)
+        cell.configure(with: data[indexPath.row])
         
         return cell
     }

@@ -16,8 +16,7 @@ class AvailableSericesViewModel: BaseViewModel {
     private let router: WeakRouter<AppRoute>
     
     private let serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: [])
-    
-    private let
+
     init(router: WeakRouter<AppRoute>) {
         self.router = router
     }
@@ -25,7 +24,7 @@ class AvailableSericesViewModel: BaseViewModel {
     func transform(input: Input) -> Output {
         input.viewWillAppearTrigger
             .drive(
-                onNext: { [weak self] in
+                onNext: { [weak self] _ in
                     guard let self = self else {
                         return
                     }
@@ -45,8 +44,17 @@ class AvailableSericesViewModel: BaseViewModel {
         
         input.serviceStateChanged
             .drive(
-                onNext: { [weak self] args in
+                onNext: { [weak self] index in
+                    guard let self = self,
+                          let index = index,
+                          var data = try? self.serviceItemsSubject.value()
+                    else {
+                        return
+                    }
                     
+                    data[index].toogleState()
+                    
+                    self.serviceItemsSubject.onNext(data)
                 }
             )
             .disposed(by: disposeBag)
@@ -60,7 +68,9 @@ class AvailableSericesViewModel: BaseViewModel {
             ServiceModel(id: "1", name: "Видеонаблюдение", description: "3 камеры", state: .checkedInactive),
             ServiceModel(id: "2", name: "Интернет и ТВ", description: "Более 250 каналов", state: .uncheckedActive),
             ServiceModel(id: "3", name: "Умный дом", description: "Дом умнее тебя", state: .uncheckedActive),
-            ServiceModel(id: "4", name: "Тревожная кнопка", description: "Не верь, не бойся, не проси", state: .uncheckedActive)
+            ServiceModel(id: "4", name: "Тревожная кнопка", description: "Не верь, не бойся, не проси", state: .uncheckedActive),
+            ServiceModel(id: "5", name: "Аренда оборудования", description: "Wi-Fi роутер, приставка для TV", state: .uncheckedActive),
+            ServiceModel(id: "6", name: "FakeFakeFake", description: "Fake", state: .uncheckedActive)
         ]
     }
     
@@ -70,8 +80,8 @@ extension AvailableSericesViewModel {
     
     struct Input {
         let nextTapped: Driver<Void>
-        let serviceStateChanged: Driver<(Int, ServiceState)>
-        let viewWillAppearTrigger: Driver<Void>
+        let serviceStateChanged: Driver<Int?>
+        let viewWillAppearTrigger: Driver<Bool>
     }
     
     struct Output {
