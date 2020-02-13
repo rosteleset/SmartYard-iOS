@@ -12,5 +12,6 @@ enum IncomingCallState {
     case callPreviewed
     case establishingConnection
     case callAccepted
+    case callFinished
     
 }

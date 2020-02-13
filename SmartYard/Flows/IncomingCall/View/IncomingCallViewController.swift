@@ -107,24 +107,29 @@ class IncomingCallViewController: BaseViewController {
                     
                     let (callState, doorState) = state
                     
-                    self.view.isUserInteractionEnabled = doorState == .notDetermined
+                    self.view.isUserInteractionEnabled = callState != .callFinished
                     self.previewButton.isSelected = callState == .callPreviewed && doorState == .notDetermined
-                    self.callButton.isSelected = callState == .callAccepted && doorState == .notDetermined
+                    self.callButton.isSelected = (callState == .establishingConnection || callState == .callAccepted)
+                        && doorState == .notDetermined
                     
                     self.alreadyOpenedButtonContainer.isHidden = doorState != .opened
                     self.openButtonContainer.isHidden = doorState == .opened
                     self.ignoreButtonContainer.isHidden = doorState == .opened
                     
-                    self.ignoreButtonLabel.text = callState == .callAccepted ? "Отклонить" : "Игнорировать"
-                    
-                    self.titleLabel.text = {
-                        switch callState {
-                        case .callReceived: return "Звонок в домофон"
-                        case .callPreviewed: return "Глазок включен"
-                        case .establishingConnection: return "Соединение..."
-                        case .callAccepted: return "Разговор"
-                        }
-                    }()
+                    switch callState {
+                    case .callReceived:
+                        self.titleLabel.text = "Звонок в домофон"
+                        self.ignoreButtonLabel.text = "Игнорировать"
+                    case .callPreviewed:
+                        self.titleLabel.text = "Глазок включен"
+                    case .establishingConnection:
+                        self.titleLabel.text = "Соединение..."
+                    case .callAccepted:
+                        self.titleLabel.text = "Разговор"
+                        self.ignoreButtonLabel.text = "Отклонить"
+                    case .callFinished:
+                        break
+                    }
                 }
             )
             .disposed(by: disposeBag)

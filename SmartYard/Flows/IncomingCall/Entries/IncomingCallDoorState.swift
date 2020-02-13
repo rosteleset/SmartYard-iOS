@@ -9,7 +9,6 @@
 enum IncomingCallDoorState {
     
     case notDetermined
-    case locked
     case opened
     
 }

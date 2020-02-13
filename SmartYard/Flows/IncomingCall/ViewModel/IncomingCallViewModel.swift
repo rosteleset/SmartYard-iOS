@@ -69,7 +69,9 @@ class IncomingCallViewModel: BaseViewModel {
                     let (videoView, cameraView) = views
                     let (callState, doorState) = currentState
                     
-                    guard let self = self, callState != .callAccepted, doorState == .notDetermined else {
+                    guard let self = self,
+                        callState == .callReceived || callState == .callPreviewed,
+                        doorState == .notDetermined else {
                         return
                     }
                     
@@ -94,11 +96,11 @@ class IncomingCallViewModel: BaseViewModel {
                 onNext: { [weak self] currentState in
                     let (callState, doorState) = currentState
                     
-                    guard let self = self, doorState == .notDetermined else {
+                    guard let self = self, callState != .callFinished, doorState == .notDetermined else {
                         return
                     }
                     
-                    self.currentStateSubject.onNext((callState, .opened))
+                    self.currentStateSubject.onNext((.callFinished, .opened))
                 }
             )
             .drive(
@@ -134,11 +136,11 @@ class IncomingCallViewModel: BaseViewModel {
                 onNext: { [weak self] currentState in
                     let (callState, doorState) = currentState
                     
-                    guard let self = self, doorState == .notDetermined else {
+                    guard let self = self, callState != .callFinished, doorState == .notDetermined else {
                         return
                     }
                     
-                    self.currentStateSubject.onNext((callState, .locked))
+                    self.currentStateSubject.onNext((.callFinished, .notDetermined))
                 }
             )
             .drive(
@@ -254,7 +256,6 @@ class IncomingCallViewModel: BaseViewModel {
         let callAcceptedEvent = currentStateSubject
             .filter { currentState in
                 let (callState, _) = currentState
-                
                 return callState == .callAccepted
             }
             .take(1)
@@ -263,9 +264,8 @@ class IncomingCallViewModel: BaseViewModel {
         
         let callFinishedEvent = currentStateSubject
             .filter { currentState in
-                let (_, doorState) = currentState
-                
-                return doorState != .notDetermined
+                let (callState, _) = currentState
+                return callState == .callFinished
             }
             .take(1)
         
@@ -357,6 +357,10 @@ extension IncomingCallViewModel: LinphoneDelegate {
         }
         
         if cstate == .End {
+            if let (_, doorState) = try? currentStateSubject.value() {
+                currentStateSubject.onNext((.callFinished, doorState))
+            }
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 self?.router.trigger(.dismiss)
             }
