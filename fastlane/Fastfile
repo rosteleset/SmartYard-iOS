@@ -1,5 +1,5 @@
 fastlane_version "2.128.0"
-import_from_git(url: 'git@gitlab.com:madbrains/util/fastlane-scripts.git', branch: 'feature/xcode-version', path: 'Fastfile')
+import_from_git(url: 'git@gitlab.com:madbrains/util/fastlane-scripts.git', branch: 'feature/allow-full-cert-sync', path: 'Fastfile')
 default_platform :ios
 
 platform :ios do
