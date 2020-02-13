@@ -33,24 +33,17 @@
                                 <constraint firstAttribute="width" constant="14" id="ZzO-fO-9fB"/>
                             </constraints>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FkH-wV-RAN">
-                            <rect key="frame" x="112" y="75.5" width="28" height="28"/>
-                        </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="67K-sS-eEV" firstAttribute="centerY" secondItem="2vn-G3-a0F" secondAttribute="centerY" id="3ii-ne-Mi6"/>
                         <constraint firstItem="67K-sS-eEV" firstAttribute="centerX" secondItem="2vn-G3-a0F" secondAttribute="centerX" id="6DY-KO-MI0"/>
                         <constraint firstItem="NbQ-z9-ni3" firstAttribute="centerX" secondItem="2vn-G3-a0F" secondAttribute="centerX" id="FjJ-L7-QWb"/>
                         <constraint firstItem="NbQ-z9-ni3" firstAttribute="centerY" secondItem="2vn-G3-a0F" secondAttribute="centerY" id="TIV-Rq-yjT"/>
-                        <constraint firstItem="FkH-wV-RAN" firstAttribute="centerY" secondItem="2vn-G3-a0F" secondAttribute="centerY" id="UPa-RN-Puq"/>
-                        <constraint firstItem="FkH-wV-RAN" firstAttribute="width" secondItem="NbQ-z9-ni3" secondAttribute="width" id="snJ-Q0-ZWb"/>
-                        <constraint firstItem="FkH-wV-RAN" firstAttribute="centerX" secondItem="2vn-G3-a0F" secondAttribute="centerX" id="vfd-LX-jnZ"/>
-                        <constraint firstItem="FkH-wV-RAN" firstAttribute="height" secondItem="NbQ-z9-ni3" secondAttribute="height" id="w3E-hc-bbt"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="2vn-G3-a0F" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="6U0-P1-BsG"/>
                 <constraint firstAttribute="bottom" secondItem="2vn-G3-a0F" secondAttribute="bottom" id="V3J-Yg-foF"/>
@@ -61,7 +54,6 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="borderImageView" destination="NbQ-z9-ni3" id="u9r-Xx-hnF"/>
-                <outlet property="checkButton" destination="FkH-wV-RAN" id="vHC-7Z-zCc"/>
                 <outlet property="checkImageView" destination="67K-sS-eEV" id="u1r-pX-wqA"/>
             </connections>
             <point key="canvasLocation" x="20.289855072463769" y="-123.54910714285714"/>
