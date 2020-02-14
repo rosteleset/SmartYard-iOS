@@ -30,7 +30,6 @@ target 'SmartYard' do
   pod 'PinLayout'
   pod 'SSCustomTabbar', :git => 'https://github.com/MadBrains/SSCustomTabbar.git', :branch => 'feature/add-animation-options'
   pod 'TPKeyboardAvoiding'
-  pod 'SwipeCellKit'
   
   # Map
   pod 'MapboxStatic.swift', '~> 0.11'
