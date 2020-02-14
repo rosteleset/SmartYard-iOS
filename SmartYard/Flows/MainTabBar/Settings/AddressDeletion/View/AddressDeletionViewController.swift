@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import TouchAreaInsets
 
 class AddressDeletionViewController: BaseViewController {
     
@@ -34,7 +35,7 @@ class AddressDeletionViewController: BaseViewController {
     }
     
     private func configureView() {
-        
+        cancelButton.touchAreaInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
     
     private func bind() {
