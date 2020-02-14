@@ -113,6 +113,18 @@ class AddressDeletionViewController: BaseViewController {
         reasonTextField.attributedPlaceholder = attrString
         reasonTextField.delegate = self
         
+        let gesture = UITapGestureRecognizer()
+        reasonTextContainer.addGestureRecognizer(gesture)
+        reasonTextContainer.touchAreaInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        
+        gesture.rx.event
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.reasonTextField.becomeFirstResponder()
+                }
+            )
+            .disposed(by: disposeBag)
+        
         cancelButton.touchAreaInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
     
