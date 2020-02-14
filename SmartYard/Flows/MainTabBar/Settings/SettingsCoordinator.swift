@@ -17,6 +17,7 @@ enum SettingsRoute: Route {
     case serviceIsActivated
     case serviceIsNotActivated
     case serviceUnavailable
+    case advancedSettings(name: String)
     
 }
 
@@ -76,6 +77,11 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             vc.modalTransitionStyle = .crossDissolve
             
             return .present(vc)
+            
+        case let .advancedSettings(name):
+            let vm = AdvancedSettingsViewModel(router: weakRouter, name: name)
+            let vc = AdvancedSettingsViewController(viewModel: vm)
+            return .push(vc)
         }
     }
     
