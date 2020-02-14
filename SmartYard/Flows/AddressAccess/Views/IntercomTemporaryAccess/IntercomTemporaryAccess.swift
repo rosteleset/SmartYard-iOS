@@ -8,6 +8,29 @@
 
 import UIKit
 import PMNibLinkableView
+import RxCocoa
+import RxSwift
 
-class IntercomTemporaryAccess: PMNibLinkableView {
+class IntercomTemporaryAccessView: PMNibLinkableView {
+    
+    @IBOutlet fileprivate weak var refreshButton: UIButton!
+    @IBOutlet fileprivate weak var openButton: WhiteButtonWithBorder!
+    @IBOutlet private weak var codeLabel: UILabel!
+    
+    func configure(code: String) {
+        codeLabel.text = code
+    }
+    
+}
+
+extension Reactive where Base: IntercomTemporaryAccessView {
+    
+    var refreshButtonTapped: ControlEvent<Void> {
+        return base.refreshButton.rx.tap
+    }
+    
+    var openButtonTapped: ControlEvent<Void> {
+        return base.openButton.rx.tap
+    }
+    
 }

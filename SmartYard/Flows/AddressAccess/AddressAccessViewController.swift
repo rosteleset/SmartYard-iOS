@@ -10,6 +10,11 @@ import UIKit
 
 class AddressAccessViewController: UIViewController {
 
+    @IBOutlet private weak var addressLabel: UILabel!
+    @IBOutlet private weak var intercomAccessView: IntercomTemporaryAccessView!
+    @IBOutlet private weak var barrierAccessView: AccessView!
+    @IBOutlet private weak var permanentAccessView: AccessView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
