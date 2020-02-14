@@ -10,7 +10,6 @@ import UIKit
 import RxCocoa
 import RxSwift
 import RxViewController
-import IHKeyboardAvoiding
 import RxKeyboard
 
 class PinCodeViewController: BaseViewController {

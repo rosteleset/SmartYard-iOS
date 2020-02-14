@@ -251,6 +251,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="RUG-Ae-ZBc" secondAttribute="bottom" id="1i2-oI-Sak"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="RUG-Ae-ZBc" secondAttribute="bottom" constant="16" id="6R1-3n-b6S"/>
                 <constraint firstItem="RUG-Ae-ZBc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="FKy-M9-h6K"/>
                 <constraint firstItem="RUG-Ae-ZBc" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" priority="999" id="Fwk-WJ-P3n"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="RUG-Ae-ZBc" secondAttribute="trailing" constant="16" id="b32-03-oiN"/>

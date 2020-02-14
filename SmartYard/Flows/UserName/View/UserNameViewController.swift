@@ -7,14 +7,15 @@
 //
 
 import UIKit
-import IHKeyboardAvoiding
+import RxKeyboard
 
 class UserNameViewController: BaseViewController {
 
     @IBOutlet private weak var nameTextField: SmartYardTextField!
     @IBOutlet private weak var middleNameTextField: SmartYardTextField!
     @IBOutlet private weak var continueButton: UIButton!
-    @IBOutlet private weak var avoidingView: UIView!
+    
+    @IBOutlet private var mainContainerBottomConstraint: NSLayoutConstraint!
     
     private let viewModel: UserNameViewModel
     
@@ -31,19 +32,35 @@ class UserNameViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        configureRxKeyboard()
         bind()
     }
     
     private func configureView() {
         view.hideKeyboardWhenTapped = true
         
-        KeyboardAvoiding.avoidingView = avoidingView
-        
         nameTextField.setPlaceholder(string: "Имя", isRequiredField: true)
         nameTextField.delegate = self
         
         middleNameTextField.setPlaceholder(string: "Отчество")
         middleNameTextField.delegate = self
+    }
+    
+    private func configureRxKeyboard() {
+        RxKeyboard.instance.visibleHeight
+            .debounce(.milliseconds(100))
+            .drive(
+                onNext: { [weak self] keyboardVisibleHeight in
+                    self?.mainContainerBottomConstraint.constant = keyboardVisibleHeight == 0 ?
+                        0 :
+                        keyboardVisibleHeight
+                    
+                    UIView.animate(withDuration: 0.25) {
+                        self?.view.layoutIfNeeded()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func bind() {
