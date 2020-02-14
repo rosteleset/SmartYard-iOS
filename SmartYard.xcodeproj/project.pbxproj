@@ -147,6 +147,7 @@
 		E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F723F6721F00623746 /* AddressAccessViewController.swift */; };
 		E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E94057F823F6721F00623746 /* AddressAccessViewController.xib */; };
 		E94057FC23F6724100623746 /* AddressAccessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057FB23F6724100623746 /* AddressAccessViewModel.swift */; };
+		E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057FD23F6757D00623746 /* FullRoundedView.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -377,6 +378,7 @@
 		E94057F723F6721F00623746 /* AddressAccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessViewController.swift; sourceTree = "<group>"; };
 		E94057F823F6721F00623746 /* AddressAccessViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessViewController.xib; sourceTree = "<group>"; };
 		E94057FB23F6724100623746 /* AddressAccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessViewModel.swift; sourceTree = "<group>"; };
+		E94057FD23F6757D00623746 /* FullRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRoundedView.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -1391,6 +1393,7 @@
 			isa = PBXGroup;
 			children = (
 				E98C382C23F180530010BBC1 /* TopRoundedView.swift */,
+				E94057FD23F6757D00623746 /* FullRoundedView.swift */,
 			);
 			path = RoundedView;
 			sourceTree = "<group>";
@@ -1964,6 +1967,7 @@
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
+				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
 				84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
 				E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */,
