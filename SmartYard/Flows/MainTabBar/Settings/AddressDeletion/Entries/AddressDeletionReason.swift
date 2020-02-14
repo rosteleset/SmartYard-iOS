@@ -10,6 +10,6 @@ enum AddressDeletionReason {
     
     case dontWantToManageFromApp
     case wantToBreakTheContract
-    case other(description: String)
+    case other
     
 }

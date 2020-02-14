@@ -29,13 +29,12 @@ class AddressDeletionViewModel: BaseViewModel {
     
     func transform(_ input: Input) -> Output {
         let isAbleToDelete: Driver<Bool> = input.deletionReason
-            .map { reason in
-                guard let reason = reason else {
-                    return false
-                }
+            .withLatestFrom(input.customDescription) { ($0, $1) }
+            .map { args in
+                let (reason, customDescription) = args
                 
                 switch reason {
-                case let .other(description): return !description.isEmpty
+                case .other: return !customDescription.isNilOrEmpty
                 default: return true
                 }
             }
@@ -73,7 +72,8 @@ extension AddressDeletionViewModel {
     struct Input {
         let cancelTrigger: Driver<Void>
         let deleteTrigger: Driver<Void>
-        let deletionReason: Driver<AddressDeletionReason?>
+        let deletionReason: Driver<AddressDeletionReason>
+        let customDescription: Driver<String?>
     }
     
     struct Output {
