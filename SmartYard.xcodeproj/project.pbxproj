@@ -191,6 +191,8 @@
 		E9BB83C623F68E0C0071F91E /* AddressPermanentAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9BB83C523F68E0C0071F91E /* AddressPermanentAccessView.xib */; };
 		E9BB83C823F68E1F0071F91E /* BarrierTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BB83C723F68E1F0071F91E /* BarrierTemporaryAccessView.swift */; };
 		E9BB83CA23F68E280071F91E /* BarrierTemporaryAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9BB83C923F68E280071F91E /* BarrierTemporaryAccessView.xib */; };
+		E9BB83CF23F69FE80071F91E /* AllowedPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BB83CE23F69FE80071F91E /* AllowedPerson.swift */; };
+		E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BB83D223F6B1E70071F91E /* AccessViewModel.swift */; };
 		E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */; };
 		E9E4270523F2CD0F00F5D593 /* ServiceFromCourierView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4270423F2CD0F00F5D593 /* ServiceFromCourierView.xib */; };
 		E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */; };
@@ -440,6 +442,8 @@
 		E9BB83C523F68E0C0071F91E /* AddressPermanentAccessView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressPermanentAccessView.xib; sourceTree = "<group>"; };
 		E9BB83C723F68E1F0071F91E /* BarrierTemporaryAccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarrierTemporaryAccessView.swift; sourceTree = "<group>"; };
 		E9BB83C923F68E280071F91E /* BarrierTemporaryAccessView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarrierTemporaryAccessView.xib; sourceTree = "<group>"; };
+		E9BB83CE23F69FE80071F91E /* AllowedPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPerson.swift; sourceTree = "<group>"; };
+		E9BB83D223F6B1E70071F91E /* AccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessViewModel.swift; sourceTree = "<group>"; };
 		E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSegmentedControlView.swift; sourceTree = "<group>"; };
 		E9E4270423F2CD0F00F5D593 /* ServiceFromCourierView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceFromCourierView.xib; sourceTree = "<group>"; };
 		E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFromCourierView.swift; sourceTree = "<group>"; };
@@ -1360,9 +1364,11 @@
 		E940580523F680C000623746 /* AccessView */ = {
 			isa = PBXGroup;
 			children = (
+				E9BB83CD23F69FAF0071F91E /* Entries */,
 				E940580C23F6828F00623746 /* Cells */,
 				E940580623F680F000623746 /* AccessView.swift */,
 				E940580823F680F900623746 /* AddressAccessView.xib */,
+				E9BB83D223F6B1E70071F91E /* AccessViewModel.swift */,
 			);
 			path = AccessView;
 			sourceTree = "<group>";
@@ -1578,6 +1584,14 @@
 				E9BB83C923F68E280071F91E /* BarrierTemporaryAccessView.xib */,
 			);
 			path = BarrierTemporaryAccessView;
+			sourceTree = "<group>";
+		};
+		E9BB83CD23F69FAF0071F91E /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				E9BB83CE23F69FE80071F91E /* AllowedPerson.swift */,
+			);
+			path = Entries;
 			sourceTree = "<group>";
 		};
 		E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */ = {
@@ -1980,6 +1994,7 @@
 				84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */,
 				E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */,
 				84B89A9023F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift in Sources */,
+				E9BB83CF23F69FE80071F91E /* AllowedPerson.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */,
 				844AC3ED23EBFF0E0066006D /* PaymentsCoordinator.swift in Sources */,
@@ -1988,6 +2003,7 @@
 				844AC38123E8637B0066006D /* ConfirmCodeRequest.swift in Sources */,
 				84898A9823F1556B00E6B78E /* SettingsSectionModel.swift in Sources */,
 				E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */,
+				E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */,
 				848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */,
 				84898A8E23F1540C00E6B78E /* SettingsActionCell.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,

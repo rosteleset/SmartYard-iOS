@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class AllowedPersonCell: UITableViewCell {
 
@@ -14,8 +16,32 @@ class AllowedPersonCell: UITableViewCell {
     @IBOutlet private weak var userNameLabel: UILabel!
     @IBOutlet private weak var smsButton: UIButton!
     
+    var disposeBag = DisposeBag()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        disposeBag = DisposeBag()
+    }
+    
+    func configure(with person: AllowedPerson) {
+        userNameLabel.text = person.displayedName ?? person.phoneNumber
+        userLogoImageView.image = person.logoImage ?? UIImage(named: "DefaultUserIcon")
+    }
+    
+    func bind(with outerSubject: PublishSubject<Void>) {
+        smsButton.rx.tap
+            .subscribe(
+                onNext: { _ in
+                    outerSubject.onNext(())
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
 }
+
