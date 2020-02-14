@@ -49,6 +49,7 @@
                                         <constraint firstAttribute="width" constant="84" id="ElA-yk-vOa"/>
                                         <constraint firstAttribute="height" constant="36" id="qNm-Hu-Ngg"/>
                                     </constraints>
+                                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                     <state key="normal" title="Открыть"/>
                                 </button>
                             </subviews>
@@ -71,17 +72,17 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ew-Yt-rLv">
-                                    <rect key="frame" x="429" y="18" width="22" height="28"/>
+                                    <rect key="frame" x="423" y="18" width="28" height="28"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="28" id="Czs-du-5si"/>
-                                        <constraint firstAttribute="width" constant="22" id="KHX-Fa-76E"/>
+                                        <constraint firstAttribute="width" constant="28" id="KHX-Fa-76E"/>
                                     </constraints>
                                     <state key="normal" image="RefreshIcon"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="If9-4b-izb">
-                                    <rect key="frame" x="133.5" y="17" width="271.5" height="30.5"/>
+                                    <rect key="frame" x="133.5" y="17" width="265.5" height="30.5"/>
                                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="24"/>
-                                    <nil key="textColor"/>
+                                    <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
