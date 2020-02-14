@@ -124,7 +124,7 @@ extension AccessView: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        guard indexPath.row != data.count + 1 || !data.isEmpty else {
+        guard indexPath.row != data.count + 1 && !data.isEmpty else {
             let cell = tableView.dequeueReusableCell(withClass: NewPersonCell.self, for: indexPath)
             return cell
         }

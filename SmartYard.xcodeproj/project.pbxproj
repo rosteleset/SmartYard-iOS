@@ -151,7 +151,7 @@
 		E940580123F6794300623746 /* IntercomTemporaryAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940580023F6794300623746 /* IntercomTemporaryAccess.swift */; };
 		E940580323F6794F00623746 /* IntercomTemporaryAccess.xib in Resources */ = {isa = PBXBuildFile; fileRef = E940580223F6794F00623746 /* IntercomTemporaryAccess.xib */; };
 		E940580723F680F000623746 /* AccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940580623F680F000623746 /* AccessView.swift */; };
-		E940580923F680F900623746 /* AddressAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E940580823F680F900623746 /* AddressAccessView.xib */; };
+		E940580923F680F900623746 /* AccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E940580823F680F900623746 /* AccessView.xib */; };
 		E940581123F682EA00623746 /* AllowedPersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940580F23F682EA00623746 /* AllowedPersonCell.swift */; };
 		E940581223F682EA00623746 /* AllowedPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E940581023F682EA00623746 /* AllowedPersonCell.xib */; };
 		E940581723F6831A00623746 /* NewPersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940581523F6831A00623746 /* NewPersonCell.swift */; };
@@ -392,7 +392,7 @@
 		E940580023F6794300623746 /* IntercomTemporaryAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTemporaryAccess.swift; sourceTree = "<group>"; };
 		E940580223F6794F00623746 /* IntercomTemporaryAccess.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntercomTemporaryAccess.xib; sourceTree = "<group>"; };
 		E940580623F680F000623746 /* AccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessView.swift; sourceTree = "<group>"; };
-		E940580823F680F900623746 /* AddressAccessView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessView.xib; sourceTree = "<group>"; };
+		E940580823F680F900623746 /* AccessView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccessView.xib; sourceTree = "<group>"; };
 		E940580F23F682EA00623746 /* AllowedPersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPersonCell.swift; sourceTree = "<group>"; };
 		E940581023F682EA00623746 /* AllowedPersonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllowedPersonCell.xib; sourceTree = "<group>"; };
 		E940581523F6831A00623746 /* NewPersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPersonCell.swift; sourceTree = "<group>"; };
@@ -1357,7 +1357,7 @@
 				E9BB83CD23F69FAF0071F91E /* Entries */,
 				E940580C23F6828F00623746 /* Cells */,
 				E940580623F680F000623746 /* AccessView.swift */,
-				E940580823F680F900623746 /* AddressAccessView.xib */,
+				E940580823F680F900623746 /* AccessView.xib */,
 				E9BB83D223F6B1E70071F91E /* AccessViewModel.swift */,
 			);
 			path = AccessView;
@@ -1795,7 +1795,7 @@
 				844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */,
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
 				84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */,
-				E940580923F680F900623746 /* AddressAccessView.xib in Resources */,
+				E940580923F680F900623746 /* AccessView.xib in Resources */,
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
 				E9E4271723F40E0B00F5D593 /* SmartYardCheckBoxView.xib in Resources */,
 				E9A1D78423F27AE500234B2A /* AddressConfirmationViewController.xib in Resources */,
