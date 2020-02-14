@@ -150,6 +150,13 @@
 		E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057FD23F6757D00623746 /* FullRoundedView.swift */; };
 		E940580123F6794300623746 /* IntercomTemporaryAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940580023F6794300623746 /* IntercomTemporaryAccess.swift */; };
 		E940580323F6794F00623746 /* IntercomTemporaryAccess.xib in Resources */ = {isa = PBXBuildFile; fileRef = E940580223F6794F00623746 /* IntercomTemporaryAccess.xib */; };
+		E940580723F680F000623746 /* AddressAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940580623F680F000623746 /* AddressAccessView.swift */; };
+		E940580923F680F900623746 /* AddressAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E940580823F680F900623746 /* AddressAccessView.xib */; };
+		E940580B23F6826400623746 /* AddressAccessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940580A23F6826400623746 /* AddressAccessViewModel.swift */; };
+		E940581123F682EA00623746 /* AllowedPersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940580F23F682EA00623746 /* AllowedPersonCell.swift */; };
+		E940581223F682EA00623746 /* AllowedPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E940581023F682EA00623746 /* AllowedPersonCell.xib */; };
+		E940581723F6831A00623746 /* NewPersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940581523F6831A00623746 /* NewPersonCell.swift */; };
+		E940581823F6831A00623746 /* NewPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E940581623F6831A00623746 /* NewPersonCell.xib */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -383,6 +390,13 @@
 		E94057FD23F6757D00623746 /* FullRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRoundedView.swift; sourceTree = "<group>"; };
 		E940580023F6794300623746 /* IntercomTemporaryAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTemporaryAccess.swift; sourceTree = "<group>"; };
 		E940580223F6794F00623746 /* IntercomTemporaryAccess.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntercomTemporaryAccess.xib; sourceTree = "<group>"; };
+		E940580623F680F000623746 /* AddressAccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessView.swift; sourceTree = "<group>"; };
+		E940580823F680F900623746 /* AddressAccessView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessView.xib; sourceTree = "<group>"; };
+		E940580A23F6826400623746 /* AddressAccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessViewModel.swift; sourceTree = "<group>"; };
+		E940580F23F682EA00623746 /* AllowedPersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPersonCell.swift; sourceTree = "<group>"; };
+		E940581023F682EA00623746 /* AllowedPersonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllowedPersonCell.xib; sourceTree = "<group>"; };
+		E940581523F6831A00623746 /* NewPersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPersonCell.swift; sourceTree = "<group>"; };
+		E940581623F6831A00623746 /* NewPersonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewPersonCell.xib; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -1329,9 +1343,48 @@
 		E940580423F67EE100623746 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E940580523F680C000623746 /* AddressAccessView */,
 				E94057FF23F678E400623746 /* IntercomTemporaryAccess */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E940580523F680C000623746 /* AddressAccessView */ = {
+			isa = PBXGroup;
+			children = (
+				E940580C23F6828F00623746 /* Cells */,
+				E940580623F680F000623746 /* AddressAccessView.swift */,
+				E940580823F680F900623746 /* AddressAccessView.xib */,
+				E940580A23F6826400623746 /* AddressAccessViewModel.swift */,
+			);
+			path = AddressAccessView;
+			sourceTree = "<group>";
+		};
+		E940580C23F6828F00623746 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E940581323F682ED00623746 /* AllowedPerson */,
+				E940581423F6830000623746 /* NewPerson */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		E940581323F682ED00623746 /* AllowedPerson */ = {
+			isa = PBXGroup;
+			children = (
+				E940580F23F682EA00623746 /* AllowedPersonCell.swift */,
+				E940581023F682EA00623746 /* AllowedPersonCell.xib */,
+			);
+			path = AllowedPerson;
+			sourceTree = "<group>";
+		};
+		E940581423F6830000623746 /* NewPerson */ = {
+			isa = PBXGroup;
+			children = (
+				E940581523F6831A00623746 /* NewPersonCell.swift */,
+				E940581623F6831A00623746 /* NewPersonCell.xib */,
+			);
+			path = NewPerson;
 			sourceTree = "<group>";
 		};
 		E98C381D23F141E70010BBC1 /* Recovered References */ = {
@@ -1731,10 +1784,12 @@
 				844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */,
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
 				84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */,
+				E940580923F680F900623746 /* AddressAccessView.xib in Resources */,
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
 				E9E4271723F40E0B00F5D593 /* SmartYardCheckBoxView.xib in Resources */,
 				E9A1D78423F27AE500234B2A /* AddressConfirmationViewController.xib in Resources */,
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
+				E940581223F682EA00623746 /* AllowedPersonCell.xib in Resources */,
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
 				84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */,
 				E9E4270B23F2CD3900F5D593 /* ServiceFromOfficeView.xib in Resources */,
@@ -1744,6 +1799,7 @@
 				E9E4271C23F41C6600F5D593 /* AvailableServiceCell.xib in Resources */,
 				843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */,
 				E9E4273B23F5609E00F5D593 /* ServiceSoonAvailableViewController.xib in Resources */,
+				E940581823F6831A00623746 /* NewPersonCell.xib in Resources */,
 				844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */,
 				84B89A9923F2FA97009692B4 /* ServiceIsActivatedViewController.xib in Resources */,
 				848D1B8A23F29D6100D6E368 /* AddressSettingsViewController.xib in Resources */,
@@ -1910,6 +1966,7 @@
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
+				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
 				844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
@@ -1935,6 +1992,7 @@
 				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
 				84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */,
+				E940580B23F6826400623746 /* AddressAccessViewModel.swift in Sources */,
 				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
@@ -1957,6 +2015,7 @@
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
 				84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */,
 				84898A9223F1554D00E6B78E /* SettingsDataItem.swift in Sources */,
+				E940580723F680F000623746 /* AddressAccessView.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
 				84B9EC8C23E085AE00979C39 /* Observable+Extensions.swift in Sources */,
 				84854B4E23FAEC4F001B44F2 /* BasicTransitions.swift in Sources */,
@@ -2013,6 +2072,7 @@
 				84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */,
 				84854B5323FBFDD6001B44F2 /* PushNotificationService.swift in Sources */,
 				84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */,
+				E940581123F682EA00623746 /* AllowedPersonCell.swift in Sources */,
 				84CC15D423EC40EE00A1CB95 /* AddressesListHeaderCell.swift in Sources */,
 				84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */,
 			);

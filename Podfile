@@ -17,6 +17,7 @@ target 'SmartYard' do
   pod 'RxCocoa'
   pod 'RxViewController'
   pod 'RxDataSources'
+  pod 'RxKeyboard'
 
   # Utilities
   pod 'SwiftLint', '0.35'
@@ -29,7 +30,7 @@ target 'SmartYard' do
   pod 'PinLayout'
   pod 'SSCustomTabbar', :git => 'https://github.com/MadBrains/SSCustomTabbar.git', :branch => 'feature/add-animation-options'
   pod 'TPKeyboardAvoiding'
-  pod 'JGProgressHUD'
+  pod 'SwipeCellKit'
   
   # Map
   pod 'MapboxStatic.swift', '~> 0.11'
