@@ -16,12 +16,15 @@
         <array key="SourceSansPro-Regular.ttf">
             <string>SourceSansPro-Regular</string>
         </array>
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserNameViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
-                <outlet property="avoidingView" destination="9oy-x5-TGN" id="v3p-Y9-jFv"/>
                 <outlet property="continueButton" destination="MyO-ec-zrb" id="CKS-Kd-iua"/>
+                <outlet property="mainContainerBottomConstraint" destination="mzc-29-aat" id="amC-Ja-cMV"/>
                 <outlet property="middleNameTextField" destination="PoY-jf-rQZ" id="CcG-Xw-0E2"/>
                 <outlet property="nameTextField" destination="EEN-Gu-xjS" id="ap6-iP-yBt"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -38,7 +41,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9oy-x5-TGN" userLabel="AvoidingView">
                     <rect key="frame" x="0.0" y="130" width="414" height="484.5"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Как к вам обращаться?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBg-Y6-ldi">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Как к вам обращаться?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBg-Y6-ldi">
                             <rect key="frame" x="40" y="0.0" width="334" height="80.5"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -77,13 +80,13 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </textField>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MyO-ec-zrb">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MyO-ec-zrb" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="24" y="252" width="334" height="60"/>
                                     <color key="backgroundColor" red="0.16078431372549018" green="0.54509803921568623" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="60" id="XWe-AN-h3R"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                                    <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                                     <color key="tintColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                     <state key="normal" title="Далее"/>
                                     <userDefinedRuntimeAttributes>
@@ -133,7 +136,9 @@
                 <constraint firstItem="9oy-x5-TGN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="VRL-6k-jTq"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="9oy-x5-TGN" secondAttribute="trailing" id="c0d-56-smz"/>
                 <constraint firstAttribute="bottom" secondItem="0CP-jo-82E" secondAttribute="bottom" id="kuA-Bb-GqZ"/>
-                <constraint firstItem="9oy-x5-TGN" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="86" id="zyz-6F-2TJ"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="9oy-x5-TGN" secondAttribute="bottom" id="mzc-29-aat"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="9oy-x5-TGN" secondAttribute="bottom" constant="20" id="n58-dP-H9s"/>
+                <constraint firstItem="9oy-x5-TGN" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" priority="999" constant="86" id="zyz-6F-2TJ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>

@@ -26,7 +26,6 @@ target 'SmartYard' do
   # UI
   pod 'Cartography'
   pod 'PMNibLinkableView'
-  pod 'IHKeyboardAvoiding'
   pod 'TouchAreaInsets'
   pod 'PinLayout'
   pod 'SSCustomTabbar', :git => 'https://github.com/MadBrains/SSCustomTabbar.git', :branch => 'feature/add-animation-options'

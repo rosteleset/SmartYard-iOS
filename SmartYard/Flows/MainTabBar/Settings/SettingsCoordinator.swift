@@ -18,6 +18,7 @@ enum SettingsRoute: Route {
     case serviceIsNotActivated
     case serviceUnavailable
     case advancedSettings(name: String)
+    case addressDeletion(delegate: AddressDeletionViewModelDelegate)
     
 }
 
@@ -82,6 +83,15 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             let vm = AdvancedSettingsViewModel(router: weakRouter, name: name)
             let vc = AdvancedSettingsViewController(viewModel: vm)
             return .push(vc)
+            
+        case let .addressDeletion(delegate):
+            let vm = AddressDeletionViewModel(router: weakRouter, delegate: delegate)
+            
+            let vc = AddressDeletionViewController(viewModel: vm)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            
+            return .present(vc)
         }
     }
     

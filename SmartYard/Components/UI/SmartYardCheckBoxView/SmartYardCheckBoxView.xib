@@ -61,6 +61,6 @@
     </objects>
     <resources>
         <image name="CheckBoxBorder" width="29" height="29"/>
-        <image name="CheckIcon" width="14" height="11"/>
+        <image name="CheckIcon" width="14" height="14"/>
     </resources>
 </document>

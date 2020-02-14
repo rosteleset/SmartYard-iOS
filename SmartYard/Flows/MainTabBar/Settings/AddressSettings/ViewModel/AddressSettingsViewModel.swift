@@ -29,6 +29,18 @@ class AddressSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.deleteTrigger
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.router.trigger(.addressDeletion(delegate: self))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             address: .just(address),
             shouldDisableOutgoingSound: .just(true),
@@ -43,6 +55,7 @@ extension AddressSettingsViewModel {
     
     struct Input {
         let backTrigger: Driver<Void>
+        let deleteTrigger: Driver<Void>
     }
     
     struct Output {
@@ -50,6 +63,14 @@ extension AddressSettingsViewModel {
         let shouldDisableOutgoingSound: Driver<Bool>
         let shouldAcceptCalls: Driver<Bool>
         let ringtone: Driver<String>
+    }
+    
+}
+
+extension AddressSettingsViewModel: AddressDeletionViewModelDelegate {
+    
+    func addressDeletionViewModelDidConfirmDeletion(_ viewModel: AddressDeletionViewModel) {
+        router.trigger(.back)
     }
     
 }

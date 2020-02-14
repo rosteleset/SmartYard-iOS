@@ -91,7 +91,10 @@ class AddressSettingsViewController: BaseViewController {
     }
     
     private func bind() {
-        let input = AddressSettingsViewModel.Input(backTrigger: fakeNavBar.rx.backButtonTap.asDriver())
+        let input = AddressSettingsViewModel.Input(
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
+            deleteTrigger: deleteAddressButton.rx.tap.asDriver()
+        )
         
         let output = viewModel.transform(input)
         
