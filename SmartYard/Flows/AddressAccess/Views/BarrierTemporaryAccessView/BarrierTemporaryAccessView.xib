@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="353"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q0k-1D-jac" customClass="AccessView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="30" width="414" height="323"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Временный доступ к шлагбауму/воротам" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SJp-2N-lOa">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="tHh-EQ-xjD"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
+                    <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Q0k-1D-jac" secondAttribute="trailing" id="5fm-Mz-EV1"/>
+                <constraint firstAttribute="bottom" secondItem="Q0k-1D-jac" secondAttribute="bottom" id="AYH-a9-Znm"/>
+                <constraint firstItem="Q0k-1D-jac" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BNL-f2-gJJ"/>
+                <constraint firstItem="SJp-2N-lOa" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="EnW-DI-S6f"/>
+                <constraint firstItem="SJp-2N-lOa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="JN1-C2-TPR"/>
+                <constraint firstItem="Q0k-1D-jac" firstAttribute="top" secondItem="SJp-2N-lOa" secondAttribute="bottom" constant="8" id="hJb-gz-5Z9"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="SJp-2N-lOa" secondAttribute="trailing" id="hXo-RQ-g9Z"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="52.173913043478265" y="-31.138392857142854"/>
+        </view>
+    </objects>
+</document>

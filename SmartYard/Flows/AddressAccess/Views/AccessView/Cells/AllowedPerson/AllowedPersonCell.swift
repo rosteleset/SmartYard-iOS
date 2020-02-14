@@ -10,9 +10,12 @@ import UIKit
 
 class AllowedPersonCell: UITableViewCell {
 
+    @IBOutlet private weak var userLogoImageView: UIImageView!
+    @IBOutlet private weak var userNameLabel: UILabel!
+    @IBOutlet private weak var smsButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
 }
