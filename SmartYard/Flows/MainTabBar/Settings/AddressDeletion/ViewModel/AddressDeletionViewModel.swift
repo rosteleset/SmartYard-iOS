@@ -28,8 +28,8 @@ class AddressDeletionViewModel: BaseViewModel {
     }
     
     func transform(_ input: Input) -> Output {
-        let isAbleToDelete: Driver<Bool> = input.deletionReason
-            .withLatestFrom(input.customDescription) { ($0, $1) }
+         let isAbleToDelete: Driver<Bool> = Driver
+            .combineLatest(input.deletionReason, input.customDescription)
             .map { args in
                 let (reason, customDescription) = args
                 

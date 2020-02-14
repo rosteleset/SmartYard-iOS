@@ -11,12 +11,37 @@ import UIKit
 
 class BlueButton: UIButton {
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupUI()
+    }
+    
+    private func setupUI() {
         cornerRadius = 12
         backgroundColor = UIColor.SmartYard.blue
         titleLabel?.textColor = .white
+    }
+    
+    override var isEnabled: Bool {
+        didSet {
+            updateAppearance()
+        }
+    }
+    
+    private func updateAppearance() {
+        switch state {
+        case .normal:
+            backgroundColor = UIColor.SmartYard.blue
+        case .disabled:
+            backgroundColor = UIColor.SmartYard.gray.withAlphaComponent(0.5)
+        default:
+            break
+        }
     }
     
 }
