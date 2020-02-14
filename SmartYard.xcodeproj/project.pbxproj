@@ -113,6 +113,9 @@
 		84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */; };
 		84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */; };
 		84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */; };
+		84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */; };
+		84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */; };
+		84D6445923F68AB200AD87EF /* AdvancedSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */; };
 		84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */; };
 		84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */; };
 		84EEBC9823F40FA600C9557F /* SettingsServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9723F40FA600C9557F /* SettingsServiceState.swift */; };
@@ -316,6 +319,9 @@
 		84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CACornerMask+Extensions.swift"; sourceTree = "<group>"; };
 		84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTabBarController.xib; sourceTree = "<group>"; };
 		84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTransitions.swift; sourceTree = "<group>"; };
+		84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewController.swift; sourceTree = "<group>"; };
+		84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvancedSettingsViewController.xib; sourceTree = "<group>"; };
+		84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewModel.swift; sourceTree = "<group>"; };
 		84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceType.swift; sourceTree = "<group>"; };
 		84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMockDataExample.swift; sourceTree = "<group>"; };
 		84EEBC9723F40FA600C9557F /* SettingsServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceState.swift; sourceTree = "<group>"; };
@@ -586,6 +592,7 @@
 			children = (
 				844AC3EE23EBFF5E0066006D /* SettingsCoordinator.swift */,
 				848D1B8423F29D3F00D6E368 /* AddressSettings */,
+				84D6445123F68A8200AD87EF /* AdvancedSettings */,
 				844AC3F023EBFF790066006D /* Main */,
 				84B89A7D23F2F88E009692B4 /* ServiceIsActivated */,
 				84B89A7E23F2F958009692B4 /* ServiceIsNotActivated */,
@@ -1080,6 +1087,32 @@
 			path = CameraCell;
 			sourceTree = "<group>";
 		};
+		84D6445123F68A8200AD87EF /* AdvancedSettings */ = {
+			isa = PBXGroup;
+			children = (
+				84D6445223F68A8E00AD87EF /* View */,
+				84D6445323F68A9200AD87EF /* ViewModel */,
+			);
+			path = AdvancedSettings;
+			sourceTree = "<group>";
+		};
+		84D6445223F68A8E00AD87EF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */,
+				84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84D6445323F68A9200AD87EF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		84EEBC9E23F55A9B00C9557F /* NotificationServiceExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -1551,6 +1584,7 @@
 				84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */,
 				E9E4270B23F2CD3900F5D593 /* ServiceFromOfficeView.xib in Resources */,
 				84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */,
+				84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */,
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
 				E9E4271C23F41C6600F5D593 /* AvailableServiceCell.xib in Resources */,
 				843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */,
@@ -1759,6 +1793,7 @@
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
+				84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */,
 				84898A9223F1554D00E6B78E /* SettingsDataItem.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
 				84B9EC8C23E085AE00979C39 /* Observable+Extensions.swift in Sources */,
@@ -1782,6 +1817,7 @@
 				E98C382923F173480010BBC1 /* ClearButtonWithDashedUnderline.swift in Sources */,
 				84B89A9823F2FA97009692B4 /* ServiceIsActivatedViewController.swift in Sources */,
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
+				84D6445923F68AB200AD87EF /* AdvancedSettingsViewModel.swift in Sources */,
 				844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */,
 				84B89A9523F2FA8A009692B4 /* ServiceIsActivatedViewModel.swift in Sources */,
 				844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */,

@@ -60,7 +60,8 @@ class SettingsViewController: BaseViewController {
         
         let input = SettingsViewModel.Input(
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
-            serviceSelected: serviceButtonTapTrigger.asDriverOnErrorJustComplete()
+            serviceSelected: serviceButtonTapTrigger.asDriverOnErrorJustComplete(),
+            advancedSettingsTrigger: settingsButton.rx.tap.asDriver()
         )
         
         let output = viewModel.transform(input)

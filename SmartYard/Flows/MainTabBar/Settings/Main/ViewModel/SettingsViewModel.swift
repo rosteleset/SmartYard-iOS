@@ -28,6 +28,16 @@ class SettingsViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
+        // MARK: Обработка нажатия на иконку настроек
+        
+        input.advancedSettingsTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.advancedSettings(name: "Алексеев В.Б."))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Обработка нажатия на кнопку сервиса
         
         input.serviceSelected
@@ -213,6 +223,7 @@ extension SettingsViewModel {
     struct Input {
         let itemSelected: Driver<SettingsDataItemIdentity>
         let serviceSelected: Driver<(SettingsDataItemIdentity, SettingsServiceType)>
+        let advancedSettingsTrigger: Driver<Void>
     }
     
     struct Output {
