@@ -27,6 +27,7 @@
                 <outlet property="deleteButton" destination="puN-ny-jxO" id="RVo-Qn-yxj"/>
                 <outlet property="dontWantToManageFromAppCheckbox" destination="PVM-oR-wfQ" id="tVq-2v-0MY"/>
                 <outlet property="dontWantToManageFromAppContainer" destination="SwW-Xv-GDI" id="UQV-Sg-xGE"/>
+                <outlet property="mainContainerBottomConstraint" destination="1i2-oI-Sak" id="NN7-t6-ONW"/>
                 <outlet property="otherReasonCheckbox" destination="O2k-u4-brK" id="2Of-vg-ho8"/>
                 <outlet property="otherReasonContainer" destination="NtQ-K7-nkS" id="XC4-RU-gvQ"/>
                 <outlet property="reasonTextContainer" destination="nzn-x3-CiT" id="CA6-ND-LOS"/>
@@ -44,7 +45,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RUG-Ae-ZBc">
                     <rect key="frame" x="16" y="172.5" width="382" height="561.5"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Укажите причину" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yh9-uz-hcE">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Укажите причину" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yh9-uz-hcE">
                             <rect key="frame" x="24" y="28" width="334" height="35.5"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="28"/>
                             <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -165,7 +166,7 @@
                                     </constraints>
                                     <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                 </textField>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YSS-wI-JVP" userLabel="Separator">
                                     <rect key="frame" x="0.0" y="31" width="334" height="1"/>
@@ -187,7 +188,7 @@
                                 <constraint firstItem="YSS-wI-JVP" firstAttribute="leading" secondItem="nzn-x3-CiT" secondAttribute="leading" id="ntb-iy-bnY"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="При удалении адреса вам будет недоступно управление услугами адреса" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ej-st-xQH">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="При удалении адреса вам будет недоступно управление услугами адреса" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ej-st-xQH">
                             <rect key="frame" x="24" y="372" width="334" height="35.5"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                             <nil key="highlightedColor"/>
@@ -249,9 +250,9 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="RUG-Ae-ZBc" secondAttribute="bottom" constant="50" id="1i2-oI-Sak"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="RUG-Ae-ZBc" secondAttribute="bottom" id="1i2-oI-Sak"/>
                 <constraint firstItem="RUG-Ae-ZBc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="FKy-M9-h6K"/>
-                <constraint firstItem="RUG-Ae-ZBc" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="Fwk-WJ-P3n"/>
+                <constraint firstItem="RUG-Ae-ZBc" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" priority="999" id="Fwk-WJ-P3n"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="RUG-Ae-ZBc" secondAttribute="trailing" constant="16" id="b32-03-oiN"/>
                 <constraint firstItem="RUG-Ae-ZBc" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="rvn-ac-uR3"/>
             </constraints>

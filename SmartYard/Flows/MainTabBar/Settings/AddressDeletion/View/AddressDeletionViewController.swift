@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import TouchAreaInsets
+import RxKeyboard
 
 class AddressDeletionViewController: BaseViewController {
     
@@ -24,6 +25,8 @@ class AddressDeletionViewController: BaseViewController {
     
     @IBOutlet private weak var reasonTextContainer: UIView!
     @IBOutlet private weak var reasonTextField: UITextField!
+    
+    @IBOutlet private var mainContainerBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var deleteButton: BlueButton!
     @IBOutlet private weak var cancelButton: UIButton!
@@ -43,6 +46,7 @@ class AddressDeletionViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        configureRxKeyboard()
         bind()
     }
     
@@ -126,6 +130,23 @@ class AddressDeletionViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         cancelButton.touchAreaInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+    }
+    
+    private func configureRxKeyboard() {
+        RxKeyboard.instance.visibleHeight
+            .debounce(.milliseconds(100))
+            .drive(
+                onNext: { [weak self] keyboardVisibleHeight in
+                    self?.mainContainerBottomConstraint.constant = keyboardVisibleHeight == 0 ?
+                        0 :
+                        keyboardVisibleHeight + 16
+                    
+                    UIView.animate(withDuration: 0.25) {
+                        self?.view.layoutIfNeeded()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func selectReason(_ reason: AddressDeletionReason) {
