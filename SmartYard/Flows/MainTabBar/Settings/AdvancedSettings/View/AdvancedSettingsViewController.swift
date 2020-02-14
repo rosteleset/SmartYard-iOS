@@ -8,10 +8,13 @@
 
 import UIKit
 import TouchAreaInsets
+import RxSwift
+import RxCocoa
 
 class AdvancedSettingsViewController: BaseViewController {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
+    @IBOutlet private weak var scrollView: UIScrollView!
     
     @IBOutlet private weak var nameContainerView: UIView!
     @IBOutlet private weak var nameTextField: UITextField!
@@ -34,6 +37,8 @@ class AdvancedSettingsViewController: BaseViewController {
     @IBOutlet private weak var logoutButton: UIButton!
     
     private let viewModel: AdvancedSettingsViewModel
+    
+    private let viewToScrollTo = BehaviorSubject<UIView?>(value: nil)
     
     init(viewModel: AdvancedSettingsViewModel) {
         self.viewModel = viewModel
@@ -98,10 +103,12 @@ class AdvancedSettingsViewController: BaseViewController {
             collapsedNotificationsBottomConstraint.isActive = false
             expandedNotificationsBottomConstraint.isActive = true
             notificationsHeaderArrowImageView.image = UIImage(named: "UpArrowIcon")
+            viewToScrollTo.onNext(notificationsContainerView)
         } else {
             expandedNotificationsBottomConstraint.isActive = false
             collapsedNotificationsBottomConstraint.isActive = true
             notificationsHeaderArrowImageView.image = UIImage(named: "DownArrowIcon")
+            viewToScrollTo.onNext(nil)
         }
         
         UIView.animate(withDuration: 0.35) { [weak self] in
@@ -117,10 +124,12 @@ class AdvancedSettingsViewController: BaseViewController {
             collapsedSecurityBottomConstraint.isActive = false
             expandedSecurityBottomConstraint.isActive = true
             securityHeaderArrowImageView.image = UIImage(named: "UpArrowIcon")
+            viewToScrollTo.onNext(securityContainerView)
         } else {
             expandedSecurityBottomConstraint.isActive = false
             collapsedSecurityBottomConstraint.isActive = true
             securityHeaderArrowImageView.image = UIImage(named: "DownArrowIcon")
+            viewToScrollTo.onNext(nil)
         }
         
         UIView.animate(withDuration: 0.35) { [weak self] in
@@ -130,6 +139,24 @@ class AdvancedSettingsViewController: BaseViewController {
     }
     
     private func bind() {
+        scrollView.rx
+            .observeWeakly(CGSize.self, "contentSize", options: [.new])
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .withLatestFrom(viewToScrollTo.asDriver(onErrorJustReturn: nil))
+            .ignoreNil()
+            .do(
+                onNext: { [weak self] _ in
+                    self?.viewToScrollTo.onNext(nil)
+                }
+            )
+            .drive(
+                onNext: { [weak self] view in
+                    self?.performScrollUpdate(to: view)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let input = AdvancedSettingsViewModel.Input(backTrigger: fakeNavBar.rx.backButtonTap.asDriver())
         
         let output = viewModel.transform(input)
@@ -143,6 +170,18 @@ class AdvancedSettingsViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    private func performScrollUpdate(to view: UIView) {
+        let convertedOrigin = view.convert(view.bounds.origin, to: scrollView)
+        let desiredOffset = convertedOrigin.y
+        let maxPossibleOffset = scrollView.contentSize.height - scrollView.bounds.height
+        let finalOffset = max(min(desiredOffset, maxPossibleOffset), 0)
+        
+        scrollView.setContentOffset(
+            CGPoint(x: 0, y: finalOffset),
+            animated: true
+        )
     }
     
 }

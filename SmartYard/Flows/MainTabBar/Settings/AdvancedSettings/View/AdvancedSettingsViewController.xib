@@ -35,6 +35,7 @@
                 <outlet property="notificationsContainerView" destination="Rja-ay-B0n" id="nnz-SJ-ubo"/>
                 <outlet property="notificationsHeader" destination="YXf-zN-Lm3" id="P2E-Ef-369"/>
                 <outlet property="notificationsHeaderArrowImageView" destination="kIZ-Qq-Puv" id="Z6X-TK-Edc"/>
+                <outlet property="scrollView" destination="hiL-tj-Ent" id="LS9-JU-qqv"/>
                 <outlet property="securityContainerView" destination="kRO-Uj-jlU" id="fNc-Og-zZM"/>
                 <outlet property="securityHeader" destination="bcs-fq-FWS" id="bzQ-qm-nYD"/>
                 <outlet property="securityHeaderArrowImageView" destination="U50-hF-8EH" id="awy-4R-ECy"/>
