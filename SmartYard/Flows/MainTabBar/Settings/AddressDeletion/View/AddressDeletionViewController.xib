@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressDeletionViewController" customModule="SmartYard" customModuleProvider="target">
+            <connections>
+                <outlet property="cancelButton" destination="nlH-Pd-ANd" id="zU1-12-QZo"/>
+                <outlet property="deleteButton" destination="puN-ny-jxO" id="RVo-Qn-yxj"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RUG-Ae-ZBc">
+                    <rect key="frame" x="16" y="381" width="382" height="144"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="puN-ny-jxO" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="24" y="24" width="334" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="scQ-6P-G1C"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                            <state key="normal" title="Удалить">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlH-Pd-ANd">
+                            <rect key="frame" x="24" y="94" width="334" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="9IK-ed-0zW"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                            <state key="normal" title="Отмена">
+                                <color key="titleColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="nlH-Pd-ANd" secondAttribute="bottom" constant="30" id="9G9-kB-0oV"/>
+                        <constraint firstItem="puN-ny-jxO" firstAttribute="leading" secondItem="RUG-Ae-ZBc" secondAttribute="leading" constant="24" id="9Tb-kG-vXt"/>
+                        <constraint firstItem="nlH-Pd-ANd" firstAttribute="leading" secondItem="RUG-Ae-ZBc" secondAttribute="leading" constant="24" id="InE-wi-Y5s"/>
+                        <constraint firstItem="nlH-Pd-ANd" firstAttribute="top" secondItem="puN-ny-jxO" secondAttribute="bottom" constant="10" id="VLF-mg-Lwa"/>
+                        <constraint firstItem="puN-ny-jxO" firstAttribute="top" secondItem="RUG-Ae-ZBc" secondAttribute="top" constant="24" id="WqX-zF-u02"/>
+                        <constraint firstAttribute="trailing" secondItem="puN-ny-jxO" secondAttribute="trailing" constant="24" id="nqD-i4-WqT"/>
+                        <constraint firstAttribute="trailing" secondItem="nlH-Pd-ANd" secondAttribute="trailing" constant="24" id="opG-qr-gWo"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="RUG-Ae-ZBc" secondAttribute="bottom" constant="50" id="1i2-oI-Sak"/>
+                <constraint firstItem="RUG-Ae-ZBc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="FKy-M9-h6K"/>
+                <constraint firstItem="RUG-Ae-ZBc" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="Fwk-WJ-P3n"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="RUG-Ae-ZBc" secondAttribute="trailing" constant="16" id="b32-03-oiN"/>
+                <constraint firstItem="RUG-Ae-ZBc" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="rvn-ac-uR3"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="137.68115942028987" y="128.57142857142856"/>
+        </view>
+    </objects>
+</document>

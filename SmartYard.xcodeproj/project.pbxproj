@@ -116,6 +116,10 @@
 		84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */; };
 		84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */; };
 		84D6445923F68AB200AD87EF /* AdvancedSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */; };
+		84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445D23F6ACE600AD87EF /* AddressDeletionViewController.swift */; };
+		84D6446023F6ACE600AD87EF /* AddressDeletionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D6445E23F6ACE600AD87EF /* AddressDeletionViewController.xib */; };
+		84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6446323F6AD3F00AD87EF /* AddressDeletionViewModel.swift */; };
+		84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6446623F6AF5100AD87EF /* AddressDeletionReason.swift */; };
 		84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */; };
 		84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */; };
 		84EEBC9823F40FA600C9557F /* SettingsServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9723F40FA600C9557F /* SettingsServiceState.swift */; };
@@ -322,6 +326,10 @@
 		84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewController.swift; sourceTree = "<group>"; };
 		84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvancedSettingsViewController.xib; sourceTree = "<group>"; };
 		84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewModel.swift; sourceTree = "<group>"; };
+		84D6445D23F6ACE600AD87EF /* AddressDeletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDeletionViewController.swift; sourceTree = "<group>"; };
+		84D6445E23F6ACE600AD87EF /* AddressDeletionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressDeletionViewController.xib; sourceTree = "<group>"; };
+		84D6446323F6AD3F00AD87EF /* AddressDeletionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDeletionViewModel.swift; sourceTree = "<group>"; };
+		84D6446623F6AF5100AD87EF /* AddressDeletionReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDeletionReason.swift; sourceTree = "<group>"; };
 		84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceType.swift; sourceTree = "<group>"; };
 		84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMockDataExample.swift; sourceTree = "<group>"; };
 		84EEBC9723F40FA600C9557F /* SettingsServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceState.swift; sourceTree = "<group>"; };
@@ -591,6 +599,7 @@
 			isa = PBXGroup;
 			children = (
 				844AC3EE23EBFF5E0066006D /* SettingsCoordinator.swift */,
+				84D6445A23F6ACA200AD87EF /* AddressDeletion */,
 				848D1B8423F29D3F00D6E368 /* AddressSettings */,
 				84D6445123F68A8200AD87EF /* AdvancedSettings */,
 				844AC3F023EBFF790066006D /* Main */,
@@ -1113,6 +1122,41 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		84D6445A23F6ACA200AD87EF /* AddressDeletion */ = {
+			isa = PBXGroup;
+			children = (
+				84D6446523F6AF4700AD87EF /* Entries */,
+				84D6445B23F6ACD100AD87EF /* View */,
+				84D6445C23F6ACD500AD87EF /* ViewModel */,
+			);
+			path = AddressDeletion;
+			sourceTree = "<group>";
+		};
+		84D6445B23F6ACD100AD87EF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84D6445D23F6ACE600AD87EF /* AddressDeletionViewController.swift */,
+				84D6445E23F6ACE600AD87EF /* AddressDeletionViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84D6445C23F6ACD500AD87EF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				84D6446323F6AD3F00AD87EF /* AddressDeletionViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		84D6446523F6AF4700AD87EF /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				84D6446623F6AF5100AD87EF /* AddressDeletionReason.swift */,
+			);
+			path = Entries;
+			sourceTree = "<group>";
+		};
 		84EEBC9E23F55A9B00C9557F /* NotificationServiceExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -1572,6 +1616,7 @@
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
+				84D6446023F6ACE600AD87EF /* AddressDeletionViewController.xib in Resources */,
 				84B89A9123F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib in Resources */,
 				844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */,
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
@@ -1823,6 +1868,7 @@
 				844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */,
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
+				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
 				84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */,
 				84EEBC9823F40FA600C9557F /* SettingsServiceState.swift in Sources */,
@@ -1832,6 +1878,8 @@
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
+				84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */,
+				84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */,
 				84CC15E523EC999700A1CB95 /* AddressesListSectionUpdateKind.swift in Sources */,
 				84CC15E323EC86D900A1CB95 /* ObjectLockButton.swift in Sources */,
 				84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */,
