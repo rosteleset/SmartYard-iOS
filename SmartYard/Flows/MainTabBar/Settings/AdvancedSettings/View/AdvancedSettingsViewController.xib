@@ -70,7 +70,7 @@
                     <rect key="frame" x="0.0" y="173.5" width="414" height="688.5"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OuL-ZB-YLW" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="764.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="334"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5nb-DY-DIs" userLabel="Name Edit View">
                                     <rect key="frame" x="16" y="0.0" width="382" height="70"/>
@@ -106,7 +106,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rja-ay-B0n" userLabel="Notifications Section">
-                                    <rect key="frame" x="16" y="78" width="382" height="325.5"/>
+                                    <rect key="frame" x="16" y="78" width="382" height="72"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YXf-zN-Lm3" userLabel="ExpandableHeader">
                                             <rect key="frame" x="0.0" y="0.0" width="382" height="72"/>
@@ -117,7 +117,7 @@
                                                     <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kIZ-Qq-Puv">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DownArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kIZ-Qq-Puv">
                                                     <rect key="frame" x="345" y="32" width="13" height="8"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="13" id="dek-Z9-cTL"/>
@@ -327,12 +327,12 @@
                                     </userDefinedRuntimeAttributes>
                                     <variation key="default">
                                         <mask key="constraints">
-                                            <exclude reference="N57-Dx-SOM"/>
+                                            <exclude reference="ERf-FW-y7G"/>
                                         </mask>
                                     </variation>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kRO-Uj-jlU" userLabel="Security Section">
-                                    <rect key="frame" x="16" y="411.5" width="382" height="249"/>
+                                    <rect key="frame" x="16" y="158" width="382" height="72"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bcs-fq-FWS" userLabel="ExpandableHeader">
                                             <rect key="frame" x="0.0" y="0.0" width="382" height="72"/>
@@ -343,7 +343,7 @@
                                                     <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="U50-hF-8EH">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DownArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="U50-hF-8EH">
                                                     <rect key="frame" x="345" y="32" width="13" height="8"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="13" id="Cwt-Yq-cwu"/>
@@ -478,12 +478,12 @@
                                     </userDefinedRuntimeAttributes>
                                     <variation key="default">
                                         <mask key="constraints">
-                                            <exclude reference="T4b-bM-osv"/>
+                                            <exclude reference="4h5-cK-RFz"/>
                                         </mask>
                                     </variation>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGe-ZA-fd6">
-                                    <rect key="frame" x="16" y="684.5" width="382" height="56"/>
+                                    <rect key="frame" x="16" y="254" width="382" height="56"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="56" id="RcF-Cm-tut"/>
@@ -553,9 +553,9 @@
         </view>
     </objects>
     <resources>
+        <image name="DownArrowIcon" width="13" height="8"/>
         <image name="EditIcon" width="12" height="12"/>
         <image name="MainBackground" width="375" height="812"/>
         <image name="RightArrowIcon" width="8" height="13"/>
-        <image name="UpArrowIcon" width="13" height="8"/>
     </resources>
 </document>
