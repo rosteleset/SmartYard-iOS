@@ -148,6 +148,8 @@
 		E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E94057F823F6721F00623746 /* AddressAccessViewController.xib */; };
 		E94057FC23F6724100623746 /* AddressAccessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057FB23F6724100623746 /* AddressAccessViewModel.swift */; };
 		E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057FD23F6757D00623746 /* FullRoundedView.swift */; };
+		E940580123F6794300623746 /* IntercomTemporaryAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940580023F6794300623746 /* IntercomTemporaryAccess.swift */; };
+		E940580323F6794F00623746 /* IntercomTemporaryAccess.xib in Resources */ = {isa = PBXBuildFile; fileRef = E940580223F6794F00623746 /* IntercomTemporaryAccess.xib */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -379,6 +381,8 @@
 		E94057F823F6721F00623746 /* AddressAccessViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessViewController.xib; sourceTree = "<group>"; };
 		E94057FB23F6724100623746 /* AddressAccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessViewModel.swift; sourceTree = "<group>"; };
 		E94057FD23F6757D00623746 /* FullRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRoundedView.swift; sourceTree = "<group>"; };
+		E940580023F6794300623746 /* IntercomTemporaryAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTemporaryAccess.swift; sourceTree = "<group>"; };
+		E940580223F6794F00623746 /* IntercomTemporaryAccess.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntercomTemporaryAccess.xib; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -1305,11 +1309,29 @@
 		E94057F623F671F200623746 /* AddressAccess */ = {
 			isa = PBXGroup;
 			children = (
+				E940580423F67EE100623746 /* Views */,
 				E94057F723F6721F00623746 /* AddressAccessViewController.swift */,
 				E94057F823F6721F00623746 /* AddressAccessViewController.xib */,
 				E94057FB23F6724100623746 /* AddressAccessViewModel.swift */,
 			);
 			path = AddressAccess;
+			sourceTree = "<group>";
+		};
+		E94057FF23F678E400623746 /* IntercomTemporaryAccess */ = {
+			isa = PBXGroup;
+			children = (
+				E940580023F6794300623746 /* IntercomTemporaryAccess.swift */,
+				E940580223F6794F00623746 /* IntercomTemporaryAccess.xib */,
+			);
+			path = IntercomTemporaryAccess;
+			sourceTree = "<group>";
+		};
+		E940580423F67EE100623746 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E94057FF23F678E400623746 /* IntercomTemporaryAccess */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		E98C381D23F141E70010BBC1 /* Recovered References */ = {
@@ -1698,6 +1720,7 @@
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
+				E940580323F6794F00623746 /* IntercomTemporaryAccess.xib in Resources */,
 				84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */,
 				E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
@@ -1984,6 +2007,7 @@
 				84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */,
 				84854B4523FAB4D7001B44F2 /* APIClientName.swift in Sources */,
 				84CC15E523EC999700A1CB95 /* AddressesListSectionUpdateKind.swift in Sources */,
+				E940580123F6794300623746 /* IntercomTemporaryAccess.swift in Sources */,
 				84CC15E323EC86D900A1CB95 /* ObjectLockButton.swift in Sources */,
 				84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */,
 				84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */,
