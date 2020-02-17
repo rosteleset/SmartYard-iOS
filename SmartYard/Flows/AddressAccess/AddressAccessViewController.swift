@@ -36,13 +36,14 @@ class AddressAccessViewController: BaseViewController {
     }
     
     private func configureViews() {
-        temporaryAccessView.viewModel = AccessViewModel()
-        permanentAccessView.viewModel = AccessViewModel()
+        print("Set view models!!!")
+//        temporaryAccessView.viewModel = AccessViewModel()
+//        permanentAccessView.viewModel = AccessViewModel()
     }
     
     private func bind() {
         let input = AddressAccessViewModel.Input(
-            viewDidLoadTrigger: rx.viewDidLoad.asDriverOnErrorJustComplete(),
+            viewDidAppearTrigger: rx.viewDidAppear.asDriverOnErrorJustComplete(),
             refreshIntercomTempCodeTrigger: intercomAccessView.rx.refreshButtonTapped.asDriverOnErrorJustComplete(),
             openGuestAccessTrigger: intercomAccessView.rx.openButtonTapped.asDriverOnErrorJustComplete(),
             smsToTempContactTrigger: temporaryAccessView.sendSmsSubject.asDriverOnErrorJustComplete(),
@@ -66,7 +67,7 @@ class AddressAccessViewController: BaseViewController {
         output.permanentAccessContacts
             .drive(
                 onNext: { [weak self] contacts in
-                    self?.permanentAccessView.viewModel?.personsItemsSubject.onNext(contacts)
+                    self?.permanentAccessView.viewModel.personsItemsSubject.onNext(contacts)
                 }
             )
             .disposed(by: disposeBag)
@@ -74,7 +75,7 @@ class AddressAccessViewController: BaseViewController {
         output.tempAccessContacts
             .drive(
                 onNext: { [weak self] contacts in
-                    self?.temporaryAccessView.viewModel?.personsItemsSubject.onNext(contacts)
+                    self?.temporaryAccessView.viewModel.updateData(data: contacts)
                 }
             )
             .disposed(by: disposeBag)

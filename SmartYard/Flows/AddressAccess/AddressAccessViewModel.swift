@@ -26,17 +26,18 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
-        input.viewDidLoadTrigger
+        input.viewDidAppearTrigger
             .drive(
-                onNext: { [weak self] in
+                onNext: { [weak self] _ in
                     guard let self = self else {
                         return
                     }
-                    
+            print("viewDidAppearTrigger!!!")
                     self.addressSubject.onNext(self.loadAddress())
                     self.tempAccessConstactsSubject.onNext(self.loadTemporaryAccessContacts())
                     self.permanentAccessContactSubject.onNext(self.loadPermanentAccessContacts())
                     self.intercomAccessCode.onNext(self.loadIntercomAccessCode())
+                    
                 }
             )
             .disposed(by: disposeBag)
@@ -48,7 +49,7 @@ class AddressAccessViewModel: BaseViewModel {
                         return
                     }
                     
-                    self.tempAccessConstactsSubject.onNext(self.loadTemporaryAccessContacts())
+                    self.intercomAccessCode.onNext(self.loadIntercomAccessCode())
                 }
             )
             .disposed(by: disposeBag)
@@ -138,7 +139,11 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func loadTemporaryAccessContacts() -> [AllowedPerson] {
-        return []
+        return [
+            AllowedPerson(displayedName: "Вася", phoneNumber: "+7-903-343-17-40", logoImage: nil),
+            AllowedPerson(displayedName: "Петя", phoneNumber: "+7-902-741-82-90", logoImage: nil),
+            AllowedPerson(displayedName: "Коля", phoneNumber: "+7-903-944-47-50", logoImage: nil)
+        ]
     }
     
     private func loadPermanentAccessContacts() -> [AllowedPerson] {
@@ -186,7 +191,7 @@ class AddressAccessViewModel: BaseViewModel {
 extension AddressAccessViewModel {
     
     struct Input {
-        let viewDidLoadTrigger: Driver<Void>
+        let viewDidAppearTrigger: Driver<Bool>
         let refreshIntercomTempCodeTrigger: Driver<Void>
         let openGuestAccessTrigger: Driver<Void>
         let smsToTempContactTrigger: Driver<Int?>

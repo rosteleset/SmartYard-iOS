@@ -12,17 +12,9 @@ import RxCocoa
 
 class AccessViewModel: BaseViewModel {
     
-    let personsItemsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
+    var personsItemsSubject = PublishSubject<[AllowedPerson]>()
     
     func transform(input: Input) -> Output {
-
-        input.awakeFromNibTrigger
-            .drive(
-                onNext: { [weak self] in
-                    self?.personsItemsSubject.onNext([])
-                }
-            )
-            .disposed(by: disposeBag)
         
         input.deletePressedTrigger
             .drive(
@@ -40,7 +32,19 @@ class AccessViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output(personsTrigger: personsItemsSubject.asDriver(onErrorJustReturn: []))
+        let combined = Driver.combineLatest(
+            input.awakeFromNibTrigger.asDriver(onErrorJustReturn: ()),
+            personsItemsSubject.asDriver(onErrorJustReturn: [])
+        ) { _, persons -> [AllowedPerson] in
+            return persons
+        }
+        
+        return Output(personsTrigger: combined.asDriver(onErrorJustReturn: []))
+    }
+    
+    func updateData(data: [AllowedPerson]) {
+        print("UPDATE DATA!!!")
+        personsItemsSubject.onNext(data)
     }
     
 }

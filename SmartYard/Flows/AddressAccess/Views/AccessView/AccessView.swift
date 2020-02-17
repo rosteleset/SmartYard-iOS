@@ -25,12 +25,13 @@ class AccessView: PMNibLinkableView {
     let deletePressedSubject = PublishSubject<Int?>()
     let addNewPersonSubject = PublishSubject<Void>()
     
-    var viewModel: AccessViewModel? = nil
+    var viewModel = AccessViewModel()
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         configureTableView()
+        bind()
         awakeFromNibSubject.onNext(())
     }
     
@@ -41,9 +42,7 @@ class AccessView: PMNibLinkableView {
             awakeFromNibTrigger: awakeFromNibSubject.asDriverOnErrorJustComplete()
         )
         
-        guard let output = viewModel?.transform(input: input) else {
-            return
-        }
+        let output = viewModel.transform(input: input)
         
         output.personsTrigger
             .drive(itemsProxy)
@@ -125,7 +124,7 @@ extension AccessView: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        guard indexPath.row != data.count + 1 && !data.isEmpty else {
+        guard indexPath.row != data.count && !data.isEmpty else {
             let cell = tableView.dequeueReusableCell(withClass: NewPersonCell.self, for: indexPath)
             return cell
         }
