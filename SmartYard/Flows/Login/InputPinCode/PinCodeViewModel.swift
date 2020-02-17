@@ -25,9 +25,12 @@ class PinCodeViewModel: BaseViewModel {
     
     let incorrectPinTrigger = PublishSubject<Bool>()
     
+    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
+        
+        let prepareTransitionTrigger = PublishSubject<Void>()
         
         input.inputPinText
             .distinctUntilChanged()
@@ -43,6 +46,12 @@ class PinCodeViewModel: BaseViewModel {
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
+            .do(
+                onNext: { _ in
+                    prepareTransitionTrigger.onNext(())
+                }
+            )
+            .delay(.milliseconds(100))
             .drive(
                 onNext: { [weak self] data in
                     self?.router.trigger(.userName(preloadedName: data.name))
@@ -77,7 +86,8 @@ class PinCodeViewModel: BaseViewModel {
         return Output(
             checkPinTrigger: incorrectPinTrigger.asDriverOnErrorJustComplete(),
             phoneNumber: .just(phoneNumber),
-            isLoading: activityTracker.asDriver()
+            isLoading: activityTracker.asDriver(),
+            prepareTransitionTrigger: prepareTransitionTrigger.asDriverOnErrorJustComplete()
         )
     }
     
@@ -95,6 +105,7 @@ extension PinCodeViewModel {
         let checkPinTrigger: Driver<Bool>
         let phoneNumber: Driver<String>
         let isLoading: Driver<Bool>
+        let prepareTransitionTrigger: Driver<Void>
     }
     
 }

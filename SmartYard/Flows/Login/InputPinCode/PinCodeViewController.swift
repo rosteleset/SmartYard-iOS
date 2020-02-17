@@ -61,7 +61,7 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        view.endEditing(true)
+        view.isUserInteractionEnabled = true
     }
     
     private func configureView() {
@@ -93,6 +93,7 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
     
+    // swiftlint:disable:next function_body_length
     private func bind() {
         sendCodeAgainButton.rx.tap
             .subscribe(
@@ -104,15 +105,13 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        let pinTextSubject = PublishSubject<String>()
-        
-        pinInputFieldView.rx.textControlProperty
-            .map { $0 ?? "" }
-            .bind(to: pinTextSubject)
-            .disposed(by: disposeBag)
+        let text = pinInputFieldView.rx.textControlProperty
+            .orEmpty
+            .observeOn(MainScheduler.asyncInstance)
+            .asDriver(onErrorJustReturn: "")
         
         let input = PinCodeViewModel.Input(
-            inputPinText: pinTextSubject.asDriver(onErrorJustReturn: ""),
+            inputPinText: text,
             fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(),
             sendCodeAgainButtonTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete()
         )
@@ -139,7 +138,20 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
                     self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.prepareTransitionTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.view.endEditing(true)
+                    self?.view.isUserInteractionEnabled = false
                 }
             )
             .disposed(by: disposeBag)

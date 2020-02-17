@@ -46,28 +46,36 @@ class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        view.endEditing(true)
+        view.isUserInteractionEnabled = true
     }
     
     private func bind() {
-        let phoneTextSubject = PublishSubject<String>()
+        let text = phoneTextView.rx.textControlProperty
+            .orEmpty
+            .observeOn(MainScheduler.asyncInstance)
+            .asDriver(onErrorJustReturn: "")
         
-        phoneTextView.rx.textControlProperty
-            .map { $0 ?? "" }
-            .bind(to: phoneTextSubject)
-            .disposed(by: disposeBag)
-        
-        let input = InputPhoneNumberViewModel.Input(
-            inputPhoneText: phoneTextSubject.asDriver(onErrorJustReturn: "")
-        )
-        
+        let input = InputPhoneNumberViewModel.Input(inputPhoneText: text)
         let output = viewModel.transform(input: input)
         
         output.isLoading
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
                     self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.prepareTransitionTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.view.endEditing(true)
+                    self?.view.isUserInteractionEnabled = false
                 }
             )
             .disposed(by: disposeBag)

@@ -56,6 +56,7 @@
 		84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4023FA9A99001B44F2 /* ActivityTracker.swift */; };
 		84854B4323FAA266001B44F2 /* NavigationTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4223FAA266001B44F2 /* NavigationTransitions.swift */; };
 		84854B4523FAB4D7001B44F2 /* APIClientName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4423FAB4D7001B44F2 /* APIClientName.swift */; };
+		84854B4823FAD3AC001B44F2 /* SendNameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4723FAD3AC001B44F2 /* SendNameRequest.swift */; };
 		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
 		84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */; };
@@ -266,6 +267,7 @@
 		84854B4023FA9A99001B44F2 /* ActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTracker.swift; sourceTree = "<group>"; };
 		84854B4223FAA266001B44F2 /* NavigationTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTransitions.swift; sourceTree = "<group>"; };
 		84854B4423FAB4D7001B44F2 /* APIClientName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientName.swift; sourceTree = "<group>"; };
+		84854B4723FAD3AC001B44F2 /* SendNameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendNameRequest.swift; sourceTree = "<group>"; };
 		84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderCell.swift; sourceTree = "<group>"; };
 		84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderCell.xib; sourceTree = "<group>"; };
 		84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelCell.swift; sourceTree = "<group>"; };
@@ -516,6 +518,7 @@
 		844AC39923E979BA0066006D /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				84854B4623FAD3A0001B44F2 /* SendName */,
 				844AC37F23E8636D0066006D /* ConfirmCode */,
 				844AC37823E8619A0066006D /* GetVerifyedAddresses */,
 				844AC38423E8651B0066006D /* Login */,
@@ -771,6 +774,14 @@
 				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
 			);
 			path = Entries;
+			sourceTree = "<group>";
+		};
+		84854B4623FAD3A0001B44F2 /* SendName */ = {
+			isa = PBXGroup;
+			children = (
+				84854B4723FAD3AC001B44F2 /* SendNameRequest.swift */,
+			);
+			path = SendName;
 			sourceTree = "<group>";
 		};
 		84898A7E23F144D400E6B78E /* Cells */ = {
@@ -1864,6 +1875,7 @@
 				84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */,
 				844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */,
 				84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */,
+				84854B4823FAD3AC001B44F2 /* SendNameRequest.swift in Sources */,
 				844AC38623E865260066006D /* LoginRequest.swift in Sources */,
 				844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */,
 				84AA8D6023E2E622001B3B43 /* APIWrapper.swift in Sources */,

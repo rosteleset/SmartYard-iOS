@@ -214,4 +214,28 @@ class APIWrapper {
         }
     }
     
+    func sendName(name: String, patronymic: String?) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = SendNameRequest(accessToken: accessToken, name: name, patronymic: patronymic)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performSendNameRequest(request) { result in
+                switch result {
+                case .success: single(.success(()))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
 }

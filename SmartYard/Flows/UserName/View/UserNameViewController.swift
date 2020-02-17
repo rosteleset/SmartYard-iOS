@@ -8,8 +8,9 @@
 
 import UIKit
 import RxKeyboard
+import JGProgressHUD
 
-class UserNameViewController: BaseViewController {
+class UserNameViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var nameTextField: SmartYardTextField!
     @IBOutlet private weak var middleNameTextField: SmartYardTextField!
@@ -19,6 +20,8 @@ class UserNameViewController: BaseViewController {
     
     private let viewModel: UserNameViewModel
     private let preloadedName: APIClientName?
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: UserNameViewModel, preloadedName: APIClientName?) {
         self.viewModel = viewModel
@@ -36,6 +39,12 @@ class UserNameViewController: BaseViewController {
         configureView()
         configureRxKeyboard()
         bind()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        view.isUserInteractionEnabled = true
     }
     
     private func configureView() {
@@ -79,6 +88,28 @@ class UserNameViewController: BaseViewController {
         
         output.isAbleToContinue
             .drive(continueButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.prepareTransitionTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.view.endEditing(true)
+                    self?.view.isUserInteractionEnabled = false
+                }
+            )
             .disposed(by: disposeBag)
     }
     

@@ -21,6 +21,11 @@ class UserNameViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
+        
+        let prepareTransitionTrigger = PublishSubject<Void>()
+        
         let isAbleToContinue = input.name
             .map { !$0.isNilOrEmpty }
         
@@ -34,14 +39,45 @@ class UserNameViewModel: BaseViewModel {
                 
                 return .just((unwrappedName, middleName))
             }
-            .drive(
+            .flatMapLatest { [weak self] args -> Driver<Void?> in
+                guard let self = self else {
+                    return .just(nil)
+                }
+                
+                let (name, patronymic) = args
+                
+                return self.apiWrapper.sendName(name: name, patronymic: patronymic)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .do(
                 onNext: { _ in
-                    // TODO: Добавить переход
+                    prepareTransitionTrigger.onNext(())
+                }
+            )
+            .delay(.milliseconds(100))
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.router.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
         
-        return Output(isAbleToContinue: isAbleToContinue)
+        errorTracker.asDriver()
+            .drive(
+                onNext: { error in
+                    print(error.localizedDescription)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        return Output(
+            isAbleToContinue: isAbleToContinue,
+            isLoading: activityTracker.asDriver(),
+            prepareTransitionTrigger: prepareTransitionTrigger.asDriverOnErrorJustComplete()
+        )
     }
     
 }
@@ -56,6 +92,8 @@ extension UserNameViewModel {
     
     struct Output {
         let isAbleToContinue: Driver<Bool>
+        let isLoading: Driver<Bool>
+        let prepareTransitionTrigger: Driver<Void>
     }
     
 }

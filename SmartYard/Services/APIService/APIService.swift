@@ -98,6 +98,17 @@ class APIService {
         )
     }
     
+    /// Запрос изменения имени пользователя
+    func performSendNameRequest(
+        _ request: SendNameRequest,
+        completion: ((Swift.Result<Void, Error>) -> Void)?
+    ) {
+        provider.request(
+            .sendName(request: request),
+            completion: createEmptyInnerCompletionBlock(from: completion)
+        )
+    }
+    
 }
 
 extension APIService {

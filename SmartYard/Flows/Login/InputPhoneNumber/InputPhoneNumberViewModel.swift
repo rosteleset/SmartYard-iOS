@@ -28,6 +28,8 @@ class InputPhoneNumberViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
+        let prepareTransitionTrigger = PublishSubject<Void>()
+        
         input.inputPhoneText
             .distinctUntilChanged()
             .filter { $0.count == Constants.phoneLengthWithoutPrefix }
@@ -49,6 +51,12 @@ class InputPhoneNumberViewModel: BaseViewModel {
             .ignoreNil()
             .withLatestFrom(tempPhone)
             .ignoreNil()
+            .do(
+                onNext: { _ in
+                    prepareTransitionTrigger.onNext(())
+                }
+            )
+            .delay(.milliseconds(100))
             .drive(
                 onNext: { [weak self] phone in
                     self?.router.trigger(.pinCode(phoneNumber: phone))
@@ -64,7 +72,10 @@ class InputPhoneNumberViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output(isLoading: activityTracker.asDriver())
+        return Output(
+            isLoading: activityTracker.asDriver(),
+            prepareTransitionTrigger: prepareTransitionTrigger.asDriverOnErrorJustComplete()
+        )
     }
     
 }
@@ -77,6 +88,7 @@ extension InputPhoneNumberViewModel {
     
     struct Output {
         let isLoading: Driver<Bool>
+        let prepareTransitionTrigger: Driver<Void>
     }
     
 }
