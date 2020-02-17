@@ -19,6 +19,9 @@ class AddressAccessViewController: BaseViewController {
     
     private let viewModel: AddressAccessViewModel
     
+    private var tempAccessViewHeightConstraint: NSLayoutConstraint!
+    private var permanentAccessViewHeightConstraint: NSLayoutConstraint!
+    
     init(viewModel: AddressAccessViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -31,12 +34,24 @@ class AddressAccessViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let temporaryViewHeight = temporaryAccessView.heightAnchor.constraint(equalToConstant: 57)
+        temporaryViewHeight.isActive = true
+        tempAccessViewHeightConstraint = temporaryViewHeight
+        
+        let permanentViewHeight = permanentAccessView.heightAnchor.constraint(equalToConstant: 57)
+        permanentViewHeight.isActive = true
+        permanentAccessViewHeightConstraint = permanentViewHeight
+        
+        temporaryAccessView.translatesAutoresizingMaskIntoConstraints = false
+        permanentAccessView.translatesAutoresizingMaskIntoConstraints = false
+        
         bind()
     }
     
     private func bind() {
         let input = AddressAccessViewModel.Input(
-            viewDidAppearTrigger: rx.viewDidAppear.asDriverOnErrorJustComplete(),
+            viewDidAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete(),
             refreshIntercomTempCodeTrigger: intercomAccessView.rx.refreshButtonTapped.asDriverOnErrorJustComplete(),
             openGuestAccessTrigger: intercomAccessView.rx.openButtonTapped.asDriverOnErrorJustComplete(),
             smsToTempContactTrigger: temporaryAccessView.sendSmsSubject.asDriverOnErrorJustComplete(),
@@ -68,10 +83,22 @@ class AddressAccessViewController: BaseViewController {
         output.tempAccessContacts
             .drive(
                 onNext: { [weak self] contacts in
-                    self?.temporaryAccessView.viewModel.updateData(data: contacts)
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.temporaryAccessView.viewModel.updateData(data: contacts)
+                    self.tempAccessViewHeightConstraint.constant = self.calculateAccessViewHeight(countItems: contacts.count)
+                    self.view.layoutIfNeeded()
                 }
             )
             .disposed(by: disposeBag)
     }
 
+    private func calculateAccessViewHeight(countItems: Int) -> CGFloat {
+        let minHeight = 57
+        let baseCellHeight = 64
+        
+        return CGFloat(baseCellHeight * countItems + minHeight)
+    }
 }

@@ -32,12 +32,11 @@ class AddressAccessViewModel: BaseViewModel {
                     guard let self = self else {
                         return
                     }
-            print("viewDidAppearTrigger!!!")
+
                     self.addressSubject.onNext(self.loadAddress())
                     self.tempAccessConstactsSubject.onNext(self.loadTemporaryAccessContacts())
                     self.permanentAccessContactSubject.onNext(self.loadPermanentAccessContacts())
                     self.intercomAccessCode.onNext(self.loadIntercomAccessCode())
-                    
                 }
             )
             .disposed(by: disposeBag)

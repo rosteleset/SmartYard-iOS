@@ -63,18 +63,37 @@ class AccessView: PMNibLinkableView {
         
         tableView.register(nibWithCellClass: AllowedPersonCell.self)
         tableView.register(nibWithCellClass: NewPersonCell.self)
+        
+        tableView.tableFooterView = UIView(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: tableView.frame.size.width,
+                height: 1
+            )
+        )
     }
     
 }
 
 extension AccessView: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let data = try? itemsProxy.value() ,
+            indexPath.row == data.count || data.isEmpty
+        else {
+                return 64
+        }
+    
+        return 57
+    }
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard let data = try? itemsProxy.value() else {
             return false
         }
         
-        return indexPath.row != data.count + 1 || !data.isEmpty
+        return indexPath.row != data.count || !data.isEmpty
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

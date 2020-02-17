@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -35,13 +39,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wnz-X0-Nqd">
-                    <rect key="frame" x="0.0" y="171" width="414" height="725"/>
+                    <rect key="frame" x="0.0" y="195" width="414" height="667"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JYd-ci-KLP">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="667"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blb-rf-Jf9">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="495"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="496.5"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bbs-2j-kxV" customClass="IntercomTemporaryAccessView" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="16" y="75" width="382" height="151"/>
@@ -59,25 +63,19 @@
                                             <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CT0-UR-Z3l" customClass="AccessView" customModule="SmartYard" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="67" translatesAutoresizingMaskIntoConstraints="NO" id="CT0-UR-Z3l" customClass="AccessView" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="20" y="280" width="374" height="67"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="67" id="chE-Ye-zbB"/>
-                                            </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Постоянный доступ к адресу" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4eY-cI-gDO">
-                                            <rect key="frame" x="16" y="371" width="382" height="19"/>
+                                            <rect key="frame" x="16" y="371" width="382" height="20.5"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                                             <color key="textColor" red="0.42745098040000001" green="0.47843137250000001" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHK-Jf-tjL" customClass="AccessView" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="398" width="374" height="67"/>
+                                        <view contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="67" translatesAutoresizingMaskIntoConstraints="NO" id="mHK-Jf-tjL" customClass="AccessView" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="20" y="399.5" width="374" height="67"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="67" id="Atf-sM-cSe"/>
-                                            </constraints>
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -120,10 +118,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tua-bR-e0p" customClass="FullRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="16" y="150" width="382" height="70"/>
+                    <rect key="frame" x="16" y="174" width="382" height="70"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Советская, 16, к. 4" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vjf-7h-gEU">
-                            <rect key="frame" x="40" y="24.5" width="302" height="21"/>
+                            <rect key="frame" x="40" y="23.5" width="302" height="23"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                             <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -138,7 +136,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Доступ к адресу" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuZ-VJ-41V">
-                    <rect key="frame" x="40" y="89" width="334" height="37.5"/>
+                    <rect key="frame" x="40" y="113" width="334" height="40.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                     <color key="textColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
