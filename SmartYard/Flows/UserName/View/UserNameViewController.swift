@@ -48,7 +48,16 @@ class UserNameViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        view.hideKeyboardWhenTapped = true
+        let gesture = UITapGestureRecognizer()
+        view.addGestureRecognizer(gesture)
+        
+        gesture.rx.event.asDriver()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.view.endEditing(true)
+                }
+            )
+            .disposed(by: disposeBag)
         
         nameTextField.setPlaceholder(string: "Имя", isRequiredField: true)
         nameTextField.delegate = self
@@ -62,16 +71,24 @@ class UserNameViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureRxKeyboard() {
-        RxKeyboard.instance.visibleHeight
+        CustomRxKeyboard.instance.visibleHeight
+            .debounce(.milliseconds(50))
+            .withLatestFrom(CustomRxKeyboard.instance.curve.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .withLatestFrom(CustomRxKeyboard.instance.duration.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .drive(
-                onNext: { [weak self] keyboardVisibleHeight in
+                onNext: { [weak self] args in
+                    let (firstPack, duration) = args
+                    let (keyboardVisibleHeight, curve) = firstPack
+                    
                     self?.mainContainerBottomConstraint.constant = keyboardVisibleHeight == 0 ?
                         0 :
                         keyboardVisibleHeight
                     
-                    UIView.animate(withDuration: 0) {
-                        self?.view.layoutIfNeeded()
-                    }
+                    UIView.beginAnimations(nil, context: nil)
+                    UIView.setAnimationCurve(curve ?? .linear)
+                    UIView.setAnimationDuration(duration ?? 0.25)
+                    self?.view.layoutIfNeeded()
+                    UIView.commitAnimations()
                 }
             )
             .disposed(by: disposeBag)

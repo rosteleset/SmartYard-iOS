@@ -69,7 +69,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             ).strongRouter
             
             mainTabBarRouter = router
-            return .dismissAllAndSet(router)
+            return .set([router], animation: .fade)
             
         case let .incomingCall(callPayload):
             let vm = IncomingCallViewModel(

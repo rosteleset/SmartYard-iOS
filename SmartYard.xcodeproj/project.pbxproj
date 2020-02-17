@@ -57,6 +57,7 @@
 		84854B4323FAA266001B44F2 /* NavigationTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4223FAA266001B44F2 /* NavigationTransitions.swift */; };
 		84854B4523FAB4D7001B44F2 /* APIClientName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4423FAB4D7001B44F2 /* APIClientName.swift */; };
 		84854B4823FAD3AC001B44F2 /* SendNameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4723FAD3AC001B44F2 /* SendNameRequest.swift */; };
+		84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4B23FADD94001B44F2 /* CustomRxKeyboard.swift */; };
 		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
 		84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */; };
@@ -268,6 +269,7 @@
 		84854B4223FAA266001B44F2 /* NavigationTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTransitions.swift; sourceTree = "<group>"; };
 		84854B4423FAB4D7001B44F2 /* APIClientName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientName.swift; sourceTree = "<group>"; };
 		84854B4723FAD3AC001B44F2 /* SendNameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendNameRequest.swift; sourceTree = "<group>"; };
+		84854B4B23FADD94001B44F2 /* CustomRxKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRxKeyboard.swift; sourceTree = "<group>"; };
 		84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderCell.swift; sourceTree = "<group>"; };
 		84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderCell.xib; sourceTree = "<group>"; };
 		84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelCell.swift; sourceTree = "<group>"; };
@@ -1021,6 +1023,7 @@
 			children = (
 				84854B4023FA9A99001B44F2 /* ActivityTracker.swift */,
 				84854B3C23FA9918001B44F2 /* ErrorTracker.swift */,
+				84854B4B23FADD94001B44F2 /* CustomRxKeyboard.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1810,6 +1813,7 @@
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
+				84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */,
 				E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */,
 				84B89A9023F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
