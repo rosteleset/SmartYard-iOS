@@ -88,7 +88,9 @@ class AddressAccessViewController: BaseViewController {
                     }
                     
                     self.temporaryAccessView.viewModel.updateData(data: contacts)
-                    self.tempAccessViewHeightConstraint.constant = self.calculateAccessViewHeight(countItems: contacts.count)
+                    
+                    let newHeight = self.calculateAccessViewHeight(countItems: contacts.count)
+                    self.tempAccessViewHeightConstraint.constant = newHeight
                     self.view.layoutIfNeeded()
                 }
             )

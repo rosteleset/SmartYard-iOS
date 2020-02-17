@@ -23,7 +23,7 @@ class NewAllowedPersonViewModel: BaseViewModel {
         input.closeTrigger
             .drive(
                 onNext: {
-            
+                    // TODO
                 }
             )
             .disposed(by: disposeBag)
@@ -31,7 +31,7 @@ class NewAllowedPersonViewModel: BaseViewModel {
         input.addAccessTrigger
             .drive(
                 onNext: {
-                    
+                    // TODO
                 }
             )
             .disposed(by: disposeBag)
@@ -39,7 +39,7 @@ class NewAllowedPersonViewModel: BaseViewModel {
         input.selectFromContactTrigger
             .drive(
                 onNext: {
-                    
+                    // TODO
                 }
             )
             .disposed(by: disposeBag)
