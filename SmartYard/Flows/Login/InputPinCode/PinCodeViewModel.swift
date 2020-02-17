@@ -47,8 +47,8 @@ class PinCodeViewModel: BaseViewModel {
             }
             .ignoreNil()
             .drive(
-                onNext: { [weak self] _ in
-                    self?.router.trigger(.main)
+                onNext: { [weak self] data in
+                    self?.router.trigger(data.name == nil ? .userName : .main)
                 }
             )
             .disposed(by: disposeBag)

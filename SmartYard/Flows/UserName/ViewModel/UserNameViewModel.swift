@@ -12,9 +12,11 @@ import XCoordinator
 
 class UserNameViewModel: BaseViewModel {
     
-    let router: WeakRouter<AppRoute>
+    private let apiWrapper: APIWrapper
+    private let router: WeakRouter<AppRoute>
     
-    init(router: WeakRouter<AppRoute>) {
+    init(apiWrapper: APIWrapper, router: WeakRouter<AppRoute>) {
+        self.apiWrapper = apiWrapper
         self.router = router
     }
     

@@ -9,6 +9,11 @@
 struct ConfirmCodeResponseData: Decodable {
     
     let accessToken: String
-    let names: Bool
+    let name: APIClientName?
+    
+    private enum CodingKeys: String, CodingKey {
+        case accessToken = "accessToken"
+        case name = "names"
+    }
     
 }

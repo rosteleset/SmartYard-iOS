@@ -61,6 +61,7 @@ class APIWrapper {
                 switch result {
                 case let .success(data):
                     self?.accessService.accessToken = data.accessToken
+                    self?.accessService.clientName = data.name
                     
                     single(.success(data))
                     

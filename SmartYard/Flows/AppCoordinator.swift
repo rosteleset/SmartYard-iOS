@@ -45,7 +45,15 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         self.accessService = accessService
         
         let initialState: AppRoute = {
-            accessService.accessToken == nil ? .phoneNumber : .main
+            guard accessService.accessToken != nil else {
+                return .phoneNumber
+            }
+            
+            guard accessService.clientName != nil else {
+                return .userName
+            }
+            
+            return .main
         }()
         
         super.init(initialRoute: initialState)
@@ -82,7 +90,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .dismiss()
             
         case .userName:
-            let vm = UserNameViewModel(router: weakRouter)
+            let vm = UserNameViewModel(apiWrapper: apiWrapper, router: weakRouter)
             let vc = UserNameViewController(viewModel: vm)
             return .present(vc)
             

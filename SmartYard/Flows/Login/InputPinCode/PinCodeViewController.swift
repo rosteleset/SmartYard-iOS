@@ -73,14 +73,13 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
     
     private func configureRxKeyboard() {
         RxKeyboard.instance.visibleHeight
-            .debounce(.milliseconds(100))
             .drive(
                 onNext: { [weak self] keyboardVisibleHeight in
                     self?.sendCodeAgainGroupButtonConstraint.constant = keyboardVisibleHeight == 0 ?
                         28 :
                         keyboardVisibleHeight + 28
                     
-                    UIView.animate(withDuration: 0.25) {
+                    UIView.animate(withDuration: 0) {
                         self?.view.layoutIfNeeded()
                     }
                 }
