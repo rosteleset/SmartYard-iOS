@@ -13,8 +13,11 @@ import RxSwift
 
 class IntercomTemporaryAccessView: PMNibLinkableView {
     
+    // swiftlint:disable:next strict_fileprivate
     @IBOutlet fileprivate weak var refreshButton: UIButton!
+    // swiftlint:disable:next strict_fileprivate
     @IBOutlet fileprivate weak var openButton: WhiteButtonWithBorder!
+    
     @IBOutlet private weak var codeLabel: UILabel!
     
     func configure(code: String) {

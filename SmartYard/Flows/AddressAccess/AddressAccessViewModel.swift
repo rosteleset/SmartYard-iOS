@@ -15,13 +15,155 @@ class AddressAccessViewModel: BaseViewModel {
     
     private let router: WeakRouter<AppRoute>
     
-    init(router: WeakRouter<AppRoute>) {
+    let addressSubject = PublishSubject<String?>()
+    let tempAccessConstactsSubject = PublishSubject<[AllowedPerson]>()
+    let permanentAccessContactSubject = PublishSubject<[AllowedPerson]>()
+    let intercomAccessCode = PublishSubject<String?>()
+    
+    init(
+        router: WeakRouter<AppRoute>) {
         self.router = router
     }
     
     func transform(input: Input) -> Output {
+        input.viewDidLoadTrigger
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.addressSubject.onNext(self.loadAddress())
+                    self.tempAccessConstactsSubject.onNext(self.loadTemporaryAccessContacts())
+                    self.permanentAccessContactSubject.onNext(self.loadPermanentAccessContacts())
+                    self.intercomAccessCode.onNext(self.loadIntercomAccessCode())
+                }
+            )
+            .disposed(by: disposeBag)
         
-        return Output()
+        input.refreshIntercomTempCodeTrigger
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.tempAccessConstactsSubject.onNext(self.loadTemporaryAccessContacts())
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.openGuestAccessTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.openGuestAccess()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.smsToTempContactTrigger
+            .drive(
+                onNext: { [weak self] index in
+                    self?.sendSmsToTemporaryAccessContact(index: index)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.smsToPermanentContactTrigger
+            .drive(
+                onNext: { [weak self] index in
+                    self?.sendSmsToPermanentAccessContact(index: index)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.deleteTempContactTrigger
+            .drive(
+                onNext: { [weak self] index in
+                    self?.deleteTempAccessContact(index: index)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.deletePermanentContactTrigger
+            .drive(
+                onNext: { [weak self] index in
+                    self?.deletePermanentAccessContact(index: index)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.addNewTempContact
+            .drive(
+                onNext: { [weak self] in
+                    self?.addNewTempAccessContact()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.addNewPermanentContact
+            .drive(
+                onNext: { [weak self] in
+                    self?.addNewPermanentAccessContact()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        
+        return Output(
+            objectAddress: addressSubject.asDriver(onErrorJustReturn: ""),
+            tempAccessContacts: tempAccessConstactsSubject.asDriver(onErrorJustReturn: []),
+            permanentAccessContacts: permanentAccessContactSubject.asDriver(onErrorJustReturn: [])
+        )
+    }
+    
+    // TODO: load real data
+    private func loadAddress() -> String {
+        return "г.Ульяновск, ул. Верхнеполевая, д.12, кв.6"
+    }
+    
+    private func loadTemporaryAccessContacts() -> [AllowedPerson] {
+        return []
+    }
+    
+    private func loadPermanentAccessContacts() -> [AllowedPerson] {
+        return []
+    }
+    
+    private func loadIntercomAccessCode() -> String {
+        return "5432"
+    }
+    
+    private func openGuestAccess() {
+        // TODO
+    }
+    
+    private func sendSmsToTemporaryAccessContact(index: Int) {
+        sendSMS(number: "+7-908-474-27-41")
+    }
+    
+    private func sendSmsToPermanentAccessContact(index: Int) {
+        sendSMS(number: "+7-908-474-27-41")
+    }
+    
+    private func sendSMS(number: String) {
+        // TODO
+    }
+    
+    private func deleteTempAccessContact(index: Int) {
+        // TODO
+    }
+    
+    private func deletePermanentAccessContact(index: Int) {
+        // TODO
+    }
+    
+    private func addNewTempAccessContact() {
+        // TODO
+    }
+    
+    private func addNewPermanentAccessContact() {
+        // TODO
     }
     
 }
@@ -29,11 +171,21 @@ class AddressAccessViewModel: BaseViewModel {
 extension AddressAccessViewModel {
     
     struct Input {
-
+        let viewDidLoadTrigger: Driver<Void>
+        let refreshIntercomTempCodeTrigger: Driver<Void>
+        let openGuestAccessTrigger: Driver<Void>
+        let smsToTempContactTrigger: Driver<Int>
+        let smsToPermanentContactTrigger: Driver<Int>
+        let deleteTempContactTrigger: Driver<Int>
+        let deletePermanentContactTrigger: Driver<Int>
+        let addNewTempContact: Driver<Void>
+        let addNewPermanentContact: Driver<Void>
     }
     
     struct Output {
-        
+        let objectAddress: Driver<String?>
+        let tempAccessContacts: Driver<[AllowedPerson]>
+        let permanentAccessContacts: Driver<[AllowedPerson]>
     }
     
 }
