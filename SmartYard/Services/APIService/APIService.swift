@@ -136,13 +136,12 @@ extension APIService {
     
     private func mapResponseWithData<T: Decodable>(_ response: Response) -> Swift.Result<T, Error> {
         do {
-            let mappedResponse = try response.map(BaseAPIResponse<T>.self)
-            
-            guard mappedResponse.code == 200 else {
-                let errorUserInfo = [NSLocalizedDescriptionKey: mappedResponse.name + mappedResponse.message]
-                let error = NSError(domain: "APIServiceError", code: mappedResponse.code, userInfo: errorUserInfo)
+            guard response.statusCode == 200 else {
+                let error = NSError(domain: "APIServiceError", code: response.statusCode, userInfo: nil)
                 return .failure(error)
             }
+            
+            let mappedResponse = try response.map(BaseAPIResponse<T>.self)
             
             return .success(mappedResponse.data)
         } catch {

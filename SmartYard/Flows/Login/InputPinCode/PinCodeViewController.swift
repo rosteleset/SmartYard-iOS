@@ -126,7 +126,7 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        output.checkPinTrigger
+        output.isPinCorrect
             .drive(
                 onNext: { [weak self] isCorrect in
                     self?.pinInputFieldView.markPass(isCorrect: isCorrect)

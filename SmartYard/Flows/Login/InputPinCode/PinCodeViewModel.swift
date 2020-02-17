@@ -23,17 +23,21 @@ class PinCodeViewModel: BaseViewModel {
         self.phoneNumber = phoneNumber
     }
     
-    let incorrectPinTrigger = PublishSubject<Bool>()
-    
     // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
+        let isPinCorrect = BehaviorSubject<Bool>(value: true)
         let prepareTransitionTrigger = PublishSubject<Void>()
         
         input.inputPinText
             .distinctUntilChanged()
+            .do(
+                onNext: { _ in
+                    isPinCorrect.onNext(true)
+                }
+            )
             .filter { $0.count == Constants.pinLength }
             .flatMapLatest { [weak self] smsCode -> Driver<ConfirmCodeResponseData?> in
                 guard let self = self else {
@@ -77,14 +81,21 @@ class PinCodeViewModel: BaseViewModel {
         
         errorTracker.asDriver()
             .drive(
-                onNext: { error in
-                    print(error.localizedDescription)
+                onNext: { [weak self] error in
+                    let nsError = error as NSError
+                    
+                    switch nsError.code {
+                    case 401:
+                        isPinCorrect.onNext(false)
+                    default:
+                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    }
                 }
             )
             .disposed(by: disposeBag)
         
         return Output(
-            checkPinTrigger: incorrectPinTrigger.asDriverOnErrorJustComplete(),
+            isPinCorrect: isPinCorrect.asDriverOnErrorJustComplete(),
             phoneNumber: .just(phoneNumber),
             isLoading: activityTracker.asDriver(),
             prepareTransitionTrigger: prepareTransitionTrigger.asDriverOnErrorJustComplete()
@@ -102,7 +113,7 @@ extension PinCodeViewModel {
     }
     
     struct Output {
-        let checkPinTrigger: Driver<Bool>
+        let isPinCorrect: Driver<Bool>
         let phoneNumber: Driver<String>
         let isLoading: Driver<Bool>
         let prepareTransitionTrigger: Driver<Void>

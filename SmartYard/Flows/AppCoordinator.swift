@@ -6,13 +6,10 @@
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
+import UIKit
 import XCoordinator
-import AVKit
 import RxSwift
 import RxCocoa
-import Kingfisher
-import UserNotifications
-import linphonesw
 
 enum AppRoute: Route {
     
@@ -22,6 +19,7 @@ enum AppRoute: Route {
     case userName(preloadedName: APIClientName?)
     case phoneNumber
     case pinCode(phoneNumber: String)
+    case alert(title: String, message: String?)
     
 }
 
@@ -103,28 +101,14 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             let vm = PinCodeViewModel(apiWrapper: apiWrapper, router: weakRouter, phoneNumber: phoneNumber)
             let vc = PinCodeViewController(viewModel: vm)
             return .set([vc], animation: .fade)
+            
+        case let .alert(title, message):
+            return .alertTransition(title: title, message: message)
         }
     }
     
     func activateToken(token: String, tokenType: TokenType) {
-        // TODO: Update logic
-//        Completable
-//            .concat(
-//                apiWrapper.registerToken(pushToken: token, type: tokenType),
-//                apiWrapper.updateTokenState(pushToken: token, newState: .on)
-//            )
-//            .andThen(
-//                apiWrapper.checkTokenState(pushToken: token)
-//            )
-//            .subscribe(
-//                onSuccess: { data in
-//                    print("DEBUG / \(tokenType) \(token) is now \(data.state)")
-//                },
-//                onError: { error in
-//                    print(error)
-//                }
-//            )
-//            .disposed(by: disposeBag)
+        // TODO: Update token activation logic
     }
     
 }

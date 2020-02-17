@@ -67,8 +67,8 @@ class UserNameViewModel: BaseViewModel {
         
         errorTracker.asDriver()
             .drive(
-                onNext: { error in
-                    print(error.localizedDescription)
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
