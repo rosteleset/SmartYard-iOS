@@ -37,6 +37,12 @@ class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
         bind()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        phoneTextView.becomeFirstResponder()
+    }
+    
     private func bind() {
         let phoneTextSubject = PublishSubject<String>()
         

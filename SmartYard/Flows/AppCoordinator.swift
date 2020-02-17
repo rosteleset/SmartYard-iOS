@@ -61,7 +61,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             ).strongRouter
             
             mainTabBarRouter = router
-            return .set([router])
+            return .dismissAllAndSet(router)
             
         case let .incomingCall(callPayload):
             let vm = IncomingCallViewModel(

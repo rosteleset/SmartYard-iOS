@@ -53,6 +53,11 @@ class PhoneTextField: PMNibLinkableView {
         bind()
     }
     
+    @discardableResult
+    override func becomeFirstResponder() -> Bool {
+        return fakeTextField.becomeFirstResponder()
+    }
+    
     func fetchInputNumber() -> String? {
         return fakeTextField.text
     }

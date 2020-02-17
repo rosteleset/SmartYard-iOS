@@ -44,7 +44,7 @@ class APIWrapper {
         }
     }
     
-    func confirmCode(userPhone: String, smsCode: String) -> Single<ConfirmCodeResponseData> {
+    func confirmCode(userPhone: String, smsCode: String) -> Single<ConfirmCodeResponseData?> {
         guard accessService.accessToken == nil else {
             return .error(NSError.APIWrapperError.alreadyLoggedInError)
         }
@@ -73,7 +73,7 @@ class APIWrapper {
         }
     }
     
-    func login(login: String, password: String) -> Single<LoginResponseData> {
+    func login(login: String, password: String) -> Single<LoginResponseData?> {
         guard accessService.accessToken == nil else {
             return .error(NSError.APIWrapperError.alreadyLoggedInError)
         }
@@ -102,7 +102,7 @@ class APIWrapper {
         }
     }
     
-    func getVerifyedAddresses() -> Single<GetVerifyedAddressesResponseData> {
+    func getVerifyedAddresses() -> Single<GetVerifyedAddressesResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -184,7 +184,7 @@ class APIWrapper {
         }
     }
     
-    func checkTokenState(pushToken: String, clientId: String) -> Single<IntercomTokenResponseData> {
+    func checkTokenState(pushToken: String, clientId: String) -> Single<IntercomTokenResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }

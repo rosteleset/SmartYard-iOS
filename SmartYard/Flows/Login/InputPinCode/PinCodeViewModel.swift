@@ -25,17 +25,30 @@ class PinCodeViewModel: BaseViewModel {
     
     let incorrectPinTrigger = PublishSubject<Bool>()
     
+    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         let phoneNumberTrigger = PublishSubject<String>()
         
-        // TODO: Получить реальный пин-код от API
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
+        
         input.inputPinText
             .distinctUntilChanged()
             .filter { $0.count == Constants.pinLength }
-            .map { $0 == "1234" }
+            .flatMapLatest { [weak self] smsCode -> Driver<ConfirmCodeResponseData?> in
+                guard let self = self else {
+                    return .just(nil)
+                }
+                
+                return self.apiWrapper.confirmCode(userPhone: "8" + self.phoneNumber, smsCode: smsCode)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] isCorrectPin in
-                    self?.incorrectPinTrigger.onNext(isCorrectPin)
+                onNext: { [weak self] _ in
+                    self?.router.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
@@ -64,9 +77,18 @@ class PinCodeViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { error in
+                    print(error.localizedDescription)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             checkPinTrigger: incorrectPinTrigger.asDriverOnErrorJustComplete(),
-            phoneNumberValueTrigger: phoneNumberTrigger.asDriver(onErrorJustReturn: "")
+            phoneNumberValueTrigger: phoneNumberTrigger.asDriver(onErrorJustReturn: ""),
+            isLoading: activityTracker.asDriver()
         )
     }
     
@@ -84,6 +106,7 @@ extension PinCodeViewModel {
     struct Output {
         let checkPinTrigger: Driver<Bool>
         let phoneNumberValueTrigger: Driver<String>
+        let isLoading: Driver<Bool>
     }
     
 }

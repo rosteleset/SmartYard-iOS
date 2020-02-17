@@ -54,6 +54,7 @@
 		84854B3B23FA8C38001B44F2 /* LoaderPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */; };
 		84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B3C23FA9918001B44F2 /* ErrorTracker.swift */; };
 		84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4023FA9A99001B44F2 /* ActivityTracker.swift */; };
+		84854B4323FAA266001B44F2 /* NavigationTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4223FAA266001B44F2 /* NavigationTransitions.swift */; };
 		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
 		84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */; };
@@ -262,6 +263,7 @@
 		84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderPresentable.swift; sourceTree = "<group>"; };
 		84854B3C23FA9918001B44F2 /* ErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTracker.swift; sourceTree = "<group>"; };
 		84854B4023FA9A99001B44F2 /* ActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTracker.swift; sourceTree = "<group>"; };
+		84854B4223FAA266001B44F2 /* NavigationTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTransitions.swift; sourceTree = "<group>"; };
 		84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderCell.swift; sourceTree = "<group>"; };
 		84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderCell.xib; sourceTree = "<group>"; };
 		84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelCell.swift; sourceTree = "<group>"; };
@@ -870,6 +872,7 @@
 			children = (
 				84950CF923E431CB00F3C550 /* Animation+Fade.swift */,
 				84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */,
+				84854B4223FAA266001B44F2 /* NavigationTransitions.swift */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -1820,6 +1823,7 @@
 				E9A1D78323F27AE500234B2A /* AddressConfirmationViewController.swift in Sources */,
 				84854B3B23FA8C38001B44F2 /* LoaderPresentable.swift in Sources */,
 				84AA8D4823E2CD48001B3B43 /* APITarget.swift in Sources */,
+				84854B4323FAA266001B44F2 /* NavigationTransitions.swift in Sources */,
 				844AC3D523EBFDAF0066006D /* AddressesListViewModel.swift in Sources */,
 				E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */,
 				844AC39523E977810066006D /* AccessService.swift in Sources */,

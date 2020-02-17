@@ -38,6 +38,11 @@ class PinTextField: PMNibLinkableView {
         bind()
     }
     
+    @discardableResult
+    override func becomeFirstResponder() -> Bool {
+        return fakeTextField.becomeFirstResponder()
+    }
+    
     func hideKeyboard() {
         fakeTextField.resignFirstResponder()
     }

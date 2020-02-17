@@ -11,8 +11,9 @@ import RxCocoa
 import RxSwift
 import RxViewController
 import RxKeyboard
+import JGProgressHUD
 
-class PinCodeViewController: BaseViewController {
+class PinCodeViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var hintInputPhoneLabel: UILabel!
     @IBOutlet private weak var fixPhoneNumberButton: UIButton!
@@ -26,10 +27,11 @@ class PinCodeViewController: BaseViewController {
     @IBOutlet weak var sendCodeAgainButton: BlueButton!
     // swiftlint:enable all
     
-    @IBOutlet private weak var sendCodeAgainGroupButtonConstraint: NSLayoutConstraint!
+    @IBOutlet private var sendCodeAgainGroupButtonConstraint: NSLayoutConstraint!
     
     var timer: Timer?
     var timeEnd: Date?
+    var loader: JGProgressHUD?
     
     private let viewModel: PinCodeViewModel
     
@@ -50,6 +52,12 @@ class PinCodeViewController: BaseViewController {
         configureRxKeyboard()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        pinInputFieldView.becomeFirstResponder()
+    }
+    
     private func configureView() {
         pinInputFieldView.reset()
         sendCodeAgainLabelView.isHidden = true
@@ -65,11 +73,14 @@ class PinCodeViewController: BaseViewController {
     
     private func configureRxKeyboard() {
         RxKeyboard.instance.visibleHeight
+            .debounce(.milliseconds(100))
             .drive(
                 onNext: { [weak self] keyboardVisibleHeight in
-                    self?.sendCodeAgainGroupButtonConstraint.constant = keyboardVisibleHeight + 28
+                    self?.sendCodeAgainGroupButtonConstraint.constant = keyboardVisibleHeight == 0 ?
+                        28 :
+                        keyboardVisibleHeight + 28
                     
-                    UIView.animate(withDuration: 1) {
+                    UIView.animate(withDuration: 0.25) {
                         self?.view.layoutIfNeeded()
                     }
                 }
@@ -116,6 +127,15 @@ class PinCodeViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] isCorrect in
                     self?.pinInputFieldView.markPass(isCorrect: isCorrect)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
                 }
             )
             .disposed(by: disposeBag)
