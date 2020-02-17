@@ -143,14 +143,15 @@
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
 		85E437EBD8028F17EA854687 /* Pods_SmartYard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3264A75344A37C60971E215B /* Pods_SmartYard.framework */; };
+		E9004C5F23FABF2200B59976 /* IntercomTemporaryAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9004C5D23FABF1C00B59976 /* IntercomTemporaryAccessView.xib */; };
+		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
+		E9004C6223FABF6800B59976 /* AccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9004C6123FABF6800B59976 /* AccessView.xib */; };
 		E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F323F56BF800623746 /* ServiceRequestType.swift */; };
 		E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F723F6721F00623746 /* AddressAccessViewController.swift */; };
 		E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E94057F823F6721F00623746 /* AddressAccessViewController.xib */; };
 		E94057FC23F6724100623746 /* AddressAccessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057FB23F6724100623746 /* AddressAccessViewModel.swift */; };
 		E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057FD23F6757D00623746 /* FullRoundedView.swift */; };
-		E940580323F6794F00623746 /* IntercomTemporaryAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E940580223F6794F00623746 /* IntercomTemporaryAccessView.xib */; };
 		E940580723F680F000623746 /* AccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940580623F680F000623746 /* AccessView.swift */; };
-		E940580923F680F900623746 /* AccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E940580823F680F900623746 /* AccessView.xib */; };
 		E940581123F682EA00623746 /* AllowedPersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940580F23F682EA00623746 /* AllowedPersonCell.swift */; };
 		E940581223F682EA00623746 /* AllowedPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E940581023F682EA00623746 /* AllowedPersonCell.xib */; };
 		E940581723F6831A00623746 /* NewPersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E940581523F6831A00623746 /* NewPersonCell.swift */; };
@@ -188,7 +189,6 @@
 		E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */; };
 		E9BB83CF23F69FE80071F91E /* AllowedPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BB83CE23F69FE80071F91E /* AllowedPerson.swift */; };
 		E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BB83D223F6B1E70071F91E /* AccessViewModel.swift */; };
-		E9BB83D523F6F5110071F91E /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BB83D423F6F5110071F91E /* IntercomTemporaryAccessView.swift */; };
 		E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */; };
 		E9E4270523F2CD0F00F5D593 /* ServiceFromCourierView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4270423F2CD0F00F5D593 /* ServiceFromCourierView.xib */; };
 		E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */; };
@@ -384,14 +384,15 @@
 		84F840E123E07DA5008DBE50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9446924CEBF5B1B90F3DD95E /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 		E5E590E291061ACD550E2CB9 /* Pods-SmartYard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.debug.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.debug.xcconfig"; sourceTree = "<group>"; };
+		E9004C5D23FABF1C00B59976 /* IntercomTemporaryAccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntercomTemporaryAccessView.xib; sourceTree = "<group>"; };
+		E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntercomTemporaryAccessView.swift; sourceTree = "<group>"; };
+		E9004C6123FABF6800B59976 /* AccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccessView.xib; sourceTree = "<group>"; };
 		E94057F323F56BF800623746 /* ServiceRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRequestType.swift; sourceTree = "<group>"; };
 		E94057F723F6721F00623746 /* AddressAccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessViewController.swift; sourceTree = "<group>"; };
 		E94057F823F6721F00623746 /* AddressAccessViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessViewController.xib; sourceTree = "<group>"; };
 		E94057FB23F6724100623746 /* AddressAccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessViewModel.swift; sourceTree = "<group>"; };
 		E94057FD23F6757D00623746 /* FullRoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRoundedView.swift; sourceTree = "<group>"; };
-		E940580223F6794F00623746 /* IntercomTemporaryAccessView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntercomTemporaryAccessView.xib; sourceTree = "<group>"; };
 		E940580623F680F000623746 /* AccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessView.swift; sourceTree = "<group>"; };
-		E940580823F680F900623746 /* AccessView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccessView.xib; sourceTree = "<group>"; };
 		E940580F23F682EA00623746 /* AllowedPersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPersonCell.swift; sourceTree = "<group>"; };
 		E940581023F682EA00623746 /* AllowedPersonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllowedPersonCell.xib; sourceTree = "<group>"; };
 		E940581523F6831A00623746 /* NewPersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPersonCell.swift; sourceTree = "<group>"; };
@@ -435,7 +436,6 @@
 		E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteButtonWithBorder.swift; sourceTree = "<group>"; };
 		E9BB83CE23F69FE80071F91E /* AllowedPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPerson.swift; sourceTree = "<group>"; };
 		E9BB83D223F6B1E70071F91E /* AccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessViewModel.swift; sourceTree = "<group>"; };
-		E9BB83D423F6F5110071F91E /* IntercomTemporaryAccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntercomTemporaryAccessView.swift; sourceTree = "<group>"; };
 		E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSegmentedControlView.swift; sourceTree = "<group>"; };
 		E9E4270423F2CD0F00F5D593 /* ServiceFromCourierView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceFromCourierView.xib; sourceTree = "<group>"; };
 		E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFromCourierView.swift; sourceTree = "<group>"; };
@@ -1116,7 +1116,6 @@
 		84B9EC8A23E0846900979C39 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				E9004C5C23FABE3F00B59976 /* AddNewAllowedPerson */,
 				E94057F623F671F200623746 /* AddressAccess */,
 				84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */,
 				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
@@ -1315,13 +1314,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		E9004C5C23FABE3F00B59976 /* AddNewAllowedPerson */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AddNewAllowedPerson;
-			sourceTree = "<group>";
-		};
 		E94057F223F56B6400623746 /* Entries */ = {
 			isa = PBXGroup;
 			children = (
@@ -1344,8 +1336,8 @@
 		E94057FF23F678E400623746 /* IntercomTemporaryAccess */ = {
 			isa = PBXGroup;
 			children = (
-				E9BB83D423F6F5110071F91E /* IntercomTemporaryAccessView.swift */,
-				E940580223F6794F00623746 /* IntercomTemporaryAccessView.xib */,
+				E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */,
+				E9004C5D23FABF1C00B59976 /* IntercomTemporaryAccessView.xib */,
 			);
 			path = IntercomTemporaryAccess;
 			sourceTree = "<group>";
@@ -1362,10 +1354,10 @@
 		E940580523F680C000623746 /* AccessView */ = {
 			isa = PBXGroup;
 			children = (
+				E9004C6123FABF6800B59976 /* AccessView.xib */,
 				E9BB83CD23F69FAF0071F91E /* Entries */,
 				E940580C23F6828F00623746 /* Cells */,
 				E940580623F680F000623746 /* AccessView.swift */,
-				E940580823F680F900623746 /* AccessView.xib */,
 				E9BB83D223F6B1E70071F91E /* AccessViewModel.swift */,
 			);
 			path = AccessView;
@@ -1777,6 +1769,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9004C6223FABF6800B59976 /* AccessView.xib in Resources */,
 				E9E4273623F55C5E00F5D593 /* ServiceUnavailableViewController.xib in Resources */,
 				E9E4273123F55B7800F5D593 /* ServicesActivationRequestViewController.xib in Resources */,
 				E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */,
@@ -1792,7 +1785,6 @@
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
-				E940580323F6794F00623746 /* IntercomTemporaryAccessView.xib in Resources */,
 				84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */,
 				E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
@@ -1803,7 +1795,6 @@
 				844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */,
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
 				84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */,
-				E940580923F680F900623746 /* AccessView.xib in Resources */,
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
 				E9E4271723F40E0B00F5D593 /* SmartYardCheckBoxView.xib in Resources */,
 				E9A1D78423F27AE500234B2A /* AddressConfirmationViewController.xib in Resources */,
@@ -1815,6 +1806,7 @@
 				84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */,
 				84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */,
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
+				E9004C5F23FABF2200B59976 /* IntercomTemporaryAccessView.xib in Resources */,
 				E9E4271C23F41C6600F5D593 /* AvailableServiceCell.xib in Resources */,
 				843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */,
 				E9E4273B23F5609E00F5D593 /* ServiceSoonAvailableViewController.xib in Resources */,
@@ -1965,10 +1957,10 @@
 				84AA8D6623E2F2A8001B3B43 /* TransportType+Extensions.swift in Sources */,
 				844AC37C23E861C50066006D /* GetVerifyedAddressesRequest.swift in Sources */,
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
+				E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */,
 				84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */,
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
-				E9BB83D523F6F5110071F91E /* IntercomTemporaryAccessView.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
 				84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */,
 				E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */,
