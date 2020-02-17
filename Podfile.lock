@@ -83,6 +83,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.5.0):
     - GoogleUtilities/Logger
+  - JGProgressHUD (2.1)
   - Kingfisher (5.13.0):
     - Kingfisher/Core (= 5.13.0)
   - Kingfisher/Core (5.13.0)
@@ -157,6 +158,7 @@ DEPENDENCIES:
   - Fabric
   - Firebase/Analytics
   - Firebase/Messaging
+  - JGProgressHUD
   - Kingfisher
   - linphone-sdk (> 4.4.0-alpha)
   - MapboxStatic.swift (~> 0.11)
@@ -196,6 +198,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
+    - JGProgressHUD
     - Kingfisher
     - MapboxStatic.swift
     - Moya
@@ -249,6 +252,7 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 574a983e829327d7c18f2627f65d9e80164ea8a4
   GoogleDataTransportCCTSupport: cad3cd6cdbdbad6b5c2c9206ec413402755faaaa
   GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
+  JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
   linphone-sdk: 82302f72c930a859a75acdcfed304272d3cfdae1
   MapboxStatic.swift: 3a39f0b077a7fb0568fd53f27a76c402b07ef408
@@ -273,6 +277,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: a4d5860394d0f0686457179e4f828b78936b8c6c
+PODFILE CHECKSUM: 9b1b5aedc305701f3677f3afa09487c942d4c53c
 
 COCOAPODS: 1.8.4

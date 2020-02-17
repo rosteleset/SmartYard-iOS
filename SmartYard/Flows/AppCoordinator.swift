@@ -31,7 +31,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     private let linphoneService = LinphoneService()
     private let apiService = APIService()
-    private let accessService = AccessService()
+    private let accessService: AccessService
     private let apiWrapper: APIWrapper
     
     private var mainTabBarRouter: StrongRouter<MainTabBarRoute>?
@@ -39,13 +39,16 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private var currentCallPreviewData: Data?
     
     init() {
-        // MARK: Замоканные данные. Убрать после добавления флоу авторизации
-        accessService.accessToken = "79902143-88e4-46fd-a2ed-2bd0b132c433:6ebba629d6adbace8fbb974fd0aa4795"
-        accessService.clientId = "75549"
+        let accessService = AccessService()
         
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
+        self.accessService = accessService
         
-        super.init(initialRoute: .main)
+        let initialState: AppRoute = {
+            accessService.accessToken == nil ? .phoneNumber : .main
+        }()
+        
+        super.init(initialRoute: initialState)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
@@ -84,33 +87,34 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .present(vc)
             
         case .phoneNumber:
-            let vm = InputPhoneNumberViewModel(router: weakRouter)
+            let vm = InputPhoneNumberViewModel(apiWrapper: apiWrapper, router: weakRouter)
             return .present(InputPhoneNumberViewController(viewModel: vm))
             
         case let .pinCode(phoneNumber):
-            let vm = PinCodeViewModel(router: weakRouter, phoneNumber: phoneNumber)
+            let vm = PinCodeViewModel(apiWrapper: apiWrapper, router: weakRouter, phoneNumber: phoneNumber)
             return .present(PinCodeViewController(viewModel: vm))
         }
     }
     
     func activateToken(token: String, tokenType: TokenType) {
-        Completable
-            .concat(
-                apiWrapper.registerToken(pushToken: token, type: tokenType),
-                apiWrapper.updateTokenState(pushToken: token, newState: .on)
-            )
-            .andThen(
-                apiWrapper.checkTokenState(pushToken: token)
-            )
-            .subscribe(
-                onSuccess: { data in
-                    print("DEBUG / \(tokenType) \(token) is now \(data.state)")
-                },
-                onError: { error in
-                    print(error)
-                }
-            )
-            .disposed(by: disposeBag)
+        // TODO: Update logic
+//        Completable
+//            .concat(
+//                apiWrapper.registerToken(pushToken: token, type: tokenType),
+//                apiWrapper.updateTokenState(pushToken: token, newState: .on)
+//            )
+//            .andThen(
+//                apiWrapper.checkTokenState(pushToken: token)
+//            )
+//            .subscribe(
+//                onSuccess: { data in
+//                    print("DEBUG / \(tokenType) \(token) is now \(data.state)")
+//                },
+//                onError: { error in
+//                    print(error)
+//                }
+//            )
+//            .disposed(by: disposeBag)
     }
     
 }

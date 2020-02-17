@@ -13,24 +13,58 @@ import XCoordinator
 
 class InputPhoneNumberViewModel: BaseViewModel {
     
-    let router: WeakRouter<AppRoute>
+    private let apiWrapper: APIWrapper
+    private let router: WeakRouter<AppRoute>
     
-    init(router: WeakRouter<AppRoute>) {
+    init(apiWrapper: APIWrapper, router: WeakRouter<AppRoute>) {
+        self.apiWrapper = apiWrapper
         self.router = router
     }
     
     func transform(input: Input) -> Output {
+        let tempPhoneSubject = BehaviorSubject<String?>(value: nil)
+        let tempPhone = tempPhoneSubject.asDriver(onErrorJustReturn: nil)
+        
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
+        
         input.inputPhoneText
             .distinctUntilChanged()
             .filter { $0.count == Constants.phoneLengthWithoutPrefix }
+            .do(
+                onNext: { phone in
+                    tempPhoneSubject.onNext(phone)
+                }
+            )
+            .flatMapLatest { [weak self] phone -> Driver<Void?> in
+                guard let self = self else {
+                    return .just(nil)
+                }
+
+                return self.apiWrapper.requestCode(userPhone: "8" + phone)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .withLatestFrom(tempPhone)
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] phoneNumber in
-                    self?.router.trigger(.pinCode(phoneNumber: phoneNumber))
+                onNext: { [weak self] phone in
+                    self?.router.trigger(.pinCode(phoneNumber: phone))
                 }
             )
             .disposed(by: disposeBag)
         
-        return Output()
+        errorTracker.asDriver()
+            .drive(
+                onNext: { error in
+                    print(error.localizedDescription)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        return Output(isLoading: activityTracker.asDriver())
     }
     
 }
@@ -42,7 +76,7 @@ extension InputPhoneNumberViewModel {
     }
     
     struct Output {
-        
+        let isLoading: Driver<Bool>
     }
     
 }

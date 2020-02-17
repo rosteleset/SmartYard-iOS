@@ -13,10 +13,12 @@ import XCoordinator
 
 class PinCodeViewModel: BaseViewModel {
     
+    private let apiWrapper: APIWrapper
     private let router: WeakRouter<AppRoute>
     private let phoneNumber: String
     
-    init(router: WeakRouter<AppRoute>, phoneNumber: String) {
+    init(apiWrapper: APIWrapper, router: WeakRouter<AppRoute>, phoneNumber: String) {
+        self.apiWrapper = apiWrapper
         self.router = router
         self.phoneNumber = phoneNumber
     }

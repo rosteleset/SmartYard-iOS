@@ -9,13 +9,16 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import JGProgressHUD
 
-class InputPhoneNumberViewController: BaseViewController {
+class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var phoneTextView: PhoneTextField!
     
     private var viewModel: InputPhoneNumberViewModel
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: InputPhoneNumberViewModel) {
         self.viewModel = viewModel
@@ -46,7 +49,16 @@ class InputPhoneNumberViewController: BaseViewController {
             inputPhoneText: phoneTextSubject.asDriver(onErrorJustReturn: "")
         )
         
-        _ = viewModel.transform(input: input)
+        let output = viewModel.transform(input: input)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

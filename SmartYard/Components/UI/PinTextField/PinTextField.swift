@@ -99,6 +99,10 @@ class PinTextField: PMNibLinkableView {
         fakeTextField.delegate = self
         fakeTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         fakeTextField.keyboardType = .numberPad
+        
+        if #available(iOS 12.0, *) {
+            fakeTextField.textContentType = .oneTimeCode
+        }
     }
     
 }

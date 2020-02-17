@@ -9,7 +9,6 @@
 import Foundation
 
 private let accessTokenKey = "accessToken"
-private let clientIdKey = "clientId"
 
 class AccessService {
     
@@ -22,18 +21,8 @@ class AccessService {
         }
     }
     
-    var clientId: String? {
-        get {
-            return UserDefaults.standard.string(forKey: clientIdKey)
-        }
-        set {
-            return UserDefaults.standard.setValue(newValue, forKey: clientIdKey)
-        }
-    }
-    
     func logout() {
         accessToken = nil
-        clientId = nil
     }
     
 }
