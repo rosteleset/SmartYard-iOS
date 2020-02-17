@@ -112,6 +112,7 @@ class AddressAccessViewModel: BaseViewModel {
         input.addNewTempContact
             .drive(
                 onNext: { [weak self] in
+                    print("here")
                     self?.addNewTempAccessContact()
                 }
             )
@@ -141,7 +142,7 @@ class AddressAccessViewModel: BaseViewModel {
         return [
             AllowedPerson(displayedName: "Вася", phoneNumber: "+7-903-343-17-40", logoImage: nil),
             AllowedPerson(displayedName: "Петя", phoneNumber: "+7-902-741-82-90", logoImage: nil),
-            AllowedPerson(displayedName: "Коля", phoneNumber: "+7-903-944-47-50", logoImage: nil)
+            AllowedPerson(displayedName: nil, phoneNumber: "+7-903-944-47-50", logoImage: nil)
         ]
     }
     
@@ -183,8 +184,7 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func addNewTempAccessContact() {
-        print("Add new person")
-        // TODO
+        self.router.trigger(.newPersonTestRoute)
     }
     
     private func addNewPermanentAccessContact() {

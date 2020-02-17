@@ -22,6 +22,7 @@ enum AppRoute: Route {
     case userName
     case phoneNumber
     case pinCode(phoneNumber: String)
+    case newPersonTestRoute
     
 }
 
@@ -92,6 +93,11 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         case let .pinCode(phoneNumber):
             let vm = PinCodeViewModel(router: weakRouter, phoneNumber: phoneNumber)
             return .present(PinCodeViewController(viewModel: vm))
+            
+        case .newPersonTestRoute:
+            let vm = NewAllowedPersonViewModel(router: weakRouter)
+            let vc = NewAllowedPersonViewController(viewModel: vm)
+            return .present(vc)
         }
     }
     
