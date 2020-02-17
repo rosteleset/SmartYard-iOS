@@ -64,7 +64,11 @@ class AddressAccessViewModel: BaseViewModel {
         input.smsToTempContactTrigger
             .drive(
                 onNext: { [weak self] index in
-                    self?.sendSmsToTemporaryAccessContact(index: index)
+                    guard let self = self, let index = index else {
+                        return
+                    }
+                    
+                    self.sendSmsToTemporaryAccessContact(index: index)
                 }
             )
             .disposed(by: disposeBag)
@@ -72,7 +76,11 @@ class AddressAccessViewModel: BaseViewModel {
         input.smsToPermanentContactTrigger
             .drive(
                 onNext: { [weak self] index in
-                    self?.sendSmsToPermanentAccessContact(index: index)
+                    guard let self = self, let index = index else {
+                        return
+                    }
+                    
+                    self.sendSmsToPermanentAccessContact(index: index)
                 }
             )
             .disposed(by: disposeBag)
@@ -80,7 +88,11 @@ class AddressAccessViewModel: BaseViewModel {
         input.deleteTempContactTrigger
             .drive(
                 onNext: { [weak self] index in
-                    self?.deleteTempAccessContact(index: index)
+                    guard let self = self, let index = index else {
+                        return
+                    }
+                    
+                    self.deleteTempAccessContact(index: index)
                 }
             )
             .disposed(by: disposeBag)
@@ -88,7 +100,11 @@ class AddressAccessViewModel: BaseViewModel {
         input.deletePermanentContactTrigger
             .drive(
                 onNext: { [weak self] index in
-                    self?.deletePermanentAccessContact(index: index)
+                    guard let self = self, let index = index else {
+                        return
+                    }
+                    
+                    self.deletePermanentAccessContact(index: index)
                 }
             )
             .disposed(by: disposeBag)
@@ -108,7 +124,6 @@ class AddressAccessViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-        
         
         return Output(
             objectAddress: addressSubject.asDriver(onErrorJustReturn: ""),
@@ -174,10 +189,10 @@ extension AddressAccessViewModel {
         let viewDidLoadTrigger: Driver<Void>
         let refreshIntercomTempCodeTrigger: Driver<Void>
         let openGuestAccessTrigger: Driver<Void>
-        let smsToTempContactTrigger: Driver<Int>
-        let smsToPermanentContactTrigger: Driver<Int>
-        let deleteTempContactTrigger: Driver<Int>
-        let deletePermanentContactTrigger: Driver<Int>
+        let smsToTempContactTrigger: Driver<Int?>
+        let smsToPermanentContactTrigger: Driver<Int?>
+        let deleteTempContactTrigger: Driver<Int?>
+        let deletePermanentContactTrigger: Driver<Int?>
         let addNewTempContact: Driver<Void>
         let addNewPermanentContact: Driver<Void>
     }

@@ -14,7 +14,7 @@ class AddressAccessViewController: BaseViewController {
 
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var intercomAccessView: IntercomTemporaryAccessView!
-    @IBOutlet private weak var barrierAccessView: AccessView!
+    @IBOutlet private weak var temporaryAccessView: AccessView!
     @IBOutlet private weak var permanentAccessView: AccessView!
     
     private let viewModel: AddressAccessViewModel
@@ -31,11 +31,53 @@ class AddressAccessViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureViews()
         bind()
+    }
+    
+    private func configureViews() {
+        temporaryAccessView.viewModel = AccessViewModel()
+        permanentAccessView.viewModel = AccessViewModel()
     }
     
     private func bind() {
         let input = AddressAccessViewModel.Input(
+            viewDidLoadTrigger: rx.viewDidLoad.asDriverOnErrorJustComplete(),
+            refreshIntercomTempCodeTrigger: intercomAccessView.rx.refreshButtonTapped.asDriverOnErrorJustComplete(),
+            openGuestAccessTrigger: intercomAccessView.rx.openButtonTapped.asDriverOnErrorJustComplete(),
+            smsToTempContactTrigger: temporaryAccessView.sendSmsSubject.asDriverOnErrorJustComplete(),
+            smsToPermanentContactTrigger: permanentAccessView.sendSmsSubject.asDriverOnErrorJustComplete(),
+            deleteTempContactTrigger: temporaryAccessView.deletePressedSubject.asDriverOnErrorJustComplete(),
+            deletePermanentContactTrigger: permanentAccessView.deletePressedSubject.asDriverOnErrorJustComplete(),
+            addNewTempContact: temporaryAccessView.addNewPersonSubject.asDriverOnErrorJustComplete(),
+            addNewPermanentContact: permanentAccessView.addNewPersonSubject.asDriverOnErrorJustComplete()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.objectAddress
+            .drive(
+                onNext: { [weak self] address in
+                    self?.addressLabel.text = address
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.permanentAccessContacts
+            .drive(
+                onNext: { [weak self] contacts in
+                    self?.permanentAccessView.viewModel?.personsItemsSubject.onNext(contacts)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.tempAccessContacts
+            .drive(
+                onNext: { [weak self] contacts in
+                    self?.temporaryAccessView.viewModel?.personsItemsSubject.onNext(contacts)
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
 }

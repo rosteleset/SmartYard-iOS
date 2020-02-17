@@ -19,10 +19,11 @@ class AccessView: PMNibLinkableView {
     private let itemsProxy = BehaviorSubject<[AllowedPerson]>(value: [])
     private let disposeBag = DisposeBag()
     
-    private let deletePressedSubject = PublishSubject<Int?>()
-    private let addNewPersonSubject = PublishSubject<Void>()
     private let awakeFromNibSubject = PublishSubject<Void>()
-    private let sendSmsSubject = PublishSubject<Int?>()
+    
+    let sendSmsSubject = PublishSubject<Int?>()
+    let deletePressedSubject = PublishSubject<Int?>()
+    let addNewPersonSubject = PublishSubject<Void>()
     
     var viewModel: AccessViewModel? = nil
     
@@ -145,4 +146,3 @@ extension AccessView: UITableViewDataSource {
     }
     
 }
-

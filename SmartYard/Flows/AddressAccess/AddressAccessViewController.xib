@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,9 +20,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressAccessViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="addressLabel" destination="Vjf-7h-gEU" id="yDC-2E-tU1"/>
-                <outlet property="barrierAccessView" destination="CT0-UR-Z3l" id="dov-tp-o8h"/>
                 <outlet property="intercomAccessView" destination="bbs-2j-kxV" id="d58-nk-3F8"/>
                 <outlet property="permanentAccessView" destination="mHK-Jf-tjL" id="eE5-eT-z1n"/>
+                <outlet property="temporaryAccessView" destination="CT0-UR-Z3l" id="dov-tp-o8h"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -39,10 +35,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wnz-X0-Nqd">
-                    <rect key="frame" x="0.0" y="195" width="414" height="667"/>
+                    <rect key="frame" x="0.0" y="171" width="414" height="725"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JYd-ci-KLP">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="667"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blb-rf-Jf9">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="495"/>
@@ -124,7 +120,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tua-bR-e0p" customClass="FullRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="16" y="174" width="382" height="70"/>
+                    <rect key="frame" x="16" y="150" width="382" height="70"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Советская, 16, к. 4" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vjf-7h-gEU">
                             <rect key="frame" x="40" y="24.5" width="302" height="21"/>
@@ -142,7 +138,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Доступ к адресу" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuZ-VJ-41V">
-                    <rect key="frame" x="40" y="113" width="334" height="37.5"/>
+                    <rect key="frame" x="40" y="89" width="334" height="37.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                     <color key="textColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>

@@ -12,19 +12,14 @@ import RxCocoa
 
 class AccessViewModel: BaseViewModel {
     
-    private let persons: [AllowedPerson]
-    
-    init(persons: [AllowedPerson]) {
-        self.persons = persons
-    }
+    let personsItemsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     
     func transform(input: Input) -> Output {
-        let personsItemsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
-        
+
         input.awakeFromNibTrigger
             .drive(
                 onNext: { [weak self] in
-                    personsItemsSubject.onNext(self?.persons ?? [])
+                    self?.personsItemsSubject.onNext([])
                 }
             )
             .disposed(by: disposeBag)

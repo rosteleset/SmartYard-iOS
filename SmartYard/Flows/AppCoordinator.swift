@@ -84,7 +84,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .present(vc)
             
         case .phoneNumber:
-            return .present(AddressAccessViewController())
+            let vm = AddressAccessViewModel(router: weakRouter)
+            return .present(AddressAccessViewController(viewModel: vm))
 //            let vm = InputPhoneNumberViewModel(router: weakRouter)
 //            return .present(InputPhoneNumberViewController(viewModel: vm))
             
