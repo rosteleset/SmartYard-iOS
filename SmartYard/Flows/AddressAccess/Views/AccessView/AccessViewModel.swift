@@ -12,7 +12,7 @@ import RxCocoa
 
 class AccessViewModel: BaseViewModel {
     
-    var personsItemsSubject = PublishSubject<[AllowedPerson]>()
+    private let personsItemsSubject = PublishSubject<[AllowedPerson]>()
     
     func transform(input: Input) -> Output {
         
@@ -36,14 +36,13 @@ class AccessViewModel: BaseViewModel {
             input.awakeFromNibTrigger.asDriver(onErrorJustReturn: ()),
             personsItemsSubject.asDriver(onErrorJustReturn: [])
         ) { _, persons -> [AllowedPerson] in
-            return persons
+            persons
         }
         
         return Output(personsTrigger: combined.asDriver(onErrorJustReturn: []))
     }
     
     func updateData(data: [AllowedPerson]) {
-        print("UPDATE DATA!!!")
         personsItemsSubject.onNext(data)
     }
     

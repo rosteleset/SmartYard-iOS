@@ -155,14 +155,17 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func openGuestAccess() {
+        print("Open guest access!")
         // TODO
     }
     
     private func sendSmsToTemporaryAccessContact(index: Int) {
+        print("SEND SMS TO USER WITH INDEX: \(index)")
         sendSMS(number: "+7-908-474-27-41")
     }
     
     private func sendSmsToPermanentAccessContact(index: Int) {
+        print("SEND SMS TO USER WITH INDEX: \(index)")
         sendSMS(number: "+7-908-474-27-41")
     }
     
@@ -171,18 +174,22 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func deleteTempAccessContact(index: Int) {
+        print("Delete person with index: \(index)")
         // TODO
     }
     
     private func deletePermanentAccessContact(index: Int) {
+        print("Delete person with index: \(index)")
         // TODO
     }
     
     private func addNewTempAccessContact() {
+        print("Add new person")
         // TODO
     }
     
     private func addNewPermanentAccessContact() {
+        print("Add new person")
         // TODO
     }
     

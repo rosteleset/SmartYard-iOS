@@ -31,14 +31,7 @@ class AddressAccessViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureViews()
         bind()
-    }
-    
-    private func configureViews() {
-        print("Set view models!!!")
-//        temporaryAccessView.viewModel = AccessViewModel()
-//        permanentAccessView.viewModel = AccessViewModel()
     }
     
     private func bind() {
@@ -67,7 +60,7 @@ class AddressAccessViewController: BaseViewController {
         output.permanentAccessContacts
             .drive(
                 onNext: { [weak self] contacts in
-                    self?.permanentAccessView.viewModel.personsItemsSubject.onNext(contacts)
+                    self?.permanentAccessView.viewModel.updateData(data: contacts)
                 }
             )
             .disposed(by: disposeBag)
