@@ -1116,6 +1116,7 @@
 		84B9EC8A23E0846900979C39 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				E9004C5C23FABE3F00B59976 /* AddNewAllowedPerson */,
 				E94057F623F671F200623746 /* AddressAccess */,
 				84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */,
 				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
@@ -1312,6 +1313,13 @@
 				9446924CEBF5B1B90F3DD95E /* Pods-SmartYard.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E9004C5C23FABE3F00B59976 /* AddNewAllowedPerson */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AddNewAllowedPerson;
 			sourceTree = "<group>";
 		};
 		E94057F223F56B6400623746 /* Entries */ = {
