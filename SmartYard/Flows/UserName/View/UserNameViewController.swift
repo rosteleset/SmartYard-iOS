@@ -18,9 +18,11 @@ class UserNameViewController: BaseViewController {
     @IBOutlet private var mainContainerBottomConstraint: NSLayoutConstraint!
     
     private let viewModel: UserNameViewModel
+    private let preloadedName: APIClientName?
     
-    init(viewModel: UserNameViewModel) {
+    init(viewModel: UserNameViewModel, preloadedName: APIClientName?) {
         self.viewModel = viewModel
+        self.preloadedName = preloadedName
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -41,21 +43,24 @@ class UserNameViewController: BaseViewController {
         
         nameTextField.setPlaceholder(string: "Имя", isRequiredField: true)
         nameTextField.delegate = self
+        nameTextField.text = preloadedName?.name
+        nameTextField.sendActions(for: .allEditingEvents)
         
         middleNameTextField.setPlaceholder(string: "Отчество")
         middleNameTextField.delegate = self
+        middleNameTextField.text = preloadedName?.patronymic
+        middleNameTextField.sendActions(for: .allEditingEvents)
     }
     
     private func configureRxKeyboard() {
         RxKeyboard.instance.visibleHeight
-            .debounce(.milliseconds(100))
             .drive(
                 onNext: { [weak self] keyboardVisibleHeight in
                     self?.mainContainerBottomConstraint.constant = keyboardVisibleHeight == 0 ?
                         0 :
                         keyboardVisibleHeight
                     
-                    UIView.animate(withDuration: 0.25) {
+                    UIView.animate(withDuration: 0) {
                         self?.view.layoutIfNeeded()
                     }
                 }

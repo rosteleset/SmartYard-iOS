@@ -43,6 +43,12 @@ class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
         phoneTextView.becomeFirstResponder()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        view.endEditing(true)
+    }
+    
     private func bind() {
         let phoneTextSubject = PublishSubject<String>()
         

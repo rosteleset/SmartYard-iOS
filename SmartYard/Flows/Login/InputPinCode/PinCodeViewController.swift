@@ -58,6 +58,12 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
         pinInputFieldView.becomeFirstResponder()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        view.endEditing(true)
+    }
+    
     private func configureView() {
         pinInputFieldView.reset()
         sendCodeAgainLabelView.isHidden = true
@@ -108,13 +114,12 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
         let input = PinCodeViewModel.Input(
             inputPinText: pinTextSubject.asDriver(onErrorJustReturn: ""),
             fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(),
-            sendCodeAgainButtonTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete(),
-            viewWillAppearTrigger: rx.viewWillAppear.asDriver(onErrorJustReturn: false)
+            sendCodeAgainButtonTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input: input)
         
-        output.phoneNumberValueTrigger
+        output.phoneNumber
             .drive(
                 onNext: { phoneNumber in
                     self.hintInputPhoneLabel.text = "Введите код из СМС,\nотправленный на номер +7\(phoneNumber)"

@@ -19,7 +19,7 @@ enum AppRoute: Route {
     case main
     case incomingCall(callPayload: CallPayload)
     case dismiss
-    case userName
+    case userName(preloadedName: APIClientName?)
     case phoneNumber
     case pinCode(phoneNumber: String)
     
@@ -50,7 +50,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             }
             
             guard accessService.clientName != nil else {
-                return .userName
+                return .userName(preloadedName: nil)
             }
             
             return .main
@@ -89,18 +89,20 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         case .dismiss:
             return .dismiss()
             
-        case .userName:
+        case let .userName(preloadedName):
             let vm = UserNameViewModel(apiWrapper: apiWrapper, router: weakRouter)
-            let vc = UserNameViewController(viewModel: vm)
-            return .present(vc)
+            let vc = UserNameViewController(viewModel: vm, preloadedName: preloadedName)
+            return .set([vc], animation: .fade)
             
         case .phoneNumber:
             let vm = InputPhoneNumberViewModel(apiWrapper: apiWrapper, router: weakRouter)
-            return .present(InputPhoneNumberViewController(viewModel: vm))
+            let vc = InputPhoneNumberViewController(viewModel: vm)
+            return .set([vc], animation: .fade)
             
         case let .pinCode(phoneNumber):
             let vm = PinCodeViewModel(apiWrapper: apiWrapper, router: weakRouter, phoneNumber: phoneNumber)
-            return .present(PinCodeViewController(viewModel: vm))
+            let vc = PinCodeViewController(viewModel: vm)
+            return .set([vc], animation: .fade)
         }
     }
     

@@ -25,10 +25,7 @@ class PinCodeViewModel: BaseViewModel {
     
     let incorrectPinTrigger = PublishSubject<Bool>()
     
-    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
-        let phoneNumberTrigger = PublishSubject<String>()
-        
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
@@ -48,15 +45,7 @@ class PinCodeViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] data in
-                    self?.router.trigger(data.name == nil ? .userName : .main)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        input.viewWillAppearTrigger
-            .drive(
-                onNext: { [weak self] _ in
-                    phoneNumberTrigger.onNext(self?.phoneNumber ?? "")
+                    self?.router.trigger(.userName(preloadedName: data.name))
                 }
             )
             .disposed(by: disposeBag)
@@ -64,7 +53,7 @@ class PinCodeViewModel: BaseViewModel {
         input.fixPhoneNumberButtonTapped
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.dismiss)
+                    self?.router.trigger(.phoneNumber)
                 }
             )
             .disposed(by: disposeBag)
@@ -87,7 +76,7 @@ class PinCodeViewModel: BaseViewModel {
         
         return Output(
             checkPinTrigger: incorrectPinTrigger.asDriverOnErrorJustComplete(),
-            phoneNumberValueTrigger: phoneNumberTrigger.asDriver(onErrorJustReturn: ""),
+            phoneNumber: .just(phoneNumber),
             isLoading: activityTracker.asDriver()
         )
     }
@@ -100,12 +89,11 @@ extension PinCodeViewModel {
         let inputPinText: Driver<String>
         let fixPhoneNumberButtonTapped: Driver<Void>
         let sendCodeAgainButtonTapped: Driver<Void>
-        let viewWillAppearTrigger: Driver<Bool>
     }
     
     struct Output {
         let checkPinTrigger: Driver<Bool>
-        let phoneNumberValueTrigger: Driver<String>
+        let phoneNumber: Driver<String>
         let isLoading: Driver<Bool>
     }
     
