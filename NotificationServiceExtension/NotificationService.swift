@@ -64,30 +64,30 @@ class NotificationService: UNNotificationServiceExtension {
         
         self.bestAttemptContent = bestAttemptContent
         
-        // MARK: Удаление уведомлений происходит асинхронно, и иногда просто не успевает произойти до показа нового
-        // Здесь, я подозреваю, нужно будет ресерчить и разруливать как-то менее костыльно. Пока не знаю как
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        // MARK: Грузится слишком долго (3+ секунды)
+        guard let image = bestAttemptContent.userInfo["live"] as? String, let imageUrl = URL(string: image) else {
+            // MARK: Удаление уведомлений происходит асинхронно, и иногда просто не успевает произойти до показа нового
+            // Здесь, я подозреваю, нужно будет ресерчить и разруливать как-то менее костыльно. Пока не знаю как
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                contentHandler(bestAttemptContent)
+            }
+            
+            return
+        }
+
+        store(imageUrl: imageUrl) { result in
+            if let path = try? result.get(),
+                let attachment = try? UNNotificationAttachment(
+                    identifier: imageUrl.absoluteString,
+                    url: path,
+                    options: nil
+                ) {
+                bestAttemptContent.attachments = [attachment]
+            }
+
             contentHandler(bestAttemptContent)
         }
-        
-        // MARK: Грузится слишком долго (3+ секунды)
-//        guard let image = request.content.userInfo["live"] as? String, let imageUrl = URL(string: image) else {
-//            contentHandler(request.content)
-//            return
-//        }
-//
-//        store(imageUrl: imageUrl) { result in
-//            if let path = try? result.get(),
-//                let attachment = try? UNNotificationAttachment(
-//                    identifier: imageUrl.absoluteString,
-//                    url: path,
-//                    options: nil
-//                ) {
-//                bestAttemptContent.attachments = [attachment]
-//            }
-//
-//            contentHandler(bestAttemptContent)
-//        }
     }
     
     private func store(imageUrl: URL, completion: ((Result<URL, Error>) -> Void)?) {
