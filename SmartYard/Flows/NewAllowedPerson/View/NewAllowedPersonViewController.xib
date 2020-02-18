@@ -78,14 +78,14 @@
                                 <constraint firstAttribute="height" constant="1" id="q9H-yi-3ZO"/>
                             </constraints>
                         </view>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NgQ-I8-VyB">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NgQ-I8-VyB">
                             <rect key="frame" x="24" y="170" width="278" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="sdi-TZ-R9i"/>
                             </constraints>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUW-vr-H7B">
                             <rect key="frame" x="326" y="174" width="32" height="32"/>

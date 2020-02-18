@@ -11,15 +11,48 @@ import XCoordinator
 import RxSwift
 import RxCocoa
 
+protocol NewAllowedPersonViewModelDelegate: AnyObject {
+    
+    func newAllowedPersonViewModelDidAddNewTemp(
+        _ viewModel: NewAllowedPersonViewModel,
+        allowedPerson: AllowedPerson
+    )
+    
+    func newAllowedPersonViewModelDidAddNewPermanent(
+        _ viewModel: NewAllowedPersonViewModel,
+        allowedPerson: AllowedPerson
+    )
+    
+}
+
 class NewAllowedPersonViewModel: BaseViewModel {
     
     private let router: WeakRouter<AppRoute>
+    private let allowedPersonType: PersonType
     
-    init(router: WeakRouter<AppRoute>) {
+    private let phoneTextSubject = PublishSubject<String?>()
+    
+    private weak var delegate: NewAllowedPersonViewModelDelegate?
+    
+    init(
+        router: WeakRouter<AppRoute>,
+        delegate: NewAllowedPersonViewModelDelegate,
+        allowedPersonType: PersonType
+    ) {
         self.router = router
+        self.allowedPersonType = allowedPersonType
+        self.delegate = delegate
     }
     
     func transform(_ input: Input) -> Output {
+        input.inputPhoneTextTrigger
+            .drive(
+                onNext: { [weak self] phoneNumber in
+                    self?.phoneTextSubject.onNext(phoneNumber)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         input.closeTrigger
             .drive(
                 onNext: { [weak self] in
@@ -28,10 +61,36 @@ class NewAllowedPersonViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        input.addAccessTrigger
+        Driver
+            .zip(
+                input.addAccessTrigger,
+                phoneTextSubject.asDriver(onErrorJustReturn: "")
+            )
             .drive(
-                onNext: {
-                    // TODO
+                onNext: { [weak self] args in
+                    let (_, phone) = args
+                    
+                    guard let self = self, let phoneNumber = phone else {
+                        return
+                    }
+                    
+                    let allowedPerson = AllowedPerson(displayedName: nil, phoneNumber: phoneNumber, logoImage: nil)
+                    
+                    switch self.allowedPersonType {
+                    case .permanent:
+                        self.delegate?.newAllowedPersonViewModelDidAddNewPermanent(
+                            self,
+                            allowedPerson: allowedPerson
+                        )
+                        
+                    case .temporary:
+                        self.delegate?.newAllowedPersonViewModelDidAddNewTemp(
+                            self,
+                            allowedPerson: allowedPerson
+                        )
+                    }
+                    
+                    self.router.trigger(.dismiss)
                 }
             )
             .disposed(by: disposeBag)
@@ -55,6 +114,7 @@ extension NewAllowedPersonViewModel {
         let closeTrigger: Driver<Void>
         let selectFromContactTrigger: Driver<Void>
         let addAccessTrigger: Driver<Void>
+        let inputPhoneTextTrigger: Driver<String>
     }
     
     struct Output {

@@ -183,7 +183,13 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func addNewTempAccessContact() {
-        self.router.trigger(.newPersonTestRoute)
+        self.router
+            .trigger(
+                .newPersonTestRoute(
+                    delegate: self,
+                    personType: .temporary
+                )
+            )
     }
     
     private func addNewPermanentAccessContact() {
@@ -213,4 +219,22 @@ extension AddressAccessViewModel {
         let permanentAccessContacts: Driver<[AllowedPerson]>
     }
     
+}
+
+extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
+    
+    func newAllowedPersonViewModelDidAddNewTemp(
+        _ viewModel: NewAllowedPersonViewModel,
+        allowedPerson: AllowedPerson
+    ) {
+        print("TEMP \(allowedPerson.phoneNumber)")
+    }
+    
+    func newAllowedPersonViewModelDidAddNewPermanent(
+        _ viewModel: NewAllowedPersonViewModel,
+        allowedPerson: AllowedPerson
+    ) {
+        print("PERMANENT \(allowedPerson.phoneNumber)")
+    }
+
 }

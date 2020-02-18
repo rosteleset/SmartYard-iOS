@@ -53,10 +53,31 @@ class NewAllowedPersonViewController: BaseViewController {
     }
     
     private func bind() {
+        let phoneTextDriver = textField.rx.text
+            .orEmpty
+            .observeOn(MainScheduler.asyncInstance)
+            .asDriver(onErrorJustReturn: "")
+            
+        phoneTextDriver
+            .drive(
+                onNext: { [weak self] text in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.addAccessButton.isEnabled = text.count == Constants.phoneLengthWithoutPrefix
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        let phoneTextCompletedDriver = phoneTextDriver
+            .filter { $0.count == Constants.phoneLengthWithoutPrefix }
+        
         let input = NewAllowedPersonViewModel.Input(
             closeTrigger: closeTrigger.asDriver(onErrorJustReturn: ()),
             selectFromContactTrigger: selectFromContactButton.rx.tap.asDriverOnErrorJustComplete(),
-            addAccessTrigger: addAccessButton.rx.tap.asDriverOnErrorJustComplete()
+            addAccessTrigger: addAccessButton.rx.tap.asDriverOnErrorJustComplete(),
+            inputPhoneTextTrigger: phoneTextCompletedDriver.asDriver(onErrorJustReturn: "")
         )
         
         let output = viewModel.transform(input)
