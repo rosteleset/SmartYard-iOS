@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import RxKeyboard
+import JGProgressHUD
 
-class UserNameViewController: BaseViewController {
+class UserNameViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var nameTextField: SmartYardTextField!
     @IBOutlet private weak var middleNameTextField: SmartYardTextField!
@@ -18,9 +18,13 @@ class UserNameViewController: BaseViewController {
     @IBOutlet private var mainContainerBottomConstraint: NSLayoutConstraint!
     
     private let viewModel: UserNameViewModel
+    private let preloadedName: APIClientName?
     
-    init(viewModel: UserNameViewModel) {
+    var loader: JGProgressHUD?
+    
+    init(viewModel: UserNameViewModel, preloadedName: APIClientName?) {
         self.viewModel = viewModel
+        self.preloadedName = preloadedName
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -36,28 +40,57 @@ class UserNameViewController: BaseViewController {
         bind()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        view.isUserInteractionEnabled = true
+    }
+    
     private func configureView() {
-        view.hideKeyboardWhenTapped = true
+        let gesture = UITapGestureRecognizer()
+        view.addGestureRecognizer(gesture)
+        
+        gesture.rx.event.asDriver()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.view.endEditing(true)
+                }
+            )
+            .disposed(by: disposeBag)
         
         nameTextField.setPlaceholder(string: "Имя", isRequiredField: true)
         nameTextField.delegate = self
+        nameTextField.text = preloadedName?.name
+        nameTextField.sendActions(for: .allEditingEvents)
         
         middleNameTextField.setPlaceholder(string: "Отчество")
         middleNameTextField.delegate = self
+        middleNameTextField.text = preloadedName?.patronymic
+        middleNameTextField.sendActions(for: .allEditingEvents)
     }
     
     private func configureRxKeyboard() {
+        // MARK: Здесь был пролаг (не было анимации) если экран был первым при запуске приложения
+        // Пришлось закастомить RxKeyboard и проксировать параметры анимации, чтобы точно восстановить их
+        
         RxKeyboard.instance.visibleHeight
-            .debounce(.milliseconds(100))
+            .debounce(.milliseconds(50))
+            .withLatestFrom(RxKeyboard.instance.curve.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .withLatestFrom(RxKeyboard.instance.duration.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .drive(
-                onNext: { [weak self] keyboardVisibleHeight in
+                onNext: { [weak self] args in
+                    let (firstPack, duration) = args
+                    let (keyboardVisibleHeight, curve) = firstPack
+                    
                     self?.mainContainerBottomConstraint.constant = keyboardVisibleHeight == 0 ?
                         0 :
                         keyboardVisibleHeight
                     
-                    UIView.animate(withDuration: 0.25) {
-                        self?.view.layoutIfNeeded()
-                    }
+                    UIView.beginAnimations(nil, context: nil)
+                    UIView.setAnimationCurve(curve ?? .linear)
+                    UIView.setAnimationDuration(duration ?? 0.25)
+                    self?.view.layoutIfNeeded()
+                    UIView.commitAnimations()
                 }
             )
             .disposed(by: disposeBag)
@@ -74,6 +107,28 @@ class UserNameViewController: BaseViewController {
         
         output.isAbleToContinue
             .drive(continueButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.prepareTransitionTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.view.endEditing(true)
+                    self?.view.isUserInteractionEnabled = false
+                }
+            )
             .disposed(by: disposeBag)
     }
     

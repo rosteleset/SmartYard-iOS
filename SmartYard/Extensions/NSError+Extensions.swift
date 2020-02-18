@@ -107,3 +107,23 @@ extension NSError {
     }
     
 }
+
+extension NSError {
+    
+    enum AccessServiceError {
+        
+        private static let domain = "AccessServiceError"
+        
+        static let stateExtractionError: NSError = {
+            let errorUserInfo = [NSLocalizedDescriptionKey: "Невозможно восстановить состояние приложения"]
+            
+            return NSError(
+                domain: domain,
+                code: 4001,
+                userInfo: errorUserInfo
+            )
+        }()
+        
+    }
+    
+}

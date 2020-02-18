@@ -24,19 +24,19 @@ class APIWrapper {
         self.accessService = accessService
     }
     
-    func requestCode(userPhone: String) -> Completable {
+    func requestCode(userPhone: String) -> Single<Void?> {
         let request = RequestCodeRequest(userPhone: userPhone)
         
-        return Completable.create { [weak self] completable in
+        return Single.create { [weak self] single in
             guard let self = self else {
-                completable(.error(NSError.GenericError.selfIsDeadError))
+                single(.error(NSError.GenericError.selfIsDeadError))
                 return Disposables.create()
             }
             
             self.apiService.performRequestCodeRequest(request) { result in
                 switch result {
-                case .success: completable(.completed)
-                case let .failure(error): completable(.error(error))
+                case .success: single(.success(()))
+                case let .failure(error): single(.error(error))
                 }
             }
             
@@ -44,8 +44,8 @@ class APIWrapper {
         }
     }
     
-    func confirmCode(userPhone: String, smsCode: String) -> Single<ConfirmCodeResponseData> {
-        guard accessService.accessToken == nil && accessService.clientId == nil else {
+    func confirmCode(userPhone: String, smsCode: String) -> Single<ConfirmCodeResponseData?> {
+        guard accessService.accessToken == nil else {
             return .error(NSError.APIWrapperError.alreadyLoggedInError)
         }
         
@@ -57,15 +57,10 @@ class APIWrapper {
                 return Disposables.create()
             }
             
-            self.apiService.performConfirmCodeRequest(request) { [weak self] result in
+            self.apiService.performConfirmCodeRequest(request) { result in
                 switch result {
-                case let .success(data):
-                    self?.accessService.accessToken = data.accessToken
-                    
-                    single(.success(data))
-                    
-                case let .failure(error):
-                    single(.error(error))
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
                 }
             }
             
@@ -73,8 +68,8 @@ class APIWrapper {
         }
     }
     
-    func login(login: String, password: String) -> Single<LoginResponseData> {
-        guard accessService.accessToken == nil && accessService.clientId == nil else {
+    func login(login: String, password: String) -> Single<LoginResponseData?> {
+        guard accessService.accessToken == nil else {
             return .error(NSError.APIWrapperError.alreadyLoggedInError)
         }
         
@@ -86,16 +81,10 @@ class APIWrapper {
                 return Disposables.create()
             }
             
-            self.apiService.performLoginRequest(request) { [weak self] result in
+            self.apiService.performLoginRequest(request) { result in
                 switch result {
-                case let .success(data):
-                    self?.accessService.accessToken = data.accessToken
-                    self?.accessService.clientId = data.clientId
-                    
-                    single(.success(data))
-                    
-                case let .failure(error):
-                    single(.error(error))
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
                 }
             }
             
@@ -103,7 +92,7 @@ class APIWrapper {
         }
     }
     
-    func getVerifyedAddresses() -> Single<GetVerifyedAddressesResponseData> {
+    func getVerifyedAddresses() -> Single<GetVerifyedAddressesResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -127,13 +116,9 @@ class APIWrapper {
         }
     }
     
-    func registerToken(pushToken: String, type: TokenType) -> Completable {
+    func registerToken(pushToken: String, clientId: String?, type: TokenType) -> Single<Void?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
-        }
-        
-        guard let clientId = accessService.clientId else {
-            return .error(NSError.APIWrapperError.clientIdMissingError)
         }
         
         let request = RegisterTokenRequest(
@@ -143,16 +128,16 @@ class APIWrapper {
             type: type
         )
         
-        return Completable.create { [weak self] completable in
+        return Single.create { [weak self] single in
             guard let self = self else {
-                completable(.error(NSError.GenericError.selfIsDeadError))
+                single(.error(NSError.GenericError.selfIsDeadError))
                 return Disposables.create()
             }
             
             self.apiService.performRegisterTokenRequest(request) { result in
                 switch result {
-                case .success: completable(.completed)
-                case let .failure(error): completable(.error(error))
+                case .success: single(.success(()))
+                case let .failure(error): single(.error(error))
                 }
             }
             
@@ -160,13 +145,9 @@ class APIWrapper {
         }
     }
     
-    func updateTokenState(pushToken: String, newState: TokenState) -> Completable {
+    func updateTokenState(pushToken: String, clientId: String, newState: TokenState) -> Single<Void?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
-        }
-        
-        guard let clientId = accessService.clientId else {
-            return .error(NSError.APIWrapperError.clientIdMissingError)
         }
         
         let request = IntercomTokenRequest(
@@ -176,16 +157,16 @@ class APIWrapper {
             state: newState
         )
         
-        return Completable.create { [weak self] completable in
+        return Single.create { [weak self] single in
             guard let self = self else {
-                completable(.error(NSError.GenericError.selfIsDeadError))
+                single(.error(NSError.GenericError.selfIsDeadError))
                 return Disposables.create()
             }
             
             self.apiService.performUpdateTokenStateRequest(request) { result in
                 switch result {
-                case .success: completable(.completed)
-                case let .failure(error): completable(.error(error))
+                case .success: single(.success(()))
+                case let .failure(error): single(.error(error))
                 }
             }
             
@@ -193,13 +174,9 @@ class APIWrapper {
         }
     }
     
-    func checkTokenState(pushToken: String) -> Single<IntercomTokenResponseData> {
+    func checkTokenState(pushToken: String, clientId: String) -> Single<IntercomTokenResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
-        }
-        
-        guard let clientId = accessService.clientId else {
-            return .error(NSError.APIWrapperError.clientIdMissingError)
         }
         
         let request = IntercomTokenRequest(
@@ -218,6 +195,30 @@ class APIWrapper {
             self.apiService.performCheckTokenStateRequest(request) { result in
                 switch result {
                 case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func sendName(name: String, patronymic: String?) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = SendNameRequest(accessToken: accessToken, name: name, patronymic: patronymic)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performSendNameRequest(request) { result in
+                switch result {
+                case .success: single(.success(()))
                 case let .failure(error): single(.error(error))
                 }
             }

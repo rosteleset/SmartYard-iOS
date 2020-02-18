@@ -83,6 +83,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.5.0):
     - GoogleUtilities/Logger
+  - JGProgressHUD (2.1)
   - Kingfisher (5.13.0):
     - Kingfisher/Core (= 5.13.0)
   - Kingfisher/Core (5.13.0)
@@ -112,9 +113,6 @@ PODS:
     - RxSwift (~> 5)
   - RxDataSources (4.0.1):
     - Differentiator (~> 4.0)
-    - RxCocoa (~> 5.0)
-    - RxSwift (~> 5.0)
-  - RxKeyboard (1.0.0):
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
   - RxRelay (5.0.1):
@@ -157,6 +155,7 @@ DEPENDENCIES:
   - Fabric
   - Firebase/Analytics
   - Firebase/Messaging
+  - JGProgressHUD
   - Kingfisher
   - linphone-sdk (> 4.4.0-alpha)
   - MapboxStatic.swift (~> 0.11)
@@ -165,7 +164,6 @@ DEPENDENCIES:
   - PMNibLinkableView
   - RxCocoa
   - RxDataSources
-  - RxKeyboard
   - RxSwift
   - RxViewController
   - SSCustomTabbar (from `https://github.com/MadBrains/SSCustomTabbar.git`, branch `feature/add-animation-options`)
@@ -196,6 +194,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
+    - JGProgressHUD
     - Kingfisher
     - MapboxStatic.swift
     - Moya
@@ -208,7 +207,6 @@ SPEC REPOS:
     - Result
     - RxCocoa
     - RxDataSources
-    - RxKeyboard
     - RxRelay
     - RxSwift
     - RxViewController
@@ -249,6 +247,7 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 574a983e829327d7c18f2627f65d9e80164ea8a4
   GoogleDataTransportCCTSupport: cad3cd6cdbdbad6b5c2c9206ec413402755faaaa
   GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
+  JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
   linphone-sdk: 82302f72c930a859a75acdcfed304272d3cfdae1
   MapboxStatic.swift: 3a39f0b077a7fb0568fd53f27a76c402b07ef408
@@ -262,7 +261,6 @@ SPEC CHECKSUMS:
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
-  RxKeyboard: 6683c4344304a00f943c158bd8a43ce5469c82a7
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
@@ -273,6 +271,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: a4d5860394d0f0686457179e4f828b78936b8c6c
+PODFILE CHECKSUM: c50b206eb2ac2985f182c0c575381d70068db87c
 
 COCOAPODS: 1.8.4

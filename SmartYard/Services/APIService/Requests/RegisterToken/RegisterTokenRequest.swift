@@ -18,7 +18,7 @@ struct RegisterTokenRequest {
     
     let accessToken: String
     let pushToken: String
-    let clientId: String
+    let clientId: String?
     let type: TokenType
     
 }
@@ -26,11 +26,16 @@ struct RegisterTokenRequest {
 extension RegisterTokenRequest {
     
     var requestParameters: [String: Any] {
-        return [
+        var params: [String: Any] = [
             "pushToken": pushToken,
-            "clientId": clientId,
             "type": type.rawValue
         ]
+        
+        if let clientId = clientId {
+            params["clientId"] = clientId
+        }
+        
+        return params
     }
     
 }

@@ -53,6 +53,11 @@ class PhoneTextField: PMNibLinkableView {
         bind()
     }
     
+    @discardableResult
+    override func becomeFirstResponder() -> Bool {
+        return fakeTextField.becomeFirstResponder()
+    }
+    
     func fetchInputNumber() -> String? {
         return fakeTextField.text
     }
@@ -107,6 +112,7 @@ class PhoneTextField: PMNibLinkableView {
         fakeTextField.delegate = self
         fakeTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         fakeTextField.keyboardType = .numberPad
+        fakeTextField.textContentType = .telephoneNumber
     }
     
 }

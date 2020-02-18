@@ -6,22 +6,20 @@
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
+import UIKit
 import XCoordinator
-import AVKit
 import RxSwift
 import RxCocoa
-import Kingfisher
-import UserNotifications
-import linphonesw
 
 enum AppRoute: Route {
     
     case main
     case incomingCall(callPayload: CallPayload)
     case dismiss
-    case userName
+    case userName(preloadedName: APIClientName?)
     case phoneNumber
-    case pinCode(phoneNumber: String)
+    case pinCode(phoneNumber: String, isInitial: Bool)
+    case alert(title: String, message: String?)
     
 }
 
@@ -31,7 +29,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     private let linphoneService = LinphoneService()
     private let apiService = APIService()
-    private let accessService = AccessService()
+    private let accessService: AccessService
     private let apiWrapper: APIWrapper
     
     private var mainTabBarRouter: StrongRouter<MainTabBarRoute>?
@@ -39,26 +37,26 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private var currentCallPreviewData: Data?
     
     init() {
-        // MARK: Замоканные данные. Убрать после добавления флоу авторизации
-        accessService.accessToken = "79902143-88e4-46fd-a2ed-2bd0b132c433:6ebba629d6adbace8fbb974fd0aa4795"
-        accessService.clientId = "75549"
+        let accessService = AccessService()
         
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
+        self.accessService = accessService
         
-        super.init(initialRoute: .main)
+        super.init(initialRoute: accessService.routeForCurrentState)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
+        
+        observeLogout()
     }
     
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let router = MainTabBarCoordinator(
-                apiWrapper: apiWrapper
-            ).strongRouter
+            let router = MainTabBarCoordinator(accessService: accessService, apiWrapper: apiWrapper)
+                .strongRouter
             
             mainTabBarRouter = router
-            return .set([router])
+            return .set([router], animation: .fade)
             
         case let .incomingCall(callPayload):
             let vm = IncomingCallViewModel(
@@ -78,36 +76,41 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         case .dismiss:
             return .dismiss()
             
-        case .userName:
-            let vm = UserNameViewModel(router: weakRouter)
-            let vc = UserNameViewController(viewModel: vm)
-            return .present(vc)
+        case let .userName(preloadedName):
+            let vm = UserNameViewModel(accessService: accessService, apiWrapper: apiWrapper, router: weakRouter)
+            let vc = UserNameViewController(viewModel: vm, preloadedName: preloadedName)
+            return .set([vc], animation: .fade)
             
         case .phoneNumber:
-            let vm = InputPhoneNumberViewModel(router: weakRouter)
-            return .present(InputPhoneNumberViewController(viewModel: vm))
+            let vm = InputPhoneNumberViewModel(accessService: accessService, apiWrapper: apiWrapper, router: weakRouter)
+            let vc = InputPhoneNumberViewController(viewModel: vm)
+            return .set([vc], animation: .fade)
             
-        case let .pinCode(phoneNumber):
-            let vm = PinCodeViewModel(router: weakRouter, phoneNumber: phoneNumber)
-            return .present(PinCodeViewController(viewModel: vm))
+        case let .pinCode(phoneNumber, isInitial):
+            let vm = PinCodeViewModel(
+                accessService: accessService,
+                apiWrapper: apiWrapper,
+                router: weakRouter,
+                phoneNumber: phoneNumber
+            )
+            
+            let vc = PinCodeViewController(viewModel: vm, isInitial: isInitial)
+            return .set([vc], animation: .fade)
+            
+        case let .alert(title, message):
+            return .alertTransition(title: title, message: message)
         }
     }
     
     func activateToken(token: String, tokenType: TokenType) {
-        Completable
-            .concat(
-                apiWrapper.registerToken(pushToken: token, type: tokenType),
-                apiWrapper.updateTokenState(pushToken: token, newState: .on)
-            )
-            .andThen(
-                apiWrapper.checkTokenState(pushToken: token)
-            )
+        // TODO: Update token activation logic
+    }
+    
+    private func observeLogout() {
+        NotificationCenter.default.rx.notification(.init("UserLoggedOut"))
             .subscribe(
-                onSuccess: { data in
-                    print("DEBUG / \(tokenType) \(token) is now \(data.state)")
-                },
-                onError: { error in
-                    print(error)
+                onNext: { [weak self] _ in
+                    self?.trigger(.phoneNumber)
                 }
             )
             .disposed(by: disposeBag)

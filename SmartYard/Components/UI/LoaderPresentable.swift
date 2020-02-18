@@ -1,0 +1,51 @@
+//
+//  LoaderPresentable.swift
+//  SmartYard
+//
+//  Created by admin on 17/02/2020.
+//  Copyright © 2020 Mad Brains. All rights reserved.
+//
+
+import JGProgressHUD
+
+protocol LoaderPresentable: UIViewController {
+    
+    var loader: JGProgressHUD? { get set }
+    var loaderContainer: UIView { get }
+    
+    func updateLoader(isEnabled: Bool, detailText: String?)
+    
+}
+
+extension LoaderPresentable {
+    
+    // MARK: По умолчанию - берется вся view у viewController
+    var loaderContainer: UIView {
+        return view
+    }
+    
+    // MARK: Имплементация по умолчанию (юзается на нескольких экранах щас)
+    func updateLoader(isEnabled: Bool, detailText: String?) {
+        guard isEnabled else {
+            loader?.dismiss()
+            return
+        }
+        
+        guard let loader = loader else {
+            let loader = JGProgressHUD(style: .dark)
+            loader.detailTextLabel.text = detailText
+            loader.parallaxMode = .alwaysOff
+            loader.show(in: loaderContainer)
+            
+            self.loader = loader
+            return
+        }
+        
+        loader.detailTextLabel.text = detailText
+        
+        if !loader.isVisible {
+            loader.show(in: loaderContainer)
+        }
+    }
+    
+}

@@ -8,32 +8,65 @@
 
 import Foundation
 
+private let appStateKey = "appState"
 private let accessTokenKey = "accessToken"
-private let clientIdKey = "clientId"
+private let clientNameKey = "clientName"
 
 class AccessService {
+    
+    var appState: AppState {
+        get {
+            return UserDefaults.standard.object(AppState.self, with: appStateKey) ?? .onboarding
+        }
+        set {
+            UserDefaults.standard.set(object: newValue, forKey: appStateKey)
+        }
+    }
     
     var accessToken: String? {
         get {
             return UserDefaults.standard.string(forKey: accessTokenKey)
         }
         set {
-            return UserDefaults.standard.setValue(newValue, forKey: accessTokenKey)
+            guard let newValue = newValue else {
+                UserDefaults.standard.removeObject(forKey: accessTokenKey)
+                return
+            }
+            
+            UserDefaults.standard.setValue(newValue, forKey: accessTokenKey)
         }
     }
     
-    var clientId: String? {
+    var clientName: APIClientName? {
         get {
-            return UserDefaults.standard.string(forKey: clientIdKey)
+            return UserDefaults.standard.object(APIClientName.self, with: clientNameKey)
         }
         set {
-            return UserDefaults.standard.setValue(newValue, forKey: clientIdKey)
+            guard let newValue = newValue else {
+                UserDefaults.standard.removeObject(forKey: clientNameKey)
+                return
+            }
+            
+            UserDefaults.standard.set(object: newValue, forKey: clientNameKey)
+        }
+    }
+    
+    var routeForCurrentState: AppRoute {
+        switch appState {
+        case .onboarding: return .phoneNumber
+        case .phoneNumber: return .phoneNumber
+        case .smsCode(let phoneNumber): return .pinCode(phoneNumber: phoneNumber, isInitial: false)
+        case .userName: return .userName(preloadedName: clientName)
+        case .main: return .main
         }
     }
     
     func logout() {
+        appState = .phoneNumber
         accessToken = nil
-        clientId = nil
+        clientName = nil
+        
+        NotificationCenter.default.post(name: .init("UserLoggedOut"), object: nil)
     }
     
 }

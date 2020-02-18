@@ -21,7 +21,7 @@ extension Animation {
 
 private extension InteractiveTransitionAnimation {
     
-    static let fadePresentation = InteractiveTransitionAnimation(duration: 0.75) { transitionContext in
+    static let fadePresentation = InteractiveTransitionAnimation(duration: 0.25) { transitionContext in
         let containerView = transitionContext.containerView
         
         guard let toView = transitionContext.view(forKey: .to) else {
@@ -36,7 +36,7 @@ private extension InteractiveTransitionAnimation {
         }
         
         UIView.animate(
-            withDuration: 0.75,
+            withDuration: 0.25,
             delay: 0,
             options: [.curveLinear],
             animations: {
@@ -48,7 +48,7 @@ private extension InteractiveTransitionAnimation {
         )
     }
     
-    static let fadeDismissal = InteractiveTransitionAnimation(duration: 0.5) { transitionContext in
+    static let fadeDismissal = InteractiveTransitionAnimation(duration: 0.25) { transitionContext in
         let containerView = transitionContext.containerView
         
         guard let fromView = transitionContext.view(forKey: .from) else {
@@ -56,7 +56,7 @@ private extension InteractiveTransitionAnimation {
         }
         
         UIView.animate(
-            withDuration: 0.5,
+            withDuration: 0.25,
             delay: 0,
             options: [.curveLinear],
             animations: {

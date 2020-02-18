@@ -10,9 +10,9 @@ import UIKit
 import RxCocoa
 import RxSwift
 import RxViewController
-import RxKeyboard
+import JGProgressHUD
 
-class PinCodeViewController: BaseViewController {
+class PinCodeViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var hintInputPhoneLabel: UILabel!
     @IBOutlet private weak var fixPhoneNumberButton: UIButton!
@@ -26,15 +26,18 @@ class PinCodeViewController: BaseViewController {
     @IBOutlet weak var sendCodeAgainButton: BlueButton!
     // swiftlint:enable all
     
-    @IBOutlet private weak var sendCodeAgainGroupButtonConstraint: NSLayoutConstraint!
+    @IBOutlet private var sendCodeAgainGroupButtonConstraint: NSLayoutConstraint!
     
     var timer: Timer?
     var timeEnd: Date?
+    var loader: JGProgressHUD?
     
     private let viewModel: PinCodeViewModel
+    private let isInitial: Bool
     
-    init(viewModel: PinCodeViewModel) {
+    init(viewModel: PinCodeViewModel, isInitial: Bool) {
         self.viewModel = viewModel
+        self.isInitial = isInitial
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -50,6 +53,18 @@ class PinCodeViewController: BaseViewController {
         configureRxKeyboard()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        pinInputFieldView.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        view.isUserInteractionEnabled = true
+    }
+    
     private func configureView() {
         pinInputFieldView.reset()
         sendCodeAgainLabelView.isHidden = true
@@ -57,6 +72,12 @@ class PinCodeViewController: BaseViewController {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
+        
+        if isInitial {
+            sendCodeAgainButton.isHidden.toggle()
+            sendCodeAgainLabelView.isHidden.toggle()
+            runCodeTimer()
+        }
     }
     
     @objc private func dismissKeyboard() {
@@ -67,9 +88,11 @@ class PinCodeViewController: BaseViewController {
         RxKeyboard.instance.visibleHeight
             .drive(
                 onNext: { [weak self] keyboardVisibleHeight in
-                    self?.sendCodeAgainGroupButtonConstraint.constant = keyboardVisibleHeight + 28
+                    self?.sendCodeAgainGroupButtonConstraint.constant = keyboardVisibleHeight == 0 ?
+                        28 :
+                        keyboardVisibleHeight + 28
                     
-                    UIView.animate(withDuration: 1) {
+                    UIView.animate(withDuration: 0) {
                         self?.view.layoutIfNeeded()
                     }
                 }
@@ -88,23 +111,20 @@ class PinCodeViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-        let pinTextSubject = PublishSubject<String>()
-        
-        pinInputFieldView.rx.textControlProperty
-            .map { $0 ?? "" }
-            .bind(to: pinTextSubject)
-            .disposed(by: disposeBag)
+        let text = pinInputFieldView.rx.textControlProperty
+            .orEmpty
+            .observeOn(MainScheduler.asyncInstance)
+            .asDriver(onErrorJustReturn: "")
         
         let input = PinCodeViewModel.Input(
-            inputPinText: pinTextSubject.asDriver(onErrorJustReturn: ""),
+            inputPinText: text,
             fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(),
-            sendCodeAgainButtonTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete(),
-            viewWillAppearTrigger: rx.viewWillAppear.asDriver(onErrorJustReturn: false)
+            sendCodeAgainButtonTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input: input)
         
-        output.phoneNumberValueTrigger
+        output.phoneNumber
             .drive(
                 onNext: { phoneNumber in
                     self.hintInputPhoneLabel.text = "Введите код из СМС,\nотправленный на номер +7\(phoneNumber)"
@@ -112,10 +132,32 @@ class PinCodeViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-        output.checkPinTrigger
+        output.isPinCorrect
             .drive(
                 onNext: { [weak self] isCorrect in
                     self?.pinInputFieldView.markPass(isCorrect: isCorrect)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.prepareTransitionTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.view.endEditing(true)
+                    self?.view.isUserInteractionEnabled = false
                 }
             )
             .disposed(by: disposeBag)

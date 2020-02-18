@@ -67,8 +67,7 @@ extension AuthByContractNumViewModel {
     }
     
     struct Output {
-        // TODO: выяснить, как будет обрабатываться проверка данных
-        // let checkDataTrigger: Driver<Bool>
+        
     }
     
 }

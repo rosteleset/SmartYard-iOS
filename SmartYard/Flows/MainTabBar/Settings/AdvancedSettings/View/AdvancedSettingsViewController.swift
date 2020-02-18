@@ -157,7 +157,10 @@ class AdvancedSettingsViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-        let input = AdvancedSettingsViewModel.Input(backTrigger: fakeNavBar.rx.backButtonTap.asDriver())
+        let input = AdvancedSettingsViewModel.Input(
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
+            logoutTrigger: logoutButton.rx.tap.asDriver()
+        )
         
         let output = viewModel.transform(input)
         

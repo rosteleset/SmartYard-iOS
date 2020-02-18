@@ -16,6 +16,7 @@ enum APITarget {
     case intercomToken(request: IntercomTokenRequest)
     case registerToken(request: RegisterTokenRequest)
     case requestCode(request: RequestCodeRequest)
+    case sendName(request: SendNameRequest)
     
 }
 
@@ -33,6 +34,7 @@ extension APITarget: TargetType {
         case .intercomToken: return "user/intercomPushToken"
         case .registerToken: return "user/registerPushToken"
         case .requestCode: return "user/requestCode"
+        case .sendName: return "user/sendName"
         }
     }
     
@@ -50,6 +52,7 @@ extension APITarget: TargetType {
             case .getVerifyedAddresses(let request): return request.accessToken
             case .intercomToken(let request): return request.accessToken
             case .registerToken(let request): return request.accessToken
+            case .sendName(let request): return request.accessToken
             default: return nil
             }
         }()
@@ -73,6 +76,7 @@ extension APITarget: TargetType {
         case .intercomToken(let request): return request.requestParameters
         case .registerToken(let request): return request.requestParameters
         case .requestCode(let request): return request.requestParameters
+        case .sendName(let request): return request.requestParameters
         }
     }
     
