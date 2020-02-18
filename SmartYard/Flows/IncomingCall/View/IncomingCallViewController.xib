@@ -215,7 +215,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lPP-Rf-bcR" userLabel="OpenButton">
                             <rect key="frame" x="224" y="100.5" width="48" height="76"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EmL-iG-h79">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EmL-iG-h79" customClass="LoadingButton" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="EmL-iG-h79" secondAttribute="height" multiplier="1:1" id="LCM-Aj-qbw"/>

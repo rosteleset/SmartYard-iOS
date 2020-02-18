@@ -64,6 +64,7 @@
 		84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5423FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift */; };
 		84854B5823FC27C1001B44F2 /* OpenDoorRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */; };
 		84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5923FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift */; };
+		84854B5C23FC38F3001B44F2 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5B23FC38F3001B44F2 /* LoadingButton.swift */; };
 		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
 		84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */; };
@@ -282,6 +283,7 @@
 		84854B5423FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNAuthorizationType+Extensions.swift"; sourceTree = "<group>"; };
 		84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDoorRequest.swift; sourceTree = "<group>"; };
 		84854B5923FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IncomingCallViewModel+Extensions.swift"; sourceTree = "<group>"; };
+		84854B5B23FC38F3001B44F2 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
 		84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderCell.swift; sourceTree = "<group>"; };
 		84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderCell.xib; sourceTree = "<group>"; };
 		84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelCell.swift; sourceTree = "<group>"; };
@@ -571,6 +573,7 @@
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
 				84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */,
+				84854B5B23FC38F3001B44F2 /* LoadingButton.swift */,
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
 				E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */,
 				E9A4D49823EC3DD00070A591 /* BlueButton */,
@@ -1892,6 +1895,7 @@
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
+				84854B5C23FC38F3001B44F2 /* LoadingButton.swift in Sources */,
 				84B89A9323F2FA6E009692B4 /* ServiceIsNotActivatedViewModel.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
