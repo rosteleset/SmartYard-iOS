@@ -70,6 +70,9 @@ class UserNameViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureRxKeyboard() {
+        // MARK: Здесь был пролаг (не было анимации) если экран был первым при запуске приложения
+        // Пришлось закастомить RxKeyboard и проксировать параметры анимации, чтобы точно восстановить их
+        
         RxKeyboard.instance.visibleHeight
             .debounce(.milliseconds(50))
             .withLatestFrom(RxKeyboard.instance.curve.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
