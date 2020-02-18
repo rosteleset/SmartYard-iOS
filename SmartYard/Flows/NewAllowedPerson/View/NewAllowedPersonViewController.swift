@@ -41,19 +41,25 @@ class NewAllowedPersonViewController: BaseViewController {
     }
 
     @objc func dismissByTapOutside() {
-        closeTrigger.onNext(())
+        
     }
     
     private func configureView() {
         view.hideKeyboardWhenTapped = true
 
-        let dismissTap = UITapGestureRecognizer(
-            target: self,
-            action: #selector(self.dismissByTapOutside)
-        )
+        let dismissTap = UITapGestureRecognizer()
         
         backgroundView.addGestureRecognizer(dismissTap)
-
+        
+        dismissTap.rx
+            .event
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.closeTrigger.onNext(())
+                }
+            )
+            .disposed(by: disposeBag)
+        
         textField.delegate = self
 
         let prefixLabel = UILabel()
