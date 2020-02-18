@@ -13,11 +13,13 @@ import XCoordinator
 
 class PinCodeViewModel: BaseViewModel {
     
+    private let accessService: AccessService
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<AppRoute>
     private let phoneNumber: String
     
-    init(apiWrapper: APIWrapper, router: WeakRouter<AppRoute>, phoneNumber: String) {
+    init(accessService: AccessService, apiWrapper: APIWrapper, router: WeakRouter<AppRoute>, phoneNumber: String) {
+        self.accessService = accessService
         self.apiWrapper = apiWrapper
         self.router = router
         self.phoneNumber = phoneNumber
@@ -51,7 +53,11 @@ class PinCodeViewModel: BaseViewModel {
             }
             .ignoreNil()
             .do(
-                onNext: { _ in
+                onNext: { [weak self] data in
+                    self?.accessService.accessToken = data.accessToken
+                    self?.accessService.clientName = data.name
+                    self?.accessService.appState = .userName
+                    
                     prepareTransitionTrigger.onNext(())
                 }
             )

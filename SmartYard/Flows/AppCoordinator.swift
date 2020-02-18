@@ -42,19 +42,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
         self.accessService = accessService
         
-        let initialState: AppRoute = {
-            guard accessService.accessToken != nil else {
-                return .phoneNumber
-            }
-            
-            guard accessService.clientName != nil else {
-                return .userName(preloadedName: nil)
-            }
-            
-            return .main
-        }()
-        
-        super.init(initialRoute: initialState)
+        super.init(initialRoute: accessService.routeForCurrentState)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
@@ -88,17 +76,23 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .dismiss()
             
         case let .userName(preloadedName):
-            let vm = UserNameViewModel(apiWrapper: apiWrapper, router: weakRouter)
+            let vm = UserNameViewModel(accessService: accessService, apiWrapper: apiWrapper, router: weakRouter)
             let vc = UserNameViewController(viewModel: vm, preloadedName: preloadedName)
             return .set([vc], animation: .fade)
             
         case .phoneNumber:
-            let vm = InputPhoneNumberViewModel(apiWrapper: apiWrapper, router: weakRouter)
+            let vm = InputPhoneNumberViewModel(accessService: accessService, apiWrapper: apiWrapper, router: weakRouter)
             let vc = InputPhoneNumberViewController(viewModel: vm)
             return .set([vc], animation: .fade)
             
         case let .pinCode(phoneNumber):
-            let vm = PinCodeViewModel(apiWrapper: apiWrapper, router: weakRouter, phoneNumber: phoneNumber)
+            let vm = PinCodeViewModel(
+                accessService: accessService,
+                apiWrapper: apiWrapper,
+                router: weakRouter,
+                phoneNumber: phoneNumber
+            )
+            
             let vc = PinCodeViewController(viewModel: vm)
             return .set([vc], animation: .fade)
             

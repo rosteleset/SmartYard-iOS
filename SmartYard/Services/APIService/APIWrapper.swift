@@ -57,16 +57,10 @@ class APIWrapper {
                 return Disposables.create()
             }
             
-            self.apiService.performConfirmCodeRequest(request) { [weak self] result in
+            self.apiService.performConfirmCodeRequest(request) { result in
                 switch result {
-                case let .success(data):
-                    self?.accessService.accessToken = data.accessToken
-                    self?.accessService.clientName = data.name
-                    
-                    single(.success(data))
-                    
-                case let .failure(error):
-                    single(.error(error))
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
                 }
             }
             
@@ -87,15 +81,10 @@ class APIWrapper {
                 return Disposables.create()
             }
             
-            self.apiService.performLoginRequest(request) { [weak self] result in
+            self.apiService.performLoginRequest(request) { result in
                 switch result {
-                case let .success(data):
-                    self?.accessService.accessToken = data.accessToken
-                    
-                    single(.success(data))
-                    
-                case let .failure(error):
-                    single(.error(error))
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
                 }
             }
             

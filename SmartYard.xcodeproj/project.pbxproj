@@ -59,6 +59,7 @@
 		84854B4823FAD3AC001B44F2 /* SendNameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4723FAD3AC001B44F2 /* SendNameRequest.swift */; };
 		84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4B23FADD94001B44F2 /* CustomRxKeyboard.swift */; };
 		84854B4E23FAEC4F001B44F2 /* BasicTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4D23FAEC4F001B44F2 /* BasicTransitions.swift */; };
+		84854B5023FBD3E7001B44F2 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4F23FBD3E7001B44F2 /* AppState.swift */; };
 		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
 		84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */; };
@@ -272,6 +273,7 @@
 		84854B4723FAD3AC001B44F2 /* SendNameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendNameRequest.swift; sourceTree = "<group>"; };
 		84854B4B23FADD94001B44F2 /* CustomRxKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRxKeyboard.swift; sourceTree = "<group>"; };
 		84854B4D23FAEC4F001B44F2 /* BasicTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTransitions.swift; sourceTree = "<group>"; };
+		84854B4F23FBD3E7001B44F2 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderCell.swift; sourceTree = "<group>"; };
 		84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderCell.xib; sourceTree = "<group>"; };
 		84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelCell.swift; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 			isa = PBXGroup;
 			children = (
 				844AC39423E977810066006D /* AccessService.swift */,
+				84854B4F23FBD3E7001B44F2 /* AppState.swift */,
 			);
 			path = AccessService;
 			sourceTree = "<group>";
@@ -1885,6 +1888,7 @@
 				84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */,
 				84854B4823FAD3AC001B44F2 /* SendNameRequest.swift in Sources */,
 				844AC38623E865260066006D /* LoginRequest.swift in Sources */,
+				84854B5023FBD3E7001B44F2 /* AppState.swift in Sources */,
 				844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */,
 				84AA8D6023E2E622001B3B43 /* APIWrapper.swift in Sources */,
 				844AC3B723EB104E0066006D /* UserNameViewController.swift in Sources */,

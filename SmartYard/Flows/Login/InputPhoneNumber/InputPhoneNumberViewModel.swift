@@ -13,10 +13,12 @@ import XCoordinator
 
 class InputPhoneNumberViewModel: BaseViewModel {
     
+    private let accessService: AccessService
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<AppRoute>
     
-    init(apiWrapper: APIWrapper, router: WeakRouter<AppRoute>) {
+    init(accessService: AccessService, apiWrapper: APIWrapper, router: WeakRouter<AppRoute>) {
+        self.accessService = accessService
         self.apiWrapper = apiWrapper
         self.router = router
     }
@@ -52,7 +54,9 @@ class InputPhoneNumberViewModel: BaseViewModel {
             .withLatestFrom(tempPhone)
             .ignoreNil()
             .do(
-                onNext: { _ in
+                onNext: { [weak self] phoneNumber in
+                    self?.accessService.appState = .smsCode(phoneNumber: phoneNumber)
+                    
                     prepareTransitionTrigger.onNext(())
                 }
             )

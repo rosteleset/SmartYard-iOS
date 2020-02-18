@@ -12,10 +12,12 @@ import XCoordinator
 
 class UserNameViewModel: BaseViewModel {
     
+    private let accessService: AccessService
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<AppRoute>
     
-    init(apiWrapper: APIWrapper, router: WeakRouter<AppRoute>) {
+    init(accessService: AccessService, apiWrapper: APIWrapper, router: WeakRouter<AppRoute>) {
+        self.accessService = accessService
         self.apiWrapper = apiWrapper
         self.router = router
     }
@@ -53,7 +55,9 @@ class UserNameViewModel: BaseViewModel {
             }
             .ignoreNil()
             .do(
-                onNext: { _ in
+                onNext: { [weak self] _ in
+                    self?.accessService.appState = .main
+                    
                     prepareTransitionTrigger.onNext(())
                 }
             )

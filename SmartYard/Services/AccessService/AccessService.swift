@@ -8,10 +8,20 @@
 
 import Foundation
 
+private let appStateKey = "appState"
 private let accessTokenKey = "accessToken"
 private let clientNameKey = "clientName"
 
 class AccessService {
+    
+    var appState: AppState {
+        get {
+            return UserDefaults.standard.object(AppState.self, with: appStateKey) ?? .onboarding
+        }
+        set {
+            UserDefaults.standard.set(object: newValue, forKey: appStateKey)
+        }
+    }
     
     var accessToken: String? {
         get {
@@ -41,7 +51,18 @@ class AccessService {
         }
     }
     
+    var routeForCurrentState: AppRoute {
+        switch appState {
+        case .onboarding: return .phoneNumber
+        case .phoneNumber: return .phoneNumber
+        case .smsCode(let phoneNumber): return .pinCode(phoneNumber: phoneNumber)
+        case .userName: return .userName(preloadedName: clientName)
+        case .main: return .main
+        }
+    }
+    
     func logout() {
+        appState = .phoneNumber
         accessToken = nil
         clientName = nil
     }
