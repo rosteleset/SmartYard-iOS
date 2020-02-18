@@ -51,7 +51,10 @@ class AccessView: PMNibLinkableView {
         itemsProxy
             .subscribe(
                 onNext: { [weak self] _ in
-                    self?.tableView.reloadData()
+                    self?.tableView.reloadSections(
+                        IndexSet(integer: 0),
+                        with: .middle
+                    )
                 }
             )
             .disposed(by: disposeBag)

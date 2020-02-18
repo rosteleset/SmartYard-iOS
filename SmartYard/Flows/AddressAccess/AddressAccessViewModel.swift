@@ -176,13 +176,27 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func deleteTempAccessContact(index: Int) {
-        print("Delete person with index: \(index)")
-        // TODO
+        guard let data = try? tempAccessConstactsSubject.value() else {
+            return
+        }
+        
+        var newData = data
+        newData.remove(at: index)
+        
+        tempAccessConstactsSubject.onNext(newData)
+        // TODO: use API deletion method
     }
     
     private func deletePermanentAccessContact(index: Int) {
-        print("Delete person with index: \(index)")
-        // TODO
+        guard let data = try? permanentAccessContactsSubject.value() else {
+            return
+        }
+        
+        var newData = data
+        newData.remove(at: index)
+        
+        permanentAccessContactsSubject.onNext(newData)
+        // TODO: use API deletion method
     }
     
     private func addNewTempAccessContact() {
