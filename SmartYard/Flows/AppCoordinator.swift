@@ -18,7 +18,7 @@ enum AppRoute: Route {
     case dismiss
     case userName(preloadedName: APIClientName?)
     case phoneNumber
-    case pinCode(phoneNumber: String)
+    case pinCode(phoneNumber: String, isInitial: Bool)
     case alert(title: String, message: String?)
     
 }
@@ -85,7 +85,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             let vc = InputPhoneNumberViewController(viewModel: vm)
             return .set([vc], animation: .fade)
             
-        case let .pinCode(phoneNumber):
+        case let .pinCode(phoneNumber, isInitial):
             let vm = PinCodeViewModel(
                 accessService: accessService,
                 apiWrapper: apiWrapper,
@@ -93,7 +93,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 phoneNumber: phoneNumber
             )
             
-            let vc = PinCodeViewController(viewModel: vm)
+            let vc = PinCodeViewController(viewModel: vm, isInitial: isInitial)
             return .set([vc], animation: .fade)
             
         case let .alert(title, message):

@@ -16,6 +16,7 @@ class PinCodeViewModel: BaseViewModel {
     private let accessService: AccessService
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<AppRoute>
+    
     private let phoneNumber: String
     
     init(accessService: AccessService, apiWrapper: APIWrapper, router: WeakRouter<AppRoute>, phoneNumber: String) {
@@ -78,11 +79,18 @@ class PinCodeViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.sendCodeAgainButtonTapped
-            .drive(
-                onNext: {
-                    // TODO: send code again
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
                 }
-            )
+                
+                return self.apiWrapper.requestCode(userPhone: self.phoneNumber)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive()
             .disposed(by: disposeBag)
         
         errorTracker.asDriver()
@@ -93,6 +101,11 @@ class PinCodeViewModel: BaseViewModel {
                     switch nsError.code {
                     case 401:
                         isPinCorrect.onNext(false)
+                        
+                    case 429:
+                        let message = "Вы запрашиваете код слишком часто. Пожалуйста, попробуйте позже"
+                        self?.router.trigger(.alert(title: "Ошибка", message: message))
+                        
                     default:
                         self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                     }

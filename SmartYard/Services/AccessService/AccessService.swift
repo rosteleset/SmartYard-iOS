@@ -55,7 +55,7 @@ class AccessService {
         switch appState {
         case .onboarding: return .phoneNumber
         case .phoneNumber: return .phoneNumber
-        case .smsCode(let phoneNumber): return .pinCode(phoneNumber: phoneNumber)
+        case .smsCode(let phoneNumber): return .pinCode(phoneNumber: phoneNumber, isInitial: false)
         case .userName: return .userName(preloadedName: clientName)
         case .main: return .main
         }

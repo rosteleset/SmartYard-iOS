@@ -23,6 +23,7 @@ class InputPhoneNumberViewModel: BaseViewModel {
         self.router = router
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         let tempPhoneSubject = BehaviorSubject<String?>(value: nil)
         let tempPhone = tempPhoneSubject.asDriver(onErrorJustReturn: nil)
@@ -63,7 +64,7 @@ class InputPhoneNumberViewModel: BaseViewModel {
             .delay(.milliseconds(100))
             .drive(
                 onNext: { [weak self] phone in
-                    self?.router.trigger(.pinCode(phoneNumber: phone))
+                    self?.router.trigger(.pinCode(phoneNumber: phone, isInitial: true))
                 }
             )
             .disposed(by: disposeBag)
@@ -71,7 +72,16 @@ class InputPhoneNumberViewModel: BaseViewModel {
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    let nsError = error as NSError
+                    
+                    switch nsError.code {
+                    case 429:
+                        let message = "Вы запрашиваете код слишком часто. Пожалуйста, попробуйте позже"
+                        self?.router.trigger(.alert(title: "Ошибка", message: message))
+                        
+                    default:
+                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    }
                 }
             )
             .disposed(by: disposeBag)

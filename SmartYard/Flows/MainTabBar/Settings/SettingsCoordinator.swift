@@ -34,6 +34,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
+    // swiftlint:disable:next function_body_length
     override func prepareTransition(for route: SettingsRoute) -> NavigationTransition {
         switch route {
         case .main:

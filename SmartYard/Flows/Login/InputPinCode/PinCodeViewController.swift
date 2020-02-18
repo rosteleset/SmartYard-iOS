@@ -34,9 +34,11 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
     var loader: JGProgressHUD?
     
     private let viewModel: PinCodeViewModel
+    private let isInitial: Bool
     
-    init(viewModel: PinCodeViewModel) {
+    init(viewModel: PinCodeViewModel, isInitial: Bool) {
         self.viewModel = viewModel
+        self.isInitial = isInitial
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -71,6 +73,12 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
+        
+        if isInitial {
+            sendCodeAgainButton.isHidden.toggle()
+            sendCodeAgainLabelView.isHidden.toggle()
+            runCodeTimer()
+        }
     }
     
     @objc private func dismissKeyboard() {
@@ -93,7 +101,6 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
         sendCodeAgainButton.rx.tap
             .subscribe(

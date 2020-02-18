@@ -50,7 +50,7 @@ class ServiceFromOfficeView: PMNibLinkableView {
         
         options.overlays.append(markerOverlay)
         
-        _ = Snapshot(options: options, accessToken: accessToken).image { [weak self] (image, error) in
+        _ = Snapshot(options: options, accessToken: accessToken).image { [weak self] image, error in
             if let error = error {
                 print(error)
                 return
