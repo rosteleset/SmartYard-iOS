@@ -17,8 +17,8 @@ struct CallPayload {
     let transport: TransportType
     let image: String
     let liveImage: String
+    let domophoneId: String
     
-    let domophoneId: String?
     let flatId: String?
     
     var asPushNotificationPayload: [AnyHashable: Any] {
@@ -29,12 +29,9 @@ struct CallPayload {
             "port": port,
             "transport": transport.rawString,
             "live": liveImage,
-            "image": image
+            "image": image,
+            "domophoneId": domophoneId
         ]
-        
-        if let domophoneId = domophoneId {
-            mainPayload["domophoneId"] = domophoneId
-        }
         
         if let flatId = flatId {
             mainPayload["flatId"] = flatId
@@ -43,11 +40,7 @@ struct CallPayload {
         return mainPayload
     }
     
-    var domophoneString: String? {
-        guard let domophoneId = domophoneId else {
-            return nil
-        }
-        
+    var domophoneString: String {
         return "ID домофона: \(domophoneId)"
     }
     
@@ -76,7 +69,8 @@ struct CallPayload {
             let rawTransport = data["transport"] as? String,
             let transport = TransportType(rawString: rawTransport),
             let liveImage = data["live"] as? String,
-            let image = data["image"] as? String else {
+            let image = data["image"] as? String,
+            let domophoneId = data["domophoneId"] as? String else {
             return nil
         }
         
@@ -87,8 +81,8 @@ struct CallPayload {
         self.transport = transport
         self.liveImage = liveImage
         self.image = image
+        self.domophoneId = domophoneId
         
-        self.domophoneId = data["domophoneId"] as? String
         self.flatId = data["flatId"] as? String
     }
     

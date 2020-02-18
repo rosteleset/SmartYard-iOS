@@ -63,8 +63,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         case let .incomingCall(callPayload):
             let vm = IncomingCallViewModel(
                 linphoneService: linphoneService,
-                callPayload: callPayload,
-                router: weakRouter
+                apiWrapper: apiWrapper,
+                router: weakRouter,
+                callPayload: callPayload
             )
             
             let vc = IncomingCallViewController(viewModel: vm)

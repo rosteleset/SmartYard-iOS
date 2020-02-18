@@ -16,23 +16,34 @@ import XCoordinator
 class IncomingCallViewModel: BaseViewModel {
     
     private let linphoneService: LinphoneService
-    private let callPayload: CallPayload
+    private let apiWrapper: APIWrapper
+    
     private let router: WeakRouter<AppRoute>
     
-    private var currentCall: Call?
+    private let callPayload: CallPayload
     
     private let currentStateSubject = BehaviorSubject<(IncomingCallState, IncomingCallDoorState)>(
         value: (.callReceived, .notDetermined)
     )
     
-    init(linphoneService: LinphoneService, callPayload: CallPayload, router: WeakRouter<AppRoute>) {
+    private var currentCall: Call?
+    
+    init(
+        linphoneService: LinphoneService,
+        apiWrapper: APIWrapper,
+        router: WeakRouter<AppRoute>,
+        callPayload: CallPayload
+    ) {
         self.linphoneService = linphoneService
-        self.callPayload = callPayload
+        self.apiWrapper = apiWrapper
         self.router = router
+        self.callPayload = callPayload
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
         
         // MARK: Общий стейт экрана
         
@@ -92,6 +103,18 @@ class IncomingCallViewModel: BaseViewModel {
         
         input.openTrigger
             .withLatestFrom(currentState)
+            .flatMapLatest { [weak self] currentState -> Driver<(IncomingCallState, IncomingCallDoorState)?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper.openDoor(domophoneId: self.callPayload.domophoneId, doorId: nil)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .map { _ -> (IncomingCallState, IncomingCallDoorState)? in currentState }
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .do(
                 onNext: { [weak self] currentState in
                     let (callState, doorState) = currentState
@@ -301,10 +324,19 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             state: currentState,
             subtitle: subtitle,
-            image: image
+            image: image,
+            isLoading: activityTracker.asDriver()
         )
     }
     
@@ -326,6 +358,7 @@ extension IncomingCallViewModel {
         let state: Driver<(IncomingCallState, IncomingCallDoorState)>
         let subtitle: Driver<String?>
         let image: Driver<UIImage?>
+        let isLoading: Driver<Bool>
     }
     
 }

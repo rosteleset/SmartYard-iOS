@@ -62,6 +62,7 @@
 		84854B5023FBD3E7001B44F2 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4F23FBD3E7001B44F2 /* AppState.swift */; };
 		84854B5323FBFDD6001B44F2 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5223FBFDD6001B44F2 /* PushNotificationService.swift */; };
 		84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5423FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift */; };
+		84854B5823FC27C1001B44F2 /* OpenDoorRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */; };
 		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
 		84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */; };
@@ -278,6 +279,7 @@
 		84854B4F23FBD3E7001B44F2 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		84854B5223FBFDD6001B44F2 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
 		84854B5423FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNAuthorizationType+Extensions.swift"; sourceTree = "<group>"; };
+		84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDoorRequest.swift; sourceTree = "<group>"; };
 		84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderCell.swift; sourceTree = "<group>"; };
 		84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderCell.xib; sourceTree = "<group>"; };
 		84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelCell.swift; sourceTree = "<group>"; };
@@ -529,13 +531,14 @@
 		844AC39923E979BA0066006D /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				84854B4623FAD3A0001B44F2 /* SendName */,
 				844AC37F23E8636D0066006D /* ConfirmCode */,
 				844AC37823E8619A0066006D /* GetVerifyedAddresses */,
-				844AC38423E8651B0066006D /* Login */,
 				844AC38C23E867720066006D /* IntercomToken */,
+				844AC38423E8651B0066006D /* Login */,
+				84854B5623FC2583001B44F2 /* OpenDoor */,
 				844AC38923E866630066006D /* RegisterToken */,
 				844AC37123E85C4A0066006D /* RequestCode */,
+				84854B4623FAD3A0001B44F2 /* SendName */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -801,6 +804,14 @@
 				84854B5223FBFDD6001B44F2 /* PushNotificationService.swift */,
 			);
 			path = PushNotificationService;
+			sourceTree = "<group>";
+		};
+		84854B5623FC2583001B44F2 /* OpenDoor */ = {
+			isa = PBXGroup;
+			children = (
+				84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */,
+			);
+			path = OpenDoor;
 			sourceTree = "<group>";
 		};
 		84898A7E23F144D400E6B78E /* Cells */ = {
@@ -1935,6 +1946,7 @@
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
+				84854B5823FC27C1001B44F2 /* OpenDoorRequest.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 				84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */,
 				84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */,

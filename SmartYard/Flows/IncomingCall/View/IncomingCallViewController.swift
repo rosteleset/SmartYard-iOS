@@ -9,8 +9,9 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import JGProgressHUD
 
-class IncomingCallViewController: BaseViewController {
+class IncomingCallViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var previewButton: UIButton!
     @IBOutlet private weak var callButton: UIButton!
@@ -29,6 +30,8 @@ class IncomingCallViewController: BaseViewController {
     @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
     
     private let viewModel: IncomingCallViewModel
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: IncomingCallViewModel) {
         self.viewModel = viewModel
@@ -131,6 +134,19 @@ class IncomingCallViewController: BaseViewController {
                     case .callFinished:
                         self.titleLabel.text = "Звонок завершен"
                     }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
                 }
             )
             .disposed(by: disposeBag)
