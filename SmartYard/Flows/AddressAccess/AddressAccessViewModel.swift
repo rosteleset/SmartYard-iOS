@@ -16,8 +16,8 @@ class AddressAccessViewModel: BaseViewModel {
     private let router: WeakRouter<AppRoute>
     
     let addressSubject = PublishSubject<String?>()
-    let tempAccessConstactsSubject = PublishSubject<[AllowedPerson]>()
-    let permanentAccessContactSubject = PublishSubject<[AllowedPerson]>()
+    let tempAccessConstactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
+    let permanentAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     let intercomAccessCode = PublishSubject<String?>()
     
     init(
@@ -26,20 +26,17 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
-        input.viewDidAppearTrigger
-            .drive(
-                onNext: { [weak self] _ in
-                    guard let self = self else {
-                        return
-                    }
-
-                    self.addressSubject.onNext(self.loadAddress())
-                    self.tempAccessConstactsSubject.onNext(self.loadTemporaryAccessContacts())
-                    self.permanentAccessContactSubject.onNext(self.loadPermanentAccessContacts())
-                    self.intercomAccessCode.onNext(self.loadIntercomAccessCode())
-                }
-            )
-            .disposed(by: disposeBag)
+        loadData()
+        // TODO: использовать это решение после подключения API
+//        input.viewDidAppearTrigger
+//            .drive(
+//                onNext: { [weak self] _ in
+//                    guard let self = self else {
+//                        return
+//                    }
+//                }
+//            )
+//            .disposed(by: disposeBag)
         
         input.refreshIntercomTempCodeTrigger
             .drive(
@@ -111,7 +108,6 @@ class AddressAccessViewModel: BaseViewModel {
         input.addNewTempContact
             .drive(
                 onNext: { [weak self] in
-                    print("here")
                     self?.addNewTempAccessContact()
                 }
             )
@@ -128,8 +124,15 @@ class AddressAccessViewModel: BaseViewModel {
         return Output(
             objectAddress: addressSubject.asDriver(onErrorJustReturn: ""),
             tempAccessContacts: tempAccessConstactsSubject.asDriver(onErrorJustReturn: []),
-            permanentAccessContacts: permanentAccessContactSubject.asDriver(onErrorJustReturn: [])
+            permanentAccessContacts: permanentAccessContactsSubject.asDriver(onErrorJustReturn: [])
         )
+    }
+    
+    private func loadData() {
+        self.addressSubject.onNext(self.loadAddress())
+        self.tempAccessConstactsSubject.onNext(self.loadTemporaryAccessContacts())
+        self.permanentAccessContactsSubject.onNext(self.loadPermanentAccessContacts())
+        self.intercomAccessCode.onNext(self.loadIntercomAccessCode())
     }
     
     // TODO: load real data
@@ -193,8 +196,13 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func addNewPermanentAccessContact() {
-        print("Add new person")
-        // TODO
+        self.router
+            .trigger(
+                .newPersonTestRoute(
+                    delegate: self,
+                    personType: .permanent
+                )
+        )
     }
     
 }
@@ -227,14 +235,28 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
         _ viewModel: NewAllowedPersonViewModel,
         allowedPerson: AllowedPerson
     ) {
-        print("TEMP \(allowedPerson.phoneNumber)")
+        guard let data = try? tempAccessConstactsSubject.value() else {
+            return
+        }
+        
+        var newData = data
+        newData.append(allowedPerson)
+        tempAccessConstactsSubject.onNext(newData)
+        // TODO: save data, using api
     }
     
     func newAllowedPersonViewModelDidAddNewPermanent(
         _ viewModel: NewAllowedPersonViewModel,
         allowedPerson: AllowedPerson
     ) {
-        print("PERMANENT \(allowedPerson.phoneNumber)")
+        guard let data = try? permanentAccessContactsSubject.value() else {
+            return
+        }
+        
+        var newData = data
+        newData.append(allowedPerson)
+        permanentAccessContactsSubject.onNext(newData)
+        // TODO: save data, using api
     }
 
 }
