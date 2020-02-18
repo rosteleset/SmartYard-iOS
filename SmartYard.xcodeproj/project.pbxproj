@@ -609,19 +609,19 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				E94B6C2523FC028F00FD9F65 /* LimitedTextField */,
-				E9E4271323F40D8100F5D593 /* SmartYardCheckBoxView */,
-				E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
 				84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */,
 				84854B5B23FC38F3001B44F2 /* LoadingButton.swift */,
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
-				E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */,
 				E9A4D49823EC3DD00070A591 /* BlueButton */,
+				E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */,
 				843A7A7D23F29A0D00840E51 /* FakeNavBar */,
+				E9E4271323F40D8100F5D593 /* SmartYardCheckBoxView */,
+				E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */,
 				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
+				E94B6C2523FC028F00FD9F65 /* LimitedTextField */,
 				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
 				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
 				E9A4D48D23EC2A510070A591 /* PinTextField */,
