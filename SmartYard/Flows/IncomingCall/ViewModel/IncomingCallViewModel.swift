@@ -342,27 +342,6 @@ class IncomingCallViewModel: BaseViewModel {
     
 }
 
-extension IncomingCallViewModel {
-    
-    struct Input {
-        let previewTrigger: Driver<Void>
-        
-        // MARK: Ну я хз, придется либо прокидывать вьюхи сюда, либо UnsafeRawPointer. И то, и то - говно
-        
-        let callTrigger: Driver<(UIView, UIView)>
-        let ignoreTrigger: Driver<Void>
-        let openTrigger: Driver<Void>
-    }
-    
-    struct Output {
-        let state: Driver<(IncomingCallState, IncomingCallDoorState)>
-        let subtitle: Driver<String?>
-        let image: Driver<UIImage?>
-        let isLoading: Driver<Bool>
-    }
-    
-}
-
 extension IncomingCallViewModel: LinphoneDelegate {
     
     func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: RegistrationState, message: String) {
@@ -401,4 +380,3 @@ extension IncomingCallViewModel: LinphoneDelegate {
     }
     
 }
-

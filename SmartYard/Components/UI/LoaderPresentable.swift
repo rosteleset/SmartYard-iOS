@@ -12,6 +12,7 @@ protocol LoaderPresentable: UIViewController {
     
     var loader: JGProgressHUD? { get set }
     var loaderContainer: UIView { get }
+    var loaderStyle: JGProgressHUDStyle { get }
     
     func updateLoader(isEnabled: Bool, detailText: String?)
     
@@ -24,6 +25,11 @@ extension LoaderPresentable {
         return view
     }
     
+    // MARK: По умолчанию используется белая крутилка на черном фоне
+    var loaderStyle: JGProgressHUDStyle {
+        return .dark
+    }
+    
     // MARK: Имплементация по умолчанию (юзается на нескольких экранах щас)
     func updateLoader(isEnabled: Bool, detailText: String?) {
         guard isEnabled else {
@@ -32,7 +38,7 @@ extension LoaderPresentable {
         }
         
         guard let loader = loader else {
-            let loader = JGProgressHUD(style: .dark)
+            let loader = JGProgressHUD(style: loaderStyle)
             loader.detailTextLabel.text = detailText
             loader.parallaxMode = .alwaysOff
             loader.show(in: loaderContainer)
