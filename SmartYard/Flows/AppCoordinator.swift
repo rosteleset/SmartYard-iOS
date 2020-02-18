@@ -45,14 +45,15 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         super.init(initialRoute: accessService.routeForCurrentState)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
+        
+        observeLogout()
     }
     
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let router = MainTabBarCoordinator(
-                apiWrapper: apiWrapper
-            ).strongRouter
+            let router = MainTabBarCoordinator(accessService: accessService, apiWrapper: apiWrapper)
+                .strongRouter
             
             mainTabBarRouter = router
             return .set([router], animation: .fade)
@@ -103,6 +104,16 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     func activateToken(token: String, tokenType: TokenType) {
         // TODO: Update token activation logic
+    }
+    
+    private func observeLogout() {
+        NotificationCenter.default.rx.notification(.init("UserLoggedOut"))
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.trigger(.phoneNumber)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

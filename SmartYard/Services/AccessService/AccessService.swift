@@ -65,6 +65,8 @@ class AccessService {
         appState = .phoneNumber
         accessToken = nil
         clientName = nil
+        
+        NotificationCenter.default.post(name: .init("UserLoggedOut"), object: nil)
     }
     
 }

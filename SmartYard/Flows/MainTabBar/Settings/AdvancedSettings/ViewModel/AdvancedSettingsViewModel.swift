@@ -12,10 +12,12 @@ import XCoordinator
 
 class AdvancedSettingsViewModel: BaseViewModel {
     
+    private let accessService: AccessService
     private let router: WeakRouter<SettingsRoute>
     private let name: String
     
-    init(router: WeakRouter<SettingsRoute>, name: String) {
+    init(accessService: AccessService, router: WeakRouter<SettingsRoute>, name: String) {
+        self.accessService = accessService
         self.router = router
         self.name = name
     }
@@ -25,6 +27,26 @@ class AdvancedSettingsViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] in
                     self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.logoutTrigger
+            .drive(
+                onNext: { [weak self] in
+                    let noAction = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
+                    
+                    let yesAction = UIAlertAction(title: "Да", style: .destructive) { _ in
+                        self?.accessService.logout()
+                    }
+                    
+                    self?.router.trigger(
+                        .dialog(
+                            title: "Выход из приложения",
+                            message: "Вы действительно хотите выйти из вашей учетной записи?",
+                            actions: [noAction, yesAction]
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -46,6 +68,7 @@ extension AdvancedSettingsViewModel {
     
     struct Input {
         let backTrigger: Driver<Void>
+        let logoutTrigger: Driver<Void>
     }
     
     struct Output {

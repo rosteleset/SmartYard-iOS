@@ -19,18 +19,21 @@ enum SettingsRoute: Route {
     case serviceUnavailable
     case advancedSettings(name: String)
     case addressDeletion(delegate: AddressDeletionViewModelDelegate)
+    case dialog(title: String, message: String?, actions: [UIAlertAction])
     
 }
 
 class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     
+    let accessService: AccessService
     let apiWrapper: APIWrapper
     
-    init(
-        apiWrapper: APIWrapper
-    ) {
+    init(accessService: AccessService, apiWrapper: APIWrapper) {
+        self.accessService = accessService
         self.apiWrapper = apiWrapper
+        
         super.init(initialRoute: .main)
+        
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
@@ -81,7 +84,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             return .present(vc)
             
         case let .advancedSettings(name):
-            let vm = AdvancedSettingsViewModel(router: weakRouter, name: name)
+            let vm = AdvancedSettingsViewModel(accessService: accessService, router: weakRouter, name: name)
             let vc = AdvancedSettingsViewController(viewModel: vm)
             return .push(vc)
             
@@ -93,6 +96,9 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             vc.modalTransitionStyle = .crossDissolve
             
             return .present(vc)
+            
+        case let .dialog(title, message, actions):
+            return .dialogTransition(title: title, message: message, actions: actions)
         }
     }
     
