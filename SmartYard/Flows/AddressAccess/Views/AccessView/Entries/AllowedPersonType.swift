@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum PersonType {
+enum AllowedPersonType {
     
     case permanent
     case temporary

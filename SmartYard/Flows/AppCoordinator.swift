@@ -23,7 +23,7 @@ enum AppRoute: Route {
     case phoneNumber
     case pinCode(phoneNumber: String)
     
-    case newPersonTestRoute(delegate: NewAllowedPersonViewModelDelegate, personType: PersonType)
+    case newPersonTestRoute(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
     
 }
 

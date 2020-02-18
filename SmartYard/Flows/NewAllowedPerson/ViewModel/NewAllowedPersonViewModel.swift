@@ -28,7 +28,7 @@ protocol NewAllowedPersonViewModelDelegate: AnyObject {
 class NewAllowedPersonViewModel: BaseViewModel {
     
     private let router: WeakRouter<AppRoute>
-    private let allowedPersonType: PersonType
+    private let allowedPersonType: AllowedPersonType
     
     private let phoneTextSubject = PublishSubject<String?>()
     
@@ -37,7 +37,7 @@ class NewAllowedPersonViewModel: BaseViewModel {
     init(
         router: WeakRouter<AppRoute>,
         delegate: NewAllowedPersonViewModelDelegate,
-        allowedPersonType: PersonType
+        allowedPersonType: AllowedPersonType
     ) {
         self.router = router
         self.allowedPersonType = allowedPersonType

@@ -82,7 +82,7 @@ extension AccessView: UITableViewDelegate {
         guard let data = try? itemsProxy.value() ,
             indexPath.row == data.count || data.isEmpty
         else {
-                return 64
+            return 64
         }
     
         return 57
@@ -93,7 +93,7 @@ extension AccessView: UITableViewDelegate {
             return false
         }
         
-        return indexPath.row != data.count || !data.isEmpty
+        return indexPath.row != data.count
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -101,12 +101,7 @@ extension AccessView: UITableViewDelegate {
             style: .default,
             title: "Удалить"
         ) { [weak self] _, indexPath in
-            print("Delete pressed")
-            tableView.beginUpdates()
             self?.deletePressedSubject.onNext(indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .left)
-            tableView.endUpdates()
-            
             return
         }
         
