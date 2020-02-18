@@ -19,17 +19,4 @@ struct APIAddress: Decodable {
     let houseId: String
     let domophoneId: String
     
-    private enum CodingKeys: String, CodingKey {
-        case clientId = "client_id"
-        case login = "login"
-        case contractName = "contract_name"
-        case clientName = "client_name"
-        case address = "address"
-        case looser = "looser"
-        case flatId = "flat_id"
-        case flatNumber = "flat_number"
-        case houseId = "house_id"
-        case domophoneId = "domophone_id"
-    }
-    
 }
