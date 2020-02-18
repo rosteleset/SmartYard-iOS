@@ -78,7 +78,7 @@
                                 <constraint firstAttribute="height" constant="1" id="q9H-yi-3ZO"/>
                             </constraints>
                         </view>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NgQ-I8-VyB">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NgQ-I8-VyB" customClass="LimitedTextField" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="24" y="170" width="278" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="sdi-TZ-R9i"/>

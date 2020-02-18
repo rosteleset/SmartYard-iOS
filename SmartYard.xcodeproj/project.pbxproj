@@ -161,6 +161,7 @@
 		E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C1A23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift */; };
 		E94B6C1F23FBC5F200FD9F65 /* PersonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C1E23FBC5F200FD9F65 /* PersonType.swift */; };
 		E94B6C2423FBFEA600FD9F65 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */; };
+		E94B6C2723FC02B800FD9F65 /* LimitedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2623FC02B800FD9F65 /* LimitedTextField.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -407,6 +408,7 @@
 		E94B6C1A23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAllowedPersonViewModel.swift; sourceTree = "<group>"; };
 		E94B6C1E23FBC5F200FD9F65 /* PersonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonType.swift; sourceTree = "<group>"; };
 		E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		E94B6C2623FC02B800FD9F65 /* LimitedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedTextField.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -607,6 +609,9 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C2523FC028F00FD9F65 /* LimitedTextField */,
+				E9E4271323F40D8100F5D593 /* SmartYardCheckBoxView */,
+				E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
@@ -1428,6 +1433,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		E94B6C2523FC028F00FD9F65 /* LimitedTextField */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C2623FC02B800FD9F65 /* LimitedTextField.swift */,
+			);
+			path = LimitedTextField;
+			sourceTree = "<group>";
+		};
 		E98C381D23F141E70010BBC1 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -2025,6 +2038,7 @@
 				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
 				844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
+				E94B6C2723FC02B800FD9F65 /* LimitedTextField.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
 				844AC39723E9788D0066006D /* APIAddress.swift in Sources */,

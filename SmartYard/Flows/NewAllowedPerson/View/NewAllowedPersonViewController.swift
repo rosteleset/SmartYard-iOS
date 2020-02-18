@@ -14,7 +14,7 @@ import RxCocoa
 class NewAllowedPersonViewController: BaseViewController {
 
     @IBOutlet private weak var backgroundView: UIView!
-    @IBOutlet private weak var textField: UITextField!
+    @IBOutlet private weak var textField: LimitedTextField!
     @IBOutlet private weak var selectFromContactButton: UIButton!
     @IBOutlet private weak var addAccessButton: BlueButton!
     @IBOutlet private weak var mainContainerBottomConstraint: NSLayoutConstraint!
