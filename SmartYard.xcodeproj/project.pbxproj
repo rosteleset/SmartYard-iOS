@@ -1361,10 +1361,10 @@
 		E940580523F680C000623746 /* AccessView */ = {
 			isa = PBXGroup;
 			children = (
-				E9004C6123FABF6800B59976 /* AccessView.xib */,
 				E9BB83CD23F69FAF0071F91E /* Entries */,
 				E940580C23F6828F00623746 /* Cells */,
 				E940580623F680F000623746 /* AccessView.swift */,
+				E9004C6123FABF6800B59976 /* AccessView.xib */,
 				E9BB83D223F6B1E70071F91E /* AccessViewModel.swift */,
 			);
 			path = AccessView;

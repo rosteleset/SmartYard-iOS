@@ -24,6 +24,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewAllowedPersonViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="addAccessButton" destination="1sJ-jH-6or" id="Dd1-YP-UBa"/>
+                <outlet property="backgroundView" destination="t6t-mh-46c" id="fdG-6k-XnM"/>
                 <outlet property="mainContainerBottomConstraint" destination="x1h-g8-K0l" id="Qcj-eZ-44t"/>
                 <outlet property="selectFromContactButton" destination="cUW-vr-H7B" id="Flg-Go-fAj"/>
                 <outlet property="textField" destination="NgQ-I8-VyB" id="a3P-df-VkX"/>
@@ -35,17 +36,27 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Ls-xU-ype">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t6t-mh-46c">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Ls-xU-ype" customClass="FullRoundedView" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="16" y="281.5" width="382" height="343"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Поделиться доступом" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gda-I1-7lg">
                             <rect key="frame" x="24" y="28" width="334" height="35.5"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35.5" id="l31-MM-huS"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="28"/>
                             <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Введите номер телефона человека, которому  хотите предоставить доступ, или выберете его из контактов" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xKP-zL-fU1">
                             <rect key="frame" x="24" y="75.5" width="334" height="53"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="53" id="3z2-2m-k00"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                             <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -56,7 +67,9 @@
                                 <constraint firstAttribute="height" constant="60" id="FbK-uj-dvw"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
-                            <state key="normal" title="Поделиться"/>
+                            <state key="normal" title="Поделиться">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FIv-dO-hQZ">
                             <rect key="frame" x="24" y="218" width="334" height="1"/>
@@ -87,7 +100,6 @@
                     <constraints>
                         <constraint firstItem="1sJ-jH-6or" firstAttribute="top" secondItem="FIv-dO-hQZ" secondAttribute="bottom" constant="36" id="60q-xB-qyp"/>
                         <constraint firstItem="NgQ-I8-VyB" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="9Ok-R1-gMI"/>
-                        <constraint firstAttribute="height" constant="343" id="BtK-QT-eah"/>
                         <constraint firstAttribute="trailing" secondItem="xKP-zL-fU1" secondAttribute="trailing" constant="24" id="EA6-EW-0gA"/>
                         <constraint firstItem="FIv-dO-hQZ" firstAttribute="top" secondItem="cUW-vr-H7B" secondAttribute="bottom" constant="12" id="EPi-4W-rYO"/>
                         <constraint firstAttribute="trailing" secondItem="cUW-vr-H7B" secondAttribute="trailing" constant="24" id="L0C-Fz-vF2"/>
@@ -98,6 +110,7 @@
                         <constraint firstItem="gda-I1-7lg" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="UAd-cw-4RD"/>
                         <constraint firstItem="gda-I1-7lg" firstAttribute="top" secondItem="8Ls-xU-ype" secondAttribute="top" constant="28" id="XbB-No-1Vo"/>
                         <constraint firstAttribute="trailing" secondItem="1sJ-jH-6or" secondAttribute="trailing" constant="24" id="eN4-UE-2jP"/>
+                        <constraint firstItem="NgQ-I8-VyB" firstAttribute="top" secondItem="xKP-zL-fU1" secondAttribute="bottom" constant="41.5" id="fgS-Jl-PEd"/>
                         <constraint firstItem="xKP-zL-fU1" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="gtH-zi-CyW"/>
                         <constraint firstAttribute="bottom" secondItem="1sJ-jH-6or" secondAttribute="bottom" constant="28" id="lHw-zd-IvT"/>
                         <constraint firstItem="FIv-dO-hQZ" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="oHJ-2Y-2x5"/>
@@ -109,12 +122,17 @@
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8Ls-xU-ype" secondAttribute="trailing" constant="16" id="NgD-AD-aTD"/>
-                <constraint firstItem="8Ls-xU-ype" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="YHN-NN-iiY"/>
+                <constraint firstItem="8Ls-xU-ype" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" priority="999" id="YHN-NN-iiY"/>
+                <constraint firstItem="t6t-mh-46c" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fuZ-Oh-8q3"/>
                 <constraint firstItem="8Ls-xU-ype" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="sIx-Jj-s7W"/>
                 <constraint firstItem="8Ls-xU-ype" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="t70-8Y-jTg"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="t6t-mh-46c" secondAttribute="bottom" id="uu1-nb-vCq"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8Ls-xU-ype" secondAttribute="bottom" id="x1h-g8-K0l"/>
+                <constraint firstItem="t6t-mh-46c" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="xTe-fM-9d9"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="t6t-mh-46c" secondAttribute="trailing" id="yqg-G9-rgo"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="47.826086956521742" y="35.491071428571423"/>
         </view>
     </objects>
     <resources>

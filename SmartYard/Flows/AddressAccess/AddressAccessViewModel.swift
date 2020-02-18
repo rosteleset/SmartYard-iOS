@@ -91,7 +91,6 @@ class AddressAccessViewModel: BaseViewModel {
                     guard let self = self, let index = index else {
                         return
                     }
-                    
                     self.deleteTempAccessContact(index: index)
                 }
             )

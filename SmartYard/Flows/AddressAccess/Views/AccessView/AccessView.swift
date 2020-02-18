@@ -118,7 +118,7 @@ extension AccessView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let data = try? itemsProxy.value() ,
-              indexPath.row == data.count + 1 || data.isEmpty
+              indexPath.row == data.count || data.isEmpty
         else {
             return
         }

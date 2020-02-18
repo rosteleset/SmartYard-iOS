@@ -86,7 +86,12 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             
         case .phoneNumber:
             let vm = AddressAccessViewModel(router: weakRouter)
-            return .present(AddressAccessViewController(viewModel: vm))
+            let vc = AddressAccessViewController(viewModel: vm)
+            vc.modalPresentationStyle = .overCurrentContext
+            vc.modalTransitionStyle = .crossDissolve
+            vc.view.backgroundColor = UIColor.clear
+            
+            return .present(vc)
 //            let vm = InputPhoneNumberViewModel(router: weakRouter)
 //            return .present(InputPhoneNumberViewController(viewModel: vm))
             

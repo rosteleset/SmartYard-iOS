@@ -13,6 +13,7 @@ import RxCocoa
 
 class NewAllowedPersonViewController: BaseViewController {
 
+    @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var textField: UITextField!
     @IBOutlet private weak var selectFromContactButton: UIButton!
     @IBOutlet private weak var addAccessButton: BlueButton!
@@ -37,18 +38,28 @@ class NewAllowedPersonViewController: BaseViewController {
         configureView()
         configureRxKeyboard()
         bind()
+        view.hideKeyboardWhenTapped = true
+        // create the gesture recognizer
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.doSomethingOnTap))
+        backgroundView.addGestureRecognizer(tap)
     }
 
+    @objc func doSomethingOnTap() {
+        closeTrigger.onNext(())
+    }
+    
     private func configureView() {
         textField.delegate = self
     }
     
     private func bind() {
-        _ = NewAllowedPersonViewModel.Input(
-            closeTrigger: closeTrigger.asDriverOnErrorJustComplete(),
+        let input = NewAllowedPersonViewModel.Input(
+            closeTrigger: closeTrigger.asDriver(onErrorJustReturn: ()),
             selectFromContactTrigger: selectFromContactButton.rx.tap.asDriverOnErrorJustComplete(),
             addAccessTrigger: addAccessButton.rx.tap.asDriverOnErrorJustComplete()
         )
+        
+        let output = viewModel.transform(input)
     }
     
     private func configureRxKeyboard() {

@@ -22,8 +22,8 @@ class NewAllowedPersonViewModel: BaseViewModel {
     func transform(_ input: Input) -> Output {
         input.closeTrigger
             .drive(
-                onNext: {
-                    // TODO
+                onNext: { [weak self] in
+                    self?.router.trigger(.dismiss)
                 }
             )
             .disposed(by: disposeBag)
