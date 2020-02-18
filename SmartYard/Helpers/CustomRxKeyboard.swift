@@ -11,7 +11,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-public protocol CustomRxKeyboardType {
+public protocol RxKeyboardType {
     var frame: Driver<CGRect> { get }
     var visibleHeight: Driver<CGFloat> { get }
     var willShowVisibleHeight: Driver<CGFloat> { get }
@@ -19,12 +19,12 @@ public protocol CustomRxKeyboardType {
 }
 
 /// RxKeyboard provides a reactive way of observing keyboard frame changes.
-public class CustomRxKeyboard: NSObject, CustomRxKeyboardType {
+public class RxKeyboard: NSObject, RxKeyboardType {
     
     // MARK: Public
     
     /// Get a singleton instance.
-    public static let instance = CustomRxKeyboard()
+    public static let instance = RxKeyboard()
     
     /// An observable keyboard frame.
     public let frame: Driver<CGRect>
@@ -163,7 +163,7 @@ public class CustomRxKeyboard: NSObject, CustomRxKeyboardType {
 
 // MARK: - UIGestureRecognizerDelegate
 
-extension CustomRxKeyboard: UIGestureRecognizerDelegate {
+extension RxKeyboard: UIGestureRecognizerDelegate {
     
     public func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,

@@ -10,7 +10,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import TouchAreaInsets
-import RxKeyboard
 
 class AddressDeletionViewController: BaseViewController {
     

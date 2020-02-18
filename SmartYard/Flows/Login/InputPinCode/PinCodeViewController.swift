@@ -10,7 +10,6 @@ import UIKit
 import RxCocoa
 import RxSwift
 import RxViewController
-import RxKeyboard
 import JGProgressHUD
 
 class PinCodeViewController: BaseViewController, LoaderPresentable {

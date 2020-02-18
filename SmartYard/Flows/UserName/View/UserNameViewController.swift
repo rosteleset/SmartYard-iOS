@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RxKeyboard
 import JGProgressHUD
 
 class UserNameViewController: BaseViewController, LoaderPresentable {
@@ -71,10 +70,10 @@ class UserNameViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureRxKeyboard() {
-        CustomRxKeyboard.instance.visibleHeight
+        RxKeyboard.instance.visibleHeight
             .debounce(.milliseconds(50))
-            .withLatestFrom(CustomRxKeyboard.instance.curve.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
-            .withLatestFrom(CustomRxKeyboard.instance.duration.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .withLatestFrom(RxKeyboard.instance.curve.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .withLatestFrom(RxKeyboard.instance.duration.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .drive(
                 onNext: { [weak self] args in
                     let (firstPack, duration) = args
