@@ -162,6 +162,7 @@
 		E94B6C2423FBFEA600FD9F65 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */; };
 		E94B6C2723FC02B800FD9F65 /* LimitedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2623FC02B800FD9F65 /* LimitedTextField.swift */; };
 		E94B6C2923FC04F500FD9F65 /* AllowedPersonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2823FC04F400FD9F65 /* AllowedPersonType.swift */; };
+		E94B6C2B23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2A23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -409,6 +410,7 @@
 		E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		E94B6C2623FC02B800FD9F65 /* LimitedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedTextField.swift; sourceTree = "<group>"; };
 		E94B6C2823FC04F400FD9F65 /* AllowedPersonType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllowedPersonType.swift; sourceTree = "<group>"; };
+		E94B6C2A23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewAllowedPerson+Contacts.swift"; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -1420,6 +1422,7 @@
 			isa = PBXGroup;
 			children = (
 				E94B6C1623FAC5B600FD9F65 /* NewAllowedPersonViewController.swift */,
+				E94B6C2A23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift */,
 				E94B6C1723FAC5B600FD9F65 /* NewAllowedPersonViewController.xib */,
 			);
 			path = View;
@@ -2033,6 +2036,7 @@
 				E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */,
 				848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */,
 				84898A8E23F1540C00E6B78E /* SettingsActionCell.swift in Sources */,
+				E94B6C2B23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,

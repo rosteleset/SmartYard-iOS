@@ -10,14 +10,18 @@ import UIKit
 import RxKeyboard
 import RxSwift
 import RxCocoa
+import ContactsUI
+import Contacts
 
 class NewAllowedPersonViewController: BaseViewController {
 
     @IBOutlet private weak var backgroundView: UIView!
-    @IBOutlet private weak var textField: LimitedTextField!
+    @IBOutlet weak var textField: LimitedTextField!
     @IBOutlet private weak var selectFromContactButton: UIButton!
     @IBOutlet private weak var addAccessButton: BlueButton!
     @IBOutlet private weak var mainContainerBottomConstraint: NSLayoutConstraint!
+    
+    private let contactPicker = CNContactPickerViewController()
     
     private let closeTrigger = PublishSubject<Void>()
     
@@ -38,10 +42,6 @@ class NewAllowedPersonViewController: BaseViewController {
         configureView()
         configureRxKeyboard()
         bind()
-    }
-
-    @objc func dismissByTapOutside() {
-        
     }
     
     private func configureView() {
@@ -91,6 +91,17 @@ class NewAllowedPersonViewController: BaseViewController {
         
         let phoneTextCompletedDriver = phoneTextDriver
             .filter { $0.count == Constants.phoneLengthWithoutPrefix }
+        
+        selectFromContactButton.rx
+            .tap
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: {
+                    self.contactPicker.delegate = self
+                    self.present(self.contactPicker, animated: true, completion: nil)
+                }
+            )
+            .disposed(by: disposeBag)
         
         let input = NewAllowedPersonViewModel.Input(
             closeTrigger: closeTrigger.asDriver(onErrorJustReturn: ()),
