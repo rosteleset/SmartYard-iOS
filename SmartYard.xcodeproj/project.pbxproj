@@ -163,6 +163,7 @@
 		E94B6C2723FC02B800FD9F65 /* LimitedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2623FC02B800FD9F65 /* LimitedTextField.swift */; };
 		E94B6C2923FC04F500FD9F65 /* AllowedPersonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2823FC04F400FD9F65 /* AllowedPersonType.swift */; };
 		E94B6C2B23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2A23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift */; };
+		E94B6C3023FC12B900FD9F65 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2F23FC12B900FD9F65 /* RoundedImageView.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -411,6 +412,7 @@
 		E94B6C2623FC02B800FD9F65 /* LimitedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedTextField.swift; sourceTree = "<group>"; };
 		E94B6C2823FC04F400FD9F65 /* AllowedPersonType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllowedPersonType.swift; sourceTree = "<group>"; };
 		E94B6C2A23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewAllowedPerson+Contacts.swift"; sourceTree = "<group>"; };
+		E94B6C2F23FC12B900FD9F65 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
 				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
 				E9A4D48D23EC2A510070A591 /* PinTextField */,
+				E94B6C2E23FC129300FD9F65 /* RoundedImageView */,
 				E99EA6CC23EAD0C800BECEE6 /* RoundedView */,
 				E9E4271323F40D8100F5D593 /* SmartYardCheckBoxView */,
 				E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */,
@@ -1444,6 +1447,14 @@
 			path = LimitedTextField;
 			sourceTree = "<group>";
 		};
+		E94B6C2E23FC129300FD9F65 /* RoundedImageView */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C2F23FC12B900FD9F65 /* RoundedImageView.swift */,
+			);
+			path = RoundedImageView;
+			sourceTree = "<group>";
+		};
 		E98C381D23F141E70010BBC1 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -2125,6 +2136,7 @@
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
+				E94B6C3023FC12B900FD9F65 /* RoundedImageView.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
 				84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */,

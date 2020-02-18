@@ -13,6 +13,6 @@ struct AllowedPerson {
     
     let displayedName: String?
     let phoneNumber: String
-    let logoImage: UIImage?
+    var logoImage: UIImage?
     
 }

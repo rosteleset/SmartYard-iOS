@@ -46,5 +46,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSContactsUsageDescription</key>
+	<string>Access is needed to save contact information to intercom access list.</string>
 </dict>
 </plist>

@@ -17,53 +17,37 @@ extension NewAllowedPersonViewController: CNContactPickerDelegate {
         
         guard phoneNumberCount > 0 else {
             dismiss(animated: true)
-            //show pop up: "Selected contact does not have a number"
             return
         }
         
-        if phoneNumberCount == 1 {
-            setNumberFromContact(contactNumber: contact.phoneNumbers[0].value.stringValue)
-            
-        } else {
-            let alertController = UIAlertController(title: "Select one of the numbers", message: nil, preferredStyle: .alert)
-            
-            for i in 0...phoneNumberCount-1 {
-                let phoneAction = UIAlertAction(title: contact.phoneNumbers[i].value.stringValue, style: .default, handler: {
-                    alert -> Void in
-                    self.setNumberFromContact(contactNumber: contact.phoneNumbers[i].value.stringValue)
-                })
-                alertController.addAction(phoneAction)
-            }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: {
-                alert -> Void in
-                
-            })
-            alertController.addAction(cancelAction)
-            
-            dismiss(animated: true)
-            self.present(alertController, animated: true, completion: nil)
+        contactNameLabel.text = contact.givenName
+        
+        var allowedPerson = AllowedPerson(
+            displayedName: contact.givenName,
+            phoneNumber: getNumberFromContact(contactNumber: contact.phoneNumbers[safe: 0]?.value.stringValue ?? "-"),
+            logoImage: nil
+        )
+        
+        if contact.imageDataAvailable {
+            let image = UIImage(data: contact.imageData!)
+            contactImageView.image = image
+            allowedPerson.logoImage = image
         }
+        
+        newContactTrigger.onNext(allowedPerson)
     }
     
-    func setNumberFromContact(contactNumber: String) {
-        
-        //UPDATE YOUR NUMBER SELECTION LOGIC AND PERFORM ACTION WITH THE SELECTED NUMBER
-        
+    func getNumberFromContact(contactNumber: String) -> String {
         var contactNumber = contactNumber.replacingOccurrences(of: "-", with: "")
         contactNumber = contactNumber.replacingOccurrences(of: "(", with: "")
         contactNumber = contactNumber.replacingOccurrences(of: ")", with: "")
         
-        guard contactNumber.count >= 10 else {
-            dismiss(animated: true) {
-            }
-            return
+        guard contactNumber.count >= Constants.phoneLengthWithoutPrefix else {
+            dismiss(animated: true)
+            return ""
         }
         
-        textField.text = String(contactNumber.suffix(10))
-    }
-    
-    func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
-        
+        return String(contactNumber.suffix(Constants.phoneLengthWithoutPrefix))
     }
 
 }

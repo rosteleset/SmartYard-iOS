@@ -25,6 +25,8 @@
             <connections>
                 <outlet property="addAccessButton" destination="1sJ-jH-6or" id="Dd1-YP-UBa"/>
                 <outlet property="backgroundView" destination="t6t-mh-46c" id="fdG-6k-XnM"/>
+                <outlet property="contactImageView" destination="Pnj-Sd-8a8" id="zxN-9D-fVu"/>
+                <outlet property="contactNameLabel" destination="d86-8d-Cc7" id="yTP-ws-jQc"/>
                 <outlet property="mainContainerBottomConstraint" destination="x1h-g8-K0l" id="Qcj-eZ-44t"/>
                 <outlet property="selectFromContactButton" destination="cUW-vr-H7B" id="Flg-Go-fAj"/>
                 <outlet property="textField" destination="NgQ-I8-VyB" id="a3P-df-VkX"/>
@@ -78,6 +80,9 @@
                                 <constraint firstAttribute="height" constant="1" id="q9H-yi-3ZO"/>
                             </constraints>
                         </view>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultUserIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Pnj-Sd-8a8" customClass="RoundedImageView" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="326" y="171.5" width="32" height="32"/>
+                        </imageView>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NgQ-I8-VyB" customClass="LimitedTextField" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="24" y="170" width="278" height="35"/>
                             <constraints>
@@ -93,29 +98,43 @@
                                 <constraint firstAttribute="height" constant="32" id="LNW-Ke-NqD"/>
                                 <constraint firstAttribute="width" constant="32" id="YSt-L7-sCy"/>
                             </constraints>
-                            <state key="normal" image="DefaultUserIcon"/>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Имя" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d86-8d-Cc7">
+                            <rect key="frame" x="24" y="169.5" width="278" height="35"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="Pnj-Sd-8a8" firstAttribute="height" secondItem="cUW-vr-H7B" secondAttribute="height" id="3JW-4J-2FW"/>
                         <constraint firstItem="1sJ-jH-6or" firstAttribute="top" secondItem="FIv-dO-hQZ" secondAttribute="bottom" constant="36" id="60q-xB-qyp"/>
+                        <constraint firstItem="d86-8d-Cc7" firstAttribute="top" secondItem="xKP-zL-fU1" secondAttribute="bottom" constant="41" id="8mw-5a-ZY0"/>
                         <constraint firstItem="NgQ-I8-VyB" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="9Ok-R1-gMI"/>
+                        <constraint firstItem="Pnj-Sd-8a8" firstAttribute="leading" secondItem="d86-8d-Cc7" secondAttribute="trailing" constant="24" id="BRA-BP-Uel"/>
                         <constraint firstAttribute="trailing" secondItem="xKP-zL-fU1" secondAttribute="trailing" constant="24" id="EA6-EW-0gA"/>
+                        <constraint firstAttribute="trailing" secondItem="Pnj-Sd-8a8" secondAttribute="trailing" constant="24" id="Goc-BH-9uo"/>
                         <constraint firstItem="cUW-vr-H7B" firstAttribute="centerY" secondItem="NgQ-I8-VyB" secondAttribute="centerY" id="Jvx-Tj-JBZ"/>
                         <constraint firstAttribute="trailing" secondItem="cUW-vr-H7B" secondAttribute="trailing" constant="24" id="L0C-Fz-vF2"/>
                         <constraint firstAttribute="trailing" secondItem="FIv-dO-hQZ" secondAttribute="trailing" constant="24" id="LGP-OP-FtL"/>
                         <constraint firstAttribute="trailing" secondItem="gda-I1-7lg" secondAttribute="trailing" constant="24" id="Mm5-hc-JTz"/>
+                        <constraint firstItem="NgQ-I8-VyB" firstAttribute="top" secondItem="xKP-zL-fU1" secondAttribute="bottom" constant="41.5" id="Phn-gF-0ff"/>
                         <constraint firstItem="FIv-dO-hQZ" firstAttribute="top" secondItem="NgQ-I8-VyB" secondAttribute="bottom" constant="8" symbolic="YES" id="RJa-5Y-e2n"/>
-                        <constraint firstItem="cUW-vr-H7B" firstAttribute="leading" secondItem="NgQ-I8-VyB" secondAttribute="trailing" constant="24" id="S3M-yZ-nvs"/>
                         <constraint firstItem="gda-I1-7lg" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="UAd-cw-4RD"/>
                         <constraint firstItem="gda-I1-7lg" firstAttribute="top" secondItem="8Ls-xU-ype" secondAttribute="top" constant="28" id="XbB-No-1Vo"/>
+                        <constraint firstItem="Pnj-Sd-8a8" firstAttribute="width" secondItem="cUW-vr-H7B" secondAttribute="width" id="a24-nK-1j1"/>
                         <constraint firstAttribute="trailing" secondItem="1sJ-jH-6or" secondAttribute="trailing" constant="24" id="eN4-UE-2jP"/>
-                        <constraint firstItem="NgQ-I8-VyB" firstAttribute="top" secondItem="xKP-zL-fU1" secondAttribute="bottom" constant="41.5" id="fgS-Jl-PEd"/>
                         <constraint firstItem="xKP-zL-fU1" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="gtH-zi-CyW"/>
+                        <constraint firstItem="d86-8d-Cc7" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="hnm-t4-OEi"/>
                         <constraint firstAttribute="bottom" secondItem="1sJ-jH-6or" secondAttribute="bottom" constant="28" id="lHw-zd-IvT"/>
+                        <constraint firstItem="d86-8d-Cc7" firstAttribute="height" secondItem="NgQ-I8-VyB" secondAttribute="height" id="ltE-CE-oS8"/>
                         <constraint firstItem="FIv-dO-hQZ" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="oHJ-2Y-2x5"/>
+                        <constraint firstItem="Pnj-Sd-8a8" firstAttribute="centerY" secondItem="NgQ-I8-VyB" secondAttribute="centerY" id="phf-dW-gST"/>
                         <constraint firstItem="1sJ-jH-6or" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="tbY-Az-iZw"/>
                         <constraint firstItem="xKP-zL-fU1" firstAttribute="top" secondItem="gda-I1-7lg" secondAttribute="bottom" constant="12" id="tpm-da-s9w"/>
+                        <constraint firstItem="d86-8d-Cc7" firstAttribute="width" secondItem="NgQ-I8-VyB" secondAttribute="width" id="wml-OW-usb"/>
+                        <constraint firstItem="Pnj-Sd-8a8" firstAttribute="leading" secondItem="NgQ-I8-VyB" secondAttribute="trailing" constant="24" id="ynM-9x-1rr"/>
                     </constraints>
                 </view>
             </subviews>

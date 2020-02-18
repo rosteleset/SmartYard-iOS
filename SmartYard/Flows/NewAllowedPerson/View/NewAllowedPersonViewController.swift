@@ -14,14 +14,19 @@ import ContactsUI
 import Contacts
 
 class NewAllowedPersonViewController: BaseViewController {
-
-    @IBOutlet private weak var backgroundView: UIView!
+    
     @IBOutlet weak var textField: LimitedTextField!
-    @IBOutlet private weak var selectFromContactButton: UIButton!
+    @IBOutlet weak var selectFromContactButton: UIButton!
+    @IBOutlet weak var contactImageView: RoundedImageView!
+    @IBOutlet weak var contactNameLabel: UILabel!
+    
+    @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var addAccessButton: BlueButton!
     @IBOutlet private weak var mainContainerBottomConstraint: NSLayoutConstraint!
     
     private let contactPicker = CNContactPickerViewController()
+    
+    let newContactTrigger = PublishSubject<AllowedPerson?>()
     
     private let closeTrigger = PublishSubject<Void>()
     
@@ -68,7 +73,7 @@ class NewAllowedPersonViewController: BaseViewController {
         prefixLabel.sizeToFit()
 
         textField.leftView = prefixLabel
-        textField.leftViewMode = .always
+        textField.leftViewMode = .whileEditing
     }
     
     private func bind() {
@@ -96,9 +101,15 @@ class NewAllowedPersonViewController: BaseViewController {
             .tap
             .asDriverOnErrorJustComplete()
             .drive(
-                onNext: {
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
                     self.contactPicker.delegate = self
                     self.present(self.contactPicker, animated: true, completion: nil)
+                    self.textField.isHidden = true
+                    self.contactNameLabel.isHidden = false
                 }
             )
             .disposed(by: disposeBag)
