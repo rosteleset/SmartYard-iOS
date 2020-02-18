@@ -38,18 +38,31 @@ class NewAllowedPersonViewController: BaseViewController {
         configureView()
         configureRxKeyboard()
         bind()
-        view.hideKeyboardWhenTapped = true
-        // create the gesture recognizer
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.doSomethingOnTap))
-        backgroundView.addGestureRecognizer(tap)
     }
 
-    @objc func doSomethingOnTap() {
+    @objc func dismissByTapOutside() {
         closeTrigger.onNext(())
     }
     
     private func configureView() {
+        view.hideKeyboardWhenTapped = true
+
+        let dismissTap = UITapGestureRecognizer(
+            target: self,
+            action: #selector(self.dismissByTapOutside)
+        )
+        
+        backgroundView.addGestureRecognizer(dismissTap)
+
         textField.delegate = self
+
+        let prefixLabel = UILabel()
+        prefixLabel.text = "+7"
+        prefixLabel.font = UIFont.SourceSansPro.semibold(size: 18)
+        prefixLabel.sizeToFit()
+
+        textField.leftView = prefixLabel
+        textField.leftViewMode = .always
     }
     
     private func bind() {

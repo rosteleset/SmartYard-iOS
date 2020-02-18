@@ -41,7 +41,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Ls-xU-ype" customClass="FullRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="16" y="281.5" width="382" height="343"/>
+                    <rect key="frame" x="16" y="284" width="382" height="338"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Поделиться доступом" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gda-I1-7lg">
                             <rect key="frame" x="24" y="28" width="334" height="35.5"/>
@@ -62,7 +62,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1sJ-jH-6or" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="24" y="255" width="334" height="60"/>
+                            <rect key="frame" x="24" y="250" width="334" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="FbK-uj-dvw"/>
                             </constraints>
@@ -72,23 +72,23 @@
                             </state>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FIv-dO-hQZ">
-                            <rect key="frame" x="24" y="218" width="334" height="1"/>
+                            <rect key="frame" x="24" y="213" width="334" height="1"/>
                             <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="q9H-yi-3ZO"/>
                             </constraints>
                         </view>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NgQ-I8-VyB">
-                            <rect key="frame" x="24" y="170" width="278" height="40"/>
+                            <rect key="frame" x="24" y="170" width="278" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="40" id="sdi-TZ-R9i"/>
+                                <constraint firstAttribute="height" constant="35" id="sdi-TZ-R9i"/>
                             </constraints>
                             <nil key="textColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" keyboardType="phonePad" smartDashesType="yes" textContentType="tel"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUW-vr-H7B">
-                            <rect key="frame" x="326" y="174" width="32" height="32"/>
+                            <rect key="frame" x="326" y="171.5" width="32" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="LNW-Ke-NqD"/>
                                 <constraint firstAttribute="width" constant="32" id="YSt-L7-sCy"/>
@@ -101,7 +101,7 @@
                         <constraint firstItem="1sJ-jH-6or" firstAttribute="top" secondItem="FIv-dO-hQZ" secondAttribute="bottom" constant="36" id="60q-xB-qyp"/>
                         <constraint firstItem="NgQ-I8-VyB" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="9Ok-R1-gMI"/>
                         <constraint firstAttribute="trailing" secondItem="xKP-zL-fU1" secondAttribute="trailing" constant="24" id="EA6-EW-0gA"/>
-                        <constraint firstItem="FIv-dO-hQZ" firstAttribute="top" secondItem="cUW-vr-H7B" secondAttribute="bottom" constant="12" id="EPi-4W-rYO"/>
+                        <constraint firstItem="cUW-vr-H7B" firstAttribute="centerY" secondItem="NgQ-I8-VyB" secondAttribute="centerY" id="Jvx-Tj-JBZ"/>
                         <constraint firstAttribute="trailing" secondItem="cUW-vr-H7B" secondAttribute="trailing" constant="24" id="L0C-Fz-vF2"/>
                         <constraint firstAttribute="trailing" secondItem="FIv-dO-hQZ" secondAttribute="trailing" constant="24" id="LGP-OP-FtL"/>
                         <constraint firstAttribute="trailing" secondItem="gda-I1-7lg" secondAttribute="trailing" constant="24" id="Mm5-hc-JTz"/>

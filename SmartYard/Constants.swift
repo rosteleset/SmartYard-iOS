@@ -11,6 +11,7 @@ import Foundation
 enum Constants {
     
     static let phoneLengthWithoutPrefix = 10
+    static let phoneLengthWithPrefix = 12
     static let pinLength = 4
     
 }

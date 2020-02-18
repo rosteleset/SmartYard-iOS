@@ -74,7 +74,14 @@ class NewAllowedPersonViewModel: BaseViewModel {
                         return
                     }
                     
-                    let allowedPerson = AllowedPerson(displayedName: nil, phoneNumber: phoneNumber, logoImage: nil)
+                    var phoneFormatString = "+7" + phoneNumber
+                    phoneFormatString = phoneFormatString.formatAsPhoneNumber()
+                    
+                    let allowedPerson = AllowedPerson(
+                        displayedName: nil,
+                        phoneNumber: phoneFormatString,
+                        logoImage: nil
+                    )
                     
                     switch self.allowedPersonType {
                     case .permanent:

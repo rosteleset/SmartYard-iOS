@@ -160,6 +160,7 @@
 		E94B6C1923FAC5B600FD9F65 /* NewAllowedPersonViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E94B6C1723FAC5B600FD9F65 /* NewAllowedPersonViewController.xib */; };
 		E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C1A23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift */; };
 		E94B6C1F23FBC5F200FD9F65 /* PersonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C1E23FBC5F200FD9F65 /* PersonType.swift */; };
+		E94B6C2423FBFEA600FD9F65 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -405,6 +406,7 @@
 		E94B6C1723FAC5B600FD9F65 /* NewAllowedPersonViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAllowedPersonViewController.xib; sourceTree = "<group>"; };
 		E94B6C1A23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAllowedPersonViewModel.swift; sourceTree = "<group>"; };
 		E94B6C1E23FBC5F200FD9F65 /* PersonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonType.swift; sourceTree = "<group>"; };
+		E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -1086,6 +1088,7 @@
 				844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */,
 				844AC3C423EB1F840066006D /* UIView+Extensions.swift */,
 				84854B5423FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift */,
+				E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2066,6 +2069,7 @@
 				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
 				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
+				E94B6C2423FBFEA600FD9F65 /* String+Extensions.swift in Sources */,
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
 				84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */,
