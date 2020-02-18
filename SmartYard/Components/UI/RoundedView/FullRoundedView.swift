@@ -16,7 +16,7 @@ class FullRoundedView: UIView {
         
         roundCorners(
             [.topLeft, .topRight, .bottomLeft, .bottomRight],
-            radius: 20.0
+            radius: 12.0
         )
     }
     
