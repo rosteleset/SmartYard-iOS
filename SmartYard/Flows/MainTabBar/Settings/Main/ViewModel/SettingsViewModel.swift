@@ -86,6 +86,30 @@ class SettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Обработка нажатия на предоставление доступа
+        
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .action(clientId, type) = identity, type == .grantAccess else {
+                    return .empty()
+                }
+                
+                return .just(clientId)
+            }
+            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (clientId, loadedData) = args
+                    
+                    guard let match = (loadedData.first { $0.clientId == clientId }) else {
+                        return
+                    }
+                    
+                    self?.router.trigger(.addressAccess(address: match.address))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг
         
         let updateKindSubject = PublishSubject<SettingsSectionUpdateKind>()

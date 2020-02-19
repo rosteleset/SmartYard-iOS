@@ -25,6 +25,7 @@ class BlueButton: UIButton {
         cornerRadius = 12
         backgroundColor = UIColor.SmartYard.blue
         titleLabel?.textColor = .white
+        tintColor = .white
     }
     
     override var isEnabled: Bool {
