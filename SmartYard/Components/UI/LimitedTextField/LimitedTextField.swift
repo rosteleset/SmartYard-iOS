@@ -11,6 +11,7 @@ import UIKit
 
 class LimitedTextField: UITextField {
     
+    
     override func willMove(toSuperview newSuperview: UIView?) {
         addTarget(
             self,
@@ -22,6 +23,11 @@ class LimitedTextField: UITextField {
     }
     
     @objc func editingChanged() {
+        guard CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: text ?? "")) else {
+            text = ""
+            return
+        }
+        
         guard let editText = text else {
             return
         }

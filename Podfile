@@ -55,4 +55,3 @@ post_install do |installer|
         end
     end
 end
-
