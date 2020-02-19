@@ -18,10 +18,6 @@ class AllowedPersonCell: UITableViewCell {
     
     var disposeBag = DisposeBag()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         

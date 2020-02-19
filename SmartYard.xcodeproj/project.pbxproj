@@ -160,7 +160,6 @@
 		E94B6C1923FAC5B600FD9F65 /* NewAllowedPersonViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E94B6C1723FAC5B600FD9F65 /* NewAllowedPersonViewController.xib */; };
 		E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C1A23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift */; };
 		E94B6C2423FBFEA600FD9F65 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */; };
-		E94B6C2723FC02B800FD9F65 /* LimitedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2623FC02B800FD9F65 /* LimitedTextField.swift */; };
 		E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3123FD723A00FD9F65 /* AllowedPersonType.swift */; };
 		E94B6C3723FD728F00FD9F65 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3623FD728F00FD9F65 /* RoundedImageView.swift */; };
 		E94B6C3923FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3823FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift */; };
@@ -409,7 +408,6 @@
 		E94B6C1723FAC5B600FD9F65 /* NewAllowedPersonViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAllowedPersonViewController.xib; sourceTree = "<group>"; };
 		E94B6C1A23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAllowedPersonViewModel.swift; sourceTree = "<group>"; };
 		E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		E94B6C2623FC02B800FD9F65 /* LimitedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedTextField.swift; sourceTree = "<group>"; };
 		E94B6C3123FD723A00FD9F65 /* AllowedPersonType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllowedPersonType.swift; sourceTree = "<group>"; };
 		E94B6C3623FD728F00FD9F65 /* RoundedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		E94B6C3823FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewAllowedPerson+Contacts.swift"; sourceTree = "<group>"; };
@@ -613,8 +611,6 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				E94B6C3523FD728F00FD9F65 /* RoundedImageView */,
-				E94B6C2523FC028F00FD9F65 /* LimitedTextField */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
@@ -629,6 +625,7 @@
 				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
 				E9A4D48D23EC2A510070A591 /* PinTextField */,
 				E99EA6CC23EAD0C800BECEE6 /* RoundedView */,
+				E94B6C3523FD728F00FD9F65 /* RoundedImageView */,
 				E9E4271323F40D8100F5D593 /* SmartYardCheckBoxView */,
 				E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */,
 				E9A4D4A623ED9BED0070A591 /* WhiteButtonWithBorder */,
@@ -679,10 +676,12 @@
 			isa = PBXGroup;
 			children = (
 				844AC3EE23EBFF5E0066006D /* SettingsCoordinator.swift */,
+				E94057F623F671F200623746 /* AddressAccess */,
 				84D6445A23F6ACA200AD87EF /* AddressDeletion */,
 				848D1B8423F29D3F00D6E368 /* AddressSettings */,
 				84D6445123F68A8200AD87EF /* AdvancedSettings */,
 				844AC3F023EBFF790066006D /* Main */,
+				E94B6C1523FAC53D00FD9F65 /* NewAllowedPerson */,
 				84B89A7D23F2F88E009692B4 /* ServiceIsActivated */,
 				84B89A7E23F2F958009692B4 /* ServiceIsNotActivated */,
 				84B89A7F23F2F974009692B4 /* ServiceUnavailable */,
@@ -1135,8 +1134,6 @@
 		84B9EC8A23E0846900979C39 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				E94B6C1523FAC53D00FD9F65 /* NewAllowedPerson */,
-				E94057F623F671F200623746 /* AddressAccess */,
 				84B9EC8D23E085DF00979C39 /* AppCoordinator.swift */,
 				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
 				E98C383223F192430010BBC1 /* Address */,
@@ -1435,14 +1432,6 @@
 				E94B6C1A23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		E94B6C2523FC028F00FD9F65 /* LimitedTextField */ = {
-			isa = PBXGroup;
-			children = (
-				E94B6C2623FC02B800FD9F65 /* LimitedTextField.swift */,
-			);
-			path = LimitedTextField;
 			sourceTree = "<group>";
 		};
 		E94B6C3523FD728F00FD9F65 /* RoundedImageView */ = {
@@ -2051,7 +2040,6 @@
 				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
 				844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
-				E94B6C2723FC02B800FD9F65 /* LimitedTextField.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
 				844AC39723E9788D0066006D /* APIAddress.swift in Sources */,

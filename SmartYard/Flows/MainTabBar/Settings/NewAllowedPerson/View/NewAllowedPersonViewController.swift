@@ -15,7 +15,7 @@ import Contacts
 class NewAllowedPersonViewController: BaseViewController {
     
     // swiftlint:disable all
-    @IBOutlet weak var textField: LimitedTextField!
+    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var selectFromContactButton: UIButton!
     @IBOutlet weak var contactImageView: RoundedImageView!
     @IBOutlet weak var contactNameLabel: UILabel!
@@ -66,6 +66,35 @@ class NewAllowedPersonViewController: BaseViewController {
     }
     
     private func bind() {
+        textField.rx
+            .controlEvent(.editingChanged)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let containOnlyDigital = CharacterSet.decimalDigits.isSuperset(
+                        of: CharacterSet(
+                            charactersIn: self.textField.text ?? ""
+                        )
+                    )
+                    
+                    guard containOnlyDigital else {
+                        self.textField.text = ""
+                        return
+                    }
+                    
+                    guard let editText = self.textField.text else {
+                        return
+                    }
+                    
+                    self.textField.text = String(editText.prefix(Constants.phoneLengthWithoutPrefix))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let phoneText = textField.rx.text
             .orEmpty
             .asDriver(onErrorJustReturn: "")
