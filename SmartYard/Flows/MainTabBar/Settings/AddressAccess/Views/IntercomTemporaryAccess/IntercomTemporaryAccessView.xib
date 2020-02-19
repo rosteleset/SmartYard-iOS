@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -24,8 +23,14 @@
             <rect key="frame" x="0.0" y="0.0" width="478" height="335"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Временный доступ к домофону" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfD-m2-Zi6">
+                    <rect key="frame" x="0.0" y="0.0" width="478" height="20.5"/>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
+                    <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DjQ-Xw-0iB" customClass="FullRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="108" width="478" height="129"/>
+                    <rect key="frame" x="0.0" y="28.5" width="478" height="129"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Die-A1-QvE">
                             <rect key="frame" x="0.0" y="64" width="478" height="1"/>
@@ -38,7 +43,7 @@
                             <rect key="frame" x="0.0" y="65" width="478" height="64"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Гостевой доступ на час" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7lW-Yj-xxP">
-                                    <rect key="frame" x="24" y="24" width="322" height="16.5"/>
+                                    <rect key="frame" x="24" y="23" width="322" height="18"/>
                                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                     <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -66,7 +71,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="478" height="64"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="262" verticalHuggingPriority="251" text="Код открытия" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="puz-1u-oTr">
-                                    <rect key="frame" x="24" y="24" width="92" height="16.5"/>
+                                    <rect key="frame" x="24" y="23" width="85.5" height="18"/>
                                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                     <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -80,7 +85,7 @@
                                     <state key="normal" image="RefreshIcon"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="If9-4b-izb">
-                                    <rect key="frame" x="140" y="18" width="259" height="28"/>
+                                    <rect key="frame" x="133.5" y="17" width="265.5" height="30.5"/>
                                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="24"/>
                                     <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -114,24 +119,18 @@
                         <constraint firstItem="VG3-rh-PSA" firstAttribute="leading" secondItem="DjQ-Xw-0iB" secondAttribute="leading" id="tZ8-8s-NCM"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Временный доступ к домофону" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfD-m2-Zi6">
-                    <rect key="frame" x="0.0" y="81" width="478" height="19"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
-                    <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="DjQ-Xw-0iB" secondAttribute="trailing" id="4me-7M-XX2"/>
+                <constraint firstAttribute="trailing" secondItem="DjQ-Xw-0iB" secondAttribute="trailing" id="4me-7M-XX2"/>
                 <constraint firstItem="DjQ-Xw-0iB" firstAttribute="top" secondItem="tfD-m2-Zi6" secondAttribute="bottom" constant="8" id="Rmn-Qc-52q"/>
-                <constraint firstItem="DjQ-Xw-0iB" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="eTA-5w-peH"/>
-                <constraint firstItem="tfD-m2-Zi6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="wAF-RH-OPW"/>
-                <constraint firstItem="DjQ-Xw-0iB" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="wHd-r7-5CT"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="tfD-m2-Zi6" secondAttribute="trailing" id="wfd-6m-iSO"/>
+                <constraint firstItem="DjQ-Xw-0iB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="eTA-5w-peH"/>
+                <constraint firstItem="tfD-m2-Zi6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="gbX-Sc-h85"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="DjQ-Xw-0iB" secondAttribute="bottom" id="oXI-bh-KFB"/>
+                <constraint firstItem="tfD-m2-Zi6" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wAF-RH-OPW"/>
+                <constraint firstAttribute="trailing" secondItem="tfD-m2-Zi6" secondAttribute="trailing" id="wfd-6m-iSO"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="codeLabel" destination="If9-4b-izb" id="D54-Mk-Zvh"/>
                 <outlet property="openButton" destination="enN-rb-QVd" id="Y2k-HD-7mO"/>

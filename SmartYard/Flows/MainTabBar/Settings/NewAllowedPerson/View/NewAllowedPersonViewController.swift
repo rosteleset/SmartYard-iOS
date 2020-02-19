@@ -65,6 +65,7 @@ class NewAllowedPersonViewController: BaseViewController {
         textField.leftViewMode = .whileEditing
     }
     
+    // swiftlint:disable:next function_body_length
     private func bind() {
         textField.rx
             .controlEvent(.editingChanged)

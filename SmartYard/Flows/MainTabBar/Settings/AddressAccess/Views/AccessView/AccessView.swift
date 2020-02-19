@@ -13,7 +13,6 @@ import PMNibLinkableView
 
 class AccessView: PMNibLinkableView {
     
-    @IBOutlet private weak var containerView: FullRoundedView!
     @IBOutlet private weak var tableView: UITableView!
     
     private let disposeBag = DisposeBag()

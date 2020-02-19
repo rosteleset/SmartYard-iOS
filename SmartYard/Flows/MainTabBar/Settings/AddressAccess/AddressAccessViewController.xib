@@ -55,12 +55,9 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blb-rf-Jf9">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="496.5"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bbs-2j-kxV" customClass="IntercomTemporaryAccessView" customModule="SmartYard" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="151" translatesAutoresizingMaskIntoConstraints="NO" id="bbs-2j-kxV" customClass="IntercomTemporaryAccessView" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="16" y="75" width="382" height="151"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="151" id="HUx-nO-zN6"/>
-                                            </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Временный доступ к шлагбауму/воротам" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SFF-xT-WW6">
                                             <rect key="frame" x="16" y="250" width="382" height="22"/>
