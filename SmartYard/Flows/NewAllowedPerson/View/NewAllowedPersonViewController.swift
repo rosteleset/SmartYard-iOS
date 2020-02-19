@@ -96,7 +96,7 @@ class NewAllowedPersonViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-        let phoneTextCompletedDriver = phoneTextDriver
+        phoneTextDriver
             .filter { $0.count == Constants.phoneLengthWithoutPrefix }
             .drive(
                 onNext: { [weak self] phoneText in

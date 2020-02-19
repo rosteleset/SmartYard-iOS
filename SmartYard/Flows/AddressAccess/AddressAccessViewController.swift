@@ -75,7 +75,15 @@ class AddressAccessViewController: BaseViewController {
         output.permanentAccessContacts
             .drive(
                 onNext: { [weak self] contacts in
-                    self?.permanentAccessView.viewModel.updateData(data: contacts)
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.permanentAccessView.viewModel.updateData(data: contacts)
+                    
+                    let newHeight = self.calculateAccessViewHeight(countItems: contacts.count)
+                    self.permanentAccessViewHeightConstraint.constant = newHeight
+                    self.view.layoutIfNeeded()
                 }
             )
             .disposed(by: disposeBag)
