@@ -188,7 +188,7 @@
                                 <constraint firstItem="YSS-wI-JVP" firstAttribute="leading" secondItem="nzn-x3-CiT" secondAttribute="leading" id="ntb-iy-bnY"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="При удалении адреса вам будет недоступно управление услугами адреса" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ej-st-xQH">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="При удалении адреса вам будет недоступно управление услугами адреса" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ej-st-xQH">
                             <rect key="frame" x="24" y="329" width="334" height="35.5"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                             <nil key="highlightedColor"/>
