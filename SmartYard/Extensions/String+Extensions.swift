@@ -15,8 +15,8 @@ extension String {
             return self
         }
         
-        insert("-", at: index(startIndex, offsetBy: 2))
-        insert("-", at: index(startIndex, offsetBy: 6))
+        insert("(", at: index(startIndex, offsetBy: 2))
+        insert(")", at: index(startIndex, offsetBy: 6))
         insert("-", at: index(startIndex, offsetBy: 10))
         insert("-", at: index(startIndex, offsetBy: 13))
         
