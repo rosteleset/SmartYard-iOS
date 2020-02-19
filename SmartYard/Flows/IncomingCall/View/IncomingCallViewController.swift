@@ -9,13 +9,14 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import JGProgressHUD
 
-class IncomingCallViewController: BaseViewController {
+class IncomingCallViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var previewButton: UIButton!
     @IBOutlet private weak var callButton: UIButton!
     @IBOutlet private weak var ignoreButton: UIButton!
-    @IBOutlet private weak var openButton: UIButton!
+    @IBOutlet private weak var openButton: LoadingButton!
     
     @IBOutlet private weak var alreadyOpenedButtonContainer: UIView!
     @IBOutlet private weak var openButtonContainer: UIView!
@@ -29,6 +30,8 @@ class IncomingCallViewController: BaseViewController {
     @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
     
     private let viewModel: IncomingCallViewModel
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: IncomingCallViewModel) {
         self.viewModel = viewModel
@@ -56,6 +59,13 @@ class IncomingCallViewController: BaseViewController {
         callButton.setImage(UIImage(named: "CallUnselectedIcon")?.darkened(), for: [.normal, .highlighted])
         callButton.setImage(UIImage(named: "CallSelectedIcon"), for: .selected)
         callButton.setImage(UIImage(named: "CallSelectedIcon")?.darkened(), for: [.selected, .highlighted])
+        
+        openButton.setImage(UIImage(named: "UnlockIcon"), for: .normal)
+        
+        let imageForDisabled = UIImage(color: UIColor(hex: 0x4CD964)!, size: CGSize(width: 100, height: 100))
+            .withRoundedCorners(radius: 50)
+        
+        openButton.setImage(imageForDisabled, for: .disabled)
     }
     
     // swiftlint:disable:next function_body_length
@@ -131,6 +141,15 @@ class IncomingCallViewController: BaseViewController {
                     case .callFinished:
                         self.titleLabel.text = "Звонок завершен"
                     }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isDoorBeingOpened
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    isLoading ? self?.openButton.showLoading() : self?.openButton.hideLoading()
                 }
             )
             .disposed(by: disposeBag)

@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: Generic Errors
+
 extension NSError {
     
     enum GenericError {
@@ -27,6 +29,8 @@ extension NSError {
     }
     
 }
+
+// MARK: APIService Errors
 
 extension NSError {
     
@@ -68,6 +72,8 @@ extension NSError {
     
 }
 
+// MARK: APIWrapper Errors
+
 extension NSError {
     
     enum APIWrapperError {
@@ -108,6 +114,8 @@ extension NSError {
     
 }
 
+// MARK: AccessService Errors
+
 extension NSError {
     
     enum AccessServiceError {
@@ -123,6 +131,45 @@ extension NSError {
                 userInfo: errorUserInfo
             )
         }()
+        
+    }
+    
+}
+
+// MARK: PushNotificationsService Errors
+
+extension NSError {
+    
+    enum PushNotificationServiceError {
+        
+        private static let domain = "PushNotificationServiceError"
+        
+        /// Push-уведомления выключены для приложения на системном уровне
+        static let pushDisabledInSystem = NSError(
+            domain: domain,
+            code: 5001,
+            userInfo: [NSLocalizedDescriptionKey: "Push-уведомления выключены для приложения на системном уровне"]
+        )
+        
+        /// Push-уведомления выключены в настройках приложения
+        static let pushDisabledInApp = NSError(
+            domain: domain,
+            code: 5002,
+            userInfo: [NSLocalizedDescriptionKey: "Push-уведомления выключены в настройках приложения"]
+        )
+        
+        /// Отсутствует FCM токен
+        static let fcmTokenMissing = NSError(
+            domain: domain,
+            code: 5003,
+            userInfo: [NSLocalizedDescriptionKey: "Отсутствует FCM токен"]
+        )
+        
+        static let instanceIdNotInitialized = NSError(
+            domain: domain,
+            code: 5004,
+            userInfo: [NSLocalizedDescriptionKey: "InstanceID не инициализирован"]
+        )
         
     }
     

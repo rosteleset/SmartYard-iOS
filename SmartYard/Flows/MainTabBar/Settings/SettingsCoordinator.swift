@@ -19,6 +19,7 @@ enum SettingsRoute: Route {
     case serviceUnavailable
     case advancedSettings(name: String)
     case addressDeletion(delegate: AddressDeletionViewModelDelegate)
+    case alert(title: String, message: String?)
     case dialog(title: String, message: String?, actions: [UIAlertAction])
     
 }
@@ -26,10 +27,12 @@ enum SettingsRoute: Route {
 class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     
     let accessService: AccessService
+    let pushNotificationService: PushNotificationService
     let apiWrapper: APIWrapper
     
-    init(accessService: AccessService, apiWrapper: APIWrapper) {
+    init(accessService: AccessService, pushNotificationService: PushNotificationService, apiWrapper: APIWrapper) {
         self.accessService = accessService
+        self.pushNotificationService = pushNotificationService
         self.apiWrapper = apiWrapper
         
         super.init(initialRoute: .main)
@@ -37,7 +40,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     override func prepareTransition(for route: SettingsRoute) -> NavigationTransition {
         switch route {
         case .main:
@@ -84,7 +87,13 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             return .present(vc)
             
         case let .advancedSettings(name):
-            let vm = AdvancedSettingsViewModel(accessService: accessService, router: weakRouter, name: name)
+            let vm = AdvancedSettingsViewModel(
+                accessService: accessService,
+                pushNotificationService: pushNotificationService,
+                router: weakRouter,
+                name: name
+            )
+            
             let vc = AdvancedSettingsViewController(viewModel: vm)
             return .push(vc)
             
@@ -96,6 +105,9 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             vc.modalTransitionStyle = .crossDissolve
             
             return .present(vc)
+            
+        case let .alert(title, message):
+            return .alertTransition(title: title, message: message)
             
         case let .dialog(title, message, actions):
             return .dialogTransition(title: title, message: message, actions: actions)

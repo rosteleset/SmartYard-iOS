@@ -10,16 +10,18 @@ import XCoordinator
 
 enum HomeRoute: Route {
     case main
+    case alert(title: String, message: String?)
 }
 
 class HomeCoordinator: NavigationCoordinator<HomeRoute> {
     
-    let apiWrapper: APIWrapper
+    private let apiWrapper: APIWrapper
+    private let pushNotificationService: PushNotificationService
     
-    init(
-        apiWrapper: APIWrapper
-    ) {
+    init(apiWrapper: APIWrapper, pushNotificationService: PushNotificationService) {
         self.apiWrapper = apiWrapper
+        self.pushNotificationService = pushNotificationService
+        
         super.init(initialRoute: .main)
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
@@ -27,9 +29,17 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
     override func prepareTransition(for route: HomeRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = AddressesListViewModel()
+            let vm = AddressesListViewModel(
+                apiWrapper: apiWrapper,
+                pushNotificationService: pushNotificationService,
+                router: weakRouter
+            )
+            
             let vc = AddressesListViewController(viewModel: vm)
             return .set([vc])
+            
+        case let .alert(title, message):
+            return .alertTransition(title: title, message: message)
         }
     }
     

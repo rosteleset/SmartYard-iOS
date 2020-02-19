@@ -8,13 +8,61 @@
 
 import RxSwift
 import RxCocoa
+import XCoordinator
 
 class AddressesListViewModel: BaseViewModel {
+    
+    private let apiWrapper: APIWrapper
+    private let pushNotificationService: PushNotificationService
+    private let router: WeakRouter<HomeRoute>
+    
+    init(
+        apiWrapper: APIWrapper,
+        pushNotificationService: PushNotificationService,
+        router: WeakRouter<HomeRoute>
+    ) {
+        self.apiWrapper = apiWrapper
+        self.pushNotificationService = pushNotificationService
+        self.router = router
+    }
     
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
     
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
+        let errorTracker = ErrorTracker()
+        
+        // MARK: Создаем подписки для всех загруженных адресов
+        // Потом это уйдет в другое место скорее всего, да и логика будет другая
+        
+        apiWrapper.getVerifyedAddresses()
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .map { addresses in addresses.map { $0.clientId } }
+            .flatMapLatest { [weak self] clientIds -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                let queries = clientIds.map {
+                    self.pushNotificationService.updatePushNotificationsState(forClientId: $0, newState: .on)
+                }
+                
+                return Single<Void?>.zip(queries)
+                    .map { _ -> Void? in () }
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: {
+                    print("DEBUG: Подписки на все загруженные адреса успешно созданы")
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг
         
         let updateKindSubject = PublishSubject<AddressesListSectionUpdateKind>()
@@ -72,6 +120,14 @@ class AddressesListViewModel: BaseViewModel {
             .map { [weak self] dict in
                 self?.createMockSections(expansionStateDict: dict) ?? []
             }
+        
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
         
         return Output(
             sectionModels: sectionModels.asDriverOnErrorJustComplete(),

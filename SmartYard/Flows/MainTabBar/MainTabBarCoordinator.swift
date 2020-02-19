@@ -24,6 +24,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let disposeBag = DisposeBag()
     
     private let accessService: AccessService
+    private let pushNotificationService: PushNotificationService
     private let apiWrapper: APIWrapper
     
     private let homeRouter: StrongRouter<HomeRoute>
@@ -37,13 +38,15 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let settingsTabBarItem: UITabBarItem
     
     // swiftlint:disable:next function_body_length
-    init(accessService: AccessService, apiWrapper: APIWrapper) {
+    init(accessService: AccessService, pushNotificationService: PushNotificationService, apiWrapper: APIWrapper) {
         self.accessService = accessService
+        self.pushNotificationService = pushNotificationService
         self.apiWrapper = apiWrapper
         
         // MARK: Home Tab
         let homeCoordinator = HomeCoordinator(
-            apiWrapper: apiWrapper
+            apiWrapper: apiWrapper,
+            pushNotificationService: pushNotificationService
         )
         
         let homeTabBarItem = UITabBarItem(
@@ -86,6 +89,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         // MARK: Settings Tab
         let settingsCoordinator = SettingsCoordinator(
             accessService: accessService,
+            pushNotificationService: pushNotificationService,
             apiWrapper: apiWrapper
         )
         

@@ -10,8 +10,9 @@ import UIKit
 import TouchAreaInsets
 import RxSwift
 import RxCocoa
+import JGProgressHUD
 
-class AdvancedSettingsViewController: BaseViewController {
+class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var scrollView: UIScrollView!
@@ -39,6 +40,8 @@ class AdvancedSettingsViewController: BaseViewController {
     private let viewModel: AdvancedSettingsViewModel
     
     private let viewToScrollTo = BehaviorSubject<UIView?>(value: nil)
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: AdvancedSettingsViewModel) {
         self.viewModel = viewModel
@@ -170,6 +173,19 @@ class AdvancedSettingsViewController: BaseViewController {
                     self?.view.endEditing(true)
                     self?.nameTextField.text = name
                     self?.nameTextField.isEnabled = false
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
                 }
             )
             .disposed(by: disposeBag)

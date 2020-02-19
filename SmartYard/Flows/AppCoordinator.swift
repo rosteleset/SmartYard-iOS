@@ -29,18 +29,17 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     private let linphoneService = LinphoneService()
     private let apiService = APIService()
-    private let accessService: AccessService
+    private let accessService = AccessService()
     private let apiWrapper: APIWrapper
+    private let pushNotificationService: PushNotificationService
     
     private var mainTabBarRouter: StrongRouter<MainTabBarRoute>?
     
     private var currentCallPreviewData: Data?
     
     init() {
-        let accessService = AccessService()
-        
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
-        self.accessService = accessService
+        pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
         
         super.init(initialRoute: accessService.routeForCurrentState)
         
@@ -52,8 +51,11 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let router = MainTabBarCoordinator(accessService: accessService, apiWrapper: apiWrapper)
-                .strongRouter
+            let router = MainTabBarCoordinator(
+                accessService: accessService,
+                pushNotificationService: pushNotificationService,
+                apiWrapper: apiWrapper
+            ).strongRouter
             
             mainTabBarRouter = router
             return .set([router], animation: .fade)
@@ -61,8 +63,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         case let .incomingCall(callPayload):
             let vm = IncomingCallViewModel(
                 linphoneService: linphoneService,
-                callPayload: callPayload,
-                router: weakRouter
+                apiWrapper: apiWrapper,
+                router: weakRouter,
+                callPayload: callPayload
             )
             
             let vc = IncomingCallViewController(viewModel: vm)
@@ -102,14 +105,28 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         }
     }
     
-    func activateToken(token: String, tokenType: TokenType) {
-        // TODO: Update token activation logic
+    func processIncomingCallRequest(callPayload: CallPayload) {
+        // MARK: Проверяем, есть ли у нас уже входящие звонки на данный момент
+        // Скорее всего, дальше надо будет делать какую-то очередь, но сейчас для демо и так сгодится
+        
+        guard !linphoneService.hasEnqueuedCalls else {
+            print("Can only process one call at a time")
+            return
+        }
+        
+        linphoneService.hasEnqueuedCalls = true
+        trigger(.incomingCall(callPayload: callPayload))
     }
     
     private func observeLogout() {
         NotificationCenter.default.rx.notification(.init("UserLoggedOut"))
             .subscribe(
                 onNext: { [weak self] _ in
+                    if let mainTabBarRouter = self?.mainTabBarRouter {
+                        self?.removeChild(mainTabBarRouter)
+                        self?.mainTabBarRouter = nil
+                    }
+                    
                     self?.trigger(.phoneNumber)
                 }
             )

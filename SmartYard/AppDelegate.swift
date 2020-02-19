@@ -35,26 +35,6 @@ extension AppDelegate: MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         print("DEBUG / PUSH NOTIFICATIONS / Firebase registration token: \(fcmToken)")
-        
-        appCoordinator.activateToken(token: fcmToken, tokenType: .fcm)
-    }
-    
-    func application(
-        _ application: UIApplication,
-        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
-    ) {
-        if let messageID = userInfo["gcm.message_id"] {
-            print("DEBUG / PUSH NOTIFICATIONS / Message ID: \(messageID)")
-        }
-        
-        print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
-        
-        if let callPayload = CallPayload(pushNotificationPayload: userInfo) {
-            appCoordinator.trigger(.incomingCall(callPayload: callPayload))
-        }
-        
-        completionHandler(.newData)
     }
     
     private func configureFirebase(for application: UIApplication) {
@@ -88,7 +68,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
         
         if let callPayload = CallPayload(pushNotificationPayload: userInfo) {
-            appCoordinator.trigger(.incomingCall(callPayload: callPayload))
+            appCoordinator.processIncomingCallRequest(callPayload: callPayload)
             completionHandler([])
         } else {
             completionHandler([.alert, .badge, .sound])
@@ -104,7 +84,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if let callPayload = CallPayload(
             pushNotificationPayload: response.notification.request.content.userInfo
         ) {
-            appCoordinator.trigger(.incomingCall(callPayload: callPayload))
+            appCoordinator.processIncomingCallRequest(callPayload: callPayload)
         }
         
         completionHandler()

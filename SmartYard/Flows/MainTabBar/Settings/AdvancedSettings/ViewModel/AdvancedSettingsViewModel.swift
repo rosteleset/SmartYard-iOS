@@ -13,16 +13,27 @@ import XCoordinator
 class AdvancedSettingsViewModel: BaseViewModel {
     
     private let accessService: AccessService
+    private let pushNotificationService: PushNotificationService
     private let router: WeakRouter<SettingsRoute>
     private let name: String
     
-    init(accessService: AccessService, router: WeakRouter<SettingsRoute>, name: String) {
+    init(
+        accessService: AccessService,
+        pushNotificationService: PushNotificationService,
+        router: WeakRouter<SettingsRoute>,
+        name: String
+    ) {
         self.accessService = accessService
+        self.pushNotificationService = pushNotificationService
         self.router = router
         self.name = name
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
+        
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
@@ -37,7 +48,21 @@ class AdvancedSettingsViewModel: BaseViewModel {
                     let noAction = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
                     
                     let yesAction = UIAlertAction(title: "Да", style: .destructive) { _ in
-                        self?.accessService.logout()
+                        guard let self = self else {
+                            return
+                        }
+                        
+                        self.pushNotificationService.resetInstanceId()
+                            .trackActivity(activityTracker)
+                            .trackError(errorTracker)
+                            .asDriver(onErrorJustReturn: nil)
+                            .ignoreNil()
+                            .drive(
+                                onNext: { [weak self] in
+                                    self?.accessService.logout()
+                                }
+                            )
+                            .disposed(by: self.disposeBag)
                     }
                     
                     self?.router.trigger(
@@ -51,6 +76,14 @@ class AdvancedSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             name: .just(name),
             enableNotifications: .just(true),
@@ -58,7 +91,8 @@ class AdvancedSettingsViewModel: BaseViewModel {
             ringtone: .just("Нота"),
             enableAccountBalanceWarning: .just(false),
             enableBiometry: .just(true),
-            enablePinCode: .just(false)
+            enablePinCode: .just(false),
+            isLoading: activityTracker.asDriver()
         )
     }
     
@@ -79,6 +113,7 @@ extension AdvancedSettingsViewModel {
         let enableAccountBalanceWarning: Driver<Bool>
         let enableBiometry: Driver<Bool>
         let enablePinCode: Driver<Bool>
+        let isLoading: Driver<Bool>
     }
     
 }

@@ -109,6 +109,17 @@ class APIService {
         )
     }
     
+    /// Запрос открытия двери
+    func performOpenDoorRequest(
+        _ request: OpenDoorRequest,
+        completion: ((Swift.Result<Void, Error>) -> Void)?
+    ) {
+        provider.request(
+            .openDoor(request: request),
+            completion: createEmptyInnerCompletionBlock(from: completion)
+        )
+    }
+    
 }
 
 extension APIService {

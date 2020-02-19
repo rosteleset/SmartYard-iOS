@@ -60,6 +60,11 @@
 		84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4B23FADD94001B44F2 /* CustomRxKeyboard.swift */; };
 		84854B4E23FAEC4F001B44F2 /* BasicTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4D23FAEC4F001B44F2 /* BasicTransitions.swift */; };
 		84854B5023FBD3E7001B44F2 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4F23FBD3E7001B44F2 /* AppState.swift */; };
+		84854B5323FBFDD6001B44F2 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5223FBFDD6001B44F2 /* PushNotificationService.swift */; };
+		84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5423FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift */; };
+		84854B5823FC27C1001B44F2 /* OpenDoorRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */; };
+		84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5923FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift */; };
+		84854B5C23FC38F3001B44F2 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5B23FC38F3001B44F2 /* LoadingButton.swift */; };
 		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
 		84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */; };
@@ -274,6 +279,11 @@
 		84854B4B23FADD94001B44F2 /* CustomRxKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRxKeyboard.swift; sourceTree = "<group>"; };
 		84854B4D23FAEC4F001B44F2 /* BasicTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTransitions.swift; sourceTree = "<group>"; };
 		84854B4F23FBD3E7001B44F2 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		84854B5223FBFDD6001B44F2 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
+		84854B5423FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNAuthorizationType+Extensions.swift"; sourceTree = "<group>"; };
+		84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDoorRequest.swift; sourceTree = "<group>"; };
+		84854B5923FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IncomingCallViewModel+Extensions.swift"; sourceTree = "<group>"; };
+		84854B5B23FC38F3001B44F2 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
 		84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderCell.swift; sourceTree = "<group>"; };
 		84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderCell.xib; sourceTree = "<group>"; };
 		84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelCell.swift; sourceTree = "<group>"; };
@@ -525,13 +535,14 @@
 		844AC39923E979BA0066006D /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				84854B4623FAD3A0001B44F2 /* SendName */,
 				844AC37F23E8636D0066006D /* ConfirmCode */,
 				844AC37823E8619A0066006D /* GetVerifyedAddresses */,
-				844AC38423E8651B0066006D /* Login */,
 				844AC38C23E867720066006D /* IntercomToken */,
+				844AC38423E8651B0066006D /* Login */,
+				84854B5623FC2583001B44F2 /* OpenDoor */,
 				844AC38923E866630066006D /* RegisterToken */,
 				844AC37123E85C4A0066006D /* RequestCode */,
+				84854B4623FAD3A0001B44F2 /* SendName */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -562,6 +573,7 @@
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
 				84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */,
+				84854B5B23FC38F3001B44F2 /* LoadingButton.swift */,
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
 				E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */,
 				E9A4D49823EC3DD00070A591 /* BlueButton */,
@@ -770,6 +782,7 @@
 			isa = PBXGroup;
 			children = (
 				844AC39F23E987400066006D /* IncomingCallViewModel.swift */,
+				84854B5923FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -789,6 +802,22 @@
 				84854B4723FAD3AC001B44F2 /* SendNameRequest.swift */,
 			);
 			path = SendName;
+			sourceTree = "<group>";
+		};
+		84854B5123FBFDBF001B44F2 /* PushNotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				84854B5223FBFDD6001B44F2 /* PushNotificationService.swift */,
+			);
+			path = PushNotificationService;
+			sourceTree = "<group>";
+		};
+		84854B5623FC2583001B44F2 /* OpenDoor */ = {
+			isa = PBXGroup;
+			children = (
+				84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */,
+			);
+			path = OpenDoor;
 			sourceTree = "<group>";
 		};
 		84898A7E23F144D400E6B78E /* Cells */ = {
@@ -1009,7 +1038,6 @@
 		84B9EC8623E0844500979C39 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */,
 				84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */,
 				84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */,
 				844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */,
@@ -1017,9 +1045,11 @@
 				84B9EC8B23E085AE00979C39 /* Observable+Extensions.swift */,
 				84AA8D6523E2F2A8001B3B43 /* TransportType+Extensions.swift */,
 				84898A8923F1510600E6B78E /* UIButton+Extensions.swift */,
+				E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */,
 				844AC3BB23EB15ED0066006D /* UIFont+Extensions.swift */,
 				844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */,
 				844AC3C423EB1F840066006D /* UIView+Extensions.swift */,
+				84854B5423FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1050,6 +1080,7 @@
 				844AC39323E9776F0066006D /* AccessService */,
 				84AA8D4423E2CD0C001B3B43 /* APIService */,
 				84B9EC9823E0886000979C39 /* LinphoneService */,
+				84854B5123FBFDBF001B44F2 /* PushNotificationService */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1864,6 +1895,7 @@
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
+				84854B5C23FC38F3001B44F2 /* LoadingButton.swift in Sources */,
 				84B89A9323F2FA6E009692B4 /* ServiceIsNotActivatedViewModel.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
@@ -1873,6 +1905,7 @@
 				E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */,
 				E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */,
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
+				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
 				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
@@ -1915,11 +1948,13 @@
 				84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
 				84EEBC9823F40FA600C9557F /* SettingsServiceState.swift in Sources */,
+				84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
+				84854B5823FC27C1001B44F2 /* OpenDoorRequest.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 				84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */,
 				84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */,
@@ -1928,6 +1963,7 @@
 				84CC15E323EC86D900A1CB95 /* ObjectLockButton.swift in Sources */,
 				84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */,
 				84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */,
+				84854B5323FBFDD6001B44F2 /* PushNotificationService.swift in Sources */,
 				84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */,
 				84CC15D423EC40EE00A1CB95 /* AddressesListHeaderCell.swift in Sources */,
 				84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */,
