@@ -123,6 +123,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             let vc = NewAllowedPersonViewController(viewModel: vm)
             vc.modalPresentationStyle = .overCurrentContext
+            vc.modalTransitionStyle = .crossDissolve
             
             return .present(vc)
             

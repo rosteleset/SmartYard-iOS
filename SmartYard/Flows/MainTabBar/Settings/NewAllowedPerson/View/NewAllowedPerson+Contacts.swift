@@ -28,8 +28,8 @@ extension NewAllowedPersonViewController: CNContactPickerDelegate {
             logoImage: nil
         )
         
-        if contact.imageDataAvailable {
-            let image = UIImage(data: contact.imageData!)
+        if contact.imageDataAvailable, let imageData = contact.imageData {
+            let image = UIImage(data: imageData)
             contactImageView.image = image
             allowedPerson.logoImage = image
         }

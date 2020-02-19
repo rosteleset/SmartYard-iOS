@@ -68,7 +68,7 @@ class NewAllowedPersonViewController: BaseViewController {
     private func bind() {
         textField.rx
             .controlEvent(.editingChanged)
-            .asDriverOnErrorJustComplete()
+            .asDriver()
             .drive(
                 onNext: { [weak self] in
                     guard let self = self else {
@@ -121,7 +121,7 @@ class NewAllowedPersonViewController: BaseViewController {
         
         selectFromContactButton.rx
             .tap
-            .asDriverOnErrorJustComplete()
+            .asDriver()
             .drive(
                 onNext: { [weak self] in
                     guard let self = self else {
@@ -137,7 +137,7 @@ class NewAllowedPersonViewController: BaseViewController {
         let addAccessTrigger = addAccessButton.rx.tap
             .asDriverOnErrorJustComplete()
             .withLatestFrom(newContactTrigger.asDriver(onErrorJustReturn: nil))
-            .asDriver(onErrorJustReturn: nil)
+            .asDriver()
         
         let dismissTap = UITapGestureRecognizer()
         backgroundView.addGestureRecognizer(dismissTap)

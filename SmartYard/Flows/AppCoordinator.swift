@@ -55,7 +55,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 accessService: accessService,
                 pushNotificationService: pushNotificationService,
                 apiWrapper: apiWrapper
-                ).strongRouter
+            ).strongRouter
             
             mainTabBarRouter = router
             return .set([router], animation: .fade)
