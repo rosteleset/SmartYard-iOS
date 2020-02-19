@@ -56,12 +56,9 @@ class AdvancedSettingsViewModel: BaseViewModel {
                             .trackActivity(activityTracker)
                             .trackError(errorTracker)
                             .asDriver(onErrorJustReturn: nil)
+                            .ignoreNil()
                             .drive(
                                 onNext: { [weak self] in
-                                    guard $0 != nil else {
-                                        return
-                                    }
-                                    
                                     self?.accessService.logout()
                                 }
                             )
