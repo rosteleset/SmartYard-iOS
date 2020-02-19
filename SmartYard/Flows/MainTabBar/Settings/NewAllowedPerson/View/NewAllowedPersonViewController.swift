@@ -153,7 +153,7 @@ class NewAllowedPersonViewController: BaseViewController {
     
     private func configureRxKeyboard() {
         RxKeyboard.instance.visibleHeight
-            .debounce(.milliseconds(100))
+            .debounce(.milliseconds(50))
             .drive(
                 onNext: { [weak self] keyboardVisibleHeight in
                     self?.mainContainerBottomConstraint.constant = keyboardVisibleHeight == 0 ?
