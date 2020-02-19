@@ -33,7 +33,7 @@ enum ServiceState {
     var borderTintColor: UIColor? {
         switch self {
         case .checkedActive, .uncheckedActive: return UIColor.SmartYard.blue
-        case .checkedInactive, .uncheckedInactive: return UIColor.SmartYard.gray
+        case .checkedInactive, .uncheckedInactive: return UIColor.SmartYard.gray.withAlphaComponent(0.5)
         }
     }
     
