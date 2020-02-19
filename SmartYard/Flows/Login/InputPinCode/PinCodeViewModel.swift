@@ -73,6 +73,8 @@ class PinCodeViewModel: BaseViewModel {
         input.fixPhoneNumberButtonTapped
             .drive(
                 onNext: { [weak self] in
+                    self?.accessService.appState = .phoneNumber
+                    
                     self?.router.trigger(.phoneNumber)
                 }
             )
