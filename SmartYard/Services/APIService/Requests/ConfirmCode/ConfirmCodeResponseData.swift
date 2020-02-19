@@ -16,4 +16,11 @@ struct ConfirmCodeResponseData: Decodable {
         case name = "names"
     }
     
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        accessToken = try container.decode(String.self, forKey: .accessToken)
+        name = try? container.decode(APIClientName.self, forKey: .name)
+    }
+    
 }
