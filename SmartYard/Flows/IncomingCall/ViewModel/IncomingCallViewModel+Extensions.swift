@@ -26,7 +26,7 @@ extension IncomingCallViewModel {
         let state: Driver<(IncomingCallState, IncomingCallDoorState)>
         let subtitle: Driver<String?>
         let image: Driver<UIImage?>
-        let isLoading: Driver<Bool>
+        let isDoorBeingOpened: Driver<Bool>
     }
     
 }

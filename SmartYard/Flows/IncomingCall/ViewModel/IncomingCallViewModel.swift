@@ -42,7 +42,7 @@ class IncomingCallViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
-        let activityTracker = ActivityTracker()
+        let doorOpeningActivityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
         // MARK: Общий стейт экрана
@@ -109,7 +109,7 @@ class IncomingCallViewModel: BaseViewModel {
                 }
                 
                 return self.apiWrapper.openDoor(domophoneId: self.callPayload.domophoneId, doorId: nil)
-                    .trackActivity(activityTracker)
+                    .trackActivity(doorOpeningActivityTracker)
                     .trackError(errorTracker)
                     .map { _ -> (IncomingCallState, IncomingCallDoorState)? in currentState }
                     .asDriver(onErrorJustReturn: nil)
@@ -336,7 +336,7 @@ class IncomingCallViewModel: BaseViewModel {
             state: currentState,
             subtitle: subtitle,
             image: image,
-            isLoading: activityTracker.asDriver()
+            isDoorBeingOpened: doorOpeningActivityTracker.asDriver()
         )
     }
     

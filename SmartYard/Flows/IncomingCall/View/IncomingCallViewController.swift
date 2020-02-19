@@ -145,7 +145,7 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        output.isLoading
+        output.isDoorBeingOpened
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
