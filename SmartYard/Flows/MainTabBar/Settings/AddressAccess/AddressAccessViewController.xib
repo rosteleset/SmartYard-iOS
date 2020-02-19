@@ -24,6 +24,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressAccessViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="addressLabel" destination="Vjf-7h-gEU" id="yDC-2E-tU1"/>
+                <outlet property="addressView" destination="Tua-bR-e0p" id="wOT-ZN-iqi"/>
                 <outlet property="fakeNavBar" destination="Gcv-sW-Tql" id="vBN-VJ-Jdb"/>
                 <outlet property="intercomAccessView" destination="bbs-2j-kxV" id="d58-nk-3F8"/>
                 <outlet property="permanentAccessView" destination="mHK-Jf-tjL" id="eE5-eT-z1n"/>

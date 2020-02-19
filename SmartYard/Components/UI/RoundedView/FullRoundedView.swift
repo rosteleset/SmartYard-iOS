@@ -13,11 +13,10 @@ class FullRoundedView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        roundCorners(
-            [.topLeft, .topRight, .bottomLeft, .bottomRight],
-            radius: 12.0
-        )
+            
+        cornerRadius = 12
+        borderWidth = 1
+        borderColor = UIColor.SmartYard.grayBorder
     }
     
 }

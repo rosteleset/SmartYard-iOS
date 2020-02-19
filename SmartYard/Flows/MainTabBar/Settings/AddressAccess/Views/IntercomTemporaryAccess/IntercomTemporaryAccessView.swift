@@ -19,6 +19,12 @@ class IntercomTemporaryAccessView: PMNibLinkableView {
     @IBOutlet fileprivate weak var openButton: WhiteButtonWithBorder!
     
     @IBOutlet private weak var codeLabel: UILabel!
+    @IBOutlet private weak var containerView: FullRoundedView!
+    
+    override func awakeFromNib() {
+        containerView.borderWidth = 1
+        containerView.borderColor = UIColor.SmartYard.grayBorder
+    }
     
     func configure(code: String) {
         codeLabel.text = code

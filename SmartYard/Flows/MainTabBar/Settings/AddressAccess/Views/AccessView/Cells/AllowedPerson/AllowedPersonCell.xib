@@ -63,11 +63,21 @@
                             <constraint firstItem="hDp-TG-q0z" firstAttribute="leading" secondItem="fNa-ka-WMv" secondAttribute="trailing" constant="9" id="st9-lE-JnE"/>
                         </constraints>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QQk-OR-8MS">
+                        <rect key="frame" x="0.0" y="42.5" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="r2A-Z3-K4A"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="Tdf-XX-hRL" secondAttribute="bottom" id="E9L-p3-IuW"/>
+                    <constraint firstItem="QQk-OR-8MS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Fui-x9-0r9"/>
                     <constraint firstAttribute="trailing" secondItem="Tdf-XX-hRL" secondAttribute="trailing" id="QHg-kI-Abw"/>
                     <constraint firstItem="Tdf-XX-hRL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="QMu-5h-tdW"/>
+                    <constraint firstAttribute="trailing" secondItem="QQk-OR-8MS" secondAttribute="trailing" id="QUI-7z-AGS"/>
+                    <constraint firstAttribute="bottom" secondItem="QQk-OR-8MS" secondAttribute="bottom" id="bA3-eb-Ihq"/>
                     <constraint firstItem="Tdf-XX-hRL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="vqe-Fy-wSp"/>
                 </constraints>
             </tableViewCellContentView>

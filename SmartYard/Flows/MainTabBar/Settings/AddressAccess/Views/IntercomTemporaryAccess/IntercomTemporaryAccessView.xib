@@ -133,6 +133,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="codeLabel" destination="If9-4b-izb" id="D54-Mk-Zvh"/>
+                <outlet property="containerView" destination="DjQ-Xw-0iB" id="uEc-IM-dS8"/>
                 <outlet property="openButton" destination="enN-rb-QVd" id="Y2k-HD-7mO"/>
                 <outlet property="refreshButton" destination="1Ew-Yt-rLv" id="ZOT-Zv-Eoj"/>
             </connections>

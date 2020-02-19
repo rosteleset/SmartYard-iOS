@@ -17,6 +17,7 @@ class AddressAccessViewController: BaseViewController {
     @IBOutlet private weak var intercomAccessView: IntercomTemporaryAccessView!
     @IBOutlet private weak var temporaryAccessView: AccessView!
     @IBOutlet private weak var permanentAccessView: AccessView!
+    @IBOutlet private weak var addressView: FullRoundedView!
     
     private let viewModel: AddressAccessViewModel
     
