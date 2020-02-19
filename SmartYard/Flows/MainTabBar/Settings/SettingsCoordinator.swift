@@ -21,6 +21,8 @@ enum SettingsRoute: Route {
     case addressDeletion(delegate: AddressDeletionViewModelDelegate)
     case alert(title: String, message: String?)
     case dialog(title: String, message: String?, actions: [UIAlertAction])
+    case addressAccess
+    case newAllowedPerson(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
     
 }
 
@@ -111,6 +113,24 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
         case let .dialog(title, message, actions):
             return .dialogTransition(title: title, message: message, actions: actions)
+            
+        case let .newAllowedPerson(delegate, personType):
+            let vm = NewAllowedPersonViewModel(
+                router: weakRouter,
+                delegate: delegate,
+                allowedPersonType: personType
+            )
+            
+            let vc = NewAllowedPersonViewController(viewModel: vm)
+            vc.modalPresentationStyle = .overCurrentContext
+            
+            return .present(vc)
+            
+        case .addressAccess:
+            let vm = AddressAccessViewModel(router: weakRouter)
+            let vc = AddressAccessViewController(viewModel: vm)
+            
+            return .present(vc)
         }
     }
     

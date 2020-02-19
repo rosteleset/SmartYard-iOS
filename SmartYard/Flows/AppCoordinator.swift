@@ -23,8 +23,6 @@ enum AppRoute: Route {
     case phoneNumber
     case pinCode(phoneNumber: String, isInitial: Bool)
     case alert(title: String, message: String?)
-
-    case newPersonTestRoute(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
     
 }
 
@@ -47,7 +45,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
         self.accessService = accessService
         
-        super.init(initialRoute: .phoneNumber/*accessService.routeForCurrentState*/)
+        super.init(initialRoute: accessService.routeForCurrentState)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
         
@@ -104,18 +102,6 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
-            
-        case let .newPersonTestRoute(delegate, personType):
-            let vm = NewAllowedPersonViewModel(
-                router: weakRouter,
-                delegate: delegate,
-                allowedPersonType: personType
-            )
-            
-            let vc = NewAllowedPersonViewController(viewModel: vm)
-            vc.modalPresentationStyle = .overCurrentContext
-            
-            return .present(vc)
         }
     }
     

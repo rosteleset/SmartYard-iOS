@@ -13,7 +13,7 @@ import RxCocoa
 
 class AddressAccessViewModel: BaseViewModel {
     
-    private let router: WeakRouter<AppRoute>
+    private let router: WeakRouter<SettingsRoute>
     
     private let addressSubject = PublishSubject<String?>()
     private let tempAccessConstactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
@@ -21,7 +21,7 @@ class AddressAccessViewModel: BaseViewModel {
     private let intercomAccessCode = PublishSubject<String?>()
     
     init(
-        router: WeakRouter<AppRoute>) {
+        router: WeakRouter<SettingsRoute>) {
         self.router = router
     }
     
@@ -192,7 +192,7 @@ class AddressAccessViewModel: BaseViewModel {
     private func addNewTempAccessContact() {
         self.router
             .trigger(
-                .newPersonTestRoute(
+                .newAllowedPerson(
                     delegate: self,
                     personType: .temporary
                 )
@@ -202,7 +202,7 @@ class AddressAccessViewModel: BaseViewModel {
     private func addNewPermanentAccessContact() {
         self.router
             .trigger(
-                .newPersonTestRoute(
+                .newAllowedPerson(
                     delegate: self,
                     personType: .permanent
                 )
