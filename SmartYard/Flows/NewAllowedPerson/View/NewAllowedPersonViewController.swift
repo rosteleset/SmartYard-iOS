@@ -19,14 +19,14 @@ class NewAllowedPersonViewController: BaseViewController {
     @IBOutlet weak var selectFromContactButton: UIButton!
     @IBOutlet weak var contactImageView: RoundedImageView!
     @IBOutlet weak var contactNameLabel: UILabel!
+    @IBOutlet weak var addAccessButton: BlueButton!
     
     @IBOutlet private weak var backgroundView: UIView!
-    @IBOutlet private weak var addAccessButton: BlueButton!
     @IBOutlet private weak var mainContainerBottomConstraint: NSLayoutConstraint!
     
     private let contactPicker = CNContactPickerViewController()
     
-    let newContactTrigger = PublishSubject<AllowedPerson?>()
+    var newContactTrigger = BehaviorSubject<AllowedPerson?>(value: nil)
     
     private let closeTrigger = PublishSubject<Void>()
     
@@ -51,7 +51,9 @@ class NewAllowedPersonViewController: BaseViewController {
     
     private func configureView() {
         view.hideKeyboardWhenTapped = true
-
+        contactNameLabel.isHidden = true
+        textField.isHidden = false
+        
         let dismissTap = UITapGestureRecognizer()
         
         backgroundView.addGestureRecognizer(dismissTap)
@@ -96,6 +98,21 @@ class NewAllowedPersonViewController: BaseViewController {
         
         let phoneTextCompletedDriver = phoneTextDriver
             .filter { $0.count == Constants.phoneLengthWithoutPrefix }
+            .drive(
+                onNext: { [weak self] phoneText in
+                    var phoneFormatString = "+7" + phoneText
+                    phoneFormatString = phoneFormatString.formatAsPhoneNumber()
+                    
+                    let newAllowedPerson = AllowedPerson(
+                        displayedName: nil,
+                        phoneNumber: phoneFormatString,
+                        logoImage: nil
+                    )
+                    
+                    self?.newContactTrigger.onNext(newAllowedPerson)
+                }
+            )
+            .disposed(by: disposeBag)
         
         selectFromContactButton.rx
             .tap
@@ -108,20 +125,34 @@ class NewAllowedPersonViewController: BaseViewController {
                     
                     self.contactPicker.delegate = self
                     self.present(self.contactPicker, animated: true, completion: nil)
-                    self.textField.isHidden = true
-                    self.contactNameLabel.isHidden = false
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        let addAccessSubject = PublishSubject<AllowedPerson?>()
+        
+        addAccessButton.rx
+            .tap
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self,
+                          let data = try? self.newContactTrigger.value()
+                    else {
+                          return
+                    }
+                    
+                    addAccessSubject.onNext(data)
                 }
             )
             .disposed(by: disposeBag)
         
         let input = NewAllowedPersonViewModel.Input(
             closeTrigger: closeTrigger.asDriver(onErrorJustReturn: ()),
-            selectFromContactTrigger: selectFromContactButton.rx.tap.asDriverOnErrorJustComplete(),
-            addAccessTrigger: addAccessButton.rx.tap.asDriverOnErrorJustComplete(),
-            inputPhoneTextTrigger: phoneTextCompletedDriver.asDriver(onErrorJustReturn: "")
+            addAccessTrigger: addAccessSubject.asDriver(onErrorJustReturn: nil)
         )
         
-        let output = viewModel.transform(input)
+        _ = viewModel.transform(input)
     }
     
     private func configureRxKeyboard() {

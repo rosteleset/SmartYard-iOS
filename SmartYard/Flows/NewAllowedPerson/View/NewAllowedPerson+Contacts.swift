@@ -34,6 +34,10 @@ extension NewAllowedPersonViewController: CNContactPickerDelegate {
             allowedPerson.logoImage = image
         }
         
+        addAccessButton.isEnabled = true
+        textField.isHidden = true
+        contactNameLabel.isHidden = false
+        
         newContactTrigger.onNext(allowedPerson)
     }
     

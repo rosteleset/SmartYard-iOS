@@ -12,7 +12,7 @@ import RxCocoa
 
 class AllowedPersonCell: UITableViewCell {
 
-    @IBOutlet private weak var userLogoImageView: UIImageView!
+    @IBOutlet private weak var userLogoImageView: RoundedImageView!
     @IBOutlet private weak var userNameLabel: UILabel!
     @IBOutlet private weak var smsButton: UIButton!
     
