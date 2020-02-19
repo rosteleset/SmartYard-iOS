@@ -106,9 +106,10 @@ class AddressAccessViewController: BaseViewController {
     }
 
     private func calculateAccessViewHeight(countItems: Int) -> CGFloat {
-        let minHeight = 57
-        let baseCellHeight = 64
+        let addContactCellHeight = 57
+        let contactCellHeight = 64
         
-        return CGFloat(baseCellHeight * countItems + minHeight)
+        return CGFloat(contactCellHeight * countItems + addContactCellHeight)
     }
+    
 }

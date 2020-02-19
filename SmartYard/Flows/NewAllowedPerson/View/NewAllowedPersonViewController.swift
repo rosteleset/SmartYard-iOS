@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RxKeyboard
 import RxSwift
 import RxCocoa
 import ContactsUI
@@ -29,8 +28,6 @@ class NewAllowedPersonViewController: BaseViewController {
     private let contactPicker = CNContactPickerViewController()
     
     var newContactTrigger = BehaviorSubject<AllowedPerson?>(value: nil)
-    
-    private let closeTrigger = PublishSubject<Void>()
     
     private let viewModel: NewAllowedPersonViewModel
     
@@ -55,21 +52,8 @@ class NewAllowedPersonViewController: BaseViewController {
     private func configureView() {
         view.hideKeyboardWhenTapped = true
         contactNameLabel.isHidden = true
+        
         textField.isHidden = false
-        
-        let dismissTap = UITapGestureRecognizer()
-        
-        backgroundView.addGestureRecognizer(dismissTap)
-        
-        dismissTap.rx
-            .event
-            .subscribe(
-                onNext: { [weak self] _ in
-                    self?.closeTrigger.onNext(())
-                }
-            )
-            .disposed(by: disposeBag)
-        
         textField.delegate = self
 
         let prefixLabel = UILabel()
@@ -82,36 +66,26 @@ class NewAllowedPersonViewController: BaseViewController {
     }
     
     private func bind() {
-        let phoneTextDriver = textField.rx.text
+        let phoneText = textField.rx.text
             .orEmpty
             .observeOn(MainScheduler.asyncInstance)
             .asDriver(onErrorJustReturn: "")
-            
-        phoneTextDriver
-            .drive(
-                onNext: { [weak self] text in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    self.addAccessButton.isEnabled = text.count == Constants.phoneLengthWithoutPrefix
-                }
-            )
+        
+        phoneText
+            .map { $0.count == Constants.phoneLengthWithoutPrefix }
+            .drive(addAccessButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        phoneTextDriver
+        phoneText
             .filter { $0.count == Constants.phoneLengthWithoutPrefix }
+            .map { phoneText in
+                var phoneFormatString = "+7" + phoneText
+                phoneFormatString = phoneFormatString.formatAsPhoneNumber()
+                
+                return AllowedPerson(displayedName: nil, phoneNumber: phoneFormatString, logoImage: nil)
+            }
             .drive(
-                onNext: { [weak self] phoneText in
-                    var phoneFormatString = "+7" + phoneText
-                    phoneFormatString = phoneFormatString.formatAsPhoneNumber()
-                    
-                    let newAllowedPerson = AllowedPerson(
-                        displayedName: nil,
-                        phoneNumber: phoneFormatString,
-                        logoImage: nil
-                    )
-                    
+                onNext: { [weak self] newAllowedPerson in
                     self?.newContactTrigger.onNext(newAllowedPerson)
                 }
             )
@@ -132,27 +106,17 @@ class NewAllowedPersonViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-        let addAccessSubject = PublishSubject<AllowedPerson?>()
-        
-        addAccessButton.rx
-            .tap
+        let addAccessTrigger = addAccessButton.rx.tap
             .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self,
-                          let data = try? self.newContactTrigger.value()
-                    else {
-                          return
-                    }
-                    
-                    addAccessSubject.onNext(data)
-                }
-            )
-            .disposed(by: disposeBag)
+            .withLatestFrom(newContactTrigger.asDriver(onErrorJustReturn: nil))
+            .asDriver(onErrorJustReturn: nil)
+        
+        let dismissTap = UITapGestureRecognizer()
+        backgroundView.addGestureRecognizer(dismissTap)
         
         let input = NewAllowedPersonViewModel.Input(
-            closeTrigger: closeTrigger.asDriver(onErrorJustReturn: ()),
-            addAccessTrigger: addAccessSubject.asDriver(onErrorJustReturn: nil)
+            closeTrigger: dismissTap.rx.event.mapToVoid().asDriver(onErrorJustReturn: ()),
+            addAccessTrigger: addAccessTrigger.asDriver()
         )
         
         _ = viewModel.transform(input)

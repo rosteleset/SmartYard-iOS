@@ -47,7 +47,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
         self.accessService = accessService
         
-        super.init(initialRoute: accessService.routeForCurrentState)
+        super.init(initialRoute: .phoneNumber/*accessService.routeForCurrentState*/)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
         
@@ -113,6 +113,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             )
             
             let vc = NewAllowedPersonViewController(viewModel: vm)
+            vc.modalPresentationStyle = .overCurrentContext
             
             return .present(vc)
         }

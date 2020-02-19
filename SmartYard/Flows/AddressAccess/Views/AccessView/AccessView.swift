@@ -16,7 +16,6 @@ class AccessView: PMNibLinkableView {
     @IBOutlet private weak var containerView: FullRoundedView!
     @IBOutlet private weak var tableView: UITableView!
     
-    private let itemsProxy = BehaviorSubject<[AllowedPerson]>(value: [])
     private let disposeBag = DisposeBag()
     
     private let awakeFromNibSubject = PublishSubject<Void>()
@@ -36,17 +35,7 @@ class AccessView: PMNibLinkableView {
     }
     
     private func bind() {
-        let input = AccessViewModel.Input(
-            awakeFromNibTrigger: awakeFromNibSubject.asDriverOnErrorJustComplete()
-        )
-        
-        let output = viewModel.transform(input: input)
-        
-        output.personsTrigger
-            .drive(itemsProxy)
-            .disposed(by: disposeBag)
-        
-        itemsProxy
+        viewModel.personsItemsSubject
             .subscribe(
                 onNext: { [weak self] _ in
                     self?.tableView.reloadSections(
@@ -80,7 +69,7 @@ class AccessView: PMNibLinkableView {
 extension AccessView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let data = try? itemsProxy.value() ,
+        guard let data = try? viewModel.personsItemsSubject.value() ,
             indexPath.row == data.count || data.isEmpty
         else {
             return 64
@@ -90,7 +79,7 @@ extension AccessView: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        guard let data = try? itemsProxy.value() else {
+        guard let data = try? viewModel.personsItemsSubject.value() else {
             return false
         }
         
@@ -113,7 +102,7 @@ extension AccessView: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let data = try? itemsProxy.value() ,
+        guard let data = try? viewModel.personsItemsSubject.value() ,
               indexPath.row == data.count || data.isEmpty
         else {
             return
@@ -127,7 +116,7 @@ extension AccessView: UITableViewDelegate {
 extension AccessView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let data = try? itemsProxy.value() else {
+        guard let data = try? viewModel.personsItemsSubject.value() else {
             return 0
         }
         
@@ -135,7 +124,7 @@ extension AccessView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let data = try? itemsProxy.value() else {
+        guard let data = try? viewModel.personsItemsSubject.value() else {
             return UITableViewCell()
         }
         
