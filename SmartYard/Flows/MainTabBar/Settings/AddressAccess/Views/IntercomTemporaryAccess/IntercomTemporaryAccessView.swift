@@ -22,6 +22,8 @@ class IntercomTemporaryAccessView: PMNibLinkableView {
     @IBOutlet private weak var containerView: FullRoundedView!
     
     override func awakeFromNib() {
+        super.awakeFromNib()
+        
         containerView.borderWidth = 1
         containerView.borderColor = UIColor.SmartYard.grayBorder
     }

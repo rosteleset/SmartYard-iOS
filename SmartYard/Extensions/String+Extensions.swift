@@ -15,10 +15,12 @@ extension String {
             return self
         }
         
-        insert("(", at: index(startIndex, offsetBy: 2))
-        insert(")", at: index(startIndex, offsetBy: 6))
-        insert("-", at: index(startIndex, offsetBy: 10))
-        insert("-", at: index(startIndex, offsetBy: 13))
+        insert(" ", at: index(startIndex, offsetBy: 2))
+        insert("(", at: index(startIndex, offsetBy: 3))
+        insert(")", at: index(startIndex, offsetBy: 7))
+        insert(" ", at: index(startIndex, offsetBy: 8))
+        insert("-", at: index(startIndex, offsetBy: 12))
+        insert("-", at: index(startIndex, offsetBy: 15))
         
         return self
     }

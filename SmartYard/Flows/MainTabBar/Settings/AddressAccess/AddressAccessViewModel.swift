@@ -138,9 +138,9 @@ class AddressAccessViewModel: BaseViewModel {
     
     private func loadTemporaryAccessContacts() -> [AllowedPerson] {
         return [
-            AllowedPerson(displayedName: nil, phoneNumber: "+7(903)343-17-40", logoImage: nil),
-            AllowedPerson(displayedName: nil, phoneNumber: "+7(902)741-82-90", logoImage: nil),
-            AllowedPerson(displayedName: nil, phoneNumber: "+7(903)944-47-50", logoImage: nil)
+            AllowedPerson(displayedName: nil, phoneNumber: "+7 (903) 343-17-40", logoImage: nil),
+            AllowedPerson(displayedName: nil, phoneNumber: "+7 (902) 741-82-90", logoImage: nil),
+            AllowedPerson(displayedName: nil, phoneNumber: "+7 (903) 944-47-50", logoImage: nil)
         ]
     }
     
