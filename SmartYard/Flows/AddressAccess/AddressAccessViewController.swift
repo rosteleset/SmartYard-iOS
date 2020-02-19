@@ -12,6 +12,7 @@ import RxSwift
 
 class AddressAccessViewController: BaseViewController {
 
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var intercomAccessView: IntercomTemporaryAccessView!
     @IBOutlet private weak var temporaryAccessView: AccessView!
@@ -59,7 +60,8 @@ class AddressAccessViewController: BaseViewController {
             deleteTempContactTrigger: temporaryAccessView.deletePressedSubject.asDriverOnErrorJustComplete(),
             deletePermanentContactTrigger: permanentAccessView.deletePressedSubject.asDriverOnErrorJustComplete(),
             addNewTempContact: temporaryAccessView.addNewPersonSubject.asDriverOnErrorJustComplete(),
-            addNewPermanentContact: permanentAccessView.addNewPersonSubject.asDriverOnErrorJustComplete()
+            addNewPermanentContact: permanentAccessView.addNewPersonSubject.asDriverOnErrorJustComplete(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
         let output = viewModel.transform(input: input)

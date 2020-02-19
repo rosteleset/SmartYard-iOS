@@ -20,9 +20,11 @@ class AddressAccessViewModel: BaseViewModel {
     private let permanentAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let intercomAccessCode = PublishSubject<String?>()
     
-    init(
-        router: WeakRouter<SettingsRoute>) {
+    private let address: String
+    
+    init(router: WeakRouter<SettingsRoute>, address: String) {
         self.router = router
+        self.address = address
     }
     
     func transform(input: Input) -> Output {
@@ -111,6 +113,14 @@ class AddressAccessViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             objectAddress: addressSubject.asDriver(onErrorJustReturn: ""),
             tempAccessContacts: tempAccessConstactsSubject.asDriver(onErrorJustReturn: []),
@@ -119,15 +129,10 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func loadData() {
-        self.addressSubject.onNext(self.loadAddress())
+        self.addressSubject.onNext(address)
         self.tempAccessConstactsSubject.onNext(self.loadTemporaryAccessContacts())
         self.permanentAccessContactsSubject.onNext(self.loadPermanentAccessContacts())
         self.intercomAccessCode.onNext(self.loadIntercomAccessCode())
-    }
-    
-    // TODO: load real data
-    private func loadAddress() -> String {
-        return "г.Ульяновск, ул. Верхнеполевая, д.12, кв.6"
     }
     
     private func loadTemporaryAccessContacts() -> [AllowedPerson] {
@@ -223,6 +228,7 @@ extension AddressAccessViewModel {
         let deletePermanentContactTrigger: Driver<Int?>
         let addNewTempContact: Driver<Void>
         let addNewPermanentContact: Driver<Void>
+        let backTrigger: Driver<Void>
     }
     
     struct Output {

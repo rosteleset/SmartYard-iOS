@@ -24,6 +24,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressAccessViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="addressLabel" destination="Vjf-7h-gEU" id="yDC-2E-tU1"/>
+                <outlet property="fakeNavBar" destination="Gcv-sW-Tql" id="vBN-VJ-Jdb"/>
                 <outlet property="intercomAccessView" destination="bbs-2j-kxV" id="d58-nk-3F8"/>
                 <outlet property="permanentAccessView" destination="mHK-Jf-tjL" id="eE5-eT-z1n"/>
                 <outlet property="temporaryAccessView" destination="CT0-UR-Z3l" id="dov-tp-o8h"/>
@@ -38,6 +39,13 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="ECQ-Ip-KTS">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gcv-sW-Tql" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="Y8k-7I-ejC"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wnz-X0-Nqd">
                     <rect key="frame" x="0.0" y="195" width="414" height="667"/>
                     <subviews>
@@ -146,10 +154,13 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="ECQ-Ip-KTS" secondAttribute="bottom" id="1Rc-PB-8hv"/>
                 <constraint firstItem="Tua-bR-e0p" firstAttribute="top" secondItem="wnz-X0-Nqd" secondAttribute="top" constant="-21" id="2zF-Vk-9p9"/>
+                <constraint firstItem="Gcv-sW-Tql" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="3ix-7e-YIF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Tua-bR-e0p" secondAttribute="trailing" constant="16" id="3rk-nY-dWM"/>
                 <constraint firstItem="wnz-X0-Nqd" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="151" id="Avf-WE-j7U"/>
                 <constraint firstItem="ECQ-Ip-KTS" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Dfy-Vt-D2r"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="wnz-X0-Nqd" secondAttribute="trailing" id="IXv-ib-6Iw"/>
+                <constraint firstAttribute="trailing" secondItem="Gcv-sW-Tql" secondAttribute="trailing" id="KyS-l5-QeP"/>
+                <constraint firstItem="Gcv-sW-Tql" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="T5h-It-3oZ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="wnz-X0-Nqd" secondAttribute="bottom" id="cjA-gq-yxy"/>
                 <constraint firstItem="Tua-bR-e0p" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="eCg-Ch-Li5"/>
                 <constraint firstItem="iuZ-VJ-41V" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="69" id="hQX-Sb-WMg"/>
