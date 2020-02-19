@@ -68,7 +68,6 @@ class NewAllowedPersonViewController: BaseViewController {
     private func bind() {
         let phoneText = textField.rx.text
             .orEmpty
-            .observeOn(MainScheduler.asyncInstance)
             .asDriver(onErrorJustReturn: "")
         
         phoneText
