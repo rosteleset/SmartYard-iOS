@@ -161,9 +161,9 @@
 		E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C1A23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift */; };
 		E94B6C2423FBFEA600FD9F65 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */; };
 		E94B6C2723FC02B800FD9F65 /* LimitedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2623FC02B800FD9F65 /* LimitedTextField.swift */; };
-		E94B6C2923FC04F500FD9F65 /* AllowedPersonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2823FC04F400FD9F65 /* AllowedPersonType.swift */; };
-		E94B6C2B23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2A23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift */; };
-		E94B6C3023FC12B900FD9F65 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C2F23FC12B900FD9F65 /* RoundedImageView.swift */; };
+		E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3123FD723A00FD9F65 /* AllowedPersonType.swift */; };
+		E94B6C3723FD728F00FD9F65 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3623FD728F00FD9F65 /* RoundedImageView.swift */; };
+		E94B6C3923FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3823FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -410,9 +410,9 @@
 		E94B6C1A23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAllowedPersonViewModel.swift; sourceTree = "<group>"; };
 		E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		E94B6C2623FC02B800FD9F65 /* LimitedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedTextField.swift; sourceTree = "<group>"; };
-		E94B6C2823FC04F400FD9F65 /* AllowedPersonType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllowedPersonType.swift; sourceTree = "<group>"; };
-		E94B6C2A23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewAllowedPerson+Contacts.swift"; sourceTree = "<group>"; };
-		E94B6C2F23FC12B900FD9F65 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
+		E94B6C3123FD723A00FD9F65 /* AllowedPersonType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllowedPersonType.swift; sourceTree = "<group>"; };
+		E94B6C3623FD728F00FD9F65 /* RoundedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
+		E94B6C3823FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewAllowedPerson+Contacts.swift"; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -613,23 +613,21 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C3523FD728F00FD9F65 /* RoundedImageView */,
+				E94B6C2523FC028F00FD9F65 /* LimitedTextField */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
 				84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */,
 				84854B5B23FC38F3001B44F2 /* LoadingButton.swift */,
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
-				E9A4D49823EC3DD00070A591 /* BlueButton */,
 				E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */,
+				E9A4D49823EC3DD00070A591 /* BlueButton */,
 				843A7A7D23F29A0D00840E51 /* FakeNavBar */,
-				E9E4271323F40D8100F5D593 /* SmartYardCheckBoxView */,
-				E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */,
 				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
-				E94B6C2523FC028F00FD9F65 /* LimitedTextField */,
 				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
 				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
 				E9A4D48D23EC2A510070A591 /* PinTextField */,
-				E94B6C2E23FC129300FD9F65 /* RoundedImageView */,
 				E99EA6CC23EAD0C800BECEE6 /* RoundedView */,
 				E9E4271323F40D8100F5D593 /* SmartYardCheckBoxView */,
 				E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */,
@@ -1424,8 +1422,8 @@
 		E94B6C1C23FACBEF00FD9F65 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C3823FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift */,
 				E94B6C1623FAC5B600FD9F65 /* NewAllowedPersonViewController.swift */,
-				E94B6C2A23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift */,
 				E94B6C1723FAC5B600FD9F65 /* NewAllowedPersonViewController.xib */,
 			);
 			path = View;
@@ -1447,10 +1445,10 @@
 			path = LimitedTextField;
 			sourceTree = "<group>";
 		};
-		E94B6C2E23FC129300FD9F65 /* RoundedImageView */ = {
+		E94B6C3523FD728F00FD9F65 /* RoundedImageView */ = {
 			isa = PBXGroup;
 			children = (
-				E94B6C2F23FC12B900FD9F65 /* RoundedImageView.swift */,
+				E94B6C3623FD728F00FD9F65 /* RoundedImageView.swift */,
 			);
 			path = RoundedImageView;
 			sourceTree = "<group>";
@@ -1626,7 +1624,7 @@
 		E9BB83CD23F69FAF0071F91E /* Entries */ = {
 			isa = PBXGroup;
 			children = (
-				E94B6C2823FC04F400FD9F65 /* AllowedPersonType.swift */,
+				E94B6C3123FD723A00FD9F65 /* AllowedPersonType.swift */,
 				E9BB83CE23F69FE80071F91E /* AllowedPerson.swift */,
 			);
 			path = Entries;
@@ -2005,7 +2003,6 @@
 				E9E4273523F55C4400F5D593 /* ServiceUnavailableViewModel.swift in Sources */,
 				E9E4273223F55B9700F5D593 /* ServicesActivationRequestViewController.swift in Sources */,
 				E9E4273323F55B9700F5D593 /* ServicesActivationRequestViewModel.swift in Sources */,
-				E94B6C2923FC04F500FD9F65 /* AllowedPersonType.swift in Sources */,
 				844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */,
 				E9E4272123F41F7300F5D593 /* AvailableSericesViewModel.swift in Sources */,
 				E9E4271F23F41DDF00F5D593 /* ServiceState.swift in Sources */,
@@ -2047,7 +2044,7 @@
 				E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */,
 				848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */,
 				84898A8E23F1540C00E6B78E /* SettingsActionCell.swift in Sources */,
-				E94B6C2B23FC0B6300FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */,
+				E94B6C3923FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
@@ -2077,9 +2074,8 @@
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
+				E94B6C3723FD728F00FD9F65 /* RoundedImageView.swift in Sources */,
 				84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */,
-				E940580B23F6826400623746 /* AddressAccessViewModel.swift in Sources */,
-
 				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
@@ -2136,7 +2132,6 @@
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
-				E94B6C3023FC12B900FD9F65 /* RoundedImageView.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
 				84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */,
@@ -2145,6 +2140,7 @@
 				84EEBC9823F40FA600C9557F /* SettingsServiceState.swift in Sources */,
 				84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
+				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
