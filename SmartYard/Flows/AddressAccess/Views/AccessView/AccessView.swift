@@ -37,8 +37,6 @@ class AccessView: PMNibLinkableView {
     
     private func bind() {
         let input = AccessViewModel.Input(
-            deletePressedTrigger: deletePressedSubject.asDriver(onErrorJustReturn: nil),
-            addNewPersonTrigger: addNewPersonSubject.asDriverOnErrorJustComplete(),
             awakeFromNibTrigger: awakeFromNibSubject.asDriverOnErrorJustComplete()
         )
         

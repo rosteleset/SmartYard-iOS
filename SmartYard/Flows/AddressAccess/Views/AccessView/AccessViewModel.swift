@@ -15,23 +15,6 @@ class AccessViewModel: BaseViewModel {
     private let personsItemsSubject = PublishSubject<[AllowedPerson]>()
     
     func transform(input: Input) -> Output {
-        
-        input.deletePressedTrigger
-            .drive(
-                onNext: { atIndex in
-                    // TODO
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        input.addNewPersonTrigger
-            .drive(
-                onNext: {
-                    // TODO
-                }
-            )
-            .disposed(by: disposeBag)
-        
         let combined = Driver.combineLatest(
             input.awakeFromNibTrigger.asDriver(onErrorJustReturn: ()),
             personsItemsSubject.asDriver(onErrorJustReturn: [])
@@ -51,8 +34,6 @@ class AccessViewModel: BaseViewModel {
 extension AccessViewModel {
     
     struct Input {
-        let deletePressedTrigger: Driver<Int?>
-        let addNewPersonTrigger: Driver<Void>
         let awakeFromNibTrigger: Driver<Void>
     }
     

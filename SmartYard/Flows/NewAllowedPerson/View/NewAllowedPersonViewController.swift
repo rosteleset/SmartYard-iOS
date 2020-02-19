@@ -15,11 +15,13 @@ import Contacts
 
 class NewAllowedPersonViewController: BaseViewController {
     
+    // swiftlint:disable all
     @IBOutlet weak var textField: LimitedTextField!
     @IBOutlet weak var selectFromContactButton: UIButton!
     @IBOutlet weak var contactImageView: RoundedImageView!
     @IBOutlet weak var contactNameLabel: UILabel!
     @IBOutlet weak var addAccessButton: BlueButton!
+    // swiftlint:enable all
     
     @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var mainContainerBottomConstraint: NSLayoutConstraint!
@@ -44,6 +46,7 @@ class NewAllowedPersonViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureView()
         configureRxKeyboard()
         bind()

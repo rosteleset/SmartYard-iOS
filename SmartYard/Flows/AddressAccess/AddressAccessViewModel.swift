@@ -15,10 +15,10 @@ class AddressAccessViewModel: BaseViewModel {
     
     private let router: WeakRouter<AppRoute>
     
-    let addressSubject = PublishSubject<String?>()
-    let tempAccessConstactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
-    let permanentAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
-    let intercomAccessCode = PublishSubject<String?>()
+    private let addressSubject = PublishSubject<String?>()
+    private let tempAccessConstactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
+    private let permanentAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
+    private let intercomAccessCode = PublishSubject<String?>()
     
     init(
         router: WeakRouter<AppRoute>) {
@@ -27,16 +27,6 @@ class AddressAccessViewModel: BaseViewModel {
     
     func transform(input: Input) -> Output {
         loadData()
-        // TODO: использовать это решение после подключения API
-//        input.viewDidAppearTrigger
-//            .drive(
-//                onNext: { [weak self] _ in
-//                    guard let self = self else {
-//                        return
-//                    }
-//                }
-//            )
-//            .disposed(by: disposeBag)
         
         input.refreshIntercomTempCodeTrigger
             .drive(

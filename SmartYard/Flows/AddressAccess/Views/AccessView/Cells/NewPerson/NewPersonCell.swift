@@ -8,10 +8,4 @@
 
 import UIKit
 
-class NewPersonCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-}
+class NewPersonCell: UITableViewCell { }

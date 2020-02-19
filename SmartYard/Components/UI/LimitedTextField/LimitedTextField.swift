@@ -11,7 +11,6 @@ import UIKit
 
 class LimitedTextField: UITextField {
     
-    
     override func willMove(toSuperview newSuperview: UIView?) {
         addTarget(
             self,
