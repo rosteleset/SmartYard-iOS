@@ -12,10 +12,14 @@ import RxCocoa
 
 class AccessViewModel: BaseViewModel {
     
-    let personsItemsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
+    let sectionModels = BehaviorSubject<[AllowedPersonSectionModel]>(value: [])
     
     func updateData(data: [AllowedPerson]) {
-        personsItemsSubject.onNext(data)
+        let headerItem = AllowedPersonDataItem.addContact
+        let contacts = data.map { AllowedPersonDataItem.contact(person: $0) }
+        
+        let sectionModel = AllowedPersonSectionModel(identity: "MainSection", items: contacts + [headerItem])
+        sectionModels.onNext([sectionModel])
     }
     
 }

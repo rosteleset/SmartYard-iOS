@@ -65,6 +65,9 @@
 		84854B5823FC27C1001B44F2 /* OpenDoorRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */; };
 		84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5923FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift */; };
 		84854B5C23FC38F3001B44F2 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5B23FC38F3001B44F2 /* LoadingButton.swift */; };
+		84854B6323FD7FDE001B44F2 /* AllowedPersonDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B6223FD7FDE001B44F2 /* AllowedPersonDataItem.swift */; };
+		84854B6523FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B6423FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift */; };
+		84854B6723FD809E001B44F2 /* AllowedPersonSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B6623FD809E001B44F2 /* AllowedPersonSectionModel.swift */; };
 		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
 		84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */; };
@@ -305,6 +308,9 @@
 		84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDoorRequest.swift; sourceTree = "<group>"; };
 		84854B5923FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IncomingCallViewModel+Extensions.swift"; sourceTree = "<group>"; };
 		84854B5B23FC38F3001B44F2 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
+		84854B6223FD7FDE001B44F2 /* AllowedPersonDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPersonDataItem.swift; sourceTree = "<group>"; };
+		84854B6423FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPersonDataItemIdentity.swift; sourceTree = "<group>"; };
+		84854B6623FD809E001B44F2 /* AllowedPersonSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPersonSectionModel.swift; sourceTree = "<group>"; };
 		84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderCell.swift; sourceTree = "<group>"; };
 		84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderCell.xib; sourceTree = "<group>"; };
 		84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelCell.swift; sourceTree = "<group>"; };
@@ -1615,6 +1621,9 @@
 			children = (
 				E94B6C3123FD723A00FD9F65 /* AllowedPersonType.swift */,
 				E9BB83CE23F69FE80071F91E /* AllowedPerson.swift */,
+				84854B6223FD7FDE001B44F2 /* AllowedPersonDataItem.swift */,
+				84854B6423FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift */,
+				84854B6623FD809E001B44F2 /* AllowedPersonSectionModel.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -2082,6 +2091,7 @@
 				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
 				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
+				84854B6323FD7FDE001B44F2 /* AllowedPersonDataItem.swift in Sources */,
 				E94B6C2423FBFEA600FD9F65 /* String+Extensions.swift in Sources */,
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
@@ -2102,6 +2112,7 @@
 				84AA8D6023E2E622001B3B43 /* APIWrapper.swift in Sources */,
 				844AC3B723EB104E0066006D /* UserNameViewController.swift in Sources */,
 				84898A8A23F1510600E6B78E /* UIButton+Extensions.swift in Sources */,
+				84854B6723FD809E001B44F2 /* AllowedPersonSectionModel.swift in Sources */,
 				84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */,
 				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
@@ -2139,6 +2150,7 @@
 				84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */,
 				84854B4523FAB4D7001B44F2 /* APIClientName.swift in Sources */,
 				84CC15E523EC999700A1CB95 /* AddressesListSectionUpdateKind.swift in Sources */,
+				84854B6523FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift in Sources */,
 				84CC15E323EC86D900A1CB95 /* ObjectLockButton.swift in Sources */,
 				84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */,
 				84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */,

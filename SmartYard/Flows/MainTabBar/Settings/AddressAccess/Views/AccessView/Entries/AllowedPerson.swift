@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct AllowedPerson {
+struct AllowedPerson: Hashable {
     
     let displayedName: String?
     let phoneNumber: String
