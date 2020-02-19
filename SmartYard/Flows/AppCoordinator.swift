@@ -105,8 +105,17 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         }
     }
     
-    func activateToken(token: String, tokenType: TokenType) {
-        // TODO: Update token activation logic
+    func processIncomingCallRequest(callPayload: CallPayload) {
+        // MARK: Проверяем, есть ли у нас уже входящие звонки на данный момент
+        // Скорее всего, дальше надо будет делать какую-то очередь, но сейчас для демо и так сгодится
+        
+        guard !linphoneService.hasEnqueuedCalls else {
+            print("Can only process one call at a time")
+            return
+        }
+        
+        linphoneService.hasEnqueuedCalls = true
+        trigger(.incomingCall(callPayload: callPayload))
     }
     
     private func observeLogout() {

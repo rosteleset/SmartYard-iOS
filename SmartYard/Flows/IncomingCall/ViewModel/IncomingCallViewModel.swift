@@ -40,6 +40,11 @@ class IncomingCallViewModel: BaseViewModel {
         self.callPayload = callPayload
     }
     
+    deinit {
+        linphoneService.stop()
+        linphoneService.hasEnqueuedCalls = false
+    }
+    
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
         let doorOpeningActivityTracker = ActivityTracker()
