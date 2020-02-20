@@ -68,6 +68,48 @@ class AddressesListViewModel: BaseViewModel {
         let updateKindSubject = PublishSubject<AddressesListSectionUpdateKind>()
         let updateKind = updateKindSubject.asDriverOnErrorJustComplete()
         
+        input.guestAccessRequested
+            .flatMap { identity -> Driver<String> in
+                guard case let .object(objectId) = identity else {
+                    return .empty()
+                }
+                return .just(objectId)
+            }
+            .drive(
+                onNext: { [weak self] objectId in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let cancelAction = UIAlertAction(
+                        title: "Отмена",
+                        style: .cancel
+                    ) { _ in
+                        // nothing
+                    }
+                    
+                    let okAction = UIAlertAction(
+                        title: "Включить",
+                        style: .default
+                    ) { _ in
+                        // TODO: send API request to guest access
+                    }
+                    
+                    // swiftlint:disable:next line_length
+                    let guestAccessAlertText = "Всем, кто будет набирать номер вашей квартиры на домофоне, дверь будет открываться автоматически в течение 60 минут. По истечению данного времени работа домофона вернется в стандартный режим автоматически."
+                    
+                    let guestAccessAlertTitle = "Включить гостевой доступ на час?"
+                    
+                    self.router.trigger(
+                        .dialog(
+                            title: guestAccessAlertTitle,
+                            message: guestAccessAlertText,
+                            actions: [cancelAction, okAction])
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
         // Это приведет к обновлению секций
         
@@ -261,6 +303,7 @@ extension AddressesListViewModel {
     
     struct Input {
         let itemSelected: Driver<AddressesListDataItemIdentity>
+        let guestAccessRequested: Driver<AddressesListDataItemIdentity>
     }
     
     struct Output {

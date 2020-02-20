@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class AddressesListObjectCell: CustomBorderCollectionViewCell {
     
@@ -14,9 +16,17 @@ class AddressesListObjectCell: CustomBorderCollectionViewCell {
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var openButton: ObjectLockButton!
     
+    var disposeBag = DisposeBag()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         configure(objectType: .house, name: nil, isOpened: false)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        disposeBag = DisposeBag()
     }
     
     func configure(objectType: DomophoneObjectType, name: String?, isOpened: Bool) {
@@ -24,5 +34,16 @@ class AddressesListObjectCell: CustomBorderCollectionViewCell {
         iconImageView.image = objectType.icon
         openButton.isSelected = isOpened
     }
-
+    
+    func bind(with outerSubject: PublishSubject<Void>) {
+        openButton.rx
+            .tap
+            .subscribe(
+                onNext: { _ in
+                    outerSubject.onNext(())
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
 }
