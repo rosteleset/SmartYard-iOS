@@ -36,7 +36,7 @@ class AddressAccessViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         let temporaryViewHeight = temporaryAccessView.heightAnchor.constraint(equalToConstant: 57)
         temporaryViewHeight.isActive = true
         tempAccessViewHeightConstraint = temporaryViewHeight
@@ -106,6 +106,8 @@ class AddressAccessViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        intercomAccessView.bind(with: output.isGrantedIntercomAccess, intercomCode: output.temporaryIntercomCode)
     }
 
     private func calculateAccessViewHeight(countItems: Int) -> CGFloat {

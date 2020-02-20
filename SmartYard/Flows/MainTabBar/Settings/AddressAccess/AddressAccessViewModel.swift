@@ -19,6 +19,7 @@ class AddressAccessViewModel: BaseViewModel {
     private let tempAccessConstactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let permanentAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let intercomAccessCode = PublishSubject<String?>()
+    private let isGrantedIntercomGuestAccess = PublishSubject<Bool>()
     
     private let address: String
     
@@ -125,7 +126,9 @@ class AddressAccessViewModel: BaseViewModel {
         return Output(
             objectAddress: addressSubject.asDriver(onErrorJustReturn: ""),
             tempAccessContacts: tempAccessConstactsSubject.asDriver(onErrorJustReturn: []),
-            permanentAccessContacts: permanentAccessContactsSubject.asDriver(onErrorJustReturn: [])
+            permanentAccessContacts: permanentAccessContactsSubject.asDriver(onErrorJustReturn: []),
+            temporaryIntercomCode: intercomAccessCode,
+            isGrantedIntercomAccess: isGrantedIntercomGuestAccess
         )
     }
     
@@ -163,8 +166,10 @@ class AddressAccessViewModel: BaseViewModel {
         let okAction = UIAlertAction(
             title: "Включить",
             style: .default
-        ) { _ in
+        ) { [weak self] _ in
             // TODO: send API request to guest access
+            // TODO: using real api data
+            self?.isGrantedIntercomGuestAccess.onNext(true)
         }
         
         // swiftlint:disable:next line_length
@@ -259,6 +264,8 @@ extension AddressAccessViewModel {
         let objectAddress: Driver<String?>
         let tempAccessContacts: Driver<[AllowedPerson]>
         let permanentAccessContacts: Driver<[AllowedPerson]>
+        let temporaryIntercomCode: PublishSubject<String?>
+        let isGrantedIntercomAccess: PublishSubject<Bool>
     }
     
 }

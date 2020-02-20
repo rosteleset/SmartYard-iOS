@@ -48,7 +48,7 @@
                                     <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enN-rb-QVd" customClass="WhiteButtonWithBorder" customModule="SmartYard" customModuleProvider="target">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enN-rb-QVd" customClass="ObjectLockButton" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="370" y="14" width="84" height="36"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="84" id="ElA-yk-vOa"/>
