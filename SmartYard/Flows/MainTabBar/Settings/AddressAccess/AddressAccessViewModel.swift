@@ -153,8 +153,31 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func openGuestAccess() {
-        print("Open guest access!")
-        // TODO
+        let cancelAction = UIAlertAction(
+            title: "Отмена",
+            style: .cancel
+        ) { _ in
+            // nothing
+        }
+        
+        let okAction = UIAlertAction(
+            title: "Включить",
+            style: .default
+        ) { _ in
+            // TODO: send API request to guest access
+        }
+        
+        // swiftlint:disable:next line_length
+        let guestAccessAlertText = "Всем, кто будет набирать номер вашей квартиры на домофоне, дверь будет открываться автоматически в течение 60 минут. По истечению данного времени работа домофона вернется в стандартный режим автоматически."
+        
+        let guestAccessAlertTitle = "Включить гостевой доступ на час?"
+        
+        self.router.trigger(
+            .dialog(
+                title: guestAccessAlertTitle,
+                message: guestAccessAlertText,
+                actions: [cancelAction, okAction])
+        )
     }
     
     private func sendSmsToTemporaryAccessContact(index: Int) {

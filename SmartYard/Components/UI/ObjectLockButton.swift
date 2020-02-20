@@ -16,7 +16,7 @@ class ObjectLockButton: UIButton {
         }
     }
     
-    override var isSelected: Bool {
+    override var isEnabled: Bool {
         didSet {
             updateAppearance()
         }
@@ -42,11 +42,8 @@ class ObjectLockButton: UIButton {
         setTitleColor(UIColor.SmartYard.blue.darken(by: 0.1), for: .highlighted)
         setTitle("Открыть", for: .highlighted)
         
-        setTitleColor(.white, for: .selected)
-        setTitle("Открыто", for: .selected)
-        
-        setTitleColor(UIColor.white.darken(by: 0.1), for: [.selected, .highlighted])
-        setTitle("Открыто", for: [.selected, .highlighted])
+        setTitleColor(.white, for: .disabled)
+        setTitle("Открыто", for: .disabled)
         
         updateAppearance()
     }
@@ -63,13 +60,8 @@ class ObjectLockButton: UIButton {
             borderWidth = 1
             borderColor = UIColor.SmartYard.blue.darken(by: 0.1)
             
-        case .selected:
+        case .disabled:
             backgroundColor = UIColor.SmartYard.darkGreen
-            borderWidth = 0
-            borderColor = .clear
-            
-        case [.selected, .highlighted]:
-            backgroundColor = UIColor.SmartYard.darkGreen.darken(by: 0.1)
             borderWidth = 0
             borderColor = .clear
             
