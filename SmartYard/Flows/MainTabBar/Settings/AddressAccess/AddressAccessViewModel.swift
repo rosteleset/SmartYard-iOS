@@ -23,9 +23,12 @@ class AddressAccessViewModel: BaseViewModel {
     
     private let address: String
     
-    init(router: WeakRouter<SettingsRoute>, address: String) {
+    private let apiWrapper: APIWrapper
+    
+    init(router: WeakRouter<SettingsRoute>, address: String, apiWrapper: APIWrapper) {
         self.router = router
         self.address = address
+        self.apiWrapper = apiWrapper
     }
     
     // swiftlint:disable:next function_body_length

@@ -251,4 +251,34 @@ class APIWrapper {
         }
     }
     
+    func grantHourGuestAccess(flatId: String) -> Single<HourGuestAccessResponseData?> {
+        let autoOpenEndDate = Date().dateHourAfter.apiString
+        
+        let settings = APIIntercomSettings(
+            enableDoorCode: "t",
+            cms: nil,
+            voip: nil,
+            autoOpen: autoOpenEndDate,
+            whiteRabbit: nil
+        )
+        
+        let request = HourGuestAccessRequest(flatId: flatId, settings: settings)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performGrantHourGuestAccessRequest(request) { result in
+                switch result {
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
 }

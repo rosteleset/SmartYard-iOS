@@ -128,7 +128,12 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             return .present(vc)
             
         case let .addressAccess(address):
-            let vm = AddressAccessViewModel(router: weakRouter, address: address)
+            let vm = AddressAccessViewModel(
+                router: weakRouter,
+                address: address,
+                apiWrapper: apiWrapper
+            )
+            
             let vc = AddressAccessViewController(viewModel: vm)
             
             return .push(vc)

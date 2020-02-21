@@ -120,6 +120,17 @@ class APIService {
         )
     }
     
+    /// Запрос предоставления гостевого доступа на 60 минут
+    func performGrantHourGuestAccessRequest(
+        _ request: HourGuestAccessRequest,
+        completion: ((Swift.Result<HourGuestAccessResponseData, Error>) -> Void)?
+        ) {
+        provider.request(
+            .grantHourGuestAccess(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
 }
 
 extension APIService {
