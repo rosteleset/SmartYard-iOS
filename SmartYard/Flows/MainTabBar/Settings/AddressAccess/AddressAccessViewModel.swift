@@ -82,7 +82,13 @@ class AddressAccessViewModel: BaseViewModel {
                     guard let self = self, let index = index else {
                         return
                     }
-                    self.deleteTempAccessContact(index: index)
+                    let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+                    
+                    let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
+                        self?.deleteTempAccessContact(index: index)
+                    }
+                    
+                    self.router.trigger(.dialog(title: "", message: "Вы уверены?", actions: [noAction, yesAction]))
                 }
             )
             .disposed(by: disposeBag)
