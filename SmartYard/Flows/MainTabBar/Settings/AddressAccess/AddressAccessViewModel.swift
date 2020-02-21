@@ -25,6 +25,9 @@ class AddressAccessViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     
+    let activityTracker = ActivityTracker()
+    let errorTracker = ErrorTracker()
+    
     init(router: WeakRouter<SettingsRoute>, address: String, apiWrapper: APIWrapper) {
         self.router = router
         self.address = address
@@ -34,7 +37,7 @@ class AddressAccessViewModel: BaseViewModel {
     // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         loadData()
-        
+
         input.refreshIntercomTempCodeTrigger
             .drive(
                 onNext: { [weak self] in
@@ -176,9 +179,33 @@ class AddressAccessViewModel: BaseViewModel {
             title: "Включить",
             style: .default
         ) { [weak self] _ in
-            // TODO: send API request to guest access
-            // TODO: using real api data
-            self?.isGrantedIntercomGuestAccess.onNext(true)
+            guard let self = self else {
+                return
+            }
+            
+            let response = self.apiWrapper.grantHourGuestAccess(flatId: "myTestFlat")
+                .trackActivity(self.activityTracker)
+                .trackError(self.errorTracker)
+            
+            response
+                .map { $0?.doorCode }
+                .asDriver(onErrorJustReturn: nil)
+                .ignoreNil()
+                .drive(self.intercomAccessCode)
+                .disposed(by: self.disposeBag)
+            
+            response
+                .asDriver(onErrorJustReturn: nil)
+                .ignoreNil()
+                .map { response -> Bool in
+                    guard let dateUntilClose = response.autoOpen.dateFromAPIString else {
+                        return false
+                    }
+                    
+                    return dateUntilClose > Date()
+                }
+                .drive(self.isGrantedIntercomGuestAccess)
+                .disposed(by: self.disposeBag)
         }
         
         // swiftlint:disable:next line_length

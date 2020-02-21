@@ -21,9 +21,9 @@ extension HourGuestAccessRequest {
         var params: [String: Any] =  [
             "flatId": flatId
         ]
-
+        
         if let settings = settings {
-            params["settings"] = settings
+            params["settings"] = settings.requestParameters
         }
         
         return params

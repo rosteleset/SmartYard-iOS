@@ -14,10 +14,4 @@ extension Date {
         return Calendar.current.date(byAdding: .minute, value: 60, to: self) ?? Date()
     }
     
-    var apiString: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        return dateFormatter.string(from: self)
-    }
-    
 }
