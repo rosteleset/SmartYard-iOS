@@ -10,11 +10,11 @@ import Foundation
 
 struct APIIntercomSettings: Codable {
     
-    let enableDoorCode: String
-    let cms: String
-    let voip: String
-    let autoOpen: String
-    let whiteRabbit: String
+    let enableDoorCode: String?
+    let cms: String?
+    let voip: String?
+    let autoOpen: String?
+    let whiteRabbit: String?
     
 }
 

@@ -11,17 +11,22 @@ import Foundation
 struct HourGuestAccessRequest {
     
     let flatId: String
-    let settings: APIIntercomSettings
+    let settings: APIIntercomSettings?
     
 }
 
 extension HourGuestAccessRequest {
     
     var requestParameters: [String: Any] {
-        return [
-            "flatId": flatId,
-            "settings": settings
+        var params: [String: Any] =  [
+            "flatId": flatId
         ]
+
+        if let settings = settings {
+            params["settings"] = settings
+        }
+        
+        return params
     }
     
 }
