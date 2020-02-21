@@ -88,7 +88,7 @@ class AddressAccessViewModel: BaseViewModel {
                         self?.deleteTempAccessContact(index: index)
                     }
                     
-                    self.router.trigger(.dialog(title: "", message: "Вы уверены?", actions: [noAction, yesAction]))
+                    self.router.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
                 }
             )
             .disposed(by: disposeBag)
