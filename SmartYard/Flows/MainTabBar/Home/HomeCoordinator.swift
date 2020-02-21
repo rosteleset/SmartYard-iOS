@@ -11,7 +11,6 @@ import XCoordinator
 enum HomeRoute: Route {
     case main
     case alert(title: String, message: String?)
-    case dialog(title: String, message: String?, actions: [UIAlertAction])
 }
 
 class HomeCoordinator: NavigationCoordinator<HomeRoute> {
@@ -41,9 +40,6 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
-            
-        case .dialog(let title, let message, let actions):
-            return .dialogTransition(title: title, message: message, actions: actions)
         }
     }
     
