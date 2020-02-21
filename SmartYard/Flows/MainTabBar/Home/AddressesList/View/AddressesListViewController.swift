@@ -30,6 +30,8 @@ class AddressesListViewController: BaseViewController {
     
     private let viewModel: AddressesListViewModel
     
+    private let requestGuestAccess = PublishSubject<AddressesListDataItemIdentity>()
+    
     init(viewModel: AddressesListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -55,7 +57,10 @@ class AddressesListViewController: BaseViewController {
             }
             .ignoreNil()
         
-        let input = AddressesListViewModel.Input(itemSelected: itemSelected.asDriverOnErrorJustComplete())
+        let input = AddressesListViewModel.Input(
+            itemSelected: itemSelected.asDriverOnErrorJustComplete(),
+            guestAccessRequested: requestGuestAccess.asDriverOnErrorJustComplete()
+        )
         
         let output = viewModel.transform(input)
         
@@ -212,6 +217,16 @@ class AddressesListViewController: BaseViewController {
             case let .object(_, type, name, isOpened):
                 let cell = collectionView.dequeueReusableCell(withClass: AddressesListObjectCell.self, for: indexPath)
                 cell.configure(objectType: type, name: name, isOpened: isOpened)
+                
+                let subject = PublishSubject<Void>()
+                
+                subject
+                    .map { item.identity }
+                    .bind(to: self.requestGuestAccess)
+                    .disposed(by: cell.disposeBag)
+                
+                cell.bind(with: subject)
+                
                 return cell
                 
             case let .cameras(_, numberOfCameras):
