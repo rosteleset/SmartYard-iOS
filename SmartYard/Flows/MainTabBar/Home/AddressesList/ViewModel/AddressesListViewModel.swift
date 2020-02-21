@@ -28,7 +28,7 @@ class AddressesListViewModel: BaseViewModel {
     
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
-    // MARK: Словарь необходим для того, чтобы хранить состояния открытости объекта
+    // MARK: Словарь необходим для того, чтобы хранить состояния предоставленного доступа к объекту
     private let areObjectsGrantAccessed = BehaviorSubject<[String: Bool]>(value: [:])
     
     // swiftlint:disable:next function_body_length
