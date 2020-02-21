@@ -28,6 +28,8 @@ class AddressesListViewModel: BaseViewModel {
     
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
+    // MARK: Словарь необходим для того, чтобы хранить состояния предоставленного доступа к объекту
+    private let areObjectsGrantAccessed = BehaviorSubject<[String: Bool]>(value: [:])
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
@@ -67,6 +69,31 @@ class AddressesListViewModel: BaseViewModel {
         
         let updateKindSubject = PublishSubject<AddressesListSectionUpdateKind>()
         let updateKind = updateKindSubject.asDriverOnErrorJustComplete()
+        
+        input.guestAccessRequested
+            .flatMap { identity -> Driver<String> in
+                guard case let .object(objectId) = identity else {
+                    return .empty()
+                }
+                return .just(objectId)
+            }
+            .withLatestFrom(areObjectsGrantAccessed.asDriverOnErrorJustComplete()) { ($0, $1) }
+            .map { args -> (String, [String: Bool]) in
+                var (objectId, dict) = args
+                
+                let newState = !dict[objectId, default: false]
+                dict[objectId] = newState
+                
+                return (objectId, dict)
+            }
+            .drive(
+                onNext: { [weak self] args in
+                    let (objectId, newDict) = args
+                    self?.areObjectsGrantAccessed.onNext(newDict)
+                    self?.closeObjectAccessAfterTimeout(objectId: objectId)
+                }
+            )
+            .disposed(by: disposeBag)
         
         // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
         // Это приведет к обновлению секций
@@ -116,9 +143,18 @@ class AddressesListViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        let sectionModels = areSectionsExpanded
-            .map { [weak self] dict in
-                self?.createMockSections(expansionStateDict: dict) ?? []
+        let sectionModels = Driver
+            .combineLatest(
+                areSectionsExpanded.asDriverOnErrorJustComplete(),
+                areObjectsGrantAccessed.asDriverOnErrorJustComplete()
+            )
+            .map { [weak self] args -> [AddressesListSectionModel] in
+                let (expansionStateDict, objectAccessDict) = args
+                
+                return self?.createMockSections(
+                    expansionStateDict: expansionStateDict,
+                    objectAccessDict: objectAccessDict
+                ) ?? []
             }
         
         errorTracker.asDriver()
@@ -130,13 +166,34 @@ class AddressesListViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            sectionModels: sectionModels.asDriverOnErrorJustComplete(),
+            sectionModels: sectionModels,
             updateKind: updateKind
         )
     }
+
+    private func closeObjectAccessAfterTimeout(objectId: String) {
+        Timer.scheduledTimer(
+            withTimeInterval: 5,
+            repeats: false
+        ) { [weak self] _ in
+            guard let self = self,
+                  let data = try? self.areObjectsGrantAccessed.value()
+            else {
+                return
+            }
+            
+            var newDict = data
+            newDict[objectId] = false
+            
+            self.areObjectsGrantAccessed.onNext(newDict)
+        }
+    }
     
     // swiftlint:disable:next function_body_length
-    private func createMockSections(expansionStateDict: [String: Bool]) -> [AddressesListSectionModel] {
+    private func createMockSections(
+        expansionStateDict: [String: Bool],
+        objectAccessDict: [String: Bool]
+    ) -> [AddressesListSectionModel] {
         // MARK: Пока моки, но в принципе, нет ничего сложного прикрутить сюда реальные данные
         // Просто будем пробегать в цикле по всем адресам и генерировать для них секции
         
@@ -155,25 +212,28 @@ class AddressesListViewModel: BaseViewModel {
                 return []
             }
             
+            let firstSectionFirstObjectId = "FirstSectionFirstObject"
             let firstSectionFirstObject: AddressesListDataItem = .object(
-                identity: .object(id: "FirstSectionFirstObject"),
+                identity: .object(id: firstSectionFirstObjectId),
                 type: .barrier,
                 name: "Шлагбаум Север",
-                isOpened: false
+                isOpened: objectAccessDict[firstSectionFirstObjectId, default: false]
             )
             
+            let firstSectionSecondObjectId = "FirstSectionSecondObject"
             let firstSectionSecondObject: AddressesListDataItem = .object(
-                identity: .object(id: "FirstSectionSecondObject"),
+                identity: .object(id: firstSectionSecondObjectId),
                 type: .gate,
                 name: "Ворота Юг",
-                isOpened: false
+                isOpened: objectAccessDict[firstSectionSecondObjectId, default: false]
             )
             
+            let firstSectionThirdObjectId = "FirstSectionThirdObject"
             let firstSectionThirdObject: AddressesListDataItem = .object(
                 identity: .object(id: "FirstSectionThirdObject"),
                 type: .house,
                 name: "Подъезд 1",
-                isOpened: true
+                isOpened: objectAccessDict[firstSectionThirdObjectId, default: false]
             )
             
             let firstSectionCameraObject: AddressesListDataItem = .cameras(
@@ -208,11 +268,12 @@ class AddressesListViewModel: BaseViewModel {
                 return []
             }
             
+            let secondSectionFirstObjectId = "SecondSectionFirstObject"
             let secondSectionFirstObject: AddressesListDataItem = .object(
-                identity: .object(id: "SecondSectionFirstObject"),
+                identity: .object(id: secondSectionFirstObjectId),
                 type: .house,
                 name: "Подъезд 1",
-                isOpened: false
+                isOpened: objectAccessDict[secondSectionFirstObjectId, default: false]
             )
             
             return [secondSectionFirstObject]
@@ -237,11 +298,12 @@ class AddressesListViewModel: BaseViewModel {
                 return []
             }
             
+            let thirdSectionFirstObjectId = "ThirdSectionFirstObject"
             let thirdSectionFirstObject: AddressesListDataItem = .object(
                 identity: .object(id: "ThirdSectionFirstObject"),
                 type: .house,
                 name: "Подъезд 1",
-                isOpened: true
+                isOpened: objectAccessDict[thirdSectionFirstObjectId, default: false]
             )
             
             return [thirdSectionFirstObject]
@@ -261,6 +323,7 @@ extension AddressesListViewModel {
     
     struct Input {
         let itemSelected: Driver<AddressesListDataItemIdentity>
+        let guestAccessRequested: Driver<AddressesListDataItemIdentity>
     }
     
     struct Output {

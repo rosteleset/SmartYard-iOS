@@ -19,6 +19,7 @@ class AddressAccessViewModel: BaseViewModel {
     private let tempAccessConstactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let permanentAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let intercomAccessCode = PublishSubject<String?>()
+    private let isGrantedIntercomGuestAccess = PublishSubject<Bool>()
     
     private let address: String
     
@@ -81,7 +82,13 @@ class AddressAccessViewModel: BaseViewModel {
                     guard let self = self, let index = index else {
                         return
                     }
-                    self.deleteTempAccessContact(index: index)
+                    let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+                    
+                    let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
+                        self?.deleteTempAccessContact(index: index)
+                    }
+                    
+                    self.router.trigger(.dialog(title: "", message: "Вы уверены?", actions: [noAction, yesAction]))
                 }
             )
             .disposed(by: disposeBag)
@@ -125,7 +132,9 @@ class AddressAccessViewModel: BaseViewModel {
         return Output(
             objectAddress: addressSubject.asDriver(onErrorJustReturn: ""),
             tempAccessContacts: tempAccessConstactsSubject.asDriver(onErrorJustReturn: []),
-            permanentAccessContacts: permanentAccessContactsSubject.asDriver(onErrorJustReturn: [])
+            permanentAccessContacts: permanentAccessContactsSubject.asDriver(onErrorJustReturn: []),
+            temporaryIntercomCode: intercomAccessCode,
+            isGrantedIntercomAccess: isGrantedIntercomGuestAccess
         )
     }
     
@@ -153,8 +162,34 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func openGuestAccess() {
-        print("Open guest access!")
-        // TODO
+        let cancelAction = UIAlertAction(
+            title: "Отмена",
+            style: .cancel
+        ) { _ in
+            // nothing
+        }
+        
+        let okAction = UIAlertAction(
+            title: "Включить",
+            style: .default
+        ) { [weak self] _ in
+            // TODO: send API request to guest access
+            // TODO: using real api data
+            self?.isGrantedIntercomGuestAccess.onNext(true)
+        }
+        
+        // swiftlint:disable:next line_length
+        let guestAccessAlertText = "Всем, кто будет набирать номер вашей квартиры на домофоне, дверь будет открываться автоматически в течение 60 минут. По истечению данного времени работа домофона вернется в стандартный режим автоматически."
+        
+        let guestAccessAlertTitle = "Включить гостевой доступ на час?"
+        
+        self.router.trigger(
+            .dialog(
+                title: guestAccessAlertTitle,
+                message: guestAccessAlertText,
+                actions: [cancelAction, okAction]
+            )
+        )
     }
     
     private func sendSmsToTemporaryAccessContact(index: Int) {
@@ -236,6 +271,8 @@ extension AddressAccessViewModel {
         let objectAddress: Driver<String?>
         let tempAccessContacts: Driver<[AllowedPerson]>
         let permanentAccessContacts: Driver<[AllowedPerson]>
+        let temporaryIntercomCode: PublishSubject<String?>
+        let isGrantedIntercomAccess: PublishSubject<Bool>
     }
     
 }

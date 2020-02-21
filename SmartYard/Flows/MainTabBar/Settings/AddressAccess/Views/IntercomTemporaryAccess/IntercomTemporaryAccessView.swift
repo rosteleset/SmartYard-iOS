@@ -16,10 +16,12 @@ class IntercomTemporaryAccessView: PMNibLinkableView {
     // swiftlint:disable:next strict_fileprivate
     @IBOutlet fileprivate weak var refreshButton: UIButton!
     // swiftlint:disable:next strict_fileprivate
-    @IBOutlet fileprivate weak var openButton: WhiteButtonWithBorder!
+    @IBOutlet fileprivate weak var openButton: ObjectLockButton!
     
     @IBOutlet private weak var codeLabel: UILabel!
     @IBOutlet private weak var containerView: FullRoundedView!
+    
+    private let disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,8 +30,17 @@ class IntercomTemporaryAccessView: PMNibLinkableView {
         containerView.borderColor = UIColor.SmartYard.grayBorder
     }
     
-    func configure(code: String) {
-        codeLabel.text = code
+    func bind(with accessGranted: PublishSubject<Bool>, intercomCode: PublishSubject<String?>) {
+        accessGranted
+            .asDriver(onErrorJustReturn: false)
+            .not()
+            .drive(openButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        intercomCode
+            .asDriver(onErrorJustReturn: "")
+            .drive(codeLabel.rx.text)
+            .disposed(by: disposeBag)
     }
     
 }
