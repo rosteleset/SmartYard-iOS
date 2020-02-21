@@ -36,13 +36,8 @@ class AddressesListObjectCell: CustomBorderCollectionViewCell {
     }
     
     func bind(with outerSubject: PublishSubject<Void>) {
-        openButton.rx
-            .tap
-            .subscribe(
-                onNext: { _ in
-                    outerSubject.onNext(())
-                }
-            )
+        openButton.rx.tap
+            .bind(to: outerSubject)
             .disposed(by: disposeBag)
     }
     

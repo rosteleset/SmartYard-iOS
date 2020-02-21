@@ -143,15 +143,18 @@ class AddressesListViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        let sectionModels = Observable
-            .combineLatest(areSectionsExpanded, areObjectsGrantAccessed)
+        let sectionModels = Driver
+            .combineLatest(
+                areSectionsExpanded.asDriverOnErrorJustComplete(),
+                areObjectsGrantAccessed.asDriverOnErrorJustComplete()
+            )
             .map { [weak self] args -> [AddressesListSectionModel] in
                 let (expansionStateDict, objectAccessDict) = args
                 
                 return self?.createMockSections(
                     expansionStateDict: expansionStateDict,
                     objectAccessDict: objectAccessDict
-                    ) ?? []
+                ) ?? []
             }
         
         errorTracker.asDriver()
@@ -163,7 +166,7 @@ class AddressesListViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            sectionModels: sectionModels.asDriverOnErrorJustComplete(),
+            sectionModels: sectionModels,
             updateKind: updateKind
         )
     }

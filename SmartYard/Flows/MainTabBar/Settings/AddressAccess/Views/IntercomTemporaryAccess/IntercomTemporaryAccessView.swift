@@ -33,20 +33,13 @@ class IntercomTemporaryAccessView: PMNibLinkableView {
     func bind(with accessGranted: PublishSubject<Bool>, intercomCode: PublishSubject<String?>) {
         accessGranted
             .asDriver(onErrorJustReturn: false)
-            .drive(
-                onNext: { [weak self] accessGranted in
-                    self?.openButton.isEnabled = !accessGranted
-                }
-            )
+            .not()
+            .drive(openButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
         intercomCode
             .asDriver(onErrorJustReturn: "")
-            .drive(
-                onNext: { [weak self] code in
-                    self?.codeLabel.text = code
-                }
-            )
+            .drive(codeLabel.rx.text)
             .disposed(by: disposeBag)
     }
     

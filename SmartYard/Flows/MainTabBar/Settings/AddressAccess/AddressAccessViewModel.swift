@@ -187,7 +187,8 @@ class AddressAccessViewModel: BaseViewModel {
             .dialog(
                 title: guestAccessAlertTitle,
                 message: guestAccessAlertText,
-                actions: [cancelAction, okAction])
+                actions: [cancelAction, okAction]
+            )
         )
     }
     
