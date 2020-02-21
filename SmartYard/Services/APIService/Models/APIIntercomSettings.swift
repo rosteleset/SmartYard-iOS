@@ -11,8 +11,8 @@ import Foundation
 struct APIIntercomSettings: Codable {
     
     let enableDoorCode: String
-    let CMS: String
-    let VoIP: String
+    let cms: String
+    let voip: String
     let autoOpen: String
     let whiteRabbit: String
     
