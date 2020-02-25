@@ -17,12 +17,10 @@ class SettingsViewModel: BaseViewModel {
     
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
-    
-    // MARK: Загруженные данные (пока моковые модели)
     private let loadedData = BehaviorSubject<[APISettingsAddress]>(value: [])
     
-    let activityTracker = ActivityTracker()
-    let errorTracker = ErrorTracker()
+    private let activityTracker = ActivityTracker()
+    private let errorTracker = ErrorTracker()
     
     init(router: WeakRouter<SettingsRoute>, apiWrapper: APIWrapper) {
         self.router = router
@@ -31,7 +29,7 @@ class SettingsViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
-        input.viewDidLoadTrigger
+        input.viewWillAppearTrigger
             .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
                 guard let self = self else {
                     return .empty()
@@ -197,7 +195,7 @@ class SettingsViewModel: BaseViewModel {
             .map { [weak self] args in
                 let (data, expansionStateDict) = args
                 
-                return self?.createMockSections(data: data, expansionStateDict: expansionStateDict) ?? []
+                return self?.createSections(data: data, expansionStateDict: expansionStateDict) ?? []
             }
         
         return Output(
@@ -206,7 +204,7 @@ class SettingsViewModel: BaseViewModel {
         )
     }
     
-    private func createMockSections(
+    private func createSections(
         data: [APISettingsAddress],
         expansionStateDict: [String: Bool]
     ) -> [SettingsSectionModel] {
@@ -271,7 +269,7 @@ class SettingsViewModel: BaseViewModel {
 extension SettingsViewModel {
     
     struct Input {
-        let viewDidLoadTrigger: Driver<Bool>
+        let viewWillAppearTrigger: Driver<Bool>
         let itemSelected: Driver<SettingsDataItemIdentity>
         let serviceSelected: Driver<(SettingsDataItemIdentity, SettingsServiceType)>
         let advancedSettingsTrigger: Driver<Void>

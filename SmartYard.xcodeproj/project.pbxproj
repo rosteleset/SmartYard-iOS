@@ -138,7 +138,6 @@
 		84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6446323F6AD3F00AD87EF /* AddressDeletionViewModel.swift */; };
 		84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6446623F6AF5100AD87EF /* AddressDeletionReason.swift */; };
 		84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */; };
-		84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */; };
 		84EEBCA023F55A9B00C9557F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9F23F55A9B00C9557F /* NotificationService.swift */; };
 		84EEBCA423F55A9B00C9557F /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F840D523E07DA5008DBE50 /* AppDelegate.swift */; };
@@ -392,7 +391,6 @@
 		84D6446323F6AD3F00AD87EF /* AddressDeletionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDeletionViewModel.swift; sourceTree = "<group>"; };
 		84D6446623F6AF5100AD87EF /* AddressDeletionReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDeletionReason.swift; sourceTree = "<group>"; };
 		84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceType.swift; sourceTree = "<group>"; };
-		84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMockDataExample.swift; sourceTree = "<group>"; };
 		84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EEBC9F23F55A9B00C9557F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		84EEBCA123F55A9B00C9557F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -933,7 +931,6 @@
 				848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */,
 				84898A9123F1554D00E6B78E /* SettingsDataItem.swift */,
 				84898A9323F1555700E6B78E /* SettingsDataItemIdentity.swift */,
-				84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */,
 				84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */,
 				84B89A7B23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift */,
 				84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */,
@@ -2176,7 +2173,6 @@
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
-				84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
 				E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */,
 				84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */,
