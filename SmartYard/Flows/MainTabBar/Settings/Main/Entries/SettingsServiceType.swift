@@ -8,31 +8,39 @@
 
 import UIKit
 
-enum SettingsServiceType {
+enum SettingsServiceType: String {
     
     case internet
-    case tv
+    case iptv
+    case ctv
     case phone
-    case lock
-    case camera
+    case cctv
+    case domophone
+    case gsm
     
+    // TODO: не хватает иконок?
     var unselectedIcon: UIImage? {
         switch self {
         case .internet: return UIImage(named: "SettingsWiFiUnselectedIcon")
-        case .tv: return UIImage(named: "SettingsMonitorUnselectedIcon")
+        case .iptv: return UIImage(named: "SettingsMonitorUnselectedIcon")
         case .phone: return UIImage(named: "SettingsCallUnselectedIcon")
-        case .lock: return UIImage(named: "SettingsKeyUnselectedIcon")
-        case .camera: return UIImage(named: "SettingsEyeUnselectedIcon")
+        case .domophone: return UIImage(named: "SettingsKeyUnselectedIcon")
+        case .cctv: return UIImage(named: "SettingsEyeUnselectedIcon")
+        case .ctv: return nil
+        case .gsm: return nil
         }
     }
     
+    // TODO: не хватает иконок?
     var selectedIcon: UIImage? {
         switch self {
         case .internet: return UIImage(named: "SettingsWiFiSelectedIcon")
-        case .tv: return UIImage(named: "SettingsMonitorSelectedIcon")
+        case .iptv: return UIImage(named: "SettingsMonitorSelectedIcon")
         case .phone: return UIImage(named: "SettingsCallSelectedIcon")
-        case .lock: return UIImage(named: "SettingsKeySelectedIcon")
-        case .camera: return UIImage(named: "SettingsEyeSelectedIcon")
+        case .domophone: return UIImage(named: "SettingsKeySelectedIcon")
+        case .cctv: return UIImage(named: "SettingsEyeSelectedIcon")
+        case .ctv: return nil
+        case .gsm: return nil
         }
     }
     

@@ -19,9 +19,7 @@ class SettingsViewModel: BaseViewModel {
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
     
     // MARK: Загруженные данные (пока моковые модели)
-    private let loadedData = BehaviorSubject<[SettingsMockDataExample]>(
-        value: [.firstExample, .secondExample, .thirdExample]
-    )
+    private let loadedData = BehaviorSubject<[APISettingsAddress]>(value: [])
     
     init(router: WeakRouter<SettingsRoute>, apiWrapper: APIWrapper) {
         self.router = router
@@ -30,14 +28,24 @@ class SettingsViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
-        apiWrapper.getSettingsAddresses()
-            .asDriver(onErrorJustReturn: nil)
+        input.viewDidLoadTrigger
+            .flatMapLatest { [weak self] _ -> Driver<GetSettingsTabAddressesResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper.getSettingsAddresses()
+//                    .trackActivity()
+//                    .trackError()
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
-                onNext: { result in
-                    print(result)
+                onNext: { [weak self] result in
+                    self?.loadedData.onNext(result)
                 }
             )
-            .disposed(by: disposeBag)
+            .disposed(by: self.disposeBag)
         
         // MARK: Обработка нажатия на иконку настроек
         input.advancedSettingsTrigger
@@ -59,14 +67,14 @@ class SettingsViewModel: BaseViewModel {
                     
                     guard case let .controlPanel(clientId) = identity,
                         let match = (loadedData.first { $0.clientId == clientId }),
-                        let state = match.serviceStates[serviceType] else {
+                        let isActivated = match.servicesAvailability[serviceType] else {
                         return
                     }
                     
-                    switch state {
-                    case .activated: self?.router.trigger(.serviceIsActivated)
-                    case .notActivated: self?.router.trigger(.serviceIsNotActivated)
-                    case .unavailable: self?.router.trigger(.serviceUnavailable)
+                    if isActivated {
+                        self?.router.trigger(.serviceIsActivated)
+                    } else {
+                        // TODO
                     }
                 }
             )
@@ -191,17 +199,17 @@ class SettingsViewModel: BaseViewModel {
     }
     
     private func createMockSections(
-        data: [SettingsMockDataExample],
+        data: [APISettingsAddress],
         expansionStateDict: [String: Bool]
     ) -> [SettingsSectionModel] {
         // swiftlint:disable:next closure_body_length
         let mainSections: [SettingsSectionModel] = data.map { example in
-            let isExpanded = expansionStateDict[example.clientId, default: false]
+            let isExpanded = expansionStateDict[example.clientId!, default: false]
             
             let header: SettingsDataItem = .header(
-                identity: .header(clientId: example.clientId),
+                identity: .header(clientId: example.clientId!),
                 address: example.address,
-                contract: example.contractNumber,
+                contract: example.contractName!,
                 isExpanded: isExpanded
             )
             
@@ -211,27 +219,27 @@ class SettingsViewModel: BaseViewModel {
                 }
                 
                 let controlPanel: SettingsDataItem = .controlPanel(
-                    identity: .controlPanel(clientId: example.clientId),
-                    serviceStates: example.serviceStates
+                    identity: .controlPanel(clientId: example.clientId!),
+                    serviceStates: example.servicesAvailability
                 )
                 
                 let openAddressSettingsAction: SettingsDataItem = .action(
                     identity: .action(
-                        clientId: example.clientId,
+                        clientId: example.clientId!,
                         type: .openAddressSettings
                     )
                 )
                 
                 let grantAccessAction: SettingsDataItem = .action(
                     identity: .action(
-                        clientId: example.clientId,
+                        clientId: example.clientId!,
                         type: .grantAccess
                     )
                 )
                 
                 let webVersionAction: SettingsDataItem = .action(
                     identity: .action(
-                        clientId: example.clientId,
+                        clientId: example.clientId!,
                         type: .openWebVersion
                     )
                 )
@@ -239,7 +247,7 @@ class SettingsViewModel: BaseViewModel {
                 return [controlPanel, openAddressSettingsAction, grantAccessAction, webVersionAction]
             }()
             
-            return SettingsSectionModel(identity: example.clientId, items: [header] + objects)
+            return SettingsSectionModel(identity: example.clientId!, items: [header] + objects)
         }
         
         let addAddressSection = SettingsSectionModel(
@@ -255,6 +263,7 @@ class SettingsViewModel: BaseViewModel {
 extension SettingsViewModel {
     
     struct Input {
+        let viewDidLoadTrigger: Driver<Bool>
         let itemSelected: Driver<SettingsDataItemIdentity>
         let serviceSelected: Driver<(SettingsDataItemIdentity, SettingsServiceType)>
         let advancedSettingsTrigger: Driver<Void>

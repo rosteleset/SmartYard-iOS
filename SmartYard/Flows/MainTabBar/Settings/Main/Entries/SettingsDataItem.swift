@@ -11,7 +11,7 @@ import RxDataSources
 enum SettingsDataItem: IdentifiableType, Equatable {
     
     case header(identity: SettingsDataItemIdentity, address: String, contract: String, isExpanded: Bool)
-    case controlPanel(identity: SettingsDataItemIdentity, serviceStates: [SettingsServiceType: SettingsServiceState])
+    case controlPanel(identity: SettingsDataItemIdentity, serviceStates: [SettingsServiceType: Bool])
     case action(identity: SettingsDataItemIdentity)
     case addAddress
     
