@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct HourGuestAccessResponseData: Decodable {
+struct IntercomResponseData: Decodable {
     
     let allowDoorCode: String
     let doorCode: String?

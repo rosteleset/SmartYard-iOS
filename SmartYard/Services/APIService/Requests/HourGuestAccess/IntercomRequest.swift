@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct HourGuestAccessRequest {
+struct IntercomRequest {
     
     let accessToken: String
     let flatId: String
@@ -16,7 +16,7 @@ struct HourGuestAccessRequest {
     
 }
 
-extension HourGuestAccessRequest {
+extension IntercomRequest {
     
     var requestParameters: [String: Any] {
         var params: [String: Any] =  [

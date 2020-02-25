@@ -122,8 +122,8 @@ class APIService {
     
     /// Запрос предоставления гостевого доступа на 60 минут
     func performGrantHourGuestAccessRequest(
-        _ request: HourGuestAccessRequest,
-        completion: ((Swift.Result<HourGuestAccessResponseData, Error>) -> Void)?
+        _ request: IntercomRequest,
+        completion: ((Swift.Result<IntercomResponseData, Error>) -> Void)?
     ) {
         provider.request(
             .grantHourGuestAccess(request: request),

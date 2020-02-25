@@ -165,8 +165,8 @@
 		E94B6C3723FD728F00FD9F65 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3623FD728F00FD9F65 /* RoundedImageView.swift */; };
 		E94B6C3923FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3823FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift */; };
 		E94B6C3B23FFE1D200FD9F65 /* APIIntercomSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3A23FFE1D200FD9F65 /* APIIntercomSettings.swift */; };
-		E94B6C3E23FFE30A00FD9F65 /* HourGuestAccessRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3D23FFE30A00FD9F65 /* HourGuestAccessRequest.swift */; };
-		E94B6C4023FFE74300FD9F65 /* HourGuestAccessResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3F23FFE74300FD9F65 /* HourGuestAccessResponseData.swift */; };
+		E94B6C3E23FFE30A00FD9F65 /* IntercomRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3D23FFE30A00FD9F65 /* IntercomRequest.swift */; };
+		E94B6C4023FFE74300FD9F65 /* IntercomResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3F23FFE74300FD9F65 /* IntercomResponseData.swift */; };
 		E94B6C4323FFF2A800FD9F65 /* Date+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C4223FFF2A800FD9F65 /* Date+Helper.swift */; };
 		E94B6C4523FFFF5D00FD9F65 /* Date+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C4423FFFF5D00FD9F65 /* Date+Conversion.swift */; };
 		E94B6C482404F1C400FD9F65 /* GetSettingsListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C472404F1C400FD9F65 /* GetSettingsListRequest.swift */; };
@@ -422,8 +422,8 @@
 		E94B6C3623FD728F00FD9F65 /* RoundedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		E94B6C3823FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewAllowedPerson+Contacts.swift"; sourceTree = "<group>"; };
 		E94B6C3A23FFE1D200FD9F65 /* APIIntercomSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIntercomSettings.swift; sourceTree = "<group>"; };
-		E94B6C3D23FFE30A00FD9F65 /* HourGuestAccessRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourGuestAccessRequest.swift; sourceTree = "<group>"; };
-		E94B6C3F23FFE74300FD9F65 /* HourGuestAccessResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourGuestAccessResponseData.swift; sourceTree = "<group>"; };
+		E94B6C3D23FFE30A00FD9F65 /* IntercomRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomRequest.swift; sourceTree = "<group>"; };
+		E94B6C3F23FFE74300FD9F65 /* IntercomResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomResponseData.swift; sourceTree = "<group>"; };
 		E94B6C4223FFF2A800FD9F65 /* Date+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Helper.swift"; sourceTree = "<group>"; };
 		E94B6C4423FFFF5D00FD9F65 /* Date+Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Conversion.swift"; sourceTree = "<group>"; };
 		E94B6C472404F1C400FD9F65 /* GetSettingsListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSettingsListRequest.swift; sourceTree = "<group>"; };
@@ -1467,8 +1467,8 @@
 		E94B6C3C23FFE2D100FD9F65 /* HourGuestAccess */ = {
 			isa = PBXGroup;
 			children = (
-				E94B6C3D23FFE30A00FD9F65 /* HourGuestAccessRequest.swift */,
-				E94B6C3F23FFE74300FD9F65 /* HourGuestAccessResponseData.swift */,
+				E94B6C3D23FFE30A00FD9F65 /* IntercomRequest.swift */,
+				E94B6C3F23FFE74300FD9F65 /* IntercomResponseData.swift */,
 			);
 			path = HourGuestAccess;
 			sourceTree = "<group>";
@@ -2177,13 +2177,13 @@
 				E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */,
 				84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
-				E94B6C4023FFE74300FD9F65 /* HourGuestAccessResponseData.swift in Sources */,
+				E94B6C4023FFE74300FD9F65 /* IntercomResponseData.swift in Sources */,
 				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
-				E94B6C3E23FFE30A00FD9F65 /* HourGuestAccessRequest.swift in Sources */,
+				E94B6C3E23FFE30A00FD9F65 /* IntercomRequest.swift in Sources */,
 				84854B5823FC27C1001B44F2 /* OpenDoorRequest.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 				84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */,

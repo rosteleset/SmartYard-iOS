@@ -251,7 +251,7 @@ class APIWrapper {
         }
     }
     
-    func grantHourGuestAccess(flatId: String) -> Single<HourGuestAccessResponseData?> {
+    func grantHourGuestAccess(flatId: String) -> Single<IntercomResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -266,7 +266,7 @@ class APIWrapper {
             whiteRabbit: nil
         )
         
-        let request = HourGuestAccessRequest(accessToken: accessToken, flatId: flatId, settings: settings)
+        let request = IntercomRequest(accessToken: accessToken, flatId: flatId, settings: settings)
         
         return Single.create { [weak self] single in
             guard let self = self else {

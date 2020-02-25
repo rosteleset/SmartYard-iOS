@@ -18,7 +18,7 @@ enum APITarget {
     case requestCode(request: RequestCodeRequest)
     case sendName(request: SendNameRequest)
     case openDoor(request: OpenDoorRequest)
-    case grantHourGuestAccess(request: HourGuestAccessRequest)
+    case grantHourGuestAccess(request: IntercomRequest)
     case getSettingsList(request: GetSettingsListRequest)
     
 }
