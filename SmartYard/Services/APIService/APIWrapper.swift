@@ -23,6 +23,40 @@ class APIWrapper {
     
     // Address
     
+    func grantHourGuestAccess(flatId: String) -> Single<IntercomResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let autoOpenEndDate = Date().dateHourAfter.apiString
+        
+        let settings = APIIntercomSettings(
+            enableDoorCode: true,
+            cms: nil,
+            voip: nil,
+            autoOpen: autoOpenEndDate,
+            whiteRabbit: nil
+        )
+        
+        let request = IntercomRequest(accessToken: accessToken, flatId: flatId, settings: settings)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performGrantHourGuestAccessRequest(request) { result in
+                switch result {
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
     func openDoor(domophoneId: String, doorId: Int?) -> Single<Void?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
@@ -61,6 +95,30 @@ class APIWrapper {
             }
             
             self.apiService.performResetCodeRequest(request) { result in
+                switch result {
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func getSettingsAddresses() -> Single<GetSettingsListResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = GetSettingsListRequest(accessToken: accessToken)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performSettingsListRequest(request) { result in
                 switch result {
                 case let .success(data): single(.success(data))
                 case let .failure(error): single(.error(error))
@@ -240,64 +298,6 @@ class APIWrapper {
             self.apiService.performSendNameRequest(request) { result in
                 switch result {
                 case .success: single(.success(()))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    func grantHourGuestAccess(flatId: String) -> Single<IntercomResponseData?> {
-        guard let accessToken = accessService.accessToken else {
-            return .error(NSError.APIWrapperError.accessTokenMissingError)
-        }
-        
-        let autoOpenEndDate = Date().dateHourAfter.apiString
-        
-        let settings = APIIntercomSettings(
-            enableDoorCode: true,
-            cms: nil,
-            voip: nil,
-            autoOpen: autoOpenEndDate,
-            whiteRabbit: nil
-        )
-        
-        let request = IntercomRequest(accessToken: accessToken, flatId: flatId, settings: settings)
-        
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performGrantHourGuestAccessRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    func getSettingsAddresses() -> Single<GetSettingsListResponseData?> {
-        guard let accessToken = accessService.accessToken else {
-            return .error(NSError.APIWrapperError.accessTokenMissingError)
-        }
-        
-        let request = GetSettingsListRequest(accessToken: accessToken)
-        
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performSettingsListRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
                 case let .failure(error): single(.error(error))
                 }
             }

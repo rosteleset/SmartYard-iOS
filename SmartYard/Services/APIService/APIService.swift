@@ -21,6 +21,17 @@ class APIService {
         return NetworkReachabilityManager()?.isReachable ?? false
     }
     
+    /// Запрос предоставления гостевого доступа на 60 минут
+    func performGrantHourGuestAccessRequest(
+        _ request: IntercomRequest,
+        completion: ((Swift.Result<IntercomResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .grantHourGuestAccess(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
     /// Запрос открытия двери
     func performOpenDoorRequest(
         _ request: OpenDoorRequest,
@@ -39,6 +50,17 @@ class APIService {
     ) {
         provider.request(
             .resetCode(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
+    /// Запрос списка адресов для экрана настроек
+    func performSettingsListRequest(
+        _ request: GetSettingsListRequest,
+        completion: ((Swift.Result<GetSettingsListResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .getSettingsList(request: request),
             completion: createInnerCompletionBlockWithData(from: completion)
         )
     }
@@ -104,7 +126,7 @@ class APIService {
     func performGetPaymentsListRequest(
         _ request: GetPaymentsListRequest,
         completion: ((Swift.Result<GetPaymentsListResponseData, Error>) -> Void)?
-        ) {
+    ) {
         provider.request(
             .getPaymentsList(request: request),
             completion: createInnerCompletionBlockWithData(from: completion)
@@ -119,28 +141,6 @@ class APIService {
         provider.request(
             .sendName(request: request),
             completion: createEmptyInnerCompletionBlock(from: completion)
-        )
-    }
-    
-    /// Запрос предоставления гостевого доступа на 60 минут
-    func performGrantHourGuestAccessRequest(
-        _ request: IntercomRequest,
-        completion: ((Swift.Result<IntercomResponseData, Error>) -> Void)?
-    ) {
-        provider.request(
-            .grantHourGuestAccess(request: request),
-            completion: createInnerCompletionBlockWithData(from: completion)
-        )
-    }
-    
-    /// Запрос списка адресов для экрана настроек
-    func performSettingsListRequest(
-        _ request: GetSettingsListRequest,
-        completion: ((Swift.Result<GetSettingsListResponseData, Error>) -> Void)?
-    ) {
-        provider.request(
-            .getSettingsList(request: request),
-            completion: createInnerCompletionBlockWithData(from: completion)
         )
     }
     

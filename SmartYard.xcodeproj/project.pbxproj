@@ -558,14 +558,14 @@
 			isa = PBXGroup;
 			children = (
 				844AC39623E9788D0066006D /* APIAddress.swift */,
-				84854B4423FAB4D7001B44F2 /* APIClientName.swift */,
-				E94B6C3A23FFE1D200FD9F65 /* APIIntercomSettings.swift */,
-				E94B6C4B2405308B00FD9F65 /* APISettingsAddress.swift */,
 				8482982124054D4B00E81620 /* APICCTV.swift */,
+				84854B4423FAB4D7001B44F2 /* APIClientName.swift */,
 				8482981D24054CDE00E81620 /* APIDoor.swift */,
-				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
-				8428672D24051F6A004D3F26 /* APIPaymentsListAddress.swift */,
+				E94B6C3A23FFE1D200FD9F65 /* APIIntercomSettings.swift */,
 				8428672F24051F7F004D3F26 /* APIPaymentsListAccount.swift */,
+				8428672D24051F6A004D3F26 /* APIPaymentsListAddress.swift */,
+				E94B6C4B2405308B00FD9F65 /* APISettingsAddress.swift */,
+				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
