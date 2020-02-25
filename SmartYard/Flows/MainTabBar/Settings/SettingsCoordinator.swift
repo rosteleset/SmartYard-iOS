@@ -21,7 +21,7 @@ enum SettingsRoute: Route {
     case addressDeletion(delegate: AddressDeletionViewModelDelegate)
     case alert(title: String, message: String?)
     case dialog(title: String, message: String?, actions: [UIAlertAction])
-    case addressAccess(address: String)
+    case addressAccess(address: String, flatId: String)
     case newAllowedPerson(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
     
 }
@@ -46,7 +46,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     override func prepareTransition(for route: SettingsRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = SettingsViewModel(router: weakRouter)
+            let vm = SettingsViewModel(router: weakRouter, apiWrapper: apiWrapper)
             let vc = SettingsViewController(viewModel: vm)
             return .set([vc])
             
@@ -127,8 +127,14 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case let .addressAccess(address):
-            let vm = AddressAccessViewModel(router: weakRouter, address: address)
+        case let .addressAccess(address, flatId):
+            let vm = AddressAccessViewModel(
+                router: weakRouter,
+                address: address,
+                flatId: flatId,
+                apiWrapper: apiWrapper
+            )
+            
             let vc = AddressAccessViewController(viewModel: vm)
             
             return .push(vc)

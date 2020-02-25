@@ -138,8 +138,6 @@
 		84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6446323F6AD3F00AD87EF /* AddressDeletionViewModel.swift */; };
 		84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6446623F6AF5100AD87EF /* AddressDeletionReason.swift */; };
 		84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */; };
-		84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */; };
-		84EEBC9823F40FA600C9557F /* SettingsServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9723F40FA600C9557F /* SettingsServiceState.swift */; };
 		84EEBCA023F55A9B00C9557F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9F23F55A9B00C9557F /* NotificationService.swift */; };
 		84EEBCA423F55A9B00C9557F /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F840D523E07DA5008DBE50 /* AppDelegate.swift */; };
@@ -166,6 +164,14 @@
 		E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3123FD723A00FD9F65 /* AllowedPersonType.swift */; };
 		E94B6C3723FD728F00FD9F65 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3623FD728F00FD9F65 /* RoundedImageView.swift */; };
 		E94B6C3923FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3823FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift */; };
+		E94B6C3B23FFE1D200FD9F65 /* APIIntercomSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3A23FFE1D200FD9F65 /* APIIntercomSettings.swift */; };
+		E94B6C3E23FFE30A00FD9F65 /* IntercomRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3D23FFE30A00FD9F65 /* IntercomRequest.swift */; };
+		E94B6C4023FFE74300FD9F65 /* IntercomResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C3F23FFE74300FD9F65 /* IntercomResponseData.swift */; };
+		E94B6C4323FFF2A800FD9F65 /* Date+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C4223FFF2A800FD9F65 /* Date+Helper.swift */; };
+		E94B6C4523FFFF5D00FD9F65 /* Date+Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C4423FFFF5D00FD9F65 /* Date+Conversion.swift */; };
+		E94B6C482404F1C400FD9F65 /* GetSettingsListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C472404F1C400FD9F65 /* GetSettingsListRequest.swift */; };
+		E94B6C4A2404F2D100FD9F65 /* GetSettingsListResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C492404F2D100FD9F65 /* GetSettingsListResponseData.swift */; };
+		E94B6C4C2405308B00FD9F65 /* APISettingsAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C4B2405308B00FD9F65 /* APISettingsAddress.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -385,8 +391,6 @@
 		84D6446323F6AD3F00AD87EF /* AddressDeletionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDeletionViewModel.swift; sourceTree = "<group>"; };
 		84D6446623F6AF5100AD87EF /* AddressDeletionReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDeletionReason.swift; sourceTree = "<group>"; };
 		84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceType.swift; sourceTree = "<group>"; };
-		84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMockDataExample.swift; sourceTree = "<group>"; };
-		84EEBC9723F40FA600C9557F /* SettingsServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceState.swift; sourceTree = "<group>"; };
 		84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EEBC9F23F55A9B00C9557F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		84EEBCA123F55A9B00C9557F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -417,6 +421,14 @@
 		E94B6C3123FD723A00FD9F65 /* AllowedPersonType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllowedPersonType.swift; sourceTree = "<group>"; };
 		E94B6C3623FD728F00FD9F65 /* RoundedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		E94B6C3823FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewAllowedPerson+Contacts.swift"; sourceTree = "<group>"; };
+		E94B6C3A23FFE1D200FD9F65 /* APIIntercomSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIntercomSettings.swift; sourceTree = "<group>"; };
+		E94B6C3D23FFE30A00FD9F65 /* IntercomRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomRequest.swift; sourceTree = "<group>"; };
+		E94B6C3F23FFE74300FD9F65 /* IntercomResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomResponseData.swift; sourceTree = "<group>"; };
+		E94B6C4223FFF2A800FD9F65 /* Date+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Helper.swift"; sourceTree = "<group>"; };
+		E94B6C4423FFFF5D00FD9F65 /* Date+Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Conversion.swift"; sourceTree = "<group>"; };
+		E94B6C472404F1C400FD9F65 /* GetSettingsListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSettingsListRequest.swift; sourceTree = "<group>"; };
+		E94B6C492404F2D100FD9F65 /* GetSettingsListResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSettingsListResponseData.swift; sourceTree = "<group>"; };
+		E94B6C4B2405308B00FD9F65 /* APISettingsAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISettingsAddress.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -575,7 +587,9 @@
 			children = (
 				844AC39623E9788D0066006D /* APIAddress.swift */,
 				84854B4423FAB4D7001B44F2 /* APIClientName.swift */,
+				E94B6C3A23FFE1D200FD9F65 /* APIIntercomSettings.swift */,
 				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
+				E94B6C4B2405308B00FD9F65 /* APISettingsAddress.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -583,8 +597,10 @@
 		844AC39923E979BA0066006D /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C462404F19D00FD9F65 /* GetSettingsList */,
 				844AC37F23E8636D0066006D /* ConfirmCode */,
 				844AC37823E8619A0066006D /* GetVerifyedAddresses */,
+				E94B6C3C23FFE2D100FD9F65 /* HourGuestAccess */,
 				844AC38C23E867720066006D /* IntercomToken */,
 				844AC38423E8651B0066006D /* Login */,
 				84854B5623FC2583001B44F2 /* OpenDoor */,
@@ -915,10 +931,8 @@
 				848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */,
 				84898A9123F1554D00E6B78E /* SettingsDataItem.swift */,
 				84898A9323F1555700E6B78E /* SettingsDataItemIdentity.swift */,
-				84EEBC9523F4026B00C9557F /* SettingsMockDataExample.swift */,
 				84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */,
 				84B89A7B23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift */,
-				84EEBC9723F40FA600C9557F /* SettingsServiceState.swift */,
 				84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */,
 			);
 			path = Entries;
@@ -1102,6 +1116,8 @@
 				844AC3C423EB1F840066006D /* UIView+Extensions.swift */,
 				84854B5423FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift */,
 				E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */,
+				E94B6C4223FFF2A800FD9F65 /* Date+Helper.swift */,
+				E94B6C4423FFFF5D00FD9F65 /* Date+Conversion.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1446,6 +1462,24 @@
 				E94B6C3623FD728F00FD9F65 /* RoundedImageView.swift */,
 			);
 			path = RoundedImageView;
+			sourceTree = "<group>";
+		};
+		E94B6C3C23FFE2D100FD9F65 /* HourGuestAccess */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C3D23FFE30A00FD9F65 /* IntercomRequest.swift */,
+				E94B6C3F23FFE74300FD9F65 /* IntercomResponseData.swift */,
+			);
+			path = HourGuestAccess;
+			sourceTree = "<group>";
+		};
+		E94B6C462404F19D00FD9F65 /* GetSettingsList */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C472404F1C400FD9F65 /* GetSettingsListRequest.swift */,
+				E94B6C492404F2D100FD9F65 /* GetSettingsListResponseData.swift */,
+			);
+			path = GetSettingsList;
 			sourceTree = "<group>";
 		};
 		E98C381D23F141E70010BBC1 /* Recovered References */ = {
@@ -2011,6 +2045,7 @@
 				84B89A7C23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift in Sources */,
 				E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
+				E94B6C3B23FFE1D200FD9F65 /* APIIntercomSettings.swift in Sources */,
 				844AC37E23E861D10066006D /* GetVerifyedAddressesResponseData.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
@@ -2056,17 +2091,21 @@
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
 				84AA8D5B23E2CEC5001B3B43 /* BaseAPIResponse.swift in Sources */,
 				E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */,
+				E94B6C4A2404F2D100FD9F65 /* GetSettingsListResponseData.swift in Sources */,
 				E9A1D78323F27AE500234B2A /* AddressConfirmationViewController.swift in Sources */,
 				84854B3B23FA8C38001B44F2 /* LoaderPresentable.swift in Sources */,
 				84AA8D4823E2CD48001B3B43 /* APITarget.swift in Sources */,
+				E94B6C4523FFFF5D00FD9F65 /* Date+Conversion.swift in Sources */,
 				84854B4323FAA266001B44F2 /* NavigationTransitions.swift in Sources */,
 				844AC3D523EBFDAF0066006D /* AddressesListViewModel.swift in Sources */,
 				E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */,
 				844AC39523E977810066006D /* AccessService.swift in Sources */,
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */,
+				E94B6C482404F1C400FD9F65 /* GetSettingsListRequest.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
+				E94B6C4C2405308B00FD9F65 /* APISettingsAddress.swift in Sources */,
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
@@ -2091,6 +2130,7 @@
 				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
 				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
+				E94B6C4323FFF2A800FD9F65 /* Date+Helper.swift in Sources */,
 				84854B6323FD7FDE001B44F2 /* AllowedPersonDataItem.swift in Sources */,
 				E94B6C2423FBFEA600FD9F65 /* String+Extensions.swift in Sources */,
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
@@ -2133,17 +2173,17 @@
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
-				84EEBC9623F4026B00C9557F /* SettingsMockDataExample.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
 				E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */,
-				84EEBC9823F40FA600C9557F /* SettingsServiceState.swift in Sources */,
 				84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
+				E94B6C4023FFE74300FD9F65 /* IntercomResponseData.swift in Sources */,
 				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
+				E94B6C3E23FFE30A00FD9F65 /* IntercomRequest.swift in Sources */,
 				84854B5823FC27C1001B44F2 /* OpenDoorRequest.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 				84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */,

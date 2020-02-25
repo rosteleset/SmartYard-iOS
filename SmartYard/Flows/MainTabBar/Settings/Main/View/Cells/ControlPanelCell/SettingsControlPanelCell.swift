@@ -35,37 +35,37 @@ class SettingsControlPanelCell: CustomBorderCollectionViewCell {
             .map { _ -> SettingsServiceType in .internet }
         
         let tv = monitorButton.rx.tap
-            .map { _ -> SettingsServiceType in .tv }
+            .map { _ -> SettingsServiceType in .iptv }
         
         let phone = callButton.rx.tap
             .map { _ -> SettingsServiceType in .phone }
         
         let lock = keyButton.rx.tap
-            .map { _ -> SettingsServiceType in .lock }
+            .map { _ -> SettingsServiceType in .domophone }
         
         let camera = eyeButton.rx.tap
-            .map { _ -> SettingsServiceType in .camera }
+            .map { _ -> SettingsServiceType in .cctv }
         
         Observable.merge(internet, tv, phone, lock, camera)
             .bind(to: outerSubject)
             .disposed(by: disposeBag)
     }
     
-    func configure(with serviceStates: [SettingsServiceType: SettingsServiceState]) {
-        wifiButton.isSelected = serviceStates[.internet] == .activated
+    func configure(with serviceStates: [SettingsServiceType: Bool]) {
+        wifiButton.isSelected = serviceStates[.internet] == true
         wifiButton.isEnabled = serviceStates[.internet] != nil
         
-        monitorButton.isSelected = serviceStates[.tv] == .activated
-        monitorButton.isEnabled = serviceStates[.tv] != nil
+        monitorButton.isSelected = serviceStates[.iptv] == true
+        monitorButton.isEnabled = serviceStates[.iptv] != nil
         
-        callButton.isSelected = serviceStates[.phone] == .activated
+        callButton.isSelected = serviceStates[.phone] == true
         callButton.isEnabled = serviceStates[.phone] != nil
         
-        keyButton.isSelected = serviceStates[.lock] == .activated
-        keyButton.isEnabled = serviceStates[.lock] != nil
+        keyButton.isSelected = serviceStates[.domophone] == true
+        keyButton.isEnabled = serviceStates[.domophone] != nil
         
-        eyeButton.isSelected = serviceStates[.camera] == .activated
-        eyeButton.isEnabled = serviceStates[.camera] != nil
+        eyeButton.isSelected = serviceStates[.cctv] == true
+        eyeButton.isEnabled = serviceStates[.cctv] != nil
     }
     
     private func configureButtons() {
@@ -75,8 +75,8 @@ class SettingsControlPanelCell: CustomBorderCollectionViewCell {
         )
         
         monitorButton.configureSelectableButton(
-            imageForNormal: SettingsServiceType.tv.unselectedIcon,
-            imageForSelected: SettingsServiceType.tv.selectedIcon
+            imageForNormal: SettingsServiceType.iptv.unselectedIcon,
+            imageForSelected: SettingsServiceType.iptv.selectedIcon
         )
         
         callButton.configureSelectableButton(
@@ -85,13 +85,13 @@ class SettingsControlPanelCell: CustomBorderCollectionViewCell {
         )
         
         keyButton.configureSelectableButton(
-            imageForNormal: SettingsServiceType.lock.unselectedIcon,
-            imageForSelected: SettingsServiceType.lock.selectedIcon
+            imageForNormal: SettingsServiceType.domophone.unselectedIcon,
+            imageForSelected: SettingsServiceType.domophone.selectedIcon
         )
         
         eyeButton.configureSelectableButton(
-            imageForNormal: SettingsServiceType.camera.unselectedIcon,
-            imageForSelected: SettingsServiceType.camera.selectedIcon
+            imageForNormal: SettingsServiceType.cctv.unselectedIcon,
+            imageForSelected: SettingsServiceType.cctv.selectedIcon
         )
     }
 

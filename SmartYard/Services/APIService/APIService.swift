@@ -120,6 +120,28 @@ class APIService {
         )
     }
     
+    /// Запрос предоставления гостевого доступа на 60 минут
+    func performGrantHourGuestAccessRequest(
+        _ request: IntercomRequest,
+        completion: ((Swift.Result<IntercomResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .grantHourGuestAccess(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
+    /// Запрос списка адресов для экрана настроек
+    func performSettingsListRequest(
+        _ request: GetSettingsListRequest,
+        completion: ((Swift.Result<GetSettingsListResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .getSettingsList(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
 }
 
 extension APIService {

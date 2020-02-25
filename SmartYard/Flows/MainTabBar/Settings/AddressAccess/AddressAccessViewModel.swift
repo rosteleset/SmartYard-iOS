@@ -22,16 +22,24 @@ class AddressAccessViewModel: BaseViewModel {
     private let isGrantedIntercomGuestAccess = PublishSubject<Bool>()
     
     private let address: String
+    private let flatId: String
     
-    init(router: WeakRouter<SettingsRoute>, address: String) {
+    private let apiWrapper: APIWrapper
+    
+    let activityTracker = ActivityTracker()
+    let errorTracker = ErrorTracker()
+    
+    init(router: WeakRouter<SettingsRoute>, address: String, flatId: String, apiWrapper: APIWrapper) {
         self.router = router
         self.address = address
+        self.flatId = flatId
+        self.apiWrapper = apiWrapper
     }
     
     // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         loadData()
-        
+
         input.refreshIntercomTempCodeTrigger
             .drive(
                 onNext: { [weak self] in
@@ -173,9 +181,31 @@ class AddressAccessViewModel: BaseViewModel {
             title: "Включить",
             style: .default
         ) { [weak self] _ in
-            // TODO: send API request to guest access
-            // TODO: using real api data
-            self?.isGrantedIntercomGuestAccess.onNext(true)
+            guard let self = self else {
+                return
+            }
+            
+            let response = self.apiWrapper.grantHourGuestAccess(flatId: self.flatId)
+                .trackActivity(self.activityTracker)
+                .trackError(self.errorTracker)
+                .asDriver(onErrorJustReturn: nil)
+                .ignoreNil()
+            
+            response
+                .map { $0.doorCode }
+                .drive(self.intercomAccessCode)
+                .disposed(by: self.disposeBag)
+            
+            response
+                .map { response -> Bool in
+                    guard let dateUntilClose = response.autoOpen.dateFromAPIString else {
+                        return false
+                    }
+                    
+                    return dateUntilClose > Date()
+                }
+                .drive(self.isGrantedIntercomGuestAccess)
+                .disposed(by: self.disposeBag)
         }
         
         // swiftlint:disable:next line_length
