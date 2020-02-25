@@ -66,8 +66,8 @@ class SettingsViewModel: BaseViewModel {
                     let (serviceSelected, loadedData) = args
                     let (identity, serviceType) = serviceSelected
                     
-                    guard case let .controlPanel(clientId) = identity,
-                        let match = (loadedData.first { $0.clientId == clientId }),
+                    guard case let .controlPanel(uniqueId) = identity,
+                        let match = (loadedData.first { $0.uniqueId == uniqueId }),
                         let isActivated = match.servicesAvailability[serviceType] else {
                         return
                     }
@@ -76,7 +76,7 @@ class SettingsViewModel: BaseViewModel {
                     if isActivated {
                         self?.router.trigger(.serviceIsActivated)
                     } else {
-                        self?.router.trigger(.serviceUnavailable)
+                       // self?.router.trigger(.serviceUnavailable)
                     }
                 }
             )
@@ -86,18 +86,18 @@ class SettingsViewModel: BaseViewModel {
         
         input.itemSelected
             .flatMap { identity -> Driver<String> in
-                guard case let .action(clientId, type) = identity, type == .openAddressSettings else {
+                guard case let .action(uniqueId, type) = identity, type == .openAddressSettings else {
                     return .empty()
                 }
                 
-                return .just(clientId)
+                return .just(uniqueId)
             }
             .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
             .drive(
                 onNext: { [weak self] args in
-                    let (clientId, loadedData) = args
+                    let (uniqueId, loadedData) = args
                     
-                    guard let match = (loadedData.first { $0.clientId == clientId }) else {
+                    guard let match = (loadedData.first { $0.uniqueId == uniqueId }) else {
                         return
                     }
                     
@@ -110,25 +110,27 @@ class SettingsViewModel: BaseViewModel {
         
         input.itemSelected
             .flatMap { identity -> Driver<String> in
-                guard case let .action(clientId, type) = identity, type == .grantAccess else {
+                guard case let .action(uniqueId, type) = identity, type == .grantAccess else {
                     return .empty()
                 }
                 
-                return .just(clientId)
+                return .just(uniqueId)
             }
             .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
             .drive(
                 onNext: { [weak self] args in
-                    let (clientId, loadedData) = args
+                    let (uniqueId, loadedData) = args
                     
-                    guard let match = (loadedData.first { $0.clientId == clientId }) else {
+                    guard let match = (loadedData.first { $0.uniqueId == uniqueId }),
+                          let flatId = match.flatId
+                    else {
                         return
                     }
                     
                     self?.router.trigger(
                         .addressAccess(
                             address: match.address,
-                            flatId: match.flatId!
+                            flatId: flatId
                         )
                     )
                 }
@@ -145,20 +147,20 @@ class SettingsViewModel: BaseViewModel {
         
         input.itemSelected
             .flatMap { identity -> Driver<String> in
-                guard case let .header(addressId) = identity else {
+                guard case let .header(uniqueId) = identity else {
                     return .empty()
                 }
                 
-                return .just(addressId)
+                return .just(uniqueId)
             }
             .withLatestFrom(areSectionsExpanded.asDriverOnErrorJustComplete()) { ($0, $1) }
             .map { args -> ((String, Bool), [String: Bool]) in
-                var (clientId, dict) = args
+                var (uniqueId, dict) = args
                 
-                let newState = !dict[clientId, default: false]
-                dict[clientId] = newState
+                let newState = !dict[uniqueId, default: false]
+                dict[uniqueId] = newState
                 
-                return ((clientId, newState), dict)
+                return ((uniqueId, newState), dict)
             }
             
             // MARK: Вынес в блок do, чтобы не делать сайд-эффектов в map
@@ -166,9 +168,9 @@ class SettingsViewModel: BaseViewModel {
             .do(
                 onNext: { args in
                     let (updatedSectionInfo, _) = args
-                    let (clientId, newState) = updatedSectionInfo
+                    let (uniqueId, newState) = updatedSectionInfo
                     
-                    let identity = SettingsDataItemIdentity.header(clientId: clientId)
+                    let identity = SettingsDataItemIdentity.header(uniqueId: uniqueId)
                     
                     updateKindSubject.onNext(
                         newState ?
@@ -210,13 +212,13 @@ class SettingsViewModel: BaseViewModel {
         expansionStateDict: [String: Bool]
     ) -> [SettingsSectionModel] {
         // swiftlint:disable:next closure_body_length
-        let mainSections: [SettingsSectionModel] = data.map { example in
-            let isExpanded = expansionStateDict[example.clientId!, default: false]
+        let mainSections: [SettingsSectionModel] = data.map { item in
+            let isExpanded = expansionStateDict[item.uniqueId, default: false]
             
             let header: SettingsDataItem = .header(
-                identity: .header(clientId: example.clientId!),
-                address: example.address,
-                contract: example.contractName!,
+                identity: .header(uniqueId: item.uniqueId),
+                address: item.address,
+                contractName: item.contractName,
                 isExpanded: isExpanded
             )
             
@@ -226,27 +228,27 @@ class SettingsViewModel: BaseViewModel {
                 }
                 
                 let controlPanel: SettingsDataItem = .controlPanel(
-                    identity: .controlPanel(clientId: example.clientId!),
-                    serviceStates: example.servicesAvailability
+                    identity: .controlPanel(uniqueId: item.uniqueId),
+                    serviceStates: item.servicesAvailability
                 )
                 
                 let openAddressSettingsAction: SettingsDataItem = .action(
                     identity: .action(
-                        clientId: example.clientId!,
+                        uniqueId: item.uniqueId,
                         type: .openAddressSettings
                     )
                 )
                 
                 let grantAccessAction: SettingsDataItem = .action(
                     identity: .action(
-                        clientId: example.clientId!,
+                        uniqueId: item.uniqueId,
                         type: .grantAccess
                     )
                 )
                 
                 let webVersionAction: SettingsDataItem = .action(
                     identity: .action(
-                        clientId: example.clientId!,
+                        uniqueId: item.uniqueId,
                         type: .openWebVersion
                     )
                 )
@@ -254,7 +256,7 @@ class SettingsViewModel: BaseViewModel {
                 return [controlPanel, openAddressSettingsAction, grantAccessAction, webVersionAction]
             }()
             
-            return SettingsSectionModel(identity: example.clientId!, items: [header] + objects)
+            return SettingsSectionModel(identity: item.uniqueId, items: [header] + objects)
         }
         
         let addAddressSection = SettingsSectionModel(

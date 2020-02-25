@@ -28,4 +28,8 @@ struct APISettingsAddress: Decodable {
         ]
     }
     
+    var uniqueId: String {
+        return (clientId ?? "") + (flatId ?? "")
+    }
+    
 }
