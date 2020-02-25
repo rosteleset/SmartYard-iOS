@@ -58,6 +58,7 @@ extension APITarget: TargetType {
             case .registerToken(let request): return request.accessToken
             case .sendName(let request): return request.accessToken
             case .openDoor(let request): return request.accessToken
+            case .grantHourGuestAccess(let request): return request.accessToken
             default: return nil
             }
         }()

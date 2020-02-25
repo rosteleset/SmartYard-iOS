@@ -10,6 +10,7 @@ import Foundation
 
 struct HourGuestAccessRequest {
     
+    let accessToken: String
     let flatId: String
     let settings: APIIntercomSettings?
     

@@ -252,6 +252,10 @@ class APIWrapper {
     }
     
     func grantHourGuestAccess(flatId: String) -> Single<HourGuestAccessResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
         let autoOpenEndDate = Date().dateHourAfter.apiString
         
         let settings = APIIntercomSettings(
@@ -262,7 +266,7 @@ class APIWrapper {
             whiteRabbit: nil
         )
         
-        let request = HourGuestAccessRequest(flatId: flatId, settings: settings)
+        let request = HourGuestAccessRequest(accessToken: accessToken, flatId: flatId, settings: settings)
         
         return Single.create { [weak self] single in
             guard let self = self else {
