@@ -21,6 +21,9 @@ class SettingsViewModel: BaseViewModel {
     // MARK: Загруженные данные (пока моковые модели)
     private let loadedData = BehaviorSubject<[APISettingsAddress]>(value: [])
     
+    let activityTracker = ActivityTracker()
+    let errorTracker = ErrorTracker()
+    
     init(router: WeakRouter<SettingsRoute>, apiWrapper: APIWrapper) {
         self.router = router
         self.apiWrapper = apiWrapper
@@ -35,8 +38,8 @@ class SettingsViewModel: BaseViewModel {
                 }
                 
                 return self.apiWrapper.getSettingsAddresses()
-//                    .trackActivity()
-//                    .trackError()
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
@@ -123,7 +126,12 @@ class SettingsViewModel: BaseViewModel {
                         return
                     }
                     
-                    self?.router.trigger(.addressAccess(address: match.address))
+                    self?.router.trigger(
+                        .addressAccess(
+                            address: match.address,
+                            flatId: match.flatId!
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)

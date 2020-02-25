@@ -22,15 +22,17 @@ class AddressAccessViewModel: BaseViewModel {
     private let isGrantedIntercomGuestAccess = PublishSubject<Bool>()
     
     private let address: String
+    private let flatId: String
     
     private let apiWrapper: APIWrapper
     
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
     
-    init(router: WeakRouter<SettingsRoute>, address: String, apiWrapper: APIWrapper) {
+    init(router: WeakRouter<SettingsRoute>, address: String, flatId: String, apiWrapper: APIWrapper) {
         self.router = router
         self.address = address
+        self.flatId = flatId
         self.apiWrapper = apiWrapper
     }
     
@@ -183,7 +185,7 @@ class AddressAccessViewModel: BaseViewModel {
                 return
             }
             
-            let response = self.apiWrapper.grantHourGuestAccess(flatId: "myTestFlat")
+            let response = self.apiWrapper.grantHourGuestAccess(flatId: self.flatId)
                 .trackActivity(self.activityTracker)
                 .trackError(self.errorTracker)
             

@@ -21,7 +21,7 @@ enum SettingsRoute: Route {
     case addressDeletion(delegate: AddressDeletionViewModelDelegate)
     case alert(title: String, message: String?)
     case dialog(title: String, message: String?, actions: [UIAlertAction])
-    case addressAccess(address: String)
+    case addressAccess(address: String, flatId: String)
     case newAllowedPerson(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
     
 }
@@ -127,10 +127,11 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case let .addressAccess(address):
+        case let .addressAccess(address, flatId):
             let vm = AddressAccessViewModel(
                 router: weakRouter,
                 address: address,
+                flatId: flatId,
                 apiWrapper: apiWrapper
             )
             
