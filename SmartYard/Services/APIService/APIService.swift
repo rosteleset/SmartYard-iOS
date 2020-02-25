@@ -132,12 +132,12 @@ class APIService {
     }
     
     /// Запрос списка адресов для экрана настроек
-    func performSettingsAddressListRequest(
-        _ request: GetSettingsTabAddressesRequest,
-        completion: ((Swift.Result<GetSettingsTabAddressesResponseData, Error>) -> Void)?
+    func performSettingsListRequest(
+        _ request: GetSettingsListRequest,
+        completion: ((Swift.Result<GetSettingsListResponseData, Error>) -> Void)?
     ) {
         provider.request(
-            .getSettingsTabAddresses(request: request),
+            .getSettingsList(request: request),
             completion: createInnerCompletionBlockWithData(from: completion)
         )
     }

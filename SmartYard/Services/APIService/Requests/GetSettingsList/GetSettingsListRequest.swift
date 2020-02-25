@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct GetSettingsTabAddressesRequest {
+struct GetSettingsListRequest {
     
     let accessToken: String
     
 }
 
-extension GetSettingsTabAddressesRequest {
+extension GetSettingsListRequest {
     
     var requestParameters: [String: Any] {
         return [:]

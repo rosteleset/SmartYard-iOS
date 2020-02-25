@@ -29,7 +29,7 @@ class SettingsViewModel: BaseViewModel {
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         input.viewDidLoadTrigger
-            .flatMapLatest { [weak self] _ -> Driver<GetSettingsTabAddressesResponseData?> in
+            .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
                 guard let self = self else {
                     return .empty()
                 }

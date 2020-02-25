@@ -19,7 +19,7 @@ enum APITarget {
     case sendName(request: SendNameRequest)
     case openDoor(request: OpenDoorRequest)
     case grantHourGuestAccess(request: HourGuestAccessRequest)
-    case getSettingsTabAddresses(request: GetSettingsTabAddressesRequest)
+    case getSettingsList(request: GetSettingsListRequest)
     
 }
 
@@ -40,7 +40,7 @@ extension APITarget: TargetType {
         case .sendName: return "user/sendName"
         case .openDoor: return "domophone/openDoor"
         case .grantHourGuestAccess: return "address/intercom"
-        case .getSettingsTabAddresses: return "address/getSettingsList"
+        case .getSettingsList: return "address/getSettingsList"
         }
     }
     
@@ -61,7 +61,7 @@ extension APITarget: TargetType {
             case .sendName(let request): return request.accessToken
             case .openDoor(let request): return request.accessToken
             case .grantHourGuestAccess(let request): return request.accessToken
-            case .getSettingsTabAddresses(let request): return request.accessToken
+            case .getSettingsList(let request): return request.accessToken
             default: return nil
             }
         }()
@@ -88,7 +88,7 @@ extension APITarget: TargetType {
         case .sendName(let request): return request.requestParameters
         case .openDoor(let request): return request.requestParameters
         case .grantHourGuestAccess(let request): return request.requestParameters
-        case .getSettingsTabAddresses(let request): return request.requestParameters
+        case .getSettingsList(let request): return request.requestParameters
         }
     }
     
