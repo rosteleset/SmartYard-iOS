@@ -19,6 +19,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var collectionView: UICollectionView!
     
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<AddressesListSectionModel>?
+    private var refreshControl = UIRefreshControl()
     
     // MARK: Это костыль для того, чтобы понять, сколько на самом деле ячеек внутри секции
     // В методе configureCell у RxDataSource мы должны сконфигурировать ячейку
@@ -62,7 +63,8 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         
         let input = AddressesListViewModel.Input(
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
-            guestAccessRequested: requestGuestAccess.asDriverOnErrorJustComplete()
+            guestAccessRequested: requestGuestAccess.asDriverOnErrorJustComplete(),
+            refreshDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriver()
         )
         
         let output = viewModel.transform(input)
@@ -73,6 +75,8 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         output.sectionModels
             .do(
                 onNext: { [weak self] models in
+                    self?.refreshControl.endRefreshing()
+                    
                     let itemsCountDict: [Int: Int] = models.enumerated().reduce([:]) { dict, enumeration in
                         let (offset, element) = enumeration
                         
@@ -193,6 +197,8 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureCollectionView() {
+        collectionView.addSubview(refreshControl)
+        
         [
             AddressesListHeaderCell.self,
             AddressesListObjectCell.self,

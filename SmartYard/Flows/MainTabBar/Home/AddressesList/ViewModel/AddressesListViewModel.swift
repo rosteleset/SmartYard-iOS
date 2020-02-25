@@ -40,11 +40,9 @@ class AddressesListViewModel: BaseViewModel {
         
         // MARK: Загрузка данных
         
-        let dataRefreshTrigger = PublishSubject<Void>()
-        
         Driver<Void>
             .merge(
-                dataRefreshTrigger.asDriverOnErrorJustComplete(),
+                input.refreshDataTrigger.asDriver().delay(.milliseconds(1000)),
                 .just(())
             )
             .flatMapLatest { [weak self] _ -> Driver<GetAddressListResponseData?> in
@@ -110,7 +108,7 @@ class AddressesListViewModel: BaseViewModel {
             .map { args -> ((String, Bool), [String: Bool]) in
                 var (addressId, dict) = args
                 
-                let newState = !dict[addressId, default: false]
+                let newState = !dict[addressId, default: true]
                 dict[addressId] = newState
                 
                 return ((addressId, newState), dict)
@@ -202,7 +200,7 @@ class AddressesListViewModel: BaseViewModel {
         // swiftlint:disable:next closure_body_length
         let sectionModels = data.map { address -> AddressesListSectionModel in
             let addressId = (address.houseId ?? "") + address.address
-            let isSectionExpanded = expansionStateDict[addressId, default: false]
+            let isSectionExpanded = expansionStateDict[addressId, default: true]
             
             let header: AddressesListDataItem = .header(
                 identity: .header(addressId: addressId),
@@ -259,6 +257,7 @@ extension AddressesListViewModel {
     struct Input {
         let itemSelected: Driver<AddressesListDataItemIdentity>
         let guestAccessRequested: Driver<AddressesListDataItemIdentity>
+        let refreshDataTrigger: Driver<Void>
     }
     
     struct Output {
