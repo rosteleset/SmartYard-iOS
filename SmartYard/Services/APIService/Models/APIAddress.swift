@@ -8,15 +8,26 @@
 
 struct APIAddress: Decodable {
     
-    let clientId: String
-    let login: String
-    let contractName: String
-    let clientName: String
+    let houseId: String?
     let address: String
-    let looser: String
-    let flatId: String
-    let flatNumber: String
-    let houseId: String
-    let domophoneId: String
+    let doors: [APIDoor]
+    let cctv: [APICCTV]
+    
+    private enum CodingKeys: String, CodingKey {
+        case houseId
+        case address
+        case doors
+        case cctv
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        houseId = try? container.decode(String.self, forKey: .houseId)
+        address = try container.decode(String.self, forKey: .address)
+        
+        doors = (try? container.decode([APIDoor].self, forKey: .doors)) ?? []
+        cctv = (try? container.decode([APICCTV].self, forKey: .cctv)) ?? []
+    }
     
 }

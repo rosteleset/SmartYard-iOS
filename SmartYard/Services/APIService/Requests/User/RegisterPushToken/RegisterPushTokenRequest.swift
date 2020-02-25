@@ -14,7 +14,7 @@ enum TokenType: Int {
     
 }
 
-struct RegisterTokenRequest {
+struct RegisterPushTokenRequest {
     
     let accessToken: String
     let pushToken: String
@@ -23,7 +23,7 @@ struct RegisterTokenRequest {
     
 }
 
-extension RegisterTokenRequest {
+extension RegisterPushTokenRequest {
     
     var requestParameters: [String: Any] {
         var params: [String: Any] = [

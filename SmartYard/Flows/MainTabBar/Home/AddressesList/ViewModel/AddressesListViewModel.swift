@@ -26,43 +26,35 @@ class AddressesListViewModel: BaseViewModel {
         self.router = router
     }
     
+    private let loadedData = BehaviorSubject<GetAddressListResponseData?>(value: nil)
+    
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
     // MARK: Словарь необходим для того, чтобы хранить состояния предоставленного доступа к объекту
-    private let areObjectsGrantAccessed = BehaviorSubject<[String: Bool]>(value: [:])
+    private let areObjectsGrantAccessed = BehaviorSubject<[AddressesListDataItemIdentity: Bool]>(value: [:])
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
+        let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
-        // MARK: Создаем подписки для всех загруженных адресов
-        // Потом это уйдет в другое место скорее всего, да и логика будет другая
+        // MARK: Загрузка данных
         
-        apiWrapper.getVerifyedAddresses()
-            .trackError(errorTracker)
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
-            .map { addresses in addresses.map { $0.clientId } }
-            .flatMapLatest { [weak self] clientIds -> Driver<Void?> in
+        Driver<Void>
+            .merge(
+                input.refreshDataTrigger.asDriver().delay(.milliseconds(1000)),
+                .just(())
+            )
+            .flatMapLatest { [weak self] _ -> Driver<GetAddressListResponseData?> in
                 guard let self = self else {
                     return .empty()
                 }
                 
-                let queries = clientIds.map {
-                    self.pushNotificationService.updatePushNotificationsState(forClientId: $0, newState: .on)
-                }
-                
-                return Single<Void?>.zip(queries)
-                    .map { _ -> Void? in () }
-                    .trackError(errorTracker)
+                return self.apiWrapper.getAddressList()
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
-            .drive(
-                onNext: {
-                    print("DEBUG: Подписки на все загруженные адреса успешно созданы")
-                }
-            )
+            .drive(loadedData)
             .disposed(by: disposeBag)
         
         // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг
@@ -71,26 +63,32 @@ class AddressesListViewModel: BaseViewModel {
         let updateKind = updateKindSubject.asDriverOnErrorJustComplete()
         
         input.guestAccessRequested
-            .flatMap { identity -> Driver<String> in
-                guard case let .object(objectId) = identity else {
+            .flatMapLatest { [weak self] identity -> Driver<AddressesListDataItemIdentity?> in
+                guard let self = self, case let .object(domophoneId, doorId, _) = identity else {
                     return .empty()
                 }
-                return .just(objectId)
+                
+                return self.apiWrapper.openDoor(domophoneId: domophoneId, doorId: doorId)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .map { _ -> AddressesListDataItemIdentity? in identity }
+                    .asDriver(onErrorJustReturn: nil)
             }
+            .ignoreNil()
             .withLatestFrom(areObjectsGrantAccessed.asDriverOnErrorJustComplete()) { ($0, $1) }
-            .map { args -> (String, [String: Bool]) in
-                var (objectId, dict) = args
+            .map { args -> (AddressesListDataItemIdentity, [AddressesListDataItemIdentity: Bool]) in
+                var (identity, dict) = args
                 
-                let newState = !dict[objectId, default: false]
-                dict[objectId] = newState
+                let newState = !dict[identity, default: false]
+                dict[identity] = newState
                 
-                return (objectId, dict)
+                return (identity, dict)
             }
             .drive(
                 onNext: { [weak self] args in
-                    let (objectId, newDict) = args
+                    let (identity, newDict) = args
                     self?.areObjectsGrantAccessed.onNext(newDict)
-                    self?.closeObjectAccessAfterTimeout(objectId: objectId)
+                    self?.closeObjectAccessAfterTimeout(identity: identity)
                 }
             )
             .disposed(by: disposeBag)
@@ -110,7 +108,7 @@ class AddressesListViewModel: BaseViewModel {
             .map { args -> ((String, Bool), [String: Bool]) in
                 var (addressId, dict) = args
                 
-                let newState = !dict[addressId, default: false]
+                let newState = !dict[addressId, default: true]
                 dict[addressId] = newState
                 
                 return ((addressId, newState), dict)
@@ -145,16 +143,22 @@ class AddressesListViewModel: BaseViewModel {
         
         let sectionModels = Driver
             .combineLatest(
+                loadedData.asDriver(onErrorJustReturn: nil),
                 areSectionsExpanded.asDriverOnErrorJustComplete(),
                 areObjectsGrantAccessed.asDriverOnErrorJustComplete()
             )
             .map { [weak self] args -> [AddressesListSectionModel] in
-                let (expansionStateDict, objectAccessDict) = args
+                let (loadedData, expansionStateDict, objectAccessDict) = args
                 
-                return self?.createMockSections(
+                guard let self = self, let data = loadedData else {
+                    return []
+                }
+                
+                return self.createSections(
+                    data: data,
                     expansionStateDict: expansionStateDict,
                     objectAccessDict: objectAccessDict
-                ) ?? []
+                )
             }
         
         errorTracker.asDriver()
@@ -167,154 +171,83 @@ class AddressesListViewModel: BaseViewModel {
         
         return Output(
             sectionModels: sectionModels,
-            updateKind: updateKind
+            updateKind: updateKind,
+            isLoading: activityTracker.asDriver()
         )
     }
 
-    private func closeObjectAccessAfterTimeout(objectId: String) {
+    private func closeObjectAccessAfterTimeout(identity: AddressesListDataItemIdentity) {
         Timer.scheduledTimer(
             withTimeInterval: 5,
             repeats: false
         ) { [weak self] _ in
-            guard let self = self,
-                  let data = try? self.areObjectsGrantAccessed.value()
-            else {
+            guard let self = self, let data = try? self.areObjectsGrantAccessed.value() else {
                 return
             }
             
             var newDict = data
-            newDict[objectId] = false
+            newDict[identity] = false
             
             self.areObjectsGrantAccessed.onNext(newDict)
         }
     }
     
-    // swiftlint:disable:next function_body_length
-    private func createMockSections(
+    private func createSections(
+        data: GetAddressListResponseData,
         expansionStateDict: [String: Bool],
-        objectAccessDict: [String: Bool]
+        objectAccessDict: [AddressesListDataItemIdentity: Bool]
     ) -> [AddressesListSectionModel] {
-        // MARK: Пока моки, но в принципе, нет ничего сложного прикрутить сюда реальные данные
-        // Просто будем пробегать в цикле по всем адресам и генерировать для них секции
-        
-        let firstAddressId = "1000"
-        let isFirstSectionExpanded = expansionStateDict[firstAddressId, default: false]
-        
-        let firstSectionHeader: AddressesListDataItem = .header(
-            identity: .header(addressId: firstAddressId),
-            address: "г. Тамбов, ул. Советская, 16, кв. 4",
-            isExpanded: isFirstSectionExpanded
-        )
-        
         // swiftlint:disable:next closure_body_length
-        let firstSectionObjects: [AddressesListDataItem] = {
-            guard isFirstSectionExpanded else {
-                return []
-            }
+        let sectionModels = data.map { address -> AddressesListSectionModel in
+            let addressId = (address.houseId ?? "") + address.address
+            let isSectionExpanded = expansionStateDict[addressId, default: true]
             
-            let firstSectionFirstObjectId = "FirstSectionFirstObject"
-            let firstSectionFirstObject: AddressesListDataItem = .object(
-                identity: .object(id: firstSectionFirstObjectId),
-                type: .barrier,
-                name: "Шлагбаум Север",
-                isOpened: objectAccessDict[firstSectionFirstObjectId, default: false]
+            let header: AddressesListDataItem = .header(
+                identity: .header(addressId: addressId),
+                address: address.address,
+                isExpanded: isSectionExpanded
             )
             
-            let firstSectionSecondObjectId = "FirstSectionSecondObject"
-            let firstSectionSecondObject: AddressesListDataItem = .object(
-                identity: .object(id: firstSectionSecondObjectId),
-                type: .gate,
-                name: "Ворота Юг",
-                isOpened: objectAccessDict[firstSectionSecondObjectId, default: false]
+            let objects: [AddressesListDataItem] = {
+                guard isSectionExpanded else {
+                    return []
+                }
+                
+                let doors = address.doors.map { door -> AddressesListDataItem in
+                    let identity = AddressesListDataItemIdentity.object(
+                        domophoneId: door.domophoneId,
+                        doorId: door.doorId,
+                        entrance: door.entrance
+                    )
+                    
+                    return AddressesListDataItem.object(
+                        identity: identity,
+                        type: door.type,
+                        name: door.name,
+                        isOpened: objectAccessDict[identity, default: false]
+                    )
+                }
+                
+                let cameras: AddressesListDataItem? = {
+                    guard !address.cctv.isEmpty else {
+                        return nil
+                    }
+                    
+                    return .cameras(identity: .cameras(addressId: addressId), numberOfCameras: address.cctv.count)
+                }()
+                
+                return doors + [cameras].compactMap { $0 }
+            }()
+            
+            let section = AddressesListSectionModel(
+                identity: addressId,
+                items: [header] + objects
             )
             
-            let firstSectionThirdObjectId = "FirstSectionThirdObject"
-            let firstSectionThirdObject: AddressesListDataItem = .object(
-                identity: .object(id: "FirstSectionThirdObject"),
-                type: .house,
-                name: "Подъезд 1",
-                isOpened: objectAccessDict[firstSectionThirdObjectId, default: false]
-            )
-            
-            let firstSectionCameraObject: AddressesListDataItem = .cameras(
-                identity: .cameras(addressId: firstAddressId),
-                numberOfCameras: 3
-            )
-            
-            return [
-                firstSectionFirstObject,
-                firstSectionSecondObject,
-                firstSectionThirdObject,
-                firstSectionCameraObject
-            ]
-        }()
-
-        let firstSection = AddressesListSectionModel(
-            identity: firstAddressId,
-            items: [firstSectionHeader] + firstSectionObjects
-        )
+            return section
+        }
         
-        let secondAddressId = "2000"
-        let isSecondSectionExpanded = expansionStateDict[secondAddressId, default: false]
-        
-        let secondSectionHeader: AddressesListDataItem = .header(
-            identity: .header(addressId: secondAddressId),
-            address: "г. Тамбов, ул. Мичуринская, 141А",
-            isExpanded: isSecondSectionExpanded
-        )
-        
-        let secondSectionObjects: [AddressesListDataItem] = {
-            guard isSecondSectionExpanded else {
-                return []
-            }
-            
-            let secondSectionFirstObjectId = "SecondSectionFirstObject"
-            let secondSectionFirstObject: AddressesListDataItem = .object(
-                identity: .object(id: secondSectionFirstObjectId),
-                type: .house,
-                name: "Подъезд 1",
-                isOpened: objectAccessDict[secondSectionFirstObjectId, default: false]
-            )
-            
-            return [secondSectionFirstObject]
-        }()
-        
-        let secondSection = AddressesListSectionModel(
-            identity: secondAddressId,
-            items: [secondSectionHeader] + secondSectionObjects
-        )
-        
-        let thirdAddressId = "3000"
-        let isThirdSectionExpanded = expansionStateDict[thirdAddressId, default: false]
-        
-        let thirdSectionHeader: AddressesListDataItem = .header(
-            identity: .header(addressId: thirdAddressId),
-            address: "г. Котовск, ул. Зимняя, 20",
-            isExpanded: isThirdSectionExpanded
-        )
-        
-        let thirdSectionObjects: [AddressesListDataItem] = {
-            guard isThirdSectionExpanded else {
-                return []
-            }
-            
-            let thirdSectionFirstObjectId = "ThirdSectionFirstObject"
-            let thirdSectionFirstObject: AddressesListDataItem = .object(
-                identity: .object(id: "ThirdSectionFirstObject"),
-                type: .house,
-                name: "Подъезд 1",
-                isOpened: objectAccessDict[thirdSectionFirstObjectId, default: false]
-            )
-            
-            return [thirdSectionFirstObject]
-        }()
-        
-        let thirdSection = AddressesListSectionModel(
-            identity: "3000",
-            items: [thirdSectionHeader] + thirdSectionObjects
-        )
-        
-        return [firstSection, secondSection, thirdSection]
+        return sectionModels
     }
     
 }
@@ -324,11 +257,13 @@ extension AddressesListViewModel {
     struct Input {
         let itemSelected: Driver<AddressesListDataItemIdentity>
         let guestAccessRequested: Driver<AddressesListDataItemIdentity>
+        let refreshDataTrigger: Driver<Void>
     }
     
     struct Output {
         let sectionModels: Driver<[AddressesListSectionModel]>
         let updateKind: Driver<AddressesListSectionUpdateKind>
+        let isLoading: Driver<Bool>
     }
     
 }

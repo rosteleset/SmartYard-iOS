@@ -10,14 +10,16 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import JGProgressHUD
 
-class AddressesListViewController: BaseViewController {
+class AddressesListViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var addButton: UIButton!
     @IBOutlet private weak var collectionView: UICollectionView!
     
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<AddressesListSectionModel>?
+    private var refreshControl = UIRefreshControl()
     
     // MARK: Это костыль для того, чтобы понять, сколько на самом деле ячеек внутри секции
     // В методе configureCell у RxDataSource мы должны сконфигурировать ячейку
@@ -31,6 +33,8 @@ class AddressesListViewController: BaseViewController {
     private let viewModel: AddressesListViewModel
     
     private let requestGuestAccess = PublishSubject<AddressesListDataItemIdentity>()
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: AddressesListViewModel) {
         self.viewModel = viewModel
@@ -59,7 +63,8 @@ class AddressesListViewController: BaseViewController {
         
         let input = AddressesListViewModel.Input(
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
-            guestAccessRequested: requestGuestAccess.asDriverOnErrorJustComplete()
+            guestAccessRequested: requestGuestAccess.asDriverOnErrorJustComplete(),
+            refreshDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriver()
         )
         
         let output = viewModel.transform(input)
@@ -70,6 +75,8 @@ class AddressesListViewController: BaseViewController {
         output.sectionModels
             .do(
                 onNext: { [weak self] models in
+                    self?.refreshControl.endRefreshing()
+                    
                     let itemsCountDict: [Int: Int] = models.enumerated().reduce([:]) { dict, enumeration in
                         let (offset, element) = enumeration
                         
@@ -136,6 +143,19 @@ class AddressesListViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func performScrollUpdate(updateKind: AddressesListSectionUpdateKind, to indexPath: IndexPath) {
@@ -177,6 +197,8 @@ class AddressesListViewController: BaseViewController {
     }
     
     private func configureCollectionView() {
+        collectionView.addSubview(refreshControl)
+        
         [
             AddressesListHeaderCell.self,
             AddressesListObjectCell.self,

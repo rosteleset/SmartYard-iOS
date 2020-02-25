@@ -20,7 +20,7 @@ class AddressesListObjectCell: CustomBorderCollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configure(objectType: .house, name: nil, isOpened: false)
+        configure(objectType: .entrance, name: nil, isOpened: false)
     }
     
     override func prepareForReuse() {
