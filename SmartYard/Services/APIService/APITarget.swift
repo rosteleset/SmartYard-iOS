@@ -88,6 +88,7 @@ extension APITarget: TargetType {
         case .sendName(let request): return request.requestParameters
         case .openDoor(let request): return request.requestParameters
         case .grantHourGuestAccess(let request): return request.requestParameters
+        case .getSettingsTabAddresses(let request): return request.requestParameters
         }
     }
     

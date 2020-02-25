@@ -14,3 +14,10 @@ struct GetSettingsTabAddressesRequest {
     
 }
 
+extension GetSettingsTabAddressesRequest {
+    
+    var requestParameters: [String: Any] {
+        return [:]
+    }
+    
+}

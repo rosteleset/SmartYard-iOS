@@ -133,10 +133,13 @@ class APIService {
     
     /// Запрос списка адресов для экрана настроек
     func performSettingsAddressListRequest(
-        _ request: HourGuestAccessRequest,
-        completion: ((Swift.Result<HourGuestAccessResponseData, Error>) -> Void)?
-        ) {
-        
+        _ request: GetSettingsTabAddressesRequest,
+        completion: ((Swift.Result<GetSettingsTabAddressesResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .getSettingsTabAddresses(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
     }
     
 }

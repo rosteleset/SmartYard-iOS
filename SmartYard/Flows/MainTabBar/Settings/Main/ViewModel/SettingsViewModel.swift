@@ -13,6 +13,7 @@ import XCoordinator
 class SettingsViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
+    private let apiWrapper: APIWrapper
     
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
@@ -22,14 +23,23 @@ class SettingsViewModel: BaseViewModel {
         value: [.firstExample, .secondExample, .thirdExample]
     )
     
-    init(router: WeakRouter<SettingsRoute>) {
+    init(router: WeakRouter<SettingsRoute>, apiWrapper: APIWrapper) {
         self.router = router
+        self.apiWrapper = apiWrapper
     }
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
-        // MARK: Обработка нажатия на иконку настроек
+        apiWrapper.getSettingsAddresses()
+            .asDriver(onErrorJustReturn: nil)
+            .drive(
+                onNext: { result in
+                    print(result)
+                }
+            )
+            .disposed(by: disposeBag)
         
+        // MARK: Обработка нажатия на иконку настроек
         input.advancedSettingsTrigger
             .drive(
                 onNext: { [weak self] in

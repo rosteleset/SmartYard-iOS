@@ -46,7 +46,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     override func prepareTransition(for route: SettingsRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = SettingsViewModel(router: weakRouter)
+            let vm = SettingsViewModel(router: weakRouter, apiWrapper: apiWrapper)
             let vc = SettingsViewController(viewModel: vm)
             return .set([vc])
             
