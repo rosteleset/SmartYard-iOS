@@ -259,7 +259,7 @@ class APIWrapper {
         let autoOpenEndDate = Date().dateHourAfter.apiString
         
         let settings = APIIntercomSettings(
-            enableDoorCode: "t",
+            enableDoorCode: true,
             cms: nil,
             voip: nil,
             autoOpen: autoOpenEndDate,

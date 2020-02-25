@@ -188,17 +188,15 @@ class AddressAccessViewModel: BaseViewModel {
             let response = self.apiWrapper.grantHourGuestAccess(flatId: self.flatId)
                 .trackActivity(self.activityTracker)
                 .trackError(self.errorTracker)
-            
-            response
-                .map { $0?.doorCode }
                 .asDriver(onErrorJustReturn: nil)
                 .ignoreNil()
+            
+            response
+                .map { $0.doorCode }
                 .drive(self.intercomAccessCode)
                 .disposed(by: self.disposeBag)
             
             response
-                .asDriver(onErrorJustReturn: nil)
-                .ignoreNil()
                 .map { response -> Bool in
                     guard let dateUntilClose = response.autoOpen.dateFromAPIString else {
                         return false

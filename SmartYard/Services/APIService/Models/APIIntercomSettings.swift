@@ -6,11 +6,9 @@
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
-import Foundation
-
-struct APIIntercomSettings: Codable {
+struct APIIntercomSettings {
     
-    let enableDoorCode: String?
+    let enableDoorCode: Bool?
     let cms: String?
     let voip: String?
     let autoOpen: String?
@@ -24,7 +22,7 @@ extension APIIntercomSettings {
         var params: [String: Any] = [:]
         
         if let enableDoorCode = enableDoorCode {
-            params["enableDoorCode"] = enableDoorCode
+            params["enableDoorCode"] = enableDoorCode ? "t" : "f"
         }
         
         if let cms = cms {
