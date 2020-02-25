@@ -59,7 +59,6 @@ class SettingsViewController: BaseViewController {
             .ignoreNil()
         
         let input = SettingsViewModel.Input(
-            viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete(),
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
             serviceSelected: serviceButtonTapTrigger.asDriverOnErrorJustComplete(),
             advancedSettingsTrigger: settingsButton.rx.tap.asDriver()

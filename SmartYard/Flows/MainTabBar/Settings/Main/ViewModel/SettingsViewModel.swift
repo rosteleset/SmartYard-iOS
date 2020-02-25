@@ -29,7 +29,13 @@ class SettingsViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
-        input.viewWillAppearTrigger
+        let refreshDataTrigger = PublishSubject<Void>()
+        
+        Driver<Void>
+            .merge(
+                refreshDataTrigger.asDriverOnErrorJustComplete(),
+                .just(())
+            )
             .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
                 guard let self = self else {
                     return .empty()
@@ -272,7 +278,6 @@ class SettingsViewModel: BaseViewModel {
 extension SettingsViewModel {
     
     struct Input {
-        let viewWillAppearTrigger: Driver<Bool>
         let itemSelected: Driver<SettingsDataItemIdentity>
         let serviceSelected: Driver<(SettingsDataItemIdentity, SettingsServiceType)>
         let advancedSettingsTrigger: Driver<Void>
