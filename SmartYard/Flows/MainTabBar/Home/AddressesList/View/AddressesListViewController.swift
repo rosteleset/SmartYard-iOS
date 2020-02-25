@@ -10,8 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import JGProgressHUD
 
-class AddressesListViewController: BaseViewController {
+class AddressesListViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var addButton: UIButton!
@@ -31,6 +32,8 @@ class AddressesListViewController: BaseViewController {
     private let viewModel: AddressesListViewModel
     
     private let requestGuestAccess = PublishSubject<AddressesListDataItemIdentity>()
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: AddressesListViewModel) {
         self.viewModel = viewModel
@@ -133,6 +136,19 @@ class AddressesListViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] updateKind, indexPath in
                     self?.performScrollUpdate(updateKind: updateKind, to: indexPath)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
                 }
             )
             .disposed(by: disposeBag)

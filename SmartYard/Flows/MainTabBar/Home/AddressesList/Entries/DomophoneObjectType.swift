@@ -8,17 +8,19 @@
 
 import UIKit
 
-enum DomophoneObjectType {
+enum DomophoneObjectType: String, Decodable {
     
-    case barrier
+    case entrance
+    case wicket
     case gate
-    case house
+    case barrier
     
     var icon: UIImage? {
         switch self {
-        case .barrier: return UIImage(named: "BarrierIcon")
+        case .entrance: return UIImage(named: "HouseIcon")
+        case .wicket: return nil
         case .gate: return UIImage(named: "GateIcon")
-        case .house: return UIImage(named: "HouseIcon")
+        case .barrier: return UIImage(named: "BarrierIcon")
         }
     }
     

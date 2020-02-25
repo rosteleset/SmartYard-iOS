@@ -21,6 +21,52 @@ class APIService {
         return NetworkReachabilityManager()?.isReachable ?? false
     }
     
+    /// Запрос открытия двери
+    func performOpenDoorRequest(
+        _ request: OpenDoorRequest,
+        completion: ((Swift.Result<Void, Error>) -> Void)?
+    ) {
+        provider.request(
+            .openDoor(request: request),
+            completion: createEmptyInnerCompletionBlock(from: completion)
+        )
+    }
+    
+    /// Запрос на перегенерацию кода открытия
+    func performResetCodeRequest(
+        _ request: ResetCodeRequest,
+        completion: ((Swift.Result<ResetCodeResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .resetCode(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
+    /// Запрос на получение списка адресов
+    func performGetAddressListRequest(
+        _ request: GetAddressListRequest,
+        completion: ((Swift.Result<GetAddressListResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .getAddressList(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
+    // User
+    
+    /// Запрос привязки номера к договору
+    func performAddMyPhoneRequest(
+        _ request: AddMyPhoneRequest,
+        completion: ((Swift.Result<Void, Error>) -> Void)?
+    ) {
+        provider.request(
+            .addMyPhone(request: request),
+            completion: createEmptyInnerCompletionBlock(from: completion)
+        )
+    }
+    
     /// Запрос получения СМС-кода
     func performRequestCodeRequest(
         _ request: RequestCodeRequest,
@@ -28,6 +74,17 @@ class APIService {
     ) {
         provider.request(
             .requestCode(request: request),
+            completion: createEmptyInnerCompletionBlock(from: completion)
+        )
+    }
+    
+    /// Запрос отправки токена на сервер
+    func performRegisterPushTokenRequest(
+        _ request: RegisterPushTokenRequest,
+        completion: ((Swift.Result<Void, Error>) -> Void)?
+    ) {
+        provider.request(
+            .registerPushToken(request: request),
             completion: createEmptyInnerCompletionBlock(from: completion)
         )
     }
@@ -43,57 +100,13 @@ class APIService {
         )
     }
     
-    /// Запрос логина
-    func performLoginRequest(
-        _ request: LoginRequest,
-        completion: ((Swift.Result<LoginResponseData, Error>) -> Void)?
-    ) {
+    /// Запрос получения списка платежей
+    func performGetPaymentsListRequest(
+        _ request: GetPaymentsListRequest,
+        completion: ((Swift.Result<GetPaymentsListResponseData, Error>) -> Void)?
+        ) {
         provider.request(
-            .login(request: request),
-            completion: createInnerCompletionBlockWithData(from: completion)
-        )
-    }
-    
-    /// Запрос подтвержденных адресов
-    func performGetVerifyedAddressesRequest(
-        _ request: GetVerifyedAddressesRequest,
-        completion: ((Swift.Result<GetVerifyedAddressesResponseData, Error>) -> Void)?
-    ) {
-        provider.request(
-            .getVerifyedAddresses(request: request),
-            completion: createInnerCompletionBlockWithData(from: completion)
-        )
-    }
-    
-    /// Запрос отправки токена на сервер
-    func performRegisterTokenRequest(
-        _ request: RegisterTokenRequest,
-        completion: ((Swift.Result<Void, Error>) -> Void)?
-    ) {
-        provider.request(
-            .registerToken(request: request),
-            completion: createEmptyInnerCompletionBlock(from: completion)
-        )
-    }
-    
-    /// Запрос модификации статуса токена на сервере
-    func performUpdateTokenStateRequest(
-        _ request: IntercomTokenRequest,
-        completion: ((Swift.Result<Void, Error>) -> Void)?
-    ) {
-        provider.request(
-            .intercomToken(request: request),
-            completion: createEmptyInnerCompletionBlock(from: completion)
-        )
-    }
-    
-    /// Запрос получения статуса токена с сервера
-    func performCheckTokenStateRequest(
-        _ request: IntercomTokenRequest,
-        completion: ((Swift.Result<IntercomTokenResponseData, Error>) -> Void)?
-    ) {
-        provider.request(
-            .intercomToken(request: request),
+            .getPaymentsList(request: request),
             completion: createInnerCompletionBlockWithData(from: completion)
         )
     }
@@ -105,17 +118,6 @@ class APIService {
     ) {
         provider.request(
             .sendName(request: request),
-            completion: createEmptyInnerCompletionBlock(from: completion)
-        )
-    }
-    
-    /// Запрос открытия двери
-    func performOpenDoorRequest(
-        _ request: OpenDoorRequest,
-        completion: ((Swift.Result<Void, Error>) -> Void)?
-    ) {
-        provider.request(
-            .openDoor(request: request),
             completion: createEmptyInnerCompletionBlock(from: completion)
         )
     }

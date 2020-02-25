@@ -7,18 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8428672E24051F6A004D3F26 /* APIPaymentsListAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428672D24051F6A004D3F26 /* APIPaymentsListAddress.swift */; };
+		8428673024051F7F004D3F26 /* APIPaymentsListAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428672F24051F7F004D3F26 /* APIPaymentsListAccount.swift */; };
 		843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A7A7E23F29A2900840E51 /* FakeNavBar.swift */; };
 		843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843A7A8023F29A3400840E51 /* FakeNavBar.xib */; };
-		844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC37223E85C6A0066006D /* RequestCodeRequest.swift */; };
-		844AC37C23E861C50066006D /* GetVerifyedAddressesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC37B23E861C50066006D /* GetVerifyedAddressesRequest.swift */; };
-		844AC37E23E861D10066006D /* GetVerifyedAddressesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC37D23E861D10066006D /* GetVerifyedAddressesResponseData.swift */; };
-		844AC38123E8637B0066006D /* ConfirmCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38023E8637B0066006D /* ConfirmCodeRequest.swift */; };
-		844AC38323E8641B0066006D /* ConfirmCodeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38223E8641B0066006D /* ConfirmCodeResponseData.swift */; };
-		844AC38623E865260066006D /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38523E865260066006D /* LoginRequest.swift */; };
-		844AC38823E8652F0066006D /* LoginResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38723E8652F0066006D /* LoginResponseData.swift */; };
-		844AC38B23E866710066006D /* RegisterTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38A23E866710066006D /* RegisterTokenRequest.swift */; };
-		844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38D23E867840066006D /* IntercomTokenRequest.swift */; };
-		844AC39023E867950066006D /* IntercomTokenResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC38F23E867950066006D /* IntercomTokenResponseData.swift */; };
 		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
 		844AC39723E9788D0066006D /* APIAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39623E9788D0066006D /* APIAddress.swift */; };
 		844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallViewController.swift */; };
@@ -51,18 +43,31 @@
 		844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C123EAA72800BECEE6 /* SourceSansPro-Bold.ttf */; };
 		844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C023EAA71C00BECEE6 /* SourceSansPro-SemiBold.ttf */; };
 		844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */; };
+		8482981E24054CDF00E81620 /* APIDoor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482981D24054CDE00E81620 /* APIDoor.swift */; };
+		8482982224054D4B00E81620 /* APICCTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482982124054D4B00E81620 /* APICCTV.swift */; };
+		848298322405655600E81620 /* SendNameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848298252405655600E81620 /* SendNameRequest.swift */; };
+		848298332405655600E81620 /* AddMyPhoneRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848298272405655600E81620 /* AddMyPhoneRequest.swift */; };
+		848298342405655600E81620 /* ConfirmCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848298292405655600E81620 /* ConfirmCodeRequest.swift */; };
+		848298352405655600E81620 /* ConfirmCodeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482982A2405655600E81620 /* ConfirmCodeResponseData.swift */; };
+		848298362405655600E81620 /* RequestCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482982C2405655600E81620 /* RequestCodeRequest.swift */; };
+		848298372405655600E81620 /* RegisterPushTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482982E2405655600E81620 /* RegisterPushTokenRequest.swift */; };
+		848298382405655600E81620 /* GetPaymentsListResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848298302405655600E81620 /* GetPaymentsListResponseData.swift */; };
+		848298392405655600E81620 /* GetPaymentsListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848298312405655600E81620 /* GetPaymentsListRequest.swift */; };
+		848298432405658A00E81620 /* GetAddressListResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482983C2405658A00E81620 /* GetAddressListResponseData.swift */; };
+		848298442405658A00E81620 /* GetAddressListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482983D2405658A00E81620 /* GetAddressListRequest.swift */; };
+		848298452405658A00E81620 /* ResetCodeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482983F2405658A00E81620 /* ResetCodeResponseData.swift */; };
+		848298462405658A00E81620 /* ResetCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848298402405658A00E81620 /* ResetCodeRequest.swift */; };
+		848298472405658A00E81620 /* OpenDoorRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848298422405658A00E81620 /* OpenDoorRequest.swift */; };
 		84854B3B23FA8C38001B44F2 /* LoaderPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */; };
 		84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B3C23FA9918001B44F2 /* ErrorTracker.swift */; };
 		84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4023FA9A99001B44F2 /* ActivityTracker.swift */; };
 		84854B4323FAA266001B44F2 /* NavigationTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4223FAA266001B44F2 /* NavigationTransitions.swift */; };
 		84854B4523FAB4D7001B44F2 /* APIClientName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4423FAB4D7001B44F2 /* APIClientName.swift */; };
-		84854B4823FAD3AC001B44F2 /* SendNameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4723FAD3AC001B44F2 /* SendNameRequest.swift */; };
 		84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4B23FADD94001B44F2 /* CustomRxKeyboard.swift */; };
 		84854B4E23FAEC4F001B44F2 /* BasicTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4D23FAEC4F001B44F2 /* BasicTransitions.swift */; };
 		84854B5023FBD3E7001B44F2 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B4F23FBD3E7001B44F2 /* AppState.swift */; };
 		84854B5323FBFDD6001B44F2 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5223FBFDD6001B44F2 /* PushNotificationService.swift */; };
 		84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5423FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift */; };
-		84854B5823FC27C1001B44F2 /* OpenDoorRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */; };
 		84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5923FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift */; };
 		84854B5C23FC38F3001B44F2 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B5B23FC38F3001B44F2 /* LoadingButton.swift */; };
 		84854B6323FD7FDE001B44F2 /* AllowedPersonDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B6223FD7FDE001B44F2 /* AllowedPersonDataItem.swift */; };
@@ -259,18 +264,10 @@
 
 /* Begin PBXFileReference section */
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8428672D24051F6A004D3F26 /* APIPaymentsListAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIPaymentsListAddress.swift; sourceTree = "<group>"; };
+		8428672F24051F7F004D3F26 /* APIPaymentsListAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIPaymentsListAccount.swift; sourceTree = "<group>"; };
 		843A7A7E23F29A2900840E51 /* FakeNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNavBar.swift; sourceTree = "<group>"; };
 		843A7A8023F29A3400840E51 /* FakeNavBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FakeNavBar.xib; sourceTree = "<group>"; };
-		844AC37223E85C6A0066006D /* RequestCodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCodeRequest.swift; sourceTree = "<group>"; };
-		844AC37B23E861C50066006D /* GetVerifyedAddressesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVerifyedAddressesRequest.swift; sourceTree = "<group>"; };
-		844AC37D23E861D10066006D /* GetVerifyedAddressesResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVerifyedAddressesResponseData.swift; sourceTree = "<group>"; };
-		844AC38023E8637B0066006D /* ConfirmCodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCodeRequest.swift; sourceTree = "<group>"; };
-		844AC38223E8641B0066006D /* ConfirmCodeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCodeResponseData.swift; sourceTree = "<group>"; };
-		844AC38523E865260066006D /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
-		844AC38723E8652F0066006D /* LoginResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseData.swift; sourceTree = "<group>"; };
-		844AC38A23E866710066006D /* RegisterTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTokenRequest.swift; sourceTree = "<group>"; };
-		844AC38D23E867840066006D /* IntercomTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTokenRequest.swift; sourceTree = "<group>"; };
-		844AC38F23E867950066006D /* IntercomTokenResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntercomTokenResponseData.swift; sourceTree = "<group>"; };
 		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
 		844AC39623E9788D0066006D /* APIAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAddress.swift; sourceTree = "<group>"; };
 		844AC39B23E987360066006D /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
@@ -300,18 +297,31 @@
 		844AC3F323EBFF900066006D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		844AC3F423EBFF900066006D /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		8482981D24054CDE00E81620 /* APIDoor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDoor.swift; sourceTree = "<group>"; };
+		8482982124054D4B00E81620 /* APICCTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICCTV.swift; sourceTree = "<group>"; };
+		848298252405655600E81620 /* SendNameRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNameRequest.swift; sourceTree = "<group>"; };
+		848298272405655600E81620 /* AddMyPhoneRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMyPhoneRequest.swift; sourceTree = "<group>"; };
+		848298292405655600E81620 /* ConfirmCodeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmCodeRequest.swift; sourceTree = "<group>"; };
+		8482982A2405655600E81620 /* ConfirmCodeResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmCodeResponseData.swift; sourceTree = "<group>"; };
+		8482982C2405655600E81620 /* RequestCodeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCodeRequest.swift; sourceTree = "<group>"; };
+		8482982E2405655600E81620 /* RegisterPushTokenRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPushTokenRequest.swift; sourceTree = "<group>"; };
+		848298302405655600E81620 /* GetPaymentsListResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPaymentsListResponseData.swift; sourceTree = "<group>"; };
+		848298312405655600E81620 /* GetPaymentsListRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPaymentsListRequest.swift; sourceTree = "<group>"; };
+		8482983C2405658A00E81620 /* GetAddressListResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAddressListResponseData.swift; sourceTree = "<group>"; };
+		8482983D2405658A00E81620 /* GetAddressListRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAddressListRequest.swift; sourceTree = "<group>"; };
+		8482983F2405658A00E81620 /* ResetCodeResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetCodeResponseData.swift; sourceTree = "<group>"; };
+		848298402405658A00E81620 /* ResetCodeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetCodeRequest.swift; sourceTree = "<group>"; };
+		848298422405658A00E81620 /* OpenDoorRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenDoorRequest.swift; sourceTree = "<group>"; };
 		84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderPresentable.swift; sourceTree = "<group>"; };
 		84854B3C23FA9918001B44F2 /* ErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTracker.swift; sourceTree = "<group>"; };
 		84854B4023FA9A99001B44F2 /* ActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTracker.swift; sourceTree = "<group>"; };
 		84854B4223FAA266001B44F2 /* NavigationTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTransitions.swift; sourceTree = "<group>"; };
 		84854B4423FAB4D7001B44F2 /* APIClientName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientName.swift; sourceTree = "<group>"; };
-		84854B4723FAD3AC001B44F2 /* SendNameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendNameRequest.swift; sourceTree = "<group>"; };
 		84854B4B23FADD94001B44F2 /* CustomRxKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRxKeyboard.swift; sourceTree = "<group>"; };
 		84854B4D23FAEC4F001B44F2 /* BasicTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTransitions.swift; sourceTree = "<group>"; };
 		84854B4F23FBD3E7001B44F2 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		84854B5223FBFDD6001B44F2 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
 		84854B5423FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNAuthorizationType+Extensions.swift"; sourceTree = "<group>"; };
-		84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDoorRequest.swift; sourceTree = "<group>"; };
 		84854B5923FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IncomingCallViewModel+Extensions.swift"; sourceTree = "<group>"; };
 		84854B5B23FC38F3001B44F2 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
 		84854B6223FD7FDE001B44F2 /* AllowedPersonDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPersonDataItem.swift; sourceTree = "<group>"; };
@@ -512,6 +522,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8428672324051942004D3F26 /* Geo */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Geo;
+			sourceTree = "<group>";
+		};
+		8428672424051946004D3F26 /* Issues */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Issues;
+			sourceTree = "<group>";
+		};
 		843A7A7D23F29A0D00840E51 /* FakeNavBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -519,58 +543,6 @@
 				843A7A8023F29A3400840E51 /* FakeNavBar.xib */,
 			);
 			path = FakeNavBar;
-			sourceTree = "<group>";
-		};
-		844AC37123E85C4A0066006D /* RequestCode */ = {
-			isa = PBXGroup;
-			children = (
-				844AC37223E85C6A0066006D /* RequestCodeRequest.swift */,
-			);
-			path = RequestCode;
-			sourceTree = "<group>";
-		};
-		844AC37823E8619A0066006D /* GetVerifyedAddresses */ = {
-			isa = PBXGroup;
-			children = (
-				844AC37B23E861C50066006D /* GetVerifyedAddressesRequest.swift */,
-				844AC37D23E861D10066006D /* GetVerifyedAddressesResponseData.swift */,
-			);
-			path = GetVerifyedAddresses;
-			sourceTree = "<group>";
-		};
-		844AC37F23E8636D0066006D /* ConfirmCode */ = {
-			isa = PBXGroup;
-			children = (
-				844AC38023E8637B0066006D /* ConfirmCodeRequest.swift */,
-				844AC38223E8641B0066006D /* ConfirmCodeResponseData.swift */,
-			);
-			path = ConfirmCode;
-			sourceTree = "<group>";
-		};
-		844AC38423E8651B0066006D /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				844AC38523E865260066006D /* LoginRequest.swift */,
-				844AC38723E8652F0066006D /* LoginResponseData.swift */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
-		844AC38923E866630066006D /* RegisterToken */ = {
-			isa = PBXGroup;
-			children = (
-				844AC38A23E866710066006D /* RegisterTokenRequest.swift */,
-			);
-			path = RegisterToken;
-			sourceTree = "<group>";
-		};
-		844AC38C23E867720066006D /* IntercomToken */ = {
-			isa = PBXGroup;
-			children = (
-				844AC38D23E867840066006D /* IntercomTokenRequest.swift */,
-				844AC38F23E867950066006D /* IntercomTokenResponseData.swift */,
-			);
-			path = IntercomToken;
 			sourceTree = "<group>";
 		};
 		844AC39323E9776F0066006D /* AccessService */ = {
@@ -588,8 +560,12 @@
 				844AC39623E9788D0066006D /* APIAddress.swift */,
 				84854B4423FAB4D7001B44F2 /* APIClientName.swift */,
 				E94B6C3A23FFE1D200FD9F65 /* APIIntercomSettings.swift */,
-				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
 				E94B6C4B2405308B00FD9F65 /* APISettingsAddress.swift */,
+				8482982124054D4B00E81620 /* APICCTV.swift */,
+				8482981D24054CDE00E81620 /* APIDoor.swift */,
+				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
+				8428672D24051F6A004D3F26 /* APIPaymentsListAddress.swift */,
+				8428672F24051F7F004D3F26 /* APIPaymentsListAccount.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -597,16 +573,10 @@
 		844AC39923E979BA0066006D /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				E94B6C462404F19D00FD9F65 /* GetSettingsList */,
-				844AC37F23E8636D0066006D /* ConfirmCode */,
-				844AC37823E8619A0066006D /* GetVerifyedAddresses */,
-				E94B6C3C23FFE2D100FD9F65 /* HourGuestAccess */,
-				844AC38C23E867720066006D /* IntercomToken */,
-				844AC38423E8651B0066006D /* Login */,
-				84854B5623FC2583001B44F2 /* OpenDoor */,
-				844AC38923E866630066006D /* RegisterToken */,
-				844AC37123E85C4A0066006D /* RequestCode */,
-				84854B4623FAD3A0001B44F2 /* SendName */,
+				8482983A2405658A00E81620 /* Address */,
+				8428672324051942004D3F26 /* Geo */,
+				8428672424051946004D3F26 /* Issues */,
+				848298232405655600E81620 /* User */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -863,12 +833,105 @@
 			path = Entries;
 			sourceTree = "<group>";
 		};
-		84854B4623FAD3A0001B44F2 /* SendName */ = {
+		848298232405655600E81620 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				84854B4723FAD3AC001B44F2 /* SendNameRequest.swift */,
+				848298262405655600E81620 /* AddMyPhone */,
+				8482982B2405655600E81620 /* RequestCode */,
+				8482982D2405655600E81620 /* RegisterPushToken */,
+				848298282405655600E81620 /* ConfirmCode */,
+				8482982F2405655600E81620 /* GetPaymentsList */,
+				848298242405655600E81620 /* SendName */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		848298242405655600E81620 /* SendName */ = {
+			isa = PBXGroup;
+			children = (
+				848298252405655600E81620 /* SendNameRequest.swift */,
 			);
 			path = SendName;
+			sourceTree = "<group>";
+		};
+		848298262405655600E81620 /* AddMyPhone */ = {
+			isa = PBXGroup;
+			children = (
+				848298272405655600E81620 /* AddMyPhoneRequest.swift */,
+			);
+			path = AddMyPhone;
+			sourceTree = "<group>";
+		};
+		848298282405655600E81620 /* ConfirmCode */ = {
+			isa = PBXGroup;
+			children = (
+				848298292405655600E81620 /* ConfirmCodeRequest.swift */,
+				8482982A2405655600E81620 /* ConfirmCodeResponseData.swift */,
+			);
+			path = ConfirmCode;
+			sourceTree = "<group>";
+		};
+		8482982B2405655600E81620 /* RequestCode */ = {
+			isa = PBXGroup;
+			children = (
+				8482982C2405655600E81620 /* RequestCodeRequest.swift */,
+			);
+			path = RequestCode;
+			sourceTree = "<group>";
+		};
+		8482982D2405655600E81620 /* RegisterPushToken */ = {
+			isa = PBXGroup;
+			children = (
+				8482982E2405655600E81620 /* RegisterPushTokenRequest.swift */,
+			);
+			path = RegisterPushToken;
+			sourceTree = "<group>";
+		};
+		8482982F2405655600E81620 /* GetPaymentsList */ = {
+			isa = PBXGroup;
+			children = (
+				848298302405655600E81620 /* GetPaymentsListResponseData.swift */,
+				848298312405655600E81620 /* GetPaymentsListRequest.swift */,
+			);
+			path = GetPaymentsList;
+			sourceTree = "<group>";
+		};
+		8482983A2405658A00E81620 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C3C23FFE2D100FD9F65 /* HourGuestAccess */,
+				848298412405658A00E81620 /* OpenDoor */,
+				8482983E2405658A00E81620 /* ResetCode */,
+				E94B6C462404F19D00FD9F65 /* GetSettingsList */,
+				8482983B2405658A00E81620 /* GetAddressList */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		8482983B2405658A00E81620 /* GetAddressList */ = {
+			isa = PBXGroup;
+			children = (
+				8482983C2405658A00E81620 /* GetAddressListResponseData.swift */,
+				8482983D2405658A00E81620 /* GetAddressListRequest.swift */,
+			);
+			path = GetAddressList;
+			sourceTree = "<group>";
+		};
+		8482983E2405658A00E81620 /* ResetCode */ = {
+			isa = PBXGroup;
+			children = (
+				8482983F2405658A00E81620 /* ResetCodeResponseData.swift */,
+				848298402405658A00E81620 /* ResetCodeRequest.swift */,
+			);
+			path = ResetCode;
+			sourceTree = "<group>";
+		};
+		848298412405658A00E81620 /* OpenDoor */ = {
+			isa = PBXGroup;
+			children = (
+				848298422405658A00E81620 /* OpenDoorRequest.swift */,
+			);
+			path = OpenDoor;
 			sourceTree = "<group>";
 		};
 		84854B5123FBFDBF001B44F2 /* PushNotificationService */ = {
@@ -877,14 +940,6 @@
 				84854B5223FBFDD6001B44F2 /* PushNotificationService.swift */,
 			);
 			path = PushNotificationService;
-			sourceTree = "<group>";
-		};
-		84854B5623FC2583001B44F2 /* OpenDoor */ = {
-			isa = PBXGroup;
-			children = (
-				84854B5723FC27C1001B44F2 /* OpenDoorRequest.swift */,
-			);
-			path = OpenDoor;
 			sourceTree = "<group>";
 		};
 		84898A7E23F144D400E6B78E /* Cells */ = {
@@ -2046,21 +2101,18 @@
 				E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
 				E94B6C3B23FFE1D200FD9F65 /* APIIntercomSettings.swift in Sources */,
-				844AC37E23E861D10066006D /* GetVerifyedAddressesResponseData.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
-				844AC38823E8652F0066006D /* LoginResponseData.swift in Sources */,
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
-				844AC39023E867950066006D /* IntercomTokenResponseData.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
 				84AA8D6623E2F2A8001B3B43 /* TransportType+Extensions.swift in Sources */,
-				844AC37C23E861C50066006D /* GetVerifyedAddressesRequest.swift in Sources */,
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
 				E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */,
 				84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */,
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
+				848298352405655600E81620 /* ConfirmCodeResponseData.swift in Sources */,
 				84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */,
 				E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */,
 				84B89A9023F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift in Sources */,
@@ -2071,25 +2123,25 @@
 				844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */,
 				E94B6C1823FAC5B600FD9F65 /* NewAllowedPersonViewController.swift in Sources */,
 				E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */,
-				844AC38123E8637B0066006D /* ConfirmCodeRequest.swift in Sources */,
 				84898A9823F1556B00E6B78E /* SettingsSectionModel.swift in Sources */,
 				E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */,
 				E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */,
 				848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */,
 				84898A8E23F1540C00E6B78E /* SettingsActionCell.swift in Sources */,
+				8482981E24054CDF00E81620 /* APIDoor.swift in Sources */,
 				E94B6C3923FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
-				844AC38E23E867840066006D /* IntercomTokenRequest.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
 				844AC39723E9788D0066006D /* APIAddress.swift in Sources */,
-				844AC38323E8641B0066006D /* ConfirmCodeResponseData.swift in Sources */,
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
+				848298362405655600E81620 /* RequestCodeRequest.swift in Sources */,
 				84AA8D5B23E2CEC5001B3B43 /* BaseAPIResponse.swift in Sources */,
+				8428673024051F7F004D3F26 /* APIPaymentsListAccount.swift in Sources */,
 				E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */,
 				E94B6C4A2404F2D100FD9F65 /* GetSettingsListResponseData.swift in Sources */,
 				E9A1D78323F27AE500234B2A /* AddressConfirmationViewController.swift in Sources */,
@@ -2106,6 +2158,7 @@
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				E94B6C4C2405308B00FD9F65 /* APISettingsAddress.swift in Sources */,
+				848298462405658A00E81620 /* ResetCodeRequest.swift in Sources */,
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
@@ -2113,22 +2166,22 @@
 				E94B6C3723FD728F00FD9F65 /* RoundedImageView.swift in Sources */,
 				84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */,
 				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
+				848298432405658A00E81620 /* GetAddressListResponseData.swift in Sources */,
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
 				84854B5C23FC38F3001B44F2 /* LoadingButton.swift in Sources */,
 				E94057FC23F6724100623746 /* AddressAccessViewModel.swift in Sources */,
+				848298342405655600E81620 /* ConfirmCodeRequest.swift in Sources */,
 				84B89A9323F2FA6E009692B4 /* ServiceIsNotActivatedViewModel.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
 				E9A4D48A23EC27E20070A591 /* PinNumberField.swift in Sources */,
-				844AC38B23E866710066006D /* RegisterTokenRequest.swift in Sources */,
 				E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */,
 				E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */,
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
 				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
-				844AC37323E85C6A0066006D /* RequestCodeRequest.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
 				E94B6C4323FFF2A800FD9F65 /* Date+Helper.swift in Sources */,
 				84854B6323FD7FDE001B44F2 /* AllowedPersonDataItem.swift in Sources */,
@@ -2145,8 +2198,6 @@
 				84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */,
 				844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */,
 				84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */,
-				84854B4823FAD3AC001B44F2 /* SendNameRequest.swift in Sources */,
-				844AC38623E865260066006D /* LoginRequest.swift in Sources */,
 				84854B5023FBD3E7001B44F2 /* AppState.swift in Sources */,
 				844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */,
 				84AA8D6023E2E622001B3B43 /* APIWrapper.swift in Sources */,
@@ -2155,6 +2206,7 @@
 				84854B6723FD809E001B44F2 /* AllowedPersonSectionModel.swift in Sources */,
 				84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */,
 				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
+				8428672E24051F6A004D3F26 /* APIPaymentsListAddress.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
 				E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */,
 				844AC3DE23EBFE1E0066006D /* ChatViewModel.swift in Sources */,
@@ -2166,14 +2218,19 @@
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				84D6445923F68AB200AD87EF /* AdvancedSettingsViewModel.swift in Sources */,
 				844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */,
+				848298382405655600E81620 /* GetPaymentsListResponseData.swift in Sources */,
 				84B89A9523F2FA8A009692B4 /* ServiceIsActivatedViewModel.swift in Sources */,
 				844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */,
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
+				8482982224054D4B00E81620 /* APICCTV.swift in Sources */,
+				848298372405655600E81620 /* RegisterPushTokenRequest.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
+				848298472405658A00E81620 /* OpenDoorRequest.swift in Sources */,
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
+				848298442405658A00E81620 /* GetAddressListRequest.swift in Sources */,
 				E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */,
 				84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
@@ -2184,15 +2241,18 @@
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
 				E94B6C3E23FFE30A00FD9F65 /* IntercomRequest.swift in Sources */,
-				84854B5823FC27C1001B44F2 /* OpenDoorRequest.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 				84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */,
+				848298452405658A00E81620 /* ResetCodeResponseData.swift in Sources */,
 				84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */,
 				84854B4523FAB4D7001B44F2 /* APIClientName.swift in Sources */,
+				848298392405655600E81620 /* GetPaymentsListRequest.swift in Sources */,
+				848298322405655600E81620 /* SendNameRequest.swift in Sources */,
 				84CC15E523EC999700A1CB95 /* AddressesListSectionUpdateKind.swift in Sources */,
 				84854B6523FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift in Sources */,
 				84CC15E323EC86D900A1CB95 /* ObjectLockButton.swift in Sources */,
 				84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */,
+				848298332405655600E81620 /* AddMyPhoneRequest.swift in Sources */,
 				84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */,
 				84854B5323FBFDD6001B44F2 /* PushNotificationService.swift in Sources */,
 				84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */,

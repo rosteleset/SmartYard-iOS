@@ -16,12 +16,115 @@ class APIWrapper {
     let apiService: APIService
     let accessService: AccessService
     
-    let login = "f70392"
-    let password = "d342a76ec"
-    
     init(apiService: APIService, accessService: AccessService) {
         self.apiService = apiService
         self.accessService = accessService
+    }
+    
+    // Address
+    
+    func openDoor(domophoneId: String, doorId: Int?) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = OpenDoorRequest(accessToken: accessToken, domophoneId: domophoneId, doorId: doorId)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performOpenDoorRequest(request) { result in
+                switch result {
+                case .success: single(.success(()))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func resetCode(flatId: String) -> Single<ResetCodeResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = ResetCodeRequest(accessToken: accessToken, flatId: flatId)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performResetCodeRequest(request) { result in
+                switch result {
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func getAddressList() -> Single<GetAddressListResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = GetAddressListRequest(accessToken: accessToken)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performGetAddressListRequest(request) { result in
+                switch result {
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    // User
+    
+    func addMyPhone(login: String, password: String, comment: String?, useForNotifications: Bool?) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = AddMyPhoneRequest(
+            accessToken: accessToken,
+            login: login,
+            password: password,
+            comment: comment,
+            useForNotifications: useForNotifications
+        )
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performAddMyPhoneRequest(request) { result in
+                switch result {
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
     }
     
     func requestCode(userPhone: String) -> Single<Void?> {
@@ -34,6 +137,35 @@ class APIWrapper {
             }
             
             self.apiService.performRequestCodeRequest(request) { result in
+                switch result {
+                case .success: single(.success(()))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func registerPushToken(pushToken: String, clientId: String?, type: TokenType) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = RegisterPushTokenRequest(
+            accessToken: accessToken,
+            pushToken: pushToken,
+            clientId: clientId,
+            type: type
+        )
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performRegisterPushTokenRequest(request) { result in
                 switch result {
                 case .success: single(.success(()))
                 case let .failure(error): single(.error(error))
@@ -68,36 +200,12 @@ class APIWrapper {
         }
     }
     
-    func login(login: String, password: String) -> Single<LoginResponseData?> {
-        guard accessService.accessToken == nil else {
-            return .error(NSError.APIWrapperError.alreadyLoggedInError)
-        }
-        
-        let request = LoginRequest(login: login, password: password)
-        
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performLoginRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    func getVerifyedAddresses() -> Single<GetVerifyedAddressesResponseData?> {
+    func getPaymentsList() -> Single<GetPaymentsListResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = GetVerifyedAddressesRequest(accessToken: accessToken)
+        let request = GetPaymentsListRequest(accessToken: accessToken)
         
         return Single.create { [weak self] single in
             guard let self = self else {
@@ -105,94 +213,7 @@ class APIWrapper {
                 return Disposables.create()
             }
             
-            self.apiService.performGetVerifyedAddressesRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    func registerToken(pushToken: String, clientId: String?, type: TokenType) -> Single<Void?> {
-        guard let accessToken = accessService.accessToken else {
-            return .error(NSError.APIWrapperError.accessTokenMissingError)
-        }
-        
-        let request = RegisterTokenRequest(
-            accessToken: accessToken,
-            pushToken: pushToken,
-            clientId: clientId,
-            type: type
-        )
-        
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performRegisterTokenRequest(request) { result in
-                switch result {
-                case .success: single(.success(()))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    func updateTokenState(pushToken: String, clientId: String, newState: TokenState) -> Single<Void?> {
-        guard let accessToken = accessService.accessToken else {
-            return .error(NSError.APIWrapperError.accessTokenMissingError)
-        }
-        
-        let request = IntercomTokenRequest(
-            accessToken: accessToken,
-            pushToken: pushToken,
-            clientId: clientId,
-            state: newState
-        )
-        
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performUpdateTokenStateRequest(request) { result in
-                switch result {
-                case .success: single(.success(()))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    func checkTokenState(pushToken: String, clientId: String) -> Single<IntercomTokenResponseData?> {
-        guard let accessToken = accessService.accessToken else {
-            return .error(NSError.APIWrapperError.accessTokenMissingError)
-        }
-        
-        let request = IntercomTokenRequest(
-            accessToken: accessToken,
-            pushToken: pushToken,
-            clientId: clientId,
-            state: nil
-        )
-        
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performCheckTokenStateRequest(request) { result in
+            self.apiService.performGetPaymentsListRequest(request) { result in
                 switch result {
                 case let .success(data): single(.success(data))
                 case let .failure(error): single(.error(error))
@@ -217,30 +238,6 @@ class APIWrapper {
             }
             
             self.apiService.performSendNameRequest(request) { result in
-                switch result {
-                case .success: single(.success(()))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
-    }
-    
-    func openDoor(domophoneId: String, doorId: Int?) -> Single<Void?> {
-        guard let accessToken = accessService.accessToken else {
-            return .error(NSError.APIWrapperError.accessTokenMissingError)
-        }
-        
-        let request = OpenDoorRequest(accessToken: accessToken, domophoneId: domophoneId, doorId: doorId)
-        
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performOpenDoorRequest(request) { result in
                 switch result {
                 case .success: single(.success(()))
                 case let .failure(error): single(.error(error))

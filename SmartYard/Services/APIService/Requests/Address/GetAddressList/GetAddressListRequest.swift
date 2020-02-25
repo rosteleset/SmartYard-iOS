@@ -1,18 +1,18 @@
 //
-//  GetVerifyedAddressesRequest.swift
+//  GetAddressListRequest.swift
 //  SmartYard
 //
-//  Created by admin on 03/02/2020.
+//  Created by admin on 25/02/2020.
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
-struct GetVerifyedAddressesRequest {
+struct GetAddressListRequest {
     
     let accessToken: String
     
 }
 
-extension GetVerifyedAddressesRequest {
+extension GetAddressListRequest {
     
     var requestParameters: [String: Any] {
         return [:]

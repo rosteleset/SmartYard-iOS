@@ -10,16 +10,18 @@ import Moya
 
 enum APITarget {
     
-    case confirmCode(request: ConfirmCodeRequest)
-    case getVerifyedAddresses(request: GetVerifyedAddressesRequest)
-    case login(request: LoginRequest)
-    case intercomToken(request: IntercomTokenRequest)
-    case registerToken(request: RegisterTokenRequest)
-    case requestCode(request: RequestCodeRequest)
-    case sendName(request: SendNameRequest)
     case openDoor(request: OpenDoorRequest)
+    case resetCode(request: ResetCodeRequest)
+    case getAddressList(request: GetAddressListRequest)
     case grantHourGuestAccess(request: IntercomRequest)
     case getSettingsList(request: GetSettingsListRequest)
+    
+    case addMyPhone(request: AddMyPhoneRequest)
+    case requestCode(request: RequestCodeRequest)
+    case registerPushToken(request: RegisterPushTokenRequest)
+    case confirmCode(request: ConfirmCodeRequest)
+    case getPaymentsList(request: GetPaymentsListRequest)
+    case sendName(request: SendNameRequest)
     
 }
 
@@ -31,16 +33,18 @@ extension APITarget: TargetType {
     
     var path: String {
         switch self {
-        case .confirmCode: return "user/confirmCode"
-        case .getVerifyedAddresses: return "user/getVerifyedAddresses"
-        case .login: return "user/login"
-        case .intercomToken: return "user/intercomPushToken"
-        case .registerToken: return "user/registerPushToken"
-        case .requestCode: return "user/requestCode"
-        case .sendName: return "user/sendName"
-        case .openDoor: return "domophone/openDoor"
         case .grantHourGuestAccess: return "address/intercom"
+        case .openDoor: return "address/openDoor"
+        case .resetCode: return "address/resetCode"
         case .getSettingsList: return "address/getSettingsList"
+        case .getAddressList: return "address/getAddressList"
+
+        case .addMyPhone: return "user/addMyPhone"
+        case .requestCode: return "user/requestCode"
+        case .registerPushToken: return "user/registerPushToken"
+        case .confirmCode: return "user/confirmCode"
+        case .getPaymentsList: return "user/getPaymentsList"
+        case .sendName: return "user/sendName"
         }
     }
     
@@ -55,13 +59,16 @@ extension APITarget: TargetType {
         
         let authorization: String? = {
             switch self {
-            case .getVerifyedAddresses(let request): return request.accessToken
-            case .intercomToken(let request): return request.accessToken
-            case .registerToken(let request): return request.accessToken
-            case .sendName(let request): return request.accessToken
-            case .openDoor(let request): return request.accessToken
             case .grantHourGuestAccess(let request): return request.accessToken
+            case .openDoor(let request): return request.accessToken
+            case .resetCode(let request): return request.accessToken
             case .getSettingsList(let request): return request.accessToken
+            case .getAddressList(let request): return request.accessToken
+                
+            case .addMyPhone(let request): return request.accessToken
+            case .registerPushToken(let request): return request.accessToken
+            case .getPaymentsList(let request): return request.accessToken
+            case .sendName(let request): return request.accessToken
             default: return nil
             }
         }()
@@ -79,16 +86,18 @@ extension APITarget: TargetType {
     
     var requestParameters: [String: Any] {
         switch self {
-        case .confirmCode(let request): return request.requestParameters
-        case .getVerifyedAddresses(let request): return request.requestParameters
-        case .login(let request): return request.requestParameters
-        case .intercomToken(let request): return request.requestParameters
-        case .registerToken(let request): return request.requestParameters
-        case .requestCode(let request): return request.requestParameters
-        case .sendName(let request): return request.requestParameters
-        case .openDoor(let request): return request.requestParameters
         case .grantHourGuestAccess(let request): return request.requestParameters
+        case .openDoor(let request): return request.requestParameters
+        case .resetCode(let request): return request.requestParameters
         case .getSettingsList(let request): return request.requestParameters
+        case .getAddressList(let request): return request.requestParameters
+
+        case .addMyPhone(let request): return request.requestParameters
+        case .requestCode(let request): return request.requestParameters
+        case .registerPushToken(let request): return request.requestParameters
+        case .confirmCode(let request): return request.requestParameters
+        case .getPaymentsList(let request): return request.requestParameters
+        case .sendName(let request): return request.requestParameters
         }
     }
     
