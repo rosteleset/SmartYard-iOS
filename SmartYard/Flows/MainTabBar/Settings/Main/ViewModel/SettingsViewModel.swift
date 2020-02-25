@@ -75,7 +75,7 @@ class SettingsViewModel: BaseViewModel {
                     if isActivated {
                         self?.router.trigger(.serviceIsActivated)
                     } else {
-                        // TODO
+                        self?.router.trigger(.serviceUnavailable)
                     }
                 }
             )
