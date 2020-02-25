@@ -124,11 +124,19 @@ class APIService {
     func performGrantHourGuestAccessRequest(
         _ request: HourGuestAccessRequest,
         completion: ((Swift.Result<HourGuestAccessResponseData, Error>) -> Void)?
-        ) {
+    ) {
         provider.request(
             .grantHourGuestAccess(request: request),
             completion: createInnerCompletionBlockWithData(from: completion)
         )
+    }
+    
+    /// Запрос списка адресов для экрана настроек
+    func performSettingsAddressListRequest(
+        _ request: HourGuestAccessRequest,
+        completion: ((Swift.Result<HourGuestAccessResponseData, Error>) -> Void)?
+        ) {
+        
     }
     
 }
