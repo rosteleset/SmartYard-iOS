@@ -105,10 +105,7 @@ class SettingsViewController: BaseViewController {
         output.endUpdating
             .drive(
                 onNext: { [weak self] in
-                    // Необходимо, чтобы refreshControl не перекрывал контент collection view
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-                        self?.refreshControl.endRefreshing()
-                    }
+                    self?.refreshControl.endRefreshing()
                 }
             )
             .disposed(by: disposeBag)
@@ -133,12 +130,16 @@ class SettingsViewController: BaseViewController {
             
             // MARK: Ищем секцию, которая содержит Header с указанным идентификатором, и скроллим к нему
             
-            .map { updateKind, sectionModels -> (SettingsSectionUpdateKind, IndexPath)? in
+            .map { [weak self] updateKind, sectionModels -> (SettingsSectionUpdateKind, IndexPath)? in
                 let neededSectionOffset = sectionModels.enumerated().first { _, model in
                     model.items.contains { $0.identity == updateKind.associatedIdentity }
                 }?.offset
                 
                 guard let section = neededSectionOffset else {
+                    return nil
+                }
+                
+                guard !(self?.collectionView.refreshControl?.isRefreshing ?? false) else {
                     return nil
                 }
                 

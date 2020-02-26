@@ -31,7 +31,7 @@ class SettingsViewModel: BaseViewModel {
     func transform(_ input: Input) -> Output {
         Driver<Void>
             .merge(
-                input.updateDataTrigger.asDriver(),
+                input.updateDataTrigger.asDriver().delay(.milliseconds(1000)),
                 .just(())
             )
             .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in

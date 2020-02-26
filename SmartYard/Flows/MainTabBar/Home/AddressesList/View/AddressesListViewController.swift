@@ -130,12 +130,16 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             
             // MARK: Ищем секцию, которая содержит Header с указанным идентификатором, и скроллим к нему
             
-            .map { updateKind, sectionModels -> (AddressesListSectionUpdateKind, IndexPath)? in
+            .map { [weak self] updateKind, sectionModels -> (AddressesListSectionUpdateKind, IndexPath)? in
                 let neededSectionOffset = sectionModels.enumerated().first { _, model in
                     model.items.contains { $0.identity == updateKind.associatedIdentity }
                 }?.offset
                 
                 guard let section = neededSectionOffset else {
+                    return nil
+                }
+                
+                guard !(self?.collectionView.refreshControl?.isRefreshing ?? false) else {
                     return nil
                 }
                 
@@ -203,7 +207,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureCollectionView() {
-        collectionView.addSubview(refreshControl)
+        collectionView.refreshControl = refreshControl
         
         [
             AddressesListHeaderCell.self,
