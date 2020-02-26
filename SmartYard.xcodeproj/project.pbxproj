@@ -1096,10 +1096,10 @@
 		84AA8D4423E2CD0C001B3B43 /* APIService */ = {
 			isa = PBXGroup;
 			children = (
-				E94B6C5F24068A0A00FD9F65 /* APIWrapper */,
 				84AA8D4523E2CD3F001B3B43 /* APIService.swift */,
 				84AA8D4723E2CD48001B3B43 /* APITarget.swift */,
 				84AA8D4923E2CD5E001B3B43 /* BaseRequestRetrier.swift */,
+				E94B6C5F24068A0A00FD9F65 /* APIWrapper */,
 				844AC39823E979AB0066006D /* Models */,
 				844AC39923E979BA0066006D /* Requests */,
 			);
