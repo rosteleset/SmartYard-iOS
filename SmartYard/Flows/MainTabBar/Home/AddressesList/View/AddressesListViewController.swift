@@ -75,8 +75,6 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         output.sectionModels
             .do(
                 onNext: { [weak self] models in
-                    self?.refreshControl.endRefreshing()
-                    
                     let itemsCountDict: [Int: Int] = models.enumerated().reduce([:]) { dict, enumeration in
                         let (offset, element) = enumeration
                         
@@ -89,6 +87,14 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .drive(collectionView.rx.items(dataSource: dataSource!))
+            .disposed(by: disposeBag)
+        
+        output.reloadingFinished
+            .drive(
+                onNext: { [weak self] in
+                    self?.refreshControl.endRefreshing()
+                }
+            )
             .disposed(by: disposeBag)
         
         // MARK: Скроллим таблицу при сворачивании / разворачивании секций для лучшего UX

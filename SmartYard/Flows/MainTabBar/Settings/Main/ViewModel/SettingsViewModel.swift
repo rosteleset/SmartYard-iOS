@@ -29,15 +29,9 @@ class SettingsViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
-        let refreshDataTrigger = PublishSubject<Void>()
-        
-        input.updateDataTrigger
-            .drive(refreshDataTrigger)
-            .disposed(by: disposeBag)
-        
         Driver<Void>
             .merge(
-                refreshDataTrigger.asDriverOnErrorJustComplete(),
+                input.updateDataTrigger.asDriver(),
                 .just(())
             )
             .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
@@ -211,18 +205,10 @@ class SettingsViewModel: BaseViewModel {
                 return self?.createSections(data: data, expansionStateDict: expansionStateDict) ?? []
             }
         
-        let endUpdatingTrigger = PublishSubject<Void>()
-        
-        loadedData
-            .asDriverOnErrorJustComplete()
-            .mapToVoid()
-            .drive(endUpdatingTrigger)
-            .disposed(by: disposeBag)
-        
         return Output(
             sectionModels: sectionModels,
             updateKind: updateKind,
-            endUpdating: endUpdatingTrigger.asDriverOnErrorJustComplete()
+            endUpdating: loadedData.asDriverOnErrorJustComplete().mapToVoid()
         )
     }
     
