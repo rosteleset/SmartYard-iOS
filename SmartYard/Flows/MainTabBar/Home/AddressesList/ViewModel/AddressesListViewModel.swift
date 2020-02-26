@@ -76,7 +76,21 @@ class AddressesListViewModel: BaseViewModel {
                 }
             )
             .ignoreNil()
-            .drive(loadedData)
+            .withLatestFrom(areSectionsExpanded.asDriver(onErrorJustReturn: [:])) { ($0, $1) }
+            .do(
+                onNext: { [weak self] args in
+                    let (newData, expansionStateDict) = args
+                    
+                    self?.updateSectionExpansionStates(expansionStateDict: expansionStateDict, newData: newData)
+                }
+            )
+            .drive(
+                onNext: { [weak self] args in
+                    let (newData, _) = args
+                    
+                    self?.loadedData.onNext(newData)
+                }
+            )
             .disposed(by: disposeBag)
         
         // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг
@@ -86,7 +100,7 @@ class AddressesListViewModel: BaseViewModel {
         
         input.guestAccessRequested
             .flatMapLatest { [weak self] identity -> Driver<AddressesListDataItemIdentity?> in
-                guard let self = self, case let .object(domophoneId, doorId, _) = identity else {
+                guard let self = self, case let .object(_, domophoneId, doorId, _) = identity else {
                     return .empty()
                 }
                 
@@ -130,7 +144,7 @@ class AddressesListViewModel: BaseViewModel {
             .map { args -> ((String, Bool), [String: Bool]) in
                 var (addressId, dict) = args
                 
-                let newState = !dict[addressId, default: true]
+                let newState = !dict[addressId, default: false]
                 dict[addressId] = newState
                 
                 return ((addressId, newState), dict)
@@ -216,6 +230,19 @@ class AddressesListViewModel: BaseViewModel {
         }
     }
     
+    private func updateSectionExpansionStates(expansionStateDict: [String: Bool], newData: GetAddressListResponseData) {
+        var mutableDict = expansionStateDict
+        
+        newData.enumerated().forEach { args in
+            let (offset, address) = args
+            
+            let addressId = (address.houseId ?? "") + address.address
+            mutableDict[addressId] = mutableDict[addressId] ?? (offset == 0 ? true : false)
+        }
+        
+        areSectionsExpanded.onNext(mutableDict)
+    }
+    
     private func createSections(
         data: GetAddressListResponseData,
         expansionStateDict: [String: Bool],
@@ -224,7 +251,7 @@ class AddressesListViewModel: BaseViewModel {
         // swiftlint:disable:next closure_body_length
         let sectionModels = data.map { address -> AddressesListSectionModel in
             let addressId = (address.houseId ?? "") + address.address
-            let isSectionExpanded = expansionStateDict[addressId, default: true]
+            let isSectionExpanded = expansionStateDict[addressId, default: false]
             
             let header: AddressesListDataItem = .header(
                 identity: .header(addressId: addressId),
@@ -239,6 +266,7 @@ class AddressesListViewModel: BaseViewModel {
                 
                 let doors = address.doors.map { door -> AddressesListDataItem in
                     let identity = AddressesListDataItemIdentity.object(
+                        addressId: addressId,
                         domophoneId: door.domophoneId,
                         doorId: door.doorId,
                         entrance: door.entrance
