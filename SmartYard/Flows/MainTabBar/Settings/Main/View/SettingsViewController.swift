@@ -21,6 +21,8 @@ class SettingsViewController: BaseViewController {
     
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<SettingsSectionModel>?
     
+    private let refreshControl = UIRefreshControl()
+    
     // MARK: Это костыль для того, чтобы понять, сколько на самом деле ячеек внутри секции
     // В методе configureCell у RxDataSource мы должны сконфигурировать ячейку
     // Но проблема в том, что RxDataSource выполняет операции обновления и добавления ячеек отдельно
@@ -61,7 +63,8 @@ class SettingsViewController: BaseViewController {
         let input = SettingsViewModel.Input(
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
             serviceSelected: serviceButtonTapTrigger.asDriverOnErrorJustComplete(),
-            advancedSettingsTrigger: settingsButton.rx.tap.asDriver()
+            advancedSettingsTrigger: settingsButton.rx.tap.asDriver(),
+            updateDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
@@ -99,6 +102,14 @@ class SettingsViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
+        output.endUpdating
+            .drive(
+                onNext: { [weak self] in
+                    self?.refreshControl.endRefreshing()
+                }
+            )
+            .disposed(by: disposeBag)
+        
         collectionView.rx
             .observeWeakly(CGSize.self, "contentSize", options: [.new])
             .asDriver(onErrorJustReturn: nil)
@@ -119,12 +130,16 @@ class SettingsViewController: BaseViewController {
             
             // MARK: Ищем секцию, которая содержит Header с указанным идентификатором, и скроллим к нему
             
-            .map { updateKind, sectionModels -> (SettingsSectionUpdateKind, IndexPath)? in
+            .map { [weak self] updateKind, sectionModels -> (SettingsSectionUpdateKind, IndexPath)? in
                 let neededSectionOffset = sectionModels.enumerated().first { _, model in
                     model.items.contains { $0.identity == updateKind.associatedIdentity }
                 }?.offset
                 
                 guard let section = neededSectionOffset else {
+                    return nil
+                }
+                
+                guard !(self?.collectionView.refreshControl?.isRefreshing ?? false) else {
                     return nil
                 }
                 
@@ -203,6 +218,9 @@ class SettingsViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         self.dataSource = dataSource
+        
+        collectionView.refreshControl = refreshControl
+        refreshControl.tintColor = UIColor.SmartYard.gray
     }
     
     private func configureCell(

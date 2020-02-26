@@ -185,7 +185,8 @@ class AddressesListViewModel: BaseViewModel {
         return Output(
             sectionModels: sectionModels,
             updateKind: updateKind,
-            isLoading: activityTracker.asDriver()
+            isLoading: activityTracker.asDriver(),
+            reloadingFinished: loadedData.asDriverOnErrorJustComplete().mapToVoid()
         )
     }
 
@@ -277,6 +278,7 @@ extension AddressesListViewModel {
         let sectionModels: Driver<[AddressesListSectionModel]>
         let updateKind: Driver<AddressesListSectionUpdateKind>
         let isLoading: Driver<Bool>
+        let reloadingFinished: Driver<Void>
     }
     
 }

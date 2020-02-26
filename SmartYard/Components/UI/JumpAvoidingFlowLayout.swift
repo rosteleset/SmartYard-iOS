@@ -16,7 +16,15 @@ class JumpAvoidingFlowLayout: UICollectionViewFlowLayout {
         }
         
         if collectionViewContentSize.height <= collectionView.bounds.size.height {
-            return CGPoint(x: proposedContentOffset.x, y: 0)
+            let refreshControlHeight: CGFloat = {
+                guard let refreshControl = collectionView.refreshControl, refreshControl.isRefreshing else {
+                    return 0
+                }
+                
+                return refreshControl.bounds.height
+            }()
+            
+            return CGPoint(x: proposedContentOffset.x, y: 0 - refreshControlHeight)
         }
         
         return proposedContentOffset

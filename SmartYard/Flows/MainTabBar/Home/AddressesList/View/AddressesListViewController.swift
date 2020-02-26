@@ -75,8 +75,6 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         output.sectionModels
             .do(
                 onNext: { [weak self] models in
-                    self?.refreshControl.endRefreshing()
-                    
                     let itemsCountDict: [Int: Int] = models.enumerated().reduce([:]) { dict, enumeration in
                         let (offset, element) = enumeration
                         
@@ -89,6 +87,14 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .drive(collectionView.rx.items(dataSource: dataSource!))
+            .disposed(by: disposeBag)
+        
+        output.reloadingFinished
+            .drive(
+                onNext: { [weak self] in
+                    self?.refreshControl.endRefreshing()
+                }
+            )
             .disposed(by: disposeBag)
         
         // MARK: Скроллим таблицу при сворачивании / разворачивании секций для лучшего UX
@@ -124,12 +130,16 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             
             // MARK: Ищем секцию, которая содержит Header с указанным идентификатором, и скроллим к нему
             
-            .map { updateKind, sectionModels -> (AddressesListSectionUpdateKind, IndexPath)? in
+            .map { [weak self] updateKind, sectionModels -> (AddressesListSectionUpdateKind, IndexPath)? in
                 let neededSectionOffset = sectionModels.enumerated().first { _, model in
                     model.items.contains { $0.identity == updateKind.associatedIdentity }
                 }?.offset
                 
                 guard let section = neededSectionOffset else {
+                    return nil
+                }
+                
+                guard !(self?.collectionView.refreshControl?.isRefreshing ?? false) else {
                     return nil
                 }
                 
@@ -197,7 +207,8 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureCollectionView() {
-        collectionView.addSubview(refreshControl)
+        collectionView.refreshControl = refreshControl
+        refreshControl.tintColor = UIColor.SmartYard.gray
         
         [
             AddressesListHeaderCell.self,
