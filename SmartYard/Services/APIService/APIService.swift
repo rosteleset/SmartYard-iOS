@@ -149,7 +149,21 @@ class APIService {
         _ request: GetAddressRequest,
         completion: ((Swift.Result<GetAddressResponseData, Error>) -> Void)?
     ) {
-        provider.request(<#T##target: APITarget##APITarget#>, completion: <#T##Completion##Completion##(Result<Response, MoyaError>) -> Void#>)
+        provider.request(
+            .getAddress(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
+    /// Запрос получения геокоординаты по адресу
+    func perormGetGeoCoderRequest(
+        _ request: GeoCoderRequest,
+        completion: ((Swift.Result<GeoCoderResponseData, Error>) -> Void)?
+        ) {
+        provider.request(
+            .getGeoCoder(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
     }
     
 }

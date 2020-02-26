@@ -24,7 +24,7 @@ enum APITarget {
     case sendName(request: SendNameRequest)
     
     case getAddress(request: GetAddressRequest)
-    //case get
+    case getGeoCoder(request: GeoCoderRequest)
     
 }
 
@@ -41,14 +41,17 @@ extension APITarget: TargetType {
         case .resetCode: return "address/resetCode"
         case .getSettingsList: return "address/getSettingsList"
         case .getAddressList: return "address/getAddressList"
-
+            
         case .addMyPhone: return "user/addMyPhone"
         case .requestCode: return "user/requestCode"
         case .registerPushToken: return "user/registerPushToken"
         case .confirmCode: return "user/confirmCode"
         case .getPaymentsList: return "user/getPaymentsList"
         case .sendName: return "user/sendName"
-        
+            
+        case .getAddress: return "geo/address"
+        case .getGeoCoder: return "geo/coder"
+        }
     }
     
     var method: Moya.Method {
@@ -72,6 +75,10 @@ extension APITarget: TargetType {
             case .registerPushToken(let request): return request.accessToken
             case .getPaymentsList(let request): return request.accessToken
             case .sendName(let request): return request.accessToken
+                
+            case .getAddress(let request): return request.accessToken
+            case .getGeoCoder(let request): return request.accessToken
+                
             default: return nil
             }
         }()
@@ -101,6 +108,9 @@ extension APITarget: TargetType {
         case .confirmCode(let request): return request.requestParameters
         case .getPaymentsList(let request): return request.requestParameters
         case .sendName(let request): return request.requestParameters
+            
+        case .getAddress(let request): return request.requestParameters
+        case .getGeoCoder(let request): return request.requestParameters
         }
     }
     

@@ -183,6 +183,7 @@
 		E94B6C58240663EF00FD9F65 /* GeoCoderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C57240663EF00FD9F65 /* GeoCoderRequest.swift */; };
 		E94B6C5A2406640100FD9F65 /* GeoCoderResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C592406640100FD9F65 /* GeoCoderResponseData.swift */; };
 		E94B6C5C2406800900FD9F65 /* APIGeoCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C5B2406800900FD9F65 /* APIGeoCoder.swift */; };
+		E94B6C5E240689FD00FD9F65 /* APIWrapper+Geo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C5D240689FD00FD9F65 /* APIWrapper+Geo.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -451,6 +452,7 @@
 		E94B6C57240663EF00FD9F65 /* GeoCoderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCoderRequest.swift; sourceTree = "<group>"; };
 		E94B6C592406640100FD9F65 /* GeoCoderResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCoderResponseData.swift; sourceTree = "<group>"; };
 		E94B6C5B2406800900FD9F65 /* APIGeoCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIGeoCoder.swift; sourceTree = "<group>"; };
+		E94B6C5D240689FD00FD9F65 /* APIWrapper+Geo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIWrapper+Geo.swift"; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -1067,9 +1069,9 @@
 		84AA8D4423E2CD0C001B3B43 /* APIService */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C5F24068A0A00FD9F65 /* APIWrapper */,
 				84AA8D4523E2CD3F001B3B43 /* APIService.swift */,
 				84AA8D4723E2CD48001B3B43 /* APITarget.swift */,
-				84AA8D5F23E2E622001B3B43 /* APIWrapper.swift */,
 				84AA8D4923E2CD5E001B3B43 /* BaseRequestRetrier.swift */,
 				844AC39823E979AB0066006D /* Models */,
 				844AC39923E979BA0066006D /* Requests */,
@@ -1569,6 +1571,15 @@
 				E94B6C592406640100FD9F65 /* GeoCoderResponseData.swift */,
 			);
 			path = GeoCoder;
+			sourceTree = "<group>";
+		};
+		E94B6C5F24068A0A00FD9F65 /* APIWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				84AA8D5F23E2E622001B3B43 /* APIWrapper.swift */,
+				E94B6C5D240689FD00FD9F65 /* APIWrapper+Geo.swift */,
+			);
+			path = APIWrapper;
 			sourceTree = "<group>";
 		};
 		E98C381D23F141E70010BBC1 /* Recovered References */ = {
@@ -2276,6 +2287,7 @@
 				E94B6C5C2406800900FD9F65 /* APIGeoCoder.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
+				E94B6C5E240689FD00FD9F65 /* APIWrapper+Geo.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
 				E94B6C3E23FFE30A00FD9F65 /* IntercomRequest.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
