@@ -166,6 +166,17 @@ class APIService {
         )
     }
     
+    /// Запрос получения списка домов
+    func performGetHousesRequest(
+        _ request: GetHousesRequest,
+        completion: ((Swift.Result<GetHousesResponseData, Error>) -> Void)?
+        ) {
+        provider.request(
+            .getHouses(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
 }
 
 extension APIService {

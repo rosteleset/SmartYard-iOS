@@ -184,6 +184,9 @@
 		E94B6C5A2406640100FD9F65 /* GeoCoderResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C592406640100FD9F65 /* GeoCoderResponseData.swift */; };
 		E94B6C5C2406800900FD9F65 /* APIGeoCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C5B2406800900FD9F65 /* APIGeoCoder.swift */; };
 		E94B6C5E240689FD00FD9F65 /* APIWrapper+Geo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C5D240689FD00FD9F65 /* APIWrapper+Geo.swift */; };
+		E94B6C6224068D8600FD9F65 /* GetHousesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6124068D8600FD9F65 /* GetHousesRequest.swift */; };
+		E94B6C6424068D9400FD9F65 /* GetHousesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6324068D9400FD9F65 /* GetHousesResponseData.swift */; };
+		E94B6C6724068DD700FD9F65 /* APIHouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6624068DD700FD9F65 /* APIHouse.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -453,6 +456,9 @@
 		E94B6C592406640100FD9F65 /* GeoCoderResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCoderResponseData.swift; sourceTree = "<group>"; };
 		E94B6C5B2406800900FD9F65 /* APIGeoCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIGeoCoder.swift; sourceTree = "<group>"; };
 		E94B6C5D240689FD00FD9F65 /* APIWrapper+Geo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIWrapper+Geo.swift"; sourceTree = "<group>"; };
+		E94B6C6124068D8600FD9F65 /* GetHousesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHousesRequest.swift; sourceTree = "<group>"; };
+		E94B6C6324068D9400FD9F65 /* GetHousesResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHousesResponseData.swift; sourceTree = "<group>"; };
+		E94B6C6624068DD700FD9F65 /* APIHouse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHouse.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -540,6 +546,7 @@
 			isa = PBXGroup;
 			children = (
 				E94B6C4F240653FE00FD9F65 /* GetAddress */,
+				E94B6C6024068D1400FD9F65 /* GetHouses */,
 				E94B6C56240663DA00FD9F65 /* GeoCoder */,
 			);
 			path = Geo;
@@ -584,6 +591,7 @@
 				E94B6C4B2405308B00FD9F65 /* APISettingsAddress.swift */,
 				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
 				E94B6C5B2406800900FD9F65 /* APIGeoCoder.swift */,
+				E94B6C6624068DD700FD9F65 /* APIHouse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1582,6 +1590,15 @@
 			path = APIWrapper;
 			sourceTree = "<group>";
 		};
+		E94B6C6024068D1400FD9F65 /* GetHouses */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C6124068D8600FD9F65 /* GetHousesRequest.swift */,
+				E94B6C6324068D9400FD9F65 /* GetHousesResponseData.swift */,
+			);
+			path = GetHouses;
+			sourceTree = "<group>";
+		};
 		E98C381D23F141E70010BBC1 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -2149,6 +2166,7 @@
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
+				E94B6C6724068DD700FD9F65 /* APIHouse.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
 				84AA8D6623E2F2A8001B3B43 /* TransportType+Extensions.swift in Sources */,
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
@@ -2279,6 +2297,7 @@
 				848298442405658A00E81620 /* GetAddressListRequest.swift in Sources */,
 				E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */,
 				E94B6C552406553600FD9F65 /* APIFullAddress.swift in Sources */,
+				E94B6C6424068D9400FD9F65 /* GetHousesResponseData.swift in Sources */,
 				84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				E94B6C4023FFE74300FD9F65 /* IntercomResponseData.swift in Sources */,
@@ -2291,6 +2310,7 @@
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
 				E94B6C3E23FFE30A00FD9F65 /* IntercomRequest.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
+				E94B6C6224068D8600FD9F65 /* GetHousesRequest.swift in Sources */,
 				84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */,
 				848298452405658A00E81620 /* ResetCodeResponseData.swift in Sources */,
 				84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */,
