@@ -38,6 +38,19 @@ class AddressesListViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
+        // MARK: Подписка на уведомления
+        
+        pushNotificationService.registerForPushNotifications()
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: {
+                    print("DEBUG: Successfully subscribed to push notifications")
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Загрузка данных
         
         Driver<Void>

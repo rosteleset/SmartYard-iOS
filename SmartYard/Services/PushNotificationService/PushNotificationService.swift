@@ -35,4 +35,12 @@ class PushNotificationService {
         }
     }
     
+    func registerForPushNotifications() -> Single<Void?> {
+        guard let fcmToken = Messaging.messaging().fcmToken else {
+            return .error(NSError.PushNotificationServiceError.fcmTokenMissing)
+        }
+        
+        return apiWrapper.registerPushToken(pushToken: fcmToken, clientId: nil, type: .fcm)
+    }
+    
 }
