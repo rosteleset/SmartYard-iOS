@@ -23,6 +23,9 @@ enum APITarget {
     case getPaymentsList(request: GetPaymentsListRequest)
     case sendName(request: SendNameRequest)
     
+    case getAddress(request: GetAddressRequest)
+    //case get
+    
 }
 
 extension APITarget: TargetType {
@@ -45,7 +48,7 @@ extension APITarget: TargetType {
         case .confirmCode: return "user/confirmCode"
         case .getPaymentsList: return "user/getPaymentsList"
         case .sendName: return "user/sendName"
-        }
+        
     }
     
     var method: Moya.Method {

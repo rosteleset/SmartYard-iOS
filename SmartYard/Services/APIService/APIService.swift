@@ -144,6 +144,14 @@ class APIService {
         )
     }
     
+    /// Запрос получения адреса дома по его id
+    func perormGetAddressRequest(
+        _ request: GetAddressRequest,
+        completion: ((Swift.Result<GetAddressResponseData, Error>) -> Void)?
+    ) {
+        provider.request(<#T##target: APITarget##APITarget#>, completion: <#T##Completion##Completion##(Result<Response, MoyaError>) -> Void#>)
+    }
+    
 }
 
 extension APIService {
