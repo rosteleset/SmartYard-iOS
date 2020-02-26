@@ -6,4 +6,8 @@
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
-typealias GetAddressResponseData = APIFullAddress
+struct GetAddressResponseData: Decodable {
+    
+    let address: String
+    
+}

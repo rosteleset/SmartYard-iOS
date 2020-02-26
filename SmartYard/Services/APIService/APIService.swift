@@ -145,7 +145,7 @@ class APIService {
     }
     
     /// Запрос получения адреса дома по его id
-    func perormGetAddressRequest(
+    func performGetAddressRequest(
         _ request: GetAddressRequest,
         completion: ((Swift.Result<GetAddressResponseData, Error>) -> Void)?
     ) {
@@ -156,7 +156,7 @@ class APIService {
     }
     
     /// Запрос получения геокоординаты по адресу
-    func perormGetGeoCoderRequest(
+    func performGetGeoCoderRequest(
         _ request: GeoCoderRequest,
         completion: ((Swift.Result<GeoCoderResponseData, Error>) -> Void)?
     ) {
@@ -192,7 +192,7 @@ class APIService {
     func performGetAllLocationsRequest(
         _ request: GetAllLocationsRequest,
         completion: ((Swift.Result<GetAllLocationsResponseData, Error>) -> Void)?
-        ) {
+    ) {
         provider.request(
             .getAllLocations(request: request),
             completion: createInnerCompletionBlockWithData(from: completion)
@@ -203,7 +203,7 @@ class APIService {
     func performGetStreetsRequest(
         _ request: GetStreetsRequest,
         completion: ((Swift.Result<GetStreetsResponseData, Error>) -> Void)?
-        ) {
+    ) {
         provider.request(
             .getStreets(request: request),
             completion: createInnerCompletionBlockWithData(from: completion)

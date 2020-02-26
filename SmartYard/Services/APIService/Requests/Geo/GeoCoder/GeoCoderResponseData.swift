@@ -6,4 +6,10 @@
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
-typealias GeoCoderResponseData = APIGeoCoder
+struct GeoCoderResponseData: Decodable {
+    
+    let lat: String
+    let lon: String
+    let address: String
+    
+}

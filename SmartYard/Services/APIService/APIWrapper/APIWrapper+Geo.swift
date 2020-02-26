@@ -25,7 +25,7 @@ extension APIWrapper {
                 return Disposables.create()
             }
             
-            self.apiService.perormGetAddressRequest(request) { result in
+            self.apiService.performGetAddressRequest(request) { result in
                 switch result {
                 case let .success(data): single(.success(data))
                 case let .failure(error): single(.error(error))
@@ -49,7 +49,7 @@ extension APIWrapper {
                 return Disposables.create()
             }
             
-            self.apiService.perormGetGeoCoderRequest(request) { result in
+            self.apiService.performGetGeoCoderRequest(request) { result in
                 switch result {
                 case let .success(data): single(.success(data))
                 case let .failure(error): single(.error(error))
