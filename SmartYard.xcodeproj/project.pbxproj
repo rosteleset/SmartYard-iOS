@@ -46,6 +46,8 @@
 		84560E7F2407A25000BA5F7D /* EmptyDataInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84560E7E2407A25000BA5F7D /* EmptyDataInitializable.swift */; };
 		847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */; };
 		847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */; };
+		847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */; };
+		847CF7DD240696D500070007 /* SettingsListSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CF7DC240696D500070007 /* SettingsListSkeletonView.xib */; };
 		8482981E24054CDF00E81620 /* APIDoor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482981D24054CDE00E81620 /* APIDoor.swift */; };
 		8482982224054D4B00E81620 /* APICCTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482982124054D4B00E81620 /* APICCTV.swift */; };
 		848298322405655600E81620 /* SendNameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848298252405655600E81620 /* SendNameRequest.swift */; };
@@ -320,6 +322,8 @@
 		84560E7E2407A25000BA5F7D /* EmptyDataInitializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataInitializable.swift; sourceTree = "<group>"; };
 		847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListSkeletonView.swift; sourceTree = "<group>"; };
 		847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListSkeletonView.xib; sourceTree = "<group>"; };
+		847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListSkeletonView.swift; sourceTree = "<group>"; };
+		847CF7DC240696D500070007 /* SettingsListSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsListSkeletonView.xib; sourceTree = "<group>"; };
 		8482981D24054CDE00E81620 /* APIDoor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDoor.swift; sourceTree = "<group>"; };
 		8482982124054D4B00E81620 /* APICCTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICCTV.swift; sourceTree = "<group>"; };
 		848298252405655600E81620 /* SendNameRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNameRequest.swift; sourceTree = "<group>"; };
@@ -885,6 +889,7 @@
 			isa = PBXGroup;
 			children = (
 				847CF7D424068B1900070007 /* AddressesListSkeletonView */,
+				847CF7D9240696A400070007 /* SettingsListSkeletonView */,
 			);
 			path = Skeletons;
 			sourceTree = "<group>";
@@ -896,6 +901,15 @@
 				847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */,
 			);
 			path = AddressesListSkeletonView;
+			sourceTree = "<group>";
+		};
+		847CF7D9240696A400070007 /* SettingsListSkeletonView */ = {
+			isa = PBXGroup;
+			children = (
+				847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */,
+				847CF7DC240696D500070007 /* SettingsListSkeletonView.xib */,
+			);
+			path = SettingsListSkeletonView;
 			sourceTree = "<group>";
 		};
 		848298232405655600E81620 /* User */ = {
@@ -2079,6 +2093,7 @@
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */,
 				E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */,
+				847CF7DD240696D500070007 /* SettingsListSkeletonView.xib in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
@@ -2241,6 +2256,7 @@
 				844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */,
 				84B89A7C23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift in Sources */,
 				E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */,
+				847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
 				E94B6C3B23FFE1D200FD9F65 /* APIIntercomSettings.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,

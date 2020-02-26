@@ -55,6 +55,14 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if skeletonContainer.isSkeletonActive {
+            skeletonContainer.showSkeletonAsynchronously()
+        }
+    }
+    
     // swiftlint:disable:next function_body_length
     private func bind() {
         let itemSelected = collectionView.rx.itemSelected
