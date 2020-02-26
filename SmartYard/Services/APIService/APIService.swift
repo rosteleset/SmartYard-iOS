@@ -210,6 +210,17 @@ class APIService {
         )
     }
     
+    /// Запрос создания заявки
+    func performCreateIssueRequest(
+        _ request: CreateIssueRequest,
+        completion: ((Swift.Result<Void, Error>) -> Void)?
+    ) {
+        provider.request(
+            .createIssue(request: request),
+            completion: createEmptyInnerCompletionBlock(from: completion)
+        )
+    }
+    
 }
 
 extension APIService {
