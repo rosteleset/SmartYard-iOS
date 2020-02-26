@@ -159,7 +159,7 @@ class APIService {
     func perormGetGeoCoderRequest(
         _ request: GeoCoderRequest,
         completion: ((Swift.Result<GeoCoderResponseData, Error>) -> Void)?
-        ) {
+    ) {
         provider.request(
             .getGeoCoder(request: request),
             completion: createInnerCompletionBlockWithData(from: completion)
@@ -170,7 +170,7 @@ class APIService {
     func performGetHousesRequest(
         _ request: GetHousesRequest,
         completion: ((Swift.Result<GetHousesResponseData, Error>) -> Void)?
-        ) {
+    ) {
         provider.request(
             .getHouses(request: request),
             completion: createInnerCompletionBlockWithData(from: completion)
@@ -181,9 +181,20 @@ class APIService {
     func performGetServicesRequest(
         _ request: GetServicesRequest,
         completion: ((Swift.Result<GetServicesResponseData, Error>) -> Void)?
-        ) {
+    ) {
         provider.request(
             .getServices(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
+    /// Запрос получения списка локаций
+    func performGetAllLocationsRequest(
+        _ request: GetAllLocationsRequest,
+        completion: ((Swift.Result<GetAllLocationsResponseData, Error>) -> Void)?
+        ) {
+        provider.request(
+            .getAllLocations(request: request),
             completion: createInnerCompletionBlockWithData(from: completion)
         )
     }

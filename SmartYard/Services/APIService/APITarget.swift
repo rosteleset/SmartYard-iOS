@@ -27,7 +27,7 @@ enum APITarget {
     case getGeoCoder(request: GeoCoderRequest)
     case getHouses(request: GetHousesRequest)
     case getServices(request: GetServicesRequest)
-    
+    case getAllLocations(request: GetAllLocationsRequest)
 }
 
 extension APITarget: TargetType {
@@ -55,6 +55,7 @@ extension APITarget: TargetType {
         case .getGeoCoder: return "geo/coder"
         case .getHouses: return "geo/getHouses"
         case .getServices: return "geo/getServices"
+        case .getAllLocations: return "geo/getAllLocations"
         }
     }
     
@@ -84,6 +85,7 @@ extension APITarget: TargetType {
             case .getGeoCoder(let request): return request.accessToken
             case .getHouses(let request): return request.accessToken
             case .getServices(let request): return request.accessToken
+            case .getAllLocations(let request): return request.accessToken
                 
             default: return nil
             }
@@ -119,6 +121,7 @@ extension APITarget: TargetType {
         case .getGeoCoder(let request): return request.requestParameters
         case .getHouses(let request): return request.requestParameters
         case .getServices(let request): return request.requestParameters
+        case .getAllLocations(let request): return request.requestParameters
         }
     }
     
