@@ -208,6 +208,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
     
     private func configureCollectionView() {
         collectionView.refreshControl = refreshControl
+        refreshControl.tintColor = UIColor.SmartYard.gray
         
         [
             AddressesListHeaderCell.self,
