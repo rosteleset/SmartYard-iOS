@@ -177,6 +177,17 @@ class APIService {
         )
     }
     
+    /// Запрос получения списка доступных услуг
+    func performGetServicesRequest(
+        _ request: GetServicesRequest,
+        completion: ((Swift.Result<GetServicesResponseData, Error>) -> Void)?
+        ) {
+        provider.request(
+            .getServices(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
 }
 
 extension APIService {

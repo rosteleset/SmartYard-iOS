@@ -187,6 +187,9 @@
 		E94B6C6224068D8600FD9F65 /* GetHousesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6124068D8600FD9F65 /* GetHousesRequest.swift */; };
 		E94B6C6424068D9400FD9F65 /* GetHousesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6324068D9400FD9F65 /* GetHousesResponseData.swift */; };
 		E94B6C6724068DD700FD9F65 /* APIHouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6624068DD700FD9F65 /* APIHouse.swift */; };
+		E94B6C6A2406900200FD9F65 /* GetServicesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C692406900200FD9F65 /* GetServicesRequest.swift */; };
+		E94B6C6C2406901500FD9F65 /* GetServicesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6B2406901500FD9F65 /* GetServicesResponseData.swift */; };
+		E94B6C6E2406905B00FD9F65 /* APIServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6D2406905B00FD9F65 /* APIServiceModel.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -459,6 +462,9 @@
 		E94B6C6124068D8600FD9F65 /* GetHousesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHousesRequest.swift; sourceTree = "<group>"; };
 		E94B6C6324068D9400FD9F65 /* GetHousesResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHousesResponseData.swift; sourceTree = "<group>"; };
 		E94B6C6624068DD700FD9F65 /* APIHouse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHouse.swift; sourceTree = "<group>"; };
+		E94B6C692406900200FD9F65 /* GetServicesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetServicesRequest.swift; sourceTree = "<group>"; };
+		E94B6C6B2406901500FD9F65 /* GetServicesResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetServicesResponseData.swift; sourceTree = "<group>"; };
+		E94B6C6D2406905B00FD9F65 /* APIServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceModel.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -545,6 +551,7 @@
 		8428672324051942004D3F26 /* Geo */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C6824068FEB00FD9F65 /* GetServices */,
 				E94B6C4F240653FE00FD9F65 /* GetAddress */,
 				E94B6C6024068D1400FD9F65 /* GetHouses */,
 				E94B6C56240663DA00FD9F65 /* GeoCoder */,
@@ -592,6 +599,7 @@
 				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
 				E94B6C5B2406800900FD9F65 /* APIGeoCoder.swift */,
 				E94B6C6624068DD700FD9F65 /* APIHouse.swift */,
+				E94B6C6D2406905B00FD9F65 /* APIServiceModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1599,6 +1607,15 @@
 			path = GetHouses;
 			sourceTree = "<group>";
 		};
+		E94B6C6824068FEB00FD9F65 /* GetServices */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C692406900200FD9F65 /* GetServicesRequest.swift */,
+				E94B6C6B2406901500FD9F65 /* GetServicesResponseData.swift */,
+			);
+			path = GetServices;
+			sourceTree = "<group>";
+		};
 		E98C381D23F141E70010BBC1 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -2236,6 +2253,7 @@
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
 				84854B5C23FC38F3001B44F2 /* LoadingButton.swift in Sources */,
 				E94057FC23F6724100623746 /* AddressAccessViewModel.swift in Sources */,
+				E94B6C6E2406905B00FD9F65 /* APIServiceModel.swift in Sources */,
 				848298342405655600E81620 /* ConfirmCodeRequest.swift in Sources */,
 				84B89A9323F2FA6E009692B4 /* ServiceIsNotActivatedViewModel.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
@@ -2262,6 +2280,7 @@
 				84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */,
 				844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */,
 				84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */,
+				E94B6C6A2406900200FD9F65 /* GetServicesRequest.swift in Sources */,
 				84854B5023FBD3E7001B44F2 /* AppState.swift in Sources */,
 				844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */,
 				84AA8D6023E2E622001B3B43 /* APIWrapper.swift in Sources */,
@@ -2312,6 +2331,7 @@
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 				E94B6C6224068D8600FD9F65 /* GetHousesRequest.swift in Sources */,
 				84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */,
+				E94B6C6C2406901500FD9F65 /* GetServicesResponseData.swift in Sources */,
 				848298452405658A00E81620 /* ResetCodeResponseData.swift in Sources */,
 				84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */,
 				84854B4523FAB4D7001B44F2 /* APIClientName.swift in Sources */,

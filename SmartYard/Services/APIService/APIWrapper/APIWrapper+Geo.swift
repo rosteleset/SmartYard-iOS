@@ -60,7 +60,7 @@ extension APIWrapper {
         }
     }
     
-    func getHousesByAddress(streetId: String) -> Single<GetHousesResponseData?> {
+    func getHousesByStreet(streetId: String) -> Single<GetHousesResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -74,6 +74,30 @@ extension APIWrapper {
             }
             
             self.apiService.performGetHousesRequest(request) { result in
+                switch result {
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func getServicesByHouseId(houseId: String) -> Single<GetServicesResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = GetServicesRequest(accessToken: accessToken, houseId: houseId)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performGetServicesRequest(request) { result in
                 switch result {
                 case let .success(data): single(.success(data))
                 case let .failure(error): single(.error(error))
