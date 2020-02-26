@@ -16,13 +16,19 @@ enum APITarget {
     case grantHourGuestAccess(request: IntercomRequest)
     case getSettingsList(request: GetSettingsListRequest)
     
+    case getAddress(request: GetAddressRequest)
+    case getGeoCoder(request: GeoCoderRequest)
+    case getHouses(request: GetHousesRequest)
+    case getServices(request: GetServicesRequest)
+    case getAllLocations(request: GetAllLocationsRequest)
+    case getStreets(request: GetStreetsRequest)
+    
     case addMyPhone(request: AddMyPhoneRequest)
     case requestCode(request: RequestCodeRequest)
     case registerPushToken(request: RegisterPushTokenRequest)
     case confirmCode(request: ConfirmCodeRequest)
     case getPaymentsList(request: GetPaymentsListRequest)
     case sendName(request: SendNameRequest)
-    
 }
 
 extension APITarget: TargetType {
@@ -38,7 +44,14 @@ extension APITarget: TargetType {
         case .resetCode: return "address/resetCode"
         case .getSettingsList: return "address/getSettingsList"
         case .getAddressList: return "address/getAddressList"
-
+            
+        case .getAddress: return "geo/address"
+        case .getGeoCoder: return "geo/coder"
+        case .getHouses: return "geo/getHouses"
+        case .getServices: return "geo/getServices"
+        case .getAllLocations: return "geo/getAllLocations"
+        case .getStreets: return "geo/getStreets"
+            
         case .addMyPhone: return "user/addMyPhone"
         case .requestCode: return "user/requestCode"
         case .registerPushToken: return "user/registerPushToken"
@@ -65,10 +78,18 @@ extension APITarget: TargetType {
             case .getSettingsList(let request): return request.accessToken
             case .getAddressList(let request): return request.accessToken
                 
+            case .getAddress(let request): return request.accessToken
+            case .getGeoCoder(let request): return request.accessToken
+            case .getHouses(let request): return request.accessToken
+            case .getServices(let request): return request.accessToken
+            case .getAllLocations(let request): return request.accessToken
+            case .getStreets(let request): return request.accessToken
+                
             case .addMyPhone(let request): return request.accessToken
             case .registerPushToken(let request): return request.accessToken
             case .getPaymentsList(let request): return request.accessToken
             case .sendName(let request): return request.accessToken
+                
             default: return nil
             }
         }()
@@ -92,6 +113,13 @@ extension APITarget: TargetType {
         case .getSettingsList(let request): return request.requestParameters
         case .getAddressList(let request): return request.requestParameters
 
+        case .getAddress(let request): return request.requestParameters
+        case .getGeoCoder(let request): return request.requestParameters
+        case .getHouses(let request): return request.requestParameters
+        case .getServices(let request): return request.requestParameters
+        case .getAllLocations(let request): return request.requestParameters
+        case .getStreets(let request): return request.requestParameters
+            
         case .addMyPhone(let request): return request.requestParameters
         case .requestCode(let request): return request.requestParameters
         case .registerPushToken(let request): return request.requestParameters

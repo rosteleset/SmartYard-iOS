@@ -144,6 +144,72 @@ class APIService {
         )
     }
     
+    /// Запрос получения адреса дома по его id
+    func performGetAddressRequest(
+        _ request: GetAddressRequest,
+        completion: ((Swift.Result<GetAddressResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .getAddress(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
+    /// Запрос получения геокоординаты по адресу
+    func performGetGeoCoderRequest(
+        _ request: GeoCoderRequest,
+        completion: ((Swift.Result<GeoCoderResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .getGeoCoder(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
+    /// Запрос получения списка домов
+    func performGetHousesRequest(
+        _ request: GetHousesRequest,
+        completion: ((Swift.Result<GetHousesResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .getHouses(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
+    /// Запрос получения списка доступных услуг
+    func performGetServicesRequest(
+        _ request: GetServicesRequest,
+        completion: ((Swift.Result<GetServicesResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .getServices(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
+    /// Запрос получения списка локаций
+    func performGetAllLocationsRequest(
+        _ request: GetAllLocationsRequest,
+        completion: ((Swift.Result<GetAllLocationsResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .getAllLocations(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
+    /// Запрос получения списка улиц
+    func performGetStreetsRequest(
+        _ request: GetStreetsRequest,
+        completion: ((Swift.Result<GetStreetsResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .getStreets(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
 }
 
 extension APIService {

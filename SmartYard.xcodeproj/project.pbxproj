@@ -177,6 +177,23 @@
 		E94B6C482404F1C400FD9F65 /* GetSettingsListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C472404F1C400FD9F65 /* GetSettingsListRequest.swift */; };
 		E94B6C4A2404F2D100FD9F65 /* GetSettingsListResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C492404F2D100FD9F65 /* GetSettingsListResponseData.swift */; };
 		E94B6C4C2405308B00FD9F65 /* APISettingsAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C4B2405308B00FD9F65 /* APISettingsAddress.swift */; };
+		E94B6C512406541600FD9F65 /* GetAddressResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C502406541600FD9F65 /* GetAddressResponseData.swift */; };
+		E94B6C532406545600FD9F65 /* GetAddressRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C522406545600FD9F65 /* GetAddressRequest.swift */; };
+		E94B6C58240663EF00FD9F65 /* GeoCoderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C57240663EF00FD9F65 /* GeoCoderRequest.swift */; };
+		E94B6C5A2406640100FD9F65 /* GeoCoderResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C592406640100FD9F65 /* GeoCoderResponseData.swift */; };
+		E94B6C5E240689FD00FD9F65 /* APIWrapper+Geo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C5D240689FD00FD9F65 /* APIWrapper+Geo.swift */; };
+		E94B6C6224068D8600FD9F65 /* GetHousesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6124068D8600FD9F65 /* GetHousesRequest.swift */; };
+		E94B6C6424068D9400FD9F65 /* GetHousesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6324068D9400FD9F65 /* GetHousesResponseData.swift */; };
+		E94B6C6724068DD700FD9F65 /* APIHouse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6624068DD700FD9F65 /* APIHouse.swift */; };
+		E94B6C6A2406900200FD9F65 /* GetServicesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C692406900200FD9F65 /* GetServicesRequest.swift */; };
+		E94B6C6C2406901500FD9F65 /* GetServicesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6B2406901500FD9F65 /* GetServicesResponseData.swift */; };
+		E94B6C6E2406905B00FD9F65 /* APIServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C6D2406905B00FD9F65 /* APIServiceModel.swift */; };
+		E94B6C71240694C900FD9F65 /* GetAllLocationsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C70240694C900FD9F65 /* GetAllLocationsRequest.swift */; };
+		E94B6C73240694D700FD9F65 /* GetAllLocationsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C72240694D700FD9F65 /* GetAllLocationsResponseData.swift */; };
+		E94B6C762406955800FD9F65 /* APILocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C752406955800FD9F65 /* APILocation.swift */; };
+		E94B6C79240698F800FD9F65 /* GetStreetsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C78240698F800FD9F65 /* GetStreetsRequest.swift */; };
+		E94B6C7B2406990400FD9F65 /* GetStreetsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */; };
+		E94B6C7D2406992400FD9F65 /* APIStreet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C7C2406992400FD9F65 /* APIStreet.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -439,6 +456,23 @@
 		E94B6C472404F1C400FD9F65 /* GetSettingsListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSettingsListRequest.swift; sourceTree = "<group>"; };
 		E94B6C492404F2D100FD9F65 /* GetSettingsListResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSettingsListResponseData.swift; sourceTree = "<group>"; };
 		E94B6C4B2405308B00FD9F65 /* APISettingsAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISettingsAddress.swift; sourceTree = "<group>"; };
+		E94B6C502406541600FD9F65 /* GetAddressResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAddressResponseData.swift; sourceTree = "<group>"; };
+		E94B6C522406545600FD9F65 /* GetAddressRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAddressRequest.swift; sourceTree = "<group>"; };
+		E94B6C57240663EF00FD9F65 /* GeoCoderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCoderRequest.swift; sourceTree = "<group>"; };
+		E94B6C592406640100FD9F65 /* GeoCoderResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCoderResponseData.swift; sourceTree = "<group>"; };
+		E94B6C5D240689FD00FD9F65 /* APIWrapper+Geo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIWrapper+Geo.swift"; sourceTree = "<group>"; };
+		E94B6C6124068D8600FD9F65 /* GetHousesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHousesRequest.swift; sourceTree = "<group>"; };
+		E94B6C6324068D9400FD9F65 /* GetHousesResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHousesResponseData.swift; sourceTree = "<group>"; };
+		E94B6C6624068DD700FD9F65 /* APIHouse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHouse.swift; sourceTree = "<group>"; };
+		E94B6C692406900200FD9F65 /* GetServicesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetServicesRequest.swift; sourceTree = "<group>"; };
+		E94B6C6B2406901500FD9F65 /* GetServicesResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetServicesResponseData.swift; sourceTree = "<group>"; };
+		E94B6C6D2406905B00FD9F65 /* APIServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceModel.swift; sourceTree = "<group>"; };
+		E94B6C70240694C900FD9F65 /* GetAllLocationsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllLocationsRequest.swift; sourceTree = "<group>"; };
+		E94B6C72240694D700FD9F65 /* GetAllLocationsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllLocationsResponseData.swift; sourceTree = "<group>"; };
+		E94B6C752406955800FD9F65 /* APILocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILocation.swift; sourceTree = "<group>"; };
+		E94B6C78240698F800FD9F65 /* GetStreetsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStreetsRequest.swift; sourceTree = "<group>"; };
+		E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStreetsResponseData.swift; sourceTree = "<group>"; };
+		E94B6C7C2406992400FD9F65 /* APIStreet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStreet.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -525,6 +559,12 @@
 		8428672324051942004D3F26 /* Geo */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C4F240653FE00FD9F65 /* GetAddress */,
+				E94B6C6F240694B200FD9F65 /* GetAllLocations */,
+				E94B6C56240663DA00FD9F65 /* GeoCoder */,
+				E94B6C6024068D1400FD9F65 /* GetHouses */,
+				E94B6C6824068FEB00FD9F65 /* GetServices */,
+				E94B6C77240698CC00FD9F65 /* GetStreets */,
 			);
 			path = Geo;
 			sourceTree = "<group>";
@@ -557,6 +597,7 @@
 		844AC39823E979AB0066006D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C742406952200FD9F65 /* Geo */,
 				844AC39623E9788D0066006D /* APIAddress.swift */,
 				8482982124054D4B00E81620 /* APICCTV.swift */,
 				84854B4423FAB4D7001B44F2 /* APIClientName.swift */,
@@ -1053,8 +1094,8 @@
 			children = (
 				84AA8D4523E2CD3F001B3B43 /* APIService.swift */,
 				84AA8D4723E2CD48001B3B43 /* APITarget.swift */,
-				84AA8D5F23E2E622001B3B43 /* APIWrapper.swift */,
 				84AA8D4923E2CD5E001B3B43 /* BaseRequestRetrier.swift */,
+				E94B6C5F24068A0A00FD9F65 /* APIWrapper */,
 				844AC39823E979AB0066006D /* Models */,
 				844AC39923E979BA0066006D /* Requests */,
 			);
@@ -1535,6 +1576,80 @@
 				E94B6C492404F2D100FD9F65 /* GetSettingsListResponseData.swift */,
 			);
 			path = GetSettingsList;
+			sourceTree = "<group>";
+		};
+		E94B6C4F240653FE00FD9F65 /* GetAddress */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C522406545600FD9F65 /* GetAddressRequest.swift */,
+				E94B6C502406541600FD9F65 /* GetAddressResponseData.swift */,
+			);
+			path = GetAddress;
+			sourceTree = "<group>";
+		};
+		E94B6C56240663DA00FD9F65 /* GeoCoder */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C57240663EF00FD9F65 /* GeoCoderRequest.swift */,
+				E94B6C592406640100FD9F65 /* GeoCoderResponseData.swift */,
+			);
+			path = GeoCoder;
+			sourceTree = "<group>";
+		};
+		E94B6C5F24068A0A00FD9F65 /* APIWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				84AA8D5F23E2E622001B3B43 /* APIWrapper.swift */,
+				E94B6C5D240689FD00FD9F65 /* APIWrapper+Geo.swift */,
+			);
+			path = APIWrapper;
+			sourceTree = "<group>";
+		};
+		E94B6C6024068D1400FD9F65 /* GetHouses */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C6124068D8600FD9F65 /* GetHousesRequest.swift */,
+				E94B6C6324068D9400FD9F65 /* GetHousesResponseData.swift */,
+			);
+			path = GetHouses;
+			sourceTree = "<group>";
+		};
+		E94B6C6824068FEB00FD9F65 /* GetServices */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C692406900200FD9F65 /* GetServicesRequest.swift */,
+				E94B6C6B2406901500FD9F65 /* GetServicesResponseData.swift */,
+			);
+			path = GetServices;
+			sourceTree = "<group>";
+		};
+		E94B6C6F240694B200FD9F65 /* GetAllLocations */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C70240694C900FD9F65 /* GetAllLocationsRequest.swift */,
+				E94B6C72240694D700FD9F65 /* GetAllLocationsResponseData.swift */,
+			);
+			path = GetAllLocations;
+			sourceTree = "<group>";
+		};
+		E94B6C742406952200FD9F65 /* Geo */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C6624068DD700FD9F65 /* APIHouse.swift */,
+				E94B6C752406955800FD9F65 /* APILocation.swift */,
+				E94B6C6D2406905B00FD9F65 /* APIServiceModel.swift */,
+				E94B6C7C2406992400FD9F65 /* APIStreet.swift */,
+			);
+			path = Geo;
+			sourceTree = "<group>";
+		};
+		E94B6C77240698CC00FD9F65 /* GetStreets */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C78240698F800FD9F65 /* GetStreetsRequest.swift */,
+				E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */,
+			);
+			path = GetStreets;
 			sourceTree = "<group>";
 		};
 		E98C381D23F141E70010BBC1 /* Recovered References */ = {
@@ -2094,6 +2209,7 @@
 				E9E4272123F41F7300F5D593 /* AvailableSericesViewModel.swift in Sources */,
 				E9E4271F23F41DDF00F5D593 /* ServiceState.swift in Sources */,
 				844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */,
+				E94B6C7B2406990400FD9F65 /* GetStreetsResponseData.swift in Sources */,
 				84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */,
 				E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */,
 				844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */,
@@ -2104,6 +2220,7 @@
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
+				E94B6C6724068DD700FD9F65 /* APIHouse.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
 				84AA8D6623E2F2A8001B3B43 /* TransportType+Extensions.swift in Sources */,
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
@@ -2132,6 +2249,7 @@
 				E94B6C3923FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
+				E94B6C79240698F800FD9F65 /* GetStreetsRequest.swift in Sources */,
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
@@ -2142,6 +2260,7 @@
 				848298362405655600E81620 /* RequestCodeRequest.swift in Sources */,
 				84AA8D5B23E2CEC5001B3B43 /* BaseAPIResponse.swift in Sources */,
 				8428673024051F7F004D3F26 /* APIPaymentsListAccount.swift in Sources */,
+				E94B6C7D2406992400FD9F65 /* APIStreet.swift in Sources */,
 				E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */,
 				E94B6C4A2404F2D100FD9F65 /* GetSettingsListResponseData.swift in Sources */,
 				E9A1D78323F27AE500234B2A /* AddressConfirmationViewController.swift in Sources */,
@@ -2152,7 +2271,9 @@
 				844AC3D523EBFDAF0066006D /* AddressesListViewModel.swift in Sources */,
 				E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */,
 				844AC39523E977810066006D /* AccessService.swift in Sources */,
+				E94B6C58240663EF00FD9F65 /* GeoCoderRequest.swift in Sources */,
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
+				E94B6C762406955800FD9F65 /* APILocation.swift in Sources */,
 				E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */,
 				E94B6C482404F1C400FD9F65 /* GetSettingsListRequest.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
@@ -2162,6 +2283,7 @@
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
+				E94B6C71240694C900FD9F65 /* GetAllLocationsRequest.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
 				E94B6C3723FD728F00FD9F65 /* RoundedImageView.swift in Sources */,
 				84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */,
@@ -2172,6 +2294,7 @@
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
 				84854B5C23FC38F3001B44F2 /* LoadingButton.swift in Sources */,
 				E94057FC23F6724100623746 /* AddressAccessViewModel.swift in Sources */,
+				E94B6C6E2406905B00FD9F65 /* APIServiceModel.swift in Sources */,
 				848298342405655600E81620 /* ConfirmCodeRequest.swift in Sources */,
 				84B89A9323F2FA6E009692B4 /* ServiceIsNotActivatedViewModel.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
@@ -2180,6 +2303,7 @@
 				E9A4D48A23EC27E20070A591 /* PinNumberField.swift in Sources */,
 				E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */,
 				E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */,
+				E94B6C73240694D700FD9F65 /* GetAllLocationsResponseData.swift in Sources */,
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
 				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
@@ -2198,6 +2322,7 @@
 				84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */,
 				844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */,
 				84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */,
+				E94B6C6A2406900200FD9F65 /* GetServicesRequest.swift in Sources */,
 				84854B5023FBD3E7001B44F2 /* AppState.swift in Sources */,
 				844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */,
 				84AA8D6023E2E622001B3B43 /* APIWrapper.swift in Sources */,
@@ -2232,6 +2357,7 @@
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
 				848298442405658A00E81620 /* GetAddressListRequest.swift in Sources */,
 				E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */,
+				E94B6C6424068D9400FD9F65 /* GetHousesResponseData.swift in Sources */,
 				84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				E94B6C4023FFE74300FD9F65 /* IntercomResponseData.swift in Sources */,
@@ -2239,17 +2365,23 @@
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
+				E94B6C5E240689FD00FD9F65 /* APIWrapper+Geo.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
 				E94B6C3E23FFE30A00FD9F65 /* IntercomRequest.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
+				E94B6C6224068D8600FD9F65 /* GetHousesRequest.swift in Sources */,
 				84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */,
+				E94B6C6C2406901500FD9F65 /* GetServicesResponseData.swift in Sources */,
 				848298452405658A00E81620 /* ResetCodeResponseData.swift in Sources */,
 				84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */,
 				84854B4523FAB4D7001B44F2 /* APIClientName.swift in Sources */,
 				848298392405655600E81620 /* GetPaymentsListRequest.swift in Sources */,
 				848298322405655600E81620 /* SendNameRequest.swift in Sources */,
+				E94B6C5A2406640100FD9F65 /* GeoCoderResponseData.swift in Sources */,
 				84CC15E523EC999700A1CB95 /* AddressesListSectionUpdateKind.swift in Sources */,
 				84854B6523FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift in Sources */,
+				E94B6C512406541600FD9F65 /* GetAddressResponseData.swift in Sources */,
+				E94B6C532406545600FD9F65 /* GetAddressRequest.swift in Sources */,
 				84CC15E323EC86D900A1CB95 /* ObjectLockButton.swift in Sources */,
 				84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */,
 				848298332405655600E81620 /* AddMyPhoneRequest.swift in Sources */,
