@@ -199,6 +199,17 @@ class APIService {
         )
     }
     
+    /// Запрос получения списка улиц
+    func performGetStreetsRequest(
+        _ request: GetStreetsRequest,
+        completion: ((Swift.Result<GetStreetsResponseData, Error>) -> Void)?
+        ) {
+        provider.request(
+            .getStreets(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
 }
 
 extension APIService {

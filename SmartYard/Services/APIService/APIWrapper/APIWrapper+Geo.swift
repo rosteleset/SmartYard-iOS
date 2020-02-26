@@ -132,4 +132,28 @@ extension APIWrapper {
         }
     }
     
+    func getStreetsByLocation(locationId: String) -> Single<GetStreetsResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = GetStreetsRequest(accessToken: accessToken, locationId: locationId)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performGetStreetsRequest(request) { result in
+                switch result {
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
 }

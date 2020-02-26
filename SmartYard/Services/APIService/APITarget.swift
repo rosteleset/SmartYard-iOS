@@ -28,6 +28,7 @@ enum APITarget {
     case getHouses(request: GetHousesRequest)
     case getServices(request: GetServicesRequest)
     case getAllLocations(request: GetAllLocationsRequest)
+    case getStreets(request: GetStreetsRequest)
 }
 
 extension APITarget: TargetType {
@@ -56,6 +57,7 @@ extension APITarget: TargetType {
         case .getHouses: return "geo/getHouses"
         case .getServices: return "geo/getServices"
         case .getAllLocations: return "geo/getAllLocations"
+        case .getStreets: return "geo/getStreets"
         }
     }
     
@@ -86,6 +88,7 @@ extension APITarget: TargetType {
             case .getHouses(let request): return request.accessToken
             case .getServices(let request): return request.accessToken
             case .getAllLocations(let request): return request.accessToken
+            case .getStreets(let request): return request.accessToken
                 
             default: return nil
             }
@@ -122,6 +125,7 @@ extension APITarget: TargetType {
         case .getHouses(let request): return request.requestParameters
         case .getServices(let request): return request.requestParameters
         case .getAllLocations(let request): return request.requestParameters
+        case .getStreets(let request): return request.requestParameters
         }
     }
     

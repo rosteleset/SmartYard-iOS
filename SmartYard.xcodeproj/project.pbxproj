@@ -193,6 +193,9 @@
 		E94B6C71240694C900FD9F65 /* GetAllLocationsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C70240694C900FD9F65 /* GetAllLocationsRequest.swift */; };
 		E94B6C73240694D700FD9F65 /* GetAllLocationsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C72240694D700FD9F65 /* GetAllLocationsResponseData.swift */; };
 		E94B6C762406955800FD9F65 /* APILocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C752406955800FD9F65 /* APILocation.swift */; };
+		E94B6C79240698F800FD9F65 /* GetStreetsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C78240698F800FD9F65 /* GetStreetsRequest.swift */; };
+		E94B6C7B2406990400FD9F65 /* GetStreetsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */; };
+		E94B6C7D2406992400FD9F65 /* APIStreet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C7C2406992400FD9F65 /* APIStreet.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -471,6 +474,9 @@
 		E94B6C70240694C900FD9F65 /* GetAllLocationsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllLocationsRequest.swift; sourceTree = "<group>"; };
 		E94B6C72240694D700FD9F65 /* GetAllLocationsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllLocationsResponseData.swift; sourceTree = "<group>"; };
 		E94B6C752406955800FD9F65 /* APILocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILocation.swift; sourceTree = "<group>"; };
+		E94B6C78240698F800FD9F65 /* GetStreetsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStreetsRequest.swift; sourceTree = "<group>"; };
+		E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStreetsResponseData.swift; sourceTree = "<group>"; };
+		E94B6C7C2406992400FD9F65 /* APIStreet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStreet.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -558,10 +564,11 @@
 			isa = PBXGroup;
 			children = (
 				E94B6C4F240653FE00FD9F65 /* GetAddress */,
+				E94B6C6F240694B200FD9F65 /* GetAllLocations */,
 				E94B6C56240663DA00FD9F65 /* GeoCoder */,
 				E94B6C6024068D1400FD9F65 /* GetHouses */,
-				E94B6C6F240694B200FD9F65 /* GetAllLocations */,
 				E94B6C6824068FEB00FD9F65 /* GetServices */,
+				E94B6C77240698CC00FD9F65 /* GetStreets */,
 			);
 			path = Geo;
 			sourceTree = "<group>";
@@ -1632,13 +1639,23 @@
 		E94B6C742406952200FD9F65 /* Geo */ = {
 			isa = PBXGroup;
 			children = (
-				E94B6C6D2406905B00FD9F65 /* APIServiceModel.swift */,
 				E94B6C542406553600FD9F65 /* APIFullAddress.swift */,
 				E94B6C5B2406800900FD9F65 /* APIGeoCoder.swift */,
 				E94B6C6624068DD700FD9F65 /* APIHouse.swift */,
 				E94B6C752406955800FD9F65 /* APILocation.swift */,
+				E94B6C6D2406905B00FD9F65 /* APIServiceModel.swift */,
+				E94B6C7C2406992400FD9F65 /* APIStreet.swift */,
 			);
 			path = Geo;
+			sourceTree = "<group>";
+		};
+		E94B6C77240698CC00FD9F65 /* GetStreets */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C78240698F800FD9F65 /* GetStreetsRequest.swift */,
+				E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */,
+			);
+			path = GetStreets;
 			sourceTree = "<group>";
 		};
 		E98C381D23F141E70010BBC1 /* Recovered References */ = {
@@ -2198,6 +2215,7 @@
 				E9E4272123F41F7300F5D593 /* AvailableSericesViewModel.swift in Sources */,
 				E9E4271F23F41DDF00F5D593 /* ServiceState.swift in Sources */,
 				844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */,
+				E94B6C7B2406990400FD9F65 /* GetStreetsResponseData.swift in Sources */,
 				84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */,
 				E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */,
 				844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */,
@@ -2237,6 +2255,7 @@
 				E94B6C3923FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
+				E94B6C79240698F800FD9F65 /* GetStreetsRequest.swift in Sources */,
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
@@ -2247,6 +2266,7 @@
 				848298362405655600E81620 /* RequestCodeRequest.swift in Sources */,
 				84AA8D5B23E2CEC5001B3B43 /* BaseAPIResponse.swift in Sources */,
 				8428673024051F7F004D3F26 /* APIPaymentsListAccount.swift in Sources */,
+				E94B6C7D2406992400FD9F65 /* APIStreet.swift in Sources */,
 				E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */,
 				E94B6C4A2404F2D100FD9F65 /* GetSettingsListResponseData.swift in Sources */,
 				E9A1D78323F27AE500234B2A /* AddressConfirmationViewController.swift in Sources */,
