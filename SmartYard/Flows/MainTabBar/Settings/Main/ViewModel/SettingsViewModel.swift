@@ -31,6 +31,10 @@ class SettingsViewModel: BaseViewModel {
     func transform(_ input: Input) -> Output {
         let refreshDataTrigger = PublishSubject<Void>()
         
+        input.updateDataTrigger
+            .drive(refreshDataTrigger)
+            .disposed(by: disposeBag)
+        
         Driver<Void>
             .merge(
                 refreshDataTrigger.asDriverOnErrorJustComplete(),
@@ -207,9 +211,18 @@ class SettingsViewModel: BaseViewModel {
                 return self?.createSections(data: data, expansionStateDict: expansionStateDict) ?? []
             }
         
+        let endUpdatingTrigger = PublishSubject<Void>()
+        
+        loadedData
+            .asDriverOnErrorJustComplete()
+            .mapToVoid()
+            .drive(endUpdatingTrigger)
+            .disposed(by: disposeBag)
+        
         return Output(
             sectionModels: sectionModels,
-            updateKind: updateKind
+            updateKind: updateKind,
+            endUpdating: endUpdatingTrigger.asDriverOnErrorJustComplete()
         )
     }
     
@@ -281,11 +294,13 @@ extension SettingsViewModel {
         let itemSelected: Driver<SettingsDataItemIdentity>
         let serviceSelected: Driver<(SettingsDataItemIdentity, SettingsServiceType)>
         let advancedSettingsTrigger: Driver<Void>
+        let updateDataTrigger: Driver<Void>
     }
     
     struct Output {
         let sectionModels: Driver<[SettingsSectionModel]>
         let updateKind: Driver<SettingsSectionUpdateKind>
+        let endUpdating: Driver<Void>
     }
     
 }

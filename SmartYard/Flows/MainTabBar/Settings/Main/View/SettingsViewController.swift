@@ -21,6 +21,8 @@ class SettingsViewController: BaseViewController {
     
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<SettingsSectionModel>?
     
+    private let refreshControl = UIRefreshControl()
+    
     // MARK: Это костыль для того, чтобы понять, сколько на самом деле ячеек внутри секции
     // В методе configureCell у RxDataSource мы должны сконфигурировать ячейку
     // Но проблема в том, что RxDataSource выполняет операции обновления и добавления ячеек отдельно
@@ -61,7 +63,8 @@ class SettingsViewController: BaseViewController {
         let input = SettingsViewModel.Input(
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
             serviceSelected: serviceButtonTapTrigger.asDriverOnErrorJustComplete(),
-            advancedSettingsTrigger: settingsButton.rx.tap.asDriver()
+            advancedSettingsTrigger: settingsButton.rx.tap.asDriver(),
+            updateDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
@@ -95,6 +98,17 @@ class SettingsViewController: BaseViewController {
             .drive(
                 onNext: {
                     updateKindSubject.onNext($0)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.endUpdating
+            .drive(
+                onNext: { [weak self] in
+                    // Необходимо, чтобы refreshControl не перекрывал контент collection view
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                        self?.refreshControl.endRefreshing()
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -203,6 +217,9 @@ class SettingsViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         self.dataSource = dataSource
+        
+        collectionView.refreshControl = refreshControl
+        refreshControl.tintColor = UIColor.SmartYard.gray
     }
     
     private func configureCell(
