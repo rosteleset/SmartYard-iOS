@@ -30,6 +30,7 @@ target 'SmartYard' do
   pod 'SSCustomTabbar', :git => 'https://github.com/MadBrains/SSCustomTabbar.git', :branch => 'feature/add-animation-options'
   pod 'TPKeyboardAvoiding'
   pod 'JGProgressHUD'
+  pod 'SkeletonView', '1.7'
   
   # Map
   pod 'MapboxStatic.swift', '~> 0.11'

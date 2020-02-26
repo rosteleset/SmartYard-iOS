@@ -69,3 +69,19 @@ extension UIView {
     }
     
 }
+
+extension UIView {
+    
+    func showSkeletonAsynchronously() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.hideSkeleton()
+            if self.isSkeletonable {
+                self.showAnimatedGradientSkeleton()
+            }
+        }
+    }
+    
+}

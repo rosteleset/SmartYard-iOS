@@ -44,6 +44,8 @@
 		844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C023EAA71C00BECEE6 /* SourceSansPro-SemiBold.ttf */; };
 		844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */; };
 		84560E7F2407A25000BA5F7D /* EmptyDataInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84560E7E2407A25000BA5F7D /* EmptyDataInitializable.swift */; };
+		847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */; };
+		847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */; };
 		8482981E24054CDF00E81620 /* APIDoor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482981D24054CDE00E81620 /* APIDoor.swift */; };
 		8482982224054D4B00E81620 /* APICCTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482982124054D4B00E81620 /* APICCTV.swift */; };
 		848298322405655600E81620 /* SendNameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848298252405655600E81620 /* SendNameRequest.swift */; };
@@ -316,6 +318,8 @@
 		844AC3F423EBFF900066006D /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		84560E7E2407A25000BA5F7D /* EmptyDataInitializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataInitializable.swift; sourceTree = "<group>"; };
+		847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListSkeletonView.swift; sourceTree = "<group>"; };
+		847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListSkeletonView.xib; sourceTree = "<group>"; };
 		8482981D24054CDE00E81620 /* APIDoor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDoor.swift; sourceTree = "<group>"; };
 		8482982124054D4B00E81620 /* APICCTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICCTV.swift; sourceTree = "<group>"; };
 		848298252405655600E81620 /* SendNameRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNameRequest.swift; sourceTree = "<group>"; };
@@ -663,6 +667,7 @@
 				E94B6C3523FD728F00FD9F65 /* RoundedImageView */,
 				E9E4271323F40D8100F5D593 /* SmartYardCheckBoxView */,
 				E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */,
+				847CF7D3240689C400070007 /* Skeletons */,
 				E9A4D4A623ED9BED0070A591 /* WhiteButtonWithBorder */,
 			);
 			path = UI;
@@ -874,6 +879,23 @@
 				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
 			);
 			path = Entries;
+			sourceTree = "<group>";
+		};
+		847CF7D3240689C400070007 /* Skeletons */ = {
+			isa = PBXGroup;
+			children = (
+				847CF7D424068B1900070007 /* AddressesListSkeletonView */,
+			);
+			path = Skeletons;
+			sourceTree = "<group>";
+		};
+		847CF7D424068B1900070007 /* AddressesListSkeletonView */ = {
+			isa = PBXGroup;
+			children = (
+				847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */,
+				847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */,
+			);
+			path = AddressesListSkeletonView;
 			sourceTree = "<group>";
 		};
 		848298232405655600E81620 /* User */ = {
@@ -2048,6 +2070,7 @@
 				E9E4270523F2CD0F00F5D593 /* ServiceFromCourierView.xib in Resources */,
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				E9E4270D23F3D62C00F5D593 /* MapPoint.pdf in Resources */,
+				847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */,
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */,
@@ -2357,6 +2380,7 @@
 				848298372405655600E81620 /* RegisterPushTokenRequest.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
 				848298472405658A00E81620 /* OpenDoorRequest.swift in Sources */,
+				847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */,
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
 				848298442405658A00E81620 /* GetAddressListRequest.swift in Sources */,
