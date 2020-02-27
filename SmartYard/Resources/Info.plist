@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>LanTa</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -20,6 +22,8 @@
 	<string>25</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSContactsUsageDescription</key>
+	<string>Access is needed to save contact information to intercom access list.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Used for VoIP calls</string>
 	<key>UIAppFonts</key>
@@ -46,7 +50,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>NSContactsUsageDescription</key>
-	<string>Access is needed to save contact information to intercom access list.</string>
 </dict>
 </plist>
