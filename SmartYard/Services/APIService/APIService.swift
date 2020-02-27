@@ -282,18 +282,18 @@ extension APIService {
         _ response: Response
     ) -> Swift.Result<T, Error> {
         do {
-            if response.statusCode == 204 {
+            switch response.statusCode {
+            case 204:
                 return .success(T())
-            }
-            
-            guard response.statusCode == 200 else {
+                
+            case 200:
+                let mappedResponse = try response.map(BaseAPIResponse<T>.self)
+                return .success(mappedResponse.data)
+                
+            default:
                 let error = NSError(domain: "APIServiceError", code: response.statusCode, userInfo: nil)
                 return .failure(error)
             }
-            
-            let mappedResponse = try response.map(BaseAPIResponse<T>.self)
-            
-            return .success(mappedResponse.data)
         } catch {
             return .failure(NSError.APIServiceError.mappingError)
         }
