@@ -64,10 +64,21 @@ class IncomingCallViewModel: BaseViewModel {
         let currentState = currentStateSubject.asDriverOnErrorJustComplete()
         
         // MARK: проксируем нажатие кнопки "Открыть" в локальный сабжект
+        // Заодно обновляем стейт на "Соединение...", если до этого был стейт "Входящий звонок"
         
         input.openTrigger
-            .map { true }
-            .drive(doorOpeningRequestedByUser)
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    let (callState, doorState) = currentState
+                    
+                    if callState == .callReceived {
+                        self?.currentStateSubject.onNext((.establishingConnection, doorState))
+                    }
+                    
+                    self?.doorOpeningRequestedByUser.onNext(true)
+                }
+            )
             .disposed(by: disposeBag)
         
         // MARK: мы можем нажать кнопку "Открыть" еще до того, как примем звонок.
