@@ -77,7 +77,9 @@ extension UIView {
             guard let self = self else {
                 return
             }
+            
             self.hideSkeleton()
+            
             if self.isSkeletonable {
                 self.showAnimatedGradientSkeleton()
             }

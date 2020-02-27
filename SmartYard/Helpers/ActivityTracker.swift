@@ -52,7 +52,6 @@ final class ActivityTracker: SharedSequenceConvertibleType {
         _lock.unlock()
     }
     
-    // swiftlint:disable:next strict_fileprivate
     fileprivate func trackActivityOfObservable<O: ObservableConvertibleType>(_ source: O) -> Observable<O.Element> {
         return source.asObservable()
             .do(

@@ -13,7 +13,6 @@ import RxCocoa
 
 class SmartYardSegmentedControl: UIView {
     
-    // swiftlint:disable:next strict_fileprivate
     fileprivate let segmentControl: UISegmentedControl = {
         let control = UISegmentedControl()
         control.backgroundColor = .white
