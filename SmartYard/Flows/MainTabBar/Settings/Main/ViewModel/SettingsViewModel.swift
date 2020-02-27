@@ -31,6 +31,9 @@ class SettingsViewModel: BaseViewModel {
         let isInitialLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
         let isInitialLoadingFinished = isInitialLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
         
+        let reloadingFinishedSubject = PublishSubject<Void>()
+        let reloadingFinished = reloadingFinishedSubject.asDriverOnErrorJustComplete()
+        
         Driver<Void>
             .merge(
                 input.updateDataTrigger.asDriver().delay(.milliseconds(1000)),
@@ -48,6 +51,7 @@ class SettingsViewModel: BaseViewModel {
             .do(
                 onNext: { _ in
                     isInitialLoadingFinishedSubject.onNext(true)
+                    reloadingFinishedSubject.onNext(())
                 }
             )
             .ignoreNil()
@@ -222,8 +226,8 @@ class SettingsViewModel: BaseViewModel {
         return Output(
             sectionModels: sectionModels,
             updateKind: updateKind,
-            endUpdating: loadedData.asDriverOnErrorJustComplete().mapToVoid(),
-            isInitialLoadingFinished: isInitialLoadingFinished
+            isInitialLoadingFinished: isInitialLoadingFinished,
+            reloadingFinished: reloadingFinished
         )
     }
     
@@ -301,8 +305,8 @@ extension SettingsViewModel {
     struct Output {
         let sectionModels: Driver<[SettingsSectionModel]>
         let updateKind: Driver<SettingsSectionUpdateKind>
-        let endUpdating: Driver<Void>
         let isInitialLoadingFinished: Driver<Bool>
+        let reloadingFinished: Driver<Void>
     }
     
 }

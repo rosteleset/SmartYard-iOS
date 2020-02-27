@@ -54,6 +54,9 @@ class AddressesListViewModel: BaseViewModel {
         let isInitialLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
         let isInitialLoadingFinished = isInitialLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
         
+        let reloadingFinishedSubject = PublishSubject<Void>()
+        let reloadingFinished = reloadingFinishedSubject.asDriverOnErrorJustComplete()
+        
         // MARK: Загрузка данных
         
         Driver<Void>
@@ -73,6 +76,7 @@ class AddressesListViewModel: BaseViewModel {
             .do(
                 onNext: { _ in
                     isInitialLoadingFinishedSubject.onNext(true)
+                    reloadingFinishedSubject.onNext(())
                 }
             )
             .ignoreNil()
@@ -209,7 +213,7 @@ class AddressesListViewModel: BaseViewModel {
             sectionModels: sectionModels,
             updateKind: updateKind,
             isLoading: activityTracker.asDriver(),
-            reloadingFinished: loadedData.asDriverOnErrorJustComplete().mapToVoid(),
+            reloadingFinished: reloadingFinished,
             isInitialLoadingFinished: isInitialLoadingFinished
         )
     }
