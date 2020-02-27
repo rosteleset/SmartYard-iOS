@@ -224,6 +224,8 @@ class IncomingCallViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         // MARK: Обработка нажатия на кнопку "Игнорировать / Отклонить"
+        // Если мы еще не приняли звонок, то просто закрываем окно (чел у домофона думает, что нас нет дома)
+        // Если мы уже приняли звонок и жмем "Отклонить", то завершаем звонок и закрываем окно
         
         input.ignoreTrigger
             .withLatestFrom(currentState)
@@ -238,22 +240,24 @@ class IncomingCallViewModel: BaseViewModel {
                     self.currentStateSubject.onNext((.callFinished, .notDetermined))
                 }
             )
+            .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
             .drive(
-                onNext: { [weak self] _ in
+                onNext: { [weak self] callInfo in
                     guard let self = self else {
                         return
                     }
                     
-//                    guard let currentCall = self.currentCall else {
-//                        self.router.trigger(.dismiss)
-//                        return
-//                    }
-//
-//                    do {
-//                        try currentCall.terminate()
-//                    } catch {
-//                        self.router.trigger(.dismiss)
-//                    }
+                    guard let currentCall = callInfo?.0,
+                        (currentCall.state == .Connected || currentCall.state == .StreamsRunning) else {
+                        self.router.trigger(.dismiss)
+                        return
+                    }
+
+                    do {
+                        try currentCall.terminate()
+                    } catch {
+                        self.router.trigger(.dismiss)
+                    }
                 }
             )
             .disposed(by: disposeBag)
