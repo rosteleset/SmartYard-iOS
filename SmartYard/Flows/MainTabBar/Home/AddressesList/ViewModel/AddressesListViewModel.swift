@@ -64,6 +64,7 @@ class AddressesListViewModel: BaseViewModel {
                 }
                 
                 return self.apiWrapper.getAddressList()
+                    .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()

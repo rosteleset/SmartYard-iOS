@@ -19,9 +19,6 @@ class SettingsViewModel: BaseViewModel {
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
     private let loadedData = BehaviorSubject<[APISettingsAddress]>(value: [])
     
-    private let activityTracker = ActivityTracker()
-    private let errorTracker = ErrorTracker()
-    
     init(router: WeakRouter<SettingsRoute>, apiWrapper: APIWrapper) {
         self.router = router
         self.apiWrapper = apiWrapper
@@ -29,6 +26,8 @@ class SettingsViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
+        let errorTracker = ErrorTracker()
+        
         Driver<Void>
             .merge(
                 input.updateDataTrigger.asDriver().delay(.milliseconds(1000)),
@@ -40,8 +39,7 @@ class SettingsViewModel: BaseViewModel {
                 }
                 
                 return self.apiWrapper.getSettingsAddresses()
-                    .trackActivity(self.activityTracker)
-                    .trackError(self.errorTracker)
+                    .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
@@ -204,6 +202,14 @@ class SettingsViewModel: BaseViewModel {
                 
                 return self?.createSections(data: data, expansionStateDict: expansionStateDict) ?? []
             }
+        
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
         
         return Output(
             sectionModels: sectionModels,
