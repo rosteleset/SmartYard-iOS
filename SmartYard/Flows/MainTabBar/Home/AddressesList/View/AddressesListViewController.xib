@@ -20,6 +20,7 @@
                 <outlet property="addButton" destination="eem-hg-ddA" id="sHE-PL-rz7"/>
                 <outlet property="collectionView" destination="OvU-at-ANt" id="QJ0-LC-Cjc"/>
                 <outlet property="mainContainerView" destination="n8q-GS-Qe3" id="wIk-hW-HWI"/>
+                <outlet property="skeletonContainer" destination="hs4-G9-VzN" id="IQu-Sz-UFu"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -59,13 +60,47 @@
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hs4-G9-VzN" userLabel="Skeleton Container">
+                            <rect key="frame" x="16" y="16" width="382" height="128"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="Teu-gw-w6H" customClass="AddressesListSkeletonView" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="128"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="12"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" red="0.94117647059999998" green="0.94117647059999998" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="Teu-gw-w6H" secondAttribute="trailing" id="6rB-R0-fRz"/>
+                                <constraint firstItem="Teu-gw-w6H" firstAttribute="leading" secondItem="hs4-G9-VzN" secondAttribute="leading" id="703-ED-dfn"/>
+                                <constraint firstAttribute="bottom" secondItem="Teu-gw-w6H" secondAttribute="bottom" id="R2k-rJ-EMM"/>
+                                <constraint firstItem="Teu-gw-w6H" firstAttribute="top" secondItem="hs4-G9-VzN" secondAttribute="top" id="akC-EG-uhm"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="OvU-at-ANt" firstAttribute="top" secondItem="n8q-GS-Qe3" secondAttribute="top" id="8lI-jL-Tm2"/>
                         <constraint firstAttribute="bottom" secondItem="OvU-at-ANt" secondAttribute="bottom" id="Vuq-cP-2qf"/>
+                        <constraint firstItem="hs4-G9-VzN" firstAttribute="leading" secondItem="n8q-GS-Qe3" secondAttribute="leading" constant="16" id="WZU-de-7vE"/>
+                        <constraint firstAttribute="trailing" secondItem="hs4-G9-VzN" secondAttribute="trailing" constant="16" id="WsH-xD-851"/>
                         <constraint firstItem="OvU-at-ANt" firstAttribute="leading" secondItem="n8q-GS-Qe3" secondAttribute="leading" id="ojz-GD-6cT"/>
                         <constraint firstAttribute="trailing" secondItem="OvU-at-ANt" secondAttribute="trailing" id="ucU-xN-BBo"/>
+                        <constraint firstItem="hs4-G9-VzN" firstAttribute="top" secondItem="n8q-GS-Qe3" secondAttribute="top" constant="16" id="xQY-Qm-R9I"/>
                     </constraints>
                 </view>
             </subviews>

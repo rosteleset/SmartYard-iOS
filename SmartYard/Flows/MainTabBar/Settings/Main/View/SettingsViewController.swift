@@ -18,6 +18,7 @@ class SettingsViewController: BaseViewController {
     @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var settingsButton: UIButton!
+    @IBOutlet private weak var skeletonContainer: UIView!
     
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<SettingsSectionModel>?
     
@@ -50,6 +51,14 @@ class SettingsViewController: BaseViewController {
         configureView()
         configureCollectionView()
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if skeletonContainer.isSkeletonActive {
+            skeletonContainer.showSkeletonAsynchronously()
+        }
     }
     
     // swiftlint:disable:next function_body_length
@@ -153,6 +162,17 @@ class SettingsViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.isInitialLoadingFinished
+            .isTrue()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.collectionView.isHidden = false
+                    self?.skeletonContainer.hideSkeleton()
+                    self?.skeletonContainer.isHidden = true
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func performScrollUpdate(updateKind: SettingsSectionUpdateKind, to indexPath: IndexPath) {
@@ -191,6 +211,10 @@ class SettingsViewController: BaseViewController {
         
         settingsButton.setImage(UIImage(named: "SettingsIcon"), for: .normal)
         settingsButton.setImage(UIImage(named: "SettingsIcon")?.darkened(), for: .highlighted)
+        
+        collectionView.isHidden = true
+        skeletonContainer.isHidden = false
+        skeletonContainer.showSkeletonAsynchronously()
     }
     
     private func configureCollectionView() {

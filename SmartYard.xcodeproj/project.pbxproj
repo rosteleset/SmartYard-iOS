@@ -44,6 +44,10 @@
 		844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C023EAA71C00BECEE6 /* SourceSansPro-SemiBold.ttf */; };
 		844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */; };
 		84560E7F2407A25000BA5F7D /* EmptyDataInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84560E7E2407A25000BA5F7D /* EmptyDataInitializable.swift */; };
+		847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */; };
+		847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */; };
+		847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */; };
+		847CF7DD240696D500070007 /* SettingsListSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CF7DC240696D500070007 /* SettingsListSkeletonView.xib */; };
 		8482981E24054CDF00E81620 /* APIDoor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482981D24054CDE00E81620 /* APIDoor.swift */; };
 		8482982224054D4B00E81620 /* APICCTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482982124054D4B00E81620 /* APICCTV.swift */; };
 		848298322405655600E81620 /* SendNameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848298252405655600E81620 /* SendNameRequest.swift */; };
@@ -316,6 +320,10 @@
 		844AC3F423EBFF900066006D /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		84560E7E2407A25000BA5F7D /* EmptyDataInitializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataInitializable.swift; sourceTree = "<group>"; };
+		847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListSkeletonView.swift; sourceTree = "<group>"; };
+		847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListSkeletonView.xib; sourceTree = "<group>"; };
+		847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListSkeletonView.swift; sourceTree = "<group>"; };
+		847CF7DC240696D500070007 /* SettingsListSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsListSkeletonView.xib; sourceTree = "<group>"; };
 		8482981D24054CDE00E81620 /* APIDoor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDoor.swift; sourceTree = "<group>"; };
 		8482982124054D4B00E81620 /* APICCTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICCTV.swift; sourceTree = "<group>"; };
 		848298252405655600E81620 /* SendNameRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNameRequest.swift; sourceTree = "<group>"; };
@@ -476,7 +484,6 @@
 		E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStreetsResponseData.swift; sourceTree = "<group>"; };
 		E94B6C7C2406992400FD9F65 /* APIStreet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStreet.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
-		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E98C382423F149F30010BBC1 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
@@ -507,7 +514,6 @@
 		E9A4D49023EC2A780070A591 /* PinTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinTextField.xib; sourceTree = "<group>"; };
 		E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeViewController.swift; sourceTree = "<group>"; };
 		E9A4D49923EC3E200070A591 /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
-		E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardTextField.swift; sourceTree = "<group>"; };
 		E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthByContractNumViewController.swift; sourceTree = "<group>"; };
 		E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthByContractNumViewController.xib; sourceTree = "<group>"; };
@@ -663,6 +669,7 @@
 				E94B6C3523FD728F00FD9F65 /* RoundedImageView */,
 				E9E4271323F40D8100F5D593 /* SmartYardCheckBoxView */,
 				E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */,
+				847CF7D3240689C400070007 /* Skeletons */,
 				E9A4D4A623ED9BED0070A591 /* WhiteButtonWithBorder */,
 			);
 			path = UI;
@@ -874,6 +881,33 @@
 				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
 			);
 			path = Entries;
+			sourceTree = "<group>";
+		};
+		847CF7D3240689C400070007 /* Skeletons */ = {
+			isa = PBXGroup;
+			children = (
+				847CF7D424068B1900070007 /* AddressesListSkeletonView */,
+				847CF7D9240696A400070007 /* SettingsListSkeletonView */,
+			);
+			path = Skeletons;
+			sourceTree = "<group>";
+		};
+		847CF7D424068B1900070007 /* AddressesListSkeletonView */ = {
+			isa = PBXGroup;
+			children = (
+				847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */,
+				847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */,
+			);
+			path = AddressesListSkeletonView;
+			sourceTree = "<group>";
+		};
+		847CF7D9240696A400070007 /* SettingsListSkeletonView */ = {
+			isa = PBXGroup;
+			children = (
+				847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */,
+				847CF7DC240696D500070007 /* SettingsListSkeletonView.xib */,
+			);
+			path = SettingsListSkeletonView;
 			sourceTree = "<group>";
 		};
 		848298232405655600E81620 /* User */ = {
@@ -1407,7 +1441,6 @@
 				84F840D323E07DA5008DBE50 /* Products */,
 				B0B71A96C6C8995993C06C49 /* Pods */,
 				9597597AA6C1CAECCA7D92F7 /* Frameworks */,
-				E98C381D23F141E70010BBC1 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1653,15 +1686,6 @@
 				E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */,
 			);
 			path = GetStreets;
-			sourceTree = "<group>";
-		};
-		E98C381D23F141E70010BBC1 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */,
-				E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */ = {
@@ -2048,6 +2072,7 @@
 				E9E4270523F2CD0F00F5D593 /* ServiceFromCourierView.xib in Resources */,
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				E9E4270D23F3D62C00F5D593 /* MapPoint.pdf in Resources */,
+				847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */,
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */,
@@ -2056,6 +2081,7 @@
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */,
 				E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */,
+				847CF7DD240696D500070007 /* SettingsListSkeletonView.xib in Resources */,
 				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
@@ -2218,6 +2244,7 @@
 				844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */,
 				84B89A7C23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift in Sources */,
 				E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */,
+				847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
 				E94B6C3B23FFE1D200FD9F65 /* APIIntercomSettings.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
@@ -2357,6 +2384,7 @@
 				848298372405655600E81620 /* RegisterPushTokenRequest.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
 				848298472405658A00E81620 /* OpenDoorRequest.swift in Sources */,
+				847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */,
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
 				848298442405658A00E81620 /* GetAddressListRequest.swift in Sources */,

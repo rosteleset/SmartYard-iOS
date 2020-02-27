@@ -28,6 +28,9 @@ class SettingsViewModel: BaseViewModel {
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         
+        let isInitialLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
+        let isInitialLoadingFinished = isInitialLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
+        
         Driver<Void>
             .merge(
                 input.updateDataTrigger.asDriver().delay(.milliseconds(1000)),
@@ -42,6 +45,11 @@ class SettingsViewModel: BaseViewModel {
                     .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
+            .do(
+                onNext: { _ in
+                    isInitialLoadingFinishedSubject.onNext(true)
+                }
+            )
             .ignoreNil()
             .drive(
                 onNext: { [weak self] result in
@@ -214,7 +222,8 @@ class SettingsViewModel: BaseViewModel {
         return Output(
             sectionModels: sectionModels,
             updateKind: updateKind,
-            endUpdating: loadedData.asDriverOnErrorJustComplete().mapToVoid()
+            endUpdating: loadedData.asDriverOnErrorJustComplete().mapToVoid(),
+            isInitialLoadingFinished: isInitialLoadingFinished
         )
     }
     
@@ -293,6 +302,7 @@ extension SettingsViewModel {
         let sectionModels: Driver<[SettingsSectionModel]>
         let updateKind: Driver<SettingsSectionUpdateKind>
         let endUpdating: Driver<Void>
+        let isInitialLoadingFinished: Driver<Bool>
     }
     
 }

@@ -9,7 +9,7 @@
 enum AddressesListDataItemIdentity: Hashable {
     
     case header(addressId: String)
-    case object(domophoneId: String, doorId: Int, entrance: String?)
+    case object(addressId: String, domophoneId: String, doorId: Int, entrance: String?)
     case cameras(addressId: String)
     
 }

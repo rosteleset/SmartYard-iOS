@@ -11,12 +11,14 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import JGProgressHUD
+import SkeletonView
 
 class AddressesListViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var addButton: UIButton!
     @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var skeletonContainer: UIView!
     
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<AddressesListSectionModel>?
     private var refreshControl = UIRefreshControl()
@@ -51,6 +53,14 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         configureView()
         configureCollectionView()
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if skeletonContainer.isSkeletonActive {
+            skeletonContainer.showSkeletonAsynchronously()
+        }
     }
     
     // swiftlint:disable:next function_body_length
@@ -166,6 +176,17 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.isInitialLoadingFinished
+            .isTrue()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.collectionView.isHidden = false
+                    self?.skeletonContainer.hideSkeleton()
+                    self?.skeletonContainer.isHidden = true
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func performScrollUpdate(updateKind: AddressesListSectionUpdateKind, to indexPath: IndexPath) {
@@ -204,6 +225,10 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         
         addButton.setImage(UIImage(named: "AddButtonIcon"), for: .normal)
         addButton.setImage(UIImage(named: "AddButtonIcon")?.darkened(), for: .highlighted)
+        
+        collectionView.isHidden = true
+        skeletonContainer.isHidden = false
+        skeletonContainer.showSkeletonAsynchronously()
     }
     
     private func configureCollectionView() {
