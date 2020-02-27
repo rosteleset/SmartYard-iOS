@@ -26,6 +26,7 @@ class IncomingCallViewModel: BaseViewModel {
         value: (.callReceived, .notDetermined)
     )
     
+    private let registrationFinished = BehaviorSubject<Bool>(value: false)
     private let incomingCall = BehaviorSubject<(Call, CallParams)?>(value: nil)
     private let incomingCallAcceptedByUser = BehaviorSubject<Bool>(value: false)
     
@@ -77,6 +78,36 @@ class IncomingCallViewModel: BaseViewModel {
                     case .callPreviewed: self.currentStateSubject.onNext((.callReceived, doorState))
                     default: break
                     }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Если после того, как мы установили соединение, за 2 секунды не придет звонок - закрываем окно
+        
+        registrationFinished
+            .asDriver(onErrorJustReturn: false)
+            .isTrue()
+            .delay(.milliseconds(2000))
+            .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
+            .filter { $0 == nil }
+            .withLatestFrom(currentState)
+            .do(
+                onNext: { [weak self] currentState in
+                    let (callState, doorState) = currentState
+                    
+                    guard let self = self, callState != .callFinished, doorState == .notDetermined else {
+                        return
+                    }
+                    
+                    self.currentStateSubject.onNext((.callFinished, doorState))
+                    self.linphoneService.stop()
+                    self.linphoneService.hasEnqueuedCalls = false
+                }
+            )
+            .delay(.milliseconds(2000))
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.router.trigger(.dismiss)
                 }
             )
             .disposed(by: disposeBag)
@@ -387,6 +418,10 @@ extension IncomingCallViewModel: LinphoneDelegate {
     
     func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: RegistrationState, message: String) {
         print("DEBUG / REGISTRATION STATE: \(cstate)")
+        
+        if cstate == .Ok {
+            registrationFinished.onNext(true)
+        }
     }
     
     func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
