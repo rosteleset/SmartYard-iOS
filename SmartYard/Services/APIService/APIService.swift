@@ -221,6 +221,17 @@ class APIService {
         )
     }
     
+    /// Запрос получения списка
+    func performGetListConnectRequest(
+        _ request: GetListConnectRequest,
+        completion: ((Swift.Result<GetListConnectResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .getListConnect(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
 }
 
 extension APIService {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct APIIssue {
+struct APIIssue: Codable {
     
     let project: String
     let summary: String
