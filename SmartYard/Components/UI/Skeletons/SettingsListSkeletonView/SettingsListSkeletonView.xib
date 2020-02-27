@@ -149,7 +149,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ARU-rm-bib">
-                    <rect key="frame" x="24" y="186" width="366" height="24"/>
+                    <rect key="frame" x="24" y="186" width="248.5" height="24"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="VgX-Fq-9SD"/>
@@ -169,7 +169,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xh0-HE-2sZ">
-                    <rect key="frame" x="24" y="251" width="366" height="24"/>
+                    <rect key="frame" x="24" y="251" width="157.5" height="24"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="VBk-47-n5S"/>
@@ -189,10 +189,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KCh-Hf-FIH">
-                    <rect key="frame" x="24" y="316" width="366" height="24"/>
+                    <rect key="frame" x="24" y="316" width="219.5" height="24"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="24" id="RKy-wM-AeV"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="RKy-wM-AeV"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
@@ -206,14 +206,16 @@
             <constraints>
                 <constraint firstItem="Y7v-xg-3Ci" firstAttribute="top" secondItem="5X6-Qo-Fd7" secondAttribute="bottom" constant="12" id="2Wd-99-RzF"/>
                 <constraint firstItem="Unz-ZH-eTG" firstAttribute="top" secondItem="Xh0-HE-2sZ" secondAttribute="bottom" constant="20" id="4LZ-gZ-Bng"/>
-                <constraint firstAttribute="trailing" secondItem="Xh0-HE-2sZ" secondAttribute="trailing" constant="24" id="7Ir-f3-jPf"/>
-                <constraint firstAttribute="trailing" secondItem="ARU-rm-bib" secondAttribute="trailing" constant="24" id="8Wf-oU-1P0"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Xh0-HE-2sZ" secondAttribute="trailing" constant="24" id="7Ir-f3-jPf"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ARU-rm-bib" secondAttribute="trailing" constant="24" id="8Wf-oU-1P0"/>
                 <constraint firstItem="Y7v-xg-3Ci" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="9ln-Zt-u0a"/>
                 <constraint firstItem="9Yc-BN-h8C" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="A2P-yn-B6R"/>
+                <constraint firstItem="ARU-rm-bib" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.6" priority="999" id="Dyz-l0-r5b"/>
                 <constraint firstItem="Xh0-HE-2sZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="ERD-UT-xVj"/>
                 <constraint firstItem="ARU-rm-bib" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="MOS-7J-qSc"/>
+                <constraint firstItem="Xh0-HE-2sZ" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.38" priority="999" id="Mcf-w8-dVD"/>
                 <constraint firstItem="Udm-5s-78a" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="24" id="MxM-2k-ByT"/>
-                <constraint firstAttribute="trailing" secondItem="KCh-Hf-FIH" secondAttribute="trailing" constant="24" id="NKG-rk-eMV"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="KCh-Hf-FIH" secondAttribute="trailing" constant="24" id="NKG-rk-eMV"/>
                 <constraint firstAttribute="bottom" secondItem="KCh-Hf-FIH" secondAttribute="bottom" constant="18" id="OKO-wj-h1H"/>
                 <constraint firstAttribute="trailing" secondItem="Udm-5s-78a" secondAttribute="trailing" constant="24" id="OaW-0p-PMn"/>
                 <constraint firstItem="KCh-Hf-FIH" firstAttribute="top" secondItem="Unz-ZH-eTG" secondAttribute="bottom" constant="20" id="QcH-UR-Mp1"/>
@@ -234,6 +236,7 @@
                 <constraint firstItem="CDX-oV-OVd" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="sUG-cO-ves"/>
                 <constraint firstItem="Xh0-HE-2sZ" firstAttribute="top" secondItem="1ca-Fe-MGj" secondAttribute="bottom" constant="20" id="tIa-MV-5xJ"/>
                 <constraint firstItem="9Yc-BN-h8C" firstAttribute="top" secondItem="CDX-oV-OVd" secondAttribute="bottom" constant="20" id="wYu-sJ-2ow"/>
+                <constraint firstItem="KCh-Hf-FIH" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.53" priority="999" id="zYg-5a-j8j"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <userDefinedRuntimeAttributes>
