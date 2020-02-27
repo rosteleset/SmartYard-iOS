@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 extension APIWrapper {
     
@@ -15,7 +17,14 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = OpenDoorRequest(accessToken: accessToken, domophoneId: domophoneId, doorId: doorId)
+        let apiIssue = APIIssue(name: "test", value: "test")
+        
+        let request = CreateIssueRequest(
+            accessToken: accessToken,
+            issue: [apiIssue],
+            customFields: nil,
+            actions: nil
+        )
         
         return Single.create { [weak self] single in
             guard let self = self else {
@@ -23,7 +32,7 @@ extension APIWrapper {
                 return Disposables.create()
             }
             
-            self.apiService.performOpenDoorRequest(request) { result in
+            self.apiService.performCreateIssueRequest(request) { result in
                 switch result {
                 case .success: single(.success(()))
                 case let .failure(error): single(.error(error))
