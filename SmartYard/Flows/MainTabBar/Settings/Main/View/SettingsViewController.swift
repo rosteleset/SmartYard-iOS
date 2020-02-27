@@ -111,7 +111,7 @@ class SettingsViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-        output.endUpdating
+        output.reloadingFinished
             .drive(
                 onNext: { [weak self] in
                     self?.refreshControl.endRefreshing()
