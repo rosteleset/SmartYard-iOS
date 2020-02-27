@@ -31,7 +31,6 @@ class PhoneTextField: PMNibLinkableView {
     @IBOutlet private weak var ninthNumView: NumberFieldView!
     @IBOutlet private weak var tenthNumView: NumberFieldView!
     
-    // swiftlint:disable:next strict_fileprivate
     @IBOutlet fileprivate weak var fakeTextField: UITextField!
     
     private var numberViewsCollection: [NumberFieldView] {

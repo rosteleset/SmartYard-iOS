@@ -12,7 +12,6 @@ import RxCocoa
 
 class FakeNavBar: PMNibLinkableView {
 
-    // swiftlint:disable:next strict_fileprivate
     @IBOutlet fileprivate weak var backButton: UIButton!
     
 }
