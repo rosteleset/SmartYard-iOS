@@ -484,7 +484,6 @@
 		E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStreetsResponseData.swift; sourceTree = "<group>"; };
 		E94B6C7C2406992400FD9F65 /* APIStreet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStreet.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
-		E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E98C382423F149F30010BBC1 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
@@ -515,7 +514,6 @@
 		E9A4D49023EC2A780070A591 /* PinTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinTextField.xib; sourceTree = "<group>"; };
 		E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeViewController.swift; sourceTree = "<group>"; };
 		E9A4D49923EC3E200070A591 /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
-		E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardTextField.swift; sourceTree = "<group>"; };
 		E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthByContractNumViewController.swift; sourceTree = "<group>"; };
 		E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthByContractNumViewController.xib; sourceTree = "<group>"; };
@@ -1443,7 +1441,6 @@
 				84F840D323E07DA5008DBE50 /* Products */,
 				B0B71A96C6C8995993C06C49 /* Pods */,
 				9597597AA6C1CAECCA7D92F7 /* Frameworks */,
-				E98C381D23F141E70010BBC1 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1689,15 +1686,6 @@
 				E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */,
 			);
 			path = GetStreets;
-			sourceTree = "<group>";
-		};
-		E98C381D23F141E70010BBC1 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */,
-				E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */ = {
