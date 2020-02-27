@@ -11,26 +11,20 @@ import Foundation
 struct CreateIssueRequest {
     
     let accessToken: String
-    let issue: [APIIssue]
-    let customFields: [APIIssueCustomField]?
-    let actions: [String]?
+    let issue: APIIssue
+    let customFields: APIIssueCustomField
+    let actions: [String]
     
 }
 
 extension CreateIssueRequest {
     
     var requestParameters: [String: Any] {
-        var params: [String: Any] = [
-            "issue": issue
+        let params: [String: Any] = [
+            "issue": issue,
+            "customFields": customFields.requestParameters,
+            "actions": actions
         ]
-        
-        if let customFields = customFields {
-            params["customFields"] = customFields
-        }
-        
-        if let actions = actions {
-            params["actions"] = actions
-        }
         
         return params
     }

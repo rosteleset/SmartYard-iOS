@@ -10,7 +10,9 @@ import Foundation
 
 struct APIIssue {
     
-    let name: String
-    let value: String
+    let project: String
+    let summary: String
+    let description: String
+    let type: String
     
 }
