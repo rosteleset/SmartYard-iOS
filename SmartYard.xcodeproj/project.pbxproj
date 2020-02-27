@@ -43,6 +43,7 @@
 		844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C123EAA72800BECEE6 /* SourceSansPro-Bold.ttf */; };
 		844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C023EAA71C00BECEE6 /* SourceSansPro-SemiBold.ttf */; };
 		844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */; };
+		84560E7F2407A25000BA5F7D /* EmptyDataInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84560E7E2407A25000BA5F7D /* EmptyDataInitializable.swift */; };
 		8482981E24054CDF00E81620 /* APIDoor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482981D24054CDE00E81620 /* APIDoor.swift */; };
 		8482982224054D4B00E81620 /* APICCTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482982124054D4B00E81620 /* APICCTV.swift */; };
 		848298322405655600E81620 /* SendNameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848298252405655600E81620 /* SendNameRequest.swift */; };
@@ -314,6 +315,7 @@
 		844AC3F323EBFF900066006D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		844AC3F423EBFF900066006D /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		84560E7E2407A25000BA5F7D /* EmptyDataInitializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataInitializable.swift; sourceTree = "<group>"; };
 		8482981D24054CDE00E81620 /* APIDoor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDoor.swift; sourceTree = "<group>"; };
 		8482982124054D4B00E81620 /* APICCTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICCTV.swift; sourceTree = "<group>"; };
 		848298252405655600E81620 /* SendNameRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNameRequest.swift; sourceTree = "<group>"; };
@@ -1095,6 +1097,7 @@
 				84AA8D4523E2CD3F001B3B43 /* APIService.swift */,
 				84AA8D4723E2CD48001B3B43 /* APITarget.swift */,
 				84AA8D4923E2CD5E001B3B43 /* BaseRequestRetrier.swift */,
+				84560E7E2407A25000BA5F7D /* EmptyDataInitializable.swift */,
 				E94B6C5F24068A0A00FD9F65 /* APIWrapper */,
 				844AC39823E979AB0066006D /* Models */,
 				844AC39923E979BA0066006D /* Requests */,
@@ -2253,6 +2256,7 @@
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
+				84560E7F2407A25000BA5F7D /* EmptyDataInitializable.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
 				844AC39723E9788D0066006D /* APIAddress.swift in Sources */,

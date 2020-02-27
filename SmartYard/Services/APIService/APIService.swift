@@ -254,6 +254,55 @@ extension APIService {
 
 extension APIService {
     
+    // MARK: Маппинг запросов, где в респонзе приходит массив каких-то данных
+    // Я думал изначально, что там будет просто приходить пустой массив, если нет данных, но приходит код 204 без тела
+    // Поскольку дженерики в свифте ну такие себе, пришлось добавить лишний метод
+    // Если должен вернуться массив данных, но вернулось 204 - интерпретируем это как пустой массив
+    
+    private func createInnerCompletionBlockWithData<T: Decodable & EmptyDataInitializable>(
+        from outerBlock: ((Swift.Result<T, Error>) -> Void)?
+    ) -> Completion {
+        return { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            
+            let convertedResult: Swift.Result<T, Error> = {
+                switch result {
+                case .success(let response): return self.mapResponseWithData(response)
+                case .failure(let error): return .failure(error)
+                }
+            }()
+            
+            outerBlock?(convertedResult)
+        }
+    }
+    
+    private func mapResponseWithData<T: Decodable & EmptyDataInitializable>(
+        _ response: Response
+    ) -> Swift.Result<T, Error> {
+        do {
+            switch response.statusCode {
+            case 204:
+                return .success(T())
+                
+            case 200:
+                let mappedResponse = try response.map(BaseAPIResponse<T>.self)
+                return .success(mappedResponse.data)
+                
+            default:
+                let error = NSError(domain: "APIServiceError", code: response.statusCode, userInfo: nil)
+                return .failure(error)
+            }
+        } catch {
+            return .failure(NSError.APIServiceError.mappingError)
+        }
+    }
+    
+}
+
+extension APIService {
+    
     // MARK: Mapping queries with empty Data block
     
     private func createEmptyInnerCompletionBlock(
