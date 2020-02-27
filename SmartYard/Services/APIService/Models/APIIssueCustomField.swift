@@ -16,7 +16,6 @@ struct APIIssueCustomField {
     let lat: String
     let lng: String
     
-    
     var requestParameters: [String: Any] {
         var params: [String: Any] = [:]
         
