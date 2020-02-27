@@ -26,7 +26,8 @@ class IncomingCallViewModel: BaseViewModel {
         value: (.callReceived, .notDetermined)
     )
     
-    private var currentCall: Call?
+    private let incomingCall = BehaviorSubject<(Call, CallParams)?>(value: nil)
+    private let incomingCallAcceptedByUser = BehaviorSubject<Bool>(value: false)
     
     init(
         linphoneService: LinphoneService,
@@ -38,6 +39,11 @@ class IncomingCallViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
         self.router = router
         self.callPayload = callPayload
+        
+        super.init()
+        
+        linphoneService.delegate = self
+        linphoneService.connect(config: callPayload.sipConfig)
     }
     
     deinit {
@@ -75,6 +81,42 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: После того, как будут выполнены два условия:
+        // 1) установлено соединение с SIP-сервером и получен входящий звонок
+        // 2) пользователь нажал на кнопку "Ответить"
+        // Звонок будет Принят и начнется разговор
+        
+        Driver
+            .combineLatest(
+                incomingCall.asDriver(onErrorJustReturn: nil),
+                incomingCallAcceptedByUser.asDriver(onErrorJustReturn: false)
+            )
+            .flatMap { args -> Driver<(Call, CallParams)> in
+                let (incomingCall, isAccepted) = args
+                
+                guard let call = incomingCall, isAccepted else {
+                    return .empty()
+                }
+                
+                return .just(call)
+            }
+            .withLatestFrom(currentStateSubject.asDriverOnErrorJustComplete()) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (callInfo, currentState) = args
+                    let (_, doorState) = currentState
+                    let (call, callParams) = callInfo
+                    
+                    do {
+                        try call.acceptWithParams(params: callParams)
+                        self?.currentStateSubject.onNext((.callAccepted, doorState))
+                    } catch {
+                        self?.router.trigger(.dismiss)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Обработка нажатия на кнопку "Звонок"
         
         input.callTrigger
@@ -92,14 +134,8 @@ class IncomingCallViewModel: BaseViewModel {
                     }
                     
                     self.currentStateSubject.onNext((.establishingConnection, doorState))
-                    
-                    self.linphoneService.delegate = self
-                    
-                    self.linphoneService.connect(
-                        config: self.callPayload.sipConfig,
-                        videoView: videoView,
-                        cameraView: cameraView
-                    )
+                    self.linphoneService.setViews(videoView: videoView, cameraView: cameraView)
+                    self.incomingCallAcceptedByUser.onNext(true)
                 }
             )
             .disposed(by: disposeBag)
@@ -137,21 +173,21 @@ class IncomingCallViewModel: BaseViewModel {
                         return
                     }
                     
-                    guard let currentCall = self.currentCall else {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                            self?.router.trigger(.dismiss)
-                        }
-                        
-                        return
-                    }
-                    
-                    do {
-                        try currentCall.terminate()
-                    } catch {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                            self?.router.trigger(.dismiss)
-                        }
-                    }
+//                    guard let currentCall = self.currentCall else {
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+//                            self?.router.trigger(.dismiss)
+//                        }
+//
+//                        return
+//                    }
+//
+//                    do {
+//                        try currentCall.terminate()
+//                    } catch {
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+//                            self?.router.trigger(.dismiss)
+//                        }
+//                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -177,16 +213,16 @@ class IncomingCallViewModel: BaseViewModel {
                         return
                     }
                     
-                    guard let currentCall = self.currentCall else {
-                        self.router.trigger(.dismiss)
-                        return
-                    }
-                    
-                    do {
-                        try currentCall.terminate()
-                    } catch {
-                        self.router.trigger(.dismiss)
-                    }
+//                    guard let currentCall = self.currentCall else {
+//                        self.router.trigger(.dismiss)
+//                        return
+//                    }
+//
+//                    do {
+//                        try currentCall.terminate()
+//                    } catch {
+//                        self.router.trigger(.dismiss)
+//                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -281,7 +317,7 @@ class IncomingCallViewModel: BaseViewModel {
         
         // MARK: Событие начала звонка
         
-        let callAcceptedEvent = currentStateSubject
+        let callStartedEvent = currentStateSubject
             .filter { currentState in
                 let (callState, _) = currentState
                 return callState == .callAccepted
@@ -299,7 +335,7 @@ class IncomingCallViewModel: BaseViewModel {
         
         // MARK: Работа со счетчиком длительности звонка
         
-        let callTimeCounter = callAcceptedEvent
+        let callTimeCounter = callStartedEvent
             .flatMap { _ -> Observable<String> in
                 let counter: Observable<String> = Observable<Int>
                     .interval(.milliseconds(1000), scheduler: MainScheduler.instance)
@@ -360,17 +396,7 @@ extension IncomingCallViewModel: LinphoneDelegate {
             params.videoEnabled = true
             params.audioEnabled = true
             
-            currentCall = call
-            
-            do {
-                try call.acceptWithParams(params: params)
-                
-                let (_, doorState) = try currentStateSubject.value()
-                
-                currentStateSubject.onNext((.callAccepted, doorState))
-            } catch {
-                router.trigger(.dismiss)
-            }
+            incomingCall.onNext((call, params))
         }
         
         if cstate == .End {
