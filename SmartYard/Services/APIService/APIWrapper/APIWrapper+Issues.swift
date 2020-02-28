@@ -15,7 +15,6 @@ extension APIWrapper {
     func createIssue(
         issue: IssueType,
         userInfo: MainUserInfo,
-        selectedService: SettingsServiceType? = nil,
         lat: String? = nil,
         lng: String? = nil
     ) -> Single<CreateIssueResponseData?> {
@@ -30,13 +29,15 @@ extension APIWrapper {
             type: "32"
         )
         
+        let latitude = (lat ?? "").replacingOccurrences(of: ".", with: ",")
+        let longitude = (lng ?? "").replacingOccurrences(of: ".", with: ",")
         
         let customField = APIIssueCustomField(
             code: issue.clientCode,
             phoneNumber: userInfo.phoneNumber,
             source: "Приложение",
-            lat: "41,40407",//lat ?? "-",
-            lng: "52,771197"//lng ?? "-"
+            lat: latitude,
+            lng: longitude
         )
         
         let actions = ["Начать работу", "Позвонить"]

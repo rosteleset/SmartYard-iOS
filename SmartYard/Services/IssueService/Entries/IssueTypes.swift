@@ -12,7 +12,7 @@ enum IssueType {
     
     case approveAddressIssue(address: String)
     
-    case dontRememberAnythingIssue
+    case dontRememberAnythingIssue(userInfo: MainUserInfo)
     
     case unavailableAddressConnectionIssue(userInfo: MainUserInfo, services: [SettingsServiceType])
     
@@ -104,6 +104,22 @@ enum IssueType {
             
         case let .serviceUnavailableIssue(userInfo, _):
             return userInfo.clientId ?? ""
+        }
+    }
+    
+    var selectedServices: [SettingsServiceType] {
+        switch self {
+            
+        case .approveAddressIssue, .dontRememberAnythingIssue, .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .deleteAddressIssue, .changeTariffIssue:
+            return []
+            
+        case let .unavailableAddressConnectionIssue(_, services),
+             let .connectSelectedServicesIssue(_, services),
+             let .activateServiceIssue(_, services):
+            return services
+            
+        case let .serviceUnavailableIssue(_, service):
+            return [service]
         }
     }
 

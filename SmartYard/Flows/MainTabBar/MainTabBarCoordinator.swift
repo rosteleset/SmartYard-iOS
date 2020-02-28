@@ -46,7 +46,8 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         // MARK: Home Tab
         let homeCoordinator = HomeCoordinator(
             apiWrapper: apiWrapper,
-            pushNotificationService: pushNotificationService
+            pushNotificationService: pushNotificationService,
+            accessService: accessService
         )
         
         let homeTabBarItem = UITabBarItem(

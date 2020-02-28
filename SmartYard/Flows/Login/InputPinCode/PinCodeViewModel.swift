@@ -57,6 +57,7 @@ class PinCodeViewModel: BaseViewModel {
                 onNext: { [weak self] data in
                     self?.accessService.accessToken = data.accessToken
                     self?.accessService.clientName = data.name
+                    self?.accessService.clientPhoneNumber = self?.phoneNumber
                     self?.accessService.appState = .userName
                     
                     prepareTransitionTrigger.onNext(())

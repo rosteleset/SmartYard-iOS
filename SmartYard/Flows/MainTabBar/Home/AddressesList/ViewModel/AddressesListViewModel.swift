@@ -16,16 +16,19 @@ class AddressesListViewModel: BaseViewModel {
     private let pushNotificationService: PushNotificationService
     private let router: WeakRouter<HomeRoute>
     private let issueService: IssueService
+    private let accessService: AccessService
     
     init(
         apiWrapper: APIWrapper,
+        accessService: AccessService,
         pushNotificationService: PushNotificationService,
         router: WeakRouter<HomeRoute>
     ) {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
         self.router = router
-        self.issueService = IssueService(apiWrapper: apiWrapper)
+        self.accessService = accessService
+        self.issueService = IssueService(apiWrapper: apiWrapper, accessService: accessService)
     }
     
     private let loadedData = BehaviorSubject<GetAddressListResponseData?>(value: nil)

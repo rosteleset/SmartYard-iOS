@@ -11,6 +11,7 @@ import Foundation
 private let appStateKey = "appState"
 private let accessTokenKey = "accessToken"
 private let clientNameKey = "clientName"
+private let clientPhoneNumberKey = "clientPhoneNumber"
 
 class AccessService {
     
@@ -51,6 +52,20 @@ class AccessService {
         }
     }
     
+    var clientPhoneNumber: String? {
+        get {
+            return UserDefaults.standard.string(forKey: clientPhoneNumberKey)
+        }
+        set {
+            guard let newValue = newValue else {
+                UserDefaults.standard.removeObject(forKey: clientPhoneNumberKey)
+                return
+            }
+            
+            UserDefaults.standard.setValue(newValue, forKey: clientPhoneNumberKey)
+        }
+    }
+    
     var routeForCurrentState: AppRoute {
         switch appState {
         case .onboarding: return .phoneNumber
@@ -65,6 +80,7 @@ class AccessService {
         appState = .phoneNumber
         accessToken = nil
         clientName = nil
+        clientPhoneNumber = nil
         
         NotificationCenter.default.post(name: .init("UserLoggedOut"), object: nil)
     }

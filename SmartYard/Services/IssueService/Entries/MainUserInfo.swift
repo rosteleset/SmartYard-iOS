@@ -11,9 +11,10 @@ import Foundation
 struct MainUserInfo {
     
     let fullName: String
-    let clientId: String?
     let phoneNumber: String
-    let address: String
+    
+    var clientId: String?
+    var address: String
     
     func convertToString() -> String {
         return "ФИО: \(fullName)\nТелефон: \(phoneNumber)\nАдрес, введённый пользователем: \(address)"
