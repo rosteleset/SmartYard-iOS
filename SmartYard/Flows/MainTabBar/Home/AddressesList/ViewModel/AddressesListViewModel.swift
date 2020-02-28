@@ -15,6 +15,7 @@ class AddressesListViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
     private let router: WeakRouter<HomeRoute>
+    private let issueService: IssueService
     
     init(
         apiWrapper: APIWrapper,
@@ -24,6 +25,7 @@ class AddressesListViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
         self.router = router
+        self.issueService = IssueService(apiWrapper: apiWrapper)
     }
     
     private let loadedData = BehaviorSubject<GetAddressListResponseData?>(value: nil)
@@ -58,6 +60,20 @@ class AddressesListViewModel: BaseViewModel {
         let reloadingFinished = reloadingFinishedSubject.asDriverOnErrorJustComplete()
         
         // MARK: Загрузка данных
+        Driver<Void>
+            .merge(
+                input.refreshDataTrigger.asDriver().delay(.milliseconds(1000)),
+                .just(())
+            )
+            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.issueService.sendAddressApproveIssue(address: "Тамбов, ул. Северо-Западная, дом 5")
+            }
+            .drive()
+            .disposed(by: disposeBag)
         
         Driver<Void>
             .merge(

@@ -14,5 +14,20 @@ struct APIIssue: Codable {
     let summary: String
     let description: String
     let type: String
+
+}
+
+extension APIIssue {
+    
+    var requestParameters: [String: Any] {
+        let params: [String: Any] = [
+            "project": project,
+            "summary": summary,
+            "description": description,
+            "type": type
+        ]
+        
+        return params
+    }
     
 }

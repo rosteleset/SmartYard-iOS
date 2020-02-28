@@ -1,0 +1,22 @@
+//
+//  MainUserInfo.swift
+//  SmartYard
+//
+//  Created by Mad Brains on 28.02.2020.
+//  Copyright © 2020 Mad Brains. All rights reserved.
+//
+
+import Foundation
+
+struct MainUserInfo {
+    
+    let fullName: String
+    let clientId: String?
+    let phoneNumber: String
+    let address: String
+    
+    func convertToString() -> String {
+        return "ФИО: \(fullName)\nТелефон: \(phoneNumber)\nАдрес, введённый пользователем: \(address)"
+    }
+    
+}

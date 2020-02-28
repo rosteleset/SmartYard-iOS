@@ -21,7 +21,7 @@ extension CreateIssueRequest {
     
     var requestParameters: [String: Any] {
         let params: [String: Any] = [
-            "issue": issue,
+            "issue": issue.requestParameters,
             "customFields": customFields.requestParameters,
             "actions": actions
         ]

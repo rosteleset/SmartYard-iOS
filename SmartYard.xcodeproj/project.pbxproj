@@ -206,6 +206,9 @@
 		E94B6C892407EB9A00FD9F65 /* GetListConnectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C882407EB9A00FD9F65 /* GetListConnectRequest.swift */; };
 		E94B6C8B2407EBB100FD9F65 /* GetListConnectResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C8A2407EBB100FD9F65 /* GetListConnectResponseData.swift */; };
 		E94B6C8D2407F8E200FD9F65 /* IssueTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C8C2407F8E200FD9F65 /* IssueTypes.swift */; };
+		E94B6C902408ED5900FD9F65 /* IssueService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C8F2408ED5900FD9F65 /* IssueService.swift */; };
+		E94B6C922408EF6B00FD9F65 /* MainUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C912408EF6B00FD9F65 /* MainUserInfo.swift */; };
+		E94B6C952409023500FD9F65 /* CreateIssueResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C942409023500FD9F65 /* CreateIssueResponseData.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -497,6 +500,9 @@
 		E94B6C882407EB9A00FD9F65 /* GetListConnectRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetListConnectRequest.swift; sourceTree = "<group>"; };
 		E94B6C8A2407EBB100FD9F65 /* GetListConnectResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetListConnectResponseData.swift; sourceTree = "<group>"; };
 		E94B6C8C2407F8E200FD9F65 /* IssueTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTypes.swift; sourceTree = "<group>"; };
+		E94B6C8F2408ED5900FD9F65 /* IssueService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueService.swift; sourceTree = "<group>"; };
+		E94B6C912408EF6B00FD9F65 /* MainUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUserInfo.swift; sourceTree = "<group>"; };
+		E94B6C942409023500FD9F65 /* CreateIssueResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIssueResponseData.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
@@ -594,7 +600,6 @@
 		8428672424051946004D3F26 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
-				E94B6C8C2407F8E200FD9F65 /* IssueTypes.swift */,
 				E94B6C7F2406ABEF00FD9F65 /* CreateIssue */,
 				E94B6C7E2406AB3D00FD9F65 /* IssuesListConnect */,
 			);
@@ -1297,6 +1302,7 @@
 		84B9EC8923E0846400979C39 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C8E2408ECB400FD9F65 /* IssueService */,
 				844AC39323E9776F0066006D /* AccessService */,
 				84AA8D4423E2CD0C001B3B43 /* APIService */,
 				84B9EC9823E0886000979C39 /* LinphoneService */,
@@ -1721,8 +1727,27 @@
 			isa = PBXGroup;
 			children = (
 				E94B6C802406AC2100FD9F65 /* CreateIssueRequest.swift */,
+				E94B6C942409023500FD9F65 /* CreateIssueResponseData.swift */,
 			);
 			path = CreateIssue;
+			sourceTree = "<group>";
+		};
+		E94B6C8E2408ECB400FD9F65 /* IssueService */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C932408F45E00FD9F65 /* Entries */,
+				E94B6C8F2408ED5900FD9F65 /* IssueService.swift */,
+			);
+			path = IssueService;
+			sourceTree = "<group>";
+		};
+		E94B6C932408F45E00FD9F65 /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C8C2407F8E200FD9F65 /* IssueTypes.swift */,
+				E94B6C912408EF6B00FD9F65 /* MainUserInfo.swift */,
+			);
+			path = Entries;
 			sourceTree = "<group>";
 		};
 		E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */ = {
@@ -2269,6 +2294,7 @@
 			files = (
 				E9E4273423F55C4400F5D593 /* ServiceUnavailableViewController.swift in Sources */,
 				E9E4273523F55C4400F5D593 /* ServiceUnavailableViewModel.swift in Sources */,
+				E94B6C902408ED5900FD9F65 /* IssueService.swift in Sources */,
 				E9E4273223F55B9700F5D593 /* ServicesActivationRequestViewController.swift in Sources */,
 				E9E4273323F55B9700F5D593 /* ServicesActivationRequestViewModel.swift in Sources */,
 				844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */,
@@ -2305,6 +2331,7 @@
 				E9BB83CF23F69FE80071F91E /* AllowedPerson.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */,
+				E94B6C922408EF6B00FD9F65 /* MainUserInfo.swift in Sources */,
 				844AC3ED23EBFF0E0066006D /* PaymentsCoordinator.swift in Sources */,
 				844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */,
 				E94B6C1823FAC5B600FD9F65 /* NewAllowedPersonViewController.swift in Sources */,
@@ -2383,6 +2410,7 @@
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
 				E94B6C4323FFF2A800FD9F65 /* Date+Helper.swift in Sources */,
 				84854B6323FD7FDE001B44F2 /* AllowedPersonDataItem.swift in Sources */,
+				E94B6C952409023500FD9F65 /* CreateIssueResponseData.swift in Sources */,
 				E94B6C2423FBFEA600FD9F65 /* String+Extensions.swift in Sources */,
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,

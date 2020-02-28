@@ -13,31 +13,30 @@ import RxCocoa
 extension APIWrapper {
     
     func createIssue(
-        userName: String,
-        phoneNumber: String,
-        selectedService: SettingsServiceType,
-        lat: String,
-        lng: String
-    ) -> Single<Void?> {
+        issue: IssueType,
+        userInfo: MainUserInfo,
+        selectedService: SettingsServiceType? = nil,
+        lat: String? = nil,
+        lng: String? = nil
+    ) -> Single<CreateIssueResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let issueDescription = "Имя: \(userName)\nЗаявка на отключение/подключение услуги \(selectedService)"
-        
         let apiIssue = APIIssue(
             project: "REM",
-            summary: "Авто: Заявка с сайта",
-            description: issueDescription,
+            summary: issue.summary,
+            description: issue.description,
             type: "32"
         )
         
+        
         let customField = APIIssueCustomField(
-            code: "-1",
-            phoneNumber: phoneNumber,
+            code: issue.clientCode,
+            phoneNumber: userInfo.phoneNumber,
             source: "Приложение",
-            lat: lat,
-            lng: lng
+            lat: "41,40407",//lat ?? "-",
+            lng: "52,771197"//lng ?? "-"
         )
         
         let actions = ["Начать работу", "Позвонить"]
@@ -57,7 +56,7 @@ extension APIWrapper {
             
             self.apiService.performCreateIssueRequest(request) { result in
                 switch result {
-                case .success: single(.success(()))
+                case let .success(data): single(.success(data))
                 case let .failure(error): single(.error(error))
                 }
             }
