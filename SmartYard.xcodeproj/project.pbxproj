@@ -205,6 +205,7 @@
 		E94B6C872406B3FB00FD9F65 /* APIWrapper+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C862406B3FB00FD9F65 /* APIWrapper+Issues.swift */; };
 		E94B6C892407EB9A00FD9F65 /* GetListConnectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C882407EB9A00FD9F65 /* GetListConnectRequest.swift */; };
 		E94B6C8B2407EBB100FD9F65 /* GetListConnectResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C8A2407EBB100FD9F65 /* GetListConnectResponseData.swift */; };
+		E94B6C8D2407F8E200FD9F65 /* IssueTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C8C2407F8E200FD9F65 /* IssueTypes.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -495,6 +496,7 @@
 		E94B6C862406B3FB00FD9F65 /* APIWrapper+Issues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIWrapper+Issues.swift"; sourceTree = "<group>"; };
 		E94B6C882407EB9A00FD9F65 /* GetListConnectRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetListConnectRequest.swift; sourceTree = "<group>"; };
 		E94B6C8A2407EBB100FD9F65 /* GetListConnectResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetListConnectResponseData.swift; sourceTree = "<group>"; };
+		E94B6C8C2407F8E200FD9F65 /* IssueTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTypes.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
@@ -592,6 +594,7 @@
 		8428672424051946004D3F26 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C8C2407F8E200FD9F65 /* IssueTypes.swift */,
 				E94B6C7F2406ABEF00FD9F65 /* CreateIssue */,
 				E94B6C7E2406AB3D00FD9F65 /* IssuesListConnect */,
 			);
@@ -1722,15 +1725,6 @@
 			path = CreateIssue;
 			sourceTree = "<group>";
 		};
-		E98C381D23F141E70010BBC1 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				E9A4D49E23ED4E900070A591 /* PinCodeViewController+Timer.swift */,
-				E98C381E23F142A50010BBC1 /* UIColor+Extensions.swift */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */ = {
 			isa = PBXGroup;
 			children = (
@@ -2354,6 +2348,7 @@
 				E94B6C852406AE7900FD9F65 /* APIIssueCustomField.swift in Sources */,
 				E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */,
 				E94B6C482404F1C400FD9F65 /* GetSettingsListRequest.swift in Sources */,
+				E94B6C8D2407F8E200FD9F65 /* IssueTypes.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				E94B6C4C2405308B00FD9F65 /* APISettingsAddress.swift in Sources */,
