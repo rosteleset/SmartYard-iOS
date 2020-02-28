@@ -40,13 +40,11 @@ extension APIWrapper {
             lng: longitude
         )
         
-        let actions = ["Начать работу", "Позвонить"]
-        
         let request = CreateIssueRequest(
             accessToken: accessToken,
             issue: apiIssue,
             customFields: customField,
-            actions: actions
+            actions: issue.actions
         )
         
         return Single.create { [weak self] single in

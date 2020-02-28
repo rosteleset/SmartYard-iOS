@@ -107,19 +107,20 @@ enum IssueType {
         }
     }
     
-    var selectedServices: [SettingsServiceType] {
+    var actions: [String] {
+        let startWorkAction = "Начать работу"
+        let callAction = "Позвонить"
+        let sendToOfficeAction = "Передать в офис"
+        
         switch self {
+        case .approveAddressIssue, .confirmAddressByCourierIssue,
+             .confirmAddressInOfficeIssue, .deleteAddressIssue:
+            return [startWorkAction, sendToOfficeAction]
             
-        case .approveAddressIssue, .dontRememberAnythingIssue, .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .deleteAddressIssue, .changeTariffIssue:
-            return []
-            
-        case let .unavailableAddressConnectionIssue(_, services),
-             let .connectSelectedServicesIssue(_, services),
-             let .activateServiceIssue(_, services):
-            return services
-            
-        case let .serviceUnavailableIssue(_, service):
-            return [service]
+        case .dontRememberAnythingIssue, .unavailableAddressConnectionIssue,
+             .connectSelectedServicesIssue, .changeTariffIssue,
+             .activateServiceIssue, .serviceUnavailableIssue:
+            return [startWorkAction, callAction]
         }
     }
 
