@@ -68,21 +68,6 @@ class AddressesListViewModel: BaseViewModel {
                 input.refreshDataTrigger.asDriver().delay(.milliseconds(1000)),
                 .just(())
             )
-            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
-                return self.issueService.sendAddressApproveIssue(address: "Тамбов, ул. Северо-Западная, дом 5")
-            }
-            .drive()
-            .disposed(by: disposeBag)
-        
-        Driver<Void>
-            .merge(
-                input.refreshDataTrigger.asDriver().delay(.milliseconds(1000)),
-                .just(())
-            )
             .flatMapLatest { [weak self] _ -> Driver<GetAddressListResponseData?> in
                 guard let self = self else {
                     return .empty()
