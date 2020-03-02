@@ -16,11 +16,17 @@ enum HomeRoute: Route {
 class HomeCoordinator: NavigationCoordinator<HomeRoute> {
     
     private let apiWrapper: APIWrapper
+    private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
     
-    init(apiWrapper: APIWrapper, pushNotificationService: PushNotificationService) {
+    init(
+        apiWrapper: APIWrapper,
+        pushNotificationService: PushNotificationService,
+        accessService: AccessService
+    ) {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
+        self.accessService = accessService
         
         super.init(initialRoute: .main)
         rootViewController.setNavigationBarHidden(true, animated: false)

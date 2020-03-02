@@ -58,7 +58,6 @@ class AddressesListViewModel: BaseViewModel {
         let reloadingFinished = reloadingFinishedSubject.asDriverOnErrorJustComplete()
         
         // MARK: Загрузка данных
-        
         Driver<Void>
             .merge(
                 input.refreshDataTrigger.asDriver().delay(.milliseconds(1000)),

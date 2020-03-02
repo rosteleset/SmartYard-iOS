@@ -239,10 +239,18 @@ class SettingsViewModel: BaseViewModel {
         let mainSections: [SettingsSectionModel] = data.map { item in
             let isExpanded = expansionStateDict[item.uniqueId, default: false]
             
+            let contractName: String? = {
+                guard let contractName = item.contractName else {
+                    return nil
+                }
+                
+                return "Номер договора: \(contractName)"
+            }()
+            
             let header: SettingsDataItem = .header(
                 identity: .header(uniqueId: item.uniqueId),
                 address: item.address,
-                contractName: item.contractName,
+                contractName: contractName,
                 isExpanded: isExpanded
             )
             

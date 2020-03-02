@@ -210,6 +210,28 @@ class APIService {
         )
     }
     
+    /// Запрос создания заявки
+    func performCreateIssueRequest(
+        _ request: CreateIssueRequest,
+        completion: ((Swift.Result<CreateIssueResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .createIssue(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
+    /// Запрос получения списка заявок на подключение
+    func performGetListConnectRequest(
+        _ request: GetListConnectRequest,
+        completion: ((Swift.Result<GetListConnectResponseData, Error>) -> Void)?
+    ) {
+        provider.request(
+            .getListConnect(request: request),
+            completion: createInnerCompletionBlockWithData(from: completion)
+        )
+    }
+    
 }
 
 extension APIService {

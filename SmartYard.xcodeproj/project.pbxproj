@@ -199,6 +199,16 @@
 		E94B6C79240698F800FD9F65 /* GetStreetsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C78240698F800FD9F65 /* GetStreetsRequest.swift */; };
 		E94B6C7B2406990400FD9F65 /* GetStreetsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */; };
 		E94B6C7D2406992400FD9F65 /* APIStreet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C7C2406992400FD9F65 /* APIStreet.swift */; };
+		E94B6C812406AC2100FD9F65 /* CreateIssueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C802406AC2100FD9F65 /* CreateIssueRequest.swift */; };
+		E94B6C832406AD3F00FD9F65 /* APIIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C822406AD3F00FD9F65 /* APIIssue.swift */; };
+		E94B6C852406AE7900FD9F65 /* APIIssueCustomField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C842406AE7900FD9F65 /* APIIssueCustomField.swift */; };
+		E94B6C872406B3FB00FD9F65 /* APIWrapper+Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C862406B3FB00FD9F65 /* APIWrapper+Issues.swift */; };
+		E94B6C892407EB9A00FD9F65 /* GetListConnectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C882407EB9A00FD9F65 /* GetListConnectRequest.swift */; };
+		E94B6C8B2407EBB100FD9F65 /* GetListConnectResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C8A2407EBB100FD9F65 /* GetListConnectResponseData.swift */; };
+		E94B6C8D2407F8E200FD9F65 /* IssueTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C8C2407F8E200FD9F65 /* IssueTypes.swift */; };
+		E94B6C902408ED5900FD9F65 /* IssueService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C8F2408ED5900FD9F65 /* IssueService.swift */; };
+		E94B6C922408EF6B00FD9F65 /* MainUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C912408EF6B00FD9F65 /* MainUserInfo.swift */; };
+		E94B6C952409023500FD9F65 /* CreateIssueResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C942409023500FD9F65 /* CreateIssueResponseData.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -483,6 +493,16 @@
 		E94B6C78240698F800FD9F65 /* GetStreetsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStreetsRequest.swift; sourceTree = "<group>"; };
 		E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStreetsResponseData.swift; sourceTree = "<group>"; };
 		E94B6C7C2406992400FD9F65 /* APIStreet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStreet.swift; sourceTree = "<group>"; };
+		E94B6C802406AC2100FD9F65 /* CreateIssueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIssueRequest.swift; sourceTree = "<group>"; };
+		E94B6C822406AD3F00FD9F65 /* APIIssue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIssue.swift; sourceTree = "<group>"; };
+		E94B6C842406AE7900FD9F65 /* APIIssueCustomField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIssueCustomField.swift; sourceTree = "<group>"; };
+		E94B6C862406B3FB00FD9F65 /* APIWrapper+Issues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIWrapper+Issues.swift"; sourceTree = "<group>"; };
+		E94B6C882407EB9A00FD9F65 /* GetListConnectRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetListConnectRequest.swift; sourceTree = "<group>"; };
+		E94B6C8A2407EBB100FD9F65 /* GetListConnectResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetListConnectResponseData.swift; sourceTree = "<group>"; };
+		E94B6C8C2407F8E200FD9F65 /* IssueTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTypes.swift; sourceTree = "<group>"; };
+		E94B6C8F2408ED5900FD9F65 /* IssueService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueService.swift; sourceTree = "<group>"; };
+		E94B6C912408EF6B00FD9F65 /* MainUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUserInfo.swift; sourceTree = "<group>"; };
+		E94B6C942409023500FD9F65 /* CreateIssueResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIssueResponseData.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
@@ -580,6 +600,8 @@
 		8428672424051946004D3F26 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C7F2406ABEF00FD9F65 /* CreateIssue */,
+				E94B6C7E2406AB3D00FD9F65 /* IssuesListConnect */,
 			);
 			path = Issues;
 			sourceTree = "<group>";
@@ -610,6 +632,8 @@
 				8482982124054D4B00E81620 /* APICCTV.swift */,
 				84854B4423FAB4D7001B44F2 /* APIClientName.swift */,
 				8482981D24054CDE00E81620 /* APIDoor.swift */,
+				E94B6C822406AD3F00FD9F65 /* APIIssue.swift */,
+				E94B6C842406AE7900FD9F65 /* APIIssueCustomField.swift */,
 				E94B6C3A23FFE1D200FD9F65 /* APIIntercomSettings.swift */,
 				8428672F24051F7F004D3F26 /* APIPaymentsListAccount.swift */,
 				8428672D24051F6A004D3F26 /* APIPaymentsListAddress.swift */,
@@ -1278,6 +1302,7 @@
 		84B9EC8923E0846400979C39 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C8E2408ECB400FD9F65 /* IssueService */,
 				844AC39323E9776F0066006D /* AccessService */,
 				84AA8D4423E2CD0C001B3B43 /* APIService */,
 				84B9EC9823E0886000979C39 /* LinphoneService */,
@@ -1637,6 +1662,7 @@
 			children = (
 				84AA8D5F23E2E622001B3B43 /* APIWrapper.swift */,
 				E94B6C5D240689FD00FD9F65 /* APIWrapper+Geo.swift */,
+				E94B6C862406B3FB00FD9F65 /* APIWrapper+Issues.swift */,
 			);
 			path = APIWrapper;
 			sourceTree = "<group>";
@@ -1686,6 +1712,42 @@
 				E94B6C7A2406990400FD9F65 /* GetStreetsResponseData.swift */,
 			);
 			path = GetStreets;
+			sourceTree = "<group>";
+		};
+		E94B6C7E2406AB3D00FD9F65 /* IssuesListConnect */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C882407EB9A00FD9F65 /* GetListConnectRequest.swift */,
+				E94B6C8A2407EBB100FD9F65 /* GetListConnectResponseData.swift */,
+			);
+			path = IssuesListConnect;
+			sourceTree = "<group>";
+		};
+		E94B6C7F2406ABEF00FD9F65 /* CreateIssue */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C802406AC2100FD9F65 /* CreateIssueRequest.swift */,
+				E94B6C942409023500FD9F65 /* CreateIssueResponseData.swift */,
+			);
+			path = CreateIssue;
+			sourceTree = "<group>";
+		};
+		E94B6C8E2408ECB400FD9F65 /* IssueService */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C932408F45E00FD9F65 /* Entries */,
+				E94B6C8F2408ED5900FD9F65 /* IssueService.swift */,
+			);
+			path = IssueService;
+			sourceTree = "<group>";
+		};
+		E94B6C932408F45E00FD9F65 /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				E94B6C8C2407F8E200FD9F65 /* IssueTypes.swift */,
+				E94B6C912408EF6B00FD9F65 /* MainUserInfo.swift */,
+			);
+			path = Entries;
 			sourceTree = "<group>";
 		};
 		E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */ = {
@@ -2232,6 +2294,7 @@
 			files = (
 				E9E4273423F55C4400F5D593 /* ServiceUnavailableViewController.swift in Sources */,
 				E9E4273523F55C4400F5D593 /* ServiceUnavailableViewModel.swift in Sources */,
+				E94B6C902408ED5900FD9F65 /* IssueService.swift in Sources */,
 				E9E4273223F55B9700F5D593 /* ServicesActivationRequestViewController.swift in Sources */,
 				E9E4273323F55B9700F5D593 /* ServicesActivationRequestViewModel.swift in Sources */,
 				844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */,
@@ -2242,10 +2305,12 @@
 				84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */,
 				E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */,
 				844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */,
+				E94B6C832406AD3F00FD9F65 /* APIIssue.swift in Sources */,
 				84B89A7C23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift in Sources */,
 				E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */,
 				847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
+				E94B6C872406B3FB00FD9F65 /* APIWrapper+Issues.swift in Sources */,
 				E94B6C3B23FFE1D200FD9F65 /* APIIntercomSettings.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
@@ -2266,6 +2331,7 @@
 				E9BB83CF23F69FE80071F91E /* AllowedPerson.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */,
+				E94B6C922408EF6B00FD9F65 /* MainUserInfo.swift in Sources */,
 				844AC3ED23EBFF0E0066006D /* PaymentsCoordinator.swift in Sources */,
 				844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */,
 				E94B6C1823FAC5B600FD9F65 /* NewAllowedPersonViewController.swift in Sources */,
@@ -2291,6 +2357,7 @@
 				848298362405655600E81620 /* RequestCodeRequest.swift in Sources */,
 				84AA8D5B23E2CEC5001B3B43 /* BaseAPIResponse.swift in Sources */,
 				8428673024051F7F004D3F26 /* APIPaymentsListAccount.swift in Sources */,
+				E94B6C812406AC2100FD9F65 /* CreateIssueRequest.swift in Sources */,
 				E94B6C7D2406992400FD9F65 /* APIStreet.swift in Sources */,
 				E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */,
 				E94B6C4A2404F2D100FD9F65 /* GetSettingsListResponseData.swift in Sources */,
@@ -2305,8 +2372,10 @@
 				E94B6C58240663EF00FD9F65 /* GeoCoderRequest.swift in Sources */,
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				E94B6C762406955800FD9F65 /* APILocation.swift in Sources */,
+				E94B6C852406AE7900FD9F65 /* APIIssueCustomField.swift in Sources */,
 				E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */,
 				E94B6C482404F1C400FD9F65 /* GetSettingsListRequest.swift in Sources */,
+				E94B6C8D2407F8E200FD9F65 /* IssueTypes.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				E94B6C4C2405308B00FD9F65 /* APISettingsAddress.swift in Sources */,
@@ -2316,6 +2385,7 @@
 				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
 				E94B6C71240694C900FD9F65 /* GetAllLocationsRequest.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
+				E94B6C8B2407EBB100FD9F65 /* GetListConnectResponseData.swift in Sources */,
 				E94B6C3723FD728F00FD9F65 /* RoundedImageView.swift in Sources */,
 				84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */,
 				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
@@ -2340,6 +2410,7 @@
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,
 				E94B6C4323FFF2A800FD9F65 /* Date+Helper.swift in Sources */,
 				84854B6323FD7FDE001B44F2 /* AllowedPersonDataItem.swift in Sources */,
+				E94B6C952409023500FD9F65 /* CreateIssueResponseData.swift in Sources */,
 				E94B6C2423FBFEA600FD9F65 /* String+Extensions.swift in Sources */,
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
@@ -2392,6 +2463,7 @@
 				E94B6C6424068D9400FD9F65 /* GetHousesResponseData.swift in Sources */,
 				84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
+				E94B6C892407EB9A00FD9F65 /* GetListConnectRequest.swift in Sources */,
 				E94B6C4023FFE74300FD9F65 /* IntercomResponseData.swift in Sources */,
 				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,

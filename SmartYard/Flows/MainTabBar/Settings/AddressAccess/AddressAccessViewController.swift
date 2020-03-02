@@ -9,8 +9,9 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import JGProgressHUD
 
-class AddressAccessViewController: BaseViewController {
+class AddressAccessViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var addressLabel: UILabel!
@@ -18,6 +19,8 @@ class AddressAccessViewController: BaseViewController {
     @IBOutlet private weak var temporaryAccessView: AccessView!
     @IBOutlet private weak var permanentAccessView: AccessView!
     @IBOutlet private weak var addressView: FullRoundedView!
+    
+    var loader: JGProgressHUD?
     
     private let viewModel: AddressAccessViewModel
     
@@ -66,6 +69,19 @@ class AddressAccessViewController: BaseViewController {
         )
         
         let output = viewModel.transform(input: input)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
         
         output.objectAddress
             .drive(

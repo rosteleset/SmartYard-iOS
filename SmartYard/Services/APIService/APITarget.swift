@@ -16,6 +16,9 @@ enum APITarget {
     case grantHourGuestAccess(request: IntercomRequest)
     case getSettingsList(request: GetSettingsListRequest)
     
+    case getListConnect(request: GetListConnectRequest)
+    case createIssue(request: CreateIssueRequest)
+    
     case getAddress(request: GetAddressRequest)
     case getGeoCoder(request: GeoCoderRequest)
     case getHouses(request: GetHousesRequest)
@@ -44,6 +47,9 @@ extension APITarget: TargetType {
         case .resetCode: return "address/resetCode"
         case .getSettingsList: return "address/getSettingsList"
         case .getAddressList: return "address/getAddressList"
+            
+        case .getListConnect: return "issues/listConnect"
+        case .createIssue: return "issues/create"
             
         case .getAddress: return "geo/address"
         case .getGeoCoder: return "geo/coder"
@@ -77,6 +83,9 @@ extension APITarget: TargetType {
             case .resetCode(let request): return request.accessToken
             case .getSettingsList(let request): return request.accessToken
             case .getAddressList(let request): return request.accessToken
+                
+            case .getListConnect(let request): return request.accessToken
+            case .createIssue(let request): return request.accessToken
                 
             case .getAddress(let request): return request.accessToken
             case .getGeoCoder(let request): return request.accessToken
@@ -113,6 +122,9 @@ extension APITarget: TargetType {
         case .getSettingsList(let request): return request.requestParameters
         case .getAddressList(let request): return request.requestParameters
 
+        case .getListConnect(let request): return request.requestParameters
+        case .createIssue(let request): return request.requestParameters
+            
         case .getAddress(let request): return request.requestParameters
         case .getGeoCoder(let request): return request.requestParameters
         case .getHouses(let request): return request.requestParameters
