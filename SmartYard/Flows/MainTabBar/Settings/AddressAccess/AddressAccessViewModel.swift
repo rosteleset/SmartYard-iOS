@@ -39,12 +39,10 @@ class AddressAccessViewModel: BaseViewModel {
     // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         loadData()
-
-        Driver<Void>
-            .merge(
-                input.refreshIntercomTempCodeTrigger.asDriver().debounce(.milliseconds(25)),
-                .just(())
-            )
+        
+        input.refreshIntercomTempCodeTrigger
+            .asDriver()
+            .debounce(.milliseconds(25))
             .flatMapLatest { [weak self] _ -> Driver<ResetCodeResponseData?> in
                 guard let self = self else {
                     return .empty()
@@ -52,6 +50,7 @@ class AddressAccessViewModel: BaseViewModel {
                 
                 return self.apiWrapper.resetCode(flatId: self.flatId)
                     .trackError(self.errorTracker)
+                    .trackActivity(self.activityTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
@@ -152,7 +151,8 @@ class AddressAccessViewModel: BaseViewModel {
             tempAccessContacts: tempAccessConstactsSubject.asDriver(onErrorJustReturn: []),
             permanentAccessContacts: permanentAccessContactsSubject.asDriver(onErrorJustReturn: []),
             temporaryIntercomCode: intercomAccessCode,
-            isGrantedIntercomAccess: isGrantedIntercomGuestAccess
+            isGrantedIntercomAccess: isGrantedIntercomGuestAccess,
+            isLoading: activityTracker.asDriver()
         )
     }
     
@@ -308,6 +308,7 @@ extension AddressAccessViewModel {
         let permanentAccessContacts: Driver<[AllowedPerson]>
         let temporaryIntercomCode: PublishSubject<String?>
         let isGrantedIntercomAccess: PublishSubject<Bool>
+        let isLoading: Driver<Bool>
     }
     
 }

@@ -161,7 +161,7 @@ class IssueService {
         return getAddressCoordinates(address: address)
             .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
                 guard let self = self, let unwrappedResponse = response else {
-                    return .error(NSError())
+                    return .error(NSError.GenericError.selfIsDeadError)
                 }
                 
                 return self.apiWrapper.createIssue(
@@ -179,7 +179,7 @@ class IssueService {
             userInfo: self.getUserInfo(address: nil, clientId: issue.clientCode),
             lat: "",
             lng: ""
-            )
+        )
     }
     
     private func getAddressCoordinates(address: String) -> Single<GeoCoderResponseData?> {
