@@ -15,7 +15,7 @@ class AddressAccessViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
     
-    private let addressSubject = PublishSubject<String?>()
+    private let addressSubject: BehaviorSubject<String?>
     private let tempAccessConstactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let permanentAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let intercomAccessCode = PublishSubject<String?>()
@@ -34,6 +34,8 @@ class AddressAccessViewModel: BaseViewModel {
         self.address = address
         self.flatId = flatId
         self.apiWrapper = apiWrapper
+        
+        addressSubject = BehaviorSubject<String?>(value: address)
     }
     
     // swiftlint:disable:next function_body_length
@@ -147,7 +149,7 @@ class AddressAccessViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            objectAddress: addressSubject.asDriver(onErrorJustReturn: ""),
+            objectAddress: addressSubject.asDriver(onErrorJustReturn: nil),
             tempAccessContacts: tempAccessConstactsSubject.asDriver(onErrorJustReturn: []),
             permanentAccessContacts: permanentAccessContactsSubject.asDriver(onErrorJustReturn: []),
             temporaryIntercomCode: intercomAccessCode,
@@ -157,7 +159,6 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func loadData() {
-        self.addressSubject.onNext(address)
         self.tempAccessConstactsSubject.onNext(self.loadTemporaryAccessContacts())
         self.permanentAccessContactsSubject.onNext(self.loadPermanentAccessContacts())
     }
