@@ -14,7 +14,7 @@ enum SettingsRoute: Route {
     case addressSettings(address: String)
     case back
     case dismiss
-    case serviceIsActivated(clientId: String)
+    case serviceIsActivated(clientId: String?)
     case serviceIsNotActivated
     case serviceUnavailable
     case advancedSettings(name: String)

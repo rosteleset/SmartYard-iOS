@@ -134,7 +134,11 @@ class IssueService {
     }
     
     // экран 34.03
-    func sendChangeTariffIssue(clientId: String) -> Single<CreateIssueResponseData?> {
+    func sendChangeTariffIssue(clientId: String?) -> Single<CreateIssueResponseData?> {
+        guard let clientId = clientId else {
+            return .error(NSError.APIWrapperError.clientIdMissingError)
+        }
+        
         return sendSimpleIssue(
             issue: .changeTariffIssue(clientId: clientId)
         )
@@ -173,7 +177,11 @@ class IssueService {
             }
     }
     
-    private func sendSimpleIssue(issue: IssueType) -> Single<CreateIssueResponseData?> {
+    private func sendSimpleIssue(issue: IssueType?) -> Single<CreateIssueResponseData?> {
+        guard let issue = issue else {
+            return .error(NSError.APIWrapperError.clientIdMissingError)
+        }
+        
         return self.apiWrapper.createIssue(
             issue: issue,
             userInfo: self.getUserInfo(address: nil, clientId: issue.clientCode),

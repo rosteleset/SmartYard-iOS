@@ -14,7 +14,7 @@ class ServiceIsActivatedViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
     private let issueService: IssueService
-    private let clientId: String
+    private let clientId: String?
     
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
@@ -22,7 +22,7 @@ class ServiceIsActivatedViewModel: BaseViewModel {
     init(
         router: WeakRouter<SettingsRoute>,
         issueService: IssueService,
-        clientId: String
+        clientId: String?
     ) {
         self.router = router
         self.issueService = issueService
@@ -52,7 +52,7 @@ class ServiceIsActivatedViewModel: BaseViewModel {
                     .asDriver(onErrorJustReturn: nil)
             }
             .drive(
-                onNext: { [weak self] result in
+                onNext: { [weak self] _ in
                     self?.router.trigger(.dismiss)
                 }
             )

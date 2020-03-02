@@ -73,6 +73,9 @@ class SettingsViewModel: BaseViewModel {
         
         // MARK: Обработка нажатия на кнопку сервиса
         
+        let serviceActivatedTrigger = PublishSubject<String?>()
+        let serviceUnactivatedTrigger = PublishSubject<(SettingsServiceType, String?)?>()
+        
         input.serviceSelected
             .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
             .drive(
@@ -86,16 +89,37 @@ class SettingsViewModel: BaseViewModel {
                         return
                     }
                     
-                    // TODO
-                    if isActivated {
-                        self?.router.trigger(.serviceIsActivated(clientId: match.clientId ?? ""))
-                    } else {
-                       // self?.router.trigger(.serviceUnavailable)
+                    guard isActivated else {
+                        serviceUnactivatedTrigger.onNext((serviceType, match.houseId))
+                        return
                     }
+                    
+                    serviceActivatedTrigger.onNext(match.clientId)
                 }
             )
             .disposed(by: disposeBag)
         
+        serviceActivatedTrigger
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] clientId in
+                    self?.router.trigger(.serviceIsActivated(clientId: clientId))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        serviceUnactivatedTrigger
+            .asDriver(onErrorJustReturn: nil)
+            .flatMap { [weak self] args -> GetServicesResponseData? in
+                guard let self = self,
+                      let (type, houseId) = args
+                else {
+                    return (nil, .empty())
+                }
+                
+                return self.apiWrapper.getServicesByHouseId(houseId: houseId)
+            }
+
         // MARK: Обработка нажатия на настройки адреса
         
         input.itemSelected
