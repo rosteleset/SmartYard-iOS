@@ -45,4 +45,3 @@ enum SettingsServiceType: String {
     }
     
 }
-

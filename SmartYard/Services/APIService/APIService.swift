@@ -221,7 +221,7 @@ class APIService {
         )
     }
     
-    /// Запрос получения списка
+    /// Запрос получения списка заявок на подключение
     func performGetListConnectRequest(
         _ request: GetListConnectRequest,
         completion: ((Swift.Result<GetListConnectResponseData, Error>) -> Void)?
