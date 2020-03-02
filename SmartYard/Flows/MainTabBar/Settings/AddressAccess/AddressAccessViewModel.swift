@@ -42,7 +42,7 @@ class AddressAccessViewModel: BaseViewModel {
 
         Driver<Void>
             .merge(
-                input.refreshIntercomTempCodeTrigger.asDriver().delay(.milliseconds(1000)),
+                input.refreshIntercomTempCodeTrigger.asDriver().debounce(.milliseconds(25)),
                 .just(())
             )
             .flatMapLatest { [weak self] _ -> Driver<ResetCodeResponseData?> in
@@ -60,7 +60,7 @@ class AddressAccessViewModel: BaseViewModel {
                     self?.intercomAccessCode.onNext(result.code)
                 }
             )
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
         
         input.openGuestAccessTrigger
             .drive(

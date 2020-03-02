@@ -20,13 +20,11 @@ struct CreateIssueRequest {
 extension CreateIssueRequest {
     
     var requestParameters: [String: Any] {
-        let params: [String: Any] = [
+        return [
             "issue": issue.requestParameters,
             "customFields": customFields.requestParameters,
             "actions": actions
         ]
-        
-        return params
     }
     
 }

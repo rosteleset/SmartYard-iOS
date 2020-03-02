@@ -17,15 +17,13 @@ struct APIIssueCustomField {
     let lng: String
     
     var requestParameters: [String: Any] {
-        var params: [String: Any] = [:]
-        
-        params["10011"] = code
-        params["11841"] = phoneNumber
-        params["12440"] = source
-        params["10743"] = lat
-        params["10744"] = lng
-        
-        return params
+        return [
+            "10011": code,
+            "11841": phoneNumber,
+            "12440": source,
+            "10743": lat,
+            "10744": lng
+        ]
     }
     
 }

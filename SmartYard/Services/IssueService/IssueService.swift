@@ -23,7 +23,7 @@ class IssueService {
     }
     
     // экран 00.01
-    func sendAddressApproveIssue(address: String) -> Driver<CreateIssueResponseData?> {
+    func sendAddressApproveIssue(address: String) -> Single<CreateIssueResponseData?> {
         return sendIssueWithLocation(
             issue: .approveAddressIssue(address: address),
             address: address
@@ -31,7 +31,7 @@ class IssueService {
     }
     
     // экран 19 и 34.00
-    func sendNothingRememberIssue() -> Driver<CreateIssueResponseData?> {
+    func sendNothingRememberIssue() -> Single<CreateIssueResponseData?> {
         return sendSimpleIssue(
             issue: .dontRememberAnythingIssue(
                 userInfo: getUserInfo(
@@ -46,7 +46,7 @@ class IssueService {
     func sendUnavailableAddressConnectionIssue(
         address: String,
         services: [SettingsServiceType]
-    ) -> Driver<CreateIssueResponseData?> {
+    ) -> Single<CreateIssueResponseData?> {
         return sendIssueWithLocation(
             issue: .unavailableAddressConnectionIssue(
                 userInfo: getUserInfo(
@@ -63,7 +63,7 @@ class IssueService {
     func sendConnectSelectedServicesIssue(
         address: String,
         services: [SettingsServiceType]
-    ) -> Driver<CreateIssueResponseData?> {
+    ) -> Single<CreateIssueResponseData?> {
         return sendIssueWithLocation(
             issue: .connectSelectedServicesIssue(
                 userInfo: getUserInfo(
@@ -77,7 +77,7 @@ class IssueService {
     }
     
     // экраны 23, 29
-    func sendApproveAddressByCourierIssue(address: String) -> Driver<CreateIssueResponseData?> {
+    func sendApproveAddressByCourierIssue(address: String) -> Single<CreateIssueResponseData?> {
         return sendIssueWithLocation(
             issue: .confirmAddressByCourierIssue(
                 userInfo: getUserInfo(
@@ -90,7 +90,7 @@ class IssueService {
     }
     
     // экраны 24, 28
-    func sendApproveAddressInOfficeIssue(address: String) -> Driver<CreateIssueResponseData?> {
+    func sendApproveAddressInOfficeIssue(address: String) -> Single<CreateIssueResponseData?> {
         return sendIssueWithLocation(
             issue: .confirmAddressInOfficeIssue(
                 userInfo: getUserInfo(
@@ -106,7 +106,7 @@ class IssueService {
     func sendActivateServiceIssue(
         address: String,
         services: [SettingsServiceType]
-    ) -> Driver<CreateIssueResponseData?> {
+    ) -> Single<CreateIssueResponseData?> {
         return sendIssueWithLocation(
             issue: .activateServiceIssue(
                 userInfo: getUserInfo(
@@ -120,7 +120,7 @@ class IssueService {
     }
     
     // экран 34.02.03
-    func sendDeleteAddressIssue(address: String, reason: String) -> Driver<CreateIssueResponseData?> {
+    func sendDeleteAddressIssue(address: String, reason: String) -> Single<CreateIssueResponseData?> {
         return sendIssueWithLocation(
             issue: .deleteAddressIssue(
                 userInfo: getUserInfo(
@@ -134,7 +134,7 @@ class IssueService {
     }
     
     // экран 34.03
-    func sendChangeTariffIssue(clientId: String) -> Driver<CreateIssueResponseData?> {
+    func sendChangeTariffIssue(clientId: String) -> Single<CreateIssueResponseData?> {
         return sendSimpleIssue(
             issue: .changeTariffIssue(clientId: clientId)
         )
@@ -144,7 +144,7 @@ class IssueService {
     func sendServiceUnavailableIssue(
         address: String,
         service: SettingsServiceType
-    ) -> Driver<CreateIssueResponseData?> {
+    ) -> Single<CreateIssueResponseData?> {
         return sendIssueWithLocation(
             issue: .serviceUnavailableIssue(
                 userInfo: getUserInfo(
@@ -157,32 +157,29 @@ class IssueService {
         )
     }
     
-    private func sendIssueWithLocation(issue: IssueType, address: String) -> Driver<CreateIssueResponseData?> {
+    private func sendIssueWithLocation(issue: IssueType, address: String) -> Single<CreateIssueResponseData?> {
         return getAddressCoordinates(address: address)
-            .asDriver(onErrorJustReturn: nil)
-            .flatMapLatest { [weak self] coordinates -> Driver<CreateIssueResponseData?> in
-                guard let self = self else {
-                    return .just(nil)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError())
                 }
                 
                 return self.apiWrapper.createIssue(
                     issue: issue,
                     userInfo: self.getUserInfo(address: address, clientId: nil),
-                    lat: coordinates?.lat,
-                    lng: coordinates?.lon
+                    lat: unwrappedResponse.lat,
+                    lng: unwrappedResponse.lon
                 )
-                    .asDriver(onErrorJustReturn: nil)
             }
     }
     
-    private func sendSimpleIssue(issue: IssueType) -> Driver<CreateIssueResponseData?> {
+    private func sendSimpleIssue(issue: IssueType) -> Single<CreateIssueResponseData?> {
         return self.apiWrapper.createIssue(
             issue: issue,
             userInfo: self.getUserInfo(address: nil, clientId: issue.clientCode),
             lat: "",
             lng: ""
             )
-            .asDriver(onErrorJustReturn: nil)
     }
     
     private func getAddressCoordinates(address: String) -> Single<GeoCoderResponseData?> {
