@@ -88,7 +88,7 @@ class SettingsViewModel: BaseViewModel {
                     
                     // TODO
                     if isActivated {
-                        self?.router.trigger(.serviceIsActivated)
+                        self?.router.trigger(.serviceIsActivated(clientId: match.clientId ?? ""))
                     } else {
                        // self?.router.trigger(.serviceUnavailable)
                     }
