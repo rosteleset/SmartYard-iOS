@@ -40,17 +40,27 @@ class AddressAccessViewModel: BaseViewModel {
     func transform(input: Input) -> Output {
         loadData()
 
-        input.refreshIntercomTempCodeTrigger
+        Driver<Void>
+            .merge(
+                input.refreshIntercomTempCodeTrigger.asDriver().delay(.milliseconds(1000)),
+                .just(())
+            )
+            .flatMapLatest { [weak self] _ -> Driver<ResetCodeResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper.resetCode(flatId: self.flatId)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    self.intercomAccessCode.onNext(self.loadIntercomAccessCode())
+                onNext: { [weak self] result in
+                    self?.intercomAccessCode.onNext(result.code)
                 }
             )
-            .disposed(by: disposeBag)
+            .disposed(by: self.disposeBag)
         
         input.openGuestAccessTrigger
             .drive(
@@ -150,7 +160,6 @@ class AddressAccessViewModel: BaseViewModel {
         self.addressSubject.onNext(address)
         self.tempAccessConstactsSubject.onNext(self.loadTemporaryAccessContacts())
         self.permanentAccessContactsSubject.onNext(self.loadPermanentAccessContacts())
-        self.intercomAccessCode.onNext(self.loadIntercomAccessCode())
     }
     
     private func loadTemporaryAccessContacts() -> [AllowedPerson] {
@@ -163,10 +172,6 @@ class AddressAccessViewModel: BaseViewModel {
     
     private func loadPermanentAccessContacts() -> [AllowedPerson] {
         return []
-    }
-    
-    private func loadIntercomAccessCode() -> String {
-        return "5432"
     }
     
     private func openGuestAccess() {
