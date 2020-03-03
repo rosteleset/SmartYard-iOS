@@ -102,7 +102,7 @@ class IssueService {
         )
     }
     
-    // экран 34
+    // экран 34.04
     func sendActivateServiceIssue(
         address: String,
         services: [SettingsServiceType]

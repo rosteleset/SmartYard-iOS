@@ -73,13 +73,13 @@ class SettingsViewModel: BaseViewModel {
         
         // MARK: Обработка нажатия на кнопку сервиса
         
-        let serviceActivatedTrigger = PublishSubject<String?>()
-        let serviceUnactivatedTrigger = PublishSubject<(SettingsServiceType, String?)?>()
+        let serviceActivatedTrigger = PublishSubject<APISettingsAddress>()
+        let serviceUnactivatedTrigger = PublishSubject<(SettingsServiceType, APISettingsAddress)>()
         
         input.serviceSelected
             .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
             .drive(
-                onNext: { [weak self] args in
+                onNext: { args in
                     let (serviceSelected, loadedData) = args
                     let (identity, serviceType) = serviceSelected
                     
@@ -90,11 +90,11 @@ class SettingsViewModel: BaseViewModel {
                     }
                     
                     guard isActivated else {
-                        serviceUnactivatedTrigger.onNext((serviceType, match.houseId))
+                        serviceUnactivatedTrigger.onNext((serviceType, match))
                         return
                     }
                     
-                    serviceActivatedTrigger.onNext(match.clientId)
+                    serviceActivatedTrigger.onNext(match)
                 }
             )
             .disposed(by: disposeBag)
@@ -102,23 +102,67 @@ class SettingsViewModel: BaseViewModel {
         serviceActivatedTrigger
             .asDriverOnErrorJustComplete()
             .drive(
-                onNext: { [weak self] clientId in
-                    self?.router.trigger(.serviceIsActivated(clientId: clientId))
+                onNext: { [weak self] apiSettingsAddress in
+                    self?.router.trigger(
+                        .serviceIsActivated(
+                            clientId: apiSettingsAddress.clientId
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
         
         serviceUnactivatedTrigger
-            .asDriver(onErrorJustReturn: nil)
-            .flatMap { [weak self] args -> GetServicesResponseData? in
-                guard let self = self,
-                      let (type, houseId) = args
-                else {
-                    return (nil, .empty())
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] args in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let (serviceType, apiSettingsAddress) = args
+                    
+                    self.apiWrapper.getServicesByHouseId(houseId: apiSettingsAddress.houseId)
+                        .asDriver(onErrorJustReturn: nil)
+                        .drive(
+                            onNext: { services in
+                                guard let services = services else {
+                                    self.router.trigger(
+                                        .serviceUnavailable(
+                                            service: serviceType,
+                                            address: apiSettingsAddress.address
+                                        )
+                                    )
+                                    
+                                    return
+                                }
+                                
+                                let isServiceContains = services.isServiceContains(
+                                    service: serviceType
+                                )
+                                
+                                guard isServiceContains else {
+                                    let serviceUnavailableRoute: SettingsRoute = .serviceUnavailable(
+                                        service: serviceType,
+                                        address: apiSettingsAddress.address
+                                    )
+                                    
+                                    self.router.trigger(serviceUnavailableRoute)
+                                    return
+                                }
+                                
+                                let serviceIsNotActivatedRoute: SettingsRoute = .serviceIsNotActivated(
+                                    service: serviceType,
+                                    address: apiSettingsAddress.address
+                                )
+                                
+                                self.router.trigger(serviceIsNotActivatedRoute)
+                            }
+                        )
+                        .disposed(by: self.disposeBag)
                 }
-                
-                return self.apiWrapper.getServicesByHouseId(houseId: houseId)
-            }
+            )
+            .disposed(by: disposeBag)
 
         // MARK: Обработка нажатия на настройки адреса
         

@@ -14,8 +14,24 @@ class ServiceIsNotActivatedViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
     
-    init(router: WeakRouter<SettingsRoute>) {
+    private let service: SettingsServiceType
+    private let address: String
+    
+    private let issueService: IssueService
+    
+    let activityTracker = ActivityTracker()
+    let errorTracker = ErrorTracker()
+    
+    init(
+        router: WeakRouter<SettingsRoute>,
+        service: SettingsServiceType,
+        address: String,
+        issueService: IssueService
+    ) {
         self.router = router
+        self.service = service
+        self.address = address
+        self.issueService = issueService
     }
     
     func transform(_ input: Input) -> Output {
@@ -28,14 +44,26 @@ class ServiceIsNotActivatedViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.sendRequestTrigger
+            .asDriver()
+            .debounce(.milliseconds(25))
+            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.issueService.sendActivateServiceIssue(address: self.address, services: [self.service])
+                    .trackError(self.errorTracker)
+                    .trackActivity(self.activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
             .drive(
-                onNext: { [weak self] in
+                onNext: { [weak self] _ in
                     self?.router.trigger(.dismiss)
                 }
             )
             .disposed(by: disposeBag)
         
-        return Output()
+        return Output(isLoading: activityTracker.asDriver())
     }
     
 }
@@ -47,6 +75,8 @@ extension ServiceIsNotActivatedViewModel {
         let sendRequestTrigger: Driver<Void>
     }
     
-    struct Output {}
+    struct Output {
+        let isLoading: Driver<Bool>
+    }
     
 }
