@@ -11,15 +11,7 @@ typealias GetServicesResponseData = [APIServiceModel]
 extension GetServicesResponseData {
     
     func isServiceContains(service: SettingsServiceType) -> Bool {
-        var isContains = false
-        
-        forEach { curService in
-            if curService.icon == service.rawValue {
-                isContains = true
-            }
-        }
-        
-        return isContains
+        return contains { $0.icon == service.rawValue }
     }
     
 }

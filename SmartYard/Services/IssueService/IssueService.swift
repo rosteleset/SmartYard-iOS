@@ -182,11 +182,7 @@ class IssueService {
             }
     }
     
-    private func sendSimpleIssue(issue: IssueType?) -> Single<CreateIssueResponseData?> {
-        guard let issue = issue else {
-            return .error(NSError.APIWrapperError.clientIdMissingError)
-        }
-        
+    private func sendSimpleIssue(issue: IssueType) -> Single<CreateIssueResponseData?> {
         return self.apiWrapper.createIssue(
             issue: issue,
             userInfo: self.getUserInfo(address: nil, clientId: issue.clientCode),
