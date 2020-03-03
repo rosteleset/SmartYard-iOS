@@ -47,16 +47,7 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
         configureUI()
         bind()
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        roundedView.roundCorners(
-            [.topLeft, .topRight, .bottomLeft, .bottomRight],
-            radius: 20.0
-        )
-    }
-    
+
     private func bind() {
         let input = AuthByContractNumViewModel.Input(
             forgetPassTapped: forgetPassButton.rx.tap.asDriverOnErrorJustComplete(),

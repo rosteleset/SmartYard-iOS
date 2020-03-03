@@ -50,13 +50,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="295"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="У вас есть договор в Лантой?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U90-l7-45t">
-                                            <rect key="frame" x="40" y="100" width="314" height="75"/>
+                                            <rect key="frame" x="40" y="100" width="314" height="80.5"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Введите номер и пароль договора, привязанного к данному адресу,  и управляйте услугами из этого приложения." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IL8-bB-yIA">
-                                            <rect key="frame" x="40" y="195" width="314" height="49"/>
+                                            <rect key="frame" x="40" y="200.5" width="314" height="53"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -73,7 +73,7 @@
                                         <constraint firstAttribute="trailing" secondItem="U90-l7-45t" secondAttribute="trailing" constant="60" id="gtO-Rb-3GT"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-VH-arK">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-VH-arK" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="295" width="414" height="486"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Номер договора" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1fV-QD-lmA" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
@@ -111,7 +111,7 @@
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3p-t8-69e" customClass="ClearButtonWithDashedUnderline" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="256" y="184" width="115" height="24"/>
+                                            <rect key="frame" x="264" y="184" width="107" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="BmP-fE-5Ul"/>
                                             </constraints>

@@ -13,13 +13,13 @@ import XCoordinator
 
 class AuthByContractNumViewModel: BaseViewModel {
     
-    private let router: WeakRouter<AppRoute>
+    private let router: WeakRouter<HomeRoute>
     private let issueService: IssueService
     
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
     
-    init(router: WeakRouter<AppRoute>, issueService: IssueService) {
+    init(router: WeakRouter<HomeRoute>, issueService: IssueService) {
         self.router = router
         self.issueService = issueService
     }

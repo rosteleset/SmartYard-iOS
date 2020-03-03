@@ -9,8 +9,11 @@
 import XCoordinator
 
 enum HomeRoute: Route {
+    
     case main
     case alert(title: String, message: String?)
+    case inputContract
+    
 }
 
 class HomeCoordinator: NavigationCoordinator<HomeRoute> {
@@ -18,15 +21,18 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
     private let apiWrapper: APIWrapper
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
+    private let issueService: IssueService
     
     init(
         apiWrapper: APIWrapper,
         pushNotificationService: PushNotificationService,
-        accessService: AccessService
+        accessService: AccessService,
+        issueService: IssueService
     ) {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
         self.accessService = accessService
+        self.issueService = issueService
         
         super.init(initialRoute: .main)
         rootViewController.setNavigationBarHidden(true, animated: false)
@@ -46,6 +52,11 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
+            
+        case .inputContract:
+            let vm = AuthByContractNumViewModel(router: weakRouter, issueService: issueService)
+            let vc = AuthByContractNumViewController(viewModel: vm)
+            return .set([vc], animation: .fade)
         }
     }
     
