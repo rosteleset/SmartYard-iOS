@@ -8,8 +8,11 @@
 
 import UIKit
 import TPKeyboardAvoiding
+import RxSwift
+import RxCocoa
+import JGProgressHUD
 
-class AuthByContractNumViewController: UIViewController {
+class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
     @IBOutlet private weak var containerView: UIView!
@@ -25,6 +28,8 @@ class AuthByContractNumViewController: UIViewController {
     @IBOutlet private weak var signInButton: BlueButton!
     
     private let viewModel: AuthByContractNumViewModel
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: AuthByContractNumViewModel) {
         self.viewModel = viewModel
@@ -53,12 +58,27 @@ class AuthByContractNumViewController: UIViewController {
     }
     
     private func bind() {
-        _ = AuthByContractNumViewModel.Input(
+        let input = AuthByContractNumViewModel.Input(
             forgetPassTapped: forgetPassButton.rx.tap.asDriverOnErrorJustComplete(),
             forgetEverythingTapped: forgetEverythingButton.rx.tap.asDriverOnErrorJustComplete(),
             noContractTapped: noContractButton.rx.tap.asDriverOnErrorJustComplete(),
             signInTapped: signInButton.rx.tap.asDriverOnErrorJustComplete()
         )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: "Создание заявки")
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureUI() {
