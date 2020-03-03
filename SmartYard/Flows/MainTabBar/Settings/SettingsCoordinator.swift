@@ -16,7 +16,7 @@ enum SettingsRoute: Route {
     case dismiss
     case serviceIsActivated(clientId: String?)
     case serviceIsNotActivated(service: SettingsServiceType, address: String)
-    case serviceUnavailable(service: SettingsServiceType, address: String)
+    case serviceUnavailable(service: SettingsServiceType, address: String, clientId: String?)
     case advancedSettings(name: String)
     case addressDeletion(delegate: AddressDeletionViewModelDelegate)
     case alert(title: String, message: String?)
@@ -95,12 +95,13 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case let .serviceUnavailable(service, address):
+        case let .serviceUnavailable(service, address, clientId):
             let vm = ServiceUnavailableViewModel(
                 router: weakRouter,
                 service: service,
                 address: address,
-                issueService: issueService
+                issueService: issueService,
+                clientId: clientId
             )
             
             let vc = ServiceUnavailableViewController(viewModel: vm)

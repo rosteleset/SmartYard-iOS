@@ -16,6 +16,7 @@ class ServiceUnavailableViewModel: BaseViewModel {
     
     private let service: SettingsServiceType
     private let address: String
+    private let clientId: String?
     
     private let issueService: IssueService
     
@@ -25,12 +26,14 @@ class ServiceUnavailableViewModel: BaseViewModel {
     init(router: WeakRouter<SettingsRoute>,
          service: SettingsServiceType,
          address: String,
-         issueService: IssueService
+         issueService: IssueService,
+         clientId: String?
     ) {
         self.router = router
         self.service = service
         self.address = address
         self.issueService = issueService
+        self.clientId = clientId
     }
     
     func transform(_ input: Input) -> Output {
@@ -50,7 +53,12 @@ class ServiceUnavailableViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                return self.issueService.sendServiceUnavailableIssue(address: self.address, service: self.service)
+                return self.issueService
+                    .sendServiceUnavailableIssue(
+                        address: self.address,
+                        service: self.service,
+                        clientId: self.clientId
+                    )
                     .trackError(self.errorTracker)
                     .trackActivity(self.activityTracker)
                     .asDriver(onErrorJustReturn: nil)

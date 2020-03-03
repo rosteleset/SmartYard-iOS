@@ -130,7 +130,8 @@ class SettingsViewModel: BaseViewModel {
                                     self.router.trigger(
                                         .serviceUnavailable(
                                             service: serviceType,
-                                            address: apiSettingsAddress.address
+                                            address: apiSettingsAddress.address,
+                                            clientId: apiSettingsAddress.clientId
                                         )
                                     )
                                     
@@ -144,7 +145,8 @@ class SettingsViewModel: BaseViewModel {
                                 guard isServiceContains else {
                                     let serviceUnavailableRoute: SettingsRoute = .serviceUnavailable(
                                         service: serviceType,
-                                        address: apiSettingsAddress.address
+                                        address: apiSettingsAddress.address,
+                                        clientId: apiSettingsAddress.clientId
                                     )
                                     
                                     self.router.trigger(serviceUnavailableRoute)
