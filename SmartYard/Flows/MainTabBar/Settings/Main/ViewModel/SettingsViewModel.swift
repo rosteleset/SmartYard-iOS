@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
+// swiftlint:disable:next type_body_length
 class SettingsViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
@@ -24,7 +25,7 @@ class SettingsViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
     }
     
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         
@@ -114,54 +115,51 @@ class SettingsViewModel: BaseViewModel {
         
         serviceUnactivatedTrigger
             .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] args in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    let (serviceType, apiSettingsAddress) = args
-                    
-                    self.apiWrapper.getServicesByHouseId(houseId: apiSettingsAddress.houseId)
-                        .asDriver(onErrorJustReturn: nil)
-                        .drive(
-                            onNext: { services in
-                                guard let services = services else {
-                                    self.router.trigger(
-                                        .serviceUnavailable(
-                                            service: serviceType,
-                                            address: apiSettingsAddress.address,
-                                            clientId: apiSettingsAddress.clientId
-                                        )
-                                    )
-                                    
-                                    return
-                                }
-                                
-                                let isServiceContains = services.isServiceContains(
-                                    service: serviceType
-                                )
-                                
-                                guard isServiceContains else {
-                                    let serviceUnavailableRoute: SettingsRoute = .serviceUnavailable(
-                                        service: serviceType,
-                                        address: apiSettingsAddress.address,
-                                        clientId: apiSettingsAddress.clientId
-                                    )
-                                    
-                                    self.router.trigger(serviceUnavailableRoute)
-                                    return
-                                }
-                                
-                                let serviceIsNotActivatedRoute: SettingsRoute = .serviceIsNotActivated(
-                                    service: serviceType,
-                                    address: apiSettingsAddress.address
-                                )
-                                
-                                self.router.trigger(serviceIsNotActivatedRoute)
-                            }
+            .flatMapLatest { [weak self] args -> Driver<ServiceUnactivatedResponsePayload?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                let (serviceType, apiSettingsAddress) = args
+                
+                return self.apiWrapper.getServicesByHouseId(houseId: apiSettingsAddress.houseId)
+                    .trackError(errorTracker)
+                    .map { response -> ServiceUnactivatedResponsePayload? in
+                        guard let response = response else {
+                            return nil
+                        }
+                        
+                        return ServiceUnactivatedResponsePayload(
+                            serviceType: serviceType,
+                            apiSettingsAddress: apiSettingsAddress,
+                            availableServices: response
                         )
-                        .disposed(by: self.disposeBag)
+                    }
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .map { payload -> SettingsRoute in
+                let isServiceAvailable = payload.availableServices.contains {
+                    $0.icon == payload.serviceType.rawValue
+                }
+                
+                switch isServiceAvailable {
+                case true:
+                    return .serviceIsNotActivated(
+                        service: payload.serviceType,
+                        address: payload.apiSettingsAddress.address
+                    )
+                case false:
+                    return .serviceUnavailable(
+                        service: payload.serviceType,
+                        address: payload.apiSettingsAddress.address,
+                        clientId: payload.apiSettingsAddress.clientId
+                    )
+                }
+            }
+            .drive(
+                onNext: { [weak self] route in
+                    self?.router.trigger(route)
                 }
             )
             .disposed(by: disposeBag)
@@ -385,6 +383,12 @@ extension SettingsViewModel {
         let updateKind: Driver<SettingsSectionUpdateKind>
         let isInitialLoadingFinished: Driver<Bool>
         let reloadingFinished: Driver<Void>
+    }
+    
+    struct ServiceUnactivatedResponsePayload {
+        let serviceType: SettingsServiceType
+        let apiSettingsAddress: APISettingsAddress
+        let availableServices: GetServicesResponseData
     }
     
 }

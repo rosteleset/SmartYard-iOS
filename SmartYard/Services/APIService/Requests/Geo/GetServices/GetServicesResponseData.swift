@@ -7,11 +7,3 @@
 //
 
 typealias GetServicesResponseData = [APIServiceModel]
-
-extension GetServicesResponseData {
-    
-    func isServiceContains(service: SettingsServiceType) -> Bool {
-        return contains { $0.icon == service.rawValue }
-    }
-    
-}

@@ -51,6 +51,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         observeLogout()
     }
     
+    // swiftlint:disable:next function_body_length
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
         case .main:

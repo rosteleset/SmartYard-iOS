@@ -54,6 +54,7 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
         bind()
     }
     
+    // swiftlint:disable:next function_body_length
     private func bind() {
         let input = AddressAccessViewModel.Input(
             viewDidAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete(),
