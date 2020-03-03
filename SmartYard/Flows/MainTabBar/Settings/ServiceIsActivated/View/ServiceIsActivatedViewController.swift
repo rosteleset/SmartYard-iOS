@@ -9,14 +9,17 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import JGProgressHUD
 
-class ServiceIsActivatedViewController: BaseViewController {
-    
+class ServiceIsActivatedViewController: BaseViewController, LoaderPresentable {
+
     @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var changePlanButton: BlueButton!
     @IBOutlet private weak var backgroundView: UIView!
     
     private let viewModel: ServiceIsActivatedViewModel
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: ServiceIsActivatedViewModel) {
         self.viewModel = viewModel
@@ -54,7 +57,20 @@ class ServiceIsActivatedViewController: BaseViewController {
             changePlanTrigger: changePlanButton.rx.tap.asDriver()
         )
         
-        _ = viewModel.transform(input)
+        let output = viewModel.transform(input)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: "Создание заявки")
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

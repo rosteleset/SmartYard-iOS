@@ -14,9 +14,9 @@ enum SettingsRoute: Route {
     case addressSettings(address: String)
     case back
     case dismiss
-    case serviceIsActivated
-    case serviceIsNotActivated
-    case serviceUnavailable
+    case serviceIsActivated(clientId: String?)
+    case serviceIsNotActivated(service: SettingsServiceType, address: String)
+    case serviceUnavailable(service: SettingsServiceType, address: String, clientId: String?)
     case advancedSettings(name: String)
     case addressDeletion(delegate: AddressDeletionViewModelDelegate)
     case alert(title: String, message: String?)
@@ -31,11 +31,18 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     let accessService: AccessService
     let pushNotificationService: PushNotificationService
     let apiWrapper: APIWrapper
+    let issueService: IssueService
     
-    init(accessService: AccessService, pushNotificationService: PushNotificationService, apiWrapper: APIWrapper) {
+    init(
+        accessService: AccessService,
+        pushNotificationService: PushNotificationService,
+        apiWrapper: APIWrapper,
+        issueService: IssueService
+    ) {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
         self.apiWrapper = apiWrapper
+        self.issueService = issueService
         
         super.init(initialRoute: .main)
         
@@ -61,8 +68,12 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
         case .dismiss:
             return .dismiss()
             
-        case .serviceIsActivated:
-            let vm = ServiceIsActivatedViewModel(router: weakRouter)
+        case let .serviceIsActivated(clientId):
+            let vm = ServiceIsActivatedViewModel(
+                router: weakRouter,
+                issueService: issueService,
+                clientId: clientId
+            )
             
             let vc = ServiceIsActivatedViewController(viewModel: vm)
             vc.modalPresentationStyle = .overFullScreen
@@ -70,8 +81,13 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case .serviceIsNotActivated:
-            let vm = ServiceIsNotActivatedViewModel(router: weakRouter)
+        case let .serviceIsNotActivated(service, address):
+            let vm = ServiceIsNotActivatedViewModel(
+                router: weakRouter,
+                service: service,
+                address: address,
+                issueService: issueService
+            )
             
             let vc = ServiceIsNotActivatedViewController(viewModel: vm)
             vc.modalPresentationStyle = .overFullScreen
@@ -79,8 +95,14 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case .serviceUnavailable:
-            let vm = ServiceUnavailableViewModel(router: weakRouter)
+        case let .serviceUnavailable(service, address, clientId):
+            let vm = ServiceUnavailableViewModel(
+                router: weakRouter,
+                service: service,
+                address: address,
+                issueService: issueService,
+                clientId: clientId
+            )
             
             let vc = ServiceUnavailableViewController(viewModel: vm)
             vc.modalPresentationStyle = .overFullScreen

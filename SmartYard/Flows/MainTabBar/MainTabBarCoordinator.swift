@@ -26,6 +26,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
     private let apiWrapper: APIWrapper
+    private let issueService: IssueService
     
     private let homeRouter: StrongRouter<HomeRoute>
     private let chatRouter: StrongRouter<ChatRoute>
@@ -38,10 +39,16 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let settingsTabBarItem: UITabBarItem
     
     // swiftlint:disable:next function_body_length
-    init(accessService: AccessService, pushNotificationService: PushNotificationService, apiWrapper: APIWrapper) {
+    init(
+        accessService: AccessService,
+        pushNotificationService: PushNotificationService,
+        apiWrapper: APIWrapper,
+        issueService: IssueService
+    ) {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
         self.apiWrapper = apiWrapper
+        self.issueService = issueService
         
         // MARK: Home Tab
         let homeCoordinator = HomeCoordinator(
@@ -91,7 +98,8 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         let settingsCoordinator = SettingsCoordinator(
             accessService: accessService,
             pushNotificationService: pushNotificationService,
-            apiWrapper: apiWrapper
+            apiWrapper: apiWrapper,
+            issueService: issueService
         )
         
         let settingsTabBarItem = UITabBarItem(

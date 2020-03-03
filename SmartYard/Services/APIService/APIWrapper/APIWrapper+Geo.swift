@@ -84,9 +84,13 @@ extension APIWrapper {
         }
     }
     
-    func getServicesByHouseId(houseId: String) -> Single<GetServicesResponseData?> {
+    func getServicesByHouseId(houseId: String?) -> Single<GetServicesResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        guard let houseId = houseId else {
+            return .error(NSError.APIWrapperError.houseIdMissingError)
         }
         
         let request = GetServicesRequest(accessToken: accessToken, houseId: houseId)

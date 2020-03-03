@@ -102,7 +102,7 @@ class IssueService {
         )
     }
     
-    // экран 34
+    // экран 34.04
     func sendActivateServiceIssue(
         address: String,
         services: [SettingsServiceType]
@@ -134,7 +134,11 @@ class IssueService {
     }
     
     // экран 34.03
-    func sendChangeTariffIssue(clientId: String) -> Single<CreateIssueResponseData?> {
+    func sendChangeTariffIssue(clientId: String?) -> Single<CreateIssueResponseData?> {
+        guard let clientId = clientId else {
+            return .error(NSError.APIWrapperError.clientIdMissingError)
+        }
+        
         return sendSimpleIssue(
             issue: .changeTariffIssue(clientId: clientId)
         )
@@ -143,13 +147,18 @@ class IssueService {
     // экран 34.05
     func sendServiceUnavailableIssue(
         address: String,
-        service: SettingsServiceType
+        service: SettingsServiceType,
+        clientId: String?
     ) -> Single<CreateIssueResponseData?> {
+        guard let clientId = clientId else {
+            return .error(NSError.APIWrapperError.clientIdMissingError)
+        }
+        
         return sendIssueWithLocation(
             issue: .serviceUnavailableIssue(
                 userInfo: getUserInfo(
                     address: address,
-                    clientId: nil
+                    clientId: clientId
                 ),
                 service: service
             ),

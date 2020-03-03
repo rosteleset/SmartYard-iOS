@@ -13,9 +13,20 @@ import XCoordinator
 class ServiceIsActivatedViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
+    private let issueService: IssueService
+    private let clientId: String?
     
-    init(router: WeakRouter<SettingsRoute>) {
+    let activityTracker = ActivityTracker()
+    let errorTracker = ErrorTracker()
+    
+    init(
+        router: WeakRouter<SettingsRoute>,
+        issueService: IssueService,
+        clientId: String?
+    ) {
         self.router = router
+        self.issueService = issueService
+        self.clientId = clientId
     }
     
     func transform(_ input: Input) -> Output {
@@ -28,14 +39,26 @@ class ServiceIsActivatedViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.changePlanTrigger
+            .asDriver()
+            .debounce(.milliseconds(25))
+            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.issueService.sendChangeTariffIssue(clientId: self.clientId)
+                    .trackError(self.errorTracker)
+                    .trackActivity(self.activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
             .drive(
-                onNext: { [weak self] in
+                onNext: { [weak self] _ in
                     self?.router.trigger(.dismiss)
                 }
             )
             .disposed(by: disposeBag)
         
-        return Output()
+        return Output(isLoading: activityTracker.asDriver())
     }
     
 }
@@ -47,6 +70,8 @@ extension ServiceIsActivatedViewModel {
         let changePlanTrigger: Driver<Void>
     }
 
-    struct Output {}
+    struct Output {
+        let isLoading: Driver<Bool>
+    }
     
 }

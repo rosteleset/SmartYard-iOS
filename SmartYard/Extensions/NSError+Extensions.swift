@@ -110,6 +110,15 @@ extension NSError {
             )
         }()
         
+        static let houseIdMissingError: NSError = {
+            let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден house id. Выполнить запрос невозможно"]
+            
+            return NSError(
+                domain: domain,
+                code: 3004,
+                userInfo: errorUserInfo
+            )
+        }()
     }
     
 }

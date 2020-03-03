@@ -32,6 +32,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let apiService = APIService()
     private let accessService = AccessService()
     private let apiWrapper: APIWrapper
+    private let issueService: IssueService
     private let pushNotificationService: PushNotificationService
     
     private var mainTabBarRouter: StrongRouter<MainTabBarRoute>?
@@ -40,6 +41,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     init() {
         apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
+        issueService = IssueService(apiWrapper: apiWrapper, accessService: accessService)
         pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
         
         super.init(initialRoute: accessService.routeForCurrentState)
@@ -49,13 +51,15 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         observeLogout()
     }
     
+    // swiftlint:disable:next function_body_length
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
         case .main:
             let router = MainTabBarCoordinator(
                 accessService: accessService,
                 pushNotificationService: pushNotificationService,
-                apiWrapper: apiWrapper
+                apiWrapper: apiWrapper,
+                issueService: issueService
             ).strongRouter
             
             mainTabBarRouter = router

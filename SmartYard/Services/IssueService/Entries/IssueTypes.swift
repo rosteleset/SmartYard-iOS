@@ -63,7 +63,8 @@ enum IssueType {
             
         case let .unavailableAddressConnectionIssue(userInfo, services),
              let .connectSelectedServicesIssue(userInfo, services):
-            return userInfo.convertToString() + "\nСписок подключаемых услуг: \(services)"
+            let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
+            return userInfo.convertToString() + "\nСписок подключаемых услуг: \(servicesStr)"
         
         case let .confirmAddressByCourierIssue(userInfo):
             return userInfo.convertToString() + "\nДоставить клиенту конверт для подтверждения адреса."
@@ -75,7 +76,8 @@ enum IssueType {
             return userInfo.convertToString() + "\nУдаление адреса из приложения. Причина: \(reason)"
         
         case let .activateServiceIssue(userInfo, services):
-            return userInfo.convertToString() + "\nСписок подключаемых услуг: \(services)"
+            let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
+            return userInfo.convertToString() + "\nСписок подключаемых услуг: \(servicesStr)"
         
         case .changeTariffIssue:
             return "Запрос на смену тарифного плана. Выполнить звонок клиенту и осуществить консультацию"
