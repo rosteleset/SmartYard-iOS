@@ -14,9 +14,14 @@ import XCoordinator
 class AuthByContractNumViewModel: BaseViewModel {
     
     private let router: WeakRouter<AppRoute>
+    private let issueService: IssueService
     
-    init(router: WeakRouter<AppRoute>) {
+    let activityTracker = ActivityTracker()
+    let errorTracker = ErrorTracker()
+    
+    init(router: WeakRouter<AppRoute>, issueService: IssueService) {
         self.router = router
+        self.issueService = issueService
     }
     
     func transform(input: Input) -> Output {
@@ -29,11 +34,18 @@ class AuthByContractNumViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.forgetEverythingTapped
-            .drive(
-                onNext: {
-                   // TODO
+            .debounce(.milliseconds(25))
+            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
                 }
-            )
+                
+                return self.issueService.sendNothingRememberIssue()
+                    .trackError(self.errorTracker)
+                    .trackActivity(self.activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .drive()
             .disposed(by: disposeBag)
         
         input.noContractTapped
@@ -52,7 +64,7 @@ class AuthByContractNumViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output()
+        return Output(isLoading: activityTracker.asDriver())
     }
     
 }
@@ -67,7 +79,7 @@ extension AuthByContractNumViewModel {
     }
     
     struct Output {
-        
+        let isLoading: Driver<Bool>
     }
     
 }
