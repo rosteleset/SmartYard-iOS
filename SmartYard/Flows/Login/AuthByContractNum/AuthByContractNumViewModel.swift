@@ -15,6 +15,7 @@ class AuthByContractNumViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
     private let issueService: IssueService
+    private let apiWrapper: APIWrapper
     
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
@@ -22,12 +23,20 @@ class AuthByContractNumViewModel: BaseViewModel {
     let contractNumber = BehaviorSubject<String?>(value: nil)
     let password = BehaviorSubject<String?>(value: nil)
     
-    init(router: WeakRouter<HomeRoute>, issueService: IssueService) {
+    init(
+        router: WeakRouter<HomeRoute>,
+        issueService: IssueService,
+        apiWrapper: APIWrapper
+    ) {
         self.router = router
         self.issueService = issueService
+        self.apiWrapper = apiWrapper
     }
     
     func transform(input: Input) -> Output {
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
+        
         let contractNumValidateTrigger = BehaviorSubject<Bool>(value: false)
         let passwordValidateTrigger = BehaviorSubject<Bool>(value: false)
         let inputValidateTrigger = BehaviorSubject<Bool>(value: false)
@@ -102,9 +111,32 @@ class AuthByContractNumViewModel: BaseViewModel {
                 inputValidateTrigger.asDriverOnErrorJustComplete()
             )
             .filter { $0 != false }
+            .withLatestFrom(
+                contractNumber.asDriver(onErrorJustReturn: nil)
+            )
+            .withLatestFrom(password.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .flatMapLatest { [weak self] args -> Driver<Void?> in
+                guard let self = self else {
+                    return .just(nil)
+                }
+                
+                let (login, password) = args
+                
+                return
+                    self.apiWrapper.addMyPhone(
+                        login: login ?? "",
+                        password: password ?? "",
+                        comment: nil,
+                        useForNotifications: true
+                    )
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] _ in
-                    // TODO: хз что делать
+                    self?.router.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)

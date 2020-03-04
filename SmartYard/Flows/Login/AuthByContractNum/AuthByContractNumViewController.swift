@@ -68,7 +68,7 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
                         self?.view.endEditing(true)
                     }
                     
-                    self?.updateLoader(isEnabled: isLoading, detailText: "Создание заявки")
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
                 }
             )
             .disposed(by: disposeBag)

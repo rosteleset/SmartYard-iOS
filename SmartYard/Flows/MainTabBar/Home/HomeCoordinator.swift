@@ -58,8 +58,14 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             return .alertTransition(title: title, message: message)
             
         case .inputContract:
-            let vm = AuthByContractNumViewModel(router: weakRouter, issueService: issueService)
+            let vm = AuthByContractNumViewModel(
+                router: weakRouter,
+                issueService: issueService,
+                apiWrapper: apiWrapper
+            )
+            
             let vc = AuthByContractNumViewController(viewModel: vm)
+            
             return .set([vc], animation: .fade)
             
         case .inputAddress:
