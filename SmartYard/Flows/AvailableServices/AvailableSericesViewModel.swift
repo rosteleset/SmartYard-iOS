@@ -39,8 +39,8 @@ class AvailableSericesViewModel: BaseViewModel {
         
         input.nextTapped
             .drive(
-                onNext: {
-                    // TODO
+                onNext: { [weak self] in
+                    self?.router.trigger(.confirmAddress)
                 }
             )
             .disposed(by: disposeBag)

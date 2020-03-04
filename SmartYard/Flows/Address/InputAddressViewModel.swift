@@ -30,8 +30,8 @@ class InputAddressViewModel: BaseViewModel {
         
         input.checkServicesTapped
             .drive(
-                onNext: {
-                    // TODO
+                onNext: { [weak self] in
+                    self?.router.trigger(.availableServices)
                 }
             )
             .disposed(by: disposeBag)

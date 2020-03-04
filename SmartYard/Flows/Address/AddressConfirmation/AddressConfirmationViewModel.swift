@@ -28,7 +28,23 @@ class AddressConfirmationViewModel: BaseViewModel {
     }
     
     func transform(_ input: Input) -> Output {
-        // TODO
+        
+        input.confirmByCourierTapped
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.confirmInOfficeTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output()
     }
     
@@ -37,7 +53,8 @@ class AddressConfirmationViewModel: BaseViewModel {
 extension AddressConfirmationViewModel {
     
     struct Input {
-
+        let confirmByCourierTapped: Driver<Void>
+        let confirmInOfficeTrigger: Driver<Void>
     }
     
     struct Output {

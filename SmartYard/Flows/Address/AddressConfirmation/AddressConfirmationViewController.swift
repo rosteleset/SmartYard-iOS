@@ -63,6 +63,13 @@ class AddressConfirmationViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        let input = AddressConfirmationViewModel.Input(
+            confirmByCourierTapped: courierView.rx.requestButtonTapped.asDriverOnErrorJustComplete(),
+            confirmInOfficeTrigger: officeView.rx.doSoButtonTapped.asDriverOnErrorJustComplete()
+        )
+        
+        _ = viewModel.transform(input)
     }
     
 }

@@ -72,13 +72,13 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let vm = AvailableSericesViewModel(router: weakRouter, apiWrapper: apiWrapper)
             let vc = AvailableServicesViewController(viewModel: vm)
             
-            return .present(vc)
+            return .set([vc], animation: .fade)
             
         case .unavailabeServices:
             let vm = ServicesActivationRequestViewModel(router: weakRouter, apiWrapper: apiWrapper)
             let vc = ServicesActivationRequestViewController(viewModel: vm)
             
-            return .present(vc)
+            return .set([vc], animation: .fade)
             
         case .confirmAddress:
             let vm = AddressConfirmationViewModel(
@@ -89,7 +89,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             let vc = AddressConfirmationViewController(viewModel: vm)
             
-            return .present(vc)
+            return .set([vc], animation: .fade)
         }
     }
     
