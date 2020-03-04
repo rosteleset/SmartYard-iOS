@@ -13,9 +13,9 @@ import RxCocoa
 
 class InputAddressViewModel: BaseViewModel {
     
-    private let router: WeakRouter<AppRoute>
+    private let router: WeakRouter<HomeRoute>
     
-    init(router: WeakRouter<AppRoute>) {
+    init(router: WeakRouter<HomeRoute>) {
         self.router = router
     }
     

@@ -13,12 +13,15 @@ import XCoordinator
 
 class AvailableSericesViewModel: BaseViewModel {
     
-    private let router: WeakRouter<AppRoute>
+    private let router: WeakRouter<HomeRoute>
+    
+    private let apiWrapper: APIWrapper
     
     private let serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: [])
 
-    init(router: WeakRouter<AppRoute>) {
+    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper) {
         self.router = router
+        self.apiWrapper = apiWrapper
     }
     
     func transform(input: Input) -> Output {

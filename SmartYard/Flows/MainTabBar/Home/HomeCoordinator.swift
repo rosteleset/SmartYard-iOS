@@ -13,6 +13,10 @@ enum HomeRoute: Route {
     case main
     case alert(title: String, message: String?)
     case inputContract
+    case inputAddress
+    case availableServices
+    case unavailabeServices
+    case confirmAddress
     
 }
 
@@ -57,6 +61,35 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let vm = AuthByContractNumViewModel(router: weakRouter, issueService: issueService)
             let vc = AuthByContractNumViewController(viewModel: vm)
             return .set([vc], animation: .fade)
+            
+        case .inputAddress:
+            let vm = InputAddressViewModel(router: weakRouter)
+            let vc = InputAddressViewController(viewModel: vm)
+            
+            return .set([vc], animation: .fade)
+            
+        case .availableServices:
+            let vm = AvailableSericesViewModel(router: weakRouter, apiWrapper: apiWrapper)
+            let vc = AvailableServicesViewController(viewModel: vm)
+            
+            return .present(vc)
+            
+        case .unavailabeServices:
+            let vm = ServicesActivationRequestViewModel(router: weakRouter, apiWrapper: apiWrapper)
+            let vc = ServicesActivationRequestViewController(viewModel: vm)
+            
+            return .present(vc)
+            
+        case .confirmAddress:
+            let vm = AddressConfirmationViewModel(
+                router: weakRouter,
+                apiWrapper: apiWrapper,
+                issueService: issueService
+            )
+            
+            let vc = AddressConfirmationViewController(viewModel: vm)
+            
+            return .present(vc)
         }
     }
     

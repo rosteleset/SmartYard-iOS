@@ -9,7 +9,7 @@
 import UIKit
 import TPKeyboardAvoiding
 
-class InputAddressViewController: UIViewController {
+class InputAddressViewController: BaseViewController {
 
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var cityTextField: SmartYardTextField!
@@ -21,6 +21,18 @@ class InputAddressViewController: UIViewController {
     @IBOutlet private weak var qrCodeButton: ClearButtonWithDashedUnderline!
     
     @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
+    
+    private let viewModel: InputAddressViewModel
+    
+    init(viewModel: InputAddressViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -59,7 +59,7 @@ class AuthByContractNumViewModel: BaseViewModel {
         input.signInTapped
             .drive(
                 onNext: {
-                    // TODO
+                    self.router.trigger(.inputAddress)
                 }
             )
             .disposed(by: disposeBag)
