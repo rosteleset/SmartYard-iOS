@@ -53,7 +53,9 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
             forgetPassTapped: forgetPassButton.rx.tap.asDriverOnErrorJustComplete(),
             forgetEverythingTapped: forgetEverythingButton.rx.tap.asDriverOnErrorJustComplete(),
             noContractTapped: noContractButton.rx.tap.asDriverOnErrorJustComplete(),
-            signInTapped: signInButton.rx.tap.asDriverOnErrorJustComplete()
+            signInTapped: signInButton.rx.tap.asDriverOnErrorJustComplete(),
+            inputContractNumText: contractNumberTextField.rx.text.changed.asDriver(onErrorJustReturn: nil),
+            inputPasswordNumText: passTextField.rx.text.changed.asDriver(onErrorJustReturn: nil)
         )
         
         let output = viewModel.transform(input: input)

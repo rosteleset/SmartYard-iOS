@@ -44,34 +44,27 @@ class AuthByContractNumViewModel: BaseViewModel {
             .flatMapLatest { [weak self] contractNumberText -> Driver<Bool?> in
                 self?.contractNumber.onNext(contractNumberText)
                 
+                // TODO: будет какая-то валидация кроме пустоты
                 return Observable<Bool?>
-                    .just(!contractNumberText.isEmpty)
+                    .just(!(contractNumberText ?? "").isEmpty)
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
-            .drive(
-                onNext: { isCorrect in
-                    contractNumValidateTrigger.onNext(isCorrect)
-                }
-            )
+            .drive(contractNumValidateTrigger)
             .disposed(by: disposeBag)
         
         input.inputPasswordNumText
             .flatMapLatest { [weak self] passwordText -> Driver<Bool?> in
                 self?.password.onNext(passwordText)
                 
+                // TODO: будет какая-то валидация кроме пустоты
                 return Observable<Bool?>
-                    .just(!passwordText.isEmpty)
+                    .just(!(passwordText ?? "").isEmpty)
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
-            .drive(
-                onNext: { isCorrect in
-                    passwordValidateTrigger.onNext(isCorrect)
-                }
-            )
+            .drive(passwordValidateTrigger)
             .disposed(by: disposeBag)
-        
         
         input.forgetEverythingTapped
             .debounce(.milliseconds(25))
@@ -90,8 +83,8 @@ class AuthByContractNumViewModel: BaseViewModel {
         
         input.noContractTapped
             .drive(
-                onNext: {
-                    // TODO
+                onNext: { [weak self] in
+                    self?.router.trigger(.inputAddress)
                 }
             )
             .disposed(by: disposeBag)
@@ -111,15 +104,7 @@ class AuthByContractNumViewModel: BaseViewModel {
             .filter { $0 != false }
             .drive(
                 onNext: { [weak self] _ in
-                   // self?.router.trigger()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        input.signInTapped
-            .drive(
-                onNext: {
-                    self.router.trigger(.inputAddress)
+                    // TODO: хз что делать
                 }
             )
             .disposed(by: disposeBag)
@@ -141,8 +126,8 @@ extension AuthByContractNumViewModel {
         let noContractTapped: Driver<Void>
         let signInTapped: Driver<Void>
         
-        let inputContractNumText: Driver<String>
-        let inputPasswordNumText: Driver<String>
+        let inputContractNumText: Driver<String?>
+        let inputPasswordNumText: Driver<String?>
     }
     
     struct Output {
