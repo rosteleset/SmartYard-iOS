@@ -157,6 +157,7 @@
 		E9004C5F23FABF2200B59976 /* IntercomTemporaryAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9004C5D23FABF1C00B59976 /* IntercomTemporaryAccessView.xib */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
 		E9004C6223FABF6800B59976 /* AccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9004C6123FABF6800B59976 /* AccessView.xib */; };
+		E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */; };
 		E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F323F56BF800623746 /* ServiceRequestType.swift */; };
 		E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F723F6721F00623746 /* AddressAccessViewController.swift */; };
 		E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E94057F823F6721F00623746 /* AddressAccessViewController.xib */; };
@@ -451,6 +452,7 @@
 		E9004C5D23FABF1C00B59976 /* IntercomTemporaryAccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntercomTemporaryAccessView.xib; sourceTree = "<group>"; };
 		E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntercomTemporaryAccessView.swift; sourceTree = "<group>"; };
 		E9004C6123FABF6800B59976 /* AccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccessView.xib; sourceTree = "<group>"; };
+		E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSearchTextField.swift; sourceTree = "<group>"; };
 		E94057F323F56BF800623746 /* ServiceRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRequestType.swift; sourceTree = "<group>"; };
 		E94057F723F6721F00623746 /* AddressAccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessViewController.swift; sourceTree = "<group>"; };
 		E94057F823F6721F00623746 /* AddressAccessViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessViewController.xib; sourceTree = "<group>"; };
@@ -676,6 +678,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E91724492410E27D00F2B810 /* SmartYardSearchTextField */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
@@ -1510,6 +1513,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E91724492410E27D00F2B810 /* SmartYardSearchTextField */ = {
+			isa = PBXGroup;
+			children = (
+				E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */,
+			);
+			path = SmartYardSearchTextField;
+			sourceTree = "<group>";
+		};
 		E94057F223F56B6400623746 /* Entries */ = {
 			isa = PBXGroup;
 			children = (
@@ -2311,6 +2322,7 @@
 				847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
 				E94B6C872406B3FB00FD9F65 /* APIWrapper+Issues.swift in Sources */,
+				E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */,
 				E94B6C3B23FFE1D200FD9F65 /* APIIntercomSettings.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,

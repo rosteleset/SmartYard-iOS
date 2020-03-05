@@ -69,7 +69,11 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             return .set([vc], animation: .fade)
             
         case .inputAddress:
-            let vm = InputAddressViewModel(router: weakRouter)
+            let vm = InputAddressViewModel(
+                router: weakRouter,
+                apiWrapper: apiWrapper
+            )
+            
             let vc = InputAddressViewController(viewModel: vm)
             
             return .set([vc], animation: .fade)
