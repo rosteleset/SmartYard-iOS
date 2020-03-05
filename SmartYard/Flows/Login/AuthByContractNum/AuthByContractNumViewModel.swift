@@ -50,28 +50,12 @@ class AuthByContractNumViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.inputContractNumText
-            .flatMapLatest { [weak self] contractNumberText -> Driver<Bool?> in
-                self?.contractNumber.onNext(contractNumberText)
-                
-                // TODO: будет какая-то валидация кроме пустоты
-                return Observable<Bool?>
-                    .just(!(contractNumberText ?? "").isEmpty)
-                    .asDriver(onErrorJustReturn: nil)
-            }
-            .ignoreNil()
+            .map { !$0.isNilOrEmpty }
             .drive(contractNumValidateTrigger)
             .disposed(by: disposeBag)
         
         input.inputPasswordNumText
-            .flatMapLatest { [weak self] passwordText -> Driver<Bool?> in
-                self?.password.onNext(passwordText)
-                
-                // TODO: будет какая-то валидация кроме пустоты
-                return Observable<Bool?>
-                    .just(!(passwordText ?? "").isEmpty)
-                    .asDriver(onErrorJustReturn: nil)
-            }
-            .ignoreNil()
+            .map { !$0.isNilOrEmpty }
             .drive(passwordValidateTrigger)
             .disposed(by: disposeBag)
         
@@ -99,33 +83,33 @@ class AuthByContractNumViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         Driver
-            .merge(
+            .combineLatest(
                 contractNumValidateTrigger.asDriverOnErrorJustComplete(),
                 passwordValidateTrigger.asDriverOnErrorJustComplete()
             )
+            .map { args in
+                let (isContractNumberValid, isPasswordValid) = args
+                return isContractNumberValid && isPasswordValid
+            }
             .drive(inputValidateTrigger)
             .disposed(by: disposeBag)
         
         input.signInTapped
-            .withLatestFrom(
-                inputValidateTrigger.asDriverOnErrorJustComplete()
-            )
-            .filter { $0 != false }
-            .withLatestFrom(
-                contractNumber.asDriver(onErrorJustReturn: nil)
-            )
+            .withLatestFrom(inputValidateTrigger.asDriverOnErrorJustComplete())
+            .isTrue()
+            .withLatestFrom(contractNumber.asDriver(onErrorJustReturn: nil))
             .withLatestFrom(password.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .flatMapLatest { [weak self] args -> Driver<Void?> in
-                guard let self = self else {
+                let (login, password) = args
+                
+                guard let self = self, let unwrappedLogjn = login, let unwrappedPassword = password else {
                     return .just(nil)
                 }
                 
-                let (login, password) = args
-                
-                return
-                    self.apiWrapper.addMyPhone(
-                        login: login ?? "",
-                        password: password ?? "",
+                return self.apiWrapper
+                    .addMyPhone(
+                        login: unwrappedLogjn,
+                        password: unwrappedPassword,
                         comment: nil,
                         useForNotifications: true
                     )
