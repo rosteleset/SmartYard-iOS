@@ -148,6 +148,7 @@
                                         <constraint firstItem="qK5-R0-4tJ" firstAttribute="leading" secondItem="N8p-X9-uGr" secondAttribute="trailing" constant="7" id="czk-44-sxB"/>
                                         <constraint firstItem="52F-f9-FuX" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="99" id="rpM-vT-hNB"/>
                                         <constraint firstItem="P3p-cv-8sH" firstAttribute="top" secondItem="N8p-X9-uGr" secondAttribute="bottom" constant="40" id="rug-eY-sJl"/>
+                                        <constraint firstAttribute="bottom" secondItem="52F-f9-FuX" secondAttribute="bottom" constant="60" id="tWb-Xk-Jzj"/>
                                         <constraint firstAttribute="trailing" secondItem="P3p-cv-8sH" secondAttribute="trailing" constant="40" id="w1k-D1-aXi"/>
                                         <constraint firstItem="N8p-X9-uGr" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="w21-mK-Icr"/>
                                         <constraint firstItem="cmm-LE-hpZ" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="xJ0-zM-Mom"/>
@@ -162,7 +163,6 @@
                                 <constraint firstItem="DnD-0W-pW4" firstAttribute="top" secondItem="tOA-mx-jDg" secondAttribute="top" id="A9t-hf-Q9e"/>
                                 <constraint firstAttribute="trailing" secondItem="DMJ-9p-DBh" secondAttribute="trailing" id="HhV-Kg-2am"/>
                                 <constraint firstItem="DMJ-9p-DBh" firstAttribute="leading" secondItem="tOA-mx-jDg" secondAttribute="leading" id="YUV-5V-kiF"/>
-                                <constraint firstAttribute="height" constant="680" id="eA4-zK-MIT"/>
                                 <constraint firstItem="DnD-0W-pW4" firstAttribute="leading" secondItem="tOA-mx-jDg" secondAttribute="leading" id="jiY-c6-BT5"/>
                                 <constraint firstAttribute="trailing" secondItem="DnD-0W-pW4" secondAttribute="trailing" id="jzS-mz-GqH"/>
                                 <constraint firstItem="DMJ-9p-DBh" firstAttribute="top" secondItem="DnD-0W-pW4" secondAttribute="bottom" id="sfh-w5-bBr"/>
