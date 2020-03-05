@@ -76,6 +76,9 @@ class InputAddressViewController: BaseViewController {
         let input = InputAddressViewModel.Input(
             qrCodeTapped: qrCodeButton.rx.tap.asDriverOnErrorJustComplete(),
             checkServicesTapped: checkAvailableServicesButton.rx.tap.asDriverOnErrorJustComplete(),
+            streetsFieldFocused: streetTextField.rx.controlEvent(.editingDidBegin).asDriver(),
+            buildingsFieldFocused: buildingTextField.rx.controlEvent(.editingDidBegin).asDriver(),
+            flatsFieldFocused: flatTextField.rx.controlEvent(.editingDidBegin).asDriver(),
             inputCityName: cityTextField.rx.text.changed.asDriver(onErrorJustReturn: nil),
             inputStreetName: streetTextField.rx.text.changed.asDriver(onErrorJustReturn: nil),
             inputBuildingName: buildingTextField.rx.text.changed.asDriver(onErrorJustReturn: nil),
