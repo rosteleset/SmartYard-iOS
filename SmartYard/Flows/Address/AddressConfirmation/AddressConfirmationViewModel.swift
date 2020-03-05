@@ -28,7 +28,6 @@ class AddressConfirmationViewModel: BaseViewModel {
     }
     
     func transform(_ input: Input) -> Output {
-        
         input.confirmByCourierTapped
             .drive(
                 onNext: { [weak self] in
