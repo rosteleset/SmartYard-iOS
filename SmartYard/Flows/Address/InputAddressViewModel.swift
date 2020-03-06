@@ -123,10 +123,34 @@ class InputAddressViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        input.checkServicesTapped
+        input.checkServicesTapped.withLatestFrom(
+            Driver.combineLatest(
+                    input.inputCityName.asDriver(onErrorJustReturn: nil).ignoreNil(),
+                    input.inputStreetName.asDriver(onErrorJustReturn: nil).ignoreNil(),
+                    input.inputBuildingName.asDriver(onErrorJustReturn: nil).ignoreNil(),
+                    input.inputFlatName.asDriver(onErrorJustReturn: nil)
+                )
+            )
+            .flatMap { args -> Driver<String?> in
+               let (city, street, building, flat) = args
+                var address = ""
+                
+                if !city.isEmpty, !street.isEmpty, !building.isEmpty {
+                    address.append("\(city), \(street), \(building)")
+                } else {
+                    return .just(nil)
+                }
+
+                if let flat = flat, !flat.isEmpty {
+                    address.append(", \(flat)")
+                }
+                
+                return .just(address)
+            }
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] in
-                    self?.router.trigger(.availableServices)
+                onNext: { [weak self] address in
+                    self?.router.trigger(.availableServices(address: address))
                 }
             )
             .disposed(by: disposeBag)
