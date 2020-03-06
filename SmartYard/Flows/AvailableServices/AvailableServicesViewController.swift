@@ -15,12 +15,12 @@ class AvailableServicesViewController: BaseViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var nextButton: BlueButton!
     
-    private let viewModel: AvailableSericesViewModel
+    private let viewModel: AvailableServicesViewModel
     private let itemsProxy = BehaviorSubject<[ServiceModel]>(value: [])
     
     private let serviceStateChanged = PublishSubject<Int?>()
     
-    init(viewModel: AvailableSericesViewModel) {
+    init(viewModel: AvailableServicesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -37,7 +37,7 @@ class AvailableServicesViewController: BaseViewController {
     }
     
     private func bind() {
-        let input = AvailableSericesViewModel.Input(
+        let input = AvailableServicesViewModel.Input(
             nextTapped: nextButton.rx.tap.asDriverOnErrorJustComplete(),
             serviceStateChanged: serviceStateChanged.asDriverOnErrorJustComplete(),
             viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete()

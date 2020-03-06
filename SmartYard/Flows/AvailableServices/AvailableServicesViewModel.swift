@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
-class AvailableSericesViewModel: BaseViewModel {
+class AvailableServicesViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
     
@@ -87,7 +87,7 @@ class AvailableSericesViewModel: BaseViewModel {
     
 }
 
-extension AvailableSericesViewModel {
+extension AvailableServicesViewModel {
     
     struct Input {
         let nextTapped: Driver<Void>

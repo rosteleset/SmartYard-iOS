@@ -79,7 +79,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             return .set([vc], animation: .fade)
             
         case let .availableServices(address, services):
-            let vm = AvailableSericesViewModel(router: weakRouter, apiWrapper: apiWrapper, address: address, services: services)
+            let vm = AvailableServicesViewModel(router: weakRouter, apiWrapper: apiWrapper, address: address, services: services)
             let vc = AvailableServicesViewController(viewModel: vm)
             
             return .set([vc], animation: .fade)
