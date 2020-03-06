@@ -20,12 +20,10 @@ class InputAddressViewModel: BaseViewModel {
     private let streetsList = BehaviorSubject<[APIStreet]>(value: [])
     private let buildingsList = BehaviorSubject<[String]>(value: [])
     
-    private let flatsList = BehaviorSubject<[String]>(value: [])
+    private var loadedStreets = [String: [APIStreet]]()
+    private var loadedBuilinds = [String: [APIHouse]]()
     
-    private let inputCityName = BehaviorSubject<String?>(value: nil)
-    private let inputStreetName = BehaviorSubject<String?>(value: nil)
-    private let inputBuildingName = BehaviorSubject<String?>(value: nil)
-    private let inputFlatName = BehaviorSubject<String?>(value: nil)
+    private let flatsList = BehaviorSubject<[String]>(value: [])
     
     init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper) {
         self.router = router
@@ -33,69 +31,87 @@ class InputAddressViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let citiesStrings = PublishSubject<[String]>()
-        let streetsStrings = PublishSubject<[String]>()
-        
-        loadCities()
+        apiWrapper.getAllLocations()
+            .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(citiesList)
             .disposed(by: disposeBag)
         
-        citiesList
-            .map { $0.map { $0.name } }
-            .asDriver(onErrorJustReturn: [])
-            .drive(citiesStrings)
-            .disposed(by: disposeBag)
-        
-        streetsList
-            .map { $0.map { $0.name } }
-            .asDriver(onErrorJustReturn: [])
-            .drive(streetsStrings)
-            .disposed(by: disposeBag)
-        
-        input.inputCityName
-            .drive(inputCityName)
-            .disposed(by: disposeBag)
-        
-        input.inputStreetName
-            .drive(inputStreetName)
-            .disposed(by: disposeBag)
-        
-        input.inputFlatName
-            .drive(inputFlatName)
-            .disposed(by: disposeBag)
-        
-        input.inputBuildingName
-            .drive(inputBuildingName)
-            .disposed(by: disposeBag)
-        
         input.streetsFieldFocused
-            .withLatestFrom(inputCityName.asDriver(onErrorJustReturn: nil))
-            .ignoreNil()
-            .flatMapLatest { [weak self] city -> Driver<GetStreetsResponseData?> in
-                guard let self = self else {
+            .withLatestFrom(input.inputCityName.asDriver(onErrorJustReturn: nil))
+            .withLatestFrom(citiesList.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .flatMapLatest { [weak self] args -> Driver<(GetStreetsResponseData, APILocation)?> in
+                let (cityName, cities) = args
+                
+                guard let self = self, let city = (cities.first { $0.name == cityName }) else {
                     return .empty()
                 }
+
+                guard let cachedStreets = self.loadedStreets[city.name] else {
+                    return self.apiWrapper.getStreetsByLocation(locationId: city.locationId)
+                        .map {
+                            guard let response = $0 else {
+                                return nil
+                            }
+                            
+                            return (response, city)
+                        }
+                        .asDriver(onErrorJustReturn: nil)
+                }
                 
-                return self.loadStreets(by: city).asDriver(onErrorJustReturn: nil)
+                return .just((cachedStreets, city))
             }
             .ignoreNil()
-            .drive(streetsList)
+            .do(
+                onNext: { [weak self] args in
+                    let (streets, city) = args
+                    self?.loadedStreets[city.name] = streets
+                }
+            )
+            .drive(
+                onNext: { [weak self] args in
+                    let (streets, _) = args
+                    self?.streetsList.onNext(streets)
+                }
+            )
             .disposed(by: disposeBag)
-        
+
         input.buildingsFieldFocused
-            .withLatestFrom(inputStreetName.asDriver(onErrorJustReturn: nil))
-            .ignoreNil()
-            .flatMapLatest { [weak self] street -> Driver<GetHousesResponseData?> in
-                guard let self = self else {
+            .withLatestFrom(input.inputStreetName.asDriver(onErrorJustReturn: nil))
+            .withLatestFrom(streetsList.asDriverOnErrorJustComplete()) { ($0, $1) }
+            .flatMapLatest { [weak self] args -> Driver<(GetHousesResponseData, APIStreet)?> in
+                let (streetName, streets) = args
+                
+                guard let self = self, let street = (streets.first { $0.name == streetName }) else {
                     return .empty()
                 }
                 
-                return self.loadBuildings(by: street)
+                guard let cachedBuildings = self.loadedBuilinds[street.name] else {
+                    return self.apiWrapper.getHousesByStreet(streetId: street.streetId)
+                        .map {
+                            guard let response = $0 else {
+                                return nil
+                            }
+                            
+                            return (response, street)
+                        }
+                        .asDriver(onErrorJustReturn: nil)
+                }
+                
+                return .just((cachedBuildings, street))
             }
             .ignoreNil()
-            .map { $0.map { $0.number } }
-            .asDriver(onErrorJustReturn: [])
+            .do(
+                onNext: { [weak self] args in
+                    let (buildings, street) = args
+                    self?.loadedBuilinds[street.name] = buildings
+                }
+            )
+            .flatMap { args -> Driver<[String]> in
+                let (buildings, _) = args
+                let buildingNumbers = buildings.map { $0.number }
+                return .just(buildingNumbers)
+            }
             .drive(buildingsList)
             .disposed(by: disposeBag)
 
@@ -116,36 +132,15 @@ class InputAddressViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            cities: citiesStrings.asDriver(onErrorJustReturn: []),
-            streets: streetsStrings.asDriver(onErrorJustReturn: []),
+            cities: citiesList.asDriver(onErrorJustReturn: [])
+                .map { $0.map { $0.name } },
+            streets: streetsList.asDriver(onErrorJustReturn: [])
+                .map { $0.map { $0.name } },
             buildings: buildingsList.asDriver(onErrorJustReturn: []),
             flats: flatsList.asDriver(onErrorJustReturn: [])
         )
     }
     
-    private func loadCities() -> Driver<GetAllLocationsResponseData?> {
-        return apiWrapper.getAllLocations().asDriver(onErrorJustReturn: nil)
-    }
-    
-    private func loadStreets(by inputCity: String) -> Driver<GetStreetsResponseData?> {
-        guard let data = try? citiesList.value(),
-              let city = data.first(where: { $0.name == inputCity })
-        else {
-            return .empty()
-        }
-        
-        return apiWrapper.getStreetsByLocation(locationId: city.locationId).asDriver(onErrorJustReturn: nil)
-    }
-    
-    private func loadBuildings(by inputStreet: String) -> Driver<GetHousesResponseData?> {
-        guard let data = try? streetsList.value(),
-            let street = data.first(where: { $0.name == inputStreet })
-            else {
-                return .empty()
-            }
-        
-        return apiWrapper.getHousesByStreet(streetId: street.streetId).asDriver(onErrorJustReturn: nil)
-    }
 }
 
 extension InputAddressViewModel {
