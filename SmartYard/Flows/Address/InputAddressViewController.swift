@@ -18,7 +18,7 @@ class InputAddressViewController: BaseViewController {
     @IBOutlet private weak var streetTextField: SmartYardSearchTextField!
     @IBOutlet private weak var buildingTextField: SmartYardSearchTextField!
     @IBOutlet private weak var flatTextField: SmartYardSearchTextField!
-    @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
+    @IBOutlet private weak var scrollView: UIScrollView!
     
     @IBOutlet private weak var checkAvailableServicesButton: BlueButton!
     @IBOutlet private weak var qrCodeButton: ClearButtonWithDashedUnderline!
@@ -43,6 +43,10 @@ class InputAddressViewController: BaseViewController {
     }
     
     private func bind() {
+        flatTextField.rx.controlEvent(.editingDidBegin).asDriver().drive(onNext: {
+            self.performScrollUpdate(to: self.flatTextField)
+        }).disposed(by: disposeBag)
+        
         Observable.of(
             cityTextField.rx.controlEvent(.editingDidBegin),
             streetTextField.rx.controlEvent(.editingDidBegin),
@@ -79,10 +83,10 @@ class InputAddressViewController: BaseViewController {
             streetsFieldFocused: streetTextField.rx.controlEvent(.editingDidBegin).asDriver(),
             buildingsFieldFocused: buildingTextField.rx.controlEvent(.editingDidBegin).asDriver(),
             flatsFieldFocused: flatTextField.rx.controlEvent(.editingDidBegin).asDriver(),
-            inputCityName: cityTextField.rx.text.changed.asDriver(onErrorJustReturn: nil),
-            inputStreetName: streetTextField.rx.text.changed.asDriver(onErrorJustReturn: nil),
-            inputBuildingName: buildingTextField.rx.text.changed.asDriver(onErrorJustReturn: nil),
-            inputFlatName: flatTextField.rx.text.changed.asDriver(onErrorJustReturn: nil)
+            inputCityName: cityTextField.rx.text.asDriver(onErrorJustReturn: nil),
+            inputStreetName: streetTextField.rx.text.asDriver(onErrorJustReturn: nil),
+            inputBuildingName: buildingTextField.rx.text.asDriver(onErrorJustReturn: nil),
+            inputFlatName: flatTextField.rx.text.asDriver(onErrorJustReturn: nil)
         )
         
         let output = viewModel.transform(input: input)
@@ -128,12 +132,30 @@ class InputAddressViewController: BaseViewController {
         
         qrCodeButton.setLeftAlignment()
         
-        view.hideKeyboardWhenTapped = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        tap.cancelsTouchesInView = false
         
         cityTextField.theme.bgColor = .white
         streetTextField.theme.bgColor = .white
         buildingTextField.theme.bgColor = .white
         flatTextField.theme.bgColor = .white
+    }
+    
+    @objc private func dismissKeyboard() {
+        cityTextField.resignFirstResponder()
+    }
+    
+    private func performScrollUpdate(to view: UITextField) {
+        let convertedOrigin = view.convert(view.bounds.origin, to: scrollView)
+        let desiredOffset = convertedOrigin.y
+        let maxPossibleOffset = scrollView.contentSize.height - scrollView.bounds.height
+        let finalOffset = max(min(desiredOffset, maxPossibleOffset), 0)
+        
+        scrollView.setContentOffset(
+            CGPoint(x: 0, y: finalOffset),
+            animated: true
+        )
     }
     
 }

@@ -37,13 +37,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="3vL-YD-f4m">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95v-tL-giU" customClass="TPKeyboardAvoidingScrollView">
-                    <rect key="frame" x="0.0" y="44" width="414" height="768"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95v-tL-giU">
+                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tOA-mx-jDg">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="680"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="852"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DnD-0W-pW4">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
@@ -63,7 +63,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DMJ-9p-DBh" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="180" width="414" height="500"/>
+                                    <rect key="frame" x="0.0" y="180" width="414" height="672"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VY4-bh-98W" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="40" y="40" width="334" height="56"/>
@@ -117,7 +117,7 @@
                                             <state key="normal" title="Проверить доступные услуги"/>
                                         </button>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QrCodeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="52F-f9-FuX">
-                                            <rect key="frame" x="99" y="416" width="24" height="24"/>
+                                            <rect key="frame" x="99" y="588" width="24" height="24"/>
                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="5wx-M2-Qza"/>
@@ -125,7 +125,7 @@
                                             </constraints>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t7w-za-uue" customClass="ClearButtonWithDashedUnderline" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="137" y="413" width="116" height="30"/>
+                                            <rect key="frame" x="137" y="585" width="116" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="6Ge-B1-v9K"/>
                                             </constraints>
@@ -138,25 +138,25 @@
                                         <constraint firstItem="qK5-R0-4tJ" firstAttribute="centerX" secondItem="DMJ-9p-DBh" secondAttribute="centerX" id="2Gw-dE-MeV"/>
                                         <constraint firstItem="P3p-cv-8sH" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="2Pj-gj-t9H"/>
                                         <constraint firstAttribute="trailing" secondItem="WJV-KH-rtf" secondAttribute="trailing" constant="40" id="8MP-mO-CIa"/>
+                                        <constraint firstItem="P3p-cv-8sH" firstAttribute="top" secondItem="WJV-KH-rtf" secondAttribute="bottom" constant="40" id="9fD-tJ-5y6"/>
                                         <constraint firstItem="N8p-X9-uGr" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="BXZ-v5-Kxi"/>
                                         <constraint firstItem="VY4-bh-98W" firstAttribute="top" secondItem="DMJ-9p-DBh" secondAttribute="top" constant="40" id="Bae-Gc-g4T"/>
                                         <constraint firstItem="VY4-bh-98W" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="EhR-sC-okg"/>
                                         <constraint firstItem="WJV-KH-rtf" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="Fsj-ZL-1hE"/>
                                         <constraint firstAttribute="trailing" secondItem="cmm-LE-hpZ" secondAttribute="trailing" constant="40" id="GTJ-M6-3NG"/>
-                                        <constraint firstAttribute="height" constant="500" id="IFF-ba-iGs"/>
                                         <constraint firstItem="t7w-za-uue" firstAttribute="centerY" secondItem="52F-f9-FuX" secondAttribute="centerY" id="IN0-VJ-rFf"/>
                                         <constraint firstItem="qK5-R0-4tJ" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="MI8-MI-fmf"/>
                                         <constraint firstItem="WJV-KH-rtf" firstAttribute="leading" secondItem="qK5-R0-4tJ" secondAttribute="trailing" constant="7" id="NsM-OK-AK5"/>
                                         <constraint firstItem="cmm-LE-hpZ" firstAttribute="top" secondItem="VY4-bh-98W" secondAttribute="bottom" constant="16" id="YR0-2L-W2z"/>
                                         <constraint firstAttribute="trailing" secondItem="VY4-bh-98W" secondAttribute="trailing" constant="40" id="Ylj-V2-VeC"/>
                                         <constraint firstItem="qK5-R0-4tJ" firstAttribute="leading" secondItem="N8p-X9-uGr" secondAttribute="trailing" constant="7" id="czk-44-sxB"/>
+                                        <constraint firstAttribute="bottom" secondItem="52F-f9-FuX" secondAttribute="bottom" constant="60" id="noM-Le-DtF"/>
                                         <constraint firstItem="52F-f9-FuX" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="99" id="rpM-vT-hNB"/>
                                         <constraint firstItem="P3p-cv-8sH" firstAttribute="top" secondItem="N8p-X9-uGr" secondAttribute="bottom" constant="40" id="rug-eY-sJl"/>
-                                        <constraint firstAttribute="bottom" secondItem="52F-f9-FuX" secondAttribute="bottom" constant="60" id="tWb-Xk-Jzj"/>
                                         <constraint firstAttribute="trailing" secondItem="P3p-cv-8sH" secondAttribute="trailing" constant="40" id="w1k-D1-aXi"/>
                                         <constraint firstItem="N8p-X9-uGr" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="w21-mK-Icr"/>
                                         <constraint firstItem="cmm-LE-hpZ" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="xJ0-zM-Mom"/>
-                                        <constraint firstItem="52F-f9-FuX" firstAttribute="top" secondItem="P3p-cv-8sH" secondAttribute="bottom" priority="255" constant="76" id="xSx-Dt-QsU"/>
+                                        <constraint firstItem="52F-f9-FuX" firstAttribute="top" secondItem="P3p-cv-8sH" secondAttribute="bottom" priority="250" constant="30" id="xSx-Dt-QsU"/>
                                         <constraint firstItem="t7w-za-uue" firstAttribute="leading" secondItem="52F-f9-FuX" secondAttribute="trailing" constant="14" id="zY0-wb-0zL"/>
                                     </constraints>
                                 </view>
@@ -180,6 +180,7 @@
                         <constraint firstItem="tOA-mx-jDg" firstAttribute="centerY" secondItem="95v-tL-giU" secondAttribute="centerY" id="BNi-84-9H4"/>
                         <constraint firstItem="tOA-mx-jDg" firstAttribute="top" secondItem="95v-tL-giU" secondAttribute="top" id="ERY-MN-Ay8"/>
                         <constraint firstItem="tOA-mx-jDg" firstAttribute="leading" secondItem="95v-tL-giU" secondAttribute="leading" id="Imf-hf-dSF"/>
+                        <constraint firstItem="tOA-mx-jDg" firstAttribute="height" secondItem="95v-tL-giU" secondAttribute="height" priority="250" id="Y3w-lb-GqH"/>
                         <constraint firstAttribute="trailing" secondItem="tOA-mx-jDg" secondAttribute="trailing" id="va6-i9-F5I"/>
                     </constraints>
                 </scrollView>

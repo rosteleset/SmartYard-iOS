@@ -30,7 +30,7 @@ class InputAddressViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
     }
     
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
         apiWrapper.getAllLocations()
             .asDriver(onErrorJustReturn: nil)
@@ -108,12 +108,12 @@ class InputAddressViewModel: BaseViewModel {
                     self?.loadedBuildings[street.name] = buildings
                 }
             )
-            .flatMap { args -> Driver<[String]> in
-                let (buildings, _) = args
-                let buildingNumbers = buildings.map { $0.number }
-                return .just(buildingNumbers)
-            }
-            .drive(buildingsList)
+            .drive(
+                onNext: { [weak self] args in
+                    let (buildings, _) = args
+                    self?.buildingsList.onNext(buildings.map { $0.number })
+                }
+            )
             .disposed(by: disposeBag)
 
         input.qrCodeTapped
@@ -124,53 +124,83 @@ class InputAddressViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        input.checkServicesTapped.withLatestFrom(
-            Driver.combineLatest(
-                    input.inputCityName.asDriver(onErrorJustReturn: nil).ignoreNil(),
-                    input.inputStreetName.asDriver(onErrorJustReturn: nil).ignoreNil(),
-                    input.inputBuildingName.asDriver(onErrorJustReturn: nil).ignoreNil(),
-                    input.inputFlatName.asDriver(onErrorJustReturn: nil)
+        let requestData = input.checkServicesTapped.withLatestFrom(
+            Driver
+                .combineLatest(
+                    input.inputCityName,
+                    input.inputStreetName,
+                    input.inputBuildingName,
+                    input.inputFlatName
                 )
             )
-            .flatMap { [weak self] args -> Driver<(String, String?)?> in
-                guard let self = self else {
-                    return .just(nil)
-                }
-               let (city, street, building, flat) = args
-                var address = ""
+            .flatMap { [weak self] args -> Driver<(String, String?)> in
+                let (cityName, streetName, buildingName, flatName) = args
                 
-                if !city.isEmpty, !street.isEmpty, !building.isEmpty {
-                    address.append("\(city), \(street), \(building)")
-                } else {
-                    return .just(nil)
-                }
-
-                if let flat = flat, !flat.isEmpty {
-                    address.append(", \(flat)")
-                }
-            
-                guard let buildings = self.loadedBuildings[street] else {
-                    return .just((address, nil))
+                guard let self = self,
+                    let uCityName = cityName?.trimmed, !uCityName.isEmpty,
+                    let uStreetName = streetName?.trimmed, !uStreetName.isEmpty,
+                    let uBuildingName = buildingName?.trimmed, !uBuildingName.isEmpty else {
+                    return .empty()
                 }
                 
-                let houseId = buildings.first { $0.number == building }?.houseId
+                var addressString = [uCityName, uStreetName, uBuildingName].joined(separator: ", ")
                 
-                return .just((address, houseId))
+                if let uFlatName = flatName?.trimmed, !uFlatName.isEmpty {
+                    addressString += ", \(uFlatName)"
+                }
+                
+                guard let buildings = self.loadedBuildings[uStreetName] else {
+                    return .just((addressString, nil))
+                }
+                
+                let houseId = buildings.first { $0.number == uBuildingName }?.houseId
+                
+                return .just((addressString, houseId))
             }
-            .ignoreNil()
+        
+        let withoutHouseId = requestData.flatMap { args -> Driver<String> in
+            let (address, houseId) = args
+            
+            guard houseId == nil else {
+                return .empty()
+            }
+            
+            return .just(address)
+        }
+        
+        withoutHouseId
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.router.trigger(.unavailableServices)
+                }
+            )
+            .disposed(by: disposeBag)
+
+        let withHouseId = requestData
+            .flatMap { args -> Driver<(String, String)> in
+                let (address, houseId) = args
+                
+                guard let uHouseId = houseId else {
+                    return .empty()
+                }
+                
+                return .just((address, uHouseId))
+            }
+        
+        withHouseId
             .flatMapLatest { [weak self] args -> Driver<(String, GetServicesResponseData?)?> in
                 guard let self = self else {
                     return .just(nil)
                 }
-                
+
                 let (address, houseId) = args
-                
+
                 return self.apiWrapper.getServicesByHouseId(houseId: houseId)
                     .map {
                         guard let response = $0 else {
                             return nil
                         }
-                        
+
                         return (address, response)
                     }
                     .asDriver(onErrorJustReturn: nil)
@@ -179,16 +209,16 @@ class InputAddressViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] args in
                     let (address, response) = args
-                    
+
                     guard let self = self, let services = response else {
                         return
                     }
-                    
+
                     guard !services.isEmpty else {
-                        self.router.trigger(.unavailabeServices)
+                        self.router.trigger(.unavailableServices)
                         return
                     }
-                    
+
                     self.router.trigger(
                         .availableServices(
                             address: address,

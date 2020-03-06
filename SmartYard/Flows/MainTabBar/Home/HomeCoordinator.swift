@@ -15,7 +15,7 @@ enum HomeRoute: Route {
     case inputContract
     case inputAddress
     case availableServices(address: String, services: [APIServiceModel])
-    case unavailabeServices
+    case unavailableServices
     case confirmAddress
     
 }
@@ -84,7 +84,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             return .set([vc], animation: .fade)
             
-        case .unavailabeServices:
+        case .unavailableServices:
             let vm = ServicesActivationRequestViewModel(router: weakRouter, apiWrapper: apiWrapper)
             let vc = ServicesActivationRequestViewController(viewModel: vm)
             
