@@ -20,11 +20,13 @@ class AvailableSericesViewModel: BaseViewModel {
     private let serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: [])
 
     private let address: String
+    private let services: [APIServiceModel]
     
-    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, address: String) {
+    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, address: String, services: [APIServiceModel]) {
         self.router = router
         self.apiWrapper = apiWrapper
         self.address = address
+        self.services = services
     }
     
     func transform(input: Input) -> Output {

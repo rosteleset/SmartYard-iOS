@@ -21,7 +21,7 @@ class InputAddressViewModel: BaseViewModel {
     private let buildingsList = BehaviorSubject<[String]>(value: [])
     
     private var loadedStreets = [String: [APIStreet]]()
-    private var loadedBuilinds = [String: [APIHouse]]()
+    private var loadedBuildings = [String: [APIHouse]]()
     
     private let flatsList = BehaviorSubject<[String]>(value: [])
     
@@ -30,6 +30,7 @@ class InputAddressViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         apiWrapper.getAllLocations()
             .asDriver(onErrorJustReturn: nil)
@@ -86,7 +87,7 @@ class InputAddressViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                guard let cachedBuildings = self.loadedBuilinds[street.name] else {
+                guard let cachedBuildings = self.loadedBuildings[street.name] else {
                     return self.apiWrapper.getHousesByStreet(streetId: street.streetId)
                         .map {
                             guard let response = $0 else {
@@ -104,7 +105,7 @@ class InputAddressViewModel: BaseViewModel {
             .do(
                 onNext: { [weak self] args in
                     let (buildings, street) = args
-                    self?.loadedBuilinds[street.name] = buildings
+                    self?.loadedBuildings[street.name] = buildings
                 }
             )
             .flatMap { args -> Driver<[String]> in
@@ -131,7 +132,10 @@ class InputAddressViewModel: BaseViewModel {
                     input.inputFlatName.asDriver(onErrorJustReturn: nil)
                 )
             )
-            .flatMap { args -> Driver<String?> in
+            .flatMap { [weak self] args -> Driver<(String, String?)?> in
+                guard let self = self else {
+                    return .just(nil)
+                }
                let (city, street, building, flat) = args
                 var address = ""
                 
@@ -144,13 +148,53 @@ class InputAddressViewModel: BaseViewModel {
                 if let flat = flat, !flat.isEmpty {
                     address.append(", \(flat)")
                 }
+            
+                guard let buildings = self.loadedBuildings[street] else {
+                    return .just((address, nil))
+                }
                 
-                return .just(address)
+                let houseId = buildings.first { $0.number == building }?.houseId
+                
+                return .just((address, houseId))
+            }
+            .ignoreNil()
+            .flatMapLatest { [weak self] args -> Driver<(String, GetServicesResponseData?)?> in
+                guard let self = self else {
+                    return .just(nil)
+                }
+                
+                let (address, houseId) = args
+                
+                return self.apiWrapper.getServicesByHouseId(houseId: houseId)
+                    .map {
+                        guard let response = $0 else {
+                            return nil
+                        }
+                        
+                        return (address, response)
+                    }
+                    .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
             .drive(
-                onNext: { [weak self] address in
-                    self?.router.trigger(.availableServices(address: address))
+                onNext: { [weak self] args in
+                    let (address, response) = args
+                    
+                    guard let self = self, let services = response else {
+                        return
+                    }
+                    
+                    guard !services.isEmpty else {
+                        self.router.trigger(.unavailabeServices)
+                        return
+                    }
+                    
+                    self.router.trigger(
+                        .availableServices(
+                            address: address,
+                            services: services
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
