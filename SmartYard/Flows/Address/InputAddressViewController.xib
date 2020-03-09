@@ -39,7 +39,7 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="3vL-YD-f4m">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95v-tL-giU">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95v-tL-giU">
                     <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tOA-mx-jDg">
@@ -63,25 +63,25 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DMJ-9p-DBh" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="180" width="414" height="672"/>
+                                    <rect key="frame" x="0.0" y="180" width="414" height="438"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VY4-bh-98W" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VY4-bh-98W" customClass="SearchTextField" customModule="SearchTextField">
                                             <rect key="frame" x="40" y="40" width="334" height="56"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="vXh-cE-YlD"/>
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" textContentType="address-level2"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="address-level2"/>
                                         </textField>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cmm-LE-hpZ" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cmm-LE-hpZ" customClass="SearchTextField" customModule="SearchTextField">
                                             <rect key="frame" x="40" y="112" width="334" height="56"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="qRK-xK-9C1"/>
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" textContentType="address-line1"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="address-line1"/>
                                         </textField>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qK5-R0-4tJ">
                                             <rect key="frame" x="206.5" y="184" width="1" height="56"/>
@@ -91,23 +91,23 @@
                                                 <constraint firstAttribute="width" constant="1" id="SFw-g8-AGY"/>
                                             </constraints>
                                         </view>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N8p-X9-uGr" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N8p-X9-uGr" customClass="SearchTextField" customModule="SearchTextField">
                                             <rect key="frame" x="40" y="184" width="159.5" height="56"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="qiB-aS-AmO"/>
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation"/>
                                         </textField>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WJV-KH-rtf" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WJV-KH-rtf" customClass="SearchTextField" customModule="SearchTextField">
                                             <rect key="frame" x="214.5" y="184" width="159.5" height="56"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="fSZ-DS-y90"/>
                                             </constraints>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation"/>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3p-cv-8sH" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="40" y="280" width="334" height="60"/>
@@ -117,7 +117,7 @@
                                             <state key="normal" title="Проверить доступные услуги"/>
                                         </button>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QrCodeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="52F-f9-FuX">
-                                            <rect key="frame" x="99" y="588" width="24" height="24"/>
+                                            <rect key="frame" x="99" y="370" width="24" height="24"/>
                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="5wx-M2-Qza"/>
@@ -125,7 +125,7 @@
                                             </constraints>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t7w-za-uue" customClass="ClearButtonWithDashedUnderline" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="137" y="585" width="116" height="30"/>
+                                            <rect key="frame" x="137" y="367" width="116" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="6Ge-B1-v9K"/>
                                             </constraints>
@@ -137,6 +137,7 @@
                                     <constraints>
                                         <constraint firstItem="qK5-R0-4tJ" firstAttribute="centerX" secondItem="DMJ-9p-DBh" secondAttribute="centerX" id="2Gw-dE-MeV"/>
                                         <constraint firstItem="P3p-cv-8sH" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="2Pj-gj-t9H"/>
+                                        <constraint firstAttribute="height" constant="438" id="44P-g9-iXd"/>
                                         <constraint firstAttribute="trailing" secondItem="WJV-KH-rtf" secondAttribute="trailing" constant="40" id="8MP-mO-CIa"/>
                                         <constraint firstItem="P3p-cv-8sH" firstAttribute="top" secondItem="WJV-KH-rtf" secondAttribute="bottom" constant="40" id="9fD-tJ-5y6"/>
                                         <constraint firstItem="N8p-X9-uGr" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="BXZ-v5-Kxi"/>
@@ -150,27 +151,24 @@
                                         <constraint firstItem="cmm-LE-hpZ" firstAttribute="top" secondItem="VY4-bh-98W" secondAttribute="bottom" constant="16" id="YR0-2L-W2z"/>
                                         <constraint firstAttribute="trailing" secondItem="VY4-bh-98W" secondAttribute="trailing" constant="40" id="Ylj-V2-VeC"/>
                                         <constraint firstItem="qK5-R0-4tJ" firstAttribute="leading" secondItem="N8p-X9-uGr" secondAttribute="trailing" constant="7" id="czk-44-sxB"/>
-                                        <constraint firstAttribute="bottom" secondItem="52F-f9-FuX" secondAttribute="bottom" constant="60" id="noM-Le-DtF"/>
                                         <constraint firstItem="52F-f9-FuX" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="99" id="rpM-vT-hNB"/>
                                         <constraint firstItem="P3p-cv-8sH" firstAttribute="top" secondItem="N8p-X9-uGr" secondAttribute="bottom" constant="40" id="rug-eY-sJl"/>
                                         <constraint firstAttribute="trailing" secondItem="P3p-cv-8sH" secondAttribute="trailing" constant="40" id="w1k-D1-aXi"/>
                                         <constraint firstItem="N8p-X9-uGr" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="w21-mK-Icr"/>
                                         <constraint firstItem="cmm-LE-hpZ" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="40" id="xJ0-zM-Mom"/>
-                                        <constraint firstItem="52F-f9-FuX" firstAttribute="top" secondItem="P3p-cv-8sH" secondAttribute="bottom" priority="250" constant="30" id="xSx-Dt-QsU"/>
+                                        <constraint firstItem="52F-f9-FuX" firstAttribute="top" secondItem="P3p-cv-8sH" secondAttribute="bottom" constant="30" id="xSx-Dt-QsU"/>
                                         <constraint firstItem="t7w-za-uue" firstAttribute="leading" secondItem="52F-f9-FuX" secondAttribute="trailing" constant="14" id="zY0-wb-0zL"/>
                                     </constraints>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="DMJ-9p-DBh" firstAttribute="top" secondItem="tOA-mx-jDg" secondAttribute="top" constant="180" id="6cj-Jo-wqh"/>
                                 <constraint firstItem="DnD-0W-pW4" firstAttribute="top" secondItem="tOA-mx-jDg" secondAttribute="top" id="A9t-hf-Q9e"/>
                                 <constraint firstAttribute="trailing" secondItem="DMJ-9p-DBh" secondAttribute="trailing" id="HhV-Kg-2am"/>
                                 <constraint firstItem="DMJ-9p-DBh" firstAttribute="leading" secondItem="tOA-mx-jDg" secondAttribute="leading" id="YUV-5V-kiF"/>
                                 <constraint firstItem="DnD-0W-pW4" firstAttribute="leading" secondItem="tOA-mx-jDg" secondAttribute="leading" id="jiY-c6-BT5"/>
                                 <constraint firstAttribute="trailing" secondItem="DnD-0W-pW4" secondAttribute="trailing" id="jzS-mz-GqH"/>
                                 <constraint firstItem="DMJ-9p-DBh" firstAttribute="top" secondItem="DnD-0W-pW4" secondAttribute="bottom" id="sfh-w5-bBr"/>
-                                <constraint firstAttribute="bottom" secondItem="DMJ-9p-DBh" secondAttribute="bottom" id="soq-Dv-vS0"/>
                             </constraints>
                         </view>
                     </subviews>

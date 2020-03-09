@@ -10,6 +10,7 @@ import UIKit
 import TPKeyboardAvoiding
 import RxSwift
 import RxCocoa
+import SearchTextField
 
 class InputAddressViewController: BaseViewController {
 
@@ -149,9 +150,10 @@ class InputAddressViewController: BaseViewController {
     private func performScrollUpdate(to view: UITextField) {
         let convertedOrigin = view.convert(view.bounds.origin, to: scrollView)
         let desiredOffset = convertedOrigin.y
+        
         let maxPossibleOffset = scrollView.contentSize.height - scrollView.bounds.height
         let finalOffset = max(min(desiredOffset, maxPossibleOffset), 0)
-        
+
         scrollView.setContentOffset(
             CGPoint(x: 0, y: finalOffset),
             animated: true
