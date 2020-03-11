@@ -114,7 +114,7 @@ class AddressesListViewModel: BaseViewModel {
                     case let .object(addressId, domophoneId, doorId, _) = identity,
                     let matchingAddress = (
                         unwrappedData.first { address in
-                            address.uniqueId == addressId
+                            address.houseId == addressId
                         }
                     ),
                     let matchingDoor = (
@@ -263,7 +263,7 @@ class AddressesListViewModel: BaseViewModel {
         newData.enumerated().forEach { args in
             let (offset, address) = args
             
-            let addressId = address.uniqueId
+            let addressId = address.houseId
             mutableDict[addressId] = mutableDict[addressId] ?? (offset == 0 ? true : false)
         }
         
@@ -277,7 +277,7 @@ class AddressesListViewModel: BaseViewModel {
     ) -> [AddressesListSectionModel] {
         // swiftlint:disable:next closure_body_length
         let sectionModels = data.map { address -> AddressesListSectionModel in
-            let addressId = address.uniqueId
+            let addressId = address.houseId
             let isSectionExpanded = expansionStateDict[addressId, default: false]
             
             let header: AddressesListDataItem = .header(

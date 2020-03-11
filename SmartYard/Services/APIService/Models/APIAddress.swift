@@ -13,10 +13,6 @@ struct APIAddress: Decodable {
     let doors: [APIDoor]
     let cctv: Int
     
-    var uniqueId: String {
-        return houseId + address
-    }
-    
     private enum CodingKeys: String, CodingKey {
         case houseId
         case address
