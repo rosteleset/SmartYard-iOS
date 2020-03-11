@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import TPKeyboardAvoiding
 import RxSwift
 import RxCocoa
 import SearchTextField
@@ -51,7 +50,7 @@ class InputAddressViewController: BaseViewController {
                     guard let self = self, keyboardVisibleHeight == 0 else {
                         return
                     }
-                    
+
                     self.scrollView.setContentOffset(
                         CGPoint(x: 0, y: 0),
                         animated: true
@@ -61,13 +60,13 @@ class InputAddressViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func bind() {        
+    private func bind() {
         streetTextField.rx
             .controlEvent(.editingDidBegin)
             .asDriver()
             .drive(
                 onNext: {
-                   // self.performScrollUpdate(to: self.streetTextField)
+//                    self.performScrollUpdate(to: self.streetTextField)
                 }
             )
             .disposed(by: disposeBag)
@@ -77,7 +76,7 @@ class InputAddressViewController: BaseViewController {
             .asDriver()
             .drive(
                 onNext: {
-                    //self.performScrollUpdate(to: self.buildingTextField)
+//                    self.performScrollUpdate(to: self.buildingTextField)
                 }
             )
             .disposed(by: disposeBag)
@@ -87,7 +86,7 @@ class InputAddressViewController: BaseViewController {
             .asDriver()
             .drive(
                 onNext: {
-                    //self.performScrollUpdate(to: self.flatTextField)
+//                    self.performScrollUpdate(to: self.flatTextField)
                 }
             )
             .disposed(by: disposeBag)
@@ -102,11 +101,11 @@ class InputAddressViewController: BaseViewController {
             .asDriver(onErrorJustReturn: ())
             .drive(
                 onNext: { [weak self] _ in
-                    self?.scrollView.isScrollEnabled = false
+//                    self?.scrollView.isScrollEnabled = false
                 }
             )
             .disposed(by: disposeBag)
-        
+
         Observable.of(
             cityTextField.rx.controlEvent(.editingDidEnd),
             streetTextField.rx.controlEvent(.editingDidEnd),
@@ -117,7 +116,7 @@ class InputAddressViewController: BaseViewController {
             .asDriver(onErrorJustReturn: ())
             .drive(
                 onNext: { [weak self] _ in
-                    //self?.scrollView.isScrollEnabled = true
+//                    self?.scrollView.isScrollEnabled = true
                 }
             )
             .disposed(by: disposeBag)
@@ -186,7 +185,6 @@ class InputAddressViewController: BaseViewController {
         buildingTextField.theme.bgColor = .white
         flatTextField.theme.bgColor = .white
     }
-    
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)

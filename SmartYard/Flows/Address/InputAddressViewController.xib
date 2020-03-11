@@ -16,6 +16,9 @@
         <array key="SourceSansPro-Regular.ttf">
             <string>SourceSansPro-Regular</string>
         </array>
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputAddressViewController" customModule="SmartYard" customModuleProvider="target">
@@ -45,6 +48,10 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tOA-mx-jDg">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                             <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="udh-Ba-a9f" userLabel="White Background" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="180.5" width="414" height="637.5"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Введите адрес" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEB-Xo-NYK">
                                     <rect key="frame" x="40" y="100" width="334" height="40.5"/>
                                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
@@ -127,7 +134,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="60" id="UIU-Bb-ndi"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="17"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                                             <state key="normal" title="Проверить доступные услуги"/>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOU-TA-YoR" userLabel="Centering View">
@@ -200,13 +207,16 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="LOU-TA-YoR" secondAttribute="bottom" constant="30" id="Cen-f7-54T"/>
+                                <constraint firstItem="udh-Ba-a9f" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" id="Fdn-70-89W"/>
                                 <constraint firstAttribute="trailing" secondItem="DMJ-9p-DBh" secondAttribute="trailing" id="HhV-Kg-2am"/>
                                 <constraint firstItem="bEB-Xo-NYK" firstAttribute="leading" secondItem="tOA-mx-jDg" secondAttribute="leading" constant="40" id="KAi-MM-ara"/>
+                                <constraint firstItem="udh-Ba-a9f" firstAttribute="trailing" secondItem="DMJ-9p-DBh" secondAttribute="trailing" id="Kuz-a9-HzH"/>
                                 <constraint firstItem="bEB-Xo-NYK" firstAttribute="top" secondItem="tOA-mx-jDg" secondAttribute="top" constant="100" id="O4a-FW-BQG"/>
                                 <constraint firstItem="DMJ-9p-DBh" firstAttribute="top" secondItem="bEB-Xo-NYK" secondAttribute="bottom" constant="40" id="UTm-KU-V0t"/>
                                 <constraint firstItem="DMJ-9p-DBh" firstAttribute="leading" secondItem="tOA-mx-jDg" secondAttribute="leading" id="YUV-5V-kiF"/>
                                 <constraint firstAttribute="trailing" secondItem="bEB-Xo-NYK" secondAttribute="trailing" constant="40" id="ZT7-me-ZaQ"/>
                                 <constraint firstAttribute="bottom" secondItem="DMJ-9p-DBh" secondAttribute="bottom" id="kId-47-DUd"/>
+                                <constraint firstItem="udh-Ba-a9f" firstAttribute="top" secondItem="DMJ-9p-DBh" secondAttribute="top" id="zhp-Ss-ZF0"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -222,6 +232,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="udh-Ba-a9f" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="9Xj-9S-4E9"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="95v-tL-giU" secondAttribute="bottom" id="GHd-Ch-m2L"/>
                 <constraint firstItem="3vL-YD-f4m" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Un1-Vg-Itd"/>
                 <constraint firstItem="95v-tL-giU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="XJ5-Dr-cY5"/>
