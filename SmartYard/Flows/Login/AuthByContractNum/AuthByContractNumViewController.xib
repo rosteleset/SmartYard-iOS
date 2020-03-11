@@ -85,6 +85,7 @@
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Номер договора" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1fV-QD-lmA" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="40" y="40" width="334" height="56"/>
+                                            <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="3w7-En-GbP"/>
                                             </constraints>
@@ -111,6 +112,7 @@
                                         </button>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hma-MD-8gc" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="40" y="112" width="334" height="56"/>
+                                            <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="rLp-2K-HVR"/>
                                             </constraints>
