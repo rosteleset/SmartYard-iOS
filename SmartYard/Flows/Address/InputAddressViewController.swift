@@ -41,12 +41,56 @@ class InputAddressViewController: BaseViewController {
         
         configureUI()
         bind()
+//        configureRxKeyboard()
     }
     
-    private func bind() {
-        flatTextField.rx.controlEvent(.editingDidBegin).asDriver().drive(onNext: {
-            self.performScrollUpdate(to: self.flatTextField)
-        }).disposed(by: disposeBag)
+    private func configureRxKeyboard() {
+        RxKeyboard.instance.visibleHeight
+            .drive(
+                onNext: { [weak self] keyboardVisibleHeight in
+                    guard let self = self, keyboardVisibleHeight == 0 else {
+                        return
+                    }
+                    
+                    self.scrollView.setContentOffset(
+                        CGPoint(x: 0, y: 0),
+                        animated: true
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func bind() {        
+        streetTextField.rx
+            .controlEvent(.editingDidBegin)
+            .asDriver()
+            .drive(
+                onNext: {
+                   // self.performScrollUpdate(to: self.streetTextField)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        buildingTextField.rx
+            .controlEvent(.editingDidBegin)
+            .asDriver()
+            .drive(
+                onNext: {
+                    //self.performScrollUpdate(to: self.buildingTextField)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        flatTextField.rx
+            .controlEvent(.editingDidBegin)
+            .asDriver()
+            .drive(
+                onNext: {
+                    //self.performScrollUpdate(to: self.flatTextField)
+                }
+            )
+            .disposed(by: disposeBag)
         
         Observable.of(
             cityTextField.rx.controlEvent(.editingDidBegin),
@@ -73,7 +117,7 @@ class InputAddressViewController: BaseViewController {
             .asDriver(onErrorJustReturn: ())
             .drive(
                 onNext: { [weak self] _ in
-                    self?.scrollView.isScrollEnabled = true
+                    //self?.scrollView.isScrollEnabled = true
                 }
             )
             .disposed(by: disposeBag)
@@ -133,9 +177,9 @@ class InputAddressViewController: BaseViewController {
         
         qrCodeButton.setLeftAlignment()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tap)
-        tap.cancelsTouchesInView = false
+        let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGestureReconizer.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGestureReconizer)
         
         cityTextField.theme.bgColor = .white
         streetTextField.theme.bgColor = .white
@@ -143,19 +187,16 @@ class InputAddressViewController: BaseViewController {
         flatTextField.theme.bgColor = .white
     }
     
+    
     @objc private func dismissKeyboard() {
-        cityTextField.resignFirstResponder()
+        view.endEditing(true)
     }
     
     private func performScrollUpdate(to view: UITextField) {
-        let convertedOrigin = view.convert(view.bounds.origin, to: scrollView)
-        let desiredOffset = convertedOrigin.y
+        let desiredOffset = view.frame.origin.y - 80
         
-        let maxPossibleOffset = scrollView.contentSize.height - scrollView.bounds.height
-        let finalOffset = max(min(desiredOffset, maxPossibleOffset), 0)
-
         scrollView.setContentOffset(
-            CGPoint(x: 0, y: finalOffset),
+            CGPoint(x: 0, y: desiredOffset),
             animated: true
         )
     }
