@@ -27,6 +27,7 @@
                 <outlet property="checkAvailableServicesButton" destination="P3p-cv-8sH" id="jCb-sd-mTF"/>
                 <outlet property="cityTextField" destination="VY4-bh-98W" id="ZPB-pn-dE0"/>
                 <outlet property="containerView" destination="tOA-mx-jDg" id="ixy-Uk-ZgR"/>
+                <outlet property="fakeNavBar" destination="EcW-C1-LK6" id="gts-6X-ny5"/>
                 <outlet property="flatTextField" destination="WJV-KH-rtf" id="EBc-sN-RcV"/>
                 <outlet property="qrCodeButton" destination="t7w-za-uue" id="k7E-S4-oc4"/>
                 <outlet property="scrollView" destination="95v-tL-giU" id="dgq-jX-uQG"/>
@@ -43,10 +44,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95v-tL-giU">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tOA-mx-jDg">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="udh-Ba-a9f" userLabel="White Background" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="180.5" width="414" height="637.5"/>
@@ -59,7 +60,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DMJ-9p-DBh" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="180.5" width="414" height="681.5"/>
+                                    <rect key="frame" x="0.0" y="180.5" width="414" height="637.5"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VY4-bh-98W" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="40" y="40" width="334" height="56"/>
@@ -138,10 +139,10 @@
                                             <state key="normal" title="Проверить доступные услуги"/>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOU-TA-YoR" userLabel="Centering View">
-                                            <rect key="frame" x="30" y="370" width="354" height="281.5"/>
+                                            <rect key="frame" x="30" y="370" width="354" height="237.5"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7xT-5V-6z5">
-                                                    <rect key="frame" x="102" y="129" width="150" height="24"/>
+                                                    <rect key="frame" x="102" y="107" width="150" height="24"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QrCodeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="52F-f9-FuX">
                                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -219,13 +220,23 @@
                                 <constraint firstItem="udh-Ba-a9f" firstAttribute="top" secondItem="DMJ-9p-DBh" secondAttribute="top" id="zhp-Ss-ZF0"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EcW-C1-LK6" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="hJx-JY-SeP"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="tOA-mx-jDg" secondAttribute="bottom" id="1X7-MK-7HD"/>
                         <constraint firstItem="tOA-mx-jDg" firstAttribute="width" secondItem="95v-tL-giU" secondAttribute="width" id="9Kj-HM-VW8"/>
+                        <constraint firstAttribute="trailing" secondItem="EcW-C1-LK6" secondAttribute="trailing" id="A05-mw-b7j"/>
                         <constraint firstItem="tOA-mx-jDg" firstAttribute="top" secondItem="95v-tL-giU" secondAttribute="top" id="ERY-MN-Ay8"/>
                         <constraint firstItem="tOA-mx-jDg" firstAttribute="leading" secondItem="95v-tL-giU" secondAttribute="leading" id="Imf-hf-dSF"/>
+                        <constraint firstItem="EcW-C1-LK6" firstAttribute="leading" secondItem="95v-tL-giU" secondAttribute="leading" id="VvA-kv-1lk"/>
                         <constraint firstItem="tOA-mx-jDg" firstAttribute="height" secondItem="95v-tL-giU" secondAttribute="height" priority="999" id="Y3w-lb-GqH"/>
+                        <constraint firstItem="EcW-C1-LK6" firstAttribute="top" secondItem="95v-tL-giU" secondAttribute="top" id="r3B-Ky-fzb"/>
                         <constraint firstAttribute="trailing" secondItem="tOA-mx-jDg" secondAttribute="trailing" id="va6-i9-F5I"/>
                     </constraints>
                 </scrollView>
@@ -233,11 +244,11 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="udh-Ba-a9f" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="9Xj-9S-4E9"/>
+                <constraint firstItem="95v-tL-giU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="CIe-ox-dG3"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="95v-tL-giU" secondAttribute="bottom" id="GHd-Ch-m2L"/>
                 <constraint firstItem="3vL-YD-f4m" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Un1-Vg-Itd"/>
                 <constraint firstItem="95v-tL-giU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="XJ5-Dr-cY5"/>
                 <constraint firstItem="95v-tL-giU" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="Z7u-tQ-HWO"/>
-                <constraint firstItem="95v-tL-giU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="j9n-NT-OhH"/>
                 <constraint firstItem="3vL-YD-f4m" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qGm-vQ-x6r"/>
                 <constraint firstAttribute="bottom" secondItem="3vL-YD-f4m" secondAttribute="bottom" id="wLf-4i-bw3"/>
                 <constraint firstAttribute="trailing" secondItem="3vL-YD-f4m" secondAttribute="trailing" id="yOM-0u-peX"/>

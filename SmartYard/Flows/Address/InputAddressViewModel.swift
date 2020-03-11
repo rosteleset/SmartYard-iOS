@@ -124,6 +124,14 @@ class InputAddressViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let requestData = input.checkServicesTapped.withLatestFrom(
             Driver
                 .combineLatest(
@@ -246,6 +254,7 @@ extension InputAddressViewModel {
     struct Input {
         let qrCodeTapped: Driver<Void>
         let checkServicesTapped: Driver<Void>
+        let backTrigger: Driver<Void>
         
         let streetsFieldFocused: Driver<Void>
         let buildingsFieldFocused: Driver<Void>

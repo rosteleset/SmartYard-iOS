@@ -14,7 +14,7 @@ import JGProgressHUD
 
 class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
 
-    @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
+    @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var containerView: UIView!
     
     @IBOutlet private weak var contractNumberTextField: SmartYardTextField!
