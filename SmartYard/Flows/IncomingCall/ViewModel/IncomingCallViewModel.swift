@@ -127,11 +127,18 @@ class IncomingCallViewModel: BaseViewModel {
             .flatMap { args -> Driver<(Call, CallParams)> in
                 let (incomingCall, isAccepted, isDoorOpeningRequested) = args
                 
-                guard let call = incomingCall, (isAccepted || isDoorOpeningRequested) else {
+                guard let unwrappedIncomingCall = incomingCall, (isAccepted || isDoorOpeningRequested) else {
                     return .empty()
                 }
                 
-                return .just(call)
+                let (call, callParams) = unwrappedIncomingCall
+                
+                if isDoorOpeningRequested {
+                    call.speakerMuted = true
+                    call.microphoneMuted = true
+                }
+                
+                return .just((call, callParams))
             }
             .throttle(.never)
             .withLatestFrom(currentStateSubject.asDriverOnErrorJustComplete()) { ($0, $1) }
