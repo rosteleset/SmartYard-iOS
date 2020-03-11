@@ -11,14 +11,22 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
-class AvailableSericesViewModel: BaseViewModel {
+class AvailableServicesViewModel: BaseViewModel {
     
-    private let router: WeakRouter<AppRoute>
+    private let router: WeakRouter<HomeRoute>
+    
+    private let apiWrapper: APIWrapper
     
     private let serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: [])
 
-    init(router: WeakRouter<AppRoute>) {
+    private let address: String
+    private let services: [APIServiceModel]
+    
+    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, address: String, services: [APIServiceModel]) {
         self.router = router
+        self.apiWrapper = apiWrapper
+        self.address = address
+        self.services = services
     }
     
     func transform(input: Input) -> Output {
@@ -36,8 +44,8 @@ class AvailableSericesViewModel: BaseViewModel {
         
         input.nextTapped
             .drive(
-                onNext: {
-                    // TODO
+                onNext: { [weak self] in
+                    self?.router.trigger(.confirmAddress)
                 }
             )
             .disposed(by: disposeBag)
@@ -79,7 +87,7 @@ class AvailableSericesViewModel: BaseViewModel {
     
 }
 
-extension AvailableSericesViewModel {
+extension AvailableServicesViewModel {
     
     struct Input {
         let nextTapped: Driver<Void>

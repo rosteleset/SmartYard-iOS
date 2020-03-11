@@ -157,6 +157,8 @@
 		E9004C5F23FABF2200B59976 /* IntercomTemporaryAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9004C5D23FABF1C00B59976 /* IntercomTemporaryAccessView.xib */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
 		E9004C6223FABF6800B59976 /* AccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9004C6123FABF6800B59976 /* AccessView.xib */; };
+		E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */; };
+		E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244C24125CAD00F2B810 /* AvailableServicesViewModel.swift */; };
 		E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F323F56BF800623746 /* ServiceRequestType.swift */; };
 		E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F723F6721F00623746 /* AddressAccessViewController.swift */; };
 		E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E94057F823F6721F00623746 /* AddressAccessViewController.xib */; };
@@ -255,7 +257,6 @@
 		E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4271923F41C6600F5D593 /* AvailableServiceCell.swift */; };
 		E9E4271C23F41C6600F5D593 /* AvailableServiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4271A23F41C6600F5D593 /* AvailableServiceCell.xib */; };
 		E9E4271F23F41DDF00F5D593 /* ServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4271E23F41DDF00F5D593 /* ServiceState.swift */; };
-		E9E4272123F41F7300F5D593 /* AvailableSericesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4272023F41F7300F5D593 /* AvailableSericesViewModel.swift */; };
 		E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4272323F42A7600F5D593 /* ServiceModel.swift */; };
 		E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4272D23F5417000F5D593 /* ServicesActivationRequestСell.swift */; };
 		E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4272E23F5417000F5D593 /* ServicesActivationRequestСell.xib */; };
@@ -451,6 +452,8 @@
 		E9004C5D23FABF1C00B59976 /* IntercomTemporaryAccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntercomTemporaryAccessView.xib; sourceTree = "<group>"; };
 		E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntercomTemporaryAccessView.swift; sourceTree = "<group>"; };
 		E9004C6123FABF6800B59976 /* AccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccessView.xib; sourceTree = "<group>"; };
+		E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSearchTextField.swift; sourceTree = "<group>"; };
+		E917244C24125CAD00F2B810 /* AvailableServicesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableServicesViewModel.swift; sourceTree = "<group>"; };
 		E94057F323F56BF800623746 /* ServiceRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRequestType.swift; sourceTree = "<group>"; };
 		E94057F723F6721F00623746 /* AddressAccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessViewController.swift; sourceTree = "<group>"; };
 		E94057F823F6721F00623746 /* AddressAccessViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessViewController.xib; sourceTree = "<group>"; };
@@ -553,7 +556,6 @@
 		E9E4271923F41C6600F5D593 /* AvailableServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableServiceCell.swift; sourceTree = "<group>"; };
 		E9E4271A23F41C6600F5D593 /* AvailableServiceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AvailableServiceCell.xib; sourceTree = "<group>"; };
 		E9E4271E23F41DDF00F5D593 /* ServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceState.swift; sourceTree = "<group>"; };
-		E9E4272023F41F7300F5D593 /* AvailableSericesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableSericesViewModel.swift; sourceTree = "<group>"; };
 		E9E4272323F42A7600F5D593 /* ServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModel.swift; sourceTree = "<group>"; };
 		E9E4272623F53B5C00F5D593 /* ServicesActivationRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesActivationRequestViewController.swift; sourceTree = "<group>"; };
 		E9E4272723F53B5C00F5D593 /* ServicesActivationRequestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServicesActivationRequestViewController.xib; sourceTree = "<group>"; };
@@ -676,6 +678,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E91724492410E27D00F2B810 /* SmartYardSearchTextField */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
@@ -1510,6 +1513,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E91724492410E27D00F2B810 /* SmartYardSearchTextField */ = {
+			isa = PBXGroup;
+			children = (
+				E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */,
+			);
+			path = SmartYardSearchTextField;
+			sourceTree = "<group>";
+		};
 		E94057F223F56B6400623746 /* Entries */ = {
 			isa = PBXGroup;
 			children = (
@@ -1963,7 +1974,7 @@
 				E9E4271823F41C3B00F5D593 /* Cells */,
 				E9E4270F23F40D2500F5D593 /* AvailableServicesViewController.swift */,
 				E9E4271023F40D2500F5D593 /* AvailableServicesViewController.xib */,
-				E9E4272023F41F7300F5D593 /* AvailableSericesViewModel.swift */,
+				E917244C24125CAD00F2B810 /* AvailableServicesViewModel.swift */,
 			);
 			path = AvailableServices;
 			sourceTree = "<group>";
@@ -2298,7 +2309,6 @@
 				E9E4273223F55B9700F5D593 /* ServicesActivationRequestViewController.swift in Sources */,
 				E9E4273323F55B9700F5D593 /* ServicesActivationRequestViewModel.swift in Sources */,
 				844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */,
-				E9E4272123F41F7300F5D593 /* AvailableSericesViewModel.swift in Sources */,
 				E9E4271F23F41DDF00F5D593 /* ServiceState.swift in Sources */,
 				844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */,
 				E94B6C7B2406990400FD9F65 /* GetStreetsResponseData.swift in Sources */,
@@ -2311,6 +2321,7 @@
 				847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
 				E94B6C872406B3FB00FD9F65 /* APIWrapper+Issues.swift in Sources */,
+				E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */,
 				E94B6C3B23FFE1D200FD9F65 /* APIIntercomSettings.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
@@ -2377,6 +2388,7 @@
 				E94B6C482404F1C400FD9F65 /* GetSettingsListRequest.swift in Sources */,
 				E94B6C8D2407F8E200FD9F65 /* IssueTypes.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
+				E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				E94B6C4C2405308B00FD9F65 /* APISettingsAddress.swift in Sources */,
 				848298462405658A00E81620 /* ResetCodeRequest.swift in Sources */,

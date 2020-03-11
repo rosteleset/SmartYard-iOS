@@ -16,6 +16,9 @@
         <array key="SourceSansPro-Regular.ttf">
             <string>SourceSansPro-Regular</string>
         </array>
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthByContractNumViewController" customModule="SmartYard" customModuleProvider="target">
@@ -41,22 +44,26 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rtx-jQ-4EM" customClass="TPKeyboardAvoidingScrollView">
-                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U9N-qc-vvf">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="781"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="771.5"/>
                             <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3LY-I3-cQo" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="293.5" width="414" height="568.5"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xiT-ww-dUY">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="295"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="293.5"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="У вас есть договор в Лантой?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U90-l7-45t">
-                                            <rect key="frame" x="40" y="100" width="314" height="75"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="У вас есть договор c Лантой?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U90-l7-45t">
+                                            <rect key="frame" x="40" y="100" width="314" height="80.5"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Введите номер и пароль договора, привязанного к данному адресу,  и управляйте услугами из этого приложения." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IL8-bB-yIA">
-                                            <rect key="frame" x="40" y="195" width="314" height="49"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Введите номер и пароль договора, привязанного к данному адресу,  и управляйте услугами из этого приложения." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IL8-bB-yIA">
+                                            <rect key="frame" x="40" y="200.5" width="314" height="53"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -69,20 +76,21 @@
                                         <constraint firstAttribute="trailing" secondItem="IL8-bB-yIA" secondAttribute="trailing" constant="60" id="ZMK-h5-HDF"/>
                                         <constraint firstItem="U90-l7-45t" firstAttribute="leading" secondItem="xiT-ww-dUY" secondAttribute="leading" constant="40" id="aRM-OF-5V7"/>
                                         <constraint firstItem="IL8-bB-yIA" firstAttribute="top" secondItem="U90-l7-45t" secondAttribute="bottom" constant="20" id="c4P-H0-9aI"/>
-                                        <constraint firstAttribute="height" constant="295" id="gO7-gH-MUY"/>
                                         <constraint firstAttribute="trailing" secondItem="U90-l7-45t" secondAttribute="trailing" constant="60" id="gtO-Rb-3GT"/>
+                                        <constraint firstAttribute="bottom" secondItem="IL8-bB-yIA" secondAttribute="bottom" constant="40" id="n3a-ux-Vbq"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-VH-arK">
-                                    <rect key="frame" x="0.0" y="295" width="414" height="486"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-VH-arK" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="293.5" width="414" height="478"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Номер договора" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1fV-QD-lmA" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="40" y="40" width="334" height="56"/>
+                                            <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="3w7-En-GbP"/>
                                             </constraints>
                                             <nil key="textColor"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBo-iL-hgv" customClass="ClearButtonWithDashedUnderline" customModule="SmartYard" customModuleProvider="target">
@@ -99,19 +107,21 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="60" id="mXP-GF-eqb"/>
                                             </constraints>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                                             <state key="normal" title="Войти"/>
                                         </button>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hma-MD-8gc" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="40" y="112" width="334" height="56"/>
+                                            <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="rLp-2K-HVR"/>
                                             </constraints>
                                             <nil key="textColor"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3p-t8-69e" customClass="ClearButtonWithDashedUnderline" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="256" y="184" width="115" height="24"/>
+                                            <rect key="frame" x="264" y="184" width="107" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="BmP-fE-5Ul"/>
                                             </constraints>
@@ -123,7 +133,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="60" id="Hgx-z0-srN"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                                             <state key="normal" title="У меня нет договора с лантой"/>
                                         </button>
                                     </subviews>
@@ -132,8 +142,8 @@
                                         <constraint firstItem="bBo-iL-hgv" firstAttribute="top" secondItem="Hma-MD-8gc" secondAttribute="bottom" constant="16" id="1qX-00-s6e"/>
                                         <constraint firstItem="Hma-MD-8gc" firstAttribute="top" secondItem="1fV-QD-lmA" secondAttribute="bottom" constant="16" id="3I1-Hl-m2y"/>
                                         <constraint firstItem="aXB-Ea-sHa" firstAttribute="leading" secondItem="mmM-VH-arK" secondAttribute="leading" constant="40" id="8lA-7b-ad2"/>
+                                        <constraint firstAttribute="bottom" secondItem="ztw-Ug-GgA" secondAttribute="bottom" constant="46" id="99b-hv-hLG"/>
                                         <constraint firstAttribute="trailing" secondItem="L3p-t8-69e" secondAttribute="trailing" constant="43" id="CHp-pB-hP8"/>
-                                        <constraint firstAttribute="height" constant="486" id="DTk-Cj-2Hd"/>
                                         <constraint firstItem="bBo-iL-hgv" firstAttribute="leading" secondItem="mmM-VH-arK" secondAttribute="leading" constant="43" id="Dle-r2-VaK"/>
                                         <constraint firstItem="Hma-MD-8gc" firstAttribute="leading" secondItem="mmM-VH-arK" secondAttribute="leading" constant="40" id="FVU-6i-Akb"/>
                                         <constraint firstItem="aXB-Ea-sHa" firstAttribute="top" secondItem="bBo-iL-hgv" secondAttribute="bottom" constant="88" id="Gqj-h4-v3H"/>
@@ -153,8 +163,11 @@
                             <constraints>
                                 <constraint firstItem="mmM-VH-arK" firstAttribute="top" secondItem="xiT-ww-dUY" secondAttribute="bottom" id="4OC-Hk-jXM"/>
                                 <constraint firstItem="mmM-VH-arK" firstAttribute="leading" secondItem="U9N-qc-vvf" secondAttribute="leading" id="5bo-yX-xEN"/>
+                                <constraint firstItem="3LY-I3-cQo" firstAttribute="top" secondItem="mmM-VH-arK" secondAttribute="top" id="cTG-xr-nGE"/>
                                 <constraint firstAttribute="bottom" secondItem="mmM-VH-arK" secondAttribute="bottom" id="f5y-DT-kLZ"/>
+                                <constraint firstAttribute="trailing" secondItem="3LY-I3-cQo" secondAttribute="trailing" id="mg3-rB-hiZ"/>
                                 <constraint firstItem="xiT-ww-dUY" firstAttribute="leading" secondItem="U9N-qc-vvf" secondAttribute="leading" id="uYC-ol-g7A"/>
+                                <constraint firstItem="3LY-I3-cQo" firstAttribute="leading" secondItem="U9N-qc-vvf" secondAttribute="leading" id="w0P-5h-gla"/>
                                 <constraint firstAttribute="trailing" secondItem="xiT-ww-dUY" secondAttribute="trailing" id="yJK-lM-jIP"/>
                                 <constraint firstItem="xiT-ww-dUY" firstAttribute="top" secondItem="U9N-qc-vvf" secondAttribute="top" id="zSm-LU-twS"/>
                                 <constraint firstAttribute="trailing" secondItem="mmM-VH-arK" secondAttribute="trailing" id="zVY-VB-qgQ"/>
@@ -168,19 +181,21 @@
                         <constraint firstItem="U9N-qc-vvf" firstAttribute="top" secondItem="Rtx-jQ-4EM" secondAttribute="top" id="KqY-Ze-nSI"/>
                         <constraint firstAttribute="bottom" secondItem="U9N-qc-vvf" secondAttribute="bottom" id="UFX-Yj-OjA"/>
                         <constraint firstItem="U9N-qc-vvf" firstAttribute="leading" secondItem="Rtx-jQ-4EM" secondAttribute="leading" id="lxf-iH-Sa7"/>
+                        <constraint firstItem="U9N-qc-vvf" firstAttribute="height" secondItem="Rtx-jQ-4EM" secondAttribute="height" priority="998" id="xlv-rv-HtZ"/>
                     </constraints>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="3LY-I3-cQo" secondAttribute="bottom" id="Flv-vc-Ycu"/>
                 <constraint firstItem="vyf-cd-Hpw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="HtP-Je-H9S"/>
                 <constraint firstItem="Rtx-jQ-4EM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="MeS-yA-mKM"/>
-                <constraint firstItem="Rtx-jQ-4EM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="O6O-jz-YKT"/>
+                <constraint firstItem="Rtx-jQ-4EM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="O6O-jz-YKT"/>
                 <constraint firstItem="vyf-cd-Hpw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Opi-qZ-s3O"/>
                 <constraint firstAttribute="bottom" secondItem="vyf-cd-Hpw" secondAttribute="bottom" id="nOi-TS-UD6"/>
                 <constraint firstAttribute="trailing" secondItem="vyf-cd-Hpw" secondAttribute="trailing" id="q83-vV-JlC"/>
                 <constraint firstItem="Rtx-jQ-4EM" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="sc6-Lm-lgp"/>
-                <constraint firstAttribute="bottom" secondItem="Rtx-jQ-4EM" secondAttribute="bottom" id="sft-e3-QZ0"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Rtx-jQ-4EM" secondAttribute="bottom" id="sft-e3-QZ0"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="110.49107142857143"/>

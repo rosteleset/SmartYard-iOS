@@ -47,22 +47,15 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
         configureUI()
         bind()
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        roundedView.roundCorners(
-            [.topLeft, .topRight, .bottomLeft, .bottomRight],
-            radius: 20.0
-        )
-    }
-    
+
     private func bind() {
         let input = AuthByContractNumViewModel.Input(
             forgetPassTapped: forgetPassButton.rx.tap.asDriverOnErrorJustComplete(),
             forgetEverythingTapped: forgetEverythingButton.rx.tap.asDriverOnErrorJustComplete(),
             noContractTapped: noContractButton.rx.tap.asDriverOnErrorJustComplete(),
-            signInTapped: signInButton.rx.tap.asDriverOnErrorJustComplete()
+            signInTapped: signInButton.rx.tap.asDriverOnErrorJustComplete(),
+            inputContractNumText: contractNumberTextField.rx.text.changed.asDriver(onErrorJustReturn: nil),
+            inputPasswordNumText: passTextField.rx.text.changed.asDriver(onErrorJustReturn: nil)
         )
         
         let output = viewModel.transform(input: input)
@@ -75,7 +68,7 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
                         self?.view.endEditing(true)
                     }
                     
-                    self?.updateLoader(isEnabled: isLoading, detailText: "Создание заявки")
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
                 }
             )
             .disposed(by: disposeBag)

@@ -90,6 +90,12 @@ class AddressesListViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] args in
                     let (newData, _) = args
+                    // TODO: нужно добавить загрузку адресов, которые ожидают подтверждения,
+                    // затем этот список по аналогии проверить на пустоту
+                    guard !newData.isEmpty else {
+                        self?.router.trigger(.inputContract)
+                        return
+                    }
                     
                     self?.loadedData.onNext(newData)
                 }

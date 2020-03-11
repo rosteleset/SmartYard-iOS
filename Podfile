@@ -31,7 +31,8 @@ target 'SmartYard' do
   pod 'TPKeyboardAvoiding'
   pod 'JGProgressHUD'
   pod 'SkeletonView', '1.7'
-  
+  pod 'SearchTextField'
+
   # Map
   pod 'MapboxStatic.swift', '~> 0.11'
   
