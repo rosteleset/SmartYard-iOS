@@ -97,6 +97,13 @@ class LinphoneService: CoreDelegate {
         
         try! core.addProxyConfig(config: cfg)
         
+        core.useInfoForDtmf = false
+        core.useRfc2833ForDtmf = true
+
+        core.audioPayloadTypes.forEach {
+            _ = $0.enable(enabled: true)
+        }
+        
         core.videoPayloadTypes.forEach {
             _ = $0.enable(enabled: $0.mimeType == "H264")
         }

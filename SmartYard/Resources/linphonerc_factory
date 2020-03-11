@@ -4,9 +4,8 @@
 #Paths to resources must be set from LinphoneManager, after creating LinphoneCore.
 [net]
 mtu=1300
-#Because dynamic bitrate adaption can increase bitrate, we must allow "no limit"
-download_bw=0
-upload_bw=0
+download_bw=1000
+upload_bw=1000
 force_ice_disablement=0
 
 [sip]
@@ -29,3 +28,6 @@ prefer_basic_chat_room=1
 
 [assistant]
 xmlrpc_url=https://subscribe.linphone.org:444/wizard.php
+
+[video]
+display_filter_auto_rotate=0
