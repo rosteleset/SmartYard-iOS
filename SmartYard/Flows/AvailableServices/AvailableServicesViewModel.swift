@@ -20,27 +20,31 @@ class AvailableServicesViewModel: BaseViewModel {
     private let serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: [])
 
     private let address: String
-    private let services: [APIServiceModel]
+    private let services: [ServiceModel]
     
     init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, address: String, services: [APIServiceModel]) {
         self.router = router
         self.apiWrapper = apiWrapper
         self.address = address
-        self.services = services
+        
+        var serviceModels = [ServiceModel]()
+        
+        services.enumerated().forEach { offset, element in
+            serviceModels.append(
+                ServiceModel(
+                    id: String(offset),
+                    name: element.title,
+                    description: element.description,
+                    state: element.isAvailableByDefault ? .checkedInactive : .uncheckedActive
+                )
+            )
+        }
+        
+        self.services = serviceModels
     }
     
     func transform(input: Input) -> Output {
-        input.viewWillAppearTrigger
-            .drive(
-                onNext: { [weak self] _ in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    self.serviceItemsSubject.onNext(self.getFakeModels())
-                }
-            )
-            .disposed(by: disposeBag)
+        serviceItemsSubject.onNext(services)
         
         input.nextTapped
             .drive(
@@ -68,21 +72,6 @@ class AvailableServicesViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []))
-    }
-    
-    private func getFakeModels() -> [ServiceModel] {
-        return [
-            // swiftlint:disable:next line_length
-            ServiceModel(id: "0", name: "Умный домофон", description: "На шлагбаум, ворота и подъезд", state: .checkedInactive),
-            ServiceModel(id: "1", name: "Видеонаблюдение", description: "3 камеры", state: .checkedInactive),
-            ServiceModel(id: "2", name: "Интернет и ТВ", description: "Более 250 каналов", state: .uncheckedActive),
-            ServiceModel(id: "3", name: "Умный дом", description: "Дом умнее тебя", state: .uncheckedActive),
-            // swiftlint:disable:next line_length
-            ServiceModel(id: "4", name: "Тревожная кнопка", description: "Не верь, не бойся, не проси", state: .uncheckedActive),
-            // swiftlint:disable:next line_length
-            ServiceModel(id: "5", name: "Аренда оборудования", description: "Wi-Fi роутер, приставка для TV", state: .uncheckedActive),
-            ServiceModel(id: "6", name: "FakeFakeFake", description: "Fake", state: .uncheckedActive)
-        ]
     }
     
 }
