@@ -352,13 +352,7 @@ class IncomingCallViewModel: BaseViewModel {
             }
             .distinctUntilChanged()
         
-        // MARK: Дополнительный текст. Здесь либо счетчик звонка, либо адрес домофона (он пока нигде не приходит)
-        
-        let tempAddressString = [callPayload.domophoneString, callPayload.flatString]
-            .compactMap { $0 }
-            .joined(separator: ". ")
-        
-        let subtitleSubject = BehaviorSubject<String?>(value: tempAddressString)
+        let subtitleSubject = BehaviorSubject<String?>(value: callPayload.callerId)
         let subtitle = subtitleSubject.asDriver(onErrorJustReturn: nil)
         
         // MARK: Событие начала звонка
