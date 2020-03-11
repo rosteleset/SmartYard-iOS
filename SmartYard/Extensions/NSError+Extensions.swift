@@ -119,6 +119,16 @@ extension NSError {
                 userInfo: errorUserInfo
             )
         }()
+        
+        static func doorBlockedError(reason: String) -> NSError {
+            let errorUserInfo = [NSLocalizedDescriptionKey: reason]
+            
+            return NSError(
+                domain: domain,
+                code: 3005,
+                userInfo: errorUserInfo
+            )
+        }
     }
     
 }
