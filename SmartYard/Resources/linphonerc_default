@@ -13,3 +13,6 @@ push_notification=1
 [misc]
 max_calls=10
 history_max_size=100
+
+[video]
+size=720p
