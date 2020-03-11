@@ -18,12 +18,10 @@ struct CallPayload {
     let image: String
     let liveImage: String
     let dtmf: String
-    
-    let domophoneId: String?
-    let flatId: String?
+    let callerId: String
     
     var asPushNotificationPayload: [AnyHashable: Any] {
-        var mainPayload: [AnyHashable: Any] = [
+        return [
             "extension": username,
             "pass": password,
             "server": server,
@@ -31,34 +29,9 @@ struct CallPayload {
             "transport": transport.rawString,
             "live": liveImage,
             "image": image,
-            "dtmf": dtmf
+            "dtmf": dtmf,
+            "callerId": callerId
         ]
-        
-        if let domophoneId = domophoneId {
-            mainPayload["domophoneId"] = domophoneId
-        }
-        
-        if let flatId = flatId {
-            mainPayload["flatId"] = flatId
-        }
-        
-        return mainPayload
-    }
-    
-    var domophoneString: String? {
-        guard let domophoneId = domophoneId else {
-            return nil
-        }
-        
-        return "ID домофона: \(domophoneId)"
-    }
-    
-    var flatString: String? {
-        guard let flatId = flatId else {
-            return nil
-        }
-        
-        return "ID квартиры: \(flatId)"
     }
     
     var sipConfig: SipConfig {
@@ -79,7 +52,8 @@ struct CallPayload {
             let transport = TransportType(rawString: rawTransport),
             let liveImage = data["live"] as? String,
             let image = data["image"] as? String,
-            let dtmf = data["dtmf"] as? String else {
+            let dtmf = data["dtmf"] as? String,
+            let callerId = data["callerId"] as? String else {
             return nil
         }
         
@@ -91,9 +65,7 @@ struct CallPayload {
         self.liveImage = liveImage
         self.image = image
         self.dtmf = dtmf
-        
-        self.domophoneId = data["domophoneId"] as? String
-        self.flatId = data["flatId"] as? String
+        self.callerId = callerId
     }
     
 }

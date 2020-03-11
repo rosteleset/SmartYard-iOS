@@ -8,10 +8,10 @@
 
 struct APIAddress: Decodable {
     
-    let houseId: String?
+    let houseId: String
     let address: String
     let doors: [APIDoor]
-    let cctv: [APICCTV]
+    let cctv: Int
     
     private enum CodingKeys: String, CodingKey {
         case houseId
@@ -23,11 +23,11 @@ struct APIAddress: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        houseId = try? container.decode(String.self, forKey: .houseId)
+        houseId = try container.decode(String.self, forKey: .houseId)
         address = try container.decode(String.self, forKey: .address)
         
         doors = (try? container.decode([APIDoor].self, forKey: .doors)) ?? []
-        cctv = (try? container.decode([APICCTV].self, forKey: .cctv)) ?? []
+        cctv = try container.decode(Int.self, forKey: .cctv)
     }
     
 }

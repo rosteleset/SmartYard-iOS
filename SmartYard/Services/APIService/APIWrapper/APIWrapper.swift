@@ -57,9 +57,13 @@ class APIWrapper {
         }
     }
     
-    func openDoor(domophoneId: String, doorId: Int?) -> Single<Void?> {
+    func openDoor(domophoneId: String, doorId: Int?, blockReason: String?) -> Single<Void?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        if let blockReason = blockReason {
+            return .error(NSError.APIWrapperError.doorBlockedError(reason: blockReason))
         }
         
         let request = OpenDoorRequest(accessToken: accessToken, domophoneId: domophoneId, doorId: doorId)

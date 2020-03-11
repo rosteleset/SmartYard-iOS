@@ -102,18 +102,31 @@ class AddressesListViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг
-        
-        let updateKindSubject = PublishSubject<AddressesListSectionUpdateKind>()
-        let updateKind = updateKindSubject.asDriverOnErrorJustComplete()
+        // MARK: Обработка нажатия на кнопку "Открыть"
         
         input.guestAccessRequested
-            .flatMapLatest { [weak self] identity -> Driver<AddressesListDataItemIdentity?> in
-                guard let self = self, case let .object(_, domophoneId, doorId, _) = identity else {
+            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .flatMapLatest { [weak self] args -> Driver<AddressesListDataItemIdentity?> in
+                let (identity, loadedData) = args
+                
+                guard let self = self,
+                    let unwrappedData = loadedData,
+                    case let .object(addressId, domophoneId, doorId, _) = identity,
+                    let matchingAddress = (
+                        unwrappedData.first { address in
+                            address.houseId == addressId
+                        }
+                    ),
+                    let matchingDoor = (
+                        matchingAddress.doors.first { door in
+                            door.domophoneId == domophoneId && door.doorId == doorId
+                        }
+                    ) else {
                     return .empty()
                 }
                 
-                return self.apiWrapper.openDoor(domophoneId: domophoneId, doorId: doorId)
+                return self.apiWrapper
+                    .openDoor(domophoneId: domophoneId, doorId: doorId, blockReason: matchingDoor.blocked)
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
                     .map { _ -> AddressesListDataItemIdentity? in identity }
@@ -137,6 +150,11 @@ class AddressesListViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        
+        // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг
+        
+        let updateKindSubject = PublishSubject<AddressesListSectionUpdateKind>()
+        let updateKind = updateKindSubject.asDriverOnErrorJustComplete()
         
         // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
         // Это приведет к обновлению секций
@@ -245,7 +263,7 @@ class AddressesListViewModel: BaseViewModel {
         newData.enumerated().forEach { args in
             let (offset, address) = args
             
-            let addressId = (address.houseId ?? "") + address.address
+            let addressId = address.houseId
             mutableDict[addressId] = mutableDict[addressId] ?? (offset == 0 ? true : false)
         }
         
@@ -259,7 +277,7 @@ class AddressesListViewModel: BaseViewModel {
     ) -> [AddressesListSectionModel] {
         // swiftlint:disable:next closure_body_length
         let sectionModels = data.map { address -> AddressesListSectionModel in
-            let addressId = (address.houseId ?? "") + address.address
+            let addressId = address.houseId
             let isSectionExpanded = expansionStateDict[addressId, default: false]
             
             let header: AddressesListDataItem = .header(
@@ -290,11 +308,11 @@ class AddressesListViewModel: BaseViewModel {
                 }
                 
                 let cameras: AddressesListDataItem? = {
-                    guard !address.cctv.isEmpty else {
+                    guard address.cctv != 0 else {
                         return nil
                     }
                     
-                    return .cameras(identity: .cameras(addressId: addressId), numberOfCameras: address.cctv.count)
+                    return .cameras(identity: .cameras(addressId: addressId), numberOfCameras: address.cctv)
                 }()
                 
                 return doors + [cameras].compactMap { $0 }

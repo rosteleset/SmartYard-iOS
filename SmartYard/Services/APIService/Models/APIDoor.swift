@@ -13,20 +13,18 @@ struct APIDoor: Decodable {
     let domophoneId: String
     let doorId: Int
     let entrance: String?
-    let title: String
-    let comments: String
     let type: DomophoneObjectType
     let name: String
+    let blocked: String?
     let dst: String?
     
     private enum CodingKeys: String, CodingKey {
         case domophoneId
         case doorId
         case entrance
-        case title
-        case comments
         case type = "icon"
         case name
+        case blocked
         case dst
     }
     
@@ -36,12 +34,11 @@ struct APIDoor: Decodable {
         domophoneId = try container.decode(String.self, forKey: .domophoneId)
         doorId = try container.decode(Int.self, forKey: .doorId)
         entrance = try? container.decode(String.self, forKey: .entrance)
-        title = try container.decode(String.self, forKey: .title)
-        comments = try container.decode(String.self, forKey: .comments)
         
         let iconRawValue = try container.decode(String.self, forKey: .type)
         type = try DomophoneObjectType(rawValue: iconRawValue).unwrapped(or: NSError.APIServiceError.mappingError)
         
+        blocked = try? container.decode(String.self, forKey: .blocked)
         name = try container.decode(String.self, forKey: .name)
         dst = try? container.decode(String.self, forKey: .dst)
     }

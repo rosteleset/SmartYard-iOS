@@ -40,26 +40,7 @@ class NotificationService: UNNotificationServiceExtension {
         }
         
         bestAttemptContent.title = "Звонок в домофон"
-        
-        let domophoneId: String? = {
-            guard let domophoneId = request.content.userInfo["domophoneId"] as? String else {
-                return nil
-            }
-            
-            return "ID домофона: \(domophoneId)"
-        }()
-        
-        let flatId: String? = {
-            guard let flatId = request.content.userInfo["flatId"] as? String else {
-                return nil
-            }
-            
-            return "ID квартиры: \(flatId)"
-        }()
-        
-        let body = [domophoneId, flatId].compactMap { $0 }.joined(separator: ". ")
-        
-        bestAttemptContent.body = body
+        bestAttemptContent.body = request.content.userInfo["callerId"] as? String ?? ""
         bestAttemptContent.sound = .default
         
         self.bestAttemptContent = bestAttemptContent
