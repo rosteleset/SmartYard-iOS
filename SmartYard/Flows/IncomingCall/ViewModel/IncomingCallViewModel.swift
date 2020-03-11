@@ -158,12 +158,12 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        // MARK: Если после того, как мы установили соединение, за 2 секунды не придет звонок - закрываем окно
+        // MARK: Если после того, как мы установили соединение, за 3 секунды не придет звонок - закрываем окно
         
         registrationFinished
             .asDriver(onErrorJustReturn: false)
             .isTrue()
-            .delay(.milliseconds(2000))
+            .delay(.milliseconds(3000))
             .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
             .filter { $0 == nil }
             .withLatestFrom(currentState)
@@ -439,7 +439,10 @@ class IncomingCallViewModel: BaseViewModel {
             return
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+        // MARK: у нас нет никакой возможности проверить, дошел тоновый сигнал или нет.
+        // Поэтому просто ждем 2 секунды, думаем что он успешно ушел, и завершаем звонок
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             print("DTMF code was sent. Delivery is not guaranteed tho")
             
             self?.isDoorBeingOpened.onNext(false)
