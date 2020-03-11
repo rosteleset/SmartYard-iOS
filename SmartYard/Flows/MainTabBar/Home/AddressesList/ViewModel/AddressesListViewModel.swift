@@ -290,11 +290,11 @@ class AddressesListViewModel: BaseViewModel {
                 }
                 
                 let cameras: AddressesListDataItem? = {
-                    guard !address.cctv.isEmpty else {
+                    guard address.cctv != 0 else {
                         return nil
                     }
                     
-                    return .cameras(identity: .cameras(addressId: addressId), numberOfCameras: address.cctv.count)
+                    return .cameras(identity: .cameras(addressId: addressId), numberOfCameras: address.cctv)
                 }()
                 
                 return doors + [cameras].compactMap { $0 }
