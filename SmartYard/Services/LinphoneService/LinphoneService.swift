@@ -83,7 +83,7 @@ class LinphoneService: CoreDelegate {
         core = nil
     }
     
-    func connect(config: SipConfig, videoView: UIView, cameraView: UIView) {
+    func connect(config: SipConfig) {
         start()
         
         guard let core = core else {
@@ -97,17 +97,23 @@ class LinphoneService: CoreDelegate {
         
         try! core.addProxyConfig(config: cfg)
         
-        let videoViewPointer = UnsafeMutableRawPointer(mutating: bridge(obj: videoView))
-        core.nativeVideoWindowId = videoViewPointer
-        
-        let cameraViewPointer = UnsafeMutableRawPointer(mutating: bridge(obj: cameraView))
-        core.nativePreviewWindowId = cameraViewPointer
-        
         core.videoPayloadTypes.forEach {
             _ = $0.enable(enabled: $0.mimeType == "H264")
         }
         
         try? core.setVideodevice(newValue: "StaticImage: Static picture")
+    }
+    
+    func setViews(videoView: UIView, cameraView: UIView) {
+        guard let core = core else {
+            return
+        }
+        
+        let videoViewPointer = UnsafeMutableRawPointer(mutating: bridge(obj: videoView))
+        core.nativeVideoWindowId = videoViewPointer
+        
+        let cameraViewPointer = UnsafeMutableRawPointer(mutating: bridge(obj: cameraView))
+        core.nativePreviewWindowId = cameraViewPointer
     }
     
     private func bridge<T: AnyObject>(obj : T) -> UnsafeRawPointer {
