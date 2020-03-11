@@ -63,10 +63,10 @@
                     <rect key="frame" x="16" y="163" width="288" height="146.5"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="640" placeholderIntrinsicHeight="480" translatesAutoresizingMaskIntoConstraints="NO" id="ws9-YM-GBC">
-                            <rect key="frame" x="46" y="0.0" width="196" height="146.5"/>
+                            <rect key="frame" x="13.5" y="0.0" width="261" height="146.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="ws9-YM-GBC" secondAttribute="height" multiplier="640:480" id="qZi-Zw-Jqz"/>
+                                <constraint firstAttribute="width" secondItem="ws9-YM-GBC" secondAttribute="height" multiplier="1280:720" id="qZi-Zw-Jqz"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
