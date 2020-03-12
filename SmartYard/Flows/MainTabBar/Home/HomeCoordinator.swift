@@ -67,7 +67,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             let vc = AuthByContractNumViewController(viewModel: vm)
             
-            return .set([vc])
+            return .set([vc], animation: .fade)
             
         case .inputAddress:
             let vm = InputAddressViewModel(
@@ -77,7 +77,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             let vc = InputAddressViewController(viewModel: vm)
             
-            return .push(vc)//.set([vc], animation: .fade)
+            return .push(vc)
             
         case let .availableServices(address, services):
             let vm = AvailableServicesViewModel(
