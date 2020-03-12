@@ -17,9 +17,6 @@ class AuthByContractNumViewModel: BaseViewModel {
     private let issueService: IssueService
     private let apiWrapper: APIWrapper
     
-    let activityTracker = ActivityTracker()
-    let errorTracker = ErrorTracker()
-    
     let contractNumber = BehaviorSubject<String?>(value: nil)
     let password = BehaviorSubject<String?>(value: nil)
     
@@ -53,8 +50,8 @@ class AuthByContractNumViewModel: BaseViewModel {
                 }
                 
                 return self.issueService.sendNothingRememberIssue()
-                    .trackError(self.errorTracker)
-                    .trackActivity(self.activityTracker)
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
             .drive()
