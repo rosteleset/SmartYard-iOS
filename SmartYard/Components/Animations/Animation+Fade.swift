@@ -13,15 +13,15 @@ import Cartography
 extension Animation {
     
     static let fade = Animation(
-        presentation: InteractiveTransitionAnimation.fadePresentation,
-        dismissal: InteractiveTransitionAnimation.fadeDismissal
+        presentation: InteractiveTransitionAnimation.fade,
+        dismissal: InteractiveTransitionAnimation.fade
     )
     
 }
 
-private extension InteractiveTransitionAnimation {
+extension InteractiveTransitionAnimation {
     
-    static let fadePresentation = InteractiveTransitionAnimation(duration: 0.25) { transitionContext in
+    static let fade = InteractiveTransitionAnimation(duration: 0.25) { transitionContext in
         let containerView = transitionContext.containerView
         
         guard let toView = transitionContext.view(forKey: .to) else {
@@ -29,11 +29,8 @@ private extension InteractiveTransitionAnimation {
         }
         
         toView.alpha = 0.0
-        containerView.addSubview(toView)
         
-        constrain(toView, containerView) { view, container in
-            view.edges == container.edges
-        }
+        containerView.addSubview(toView)
         
         UIView.animate(
             withDuration: 0.25,
@@ -41,26 +38,6 @@ private extension InteractiveTransitionAnimation {
             options: [.curveLinear],
             animations: {
                 toView.alpha = 1.0
-            },
-            completion: { _ in
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-            }
-        )
-    }
-    
-    static let fadeDismissal = InteractiveTransitionAnimation(duration: 0.25) { transitionContext in
-        let containerView = transitionContext.containerView
-        
-        guard let fromView = transitionContext.view(forKey: .from) else {
-            return
-        }
-        
-        UIView.animate(
-            withDuration: 0.25,
-            delay: 0,
-            options: [.curveLinear],
-            animations: {
-                fromView.alpha = 0
             },
             completion: { _ in
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)

@@ -14,7 +14,7 @@ import JGProgressHUD
 
 class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
 
-    @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
+    @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var containerView: UIView!
     
     @IBOutlet private weak var contractNumberTextField: SmartYardTextField!
@@ -54,11 +54,19 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
             forgetEverythingTapped: forgetEverythingButton.rx.tap.asDriverOnErrorJustComplete(),
             noContractTapped: noContractButton.rx.tap.asDriverOnErrorJustComplete(),
             signInTapped: signInButton.rx.tap.asDriverOnErrorJustComplete(),
-            inputContractNumText: contractNumberTextField.rx.text.changed.asDriver(onErrorJustReturn: nil),
-            inputPasswordNumText: passTextField.rx.text.changed.asDriver(onErrorJustReturn: nil)
+            inputContractNumText: contractNumberTextField.rx.text.asDriver(onErrorJustReturn: nil),
+            inputPasswordNumText: passTextField.rx.text.asDriver(onErrorJustReturn: nil)
         )
         
         let output = viewModel.transform(input: input)
+        
+        output.isAbleToProceed
+            .drive(
+                onNext: { [weak self] isAbleToProceed in
+                    self?.signInButton.isEnabled = isAbleToProceed
+                }
+            )
+            .disposed(by: disposeBag)
         
         output.isLoading
             .debounce(.milliseconds(25))

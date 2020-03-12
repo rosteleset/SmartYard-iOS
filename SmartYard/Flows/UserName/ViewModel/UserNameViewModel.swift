@@ -29,7 +29,7 @@ class UserNameViewModel: BaseViewModel {
         let prepareTransitionTrigger = PublishSubject<Void>()
         
         let isAbleToContinue = input.name
-            .map { !$0.isNilOrEmpty }
+            .map { !($0?.trimmed).isNilOrEmpty }
         
         input.continueTrigger
             .withLatestFrom(input.name)
@@ -39,7 +39,7 @@ class UserNameViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                return .just((unwrappedName, middleName))
+                return .just((unwrappedName.trimmed, middleName?.trimmed))
             }
             .flatMapLatest { [weak self] args -> Driver<Void?> in
                 guard let self = self else {

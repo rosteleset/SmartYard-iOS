@@ -13,6 +13,7 @@ import SearchTextField
 
 class InputAddressViewController: BaseViewController {
 
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var cityTextField: SmartYardSearchTextField!
     @IBOutlet private weak var streetTextField: SmartYardSearchTextField!
@@ -124,6 +125,7 @@ class InputAddressViewController: BaseViewController {
         let input = InputAddressViewModel.Input(
             qrCodeTapped: qrCodeButton.rx.tap.asDriverOnErrorJustComplete(),
             checkServicesTapped: checkAvailableServicesButton.rx.tap.asDriverOnErrorJustComplete(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             streetsFieldFocused: streetTextField.rx.controlEvent(.editingDidBegin).asDriver(),
             buildingsFieldFocused: buildingTextField.rx.controlEvent(.editingDidBegin).asDriver(),
             flatsFieldFocused: flatTextField.rx.controlEvent(.editingDidBegin).asDriver(),
@@ -163,6 +165,14 @@ class InputAddressViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] flats in
                     self?.flatTextField.filterStrings(flats)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isAbleToProceed
+            .drive(
+                onNext: { [weak self] isAbleToProceed in
+                    self?.checkAvailableServicesButton.isEnabled = isAbleToProceed
                 }
             )
             .disposed(by: disposeBag)

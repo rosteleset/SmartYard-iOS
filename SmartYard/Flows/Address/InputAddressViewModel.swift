@@ -124,6 +124,32 @@ class InputAddressViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        let isAbleToProceed = Driver
+            .combineLatest(
+                input.inputCityName,
+                input.inputStreetName,
+                input.inputBuildingName
+            )
+            .map { args -> Bool in
+                let (cityName, streetName, buildingName) = args
+                
+                guard let uCityName = cityName?.trimmed, !uCityName.isEmpty,
+                    let uStreetName = streetName?.trimmed, !uStreetName.isEmpty,
+                    let uBuildingName = buildingName?.trimmed, !uBuildingName.isEmpty else {
+                    return false
+                }
+                
+                return true
+            }
+        
         let requestData = input.checkServicesTapped.withLatestFrom(
             Driver
                 .combineLatest(
@@ -235,7 +261,8 @@ class InputAddressViewModel: BaseViewModel {
             streets: streetsList.asDriver(onErrorJustReturn: [])
                 .map { $0.map { $0.name } },
             buildings: buildingsList.asDriver(onErrorJustReturn: []),
-            flats: flatsList.asDriver(onErrorJustReturn: [])
+            flats: flatsList.asDriver(onErrorJustReturn: []),
+            isAbleToProceed: isAbleToProceed
         )
     }
     
@@ -246,6 +273,7 @@ extension InputAddressViewModel {
     struct Input {
         let qrCodeTapped: Driver<Void>
         let checkServicesTapped: Driver<Void>
+        let backTrigger: Driver<Void>
         
         let streetsFieldFocused: Driver<Void>
         let buildingsFieldFocused: Driver<Void>
@@ -262,6 +290,7 @@ extension InputAddressViewModel {
         let streets: Driver<[String]>
         let buildings: Driver<[String]>
         let flats: Driver<[String]>
+        let isAbleToProceed: Driver<Bool>
     }
     
 }
