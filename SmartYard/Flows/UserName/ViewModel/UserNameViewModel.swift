@@ -29,7 +29,7 @@ class UserNameViewModel: BaseViewModel {
         let prepareTransitionTrigger = PublishSubject<Void>()
         
         let isAbleToContinue = input.name
-            .map { ($0?.trimmed).isNilOrEmpty }
+            .map { !($0?.trimmed).isNilOrEmpty }
         
         input.continueTrigger
             .withLatestFrom(input.name)
