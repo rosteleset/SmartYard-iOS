@@ -89,14 +89,14 @@ class AuthByContractNumViewModel: BaseViewModel {
             .flatMapLatest { [weak self] args -> Driver<Void?> in
                 let (login, password) = args
                 
-                guard let self = self, let unwrappedLogjn = login, let unwrappedPassword = password else {
+                guard let self = self, let uLogin = login, let uPassword = password else {
                     return .just(nil)
                 }
                 
                 return self.apiWrapper
                     .addMyPhone(
-                        login: unwrappedLogjn,
-                        password: unwrappedPassword,
+                        login: uLogin.trimmed,
+                        password: uPassword.trimmed,
                         comment: nil,
                         useForNotifications: true
                     )
