@@ -26,6 +26,7 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var ignoreButtonLabel: UILabel!
     
+    @IBOutlet private weak var videoPreview: UIView!
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
     
@@ -47,6 +48,16 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
         super.viewDidLoad()
         configureButtons()
         bind()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let targetHeight: CGFloat = 720
+        let scaleRatio = imageView.bounds.height / targetHeight + 0.001
+        
+        videoPreview.transform = CGAffineTransform(scaleX: scaleRatio, y: scaleRatio)
+        videoPreview.cornerRadius = 24 / scaleRatio
     }
     
     private func configureButtons() {
@@ -76,7 +87,7 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
                     return .empty()
                 }
                 
-                return .just((self.imageView, UIView()))
+                return .just((self.videoPreview, UIView()))
             }
             .do(
                 onNext: { [weak self] _ in

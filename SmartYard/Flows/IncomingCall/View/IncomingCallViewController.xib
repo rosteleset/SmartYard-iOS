@@ -32,6 +32,7 @@
                 <outlet property="previewButton" destination="rwT-mp-rJV" id="BtZ-YJ-EHv"/>
                 <outlet property="subtitleLabel" destination="Rh6-Xt-7AB" id="kJV-nO-5XR"/>
                 <outlet property="titleLabel" destination="EaG-bR-VV0" id="SPP-lu-dvx"/>
+                <outlet property="videoPreview" destination="qZy-mX-wC7" id="00X-h0-Zjs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -63,10 +64,10 @@
                     <rect key="frame" x="16" y="163" width="288" height="146.5"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="640" placeholderIntrinsicHeight="480" translatesAutoresizingMaskIntoConstraints="NO" id="ws9-YM-GBC">
-                            <rect key="frame" x="46" y="0.0" width="196" height="146.5"/>
+                            <rect key="frame" x="13.5" y="0.0" width="261" height="146.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="ws9-YM-GBC" secondAttribute="height" multiplier="640:480" id="qZi-Zw-Jqz"/>
+                                <constraint firstAttribute="width" secondItem="ws9-YM-GBC" secondAttribute="height" multiplier="1280:720" id="qZi-Zw-Jqz"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -77,6 +78,19 @@
                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="HGl-tO-Nut">
                             <rect key="frame" x="125.5" y="55" width="37" height="37"/>
                         </activityIndicatorView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qZy-mX-wC7">
+                            <rect key="frame" x="-496" y="-286.5" width="1280" height="720"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1280" id="ZJJ-nL-hxI"/>
+                                <constraint firstAttribute="height" constant="720" id="pzf-Po-wec"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -86,7 +100,9 @@
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="centerX" secondItem="o7y-sM-LFP" secondAttribute="centerX" id="XDY-iC-MOS"/>
                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ws9-YM-GBC" secondAttribute="bottom" id="Xuk-K8-1zR"/>
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="leading" secondItem="o7y-sM-LFP" secondAttribute="leading" priority="751" id="YEb-42-zkF"/>
+                        <constraint firstItem="qZy-mX-wC7" firstAttribute="centerY" secondItem="ws9-YM-GBC" secondAttribute="centerY" id="bZ1-dO-JbJ"/>
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="centerY" secondItem="o7y-sM-LFP" secondAttribute="centerY" id="dY5-x5-eAd"/>
+                        <constraint firstItem="qZy-mX-wC7" firstAttribute="centerX" secondItem="ws9-YM-GBC" secondAttribute="centerX" id="n6N-hY-uUy"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kK5-Z2-k0l" userLabel="Button Container">
