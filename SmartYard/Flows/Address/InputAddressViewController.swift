@@ -168,6 +168,14 @@ class InputAddressViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.isAbleToProceed
+            .drive(
+                onNext: { [weak self] isAbleToProceed in
+                    self?.checkAvailableServicesButton.isEnabled = isAbleToProceed
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureUI() {

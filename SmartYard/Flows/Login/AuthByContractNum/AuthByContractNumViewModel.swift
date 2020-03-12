@@ -73,7 +73,12 @@ class AuthByContractNumViewModel: BaseViewModel {
             .map { args -> Bool in
                 let (contractNumber, password) = args
                 
-                return !contractNumber.isNilOrEmpty && !password.isNilOrEmpty
+                guard let uContractNumber = contractNumber?.trimmed, !uContractNumber.isEmpty,
+                    let uPassword = password?.trimmed, !uPassword.isEmpty else {
+                    return false
+                }
+                
+                return true
             }
         
         input.signInTapped
