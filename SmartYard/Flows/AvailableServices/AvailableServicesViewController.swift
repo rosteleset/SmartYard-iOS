@@ -12,6 +12,7 @@ import RxSwift
 
 class AvailableServicesViewController: BaseViewController {
 
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var nextButton: BlueButton!
     
@@ -40,7 +41,8 @@ class AvailableServicesViewController: BaseViewController {
         let input = AvailableServicesViewModel.Input(
             nextTapped: nextButton.rx.tap.asDriverOnErrorJustComplete(),
             serviceStateChanged: serviceStateChanged.asDriverOnErrorJustComplete(),
-            viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete()
+            viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
         let output = viewModel.transform(input: input)

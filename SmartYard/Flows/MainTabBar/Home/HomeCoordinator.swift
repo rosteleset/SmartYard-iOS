@@ -90,7 +90,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             let vc = AvailableServicesViewController(viewModel: vm)
             
-            return .set([vc], animation: .fade)
+            return .push(vc)
             
         case .unavailableServices:
             let vm = ServicesActivationRequestViewModel(router: weakRouter, apiWrapper: apiWrapper)

@@ -40,6 +40,8 @@ class AvailableServicesViewModel: BaseViewModel {
             )
         }
         
+        serviceModels = serviceModels.sorted(by: { $0.state < $1.state })
+        
         self.services = serviceModels
     }
     
@@ -71,6 +73,14 @@ class AvailableServicesViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []))
     }
     
@@ -82,6 +92,7 @@ extension AvailableServicesViewModel {
         let nextTapped: Driver<Void>
         let serviceStateChanged: Driver<Int?>
         let viewWillAppearTrigger: Driver<Bool>
+        let backTrigger: Driver<Void>
     }
     
     struct Output {

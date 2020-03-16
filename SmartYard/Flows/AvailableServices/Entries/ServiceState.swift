@@ -9,12 +9,25 @@
 import Foundation
 import UIKit
 
-enum ServiceState {
+enum ServiceState: Comparable {
     
-    case checkedActive
     case checkedInactive
-    case uncheckedActive
     case uncheckedInactive
+    case uncheckedActive
+    case checkedActive
+    
+    private var sortOrder: Int {
+        switch self {
+        case .checkedInactive:
+            return 0
+        case .uncheckedInactive:
+            return 1
+        case .uncheckedActive:
+            return 2
+        case .checkedActive:
+            return 3
+        }
+    }
     
     var titleTextColor: UIColor? {
         switch self {
@@ -43,6 +56,10 @@ enum ServiceState {
         case .uncheckedActive, .uncheckedInactive: return .clear
         case .checkedInactive: return UIColor.SmartYard.gray
         }
+    }
+    
+    static func <(lhs: ServiceState, rhs: ServiceState) -> Bool {
+        return lhs.sortOrder < rhs.sortOrder
     }
     
 }
