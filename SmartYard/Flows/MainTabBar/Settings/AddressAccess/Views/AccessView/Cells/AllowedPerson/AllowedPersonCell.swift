@@ -25,7 +25,7 @@ class AllowedPersonCell: UITableViewCell {
     }
     
     func configure(with person: AllowedPerson) {
-        userNameLabel.text = person.displayedName ?? person.phoneNumber
+        userNameLabel.text = person.displayedName ?? person.formattedNumber
         userLogoImageView.image = person.logoImage ?? UIImage(named: "DefaultUserIcon")
     }
     

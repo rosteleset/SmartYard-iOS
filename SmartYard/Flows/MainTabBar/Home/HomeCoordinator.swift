@@ -43,6 +43,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
+    // swiftlint:disable:next function_body_length
     override func prepareTransition(for route: HomeRoute) -> NavigationTransition {
         switch route {
         case .main:

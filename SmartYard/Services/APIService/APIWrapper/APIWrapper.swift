@@ -11,6 +11,7 @@ import Alamofire
 import RxSwift
 import RxCocoa
 
+// swiftlint:disable:next type_body_length
 class APIWrapper {
     
     let apiService: APIService
@@ -181,12 +182,25 @@ class APIWrapper {
         }
     }
     
-    func grantAccess(flatId: String, guestPhone: String, type: APIRoommateAccessType) -> Single<Void?> {
-        return access(flatId: flatId, guestPhone: guestPhone, type: type)
+    func grantAccess(
+        flatId: String,
+        guestPhone: String,
+        type: APIRoommateAccessType,
+        numberOfHours: Int = 24
+    ) -> Single<Void?> {
+        let expire: Date? = {
+            guard type == .outer else {
+                return nil
+            }
+            
+            return Calendar.current.date(byAdding: .hour, value: numberOfHours, to: Date())
+        }()
+        
+        return access(flatId: flatId, guestPhone: guestPhone, type: type, expire: expire)
     }
     
-    func revokeAccess(flatId: String, guestPhone: String) -> Single<Void?> {
-        return access(flatId: flatId, guestPhone: guestPhone, expire: Date.distantPast)
+    func revokeAccess(flatId: String, guestPhone: String, type: APIRoommateAccessType) -> Single<Void?> {
+        return access(flatId: flatId, guestPhone: guestPhone, type: type, expire: Date.distantPast)
     }
     
     func access(

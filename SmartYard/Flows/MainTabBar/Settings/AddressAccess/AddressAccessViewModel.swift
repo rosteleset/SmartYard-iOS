@@ -11,6 +11,7 @@ import XCoordinator
 import RxSwift
 import RxCocoa
 
+// swiftlint:disable:next type_body_length
 class AddressAccessViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
@@ -76,16 +77,27 @@ class AddressAccessViewModel: BaseViewModel {
             }
             .drive(
                 onNext: { [weak self] roommates in
-                    let tempAccessRoommates = roommates
+                    let tempAccessRoommates: [AllowedPerson] = roommates
                         .filter { $0.type == .outer && $0.expire > Date() }
-                        .map { AllowedPerson(displayedName: nil, phoneNumber: $0.phone, logoImage: nil) }
+                        .compactMap { roommate in
+                            guard let rawNumber = roommate.phone.rawPhoneNumberFromFullNumber else {
+                                return nil
+                            }
+                            
+                            return AllowedPerson(displayedName: nil, rawNumber: rawNumber, logoImage: nil)
+                        }
+                    
+                    let permanentAccessRoommates: [AllowedPerson] = roommates
+                        .filter { ($0.type == .inner || $0.type == .owner) && $0.expire > Date() }
+                        .compactMap { roommate in
+                            guard let rawNumber = roommate.phone.rawPhoneNumberFromFullNumber else {
+                                return nil
+                            }
+                            
+                            return AllowedPerson(displayedName: nil, rawNumber: rawNumber, logoImage: nil)
+                        }
                     
                     self?.tempAccessContactsSubject.onNext(tempAccessRoommates)
-                    
-                    let permanentAccessRoommates = roommates
-                        .filter { ($0.type == .inner || $0.type == .owner) && $0.expire > Date() }
-                        .map { AllowedPerson(displayedName: nil, phoneNumber: $0.phone, logoImage: nil) }
-                    
                     self?.permanentAccessContactsSubject.onNext(permanentAccessRoommates)
                 }
             )
@@ -283,27 +295,39 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func deleteTempAccessContact(index: Int) {
-        guard let data = try? tempAccessContactsSubject.value() else {
+        guard let data = try? tempAccessContactsSubject.value(), let allowedPerson = data[safe: index] else {
             return
         }
         
-        var newData = data
-        newData.remove(at: index)
-        
-        tempAccessContactsSubject.onNext(newData)
-        // TODO: use API deletion method
+        apiWrapper
+            .revokeAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .outer)
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: {
+                    print("Actually, that number was removed")
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func deletePermanentAccessContact(index: Int) {
-        guard let data = try? permanentAccessContactsSubject.value() else {
+        guard let data = try? permanentAccessContactsSubject.value(), let allowedPerson = data[safe: index] else {
             return
         }
         
-        var newData = data
-        newData.remove(at: index)
-        
-        permanentAccessContactsSubject.onNext(newData)
-        // TODO: use API deletion method
+        apiWrapper
+            .revokeAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .inner)
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: {
+                    print("Actually, that number was removed")
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func addNewTempAccessContact() {
@@ -360,28 +384,35 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
         _ viewModel: NewAllowedPersonViewModel,
         allowedPerson: AllowedPerson
     ) {
-        guard let data = try? tempAccessContactsSubject.value() else {
-            return
-        }
-        
-        var newData = data
-        newData.append(allowedPerson)
-        tempAccessContactsSubject.onNext(newData)
-        // TODO: save data, using api
+        apiWrapper
+            .grantAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .outer)
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: {
+                    print("Actually, new number was added")
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     func newAllowedPersonViewModelDidAddNewPermanent(
         _ viewModel: NewAllowedPersonViewModel,
         allowedPerson: AllowedPerson
     ) {
-        guard let data = try? permanentAccessContactsSubject.value() else {
-            return
-        }
-        
-        var newData = data
-        newData.append(allowedPerson)
-        permanentAccessContactsSubject.onNext(newData)
-        // TODO: save data, using api
+        apiWrapper
+            .grantAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .inner)
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: {
+                    print("Actually, new number was added")
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
+// swiftlint:disable:next file_length
 }

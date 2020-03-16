@@ -25,4 +25,19 @@ extension String {
         return self
     }
     
+    // Сырой номер без префикса (9271234567), 10 цифр
+    var rawPhoneNumberFromFullNumber: String? {
+        let contactNumber = self
+            .replacingOccurrences(of: " ", with: "")
+            .replacingOccurrences(of: "-", with: "")
+            .replacingOccurrences(of: "(", with: "")
+            .replacingOccurrences(of: ")", with: "")
+        
+        guard contactNumber.count >= Constants.phoneLengthWithoutPrefix else {
+            return nil
+        }
+        
+        return String(contactNumber.suffix(Constants.phoneLengthWithoutPrefix))
+    }
+    
 }

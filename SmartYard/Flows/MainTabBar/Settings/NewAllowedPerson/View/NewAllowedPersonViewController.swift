@@ -108,10 +108,7 @@ class NewAllowedPersonViewController: BaseViewController {
         phoneText
             .filter { $0.count == Constants.phoneLengthWithoutPrefix }
             .map { phoneText in
-                var phoneFormatString = "+7" + phoneText
-                phoneFormatString = phoneFormatString.formatAsPhoneNumber()
-                
-                return AllowedPerson(displayedName: nil, phoneNumber: phoneFormatString, logoImage: nil)
+                AllowedPerson(displayedName: nil, rawNumber: phoneText, logoImage: nil)
             }
             .drive(
                 onNext: { [weak self] newAllowedPerson in
