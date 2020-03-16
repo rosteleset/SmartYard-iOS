@@ -84,6 +84,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let vm = AvailableServicesViewModel(
                 router: weakRouter,
                 apiWrapper: apiWrapper,
+                issueService: issueService,
                 address: address,
                 services: services
             )

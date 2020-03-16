@@ -172,7 +172,7 @@ class InputAddressViewModel: BaseViewModel {
                 var addressString = [uCityName, uStreetName, uBuildingName].joined(separator: ", ")
                 
                 if let uFlatName = flatName?.trimmed, !uFlatName.isEmpty {
-                    addressString += ", \(uFlatName)"
+                    addressString += ", квартира \(uFlatName)"
                 }
                 
                 guard let buildings = self.loadedBuildings[uStreetName] else {

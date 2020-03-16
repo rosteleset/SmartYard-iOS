@@ -9,13 +9,16 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import JGProgressHUD
 
-class AvailableServicesViewController: BaseViewController {
-
+class AvailableServicesViewController: BaseViewController, LoaderPresentable {
+    
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var nextButton: BlueButton!
     @IBOutlet private weak var addressLabel: UILabel!
+    
+    var loader: JGProgressHUD?
     
     private let viewModel: AvailableServicesViewModel
     private let itemsProxy = BehaviorSubject<[ServiceModel]>(value: [])
@@ -56,6 +59,15 @@ class AvailableServicesViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] address in
                     self?.addressLabel.text = address
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: "Создание заявки")
                 }
             )
             .disposed(by: disposeBag)

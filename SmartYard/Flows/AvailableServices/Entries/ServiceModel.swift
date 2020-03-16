@@ -11,6 +11,7 @@ import Foundation
 struct ServiceModel {
     
     let id: String
+    let icon: String
     let name: String
     let description: String
     var state: ServiceState
