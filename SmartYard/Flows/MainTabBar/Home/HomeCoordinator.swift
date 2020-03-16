@@ -96,7 +96,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let vm = ServicesActivationRequestViewModel(router: weakRouter, apiWrapper: apiWrapper)
             let vc = ServicesActivationRequestViewController(viewModel: vm)
             
-            return .set([vc], animation: .fade)
+            return .push(vc)
             
         case .confirmAddress:
             let vm = AddressConfirmationViewModel(

@@ -61,6 +61,14 @@ class ServicesActivationRequestViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []))
     }
     
@@ -81,6 +89,7 @@ extension ServicesActivationRequestViewModel {
         let sendRequestTapped: Driver<Void>
         let serviceStateChanged: Driver<Int?>
         let viewWillAppearTrigger: Driver<Bool>
+        let backTrigger: Driver<Void>
     }
     
     struct Output {
