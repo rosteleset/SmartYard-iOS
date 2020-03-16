@@ -23,6 +23,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AvailableServicesViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="addressLabel" destination="F7n-PP-pF1" id="yHc-Ka-2VV"/>
                 <outlet property="fakeNavBar" destination="ZHo-ab-uCT" id="akb-uw-D0D"/>
                 <outlet property="nextButton" destination="89Y-FQ-vdr" id="j07-bY-Q4r"/>
                 <outlet property="tableView" destination="w0Q-oS-zCM" id="360-rJ-Exd"/>

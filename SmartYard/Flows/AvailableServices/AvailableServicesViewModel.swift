@@ -18,7 +18,8 @@ class AvailableServicesViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     
     private let serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: [])
-
+    private let addressSubject = BehaviorSubject<String?>(value: nil)
+    
     private let address: String
     private let services: [ServiceModel]
     
@@ -46,6 +47,7 @@ class AvailableServicesViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
+        addressSubject.onNext(address)
         serviceItemsSubject.onNext(services)
         
         input.nextTapped
@@ -81,7 +83,10 @@ class AvailableServicesViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output(serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []))
+        return Output(
+            serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []),
+            addressSubject: addressSubject.asDriver(onErrorJustReturn: nil)
+        )
     }
     
 }
@@ -97,6 +102,7 @@ extension AvailableServicesViewModel {
     
     struct Output {
         let serviceItems: Driver<[ServiceModel]>
+        let addressSubject: Driver<String?>
     }
     
 }

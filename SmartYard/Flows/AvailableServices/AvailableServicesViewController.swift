@@ -15,6 +15,7 @@ class AvailableServicesViewController: BaseViewController {
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var nextButton: BlueButton!
+    @IBOutlet private weak var addressLabel: UILabel!
     
     private let viewModel: AvailableServicesViewModel
     private let itemsProxy = BehaviorSubject<[ServiceModel]>(value: [])
@@ -49,6 +50,14 @@ class AvailableServicesViewController: BaseViewController {
         
         output.serviceItems
             .drive(itemsProxy)
+            .disposed(by: disposeBag)
+        
+        output.addressSubject
+            .drive(
+                onNext: { [weak self] address in
+                    self?.addressLabel.text = address
+                }
+            )
             .disposed(by: disposeBag)
         
         itemsProxy
