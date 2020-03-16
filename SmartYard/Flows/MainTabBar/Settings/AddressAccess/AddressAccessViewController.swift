@@ -106,8 +106,11 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.permanentAccessContacts
+            .withLatestFrom(output.isInitialLoadingFinished) { ($0, $1) }
             .drive(
-                onNext: { [weak self] contacts in
+                onNext: { [weak self] args in
+                    let (contacts, isInitialLoadingFinished) = args
+                    
                     guard let self = self else {
                         return
                     }
@@ -116,14 +119,20 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
                     
                     let newHeight = self.calculateAccessViewHeight(countItems: contacts.count)
                     self.permanentAccessViewHeightConstraint.constant = newHeight
-                    self.view.layoutIfNeeded()
+                    
+                    UIView.animate(withDuration: isInitialLoadingFinished ? 0.25 : 0) { [weak self] in
+                        self?.view.layoutIfNeeded()
+                    }
                 }
             )
             .disposed(by: disposeBag)
         
         output.tempAccessContacts
+            .withLatestFrom(output.isInitialLoadingFinished) { ($0, $1) }
             .drive(
-                onNext: { [weak self] contacts in
+                onNext: { [weak self] args in
+                    let (contacts, isInitialLoadingFinished) = args
+                    
                     guard let self = self else {
                         return
                     }
@@ -132,7 +141,10 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
                     
                     let newHeight = self.calculateAccessViewHeight(countItems: contacts.count)
                     self.tempAccessViewHeightConstraint.constant = newHeight
-                    self.view.layoutIfNeeded()
+                    
+                    UIView.animate(withDuration: isInitialLoadingFinished ? 0.25 : 0) { [weak self] in
+                        self?.view.layoutIfNeeded()
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -158,6 +170,7 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.hasGates
+            .distinctUntilChanged()
             .drive(
                 onNext: { [weak self] hasGates in
                     self?.temporaryAccessContainer.isHidden = !hasGates
@@ -170,6 +183,7 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.isOwner
+            .distinctUntilChanged()
             .drive(
                 onNext: { [weak self] isOwner in
                     self?.permanentAccessContainer.isHidden = !isOwner
@@ -182,6 +196,7 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.isInitialLoadingFinished
+            .distinctUntilChanged()
             .isTrue()
             .delay(.milliseconds(500))
             .drive(

@@ -22,6 +22,8 @@ class AddressAccessViewModel: BaseViewModel {
     private let intercomAccessCode = BehaviorSubject<String?>(value: nil)
     private let isGrantedIntercomGuestAccess = BehaviorSubject<Bool>(value: false)
     
+    private let refreshAccessDataTrigger = PublishSubject<Void>()
+    
     private let address: String
     private let flatId: String
     
@@ -95,10 +97,18 @@ class AddressAccessViewModel: BaseViewModel {
                 return intercomState && roommateState
             }
         
-        apiWrapper
-            .getSettingsAddresses()
-            .trackError(errorTracker)
-            .asDriver(onErrorJustReturn: nil)
+        Driver
+            .merge(.just(()), refreshAccessDataTrigger.asDriverOnErrorJustComplete())
+            .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .getSettingsAddresses()
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
             .do(
                 onNext: { _ in
                     isRoommateStateLoadingFinishedSubject.onNext(true)
@@ -354,8 +364,9 @@ class AddressAccessViewModel: BaseViewModel {
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
-                onNext: {
+                onNext: { [weak self] in
                     print("Actually, that number was removed")
+                    self?.refreshAccessDataTrigger.onNext(())
                 }
             )
             .disposed(by: disposeBag)
@@ -373,8 +384,9 @@ class AddressAccessViewModel: BaseViewModel {
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
-                onNext: {
+                onNext: { [weak self] in
                     print("Actually, that number was removed")
+                    self?.refreshAccessDataTrigger.onNext(())
                 }
             )
             .disposed(by: disposeBag)
@@ -444,8 +456,9 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
-                onNext: {
+                onNext: { [weak self] in
                     print("Actually, new number was added")
+                    self?.refreshAccessDataTrigger.onNext(())
                 }
             )
             .disposed(by: disposeBag)
@@ -462,8 +475,9 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
-                onNext: {
+                onNext: { [weak self] in
                     print("Actually, new number was added")
+                    self?.refreshAccessDataTrigger.onNext(())
                 }
             )
             .disposed(by: disposeBag)
