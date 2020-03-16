@@ -27,7 +27,7 @@ struct APIAddress: Decodable {
         address = try container.decode(String.self, forKey: .address)
         
         doors = (try? container.decode([APIDoor].self, forKey: .doors)) ?? []
-        cctv = try container.decode(Int.self, forKey: .cctv)
+        cctv = (try? container.decode(Int.self, forKey: .cctv)) ?? 0
     }
     
 }

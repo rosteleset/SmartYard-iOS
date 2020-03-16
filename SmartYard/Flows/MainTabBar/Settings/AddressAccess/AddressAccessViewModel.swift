@@ -350,6 +350,7 @@ class AddressAccessViewModel: BaseViewModel {
         apiWrapper
             .revokeAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .outer)
             .trackError(errorTracker)
+            .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
@@ -368,6 +369,7 @@ class AddressAccessViewModel: BaseViewModel {
         apiWrapper
             .revokeAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .inner)
             .trackError(errorTracker)
+            .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
@@ -438,6 +440,7 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
         apiWrapper
             .grantAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .outer)
             .trackError(errorTracker)
+            .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
@@ -455,6 +458,7 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
         apiWrapper
             .grantAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .inner)
             .trackError(errorTracker)
+            .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
