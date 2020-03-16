@@ -24,6 +24,9 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var permanentAccessContainer: UIView!
     @IBOutlet private weak var permanentAccessView: AccessView!
     
+    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var skeletonView: AddressAccessSkeletonView!
+    
     var loader: JGProgressHUD?
     
     private let viewModel: AddressAccessViewModel
@@ -43,7 +46,11 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView()
+        bind()
+    }
     
+    private func configureView() {
         let temporaryViewHeight = temporaryAccessView.heightAnchor.constraint(equalToConstant: 57)
         temporaryViewHeight.isActive = true
         tempAccessViewHeightConstraint = temporaryViewHeight
@@ -55,7 +62,9 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
         temporaryAccessView.translatesAutoresizingMaskIntoConstraints = false
         permanentAccessView.translatesAutoresizingMaskIntoConstraints = false
         
-        bind()
+        scrollView.isHidden = true
+        skeletonView.isHidden = false
+        skeletonView.showSkeletonAsynchronously()
     }
     
     // swiftlint:disable:next function_body_length
@@ -168,6 +177,18 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
                     UIView.animate(withDuration: 0.25) {
                         self?.view.layoutIfNeeded()
                     }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isInitialLoadingFinished
+            .isTrue()
+            .delay(.milliseconds(500))
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.scrollView.isHidden = false
+                    self?.skeletonView.hideSkeleton()
+                    self?.skeletonView.isHidden = true
                 }
             )
             .disposed(by: disposeBag)

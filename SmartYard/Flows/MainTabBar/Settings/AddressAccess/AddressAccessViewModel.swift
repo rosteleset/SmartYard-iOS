@@ -43,10 +43,17 @@ class AddressAccessViewModel: BaseViewModel {
     func transform(input: Input) -> Output {
         // MARK: Загрузка изначального стейта
         
+        let isIntercomStateLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
+        
         apiWrapper
             .getCurrentIntercomState(flatId: flatId)
             .trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
+            .do(
+                onNext: { _ in
+                    isIntercomStateLoadingFinishedSubject.onNext(true)
+                }
+            )
             .ignoreNil()
             .drive(
                 onNext: { [weak self] response in
@@ -75,10 +82,28 @@ class AddressAccessViewModel: BaseViewModel {
         
         // MARK: Загрузка номеров, которым предоставлен доступ
         
+        let isRoommateStateLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
+        
+        let isInitialLoadingFinished = Driver
+            .combineLatest(
+                isIntercomStateLoadingFinishedSubject.asDriver(onErrorJustReturn: false),
+                isRoommateStateLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
+            )
+            .map { args -> Bool in
+                let (intercomState, roommateState) = args
+                
+                return intercomState && roommateState
+            }
+        
         apiWrapper
             .getSettingsAddresses()
             .trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
+            .do(
+                onNext: { _ in
+                    isRoommateStateLoadingFinishedSubject.onNext(true)
+                }
+            )
             .ignoreNil()
             .map { [weak self] addresses in
                 addresses.first { $0.flatId == self?.flatId }
@@ -245,7 +270,8 @@ class AddressAccessViewModel: BaseViewModel {
             isGrantedIntercomAccess: isGrantedIntercomGuestAccess.asDriver(onErrorJustReturn: false),
             isLoading: activityTracker.asDriver(),
             hasGates: hasGatesSubject.asDriver(onErrorJustReturn: false),
-            isOwner: isOwnerSubject.asDriver(onErrorJustReturn: false)
+            isOwner: isOwnerSubject.asDriver(onErrorJustReturn: false),
+            isInitialLoadingFinished: isInitialLoadingFinished
         )
     }
     
@@ -398,6 +424,7 @@ extension AddressAccessViewModel {
         let isLoading: Driver<Bool>
         let hasGates: Driver<Bool>
         let isOwner: Driver<Bool>
+        let isInitialLoadingFinished: Driver<Bool>
     }
     
 }

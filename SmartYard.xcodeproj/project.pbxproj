@@ -101,6 +101,8 @@
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84A6705A241F793D00BBA12B /* APIRoommate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A67059241F793D00BBA12B /* APIRoommate.swift */; };
 		84A6705D241F87E700BBA12B /* AccessRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A6705C241F87E700BBA12B /* AccessRequest.swift */; };
+		84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A6705F241FB6CC00BBA12B /* AddressAccessSkeletonView.swift */; };
+		84A67062241FB6E100BBA12B /* AddressAccessSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A67061241FB6E100BBA12B /* AddressAccessSkeletonView.xib */; };
 		84AA8D4623E2CD3F001B3B43 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4523E2CD3F001B3B43 /* APIService.swift */; };
 		84AA8D4823E2CD48001B3B43 /* APITarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4723E2CD48001B3B43 /* APITarget.swift */; };
 		84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D4923E2CD5E001B3B43 /* BaseRequestRetrier.swift */; };
@@ -388,6 +390,8 @@
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
 		84A67059241F793D00BBA12B /* APIRoommate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRoommate.swift; sourceTree = "<group>"; };
 		84A6705C241F87E700BBA12B /* AccessRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessRequest.swift; sourceTree = "<group>"; };
+		84A6705F241FB6CC00BBA12B /* AddressAccessSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessSkeletonView.swift; sourceTree = "<group>"; };
+		84A67061241FB6E100BBA12B /* AddressAccessSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessSkeletonView.xib; sourceTree = "<group>"; };
 		84AA8D4523E2CD3F001B3B43 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		84AA8D4723E2CD48001B3B43 /* APITarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITarget.swift; sourceTree = "<group>"; };
 		84AA8D4923E2CD5E001B3B43 /* BaseRequestRetrier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRequestRetrier.swift; sourceTree = "<group>"; };
@@ -918,6 +922,7 @@
 		847CF7D3240689C400070007 /* Skeletons */ = {
 			isa = PBXGroup;
 			children = (
+				84A6705E241FB6B200BBA12B /* AddressAccessSkeletonView */,
 				847CF7D424068B1900070007 /* AddressesListSkeletonView */,
 				847CF7D9240696A400070007 /* SettingsListSkeletonView */,
 			);
@@ -1164,6 +1169,15 @@
 				84A6705C241F87E700BBA12B /* AccessRequest.swift */,
 			);
 			path = Access;
+			sourceTree = "<group>";
+		};
+		84A6705E241FB6B200BBA12B /* AddressAccessSkeletonView */ = {
+			isa = PBXGroup;
+			children = (
+				84A6705F241FB6CC00BBA12B /* AddressAccessSkeletonView.swift */,
+				84A67061241FB6E100BBA12B /* AddressAccessSkeletonView.xib */,
+			);
+			path = AddressAccessSkeletonView;
 			sourceTree = "<group>";
 		};
 		84AA8D4423E2CD0C001B3B43 /* APIService */ = {
@@ -2187,6 +2201,7 @@
 				E9E4270B23F2CD3900F5D593 /* ServiceFromOfficeView.xib in Resources */,
 				84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */,
 				84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */,
+				84A67062241FB6E100BBA12B /* AddressAccessSkeletonView.xib in Resources */,
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
 				E9004C5F23FABF2200B59976 /* IntercomTemporaryAccessView.xib in Resources */,
 				E9E4271C23F41C6600F5D593 /* AvailableServiceCell.xib in Resources */,
@@ -2427,6 +2442,7 @@
 				848298342405655600E81620 /* ConfirmCodeRequest.swift in Sources */,
 				84B89A9323F2FA6E009692B4 /* ServiceIsNotActivatedViewModel.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
+				84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
 				E9A4D48A23EC27E20070A591 /* PinNumberField.swift in Sources */,
