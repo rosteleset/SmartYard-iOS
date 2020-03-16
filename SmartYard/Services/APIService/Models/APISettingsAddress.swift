@@ -15,6 +15,7 @@ struct APISettingsAddress: Decodable {
     let flatId: String?
     let address: String
     let services: [String]
+    let roommates: [APIRoommate]?
     
     var servicesAvailability: [SettingsServiceType: Bool] {
         return [

@@ -16,7 +16,7 @@ class AddressAccessViewModel: BaseViewModel {
     private let router: WeakRouter<SettingsRoute>
     
     private let addressSubject: BehaviorSubject<String?>
-    private let tempAccessConstactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
+    private let tempAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let permanentAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let intercomAccessCode = PublishSubject<String?>()
     private let isGrantedIntercomGuestAccess = PublishSubject<Bool>()
@@ -60,6 +60,33 @@ class AddressAccessViewModel: BaseViewModel {
                     }()
                     
                     self?.isGrantedIntercomGuestAccess.onNext(isAccessGranted)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Загрузка номеров, которым предоставлен доступ
+        
+        apiWrapper
+            .getSettingsAddresses()
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .map { [weak self] addresses in
+                addresses.first { $0.flatId == self?.flatId }?.roommates ?? []
+            }
+            .drive(
+                onNext: { [weak self] roommates in
+                    let tempAccessRoommates = roommates
+                        .filter { $0.type == .outer && $0.expire > Date() }
+                        .map { AllowedPerson(displayedName: nil, phoneNumber: $0.phone, logoImage: nil) }
+                    
+                    self?.tempAccessContactsSubject.onNext(tempAccessRoommates)
+                    
+                    let permanentAccessRoommates = roommates
+                        .filter { $0.type == .inner && $0.expire > Date() }
+                        .map { AllowedPerson(displayedName: nil, phoneNumber: $0.phone, logoImage: nil) }
+                    
+                    self?.permanentAccessContactsSubject.onNext(permanentAccessRoommates)
                 }
             )
             .disposed(by: disposeBag)
@@ -180,7 +207,7 @@ class AddressAccessViewModel: BaseViewModel {
         
         return Output(
             objectAddress: addressSubject.asDriver(onErrorJustReturn: nil),
-            tempAccessContacts: tempAccessConstactsSubject.asDriver(onErrorJustReturn: []),
+            tempAccessContacts: tempAccessContactsSubject.asDriver(onErrorJustReturn: []),
             permanentAccessContacts: permanentAccessContactsSubject.asDriver(onErrorJustReturn: []),
             temporaryIntercomCode: intercomAccessCode,
             isGrantedIntercomAccess: isGrantedIntercomGuestAccess,
@@ -256,14 +283,14 @@ class AddressAccessViewModel: BaseViewModel {
     }
     
     private func deleteTempAccessContact(index: Int) {
-        guard let data = try? tempAccessConstactsSubject.value() else {
+        guard let data = try? tempAccessContactsSubject.value() else {
             return
         }
         
         var newData = data
         newData.remove(at: index)
         
-        tempAccessConstactsSubject.onNext(newData)
+        tempAccessContactsSubject.onNext(newData)
         // TODO: use API deletion method
     }
     
@@ -333,13 +360,13 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
         _ viewModel: NewAllowedPersonViewModel,
         allowedPerson: AllowedPerson
     ) {
-        guard let data = try? tempAccessConstactsSubject.value() else {
+        guard let data = try? tempAccessContactsSubject.value() else {
             return
         }
         
         var newData = data
         newData.append(allowedPerson)
-        tempAccessConstactsSubject.onNext(newData)
+        tempAccessContactsSubject.onNext(newData)
         // TODO: save data, using api
     }
     
