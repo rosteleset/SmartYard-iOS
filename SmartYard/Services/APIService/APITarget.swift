@@ -15,6 +15,7 @@ enum APITarget {
     case getAddressList(request: GetAddressListRequest)
     case grantHourGuestAccess(request: IntercomRequest)
     case getSettingsList(request: GetSettingsListRequest)
+    case access(request: AccessRequest)
     
     case getListConnect(request: GetListConnectRequest)
     case createIssue(request: CreateIssueRequest)
@@ -47,6 +48,7 @@ extension APITarget: TargetType {
         case .resetCode: return "address/resetCode"
         case .getSettingsList: return "address/getSettingsList"
         case .getAddressList: return "address/getAddressList"
+        case .access: return "address/access"
             
         case .getListConnect: return "issues/listConnect"
         case .createIssue: return "issues/create"
@@ -83,6 +85,7 @@ extension APITarget: TargetType {
             case .resetCode(let request): return request.accessToken
             case .getSettingsList(let request): return request.accessToken
             case .getAddressList(let request): return request.accessToken
+            case .access(let request): return request.accessToken
                 
             case .getListConnect(let request): return request.accessToken
             case .createIssue(let request): return request.accessToken
@@ -121,6 +124,7 @@ extension APITarget: TargetType {
         case .resetCode(let request): return request.requestParameters
         case .getSettingsList(let request): return request.requestParameters
         case .getAddressList(let request): return request.requestParameters
+        case .access(let request): return request.requestParameters
 
         case .getListConnect(let request): return request.requestParameters
         case .createIssue(let request): return request.requestParameters

@@ -181,6 +181,49 @@ class APIWrapper {
         }
     }
     
+    func grantAccess(flatId: String, guestPhone: String, type: APIRoommateAccessType) -> Single<Void?> {
+        return access(flatId: flatId, guestPhone: guestPhone, type: type)
+    }
+    
+    func revokeAccess(flatId: String, guestPhone: String) -> Single<Void?> {
+        return access(flatId: flatId, guestPhone: guestPhone, expire: Date.distantPast)
+    }
+    
+    func access(
+        flatId: String,
+        guestPhone: String? = nil,
+        type: APIRoommateAccessType? = nil,
+        expire: Date? = nil
+    ) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = AccessRequest(
+            accessToken: accessToken,
+            flatId: flatId,
+            guestPhone: guestPhone,
+            type: type,
+            expire: expire
+        )
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performAccessRequest(request) { result in
+                switch result {
+                case .success: single(.success(()))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
     // User
     
     func addMyPhone(login: String, password: String, comment: String?, useForNotifications: Bool?) -> Single<Void?> {

@@ -83,7 +83,7 @@ class AddressAccessViewModel: BaseViewModel {
                     self?.tempAccessContactsSubject.onNext(tempAccessRoommates)
                     
                     let permanentAccessRoommates = roommates
-                        .filter { $0.type == .inner && $0.expire > Date() }
+                        .filter { ($0.type == .inner || $0.type == .owner) && $0.expire > Date() }
                         .map { AllowedPerson(displayedName: nil, phoneNumber: $0.phone, logoImage: nil) }
                     
                     self?.permanentAccessContactsSubject.onNext(permanentAccessRoommates)
