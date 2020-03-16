@@ -30,43 +30,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DjQ-Xw-0iB" customClass="FullRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="28.5" width="478" height="129"/>
+                    <rect key="frame" x="0.0" y="28.5" width="478" height="64"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Die-A1-QvE">
-                            <rect key="frame" x="0.0" y="64" width="478" height="1"/>
-                            <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="1" id="Kzp-Jr-4a1"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VG3-rh-PSA">
-                            <rect key="frame" x="0.0" y="65" width="478" height="64"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Гостевой доступ на час" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7lW-Yj-xxP">
-                                    <rect key="frame" x="24" y="23" width="322" height="18"/>
-                                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
-                                    <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enN-rb-QVd" customClass="ObjectLockButton" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="370" y="14" width="84" height="36"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="84" id="ElA-yk-vOa"/>
-                                        <constraint firstAttribute="height" constant="36" id="qNm-Hu-Ngg"/>
-                                    </constraints>
-                                    <state key="normal" title="Открыть"/>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstItem="enN-rb-QVd" firstAttribute="centerY" secondItem="VG3-rh-PSA" secondAttribute="centerY" id="DcU-qJ-HVL"/>
-                                <constraint firstItem="enN-rb-QVd" firstAttribute="leading" secondItem="7lW-Yj-xxP" secondAttribute="trailing" constant="24" id="KZn-yT-WFq"/>
-                                <constraint firstItem="7lW-Yj-xxP" firstAttribute="leading" secondItem="VG3-rh-PSA" secondAttribute="leading" constant="24" id="xUN-fq-LEL"/>
-                                <constraint firstItem="7lW-Yj-xxP" firstAttribute="centerY" secondItem="VG3-rh-PSA" secondAttribute="centerY" id="xgt-lU-wZU"/>
-                                <constraint firstAttribute="trailing" secondItem="enN-rb-QVd" secondAttribute="trailing" constant="24" id="yLH-S5-bxG"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hlq-uU-c3r">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hlq-uU-c3r" userLabel="Code View">
                             <rect key="frame" x="0.0" y="0.0" width="478" height="64"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="262" verticalHuggingPriority="251" text="Код открытия" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="puz-1u-oTr">
@@ -89,32 +55,67 @@
                                     <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Die-A1-QvE">
+                                    <rect key="frame" x="0.0" y="63" width="478" height="1"/>
+                                    <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="Kzp-Jr-4a1"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="puz-1u-oTr" firstAttribute="centerY" secondItem="hlq-uU-c3r" secondAttribute="centerY" id="Dbh-lT-xbq"/>
+                                <constraint firstAttribute="bottom" secondItem="Die-A1-QvE" secondAttribute="bottom" id="FVU-2A-jBV"/>
                                 <constraint firstItem="puz-1u-oTr" firstAttribute="leading" secondItem="hlq-uU-c3r" secondAttribute="leading" constant="24" id="Lgx-El-T7a"/>
                                 <constraint firstItem="1Ew-Yt-rLv" firstAttribute="leading" secondItem="If9-4b-izb" secondAttribute="trailing" constant="24" id="Y4e-x2-2mJ"/>
                                 <constraint firstItem="If9-4b-izb" firstAttribute="centerY" secondItem="hlq-uU-c3r" secondAttribute="centerY" id="bgf-By-ruV"/>
                                 <constraint firstAttribute="trailing" secondItem="1Ew-Yt-rLv" secondAttribute="trailing" constant="27" id="d0h-hR-DLQ"/>
+                                <constraint firstAttribute="height" constant="64" id="diV-RC-Z26"/>
                                 <constraint firstItem="1Ew-Yt-rLv" firstAttribute="centerY" secondItem="hlq-uU-c3r" secondAttribute="centerY" id="gHp-aP-UxZ"/>
                                 <constraint firstItem="If9-4b-izb" firstAttribute="leading" secondItem="puz-1u-oTr" secondAttribute="trailing" constant="24" id="per-yR-syS"/>
+                                <constraint firstItem="Die-A1-QvE" firstAttribute="leading" secondItem="hlq-uU-c3r" secondAttribute="leading" id="rer-XG-fLV"/>
+                                <constraint firstAttribute="trailing" secondItem="Die-A1-QvE" secondAttribute="trailing" id="yhf-dh-LmV"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VG3-rh-PSA" userLabel="Guest Access View">
+                            <rect key="frame" x="0.0" y="0.0" width="478" height="64"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Гостевой доступ на час" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7lW-Yj-xxP">
+                                    <rect key="frame" x="24" y="23" width="322" height="18"/>
+                                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                                    <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enN-rb-QVd" customClass="ObjectLockButton" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="370" y="14" width="84" height="36"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="84" id="ElA-yk-vOa"/>
+                                        <constraint firstAttribute="height" constant="36" id="qNm-Hu-Ngg"/>
+                                    </constraints>
+                                    <state key="normal" title="Открыть"/>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="enN-rb-QVd" firstAttribute="centerY" secondItem="VG3-rh-PSA" secondAttribute="centerY" id="DcU-qJ-HVL"/>
+                                <constraint firstItem="enN-rb-QVd" firstAttribute="leading" secondItem="7lW-Yj-xxP" secondAttribute="trailing" constant="24" id="KZn-yT-WFq"/>
+                                <constraint firstAttribute="height" constant="64" id="uVD-gl-ta1"/>
+                                <constraint firstItem="7lW-Yj-xxP" firstAttribute="leading" secondItem="VG3-rh-PSA" secondAttribute="leading" constant="24" id="xUN-fq-LEL"/>
+                                <constraint firstItem="7lW-Yj-xxP" firstAttribute="centerY" secondItem="VG3-rh-PSA" secondAttribute="centerY" id="xgt-lU-wZU"/>
+                                <constraint firstAttribute="trailing" secondItem="enN-rb-QVd" secondAttribute="trailing" constant="24" id="yLH-S5-bxG"/>
                             </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="129" id="4fR-al-Ons"/>
-                        <constraint firstItem="Die-A1-QvE" firstAttribute="centerY" secondItem="DjQ-Xw-0iB" secondAttribute="centerY" id="5OK-Hz-Dht"/>
+                        <constraint firstItem="VG3-rh-PSA" firstAttribute="top" secondItem="DjQ-Xw-0iB" secondAttribute="top" id="CRb-Om-cQt"/>
                         <constraint firstItem="hlq-uU-c3r" firstAttribute="top" secondItem="DjQ-Xw-0iB" secondAttribute="top" id="IeR-bC-JEt"/>
                         <constraint firstItem="hlq-uU-c3r" firstAttribute="leading" secondItem="DjQ-Xw-0iB" secondAttribute="leading" id="Kye-Xz-PZU"/>
-                        <constraint firstItem="VG3-rh-PSA" firstAttribute="top" secondItem="Die-A1-QvE" secondAttribute="bottom" id="Q1h-xb-gUb"/>
-                        <constraint firstAttribute="trailing" secondItem="Die-A1-QvE" secondAttribute="trailing" id="Trr-Cf-a85"/>
                         <constraint firstAttribute="bottom" secondItem="VG3-rh-PSA" secondAttribute="bottom" id="VFc-7Q-EgV"/>
                         <constraint firstAttribute="trailing" secondItem="hlq-uU-c3r" secondAttribute="trailing" id="VZh-xf-B9W"/>
+                        <constraint firstItem="VG3-rh-PSA" firstAttribute="top" secondItem="hlq-uU-c3r" secondAttribute="bottom" priority="999" id="bph-9T-6Sm"/>
                         <constraint firstAttribute="trailing" secondItem="VG3-rh-PSA" secondAttribute="trailing" id="dNo-te-W7w"/>
-                        <constraint firstItem="Die-A1-QvE" firstAttribute="leading" secondItem="DjQ-Xw-0iB" secondAttribute="leading" id="myk-ZB-5kY"/>
-                        <constraint firstItem="Die-A1-QvE" firstAttribute="top" secondItem="hlq-uU-c3r" secondAttribute="bottom" id="pIV-Le-xrY"/>
                         <constraint firstItem="VG3-rh-PSA" firstAttribute="leading" secondItem="DjQ-Xw-0iB" secondAttribute="leading" id="tZ8-8s-NCM"/>
                     </constraints>
                 </view>
@@ -133,6 +134,7 @@
             <connections>
                 <outlet property="codeLabel" destination="If9-4b-izb" id="D54-Mk-Zvh"/>
                 <outlet property="containerView" destination="DjQ-Xw-0iB" id="uEc-IM-dS8"/>
+                <outlet property="guestAccessToSuperviewTopConstraint" destination="CRb-Om-cQt" id="ZCa-Z2-vbd"/>
                 <outlet property="openButton" destination="enN-rb-QVd" id="Y2k-HD-7mO"/>
                 <outlet property="refreshButton" destination="1Ew-Yt-rLv" id="ZOT-Zv-Eoj"/>
             </connections>

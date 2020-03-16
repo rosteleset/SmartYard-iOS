@@ -124,7 +124,25 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        intercomAccessView.bind(with: output.isGrantedIntercomAccess, intercomCode: output.temporaryIntercomCode)
+        output.isGrantedIntercomAccess
+            .subscribe(
+                onNext: { [weak self] isGranted in
+                    self?.intercomAccessView.isAccessGranted = isGranted
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.temporaryIntercomCode
+            .subscribe(
+                onNext: { [weak self] code in
+                    self?.intercomAccessView.intercomCode = code
+                    
+                    UIView.animate(withDuration: 0.5) {
+                        self?.view.layoutIfNeeded()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
     private func calculateAccessViewHeight(countItems: Int) -> CGFloat {

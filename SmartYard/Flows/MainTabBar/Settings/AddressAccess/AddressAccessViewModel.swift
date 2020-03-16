@@ -40,7 +40,29 @@ class AddressAccessViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
-        loadData()
+        // MARK: Загрузка изначального стейта
+        
+        apiWrapper
+            .getCurrentIntercomState(flatId: flatId)
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] response in
+                    self?.intercomAccessCode.onNext(response.doorCode)
+                    
+                    let isAccessGranted: Bool = {
+                        guard let dateUntilClose = response.autoOpen.dateFromAPIString else {
+                            return false
+                        }
+                        
+                        return dateUntilClose > Date()
+                    }()
+                    
+                    self?.isGrantedIntercomGuestAccess.onNext(isAccessGranted)
+                }
+            )
+            .disposed(by: disposeBag)
         
         input.refreshIntercomTempCodeTrigger
             .asDriver()
@@ -58,7 +80,7 @@ class AddressAccessViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] result in
-                    self?.intercomAccessCode.onNext(result.code)
+                    self?.intercomAccessCode.onNext(result.code.string)
                 }
             )
             .disposed(by: disposeBag)
@@ -148,6 +170,14 @@ class AddressAccessViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { error in
+                    print(error)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             objectAddress: addressSubject.asDriver(onErrorJustReturn: nil),
             tempAccessContacts: tempAccessConstactsSubject.asDriver(onErrorJustReturn: []),
@@ -156,23 +186,6 @@ class AddressAccessViewModel: BaseViewModel {
             isGrantedIntercomAccess: isGrantedIntercomGuestAccess,
             isLoading: activityTracker.asDriver()
         )
-    }
-    
-    private func loadData() {
-        self.tempAccessConstactsSubject.onNext(self.loadTemporaryAccessContacts())
-        self.permanentAccessContactsSubject.onNext(self.loadPermanentAccessContacts())
-    }
-    
-    private func loadTemporaryAccessContacts() -> [AllowedPerson] {
-        return [
-            AllowedPerson(displayedName: nil, phoneNumber: "+7 (903) 343-17-40", logoImage: nil),
-            AllowedPerson(displayedName: nil, phoneNumber: "+7 (902) 741-82-90", logoImage: nil),
-            AllowedPerson(displayedName: nil, phoneNumber: "+7 (903) 944-47-50", logoImage: nil)
-        ]
-    }
-    
-    private func loadPermanentAccessContacts() -> [AllowedPerson] {
-        return []
     }
     
     private func openGuestAccess() {

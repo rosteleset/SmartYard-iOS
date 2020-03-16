@@ -8,6 +8,6 @@
 
 struct ResetCodeResponseData: Decodable {
     
-    let code: String
+    let code: Int
     
 }
