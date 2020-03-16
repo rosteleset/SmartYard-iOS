@@ -40,10 +40,8 @@ class AvailableServicesViewModel: BaseViewModel {
                 )
             )
         }
-        
-        serviceModels = serviceModels.sorted(by: { $0.state < $1.state })
-        
-        self.services = serviceModels
+
+        self.services = serviceModels.sorted(by: { $0.state < $1.state })
     }
     
     func transform(input: Input) -> Output {

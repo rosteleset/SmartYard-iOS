@@ -44,6 +44,14 @@ class AddressConfirmationViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output()
     }
     
@@ -54,6 +62,7 @@ extension AddressConfirmationViewModel {
     struct Input {
         let confirmByCourierTapped: Driver<Void>
         let confirmInOfficeTrigger: Driver<Void>
+        let backTrigger: Driver<Void>
     }
     
     struct Output {

@@ -16,6 +16,7 @@ class AddressConfirmationViewController: BaseViewController {
     
     @IBOutlet private weak var officeView: ServiceFromOfficeView!
     @IBOutlet private weak var courierView: ServiceFromCourierView!
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
     private let viewModel: AddressConfirmationViewModel
     
@@ -66,7 +67,8 @@ class AddressConfirmationViewController: BaseViewController {
         
         let input = AddressConfirmationViewModel.Input(
             confirmByCourierTapped: courierView.rx.requestButtonTapped.asDriverOnErrorJustComplete(),
-            confirmInOfficeTrigger: officeView.rx.doSoButtonTapped.asDriverOnErrorJustComplete()
+            confirmInOfficeTrigger: officeView.rx.doSoButtonTapped.asDriverOnErrorJustComplete(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
         _ = viewModel.transform(input)

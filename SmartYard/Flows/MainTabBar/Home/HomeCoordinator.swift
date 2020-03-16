@@ -107,7 +107,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             let vc = AddressConfirmationViewController(viewModel: vm)
             
-            return .set([vc], animation: .fade)
+            return .push(vc)
         
         case .back:
             return .pop(animation: .default)

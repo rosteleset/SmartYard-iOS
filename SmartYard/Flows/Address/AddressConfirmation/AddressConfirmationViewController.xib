@@ -21,6 +21,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressConfirmationViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="courierView" destination="mow-Yx-2Q3" id="1tX-qN-5CY"/>
+                <outlet property="fakeNavBar" destination="yMA-ak-ijO" id="Jsd-YA-tST"/>
                 <outlet property="officeView" destination="BRa-A7-Ebr" id="zgl-Oz-N7O"/>
                 <outlet property="segmentControl" destination="Tbm-7a-VCj" id="STT-LN-Dus"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -35,7 +36,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4bS-gB-f4A">
-                    <rect key="frame" x="0.0" y="44" width="414" height="161"/>
+                    <rect key="frame" x="0.0" y="88" width="414" height="161"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Как вам будет удобнее это сделать?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kwu-21-IKd">
                             <rect key="frame" x="40" y="108.5" width="219" height="18"/>
@@ -61,7 +62,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jvI-aM-Z2y" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="205" width="414" height="657"/>
+                    <rect key="frame" x="0.0" y="249" width="414" height="613"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tbm-7a-VCj" customClass="SmartYardSegmentedControl" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="67"/>
@@ -71,11 +72,11 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BRa-A7-Ebr" customClass="ServiceFromOfficeView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="67" width="414" height="590"/>
+                            <rect key="frame" x="0.0" y="67" width="414" height="546"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mow-Yx-2Q3" customClass="ServiceFromCourierView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="67" width="414" height="590"/>
+                            <rect key="frame" x="0.0" y="67" width="414" height="546"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                     </subviews>
@@ -94,19 +95,29 @@
                         <constraint firstAttribute="bottom" secondItem="mow-Yx-2Q3" secondAttribute="bottom" id="scS-qh-s4d"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yMA-ak-ijO" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="Y9C-af-Ew1"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="yMA-ak-ijO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="59a-Ze-GRd"/>
                 <constraint firstAttribute="bottom" secondItem="NbX-aL-bqo" secondAttribute="bottom" id="BmZ-Tb-Prm"/>
                 <constraint firstItem="jvI-aM-Z2y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="IuP-3k-uji"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="jvI-aM-Z2y" secondAttribute="bottom" id="KMX-jR-9Re"/>
+                <constraint firstItem="4bS-gB-f4A" firstAttribute="top" secondItem="yMA-ak-ijO" secondAttribute="bottom" id="T6I-6A-Y0C"/>
                 <constraint firstItem="NbX-aL-bqo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="U09-Pe-n7J"/>
                 <constraint firstItem="4bS-gB-f4A" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="XWL-fd-FPe"/>
+                <constraint firstItem="yMA-ak-ijO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="c1G-JD-6Xs"/>
                 <constraint firstItem="4bS-gB-f4A" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="h9z-IQ-itk"/>
                 <constraint firstAttribute="trailing" secondItem="NbX-aL-bqo" secondAttribute="trailing" id="j5H-wQ-BwG"/>
                 <constraint firstItem="NbX-aL-bqo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="oTw-D0-fbW"/>
                 <constraint firstItem="jvI-aM-Z2y" firstAttribute="top" secondItem="4bS-gB-f4A" secondAttribute="bottom" id="t29-yk-VMw"/>
-                <constraint firstItem="4bS-gB-f4A" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="vNc-87-Ih7"/>
+                <constraint firstItem="yMA-ak-ijO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="whg-oL-qXP"/>
                 <constraint firstAttribute="trailing" secondItem="jvI-aM-Z2y" secondAttribute="trailing" id="xGC-fM-OZF"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
