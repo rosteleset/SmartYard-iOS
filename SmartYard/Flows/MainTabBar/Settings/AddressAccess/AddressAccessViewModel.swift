@@ -65,6 +65,14 @@ class AddressAccessViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Есть у нас права владельца или нет (от этого зависит, показываем список постоянного доступа или нет)
+        
+        let isOwnerSubject = BehaviorSubject<Bool>(value: false)
+        
+        // MARK: Есть ли в доме ворота / калитки (от этого зависит, показываем список временного доступа или нет)
+        
+        let hasGatesSubject = BehaviorSubject<Bool>(value: false)
+        
         // MARK: Загрузка номеров, которым предоставлен доступ
         
         apiWrapper
@@ -73,32 +81,44 @@ class AddressAccessViewModel: BaseViewModel {
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .map { [weak self] addresses in
-                addresses.first { $0.flatId == self?.flatId }?.roommates ?? []
+                addresses.first { $0.flatId == self?.flatId }
+            }
+            .ignoreNil()
+            .do(
+                onNext: { address in
+                    isOwnerSubject.onNext((address.flatOwner ?? false) || (address.contractOwner ?? false))
+                    hasGatesSubject.onNext(address.hasGates ?? false)
+                }
+            )
+            .map { address -> ([AllowedPerson], [AllowedPerson]) in
+                let tempAccessRoommates: [AllowedPerson] = address.roommates
+                    .filter { $0.type == .outer && $0.expire > Date() }
+                    .compactMap { roommate in
+                        guard let rawNumber = roommate.phone.rawPhoneNumberFromFullNumber else {
+                            return nil
+                        }
+                        
+                        return AllowedPerson(displayedName: nil, rawNumber: rawNumber, logoImage: nil)
+                    }
+                
+                let permanentAccessRoommates: [AllowedPerson] = address.roommates
+                    .filter { ($0.type == .inner || $0.type == .owner) && $0.expire > Date() }
+                    .compactMap { roommate in
+                        guard let rawNumber = roommate.phone.rawPhoneNumberFromFullNumber else {
+                            return nil
+                        }
+                        
+                        return AllowedPerson(displayedName: nil, rawNumber: rawNumber, logoImage: nil)
+                    }
+                
+                return (tempAccessRoommates, permanentAccessRoommates)
             }
             .drive(
                 onNext: { [weak self] roommates in
-                    let tempAccessRoommates: [AllowedPerson] = roommates
-                        .filter { $0.type == .outer && $0.expire > Date() }
-                        .compactMap { roommate in
-                            guard let rawNumber = roommate.phone.rawPhoneNumberFromFullNumber else {
-                                return nil
-                            }
-                            
-                            return AllowedPerson(displayedName: nil, rawNumber: rawNumber, logoImage: nil)
-                        }
+                    let (temp, permanent) = roommates
                     
-                    let permanentAccessRoommates: [AllowedPerson] = roommates
-                        .filter { ($0.type == .inner || $0.type == .owner) && $0.expire > Date() }
-                        .compactMap { roommate in
-                            guard let rawNumber = roommate.phone.rawPhoneNumberFromFullNumber else {
-                                return nil
-                            }
-                            
-                            return AllowedPerson(displayedName: nil, rawNumber: rawNumber, logoImage: nil)
-                        }
-                    
-                    self?.tempAccessContactsSubject.onNext(tempAccessRoommates)
-                    self?.permanentAccessContactsSubject.onNext(permanentAccessRoommates)
+                    self?.tempAccessContactsSubject.onNext(temp)
+                    self?.permanentAccessContactsSubject.onNext(permanent)
                 }
             )
             .disposed(by: disposeBag)
@@ -223,7 +243,9 @@ class AddressAccessViewModel: BaseViewModel {
             permanentAccessContacts: permanentAccessContactsSubject.asDriver(onErrorJustReturn: []),
             temporaryIntercomCode: intercomAccessCode,
             isGrantedIntercomAccess: isGrantedIntercomGuestAccess,
-            isLoading: activityTracker.asDriver()
+            isLoading: activityTracker.asDriver(),
+            hasGates: hasGatesSubject.asDriver(onErrorJustReturn: false),
+            isOwner: isOwnerSubject.asDriver(onErrorJustReturn: false)
         )
     }
     
@@ -374,6 +396,8 @@ extension AddressAccessViewModel {
         let temporaryIntercomCode: PublishSubject<String?>
         let isGrantedIntercomAccess: PublishSubject<Bool>
         let isLoading: Driver<Bool>
+        let hasGates: Driver<Bool>
+        let isOwner: Driver<Bool>
     }
     
 }
