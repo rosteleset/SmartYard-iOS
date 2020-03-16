@@ -19,8 +19,8 @@ class AddressAccessViewModel: BaseViewModel {
     private let addressSubject: BehaviorSubject<String?>
     private let tempAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let permanentAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
-    private let intercomAccessCode = PublishSubject<String?>()
-    private let isGrantedIntercomGuestAccess = PublishSubject<Bool>()
+    private let intercomAccessCode = BehaviorSubject<String?>(value: nil)
+    private let isGrantedIntercomGuestAccess = BehaviorSubject<Bool>(value: false)
     
     private let address: String
     private let flatId: String
@@ -241,8 +241,8 @@ class AddressAccessViewModel: BaseViewModel {
             objectAddress: addressSubject.asDriver(onErrorJustReturn: nil),
             tempAccessContacts: tempAccessContactsSubject.asDriver(onErrorJustReturn: []),
             permanentAccessContacts: permanentAccessContactsSubject.asDriver(onErrorJustReturn: []),
-            temporaryIntercomCode: intercomAccessCode,
-            isGrantedIntercomAccess: isGrantedIntercomGuestAccess,
+            temporaryIntercomCode: intercomAccessCode.asDriver(onErrorJustReturn: nil),
+            isGrantedIntercomAccess: isGrantedIntercomGuestAccess.asDriver(onErrorJustReturn: false),
             isLoading: activityTracker.asDriver(),
             hasGates: hasGatesSubject.asDriver(onErrorJustReturn: false),
             isOwner: isOwnerSubject.asDriver(onErrorJustReturn: false)
@@ -393,8 +393,8 @@ extension AddressAccessViewModel {
         let objectAddress: Driver<String?>
         let tempAccessContacts: Driver<[AllowedPerson]>
         let permanentAccessContacts: Driver<[AllowedPerson]>
-        let temporaryIntercomCode: PublishSubject<String?>
-        let isGrantedIntercomAccess: PublishSubject<Bool>
+        let temporaryIntercomCode: Driver<String?>
+        let isGrantedIntercomAccess: Driver<Bool>
         let isLoading: Driver<Bool>
         let hasGates: Driver<Bool>
         let isOwner: Driver<Bool>

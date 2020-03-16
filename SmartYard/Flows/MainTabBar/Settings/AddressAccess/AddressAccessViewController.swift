@@ -15,10 +15,14 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var addressLabel: UILabel!
-    @IBOutlet private weak var intercomAccessView: IntercomTemporaryAccessView!
-    @IBOutlet private weak var temporaryAccessView: AccessView!
-    @IBOutlet private weak var permanentAccessView: AccessView!
     @IBOutlet private weak var addressView: FullRoundedView!
+    @IBOutlet private weak var intercomAccessView: IntercomTemporaryAccessView!
+    
+    @IBOutlet private weak var temporaryAccessContainer: UIView!
+    @IBOutlet private weak var temporaryAccessView: AccessView!
+    
+    @IBOutlet private weak var permanentAccessContainer: UIView!
+    @IBOutlet private weak var permanentAccessView: AccessView!
     
     var loader: JGProgressHUD?
     
@@ -125,7 +129,7 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.isGrantedIntercomAccess
-            .subscribe(
+            .drive(
                 onNext: { [weak self] isGranted in
                     self?.intercomAccessView.isAccessGranted = isGranted
                 }
@@ -133,11 +137,35 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.temporaryIntercomCode
-            .subscribe(
+            .drive(
                 onNext: { [weak self] code in
                     self?.intercomAccessView.intercomCode = code
                     
-                    UIView.animate(withDuration: 0.5) {
+                    UIView.animate(withDuration: 0.25) {
+                        self?.view.layoutIfNeeded()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.hasGates
+            .drive(
+                onNext: { [weak self] hasGates in
+                    self?.temporaryAccessContainer.isHidden = !hasGates
+                    
+                    UIView.animate(withDuration: 0.25) {
+                        self?.view.layoutIfNeeded()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isOwner
+            .drive(
+                onNext: { [weak self] isOwner in
+                    self?.permanentAccessContainer.isHidden = !isOwner
+                    
+                    UIView.animate(withDuration: 0.25) {
                         self?.view.layoutIfNeeded()
                     }
                 }
