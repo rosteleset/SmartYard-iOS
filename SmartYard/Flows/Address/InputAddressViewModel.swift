@@ -196,8 +196,8 @@ class InputAddressViewModel: BaseViewModel {
         
         withoutHouseId
             .drive(
-                onNext: { [weak self] _ in
-                    self?.router.trigger(.unavailableServices)
+                onNext: { [weak self] address in
+                    self?.router.trigger(.unavailableServices(address: address))
                 }
             )
             .disposed(by: disposeBag)
@@ -241,7 +241,7 @@ class InputAddressViewModel: BaseViewModel {
                     }
 
                     guard !services.isEmpty else {
-                        self.router.trigger(.unavailableServices)
+                        self.router.trigger(.unavailableServices(address: address))
                         return
                     }
 

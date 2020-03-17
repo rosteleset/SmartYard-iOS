@@ -14,16 +14,27 @@ import RxSwift
 class ServicesActivationRequestViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
+    
     private let apiWrapper: APIWrapper
+    private let issueService: IssueService
     
+    private let address: String
+
     private let serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: [])
-    
-    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper) {
+
+    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, issueService: IssueService, address: String) {
         self.router = router
         self.apiWrapper = apiWrapper
+        self.issueService = issueService
+        self.address = address
     }
     
     func transform(input: Input) -> Output {
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
+        
+        let isSelectedSomeServiceSubject = BehaviorSubject<Bool>(value: false)
+        
         input.viewWillAppearTrigger
             .drive(
                 onNext: { [weak self] _ in
@@ -37,9 +48,30 @@ class ServicesActivationRequestViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.sendRequestTapped
+            .withLatestFrom(serviceItemsSubject.asDriver(onErrorJustReturn: []))
+            .filter { !$0.isEmpty }
+            .flatMapLatest { [weak self] servicesData -> Driver<CreateIssueResponseData?> in
+                guard let self = self, let servicesData = try? self.serviceItemsSubject.value() else {
+                    return .empty()
+                }
+                
+                let services = servicesData
+                    .filter { $0.state == .checkedActive }
+                    .compactMap { serviceItem -> SettingsServiceType? in
+                        SettingsServiceType(rawValue: serviceItem.icon)
+                    }
+                
+                return
+                    self.issueService.sendUnavailableAddressConnectionIssue(address: self.address, services: services)
+                        .trackError(errorTracker)
+                        .trackActivity(activityTracker)
+                        .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .mapToVoid()
             .drive(
-                onNext: {
-                    // TODO
+                onNext: { [weak self] in
+                    self?.router.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
@@ -69,7 +101,19 @@ class ServicesActivationRequestViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output(serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []))
+        serviceItemsSubject
+            .asDriver(onErrorJustReturn: [])
+            .drive(
+                onNext: { values in
+                    isSelectedSomeServiceSubject.onNext(!values.filter {$0.state == .checkedActive }.isEmpty)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        return Output(
+            serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []),
+            isSelectedSomeService: isSelectedSomeServiceSubject.asDriver(onErrorJustReturn: false)
+        )
     }
     
     private func getServiceModels() -> [ServiceModel] {
@@ -94,6 +138,7 @@ extension ServicesActivationRequestViewModel {
     
     struct Output {
         let serviceItems: Driver<[ServiceModel]>
+        let isSelectedSomeService: Driver<Bool>
     }
     
 }

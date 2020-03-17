@@ -94,18 +94,20 @@ class AddressesListViewModel: BaseViewModel {
             .do(
                 onNext: { [weak self] args in
                     let (newData, expansionStateDict) = args
-                    
                     let (approvedAddresses, _) = newData
-                    self?.updateSectionExpansionStates(expansionStateDict: expansionStateDict, newData: approvedAddresses)
+                    
+                    self?.updateSectionExpansionStates(
+                        expansionStateDict: expansionStateDict,
+                        newData: approvedAddresses
+                    )
                 }
             )
             .drive(
                 onNext: { [weak self] args in
                     let (newData, _) = args
                     let (approvedAddresses, unapprovedAddresses) = newData
-                    // TODO: нужно добавить загрузку адресов, которые ожидают подтверждения,
-                    // затем этот список по аналогии проверить на пустоту
-                    guard !approvedAddresses.isEmpty || !unapprovedAddresses.isEmpty else {
+                    
+                    guard !approvedAddresses.isEmpty /*|| !unapprovedAddresses.isEmpty */else {
                         self?.router.trigger(.inputContract)
                         return
                     }

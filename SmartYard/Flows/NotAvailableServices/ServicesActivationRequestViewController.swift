@@ -57,6 +57,14 @@ class ServicesActivationRequestViewController: BaseViewController {
             .drive(itemsProxy)
             .disposed(by: disposeBag)
         
+        output.isSelectedSomeService
+            .drive(
+                onNext: { [weak self] isSelected in
+                    self?.sendRequestButton.isEnabled = isSelected
+                }
+            )
+            .disposed(by: disposeBag)
+        
         itemsProxy
             .subscribe(
                 onNext: { [weak self] _ in
