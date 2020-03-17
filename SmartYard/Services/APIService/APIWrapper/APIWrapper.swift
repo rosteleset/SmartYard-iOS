@@ -238,6 +238,30 @@ class APIWrapper {
         }
     }
     
+    func resendSMS(flatId: String, guestPhone: String) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = ResendRequest(accessToken: accessToken, flatId: flatId, guestPhone: guestPhone)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performResendRequest(request) { result in
+                switch result {
+                case .success: single(.success(()))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
     // User
     
     func addMyPhone(login: String, password: String, comment: String?, useForNotifications: Bool?) -> Single<Void?> {

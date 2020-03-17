@@ -87,6 +87,17 @@ class APIService {
         )
     }
     
+    /// Запрос на получение списка адресов
+    func performResendRequest(
+        _ request: ResendRequest,
+        completion: ((Swift.Result<Void, Error>) -> Void)?
+    ) {
+        provider.request(
+            .resend(request: request),
+            completion: createEmptyInnerCompletionBlock(from: completion)
+        )
+    }
+    
     // User
     
     /// Запрос привязки номера к договору

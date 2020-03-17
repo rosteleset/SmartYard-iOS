@@ -184,25 +184,59 @@ class AddressAccessViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.smsToTempContactTrigger
+            .withLatestFrom(tempAccessContactsSubject.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .flatMapLatest { [weak self] args -> Driver<Void?> in
+                let (index, contacts) = args
+                
+                guard let self = self, let uIndex = index, let match = contacts[safe: uIndex] else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .resendSMS(flatId: self.flatId, guestPhone: match.apiNumber)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] index in
-                    guard let self = self, let index = index else {
-                        return
-                    }
-                    
-                    self.sendSmsToTemporaryAccessContact(index: index)
+                onNext: { [weak self] in
+                    self?.router.trigger(
+                        .dialog(
+                            title: "Информация для гостя успешно отправлена!",
+                            message: nil,
+                            actions: [UIAlertAction(title: "OK", style: .default, handler: nil)]
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
         
         input.smsToPermanentContactTrigger
+            .withLatestFrom(permanentAccessContactsSubject.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .flatMapLatest { [weak self] args -> Driver<Void?> in
+                let (index, contacts) = args
+                
+                guard let self = self, let uIndex = index, let match = contacts[safe: uIndex] else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .resendSMS(flatId: self.flatId, guestPhone: match.apiNumber)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] index in
-                    guard let self = self, let index = index else {
-                        return
-                    }
-                    
-                    self.sendSmsToPermanentAccessContact(index: index)
+                onNext: { [weak self] in
+                    self?.router.trigger(
+                        .dialog(
+                            title: "Информация для гостя успешно отправлена!",
+                            message: nil,
+                            actions: [UIAlertAction(title: "OK", style: .default, handler: nil)]
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -351,20 +385,6 @@ class AddressAccessViewModel: BaseViewModel {
                 actions: [cancelAction, okAction]
             )
         )
-    }
-    
-    private func sendSmsToTemporaryAccessContact(index: Int) {
-        print("SEND SMS TO USER WITH INDEX: \(index)")
-        sendSMS(number: "+7-908-474-27-41")
-    }
-    
-    private func sendSmsToPermanentAccessContact(index: Int) {
-        print("SEND SMS TO USER WITH INDEX: \(index)")
-        sendSMS(number: "+7-908-474-27-41")
-    }
-    
-    private func sendSMS(number: String) {
-        // TODO
     }
     
     private func deleteTempAccessContact(index: Int) {

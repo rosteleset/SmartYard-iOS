@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8428672E24051F6A004D3F26 /* APIPaymentsListAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428672D24051F6A004D3F26 /* APIPaymentsListAddress.swift */; };
 		8428673024051F7F004D3F26 /* APIPaymentsListAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428672F24051F7F004D3F26 /* APIPaymentsListAccount.swift */; };
+		842B9C012420FBE600C86017 /* ResendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842B9C002420FBE600C86017 /* ResendRequest.swift */; };
 		843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A7A7E23F29A2900840E51 /* FakeNavBar.swift */; };
 		843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843A7A8023F29A3400840E51 /* FakeNavBar.xib */; };
 		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
@@ -304,6 +305,7 @@
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8428672D24051F6A004D3F26 /* APIPaymentsListAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIPaymentsListAddress.swift; sourceTree = "<group>"; };
 		8428672F24051F7F004D3F26 /* APIPaymentsListAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIPaymentsListAccount.swift; sourceTree = "<group>"; };
+		842B9C002420FBE600C86017 /* ResendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendRequest.swift; sourceTree = "<group>"; };
 		843A7A7E23F29A2900840E51 /* FakeNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNavBar.swift; sourceTree = "<group>"; };
 		843A7A8023F29A3400840E51 /* FakeNavBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FakeNavBar.xib; sourceTree = "<group>"; };
 		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
@@ -616,6 +618,14 @@
 				E94B6C7E2406AB3D00FD9F65 /* IssuesListConnect */,
 			);
 			path = Issues;
+			sourceTree = "<group>";
+		};
+		842B9BFF2420FBD400C86017 /* Resend */ = {
+			isa = PBXGroup;
+			children = (
+				842B9C002420FBE600C86017 /* ResendRequest.swift */,
+			);
+			path = Resend;
 			sourceTree = "<group>";
 		};
 		843A7A7D23F29A0D00840E51 /* FakeNavBar */ = {
@@ -1021,6 +1031,7 @@
 				8482983E2405658A00E81620 /* ResetCode */,
 				E94B6C462404F19D00FD9F65 /* GetSettingsList */,
 				8482983B2405658A00E81620 /* GetAddressList */,
+				842B9BFF2420FBD400C86017 /* Resend */,
 			);
 			path = Address;
 			sourceTree = "<group>";
@@ -2402,6 +2413,7 @@
 				8428673024051F7F004D3F26 /* APIPaymentsListAccount.swift in Sources */,
 				E94B6C812406AC2100FD9F65 /* CreateIssueRequest.swift in Sources */,
 				E94B6C7D2406992400FD9F65 /* APIStreet.swift in Sources */,
+				842B9C012420FBE600C86017 /* ResendRequest.swift in Sources */,
 				E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */,
 				E94B6C4A2404F2D100FD9F65 /* GetSettingsListResponseData.swift in Sources */,
 				E9A1D78323F27AE500234B2A /* AddressConfirmationViewController.swift in Sources */,
