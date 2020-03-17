@@ -9,14 +9,17 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import JGProgressHUD
 
-class AddressConfirmationViewController: BaseViewController {
+class AddressConfirmationViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var segmentControl: SmartYardSegmentedControl!
     
     @IBOutlet private weak var officeView: ServiceFromOfficeView!
     @IBOutlet private weak var courierView: ServiceFromCourierView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
+    
+    var loader: JGProgressHUD?
     
     private let viewModel: AddressConfirmationViewModel
     
@@ -71,7 +74,16 @@ class AddressConfirmationViewController: BaseViewController {
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
-        _ = viewModel.transform(input)
+        let output = viewModel.transform(input)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: "Создание заявки")
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

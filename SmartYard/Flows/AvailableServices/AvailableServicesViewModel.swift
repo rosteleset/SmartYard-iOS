@@ -74,7 +74,7 @@ class AvailableServicesViewModel: BaseViewModel {
                     let selectedServices = data.filter { $0.state == .checkedActive }
                     
                     guard !selectedServices.isEmpty else {
-                        self.router.trigger(.confirmAddress)
+                        self.router.trigger(.confirmAddress(address: self.address))
                         return
                     }
                     

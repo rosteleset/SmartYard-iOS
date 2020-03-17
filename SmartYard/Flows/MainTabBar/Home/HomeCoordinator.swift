@@ -16,7 +16,7 @@ enum HomeRoute: Route {
     case inputAddress
     case availableServices(address: String, services: [APIServiceModel])
     case unavailableServices(address: String)
-    case confirmAddress
+    case confirmAddress(address: String)
     case back
     
 }
@@ -99,11 +99,12 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             return .push(vc)
             
-        case .confirmAddress:
+        case let .confirmAddress(address):
             let vm = AddressConfirmationViewModel(
                 router: weakRouter,
                 apiWrapper: apiWrapper,
-                issueService: issueService
+                issueService: issueService,
+                address: address
             )
             
             let vc = AddressConfirmationViewController(viewModel: vm)

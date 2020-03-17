@@ -9,8 +9,9 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import JGProgressHUD
 
-class ServicesActivationRequestViewController: BaseViewController {
+class ServicesActivationRequestViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var sendRequestButton: BlueButton!
@@ -20,6 +21,8 @@ class ServicesActivationRequestViewController: BaseViewController {
     private let itemsProxy = BehaviorSubject<[ServiceModel]>(value: [])
     
     private let serviceStateChanged = PublishSubject<Int?>()
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: ServicesActivationRequestViewModel) {
         self.viewModel = viewModel
@@ -61,6 +64,19 @@ class ServicesActivationRequestViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] isSelected in
                     self?.sendRequestButton.isEnabled = isSelected
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
                 }
             )
             .disposed(by: disposeBag)

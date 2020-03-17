@@ -112,7 +112,8 @@ class ServicesActivationRequestViewModel: BaseViewModel {
         
         return Output(
             serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []),
-            isSelectedSomeService: isSelectedSomeServiceSubject.asDriver(onErrorJustReturn: false)
+            isSelectedSomeService: isSelectedSomeServiceSubject.asDriver(onErrorJustReturn: false),
+            isLoading: activityTracker.asDriver()
         )
     }
     
@@ -139,6 +140,7 @@ extension ServicesActivationRequestViewModel {
     struct Output {
         let serviceItems: Driver<[ServiceModel]>
         let isSelectedSomeService: Driver<Bool>
+        let isLoading: Driver<Bool>
     }
     
 }
