@@ -26,6 +26,16 @@ extension NSError {
             )
         }()
         
+        static let unknownError: NSError = {
+            let errorUserInfo = [NSLocalizedDescriptionKey: "Неизвестная ошибка"]
+            
+            return NSError(
+                domain: domain,
+                code: 1002,
+                userInfo: errorUserInfo
+            )
+        }()
+        
     }
     
 }

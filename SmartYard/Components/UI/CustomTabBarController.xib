@@ -30,7 +30,7 @@
                         <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </userDefinedRuntimeAttribute>
                     <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                        <color key="value" red="0.87450980392156863" green="0.87450980392156863" blue="0.87450980392156863" alpha="0.5" colorSpace="calibratedRGB"/>
+                        <color key="value" red="0.87450980392156863" green="0.87450980392156863" blue="0.87450980392156863" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                     </userDefinedRuntimeAttribute>
                 </userDefinedRuntimeAttributes>
             </tabBar>

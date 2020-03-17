@@ -8,8 +8,27 @@
 
 import UIKit
 import Contacts
+import RxSwift
+import RxCocoa
 
 extension AddressAccessViewModel {
+    
+    func hasAccessToContacts() -> Single<Void?> {
+        return Single.create(
+            subscribe: { single in
+                CNContactStore().requestAccess(for: .contacts) { isPermissionGranted, error in
+                    guard isPermissionGranted else {
+                        single(.error(error ?? NSError.GenericError.unknownError))
+                        return
+                    }
+                    
+                    single(.success(()))
+                }
+                
+                return Disposables.create()
+            }
+        )
+    }
     
     func getContacts() -> [CNContact] {
         let contactStore = CNContactStore()
@@ -53,19 +72,22 @@ extension AddressAccessViewModel {
         return results
     }
     
-    func findContact(matchingNumber number: String) -> CNContact? {
+    func findContact(matchingNumber number: String, inList list: [CNContact]) -> CNContact? {
         let rawNumber = number.rawPhoneNumberFromFullNumber
         
-        let match = userContacts.first { contact in
+        let match = list.first { contact in
             contact.phoneNumbers.contains { $0.value.stringValue.rawPhoneNumberFromFullNumber == rawNumber }
         }
         
         return match
     }
     
-    func fillAllowedPersonsWithContactData(_ persons: [AllowedPerson]) -> [AllowedPerson] {
+    func fillAllowedPersonsWithContactData(
+        _ persons: [AllowedPerson],
+        contactList list: [CNContact]
+    ) -> [AllowedPerson] {
         return persons.map {
-            guard let match = findContact(matchingNumber: $0.rawNumber) else {
+            guard let match = findContact(matchingNumber: $0.rawNumber, inList: list) else {
                 return $0
             }
             
