@@ -35,7 +35,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fNa-ka-WMv">
-                                <rect key="frame" x="65" y="10.5" width="188" height="23"/>
+                                <rect key="frame" x="68" y="10.5" width="182" height="23"/>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                                 <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -59,8 +59,8 @@
                             <constraint firstItem="GwR-jd-bFn" firstAttribute="leading" secondItem="Tdf-XX-hRL" secondAttribute="leading" constant="24" id="f4X-w0-ByH"/>
                             <constraint firstItem="hDp-TG-q0z" firstAttribute="centerY" secondItem="Tdf-XX-hRL" secondAttribute="centerY" id="jin-Rz-usm"/>
                             <constraint firstAttribute="trailing" secondItem="hDp-TG-q0z" secondAttribute="trailing" constant="24" id="nfb-Dz-d14"/>
-                            <constraint firstItem="fNa-ka-WMv" firstAttribute="leading" secondItem="GwR-jd-bFn" secondAttribute="trailing" constant="9" id="qBx-z4-BCN"/>
-                            <constraint firstItem="hDp-TG-q0z" firstAttribute="leading" secondItem="fNa-ka-WMv" secondAttribute="trailing" constant="9" id="st9-lE-JnE"/>
+                            <constraint firstItem="fNa-ka-WMv" firstAttribute="leading" secondItem="GwR-jd-bFn" secondAttribute="trailing" constant="12" id="qBx-z4-BCN"/>
+                            <constraint firstItem="hDp-TG-q0z" firstAttribute="leading" secondItem="fNa-ka-WMv" secondAttribute="trailing" constant="12" id="st9-lE-JnE"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QQk-OR-8MS">

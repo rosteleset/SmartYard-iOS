@@ -10,6 +10,7 @@ import Foundation
 import XCoordinator
 import RxSwift
 import RxCocoa
+import Contacts
 
 // swiftlint:disable:next type_body_length
 class AddressAccessViewModel: BaseViewModel {
@@ -30,6 +31,8 @@ class AddressAccessViewModel: BaseViewModel {
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
     
+    private(set) var userContacts = [CNContact]()
+    
     init(router: WeakRouter<SettingsRoute>, address: String, flatId: String, apiWrapper: APIWrapper) {
         self.router = router
         self.address = address
@@ -37,9 +40,12 @@ class AddressAccessViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
         
         addressSubject = BehaviorSubject<String?>(value: address)
+        
+        super.init()
+        userContacts = getContacts()
     }
     
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
         // MARK: Загрузка изначального стейта
         
@@ -269,10 +275,22 @@ class AddressAccessViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        let mappedTempContacts = tempAccessContactsSubject
+            .asDriver(onErrorJustReturn: [])
+            .map { [weak self] persons -> [AllowedPerson] in
+                self?.fillAllowedPersonsWithContactData(persons) ?? []
+            }
+        
+        let mappedPermanentContacts = permanentAccessContactsSubject
+            .asDriver(onErrorJustReturn: [])
+            .map { [weak self] persons -> [AllowedPerson] in
+                self?.fillAllowedPersonsWithContactData(persons) ?? []
+            }
+        
         return Output(
             objectAddress: addressSubject.asDriver(onErrorJustReturn: nil),
-            tempAccessContacts: tempAccessContactsSubject.asDriver(onErrorJustReturn: []),
-            permanentAccessContacts: permanentAccessContactsSubject.asDriver(onErrorJustReturn: []),
+            tempAccessContacts: mappedTempContacts,
+            permanentAccessContacts: mappedPermanentContacts,
             temporaryIntercomCode: intercomAccessCode.asDriver(onErrorJustReturn: nil),
             isGrantedIntercomAccess: isGrantedIntercomGuestAccess.asDriver(onErrorJustReturn: false),
             isLoading: activityTracker.asDriver(),

@@ -78,6 +78,7 @@
 		84854B6323FD7FDE001B44F2 /* AllowedPersonDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B6223FD7FDE001B44F2 /* AllowedPersonDataItem.swift */; };
 		84854B6523FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B6423FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift */; };
 		84854B6723FD809E001B44F2 /* AllowedPersonSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84854B6623FD809E001B44F2 /* AllowedPersonSectionModel.swift */; };
+		84878DE52420DB3B004C11B2 /* AddressAccessViewModel+ContactParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84878DE42420DB3B004C11B2 /* AddressAccessViewModel+ContactParsing.swift */; };
 		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
 		84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */; };
@@ -369,6 +370,7 @@
 		84854B6223FD7FDE001B44F2 /* AllowedPersonDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPersonDataItem.swift; sourceTree = "<group>"; };
 		84854B6423FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPersonDataItemIdentity.swift; sourceTree = "<group>"; };
 		84854B6623FD809E001B44F2 /* AllowedPersonSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPersonSectionModel.swift; sourceTree = "<group>"; };
+		84878DE42420DB3B004C11B2 /* AddressAccessViewModel+ContactParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddressAccessViewModel+ContactParsing.swift"; sourceTree = "<group>"; };
 		84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderCell.swift; sourceTree = "<group>"; };
 		84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderCell.xib; sourceTree = "<group>"; };
 		84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelCell.swift; sourceTree = "<group>"; };
@@ -1564,6 +1566,7 @@
 				E94057F723F6721F00623746 /* AddressAccessViewController.swift */,
 				E94057F823F6721F00623746 /* AddressAccessViewController.xib */,
 				E94057FB23F6724100623746 /* AddressAccessViewModel.swift */,
+				84878DE42420DB3B004C11B2 /* AddressAccessViewModel+ContactParsing.swift */,
 			);
 			path = AddressAccess;
 			sourceTree = "<group>";
@@ -2497,6 +2500,7 @@
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
 				8482982224054D4B00E81620 /* APICCTV.swift in Sources */,
 				848298372405655600E81620 /* RegisterPushTokenRequest.swift in Sources */,
+				84878DE52420DB3B004C11B2 /* AddressAccessViewModel+ContactParsing.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
 				848298472405658A00E81620 /* OpenDoorRequest.swift in Sources */,
 				847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */,
