@@ -19,26 +19,28 @@ class IntercomTemporaryAccessView: PMNibLinkableView {
     @IBOutlet private weak var codeLabel: UILabel!
     @IBOutlet private weak var containerView: FullRoundedView!
     
+    @IBOutlet private var guestAccessToSuperviewTopConstraint: NSLayoutConstraint!
+    
     private let disposeBag = DisposeBag()
+    
+    var isAccessGranted: Bool = false {
+        didSet {
+            openButton.isEnabled = !isAccessGranted
+        }
+    }
+    
+    var intercomCode: String? = nil {
+        didSet {
+            codeLabel.text = intercomCode
+            guestAccessToSuperviewTopConstraint.isActive = intercomCode.isNilOrEmpty
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         containerView.borderWidth = 1
         containerView.borderColor = UIColor.SmartYard.grayBorder
-    }
-    
-    func bind(with accessGranted: PublishSubject<Bool>, intercomCode: PublishSubject<String?>) {
-        accessGranted
-            .asDriver(onErrorJustReturn: false)
-            .not()
-            .drive(openButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-        
-        intercomCode
-            .asDriver(onErrorJustReturn: "")
-            .drive(codeLabel.rx.text)
-            .disposed(by: disposeBag)
     }
     
 }

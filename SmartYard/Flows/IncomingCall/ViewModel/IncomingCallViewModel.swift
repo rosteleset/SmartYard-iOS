@@ -426,30 +426,50 @@ class IncomingCallViewModel: BaseViewModel {
     private func openTheDoor(call: Call) {
         isDoorBeingOpened.onNext(true)
         
-        do {
-            try call.sendDtmfs(dtmfs: self.callPayload.dtmf)
-        } catch {
-            isDoorBeingOpened.onNext(false)
-            return
-        }
+        // MARK: Поскольку доставка тонового сигнала вообще не гарантируется, решено отправлять их несколько раз
+        // С промежутком в 750 мс
         
-        // MARK: у нас нет никакой возможности проверить, дошел тоновый сигнал или нет.
-        // Поэтому просто ждем 2 секунды, думаем что он успешно ушел, и завершаем звонок
+        let dtmfRetrier = Driver<Int>
+            .interval(.milliseconds(750))
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            print("DTMF code was sent. Delivery is not guaranteed tho")
-            
-            self?.isDoorBeingOpened.onNext(false)
-            self?.currentStateSubject.onNext((.callFinished, .opened))
-            
-            do {
-                try call.terminate()
-            } catch {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                    self?.router.trigger(.dismiss)
+        dtmfRetrier
+            .filter { $0 < 3 }
+            .drive(
+                onNext: { [weak self] _ in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    do {
+                        try call.sendDtmfs(dtmfs: self.callPayload.dtmf)
+                    } catch {
+                        self.isDoorBeingOpened.onNext(false)
+                        return
+                    }
                 }
-            }
-        }
+            )
+            .disposed(by: disposeBag)
+        
+        dtmfRetrier
+            .filter { $0 >= 3 }
+            .throttle(.never)
+            .drive(
+                onNext: { [weak self] _ in
+                    print("DTMF code was sent. Delivery is not guaranteed tho")
+                    
+                    self?.isDoorBeingOpened.onNext(false)
+                    self?.currentStateSubject.onNext((.callFinished, .opened))
+                    
+                    do {
+                        try call.terminate()
+                    } catch {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                            self?.router.trigger(.dismiss)
+                        }
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

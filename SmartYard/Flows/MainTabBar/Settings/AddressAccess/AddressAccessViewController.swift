@@ -15,10 +15,17 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var addressLabel: UILabel!
-    @IBOutlet private weak var intercomAccessView: IntercomTemporaryAccessView!
-    @IBOutlet private weak var temporaryAccessView: AccessView!
-    @IBOutlet private weak var permanentAccessView: AccessView!
     @IBOutlet private weak var addressView: FullRoundedView!
+    @IBOutlet private weak var intercomAccessView: IntercomTemporaryAccessView!
+    
+    @IBOutlet private weak var temporaryAccessContainer: UIView!
+    @IBOutlet private weak var temporaryAccessView: AccessView!
+    
+    @IBOutlet private weak var permanentAccessContainer: UIView!
+    @IBOutlet private weak var permanentAccessView: AccessView!
+    
+    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var skeletonView: AddressAccessSkeletonView!
     
     var loader: JGProgressHUD?
     
@@ -39,7 +46,11 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView()
+        bind()
+    }
     
+    private func configureView() {
         let temporaryViewHeight = temporaryAccessView.heightAnchor.constraint(equalToConstant: 57)
         temporaryViewHeight.isActive = true
         tempAccessViewHeightConstraint = temporaryViewHeight
@@ -51,7 +62,9 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
         temporaryAccessView.translatesAutoresizingMaskIntoConstraints = false
         permanentAccessView.translatesAutoresizingMaskIntoConstraints = false
         
-        bind()
+        scrollView.isHidden = true
+        skeletonView.isHidden = false
+        skeletonView.showSkeletonAsynchronously()
     }
     
     // swiftlint:disable:next function_body_length
@@ -93,8 +106,11 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.permanentAccessContacts
+            .withLatestFrom(output.isInitialLoadingFinished) { ($0, $1) }
             .drive(
-                onNext: { [weak self] contacts in
+                onNext: { [weak self] args in
+                    let (contacts, isInitialLoadingFinished) = args
+                    
                     guard let self = self else {
                         return
                     }
@@ -103,14 +119,20 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
                     
                     let newHeight = self.calculateAccessViewHeight(countItems: contacts.count)
                     self.permanentAccessViewHeightConstraint.constant = newHeight
-                    self.view.layoutIfNeeded()
+                    
+                    UIView.animate(withDuration: isInitialLoadingFinished ? 0.25 : 0) { [weak self] in
+                        self?.view.layoutIfNeeded()
+                    }
                 }
             )
             .disposed(by: disposeBag)
         
         output.tempAccessContacts
+            .withLatestFrom(output.isInitialLoadingFinished) { ($0, $1) }
             .drive(
-                onNext: { [weak self] contacts in
+                onNext: { [weak self] args in
+                    let (contacts, isInitialLoadingFinished) = args
+                    
                     guard let self = self else {
                         return
                     }
@@ -119,12 +141,73 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
                     
                     let newHeight = self.calculateAccessViewHeight(countItems: contacts.count)
                     self.tempAccessViewHeightConstraint.constant = newHeight
-                    self.view.layoutIfNeeded()
+                    
+                    UIView.animate(withDuration: isInitialLoadingFinished ? 0.25 : 0) { [weak self] in
+                        self?.view.layoutIfNeeded()
+                    }
                 }
             )
             .disposed(by: disposeBag)
         
-        intercomAccessView.bind(with: output.isGrantedIntercomAccess, intercomCode: output.temporaryIntercomCode)
+        output.isGrantedIntercomAccess
+            .drive(
+                onNext: { [weak self] isGranted in
+                    self?.intercomAccessView.isAccessGranted = isGranted
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.temporaryIntercomCode
+            .distinctUntilChanged()
+            .drive(
+                onNext: { [weak self] code in
+                    self?.intercomAccessView.intercomCode = code
+                    
+                    UIView.animate(withDuration: 0.25) {
+                        self?.view.layoutIfNeeded()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.hasGates
+            .distinctUntilChanged()
+            .drive(
+                onNext: { [weak self] hasGates in
+                    self?.temporaryAccessContainer.isHidden = !hasGates
+                    
+                    UIView.animate(withDuration: 0.25) {
+                        self?.view.layoutIfNeeded()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isOwner
+            .distinctUntilChanged()
+            .drive(
+                onNext: { [weak self] isOwner in
+                    self?.permanentAccessContainer.isHidden = !isOwner
+                    
+                    UIView.animate(withDuration: 0.25) {
+                        self?.view.layoutIfNeeded()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isInitialLoadingFinished
+            .distinctUntilChanged()
+            .isTrue()
+            .delay(.milliseconds(500))
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.scrollView.isHidden = false
+                    self?.skeletonView.hideSkeleton()
+                    self?.skeletonView.isHidden = true
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
     private func calculateAccessViewHeight(countItems: Int) -> CGFloat {

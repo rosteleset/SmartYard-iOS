@@ -61,6 +61,7 @@ class InputAddressViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    // swiftlint:disable:next function_body_length
     private func bind() {
         streetTextField.rx
             .controlEvent(.editingDidBegin)
@@ -101,7 +102,7 @@ class InputAddressViewController: BaseViewController {
             .merge()
             .asDriver(onErrorJustReturn: ())
             .drive(
-                onNext: { [weak self] _ in
+                onNext: { _ in
 //                    self?.scrollView.isScrollEnabled = false
                 }
             )
@@ -116,7 +117,7 @@ class InputAddressViewController: BaseViewController {
             .merge()
             .asDriver(onErrorJustReturn: ())
             .drive(
-                onNext: { [weak self] _ in
+                onNext: { _ in
 //                    self?.scrollView.isScrollEnabled = true
                 }
             )

@@ -13,9 +13,11 @@ import Contacts
 extension NewAllowedPersonViewController: CNContactPickerDelegate {
     
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
-        let phoneNumberCount = contact.phoneNumbers.count
+        let rawNumbers = contact.phoneNumbers.compactMap {
+            $0.value.stringValue.rawPhoneNumberFromFullNumber
+        }
         
-        guard phoneNumberCount > 0 else {
+        guard let firstMatchingRawNumber = rawNumbers.first else {
             dismiss(animated: true)
             return
         }
@@ -24,11 +26,11 @@ extension NewAllowedPersonViewController: CNContactPickerDelegate {
         
         var allowedPerson = AllowedPerson(
             displayedName: contact.givenName,
-            phoneNumber: getNumberFromContact(contactNumber: contact.phoneNumbers[safe: 0]?.value.stringValue ?? "-"),
+            rawNumber: firstMatchingRawNumber,
             logoImage: nil
         )
         
-        if contact.imageDataAvailable, let imageData = contact.imageData {
+        if contact.imageDataAvailable, let imageData = contact.thumbnailImageData {
             let image = UIImage(data: imageData)
             contactImageView.image = image
             allowedPerson.logoImage = image
@@ -39,19 +41,6 @@ extension NewAllowedPersonViewController: CNContactPickerDelegate {
         contactNameLabel.isHidden = false
         
         newContactTrigger.onNext(allowedPerson)
-    }
-    
-    func getNumberFromContact(contactNumber: String) -> String {
-        var contactNumber = contactNumber.replacingOccurrences(of: "-", with: "")
-        contactNumber = contactNumber.replacingOccurrences(of: "(", with: "")
-        contactNumber = contactNumber.replacingOccurrences(of: ")", with: "")
-        
-        guard contactNumber.count >= Constants.phoneLengthWithoutPrefix else {
-            dismiss(animated: true)
-            return ""
-        }
-        
-        return String(contactNumber.suffix(Constants.phoneLengthWithoutPrefix))
     }
 
 }

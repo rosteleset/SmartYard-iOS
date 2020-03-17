@@ -11,6 +11,7 @@ import Alamofire
 import RxSwift
 import RxCocoa
 
+// swiftlint:disable:next type_body_length
 class APIWrapper {
     
     let apiService: APIService
@@ -23,6 +24,30 @@ class APIWrapper {
     
     // Address
     
+    func getCurrentIntercomState(flatId: String) -> Single<IntercomResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = IntercomRequest(accessToken: accessToken, flatId: flatId, settings: nil)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performGrantHourGuestAccessRequest(request) { result in
+                switch result {
+                case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
     func grantHourGuestAccess(flatId: String) -> Single<IntercomResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
@@ -31,7 +56,7 @@ class APIWrapper {
         let autoOpenEndDate = Date().dateHourAfter.apiString
         
         let settings = APIIntercomSettings(
-            enableDoorCode: true,
+            enableDoorCode: nil,
             cms: nil,
             voip: nil,
             autoOpen: autoOpenEndDate,
@@ -149,6 +174,86 @@ class APIWrapper {
             self.apiService.performGetAddressListRequest(request) { result in
                 switch result {
                 case let .success(data): single(.success(data))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func grantAccess(
+        flatId: String,
+        guestPhone: String,
+        type: APIRoommateAccessType,
+        numberOfHours: Int = 24
+    ) -> Single<Void?> {
+        let expire: Date? = {
+            guard type == .outer else {
+                return nil
+            }
+            
+            return Calendar.current.date(byAdding: .hour, value: numberOfHours, to: Date())
+        }()
+        
+        return access(flatId: flatId, guestPhone: guestPhone, type: type, expire: expire)
+    }
+    
+    func revokeAccess(flatId: String, guestPhone: String, type: APIRoommateAccessType) -> Single<Void?> {
+        return access(flatId: flatId, guestPhone: guestPhone, type: type, expire: Date.distantPast)
+    }
+    
+    func access(
+        flatId: String,
+        guestPhone: String? = nil,
+        type: APIRoommateAccessType? = nil,
+        expire: Date? = nil
+    ) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = AccessRequest(
+            accessToken: accessToken,
+            flatId: flatId,
+            guestPhone: guestPhone,
+            type: type,
+            expire: expire
+        )
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performAccessRequest(request) { result in
+                switch result {
+                case .success: single(.success(()))
+                case let .failure(error): single(.error(error))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func resendSMS(flatId: String, guestPhone: String) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = ResendRequest(accessToken: accessToken, flatId: flatId, guestPhone: guestPhone)
+        
+        return Single.create { [weak self] single in
+            guard let self = self else {
+                single(.error(NSError.GenericError.selfIsDeadError))
+                return Disposables.create()
+            }
+            
+            self.apiService.performResendRequest(request) { result in
+                switch result {
+                case .success: single(.success(()))
                 case let .failure(error): single(.error(error))
                 }
             }

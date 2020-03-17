@@ -19,7 +19,7 @@ struct IntercomRequest {
 extension IntercomRequest {
     
     var requestParameters: [String: Any] {
-        var params: [String: Any] =  [
+        var params: [String: Any] = [
             "flatId": flatId
         ]
         

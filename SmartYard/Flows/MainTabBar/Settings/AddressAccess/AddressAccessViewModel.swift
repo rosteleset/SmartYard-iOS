@@ -10,16 +10,18 @@ import Foundation
 import XCoordinator
 import RxSwift
 import RxCocoa
+import Contacts
 
+// swiftlint:disable:next type_body_length
 class AddressAccessViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
     
     private let addressSubject: BehaviorSubject<String?>
-    private let tempAccessConstactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
+    private let tempAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let permanentAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
-    private let intercomAccessCode = PublishSubject<String?>()
-    private let isGrantedIntercomGuestAccess = PublishSubject<Bool>()
+    private let intercomAccessCode = BehaviorSubject<String?>(value: nil)
+    private let isGrantedIntercomGuestAccess = BehaviorSubject<Bool>(value: false)
     
     private let address: String
     private let flatId: String
@@ -29,6 +31,8 @@ class AddressAccessViewModel: BaseViewModel {
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
     
+    private(set) var userContacts = [CNContact]()
+    
     init(router: WeakRouter<SettingsRoute>, address: String, flatId: String, apiWrapper: APIWrapper) {
         self.router = router
         self.address = address
@@ -36,11 +40,119 @@ class AddressAccessViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
         
         addressSubject = BehaviorSubject<String?>(value: address)
+        
+        super.init()
+        userContacts = getContacts()
     }
     
     // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
-        loadData()
+        // MARK: Загрузка изначального стейта
+        
+        let isIntercomStateLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
+        
+        apiWrapper
+            .getCurrentIntercomState(flatId: flatId)
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .do(
+                onNext: { _ in
+                    isIntercomStateLoadingFinishedSubject.onNext(true)
+                }
+            )
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] response in
+                    self?.intercomAccessCode.onNext(response.doorCode)
+                    
+                    let isAccessGranted: Bool = {
+                        guard let dateUntilClose = response.autoOpen.dateFromAPIString else {
+                            return false
+                        }
+                        
+                        return dateUntilClose > Date()
+                    }()
+                    
+                    self?.isGrantedIntercomGuestAccess.onNext(isAccessGranted)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Есть у нас права владельца или нет (от этого зависит, показываем список постоянного доступа или нет)
+        
+        let isOwnerSubject = BehaviorSubject<Bool>(value: false)
+        
+        // MARK: Есть ли в доме ворота / калитки (от этого зависит, показываем список временного доступа или нет)
+        
+        let hasGatesSubject = BehaviorSubject<Bool>(value: false)
+        
+        // MARK: Загрузка номеров, которым предоставлен доступ
+        
+        let isRoommateStateLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
+        
+        let isInitialLoadingFinished = Driver
+            .combineLatest(
+                isIntercomStateLoadingFinishedSubject.asDriver(onErrorJustReturn: false),
+                isRoommateStateLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
+            )
+            .map { args -> Bool in
+                let (intercomState, roommateState) = args
+                
+                return intercomState && roommateState
+            }
+        
+        self.apiWrapper
+            .getSettingsAddresses()
+            .trackError(self.errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .do(
+                onNext: { _ in
+                    isRoommateStateLoadingFinishedSubject.onNext(true)
+                }
+            )
+            .ignoreNil()
+            .map { [weak self] addresses in
+                addresses.first { $0.flatId == self?.flatId }
+            }
+            .ignoreNil()
+            .do(
+                onNext: { address in
+                    isOwnerSubject.onNext((address.flatOwner ?? false) || (address.contractOwner ?? false))
+                    hasGatesSubject.onNext(address.hasGates ?? false)
+                }
+            )
+            .map { address -> ([AllowedPerson], [AllowedPerson]) in
+                let tempAccessRoommates: [AllowedPerson] = address.roommates
+                    .filter { $0.type == .outer && $0.expire > Date() }
+                    .compactMap { roommate in
+                        guard let rawNumber = roommate.phone.rawPhoneNumberFromFullNumber else {
+                            return nil
+                        }
+                        
+                        return AllowedPerson(displayedName: nil, rawNumber: rawNumber, logoImage: nil)
+                    }
+                
+                let permanentAccessRoommates: [AllowedPerson] = address.roommates
+                    .filter { ($0.type == .inner || $0.type == .owner) && $0.expire > Date() }
+                    .compactMap { roommate in
+                        guard let rawNumber = roommate.phone.rawPhoneNumberFromFullNumber else {
+                            return nil
+                        }
+                        
+                        return AllowedPerson(displayedName: nil, rawNumber: rawNumber, logoImage: nil)
+                    }
+                
+                return (tempAccessRoommates, permanentAccessRoommates)
+            }
+            .drive(
+                onNext: { [weak self] roommates in
+                    let (temp, permanent) = roommates
+                    
+                    self?.tempAccessContactsSubject.onNext(temp)
+                    self?.permanentAccessContactsSubject.onNext(permanent)
+                }
+            )
+            .disposed(by: disposeBag)
         
         input.refreshIntercomTempCodeTrigger
             .asDriver()
@@ -58,7 +170,7 @@ class AddressAccessViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] result in
-                    self?.intercomAccessCode.onNext(result.code)
+                    self?.intercomAccessCode.onNext(result.code.string)
                 }
             )
             .disposed(by: disposeBag)
@@ -72,25 +184,59 @@ class AddressAccessViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.smsToTempContactTrigger
+            .withLatestFrom(tempAccessContactsSubject.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .flatMapLatest { [weak self] args -> Driver<Void?> in
+                let (index, contacts) = args
+                
+                guard let self = self, let uIndex = index, let match = contacts[safe: uIndex] else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .resendSMS(flatId: self.flatId, guestPhone: match.apiNumber)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] index in
-                    guard let self = self, let index = index else {
-                        return
-                    }
-                    
-                    self.sendSmsToTemporaryAccessContact(index: index)
+                onNext: { [weak self] in
+                    self?.router.trigger(
+                        .dialog(
+                            title: "Информация для гостя успешно отправлена!",
+                            message: nil,
+                            actions: [UIAlertAction(title: "OK", style: .default, handler: nil)]
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
         
         input.smsToPermanentContactTrigger
+            .withLatestFrom(permanentAccessContactsSubject.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .flatMapLatest { [weak self] args -> Driver<Void?> in
+                let (index, contacts) = args
+                
+                guard let self = self, let uIndex = index, let match = contacts[safe: uIndex] else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .resendSMS(flatId: self.flatId, guestPhone: match.apiNumber)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] index in
-                    guard let self = self, let index = index else {
-                        return
-                    }
-                    
-                    self.sendSmsToPermanentAccessContact(index: index)
+                onNext: { [weak self] in
+                    self?.router.trigger(
+                        .dialog(
+                            title: "Информация для гостя успешно отправлена!",
+                            message: nil,
+                            actions: [UIAlertAction(title: "OK", style: .default, handler: nil)]
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -101,6 +247,7 @@ class AddressAccessViewModel: BaseViewModel {
                     guard let self = self, let index = index else {
                         return
                     }
+                    
                     let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
                     
                     let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
@@ -119,7 +266,13 @@ class AddressAccessViewModel: BaseViewModel {
                         return
                     }
                     
-                    self.deletePermanentAccessContact(index: index)
+                    let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+                    
+                    let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
+                        self?.deletePermanentAccessContact(index: index)
+                    }
+                    
+                    self.router.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
                 }
             )
             .disposed(by: disposeBag)
@@ -148,31 +301,37 @@ class AddressAccessViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { error in
+                    print(error)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        let mappedTempContacts = tempAccessContactsSubject
+            .asDriver(onErrorJustReturn: [])
+            .map { [weak self] persons -> [AllowedPerson] in
+                self?.fillAllowedPersonsWithContactData(persons) ?? []
+            }
+        
+        let mappedPermanentContacts = permanentAccessContactsSubject
+            .asDriver(onErrorJustReturn: [])
+            .map { [weak self] persons -> [AllowedPerson] in
+                self?.fillAllowedPersonsWithContactData(persons) ?? []
+            }
+        
         return Output(
             objectAddress: addressSubject.asDriver(onErrorJustReturn: nil),
-            tempAccessContacts: tempAccessConstactsSubject.asDriver(onErrorJustReturn: []),
-            permanentAccessContacts: permanentAccessContactsSubject.asDriver(onErrorJustReturn: []),
-            temporaryIntercomCode: intercomAccessCode,
-            isGrantedIntercomAccess: isGrantedIntercomGuestAccess,
-            isLoading: activityTracker.asDriver()
+            tempAccessContacts: mappedTempContacts,
+            permanentAccessContacts: mappedPermanentContacts,
+            temporaryIntercomCode: intercomAccessCode.asDriver(onErrorJustReturn: nil),
+            isGrantedIntercomAccess: isGrantedIntercomGuestAccess.asDriver(onErrorJustReturn: false),
+            isLoading: activityTracker.asDriver(),
+            hasGates: hasGatesSubject.asDriver(onErrorJustReturn: false),
+            isOwner: isOwnerSubject.asDriver(onErrorJustReturn: false),
+            isInitialLoadingFinished: isInitialLoadingFinished
         )
-    }
-    
-    private func loadData() {
-        self.tempAccessConstactsSubject.onNext(self.loadTemporaryAccessContacts())
-        self.permanentAccessContactsSubject.onNext(self.loadPermanentAccessContacts())
-    }
-    
-    private func loadTemporaryAccessContacts() -> [AllowedPerson] {
-        return [
-            AllowedPerson(displayedName: nil, phoneNumber: "+7 (903) 343-17-40", logoImage: nil),
-            AllowedPerson(displayedName: nil, phoneNumber: "+7 (902) 741-82-90", logoImage: nil),
-            AllowedPerson(displayedName: nil, phoneNumber: "+7 (903) 944-47-50", logoImage: nil)
-        ]
-    }
-    
-    private func loadPermanentAccessContacts() -> [AllowedPerson] {
-        return []
     }
     
     private func openGuestAccess() {
@@ -228,42 +387,50 @@ class AddressAccessViewModel: BaseViewModel {
         )
     }
     
-    private func sendSmsToTemporaryAccessContact(index: Int) {
-        print("SEND SMS TO USER WITH INDEX: \(index)")
-        sendSMS(number: "+7-908-474-27-41")
-    }
-    
-    private func sendSmsToPermanentAccessContact(index: Int) {
-        print("SEND SMS TO USER WITH INDEX: \(index)")
-        sendSMS(number: "+7-908-474-27-41")
-    }
-    
-    private func sendSMS(number: String) {
-        // TODO
-    }
-    
     private func deleteTempAccessContact(index: Int) {
-        guard let data = try? tempAccessConstactsSubject.value() else {
+        guard let data = try? tempAccessContactsSubject.value(), let allowedPerson = data[safe: index] else {
             return
         }
         
-        var newData = data
-        newData.remove(at: index)
-        
-        tempAccessConstactsSubject.onNext(newData)
-        // TODO: use API deletion method
+        apiWrapper
+            .revokeAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .outer)
+            .trackError(errorTracker)
+            .trackActivity(activityTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .withLatestFrom(tempAccessContactsSubject.asDriver(onErrorJustReturn: []))
+            .map { contacts -> [AllowedPerson] in
+                contacts.filter { $0 != allowedPerson }
+            }
+            .drive(
+                onNext: { [weak self] in
+                    self?.tempAccessContactsSubject.onNext($0)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func deletePermanentAccessContact(index: Int) {
-        guard let data = try? permanentAccessContactsSubject.value() else {
+        guard let data = try? permanentAccessContactsSubject.value(), let allowedPerson = data[safe: index] else {
             return
         }
         
-        var newData = data
-        newData.remove(at: index)
-        
-        permanentAccessContactsSubject.onNext(newData)
-        // TODO: use API deletion method
+        apiWrapper
+            .revokeAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .inner)
+            .trackError(errorTracker)
+            .trackActivity(activityTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .withLatestFrom(permanentAccessContactsSubject.asDriver(onErrorJustReturn: []))
+            .map { contacts -> [AllowedPerson] in
+                contacts.filter { $0 != allowedPerson }
+            }
+            .drive(
+                onNext: { [weak self] in
+                    self?.permanentAccessContactsSubject.onNext($0)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func addNewTempAccessContact() {
@@ -307,9 +474,12 @@ extension AddressAccessViewModel {
         let objectAddress: Driver<String?>
         let tempAccessContacts: Driver<[AllowedPerson]>
         let permanentAccessContacts: Driver<[AllowedPerson]>
-        let temporaryIntercomCode: PublishSubject<String?>
-        let isGrantedIntercomAccess: PublishSubject<Bool>
+        let temporaryIntercomCode: Driver<String?>
+        let isGrantedIntercomAccess: Driver<Bool>
         let isLoading: Driver<Bool>
+        let hasGates: Driver<Bool>
+        let isOwner: Driver<Bool>
+        let isInitialLoadingFinished: Driver<Bool>
     }
     
 }
@@ -320,28 +490,45 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
         _ viewModel: NewAllowedPersonViewModel,
         allowedPerson: AllowedPerson
     ) {
-        guard let data = try? tempAccessConstactsSubject.value() else {
-            return
-        }
-        
-        var newData = data
-        newData.append(allowedPerson)
-        tempAccessConstactsSubject.onNext(newData)
-        // TODO: save data, using api
+        apiWrapper
+            .grantAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .outer)
+            .trackError(errorTracker)
+            .trackActivity(activityTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .withLatestFrom(tempAccessContactsSubject.asDriver(onErrorJustReturn: []))
+            .map { contacts -> [AllowedPerson] in
+                contacts + [allowedPerson]
+            }
+            .drive(
+                onNext: { [weak self] in
+                    self?.tempAccessContactsSubject.onNext($0)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     func newAllowedPersonViewModelDidAddNewPermanent(
         _ viewModel: NewAllowedPersonViewModel,
         allowedPerson: AllowedPerson
     ) {
-        guard let data = try? permanentAccessContactsSubject.value() else {
-            return
-        }
-        
-        var newData = data
-        newData.append(allowedPerson)
-        permanentAccessContactsSubject.onNext(newData)
-        // TODO: save data, using api
+        apiWrapper
+            .grantAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .inner)
+            .trackError(errorTracker)
+            .trackActivity(activityTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .withLatestFrom(permanentAccessContactsSubject.asDriver(onErrorJustReturn: []))
+            .map { contacts -> [AllowedPerson] in
+                contacts + [allowedPerson]
+            }
+            .drive(
+                onNext: { [weak self] in
+                    self?.permanentAccessContactsSubject.onNext($0)
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
+// swiftlint:disable:next file_length
 }
