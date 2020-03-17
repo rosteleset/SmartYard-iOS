@@ -29,7 +29,7 @@
                             <constraint firstAttribute="height" constant="60" id="iN5-Kz-Mbk"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
-                        <color key="tintColor" red="0.16078431372549018" green="0.54509803921568623" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.16078431372549018" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <state key="normal" title="Добавить адрес"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
