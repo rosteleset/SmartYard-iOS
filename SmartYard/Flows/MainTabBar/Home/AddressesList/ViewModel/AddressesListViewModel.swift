@@ -26,7 +26,8 @@ class AddressesListViewModel: BaseViewModel {
         self.router = router
     }
     
-    private let loadedData = BehaviorSubject<GetAddressListResponseData?>(value: nil)
+    private let loadedApprovedAddressesData = BehaviorSubject<GetAddressListResponseData?>(value: nil)
+    private let loadedUnapprovedAddressesData = BehaviorSubject<GetListConnectResponseData?>(value: nil)
     
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
@@ -109,7 +110,8 @@ class AddressesListViewModel: BaseViewModel {
                         return
                     }
                     
-                    self?.loadedData.onNext(approvedAddresses)
+                    self?.loadedApprovedAddressesData.onNext(approvedAddresses)
+                    self?.loadedUnapprovedAddressesData.onNext(unapprovedAddresses)
                 }
             )
             .disposed(by: disposeBag)
@@ -117,7 +119,7 @@ class AddressesListViewModel: BaseViewModel {
         // MARK: Обработка нажатия на кнопку "Открыть"
         
         input.guestAccessRequested
-            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .withLatestFrom(loadedApprovedAddressesData.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .flatMapLatest { [weak self] args -> Driver<AddressesListDataItemIdentity?> in
                 let (identity, loadedData) = args
                 
@@ -218,19 +220,25 @@ class AddressesListViewModel: BaseViewModel {
         
         let sectionModels = Driver
             .combineLatest(
-                loadedData.asDriver(onErrorJustReturn: nil),
+                loadedApprovedAddressesData.asDriver(onErrorJustReturn: nil),
+                loadedUnapprovedAddressesData.asDriver(onErrorJustReturn: nil),
                 areSectionsExpanded.asDriverOnErrorJustComplete(),
                 areObjectsGrantAccessed.asDriverOnErrorJustComplete()
             )
             .map { [weak self] args -> [AddressesListSectionModel] in
-                let (loadedData, expansionStateDict, objectAccessDict) = args
+                let (loadedApprovedAddressesData, loadedUnapprovedAddressesData,
+                    expansionStateDict, objectAccessDict) = args
                 
-                guard let self = self, let data = loadedData else {
+                guard let self = self,
+                      let approvedAddresses = loadedApprovedAddressesData,
+                      let unapprovedAddresses = loadedUnapprovedAddressesData
+                else {
                     return []
                 }
                 
                 return self.createSections(
-                    data: data,
+                    approvedAddressesData: approvedAddresses,
+                    unapprovedAddressesData: unapprovedAddresses,
                     expansionStateDict: expansionStateDict,
                     objectAccessDict: objectAccessDict
                 )
@@ -283,12 +291,13 @@ class AddressesListViewModel: BaseViewModel {
     }
     
     private func createSections(
-        data: GetAddressListResponseData,
+        approvedAddressesData: GetAddressListResponseData,
+        unapprovedAddressesData: GetListConnectResponseData,
         expansionStateDict: [String: Bool],
         objectAccessDict: [AddressesListDataItemIdentity: Bool]
     ) -> [AddressesListSectionModel] {
         // swiftlint:disable:next closure_body_length
-        let sectionModels = data.map { address -> AddressesListSectionModel in
+        var sectionModels = approvedAddressesData.map { address -> AddressesListSectionModel in
             let addressId = address.houseId
             let isSectionExpanded = expansionStateDict[addressId, default: false]
             
@@ -337,6 +346,16 @@ class AddressesListViewModel: BaseViewModel {
             
             return section
         }
+        
+        let unapprovedAddressItems = unapprovedAddressesData.compactMap { unapprovedAddress -> AddressesListDataItem? in
+            let addressItem: AddressesListDataItem? = {
+                return .unapprovedAddresses(identity: .unapprovedObject(addressId: unapprovedAddress.id), address: unapprovedAddress.description)
+            }()
+            return addressItem
+        }
+        
+        let unapprovedAddressSections = AddressesListSectionModel(identity: "unapproved", items: unapprovedAddressItems)
+        sectionModels.append(unapprovedAddressSections)
         
         return sectionModels
     }

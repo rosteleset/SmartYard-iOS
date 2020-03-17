@@ -238,7 +238,8 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         [
             AddressesListHeaderCell.self,
             AddressesListObjectCell.self,
-            AddressesListCameraCell.self
+            AddressesListCameraCell.self,
+            UnapprovedObjectCell.self
         ].forEach {
             collectionView.register(nibWithCellClass: $0)
         }
@@ -290,6 +291,11 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             case let .cameras(_, numberOfCameras):
                 let cell = collectionView.dequeueReusableCell(withClass: AddressesListCameraCell.self, for: indexPath)
                 cell.configure(availableCameras: numberOfCameras)
+                return cell
+                
+            case let .unapprovedAddresses(_, address):
+                let cell = collectionView.dequeueReusableCell(withClass: UnapprovedObjectCell.self, for: indexPath)
+                cell.configure(address: address)
                 return cell
             }
         }()

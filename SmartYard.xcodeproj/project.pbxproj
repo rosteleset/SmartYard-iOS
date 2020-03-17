@@ -217,6 +217,9 @@
 		E94B6C902408ED5900FD9F65 /* IssueService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C8F2408ED5900FD9F65 /* IssueService.swift */; };
 		E94B6C922408EF6B00FD9F65 /* MainUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C912408EF6B00FD9F65 /* MainUserInfo.swift */; };
 		E94B6C952409023500FD9F65 /* CreateIssueResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94B6C942409023500FD9F65 /* CreateIssueResponseData.swift */; };
+		E9618A332420ABC1003FF47D /* UnapprovedObjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9618A312420ABC1003FF47D /* UnapprovedObjectCell.swift */; };
+		E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */; };
+		E9618A362420CC9F003FF47D /* APIIssueConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9618A352420CC9F003FF47D /* APIIssueConnect.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
@@ -518,6 +521,9 @@
 		E94B6C8F2408ED5900FD9F65 /* IssueService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueService.swift; sourceTree = "<group>"; };
 		E94B6C912408EF6B00FD9F65 /* MainUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUserInfo.swift; sourceTree = "<group>"; };
 		E94B6C942409023500FD9F65 /* CreateIssueResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIssueResponseData.swift; sourceTree = "<group>"; };
+		E9618A312420ABC1003FF47D /* UnapprovedObjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnapprovedObjectCell.swift; sourceTree = "<group>"; };
+		E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnapprovedObjectCell.xib; sourceTree = "<group>"; };
+		E9618A352420CC9F003FF47D /* APIIssueConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIssueConnect.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
@@ -662,6 +668,7 @@
 				84A67059241F793D00BBA12B /* APIRoommate.swift */,
 				E94B6C4B2405308B00FD9F65 /* APISettingsAddress.swift */,
 				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
+				E9618A352420CC9F003FF47D /* APIIssueConnect.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1398,6 +1405,7 @@
 		84CC15BE23EC31D100A1CB95 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				E9618A302420AB6E003FF47D /* UnapprovedObjectCell */,
 				84CC15D923EC6A9300A1CB95 /* CameraCell */,
 				84CC15CE23EC404F00A1CB95 /* ObjectCell */,
 				84CC15BF23EC31FD00A1CB95 /* HeaderCell */,
@@ -1803,6 +1811,15 @@
 			path = Entries;
 			sourceTree = "<group>";
 		};
+		E9618A302420AB6E003FF47D /* UnapprovedObjectCell */ = {
+			isa = PBXGroup;
+			children = (
+				E9618A312420ABC1003FF47D /* UnapprovedObjectCell.swift */,
+				E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */,
+			);
+			path = UnapprovedObjectCell;
+			sourceTree = "<group>";
+		};
 		E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */ = {
 			isa = PBXGroup;
 			children = (
@@ -2189,6 +2206,7 @@
 				E9E4270D23F3D62C00F5D593 /* MapPoint.pdf in Resources */,
 				847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */,
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
+				E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */,
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
@@ -2369,6 +2387,7 @@
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
+				E9618A362420CC9F003FF47D /* APIIssueConnect.swift in Sources */,
 				E94B6C6724068DD700FD9F65 /* APIHouse.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
 				84AA8D6623E2F2A8001B3B43 /* TransportType+Extensions.swift in Sources */,
@@ -2394,6 +2413,7 @@
 				E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */,
 				E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */,
 				848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */,
+				E9618A332420ABC1003FF47D /* UnapprovedObjectCell.swift in Sources */,
 				84898A8E23F1540C00E6B78E /* SettingsActionCell.swift in Sources */,
 				8482981E24054CDF00E81620 /* APIDoor.swift in Sources */,
 				E94B6C3923FD72B900FD9F65 /* NewAllowedPerson+Contacts.swift in Sources */,
