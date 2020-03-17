@@ -22,8 +22,6 @@ class AddressAccessViewModel: BaseViewModel {
     private let intercomAccessCode = BehaviorSubject<String?>(value: nil)
     private let isGrantedIntercomGuestAccess = BehaviorSubject<Bool>(value: false)
     
-    private let refreshAccessDataTrigger = PublishSubject<Void>()
-    
     private let address: String
     private let flatId: String
     
@@ -97,18 +95,10 @@ class AddressAccessViewModel: BaseViewModel {
                 return intercomState && roommateState
             }
         
-        Driver
-            .merge(.just(()), refreshAccessDataTrigger.asDriverOnErrorJustComplete())
-            .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
-                return self.apiWrapper
-                    .getSettingsAddresses()
-                    .trackError(self.errorTracker)
-                    .asDriver(onErrorJustReturn: nil)
-            }
+        self.apiWrapper
+            .getSettingsAddresses()
+            .trackError(self.errorTracker)
+            .asDriver(onErrorJustReturn: nil)
             .do(
                 onNext: { _ in
                     isRoommateStateLoadingFinishedSubject.onNext(true)
@@ -363,10 +353,13 @@ class AddressAccessViewModel: BaseViewModel {
             .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
+            .withLatestFrom(tempAccessContactsSubject.asDriver(onErrorJustReturn: []))
+            .map { contacts -> [AllowedPerson] in
+                contacts.filter { $0 != allowedPerson }
+            }
             .drive(
                 onNext: { [weak self] in
-                    print("Actually, that number was removed")
-                    self?.refreshAccessDataTrigger.onNext(())
+                    self?.tempAccessContactsSubject.onNext($0)
                 }
             )
             .disposed(by: disposeBag)
@@ -383,10 +376,13 @@ class AddressAccessViewModel: BaseViewModel {
             .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
+            .withLatestFrom(permanentAccessContactsSubject.asDriver(onErrorJustReturn: []))
+            .map { contacts -> [AllowedPerson] in
+                contacts.filter { $0 != allowedPerson }
+            }
             .drive(
                 onNext: { [weak self] in
-                    print("Actually, that number was removed")
-                    self?.refreshAccessDataTrigger.onNext(())
+                    self?.permanentAccessContactsSubject.onNext($0)
                 }
             )
             .disposed(by: disposeBag)
@@ -455,10 +451,13 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
             .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
+            .withLatestFrom(tempAccessContactsSubject.asDriver(onErrorJustReturn: []))
+            .map { contacts -> [AllowedPerson] in
+                contacts + [allowedPerson]
+            }
             .drive(
                 onNext: { [weak self] in
-                    print("Actually, new number was added")
-                    self?.refreshAccessDataTrigger.onNext(())
+                    self?.tempAccessContactsSubject.onNext($0)
                 }
             )
             .disposed(by: disposeBag)
@@ -474,10 +473,13 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
             .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
+            .withLatestFrom(permanentAccessContactsSubject.asDriver(onErrorJustReturn: []))
+            .map { contacts -> [AllowedPerson] in
+                contacts + [allowedPerson]
+            }
             .drive(
                 onNext: { [weak self] in
-                    print("Actually, new number was added")
-                    self?.refreshAccessDataTrigger.onNext(())
+                    self?.permanentAccessContactsSubject.onNext($0)
                 }
             )
             .disposed(by: disposeBag)
