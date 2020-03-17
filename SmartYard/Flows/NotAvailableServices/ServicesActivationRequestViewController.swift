@@ -39,7 +39,7 @@ class ServicesActivationRequestViewController: BaseViewController {
         super.viewDidLoad()
         
         configureTableView()
-        fakeNavBar.setBlueNavBarColors()
+        fakeNavBar.configureBlueNavBar()
         bind()
     }
 

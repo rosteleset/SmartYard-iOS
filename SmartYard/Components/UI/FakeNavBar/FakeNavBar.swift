@@ -14,7 +14,7 @@ class FakeNavBar: PMNibLinkableView {
 
     @IBOutlet fileprivate weak var backButton: UIButton!
     
-    func setBlueNavBarColors() {
+    func configureBlueNavBar() {
         backButton.setTitleColor(UIColor.SmartYard.blue, for: .normal)
         backButton.tintColor = UIColor.SmartYard.blue
     }

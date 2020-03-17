@@ -63,13 +63,23 @@ class AddressesListViewModel: BaseViewModel {
                 input.refreshDataTrigger.asDriver().delay(.milliseconds(1000)),
                 .just(())
             )
-            .flatMapLatest { [weak self] _ -> Driver<GetAddressListResponseData?> in
+            .flatMapLatest { [weak self] _ -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in
                 guard let self = self else {
                     return .empty()
                 }
-                
-                return self.apiWrapper.getAddressList()
+
+                return Single
+                    .zip(self.apiWrapper.getAddressList(), self.apiWrapper.getListConnect())
                     .trackError(errorTracker)
+                    .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
+                        let (firstResponse, secondResponse) = args
+                        
+                        guard let uFirstResponse = firstResponse, let uSecondResponse = secondResponse else {
+                            return nil
+                        }
+                        
+                        return (uFirstResponse, uSecondResponse)
+                    }
                     .asDriver(onErrorJustReturn: nil)
             }
             .do(
@@ -84,20 +94,22 @@ class AddressesListViewModel: BaseViewModel {
                 onNext: { [weak self] args in
                     let (newData, expansionStateDict) = args
                     
-                    self?.updateSectionExpansionStates(expansionStateDict: expansionStateDict, newData: newData)
+                    let (approvedAddresses, _) = newData
+                    self?.updateSectionExpansionStates(expansionStateDict: expansionStateDict, newData: approvedAddresses)
                 }
             )
             .drive(
                 onNext: { [weak self] args in
                     let (newData, _) = args
+                    let (approvedAddresses, unapprovedAddresses) = newData
                     // TODO: нужно добавить загрузку адресов, которые ожидают подтверждения,
                     // затем этот список по аналогии проверить на пустоту
-                    guard !newData.isEmpty else {
+                    guard !approvedAddresses.isEmpty || !unapprovedAddresses.isEmpty else {
                         self?.router.trigger(.inputContract)
                         return
                     }
                     
-                    self?.loadedData.onNext(newData)
+                    self?.loadedData.onNext(approvedAddresses)
                 }
             )
             .disposed(by: disposeBag)
