@@ -47,8 +47,9 @@ class AddressConfirmationViewModel: BaseViewModel {
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
+            .mapToVoid()
             .drive(
-                onNext: { [weak self] _ in
+                onNext: { [weak self] in
                     self?.router.trigger(.main)
                 }
             )
@@ -66,8 +67,9 @@ class AddressConfirmationViewModel: BaseViewModel {
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
+            .mapToVoid()
             .drive(
-                onNext: { [weak self] _ in
+                onNext: { [weak self] in
                     self?.router.trigger(.main)
                 }
             )
