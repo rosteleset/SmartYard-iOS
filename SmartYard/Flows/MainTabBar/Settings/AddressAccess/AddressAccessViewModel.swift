@@ -207,6 +207,7 @@ class AddressAccessViewModel: BaseViewModel {
                     guard let self = self, let index = index else {
                         return
                     }
+                    
                     let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
                     
                     let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
@@ -225,7 +226,13 @@ class AddressAccessViewModel: BaseViewModel {
                         return
                     }
                     
-                    self.deletePermanentAccessContact(index: index)
+                    let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+                    
+                    let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
+                        self?.deletePermanentAccessContact(index: index)
+                    }
+                    
+                    self.router.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
                 }
             )
             .disposed(by: disposeBag)
