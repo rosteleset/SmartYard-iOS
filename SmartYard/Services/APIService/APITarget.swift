@@ -80,6 +80,7 @@ extension APITarget: TargetType {
             "Content-type": "application/json"
         ]
         
+        // swiftlint:disable:next closure_body_length
         let authorization: String? = {
             switch self {
             case .grantHourGuestAccess(let request): return request.accessToken

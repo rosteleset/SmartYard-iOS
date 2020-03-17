@@ -23,9 +23,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSContactsUsageDescription</key>
-	<string>Access is needed to save contact information to intercom access list.</string>
+	<string>Доступ к списку контактов нужен для отображения имен и фотографий людей, на чьи номера выделен доступ к адресу</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Used for VoIP calls</string>
+	<string>Доступ к микрофону нужен для передачи звука во время звонка</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SourceSansPro-Regular.ttf</string>

@@ -415,4 +415,5 @@ class APIWrapper {
         }
     }
     
+// swiftlint:disable:next file_length
 }

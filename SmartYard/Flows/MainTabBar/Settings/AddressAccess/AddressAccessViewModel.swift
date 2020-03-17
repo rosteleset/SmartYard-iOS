@@ -31,7 +31,7 @@ class AddressAccessViewModel: BaseViewModel {
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
     
-    private(set) var userContacts = [CNContact]()
+    private var userContacts = [CNContact]()
     
     init(router: WeakRouter<SettingsRoute>, address: String, flatId: String, apiWrapper: APIWrapper) {
         self.router = router
@@ -42,6 +42,7 @@ class AddressAccessViewModel: BaseViewModel {
         addressSubject = BehaviorSubject<String?>(value: address)
         
         super.init()
+        
         userContacts = getContacts()
     }
     
@@ -303,8 +304,8 @@ class AddressAccessViewModel: BaseViewModel {
         
         errorTracker.asDriver()
             .drive(
-                onNext: { error in
-                    print(error)
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -312,13 +313,21 @@ class AddressAccessViewModel: BaseViewModel {
         let mappedTempContacts = tempAccessContactsSubject
             .asDriver(onErrorJustReturn: [])
             .map { [weak self] persons -> [AllowedPerson] in
-                self?.fillAllowedPersonsWithContactData(persons) ?? []
+                guard let self = self else {
+                    return []
+                }
+                
+                return self.fillAllowedPersonsWithContactData(persons, contactList: self.userContacts)
             }
         
         let mappedPermanentContacts = permanentAccessContactsSubject
             .asDriver(onErrorJustReturn: [])
             .map { [weak self] persons -> [AllowedPerson] in
-                self?.fillAllowedPersonsWithContactData(persons) ?? []
+                guard let self = self else {
+                    return []
+                }
+                
+                return self.fillAllowedPersonsWithContactData(persons, contactList: self.userContacts)
             }
         
         return Output(
