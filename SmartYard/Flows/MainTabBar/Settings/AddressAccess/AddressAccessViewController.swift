@@ -158,6 +158,7 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.temporaryIntercomCode
+            .distinctUntilChanged()
             .drive(
                 onNext: { [weak self] code in
                     self?.intercomAccessView.intercomCode = code

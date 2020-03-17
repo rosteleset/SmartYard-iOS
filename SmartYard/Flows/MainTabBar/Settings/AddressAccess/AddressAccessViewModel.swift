@@ -45,7 +45,7 @@ class AddressAccessViewModel: BaseViewModel {
         userContacts = getContacts()
     }
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         // MARK: Загрузка изначального стейта
         
