@@ -17,6 +17,7 @@ class AddressAccessViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
     
+    private let loadedUserContacts = BehaviorSubject<[CNContact]>(value: [])
     private let addressSubject: BehaviorSubject<String?>
     private let tempAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let permanentAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
@@ -31,8 +32,6 @@ class AddressAccessViewModel: BaseViewModel {
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
     
-    private var userContacts = [CNContact]()
-    
     init(router: WeakRouter<SettingsRoute>, address: String, flatId: String, apiWrapper: APIWrapper) {
         self.router = router
         self.address = address
@@ -42,12 +41,26 @@ class AddressAccessViewModel: BaseViewModel {
         addressSubject = BehaviorSubject<String?>(value: address)
         
         super.init()
-        
-        userContacts = getContacts()
     }
     
     // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
+        // MARK: Загрузка локального списка контактов
+        
+        hasAccessToContacts()
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.loadedUserContacts.onNext(self.getContacts())
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Загрузка изначального стейта
         
         let isIntercomStateLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
@@ -310,30 +323,32 @@ class AddressAccessViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        let mappedTempContacts = tempAccessContactsSubject
-            .asDriver(onErrorJustReturn: [])
-            .map { [weak self] persons -> [AllowedPerson] in
-                guard let self = self else {
-                    return []
-                }
+        let formattedTempContacts = Driver
+            .combineLatest(
+                tempAccessContactsSubject.asDriver(onErrorJustReturn: []),
+                loadedUserContacts.asDriver(onErrorJustReturn: [])
+            )
+            .map { [weak self] args -> [AllowedPerson] in
+                let (contactsWithAccess, localContactList) = args
                 
-                return self.fillAllowedPersonsWithContactData(persons, contactList: self.userContacts)
+                return self?.fillAllowedPersonsWithContactData(contactsWithAccess, contactList: localContactList) ?? []
             }
         
-        let mappedPermanentContacts = permanentAccessContactsSubject
-            .asDriver(onErrorJustReturn: [])
-            .map { [weak self] persons -> [AllowedPerson] in
-                guard let self = self else {
-                    return []
-                }
+        let formattedPermanentContacts = Driver
+            .combineLatest(
+                permanentAccessContactsSubject.asDriver(onErrorJustReturn: []),
+                loadedUserContacts.asDriver(onErrorJustReturn: [])
+            )
+            .map { [weak self] args -> [AllowedPerson] in
+                let (contactsWithAccess, localContactList) = args
                 
-                return self.fillAllowedPersonsWithContactData(persons, contactList: self.userContacts)
+                return self?.fillAllowedPersonsWithContactData(contactsWithAccess, contactList: localContactList) ?? []
             }
         
         return Output(
             objectAddress: addressSubject.asDriver(onErrorJustReturn: nil),
-            tempAccessContacts: mappedTempContacts,
-            permanentAccessContacts: mappedPermanentContacts,
+            tempAccessContacts: formattedTempContacts,
+            permanentAccessContacts: formattedPermanentContacts,
             temporaryIntercomCode: intercomAccessCode.asDriver(onErrorJustReturn: nil),
             isGrantedIntercomAccess: isGrantedIntercomGuestAccess.asDriver(onErrorJustReturn: false),
             isLoading: activityTracker.asDriver(),

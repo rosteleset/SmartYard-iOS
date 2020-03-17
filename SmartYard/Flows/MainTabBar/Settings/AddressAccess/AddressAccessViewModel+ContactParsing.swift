@@ -8,16 +8,29 @@
 
 import UIKit
 import Contacts
+import RxSwift
+import RxCocoa
 
 extension AddressAccessViewModel {
     
+    func hasAccessToContacts() -> Single<Void?> {
+        return Single.create(
+            subscribe: { single in
+                CNContactStore().requestAccess(for: .contacts) { isPermissionGranted, error in
+                    guard isPermissionGranted else {
+                        single(.error(error ?? NSError.GenericError.unknownError))
+                        return
+                    }
+                    
+                    single(.success(()))
+                }
+                
+                return Disposables.create()
+            }
+        )
+    }
+    
     func getContacts() -> [CNContact] {
-        switch CNContactStore.authorizationStatus(for: .contacts) {
-        case .authorized, .notDetermined: break
-        case .restricted, .denied: return []
-        @unknown default: return []
-        }
-        
         let contactStore = CNContactStore()
         
         let keysToFetch = [
@@ -69,7 +82,10 @@ extension AddressAccessViewModel {
         return match
     }
     
-    func fillAllowedPersonsWithContactData(_ persons: [AllowedPerson], contactList list: [CNContact]) -> [AllowedPerson] {
+    func fillAllowedPersonsWithContactData(
+        _ persons: [AllowedPerson],
+        contactList list: [CNContact]
+    ) -> [AllowedPerson] {
         return persons.map {
             guard let match = findContact(matchingNumber: $0.rawNumber, inList: list) else {
                 return $0
