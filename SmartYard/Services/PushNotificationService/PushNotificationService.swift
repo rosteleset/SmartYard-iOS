@@ -40,7 +40,7 @@ class PushNotificationService {
             return .error(NSError.PushNotificationServiceError.fcmTokenMissing)
         }
         
-        return apiWrapper.registerPushToken(pushToken: fcmToken, clientId: nil, type: .fcm)
+        return apiWrapper.registerPushToken(pushToken: fcmToken, clientId: nil, type: .fcmRepeating)
     }
     
 }

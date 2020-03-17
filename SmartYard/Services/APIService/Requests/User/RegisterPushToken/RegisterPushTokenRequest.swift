@@ -11,6 +11,7 @@ enum TokenType: Int {
     case fcm
     case apnsRelease
     case apnsDebug
+    case fcmRepeating
     
 }
 
