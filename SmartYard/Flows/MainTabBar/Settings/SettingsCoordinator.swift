@@ -12,7 +12,7 @@ import SafariServices
 enum SettingsRoute: Route {
     
     case main
-    case addressSettings(flatId: String, address: String)
+    case addressSettings(flatId: String, address: String, isContractOwner: Bool)
     case back
     case dismiss
     case serviceIsActivated(clientId: String?)
@@ -59,11 +59,13 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             let vc = SettingsViewController(viewModel: vm)
             return .set([vc])
             
-        case let .addressSettings(flatId, address):
+        case let .addressSettings(flatId, address, isContractOwner):
             let vm = AddressSettingsViewModel(
                 apiWrapper: apiWrapper,
+                issueService: issueService,
                 flatId: flatId,
                 address: address,
+                isContractOwner: isContractOwner,
                 router: weakRouter
             )
             

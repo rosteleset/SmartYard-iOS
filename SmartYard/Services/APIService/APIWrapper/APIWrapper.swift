@@ -209,6 +209,14 @@ class APIWrapper {
         return access(flatId: flatId, guestPhone: guestPhone, type: type, expire: Date.distantPast)
     }
     
+    func deleteAddress(flatId: String) -> Single<Void?> {
+        guard let phone = accessService.clientPhoneNumber else {
+            return .error(NSError.APIWrapperError.userPhoneMissing)
+        }
+        
+        return access(flatId: flatId, guestPhone: "8" + phone, expire: Date.distantFuture)
+    }
+    
     func access(
         flatId: String,
         guestPhone: String? = nil,

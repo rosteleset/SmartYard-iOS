@@ -13,21 +13,33 @@ import XCoordinator
 class AddressSettingsViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
+    private let issueService: IssueService
+    
     private let flatId: String
     private let address: String
+    private let isContractOwner: Bool
     private let router: WeakRouter<SettingsRoute>
     
-    init(apiWrapper: APIWrapper, flatId: String, address: String, router: WeakRouter<SettingsRoute>) {
+    private let activityTracker = ActivityTracker()
+    private let errorTracker = ErrorTracker()
+    
+    init(
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        flatId: String,
+        address: String,
+        isContractOwner: Bool,
+        router: WeakRouter<SettingsRoute>
+    ) {
         self.apiWrapper = apiWrapper
+        self.issueService = issueService
         self.flatId = flatId
         self.address = address
+        self.isContractOwner = isContractOwner
         self.router = router
     }
     
     func transform(_ input: Input) -> Output {
-        let activityTracker = ActivityTracker()
-        let errorTracker = ErrorTracker()
-        
         let isCmsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let areCallsEnabledSubject = BehaviorSubject<Bool>(value: false)
         
@@ -60,8 +72,8 @@ class AddressSettingsViewModel: BaseViewModel {
                 
                 return self.apiWrapper
                     .setIntercomCMSState(flatId: self.flatId, isEnabled: !isEnabled)
-                    .trackActivity(activityTracker)
-                    .trackError(errorTracker)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
@@ -81,8 +93,8 @@ class AddressSettingsViewModel: BaseViewModel {
                 
                 return self.apiWrapper
                     .setIntercomVoIPState(flatId: self.flatId, isEnabled: !isEnabled)
-                    .trackActivity(activityTracker)
-                    .trackError(errorTracker)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
@@ -104,11 +116,7 @@ class AddressSettingsViewModel: BaseViewModel {
         input.deleteTrigger
             .drive(
                 onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    self.router.trigger(.addressDeletion(delegate: self))
+                    self?.deleteAddress()
                 }
             )
             .disposed(by: disposeBag)
@@ -129,6 +137,36 @@ class AddressSettingsViewModel: BaseViewModel {
             isLoading: activityTracker.asDriver(),
             isInitialLoadingFinished: isInitialLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
         )
+    }
+    
+    private func deleteAddress() {
+        guard !isContractOwner else {
+            router.trigger(.addressDeletion(delegate: self))
+            return
+        }
+        
+        let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        
+        let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
+            guard let self = self else {
+                return
+            }
+            
+            self.apiWrapper
+                .deleteAddress(flatId: self.flatId)
+                .trackActivity(self.activityTracker)
+                .trackError(self.errorTracker)
+                .asDriver(onErrorJustReturn: nil)
+                .ignoreNil()
+                .drive(
+                    onNext: {
+                        print("Адрес удален")
+                    }
+                )
+                .disposed(by: self.disposeBag)
+        }
+        
+        router.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
     }
     
 }
@@ -155,8 +193,19 @@ extension AddressSettingsViewModel {
 
 extension AddressSettingsViewModel: AddressDeletionViewModelDelegate {
     
-    func addressDeletionViewModelDidConfirmDeletion(_ viewModel: AddressDeletionViewModel) {
-        router.trigger(.back)
+    func addressDeletionViewModelDidConfirmDeletion(_ viewModel: AddressDeletionViewModel, reason: String) {
+        issueService
+            .sendDeleteAddressIssue(address: address, reason: reason)
+            .trackActivity(activityTracker)
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { _ in
+                    print("DONE")
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

@@ -185,7 +185,13 @@ class SettingsViewModel: BaseViewModel {
                         return
                     }
                     
-                    self?.router.trigger(.addressSettings(flatId: flatId, address: match.address))
+                    self?.router.trigger(
+                        .addressSettings(
+                            flatId: flatId,
+                            address: match.address,
+                            isContractOwner: match.contractOwner ?? false
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
