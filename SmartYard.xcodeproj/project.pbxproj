@@ -1881,10 +1881,10 @@
 		E99EA6B623EA9CED00BECEE6 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				E9B9EAC42421FC91000A92B3 /* ResetPassword */,
 				E98C382E23F1812C0010BBC1 /* AuthByContractNum */,
 				E99EA6B723EA9CF200BECEE6 /* InputPhoneNumber */,
 				E9A4D48123EC22760070A591 /* InputPinCode */,
+				E9B9EAC42421FC91000A92B3 /* ResetPassword */,
 			);
 			path = Login;
 			sourceTree = "<group>";

@@ -7,24 +7,25 @@
 //
 
 import UIKit
+import JGProgressHUD
 
-class ResetPasswordViewController: UIViewController {
-
+class ResetPasswordViewController: BaseViewController, LoaderPresentable {
+    
+    @IBOutlet private weak var contractTextField: SmartYardTextField!
+    @IBOutlet private weak var firstResetMethodView: UIView!
+    @IBOutlet private weak var secondResetMethodView: UIView!
+    @IBOutlet private weak var getConfirmationCodeButton: WhiteButtonWithBorder!
+    
+    var loader: JGProgressHUD?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        configureUI()
     }
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func configureUI() {
+        firstResetMethodView.isHidden = true
+        secondResetMethodView.isHidden = true
     }
-    */
-
+    
 }
