@@ -28,4 +28,8 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
         secondResetMethodView.isHidden = true
     }
     
+    private func bind() {
+        
+    }
+    
 }

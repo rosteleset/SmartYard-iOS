@@ -16,7 +16,7 @@ class ResetPasswordViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<HomeRoute>
     
-    private let contractNum: String
+    private var contractNum: String
     
     init(apiWrapper: APIWrapper, router: WeakRouter<HomeRoute>, contractNum: String) {
         self.apiWrapper = apiWrapper
