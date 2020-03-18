@@ -173,6 +173,22 @@ class SettingsViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.clientName
+            .drive(
+                onNext: { [weak self] name in
+                    self?.nameLabel.text = name
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.clientPhone
+            .drive(
+                onNext: { [weak self] phone in
+                    self?.phoneNumberLabel.text = phone
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func performScrollUpdate(updateKind: SettingsSectionUpdateKind, to indexPath: IndexPath) {

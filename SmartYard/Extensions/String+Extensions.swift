@@ -10,7 +10,7 @@ import Foundation
 
 extension String {
     
-    mutating func formatAsPhoneNumber() -> String {
+    private mutating func formatAsPhoneNumber() -> String {
         guard count == Constants.phoneLengthWithPrefix else {
             return self
         }
@@ -38,6 +38,17 @@ extension String {
         }
         
         return String(contactNumber.suffix(Constants.phoneLengthWithoutPrefix))
+    }
+    
+    // Форматированный номер ( +7 (927) 123-45-67 )
+    var formattedNumberFromRawNumber: String? {
+        guard count == Constants.phoneLengthWithoutPrefix else {
+            return nil
+        }
+        
+        var mutableString = "+7" + self
+        
+        return mutableString.formatAsPhoneNumber()
     }
     
 }

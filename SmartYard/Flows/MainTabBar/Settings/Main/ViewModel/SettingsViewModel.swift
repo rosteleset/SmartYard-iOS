@@ -15,14 +15,16 @@ class SettingsViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
     private let apiWrapper: APIWrapper
+    private let accessService: AccessService
     
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
     private let loadedData = BehaviorSubject<[APISettingsAddress]>(value: [])
     
-    init(router: WeakRouter<SettingsRoute>, apiWrapper: APIWrapper) {
+    init(router: WeakRouter<SettingsRoute>, apiWrapper: APIWrapper, accessService: AccessService) {
         self.router = router
         self.apiWrapper = apiWrapper
+        self.accessService = accessService
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
@@ -317,7 +319,15 @@ class SettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        let name = [accessService.clientName?.name, accessService.clientName?.patronymic]
+            .compactMap { $0 }
+            .joined(separator: " ")
+        
+        let phone = accessService.clientPhoneNumber?.formattedNumberFromRawNumber
+        
         return Output(
+            clientName: .just(name),
+            clientPhone: .just(phone),
             sectionModels: sectionModels,
             updateKind: updateKind,
             isInitialLoadingFinished: isInitialLoadingFinished,
@@ -430,6 +440,8 @@ extension SettingsViewModel {
     }
     
     struct Output {
+        let clientName: Driver<String?>
+        let clientPhone: Driver<String?>
         let sectionModels: Driver<[SettingsSectionModel]>
         let updateKind: Driver<SettingsSectionUpdateKind>
         let isInitialLoadingFinished: Driver<Bool>
