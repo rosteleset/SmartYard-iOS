@@ -8,9 +8,5 @@
 
 import Foundation
 
-struct CreateIssueResponseData: Decodable {
-    
-    let issue: String
-    
-}
+struct CreateIssueResponseData: Codable { }
 

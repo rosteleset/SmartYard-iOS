@@ -9,16 +9,20 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import JGProgressHUD
 
-class ServicesActivationRequestViewController: BaseViewController {
+class ServicesActivationRequestViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var sendRequestButton: BlueButton!
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
     private let viewModel: ServicesActivationRequestViewModel
     private let itemsProxy = BehaviorSubject<[ServiceModel]>(value: [])
     
     private let serviceStateChanged = PublishSubject<Int?>()
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: ServicesActivationRequestViewModel) {
         self.viewModel = viewModel
@@ -38,6 +42,7 @@ class ServicesActivationRequestViewController: BaseViewController {
         super.viewDidLoad()
         
         configureTableView()
+        fakeNavBar.configureBlueNavBar()
         bind()
     }
 
@@ -45,13 +50,31 @@ class ServicesActivationRequestViewController: BaseViewController {
         let input = ServicesActivationRequestViewModel.Input(
             sendRequestTapped: sendRequestButton.rx.tap.asDriverOnErrorJustComplete(),
             serviceStateChanged: serviceStateChanged.asDriverOnErrorJustComplete(),
-            viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete()
+            viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
         let output = viewModel.transform(input: input)
         
         output.serviceItems
             .drive(itemsProxy)
+            .disposed(by: disposeBag)
+        
+        output.isSelectedSomeService
+            .drive(sendRequestButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
             .disposed(by: disposeBag)
         
         itemsProxy

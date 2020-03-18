@@ -17,18 +17,37 @@ class AddressConfirmationViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     
+    private let address: String
+    
     init(
         router: WeakRouter<HomeRoute>,
         apiWrapper: APIWrapper,
-        issueService: IssueService
+        issueService: IssueService,
+        address: String
     ) {
         self.router = router
         self.apiWrapper = apiWrapper
         self.issueService = issueService
+        self.address = address
     }
     
     func transform(_ input: Input) -> Output {
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
+        
         input.confirmByCourierTapped
+            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.issueService.sendApproveAddressByCourierIssue(address: self.address)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .mapToVoid()
             .drive(
                 onNext: { [weak self] in
                     self?.router.trigger(.main)
@@ -37,6 +56,18 @@ class AddressConfirmationViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.confirmInOfficeTrigger
+            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.issueService.sendApproveAddressInOfficeIssue(address: self.address)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .mapToVoid()
             .drive(
                 onNext: { [weak self] in
                     self?.router.trigger(.main)
@@ -44,7 +75,15 @@ class AddressConfirmationViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output()
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        return Output(isLoading: activityTracker.asDriver())
     }
     
 }
@@ -54,10 +93,11 @@ extension AddressConfirmationViewModel {
     struct Input {
         let confirmByCourierTapped: Driver<Void>
         let confirmInOfficeTrigger: Driver<Void>
+        let backTrigger: Driver<Void>
     }
     
     struct Output {
-        
+        let isLoading: Driver<Bool>
     }
     
 }

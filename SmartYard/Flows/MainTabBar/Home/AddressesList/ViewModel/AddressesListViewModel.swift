@@ -26,7 +26,8 @@ class AddressesListViewModel: BaseViewModel {
         self.router = router
     }
     
-    private let loadedData = BehaviorSubject<GetAddressListResponseData?>(value: nil)
+    private let loadedApprovedAddressesData = BehaviorSubject<GetAddressListResponseData?>(value: nil)
+    private let loadedUnapprovedAddressesData = BehaviorSubject<GetListConnectResponseData?>(value: nil)
     
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
@@ -63,13 +64,23 @@ class AddressesListViewModel: BaseViewModel {
                 input.refreshDataTrigger.asDriver().delay(.milliseconds(1000)),
                 .just(())
             )
-            .flatMapLatest { [weak self] _ -> Driver<GetAddressListResponseData?> in
+            .flatMapLatest { [weak self] _ -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in
                 guard let self = self else {
                     return .empty()
                 }
-                
-                return self.apiWrapper.getAddressList()
+
+                return Single
+                    .zip(self.apiWrapper.getAddressList(), self.apiWrapper.getListConnect())
                     .trackError(errorTracker)
+                    .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
+                        let (firstResponse, secondResponse) = args
+                        
+                        guard let uFirstResponse = firstResponse, let uSecondResponse = secondResponse else {
+                            return nil
+                        }
+                        
+                        return (uFirstResponse, uSecondResponse)
+                    }
                     .asDriver(onErrorJustReturn: nil)
             }
             .do(
@@ -83,21 +94,26 @@ class AddressesListViewModel: BaseViewModel {
             .do(
                 onNext: { [weak self] args in
                     let (newData, expansionStateDict) = args
+                    let (approvedAddresses, _) = newData
                     
-                    self?.updateSectionExpansionStates(expansionStateDict: expansionStateDict, newData: newData)
+                    self?.updateSectionExpansionStates(
+                        expansionStateDict: expansionStateDict,
+                        newData: approvedAddresses
+                    )
                 }
             )
             .drive(
                 onNext: { [weak self] args in
                     let (newData, _) = args
-                    // TODO: нужно добавить загрузку адресов, которые ожидают подтверждения,
-                    // затем этот список по аналогии проверить на пустоту
-                    guard !newData.isEmpty else {
+                    let (approvedAddresses, unapprovedAddresses) = newData
+                    
+                    guard !approvedAddresses.isEmpty || !unapprovedAddresses.isEmpty else {
                         self?.router.trigger(.inputContract)
                         return
                     }
                     
-                    self?.loadedData.onNext(newData)
+                    self?.loadedApprovedAddressesData.onNext(approvedAddresses)
+                    self?.loadedUnapprovedAddressesData.onNext(unapprovedAddresses)
                 }
             )
             .disposed(by: disposeBag)
@@ -105,7 +121,7 @@ class AddressesListViewModel: BaseViewModel {
         // MARK: Обработка нажатия на кнопку "Открыть"
         
         input.guestAccessRequested
-            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .withLatestFrom(loadedApprovedAddressesData.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .flatMapLatest { [weak self] args -> Driver<AddressesListDataItemIdentity?> in
                 let (identity, loadedData) = args
                 
@@ -206,19 +222,25 @@ class AddressesListViewModel: BaseViewModel {
         
         let sectionModels = Driver
             .combineLatest(
-                loadedData.asDriver(onErrorJustReturn: nil),
+                loadedApprovedAddressesData.asDriver(onErrorJustReturn: nil),
+                loadedUnapprovedAddressesData.asDriver(onErrorJustReturn: nil),
                 areSectionsExpanded.asDriverOnErrorJustComplete(),
                 areObjectsGrantAccessed.asDriverOnErrorJustComplete()
             )
             .map { [weak self] args -> [AddressesListSectionModel] in
-                let (loadedData, expansionStateDict, objectAccessDict) = args
+                let (loadedApprovedAddressesData, loadedUnapprovedAddressesData,
+                    expansionStateDict, objectAccessDict) = args
                 
-                guard let self = self, let data = loadedData else {
+                guard let self = self,
+                      let approvedAddresses = loadedApprovedAddressesData,
+                      let unapprovedAddresses = loadedUnapprovedAddressesData
+                else {
                     return []
                 }
                 
                 return self.createSections(
-                    data: data,
+                    approvedAddressesData: approvedAddresses,
+                    unapprovedAddressesData: unapprovedAddresses,
                     expansionStateDict: expansionStateDict,
                     objectAccessDict: objectAccessDict
                 )
@@ -271,12 +293,13 @@ class AddressesListViewModel: BaseViewModel {
     }
     
     private func createSections(
-        data: GetAddressListResponseData,
+        approvedAddressesData: GetAddressListResponseData,
+        unapprovedAddressesData: GetListConnectResponseData,
         expansionStateDict: [String: Bool],
         objectAccessDict: [AddressesListDataItemIdentity: Bool]
     ) -> [AddressesListSectionModel] {
         // swiftlint:disable:next closure_body_length
-        let sectionModels = data.map { address -> AddressesListSectionModel in
+        var sectionModels = approvedAddressesData.map { address -> AddressesListSectionModel in
             let addressId = address.houseId
             let isSectionExpanded = expansionStateDict[addressId, default: false]
             
@@ -325,6 +348,19 @@ class AddressesListViewModel: BaseViewModel {
             
             return section
         }
+        
+        let unapprovedAddressItems = unapprovedAddressesData.compactMap { address -> AddressesListDataItem? in
+            let addressItem: AddressesListDataItem? = {
+                .unapprovedAddresses(
+                    identity: .unapprovedObject(addressId: address.id),
+                    address: address.description
+                )
+            }()
+            return addressItem
+        }
+        
+        let unapprovedAddressSections = AddressesListSectionModel(identity: "unapproved", items: unapprovedAddressItems)
+        sectionModels.append(unapprovedAddressSections)
         
         return sectionModels
     }

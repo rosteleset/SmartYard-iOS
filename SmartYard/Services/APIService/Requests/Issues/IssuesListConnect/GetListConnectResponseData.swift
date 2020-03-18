@@ -6,4 +6,4 @@
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
-typealias GetListConnectResponseData = [APIIssue]
+typealias GetListConnectResponseData = [APIIssueConnect]

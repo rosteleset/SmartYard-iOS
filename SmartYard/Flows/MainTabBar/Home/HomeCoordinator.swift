@@ -15,8 +15,8 @@ enum HomeRoute: Route {
     case inputContract
     case inputAddress
     case availableServices(address: String, services: [APIServiceModel])
-    case unavailableServices
-    case confirmAddress
+    case unavailableServices(address: String)
+    case confirmAddress(address: String)
     case back
     
 }
@@ -84,30 +84,38 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let vm = AvailableServicesViewModel(
                 router: weakRouter,
                 apiWrapper: apiWrapper,
+                issueService: issueService,
                 address: address,
                 services: services
             )
             
             let vc = AvailableServicesViewController(viewModel: vm)
             
-            return .set([vc], animation: .fade)
+            return .push(vc)
             
-        case .unavailableServices:
-            let vm = ServicesActivationRequestViewModel(router: weakRouter, apiWrapper: apiWrapper)
+        case let .unavailableServices(address):
+            let vm = ServicesActivationRequestViewModel(
+                router: weakRouter,
+                apiWrapper: apiWrapper,
+                issueService: issueService,
+                address: address
+            )
+            
             let vc = ServicesActivationRequestViewController(viewModel: vm)
             
-            return .set([vc], animation: .fade)
+            return .push(vc)
             
-        case .confirmAddress:
+        case let .confirmAddress(address):
             let vm = AddressConfirmationViewModel(
                 router: weakRouter,
                 apiWrapper: apiWrapper,
-                issueService: issueService
+                issueService: issueService,
+                address: address
             )
             
             let vc = AddressConfirmationViewController(viewModel: vm)
             
-            return .set([vc], animation: .fade)
+            return .push(vc)
         
         case .back:
             return .pop(animation: .default)

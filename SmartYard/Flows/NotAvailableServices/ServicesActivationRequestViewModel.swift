@@ -14,16 +14,25 @@ import RxSwift
 class ServicesActivationRequestViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
+    
     private let apiWrapper: APIWrapper
+    private let issueService: IssueService
     
+    private let address: String
+
     private let serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: [])
-    
-    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper) {
+
+    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, issueService: IssueService, address: String) {
         self.router = router
         self.apiWrapper = apiWrapper
+        self.issueService = issueService
+        self.address = address
     }
     
     func transform(input: Input) -> Output {
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
+        
         input.viewWillAppearTrigger
             .drive(
                 onNext: { [weak self] _ in
@@ -37,9 +46,30 @@ class ServicesActivationRequestViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.sendRequestTapped
+            .withLatestFrom(serviceItemsSubject.asDriver(onErrorJustReturn: []))
+            .filter { !$0.isEmpty }
+            .flatMapLatest { [weak self] servicesData -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                let services = servicesData
+                    .filter { $0.state == .checkedActive }
+                    .compactMap { serviceItem -> SettingsServiceType? in
+                        SettingsServiceType(rawValue: serviceItem.icon)
+                    }
+                
+                return
+                    self.issueService.sendUnavailableAddressConnectionIssue(address: self.address, services: services)
+                        .trackError(errorTracker)
+                        .trackActivity(activityTracker)
+                        .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .mapToVoid()
             .drive(
-                onNext: {
-                    // TODO
+                onNext: { [weak self] in
+                    self?.router.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
@@ -61,15 +91,33 @@ class ServicesActivationRequestViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output(serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []))
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        let isSomeServiceSelected = serviceItemsSubject
+            .asDriver(onErrorJustReturn: [])
+            .map { services -> Bool in
+                services.contains { $0.state == .checkedActive }
+            }
+
+        return Output(
+            serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []),
+            isSelectedSomeService: isSomeServiceSelected.asDriver(onErrorJustReturn: false),
+            isLoading: activityTracker.asDriver()
+        )
     }
     
     private func getServiceModels() -> [ServiceModel] {
         return [
-            ServiceModel(id: "0", name: "Умный домофон", description: "", state: .uncheckedActive),
-            ServiceModel(id: "1", name: "Видеонаблюдение", description: "", state: .uncheckedActive),
-            ServiceModel(id: "2", name: "Интернет и ТВ", description: "", state: .uncheckedActive),
-            ServiceModel(id: "3", name: "Телефония", description: "", state: .uncheckedActive)
+            ServiceModel(id: "0", icon: "domophone", name: "Умный домофон", description: "", state: .uncheckedActive),
+            ServiceModel(id: "1", icon: "cctv", name: "Видеонаблюдение", description: "", state: .uncheckedActive),
+            ServiceModel(id: "2", icon: "internet", name: "Интернет и ТВ", description: "", state: .uncheckedActive),
+            ServiceModel(id: "3", icon: "phone", name: "Телефония", description: "", state: .uncheckedActive)
         ]
     }
     
@@ -81,10 +129,13 @@ extension ServicesActivationRequestViewModel {
         let sendRequestTapped: Driver<Void>
         let serviceStateChanged: Driver<Int?>
         let viewWillAppearTrigger: Driver<Bool>
+        let backTrigger: Driver<Void>
     }
     
     struct Output {
         let serviceItems: Driver<[ServiceModel]>
+        let isSelectedSomeService: Driver<Bool>
+        let isLoading: Driver<Bool>
     }
     
 }

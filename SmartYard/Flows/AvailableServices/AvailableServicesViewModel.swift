@@ -16,36 +16,89 @@ class AvailableServicesViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     
     private let apiWrapper: APIWrapper
+    private let issueService: IssueService
     
-    private let serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: [])
-
-    private let address: String
-    private let services: [APIServiceModel]
+    private let serviceItemsSubject: BehaviorSubject<[ServiceModel]>
+    private let addressSubject: BehaviorSubject<String?>
     
-    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, address: String, services: [APIServiceModel]) {
+    init(
+        router: WeakRouter<HomeRoute>,
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        address: String,
+        services: [APIServiceModel]
+    ) {
         self.router = router
         self.apiWrapper = apiWrapper
-        self.address = address
-        self.services = services
+        self.issueService = issueService
+        
+        var serviceModels = services.enumerated().map { offset, element in
+            ServiceModel(
+                id: String(offset),
+                icon: element.icon,
+                name: element.title,
+                description: element.description,
+                state: element.isAvailableByDefault ? .checkedInactive : .uncheckedActive
+            )
+        }
+        
+        serviceModels = serviceModels.sorted { $0.state.sortOrder < $1.state.sortOrder }
+
+        addressSubject = BehaviorSubject<String?>(value: address)
+        serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: serviceModels)
     }
     
     func transform(input: Input) -> Output {
-        input.viewWillAppearTrigger
+        let sendConnectServicesIssueTrigger = PublishSubject<(String, [ServiceModel])>()
+        
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
+        
+        input.nextTapped
+            .withLatestFrom(serviceItemsSubject.asDriver(onErrorJustReturn: []))
+            .withLatestFrom(addressSubject.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .drive(
-                onNext: { [weak self] _ in
-                    guard let self = self else {
+                onNext: { [weak self] services, address in
+                    guard let self = self, let address = address else {
                         return
                     }
                     
-                    self.serviceItemsSubject.onNext(self.getFakeModels())
+                    let selectedServices = services.filter { $0.state == .checkedActive }
+                    
+                    guard !selectedServices.isEmpty else {
+                        self.router.trigger(.confirmAddress(address: address))
+                        return
+                    }
+                    
+                    sendConnectServicesIssueTrigger.onNext((address, selectedServices))
                 }
             )
             .disposed(by: disposeBag)
         
-        input.nextTapped
+        sendConnectServicesIssueTrigger
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] args -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                let (addressString, services) = args
+                let selectedServices = services.compactMap { SettingsServiceType(rawValue: $0.icon) }
+                
+                return self.issueService
+                    .sendConnectSelectedServicesIssue(
+                        address: addressString,
+                        services: selectedServices
+                    )
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .mapToVoid()
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.confirmAddress)
+                    self?.router.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
@@ -67,22 +120,19 @@ class AvailableServicesViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output(serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []))
-    }
-    
-    private func getFakeModels() -> [ServiceModel] {
-        return [
-            // swiftlint:disable:next line_length
-            ServiceModel(id: "0", name: "Умный домофон", description: "На шлагбаум, ворота и подъезд", state: .checkedInactive),
-            ServiceModel(id: "1", name: "Видеонаблюдение", description: "3 камеры", state: .checkedInactive),
-            ServiceModel(id: "2", name: "Интернет и ТВ", description: "Более 250 каналов", state: .uncheckedActive),
-            ServiceModel(id: "3", name: "Умный дом", description: "Дом умнее тебя", state: .uncheckedActive),
-            // swiftlint:disable:next line_length
-            ServiceModel(id: "4", name: "Тревожная кнопка", description: "Не верь, не бойся, не проси", state: .uncheckedActive),
-            // swiftlint:disable:next line_length
-            ServiceModel(id: "5", name: "Аренда оборудования", description: "Wi-Fi роутер, приставка для TV", state: .uncheckedActive),
-            ServiceModel(id: "6", name: "FakeFakeFake", description: "Fake", state: .uncheckedActive)
-        ]
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        return Output(
+            serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []),
+            addressSubject: addressSubject.asDriver(onErrorJustReturn: nil),
+            isLoading: activityTracker.asDriver()
+        )
     }
     
 }
@@ -93,10 +143,13 @@ extension AvailableServicesViewModel {
         let nextTapped: Driver<Void>
         let serviceStateChanged: Driver<Int?>
         let viewWillAppearTrigger: Driver<Bool>
+        let backTrigger: Driver<Void>
     }
     
     struct Output {
         let serviceItems: Driver<[ServiceModel]>
+        let addressSubject: Driver<String?>
+        let isLoading: Driver<Bool>
     }
     
 }

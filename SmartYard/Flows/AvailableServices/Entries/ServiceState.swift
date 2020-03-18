@@ -11,10 +11,23 @@ import UIKit
 
 enum ServiceState {
     
-    case checkedActive
     case checkedInactive
-    case uncheckedActive
     case uncheckedInactive
+    case uncheckedActive
+    case checkedActive
+    
+    var sortOrder: Int {
+        switch self {
+        case .checkedInactive:
+            return 0
+        case .uncheckedInactive:
+            return 1
+        case .uncheckedActive:
+            return 2
+        case .checkedActive:
+            return 3
+        }
+    }
     
     var titleTextColor: UIColor? {
         switch self {
