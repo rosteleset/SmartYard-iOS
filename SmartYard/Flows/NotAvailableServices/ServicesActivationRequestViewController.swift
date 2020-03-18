@@ -61,11 +61,7 @@ class ServicesActivationRequestViewController: BaseViewController, LoaderPresent
             .disposed(by: disposeBag)
         
         output.isSelectedSomeService
-            .drive(
-                onNext: { [weak self] isSelected in
-                    self?.sendRequestButton.isEnabled = isSelected
-                }
-            )
+            .drive(sendRequestButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
         output.isLoading

@@ -94,7 +94,13 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             return .push(vc)
             
         case let .unavailableServices(address):
-            let vm = ServicesActivationRequestViewModel(router: weakRouter, apiWrapper: apiWrapper, issueService: issueService, address: address)
+            let vm = ServicesActivationRequestViewModel(
+                router: weakRouter,
+                apiWrapper: apiWrapper,
+                issueService: issueService,
+                address: address
+            )
+            
             let vc = ServicesActivationRequestViewController(viewModel: vm)
             
             return .push(vc)

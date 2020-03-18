@@ -107,7 +107,7 @@ class AddressesListViewModel: BaseViewModel {
                     let (newData, _) = args
                     let (approvedAddresses, unapprovedAddresses) = newData
                     
-                    guard !approvedAddresses.isEmpty || !unapprovedAddresses.isEmpty else {
+                    guard !approvedAddresses.isEmpty /*|| !unapprovedAddresses.isEmpty */else {
                         self?.router.trigger(.inputContract)
                         return
                     }

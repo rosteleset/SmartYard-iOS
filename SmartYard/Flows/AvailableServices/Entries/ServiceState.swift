@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-enum ServiceState: Comparable {
+enum ServiceState {
     
     case checkedInactive
     case uncheckedInactive
     case uncheckedActive
     case checkedActive
     
-    private var sortOrder: Int {
+    var sortOrder: Int {
         switch self {
         case .checkedInactive:
             return 0
@@ -56,10 +56,6 @@ enum ServiceState: Comparable {
         case .uncheckedActive, .uncheckedInactive: return .clear
         case .checkedInactive: return UIColor.SmartYard.gray
         }
-    }
-    
-    static func <(lhs: ServiceState, rhs: ServiceState) -> Bool {
-        return lhs.sortOrder < rhs.sortOrder
     }
     
 }

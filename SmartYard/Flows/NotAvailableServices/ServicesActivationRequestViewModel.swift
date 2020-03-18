@@ -33,8 +33,6 @@ class ServicesActivationRequestViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
-        let isSelectedSomeServiceSubject = BehaviorSubject<Bool>(value: false)
-        
         input.viewWillAppearTrigger
             .drive(
                 onNext: { [weak self] _ in
@@ -51,7 +49,7 @@ class ServicesActivationRequestViewModel: BaseViewModel {
             .withLatestFrom(serviceItemsSubject.asDriver(onErrorJustReturn: []))
             .filter { !$0.isEmpty }
             .flatMapLatest { [weak self] servicesData -> Driver<CreateIssueResponseData?> in
-                guard let self = self, let servicesData = try? self.serviceItemsSubject.value() else {
+                guard let self = self else {
                     return .empty()
                 }
                 
@@ -101,18 +99,15 @@ class ServicesActivationRequestViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        serviceItemsSubject
+        let isSomeServiceSelected = serviceItemsSubject
             .asDriver(onErrorJustReturn: [])
-            .drive(
-                onNext: { values in
-                    isSelectedSomeServiceSubject.onNext(!values.filter {$0.state == .checkedActive }.isEmpty)
-                }
-            )
-            .disposed(by: disposeBag)
-        
+            .map { services -> Bool in
+                services.contains { $0.state == .checkedActive }
+            }
+
         return Output(
             serviceItems: serviceItemsSubject.asDriver(onErrorJustReturn: []),
-            isSelectedSomeService: isSelectedSomeServiceSubject.asDriver(onErrorJustReturn: false),
+            isSelectedSomeService: isSomeServiceSelected.asDriver(onErrorJustReturn: false),
             isLoading: activityTracker.asDriver()
         )
     }

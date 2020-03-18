@@ -18,11 +18,8 @@ class AvailableServicesViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     
-    private let serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: [])
-    private let addressSubject = BehaviorSubject<String?>(value: nil)
-    
-    private let address: String
-    private let services: [ServiceModel]
+    private let serviceItemsSubject: BehaviorSubject<[ServiceModel]>
+    private let addressSubject: BehaviorSubject<String?>
     
     init(
         router: WeakRouter<HomeRoute>,
@@ -34,23 +31,21 @@ class AvailableServicesViewModel: BaseViewModel {
         self.router = router
         self.apiWrapper = apiWrapper
         self.issueService = issueService
-        self.address = address
         
-        var serviceModels = [ServiceModel]()
-        
-        services.enumerated().forEach { offset, element in
-            serviceModels.append(
-                ServiceModel(
-                    id: String(offset),
-                    icon: element.icon,
-                    name: element.title,
-                    description: element.description,
-                    state: element.isAvailableByDefault ? .checkedInactive : .uncheckedActive
-                )
+        var serviceModels = services.enumerated().map { offset, element in
+            ServiceModel(
+                id: String(offset),
+                icon: element.icon,
+                name: element.title,
+                description: element.description,
+                state: element.isAvailableByDefault ? .checkedInactive : .uncheckedActive
             )
         }
+        
+        serviceModels = serviceModels.sorted { $0.state.sortOrder < $1.state.sortOrder }
 
-        self.services = serviceModels.sorted(by: { $0.state < $1.state })
+        addressSubject = BehaviorSubject<String?>(value: address)
+        serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: serviceModels)
     }
     
     func transform(input: Input) -> Output {
@@ -59,26 +54,23 @@ class AvailableServicesViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
-        addressSubject.onNext(address)
-        serviceItemsSubject.onNext(services)
-        
         input.nextTapped
+            .withLatestFrom(serviceItemsSubject.asDriver(onErrorJustReturn: []))
+            .withLatestFrom(addressSubject.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .drive(
-                onNext: { [weak self] in
-                    guard let self = self,
-                          let data = try? self.serviceItemsSubject.value()
-                    else {
+                onNext: { [weak self] services, address in
+                    guard let self = self, let address = address else {
                         return
                     }
                     
-                    let selectedServices = data.filter { $0.state == .checkedActive }
+                    let selectedServices = services.filter { $0.state == .checkedActive }
                     
                     guard !selectedServices.isEmpty else {
-                        self.router.trigger(.confirmAddress(address: self.address))
+                        self.router.trigger(.confirmAddress(address: address))
                         return
                     }
                     
-                    sendConnectServicesIssueTrigger.onNext((self.address, selectedServices))
+                    sendConnectServicesIssueTrigger.onNext((address, selectedServices))
                 }
             )
             .disposed(by: disposeBag)
