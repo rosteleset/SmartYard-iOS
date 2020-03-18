@@ -25,43 +25,49 @@ class APIWrapper {
     // Address
     
     func getCurrentIntercomState(flatId: String) -> Single<IntercomResponseData?> {
-        guard let accessToken = accessService.accessToken else {
-            return .error(NSError.APIWrapperError.accessTokenMissingError)
-        }
-        
-        let request = IntercomRequest(accessToken: accessToken, flatId: flatId, settings: nil)
-        
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performGrantHourGuestAccessRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
+        return intercom(flatId: flatId, settings: nil)
     }
     
     func grantHourGuestAccess(flatId: String) -> Single<IntercomResponseData?> {
-        guard let accessToken = accessService.accessToken else {
-            return .error(NSError.APIWrapperError.accessTokenMissingError)
-        }
-        
-        let autoOpenEndDate = Date().dateHourAfter.apiString
-        
         let settings = APIIntercomSettings(
             enableDoorCode: nil,
             cms: nil,
             voip: nil,
-            autoOpen: autoOpenEndDate,
+            autoOpen: Date().dateHourAfter,
             whiteRabbit: nil
         )
+        
+        return intercom(flatId: flatId, settings: settings)
+    }
+    
+    func setIntercomCMSState(flatId: String, isEnabled: Bool) -> Single<IntercomResponseData?> {
+        let settings = APIIntercomSettings(
+            enableDoorCode: nil,
+            cms: isEnabled,
+            voip: nil,
+            autoOpen: nil,
+            whiteRabbit: nil
+        )
+        
+        return intercom(flatId: flatId, settings: settings)
+    }
+    
+    func setIntercomVoIPState(flatId: String, isEnabled: Bool) -> Single<IntercomResponseData?> {
+        let settings = APIIntercomSettings(
+            enableDoorCode: nil,
+            cms: nil,
+            voip: isEnabled,
+            autoOpen: nil,
+            whiteRabbit: nil
+        )
+        
+        return intercom(flatId: flatId, settings: settings)
+    }
+    
+    func intercom(flatId: String, settings: APIIntercomSettings?) -> Single<IntercomResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
         
         let request = IntercomRequest(accessToken: accessToken, flatId: flatId, settings: settings)
         
@@ -71,7 +77,7 @@ class APIWrapper {
                 return Disposables.create()
             }
             
-            self.apiService.performGrantHourGuestAccessRequest(request) { result in
+            self.apiService.performIntercomRequest(request) { result in
                 switch result {
                 case let .success(data): single(.success(data))
                 case let .failure(error): single(.error(error))

@@ -79,13 +79,7 @@ class AddressAccessViewModel: BaseViewModel {
                 onNext: { [weak self] response in
                     self?.intercomAccessCode.onNext(response.doorCode)
                     
-                    let isAccessGranted: Bool = {
-                        guard let dateUntilClose = response.autoOpen.dateFromAPIString else {
-                            return false
-                        }
-                        
-                        return dateUntilClose > Date()
-                    }()
+                    let isAccessGranted = response.autoOpen > Date()
                     
                     self?.isGrantedIntercomGuestAccess.onNext(isAccessGranted)
                 }
@@ -387,11 +381,7 @@ class AddressAccessViewModel: BaseViewModel {
             
             response
                 .map { response -> Bool in
-                    guard let dateUntilClose = response.autoOpen.dateFromAPIString else {
-                        return false
-                    }
-                    
-                    return dateUntilClose > Date()
+                    response.autoOpen > Date()
                 }
                 .drive(self.isGrantedIntercomGuestAccess)
                 .disposed(by: self.disposeBag)

@@ -6,12 +6,14 @@
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
+import Foundation
+
 struct APIIntercomSettings {
     
     let enableDoorCode: Bool?
-    let cms: String?
-    let voip: String?
-    let autoOpen: String?
+    let cms: Bool?
+    let voip: Bool?
+    let autoOpen: Date?
     let whiteRabbit: String?
     
 }
@@ -26,15 +28,15 @@ extension APIIntercomSettings {
         }
         
         if let cms = cms {
-            params["CMS"] = cms
+            params["CMS"] = cms ? "t" : "f"
         }
         
         if let voip = voip {
-            params["VoIP"] = voip
+            params["VoIP"] = voip ? "t" : "f"
         }
         
         if let autoOpen = autoOpen {
-            params["autoOpen"] = autoOpen
+            params["autoOpen"] = autoOpen.apiString
         }
         
         if let whiteRabbit = whiteRabbit {
