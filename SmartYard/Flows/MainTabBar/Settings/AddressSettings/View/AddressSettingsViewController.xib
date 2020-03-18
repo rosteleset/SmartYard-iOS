@@ -25,6 +25,8 @@
             <connections>
                 <outlet property="addressContainerView" destination="orr-Vl-FJW" id="qhI-lw-wXk"/>
                 <outlet property="addressTextField" destination="ayL-Ea-bZp" id="WgE-Ve-7E2"/>
+                <outlet property="cmsContainerView" destination="137-G2-w7g" id="WGI-Nq-uPa"/>
+                <outlet property="cmsSwitch" destination="bJY-jZ-mlo" id="zYF-LD-OdR"/>
                 <outlet property="collapsedBottomConstraint" destination="glm-ii-U7P" id="MK6-gt-ax6"/>
                 <outlet property="deleteAddressButton" destination="kq1-WA-VLg" id="Har-ha-hTo"/>
                 <outlet property="editAddressButton" destination="Ezj-S0-0Ws" id="lcm-0z-8fz"/>
@@ -35,6 +37,8 @@
                 <outlet property="notificationsContainerView" destination="isu-7K-afz" id="lNm-XQ-64c"/>
                 <outlet property="notificationsHeader" destination="oou-k0-7st" id="2l2-a5-aJM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="voipContainerView" destination="NSt-af-Niu" id="Ogf-jR-dd9"/>
+                <outlet property="voipSwitch" destination="Oc1-5u-GP9" id="JpJ-GV-VM5"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

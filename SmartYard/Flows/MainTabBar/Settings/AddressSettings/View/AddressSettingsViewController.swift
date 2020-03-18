@@ -8,8 +8,9 @@
 
 import UIKit
 import TouchAreaInsets
+import JGProgressHUD
 
-class AddressSettingsViewController: BaseViewController {
+class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
@@ -22,12 +23,23 @@ class AddressSettingsViewController: BaseViewController {
     @IBOutlet private weak var headerArrowImageView: UIImageView!
     @IBOutlet private weak var expandedContainer: UIView!
     
+    @IBOutlet private weak var cmsContainerView: UIView!
+    @IBOutlet private weak var cmsSwitch: UISwitch!
+    
+    @IBOutlet private weak var voipContainerView: UIView!
+    @IBOutlet private weak var voipSwitch: UISwitch!
+    
     @IBOutlet private var collapsedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var deleteAddressButton: UIButton!
     
     private let viewModel: AddressSettingsViewModel
+    
+    private let cmsTapGesture = UITapGestureRecognizer()
+    private let voipTapGesture = UITapGestureRecognizer()
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: AddressSettingsViewModel) {
         self.viewModel = viewModel
@@ -59,16 +71,22 @@ class AddressSettingsViewController: BaseViewController {
         deleteAddressButton.borderWidth = 1
         deleteAddressButton.borderColor = UIColor.SmartYard.grayBorder
         
-        let tapGesture = UITapGestureRecognizer()
-        notificationsHeader.addGestureRecognizer(tapGesture)
+        let expansionTapGesture = UITapGestureRecognizer()
+        notificationsHeader.addGestureRecognizer(expansionTapGesture)
         
-        tapGesture.rx.event
+        expansionTapGesture.rx.event
             .subscribe(
                 onNext: { [weak self] _ in
                     self?.toggleNotificationsSection()
                 }
             )
             .disposed(by: disposeBag)
+        
+        cmsContainerView.addGestureRecognizer(cmsTapGesture)
+        cmsSwitch.isUserInteractionEnabled = false
+        
+        voipContainerView.addGestureRecognizer(voipTapGesture)
+        voipSwitch.isUserInteractionEnabled = false
     }
     
     private func toggleNotificationsSection() {
@@ -93,7 +111,9 @@ class AddressSettingsViewController: BaseViewController {
     private func bind() {
         let input = AddressSettingsViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
-            deleteTrigger: deleteAddressButton.rx.tap.asDriver()
+            deleteTrigger: deleteAddressButton.rx.tap.asDriver(),
+            cmsTrigger: cmsTapGesture.rx.event.asDriver().mapToVoid(),
+            voipTrigger: voipTapGesture.rx.event.asDriver().mapToVoid()
         )
         
         let output = viewModel.transform(input)
@@ -104,6 +124,31 @@ class AddressSettingsViewController: BaseViewController {
                     self?.view.endEditing(true)
                     self?.addressTextField.text = address
                     self?.addressTextField.isEnabled = false
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isCmsEnabled
+            .drive(
+                onNext: { [weak self] state in
+                    self?.cmsSwitch.setOn(!state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.areCallsEnabled
+            .drive(
+                onNext: { [weak self] state in
+                    self?.voipSwitch.setOn(state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
                 }
             )
             .disposed(by: disposeBag)
