@@ -36,9 +36,10 @@ class AuthByContractNumViewModel: BaseViewModel {
         let errorTracker = ErrorTracker()
         
         input.forgetPassTapped
+            .withLatestFrom(contractNumber.asDriver(onErrorJustReturn: nil))
             .drive(
-                onNext: {
-                    // TODO
+                onNext: { [weak self] contract in
+                    self?.router.trigger(.restorePassword(contractNum: contract))
                 }
             )
             .disposed(by: disposeBag)

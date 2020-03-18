@@ -261,6 +261,7 @@
 		E9C2567A24223F3400BE32E0 /* RestoreRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2567924223F3400BE32E0 /* RestoreRequest.swift */; };
 		E9C2567C2422423D00BE32E0 /* RestoreResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2567B2422423D00BE32E0 /* RestoreResponseData.swift */; };
 		E9C2567E242243C200BE32E0 /* APIRestoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2567D242243C200BE32E0 /* APIRestoreData.swift */; };
+		E9C2568124224DF200BE32E0 /* RestoreMethodType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2568024224DF200BE32E0 /* RestoreMethodType.swift */; };
 		E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */; };
 		E9E4270523F2CD0F00F5D593 /* ServiceFromCourierView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4270423F2CD0F00F5D593 /* ServiceFromCourierView.xib */; };
 		E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */; };
@@ -577,6 +578,7 @@
 		E9C2567924223F3400BE32E0 /* RestoreRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreRequest.swift; sourceTree = "<group>"; };
 		E9C2567B2422423D00BE32E0 /* RestoreResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreResponseData.swift; sourceTree = "<group>"; };
 		E9C2567D242243C200BE32E0 /* APIRestoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRestoreData.swift; sourceTree = "<group>"; };
+		E9C2568024224DF200BE32E0 /* RestoreMethodType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethodType.swift; sourceTree = "<group>"; };
 		E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSegmentedControlView.swift; sourceTree = "<group>"; };
 		E9E4270423F2CD0F00F5D593 /* ServiceFromCourierView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceFromCourierView.xib; sourceTree = "<group>"; };
 		E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFromCourierView.swift; sourceTree = "<group>"; };
@@ -2013,6 +2015,7 @@
 		E9B9EAC42421FC91000A92B3 /* ResetPassword */ = {
 			isa = PBXGroup;
 			children = (
+				E9C2567F24224D1E00BE32E0 /* Entity */,
 				E9B9EAC52421FCB8000A92B3 /* ResetPasswordViewController.swift */,
 				E9B9EAC62421FCB8000A92B3 /* ResetPasswordViewController.xib */,
 				E9B9EAC92421FCCB000A92B3 /* ResetPasswordViewModel.swift */,
@@ -2039,6 +2042,14 @@
 				E9C2567B2422423D00BE32E0 /* RestoreResponseData.swift */,
 			);
 			path = Restore;
+			sourceTree = "<group>";
+		};
+		E9C2567F24224D1E00BE32E0 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				E9C2568024224DF200BE32E0 /* RestoreMethodType.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */ = {
@@ -2540,6 +2551,7 @@
 				E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */,
 				E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */,
 				E94B6C73240694D700FD9F65 /* GetAllLocationsResponseData.swift in Sources */,
+				E9C2568124224DF200BE32E0 /* RestoreMethodType.swift in Sources */,
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
 				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,

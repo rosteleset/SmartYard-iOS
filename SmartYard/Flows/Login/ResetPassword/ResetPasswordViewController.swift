@@ -18,6 +18,8 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
     
     var loader: JGProgressHUD?
     
+    let viewModel: ResetPasswordViewModel
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
