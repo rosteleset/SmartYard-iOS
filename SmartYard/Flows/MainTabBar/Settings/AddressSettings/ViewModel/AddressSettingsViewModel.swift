@@ -31,13 +31,18 @@ class AddressSettingsViewModel: BaseViewModel {
         let isCmsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let areCallsEnabledSubject = BehaviorSubject<Bool>(value: false)
         
+        let isInitialLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
+        
         apiWrapper
             .getCurrentIntercomState(flatId: flatId)
-            .trackActivity(activityTracker)
             .trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
+            .do(
+                onNext: { _ in
+                    isInitialLoadingFinishedSubject.onNext(true)
+                }
+            )
             .ignoreNil()
-            .debug()
             .drive(
                 onNext: { state in
                     isCmsEnabledSubject.onNext(state.cms)
@@ -121,7 +126,8 @@ class AddressSettingsViewModel: BaseViewModel {
             isCmsEnabled: isCmsEnabledSubject.asDriver(onErrorJustReturn: false),
             areCallsEnabled: areCallsEnabledSubject.asDriver(onErrorJustReturn: false),
             ringtone: .just("Нота"),
-            isLoading: activityTracker.asDriver()
+            isLoading: activityTracker.asDriver(),
+            isInitialLoadingFinished: isInitialLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
         )
     }
     
@@ -142,6 +148,7 @@ extension AddressSettingsViewModel {
         let areCallsEnabled: Driver<Bool>
         let ringtone: Driver<String>
         let isLoading: Driver<Bool>
+        let isInitialLoadingFinished: Driver<Bool>
     }
     
 }

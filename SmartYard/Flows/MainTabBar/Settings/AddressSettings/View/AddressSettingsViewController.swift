@@ -23,6 +23,9 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var headerArrowImageView: UIImageView!
     @IBOutlet private weak var expandedContainer: UIView!
     
+    @IBOutlet private weak var mainContainerView: UIView!
+    @IBOutlet private weak var skeletonView: AddressSettingsSkeletonView!
+    
     @IBOutlet private weak var cmsContainerView: UIView!
     @IBOutlet private weak var cmsSwitch: UISwitch!
     
@@ -57,6 +60,14 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if skeletonView.isSkeletonActive {
+            skeletonView.showSkeletonAsynchronously()
+        }
+    }
+    
     private func configureView() {
         addressContainerView.borderWidth = 1
         addressContainerView.borderColor = UIColor.SmartYard.grayBorder
@@ -87,6 +98,10 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         
         voipContainerView.addGestureRecognizer(voipTapGesture)
         voipSwitch.isUserInteractionEnabled = false
+        
+        mainContainerView.isHidden = true
+        skeletonView.isHidden = false
+        skeletonView.showSkeletonAsynchronously()
     }
     
     private func toggleNotificationsSection() {
@@ -149,6 +164,19 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
             .drive(
                 onNext: { [weak self] isLoading in
                     self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isInitialLoadingFinished
+            .distinctUntilChanged()
+            .isTrue()
+            .delay(.milliseconds(500))
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.mainContainerView.isHidden = false
+                    self?.skeletonView.hideSkeleton()
+                    self?.skeletonView.isHidden = true
                 }
             )
             .disposed(by: disposeBag)
