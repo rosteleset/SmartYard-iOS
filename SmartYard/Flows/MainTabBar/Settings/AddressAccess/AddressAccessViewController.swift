@@ -50,6 +50,14 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if skeletonView.isSkeletonActive {
+            skeletonView.showSkeletonAsynchronously()
+        }
+    }
+    
     private func configureView() {
         let temporaryViewHeight = temporaryAccessView.heightAnchor.constraint(equalToConstant: 57)
         temporaryViewHeight.isActive = true

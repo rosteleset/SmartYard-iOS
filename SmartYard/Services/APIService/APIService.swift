@@ -21,8 +21,8 @@ class APIService {
         return NetworkReachabilityManager()?.isReachable ?? false
     }
     
-    /// Запрос предоставления гостевого доступа на 60 минут
-    func performGrantHourGuestAccessRequest(
+    /// Запрос управления домофоном
+    func performIntercomRequest(
         _ request: IntercomRequest,
         completion: ((Swift.Result<IntercomResponseData, Error>) -> Void)?
     ) {

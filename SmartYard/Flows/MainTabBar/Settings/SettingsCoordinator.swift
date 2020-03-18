@@ -7,11 +7,12 @@
 //
 
 import XCoordinator
+import SafariServices
 
 enum SettingsRoute: Route {
     
     case main
-    case addressSettings(address: String)
+    case addressSettings(flatId: String, address: String)
     case back
     case dismiss
     case serviceIsActivated(clientId: String?)
@@ -23,6 +24,7 @@ enum SettingsRoute: Route {
     case dialog(title: String, message: String?, actions: [UIAlertAction])
     case addressAccess(address: String, flatId: String)
     case newAllowedPerson(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
+    case safariPage(url: URL)
     
 }
 
@@ -57,8 +59,14 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             let vc = SettingsViewController(viewModel: vm)
             return .set([vc])
             
-        case let .addressSettings(address):
-            let vm = AddressSettingsViewModel(router: weakRouter, address: address)
+        case let .addressSettings(flatId, address):
+            let vm = AddressSettingsViewModel(
+                apiWrapper: apiWrapper,
+                flatId: flatId,
+                address: address,
+                router: weakRouter
+            )
+            
             let vc = AddressSettingsViewController(viewModel: vm)
             return .push(vc)
             
@@ -160,6 +168,11 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             let vc = AddressAccessViewController(viewModel: vm)
             
             return .push(vc)
+            
+        case let .safariPage(url):
+            let vc = SFSafariViewController(url: url)
+            
+            return .present(vc)
         }
     }
     

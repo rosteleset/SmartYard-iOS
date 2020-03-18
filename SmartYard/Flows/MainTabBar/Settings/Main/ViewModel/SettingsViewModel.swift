@@ -179,11 +179,11 @@ class SettingsViewModel: BaseViewModel {
                 onNext: { [weak self] args in
                     let (uniqueId, loadedData) = args
                     
-                    guard let match = (loadedData.first { $0.uniqueId == uniqueId }) else {
+                    guard let match = (loadedData.first { $0.uniqueId == uniqueId }), let flatId = match.flatId else {
                         return
                     }
                     
-                    self?.router.trigger(.addressSettings(address: match.address))
+                    self?.router.trigger(.addressSettings(flatId: flatId, address: match.address))
                 }
             )
             .disposed(by: disposeBag)
@@ -215,6 +215,32 @@ class SettingsViewModel: BaseViewModel {
                             flatId: flatId
                         )
                     )
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на веб-версию ЛК
+        
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .action(uniqueId, type) = identity, type == .openWebVersion else {
+                    return .empty()
+                }
+                
+                return .just(uniqueId)
+            }
+            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (uniqueId, loadedData) = args
+                    
+                    guard let match = (loadedData.first { $0.uniqueId == uniqueId }),
+                        let lcab = match.lcab,
+                        let lcabUrl = URL(string: lcab) else {
+                        return
+                    }
+                    
+                    self?.router.trigger(.safariPage(url: lcabUrl))
                 }
             )
             .disposed(by: disposeBag)
@@ -327,33 +353,58 @@ class SettingsViewModel: BaseViewModel {
                     return []
                 }
                 
-                let controlPanel: SettingsDataItem = .controlPanel(
-                    identity: .controlPanel(uniqueId: item.uniqueId),
-                    serviceStates: item.servicesAvailability
-                )
-                
-                let openAddressSettingsAction: SettingsDataItem = .action(
-                    identity: .action(
-                        uniqueId: item.uniqueId,
-                        type: .openAddressSettings
+                let controlPanel: SettingsDataItem? = {
+                    guard item.contractOwner ?? false else {
+                        return nil
+                    }
+                    
+                    return .controlPanel(
+                        identity: .controlPanel(uniqueId: item.uniqueId),
+                        serviceStates: item.servicesAvailability
                     )
-                )
+                }()
                 
-                let grantAccessAction: SettingsDataItem = .action(
-                    identity: .action(
-                        uniqueId: item.uniqueId,
-                        type: .grantAccess
+                let openAddressSettingsAction: SettingsDataItem? = {
+                    guard item.flatId != nil else {
+                        return nil
+                    }
+                    
+                    return .action(
+                        identity: .action(
+                            uniqueId: item.uniqueId,
+                            type: .openAddressSettings
+                        )
                     )
-                )
+                }()
                 
-                let webVersionAction: SettingsDataItem = .action(
-                    identity: .action(
-                        uniqueId: item.uniqueId,
-                        type: .openWebVersion
+                let grantAccessAction: SettingsDataItem? = {
+                    guard item.flatId != nil else {
+                        return nil
+                    }
+                    
+                    return .action(
+                        identity: .action(
+                            uniqueId: item.uniqueId,
+                            type: .grantAccess
+                        )
                     )
-                )
+                }()
+                
+                let webVersionAction: SettingsDataItem? = {
+                    guard let lcab = item.lcab, URL(string: lcab) != nil else {
+                        return nil
+                    }
+                    
+                    return .action(
+                        identity: .action(
+                            uniqueId: item.uniqueId,
+                            type: .openWebVersion
+                        )
+                    )
+                }()
                 
                 return [controlPanel, openAddressSettingsAction, grantAccessAction, webVersionAction]
+                    .compactMap { $0 }
             }()
             
             return SettingsSectionModel(identity: item.uniqueId, items: [header] + objects)

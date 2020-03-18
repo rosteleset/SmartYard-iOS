@@ -12,15 +12,87 @@ import XCoordinator
 
 class AddressSettingsViewModel: BaseViewModel {
     
-    private let router: WeakRouter<SettingsRoute>
+    private let apiWrapper: APIWrapper
+    private let flatId: String
     private let address: String
+    private let router: WeakRouter<SettingsRoute>
     
-    init(router: WeakRouter<SettingsRoute>, address: String) {
-        self.router = router
+    init(apiWrapper: APIWrapper, flatId: String, address: String, router: WeakRouter<SettingsRoute>) {
+        self.apiWrapper = apiWrapper
+        self.flatId = flatId
         self.address = address
+        self.router = router
     }
     
     func transform(_ input: Input) -> Output {
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
+        
+        let isCmsEnabledSubject = BehaviorSubject<Bool>(value: false)
+        let areCallsEnabledSubject = BehaviorSubject<Bool>(value: false)
+        
+        let isInitialLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
+        
+        apiWrapper
+            .getCurrentIntercomState(flatId: flatId)
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .do(
+                onNext: { _ in
+                    isInitialLoadingFinishedSubject.onNext(true)
+                }
+            )
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    isCmsEnabledSubject.onNext(state.cms)
+                    areCallsEnabledSubject.onNext(state.voip)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.cmsTrigger
+            .withLatestFrom(isCmsEnabledSubject.asDriver(onErrorJustReturn: false))
+            .flatMapLatest { [weak self] isEnabled -> Driver<IntercomResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .setIntercomCMSState(flatId: self.flatId, isEnabled: !isEnabled)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    isCmsEnabledSubject.onNext(state.cms)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.voipTrigger
+            .withLatestFrom(areCallsEnabledSubject.asDriver(onErrorJustReturn: false))
+            .flatMapLatest { [weak self] isEnabled -> Driver<IntercomResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .setIntercomVoIPState(flatId: self.flatId, isEnabled: !isEnabled)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    areCallsEnabledSubject.onNext(state.voip)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
@@ -41,11 +113,21 @@ class AddressSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             address: .just(address),
-            shouldDisableOutgoingSound: .just(true),
-            shouldAcceptCalls: .just(false),
-            ringtone: .just("Нота")
+            isCmsEnabled: isCmsEnabledSubject.asDriver(onErrorJustReturn: false),
+            areCallsEnabled: areCallsEnabledSubject.asDriver(onErrorJustReturn: false),
+            ringtone: .just("Нота"),
+            isLoading: activityTracker.asDriver(),
+            isInitialLoadingFinished: isInitialLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
         )
     }
     
@@ -56,13 +138,17 @@ extension AddressSettingsViewModel {
     struct Input {
         let backTrigger: Driver<Void>
         let deleteTrigger: Driver<Void>
+        let cmsTrigger: Driver<Void>
+        let voipTrigger: Driver<Void>
     }
     
     struct Output {
         let address: Driver<String>
-        let shouldDisableOutgoingSound: Driver<Bool>
-        let shouldAcceptCalls: Driver<Bool>
+        let isCmsEnabled: Driver<Bool>
+        let areCallsEnabled: Driver<Bool>
         let ringtone: Driver<String>
+        let isLoading: Driver<Bool>
+        let isInitialLoadingFinished: Driver<Bool>
     }
     
 }
