@@ -10,12 +10,14 @@ import UIKit
 import AVFoundation
 import RxSwift
 import RxCocoa
+import TouchAreaInsets
 
 class QRCodeScanViewController: BaseViewController {
     
     @IBOutlet private weak var previewContainer: UIView!
-    @IBOutlet private weak var darkView: UIView!
     @IBOutlet private weak var backButton: UIButton!
+    @IBOutlet private weak var flashButton: UIButton!
+    @IBOutlet private weak var scanningArea: UIView!
     
     private let viewModel: QRCodeScanViewModel
     
@@ -24,6 +26,8 @@ class QRCodeScanViewController: BaseViewController {
     
     private var captureSession: AVCaptureSession?
     private var previewLayer: AVCaptureVideoPreviewLayer?
+    private var blurLayer: CAShapeLayer?
+    private var whiteFrameLayer: CAShapeLayer?
     
     init(viewModel: QRCodeScanViewModel) {
         self.viewModel = viewModel
@@ -37,17 +41,8 @@ class QRCodeScanViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         bind()
-        
-        guard configureCaptureSession() else {
-            cameraFailureTrigger.onNext(())
-            return
-        }
-        
-        UIView.animate(withDuration: 0.5) { [weak self] in
-            self?.darkView.alpha = 0.25
-        }
+        configureView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,6 +58,46 @@ class QRCodeScanViewController: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         previewLayer?.frame = view.bounds
+        
+        blurLayer?.path = createBlurPath(for: view.bounds)
+        blurLayer?.frame = view.bounds
+        
+        whiteFrameLayer?.path = UIBezierPath(roundedRect: scanningArea.frame, cornerRadius: 20).cgPath
+        whiteFrameLayer?.frame = view.bounds
+    }
+    
+    private func configureView() {
+        guard configureCaptureSession() else {
+            cameraFailureTrigger.onNext(())
+            return
+        }
+        
+        configureBlurLayer()
+        configureWhiteFrameLayer()
+        
+        backButton.touchAreaInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        
+        flashButton.configureSelectableButton(
+            imageForNormal: UIImage(named: "FlashDisabledIcon"),
+            imageForSelected: UIImage(named: "FlashEnabledIcon")
+        )
+        
+        flashButton.rx.tap.asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let newState = !self.flashButton.isSelected
+                    
+                    self.flashButton.isSelected = newState
+                    self.toggleTorch(on: newState)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        flashButton.touchAreaInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     }
     
     private func bind() {
@@ -121,6 +156,54 @@ class QRCodeScanViewController: BaseViewController {
         return true
     }
     
+    private func configureBlurLayer() {
+        let blurLayer = CAShapeLayer()
+        
+        blurLayer.path = createBlurPath(for: view.bounds)
+        blurLayer.fillRule = .evenOdd
+        blurLayer.fillColor = UIColor.black.cgColor
+        blurLayer.opacity = 0.6
+        
+        previewContainer.layer.addSublayer(blurLayer)
+        self.blurLayer = blurLayer
+    }
+
+    private func createBlurPath(for bounds: CGRect) -> CGPath {
+        let fullPath = UIBezierPath(rect: bounds)
+        let highlightedPartPath = UIBezierPath(roundedRect: scanningArea.frame, cornerRadius: 20)
+        
+        fullPath.append(highlightedPartPath)
+        fullPath.usesEvenOddFillRule = true
+        
+        return fullPath.cgPath
+    }
+    
+    private func configureWhiteFrameLayer() {
+        let whiteFrameLayer = CAShapeLayer()
+        
+        whiteFrameLayer.path = UIBezierPath(roundedRect: scanningArea.frame, cornerRadius: 20).cgPath
+        whiteFrameLayer.lineWidth = 4
+        whiteFrameLayer.strokeColor = UIColor.white.cgColor
+        whiteFrameLayer.fillColor = UIColor.clear.cgColor
+        
+        previewContainer.layer.addSublayer(whiteFrameLayer)
+        self.whiteFrameLayer = whiteFrameLayer
+    }
+    
+    private func toggleTorch(on: Bool) {
+        guard let device = AVCaptureDevice.default(for: AVMediaType.video), device.hasTorch else {
+            return
+        }
+        
+        do {
+            try device.lockForConfiguration()
+            device.torchMode = on ? .on : .off
+            device.unlockForConfiguration()
+        } catch {
+            print("Torch could not be used")
+        }
+    }
+    
 }
 
 extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
@@ -130,11 +213,23 @@ extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
         didOutput metadataObjects: [AVMetadataObject],
         from connection: AVCaptureConnection
     ) {
-        let objects = metadataObjects.compactMap {
-            $0 as? AVMetadataMachineReadableCodeObject
+        guard let previewLayer = previewLayer else {
+            return
         }
         
-        readableObjects.onNext(objects)
+        let objectsInsideFrame = metadataObjects
+            .filter { object in
+                guard let objectBounds = previewLayer.transformedMetadataObject(for: object)?.bounds else {
+                    return false
+                }
+                
+                return scanningArea.frame.contains(objectBounds)
+            }
+            .compactMap {
+                $0 as? AVMetadataMachineReadableCodeObject
+            }
+        
+        readableObjects.onNext(objectsInsideFrame)
     }
     
 }
