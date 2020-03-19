@@ -666,13 +666,13 @@
 				8482981D24054CDE00E81620 /* APIDoor.swift */,
 				E94B6C822406AD3F00FD9F65 /* APIIssue.swift */,
 				E94B6C842406AE7900FD9F65 /* APIIssueCustomField.swift */,
+				E9618A352420CC9F003FF47D /* APIIssueConnect.swift */,
 				E94B6C3A23FFE1D200FD9F65 /* APIIntercomSettings.swift */,
 				8428672F24051F7F004D3F26 /* APIPaymentsListAccount.swift */,
 				8428672D24051F6A004D3F26 /* APIPaymentsListAddress.swift */,
 				84A67059241F793D00BBA12B /* APIRoommate.swift */,
 				E94B6C4B2405308B00FD9F65 /* APISettingsAddress.swift */,
 				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
-				E9618A352420CC9F003FF47D /* APIIssueConnect.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

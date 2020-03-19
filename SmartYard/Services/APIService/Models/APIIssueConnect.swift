@@ -8,20 +8,33 @@
 
 import Foundation
 
-struct APIIssueConnect: Codable {
+struct APIIssueConnect: Decodable {
     
-    let id: String
-    let description: String
+    let key: String
+    let houseId: String
+    let address: String
+    let isDeliveredByCourier: Bool
     
-}
-
-extension APIIssueConnect {
-    
-    var requestParameters: [String: Any] {
-        return [
-            "id": id,
-            "description": description
-        ]
+    private enum CodingKeys: String, CodingKey {
+        case key
+        case houseId
+        case address
+        case courier
     }
     
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        key = try container.decode(String.self, forKey: .key)
+        houseId = try container.decode(String.self, forKey: .houseId)
+        address = try container.decode(String.self, forKey: .address)
+
+        let isCourierRawValue = try container.decode(String.self, forKey: .courier)
+        
+        switch isCourierRawValue {
+        case "t": isDeliveredByCourier = true
+        case "f": isDeliveredByCourier = false
+        default: throw NSError.APIServiceError.mappingError
+        }
+    }
 }
