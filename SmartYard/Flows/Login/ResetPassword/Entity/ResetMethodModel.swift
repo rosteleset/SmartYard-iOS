@@ -1,19 +1,16 @@
 //
-//  ServicesModel.swift
+//  ResetMethodModel.swift
 //  SmartYard
 //
-//  Created by Mad Brains on 12.02.2020.
+//  Created by Mad Brains on 19.03.2020.
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
 import Foundation
 
-struct ServiceModel {
+struct ResetMethodModel {
     
-    let id: String
-    let icon: String
-    let name: String
-    let description: String
+    let type: ResetMethodType
     var state: SmartYardCheckBoxState
     
     mutating func toogleState() {

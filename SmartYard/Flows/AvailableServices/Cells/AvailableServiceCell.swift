@@ -14,7 +14,7 @@ class AvailableServiceCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     
-    private var currentState: ServiceState = .uncheckedActive {
+    private var currentState: SmartYardCheckBoxState = .uncheckedActive {
         didSet {
             titleLabel.textColor = currentState.titleTextColor
             descriptionLabel.textColor = currentState.descriptionTextColor

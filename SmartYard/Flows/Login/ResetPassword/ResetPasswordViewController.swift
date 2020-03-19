@@ -8,15 +8,15 @@
 
 import UIKit
 import JGProgressHUD
+import RxCocoa
+import RxSwift
 
 class ResetPasswordViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var contractTextField: SmartYardTextField!
-    @IBOutlet private weak var firstResetMethodView: UIView!
-    @IBOutlet private weak var secondResetMethodView: UIView!
     @IBOutlet private weak var actionButton: WhiteButtonWithBorder!
-    @IBOutlet private weak var separatorView: UIView!
     @IBOutlet private weak var methodsNotFoundLabel: UILabel!
+    @IBOutlet private weak var tableView: UITableView!
     
     var loader: JGProgressHUD?
     
@@ -24,6 +24,10 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
     
     private let getResetMethodsText = "Получить доступные\nметоды восстановления"
     private let getResetCodeText = "Получить код восстановления"
+    
+    private let itemsProxy = BehaviorSubject<[ResetMethodModel]>(value: [])
+    
+    private let itemStateChanged = PublishSubject<Int?>()
     
     init(viewModel: ResetPasswordViewModel) {
         self.viewModel = viewModel
@@ -42,12 +46,24 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
     }
 
     private func configureUI() {
-        firstResetMethodView.isHidden = true
-        secondResetMethodView.isHidden = true
+        tableView.isHidden = true
         methodsNotFoundLabel.isHidden = true
         
         view.hideKeyboardWhenTapped = true
         actionButton.titleLabel?.textAlignment = .center
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(nibWithCellClass: ResetMethodCell.self)
+        
+        tableView.tableFooterView = UIView(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: tableView.frame.size.width,
+                height: 1
+            )
+        )
     }
     
     private func bind() {
@@ -73,6 +89,23 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        itemsProxy
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.tableView.reloadData()
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureResetMethodsScene(resetMethods: [ResetMethodType]) {
@@ -82,45 +115,55 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
             configureMethodsNotFoundScene()
             return
         }
-        
-        resetMethods.count == 1 ? configureOneMethodScene() : configureBothMethodScene()
     }
     
     private func configureMethodsNotFoundScene() {
-        firstResetMethodView.isHidden = true
-        secondResetMethodView.isHidden = true
-        separatorView.isHidden = true
         methodsNotFoundLabel.isHidden = false
         
-        actionButton.isEnabled = false
+        actionButton.isEnabled = true
         actionButton.setTitle(getResetMethodsText, for: .normal)
-    }
-    
-    private func configureOneMethodScene() {
-        firstResetMethodView.isHidden = false
-        secondResetMethodView.isHidden = true
-        separatorView.isHidden = true
-        methodsNotFoundLabel.isHidden = true
-        
-        actionButton.isEnabled = true
-    }
-    
-    private func configureBothMethodScene() {
-        firstResetMethodView.isHidden = true
-        secondResetMethodView.isHidden = true
-        separatorView.isHidden = true
-        methodsNotFoundLabel.isHidden = false
-        
-        actionButton.isEnabled = true
     }
     
     private func configureNeedReloadResetMethodsScene() {
-        firstResetMethodView.isHidden = true
-        secondResetMethodView.isHidden = true
-        separatorView.isHidden = true
+        tableView.isHidden = true
         methodsNotFoundLabel.isHidden = false
         
         actionButton.setTitle(getResetMethodsText, for: .normal)
+    }
+    
+}
+
+extension ResetPasswordViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        itemStateChanged.onNext(indexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
+}
+
+extension ResetPasswordViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let data = try? itemsProxy.value() else {
+            return 0
+        }
+        
+        return data.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let data = try? itemsProxy.value() else {
+            return UITableViewCell()
+        }
+        
+        let cell = tableView.dequeueReusableCell(withClass: ResetMethodCell.self, for: indexPath)
+        cell.configure(with: data[indexPath.row].type.displayedText, state: data[indexPath.row].state)
+        
+        return cell
     }
     
 }

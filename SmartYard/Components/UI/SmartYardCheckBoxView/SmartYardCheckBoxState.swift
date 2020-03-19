@@ -1,5 +1,5 @@
 //
-//  ServiceStates.swift
+//  SmartYardCheckBoxState.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 12.02.2020.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum ServiceState {
+enum SmartYardCheckBoxState {
     
     case checkedInactive
     case uncheckedInactive

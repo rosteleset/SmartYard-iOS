@@ -37,6 +37,35 @@ class ResetPasswordViewModel: BaseViewModel {
             .drive(contractNum)
             .disposed(by: disposeBag)
         
+        
+        input.actionTrigger
+            .withLatestFrom(contractNum.asDriver(onErrorJustReturn: nil))
+            .ignoreNil()
+            .flatMapLatest { [weak self] contractNum -> Driver<RestoreRequestResponseData?> in
+                guard let self = self, !contractNum.isEmpty else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper.restore(contractNum: contractNum)
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .drive(
+                onNext: { [weak self] response in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let resetMethodsArr = response?.compactMap { response in
+                        ResetMethodType(rawValue: response.contact)
+                        } ?? []
+                    
+                    self.resetMethods.onNext(resetMethodsArr)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         contractNum
             .map { $0.isNilOrEmpty }
             .asDriver(onErrorJustReturn: false)
@@ -45,7 +74,6 @@ class ResetPasswordViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         contractNum
-            .distinctUntilChanged()
             .asDriver(onErrorJustReturn: nil)
             .mapToVoid()
             .drive(shouldLoadResetMethodsTrigger)

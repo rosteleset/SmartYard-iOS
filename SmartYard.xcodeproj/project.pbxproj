@@ -223,6 +223,7 @@
 		E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */; };
 		E9618A362420CC9F003FF47D /* APIIssueConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9618A352420CC9F003FF47D /* APIIssueConnect.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
+		E96CC0D72423FAEA008DF44B /* ResetMethodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96CC0D62423FAEA008DF44B /* ResetMethodModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
 		E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C382423F149F30010BBC1 /* PinCodeViewController.xib */; };
@@ -262,6 +263,8 @@
 		E9C2567C2422423D00BE32E0 /* RestoreResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2567B2422423D00BE32E0 /* RestoreResponseData.swift */; };
 		E9C2567E242243C200BE32E0 /* APIRestoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2567D242243C200BE32E0 /* APIRestoreData.swift */; };
 		E9C2568124224DF200BE32E0 /* RestoreMethodType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2568024224DF200BE32E0 /* RestoreMethodType.swift */; };
+		E9C256852423F31D00BE32E0 /* ResetMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C256832423F31D00BE32E0 /* ResetMethodCell.swift */; };
+		E9C256862423F31D00BE32E0 /* ResetMethodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9C256842423F31D00BE32E0 /* ResetMethodCell.xib */; };
 		E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */; };
 		E9E4270523F2CD0F00F5D593 /* ServiceFromCourierView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4270423F2CD0F00F5D593 /* ServiceFromCourierView.xib */; };
 		E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */; };
@@ -274,7 +277,7 @@
 		E9E4271723F40E0B00F5D593 /* SmartYardCheckBoxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4271623F40E0B00F5D593 /* SmartYardCheckBoxView.xib */; };
 		E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4271923F41C6600F5D593 /* AvailableServiceCell.swift */; };
 		E9E4271C23F41C6600F5D593 /* AvailableServiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4271A23F41C6600F5D593 /* AvailableServiceCell.xib */; };
-		E9E4271F23F41DDF00F5D593 /* ServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4271E23F41DDF00F5D593 /* ServiceState.swift */; };
+		E9E4271F23F41DDF00F5D593 /* SmartYardCheckBoxState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4271E23F41DDF00F5D593 /* SmartYardCheckBoxState.swift */; };
 		E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4272323F42A7600F5D593 /* ServiceModel.swift */; };
 		E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4272D23F5417000F5D593 /* ServicesActivationRequestСell.swift */; };
 		E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4272E23F5417000F5D593 /* ServicesActivationRequestСell.xib */; };
@@ -536,6 +539,7 @@
 		E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnapprovedObjectCell.xib; sourceTree = "<group>"; };
 		E9618A352420CC9F003FF47D /* APIIssueConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIssueConnect.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
+		E96CC0D62423FAEA008DF44B /* ResetMethodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetMethodModel.swift; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E98C382423F149F30010BBC1 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
@@ -579,6 +583,8 @@
 		E9C2567B2422423D00BE32E0 /* RestoreResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreResponseData.swift; sourceTree = "<group>"; };
 		E9C2567D242243C200BE32E0 /* APIRestoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRestoreData.swift; sourceTree = "<group>"; };
 		E9C2568024224DF200BE32E0 /* RestoreMethodType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethodType.swift; sourceTree = "<group>"; };
+		E9C256832423F31D00BE32E0 /* ResetMethodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetMethodCell.swift; sourceTree = "<group>"; };
+		E9C256842423F31D00BE32E0 /* ResetMethodCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResetMethodCell.xib; sourceTree = "<group>"; };
 		E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSegmentedControlView.swift; sourceTree = "<group>"; };
 		E9E4270423F2CD0F00F5D593 /* ServiceFromCourierView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceFromCourierView.xib; sourceTree = "<group>"; };
 		E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFromCourierView.swift; sourceTree = "<group>"; };
@@ -591,7 +597,7 @@
 		E9E4271623F40E0B00F5D593 /* SmartYardCheckBoxView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmartYardCheckBoxView.xib; sourceTree = "<group>"; };
 		E9E4271923F41C6600F5D593 /* AvailableServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableServiceCell.swift; sourceTree = "<group>"; };
 		E9E4271A23F41C6600F5D593 /* AvailableServiceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AvailableServiceCell.xib; sourceTree = "<group>"; };
-		E9E4271E23F41DDF00F5D593 /* ServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceState.swift; sourceTree = "<group>"; };
+		E9E4271E23F41DDF00F5D593 /* SmartYardCheckBoxState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardCheckBoxState.swift; sourceTree = "<group>"; };
 		E9E4272323F42A7600F5D593 /* ServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModel.swift; sourceTree = "<group>"; };
 		E9E4272623F53B5C00F5D593 /* ServicesActivationRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesActivationRequestViewController.swift; sourceTree = "<group>"; };
 		E9E4272723F53B5C00F5D593 /* ServicesActivationRequestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServicesActivationRequestViewController.xib; sourceTree = "<group>"; };
@@ -680,14 +686,12 @@
 				8482981D24054CDE00E81620 /* APIDoor.swift */,
 				E94B6C822406AD3F00FD9F65 /* APIIssue.swift */,
 				E94B6C842406AE7900FD9F65 /* APIIssueCustomField.swift */,
-				E9618A352420CC9F003FF47D /* APIIssueConnect.swift */,
 				E94B6C3A23FFE1D200FD9F65 /* APIIntercomSettings.swift */,
 				8428672F24051F7F004D3F26 /* APIPaymentsListAccount.swift */,
 				8428672D24051F6A004D3F26 /* APIPaymentsListAddress.swift */,
 				84A67059241F793D00BBA12B /* APIRoommate.swift */,
 				E94B6C4B2405308B00FD9F65 /* APISettingsAddress.swift */,
 				84AA8D5A23E2CEC5001B3B43 /* BaseAPIResponse.swift */,
-
 				E9618A352420CC9F003FF47D /* APIIssueConnect.swift */,
 				E9C2567D242243C200BE32E0 /* APIRestoreData.swift */,
 			);
@@ -2015,6 +2019,7 @@
 		E9B9EAC42421FC91000A92B3 /* ResetPassword */ = {
 			isa = PBXGroup;
 			children = (
+				E9C256822423F2F900BE32E0 /* Cells */,
 				E9C2567F24224D1E00BE32E0 /* Entity */,
 				E9B9EAC52421FCB8000A92B3 /* ResetPasswordViewController.swift */,
 				E9B9EAC62421FCB8000A92B3 /* ResetPasswordViewController.xib */,
@@ -2048,8 +2053,18 @@
 			isa = PBXGroup;
 			children = (
 				E9C2568024224DF200BE32E0 /* RestoreMethodType.swift */,
+				E96CC0D62423FAEA008DF44B /* ResetMethodModel.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		E9C256822423F2F900BE32E0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E9C256832423F31D00BE32E0 /* ResetMethodCell.swift */,
+				E9C256842423F31D00BE32E0 /* ResetMethodCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */ = {
@@ -2103,6 +2118,7 @@
 			isa = PBXGroup;
 			children = (
 				E9E4271423F40DAF00F5D593 /* SmartYardCheckBoxView.swift */,
+				E9E4271E23F41DDF00F5D593 /* SmartYardCheckBoxState.swift */,
 				E9E4271623F40E0B00F5D593 /* SmartYardCheckBoxView.xib */,
 			);
 			path = SmartYardCheckBoxView;
@@ -2120,7 +2136,6 @@
 		E9E4271D23F41D9300F5D593 /* Entries */ = {
 			isa = PBXGroup;
 			children = (
-				E9E4271E23F41DDF00F5D593 /* ServiceState.swift */,
 				E9E4272323F42A7600F5D593 /* ServiceModel.swift */,
 			);
 			path = Entries;
@@ -2263,6 +2278,7 @@
 				E9A4D49123EC2A780070A591 /* PinTextField.xib in Resources */,
 				E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */,
 				E9E4270523F2CD0F00F5D593 /* ServiceFromCourierView.xib in Resources */,
+				E9C256862423F31D00BE32E0 /* ResetMethodCell.xib in Resources */,
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				E9E4270D23F3D62C00F5D593 /* MapPoint.pdf in Resources */,
 				847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */,
@@ -2433,7 +2449,7 @@
 				E9E4273223F55B9700F5D593 /* ServicesActivationRequestViewController.swift in Sources */,
 				E9E4273323F55B9700F5D593 /* ServicesActivationRequestViewModel.swift in Sources */,
 				844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */,
-				E9E4271F23F41DDF00F5D593 /* ServiceState.swift in Sources */,
+				E9E4271F23F41DDF00F5D593 /* SmartYardCheckBoxState.swift in Sources */,
 				844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */,
 				E94B6C7B2406990400FD9F65 /* GetStreetsResponseData.swift in Sources */,
 				84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */,
@@ -2461,6 +2477,7 @@
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
+				E96CC0D72423FAEA008DF44B /* ResetMethodModel.swift in Sources */,
 				848298352405655600E81620 /* ConfirmCodeResponseData.swift in Sources */,
 				84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */,
 				E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */,
@@ -2600,6 +2617,7 @@
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
+				E9C256852423F31D00BE32E0 /* ResetMethodCell.swift in Sources */,
 				8482982224054D4B00E81620 /* APICCTV.swift in Sources */,
 				848298372405655600E81620 /* RegisterPushTokenRequest.swift in Sources */,
 				84878DE52420DB3B004C11B2 /* AddressAccessViewModel+ContactParsing.swift in Sources */,
