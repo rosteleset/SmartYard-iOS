@@ -37,12 +37,12 @@ class AuthByContractNumViewModel: BaseViewModel {
         
         input.forgetPassTapped
             .withLatestFrom(contractNumber.asDriver(onErrorJustReturn: nil))
-            .flatMapLatest { [weak self] contract -> Driver<ResetCodeResponseData?> in
+            .flatMapLatest { [weak self] contract -> Driver<RestoreRequestResponseData?> in
                 guard let self = self, let contract = contract, contract.isEmpty else {
                     return .empty()
                 }
                 
-                return self.apiWrapper.restore(contractNum: contract).asDriver(onErrorJustReturn: <#T##Void?#>)
+                return self.apiWrapper.restore(contractNum: contract).asDriver(onErrorJustReturn: nil)
             }
 //            .drive(
 //                onNext: { [weak self] contract in
@@ -56,7 +56,7 @@ class AuthByContractNumViewModel: BaseViewModel {
                 guard let self = self else {
                     return .empty()
                 }
-                
+
                 return self.issueService.sendNothingRememberIssue()
                     .trackError(errorTracker)
                     .trackActivity(activityTracker)
