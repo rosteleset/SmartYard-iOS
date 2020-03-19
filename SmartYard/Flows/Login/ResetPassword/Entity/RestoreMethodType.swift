@@ -1,5 +1,5 @@
 //
-//  RestoreMethodType.swift
+//  ResetMethodType.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 18.03.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum RestoreMethodType {
+enum ResetMethodType {
     
     case byEmail(mail: String)
     case byPhoneNumber(phoneNumber: String)

@@ -18,7 +18,7 @@ enum HomeRoute: Route {
     case unavailableServices(address: String)
     case confirmAddress(address: String)
     case back
-    case restorePassword(contractNum: String?)
+    case restorePassword(contractNum: String?, resetMethods: [ResetMethodType])
     
 }
 
@@ -121,14 +121,15 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case .back:
             return .pop(animation: .default)
             
-        case let .restorePassword(contractNum):
+        case let .restorePassword(contractNum, resetMethods):
             let vm = ResetPasswordViewModel(
                 apiWrapper: apiWrapper,
                 router: weakRouter,
-                contractNum: contractNum
+                contractNum: contractNum,
+                resetMethods: resetMethods
             )
             
-            let vc = ResetPasswordViewController()
+            let vc = ResetPasswordViewController(viewModel: vm)
             
             return .push(vc)
         }

@@ -37,12 +37,19 @@ class AuthByContractNumViewModel: BaseViewModel {
         
         input.forgetPassTapped
             .withLatestFrom(contractNumber.asDriver(onErrorJustReturn: nil))
-            .drive(
-                onNext: { [weak self] contract in
-                    self?.router.trigger(.restorePassword(contractNum: contract))
+            .flatMapLatest { [weak self] contract -> Driver<ResetCodeResponseData?> in
+                guard let self = self, let contract = contract, contract.isEmpty else {
+                    return .empty()
                 }
-            )
-            .disposed(by: disposeBag)
+                
+                return self.apiWrapper.restore(contractNum: contract).asDriver(onErrorJustReturn: <#T##Void?#>)
+            }
+//            .drive(
+//                onNext: { [weak self] contract in
+//                    self?.router.trigger(.restorePassword(contractNum: contract))
+//                }
+//            )
+//            .disposed(by: disposeBag)
         
         input.forgetEverythingTapped
             .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
