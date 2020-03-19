@@ -12,8 +12,12 @@ enum ResetMethodType {
     
     case byEmail(mail: String)
     case byPhoneNumber(phoneNumber: String)
-    
-    init(rawValue: String) {
+
+    init?(rawValue: String?) {
+        guard let rawValue = rawValue else {
+            return nil
+        }
+        
         switch rawValue.contains("@") {
         case true: self = .byEmail(mail: rawValue)
         case false: self = .byPhoneNumber(phoneNumber: rawValue)

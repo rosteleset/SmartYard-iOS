@@ -42,14 +42,23 @@ class AuthByContractNumViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                return self.apiWrapper.restore(contractNum: contract).asDriver(onErrorJustReturn: nil)
+                return self.apiWrapper.restore(contractNum: contract)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
             }
-//            .drive(
-//                onNext: { [weak self] contract in
-//                    self?.router.trigger(.restorePassword(contractNum: contract))
-//                }
-//            )
-//            .disposed(by: disposeBag)
+            .withLatestFrom(contractNumber.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (response, contractNum) = args
+                    let resetMethodsArr = response?.compactMap { response in
+                        ResetMethodType(rawValue: response.contact)
+                    } ?? []
+                
+                    self?.router.trigger(.restorePassword(contractNum: contractNum, resetMethods: resetMethodsArr))
+                }
+            )
+            .disposed(by: disposeBag)
         
         input.forgetEverythingTapped
             .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
