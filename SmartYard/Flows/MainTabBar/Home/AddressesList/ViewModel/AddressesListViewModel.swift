@@ -349,14 +349,11 @@ class AddressesListViewModel: BaseViewModel {
             return section
         }
         
-        let unapprovedAddressItems = unapprovedAddressesData.compactMap { address -> AddressesListDataItem? in
-            let addressItem: AddressesListDataItem? = {
-                .unapprovedAddresses(
-                    identity: .unapprovedObject(addressId: address.id),
-                    address: address.description
-                )
-            }()
-            return addressItem
+        let unapprovedAddressItems = unapprovedAddressesData.map { address -> AddressesListDataItem in
+            .unapprovedAddresses(
+                identity: .unapprovedObject(addressId: address.houseId),
+                address: address.address
+            )
         }
         
         let unapprovedAddressSections = AddressesListSectionModel(identity: "unapproved", items: unapprovedAddressItems)
