@@ -19,7 +19,7 @@ class QRCodeScanViewController: BaseViewController {
     
     private let viewModel: QRCodeScanViewModel
     
-    private let errorData = PublishSubject<Error>()
+    private let cameraFailureTrigger = PublishSubject<Void>()
     private let readableObjects = PublishSubject<[AVMetadataMachineReadableCodeObject]>()
     
     private var captureSession: AVCaptureSession?
@@ -40,12 +40,13 @@ class QRCodeScanViewController: BaseViewController {
         
         bind()
         
-        if !configureCaptureSession() {
-            errorData.onNext(NSError())
-        } else {
-            UIView.animate(withDuration: 0.5) { [weak self] in
-                self?.darkView.alpha = 0.25
-            }
+        guard configureCaptureSession() else {
+            cameraFailureTrigger.onNext(())
+            return
+        }
+        
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            self?.darkView.alpha = 0.25
         }
     }
     
@@ -65,30 +66,21 @@ class QRCodeScanViewController: BaseViewController {
     }
     
     private func bind() {
+        let cameraFailure = cameraFailureTrigger
+            .asDriverOnErrorJustComplete()
+            .do(
+                onNext: { [weak self] in
+                    self?.captureSession?.stopRunning()
+                }
+            )
+        
         let input = QRCodeScanViewModel.Input(
-            errorData: errorData.asDriverOnErrorJustComplete(),
             readableObjects: readableObjects.asDriverOnErrorJustComplete(),
-            backTrigger: backButton.rx.tap.asDriver()
+            backTrigger: backButton.rx.tap.asDriver(),
+            cameraFailureTrigger: cameraFailure
         )
         
-        let output = viewModel.transform(input: input)
-        
-        output.failed
-            .drive(
-                onNext: { [weak self] in
-                    self?.captureSession?.stopRunning()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        output.succeeded
-            .drive(
-                onNext: { [weak self] in
-                    AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-                    self?.captureSession?.stopRunning()
-                }
-            )
-            .disposed(by: disposeBag)
+        _ = viewModel.transform(input: input)
     }
     
     private func configureCaptureSession() -> Bool {

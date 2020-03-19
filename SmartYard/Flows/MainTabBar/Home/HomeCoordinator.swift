@@ -12,6 +12,7 @@ enum HomeRoute: Route {
     
     case main
     case alert(title: String, message: String?)
+    case dialog(title: String, message: String?, actions: [UIAlertAction])
     case inputContract
     case inputAddress
     case availableServices(address: String, services: [APIServiceModel])
@@ -63,6 +64,9 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
+            
+        case let .dialog(title, message, actions):
+            return .dialogTransition(title: title, message: message, actions: actions)
             
         case .inputContract:
             let vm = AuthByContractNumViewModel(

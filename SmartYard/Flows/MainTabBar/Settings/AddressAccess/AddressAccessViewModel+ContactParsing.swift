@@ -18,7 +18,7 @@ extension AddressAccessViewModel {
             subscribe: { single in
                 CNContactStore().requestAccess(for: .contacts) { isPermissionGranted, error in
                     guard isPermissionGranted else {
-                        single(.error(error ?? NSError.GenericError.unknownError))
+                        single(.error(error ?? NSError.PermissionError.noContactsPermission))
                         return
                     }
                     

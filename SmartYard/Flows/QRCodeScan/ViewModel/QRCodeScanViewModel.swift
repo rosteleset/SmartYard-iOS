@@ -29,22 +29,26 @@ class QRCodeScanViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let failed = PublishSubject<Void>()
-        
-        let succeeded = input.readableObjects
-            .map { [weak self] readableObjects in
-                readableObjects.compactMap { object in
-                    self?.extractCode(from: object)
+        input.readableObjects
+            .map { [weak self] readableObjects -> String? in
+                guard let self = self else {
+                    return nil
+                }
+                
+                return readableObjects.compactMap { object in
+                    self.extractCode(from: object)
                 }.first
             }
             .ignoreNil()
-            .map { () }
-        
-        input.errorData
             .drive(
-                onNext: { [weak self] error in
-                    failed.onNext(())
+                onNext: { [weak self] code in
+                    guard let self = self else {
+                        return
+                    }
                     
+                    AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+                    self.delegate?.qrCodeScanViewModel(self, didExtractCode: code)
+                    self.router.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -57,15 +61,25 @@ class QRCodeScanViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output(failed: failed.asDriverOnErrorJustComplete(), succeeded: succeeded)
+        input.cameraFailureTrigger
+            .drive(
+                onNext: { [weak self] in
+                    let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+                        self?.router.trigger(.back)
+                    }
+                    
+                    let message = NSError.GenericError.cameraSetupFailed.localizedDescription
+                    
+                    self?.router.trigger(.dialog(title: "Ошибка", message: message, actions: [okAction]))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        return Output()
     }
     
     private func extractCode(from readableObject: AVMetadataMachineReadableCodeObject) -> String? {
-        guard let stringValue = readableObject.stringValue, let descriptor = readableObject.descriptor else {
-            return nil
-        }
-        
-        return "DEBUG"
+        return readableObject.stringValue
     }
     
 }
@@ -73,14 +87,12 @@ class QRCodeScanViewModel: BaseViewModel {
 extension QRCodeScanViewModel {
     
     struct Input {
-        let errorData: Driver<Error>
         let readableObjects: Driver<[AVMetadataMachineReadableCodeObject]>
         let backTrigger: Driver<Void>
+        let cameraFailureTrigger: Driver<Void>
     }
     
     struct Output {
-        let failed: Driver<Void>
-        let succeeded: Driver<Void>
     }
     
 }

@@ -10,6 +10,7 @@ import Foundation
 import XCoordinator
 import RxSwift
 import RxCocoa
+import AVFoundation
 
 class InputAddressViewModel: BaseViewModel {
     
@@ -32,6 +33,8 @@ class InputAddressViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
+        let errorTracker = ErrorTracker()
+        
         apiWrapper.getAllLocations()
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
@@ -117,9 +120,23 @@ class InputAddressViewModel: BaseViewModel {
             .disposed(by: disposeBag)
 
         input.qrCodeTapped
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.hasAccess(to: .video)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
-                onNext: {
-                    // TODO
+                onNext: { [weak self] _ in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.router.trigger(.qrCodeScan(delegate: self))
                 }
             )
             .disposed(by: disposeBag)
@@ -255,6 +272,14 @@ class InputAddressViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             cities: citiesList.asDriver(onErrorJustReturn: [])
                 .map { $0.map { $0.name } },
@@ -295,3 +320,27 @@ extension InputAddressViewModel {
     
 }
 
+extension InputAddressViewModel: QRCodeScanViewModelDelegate {
+    
+    func hasAccess(to mediaType: AVMediaType) -> Single<Void?> {
+        return Single.create(
+            subscribe: { single in
+                AVCaptureDevice.requestAccess(for: mediaType) { isPermissionGranted in
+                    guard isPermissionGranted else {
+                        single(.error(NSError.PermissionError.noCameraPermission))
+                        return
+                    }
+                    
+                    single(.success(()))
+                }
+                
+                return Disposables.create()
+            }
+        )
+    }
+    
+    func qrCodeScanViewModel(_ viewModel: QRCodeScanViewModel, didExtractCode code: String) {
+        print(code)
+    }
+    
+}
