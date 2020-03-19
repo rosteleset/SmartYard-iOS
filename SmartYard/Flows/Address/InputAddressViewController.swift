@@ -44,6 +44,16 @@ class InputAddressViewController: BaseViewController {
 //        configureRxKeyboard()
     }
     
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+        
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
+        
+        // TODO: разобраться с прыжками кнопки "У меня есть QR-код". Наверно, придется костылить
+    }
+    
     private func configureRxKeyboard() {
         RxKeyboard.instance.visibleHeight
             .drive(
