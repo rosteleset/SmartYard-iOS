@@ -22,7 +22,7 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
     
     let viewModel: ResetPasswordViewModel
     
-    private let getResetMethodsText = "Получить доступные методы восстановления"
+    private let getResetMethodsText = "Получить доступные\nметоды восстановления"
     private let getResetCodeText = "Получить код восстановления"
     
     init(viewModel: ResetPasswordViewModel) {
@@ -45,11 +45,14 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
         firstResetMethodView.isHidden = true
         secondResetMethodView.isHidden = true
         methodsNotFoundLabel.isHidden = true
+        
+        view.hideKeyboardWhenTapped = true
+        actionButton.titleLabel?.textAlignment = .center
     }
     
     private func bind() {
         let input = ResetPasswordViewModel.Input(
-            inputContractNum: contractTextField.rx.text.asDriver(onErrorJustReturn: nil),
+            inputContractNum: contractTextField.rx.text.distinctUntilChanged().asDriver(onErrorJustReturn: nil),
             actionTrigger: actionButton.rx.tap.asDriver()
         )
         
@@ -90,6 +93,7 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
         methodsNotFoundLabel.isHidden = false
         
         actionButton.isEnabled = false
+        actionButton.setTitle(getResetMethodsText, for: .normal)
     }
     
     private func configureOneMethodScene() {
@@ -114,7 +118,7 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
         firstResetMethodView.isHidden = true
         secondResetMethodView.isHidden = true
         separatorView.isHidden = true
-        methodsNotFoundLabel.isHidden = true
+        methodsNotFoundLabel.isHidden = false
         
         actionButton.setTitle(getResetMethodsText, for: .normal)
     }

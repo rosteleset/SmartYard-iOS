@@ -136,6 +136,16 @@ extension NSError {
             )
         }()
         
+        static let contractNumberMissingError: NSError = {
+            let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден номер договора. Выполнить запрос невозможно"]
+            
+            return NSError(
+                domain: domain,
+                code: 3007,
+                userInfo: errorUserInfo
+            )
+        }()
+        
         static func qrRegistrationFailed(reason: String) -> NSError {
             let errorUserInfo = [NSLocalizedDescriptionKey: reason]
             
@@ -145,7 +155,7 @@ extension NSError {
                 userInfo: errorUserInfo
             )
         }
-        
+    
     }
     
 }
