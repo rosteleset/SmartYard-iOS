@@ -21,6 +21,7 @@ enum HomeRoute: Route {
     case restorePassword(contractNum: String?)
     case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
     case dialog(messageText: String, actions: [UIAlertAction])
+    case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
     
 }
 
@@ -43,6 +44,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         self.issueService = issueService
         
         super.init(initialRoute: .main)
+        
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
@@ -147,6 +149,14 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
         case let .dialog(messageText, actions):
             return .dialogTransition(title: "", message: messageText, actions: actions)
+            
+        case let .qrCodeScan(delegate):
+            let vm = QRCodeScanViewModel(router: weakRouter, delegate: delegate)
+            
+            let vc = QRCodeScanViewController(viewModel: vm)
+            vc.hidesBottomBarWhenPushed = true
+            
+            return .push(vc)
         }
     }
     
