@@ -173,6 +173,11 @@ class IssueService {
                     return .error(NSError.GenericError.selfIsDeadError)
                 }
                 
+                // TODO: пересоздание userInfo с пустым clientId может сломать логику
+                // Поскольку по факту мы в issue уже прокинули userInfo, где clientId может быть не равным nil
+                // Нужно будет либо поправить этот баг, чтобы не было путаницы с clientId
+                // Либо прокидывать только телефон, потому что юзается только он
+                
                 return self.apiWrapper.createIssue(
                     issue: issue,
                     userInfo: self.getUserInfo(address: address, clientId: nil),
