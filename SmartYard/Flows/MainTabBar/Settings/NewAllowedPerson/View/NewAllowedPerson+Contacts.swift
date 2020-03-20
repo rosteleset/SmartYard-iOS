@@ -24,8 +24,14 @@ extension NewAllowedPersonViewController: CNContactPickerDelegate {
         
         contactNameLabel.text = contact.givenName
         
+        let nameToShow: String = {
+            [contact.givenName, contact.familyName]
+                .joined(separator: " ")
+                .trimmed
+        }()
+        
         var allowedPerson = AllowedPerson(
-            displayedName: contact.givenName,
+            displayedName: nameToShow,
             rawNumber: firstMatchingRawNumber,
             logoImage: nil
         )

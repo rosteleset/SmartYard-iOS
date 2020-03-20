@@ -99,8 +99,14 @@ extension AddressAccessViewModel {
                 }
             }()
             
+            let nameToShow: String = {
+                [match.givenName, match.familyName]
+                    .joined(separator: " ")
+                    .trimmed
+            }()
+            
             return AllowedPerson(
-                displayedName: match.givenName + match.familyName,
+                displayedName: nameToShow,
                 rawNumber: $0.rawNumber,
                 logoImage: icon
             )
