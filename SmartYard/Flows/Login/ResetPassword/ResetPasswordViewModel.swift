@@ -72,6 +72,29 @@ class ResetPasswordViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
 
+        input.itemStateChanged
+            .drive(
+                onNext: { [weak self] index in
+                    guard let self = self,
+                        let index = index,
+                        var data = try? self.resetMethods.value()
+                        else {
+                            return
+                    }
+                    
+                    data.enumerated().forEach { offset, _ in
+                        if offset == index {
+                            data[offset].toogleState()
+                        } else {
+                            data[offset].setUncheckedState()
+                        }
+                    }
+                    
+                    self.resetMethods.onNext(data)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             isLoading: activityTracker.asDriver(),
             resetMethods: resetMethods.asDriver(onErrorJustReturn: [])
@@ -85,6 +108,7 @@ extension ResetPasswordViewModel {
     struct Input {
         let inputContractNum: Driver<String?>
         let actionTrigger: Driver<Void>
+        let itemStateChanged: Driver<Int?>
     }
     
     struct Output {

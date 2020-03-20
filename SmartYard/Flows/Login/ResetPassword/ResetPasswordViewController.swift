@@ -70,7 +70,8 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
     private func bind() {
         let input = ResetPasswordViewModel.Input(
             inputContractNum: contractTextField.rx.text.distinctUntilChanged().asDriver(onErrorJustReturn: nil),
-            actionTrigger: actionButton.rx.tap.asDriver()
+            actionTrigger: actionButton.rx.tap.asDriver(),
+            itemStateChanged: itemStateChanged.asDriver(onErrorJustReturn: nil)
         )
         
         contractTextField.rx.text.distinctUntilChanged()

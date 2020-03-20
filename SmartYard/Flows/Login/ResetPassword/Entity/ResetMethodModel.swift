@@ -21,4 +21,8 @@ struct ResetMethodModel {
         state = state == .uncheckedActive ? .checkedActive : .uncheckedActive
     }
     
+    mutating func setUncheckedState() {
+        state = .uncheckedActive
+    }
+    
 }
