@@ -245,7 +245,13 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         let dataSource = RxCollectionViewSectionedAnimatedDataSource<AddressesListSectionModel>(
             configureCell: { [weak self] _, collectionView, indexPath, item in
                 guard let self = self else {
-                    return UICollectionViewCell()
+                    // MARK: я думал, мы сюда вообще никак не сможем попасть, но я еще никогда так не ошибался
+                    // Из-за реактивщины этот датасорс может жить чуть дольше, чем этот контроллер
+                    // Из-за того, что я возвращал UICollectionViewCell(), приложение падало с эксепшном
+                    // Типа нельзя использовать ячейки без ReuseIdentifier в таком датасорсе
+                    // Поэтому возвращаю рандомную ячейку. Все равно контроллер уже мертв, нам пофиг
+                    
+                    return collectionView.dequeueReusableCell(withClass: AddressesListHeaderCell.self, for: indexPath)
                 }
                 
                 return self.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)

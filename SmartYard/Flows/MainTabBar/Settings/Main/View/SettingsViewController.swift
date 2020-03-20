@@ -244,7 +244,9 @@ class SettingsViewController: BaseViewController {
         let dataSource = RxCollectionViewSectionedAnimatedDataSource<SettingsSectionModel>(
             configureCell: { [weak self] _, collectionView, indexPath, item in
                 guard let self = self else {
-                    return UICollectionViewCell()
+                    // MARK: См. AddressesListViewController, почему нельзя просто вернуть UICollectionViewCell()
+                    
+                    return collectionView.dequeueReusableCell(withClass: SettingsHeaderCell.self, for: indexPath)
                 }
                 
                 return self.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)

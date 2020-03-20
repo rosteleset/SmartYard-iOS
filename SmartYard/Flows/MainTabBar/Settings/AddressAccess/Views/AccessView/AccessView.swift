@@ -72,7 +72,9 @@ class AccessView: PMNibLinkableView {
         let dataSource = RxTableViewSectionedAnimatedDataSource<AllowedPersonSectionModel>(
             configureCell: { [weak self] _, tableView, indexPath, item in
                 guard let self = self else {
-                    return UITableViewCell()
+                    // MARK: См. AddressesListViewController, почему нельзя просто вернуть UITableViewCell()
+                    
+                    return tableView.dequeueReusableCell(withClass: NewPersonCell.self, for: indexPath)
                 }
                 
                 switch item {
