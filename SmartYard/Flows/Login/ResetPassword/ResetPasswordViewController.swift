@@ -92,7 +92,7 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
                         self?.tableView.isHidden = false
                         self?.methodsNotFoundLabel.isHidden = true
                         self?.actionButton.setTitle(self?.getResetCodeText, for: .normal)
-                        self?.actionButton.isEnabled = false
+                        self?.actionButton.isEnabled = $0.contains { $0.state == .checkedActive }
                         return
                     }
                     
