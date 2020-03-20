@@ -73,13 +73,31 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
             actionTrigger: actionButton.rx.tap.asDriver()
         )
         
+        contractTextField.rx.text.distinctUntilChanged()
+            .asDriver(onErrorJustReturn: nil)
+            .drive(
+                onNext: { [weak self] text in
+                    self?.actionButton.isEnabled = !text.isNilOrEmpty
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let output = viewModel.transform(input: input)
         
         output.resetMethods
             .do(
                 onNext: { [weak self] in
-                    self?.tableView.isHidden = $0.isEmpty
-                    self?.methodsNotFoundLabel.isHidden = !$0.isEmpty
+                    guard $0.isEmpty else {
+                        self?.tableView.isHidden = false
+                        self?.methodsNotFoundLabel.isHidden = true
+                        self?.actionButton.setTitle(self?.getResetCodeText, for: .normal)
+                        self?.actionButton.isEnabled = false
+                        return
+                    }
+                    
+                    self?.tableView.isHidden = true
+                    self?.methodsNotFoundLabel.isHidden = false
+                    self?.actionButton.setTitle(self?.getResetMethodsText, for: .normal)
                 }
             )
             .drive(itemsProxy)

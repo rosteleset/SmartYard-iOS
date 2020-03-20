@@ -32,10 +32,13 @@ class ResetPasswordViewModel: BaseViewModel {
     func transform(input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
-    
-        let shouldLoadResetMethodsTrigger = PublishSubject<Void>()
         
         input.inputContractNum
+            .do(
+                onNext: { [weak self] _ in
+                    self?.resetMethods.onNext([])
+                }
+            )
             .drive(contractNum)
             .disposed(by: disposeBag)
         
@@ -67,19 +70,6 @@ class ResetPasswordViewModel: BaseViewModel {
                     )
                 }
             )
-            .disposed(by: disposeBag)
-        
-        contractNum
-            .map { $0.isNilOrEmpty }
-            .asDriver(onErrorJustReturn: false)
-            .mapToVoid()
-            .drive(shouldLoadResetMethodsTrigger)
-            .disposed(by: disposeBag)
-        
-        contractNum
-            .asDriver(onErrorJustReturn: nil)
-            .mapToVoid()
-            .drive(shouldLoadResetMethodsTrigger)
             .disposed(by: disposeBag)
 
         return Output(
