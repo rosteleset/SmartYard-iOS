@@ -22,13 +22,13 @@ extension NewAllowedPersonViewController: CNContactPickerDelegate {
             return
         }
         
-        contactNameLabel.text = contact.givenName
-        
         let nameToShow: String = {
             [contact.givenName, contact.familyName]
                 .joined(separator: " ")
                 .trimmed
         }()
+        
+        contactNameLabel.text = nameToShow
         
         var allowedPerson = AllowedPerson(
             displayedName: nameToShow,

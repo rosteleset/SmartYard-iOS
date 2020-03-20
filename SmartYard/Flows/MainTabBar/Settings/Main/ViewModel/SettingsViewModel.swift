@@ -30,29 +30,41 @@ class SettingsViewModel: BaseViewModel {
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
+        let interactionBlockingRequestTracker = ActivityTracker()
         
-        let isInitialLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
-        let isInitialLoadingFinished = isInitialLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
+        // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
+        
+        Driver
+            .merge(
+                NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToVoid(),
+                .just(())
+            )
+            .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper.getSettingsAddresses()
+                    .trackError(errorTracker)
+                    .trackActivity(interactionBlockingRequestTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] result in
+                    self?.loadedData.onNext(result)
+                }
+            )
+            .disposed(by: self.disposeBag)
+        
+        // MARK: Запрос на обновление, который вызван рефреш контролом
         
         let reloadingFinishedSubject = PublishSubject<Void>()
         let reloadingFinished = reloadingFinishedSubject.asDriverOnErrorJustComplete()
         
-        let reloadAfterDeletionTrigger = PublishSubject<Void>()
-        
-        NotificationCenter.default.rx.notification(.addressDeleted)
-            .subscribe(
-                onNext: { [weak self] _ in
-                    reloadAfterDeletionTrigger.onNext(())
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        Driver<Void>
-            .merge(
-                input.updateDataTrigger.asDriver().delay(.milliseconds(1000)),
-                reloadAfterDeletionTrigger.asDriverOnErrorJustComplete(),
-                .just(())
-            )
+        input.updateDataTrigger
+            .asDriver()
+            .delay(.milliseconds(1000))
             .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
                 guard let self = self else {
                     return .empty()
@@ -64,7 +76,6 @@ class SettingsViewModel: BaseViewModel {
             }
             .do(
                 onNext: { _ in
-                    isInitialLoadingFinishedSubject.onNext(true)
                     reloadingFinishedSubject.onNext(())
                 }
             )
@@ -347,8 +358,8 @@ class SettingsViewModel: BaseViewModel {
             clientPhone: .just(phone),
             sectionModels: sectionModels,
             updateKind: updateKind,
-            isInitialLoadingFinished: isInitialLoadingFinished,
-            reloadingFinished: reloadingFinished
+            reloadingFinished: reloadingFinished,
+            shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
         )
     }
     
@@ -461,8 +472,8 @@ extension SettingsViewModel {
         let clientPhone: Driver<String?>
         let sectionModels: Driver<[SettingsSectionModel]>
         let updateKind: Driver<SettingsSectionUpdateKind>
-        let isInitialLoadingFinished: Driver<Bool>
         let reloadingFinished: Driver<Void>
+        let shouldBlockInteraction: Driver<Bool>
     }
     
     struct ServiceUnactivatedResponsePayload {

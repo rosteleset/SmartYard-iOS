@@ -163,13 +163,15 @@ class SettingsViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-        output.isInitialLoadingFinished
-            .isTrue()
+        output.shouldBlockInteraction
             .drive(
-                onNext: { [weak self] _ in
-                    self?.collectionView.isHidden = false
-                    self?.skeletonContainer.hideSkeleton()
-                    self?.skeletonContainer.isHidden = true
+                onNext: { [weak self] shouldBlockInteraction in
+                    self?.collectionView.isHidden = shouldBlockInteraction
+                    self?.skeletonContainer.isHidden = !shouldBlockInteraction
+                    
+                    shouldBlockInteraction ?
+                        self?.skeletonContainer.showSkeletonAsynchronously() :
+                        self?.skeletonContainer.hideSkeleton()
                 }
             )
             .disposed(by: disposeBag)
@@ -227,10 +229,6 @@ class SettingsViewController: BaseViewController {
         
         settingsButton.setImage(UIImage(named: "SettingsIcon"), for: .normal)
         settingsButton.setImage(UIImage(named: "SettingsIcon")?.darkened(), for: .highlighted)
-        
-        collectionView.isHidden = true
-        skeletonContainer.isHidden = false
-        skeletonContainer.showSkeletonAsynchronously()
     }
     
     private func configureCollectionView() {
