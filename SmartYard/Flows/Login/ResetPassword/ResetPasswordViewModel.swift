@@ -23,7 +23,9 @@ class ResetPasswordViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
         self.router = router
         self.contractNum = BehaviorSubject<String?>(value: contractNum)
-        self.resetMethods = BehaviorSubject<[ResetMethodModel]>(value: resetMethods.map { ResetMethodModel(type: $0, state: .uncheckedActive) })
+        
+        let resetModels = resetMethods.map { ResetMethodModel(type: $0, state: .uncheckedActive) }
+        self.resetMethods = BehaviorSubject<[ResetMethodModel]>(value: resetModels)
     }
     
     // swiftlint:disable:next function_body_length
@@ -60,7 +62,9 @@ class ResetPasswordViewModel: BaseViewModel {
                         ResetMethodType(rawValue: response.contact)
                     } ?? []
                     
-                    self.resetMethods.onNext(resetMethodsArr.map { ResetMethodModel(type: $0, state: .uncheckedActive) })
+                    self.resetMethods.onNext(
+                        resetMethodsArr.map { ResetMethodModel(type: $0, state: .uncheckedActive) }
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -80,7 +84,6 @@ class ResetPasswordViewModel: BaseViewModel {
 
         return Output(
             isLoading: activityTracker.asDriver(),
-            shouldLoadResetMethodsTrigger: shouldLoadResetMethodsTrigger.asDriver(onErrorJustReturn: ()),
             resetMethods: resetMethods.asDriver(onErrorJustReturn: [])
         )
     }
@@ -96,7 +99,6 @@ extension ResetPasswordViewModel {
     
     struct Output {
         let isLoading: Driver<Bool>
-        let shouldLoadResetMethodsTrigger: Driver<Void>
         let resetMethods: Driver<[ResetMethodModel]>
     }
     

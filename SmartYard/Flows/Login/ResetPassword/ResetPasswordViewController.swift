@@ -79,6 +79,7 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
             .do(
                 onNext: { [weak self] in
                     self?.tableView.isHidden = $0.isEmpty
+                    self?.methodsNotFoundLabel.isHidden = !$0.isEmpty
                 }
             )
             .drive(itemsProxy)
