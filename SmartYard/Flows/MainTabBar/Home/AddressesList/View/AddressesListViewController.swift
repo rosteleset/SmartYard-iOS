@@ -177,13 +177,15 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        output.isInitialLoadingFinished
-            .isTrue()
+        output.shouldBlockInteraction
             .drive(
-                onNext: { [weak self] _ in
-                    self?.collectionView.isHidden = false
-                    self?.skeletonContainer.hideSkeleton()
-                    self?.skeletonContainer.isHidden = true
+                onNext: { [weak self] shouldBlockInteraction in
+                    self?.collectionView.isHidden = shouldBlockInteraction
+                    self?.skeletonContainer.isHidden = !shouldBlockInteraction
+                    
+                    shouldBlockInteraction ?
+                        self?.skeletonContainer.showSkeletonAsynchronously() :
+                        self?.skeletonContainer.hideSkeleton()
                 }
             )
             .disposed(by: disposeBag)
@@ -225,10 +227,6 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         
         addButton.setImage(UIImage(named: "AddButtonIcon"), for: .normal)
         addButton.setImage(UIImage(named: "AddButtonIcon")?.darkened(), for: .highlighted)
-        
-        collectionView.isHidden = true
-        skeletonContainer.isHidden = false
-        skeletonContainer.showSkeletonAsynchronously()
     }
     
     private func configureCollectionView() {

@@ -30,11 +30,12 @@ class SettingsViewModel: BaseViewModel {
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
-        let interactionBlockingRequestTracker = ActivityTracker()
         
         // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
         
-        Driver
+        let interactionBlockingRequestTracker = ActivityTracker()
+        
+        let blockingRefresh = Driver
             .merge(
                 NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToVoid(),
                 .just(())
@@ -49,20 +50,13 @@ class SettingsViewModel: BaseViewModel {
                     .trackActivity(interactionBlockingRequestTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
-            .ignoreNil()
-            .drive(
-                onNext: { [weak self] result in
-                    self?.loadedData.onNext(result)
-                }
-            )
-            .disposed(by: self.disposeBag)
         
         // MARK: Запрос на обновление, который вызван рефреш контролом
         
         let reloadingFinishedSubject = PublishSubject<Void>()
         let reloadingFinished = reloadingFinishedSubject.asDriverOnErrorJustComplete()
         
-        input.updateDataTrigger
+        let nonBlockingRefresh = input.updateDataTrigger
             .asDriver()
             .delay(.milliseconds(1000))
             .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
@@ -79,6 +73,9 @@ class SettingsViewModel: BaseViewModel {
                     reloadingFinishedSubject.onNext(())
                 }
             )
+        
+        Driver
+            .merge(blockingRefresh, nonBlockingRefresh)
             .ignoreNil()
             .drive(
                 onNext: { [weak self] result in
