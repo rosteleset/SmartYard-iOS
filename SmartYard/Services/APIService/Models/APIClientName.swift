@@ -11,4 +11,9 @@ struct APIClientName: Codable {
     let name: String
     let patronymic: String?
     
+    init(name: String, patronymic: String?) {
+        self.name = name
+        self.patronymic = patronymic
+    }
+    
 }

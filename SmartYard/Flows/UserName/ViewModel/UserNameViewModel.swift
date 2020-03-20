@@ -41,7 +41,7 @@ class UserNameViewModel: BaseViewModel {
                 
                 return .just((unwrappedName.trimmed, middleName?.trimmed))
             }
-            .flatMapLatest { [weak self] args -> Driver<Void?> in
+            .flatMapLatest { [weak self] args -> Driver<APIClientName?> in
                 guard let self = self else {
                     return .just(nil)
                 }
@@ -51,11 +51,13 @@ class UserNameViewModel: BaseViewModel {
                 return self.apiWrapper.sendName(name: name, patronymic: patronymic)
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
+                    .map { _ in APIClientName(name: name, patronymic: patronymic) }
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
             .do(
-                onNext: { [weak self] _ in
+                onNext: { [weak self] name in
+                    self?.accessService.clientName = name
                     self?.accessService.appState = .main
                     
                     prepareTransitionTrigger.onNext(())
