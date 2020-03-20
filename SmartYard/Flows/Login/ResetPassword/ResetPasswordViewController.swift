@@ -75,14 +75,6 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
         
         let output = viewModel.transform(input: input)
         
-        output.shouldLoadResetMethodsTrigger
-            .drive(
-                onNext: { [weak self] in
-                    self?.configureNeedReloadResetMethodsScene()
-                }
-            )
-            .disposed(by: disposeBag)
-        
         output.resetMethods
             .do(
                 onNext: { [weak self] in
@@ -108,29 +100,6 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
-    }
-    
-    private func configureResetMethodsScene(resetMethods: [ResetMethodType]) {
-        actionButton.setTitle(getResetCodeText, for: .normal)
-        
-        guard !resetMethods.isEmpty else {
-            configureMethodsNotFoundScene()
-            return
-        }
-    }
-    
-    private func configureMethodsNotFoundScene() {
-        methodsNotFoundLabel.isHidden = false
-        
-        actionButton.isEnabled = true
-        actionButton.setTitle(getResetMethodsText, for: .normal)
-    }
-    
-    private func configureNeedReloadResetMethodsScene() {
-        tableView.isHidden = true
-        methodsNotFoundLabel.isHidden = false
-        
-        actionButton.setTitle(getResetMethodsText, for: .normal)
     }
     
 }
