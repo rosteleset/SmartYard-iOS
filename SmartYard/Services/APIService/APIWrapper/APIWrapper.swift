@@ -214,7 +214,7 @@ class APIWrapper {
             return .error(NSError.APIWrapperError.userPhoneMissing)
         }
         
-        return access(flatId: flatId, guestPhone: "8" + phone, expire: Date.distantFuture)
+        return access(flatId: flatId, guestPhone: "8" + phone, expire: Date.distantPast)
     }
     
     func access(

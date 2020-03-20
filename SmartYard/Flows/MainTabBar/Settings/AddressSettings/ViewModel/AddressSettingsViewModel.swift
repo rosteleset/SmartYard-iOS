@@ -159,8 +159,10 @@ class AddressSettingsViewModel: BaseViewModel {
                 .asDriver(onErrorJustReturn: nil)
                 .ignoreNil()
                 .drive(
-                    onNext: {
-                        print("Адрес удален")
+                    onNext: { [weak self] in
+                        NotificationCenter.default.post(.init(name: .addressDeleted, object: nil, userInfo: nil))
+                        
+                        self?.router.trigger(.back)
                     }
                 )
                 .disposed(by: self.disposeBag)
@@ -201,8 +203,10 @@ extension AddressSettingsViewModel: AddressDeletionViewModelDelegate {
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
-                onNext: { _ in
-                    print("DONE")
+                onNext: { [weak self] _ in
+                    NotificationCenter.default.post(.init(name: .addressDeleted, object: nil, userInfo: nil))
+                    
+                    self?.router.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)

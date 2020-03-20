@@ -37,9 +37,20 @@ class SettingsViewModel: BaseViewModel {
         let reloadingFinishedSubject = PublishSubject<Void>()
         let reloadingFinished = reloadingFinishedSubject.asDriverOnErrorJustComplete()
         
+        let reloadAfterDeletionTrigger = PublishSubject<Void>()
+        
+        NotificationCenter.default.rx.notification(.addressDeleted)
+            .subscribe(
+                onNext: { [weak self] _ in
+                    reloadAfterDeletionTrigger.onNext(())
+                }
+            )
+            .disposed(by: disposeBag)
+        
         Driver<Void>
             .merge(
                 input.updateDataTrigger.asDriver().delay(.milliseconds(1000)),
+                reloadAfterDeletionTrigger.asDriverOnErrorJustComplete(),
                 .just(())
             )
             .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
