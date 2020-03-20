@@ -41,6 +41,7 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureUI()
         bind()
     }
@@ -83,11 +84,12 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.resetMethods
-            .drive(
-                onNext: { [weak self] resetMethods in
-                    self?.configureResetMethodsScene(resetMethods: resetMethods)
+            .do(
+                onNext: { [weak self] in
+                    self?.tableView.isHidden = $0.isEmpty
                 }
             )
+            .drive(itemsProxy)
             .disposed(by: disposeBag)
         
         output.isLoading

@@ -17,13 +17,13 @@ class ResetPasswordViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     
     private let contractNum: BehaviorSubject<String?>
-    private let resetMethods: BehaviorSubject<[ResetMethodType]>
+    private let resetMethods: BehaviorSubject<[ResetMethodModel]>
     
     init(apiWrapper: APIWrapper, router: WeakRouter<HomeRoute>, contractNum: String?, resetMethods: [ResetMethodType]) {
         self.apiWrapper = apiWrapper
         self.router = router
         self.contractNum = BehaviorSubject<String?>(value: contractNum)
-        self.resetMethods = BehaviorSubject<[ResetMethodType]>(value: resetMethods)
+        self.resetMethods = BehaviorSubject<[ResetMethodModel]>(value: resetMethods.map { ResetMethodModel(type: $0, state: .uncheckedActive) })
     }
     
     // swiftlint:disable:next function_body_length
@@ -36,7 +36,6 @@ class ResetPasswordViewModel: BaseViewModel {
         input.inputContractNum
             .drive(contractNum)
             .disposed(by: disposeBag)
-        
         
         input.actionTrigger
             .withLatestFrom(contractNum.asDriver(onErrorJustReturn: nil))
@@ -59,9 +58,9 @@ class ResetPasswordViewModel: BaseViewModel {
                     
                     let resetMethodsArr = response?.compactMap { response in
                         ResetMethodType(rawValue: response.contact)
-                        } ?? []
+                    } ?? []
                     
-                    self.resetMethods.onNext(resetMethodsArr)
+                    self.resetMethods.onNext(resetMethodsArr.map { ResetMethodModel(type: $0, state: .uncheckedActive) })
                 }
             )
             .disposed(by: disposeBag)
@@ -98,7 +97,7 @@ extension ResetPasswordViewModel {
     struct Output {
         let isLoading: Driver<Bool>
         let shouldLoadResetMethodsTrigger: Driver<Void>
-        let resetMethods: Driver<[ResetMethodType]>
+        let resetMethods: Driver<[ResetMethodModel]>
     }
     
 }
