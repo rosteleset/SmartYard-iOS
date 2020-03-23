@@ -34,10 +34,10 @@ struct APIRoommate: Decodable {
         phone = try container.decode(String.self, forKey: .phone)
         
         let expireRawValue = try container.decode(String.self, forKey: .expire)
-        expire = try expireRawValue.dateFromAPIString.unwrapped(or: NSError.APIServiceError.mappingError)
+        expire = try expireRawValue.dateFromAPIString.unwrapped(or: NSError.APIWrapperError.noDataError)
         
         let typeRawValue = try container.decode(String.self, forKey: .type)
-        type = try APIRoommateAccessType(rawValue: typeRawValue).unwrapped(or: NSError.APIServiceError.mappingError)
+        type = try APIRoommateAccessType(rawValue: typeRawValue).unwrapped(or: NSError.APIWrapperError.noDataError)
     }
     
 }

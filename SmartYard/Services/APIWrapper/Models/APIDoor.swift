@@ -36,7 +36,7 @@ struct APIDoor: Decodable {
         entrance = try? container.decode(String.self, forKey: .entrance)
         
         let iconRawValue = try container.decode(String.self, forKey: .type)
-        type = try DomophoneObjectType(rawValue: iconRawValue).unwrapped(or: NSError.APIServiceError.mappingError)
+        type = try DomophoneObjectType(rawValue: iconRawValue).unwrapped(or: NSError.APIWrapperError.noDataError)
         
         blocked = try? container.decode(String.self, forKey: .blocked)
         name = try container.decode(String.self, forKey: .name)

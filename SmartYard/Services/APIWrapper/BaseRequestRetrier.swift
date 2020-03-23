@@ -8,34 +8,34 @@
 
 import Alamofire
 
-class BaseRequestRetrier: RequestAdapter, RequestRetrier {
+class BaseRequestRetrier: RequestInterceptor {
     
     func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
         return urlRequest
     }
     
-    func should(
-        _ manager: SessionManager,
-        retry request: Request,
-        with error: Error,
-        completion: RequestRetryCompletion
+    func retry(
+        _ request: Request,
+        for session: Session,
+        dueTo error: Error,
+        completion: @escaping (RetryResult) -> Void
     ) {
         // If task failed 5 attempts to finish, everything is very bad (connection is dead). TODO: Add Reachability
         guard request.retryCount < 5 else {
             print("REQUEST RETRIER: Task failed to finish in 5 attempts. RIP")
-            return completion(false, 0)
+            return completion(.doNotRetry)
         }
         
         // If task was not completed at all (probably because of unstable connection), try it again.
         guard let response = request.task?.response as? HTTPURLResponse else {
             print("REQUEST RETRIER: Task returned no response. Trying again. Attempt #\(request.retryCount + 1)")
-            return completion(true, Double(request.retryCount) * 2.0)
+            return completion(.retryWithDelay(Double(request.retryCount) * 2.0))
         }
         
         if response.statusCode == 401 {
-            completion(true, 1.0) // retry after 1 second
+            completion(.retryWithDelay(1000))
         } else {
-            completion(false, 0.0) // don't retry
+            completion(.doNotRetry)
         }
     }
     

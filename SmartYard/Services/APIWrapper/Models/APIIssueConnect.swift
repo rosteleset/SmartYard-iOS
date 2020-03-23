@@ -34,7 +34,7 @@ struct APIIssueConnect: Decodable {
         switch isCourierRawValue {
         case "t": isDeliveredByCourier = true
         case "f": isDeliveredByCourier = false
-        default: throw NSError.APIServiceError.mappingError
+        default: throw NSError.APIWrapperError.noDataError
         }
     }
 }

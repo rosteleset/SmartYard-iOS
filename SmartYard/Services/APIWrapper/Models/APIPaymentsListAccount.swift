@@ -39,7 +39,7 @@ struct APIPaymentsListAccount: Decodable {
         switch isBlockedRawValue {
         case "t": isBlocked = true
         case "f": isBlocked = false
-        default: throw NSError.APIServiceError.mappingError
+        default: throw NSError.APIWrapperError.noDataError
         }
         
         balance = try container.decode(Double.self, forKey: .balance)

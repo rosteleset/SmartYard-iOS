@@ -10,10 +10,11 @@ import Moya
 
 enum APITarget {
     
+    case registerQR(request: RegisterQRRequest)
     case openDoor(request: OpenDoorRequest)
     case resetCode(request: ResetCodeRequest)
     case getAddressList(request: GetAddressListRequest)
-    case grantHourGuestAccess(request: IntercomRequest)
+    case intercom(request: IntercomRequest)
     case getSettingsList(request: GetSettingsListRequest)
     case access(request: AccessRequest)
     case resend(request: ResendRequest)
@@ -44,7 +45,8 @@ extension APITarget: TargetType {
     
     var path: String {
         switch self {
-        case .grantHourGuestAccess: return "address/intercom"
+        case .registerQR: return "address/registerQR"
+        case .intercom: return "address/intercom"
         case .openDoor: return "address/openDoor"
         case .resetCode: return "address/resetCode"
         case .getSettingsList: return "address/getSettingsList"
@@ -83,7 +85,8 @@ extension APITarget: TargetType {
         // swiftlint:disable:next closure_body_length
         let authorization: String? = {
             switch self {
-            case .grantHourGuestAccess(let request): return request.accessToken
+            case .registerQR(let request): return request.accessToken
+            case .intercom(let request): return request.accessToken
             case .openDoor(let request): return request.accessToken
             case .resetCode(let request): return request.accessToken
             case .getSettingsList(let request): return request.accessToken
@@ -123,7 +126,8 @@ extension APITarget: TargetType {
     
     var requestParameters: [String: Any] {
         switch self {
-        case .grantHourGuestAccess(let request): return request.requestParameters
+        case .registerQR(let request): return request.requestParameters
+        case .intercom(let request): return request.requestParameters
         case .openDoor(let request): return request.requestParameters
         case .resetCode(let request): return request.requestParameters
         case .getSettingsList(let request): return request.requestParameters

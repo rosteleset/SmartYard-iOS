@@ -8,7 +8,7 @@ target 'SmartYard' do
   use_frameworks!
 
   # Networking
-  pod 'Moya'
+  pod 'Moya/RxSwift'
   pod 'Kingfisher'
   pod 'linphone-sdk' , '> 4.4.0-alpha'
   

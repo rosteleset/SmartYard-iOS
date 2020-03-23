@@ -34,7 +34,7 @@ struct APIServiceModel: Decodable {
         switch isAvailableByDefaultRawValue {
         case "t": isAvailableByDefault = true
         case "f": isAvailableByDefault = false
-        default: throw NSError.APIServiceError.mappingError
+        default: throw NSError.APIWrapperError.noDataError
         }
     }
     

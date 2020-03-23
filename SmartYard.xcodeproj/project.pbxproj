@@ -14,6 +14,7 @@
 		843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843A7A8023F29A3400840E51 /* FakeNavBar.xib */; };
 		843C389124291AA80035BF80 /* APIWrapper+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C388F24291AA70035BF80 /* APIWrapper+User.swift */; };
 		843C389224291AA80035BF80 /* APIWrapper+Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C389024291AA80035BF80 /* APIWrapper+Address.swift */; };
+		843C389624292DD90035BF80 /* RegisterQRRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C389524292DD90035BF80 /* RegisterQRRequest.swift */; };
 		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
 		844AC39723E9788D0066006D /* APIAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39623E9788D0066006D /* APIAddress.swift */; };
 		844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallViewController.swift */; };
@@ -316,6 +317,7 @@
 		843A7A8023F29A3400840E51 /* FakeNavBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FakeNavBar.xib; sourceTree = "<group>"; };
 		843C388F24291AA70035BF80 /* APIWrapper+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "APIWrapper+User.swift"; sourceTree = "<group>"; };
 		843C389024291AA80035BF80 /* APIWrapper+Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "APIWrapper+Address.swift"; sourceTree = "<group>"; };
+		843C389524292DD90035BF80 /* RegisterQRRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterQRRequest.swift; sourceTree = "<group>"; };
 		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
 		844AC39623E9788D0066006D /* APIAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAddress.swift; sourceTree = "<group>"; };
 		844AC39B23E987360066006D /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
@@ -649,6 +651,14 @@
 				843A7A8023F29A3400840E51 /* FakeNavBar.xib */,
 			);
 			path = FakeNavBar;
+			sourceTree = "<group>";
+		};
+		843C389424292DC30035BF80 /* RegisterQR */ = {
+			isa = PBXGroup;
+			children = (
+				843C389524292DD90035BF80 /* RegisterQRRequest.swift */,
+			);
+			path = RegisterQR;
 			sourceTree = "<group>";
 		};
 		844AC39323E9776F0066006D /* AccessService */ = {
@@ -1055,10 +1065,11 @@
 				84A6705B241F87DB00BBA12B /* Access */,
 				E94B6C3C23FFE2D100FD9F65 /* HourGuestAccess */,
 				848298412405658A00E81620 /* OpenDoor */,
+				843C389424292DC30035BF80 /* RegisterQR */,
+				842B9BFF2420FBD400C86017 /* Resend */,
 				8482983E2405658A00E81620 /* ResetCode */,
 				E94B6C462404F19D00FD9F65 /* GetSettingsList */,
 				8482983B2405658A00E81620 /* GetAddressList */,
-				842B9BFF2420FBD400C86017 /* Resend */,
 			);
 			path = Address;
 			sourceTree = "<group>";
@@ -2475,6 +2486,7 @@
 				E94B6C3723FD728F00FD9F65 /* RoundedImageView.swift in Sources */,
 				84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */,
 				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
+				843C389624292DD90035BF80 /* RegisterQRRequest.swift in Sources */,
 				848298432405658A00E81620 /* GetAddressListResponseData.swift in Sources */,
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				84A6705D241F87E700BBA12B /* AccessRequest.swift in Sources */,

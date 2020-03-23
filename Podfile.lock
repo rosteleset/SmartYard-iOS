@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.9.1)
+  - Alamofire (5.0.4)
   - Cartography (4.0.0)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
@@ -92,11 +92,11 @@ PODS:
   - "linphone-sdk/basic-frameworks (4.4.0-alpha.22+a27d5c6)"
   - MapboxStatic.swift (0.11.0):
     - Polyline (~> 4.2)
-  - Moya (13.0.1):
-    - Moya/Core (= 13.0.1)
-  - Moya/Core (13.0.1):
-    - Alamofire (~> 4.1)
-    - Result (~> 4.1)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/RxSwift (14.0.0):
+    - Moya/Core
+    - RxSwift (~> 5.0)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
     - nanopb/encode (= 0.3.9011)
@@ -107,7 +107,6 @@ PODS:
   - Polyline (4.2.1)
   - PromisesObjC (1.2.8)
   - Protobuf (3.11.2)
-  - Result (4.1.0)
   - RxCocoa (5.0.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -161,7 +160,7 @@ DEPENDENCIES:
   - Kingfisher
   - linphone-sdk (> 4.4.0-alpha)
   - MapboxStatic.swift (~> 0.11)
-  - Moya
+  - Moya/RxSwift
   - PinLayout
   - PMNibLinkableView
   - RxCocoa
@@ -208,7 +207,6 @@ SPEC REPOS:
     - Polyline
     - PromisesObjC
     - Protobuf
-    - Result
     - RxCocoa
     - RxDataSources
     - RxRelay
@@ -235,7 +233,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/MadBrains/SSCustomTabbar.git
 
 SPEC CHECKSUMS:
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Alamofire: 0fe5fd24b4298dc377a6550da7d5f1b30e286fcb
   Cartography: c5626d29056b20f1e95c017326ee4df57cc39ad8
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
@@ -257,14 +255,13 @@ SPEC CHECKSUMS:
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
   linphone-sdk: 82302f72c930a859a75acdcfed304272d3cfdae1
   MapboxStatic.swift: 3a39f0b077a7fb0568fd53f27a76c402b07ef408
-  Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PinLayout: e41a50260a76508b7a7fcee8955c76639adc69bc
   PMNibLinkableView: 06ebf6128feb70c3ba589d6be232748c1b7b1767
   Polyline: 0e9890790292741c8186201a536b6bb6a78d02dd
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
-  Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
@@ -279,6 +276,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: b8e87d55ec0d4fce1f54f0bb062777b200df3c2f
+PODFILE CHECKSUM: 7206dd4e1af403c868d4870d15c09380bc2b133f
 
 COCOAPODS: 1.8.4

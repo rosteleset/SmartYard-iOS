@@ -12,6 +12,25 @@ import RxCocoa
 
 extension APIWrapper {
     
+    func registerQR(qr: String) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = RegisterQRRequest(accessToken: accessToken, qr: qr)
+        
+        return provider.rx
+            .request(.registerQR(request: request))
+            .map(BaseAPIResponse<String>.self)
+            .flatMap { response in
+                if let errorDescription = response.data {
+                    return .error(NSError.APIWrapperError.qrRegistrationFailed(reason: errorDescription))
+                }
+                
+                return .just(())
+            }
+    }
+    
     func getCurrentIntercomState(flatId: String) -> Single<IntercomResponseData?> {
         return intercom(flatId: flatId, settings: nil)
     }
@@ -59,21 +78,16 @@ extension APIWrapper {
         
         let request = IntercomRequest(accessToken: accessToken, flatId: flatId, settings: settings)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performIntercomRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.intercom(request: request))
+            .map(BaseAPIResponse<IntercomResponseData>.self)
+            .flatMap { response in
+                guard let data = response.data else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
+                
+                return .just(data)
             }
-            
-            return Disposables.create()
-        }
     }
     
     func openDoor(domophoneId: String, doorId: Int?, blockReason: String?) -> Single<Void?> {
@@ -87,21 +101,10 @@ extension APIWrapper {
         
         let request = OpenDoorRequest(accessToken: accessToken, domophoneId: domophoneId, doorId: doorId)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performOpenDoorRequest(request) { result in
-                switch result {
-                case .success: single(.success(()))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
+        return provider.rx
+            .request(.openDoor(request: request))
+            .map(BaseAPIResponse<Bool>.self)
+            .map { _ in }
     }
     
     func resetCode(flatId: String) -> Single<ResetCodeResponseData?> {
@@ -111,21 +114,16 @@ extension APIWrapper {
         
         let request = ResetCodeRequest(accessToken: accessToken, flatId: flatId)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performResetCodeRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.resetCode(request: request))
+            .map(BaseAPIResponse<ResetCodeResponseData>.self)
+            .flatMap { response in
+                guard let data = response.data else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
+                
+                return .just(data)
             }
-            
-            return Disposables.create()
-        }
     }
     
     func getSettingsAddresses() -> Single<GetSettingsListResponseData?> {
@@ -135,21 +133,18 @@ extension APIWrapper {
         
         let request = GetSettingsListRequest(accessToken: accessToken)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performSettingsListRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.getSettingsList(request: request))
+            .map(BaseAPIResponse<GetSettingsListResponseData>.self)
+            .flatMap { response in
+                if let data = response.data {
+                    return .just(data)
+                } else if response.code == 204 {
+                    return .just([])
+                } else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
             }
-            
-            return Disposables.create()
-        }
     }
     
     func getAddressList() -> Single<GetAddressListResponseData?> {
@@ -159,21 +154,18 @@ extension APIWrapper {
         
         let request = GetAddressListRequest(accessToken: accessToken)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performGetAddressListRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.getAddressList(request: request))
+            .map(BaseAPIResponse<GetAddressListResponseData>.self)
+            .flatMap { response in
+                if let data = response.data {
+                    return .just(data)
+                } else if response.code == 204 {
+                    return .just([])
+                } else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
             }
-            
-            return Disposables.create()
-        }
     }
     
     func grantAccess(
@@ -223,21 +215,10 @@ extension APIWrapper {
             expire: expire
         )
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performAccessRequest(request) { result in
-                switch result {
-                case .success: single(.success(()))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
+        return provider.rx
+            .request(.access(request: request))
+            .map(BaseAPIResponse<Bool>.self)
+            .map { _ in }
     }
     
     func resendSMS(flatId: String, guestPhone: String) -> Single<Void?> {
@@ -247,21 +228,10 @@ extension APIWrapper {
         
         let request = ResendRequest(accessToken: accessToken, flatId: flatId, guestPhone: guestPhone)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performResendRequest(request) { result in
-                switch result {
-                case .success: single(.success(()))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
+        return provider.rx
+            .request(.resend(request: request))
+            .map(BaseAPIResponse<Bool>.self)
+            .map { _ in }
     }
     
 }
