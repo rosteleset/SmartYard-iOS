@@ -29,11 +29,13 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let issueService: IssueService
     
     private let homeRouter: StrongRouter<HomeRoute>
+    private let notificationsRouter: StrongRouter<NotificationsRoute>
     private let chatRouter: StrongRouter<ChatRoute>
     private let paymentsRouter: StrongRouter<PaymentsRoute>
     private let settingsRouter: StrongRouter<SettingsRoute>
     
     private let homeTabBarItem: UITabBarItem
+    private let notificationsTabBarItem: UITabBarItem
     private let chatTabBarItem: UITabBarItem
     private let paymentsTabBarItem: UITabBarItem
     private let settingsTabBarItem: UITabBarItem
@@ -66,6 +68,19 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         homeCoordinator.rootViewController.tabBarItem = homeTabBarItem
         self.homeTabBarItem = homeTabBarItem
+        
+        // MARK: Notifications Tab
+        
+        let notificationsCoordinator = NotificationsCoordinator(apiWrapper: apiWrapper)
+        
+        let notificationsTabBarItem = UITabBarItem(
+            title: "Уведомления",
+            image: UIImage(named: "NotificationsTabUnselected"),
+            selectedImage: UIImage(named: "NotificationsTabSelected")
+        )
+        
+        notificationsCoordinator.rootViewController.tabBarItem = notificationsTabBarItem
+        self.notificationsTabBarItem = notificationsTabBarItem
         
         // MARK: Chat Tab
         let chatCoordinator = ChatCoordinator(
@@ -114,6 +129,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         // MARK: Initialization
         self.homeRouter = homeCoordinator.strongRouter
+        self.notificationsRouter = notificationsCoordinator.strongRouter
         self.chatRouter = chatCoordinator.strongRouter
         self.paymentsRouter = paymentsCoordinator.strongRouter
         self.settingsRouter = settingsCoordinator.strongRouter
@@ -138,7 +154,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         super.init(
             rootViewController: customTabBarController,
-            tabs: [homeRouter, chatRouter, paymentsRouter, settingsRouter],
+            tabs: [homeRouter, notificationsRouter, chatRouter, paymentsRouter, settingsRouter],
             select: homeRouter
         )
         
