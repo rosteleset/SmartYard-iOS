@@ -29,3 +29,17 @@ class APIWrapper {
     }
     
 }
+
+extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
+    
+    func filterSuccessfulCodes() -> Single<Response> {
+        return flatMap { response in
+            guard 200...299 ~= response.statusCode else {
+                return .error(NSError.APIWrapperError.codeIsNotSuccessful(response.statusCode))
+            }
+            
+            return .just(response)
+        }
+    }
+    
+}
