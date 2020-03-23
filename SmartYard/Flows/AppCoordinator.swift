@@ -29,7 +29,6 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let disposeBag = DisposeBag()
     
     private let linphoneService = LinphoneService()
-    private let apiService = APIService()
     private let accessService = AccessService()
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
@@ -40,7 +39,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private var currentCallPreviewData: Data?
     
     init() {
-        apiWrapper = APIWrapper(apiService: apiService, accessService: accessService)
+        apiWrapper = APIWrapper(accessService: accessService)
         issueService = IssueService(apiWrapper: apiWrapper, accessService: accessService)
         pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
         

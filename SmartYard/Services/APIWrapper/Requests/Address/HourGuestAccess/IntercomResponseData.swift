@@ -34,7 +34,7 @@ struct IntercomResponseData: Decodable {
         switch allowDoorCodeRawValue {
         case "t": allowDoorCode = true
         case "f": allowDoorCode = false
-        default: throw NSError.APIServiceError.mappingError
+        default: throw NSError.APIWrapperError.noDataError
         }
         
         doorCode = try? container.decode(String.self, forKey: .doorCode)
@@ -44,7 +44,7 @@ struct IntercomResponseData: Decodable {
         switch cmsRawValue {
         case "t": cms = true
         case "f": cms = false
-        default: throw NSError.APIServiceError.mappingError
+        default: throw NSError.APIWrapperError.noDataError
         }
         
         let voipRawValue = try container.decode(String.self, forKey: .voip)
@@ -52,11 +52,11 @@ struct IntercomResponseData: Decodable {
         switch voipRawValue {
         case "t": voip = true
         case "f": voip = false
-        default: throw NSError.APIServiceError.mappingError
+        default: throw NSError.APIWrapperError.noDataError
         }
         
         let autoOpenRawValue = try container.decode(String.self, forKey: .autoOpen)
-        autoOpen = try autoOpenRawValue.dateFromAPIString.unwrapped(or: NSError.APIServiceError.mappingError)
+        autoOpen = try autoOpenRawValue.dateFromAPIString.unwrapped(or: NSError.APIWrapperError.noDataError)
         
         whiteRabbit = try container.decode(String.self, forKey: .whiteRabbit)
     }

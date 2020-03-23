@@ -40,48 +40,6 @@ extension NSError {
     
 }
 
-// MARK: APIService Errors
-
-extension NSError {
-    
-    enum APIServiceError {
-        
-        private static let domain = "APIServiceError"
-        
-        static let unknownError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Неизвестная ошибка"]
-            
-            return NSError(
-                domain: domain,
-                code: 2001,
-                userInfo: errorUserInfo
-            )
-        }()
-        
-        static let mappingError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Ошибка маппинга данных"]
-            
-            return NSError(
-                domain: domain,
-                code: 2002,
-                userInfo: errorUserInfo
-            )
-        }()
-        
-        static let emptyDataError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Ошибка маппинга поля Data, либо же оно отсутствует"]
-
-            return NSError(
-                domain: domain,
-                code: 2003,
-                userInfo: errorUserInfo
-            )
-        }()
-        
-    }
-    
-}
-
 // MARK: APIWrapper Errors
 
 extension NSError {
@@ -89,6 +47,34 @@ extension NSError {
     enum APIWrapperError {
         
         private static let domain = "APIWrapperError"
+        
+        static let baseResponseMappingError: NSError = {
+            let description = "Не удалось представить ответ сервера в виде базовой модели"
+            
+            return NSError(
+                domain: domain,
+                code: 3100,
+                userInfo: [NSLocalizedDescriptionKey: description]
+            )
+        }()
+        
+        static let noDataError: NSError = {
+            let description = "Ошибка маппинга поля Data, либо же оно отсутствует при коде отличном от 204"
+
+            return NSError(
+                domain: domain,
+                code: 3101,
+                userInfo: [NSLocalizedDescriptionKey: description]
+            )
+        }()
+        
+        static func codeIsNotSuccessful(_ code: Int) -> NSError {
+            return NSError(
+                domain: domain,
+                code: 3102,
+                userInfo: [NSLocalizedDescriptionKey: "В ходе выполнения запроса произошла ошибка \(code)"]
+            )
+        }
         
         static let accessTokenMissingError: NSError = {
             let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден access token. Выполнить запрос невозможно"]
@@ -149,6 +135,16 @@ extension NSError {
                 userInfo: errorUserInfo
             )
         }()
+        
+        static func qrRegistrationFailed(reason: String) -> NSError {
+            let errorUserInfo = [NSLocalizedDescriptionKey: reason]
+            
+            return NSError(
+                domain: domain,
+                code: 3007,
+                userInfo: errorUserInfo
+            )
+        }
         
     }
     

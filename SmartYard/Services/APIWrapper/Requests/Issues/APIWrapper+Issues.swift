@@ -47,21 +47,17 @@ extension APIWrapper {
             actions: issue.actions
         )
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performCreateIssueRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.createIssue(request: request))
+            .filterSuccessfulCodes()
+            .map(BaseAPIResponse<CreateIssueResponseData>.self)
+            .flatMap { response in
+                guard let data = response.data else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
+                
+                return .just(data)
             }
-            
-            return Disposables.create()
-        }
     }
     
     func getListConnect() -> Single<GetListConnectResponseData?> {
@@ -71,21 +67,19 @@ extension APIWrapper {
         
         let request = GetListConnectRequest(accessToken: accessToken)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performGetListConnectRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.getListConnect(request: request))
+            .filterSuccessfulCodes()
+            .map(BaseAPIResponse<GetListConnectResponseData>.self)
+            .flatMap { response in
+                if let data = response.data {
+                    return .just(data)
+                } else if response.code == 204 {
+                    return .just([])
+                } else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
             }
-            
-            return Disposables.create()
-        }
     }
     
 }

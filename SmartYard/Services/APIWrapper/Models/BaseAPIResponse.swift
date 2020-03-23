@@ -11,6 +11,6 @@ struct BaseAPIResponse<T: Decodable>: Decodable {
     let code: Int
     let name: String
     let message: String
-    let data: T
+    let data: T?
     
 }
