@@ -119,7 +119,16 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         }
         
         linphoneService.hasEnqueuedCalls = true
-        trigger(.incomingCall(callPayload: callPayload))
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.trigger(.incomingCall(callPayload: callPayload))
+        }
+    }
+    
+    func goToNotifications() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            self?.mainTabBarRouter?.trigger(.notifications)
+        }
     }
     
     private func observeLogout() {

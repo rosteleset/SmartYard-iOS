@@ -14,6 +14,7 @@ import SSCustomTabbar
 
 enum MainTabBarRoute: Route {
     case home
+    case notifications
     case chat
     case payments
     case settings
@@ -164,6 +165,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
         switch route {
         case .home: return .selectAndCallDelegate(homeRouter)
+        case .notifications: return .selectAndCallDelegate(notificationsRouter)
         case .chat: return .selectAndCallDelegate(chatRouter)
         case .payments: return .selectAndCallDelegate(paymentsRouter)
         case .settings: return .selectAndCallDelegate(settingsRouter)

@@ -52,6 +52,18 @@ extension AppDelegate: MessagingDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+    ) {
+        if let messageID = userInfo["gcm.message_id"] {
+            print("DEBUG / PUSH NOTIFICATIONS / Message ID: \(messageID)")
+        }
+        
+        print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
+    }
+    
     // MARK: Чтобы отображались пуши, если приложение в данный момент активно (в foreground)
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
@@ -84,6 +96,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             pushNotificationPayload: response.notification.request.content.userInfo
         ) {
             appCoordinator.processIncomingCallRequest(callPayload: callPayload)
+        }
+        
+        let messageType = response.notification.request.content.userInfo["messageType"] as? String
+        
+        if messageType == "inbox" {
+            appCoordinator.goToNotifications()
         }
         
         completionHandler()
