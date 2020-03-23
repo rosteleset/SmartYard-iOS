@@ -348,7 +348,9 @@ extension InputAddressViewModel: QRCodeScanViewModelDelegate {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] in
-                    print("added")
+                    NotificationCenter.default.post(name: .addressAdded, object: nil)
+                    
+                    self?.router.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)

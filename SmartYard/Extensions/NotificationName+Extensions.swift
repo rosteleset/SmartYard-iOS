@@ -11,6 +11,7 @@ import Foundation
 extension Notification.Name {
     
     static let addressDeleted = Notification.Name("AddressDeleted")
+    static let addressAdded = Notification.Name("AddressAdded")
     static let badgeNumberUpdated = Notification.Name("BadgeNumberUpdated")
     static let newInboxMessageReceived = Notification.Name("NewInboxMessageReceived")
     
