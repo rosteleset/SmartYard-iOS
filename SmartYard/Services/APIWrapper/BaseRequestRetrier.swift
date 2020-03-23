@@ -33,7 +33,7 @@ class BaseRequestRetrier: RequestInterceptor {
         }
         
         if response.statusCode == 401 {
-            completion(.retryWithDelay(1000))
+            completion(.retryWithDelay(1))
         } else {
             completion(.doNotRetry)
         }
