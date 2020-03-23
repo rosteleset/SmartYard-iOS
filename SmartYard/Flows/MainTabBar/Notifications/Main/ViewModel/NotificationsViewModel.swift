@@ -18,4 +18,41 @@ class NotificationsViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
     }
     
+    func transform(_ input: Input) -> Output {
+        let errorTracker = ErrorTracker()
+        let activityTracker = ActivityTracker()
+        
+        let reloadHtmlCodeTrigger = PublishSubject<Void>()
+        
+        let response = Driver
+            .merge(
+                reloadHtmlCodeTrigger.asDriverOnErrorJustComplete(),
+                .just(())
+            )
+            .flatMapLatest { [weak self] _ -> Driver<InboxResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper.inbox()
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+        
+        return Output(inboxResponse: response, isLoading: activityTracker.asDriver())
+    }
+    
+}
+
+extension NotificationsViewModel {
+    
+    struct Input {
+    }
+    
+    struct Output {
+        let inboxResponse: Driver<InboxResponseData?>
+        let isLoading: Driver<Bool>
+    }
+    
 }

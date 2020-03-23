@@ -19,15 +19,17 @@ enum APITarget {
     case access(request: AccessRequest)
     case resend(request: ResendRequest)
     
-    case getListConnect(request: GetListConnectRequest)
-    case createIssue(request: CreateIssueRequest)
-    
     case getAddress(request: GetAddressRequest)
     case getGeoCoder(request: GeoCoderRequest)
     case getHouses(request: GetHousesRequest)
     case getServices(request: GetServicesRequest)
     case getAllLocations(request: GetAllLocationsRequest)
     case getStreets(request: GetStreetsRequest)
+    
+    case inbox(request: InboxRequest)
+    
+    case getListConnect(request: GetListConnectRequest)
+    case createIssue(request: CreateIssueRequest)
     
     case addMyPhone(request: AddMyPhoneRequest)
     case requestCode(request: RequestCodeRequest)
@@ -56,15 +58,17 @@ extension APITarget: TargetType {
         case .access: return "address/access"
         case .resend: return "address/resend"
             
-        case .getListConnect: return "issues/listConnect"
-        case .createIssue: return "issues/create"
-            
         case .getAddress: return "geo/address"
         case .getGeoCoder: return "geo/coder"
         case .getHouses: return "geo/getHouses"
         case .getServices: return "geo/getServices"
         case .getAllLocations: return "geo/getAllLocations"
         case .getStreets: return "geo/getStreets"
+            
+        case .inbox: return "inbox/inbox"
+            
+        case .getListConnect: return "issues/listConnect"
+        case .createIssue: return "issues/create"
             
         case .addMyPhone: return "user/addMyPhone"
         case .requestCode: return "user/requestCode"
@@ -97,15 +101,17 @@ extension APITarget: TargetType {
             case .access(let request): return request.accessToken
             case .resend(let request): return request.accessToken
                 
-            case .getListConnect(let request): return request.accessToken
-            case .createIssue(let request): return request.accessToken
-                
             case .getAddress(let request): return request.accessToken
             case .getGeoCoder(let request): return request.accessToken
             case .getHouses(let request): return request.accessToken
             case .getServices(let request): return request.accessToken
             case .getAllLocations(let request): return request.accessToken
             case .getStreets(let request): return request.accessToken
+                
+            case .inbox(let request): return request.accessToken
+                
+            case .getListConnect(let request): return request.accessToken
+            case .createIssue(let request): return request.accessToken
                 
             case .addMyPhone(let request): return request.accessToken
             case .registerPushToken(let request): return request.accessToken
@@ -138,9 +144,6 @@ extension APITarget: TargetType {
         case .getAddressList(let request): return request.requestParameters
         case .access(let request): return request.requestParameters
         case .resend(let request): return request.requestParameters
-
-        case .getListConnect(let request): return request.requestParameters
-        case .createIssue(let request): return request.requestParameters
             
         case .getAddress(let request): return request.requestParameters
         case .getGeoCoder(let request): return request.requestParameters
@@ -148,6 +151,11 @@ extension APITarget: TargetType {
         case .getServices(let request): return request.requestParameters
         case .getAllLocations(let request): return request.requestParameters
         case .getStreets(let request): return request.requestParameters
+            
+        case .inbox(let request): return request.requestParameters
+
+        case .getListConnect(let request): return request.requestParameters
+        case .createIssue(let request): return request.requestParameters
             
         case .addMyPhone(let request): return request.requestParameters
         case .requestCode(let request): return request.requestParameters

@@ -9,9 +9,15 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import WebKit
+import JGProgressHUD
 
-class NotificationsViewController: BaseViewController {
-
+class NotificationsViewController: BaseViewController, LoaderPresentable {
+    
+    @IBOutlet private weak var webView: WKWebView!
+    
+    var loader: JGProgressHUD?
+    
     private let viewModel: NotificationsViewModel
     
     init(viewModel: NotificationsViewModel) {
@@ -32,11 +38,37 @@ class NotificationsViewController: BaseViewController {
     }
     
     private func configureView() {
+        webView.cornerRadius = 24
+        webView.layer.maskedCorners = .topCorners
         
+        webView.scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 17, left: 0, bottom: 5, right: 0)
     }
     
     private func bind() {
+        let input = NotificationsViewModel.Input()
+        let output = viewModel.transform(input)
         
+        output.inboxResponse
+            .distinctUntilChanged()
+            .drive(
+                onNext: { [weak self] response in
+                    guard let response = response, let url = URL(string: response.basePath) else {
+                        return
+                    }
+                    
+                    self?.webView.loadHTMLString(response.code, baseURL: url)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
 }
