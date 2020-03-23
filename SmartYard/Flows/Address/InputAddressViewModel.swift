@@ -26,6 +26,9 @@ class InputAddressViewModel: BaseViewModel {
     
     private let flatsList = BehaviorSubject<[String]>(value: [])
     
+    private let activityTracker = ActivityTracker()
+    private let errorTracker = ErrorTracker()
+    
     init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper) {
         self.router = router
         self.apiWrapper = apiWrapper
@@ -33,8 +36,6 @@ class InputAddressViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
-        let errorTracker = ErrorTracker()
-        
         apiWrapper.getAllLocations()
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
@@ -126,7 +127,7 @@ class InputAddressViewModel: BaseViewModel {
                 }
                 
                 return self.hasAccess(to: .video)
-                    .trackError(errorTracker)
+                    .trackError(self.errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
@@ -340,7 +341,17 @@ extension InputAddressViewModel: QRCodeScanViewModelDelegate {
     }
     
     func qrCodeScanViewModel(_ viewModel: QRCodeScanViewModel, didExtractCode code: String) {
-        print(code)
+        apiWrapper.registerQR(qr: code)
+            .trackActivity(activityTracker)
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] in
+                    print("added")
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }
