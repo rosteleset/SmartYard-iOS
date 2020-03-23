@@ -613,6 +613,7 @@
 		8428672324051942004D3F26 /* Geo */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C5D240689FD00FD9F65 /* APIWrapper+Geo.swift */,
 				E94B6C4F240653FE00FD9F65 /* GetAddress */,
 				E94B6C6F240694B200FD9F65 /* GetAllLocations */,
 				E94B6C56240663DA00FD9F65 /* GeoCoder */,
@@ -626,6 +627,7 @@
 		8428672424051946004D3F26 /* Issues */ = {
 			isa = PBXGroup;
 			children = (
+				E94B6C862406B3FB00FD9F65 /* APIWrapper+Issues.swift */,
 				E94B6C7F2406ABEF00FD9F65 /* CreateIssue */,
 				E94B6C7E2406AB3D00FD9F65 /* IssuesListConnect */,
 			);
@@ -985,6 +987,7 @@
 		848298232405655600E81620 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				843C388F24291AA70035BF80 /* APIWrapper+User.swift */,
 				848298262405655600E81620 /* AddMyPhone */,
 				8482982B2405655600E81620 /* RequestCode */,
 				8482982D2405655600E81620 /* RegisterPushToken */,
@@ -1048,6 +1051,7 @@
 		8482983A2405658A00E81620 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				843C389024291AA80035BF80 /* APIWrapper+Address.swift */,
 				84A6705B241F87DB00BBA12B /* Access */,
 				E94B6C3C23FFE2D100FD9F65 /* HourGuestAccess */,
 				848298412405658A00E81620 /* OpenDoor */,
@@ -1216,16 +1220,16 @@
 			path = AddressAccessSkeletonView;
 			sourceTree = "<group>";
 		};
-		84AA8D4423E2CD0C001B3B43 /* APIService */ = {
+		84AA8D4423E2CD0C001B3B43 /* APIWrapper */ = {
 			isa = PBXGroup;
 			children = (
 				84AA8D4723E2CD48001B3B43 /* APITarget.swift */,
+				84AA8D5F23E2E622001B3B43 /* APIWrapper.swift */,
 				84AA8D4923E2CD5E001B3B43 /* BaseRequestRetrier.swift */,
-				E94B6C5F24068A0A00FD9F65 /* APIWrapper */,
 				844AC39823E979AB0066006D /* Models */,
 				844AC39923E979BA0066006D /* Requests */,
 			);
-			path = APIService;
+			path = APIWrapper;
 			sourceTree = "<group>";
 		};
 		84B89A7D23F2F88E009692B4 /* ServiceIsActivated */ = {
@@ -1370,7 +1374,7 @@
 			children = (
 				E94B6C8E2408ECB400FD9F65 /* IssueService */,
 				844AC39323E9776F0066006D /* AccessService */,
-				84AA8D4423E2CD0C001B3B43 /* APIService */,
+				84AA8D4423E2CD0C001B3B43 /* APIWrapper */,
 				84B9EC9823E0886000979C39 /* LinphoneService */,
 				84854B5123FBFDBF001B44F2 /* PushNotificationService */,
 			);
@@ -1731,18 +1735,6 @@
 				E94B6C592406640100FD9F65 /* GeoCoderResponseData.swift */,
 			);
 			path = GeoCoder;
-			sourceTree = "<group>";
-		};
-		E94B6C5F24068A0A00FD9F65 /* APIWrapper */ = {
-			isa = PBXGroup;
-			children = (
-				84AA8D5F23E2E622001B3B43 /* APIWrapper.swift */,
-				843C389024291AA80035BF80 /* APIWrapper+Address.swift */,
-				843C388F24291AA70035BF80 /* APIWrapper+User.swift */,
-				E94B6C5D240689FD00FD9F65 /* APIWrapper+Geo.swift */,
-				E94B6C862406B3FB00FD9F65 /* APIWrapper+Issues.swift */,
-			);
-			path = APIWrapper;
 			sourceTree = "<group>";
 		};
 		E94B6C6024068D1400FD9F65 /* GetHouses */ = {
