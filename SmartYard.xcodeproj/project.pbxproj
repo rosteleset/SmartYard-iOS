@@ -227,7 +227,7 @@
 		E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */; };
 		E9618A362420CC9F003FF47D /* APIIssueConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9618A352420CC9F003FF47D /* APIIssueConnect.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
-		E96CC0D72423FAEA008DF44B /* ResetMethodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96CC0D62423FAEA008DF44B /* ResetMethodModel.swift */; };
+		E96CC0D72423FAEA008DF44B /* RestoreMethodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96CC0D62423FAEA008DF44B /* RestoreMethodModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
 		E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C382423F149F30010BBC1 /* PinCodeViewController.xib */; };
@@ -547,7 +547,7 @@
 		E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnapprovedObjectCell.xib; sourceTree = "<group>"; };
 		E9618A352420CC9F003FF47D /* APIIssueConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIssueConnect.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
-		E96CC0D62423FAEA008DF44B /* ResetMethodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetMethodModel.swift; sourceTree = "<group>"; };
+		E96CC0D62423FAEA008DF44B /* RestoreMethodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethodModel.swift; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E98C382423F149F30010BBC1 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
@@ -1625,6 +1625,18 @@
 			path = PassConfirmationPin;
 			sourceTree = "<group>";
 		};
+		E92EFB4B2428D742003AF7FE /* ResetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				E9C256822423F2F900BE32E0 /* Cells */,
+				E9C2567F24224D1E00BE32E0 /* Entity */,
+				E9B9EAC52421FCB8000A92B3 /* ResetPasswordViewController.swift */,
+				E9B9EAC62421FCB8000A92B3 /* ResetPasswordViewController.xib */,
+				E9B9EAC92421FCCB000A92B3 /* ResetPasswordViewModel.swift */,
+			);
+			path = ResetPassword;
+			sourceTree = "<group>";
+		};
 		E94057F223F56B6400623746 /* Entries */ = {
 			isa = PBXGroup;
 			children = (
@@ -2039,11 +2051,7 @@
 			isa = PBXGroup;
 			children = (
 				E92EFB4224287EE4003AF7FE /* PassConfirmationPin */,
-				E9C256822423F2F900BE32E0 /* Cells */,
-				E9C2567F24224D1E00BE32E0 /* Entity */,
-				E9B9EAC52421FCB8000A92B3 /* ResetPasswordViewController.swift */,
-				E9B9EAC62421FCB8000A92B3 /* ResetPasswordViewController.xib */,
-				E9B9EAC92421FCCB000A92B3 /* ResetPasswordViewModel.swift */,
+				E92EFB4B2428D742003AF7FE /* ResetPassword */,
 			);
 			path = ResetPassword;
 			sourceTree = "<group>";
@@ -2073,7 +2081,7 @@
 			isa = PBXGroup;
 			children = (
 				E9C2568024224DF200BE32E0 /* RestoreMethodType.swift */,
-				E96CC0D62423FAEA008DF44B /* ResetMethodModel.swift */,
+				E96CC0D62423FAEA008DF44B /* RestoreMethodModel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -2498,7 +2506,7 @@
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
-				E96CC0D72423FAEA008DF44B /* ResetMethodModel.swift in Sources */,
+				E96CC0D72423FAEA008DF44B /* RestoreMethodModel.swift in Sources */,
 				848298352405655600E81620 /* ConfirmCodeResponseData.swift in Sources */,
 				84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */,
 				E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */,

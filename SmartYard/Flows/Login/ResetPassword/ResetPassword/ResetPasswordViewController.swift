@@ -25,7 +25,7 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
     private let getResetMethodsText = "Получить доступные\nметоды восстановления"
     private let getResetCodeText = "Получить код восстановления"
     
-    private let itemsProxy = BehaviorSubject<[ResetMethodModel]>(value: [])
+    private let itemsProxy = BehaviorSubject<[RestoreMethodModel]>(value: [])
     
     private let itemStateChanged = PublishSubject<Int?>()
     

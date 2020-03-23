@@ -17,17 +17,23 @@ class ResetPasswordViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     
     private let contractNum: BehaviorSubject<String?>
-    private let selectedContactId = BehaviorSubject<String?>(value: nil)
     
-    private let resetMethods: BehaviorSubject<[ResetMethodModel]>
+    private let selectedContact = BehaviorSubject<RestoreMethodModel?>(value: nil)
     
-    init(apiWrapper: APIWrapper, router: WeakRouter<HomeRoute>, contractNum: String?, resetMethods: [ResetMethodType]) {
+    private let restoreMethods: BehaviorSubject<[RestoreMethodModel]>
+    
+    init(
+        apiWrapper: APIWrapper,
+        router: WeakRouter<HomeRoute>,
+        contractNum: String?,
+        restoreMethods: [RestoreMethodType]
+    ) {
         self.apiWrapper = apiWrapper
         self.router = router
         self.contractNum = BehaviorSubject<String?>(value: contractNum)
         
-        let resetModels = resetMethods.map { ResetMethodModel(type: $0, state: .uncheckedActive) }
-        self.resetMethods = BehaviorSubject<[ResetMethodModel]>(value: resetModels)
+        let restoreModels = restoreMethods.map { RestoreMethodModel(type: $0, state: .uncheckedActive) }
+        self.restoreMethods = BehaviorSubject<[RestoreMethodModel]>(value: restoreModels)
     }
     
     // swiftlint:disable:next function_body_length
@@ -38,7 +44,7 @@ class ResetPasswordViewModel: BaseViewModel {
         input.inputContractNum
             .do(
                 onNext: { [weak self] _ in
-                    self?.resetMethods.onNext([])
+                    self?.restoreMethods.onNext([])
                 }
             )
             .drive(contractNum)
@@ -47,21 +53,21 @@ class ResetPasswordViewModel: BaseViewModel {
         input.actionTrigger
             .withLatestFrom(contractNum.asDriver(onErrorJustReturn: nil))
             .ignoreNil()
-            .withLatestFrom(selectedContactId.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .withLatestFrom(selectedContact.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .flatMapLatest { [weak self] args -> Driver<(RestoreRequestResponseData?, String?)?> in
-                let (contractNum, contactId) = args
+                let (contractNum, contact) = args
                 
                 guard let self = self, !contractNum.isEmpty else {
                     return .just(nil)
                 }
 
-                return self.apiWrapper.restore(contractNum: contractNum, contractId: contactId, code: nil)
+                return self.apiWrapper.restore(contractNum: contractNum, contactId: contact?.type.contactId, code: nil)
                     .map {
                         guard let response = $0 else {
                             return nil
                         }
                         
-                        return (response, contactId)
+                        return (response, contact?.type.contactId)
                     }
                     .trackError(errorTracker)
                     .trackActivity(activityTracker)
@@ -77,16 +83,20 @@ class ResetPasswordViewModel: BaseViewModel {
                     let (response, contactId) = args
                 
                     guard contactId.isNilOrEmpty else {
-                        self.router.trigger(.pinCode(phoneNumber: ""))
+                        self.router.trigger(.pinCode(phoneNumber: response?.first?.contact ?? ""))
                         return
                     }
                     
-                    let resetMethodsArr = response?.compactMap { response in
-                        ResetMethodType(rawValue: response.type)
+                    let resetMethodsArr: [RestoreMethodType] = response?.compactMap { response in
+                        guard let id = response.id, let contact = response.contact else {
+                            return nil
+                        }
+                        
+                        return RestoreMethodType(rawValue: response.type, contactId: id, contact: contact)
                     } ?? []
                     
-                    self.resetMethods.onNext(
-                        resetMethodsArr.map { ResetMethodModel(type: $0, state: .uncheckedActive) }
+                    self.restoreMethods.onNext(
+                        resetMethodsArr.map { RestoreMethodModel(type: $0, state: .uncheckedActive) }
                     )
                 }
             )
@@ -97,10 +107,11 @@ class ResetPasswordViewModel: BaseViewModel {
                 onNext: { [weak self] index in
                     guard let self = self,
                         let index = index,
-                        var data = try? self.resetMethods.value()
+                        var data = try? self.restoreMethods.value()
                         else {
                             return
                     }
+                    
                     
                     data.enumerated().forEach { offset, _ in
                         if offset == index {
@@ -110,14 +121,16 @@ class ResetPasswordViewModel: BaseViewModel {
                         }
                     }
                     
-                    self.resetMethods.onNext(data)
+                    self.selectedContact.onNext(data.first { $0.state == .checkedActive })
+                    
+                    self.restoreMethods.onNext(data)
                 }
             )
             .disposed(by: disposeBag)
         
         return Output(
             isLoading: activityTracker.asDriver(),
-            resetMethods: resetMethods.asDriver(onErrorJustReturn: [])
+            resetMethods: restoreMethods.asDriver(onErrorJustReturn: [])
         )
     }
     
@@ -133,7 +146,7 @@ extension ResetPasswordViewModel {
     
     struct Output {
         let isLoading: Driver<Bool>
-        let resetMethods: Driver<[ResetMethodModel]>
+        let resetMethods: Driver<[RestoreMethodModel]>
     }
     
 }

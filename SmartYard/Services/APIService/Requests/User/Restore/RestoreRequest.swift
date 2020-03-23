@@ -12,7 +12,7 @@ struct RestoreRequest {
     
     let accessToken: String
     let contract: String
-    let contractId: String?
+    let contactId: String?
     let code: String?
     let comment: String?
     let notification: Bool?
@@ -26,8 +26,8 @@ extension RestoreRequest {
             "contract": contract
         ]
         
-        if let contractId = contractId {
-            params["contractId"] = contractId
+        if let contactId = contactId {
+            params["contact_id"] = contactId
         }
         
         if let code = code {

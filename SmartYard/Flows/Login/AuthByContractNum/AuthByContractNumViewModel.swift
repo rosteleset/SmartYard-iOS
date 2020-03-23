@@ -42,7 +42,7 @@ class AuthByContractNumViewModel: BaseViewModel {
                     return .empty()
                 }
                
-                return self.apiWrapper.restore(contractNum: contract, contractId: nil, code: nil)
+                return self.apiWrapper.restore(contractNum: contract, contactId: nil, code: nil)
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)
@@ -51,11 +51,11 @@ class AuthByContractNumViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] args in
                     let (response, contractNum) = args
-                    let resetMethodsArr = response?.compactMap { response in
-                        ResetMethodType(rawValue: response.type)
+                    let restoreMethodsArr = response?.compactMap { response in
+                        RestoreMethodType(rawValue: response.type, contactId: response.id ?? "", contact: response.contact ?? "")
                     } ?? []
                 
-                    self?.router.trigger(.restorePassword(contractNum: contractNum, resetMethods: resetMethodsArr))
+                    self?.router.trigger(.restorePassword(contractNum: contractNum, restoreMethods: restoreMethodsArr))
                 }
             )
             .disposed(by: disposeBag)
