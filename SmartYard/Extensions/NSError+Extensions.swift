@@ -59,7 +59,7 @@ extension NSError {
         }()
         
         static let mappingError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Ошибка маппинга данных"]
+            let errorUserInfo = [NSLocalizedDescriptionKey: "Не удалось представить ответ сервера в виде базовой модели"]
             
             return NSError(
                 domain: domain,
