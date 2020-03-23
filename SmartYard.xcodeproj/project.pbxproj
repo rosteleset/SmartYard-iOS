@@ -170,6 +170,7 @@
 		E92EFB4524287F4C003AF7FE /* PassConfirmationPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB4324287F4C003AF7FE /* PassConfirmationPinViewController.swift */; };
 		E92EFB4624287F4C003AF7FE /* PassConfirmationPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92EFB4424287F4C003AF7FE /* PassConfirmationPinViewController.xib */; };
 		E92EFB4824287F72003AF7FE /* PassConfirmationPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB4724287F72003AF7FE /* PassConfirmationPinViewModel.swift */; };
+		E92EFB4A2428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB492428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift */; };
 		E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F323F56BF800623746 /* ServiceRequestType.swift */; };
 		E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F723F6721F00623746 /* AddressAccessViewController.swift */; };
 		E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E94057F823F6721F00623746 /* AddressAccessViewController.xib */; };
@@ -489,6 +490,7 @@
 		E92EFB4324287F4C003AF7FE /* PassConfirmationPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassConfirmationPinViewController.swift; sourceTree = "<group>"; };
 		E92EFB4424287F4C003AF7FE /* PassConfirmationPinViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PassConfirmationPinViewController.xib; sourceTree = "<group>"; };
 		E92EFB4724287F72003AF7FE /* PassConfirmationPinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassConfirmationPinViewModel.swift; sourceTree = "<group>"; };
+		E92EFB492428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PassConfirmationPinViewController+Timer.swift"; sourceTree = "<group>"; };
 		E94057F323F56BF800623746 /* ServiceRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRequestType.swift; sourceTree = "<group>"; };
 		E94057F723F6721F00623746 /* AddressAccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessViewController.swift; sourceTree = "<group>"; };
 		E94057F823F6721F00623746 /* AddressAccessViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessViewController.xib; sourceTree = "<group>"; };
@@ -1618,6 +1620,7 @@
 				E92EFB4324287F4C003AF7FE /* PassConfirmationPinViewController.swift */,
 				E92EFB4424287F4C003AF7FE /* PassConfirmationPinViewController.xib */,
 				E92EFB4724287F72003AF7FE /* PassConfirmationPinViewModel.swift */,
+				E92EFB492428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift */,
 			);
 			path = PasswordConfirmationPin;
 			sourceTree = "<group>";
@@ -2580,6 +2583,7 @@
 				84B89A9323F2FA6E009692B4 /* ServiceIsNotActivatedViewModel.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
 				84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */,
+				E92EFB4A2428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
 				E9A4D48A23EC27E20070A591 /* PinNumberField.swift in Sources */,
