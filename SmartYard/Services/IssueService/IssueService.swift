@@ -121,15 +121,14 @@ class IssueService {
     
     // экран 34.02.03
     func sendDeleteAddressIssue(address: String, reason: String) -> Single<CreateIssueResponseData?> {
-        return sendIssueWithLocation(
+        return sendSimpleIssue(
             issue: .deleteAddressIssue(
                 userInfo: getUserInfo(
                     address: address,
                     clientId: nil
                 ),
                 reason: reason
-            ),
-            address: address
+            )
         )
     }
     
