@@ -19,21 +19,16 @@ extension APIWrapper {
         
         let request = GetAddressRequest(accessToken: accessToken, houseId: houseId)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performGetAddressRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.getAddress(request: request))
+            .map(BaseAPIResponse<GetAddressResponseData>.self)
+            .flatMap { response in
+                guard let data = response.data else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
+                
+                return .just(data)
             }
-            
-            return Disposables.create()
-        }
     }
     
     func getCoordinatesByAddress(address: String) -> Single<GeoCoderResponseData?> {
@@ -43,21 +38,16 @@ extension APIWrapper {
         
         let request = GeoCoderRequest(accessToken: accessToken, address: address)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performGetGeoCoderRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.getGeoCoder(request: request))
+            .map(BaseAPIResponse<GeoCoderResponseData>.self)
+            .flatMap { response in
+                guard let data = response.data else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
+                
+                return .just(data)
             }
-            
-            return Disposables.create()
-        }
     }
     
     func getHousesByStreet(streetId: String) -> Single<GetHousesResponseData?> {
@@ -67,21 +57,18 @@ extension APIWrapper {
         
         let request = GetHousesRequest(accessToken: accessToken, streetId: streetId)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performGetHousesRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.getHouses(request: request))
+            .map(BaseAPIResponse<GetHousesResponseData>.self)
+            .flatMap { response in
+                if let data = response.data {
+                    return .just(data)
+                } else if response.code == 204 {
+                    return .just([])
+                } else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
             }
-            
-            return Disposables.create()
-        }
     }
     
     func getServicesByHouseId(houseId: String?) -> Single<GetServicesResponseData?> {
@@ -95,21 +82,18 @@ extension APIWrapper {
         
         let request = GetServicesRequest(accessToken: accessToken, houseId: houseId)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performGetServicesRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.getServices(request: request))
+            .map(BaseAPIResponse<GetServicesResponseData>.self)
+            .flatMap { response in
+                if let data = response.data {
+                    return .just(data)
+                } else if response.code == 204 {
+                    return .just([])
+                } else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
             }
-            
-            return Disposables.create()
-        }
     }
     
     func getAllLocations() -> Single<GetAllLocationsResponseData?> {
@@ -119,21 +103,18 @@ extension APIWrapper {
         
         let request = GetAllLocationsRequest(accessToken: accessToken)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performGetAllLocationsRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.getAllLocations(request: request))
+            .map(BaseAPIResponse<GetAllLocationsResponseData>.self)
+            .flatMap { response in
+                if let data = response.data {
+                    return .just(data)
+                } else if response.code == 204 {
+                    return .just([])
+                } else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
             }
-            
-            return Disposables.create()
-        }
     }
     
     func getStreetsByLocation(locationId: String) -> Single<GetStreetsResponseData?> {
@@ -143,21 +124,18 @@ extension APIWrapper {
         
         let request = GetStreetsRequest(accessToken: accessToken, locationId: locationId)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performGetStreetsRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.getStreets(request: request))
+            .map(BaseAPIResponse<GetStreetsResponseData>.self)
+            .flatMap { response in
+                if let data = response.data {
+                    return .just(data)
+                } else if response.code == 204 {
+                    return .just([])
+                } else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
             }
-            
-            return Disposables.create()
-        }
     }
     
 }
