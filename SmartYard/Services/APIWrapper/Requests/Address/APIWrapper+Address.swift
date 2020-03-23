@@ -21,6 +21,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.registerQR(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<String>.self)
             .flatMap { response in
                 if let errorDescription = response.data {
@@ -80,6 +81,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.intercom(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<IntercomResponseData>.self)
             .flatMap { response in
                 guard let data = response.data else {
@@ -103,7 +105,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.openDoor(request: request))
-            .map(BaseAPIResponse<Bool>.self)
+            .filterSuccessfulCodes()
             .map { _ in }
     }
     
@@ -116,6 +118,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.resetCode(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<ResetCodeResponseData>.self)
             .flatMap { response in
                 guard let data = response.data else {
@@ -135,6 +138,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getSettingsList(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<GetSettingsListResponseData>.self)
             .flatMap { response in
                 if let data = response.data {
@@ -156,6 +160,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAddressList(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<GetAddressListResponseData>.self)
             .flatMap { response in
                 if let data = response.data {
@@ -217,7 +222,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.access(request: request))
-            .map(BaseAPIResponse<Bool>.self)
+            .filterSuccessfulCodes()
             .map { _ in }
     }
     
@@ -230,7 +235,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.resend(request: request))
-            .map(BaseAPIResponse<Bool>.self)
+            .filterSuccessfulCodes()
             .map { _ in }
     }
     

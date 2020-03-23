@@ -21,6 +21,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAddress(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<GetAddressResponseData>.self)
             .flatMap { response in
                 guard let data = response.data else {
@@ -40,6 +41,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getGeoCoder(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<GeoCoderResponseData>.self)
             .flatMap { response in
                 guard let data = response.data else {
@@ -59,6 +61,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getHouses(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<GetHousesResponseData>.self)
             .flatMap { response in
                 if let data = response.data {
@@ -84,6 +87,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getServices(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<GetServicesResponseData>.self)
             .flatMap { response in
                 if let data = response.data {
@@ -105,6 +109,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAllLocations(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<GetAllLocationsResponseData>.self)
             .flatMap { response in
                 if let data = response.data {
@@ -126,6 +131,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getStreets(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<GetStreetsResponseData>.self)
             .flatMap { response in
                 if let data = response.data {

@@ -27,7 +27,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.addMyPhone(request: request))
-            .map(BaseAPIResponse<Bool>.self)
+            .filterSuccessfulCodes()
             .map { _ in }
     }
     
@@ -36,7 +36,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.requestCode(request: request))
-            .map(BaseAPIResponse<Bool>.self)
+            .filterSuccessfulCodes()
             .map { _ in }
     }
     
@@ -54,7 +54,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.registerPushToken(request: request))
-            .map(BaseAPIResponse<Bool>.self)
+            .filterSuccessfulCodes()
             .map { _ in }
     }
     
@@ -67,6 +67,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.confirmCode(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<ConfirmCodeResponseData>.self)
             .flatMap { response in
                 guard let data = response.data else {
@@ -86,6 +87,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getPaymentsList(request: request))
+            .filterSuccessfulCodes()
             .map(BaseAPIResponse<GetPaymentsListResponseData>.self)
             .flatMap { response in
                 if let data = response.data {
@@ -107,7 +109,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.sendName(request: request))
-            .map(BaseAPIResponse<Bool>.self)
+            .filterSuccessfulCodes()
             .map { _ in }
     }
     

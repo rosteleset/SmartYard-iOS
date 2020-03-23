@@ -49,24 +49,32 @@ extension NSError {
         private static let domain = "APIWrapperError"
         
         static let baseResponseMappingError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Не удалось представить ответ сервера в виде базовой модели"]
+            let description = "Не удалось представить ответ сервера в виде базовой модели"
             
             return NSError(
                 domain: domain,
                 code: 3100,
-                userInfo: errorUserInfo
+                userInfo: [NSLocalizedDescriptionKey: description]
             )
         }()
         
         static let noDataError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Ошибка маппинга поля Data, либо же оно отсутствует при коде отличном от 204"]
-            
+            let description = "Ошибка маппинга поля Data, либо же оно отсутствует при коде отличном от 204"
+
             return NSError(
                 domain: domain,
                 code: 3101,
-                userInfo: errorUserInfo
+                userInfo: [NSLocalizedDescriptionKey: description]
             )
         }()
+        
+        static func codeIsNotSuccessful(_ code: Int) -> NSError {
+            return NSError(
+                domain: domain,
+                code: 3102,
+                userInfo: [NSLocalizedDescriptionKey: "В ходе выполнения запроса произошла ошибка \(code)"]
+            )
+        }
         
         static let accessTokenMissingError: NSError = {
             let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден access token. Выполнить запрос невозможно"]
