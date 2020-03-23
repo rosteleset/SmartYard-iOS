@@ -12,6 +12,13 @@ import RxCocoa
 
 class PassConfirmationPinViewController: BaseViewController {
 
+    @IBOutlet private weak var titleMessageLabel: UILabel!
+    @IBOutlet private weak var pinTextField: PinTextField!
+    @IBOutlet private weak var sendCodeAgainButton: BlueButton!
+    @IBOutlet private weak var timerLabel: UILabel!
+    @IBOutlet private weak var sendCodeAgainGroupView: UIView!
+    @IBOutlet private weak var sendCodeAgainMessageGroupView: UIView!
+    
     private let viewModel: PassConfirmationPinViewModel
     
     init(viewModel: PassConfirmationPinViewModel) {
