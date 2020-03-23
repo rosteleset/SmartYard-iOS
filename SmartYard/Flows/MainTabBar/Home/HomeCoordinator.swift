@@ -19,7 +19,8 @@ enum HomeRoute: Route {
     case confirmAddress(address: String)
     case back
     case restorePassword(contractNum: String?, resetMethods: [ResetMethodType])
-    case pinCode(phoneNumber: String, isInitial: Bool)
+    case pinCode(phoneNumber: String)
+    
 }
 
 class HomeCoordinator: NavigationCoordinator<HomeRoute> {
@@ -133,15 +134,10 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             return .push(vc)
             
-        case .pinCode(let phoneNumber, let isInitial):
-            let vm = PinCodeViewModel(
-                accessService: accessService,
-                apiWrapper: apiWrapper,
-                router: weakRouter,
-                phoneNumber: phoneNumber
-            )
+        case .pinCode(let phoneNumber):
+            let vm = PassConfirmationPinViewModel(apiWrapper: apiWrapper, router: weakRouter, selectedContact: phoneNumber)
             
-            let vc = PinCodeViewController(viewModel: vm, isInitial: isInitial)
+            let vc = PassConfirmationPinViewController(viewModel: vm)
             return .set([vc], animation: .fade)
         }
     }

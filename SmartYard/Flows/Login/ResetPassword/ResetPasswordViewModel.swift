@@ -75,9 +75,9 @@ class ResetPasswordViewModel: BaseViewModel {
                     }
                     
                     let (response, contactId) = args
-                    
+                
                     guard contactId.isNilOrEmpty else {
-                        self.router.trigger(.)
+                        self.router.trigger(.pinCode(phoneNumber: ""))
                         return
                     }
                     

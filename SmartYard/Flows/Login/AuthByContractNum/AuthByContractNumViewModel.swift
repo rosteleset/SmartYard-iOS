@@ -41,8 +41,8 @@ class AuthByContractNumViewModel: BaseViewModel {
                 guard let self = self else {
                     return .empty()
                 }
-                
-                return self.apiWrapper.restore(contractNum: contract)
+               
+                return self.apiWrapper.restore(contractNum: contract, contractId: nil, code: nil)
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)
