@@ -17,6 +17,8 @@ class ResetPasswordViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     
     private let contractNum: BehaviorSubject<String?>
+    private let selectedContactId = BehaviorSubject<String?>(value: nil)
+    
     private let resetMethods: BehaviorSubject<[ResetMethodModel]>
     
     init(apiWrapper: APIWrapper, router: WeakRouter<HomeRoute>, contractNum: String?, resetMethods: [ResetMethodType]) {
@@ -45,24 +47,42 @@ class ResetPasswordViewModel: BaseViewModel {
         input.actionTrigger
             .withLatestFrom(contractNum.asDriver(onErrorJustReturn: nil))
             .ignoreNil()
-            .flatMapLatest { [weak self] contractNum -> Driver<RestoreRequestResponseData?> in
-                guard let self = self, !contractNum.isEmpty else {
-                    return .empty()
-                }
+            .withLatestFrom(selectedContactId.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .flatMapLatest { [weak self] args -> Driver<(RestoreRequestResponseData?, String?)?> in
+                let (contractNum, contactId) = args
                 
-                return self.apiWrapper.restore(contractNum: contractNum)
+                guard let self = self, !contractNum.isEmpty else {
+                    return .just(nil)
+                }
+
+                return self.apiWrapper.restore(contractNum: contractNum, contractId: contactId, code: nil)
+                    .map {
+                        guard let response = $0 else {
+                            return nil
+                        }
+                        
+                        return (response, contactId)
+                    }
                     .trackError(errorTracker)
                     .trackActivity(activityTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] response in
+                onNext: { [weak self] args in
                     guard let self = self else {
                         return
                     }
                     
+                    let (response, contactId) = args
+                    
+                    guard contactId.isNilOrEmpty else {
+                        self.router.trigger(.)
+                        return
+                    }
+                    
                     let resetMethodsArr = response?.compactMap { response in
-                        ResetMethodType(rawValue: response.contact)
+                        ResetMethodType(rawValue: response.type)
                     } ?? []
                     
                     self.resetMethods.onNext(

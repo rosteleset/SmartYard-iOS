@@ -59,7 +59,7 @@ class InputAddressViewModel: BaseViewModel {
                         }
                         .asDriver(onErrorJustReturn: nil)
                 }
-                
+            
                 return .just((cachedStreets, city))
             }
             .ignoreNil()

@@ -421,7 +421,7 @@ class APIWrapper {
         }
     }
     
-    func restore(contractNum: String?) -> Single<RestoreRequestResponseData?> {
+    func restore(contractNum: String?, contractId: String?, code: String?) -> Single<RestoreRequestResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -433,8 +433,8 @@ class APIWrapper {
         let request = RestoreRequest(
             accessToken: accessToken,
             contract: contractNum,
-            contractId: nil,
-            code: nil,
+            contractId: contractId,
+            code: code,
             comment: nil,
             notification: true
         )

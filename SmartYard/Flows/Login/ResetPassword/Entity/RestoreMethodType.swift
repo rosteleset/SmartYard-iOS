@@ -18,9 +18,10 @@ enum ResetMethodType {
             return nil
         }
         
-        switch rawValue.contains("@") {
-        case true: self = .byEmail(mail: rawValue)
-        case false: self = .byPhoneNumber(phoneNumber: rawValue)
+        switch rawValue {
+        case "email": self = .byEmail(mail: rawValue)
+        case "phone": self = .byPhoneNumber(phoneNumber: rawValue)
+        default: return nil
         }
     }
     
