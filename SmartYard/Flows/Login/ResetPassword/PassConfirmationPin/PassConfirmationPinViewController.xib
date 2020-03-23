@@ -15,7 +15,8 @@
                 <outlet property="pinTextField" destination="eaR-Iu-Udm" id="e7K-bf-ro8"/>
                 <outlet property="sendCodeAgainButton" destination="gGI-M9-YUZ" id="mHg-h7-zi5"/>
                 <outlet property="sendCodeAgainGroupView" destination="fRv-aQ-uDM" id="AyX-iA-Ode"/>
-                <outlet property="sendCodeAgainMessageGroupView" destination="w5G-Uh-fIa" id="nvO-56-0a3"/>
+                <outlet property="sendCodeAgainGroupViewBottomConstraint" destination="1Ak-XW-bQ5" id="rcw-uZ-9Jp"/>
+                <outlet property="sendCodeAgainMessageView" destination="w5G-Uh-fIa" id="nvO-56-0a3"/>
                 <outlet property="timerLabel" destination="58D-aL-5Mh" id="83U-ej-ubO"/>
                 <outlet property="titleMessageLabel" destination="aDl-zG-Nme" id="v1t-A4-FVh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

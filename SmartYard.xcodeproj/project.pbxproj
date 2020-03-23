@@ -1614,15 +1614,15 @@
 			path = SmartYardSearchTextField;
 			sourceTree = "<group>";
 		};
-		E92EFB4224287EE4003AF7FE /* PasswordConfirmationPin */ = {
+		E92EFB4224287EE4003AF7FE /* PassConfirmationPin */ = {
 			isa = PBXGroup;
 			children = (
 				E92EFB4324287F4C003AF7FE /* PassConfirmationPinViewController.swift */,
+				E92EFB492428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift */,
 				E92EFB4424287F4C003AF7FE /* PassConfirmationPinViewController.xib */,
 				E92EFB4724287F72003AF7FE /* PassConfirmationPinViewModel.swift */,
-				E92EFB492428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift */,
 			);
-			path = PasswordConfirmationPin;
+			path = PassConfirmationPin;
 			sourceTree = "<group>";
 		};
 		E94057F223F56B6400623746 /* Entries */ = {
@@ -2038,7 +2038,7 @@
 		E9B9EAC42421FC91000A92B3 /* ResetPassword */ = {
 			isa = PBXGroup;
 			children = (
-				E92EFB4224287EE4003AF7FE /* PasswordConfirmationPin */,
+				E92EFB4224287EE4003AF7FE /* PassConfirmationPin */,
 				E9C256822423F2F900BE32E0 /* Cells */,
 				E9C2567F24224D1E00BE32E0 /* Entity */,
 				E9B9EAC52421FCB8000A92B3 /* ResetPasswordViewController.swift */,
