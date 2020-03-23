@@ -163,13 +163,31 @@ class SettingsViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-        output.isInitialLoadingFinished
-            .isTrue()
+        output.shouldBlockInteraction
             .drive(
-                onNext: { [weak self] _ in
-                    self?.collectionView.isHidden = false
-                    self?.skeletonContainer.hideSkeleton()
-                    self?.skeletonContainer.isHidden = true
+                onNext: { [weak self] shouldBlockInteraction in
+                    self?.collectionView.isHidden = shouldBlockInteraction
+                    self?.skeletonContainer.isHidden = !shouldBlockInteraction
+                    
+                    shouldBlockInteraction ?
+                        self?.skeletonContainer.showSkeletonAsynchronously() :
+                        self?.skeletonContainer.hideSkeleton()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.clientName
+            .drive(
+                onNext: { [weak self] name in
+                    self?.nameLabel.text = name
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.clientPhone
+            .drive(
+                onNext: { [weak self] phone in
+                    self?.phoneNumberLabel.text = phone
                 }
             )
             .disposed(by: disposeBag)
@@ -211,10 +229,6 @@ class SettingsViewController: BaseViewController {
         
         settingsButton.setImage(UIImage(named: "SettingsIcon"), for: .normal)
         settingsButton.setImage(UIImage(named: "SettingsIcon")?.darkened(), for: .highlighted)
-        
-        collectionView.isHidden = true
-        skeletonContainer.isHidden = false
-        skeletonContainer.showSkeletonAsynchronously()
     }
     
     private func configureCollectionView() {
@@ -230,7 +244,9 @@ class SettingsViewController: BaseViewController {
         let dataSource = RxCollectionViewSectionedAnimatedDataSource<SettingsSectionModel>(
             configureCell: { [weak self] _, collectionView, indexPath, item in
                 guard let self = self else {
-                    return UICollectionViewCell()
+                    // MARK: См. AddressesListViewController, почему нельзя просто вернуть UICollectionViewCell()
+                    
+                    return collectionView.dequeueReusableCell(withClass: SettingsHeaderCell.self, for: indexPath)
                 }
                 
                 return self.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)

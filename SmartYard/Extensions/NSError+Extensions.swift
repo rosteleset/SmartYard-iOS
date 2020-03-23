@@ -139,6 +139,17 @@ extension NSError {
                 userInfo: errorUserInfo
             )
         }
+        
+        static let userPhoneMissing: NSError = {
+            let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден номер телефона текущего пользователя"]
+            
+            return NSError(
+                domain: domain,
+                code: 3006,
+                userInfo: errorUserInfo
+            )
+        }()
+        
     }
     
 }

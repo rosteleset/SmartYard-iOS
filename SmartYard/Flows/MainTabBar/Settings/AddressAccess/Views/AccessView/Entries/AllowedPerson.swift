@@ -19,13 +19,11 @@ struct AllowedPerson: Hashable {
     var logoImage: UIImage?
     
     var formattedNumber: String {
-        guard rawNumber.count == Constants.phoneLengthWithoutPrefix else {
+        guard let fNumber = rawNumber.formattedNumberFromRawNumber else {
             fatalError("Неправильный формат номера")
         }
         
-        var withSeven = "+7" + rawNumber
-        
-        return withSeven.formatAsPhoneNumber()
+        return fNumber
     }
     
     var apiNumber: String {

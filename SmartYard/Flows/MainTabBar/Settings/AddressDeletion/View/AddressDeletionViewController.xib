@@ -25,8 +25,6 @@
             <connections>
                 <outlet property="cancelButton" destination="nlH-Pd-ANd" id="zU1-12-QZo"/>
                 <outlet property="deleteButton" destination="puN-ny-jxO" id="RVo-Qn-yxj"/>
-                <outlet property="dontWantToManageFromAppCheckbox" destination="PVM-oR-wfQ" id="tVq-2v-0MY"/>
-                <outlet property="dontWantToManageFromAppContainer" destination="SwW-Xv-GDI" id="UQV-Sg-xGE"/>
                 <outlet property="mainContainerBottomConstraint" destination="1i2-oI-Sak" id="NN7-t6-ONW"/>
                 <outlet property="otherReasonCheckbox" destination="O2k-u4-brK" id="2Of-vg-ho8"/>
                 <outlet property="otherReasonContainer" destination="NtQ-K7-nkS" id="XC4-RU-gvQ"/>
@@ -43,7 +41,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RUG-Ae-ZBc">
-                    <rect key="frame" x="16" y="193.5" width="382" height="519.5"/>
+                    <rect key="frame" x="16" y="228.5" width="382" height="449"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Укажите причину" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yh9-uz-hcE">
                             <rect key="frame" x="24" y="25" width="334" height="35.5"/>
@@ -52,39 +50,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXU-Jw-Yhb" userLabel="Checkboxes Container">
-                            <rect key="frame" x="24" y="90.5" width="334" height="156.5"/>
+                            <rect key="frame" x="24" y="90.5" width="334" height="86"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SwW-Xv-GDI">
-                                    <rect key="frame" x="0.0" y="0.0" width="334" height="40.5"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PVM-oR-wfQ" customClass="SmartYardCheckBoxView" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="6" width="28" height="28"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="28" id="LMu-Gb-cVH"/>
-                                                <constraint firstAttribute="width" constant="28" id="lNo-Ty-Pd7"/>
-                                            </constraints>
-                                        </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Не хочу управлять этим адресом из приложения" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="syB-Md-0y6">
-                                            <rect key="frame" x="44" y="0.0" width="290" height="40.5"/>
-                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
-                                            <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="syB-Md-0y6" secondAttribute="trailing" id="9HG-Bz-9AH"/>
-                                        <constraint firstItem="syB-Md-0y6" firstAttribute="centerY" secondItem="SwW-Xv-GDI" secondAttribute="centerY" id="PDz-UT-NUl"/>
-                                        <constraint firstItem="PVM-oR-wfQ" firstAttribute="leading" secondItem="SwW-Xv-GDI" secondAttribute="leading" id="PPl-2D-qMX"/>
-                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="28" id="c83-iJ-gf7"/>
-                                        <constraint firstItem="syB-Md-0y6" firstAttribute="top" secondItem="SwW-Xv-GDI" secondAttribute="top" id="cvT-lJ-drX"/>
-                                        <constraint firstItem="syB-Md-0y6" firstAttribute="leading" secondItem="PVM-oR-wfQ" secondAttribute="trailing" constant="16" id="o96-C0-mbc"/>
-                                        <constraint firstItem="PVM-oR-wfQ" firstAttribute="centerY" secondItem="SwW-Xv-GDI" secondAttribute="centerY" id="szo-6t-qU7"/>
-                                    </constraints>
-                                </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pho-qA-MzB">
-                                    <rect key="frame" x="0.0" y="70.5" width="334" height="28"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="334" height="28"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="olY-aM-R5Y" customClass="SmartYardCheckBoxView" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
@@ -113,7 +82,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NtQ-K7-nkS">
-                                    <rect key="frame" x="0.0" y="128.5" width="334" height="28"/>
+                                    <rect key="frame" x="0.0" y="58" width="334" height="28"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2k-u4-brK" customClass="SmartYardCheckBoxView" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
@@ -146,18 +115,15 @@
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="NtQ-K7-nkS" secondAttribute="trailing" id="13v-gz-foh"/>
                                 <constraint firstAttribute="bottom" secondItem="NtQ-K7-nkS" secondAttribute="bottom" id="1tN-hO-zr0"/>
-                                <constraint firstItem="SwW-Xv-GDI" firstAttribute="leading" secondItem="XXU-Jw-Yhb" secondAttribute="leading" id="57K-I1-ib6"/>
-                                <constraint firstItem="SwW-Xv-GDI" firstAttribute="top" secondItem="XXU-Jw-Yhb" secondAttribute="top" id="5cM-Tp-Nxp"/>
                                 <constraint firstItem="NtQ-K7-nkS" firstAttribute="top" secondItem="pho-qA-MzB" secondAttribute="bottom" constant="30" id="Cjb-ct-fR0"/>
-                                <constraint firstAttribute="trailing" secondItem="SwW-Xv-GDI" secondAttribute="trailing" id="E4f-PN-r9r"/>
-                                <constraint firstItem="pho-qA-MzB" firstAttribute="top" secondItem="SwW-Xv-GDI" secondAttribute="bottom" constant="30" id="FSY-By-IWb"/>
                                 <constraint firstAttribute="trailing" secondItem="pho-qA-MzB" secondAttribute="trailing" id="j7y-qF-Xnz"/>
                                 <constraint firstItem="pho-qA-MzB" firstAttribute="leading" secondItem="XXU-Jw-Yhb" secondAttribute="leading" id="nxK-Lh-Blb"/>
                                 <constraint firstItem="NtQ-K7-nkS" firstAttribute="leading" secondItem="XXU-Jw-Yhb" secondAttribute="leading" id="suT-N7-oiT"/>
+                                <constraint firstItem="pho-qA-MzB" firstAttribute="top" secondItem="XXU-Jw-Yhb" secondAttribute="top" id="wgJ-cc-jJo"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nzn-x3-CiT" userLabel="Custom Text Container">
-                            <rect key="frame" x="24" y="272" width="334" height="32"/>
+                            <rect key="frame" x="24" y="201.5" width="334" height="32"/>
                             <subviews>
                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r7k-AQ-FUa">
                                     <rect key="frame" x="0.0" y="0.0" width="334" height="20"/>
@@ -189,12 +155,12 @@
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="При удалении адреса вам будет недоступно управление услугами адреса" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ej-st-xQH">
-                            <rect key="frame" x="24" y="329" width="334" height="35.5"/>
+                            <rect key="frame" x="24" y="258.5" width="334" height="35.5"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="puN-ny-jxO" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="24" y="389.5" width="334" height="60"/>
+                            <rect key="frame" x="24" y="319" width="334" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="scQ-6P-G1C"/>
                             </constraints>
@@ -209,7 +175,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlH-Pd-ANd">
-                            <rect key="frame" x="24" y="474.5" width="334" height="20"/>
+                            <rect key="frame" x="24" y="404" width="334" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="9IK-ed-0zW"/>
                             </constraints>

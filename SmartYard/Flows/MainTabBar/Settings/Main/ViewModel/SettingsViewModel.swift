@@ -15,31 +15,50 @@ class SettingsViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
     private let apiWrapper: APIWrapper
+    private let accessService: AccessService
     
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
     private let loadedData = BehaviorSubject<[APISettingsAddress]>(value: [])
     
-    init(router: WeakRouter<SettingsRoute>, apiWrapper: APIWrapper) {
+    init(router: WeakRouter<SettingsRoute>, apiWrapper: APIWrapper, accessService: AccessService) {
         self.router = router
         self.apiWrapper = apiWrapper
+        self.accessService = accessService
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         
-        let isInitialLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
-        let isInitialLoadingFinished = isInitialLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
+        // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
+        
+        let interactionBlockingRequestTracker = ActivityTracker()
+        
+        let blockingRefresh = Driver
+            .merge(
+                NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToVoid(),
+                .just(())
+            )
+            .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper.getSettingsAddresses()
+                    .trackError(errorTracker)
+                    .trackActivity(interactionBlockingRequestTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+        
+        // MARK: Запрос на обновление, который вызван рефреш контролом
         
         let reloadingFinishedSubject = PublishSubject<Void>()
         let reloadingFinished = reloadingFinishedSubject.asDriverOnErrorJustComplete()
         
-        Driver<Void>
-            .merge(
-                input.updateDataTrigger.asDriver().delay(.milliseconds(1000)),
-                .just(())
-            )
+        let nonBlockingRefresh = input.updateDataTrigger
+            .asDriver()
+            .delay(.milliseconds(1000))
             .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
                 guard let self = self else {
                     return .empty()
@@ -51,10 +70,12 @@ class SettingsViewModel: BaseViewModel {
             }
             .do(
                 onNext: { _ in
-                    isInitialLoadingFinishedSubject.onNext(true)
                     reloadingFinishedSubject.onNext(())
                 }
             )
+        
+        Driver
+            .merge(blockingRefresh, nonBlockingRefresh)
             .ignoreNil()
             .drive(
                 onNext: { [weak self] result in
@@ -183,7 +204,13 @@ class SettingsViewModel: BaseViewModel {
                         return
                     }
                     
-                    self?.router.trigger(.addressSettings(flatId: flatId, address: match.address))
+                    self?.router.trigger(
+                        .addressSettings(
+                            flatId: flatId,
+                            address: match.address,
+                            isContractOwner: match.contractOwner ?? false
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -317,11 +344,16 @@ class SettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        let name = accessService.clientName?.name ?? ""
+        let phone = accessService.clientPhoneNumber?.formattedNumberFromRawNumber
+        
         return Output(
+            clientName: .just(name),
+            clientPhone: .just(phone),
             sectionModels: sectionModels,
             updateKind: updateKind,
-            isInitialLoadingFinished: isInitialLoadingFinished,
-            reloadingFinished: reloadingFinished
+            reloadingFinished: reloadingFinished,
+            shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
         )
     }
     
@@ -430,10 +462,12 @@ extension SettingsViewModel {
     }
     
     struct Output {
+        let clientName: Driver<String?>
+        let clientPhone: Driver<String?>
         let sectionModels: Driver<[SettingsSectionModel]>
         let updateKind: Driver<SettingsSectionUpdateKind>
-        let isInitialLoadingFinished: Driver<Bool>
         let reloadingFinished: Driver<Void>
+        let shouldBlockInteraction: Driver<Bool>
     }
     
     struct ServiceUnactivatedResponsePayload {

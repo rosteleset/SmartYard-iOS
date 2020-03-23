@@ -121,15 +121,14 @@ class IssueService {
     
     // экран 34.02.03
     func sendDeleteAddressIssue(address: String, reason: String) -> Single<CreateIssueResponseData?> {
-        return sendIssueWithLocation(
+        return sendSimpleIssue(
             issue: .deleteAddressIssue(
                 userInfo: getUserInfo(
                     address: address,
                     clientId: nil
                 ),
                 reason: reason
-            ),
-            address: address
+            )
         )
     }
     
@@ -172,6 +171,11 @@ class IssueService {
                 guard let self = self, let unwrappedResponse = response else {
                     return .error(NSError.GenericError.selfIsDeadError)
                 }
+                
+                // TODO: пересоздание userInfo с пустым clientId может сломать логику
+                // Поскольку по факту мы в issue уже прокинули userInfo, где clientId может быть не равным nil
+                // Нужно будет либо поправить этот баг, чтобы не было путаницы с clientId
+                // Либо прокидывать только телефон, потому что юзается только он
                 
                 return self.apiWrapper.createIssue(
                     issue: issue,

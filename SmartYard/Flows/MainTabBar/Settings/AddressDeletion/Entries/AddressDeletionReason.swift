@@ -8,7 +8,6 @@
 
 enum AddressDeletionReason {
     
-    case dontWantToManageFromApp
     case wantToBreakTheContract
     case other
     

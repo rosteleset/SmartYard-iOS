@@ -13,9 +13,6 @@ import TouchAreaInsets
 
 class AddressDeletionViewController: BaseViewController {
     
-    @IBOutlet private weak var dontWantToManageFromAppContainer: UIView!
-    @IBOutlet private weak var dontWantToManageFromAppCheckbox: SmartYardCheckBoxView!
-    
     @IBOutlet private weak var wantToBreakTheContractContainer: UIView!
     @IBOutlet private weak var wantToBreakTheContractCheckbox: SmartYardCheckBoxView!
     
@@ -50,9 +47,6 @@ class AddressDeletionViewController: BaseViewController {
     }
     
     private func bind() {
-        let dontWantToManageFromAppGesture = UITapGestureRecognizer()
-        dontWantToManageFromAppContainer.addGestureRecognizer(dontWantToManageFromAppGesture)
-        
         let wantToBreakTheContractGesture = UITapGestureRecognizer()
         wantToBreakTheContractContainer.addGestureRecognizer(wantToBreakTheContractGesture)
         
@@ -61,10 +55,9 @@ class AddressDeletionViewController: BaseViewController {
         
         let deletionReason = Observable<AddressDeletionReason>
             .merge(
-                dontWantToManageFromAppGesture.rx.event.map { _ in .dontWantToManageFromApp },
                 wantToBreakTheContractGesture.rx.event.map { _ in .wantToBreakTheContract },
                 otherReasonGesture.rx.event.map { _ in .other },
-                .just(.dontWantToManageFromApp)
+                .just(.wantToBreakTheContract)
             )
             .asDriverOnErrorJustComplete()
             .distinctUntilChanged()
@@ -149,7 +142,7 @@ class AddressDeletionViewController: BaseViewController {
     }
     
     private func selectReason(_ reason: AddressDeletionReason) {
-        [dontWantToManageFromAppCheckbox, wantToBreakTheContractCheckbox, otherReasonCheckbox].forEach {
+        [wantToBreakTheContractCheckbox, otherReasonCheckbox].forEach {
             $0?.setState(state: .uncheckedInactive)
         }
         
@@ -157,12 +150,6 @@ class AddressDeletionViewController: BaseViewController {
         reasonTextField.sendActions(for: .valueChanged)
         
         switch reason {
-        case .dontWantToManageFromApp:
-            dontWantToManageFromAppCheckbox.setState(state: .checkedActive)
-            
-            reasonTextField.resignFirstResponder()
-            reasonTextContainer.isHidden = true
-            
         case .wantToBreakTheContract:
             wantToBreakTheContractCheckbox.setState(state: .checkedActive)
             

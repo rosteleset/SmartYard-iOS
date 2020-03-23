@@ -12,7 +12,7 @@ import XCoordinator
 
 protocol AddressDeletionViewModelDelegate: AnyObject {
     
-    func addressDeletionViewModelDidConfirmDeletion(_ viewModel: AddressDeletionViewModel)
+    func addressDeletionViewModelDidConfirmDeletion(_ viewModel: AddressDeletionViewModel, reason: String)
     
 }
 
@@ -34,7 +34,7 @@ class AddressDeletionViewModel: BaseViewModel {
                 let (reason, customDescription) = args
                 
                 switch reason {
-                case .other: return !customDescription.isNilOrEmpty
+                case .other: return !(customDescription?.trimmed).isNilOrEmpty
                 default: return true
                 }
             }
@@ -48,16 +48,24 @@ class AddressDeletionViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.deleteTrigger
-            .withLatestFrom(isAbleToDelete)
-            .isTrue()
+            .withLatestFrom(input.deletionReason)
+            .withLatestFrom(input.customDescription) { ($0, $1) }
             .drive(
-                onNext: { [weak self] _ in
-                    guard let self = self else {
+                onNext: { [weak self] args in
+                    let (deletionReason, customDescription) = args
+                    
+                    let reasonString: String? = {
+                        switch deletionReason {
+                        case .wantToBreakTheContract: return "Хочу расторгнуть договор"
+                        case .other: return customDescription?.trimmed
+                        }
+                    }()
+                    
+                    guard let self = self, let uReason = reasonString, !uReason.isEmpty else {
                         return
                     }
                     
-                    self.delegate?.addressDeletionViewModelDidConfirmDeletion(self)
-                    self.router.trigger(.dismiss)
+                    self.delegate?.addressDeletionViewModelDidConfirmDeletion(self, reason: uReason)
                 }
             )
             .disposed(by: disposeBag)

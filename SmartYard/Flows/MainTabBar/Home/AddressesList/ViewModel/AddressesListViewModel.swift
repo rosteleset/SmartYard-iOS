@@ -52,18 +52,44 @@ class AddressesListViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        let isInitialLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
-        let isInitialLoadingFinished = isInitialLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
+        // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
+        
+        let interactionBlockingRequestTracker = ActivityTracker()
+        
+        let blockingRefresh = Driver
+            .merge(
+                NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToVoid(),
+                .just(())
+            )
+            .flatMapLatest { [weak self] _ -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return Single
+                    .zip(self.apiWrapper.getAddressList(), self.apiWrapper.getListConnect())
+                    .trackActivity(interactionBlockingRequestTracker)
+                    .trackError(errorTracker)
+                    .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
+                        let (firstResponse, secondResponse) = args
+                        
+                        guard let uFirstResponse = firstResponse, let uSecondResponse = secondResponse else {
+                            return nil
+                        }
+                        
+                        return (uFirstResponse, uSecondResponse)
+                    }
+                    .asDriver(onErrorJustReturn: nil)
+            }
+        
+        // MARK: Запрос на обновление, который вызван рефреш контролом
         
         let reloadingFinishedSubject = PublishSubject<Void>()
         let reloadingFinished = reloadingFinishedSubject.asDriverOnErrorJustComplete()
         
-        // MARK: Загрузка данных
-        Driver<Void>
-            .merge(
-                input.refreshDataTrigger.asDriver().delay(.milliseconds(1000)),
-                .just(())
-            )
+        let nonBlockingRefresh = input.refreshDataTrigger
+            .asDriver()
+            .delay(.milliseconds(1000))
             .flatMapLatest { [weak self] _ -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in
                 guard let self = self else {
                     return .empty()
@@ -85,10 +111,12 @@ class AddressesListViewModel: BaseViewModel {
             }
             .do(
                 onNext: { _ in
-                    isInitialLoadingFinishedSubject.onNext(true)
                     reloadingFinishedSubject.onNext(())
                 }
             )
+        
+        Driver
+            .merge(blockingRefresh, nonBlockingRefresh)
             .ignoreNil()
             .withLatestFrom(areSectionsExpanded.asDriver(onErrorJustReturn: [:])) { ($0, $1) }
             .do(
@@ -259,7 +287,7 @@ class AddressesListViewModel: BaseViewModel {
             updateKind: updateKind,
             isLoading: activityTracker.asDriver(),
             reloadingFinished: reloadingFinished,
-            isInitialLoadingFinished: isInitialLoadingFinished
+            shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
         )
     }
 
@@ -349,10 +377,14 @@ class AddressesListViewModel: BaseViewModel {
             return section
         }
         
-        let unapprovedAddressItems = unapprovedAddressesData.map { address -> AddressesListDataItem in
-            .unapprovedAddresses(
-                identity: .unapprovedObject(addressId: address.houseId),
-                address: address.address
+        let unapprovedAddressItems = unapprovedAddressesData.compactMap { issueInfo -> AddressesListDataItem? in
+            guard let houseId = issueInfo.houseId, let address = issueInfo.address else {
+                return nil
+            }
+            
+            return .unapprovedAddresses(
+                identity: .unapprovedObject(addressId: houseId),
+                address: address
             )
         }
         
@@ -377,7 +409,7 @@ extension AddressesListViewModel {
         let updateKind: Driver<AddressesListSectionUpdateKind>
         let isLoading: Driver<Bool>
         let reloadingFinished: Driver<Void>
-        let isInitialLoadingFinished: Driver<Bool>
+        let shouldBlockInteraction: Driver<Bool>
     }
     
 }
