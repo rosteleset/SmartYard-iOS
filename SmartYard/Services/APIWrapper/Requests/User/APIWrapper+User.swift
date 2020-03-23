@@ -25,41 +25,19 @@ extension APIWrapper {
             useForNotifications: useForNotifications
         )
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performAddMyPhoneRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
+        return provider.rx
+            .request(.addMyPhone(request: request))
+            .map(BaseAPIResponse<Bool>.self)
+            .map { _ in }
     }
     
     func requestCode(userPhone: String) -> Single<Void?> {
         let request = RequestCodeRequest(userPhone: userPhone)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performRequestCodeRequest(request) { result in
-                switch result {
-                case .success: single(.success(()))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
+        return provider.rx
+            .request(.requestCode(request: request))
+            .map(BaseAPIResponse<Bool>.self)
+            .map { _ in }
     }
     
     func registerPushToken(pushToken: String, clientId: String?, type: TokenType) -> Single<Void?> {
@@ -74,21 +52,10 @@ extension APIWrapper {
             type: type
         )
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performRegisterPushTokenRequest(request) { result in
-                switch result {
-                case .success: single(.success(()))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
+        return provider.rx
+            .request(.registerPushToken(request: request))
+            .map(BaseAPIResponse<Bool>.self)
+            .map { _ in }
     }
     
     func confirmCode(userPhone: String, smsCode: String) -> Single<ConfirmCodeResponseData?> {
@@ -98,21 +65,16 @@ extension APIWrapper {
         
         let request = ConfirmCodeRequest(userPhone: userPhone, smsCode: smsCode)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performConfirmCodeRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.confirmCode(request: request))
+            .map(BaseAPIResponse<ConfirmCodeResponseData>.self)
+            .flatMap { response in
+                guard let data = response.data else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
+                
+                return .just(data)
             }
-            
-            return Disposables.create()
-        }
     }
     
     func getPaymentsList() -> Single<GetPaymentsListResponseData?> {
@@ -122,21 +84,18 @@ extension APIWrapper {
         
         let request = GetPaymentsListRequest(accessToken: accessToken)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performGetPaymentsListRequest(request) { result in
-                switch result {
-                case let .success(data): single(.success(data))
-                case let .failure(error): single(.error(error))
+        return provider.rx
+            .request(.getPaymentsList(request: request))
+            .map(BaseAPIResponse<GetPaymentsListResponseData>.self)
+            .flatMap { response in
+                if let data = response.data {
+                    return .just(data)
+                } else if response.code == 204 {
+                    return .just([])
+                } else {
+                    return .error(NSError.APIWrapperError.noDataError)
                 }
             }
-            
-            return Disposables.create()
-        }
     }
     
     func sendName(name: String, patronymic: String?) -> Single<Void?> {
@@ -146,21 +105,10 @@ extension APIWrapper {
         
         let request = SendNameRequest(accessToken: accessToken, name: name, patronymic: patronymic)
         
-        return Single.create { [weak self] single in
-            guard let self = self else {
-                single(.error(NSError.GenericError.selfIsDeadError))
-                return Disposables.create()
-            }
-            
-            self.apiService.performSendNameRequest(request) { result in
-                switch result {
-                case .success: single(.success(()))
-                case let .failure(error): single(.error(error))
-                }
-            }
-            
-            return Disposables.create()
-        }
+        return provider.rx
+            .request(.sendName(request: request))
+            .map(BaseAPIResponse<Bool>.self)
+            .map { _ in }
     }
     
 }
