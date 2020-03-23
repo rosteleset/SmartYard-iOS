@@ -66,7 +66,6 @@ class AddressDeletionViewModel: BaseViewModel {
                     }
                     
                     self.delegate?.addressDeletionViewModelDidConfirmDeletion(self, reason: uReason)
-                    self.router.trigger(.dismiss)
                 }
             )
             .disposed(by: disposeBag)

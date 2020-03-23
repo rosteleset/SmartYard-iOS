@@ -196,11 +196,20 @@ extension AddressSettingsViewModel {
 extension AddressSettingsViewModel: AddressDeletionViewModelDelegate {
     
     func addressDeletionViewModelDidConfirmDeletion(_ viewModel: AddressDeletionViewModel, reason: String) {
-        issueService
-            .sendDeleteAddressIssue(address: address, reason: reason)
-            .trackActivity(activityTracker)
-            .trackError(errorTracker)
-            .asDriver(onErrorJustReturn: nil)
+        router.rx
+            .trigger(.dismiss)
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.issueService
+                    .sendDeleteAddressIssue(address: self.address, reason: reason)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
             .ignoreNil()
             .drive(
                 onNext: { [weak self] _ in
