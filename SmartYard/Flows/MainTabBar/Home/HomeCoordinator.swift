@@ -126,11 +126,10 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case let .restorePassword(contractNum):
             let vm = RestorePasswordViewModel(
                 apiWrapper: apiWrapper,
-                router: weakRouter,
-                contractNum: contractNum
+                router: weakRouter
             )
             
-            let vc = RestorePasswordViewController(viewModel: vm)
+            let vc = RestorePasswordViewController(viewModel: vm, preloadedContractNumber: contractNum)
             
             return .push(vc)
             

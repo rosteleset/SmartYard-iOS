@@ -16,20 +16,15 @@ class RestorePasswordViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<HomeRoute>
     
-    private let contractNum = BehaviorSubject<String?>(value: nil)
     private let selectedRestoreMethod = BehaviorSubject<RestoreMethodCellModel?>(value: nil)
     private let restoreMethods = BehaviorSubject<[RestoreMethodCellModel]>(value: [])
     
-    private let initialContractNum: String?
-    
     init(
         apiWrapper: APIWrapper,
-        router: WeakRouter<HomeRoute>,
-        contractNum: String?
+        router: WeakRouter<HomeRoute>
     ) {
         self.apiWrapper = apiWrapper
         self.router = router
-        self.initialContractNum = contractNum
     }
     
     // swiftlint:disable:next function_body_length
@@ -37,19 +32,16 @@ class RestorePasswordViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
-        input.inputContractNum
+        let contractNum = input.inputContractNum
+            .asDriver(onErrorJustReturn: nil)
             .do(
                 onNext: { [weak self] _ in
                     self?.restoreMethods.onNext([])
                 }
             )
-            .drive(contractNum)
-            .disposed(by: disposeBag)
-        
-        self.contractNum.onNext(self.initialContractNum)
         
         input.getCodeButtonTapped
-            .withLatestFrom(contractNum.asDriver(onErrorJustReturn: nil))
+            .withLatestFrom(contractNum)
             .ignoreNil()
             .withLatestFrom(selectedRestoreMethod.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .flatMapLatest { [weak self] args -> Driver<(RestoreMethodCellModel, String)?> in
@@ -170,8 +162,7 @@ class RestorePasswordViewModel: BaseViewModel {
         
         return Output(
             isLoading: activityTracker.asDriver(),
-            restoreMethods: restoreMethods.asDriver(onErrorJustReturn: []),
-            initialContractNum: contractNum.asDriver(onErrorJustReturn: nil)
+            restoreMethods: restoreMethods.asDriver(onErrorJustReturn: [])
         )
     }
     
@@ -190,7 +181,6 @@ extension RestorePasswordViewModel {
     struct Output {
         let isLoading: Driver<Bool>
         let restoreMethods: Driver<[RestoreMethodCellModel]>
-        let initialContractNum: Driver<String?>
     }
     
 }

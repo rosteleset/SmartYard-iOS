@@ -26,8 +26,12 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
     private let itemsProxy = BehaviorSubject<[RestoreMethodCellModel]>(value: [])
     private let itemStateChanged = PublishSubject<Int?>()
     
-    init(viewModel: RestorePasswordViewModel) {
+    private let preloadedContractNumber: String?
+    
+    init(viewModel: RestorePasswordViewModel, preloadedContractNumber: String?) {
         self.viewModel = viewModel
+        self.preloadedContractNumber = preloadedContractNumber
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -44,14 +48,15 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
     }
 
     private func configureUI() {
-        tableView.isHidden = true
-        
         view.hideKeyboardWhenTapped = true
         getRestoreMethodsButton.titleLabel?.textAlignment = .center
         
+        contractTextField.text = preloadedContractNumber
+        contractTextField.sendActions(for: .allEditingEvents)
+        
+        tableView.isHidden = true
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.register(nibWithCellClass: RestoreMethodCell.self)
         
         tableView.tableFooterView = UIView(
@@ -102,15 +107,6 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
             .drive(
                 onNext: { [weak self] isLoading in
                     self?.updateLoader(isEnabled: isLoading, detailText: nil)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        output.initialContractNum
-            .drive(
-                onNext: { [weak self] contractNum in
-                    self?.contractTextField.text = contractNum
-                    self?.contractTextField.sendActions(for: .allEditingEvents)
                 }
             )
             .disposed(by: disposeBag)
