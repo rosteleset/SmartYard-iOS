@@ -15,6 +15,7 @@
 		843C389124291AA80035BF80 /* APIWrapper+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C388F24291AA70035BF80 /* APIWrapper+User.swift */; };
 		843C389224291AA80035BF80 /* APIWrapper+Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C389024291AA80035BF80 /* APIWrapper+Address.swift */; };
 		843C389624292DD90035BF80 /* RegisterQRRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C389524292DD90035BF80 /* RegisterQRRequest.swift */; };
+		843C389E2429F8C30035BF80 /* EmptyDataInitializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C389D2429F8C30035BF80 /* EmptyDataInitializable.swift */; };
 		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
 		844AC39723E9788D0066006D /* APIAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39623E9788D0066006D /* APIAddress.swift */; };
 		844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallViewController.swift */; };
@@ -318,6 +319,7 @@
 		843C388F24291AA70035BF80 /* APIWrapper+User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "APIWrapper+User.swift"; sourceTree = "<group>"; };
 		843C389024291AA80035BF80 /* APIWrapper+Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "APIWrapper+Address.swift"; sourceTree = "<group>"; };
 		843C389524292DD90035BF80 /* RegisterQRRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterQRRequest.swift; sourceTree = "<group>"; };
+		843C389D2429F8C30035BF80 /* EmptyDataInitializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataInitializable.swift; sourceTree = "<group>"; };
 		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
 		844AC39623E9788D0066006D /* APIAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAddress.swift; sourceTree = "<group>"; };
 		844AC39B23E987360066006D /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
@@ -1237,6 +1239,7 @@
 				84AA8D4723E2CD48001B3B43 /* APITarget.swift */,
 				84AA8D5F23E2E622001B3B43 /* APIWrapper.swift */,
 				84AA8D4923E2CD5E001B3B43 /* BaseRequestRetrier.swift */,
+				843C389D2429F8C30035BF80 /* EmptyDataInitializable.swift */,
 				844AC39823E979AB0066006D /* Models */,
 				844AC39923E979BA0066006D /* Requests */,
 			);
@@ -2416,6 +2419,7 @@
 				E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */,
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
+				843C389E2429F8C30035BF80 /* EmptyDataInitializable.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
 				848298352405655600E81620 /* ConfirmCodeResponseData.swift in Sources */,
 				84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */,

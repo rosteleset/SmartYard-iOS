@@ -42,4 +42,32 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         }
     }
     
+    func mapAsEmptyDataInitializable<T: Decodable & EmptyDataInitializable>() -> Single<T> {
+        return flatMap { response in
+            if response.statusCode == 204 {
+                return .just(T())
+            }
+            
+            do {
+                let mappedResponse = try response.map(BaseAPIResponse<T>.self)
+                
+                if let data = mappedResponse.data {
+                    return .just(data)
+                } else {
+                    return .error(NSError.APIWrapperError.noDataError)
+                }
+            } catch {
+                return .error(NSError.APIWrapperError.baseResponseMappingError)
+            }
+        }
+    }
+    
+}
+
+extension PrimitiveSequence where Trait == SingleTrait {
+    
+    func mapToOptional() -> Single<Element?> {
+        return map { $0 }
+    }
+    
 }

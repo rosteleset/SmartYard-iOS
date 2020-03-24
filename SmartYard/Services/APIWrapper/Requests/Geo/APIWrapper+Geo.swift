@@ -62,16 +62,8 @@ extension APIWrapper {
         return provider.rx
             .request(.getHouses(request: request))
             .filterSuccessfulCodes()
-            .map(BaseAPIResponse<GetHousesResponseData>.self)
-            .flatMap { response in
-                if let data = response.data {
-                    return .just(data)
-                } else if response.code == 204 {
-                    return .just([])
-                } else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-            }
+            .mapAsEmptyDataInitializable()
+            .mapToOptional()
     }
     
     func getServicesByHouseId(houseId: String?) -> Single<GetServicesResponseData?> {
@@ -88,16 +80,8 @@ extension APIWrapper {
         return provider.rx
             .request(.getServices(request: request))
             .filterSuccessfulCodes()
-            .map(BaseAPIResponse<GetServicesResponseData>.self)
-            .flatMap { response in
-                if let data = response.data {
-                    return .just(data)
-                } else if response.code == 204 {
-                    return .just([])
-                } else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-            }
+            .mapAsEmptyDataInitializable()
+            .mapToOptional()
     }
     
     func getAllLocations() -> Single<GetAllLocationsResponseData?> {
@@ -110,16 +94,8 @@ extension APIWrapper {
         return provider.rx
             .request(.getAllLocations(request: request))
             .filterSuccessfulCodes()
-            .map(BaseAPIResponse<GetAllLocationsResponseData>.self)
-            .flatMap { response in
-                if let data = response.data {
-                    return .just(data)
-                } else if response.code == 204 {
-                    return .just([])
-                } else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-            }
+            .mapAsEmptyDataInitializable()
+            .mapToOptional()
     }
     
     func getStreetsByLocation(locationId: String) -> Single<GetStreetsResponseData?> {
@@ -132,16 +108,8 @@ extension APIWrapper {
         return provider.rx
             .request(.getStreets(request: request))
             .filterSuccessfulCodes()
-            .map(BaseAPIResponse<GetStreetsResponseData>.self)
-            .flatMap { response in
-                if let data = response.data {
-                    return .just(data)
-                } else if response.code == 204 {
-                    return .just([])
-                } else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-            }
+            .mapAsEmptyDataInitializable()
+            .mapToOptional()
     }
     
 }

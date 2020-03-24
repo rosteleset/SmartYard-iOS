@@ -88,16 +88,8 @@ extension APIWrapper {
         return provider.rx
             .request(.getPaymentsList(request: request))
             .filterSuccessfulCodes()
-            .map(BaseAPIResponse<GetPaymentsListResponseData>.self)
-            .flatMap { response in
-                if let data = response.data {
-                    return .just(data)
-                } else if response.code == 204 {
-                    return .just([])
-                } else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-            }
+            .mapAsEmptyDataInitializable()
+            .mapToOptional()
     }
     
     func sendName(name: String, patronymic: String?) -> Single<Void?> {
