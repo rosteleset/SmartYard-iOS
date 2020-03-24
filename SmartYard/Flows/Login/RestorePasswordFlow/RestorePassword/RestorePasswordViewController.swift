@@ -15,7 +15,6 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var contractTextField: SmartYardTextField!
     @IBOutlet private weak var getCodeButton: WhiteButtonWithBorder!
-    @IBOutlet private weak var methodsNotFoundLabel: UILabel!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var getRestoreMethodsButton: WhiteButtonWithBorder!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
@@ -46,7 +45,6 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
 
     private func configureUI() {
         tableView.isHidden = true
-        methodsNotFoundLabel.isHidden = true
         
         view.hideKeyboardWhenTapped = true
         getRestoreMethodsButton.titleLabel?.textAlignment = .center
@@ -91,7 +89,6 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
                 onNext: { [weak self] in
                     guard $0.isEmpty else {
                         self?.tableView.isHidden = false
-                        self?.methodsNotFoundLabel.isHidden = true
                         self?.getRestoreMethodsButton.isHidden = true
                         self?.getCodeButton.isHidden = false
                         self?.getCodeButton.isEnabled = $0.contains { $0.state == .checkedActive }
@@ -99,7 +96,6 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
                     }
                     
                     self?.tableView.isHidden = true
-                    self?.methodsNotFoundLabel.isHidden = false
                     self?.getCodeButton.isHidden = true
                     self?.getRestoreMethodsButton.isHidden = false
                 }
@@ -112,6 +108,15 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
             .drive(
                 onNext: { [weak self] isLoading in
                     self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.initialContractNum
+            .drive(
+                onNext: { [weak self] contractNum in
+                    self?.contractTextField.text = contractNum
+                    self?.getRestoreMethodsButton.isEnabled = !contractNum.isNilOrEmpty
                 }
             )
             .disposed(by: disposeBag)

@@ -16,22 +16,20 @@ class RestorePasswordViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<HomeRoute>
     
-    private let contractNum: BehaviorSubject<String?>
+    private let contractNum = BehaviorSubject<String?>(value: nil)
     private let selectedRestoreMethod = BehaviorSubject<RestoreMethodCellModel?>(value: nil)
-    private let restoreMethods: BehaviorSubject<[RestoreMethodCellModel]>
+    private let restoreMethods = BehaviorSubject<[RestoreMethodCellModel]>(value: [])
+    
+    private let initialContractNum: String?
     
     init(
         apiWrapper: APIWrapper,
         router: WeakRouter<HomeRoute>,
-        contractNum: String?,
-        restoreMethods: [RestoreMethod]
+        contractNum: String?
     ) {
         self.apiWrapper = apiWrapper
         self.router = router
-        self.contractNum = BehaviorSubject<String?>(value: contractNum)
-        
-        let restoreModels = restoreMethods.map { RestoreMethodCellModel(method: $0, state: .uncheckedActive) }
-        self.restoreMethods = BehaviorSubject<[RestoreMethodCellModel]>(value: restoreModels)
+        self.initialContractNum = contractNum
     }
     
     // swiftlint:disable:next function_body_length
@@ -47,6 +45,8 @@ class RestorePasswordViewModel: BaseViewModel {
             )
             .drive(contractNum)
             .disposed(by: disposeBag)
+        
+        self.contractNum.onNext(self.initialContractNum)
         
         input.getCodeButtonTapped
             .withLatestFrom(contractNum.asDriver(onErrorJustReturn: nil))
@@ -163,8 +163,8 @@ class RestorePasswordViewModel: BaseViewModel {
                     let nsError = error as NSError
                     
                     switch nsError.code {                        
-                    case 429:
-                        let message = "Вы запрашиваете код слишком часто. Пожалуйста, попробуйте позже"
+                    case 422, 404:
+                        let message = "Введен неверный номер договора"
                         self?.router.trigger(.alert(title: "Ошибка", message: message))
                         
                     default:
@@ -176,7 +176,8 @@ class RestorePasswordViewModel: BaseViewModel {
         
         return Output(
             isLoading: activityTracker.asDriver(),
-            restoreMethods: restoreMethods.asDriver(onErrorJustReturn: [])
+            restoreMethods: restoreMethods.asDriver(onErrorJustReturn: []),
+            initialContractNum: contractNum.asDriver(onErrorJustReturn: nil)
         )
     }
     
@@ -195,6 +196,7 @@ extension RestorePasswordViewModel {
     struct Output {
         let isLoading: Driver<Bool>
         let restoreMethods: Driver<[RestoreMethodCellModel]>
+        let initialContractNum: Driver<String?>
     }
     
 }

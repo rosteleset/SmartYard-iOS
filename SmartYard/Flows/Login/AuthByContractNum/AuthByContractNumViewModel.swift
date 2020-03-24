@@ -35,27 +35,15 @@ class AuthByContractNumViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
+        input.inputContractNumText
+            .drive(contractNumber)
+            .disposed(by: disposeBag)
+        
         input.forgetPassTapped
             .withLatestFrom(contractNumber.asDriver(onErrorJustReturn: nil))
-            .flatMapLatest { [weak self] contract -> Driver<RestoreRequestResponseData?> in
-                guard let self = self else {
-                    return .empty()
-                }
-               
-                return self.apiWrapper.restore(contractNum: contract, contactId: nil, code: nil)
-                    .trackActivity(activityTracker)
-                    .trackError(errorTracker)
-                    .asDriver(onErrorJustReturn: nil)
-            }
-            .withLatestFrom(contractNumber.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .drive(
-                onNext: { [weak self] args in
-                    let (response, contractNum) = args
-                    let restoreMethodsArr = response?.compactMap { response in
-                        RestoreMethod(rawValue: response.type, contactId: response.id ?? "", contact: response.contact ?? "")
-                    } ?? []
-                
-                    self?.router.trigger(.restorePassword(contractNum: contractNum, restoreMethods: restoreMethodsArr))
+                onNext: { [weak self] contractNum in
+                    self?.router.trigger(.restorePassword(contractNum: contractNum))
                 }
             )
             .disposed(by: disposeBag)
