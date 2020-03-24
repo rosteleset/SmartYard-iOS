@@ -16,10 +16,7 @@ class AuthByContractNumViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     private let issueService: IssueService
     private let apiWrapper: APIWrapper
-    
-    let contractNumber = BehaviorSubject<String?>(value: nil)
-    let password = BehaviorSubject<String?>(value: nil)
-    
+
     init(
         router: WeakRouter<HomeRoute>,
         issueService: IssueService,
@@ -34,13 +31,9 @@ class AuthByContractNumViewModel: BaseViewModel {
     func transform(input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
-        
-        input.inputContractNumText
-            .drive(contractNumber)
-            .disposed(by: disposeBag)
-        
+     
         input.forgetPassTapped
-            .withLatestFrom(contractNumber.asDriver(onErrorJustReturn: nil))
+            .withLatestFrom(input.inputContractNumText.asDriver(onErrorJustReturn: nil))
             .drive(
                 onNext: { [weak self] contractNum in
                     self?.router.trigger(.restorePassword(contractNum: contractNum))
@@ -89,8 +82,8 @@ class AuthByContractNumViewModel: BaseViewModel {
         input.signInTapped
             .withLatestFrom(isAbleToProceed)
             .isTrue()
-            .withLatestFrom(contractNumber.asDriver(onErrorJustReturn: nil))
-            .withLatestFrom(password.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .withLatestFrom(input.inputContractNumText.asDriver(onErrorJustReturn: nil))
+            .withLatestFrom(input.inputPasswordNumText.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .flatMapLatest { [weak self] args -> Driver<Void?> in
                 let (login, password) = args
                 
