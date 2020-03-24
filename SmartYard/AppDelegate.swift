@@ -98,10 +98,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             appCoordinator.processIncomingCallRequest(callPayload: callPayload)
         }
         
-        let messageType = response.notification.request.content.userInfo["messageType"] as? String
-        
-        if messageType == "inbox" {
-            appCoordinator.goToNotifications()
+        if let rawMessageType = response.notification.request.content.userInfo["messageType"] as? String,
+            let messageType = MessageType(rawValue: rawMessageType),
+            let messageId = response.notification.request.content.userInfo["messageId"] as? String {
+            appCoordinator.processIncomingMessage(messageId: messageId, messageType: messageType)
         }
         
         completionHandler()

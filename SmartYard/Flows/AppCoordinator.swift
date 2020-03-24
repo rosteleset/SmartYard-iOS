@@ -125,9 +125,15 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         }
     }
     
-    func goToNotifications() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            self?.mainTabBarRouter?.trigger(.notifications)
+    func processIncomingMessage(messageId: String, messageType: MessageType) {
+        switch messageType {
+        case .inbox:
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                self?.mainTabBarRouter?.trigger(.notifications)
+            }
+            
+        case .chat:
+            break
         }
     }
     
