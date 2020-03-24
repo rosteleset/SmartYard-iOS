@@ -107,13 +107,7 @@ class RestorePasswordViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { response in
-                    let resetMethodsArr: [RestoreMethod] = response.compactMap { response in
-                        guard let id = response.id, let contact = response.contact else {
-                            return nil
-                        }
-                        
-                        return RestoreMethod(rawValue: response.type, contactId: id, contact: contact)
-                    }
+                    let resetMethodsArr: [RestoreMethod] = response.compactMap { RestoreMethod(apiRestoreData: $0) }
                     
                     self.selectedRestoreMethod.onNext(nil)
                     
