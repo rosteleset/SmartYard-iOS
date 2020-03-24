@@ -46,7 +46,7 @@ class NotificationsViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] response in
-                    self?.pushNotificationService.resetMessagesCount()
+                    self?.pushNotificationService.markAllMessagesAsRead()
                     
                     inboxResponseSubject.onNext(response)
                 }

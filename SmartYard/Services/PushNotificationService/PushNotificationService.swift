@@ -62,6 +62,24 @@ class PushNotificationService {
             }
         }
     }
+    
+    func markAllMessagesAsRead() {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        userNotificationCenter.getDeliveredNotifications { [weak self] notifications in
+            let notificationIds: [String] = notifications.compactMap { notification in
+                guard let rawMessageType = notification.request.content.userInfo["messageType"] as? String,
+                    let messageType = MessageType(rawValue: rawMessageType),
+                    messageType == .inbox else {
+                    return nil
+                }
+                
+                return notification.request.identifier
+            }
+            
+            self?.userNotificationCenter.removeDeliveredNotifications(withIdentifiers: notificationIds)
+        }
+    }
 
     func markMessagesAsDelivered(messageIds: [String]) {
         let queries = messageIds.map { messageId in
@@ -89,10 +107,6 @@ class PushNotificationService {
                 }
             )
             .disposed(by: disposeBag)
-    }
-    
-    func resetMessagesCount() {
-        UIApplication.shared.applicationIconBadgeNumber = 0
     }
     
 }
