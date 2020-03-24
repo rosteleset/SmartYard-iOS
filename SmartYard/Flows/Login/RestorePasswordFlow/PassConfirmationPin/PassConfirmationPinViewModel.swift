@@ -81,7 +81,7 @@ class PassConfirmationPinViewModel: BaseViewModel {
                     let passDestination = self.selectedRestoreMethod.contact.contains("@") ? "email" : "телефон"
                     let dialogText = "Пароль от указанной записи отправлен на указанный \(passDestination)"
                     
-                    self.router.trigger(.dialog(messageText: dialogText, actions: [okAction]))
+                    self.router.trigger(.dialog(title: "", message: dialogText, actions: [okAction]))
                 }
             )
             .disposed(by: disposeBag)

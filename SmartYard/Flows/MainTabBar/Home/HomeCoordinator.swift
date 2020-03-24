@@ -21,7 +21,6 @@ enum HomeRoute: Route {
     case back
     case restorePassword(contractNum: String?)
     case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
-    case dialog(messageText: String, actions: [UIAlertAction])
     case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
     
 }
@@ -150,9 +149,6 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let vc = PassConfirmationPinViewController(viewModel: vm)
             
             return .push(vc)
-            
-        case let .dialog(messageText, actions):
-            return .dialogTransition(title: "", message: messageText, actions: actions)
             
         case let .qrCodeScan(delegate):
             let vm = QRCodeScanViewModel(router: weakRouter, delegate: delegate)

@@ -20,6 +20,9 @@
 		843C38DF242A57C40035BF80 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38DA242A57C40035BF80 /* NotificationsViewModel.swift */; };
 		843C38E0242A57C40035BF80 /* NotificationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843C38DC242A57C40035BF80 /* NotificationsViewController.xib */; };
 		843C38E1242A57C40035BF80 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38DD242A57C40035BF80 /* NotificationsViewController.swift */; };
+		843C38E8242A6E490035BF80 /* QRCodeScanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38E4242A6E490035BF80 /* QRCodeScanViewModel.swift */; };
+		843C38E9242A6E490035BF80 /* QRCodeScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38E6242A6E490035BF80 /* QRCodeScanViewController.swift */; };
+		843C38EA242A6E490035BF80 /* QRCodeScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843C38E7242A6E490035BF80 /* QRCodeScanViewController.xib */; };
 		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
 		844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallViewController.swift */; };
 		844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39F23E987400066006D /* IncomingCallViewModel.swift */; };
@@ -349,6 +352,9 @@
 		843C38DA242A57C40035BF80 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		843C38DC242A57C40035BF80 /* NotificationsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationsViewController.xib; sourceTree = "<group>"; };
 		843C38DD242A57C40035BF80 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		843C38E4242A6E490035BF80 /* QRCodeScanViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScanViewModel.swift; sourceTree = "<group>"; };
+		843C38E6242A6E490035BF80 /* QRCodeScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScanViewController.swift; sourceTree = "<group>"; };
+		843C38E7242A6E490035BF80 /* QRCodeScanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRCodeScanViewController.xib; sourceTree = "<group>"; };
 		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
 		844AC39B23E987360066006D /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
 		844AC39F23E987400066006D /* IncomingCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewModel.swift; sourceTree = "<group>"; };
@@ -741,6 +747,32 @@
 			children = (
 				843C38DC242A57C40035BF80 /* NotificationsViewController.xib */,
 				843C38DD242A57C40035BF80 /* NotificationsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		843C38E2242A6E490035BF80 /* QRCodeScan */ = {
+			isa = PBXGroup;
+			children = (
+				843C38E3242A6E490035BF80 /* ViewModel */,
+				843C38E5242A6E490035BF80 /* View */,
+			);
+			path = QRCodeScan;
+			sourceTree = "<group>";
+		};
+		843C38E3242A6E490035BF80 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				843C38E4242A6E490035BF80 /* QRCodeScanViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		843C38E5242A6E490035BF80 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				843C38E6242A6E490035BF80 /* QRCodeScanViewController.swift */,
+				843C38E7242A6E490035BF80 /* QRCodeScanViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1333,6 +1365,7 @@
 				E9E4272523F53B0300F5D593 /* NotAvailableServices */,
 				844AC3B423EB0FD80066006D /* UserName */,
 				844AC39A23E9871F0066006D /* IncomingCall */,
+				843C38E2242A6E490035BF80 /* QRCodeScan */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -2459,6 +2492,7 @@
 				844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */,
 				84B89A9923F2FA97009692B4 /* ServiceIsActivatedViewController.xib in Resources */,
 				848D1B8A23F29D6100D6E368 /* AddressSettingsViewController.xib in Resources */,
+				843C38EA242A6E490035BF80 /* QRCodeScanViewController.xib in Resources */,
 				E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */,
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
@@ -2596,6 +2630,7 @@
 				E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */,
 				E92EFBAE242A22F2003AF7FE /* APIHouse.swift in Sources */,
 				847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */,
+				843C38E9242A6E490035BF80 /* QRCodeScanViewController.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
 				E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
@@ -2668,6 +2703,7 @@
 				844AC39523E977810066006D /* AccessService.swift in Sources */,
 				E92EFBDD242A22F2003AF7FE /* GetListConnectResponseData.swift in Sources */,
 				843C38CE242A577C0035BF80 /* InboxResponseData.swift in Sources */,
+				843C38E8242A6E490035BF80 /* QRCodeScanViewModel.swift in Sources */,
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */,
 				E92EFBD1242A22F2003AF7FE /* IntercomRequest.swift in Sources */,
