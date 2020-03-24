@@ -80,6 +80,7 @@ class PassConfirmationPinViewModel: BaseViewModel {
                     
                     let passDestination = self.selectedRestoreMethod.contact.contains("@") ? "email" : "телефон"
                     let dialogText = "Пароль от указанной записи отправлен на указанный \(passDestination)"
+                    
                     self.router.trigger(.dialog(messageText: dialogText, actions: [okAction]))
                 }
             )
@@ -101,6 +102,14 @@ class PassConfirmationPinViewModel: BaseViewModel {
                     .asDriverOnErrorJustComplete()
             }
             .drive()
+            .disposed(by: disposeBag)
+        
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
             .disposed(by: disposeBag)
         
         errorTracker.asDriver()
@@ -134,6 +143,7 @@ extension PassConfirmationPinViewModel {
     struct Input {
         let inputPinText: Driver<String>
         let sendCodeAgainButtonTapped: Driver<Void>
+        let backTrigger: Driver<Void>
     }
     
     struct Output {

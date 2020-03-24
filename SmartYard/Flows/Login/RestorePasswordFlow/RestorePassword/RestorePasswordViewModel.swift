@@ -149,6 +149,14 @@ class RestorePasswordViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
@@ -181,6 +189,7 @@ extension RestorePasswordViewModel {
         let getCodeButtonTapped: Driver<Void>
         let itemStateChanged: Driver<Int?>
         let getRestoreMethodsButtonTapped: Driver<Void>
+        let backTrigger: Driver<Void>
     }
     
     struct Output {

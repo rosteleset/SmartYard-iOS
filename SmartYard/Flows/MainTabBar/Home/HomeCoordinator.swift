@@ -144,7 +144,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             )
             
             let vc = PassConfirmationPinViewController(viewModel: vm)
-            return .set([vc], animation: .fade)
+            
+            return .push(vc)
             
         case let .dialog(messageText, actions):
             return .dialogTransition(title: "", message: messageText, actions: actions)

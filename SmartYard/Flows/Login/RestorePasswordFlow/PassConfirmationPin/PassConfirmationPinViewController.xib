@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PassConfirmationPinViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="fakeNavBar" destination="syV-9N-tVU" id="ceg-Co-xt2"/>
                 <outlet property="pinTextField" destination="eaR-Iu-Udm" id="e7K-bf-ro8"/>
                 <outlet property="sendCodeAgainButton" destination="gGI-M9-YUZ" id="mHg-h7-zi5"/>
                 <outlet property="sendCodeAgainGroupView" destination="fRv-aQ-uDM" id="AyX-iA-Ode"/>
@@ -30,6 +31,13 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="jFE-Bu-Rrc">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
+                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="syV-9N-tVU" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="lBm-H6-Vr9"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xcm-SV-Q6e" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="113" width="414" height="749"/>
                     <subviews>
@@ -117,11 +125,14 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="xcm-SV-Q6e" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="69" id="0c3-Ef-H70"/>
+                <constraint firstItem="syV-9N-tVU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="5j8-Ax-z1q"/>
                 <constraint firstItem="jFE-Bu-Rrc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WHr-9Y-ePc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="xcm-SV-Q6e" secondAttribute="bottom" id="YZ8-4K-Hig"/>
                 <constraint firstItem="xcm-SV-Q6e" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YzJ-tp-qAW"/>
                 <constraint firstAttribute="bottom" secondItem="jFE-Bu-Rrc" secondAttribute="bottom" id="bqG-3l-mUd"/>
                 <constraint firstAttribute="trailing" secondItem="xcm-SV-Q6e" secondAttribute="trailing" id="dSr-oK-Jc6"/>
+                <constraint firstItem="syV-9N-tVU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="jOt-F8-WNF"/>
+                <constraint firstItem="syV-9N-tVU" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="nMu-al-M4o"/>
                 <constraint firstItem="jFE-Bu-Rrc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="uUm-7B-hgS"/>
                 <constraint firstAttribute="trailing" secondItem="jFE-Bu-Rrc" secondAttribute="trailing" id="zHW-du-Sdk"/>
             </constraints>

@@ -13,6 +13,7 @@ import JGProgressHUD
 
 class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
 
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var titleMessageLabel: UILabel!
     @IBOutlet private weak var pinTextField: PinTextField!
     
@@ -112,7 +113,8 @@ class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
         
         let input = PassConfirmationPinViewModel.Input(
             inputPinText: text,
-            sendCodeAgainButtonTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete()
+            sendCodeAgainButtonTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
         let output = viewModel.transform(input: input)

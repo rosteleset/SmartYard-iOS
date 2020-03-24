@@ -18,6 +18,7 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var methodsNotFoundLabel: UILabel!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var getRestoreMethodsButton: WhiteButtonWithBorder!
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
     var loader: JGProgressHUD?
     
@@ -70,7 +71,8 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
             inputContractNum: contractTextField.rx.text.distinctUntilChanged().asDriver(onErrorJustReturn: nil),
             getCodeButtonTapped: getCodeButton.rx.tap.asDriver(),
             itemStateChanged: itemStateChanged.asDriver(onErrorJustReturn: nil),
-            getRestoreMethodsButtonTapped: getRestoreMethodsButton.rx.tap.asDriver()
+            getRestoreMethodsButtonTapped: getRestoreMethodsButton.rx.tap.asDriver(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
         contractTextField.rx.text.distinctUntilChanged()
