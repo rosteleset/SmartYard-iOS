@@ -120,6 +120,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         linphoneService.hasEnqueuedCalls = true
         
+        // MARK: Здесь решил перестраховаться, хотя вроде все и работало раньше
+        
         DispatchQueue.main.async { [weak self] in
             self?.trigger(.incomingCall(callPayload: callPayload))
         }
@@ -138,12 +140,16 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     }
     
     func openNotificationsTab() {
+        // MARK: DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             self?.mainTabBarRouter?.trigger(.notifications)
         }
     }
     
     func openChatTab() {
+        // MARK: DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             self?.mainTabBarRouter?.trigger(.chat)
         }

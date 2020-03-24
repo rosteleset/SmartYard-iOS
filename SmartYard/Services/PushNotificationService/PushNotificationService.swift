@@ -21,6 +21,7 @@ class PushNotificationService {
         self.apiWrapper = apiWrapper
     }
     
+    /// Сбрасывает InstanceId. Этакий способ гарантированно отписаться от уведомлений при разлогине
     func resetInstanceId() -> Single<Void?> {
         return Single.create { single in
             InstanceID.instanceID().deleteID { error in
@@ -36,6 +37,7 @@ class PushNotificationService {
         }
     }
     
+    /// Подписка на уведомления
     func registerForPushNotifications() -> Single<Void?> {
         guard let fcmToken = Messaging.messaging().fcmToken else {
             return .error(NSError.PushNotificationServiceError.fcmTokenMissing)
@@ -44,6 +46,7 @@ class PushNotificationService {
         return apiWrapper.registerPushToken(pushToken: fcmToken, clientId: nil, type: .fcmRepeating)
     }
     
+    /// Помечает все inbox message, которые сейчас есть в NotificationCenter, как доставленные
     func markAllMessagesAsDelivered() {
         userNotificationCenter.getDeliveredNotifications { [weak self] notifications in
             let messageIds: [String] = notifications.compactMap { notification in
@@ -62,32 +65,13 @@ class PushNotificationService {
             }
         }
     }
-    
-    func markAllMessagesAsRead() {
-        UIApplication.shared.applicationIconBadgeNumber = 0
-        
-        NotificationCenter.default.post(
-            name: .badgeNumberUpdated,
-            object: nil,
-            userInfo: [NotificationKeys.badgeNumberKey: 0]
-        )
-        
-        userNotificationCenter.getDeliveredNotifications { [weak self] notifications in
-            let notificationIds: [String] = notifications.compactMap { notification in
-                guard let rawMessageType = notification.request.content.userInfo["messageType"] as? String,
-                    let messageType = MessageType(rawValue: rawMessageType),
-                    messageType == .inbox else {
-                    return nil
-                }
-                
-                return notification.request.identifier
-            }
-            
-            self?.userNotificationCenter.removeDeliveredNotifications(withIdentifiers: notificationIds)
-        }
-    }
 
+    /// Помечает inbox message с заданными messageId как доставленные
     func markMessagesAsDelivered(messageIds: [String]) {
+        // MARK: сейчас я не совсем представляю, как мне гарантировать отправку маркера на сервер
+        // Сколько раз ретраить запрос и т.д.
+        // Поэтому я просто создаю запросы на каждый пуш и выполняю их. Без разницы, какой будет результат
+        
         let queries = messageIds.map { messageId in
             apiWrapper.delivered(messageId: messageId)
                 .asDriver(onErrorJustReturn: nil)
@@ -103,6 +87,32 @@ class PushNotificationService {
             .disposed(by: disposeBag)
     }
     
+    /// Удаляет все inbox message из NotificationCenter и сбрасывает Badge
+    func markAllMessagesAsRead() {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        NotificationCenter.default.post(
+            name: .badgeNumberUpdated,
+            object: nil,
+            userInfo: [NotificationKeys.badgeNumberKey: 0]
+        )
+        
+        userNotificationCenter.getDeliveredNotifications { [weak self] notifications in
+            let notificationIds: [String] = notifications.compactMap { notification in
+                guard let rawMessageType = notification.request.content.userInfo["messageType"] as? String,
+                    let messageType = MessageType(rawValue: rawMessageType),
+                    messageType == .inbox else {
+                        return nil
+                }
+                
+                return notification.request.identifier
+            }
+            
+            self?.userNotificationCenter.removeDeliveredNotifications(withIdentifiers: notificationIds)
+        }
+    }
+    
+    /// Получает с сервера количество непрочитанных сообщений и обновляет Badge
     func getMessagesCountAndUpdateBadge() {
         apiWrapper.unreaded()
             .asDriver(onErrorJustReturn: nil)
