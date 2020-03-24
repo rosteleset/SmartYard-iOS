@@ -84,7 +84,7 @@ class RestorePasswordViewModel: BaseViewModel {
             .disposed(by: disposeBag)
     
         input.getRestoreMethodsButtonTapped
-            .withLatestFrom(contractNum.asDriver(onErrorJustReturn: nil))
+            .withLatestFrom(contractNum)
             .ignoreNil()
             .flatMapLatest { [weak self] inputContractNum -> Driver<RestoreRequestResponseData?> in
                 guard let self = self else {
