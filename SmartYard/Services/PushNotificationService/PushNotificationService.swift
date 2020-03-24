@@ -75,13 +75,16 @@ class PushNotificationService {
         let queries = messageIds.map { messageId in
             apiWrapper.delivered(messageId: messageId)
                 .asDriver(onErrorJustReturn: nil)
+                .map { (response: Void?) -> (String, Bool) in
+                    (messageId, response != nil)
+                }
         }
         
         Driver
             .concat(queries)
             .drive(
-                onNext: { _ in
-                    print("Probably marked all messages as delivered")
+                onNext: { messageId, isMarked in
+                    print("Message \(messageId) delivery state is: \(isMarked)")
                 }
             )
             .disposed(by: disposeBag)
