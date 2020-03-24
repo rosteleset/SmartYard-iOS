@@ -33,7 +33,7 @@ extension PassConfirmationPinViewController {
         guard timeEnd.compare(timeNow) == ComparisonResult.orderedDescending else {
             sendCodeAgainButton.isHidden.toggle()
             sendCodeAgainMessageView.isHidden.toggle()
-            updateTimeValues(minutesValue: 0, secondsValue: 0)
+            timerLabel.text = "00:00"
             timer?.invalidate()
             timer = nil
             
@@ -47,22 +47,8 @@ extension PassConfirmationPinViewController {
             from: timeNow,
             to: timeEnd
         )
-        
-        updateTimeValues(minutesValue: components.minute, secondsValue: components.second)
-    }
-    
-    func updateTimeValues(minutesValue: Int?, secondsValue: Int?) {
-        guard let minutes = minutesValue, let seconds = secondsValue else {
-            timerLabel.text = "00:00"
-            return
-        }
-        
-        let min = String(minutes)
-        let sec = String(seconds)
-        
-        let minutesText = min.count == 1 ? "0" + min : min
-        let secondesText = sec.count == 1 ? "0" + sec : sec
-        timerLabel.text = minutesText + ":" + secondesText
+
+        timerLabel.text = String(format: "%02d:%02d", components.minute ?? 0, components.second ?? 0)
     }
     
 }

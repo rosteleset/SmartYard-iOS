@@ -87,10 +87,11 @@ class PassConfirmationPinViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.sendCodeAgainButtonTapped
-            .flatMapLatest { [weak self] _ -> Driver<Void> in
+            .flatMapLatest { [weak self] _ -> Driver<RestoreRequestResponseData?> in
                 guard let self = self else {
                     return .empty()
                 }
+                
                 return self.apiWrapper.restore(
                         contractNum: self.contractNum,
                         contactId: self.selectedRestoreMethod.contactId,
@@ -98,8 +99,7 @@ class PassConfirmationPinViewModel: BaseViewModel {
                     )
                     .trackError(errorTracker)
                     .trackActivity(activityTracker)
-                    .mapToVoid()
-                    .asDriverOnErrorJustComplete()
+                    .asDriver(onErrorJustReturn: nil)
             }
             .drive()
             .disposed(by: disposeBag)
