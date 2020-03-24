@@ -11,5 +11,12 @@ import Foundation
 extension Notification.Name {
     
     static let addressDeleted = Notification.Name("AddressDeleted")
+    static let badgeNumberUpdated = Notification.Name("BadgeNumberUpdated")
+    
+}
+
+enum NotificationKeys {
+    
+    static let badgeNumberKey = "badgeNumberKey"
     
 }

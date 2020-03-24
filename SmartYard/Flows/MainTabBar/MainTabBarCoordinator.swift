@@ -14,6 +14,7 @@ import SSCustomTabbar
 
 enum MainTabBarRoute: Route {
     case home
+    case notifications
     case chat
     case payments
     case settings
@@ -29,11 +30,13 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let issueService: IssueService
     
     private let homeRouter: StrongRouter<HomeRoute>
+    private let notificationsRouter: StrongRouter<NotificationsRoute>
     private let chatRouter: StrongRouter<ChatRoute>
     private let paymentsRouter: StrongRouter<PaymentsRoute>
     private let settingsRouter: StrongRouter<SettingsRoute>
     
     private let homeTabBarItem: UITabBarItem
+    private let notificationsTabBarItem: UITabBarItem
     private let chatTabBarItem: UITabBarItem
     private let paymentsTabBarItem: UITabBarItem
     private let settingsTabBarItem: UITabBarItem
@@ -66,6 +69,25 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         homeCoordinator.rootViewController.tabBarItem = homeTabBarItem
         self.homeTabBarItem = homeTabBarItem
+        
+        // MARK: Notifications Tab
+        
+        let notificationsCoordinator = NotificationsCoordinator(
+            apiWrapper: apiWrapper,
+            pushNotificationService: pushNotificationService
+        )
+        
+        let notificationsTabBarItem = UITabBarItem(
+            title: "Уведомления",
+            image: UIImage(named: "NotificationsTabUnselected"),
+            selectedImage: UIImage(named: "NotificationsTabSelected")
+        )
+        
+        let currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
+        notificationsTabBarItem.badgeValue = currentBadgeNumber > 0 ? "\(currentBadgeNumber)" : nil
+        
+        notificationsCoordinator.rootViewController.tabBarItem = notificationsTabBarItem
+        self.notificationsTabBarItem = notificationsTabBarItem
         
         // MARK: Chat Tab
         let chatCoordinator = ChatCoordinator(
@@ -114,6 +136,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         // MARK: Initialization
         self.homeRouter = homeCoordinator.strongRouter
+        self.notificationsRouter = notificationsCoordinator.strongRouter
         self.chatRouter = chatCoordinator.strongRouter
         self.paymentsRouter = paymentsCoordinator.strongRouter
         self.settingsRouter = settingsCoordinator.strongRouter
@@ -138,20 +161,38 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         super.init(
             rootViewController: customTabBarController,
-            tabs: [homeRouter, chatRouter, paymentsRouter, settingsRouter],
+            tabs: [homeRouter, notificationsRouter, chatRouter, paymentsRouter, settingsRouter],
             select: homeRouter
         )
         
         rootViewController.tabBar.isTranslucent = false
+        subscribeToBadgeUpdates()
     }
     
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
         switch route {
         case .home: return .selectAndCallDelegate(homeRouter)
+        case .notifications: return .selectAndCallDelegate(notificationsRouter)
         case .chat: return .selectAndCallDelegate(chatRouter)
         case .payments: return .selectAndCallDelegate(paymentsRouter)
         case .settings: return .selectAndCallDelegate(settingsRouter)
         }
+    }
+    
+    private func subscribeToBadgeUpdates() {
+        NotificationCenter.default.rx
+            .notification(Notification.Name.badgeNumberUpdated)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] notification in
+                    guard let badgeNumber = notification.userInfo?[NotificationKeys.badgeNumberKey] as? Int else {
+                        return
+                    }
+                    
+                    self?.notificationsTabBarItem.badgeValue = badgeNumber > 0 ? "\(badgeNumber)" : nil
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }
