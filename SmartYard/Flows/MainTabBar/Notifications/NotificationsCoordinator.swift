@@ -11,6 +11,7 @@ import XCoordinator
 enum NotificationsRoute: Route {
     
     case main
+    case alert(title: String, message: String?)
     
 }
 
@@ -32,11 +33,15 @@ class NotificationsCoordinator: NavigationCoordinator<NotificationsRoute> {
         case .main:
             let vm = NotificationsViewModel(
                 apiWrapper: apiWrapper,
-                pushNotificationService: pushNotificationService
+                pushNotificationService: pushNotificationService,
+                router: weakRouter
             )
             
             let vc = NotificationsViewController(viewModel: vm)
             return .set([vc])
+            
+        case let .alert(title, message):
+            return .alertTransition(title: title, message: message)
         }
     }
     

@@ -14,23 +14,26 @@ class NotificationsViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
+    private let router: WeakRouter<NotificationsRoute>
     
-    init(apiWrapper: APIWrapper, pushNotificationService: PushNotificationService) {
+    init(
+        apiWrapper: APIWrapper,
+        pushNotificationService: PushNotificationService,
+        router: WeakRouter<NotificationsRoute>
+    ) {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
+        self.router = router
     }
     
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()
         
-        let reloadHtmlCodeTrigger = PublishSubject<Void>()
-        
         let inboxResponseSubject = BehaviorSubject<InboxResponseData?>(value: nil)
         
         Driver
             .merge(
-                reloadHtmlCodeTrigger.asDriverOnErrorJustComplete(),
                 input.viewWillAppearTrigger.mapToVoid(),
                 .just(())
             )
@@ -50,6 +53,14 @@ class NotificationsViewModel: BaseViewModel {
                     self?.pushNotificationService.markAllMessagesAsRead()
                     
                     inboxResponseSubject.onNext(response)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
