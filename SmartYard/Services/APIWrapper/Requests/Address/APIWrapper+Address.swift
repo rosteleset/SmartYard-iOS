@@ -139,16 +139,8 @@ extension APIWrapper {
         return provider.rx
             .request(.getSettingsList(request: request))
             .filterSuccessfulCodes()
-            .map(BaseAPIResponse<GetSettingsListResponseData>.self)
-            .flatMap { response in
-                if let data = response.data {
-                    return .just(data)
-                } else if response.code == 204 {
-                    return .just([])
-                } else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-            }
+            .mapAsEmptyDataInitializable()
+            .mapToOptional()
     }
     
     func getAddressList() -> Single<GetAddressListResponseData?> {
@@ -161,16 +153,8 @@ extension APIWrapper {
         return provider.rx
             .request(.getAddressList(request: request))
             .filterSuccessfulCodes()
-            .map(BaseAPIResponse<GetAddressListResponseData>.self)
-            .flatMap { response in
-                if let data = response.data {
-                    return .just(data)
-                } else if response.code == 204 {
-                    return .just([])
-                } else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-            }
+            .mapAsEmptyDataInitializable()
+            .mapToOptional()
     }
     
     func grantAccess(

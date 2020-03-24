@@ -70,16 +70,8 @@ extension APIWrapper {
         return provider.rx
             .request(.getListConnect(request: request))
             .filterSuccessfulCodes()
-            .map(BaseAPIResponse<GetListConnectResponseData>.self)
-            .flatMap { response in
-                if let data = response.data {
-                    return .just(data)
-                } else if response.code == 204 {
-                    return .just([])
-                } else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-            }
+            .mapAsEmptyDataInitializable()
+            .mapToOptional()
     }
     
 }
