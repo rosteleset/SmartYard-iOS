@@ -25,7 +25,15 @@ enum RestoreMethodType {
         }
     }
     
-    var displayedText: String {
+    var displayedTextHasBeenSent: String {
+        let baseText = "Код подтверждения отправлен на "
+        switch self {
+        case let .byEmail(_, _, contact): return baseText + "почту \(contact)"
+        case let .byPhoneNumber(_, _, contact): return baseText + "телефон \(contact)"
+        }
+    }
+    
+    var displayedTextShouldSent: String {
         let baseText = "Выслать код восстановления на "
         switch self {
         case let .byEmail(_, _, contact): return baseText + "почту \(contact)"

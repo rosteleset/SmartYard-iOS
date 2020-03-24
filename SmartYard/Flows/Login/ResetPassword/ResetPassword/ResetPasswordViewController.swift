@@ -152,7 +152,7 @@ extension ResetPasswordViewController: UITableViewDataSource {
         }
         
         let cell = tableView.dequeueReusableCell(withClass: ResetMethodCell.self, for: indexPath)
-        cell.configure(with: data[indexPath.row].type.displayedText, state: data[indexPath.row].state)
+        cell.configure(with: data[indexPath.row].type.displayedTextShouldSent, state: data[indexPath.row].state)
         
         return cell
     }

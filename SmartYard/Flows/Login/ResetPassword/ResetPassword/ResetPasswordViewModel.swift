@@ -54,7 +54,7 @@ class ResetPasswordViewModel: BaseViewModel {
             .withLatestFrom(contractNum.asDriver(onErrorJustReturn: nil))
             .ignoreNil()
             .withLatestFrom(selectedContact.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
-            .flatMapLatest { [weak self] args -> Driver<(RestoreRequestResponseData?, String?)?> in
+            .flatMapLatest { [weak self] args -> Driver<(RestoreRequestResponseData?, RestoreMethodModel?, String)?> in
                 let (contractNum, contact) = args
                 
                 guard let self = self, !contractNum.isEmpty else {
@@ -67,7 +67,7 @@ class ResetPasswordViewModel: BaseViewModel {
                             return nil
                         }
                         
-                        return (response, contact?.type.contactId)
+                        return (response, contact, contractNum)
                     }
                     .trackError(errorTracker)
                     .trackActivity(activityTracker)
@@ -80,10 +80,10 @@ class ResetPasswordViewModel: BaseViewModel {
                         return
                     }
                     
-                    let (response, contactId) = args
-                
-                    guard contactId.isNilOrEmpty else {
-                        self.router.trigger(.pinCode(phoneNumber: response?.first?.contact ?? ""))
+                    let (response, contact, contractNum) = args
+        
+                    guard contact == nil else {
+                        self.router.trigger(.pinCode(contractNum: contractNum, selectedRestoreMethod: contact!.type))
                         return
                     }
                     
@@ -112,7 +112,6 @@ class ResetPasswordViewModel: BaseViewModel {
                             return
                     }
                     
-                    
                     data.enumerated().forEach { offset, _ in
                         if offset == index {
                             data[offset].toogleState()
@@ -124,6 +123,23 @@ class ResetPasswordViewModel: BaseViewModel {
                     self.selectedContact.onNext(data.first { $0.state == .checkedActive })
                     
                     self.restoreMethods.onNext(data)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    let nsError = error as NSError
+                    
+                    switch nsError.code {                        
+                    case 429:
+                        let message = "Вы запрашиваете код слишком часто. Пожалуйста, попробуйте позже"
+                        self?.router.trigger(.alert(title: "Ошибка", message: message))
+                        
+                    default:
+                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    }
                 }
             )
             .disposed(by: disposeBag)

@@ -32,7 +32,7 @@ extension PassConfirmationPinViewController {
         
         guard timeEnd.compare(timeNow) == ComparisonResult.orderedDescending else {
             sendCodeAgainButton.isHidden.toggle()
-            sendCodeAgainGroupView.isHidden.toggle()
+            sendCodeAgainMessageView.isHidden.toggle()
             updateTimeValues(minutesValue: 0, secondsValue: 0)
             timer?.invalidate()
             timer = nil

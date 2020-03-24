@@ -62,14 +62,13 @@ class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
     
     private func configureView() {
         pinTextField.reset()
-        sendCodeAgainMessageView.isHidden = true
-        sendCodeAgainButton.isHidden = false
+        sendCodeAgainMessageView.isHidden = false
+        sendCodeAgainButton.isHidden = true
+        sendCodeAgainGroupView.isHidden = false
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
-        
-        sendCodeAgainButton.isHidden.toggle()
-        sendCodeAgainMessageView.isHidden.toggle()
+
         runCodeTimer()
     }
     
@@ -116,11 +115,10 @@ class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
         
         let output = viewModel.transform(input: input)
         
-        output.phoneNumber
+        output.restoreMethod
             .drive(
-                onNext: { phoneNumber in
-                    // код подтверждения отправлена на .......
-                    self.titleMessageLabel.text = "Код подтверждения отправлена на ****"
+                onNext: { method in
+                    self.titleMessageLabel.text = method.displayedTextHasBeenSent
                 }
             )
             .disposed(by: disposeBag)

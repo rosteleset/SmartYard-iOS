@@ -19,7 +19,8 @@ enum HomeRoute: Route {
     case confirmAddress(address: String)
     case back
     case restorePassword(contractNum: String?, restoreMethods: [RestoreMethodType])
-    case pinCode(phoneNumber: String)
+    case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethodType)
+    case dialog(restoreMethod: RestoreMethodType, actions: [UIAlertAction])
     
 }
 
@@ -134,11 +135,19 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             return .push(vc)
             
-        case .pinCode(let phoneNumber):
-            let vm = PassConfirmationPinViewModel(apiWrapper: apiWrapper, router: weakRouter, selectedContact: phoneNumber)
+        case let .pinCode(contractNum, restoreMethod):
+            let vm = PassConfirmationPinViewModel(
+                apiWrapper: apiWrapper,
+                router: weakRouter,
+                contractNum: contractNum,
+                selectedRestoreMethod: restoreMethod
+            )
             
             let vc = PassConfirmationPinViewController(viewModel: vm)
             return .set([vc], animation: .fade)
+            
+        case let .dialog(restoreMethod, actions):
+            return .dialogTransition(title: "test", message: restoreMethod.displayedTextHasBeenSent, actions: actions)
         }
     }
     

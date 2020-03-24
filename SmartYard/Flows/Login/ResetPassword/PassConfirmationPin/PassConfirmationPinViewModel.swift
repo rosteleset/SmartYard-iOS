@@ -16,12 +16,19 @@ class PassConfirmationPinViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<HomeRoute>
     
-    private let selectedContact: String
+    private let selectedRestoreMethod: RestoreMethodType
+    private let contractNum: String
     
-    init(apiWrapper: APIWrapper, router: WeakRouter<HomeRoute>, selectedContact: String) {
+    init(
+        apiWrapper: APIWrapper,
+        router: WeakRouter<HomeRoute>,
+        contractNum: String,
+        selectedRestoreMethod: RestoreMethodType
+    ) {
         self.apiWrapper = apiWrapper
         self.router = router
-        self.selectedContact = selectedContact
+        self.selectedRestoreMethod = selectedRestoreMethod
+        self.contractNum = contractNum
     }
     
     // swiftlint:disable:next function_body_length
@@ -37,16 +44,22 @@ class PassConfirmationPinViewModel: BaseViewModel {
             .do(
                 onNext: { _ in
                     isPinCorrect.onNext(true)
-            }
+                }
             )
             .filter { $0.count == Constants.pinLength }
-            .flatMapLatest { [weak self] smsCode -> Driver<ConfirmCodeResponseData?> in
+            .flatMapLatest { [weak self] smsCode -> Driver<RestoreRequestResponseData?> in
                 guard let self = self else {
                     return .just(nil)
                 }
                 
-                // TODO: confirm code
-                return .empty()
+                return self.apiWrapper.restore(
+                        contractNum: nil,
+                        contactId: self.selectedRestoreMethod.contactId,
+                        code: smsCode
+                    )
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
             .do(
@@ -57,20 +70,34 @@ class PassConfirmationPinViewModel: BaseViewModel {
             .delay(.milliseconds(100))
             .drive(
                 onNext: { [weak self] data in
-                    //self?.router.trigger(.userName(preloadedName: data.name))
+                    guard let self = self else {
+                        return
+                    }
+
+                    let okAction = UIAlertAction(title: "Ок", style: .default) { [weak self] _ in
+                        self?.router.trigger(.main)
+                    }
+                    
+                    self.router.trigger(.dialog(restoreMethod: self.selectedRestoreMethod, actions: [okAction]))
                 }
             )
             .disposed(by: disposeBag)
         
         input.sendCodeAgainButtonTapped
-            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+            .flatMapLatest { [weak self] _ -> Driver<Void> in
                 guard let self = self else {
                     return .empty()
                 }
-                // TODO: need request
-                return .empty()
+                return self.apiWrapper.restore(
+                        contractNum: self.contractNum,
+                        contactId: self.selectedRestoreMethod.contactId,
+                        code: nil
+                    )
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .mapToVoid()
+                    .asDriverOnErrorJustComplete()
             }
-            .ignoreNil()
             .drive()
             .disposed(by: disposeBag)
         
@@ -96,7 +123,7 @@ class PassConfirmationPinViewModel: BaseViewModel {
         
         return Output(
             isPinCorrect: isPinCorrect.asDriverOnErrorJustComplete(),
-            phoneNumber: .just(selectedContact),
+            restoreMethod: .just(selectedRestoreMethod),
             isLoading: activityTracker.asDriver(),
             prepareTransitionTrigger: prepareTransitionTrigger.asDriverOnErrorJustComplete()
         )
@@ -113,7 +140,7 @@ extension PassConfirmationPinViewModel {
     
     struct Output {
         let isPinCorrect: Driver<Bool>
-        let phoneNumber: Driver<String>
+        let restoreMethod: Driver<RestoreMethodType>
         let isLoading: Driver<Bool>
         let prepareTransitionTrigger: Driver<Void>
     }
