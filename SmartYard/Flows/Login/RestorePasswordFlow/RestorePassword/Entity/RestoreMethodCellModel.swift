@@ -1,5 +1,5 @@
 //
-//  RestoreMethodModel.swift
+//  RestoreMethodCellModel.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 19.03.2020.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct RestoreMethodModel {
+struct RestoreMethodCellModel {
     
-    let type: RestoreMethodType
+    let method: RestoreMethod
     var state: SmartYardCheckBoxState
     
     mutating func toogleState() {

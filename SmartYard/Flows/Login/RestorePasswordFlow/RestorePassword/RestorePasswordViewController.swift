@@ -14,19 +14,16 @@ import RxSwift
 class RestorePasswordViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var contractTextField: SmartYardTextField!
-    @IBOutlet private weak var actionButton: WhiteButtonWithBorder!
+    @IBOutlet private weak var getCodeButton: WhiteButtonWithBorder!
     @IBOutlet private weak var methodsNotFoundLabel: UILabel!
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var getRestoreMethodsButton: WhiteButtonWithBorder!
     
     var loader: JGProgressHUD?
     
-    let viewModel: RestorePasswordViewModel
+    private let viewModel: RestorePasswordViewModel
     
-    private let getResetMethodsText = "Получить доступные\nметоды восстановления"
-    private let getResetCodeText = "Получить код восстановления"
-    
-    private let itemsProxy = BehaviorSubject<[RestoreMethodModel]>(value: [])
-    
+    private let itemsProxy = BehaviorSubject<[RestoreMethodCellModel]>(value: [])
     private let itemStateChanged = PublishSubject<Int?>()
     
     init(viewModel: RestorePasswordViewModel) {
@@ -51,10 +48,11 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
         methodsNotFoundLabel.isHidden = true
         
         view.hideKeyboardWhenTapped = true
-        actionButton.titleLabel?.textAlignment = .center
+        getRestoreMethodsButton.titleLabel?.textAlignment = .center
         
         tableView.delegate = self
         tableView.dataSource = self
+        
         tableView.register(nibWithCellClass: RestoreMethodCell.self)
         
         tableView.tableFooterView = UIView(
@@ -70,35 +68,38 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
     private func bind() {
         let input = RestorePasswordViewModel.Input(
             inputContractNum: contractTextField.rx.text.distinctUntilChanged().asDriver(onErrorJustReturn: nil),
-            actionTrigger: actionButton.rx.tap.asDriver(),
-            itemStateChanged: itemStateChanged.asDriver(onErrorJustReturn: nil)
+            getCodeButtonTapped: getCodeButton.rx.tap.asDriver(),
+            itemStateChanged: itemStateChanged.asDriver(onErrorJustReturn: nil),
+            getRestoreMethodsButtonTapped: getRestoreMethodsButton.rx.tap.asDriver()
         )
         
         contractTextField.rx.text.distinctUntilChanged()
             .asDriver(onErrorJustReturn: nil)
             .drive(
                 onNext: { [weak self] text in
-                    self?.actionButton.isEnabled = !text.isNilOrEmpty
+                    self?.getRestoreMethodsButton.isEnabled = !text.isNilOrEmpty
                 }
             )
             .disposed(by: disposeBag)
         
         let output = viewModel.transform(input: input)
         
-        output.resetMethods
+        output.restoreMethods
             .do(
                 onNext: { [weak self] in
                     guard $0.isEmpty else {
                         self?.tableView.isHidden = false
                         self?.methodsNotFoundLabel.isHidden = true
-                        self?.actionButton.setTitle(self?.getResetCodeText, for: .normal)
-                        self?.actionButton.isEnabled = $0.contains { $0.state == .checkedActive }
+                        self?.getRestoreMethodsButton.isHidden = true
+                        self?.getCodeButton.isHidden = false
+                        self?.getCodeButton.isEnabled = $0.contains { $0.state == .checkedActive }
                         return
                     }
                     
                     self?.tableView.isHidden = true
                     self?.methodsNotFoundLabel.isHidden = false
-                    self?.actionButton.setTitle(self?.getResetMethodsText, for: .normal)
+                    self?.getCodeButton.isHidden = true
+                    self?.getRestoreMethodsButton.isHidden = false
                 }
             )
             .drive(itemsProxy)
@@ -152,7 +153,7 @@ extension RestorePasswordViewController: UITableViewDataSource {
         }
         
         let cell = tableView.dequeueReusableCell(withClass: RestoreMethodCell.self, for: indexPath)
-        cell.configure(with: data[indexPath.row].type.displayedTextShouldSent, state: data[indexPath.row].state)
+        cell.configure(with: data[indexPath.row].method.displayedTextShouldSent, state: data[indexPath.row].state)
         
         return cell
     }

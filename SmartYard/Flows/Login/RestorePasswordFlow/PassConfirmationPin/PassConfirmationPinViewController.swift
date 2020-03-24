@@ -44,6 +44,7 @@ class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         bind()
         configureView()
         configureRxKeyboard()
@@ -51,6 +52,7 @@ class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         pinTextField.becomeFirstResponder()
     }
 
@@ -82,7 +84,7 @@ class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
                 onNext: { [weak self] keyboardVisibleHeight in
                     self?.sendCodeAgainGroupViewBottomConstraint.constant = keyboardVisibleHeight == 0 ?
                         28 :
-                        keyboardVisibleHeight + 28
+                        keyboardVisibleHeight
                     
                     UIView.animate(withDuration: 0) {
                         self?.view.layoutIfNeeded()

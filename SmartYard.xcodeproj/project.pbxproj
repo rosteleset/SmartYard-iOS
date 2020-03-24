@@ -227,7 +227,7 @@
 		E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */; };
 		E9618A362420CC9F003FF47D /* APIIssueConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9618A352420CC9F003FF47D /* APIIssueConnect.swift */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
-		E96CC0D72423FAEA008DF44B /* RestoreMethodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96CC0D62423FAEA008DF44B /* RestoreMethodModel.swift */; };
+		E96CC0D72423FAEA008DF44B /* RestoreMethodCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96CC0D62423FAEA008DF44B /* RestoreMethodCellModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
 		E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C382423F149F30010BBC1 /* PinCodeViewController.xib */; };
@@ -266,7 +266,7 @@
 		E9C2567A24223F3400BE32E0 /* RestoreRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2567924223F3400BE32E0 /* RestoreRequest.swift */; };
 		E9C2567C2422423D00BE32E0 /* RestoreResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2567B2422423D00BE32E0 /* RestoreResponseData.swift */; };
 		E9C2567E242243C200BE32E0 /* APIRestoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2567D242243C200BE32E0 /* APIRestoreData.swift */; };
-		E9C2568124224DF200BE32E0 /* RestoreMethodType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2568024224DF200BE32E0 /* RestoreMethodType.swift */; };
+		E9C2568124224DF200BE32E0 /* RestoreMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2568024224DF200BE32E0 /* RestoreMethod.swift */; };
 		E9C256852423F31D00BE32E0 /* RestoreMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C256832423F31D00BE32E0 /* RestoreMethodCell.swift */; };
 		E9C256862423F31D00BE32E0 /* RestoreMethodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9C256842423F31D00BE32E0 /* RestoreMethodCell.xib */; };
 		E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */; };
@@ -547,7 +547,7 @@
 		E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnapprovedObjectCell.xib; sourceTree = "<group>"; };
 		E9618A352420CC9F003FF47D /* APIIssueConnect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIIssueConnect.swift; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
-		E96CC0D62423FAEA008DF44B /* RestoreMethodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethodModel.swift; sourceTree = "<group>"; };
+		E96CC0D62423FAEA008DF44B /* RestoreMethodCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethodCellModel.swift; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E98C382423F149F30010BBC1 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
@@ -590,7 +590,7 @@
 		E9C2567924223F3400BE32E0 /* RestoreRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreRequest.swift; sourceTree = "<group>"; };
 		E9C2567B2422423D00BE32E0 /* RestoreResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreResponseData.swift; sourceTree = "<group>"; };
 		E9C2567D242243C200BE32E0 /* APIRestoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRestoreData.swift; sourceTree = "<group>"; };
-		E9C2568024224DF200BE32E0 /* RestoreMethodType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethodType.swift; sourceTree = "<group>"; };
+		E9C2568024224DF200BE32E0 /* RestoreMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethod.swift; sourceTree = "<group>"; };
 		E9C256832423F31D00BE32E0 /* RestoreMethodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethodCell.swift; sourceTree = "<group>"; };
 		E9C256842423F31D00BE32E0 /* RestoreMethodCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestoreMethodCell.xib; sourceTree = "<group>"; };
 		E9E426FD23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSegmentedControlView.swift; sourceTree = "<group>"; };
@@ -1922,7 +1922,7 @@
 				E98C382E23F1812C0010BBC1 /* AuthByContractNum */,
 				E99EA6B723EA9CF200BECEE6 /* InputPhoneNumber */,
 				E9A4D48123EC22760070A591 /* InputPinCode */,
-				E9B9EAC42421FC91000A92B3 /* RestorePassword */,
+				E9B9EAC42421FC91000A92B3 /* RestorePasswordFlow */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -2047,13 +2047,13 @@
 			path = WhiteButtonWithBorder;
 			sourceTree = "<group>";
 		};
-		E9B9EAC42421FC91000A92B3 /* RestorePassword */ = {
+		E9B9EAC42421FC91000A92B3 /* RestorePasswordFlow */ = {
 			isa = PBXGroup;
 			children = (
-				E92EFB4224287EE4003AF7FE /* PassConfirmationPin */,
 				E92EFB4B2428D742003AF7FE /* RestorePassword */,
+				E92EFB4224287EE4003AF7FE /* PassConfirmationPin */,
 			);
-			path = RestorePassword;
+			path = RestorePasswordFlow;
 			sourceTree = "<group>";
 		};
 		E9BB83CD23F69FAF0071F91E /* Entries */ = {
@@ -2080,8 +2080,8 @@
 		E9C2567F24224D1E00BE32E0 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				E9C2568024224DF200BE32E0 /* RestoreMethodType.swift */,
-				E96CC0D62423FAEA008DF44B /* RestoreMethodModel.swift */,
+				E9C2568024224DF200BE32E0 /* RestoreMethod.swift */,
+				E96CC0D62423FAEA008DF44B /* RestoreMethodCellModel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -2506,7 +2506,7 @@
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
-				E96CC0D72423FAEA008DF44B /* RestoreMethodModel.swift in Sources */,
+				E96CC0D72423FAEA008DF44B /* RestoreMethodCellModel.swift in Sources */,
 				848298352405655600E81620 /* ConfirmCodeResponseData.swift in Sources */,
 				84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */,
 				E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */,
@@ -2598,7 +2598,7 @@
 				E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */,
 				E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */,
 				E94B6C73240694D700FD9F65 /* GetAllLocationsResponseData.swift in Sources */,
-				E9C2568124224DF200BE32E0 /* RestoreMethodType.swift in Sources */,
+				E9C2568124224DF200BE32E0 /* RestoreMethod.swift in Sources */,
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
 				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
 				84AA8D4A23E2CD5E001B3B43 /* BaseRequestRetrier.swift in Sources */,

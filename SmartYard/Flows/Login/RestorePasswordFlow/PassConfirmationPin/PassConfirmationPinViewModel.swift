@@ -16,14 +16,14 @@ class PassConfirmationPinViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<HomeRoute>
     
-    private let selectedRestoreMethod: RestoreMethodType
+    private let selectedRestoreMethod: RestoreMethod
     private let contractNum: String
     
     init(
         apiWrapper: APIWrapper,
         router: WeakRouter<HomeRoute>,
         contractNum: String,
-        selectedRestoreMethod: RestoreMethodType
+        selectedRestoreMethod: RestoreMethod
     ) {
         self.apiWrapper = apiWrapper
         self.router = router
@@ -54,7 +54,7 @@ class PassConfirmationPinViewModel: BaseViewModel {
                 
                 return self.apiWrapper.restore(
                         contractNum: self.contractNum,
-                        contactId: self.selectedRestoreMethod.contactId,
+                        contactId: nil,
                         code: smsCode
                     )
                     .trackError(errorTracker)
@@ -63,13 +63,13 @@ class PassConfirmationPinViewModel: BaseViewModel {
             }
             .ignoreNil()
             .do(
-                onNext: { [weak self] _ in
+                onNext: { _ in
                     prepareTransitionTrigger.onNext(())
                 }
             )
             .delay(.milliseconds(100))
             .drive(
-                onNext: { [weak self] data in
+                onNext: { [weak self] _ in
                     guard let self = self else {
                         return
                     }
@@ -78,7 +78,9 @@ class PassConfirmationPinViewModel: BaseViewModel {
                         self?.router.trigger(.main)
                     }
                     
-                    self.router.trigger(.dialog(restoreMethod: self.selectedRestoreMethod, actions: [okAction]))
+                    let passDestination = self.selectedRestoreMethod.contact.contains("@") ? "email" : "телефон"
+                    let dialogText = "Пароль от указанной записи отправлен на указанный \(passDestination)"
+                    self.router.trigger(.dialog(messageText: dialogText, actions: [okAction]))
                 }
             )
             .disposed(by: disposeBag)
@@ -107,12 +109,8 @@ class PassConfirmationPinViewModel: BaseViewModel {
                     let nsError = error as NSError
                     
                     switch nsError.code {
-                    case 401:
+                    case 403:
                         isPinCorrect.onNext(false)
-                        
-                    case 429:
-                        let message = "Вы запрашиваете код слишком часто. Пожалуйста, попробуйте позже"
-                        self?.router.trigger(.alert(title: "Ошибка", message: message))
                         
                     default:
                         self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
@@ -140,7 +138,7 @@ extension PassConfirmationPinViewModel {
     
     struct Output {
         let isPinCorrect: Driver<Bool>
-        let restoreMethod: Driver<RestoreMethodType>
+        let restoreMethod: Driver<RestoreMethod>
         let isLoading: Driver<Bool>
         let prepareTransitionTrigger: Driver<Void>
     }

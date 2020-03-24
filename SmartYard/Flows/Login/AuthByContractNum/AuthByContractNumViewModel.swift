@@ -52,7 +52,7 @@ class AuthByContractNumViewModel: BaseViewModel {
                 onNext: { [weak self] args in
                     let (response, contractNum) = args
                     let restoreMethodsArr = response?.compactMap { response in
-                        RestoreMethodType(rawValue: response.type, contactId: response.id ?? "", contact: response.contact ?? "")
+                        RestoreMethod(rawValue: response.type, contactId: response.id ?? "", contact: response.contact ?? "")
                     } ?? []
                 
                     self?.router.trigger(.restorePassword(contractNum: contractNum, restoreMethods: restoreMethodsArr))

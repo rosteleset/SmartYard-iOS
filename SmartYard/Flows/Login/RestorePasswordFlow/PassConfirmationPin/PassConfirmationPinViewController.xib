@@ -40,14 +40,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eaR-Iu-Udm" customClass="PinTextField" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="5" y="147.5" width="404" height="80"/>
+                            <rect key="frame" x="5" y="127.5" width="404" height="80"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="80" id="UOW-cA-mJh"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fRv-aQ-uDM">
-                            <rect key="frame" x="0.0" y="639" width="414" height="60"/>
+                            <rect key="frame" x="0.0" y="661" width="414" height="60"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w5G-Uh-fIa">
                                     <rect key="frame" x="20" y="14" width="374" height="32"/>
@@ -65,7 +65,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="32" id="2my-cg-fg9"/>
                                         <constraint firstItem="P50-Bq-deW" firstAttribute="leading" secondItem="w5G-Uh-fIa" secondAttribute="leading" id="5aE-Ks-uK6"/>
@@ -86,7 +86,7 @@
                                     </state>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="w5G-Uh-fIa" firstAttribute="centerY" secondItem="fRv-aQ-uDM" secondAttribute="centerY" id="1yJ-L0-RmZ"/>
                                 <constraint firstItem="gGI-M9-YUZ" firstAttribute="leading" secondItem="fRv-aQ-uDM" secondAttribute="leading" constant="40" id="7on-ci-MCd"/>
@@ -100,12 +100,12 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="fRv-aQ-uDM" secondAttribute="bottom" priority="999" constant="50" id="1Ak-XW-bQ5"/>
+                        <constraint firstAttribute="bottom" secondItem="fRv-aQ-uDM" secondAttribute="bottom" priority="999" constant="28" id="1Ak-XW-bQ5"/>
                         <constraint firstItem="fRv-aQ-uDM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="eaR-Iu-Udm" secondAttribute="bottom" constant="20" id="ICO-Lx-tGJ"/>
                         <constraint firstAttribute="trailing" secondItem="eaR-Iu-Udm" secondAttribute="trailing" constant="5" id="Nw1-jN-ruo"/>
                         <constraint firstItem="fRv-aQ-uDM" firstAttribute="leading" secondItem="xcm-SV-Q6e" secondAttribute="leading" id="QGZ-ln-e4I"/>
                         <constraint firstAttribute="trailing" secondItem="aDl-zG-Nme" secondAttribute="trailing" constant="40" id="RPf-sK-47D"/>
-                        <constraint firstItem="eaR-Iu-Udm" firstAttribute="top" secondItem="aDl-zG-Nme" secondAttribute="bottom" constant="80" id="S9w-pi-uLe"/>
+                        <constraint firstItem="eaR-Iu-Udm" firstAttribute="top" secondItem="aDl-zG-Nme" secondAttribute="bottom" constant="60" id="S9w-pi-uLe"/>
                         <constraint firstItem="aDl-zG-Nme" firstAttribute="leading" secondItem="xcm-SV-Q6e" secondAttribute="leading" constant="40" id="W6m-JT-46f"/>
                         <constraint firstItem="aDl-zG-Nme" firstAttribute="centerX" secondItem="xcm-SV-Q6e" secondAttribute="centerX" id="cV9-0I-lUJ"/>
                         <constraint firstAttribute="trailing" secondItem="fRv-aQ-uDM" secondAttribute="trailing" id="xSY-f7-Prw"/>

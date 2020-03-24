@@ -17,23 +17,24 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var hintInputPhoneLabel: UILabel!
     @IBOutlet private weak var fixPhoneNumberButton: UIButton!
     @IBOutlet private weak var sendCodeAgainGroupView: UIView!
+    
     @IBOutlet private weak var pinInputFieldView: PinTextField!
     @IBOutlet private weak var containerView: TopRoundedView!
+    
+    @IBOutlet private var sendCodeAgainGroupButtonConstraint: NSLayoutConstraint!
     
     // swiftlint:disable all
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var sendCodeAgainLabelView: UIView!
     @IBOutlet weak var sendCodeAgainButton: BlueButton!
     // swiftlint:enable all
-    
-    @IBOutlet private var sendCodeAgainGroupButtonConstraint: NSLayoutConstraint!
+
+    private let viewModel: PinCodeViewModel
+    private let isInitial: Bool
     
     var timer: Timer?
     var timeEnd: Date?
     var loader: JGProgressHUD?
-    
-    private let viewModel: PinCodeViewModel
-    private let isInitial: Bool
     
     init(viewModel: PinCodeViewModel, isInitial: Bool) {
         self.viewModel = viewModel
@@ -48,6 +49,7 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         bind()
         configureView()
         configureRxKeyboard()

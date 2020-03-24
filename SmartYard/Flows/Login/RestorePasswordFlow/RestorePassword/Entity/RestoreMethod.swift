@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum RestoreMethodType {
+enum RestoreMethod {
     
     case byEmail(type: String, contactId: String, contact: String)
     case byPhoneNumber(type: String, contactId: String, contact: String)

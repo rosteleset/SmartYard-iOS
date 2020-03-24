@@ -17,23 +17,21 @@ class RestorePasswordViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     
     private let contractNum: BehaviorSubject<String?>
-    
-    private let selectedContact = BehaviorSubject<RestoreMethodModel?>(value: nil)
-    
-    private let restoreMethods: BehaviorSubject<[RestoreMethodModel]>
+    private let selectedRestoreMethod = BehaviorSubject<RestoreMethodCellModel?>(value: nil)
+    private let restoreMethods: BehaviorSubject<[RestoreMethodCellModel]>
     
     init(
         apiWrapper: APIWrapper,
         router: WeakRouter<HomeRoute>,
         contractNum: String?,
-        restoreMethods: [RestoreMethodType]
+        restoreMethods: [RestoreMethod]
     ) {
         self.apiWrapper = apiWrapper
         self.router = router
         self.contractNum = BehaviorSubject<String?>(value: contractNum)
         
-        let restoreModels = restoreMethods.map { RestoreMethodModel(type: $0, state: .uncheckedActive) }
-        self.restoreMethods = BehaviorSubject<[RestoreMethodModel]>(value: restoreModels)
+        let restoreModels = restoreMethods.map { RestoreMethodCellModel(method: $0, state: .uncheckedActive) }
+        self.restoreMethods = BehaviorSubject<[RestoreMethodCellModel]>(value: restoreModels)
     }
     
     // swiftlint:disable:next function_body_length
@@ -50,24 +48,28 @@ class RestorePasswordViewModel: BaseViewModel {
             .drive(contractNum)
             .disposed(by: disposeBag)
         
-        input.actionTrigger
+        input.getCodeButtonTapped
             .withLatestFrom(contractNum.asDriver(onErrorJustReturn: nil))
             .ignoreNil()
-            .withLatestFrom(selectedContact.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
-            .flatMapLatest { [weak self] args -> Driver<(RestoreRequestResponseData?, RestoreMethodModel?, String)?> in
-                let (contractNum, contact) = args
+            .withLatestFrom(selectedRestoreMethod.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .flatMapLatest { [weak self] args -> Driver<(RestoreMethodCellModel, String)?> in
+                let (inputContractNum, selectedMethod) = args
                 
-                guard let self = self, !contractNum.isEmpty else {
+                guard let self = self, !inputContractNum.isEmpty, let uSelectedMethod = selectedMethod else {
                     return .just(nil)
                 }
-
-                return self.apiWrapper.restore(contractNum: contractNum, contactId: contact?.type.contactId, code: nil)
+                
+                return self.apiWrapper.restore(
+                        contractNum: inputContractNum,
+                        contactId: uSelectedMethod.method.contactId,
+                        code: nil
+                    )
                     .map {
-                        guard let response = $0 else {
+                        guard $0 != nil else {
                             return nil
                         }
                         
-                        return (response, contact, contractNum)
+                        return (uSelectedMethod, inputContractNum)
                     }
                     .trackError(errorTracker)
                     .trackActivity(activityTracker)
@@ -80,23 +82,43 @@ class RestorePasswordViewModel: BaseViewModel {
                         return
                     }
                     
-                    let (response, contact, contractNum) = args
-        
-                    guard contact == nil else {
-                        self.router.trigger(.pinCode(contractNum: contractNum, selectedRestoreMethod: contact!.type))
-                        return
-                    }
+                    let (selectedMethodModel, inputContractNum) = args
                     
-                    let resetMethodsArr: [RestoreMethodType] = response?.compactMap { response in
+                    self.router.trigger(
+                        .pinCode(contractNum: inputContractNum, selectedRestoreMethod: selectedMethodModel.method)
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+    
+        input.getRestoreMethodsButtonTapped
+            .withLatestFrom(contractNum.asDriver(onErrorJustReturn: nil))
+            .ignoreNil()
+            .flatMapLatest { [weak self] inputContractNum -> Driver<RestoreRequestResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper.restore(contractNum: inputContractNum, contactId: nil, code: nil)
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { response in
+                    let resetMethodsArr: [RestoreMethod] = response.compactMap { response in
                         guard let id = response.id, let contact = response.contact else {
                             return nil
                         }
                         
-                        return RestoreMethodType(rawValue: response.type, contactId: id, contact: contact)
-                    } ?? []
+                        return RestoreMethod(rawValue: response.type, contactId: id, contact: contact)
+                    }
+                    
+                    self.selectedRestoreMethod.onNext(nil)
                     
                     self.restoreMethods.onNext(
-                        resetMethodsArr.map { RestoreMethodModel(type: $0, state: .uncheckedActive) }
+                        resetMethodsArr.map { RestoreMethodCellModel(method: $0, state: .uncheckedActive) }
                     )
                 }
             )
@@ -120,7 +142,7 @@ class RestorePasswordViewModel: BaseViewModel {
                         }
                     }
                     
-                    self.selectedContact.onNext(data.first { $0.state == .checkedActive })
+                    self.selectedRestoreMethod.onNext(data.first { $0.state == .checkedActive })
                     
                     self.restoreMethods.onNext(data)
                 }
@@ -146,7 +168,7 @@ class RestorePasswordViewModel: BaseViewModel {
         
         return Output(
             isLoading: activityTracker.asDriver(),
-            resetMethods: restoreMethods.asDriver(onErrorJustReturn: [])
+            restoreMethods: restoreMethods.asDriver(onErrorJustReturn: [])
         )
     }
     
@@ -156,13 +178,14 @@ extension RestorePasswordViewModel {
     
     struct Input {
         let inputContractNum: Driver<String?>
-        let actionTrigger: Driver<Void>
+        let getCodeButtonTapped: Driver<Void>
         let itemStateChanged: Driver<Int?>
+        let getRestoreMethodsButtonTapped: Driver<Void>
     }
     
     struct Output {
         let isLoading: Driver<Bool>
-        let resetMethods: Driver<[RestoreMethodModel]>
+        let restoreMethods: Driver<[RestoreMethodCellModel]>
     }
     
 }

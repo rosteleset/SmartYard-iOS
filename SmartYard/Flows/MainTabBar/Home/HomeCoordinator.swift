@@ -18,9 +18,9 @@ enum HomeRoute: Route {
     case unavailableServices(address: String)
     case confirmAddress(address: String)
     case back
-    case restorePassword(contractNum: String?, restoreMethods: [RestoreMethodType])
-    case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethodType)
-    case dialog(restoreMethod: RestoreMethodType, actions: [UIAlertAction])
+    case restorePassword(contractNum: String?, restoreMethods: [RestoreMethod])
+    case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
+    case dialog(messageText: String, actions: [UIAlertAction])
     
 }
 
@@ -146,8 +146,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let vc = PassConfirmationPinViewController(viewModel: vm)
             return .set([vc], animation: .fade)
             
-        case let .dialog(restoreMethod, actions):
-            return .dialogTransition(title: "test", message: restoreMethod.displayedTextHasBeenSent, actions: actions)
+        case let .dialog(messageText, actions):
+            return .dialogTransition(title: "", message: messageText, actions: actions)
         }
     }
     
