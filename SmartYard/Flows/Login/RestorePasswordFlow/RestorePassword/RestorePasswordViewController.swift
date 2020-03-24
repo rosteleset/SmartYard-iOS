@@ -77,7 +77,7 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
             .asDriver(onErrorJustReturn: nil)
             .drive(
                 onNext: { [weak self] text in
-                    self?.getRestoreMethodsButton.isEnabled = !text.isNilOrEmpty
+                    self?.getRestoreMethodsButton.isEnabled = !(text?.trimmed).isNilOrEmpty
                 }
             )
             .disposed(by: disposeBag)
@@ -87,17 +87,11 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
         output.restoreMethods
             .do(
                 onNext: { [weak self] in
-                    guard $0.isEmpty else {
-                        self?.tableView.isHidden = false
-                        self?.getRestoreMethodsButton.isHidden = true
-                        self?.getCodeButton.isHidden = false
-                        self?.getCodeButton.isEnabled = $0.contains { $0.state == .checkedActive }
-                        return
-                    }
-                    
-                    self?.tableView.isHidden = true
-                    self?.getCodeButton.isHidden = true
-                    self?.getRestoreMethodsButton.isHidden = false
+                    self?.tableView.isHidden = $0.isEmpty
+                    self?.getCodeButton.isHidden = $0.isEmpty
+                    self?.getCodeButton.isEnabled = $0.contains { $0.state == .checkedActive }
+                    self?.getRestoreMethodsButton.isHidden = !$0.isEmpty
+
                 }
             )
             .drive(itemsProxy)
@@ -116,7 +110,7 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
             .drive(
                 onNext: { [weak self] contractNum in
                     self?.contractTextField.text = contractNum
-                    self?.getRestoreMethodsButton.isEnabled = !contractNum.isNilOrEmpty
+                    self?.contractTextField.sendActions(for: .allEditingEvents)
                 }
             )
             .disposed(by: disposeBag)

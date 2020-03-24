@@ -14,7 +14,7 @@ struct RestoreMethodCellModel {
     var state: SmartYardCheckBoxState
     
     mutating func toogleState() {
-        guard state != .checkedInactive else {
+        guard state != .checkedInactive && state != .uncheckedInactive else {
             return
         }
         
