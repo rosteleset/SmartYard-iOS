@@ -124,14 +124,14 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             return .pop(animation: .default)
             
         case let .restorePassword(contractNum, restoreMethods):
-            let vm = ResetPasswordViewModel(
+            let vm = RestorePasswordViewModel(
                 apiWrapper: apiWrapper,
                 router: weakRouter,
                 contractNum: contractNum,
                 restoreMethods: restoreMethods
             )
             
-            let vc = ResetPasswordViewController(viewModel: vm)
+            let vc = RestorePasswordViewController(viewModel: vm)
             
             return .push(vc)
             

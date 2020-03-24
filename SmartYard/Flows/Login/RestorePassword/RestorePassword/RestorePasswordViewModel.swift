@@ -1,5 +1,5 @@
 //
-//  ResetPasswordViewModel.swift
+//  RestorePasswordViewModel.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 18.03.2020.
@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 
-class ResetPasswordViewModel: BaseViewModel {
+class RestorePasswordViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<HomeRoute>
@@ -152,7 +152,7 @@ class ResetPasswordViewModel: BaseViewModel {
     
 }
 
-extension ResetPasswordViewModel {
+extension RestorePasswordViewModel {
     
     struct Input {
         let inputContractNum: Driver<String?>

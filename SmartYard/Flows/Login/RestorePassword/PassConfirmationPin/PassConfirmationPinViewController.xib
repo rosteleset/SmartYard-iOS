@@ -31,7 +31,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xcm-SV-Q6e" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="113" width="414" height="783"/>
+                    <rect key="frame" x="0.0" y="113" width="414" height="749"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Код подтверждения отправлен на телефон +79025308094" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDl-zG-Nme">
                             <rect key="frame" x="40" y="36" width="334" height="31.5"/>
@@ -47,7 +47,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fRv-aQ-uDM">
-                            <rect key="frame" x="0.0" y="673" width="414" height="60"/>
+                            <rect key="frame" x="0.0" y="639" width="414" height="60"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w5G-Uh-fIa">
                                     <rect key="frame" x="20" y="14" width="374" height="32"/>
@@ -118,7 +118,7 @@
             <constraints>
                 <constraint firstItem="xcm-SV-Q6e" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="69" id="0c3-Ef-H70"/>
                 <constraint firstItem="jFE-Bu-Rrc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WHr-9Y-ePc"/>
-                <constraint firstAttribute="bottom" secondItem="xcm-SV-Q6e" secondAttribute="bottom" id="YZ8-4K-Hig"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="xcm-SV-Q6e" secondAttribute="bottom" id="YZ8-4K-Hig"/>
                 <constraint firstItem="xcm-SV-Q6e" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YzJ-tp-qAW"/>
                 <constraint firstAttribute="bottom" secondItem="jFE-Bu-Rrc" secondAttribute="bottom" id="bqG-3l-mUd"/>
                 <constraint firstAttribute="trailing" secondItem="xcm-SV-Q6e" secondAttribute="trailing" id="dSr-oK-Jc6"/>

@@ -1,5 +1,5 @@
 //
-//  ResetMethodCell.swift
+//  RestoreMethodCell.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 19.03.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ResetMethodCell: UITableViewCell {
+class RestoreMethodCell: UITableViewCell {
 
     @IBOutlet private weak var checkBox: SmartYardCheckBoxView!
     @IBOutlet private weak var titleLabel: UILabel!

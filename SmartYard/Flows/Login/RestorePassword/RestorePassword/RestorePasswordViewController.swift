@@ -1,5 +1,5 @@
 //
-//  ResetPasswordViewController.swift
+//  RestorePasswordViewController.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 18.03.2020.
@@ -11,7 +11,7 @@ import JGProgressHUD
 import RxCocoa
 import RxSwift
 
-class ResetPasswordViewController: BaseViewController, LoaderPresentable {
+class RestorePasswordViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var contractTextField: SmartYardTextField!
     @IBOutlet private weak var actionButton: WhiteButtonWithBorder!
@@ -20,7 +20,7 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
     
     var loader: JGProgressHUD?
     
-    let viewModel: ResetPasswordViewModel
+    let viewModel: RestorePasswordViewModel
     
     private let getResetMethodsText = "Получить доступные\nметоды восстановления"
     private let getResetCodeText = "Получить код восстановления"
@@ -29,7 +29,7 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
     
     private let itemStateChanged = PublishSubject<Int?>()
     
-    init(viewModel: ResetPasswordViewModel) {
+    init(viewModel: RestorePasswordViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -55,7 +55,7 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(nibWithCellClass: ResetMethodCell.self)
+        tableView.register(nibWithCellClass: RestoreMethodCell.self)
         
         tableView.tableFooterView = UIView(
             frame: CGRect(
@@ -68,7 +68,7 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
     }
     
     private func bind() {
-        let input = ResetPasswordViewModel.Input(
+        let input = RestorePasswordViewModel.Input(
             inputContractNum: contractTextField.rx.text.distinctUntilChanged().asDriver(onErrorJustReturn: nil),
             actionTrigger: actionButton.rx.tap.asDriver(),
             itemStateChanged: itemStateChanged.asDriver(onErrorJustReturn: nil)
@@ -124,7 +124,7 @@ class ResetPasswordViewController: BaseViewController, LoaderPresentable {
     
 }
 
-extension ResetPasswordViewController: UITableViewDelegate {
+extension RestorePasswordViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         itemStateChanged.onNext(indexPath.row)
@@ -136,7 +136,7 @@ extension ResetPasswordViewController: UITableViewDelegate {
     
 }
 
-extension ResetPasswordViewController: UITableViewDataSource {
+extension RestorePasswordViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let data = try? itemsProxy.value() else {
@@ -151,7 +151,7 @@ extension ResetPasswordViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let cell = tableView.dequeueReusableCell(withClass: ResetMethodCell.self, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withClass: RestoreMethodCell.self, for: indexPath)
         cell.configure(with: data[indexPath.row].type.displayedTextShouldSent, state: data[indexPath.row].state)
         
         return cell

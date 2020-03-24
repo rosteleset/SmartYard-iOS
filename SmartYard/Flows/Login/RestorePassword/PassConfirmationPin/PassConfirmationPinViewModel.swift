@@ -53,7 +53,7 @@ class PassConfirmationPinViewModel: BaseViewModel {
                 }
                 
                 return self.apiWrapper.restore(
-                        contractNum: nil,
+                        contractNum: self.contractNum,
                         contactId: self.selectedRestoreMethod.contactId,
                         code: smsCode
                     )
