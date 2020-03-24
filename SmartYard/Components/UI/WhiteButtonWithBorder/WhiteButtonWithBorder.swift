@@ -16,9 +16,27 @@ class WhiteButtonWithBorder: UIButton {
         
         cornerRadius = 12
         backgroundColor = .white
-        titleLabel?.textColor = UIColor.SmartYard.blue
         borderWidth = 1
-        borderColor = UIColor.SmartYard.blue
+        updateAppearance()
+    }
+    
+    override var isEnabled: Bool {
+        didSet {
+            updateAppearance()
+        }
+    }
+    
+    private func updateAppearance() {
+        switch state {
+        case .normal:
+            borderColor = UIColor.SmartYard.blue
+            titleLabel?.textColor = UIColor.SmartYard.blue
+        case .disabled:
+            borderColor = UIColor.SmartYard.gray.withAlphaComponent(0.5)
+            titleLabel?.textColor = UIColor.SmartYard.gray.withAlphaComponent(0.5)
+        default:
+            break
+        }
     }
     
 }

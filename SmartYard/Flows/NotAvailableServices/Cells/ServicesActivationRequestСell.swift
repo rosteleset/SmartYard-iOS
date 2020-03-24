@@ -13,7 +13,7 @@ class ServicesActivationRequestСell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var checkBox: SmartYardCheckBoxView!
     
-    private var currentState: ServiceState = .uncheckedActive {
+    private var currentState: SmartYardCheckBoxState = .uncheckedActive {
         didSet {
             titleLabel.textColor = currentState.titleTextColor
             checkBox.setState(state: currentState)

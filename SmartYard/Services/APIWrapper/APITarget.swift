@@ -35,6 +35,8 @@ enum APITarget {
     case confirmCode(request: ConfirmCodeRequest)
     case getPaymentsList(request: GetPaymentsListRequest)
     case sendName(request: SendNameRequest)
+    case restore(request: RestoreRequest)
+    
 }
 
 extension APITarget: TargetType {
@@ -70,6 +72,7 @@ extension APITarget: TargetType {
         case .confirmCode: return "user/confirmCode"
         case .getPaymentsList: return "user/getPaymentsList"
         case .sendName: return "user/sendName"
+        case .restore: return "user/restore"
         }
     }
     
@@ -108,6 +111,7 @@ extension APITarget: TargetType {
             case .registerPushToken(let request): return request.accessToken
             case .getPaymentsList(let request): return request.accessToken
             case .sendName(let request): return request.accessToken
+            case .restore(let request): return request.accessToken
                 
             default: return nil
             }
@@ -151,6 +155,7 @@ extension APITarget: TargetType {
         case .confirmCode(let request): return request.requestParameters
         case .getPaymentsList(let request): return request.requestParameters
         case .sendName(let request): return request.requestParameters
+        case .restore(let request): return request.requestParameters
         }
     }
     

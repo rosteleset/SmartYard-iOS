@@ -15,14 +15,14 @@ class SmartYardCheckBoxView: PMNibLinkableView {
     @IBOutlet private weak var borderImageView: UIImageView!
     @IBOutlet private weak var checkImageView: UIImageView!
     
-    private var currentState: ServiceState = .uncheckedActive {
+    private var currentState: SmartYardCheckBoxState = .uncheckedActive {
         didSet {
             borderImageView.tintColor = currentState.borderTintColor
             checkImageView.tintColor = currentState.checkTintColor
         }
     }
 
-    func setState(state: ServiceState) {
+    func setState(state: SmartYardCheckBoxState) {
         currentState = state
     }
     

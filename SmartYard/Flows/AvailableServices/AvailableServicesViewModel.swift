@@ -113,7 +113,7 @@ class AvailableServicesViewModel: BaseViewModel {
                         return
                     }
                     
-                    data[index].toogleState()
+                    data[index].toggleState()
                     
                     self.serviceItemsSubject.onNext(data)
                 }

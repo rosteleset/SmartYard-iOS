@@ -1,44 +1,40 @@
 //
-//  PinCodeViewController.swift
+//  PassConfirmationPinViewController.swift
 //  SmartYard
 //
-//  Created by Mad Brains on 06.02.2020.
+//  Created by Mad Brains on 23.03.2020.
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
 import UIKit
-import RxCocoa
 import RxSwift
-import RxViewController
+import RxCocoa
 import JGProgressHUD
 
-class PinCodeViewController: BaseViewController, LoaderPresentable {
-    
-    @IBOutlet private weak var hintInputPhoneLabel: UILabel!
-    @IBOutlet private weak var fixPhoneNumberButton: UIButton!
-    @IBOutlet private weak var sendCodeAgainGroupView: UIView!
-    
-    @IBOutlet private weak var pinInputFieldView: PinTextField!
-    @IBOutlet private weak var containerView: TopRoundedView!
-    
-    @IBOutlet private var sendCodeAgainGroupButtonConstraint: NSLayoutConstraint!
+class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
+
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
+    @IBOutlet private weak var titleMessageLabel: UILabel!
+    @IBOutlet private weak var pinTextField: PinTextField!
     
     // swiftlint:disable all
-    @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var sendCodeAgainLabelView: UIView!
     @IBOutlet weak var sendCodeAgainButton: BlueButton!
+    @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var sendCodeAgainGroupView: UIView!
+    @IBOutlet weak var sendCodeAgainMessageView: UIView!
     // swiftlint:enable all
-
-    private let viewModel: PinCodeViewModel
-    private let isInitial: Bool
+    
+    @IBOutlet private weak var sendCodeAgainGroupViewBottomConstraint: NSLayoutConstraint!
     
     var timer: Timer?
     var timeEnd: Date?
+    
     var loader: JGProgressHUD?
     
-    init(viewModel: PinCodeViewModel, isInitial: Bool) {
+    private let viewModel: PassConfirmationPinViewModel
+    
+    init(viewModel: PassConfirmationPinViewModel) {
         self.viewModel = viewModel
-        self.isInitial = isInitial
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -58,9 +54,9 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        pinInputFieldView.becomeFirstResponder()
+        pinTextField.becomeFirstResponder()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -68,31 +64,28 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        pinInputFieldView.reset()
-        sendCodeAgainLabelView.isHidden = true
-        sendCodeAgainButton.isHidden = false
+        pinTextField.reset()
+        sendCodeAgainMessageView.isHidden = false
+        sendCodeAgainButton.isHidden = true
+        sendCodeAgainGroupView.isHidden = false
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
-        
-        if isInitial {
-            sendCodeAgainButton.isHidden.toggle()
-            sendCodeAgainLabelView.isHidden.toggle()
-            runCodeTimer()
-        }
+
+        runCodeTimer()
     }
     
     @objc private func dismissKeyboard() {
-        pinInputFieldView.hideKeyboard()
+        pinTextField.hideKeyboard()
     }
     
     private func configureRxKeyboard() {
         RxKeyboard.instance.visibleHeight
             .drive(
                 onNext: { [weak self] keyboardVisibleHeight in
-                    self?.sendCodeAgainGroupButtonConstraint.constant = keyboardVisibleHeight == 0 ?
+                    self?.sendCodeAgainGroupViewBottomConstraint.constant = keyboardVisibleHeight == 0 ?
                         28 :
-                        keyboardVisibleHeight + 28
+                        keyboardVisibleHeight
                     
                     UIView.animate(withDuration: 0) {
                         self?.view.layoutIfNeeded()
@@ -107,29 +100,29 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
             .subscribe(
                 onNext: { [weak self] _ in
                     self?.sendCodeAgainButton.isHidden.toggle()
-                    self?.sendCodeAgainLabelView.isHidden.toggle()
+                    self?.sendCodeAgainMessageView.isHidden.toggle()
                     self?.runCodeTimer()
                 }
             )
             .disposed(by: disposeBag)
         
-        let text = pinInputFieldView.rx.textControlProperty
+        let text = pinTextField.rx.textControlProperty
             .orEmpty
             .observeOn(MainScheduler.asyncInstance)
             .asDriver(onErrorJustReturn: "")
         
-        let input = PinCodeViewModel.Input(
+        let input = PassConfirmationPinViewModel.Input(
             inputPinText: text,
-            fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(),
-            sendCodeAgainButtonTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete()
+            sendCodeAgainButtonTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
         let output = viewModel.transform(input: input)
         
-        output.phoneNumber
+        output.restoreMethod
             .drive(
-                onNext: { phoneNumber in
-                    self.hintInputPhoneLabel.text = "Введите код из СМС,\nотправленный на номер +7\(phoneNumber)"
+                onNext: { method in
+                    self.titleMessageLabel.text = method.displayedTextHasBeenSent
                 }
             )
             .disposed(by: disposeBag)
@@ -137,7 +130,7 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
         output.isPinCorrect
             .drive(
                 onNext: { [weak self] isCorrect in
-                    self?.pinInputFieldView.markPass(isCorrect: isCorrect)
+                    self?.pinTextField.markPass(isCorrect: isCorrect)
                 }
             )
             .disposed(by: disposeBag)
@@ -166,4 +159,3 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
     }
     
 }
-

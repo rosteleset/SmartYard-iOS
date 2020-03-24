@@ -71,7 +71,7 @@ extension NSError {
         static func codeIsNotSuccessful(_ code: Int) -> NSError {
             return NSError(
                 domain: domain,
-                code: 3102,
+                code: code,
                 userInfo: [NSLocalizedDescriptionKey: "В ходе выполнения запроса произошла ошибка \(code)"]
             )
         }
@@ -146,6 +146,16 @@ extension NSError {
             )
         }
         
+        static let contractNumberMissingError: NSError = {
+            let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден номер договора. Выполнить запрос невозможно"]
+            
+            return NSError(
+                domain: domain,
+                code: 3008,
+                userInfo: errorUserInfo
+            )
+        }()
+    
     }
     
 }

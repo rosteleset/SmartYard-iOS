@@ -1,27 +1,28 @@
 //
-//  ServicesModel.swift
+//  RestoreMethodCellModel.swift
 //  SmartYard
 //
-//  Created by Mad Brains on 12.02.2020.
+//  Created by Mad Brains on 19.03.2020.
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
 import Foundation
 
-struct ServiceModel {
+struct RestoreMethodCellModel {
     
-    let id: String
-    let icon: String
-    let name: String
-    let description: String
+    let method: RestoreMethod
     var state: SmartYardCheckBoxState
     
     mutating func toggleState() {
-        guard state != .checkedInactive else {
+        guard state != .checkedInactive && state != .uncheckedInactive else {
             return
         }
         
         state = state == .uncheckedActive ? .checkedActive : .uncheckedActive
+    }
+    
+    mutating func setUncheckedState() {
+        state = .uncheckedActive
     }
     
 }

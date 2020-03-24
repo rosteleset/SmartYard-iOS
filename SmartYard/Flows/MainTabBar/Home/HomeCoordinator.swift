@@ -18,6 +18,9 @@ enum HomeRoute: Route {
     case unavailableServices(address: String)
     case confirmAddress(address: String)
     case back
+    case restorePassword(contractNum: String?)
+    case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
+    case dialog(messageText: String, actions: [UIAlertAction])
     
 }
 
@@ -119,6 +122,31 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         
         case .back:
             return .pop(animation: .default)
+            
+        case let .restorePassword(contractNum):
+            let vm = RestorePasswordViewModel(
+                apiWrapper: apiWrapper,
+                router: weakRouter
+            )
+            
+            let vc = RestorePasswordViewController(viewModel: vm, preloadedContractNumber: contractNum)
+            
+            return .push(vc)
+            
+        case let .pinCode(contractNum, restoreMethod):
+            let vm = PassConfirmationPinViewModel(
+                apiWrapper: apiWrapper,
+                router: weakRouter,
+                contractNum: contractNum,
+                selectedRestoreMethod: restoreMethod
+            )
+            
+            let vc = PassConfirmationPinViewController(viewModel: vm)
+            
+            return .push(vc)
+            
+        case let .dialog(messageText, actions):
+            return .dialogTransition(title: "", message: messageText, actions: actions)
         }
     }
     
