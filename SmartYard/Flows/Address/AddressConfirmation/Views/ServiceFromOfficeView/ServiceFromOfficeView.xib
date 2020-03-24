@@ -97,7 +97,6 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="doSoButton" destination="bQy-0w-33M" id="14r-cL-qL7"/>
-                <outlet property="mapImageView" destination="sGG-w5-CTR" id="Gb8-Kg-arE"/>
             </connections>
             <point key="canvasLocation" x="190.57971014492756" y="-50.892857142857139"/>
         </view>
