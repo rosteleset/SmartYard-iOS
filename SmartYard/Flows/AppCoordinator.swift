@@ -125,15 +125,23 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         }
     }
     
-    func processIncomingMessage(messageId: String, messageType: MessageType) {
-        switch messageType {
-        case .inbox:
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-                self?.mainTabBarRouter?.trigger(.notifications)
-            }
-            
-        case .chat:
-            break
+    func markAllMessagesAsDelivered() {
+        pushNotificationService.markAllMessagesAsDelivered()
+    }
+    
+    func markMessagesAsDelivered(messageIds: [String]) {
+        pushNotificationService.markMessagesAsDelivered(messageIds: messageIds)
+    }
+    
+    func openNotificationsTab() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            self?.mainTabBarRouter?.trigger(.notifications)
+        }
+    }
+    
+    func openChatTab() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            self?.mainTabBarRouter?.trigger(.chat)
         }
     }
     

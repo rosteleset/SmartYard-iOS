@@ -32,4 +32,17 @@ extension APIWrapper {
             }
     }
     
+    func delivered(messageId: String) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = DeliveredRequest(accessToken: accessToken, messageId: messageId)
+        
+        return provider.rx
+            .request(.delivered(request: request))
+            .filterSuccessfulCodes()
+            .map { _ in }
+    }
+    
 }

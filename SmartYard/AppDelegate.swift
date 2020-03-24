@@ -21,7 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         configureFirebase(for: application)
+        
         appCoordinator.setRoot(for: mainWindow)
+        appCoordinator.markAllMessagesAsDelivered()
         
         return true
     }
@@ -52,18 +54,6 @@ extension AppDelegate: MessagingDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
-    func application(
-        _ application: UIApplication,
-        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
-    ) {
-        if let messageID = userInfo["gcm.message_id"] {
-            print("DEBUG / PUSH NOTIFICATIONS / Message ID: \(messageID)")
-        }
-        
-        print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
-    }
-    
     // MARK: Чтобы отображались пуши, если приложение в данный момент активно (в foreground)
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
@@ -81,9 +71,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if let callPayload = CallPayload(pushNotificationPayload: userInfo) {
             appCoordinator.processIncomingCallRequest(callPayload: callPayload)
             completionHandler([])
-        } else {
-            completionHandler([.alert, .badge, .sound])
+            return
         }
+        
+        if let rawMessageType = userInfo["messageType"] as? String,
+            let messageType = MessageType(rawValue: rawMessageType),
+            messageType == .inbox,
+            let messageId = userInfo["messageId"] as? String {
+            appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
+        }
+        
+        completionHandler([.alert, .badge, .sound])
     }
     
     // MARK: Чтобы при нажатии на пуш происходило какое-то действие
@@ -99,9 +97,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         }
         
         if let rawMessageType = response.notification.request.content.userInfo["messageType"] as? String,
-            let messageType = MessageType(rawValue: rawMessageType),
-            let messageId = response.notification.request.content.userInfo["messageId"] as? String {
-            appCoordinator.processIncomingMessage(messageId: messageId, messageType: messageType)
+            let messageType = MessageType(rawValue: rawMessageType) {
+            switch messageType {
+            case .inbox: appCoordinator.openNotificationsTab()
+            case .chat: appCoordinator.openChatTab()
+            }
+            
+            if let messageId = response.notification.request.content.userInfo["messageId"] as? String,
+                messageType == .inbox {
+                appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
+            }
         }
         
         completionHandler()

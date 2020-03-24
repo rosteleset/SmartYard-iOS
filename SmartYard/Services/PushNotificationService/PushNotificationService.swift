@@ -13,6 +13,7 @@ import Firebase
 class PushNotificationService {
     
     private let apiWrapper: APIWrapper
+    private let disposeBag = DisposeBag()
     
     private let userNotificationCenter = UNUserNotificationCenter.current()
     
@@ -41,6 +42,41 @@ class PushNotificationService {
         }
         
         return apiWrapper.registerPushToken(pushToken: fcmToken, clientId: nil, type: .fcmRepeating)
+    }
+    
+    func markAllMessagesAsDelivered() {
+        userNotificationCenter.getDeliveredNotifications { [weak self] notifications in
+            let messageIds: [String] = notifications.compactMap { notification in
+                guard let rawMessageType = notification.request.content.userInfo["messageType"] as? String,
+                    let messageType = MessageType(rawValue: rawMessageType),
+                    messageType == .inbox,
+                    let messageId = notification.request.content.userInfo["messageId"] as? String else {
+                    return nil
+                }
+                
+                return messageId
+            }
+            
+            DispatchQueue.main.async {
+                self?.markMessagesAsDelivered(messageIds: messageIds)
+            }
+        }
+    }
+
+    func markMessagesAsDelivered(messageIds: [String]) {
+        let queries = messageIds.map { messageId in
+            apiWrapper.delivered(messageId: messageId)
+                .asDriver(onErrorJustReturn: nil)
+        }
+        
+        Driver
+            .concat(queries)
+            .drive(
+                onNext: { _ in
+                    print("Probably marked all messages as delivered")
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }
