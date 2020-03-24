@@ -45,4 +45,24 @@ extension APIWrapper {
             .map { _ in }
     }
     
+    func unreaded() -> Single<UnreadedResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = UnreadedRequest(accessToken: accessToken)
+        
+        return provider.rx
+            .request(.unreaded(request: request))
+            .filterSuccessfulCodes()
+            .map(BaseAPIResponse<UnreadedResponseData>.self)
+            .flatMap { response in
+                guard let data = response.data else {
+                    return .error(NSError.APIWrapperError.noDataError)
+                }
+                
+                return .just(data)
+            }
+    }
+    
 }

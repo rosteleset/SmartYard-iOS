@@ -13,9 +13,11 @@ import XCoordinator
 class NotificationsViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
+    private let pushNotificationService: PushNotificationService
     
-    init(apiWrapper: APIWrapper) {
+    init(apiWrapper: APIWrapper, pushNotificationService: PushNotificationService) {
         self.apiWrapper = apiWrapper
+        self.pushNotificationService = pushNotificationService
     }
     
     func transform(_ input: Input) -> Output {
@@ -24,7 +26,9 @@ class NotificationsViewModel: BaseViewModel {
         
         let reloadHtmlCodeTrigger = PublishSubject<Void>()
         
-        let response = Driver
+        let inboxResponseSubject = BehaviorSubject<InboxResponseData?>(value: nil)
+        
+        Driver
             .merge(
                 reloadHtmlCodeTrigger.asDriverOnErrorJustComplete(),
                 .just(())
@@ -39,8 +43,20 @@ class NotificationsViewModel: BaseViewModel {
                     .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] response in
+                    self?.pushNotificationService.resetMessagesCount()
+                    
+                    inboxResponseSubject.onNext(response)
+                }
+            )
+            .disposed(by: disposeBag)
         
-        return Output(inboxResponse: response, isLoading: activityTracker.asDriver())
+        return Output(
+            inboxResponse: inboxResponseSubject.asDriver(onErrorJustReturn: nil),
+            isLoading: activityTracker.asDriver()
+        )
     }
     
 }

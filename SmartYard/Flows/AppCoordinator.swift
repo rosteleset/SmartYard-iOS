@@ -133,6 +133,10 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         pushNotificationService.markMessagesAsDelivered(messageIds: messageIds)
     }
     
+    func syncBadgeNumber() {
+        pushNotificationService.getMessagesCountAndUpdateBadge()
+    }
+    
     func openNotificationsTab() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             self?.mainTabBarRouter?.trigger(.notifications)

@@ -17,9 +17,11 @@ enum NotificationsRoute: Route {
 class NotificationsCoordinator: NavigationCoordinator<NotificationsRoute> {
     
     private let apiWrapper: APIWrapper
+    private let pushNotificationService: PushNotificationService
     
-    init(apiWrapper: APIWrapper) {
+    init(apiWrapper: APIWrapper, pushNotificationService: PushNotificationService) {
         self.apiWrapper = apiWrapper
+        self.pushNotificationService = pushNotificationService
         
         super.init(initialRoute: .main)
         rootViewController.setNavigationBarHidden(true, animated: false)
@@ -28,7 +30,11 @@ class NotificationsCoordinator: NavigationCoordinator<NotificationsRoute> {
     override func prepareTransition(for route: NotificationsRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = NotificationsViewModel(apiWrapper: apiWrapper)
+            let vm = NotificationsViewModel(
+                apiWrapper: apiWrapper,
+                pushNotificationService: pushNotificationService
+            )
+            
             let vc = NotificationsViewController(viewModel: vm)
             return .set([vc])
         }

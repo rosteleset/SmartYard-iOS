@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureFirebase(for: application)
         
         appCoordinator.setRoot(for: mainWindow)
+        appCoordinator.syncBadgeNumber()
         appCoordinator.markAllMessagesAsDelivered()
         
         return true

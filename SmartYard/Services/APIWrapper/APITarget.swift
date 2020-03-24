@@ -27,6 +27,7 @@ enum APITarget {
     case getStreets(request: GetStreetsRequest)
     
     case inbox(request: InboxRequest)
+    case unreaded(request: UnreadedRequest)
     case delivered(request: DeliveredRequest)
     
     case getListConnect(request: GetListConnectRequest)
@@ -67,6 +68,7 @@ extension APITarget: TargetType {
         case .getStreets: return "geo/getStreets"
             
         case .inbox: return "inbox/inbox"
+        case .unreaded: return "inbox/unreaded"
         case .delivered: return "inbox/delivered"
             
         case .getListConnect: return "issues/listConnect"
@@ -111,6 +113,7 @@ extension APITarget: TargetType {
             case .getStreets(let request): return request.accessToken
                 
             case .inbox(let request): return request.accessToken
+            case .unreaded(let request): return request.accessToken
             case .delivered(let request): return request.accessToken
                 
             case .getListConnect(let request): return request.accessToken
@@ -156,6 +159,7 @@ extension APITarget: TargetType {
         case .getStreets(let request): return request.requestParameters
             
         case .inbox(let request): return request.requestParameters
+        case .unreaded(let request): return request.requestParameters
         case .delivered(let request): return request.requestParameters
 
         case .getListConnect(let request): return request.requestParameters

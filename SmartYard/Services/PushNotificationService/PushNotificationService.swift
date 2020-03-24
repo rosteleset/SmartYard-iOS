@@ -79,4 +79,20 @@ class PushNotificationService {
             .disposed(by: disposeBag)
     }
     
+    func getMessagesCountAndUpdateBadge() {
+        apiWrapper.unreaded()
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { response in
+                    UIApplication.shared.applicationIconBadgeNumber = response.count
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    func resetMessagesCount() {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
+    
 }

@@ -72,7 +72,10 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         // MARK: Notifications Tab
         
-        let notificationsCoordinator = NotificationsCoordinator(apiWrapper: apiWrapper)
+        let notificationsCoordinator = NotificationsCoordinator(
+            apiWrapper: apiWrapper,
+            pushNotificationService: pushNotificationService
+        )
         
         let notificationsTabBarItem = UITabBarItem(
             title: "Уведомления",
