@@ -105,4 +105,28 @@ extension APIWrapper {
             .map { _ in }
     }
     
+    func restore(contractNum: String?, contactId: String?, code: String?) -> Single<RestoreRequestResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        guard let contractNum = contractNum else {
+            return .error(NSError.APIWrapperError.contractNumberMissingError)
+        }
+        
+        let request = RestoreRequest(
+            accessToken: accessToken,
+            contract: contractNum,
+            contactId: contactId,
+            code: code,
+            comment: nil,
+            notification: nil
+        )
+        
+        return provider.rx.request(.restore(request: request))
+            .filterSuccessfulCodes()
+            .mapAsEmptyDataInitializable()
+            .mapToOptional()
+    }
+    
 }

@@ -71,7 +71,7 @@ extension NSError {
         static func codeIsNotSuccessful(_ code: Int) -> NSError {
             return NSError(
                 domain: domain,
-                code: 3102,
+                code: code,
                 userInfo: [NSLocalizedDescriptionKey: "В ходе выполнения запроса произошла ошибка \(code)"]
             )
         }
