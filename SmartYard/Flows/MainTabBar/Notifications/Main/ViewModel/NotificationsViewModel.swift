@@ -31,6 +31,7 @@ class NotificationsViewModel: BaseViewModel {
         Driver
             .merge(
                 reloadHtmlCodeTrigger.asDriverOnErrorJustComplete(),
+                input.viewWillAppearTrigger.mapToVoid(),
                 .just(())
             )
             .flatMapLatest { [weak self] _ -> Driver<InboxResponseData?> in
@@ -64,6 +65,7 @@ class NotificationsViewModel: BaseViewModel {
 extension NotificationsViewModel {
     
     struct Input {
+        let viewWillAppearTrigger: Driver<Bool>
     }
     
     struct Output {

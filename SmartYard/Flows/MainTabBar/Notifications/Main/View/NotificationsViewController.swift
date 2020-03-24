@@ -45,7 +45,7 @@ class NotificationsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func bind() {
-        let input = NotificationsViewModel.Input()
+        let input = NotificationsViewModel.Input(viewWillAppearTrigger: rx.viewWillAppear.asDriver())
         let output = viewModel.transform(input)
         
         output.inboxResponse
