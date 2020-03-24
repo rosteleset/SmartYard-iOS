@@ -69,6 +69,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
         
+        if let aps = userInfo["aps"] as? [AnyHashable: Any],
+            let badge = aps["badge"] as? Int {
+            NotificationCenter.default.post(
+                name: .badgeNumberUpdated,
+                object: nil,
+                userInfo: [NotificationKeys.badgeNumberKey: badge]
+            )
+        }
+        
         if let callPayload = CallPayload(pushNotificationPayload: userInfo) {
             appCoordinator.processIncomingCallRequest(callPayload: callPayload)
             completionHandler([])

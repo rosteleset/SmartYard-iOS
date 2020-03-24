@@ -66,6 +66,12 @@ class PushNotificationService {
     func markAllMessagesAsRead() {
         UIApplication.shared.applicationIconBadgeNumber = 0
         
+        NotificationCenter.default.post(
+            name: .badgeNumberUpdated,
+            object: nil,
+            userInfo: [NotificationKeys.badgeNumberKey: 0]
+        )
+        
         userNotificationCenter.getDeliveredNotifications { [weak self] notifications in
             let notificationIds: [String] = notifications.compactMap { notification in
                 guard let rawMessageType = notification.request.content.userInfo["messageType"] as? String,
@@ -104,6 +110,12 @@ class PushNotificationService {
             .drive(
                 onNext: { response in
                     UIApplication.shared.applicationIconBadgeNumber = response.count
+                    
+                    NotificationCenter.default.post(
+                        name: .badgeNumberUpdated,
+                        object: nil,
+                        userInfo: [NotificationKeys.badgeNumberKey: response.count]
+                    )
                 }
             )
             .disposed(by: disposeBag)

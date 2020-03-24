@@ -83,6 +83,9 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             selectedImage: UIImage(named: "NotificationsTabSelected")
         )
         
+        let currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
+        notificationsTabBarItem.badgeValue = currentBadgeNumber > 0 ? "\(currentBadgeNumber)" : nil
+        
         notificationsCoordinator.rootViewController.tabBarItem = notificationsTabBarItem
         self.notificationsTabBarItem = notificationsTabBarItem
         
@@ -163,6 +166,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         )
         
         rootViewController.tabBar.isTranslucent = false
+        subscribeToBadgeUpdates()
     }
     
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
@@ -173,6 +177,22 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         case .payments: return .selectAndCallDelegate(paymentsRouter)
         case .settings: return .selectAndCallDelegate(settingsRouter)
         }
+    }
+    
+    private func subscribeToBadgeUpdates() {
+        NotificationCenter.default.rx
+            .notification(Notification.Name.badgeNumberUpdated)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] notification in
+                    guard let badgeNumber = notification.userInfo?[NotificationKeys.badgeNumberKey] as? Int else {
+                        return
+                    }
+                    
+                    self?.notificationsTabBarItem.badgeValue = badgeNumber > 0 ? "\(badgeNumber)" : nil
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }
