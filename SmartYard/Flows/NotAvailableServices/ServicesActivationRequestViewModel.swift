@@ -84,7 +84,7 @@ class ServicesActivationRequestViewModel: BaseViewModel {
                         return
                     }
                     
-                    data[index].toogleState()
+                    data[index].toggleState()
                     
                     self.serviceItemsSubject.onNext(data)
                 }

@@ -99,38 +99,37 @@ class RestorePasswordViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { response in
-                    let resetMethodsArr: [RestoreMethod] = response.compactMap { RestoreMethod(apiRestoreData: $0) }
+                    let restoreMethods = response
+                        .compactMap { RestoreMethod(apiRestoreData: $0) }
+                        .map { RestoreMethodCellModel(method: $0, state: .uncheckedActive) }
                     
                     self.selectedRestoreMethod.onNext(nil)
-                    
-                    self.restoreMethods.onNext(
-                        resetMethodsArr.map { RestoreMethodCellModel(method: $0, state: .uncheckedActive) }
-                    )
+                    self.restoreMethods.onNext(restoreMethods)
                 }
             )
             .disposed(by: disposeBag)
 
         input.itemStateChanged
+            .withLatestFrom(self.restoreMethods.asDriver(onErrorJustReturn: [])) { ($0, $1) }
             .drive(
-                onNext: { [weak self] index in
-                    guard let self = self,
-                        let index = index,
-                        var data = try? self.restoreMethods.value()
-                        else {
-                            return
+                onNext: { [weak self] args in
+                    var (itemIndex, restoreMethods) = args
+                    
+                    guard let self = self, let index = itemIndex else {
+                        return
                     }
                     
-                    data.enumerated().forEach { offset, _ in
+                    restoreMethods.enumerated().forEach { offset, _ in
                         if offset == index {
-                            data[offset].toogleState()
+                            restoreMethods[offset].toggleState()
                         } else {
-                            data[offset].setUncheckedState()
+                            restoreMethods[offset].setUncheckedState()
                         }
                     }
                     
-                    self.selectedRestoreMethod.onNext(data.first { $0.state == .checkedActive })
+                    self.selectedRestoreMethod.onNext(restoreMethods.first { $0.state == .checkedActive })
                     
-                    self.restoreMethods.onNext(data)
+                    self.restoreMethods.onNext(restoreMethods)
                 }
             )
             .disposed(by: disposeBag)

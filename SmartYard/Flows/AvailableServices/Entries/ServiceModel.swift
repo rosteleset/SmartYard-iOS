@@ -16,7 +16,7 @@ struct ServiceModel {
     let description: String
     var state: SmartYardCheckBoxState
     
-    mutating func toogleState() {
+    mutating func toggleState() {
         guard state != .checkedInactive else {
             return
         }
