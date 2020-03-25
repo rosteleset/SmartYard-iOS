@@ -23,20 +23,20 @@ class ServiceFromOfficeView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var doSoButton: BlueButton!
     @IBOutlet private weak var mapView: MGLMapView!
-    
-    private var offices = [APIOffice]()
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         mapView.delegate = self
     }
     
     func setOffices(offices: [APIOffice]) {
-        self.offices = offices
-
+        if let annotations = mapView.annotations {
+            mapView.removeAnnotations(annotations)
+        }
+        
         var officesPoints = [CustomPointAnnotation]()
         
-        self.offices.forEach {
+        offices.forEach {
             let point = CustomPointAnnotation()
             point.coordinate = CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lon)
             point.title = $0.address
@@ -45,6 +45,9 @@ class ServiceFromOfficeView: PMNibLinkableView {
         }
         
         mapView.addAnnotations(officesPoints)
+        
+        mapView.setCenter(Constants.tambovCoordinates, animated: true)
+        mapView.setZoomLevel(8, animated: true)
     }
 
 }
@@ -76,13 +79,6 @@ extension ServiceFromOfficeView: MGLMapViewDelegate {
     }
 
     func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
-        
-        if let castAnnotation = annotation as? CustomPointAnnotation {
-            if !castAnnotation.willUseImage {
-                return nil
-            }
-        }
-    
         var annotationImage = mapView.dequeueReusableAnnotationImage(withIdentifier: "MapPoint")
         
         if annotationImage == nil {
