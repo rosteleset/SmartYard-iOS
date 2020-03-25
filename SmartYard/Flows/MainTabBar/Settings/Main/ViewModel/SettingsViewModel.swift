@@ -411,7 +411,7 @@ class SettingsViewModel: BaseViewModel {
                 }()
                 
                 let grantAccessAction: SettingsDataItem? = {
-                    guard item.flatId != nil else {
+                    guard item.flatId != nil, item.servicesAvailability[.domophone] == true else {
                         return nil
                     }
                     
