@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		842FECB6242B89DF007CA0F3 /* OfficesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */; };
+		842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */; };
+		842FECB9242B8A04007CA0F3 /* APIOffice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB8242B8A04007CA0F3 /* APIOffice.swift */; };
 		843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A7A7E23F29A2900840E51 /* FakeNavBar.swift */; };
 		843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843A7A8023F29A3400840E51 /* FakeNavBar.xib */; };
 		843C38CE242A577C0035BF80 /* InboxResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38C6242A577B0035BF80 /* InboxResponseData.swift */; };
@@ -339,6 +342,9 @@
 
 /* Begin PBXFileReference section */
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesResponseData.swift; sourceTree = "<group>"; };
+		842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesRequest.swift; sourceTree = "<group>"; };
+		842FECB8242B8A04007CA0F3 /* APIOffice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIOffice.swift; sourceTree = "<group>"; };
 		843A7A7E23F29A2900840E51 /* FakeNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNavBar.swift; sourceTree = "<group>"; };
 		843A7A8023F29A3400840E51 /* FakeNavBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FakeNavBar.xib; sourceTree = "<group>"; };
 		843C38C6242A577B0035BF80 /* InboxResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxResponseData.swift; sourceTree = "<group>"; };
@@ -670,6 +676,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		842FECB3242B89DF007CA0F3 /* Offices */ = {
+			isa = PBXGroup;
+			children = (
+				842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */,
+				842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */,
+			);
+			path = Offices;
+			sourceTree = "<group>";
+		};
 		843A7A7D23F29A0D00840E51 /* FakeNavBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1609,6 +1624,7 @@
 			isa = PBXGroup;
 			children = (
 				E92EFB52242A22F2003AF7FE /* Geo */,
+				842FECB8242B8A04007CA0F3 /* APIOffice.swift */,
 				E92EFB4F242A22F2003AF7FE /* APIPaymentsListAddress.swift */,
 				E92EFB50242A22F2003AF7FE /* APIIssueConnect.swift */,
 				E92EFB51242A22F2003AF7FE /* APIAddress.swift */,
@@ -1786,6 +1802,8 @@
 		E92EFB86242A22F2003AF7FE /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				E92EFB99242A22F2003AF7FE /* APIWrapper+Address.swift */,
+				842FECB3242B89DF007CA0F3 /* Offices */,
 				E92EFB87242A22F2003AF7FE /* GetAddressList */,
 				E92EFB8A242A22F2003AF7FE /* HourGuestAccess */,
 				E92EFB8D242A22F2003AF7FE /* Access */,
@@ -1793,7 +1811,6 @@
 				E92EFB92242A22F2003AF7FE /* OpenDoor */,
 				E92EFB94242A22F2003AF7FE /* GetSettingsList */,
 				E92EFB97242A22F2003AF7FE /* RegisterQR */,
-				E92EFB99242A22F2003AF7FE /* APIWrapper+Address.swift */,
 				E92EFB9A242A22F2003AF7FE /* Resend */,
 			);
 			path = Address;
@@ -2747,6 +2764,7 @@
 				E92EFB4A2428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
+				842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */,
 				E9A4D48A23EC27E20070A591 /* PinNumberField.swift in Sources */,
 				E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */,
 				E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */,
@@ -2799,6 +2817,7 @@
 				E92EFBB1242A22F2003AF7FE /* APIIssue.swift in Sources */,
 				E92EFBBE242A22F2003AF7FE /* GetAllLocationsResponseData.swift in Sources */,
 				E92EFBCF242A22F2003AF7FE /* GetAddressListResponseData.swift in Sources */,
+				842FECB9242B8A04007CA0F3 /* APIOffice.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
 				E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */,
 				E92EFBE0242A22F2003AF7FE /* CreateIssueRequest.swift in Sources */,
@@ -2824,6 +2843,7 @@
 				84878DE52420DB3B004C11B2 /* AddressAccessViewModel+ContactParsing.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
 				847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */,
+				842FECB6242B89DF007CA0F3 /* OfficesResponseData.swift in Sources */,
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
 				E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */,
