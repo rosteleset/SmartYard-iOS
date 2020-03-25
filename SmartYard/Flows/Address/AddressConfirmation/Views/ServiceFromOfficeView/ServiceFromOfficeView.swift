@@ -11,53 +11,57 @@ import PMNibLinkableView
 import RxSwift
 import RxCocoa
 import CoreLocation
-import MapboxStatic
+import Mapbox
 
 class ServiceFromOfficeView: PMNibLinkableView {
     
-    @IBOutlet private weak var mapImageView: UIImageView!
     @IBOutlet fileprivate weak var doSoButton: BlueButton!
     
-    // TODO: ничего не понятно с этим экраном, пусть пока останется так. Это 100% будет переделано
-    private let accessToken = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNqMHFiNXN4ZDAxazMyd253cmt3a2hmN2cifQ.q0ntnAWEdwckfZnT0IEy5A"
-    private let url = Bundle.main.url(forResource: "MapPoint", withExtension: "pdf")
-    
-    func setPreview() {
-        guard let mapPointImageUrl = url else {
-            return
-        }
-        
-        let markerOverlay = Marker(
-            coordinate: CLLocationCoordinate2D(latitude: 54.32881096780029, longitude: 48.38518549809816),
-            size: .medium,
-            iconName: "cafe"
-        )
-        
-        let camera = SnapshotCamera(
-            lookingAtCenter: CLLocationCoordinate2D(
-                latitude: 54.32881096780029,
-                longitude: 48.38518549809816
-            ),
-            zoomLevel: 15
-        )
-        
-        let options = SnapshotOptions(
-            styleURL: URL(string: "mapbox://styles/mapbox/streets-v9")!,
-            camera: camera,
-            size: mapImageView.bounds.size
-        )
-        
-        options.overlays.append(markerOverlay)
-        
-        _ = Snapshot(options: options, accessToken: accessToken).image { [weak self] image, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            self?.mapImageView.image = image
-        }
+    @IBOutlet private weak var mapView: MGLMapView!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        mapView.delegate = self
     }
+    
+    func setOffices(offices: [APIOffice]) {
+        if let annotations = mapView.annotations {
+            mapView.removeAnnotations(annotations)
+        }
+        
+        let officesPoints = offices.map { value -> MGLPointAnnotation in
+            let point = MGLPointAnnotation()
+            point.coordinate = CLLocationCoordinate2D(latitude: value.lat, longitude: value.lon)
+            point.title = value.address
+            return point
+        }
+        
+        mapView.addAnnotations(officesPoints)
+        
+        mapView.setCenter(Constants.tambovCoordinates, animated: true)
+        mapView.setZoomLevel(8, animated: true)
+    }
+
+}
+
+extension ServiceFromOfficeView: MGLMapViewDelegate {
+    
+    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
+        return nil
+    }
+
+    func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
+        guard let mapPointIcon = UIImage(named: "MapPoint") else {
+            return nil
+        }
+
+        return MGLAnnotationImage(image: mapPointIcon, reuseIdentifier: "MapPoint")
+    }
+    
+    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        return true
+    }
+    
 }
 
 extension Reactive where Base: ServiceFromOfficeView {

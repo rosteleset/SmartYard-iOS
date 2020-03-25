@@ -18,6 +18,7 @@ enum APITarget {
     case getSettingsList(request: GetSettingsListRequest)
     case access(request: AccessRequest)
     case resend(request: ResendRequest)
+    case offices(request: OfficesRequest)
     
     case getAddress(request: GetAddressRequest)
     case getGeoCoder(request: GeoCoderRequest)
@@ -59,6 +60,7 @@ extension APITarget: TargetType {
         case .getAddressList: return "address/getAddressList"
         case .access: return "address/access"
         case .resend: return "address/resend"
+        case .offices: return "address/offices"
             
         case .getAddress: return "geo/address"
         case .getGeoCoder: return "geo/coder"
@@ -104,6 +106,7 @@ extension APITarget: TargetType {
             case .getAddressList(let request): return request.accessToken
             case .access(let request): return request.accessToken
             case .resend(let request): return request.accessToken
+            case .offices(let request): return request.accessToken
                 
             case .getAddress(let request): return request.accessToken
             case .getGeoCoder(let request): return request.accessToken
@@ -150,6 +153,7 @@ extension APITarget: TargetType {
         case .getAddressList(let request): return request.requestParameters
         case .access(let request): return request.requestParameters
         case .resend(let request): return request.requestParameters
+        case .offices(let request): return request.requestParameters
             
         case .getAddress(let request): return request.requestParameters
         case .getGeoCoder(let request): return request.requestParameters

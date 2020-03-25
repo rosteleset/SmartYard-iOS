@@ -35,6 +35,20 @@ class AddressConfirmationViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
+        let offices = BehaviorSubject<[APIOffice]>(value: [])
+        
+        apiWrapper.getOffices()
+            .trackActivity(activityTracker)
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { response in
+                    offices.onNext(response)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         input.confirmByCourierTapped
             .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
                 guard let self = self else {
@@ -83,7 +97,7 @@ class AddressConfirmationViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output(isLoading: activityTracker.asDriver())
+        return Output(isLoading: activityTracker.asDriver(), offices: offices.asDriver(onErrorJustReturn: []))
     }
     
 }
@@ -98,6 +112,7 @@ extension AddressConfirmationViewModel {
     
     struct Output {
         let isLoading: Driver<Bool>
+        let offices: Driver<[APIOffice]>
     }
     
 }

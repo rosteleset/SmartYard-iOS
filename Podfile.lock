@@ -90,8 +90,9 @@ PODS:
   - "linphone-sdk (4.4.0-alpha.22+a27d5c6)":
     - "linphone-sdk/basic-frameworks (= 4.4.0-alpha.22+a27d5c6)"
   - "linphone-sdk/basic-frameworks (4.4.0-alpha.22+a27d5c6)"
-  - MapboxStatic.swift (0.11.0):
-    - Polyline (~> 4.2)
+  - Mapbox-iOS-SDK (5.7.0):
+    - MapboxMobileEvents (= 0.10.2)
+  - MapboxMobileEvents (0.10.2)
   - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (14.0.0):
@@ -104,7 +105,6 @@ PODS:
   - nanopb/encode (0.3.9011)
   - PinLayout (1.8.13)
   - PMNibLinkableView (0.3.0)
-  - Polyline (4.2.1)
   - PromisesObjC (1.2.8)
   - Protobuf (3.11.2)
   - RxCocoa (5.0.1):
@@ -159,7 +159,7 @@ DEPENDENCIES:
   - JGProgressHUD
   - Kingfisher
   - linphone-sdk (> 4.4.0-alpha)
-  - MapboxStatic.swift (~> 0.11)
+  - Mapbox-iOS-SDK (~> 5.7)
   - Moya/RxSwift
   - PinLayout
   - PMNibLinkableView
@@ -199,12 +199,12 @@ SPEC REPOS:
     - GoogleUtilities
     - JGProgressHUD
     - Kingfisher
-    - MapboxStatic.swift
+    - Mapbox-iOS-SDK
+    - MapboxMobileEvents
     - Moya
     - nanopb
     - PinLayout
     - PMNibLinkableView
-    - Polyline
     - PromisesObjC
     - Protobuf
     - RxCocoa
@@ -254,12 +254,12 @@ SPEC CHECKSUMS:
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
   linphone-sdk: 82302f72c930a859a75acdcfed304272d3cfdae1
-  MapboxStatic.swift: 3a39f0b077a7fb0568fd53f27a76c402b07ef408
+  Mapbox-iOS-SDK: 1b7cb0e739247d20ef75f5f14aa6ce34e1f0660f
+  MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PinLayout: e41a50260a76508b7a7fcee8955c76639adc69bc
   PMNibLinkableView: 06ebf6128feb70c3ba589d6be232748c1b7b1767
-  Polyline: 0e9890790292741c8186201a536b6bb6a78d02dd
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
@@ -276,6 +276,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: 7206dd4e1af403c868d4870d15c09380bc2b133f
+PODFILE CHECKSUM: 6f72ab2125886600f1936e9e58f47ba09678f4ea
 
 COCOAPODS: 1.8.4

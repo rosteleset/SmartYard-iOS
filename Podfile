@@ -34,7 +34,7 @@ target 'SmartYard' do
   pod 'SearchTextField'
 
   # Map
-  pod 'MapboxStatic.swift', '~> 0.11'
+  pod 'Mapbox-iOS-SDK', '~> 5.7'
   
   # Analytics
   pod 'Fabric'
