@@ -12,6 +12,7 @@ enum HomeRoute: Route {
     
     case main
     case alert(title: String, message: String?)
+    case dialog(title: String, message: String?, actions: [UIAlertAction])
     case inputContract
     case inputAddress
     case availableServices(address: String, services: [APIServiceModel])
@@ -20,7 +21,7 @@ enum HomeRoute: Route {
     case back
     case restorePassword(contractNum: String?)
     case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
-    case dialog(messageText: String, actions: [UIAlertAction])
+    case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
     
 }
 
@@ -30,19 +31,23 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
     private let issueService: IssueService
+    private let permissionService: PermissionService
     
     init(
         apiWrapper: APIWrapper,
         pushNotificationService: PushNotificationService,
         accessService: AccessService,
-        issueService: IssueService
+        issueService: IssueService,
+        permissionService: PermissionService
     ) {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
         self.accessService = accessService
         self.issueService = issueService
+        self.permissionService = permissionService
         
         super.init(initialRoute: .main)
+        
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
@@ -62,6 +67,9 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
             
+        case let .dialog(title, message, actions):
+            return .dialogTransition(title: title, message: message, actions: actions)
+            
         case .inputContract:
             let vm = AuthByContractNumViewModel(
                 router: weakRouter,
@@ -76,7 +84,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case .inputAddress:
             let vm = InputAddressViewModel(
                 router: weakRouter,
-                apiWrapper: apiWrapper
+                apiWrapper: apiWrapper,
+                permissionService: permissionService
             )
             
             let vc = InputAddressViewController(viewModel: vm)
@@ -145,8 +154,13 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             return .push(vc)
             
-        case let .dialog(messageText, actions):
-            return .dialogTransition(title: "", message: messageText, actions: actions)
+        case let .qrCodeScan(delegate):
+            let vm = QRCodeScanViewModel(router: weakRouter, delegate: delegate)
+            
+            let vc = QRCodeScanViewController(viewModel: vm)
+            vc.hidesBottomBarWhenPushed = true
+            
+            return .push(vc)
         }
     }
     

@@ -36,6 +36,12 @@ extension NSError {
             )
         }()
         
+        /// Не удалось настроить камеру
+        static let cameraSetupFailed = NSError(
+            domain: domain,
+            code: 1003,
+            userInfo: [NSLocalizedDescriptionKey: "Не удалось настроить камеру"]
+        )
     }
     
 }
@@ -215,6 +221,32 @@ extension NSError {
             domain: domain,
             code: 5004,
             userInfo: [NSLocalizedDescriptionKey: "InstanceID не инициализирован"]
+        )
+        
+    }
+    
+}
+
+// MARK: Permission Errors
+
+extension NSError {
+    
+    enum PermissionError {
+        
+        private static let domain = "PermissionError"
+        
+        /// Доступ к контактам отсутствует
+        static let noContactsPermission = NSError(
+            domain: domain,
+            code: 6001,
+            userInfo: [NSLocalizedDescriptionKey: "Доступ к контактам отсутствует"]
+        )
+        
+        /// Доступ к камере отсутствует
+        static let noCameraPermission = NSError(
+            domain: domain,
+            code: 6002,
+            userInfo: [NSLocalizedDescriptionKey: "Доступ к камере отсутствует"]
         )
         
     }

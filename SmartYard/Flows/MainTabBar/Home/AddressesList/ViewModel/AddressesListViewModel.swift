@@ -59,6 +59,7 @@ class AddressesListViewModel: BaseViewModel {
         let blockingRefresh = Driver
             .merge(
                 NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToVoid(),
+                NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToVoid(),
                 .just(())
             )
             .flatMapLatest { [weak self] _ -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in

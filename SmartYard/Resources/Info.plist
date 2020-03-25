@@ -26,6 +26,8 @@
 	<string>Доступ к списку контактов нужен для отображения имен и фотографий людей, на чьи номера выделен доступ к адресу</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Доступ к микрофону нужен для передачи звука во время звонка</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Доступ к камере нужен для возможности сканирования QR-кодов</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SourceSansPro-Regular.ttf</string>

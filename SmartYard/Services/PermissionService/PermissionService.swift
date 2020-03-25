@@ -1,0 +1,50 @@
+//
+//  PermissionService.swift
+//  SmartYard
+//
+//  Created by admin on 25/03/2020.
+//  Copyright © 2020 Mad Brains. All rights reserved.
+//
+
+import RxCocoa
+import RxSwift
+import AVFoundation
+import Contacts
+
+class PermissionService {
+    
+    func hasAccess(to mediaType: AVMediaType) -> Single<Void?> {
+        return Single.create(
+            subscribe: { single in
+                AVCaptureDevice.requestAccess(for: mediaType) { isPermissionGranted in
+                    guard isPermissionGranted else {
+                        single(.error(NSError.PermissionError.noCameraPermission))
+                        return
+                    }
+                    
+                    single(.success(()))
+                }
+                
+                return Disposables.create()
+            }
+        )
+    }
+    
+    func hasAccessToContacts() -> Single<Void?> {
+        return Single.create(
+            subscribe: { single in
+                CNContactStore().requestAccess(for: .contacts) { isPermissionGranted, error in
+                    guard isPermissionGranted else {
+                        single(.error(error ?? NSError.PermissionError.noContactsPermission))
+                        return
+                    }
+                    
+                    single(.success(()))
+                }
+                
+                return Disposables.create()
+            }
+        )
+    }
+    
+}

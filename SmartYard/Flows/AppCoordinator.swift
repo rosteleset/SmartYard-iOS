@@ -30,6 +30,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     private let linphoneService = LinphoneService()
     private let accessService = AccessService()
+    private let permissionService = PermissionService()
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     private let pushNotificationService: PushNotificationService
@@ -58,7 +59,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 accessService: accessService,
                 pushNotificationService: pushNotificationService,
                 apiWrapper: apiWrapper,
-                issueService: issueService
+                issueService: issueService,
+                permissionService: permissionService
             ).strongRouter
             
             mainTabBarRouter = router

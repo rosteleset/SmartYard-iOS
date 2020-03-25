@@ -30,21 +30,24 @@ enum SettingsRoute: Route {
 
 class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     
-    let accessService: AccessService
-    let pushNotificationService: PushNotificationService
-    let apiWrapper: APIWrapper
-    let issueService: IssueService
+    private let accessService: AccessService
+    private let pushNotificationService: PushNotificationService
+    private let apiWrapper: APIWrapper
+    private let issueService: IssueService
+    private let permissionService: PermissionService
     
     init(
         accessService: AccessService,
         pushNotificationService: PushNotificationService,
         apiWrapper: APIWrapper,
-        issueService: IssueService
+        issueService: IssueService,
+        permissionService: PermissionService
     ) {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
         self.apiWrapper = apiWrapper
         self.issueService = issueService
+        self.permissionService = permissionService
         
         super.init(initialRoute: .main)
         
@@ -164,7 +167,8 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
                 router: weakRouter,
                 address: address,
                 flatId: flatId,
-                apiWrapper: apiWrapper
+                apiWrapper: apiWrapper,
+                permissionService: permissionService
             )
             
             let vc = AddressAccessViewController(viewModel: vm)

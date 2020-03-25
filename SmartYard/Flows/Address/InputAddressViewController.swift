@@ -44,6 +44,23 @@ class InputAddressViewController: BaseViewController {
 //        configureRxKeyboard()
     }
     
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+        
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
+        
+        // TODO: сейчас кнопка "У меня есть QR-код" закреплена снизу по safe area
+        // При переходе на следующий экран, у которого hidesBottomBarWhenPushed, значение инсета снизу меняется
+        // При возврате назад, ТОЛЬКО когда мы полностью завершили транзишен до этого экрана, значение меняется обратно
+        // В итоге кнопка при возврате назад сначала находится в неправильном месте, как будто таббара тут не существует
+        // И только после завершения транзишена она возвращается в нормальное положение
+        //
+        // Я сделал это изменение положения анимированным, потому что раньше вообще крипово выглядело
+        // Нормального решения проблемы НЕТ. Можно будет это закостылить, но пока на мой взгляд не принципиально
+    }
+    
     private func configureRxKeyboard() {
         RxKeyboard.instance.visibleHeight
             .drive(

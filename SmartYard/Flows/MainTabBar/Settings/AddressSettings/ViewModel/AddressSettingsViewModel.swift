@@ -160,7 +160,7 @@ class AddressSettingsViewModel: BaseViewModel {
                 .ignoreNil()
                 .drive(
                     onNext: { [weak self] in
-                        NotificationCenter.default.post(.init(name: .addressDeleted, object: nil, userInfo: nil))
+                        NotificationCenter.default.post(.init(name: .addressDeleted, object: nil))
                         
                         self?.router.trigger(.back)
                     }
@@ -213,7 +213,7 @@ extension AddressSettingsViewModel: AddressDeletionViewModelDelegate {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] _ in
-                    NotificationCenter.default.post(.init(name: .addressDeleted, object: nil, userInfo: nil))
+                    NotificationCenter.default.post(.init(name: .addressDeleted, object: nil))
                     
                     self?.router.trigger(.back)
                 }
