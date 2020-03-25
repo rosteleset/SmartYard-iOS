@@ -168,12 +168,20 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         output.shouldBlockInteraction
             .drive(
                 onNext: { [weak self] shouldBlockInteraction in
-                    self?.mainContainerView.isHidden = shouldBlockInteraction
-                    self?.skeletonView.isHidden = !shouldBlockInteraction
-                    
-                    shouldBlockInteraction ?
-                        self?.skeletonView.showSkeletonAsynchronously() :
-                        self?.skeletonView.hideSkeleton()
+                    if shouldBlockInteraction {
+                        self?.mainContainerView.isHidden = true
+                        self?.skeletonView.isHidden = false
+                        self?.skeletonView.showSkeletonAsynchronously()
+                    } else {
+                        // MARK: Если показать сразу, то пользователь увидит, как меняется положение тумблеров
+                        // Т.к. мы подгружаем стейт с сервера. Поэтому решил это закрыть за скелетоном
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self?.mainContainerView.isHidden = false
+                            self?.skeletonView.isHidden = true
+                            self?.skeletonView.hideSkeleton()
+                        }
+                    }
                 }
             )
             .disposed(by: disposeBag)
