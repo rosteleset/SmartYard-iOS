@@ -35,6 +35,9 @@ class NotificationsViewModel: BaseViewModel {
         Driver
             .merge(
                 input.viewWillAppearTrigger.mapToVoid(),
+                NotificationCenter.default.rx.notification(.newInboxMessageReceived)
+                    .asDriverOnErrorJustComplete()
+                    .mapToVoid(),
                 .just(())
             )
             .flatMapLatest { [weak self] _ -> Driver<InboxResponseData?> in
