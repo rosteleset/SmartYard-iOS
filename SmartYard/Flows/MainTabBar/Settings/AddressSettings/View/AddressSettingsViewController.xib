@@ -29,6 +29,7 @@
                 <outlet property="cmsSwitch" destination="bJY-jZ-mlo" id="zYF-LD-OdR"/>
                 <outlet property="collapsedBottomConstraint" destination="glm-ii-U7P" id="MK6-gt-ax6"/>
                 <outlet property="deleteAddressButton" destination="kq1-WA-VLg" id="Har-ha-hTo"/>
+                <outlet property="deleteButtonTopToNotificationsConstraint" destination="TbD-rd-ij5" id="rit-k5-kAn"/>
                 <outlet property="editAddressButton" destination="Ezj-S0-0Ws" id="lcm-0z-8fz"/>
                 <outlet property="expandedBottomConstraint" destination="AgV-fd-NmC" id="H4a-hd-3n3"/>
                 <outlet property="expandedContainer" destination="dKI-5f-MgG" id="QFF-XK-ZgT"/>
@@ -277,6 +278,7 @@
                                 <constraint firstAttribute="trailing" secondItem="isu-7K-afz" secondAttribute="trailing" id="Lyf-AM-kMa"/>
                                 <constraint firstItem="kq1-WA-VLg" firstAttribute="top" secondItem="isu-7K-afz" secondAttribute="bottom" constant="20" id="TbD-rd-ij5"/>
                                 <constraint firstItem="kq1-WA-VLg" firstAttribute="leading" secondItem="SOC-N6-riE" secondAttribute="leading" id="dTJ-1v-vdA"/>
+                                <constraint firstItem="kq1-WA-VLg" firstAttribute="top" secondItem="SOC-N6-riE" secondAttribute="top" priority="999" id="if5-lB-Jwn"/>
                                 <constraint firstAttribute="bottom" secondItem="kq1-WA-VLg" secondAttribute="bottom" id="rHA-9D-iFP"/>
                             </constraints>
                         </view>

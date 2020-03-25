@@ -46,18 +46,14 @@ class AddressSettingsViewModel: BaseViewModel {
         let isCmsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let areCallsEnabledSubject = BehaviorSubject<Bool>(value: false)
         
-        let isInitialLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
+        let interactionBlockingRequestTracker = ActivityTracker()
         
         if hasDomophone {
             apiWrapper
                 .getCurrentIntercomState(flatId: flatId)
                 .trackError(errorTracker)
+                .trackActivity(interactionBlockingRequestTracker)
                 .asDriver(onErrorJustReturn: nil)
-                .do(
-                    onNext: { _ in
-                        isInitialLoadingFinishedSubject.onNext(true)
-                    }
-                )
                 .ignoreNil()
                 .drive(
                     onNext: { state in
@@ -141,7 +137,7 @@ class AddressSettingsViewModel: BaseViewModel {
             ringtone: .just("Нота"),
             hasDomophone: .just(hasDomophone),
             isLoading: activityTracker.asDriver(),
-            isInitialLoadingFinished: isInitialLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
+            shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
         )
     }
     
@@ -195,7 +191,7 @@ extension AddressSettingsViewModel {
         let ringtone: Driver<String>
         let hasDomophone: Driver<Bool>
         let isLoading: Driver<Bool>
-        let isInitialLoadingFinished: Driver<Bool>
+        let shouldBlockInteraction: Driver<Bool>
     }
     
 }

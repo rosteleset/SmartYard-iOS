@@ -34,6 +34,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private var collapsedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private var deleteButtonTopToNotificationsConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var deleteAddressButton: UIButton!
     
@@ -98,10 +99,6 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         
         voipContainerView.addGestureRecognizer(voipTapGesture)
         voipSwitch.isUserInteractionEnabled = false
-        
-        mainContainerView.isHidden = true
-        skeletonView.isHidden = false
-        skeletonView.showSkeletonAsynchronously()
     }
     
     private func toggleNotificationsSection() {
@@ -168,15 +165,24 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        output.isInitialLoadingFinished
-            .distinctUntilChanged()
-            .isTrue()
-            .delay(.milliseconds(500))
+        output.shouldBlockInteraction
             .drive(
-                onNext: { [weak self] _ in
-                    self?.mainContainerView.isHidden = false
-                    self?.skeletonView.hideSkeleton()
-                    self?.skeletonView.isHidden = true
+                onNext: { [weak self] shouldBlockInteraction in
+                    self?.mainContainerView.isHidden = shouldBlockInteraction
+                    self?.skeletonView.isHidden = !shouldBlockInteraction
+                    
+                    shouldBlockInteraction ?
+                        self?.skeletonView.showSkeletonAsynchronously() :
+                        self?.skeletonView.hideSkeleton()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.hasDomophone
+            .drive(
+                onNext: { [weak self] hasDomophone in
+                    self?.deleteButtonTopToNotificationsConstraint.isActive = hasDomophone
+                    self?.notificationsContainerView.isHidden = !hasDomophone
                 }
             )
             .disposed(by: disposeBag)
