@@ -166,20 +166,36 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.shouldBlockInteraction
+            .withLatestFrom(output.hasDomophone) { ($0, $1) }
             .drive(
-                onNext: { [weak self] shouldBlockInteraction in
-                    if shouldBlockInteraction {
+                onNext: { [weak self] args in
+                    let (shouldBlockInteraction, hasDomophone) = args
+                    
+                    let showSkeleton = {
                         self?.mainContainerView.isHidden = true
                         self?.skeletonView.isHidden = false
                         self?.skeletonView.showSkeletonAsynchronously()
-                    } else {
-                        // MARK: Если показать сразу, то пользователь увидит, как меняется положение тумблеров
-                        // Т.к. мы подгружаем стейт с сервера. Поэтому решил это закрыть за скелетоном
+                    }
+                    
+                    let hideSkeleton = {
+                        self?.mainContainerView.isHidden = false
+                        self?.skeletonView.isHidden = true
+                        self?.skeletonView.hideSkeleton()
+                    }
+                    
+                    // MARK: Если есть домофон, то лучше задержать скелетон на некоторое время
+                    // Иначе юзер может увидеть, как тумблеры меняют свое значение согласно загруженному стейту
+                    
+                    switch (shouldBlockInteraction, hasDomophone) {
+                    case (true, _):
+                        showSkeleton()
                         
+                    case (false, false):
+                        hideSkeleton()
+                        
+                    case (false, true):
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            self?.mainContainerView.isHidden = false
-                            self?.skeletonView.isHidden = true
-                            self?.skeletonView.hideSkeleton()
+                            hideSkeleton()
                         }
                     }
                 }
