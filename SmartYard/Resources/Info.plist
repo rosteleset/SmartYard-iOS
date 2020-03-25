@@ -52,5 +52,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>MGLMapboxAccessToken</key>
+	<string>pk.eyJ1IjoibGFudGEiLCJhIjoiY2s4NndqbHRqMDFibjNuc2lvYjhzeTVhcCJ9.W-BMwoS8EqatJldtgxTuLg</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Доступ к местоположению позволит отобразить Вашу позицию на карте</string>
 </dict>
 </plist>

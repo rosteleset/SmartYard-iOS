@@ -58,7 +58,6 @@ class AddressConfirmationViewController: BaseViewController, LoaderPresentable {
                         self?.officeView.isHidden = false
                         self?.courierView.isHidden = true
                         
-                        self?.officeView.setPreview()
                         return
                     }
                     
@@ -80,7 +79,15 @@ class AddressConfirmationViewController: BaseViewController, LoaderPresentable {
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
-                    self?.updateLoader(isEnabled: isLoading, detailText: "Создание заявки")
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.offices
+            .drive(
+                onNext: { [weak self] offices in
+                    self?.officeView.setOffices(offices: offices)
                 }
             )
             .disposed(by: disposeBag)

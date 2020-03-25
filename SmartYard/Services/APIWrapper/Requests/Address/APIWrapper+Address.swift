@@ -223,4 +223,18 @@ extension APIWrapper {
             .map { _ in }
     }
     
+    func getOffices() -> Single<OfficesResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = OfficesRequest(accessToken: accessToken)
+        
+        return provider.rx
+            .request(.offices(request: request))
+            .filterSuccessfulCodes()
+            .mapAsEmptyDataInitializable()
+            .mapToOptional()
+    }
+    
 }
