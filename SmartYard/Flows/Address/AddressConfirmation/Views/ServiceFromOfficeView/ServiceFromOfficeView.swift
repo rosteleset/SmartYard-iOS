@@ -13,15 +13,10 @@ import RxCocoa
 import CoreLocation
 import Mapbox
 
-class CustomPointAnnotation: MGLPointAnnotation {
-    
-    var willUseImage: Bool = true
-    
-}
-
 class ServiceFromOfficeView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var doSoButton: BlueButton!
+    
     @IBOutlet private weak var mapView: MGLMapView!
 
     override func awakeFromNib() {
@@ -34,14 +29,11 @@ class ServiceFromOfficeView: PMNibLinkableView {
             mapView.removeAnnotations(annotations)
         }
         
-        var officesPoints = [CustomPointAnnotation]()
-        
-        offices.forEach {
-            let point = CustomPointAnnotation()
-            point.coordinate = CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lon)
-            point.title = $0.address
-            
-            officesPoints.append(point)
+        let officesPoints = offices.map { value -> MGLPointAnnotation in
+            let point = MGLPointAnnotation()
+            point.coordinate = CLLocationCoordinate2D(latitude: value.lat, longitude: value.lon)
+            point.title = value.address
+            return point
         }
         
         mapView.addAnnotations(officesPoints)
@@ -59,13 +51,11 @@ extension ServiceFromOfficeView: MGLMapViewDelegate {
     }
 
     func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
-        var annotationImage = mapView.dequeueReusableAnnotationImage(withIdentifier: "MapPoint")
-        
-        if annotationImage == nil {
-            annotationImage = MGLAnnotationImage(image: UIImage(named: "MapPoint")!, reuseIdentifier: "MapPoint")
+        guard let mapPointIcon = UIImage(named: "MapPoint") else {
+            return nil
         }
-        
-        return annotationImage
+
+        return MGLAnnotationImage(image: mapPointIcon, reuseIdentifier: "MapPoint")
     }
     
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
