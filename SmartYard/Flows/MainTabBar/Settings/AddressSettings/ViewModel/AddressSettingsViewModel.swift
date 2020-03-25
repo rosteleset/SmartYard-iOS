@@ -18,6 +18,7 @@ class AddressSettingsViewModel: BaseViewModel {
     private let flatId: String
     private let address: String
     private let isContractOwner: Bool
+    private let hasDomophone: Bool
     private let router: WeakRouter<SettingsRoute>
     
     private let activityTracker = ActivityTracker()
@@ -29,6 +30,7 @@ class AddressSettingsViewModel: BaseViewModel {
         flatId: String,
         address: String,
         isContractOwner: Bool,
+        hasDomophone: Bool,
         router: WeakRouter<SettingsRoute>
     ) {
         self.apiWrapper = apiWrapper
@@ -36,6 +38,7 @@ class AddressSettingsViewModel: BaseViewModel {
         self.flatId = flatId
         self.address = address
         self.isContractOwner = isContractOwner
+        self.hasDomophone = hasDomophone
         self.router = router
     }
     
@@ -45,28 +48,30 @@ class AddressSettingsViewModel: BaseViewModel {
         
         let isInitialLoadingFinishedSubject = BehaviorSubject<Bool>(value: false)
         
-        apiWrapper
-            .getCurrentIntercomState(flatId: flatId)
-            .trackError(errorTracker)
-            .asDriver(onErrorJustReturn: nil)
-            .do(
-                onNext: { _ in
-                    isInitialLoadingFinishedSubject.onNext(true)
-                }
-            )
-            .ignoreNil()
-            .drive(
-                onNext: { state in
-                    isCmsEnabledSubject.onNext(state.cms)
-                    areCallsEnabledSubject.onNext(state.voip)
-                }
-            )
-            .disposed(by: disposeBag)
+        if hasDomophone {
+            apiWrapper
+                .getCurrentIntercomState(flatId: flatId)
+                .trackError(errorTracker)
+                .asDriver(onErrorJustReturn: nil)
+                .do(
+                    onNext: { _ in
+                        isInitialLoadingFinishedSubject.onNext(true)
+                    }
+                )
+                .ignoreNil()
+                .drive(
+                    onNext: { state in
+                        isCmsEnabledSubject.onNext(state.cms)
+                        areCallsEnabledSubject.onNext(state.voip)
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
         
         input.cmsTrigger
             .withLatestFrom(isCmsEnabledSubject.asDriver(onErrorJustReturn: false))
             .flatMapLatest { [weak self] isEnabled -> Driver<IntercomResponseData?> in
-                guard let self = self else {
+                guard let self = self, self.hasDomophone else {
                     return .empty()
                 }
                 
@@ -87,7 +92,7 @@ class AddressSettingsViewModel: BaseViewModel {
         input.voipTrigger
             .withLatestFrom(areCallsEnabledSubject.asDriver(onErrorJustReturn: false))
             .flatMapLatest { [weak self] isEnabled -> Driver<IntercomResponseData?> in
-                guard let self = self else {
+                guard let self = self, self.hasDomophone else {
                     return .empty()
                 }
                 
@@ -134,6 +139,7 @@ class AddressSettingsViewModel: BaseViewModel {
             isCmsEnabled: isCmsEnabledSubject.asDriver(onErrorJustReturn: false),
             areCallsEnabled: areCallsEnabledSubject.asDriver(onErrorJustReturn: false),
             ringtone: .just("Нота"),
+            hasDomophone: .just(hasDomophone),
             isLoading: activityTracker.asDriver(),
             isInitialLoadingFinished: isInitialLoadingFinishedSubject.asDriver(onErrorJustReturn: false)
         )
@@ -187,6 +193,7 @@ extension AddressSettingsViewModel {
         let isCmsEnabled: Driver<Bool>
         let areCallsEnabled: Driver<Bool>
         let ringtone: Driver<String>
+        let hasDomophone: Driver<Bool>
         let isLoading: Driver<Bool>
         let isInitialLoadingFinished: Driver<Bool>
     }

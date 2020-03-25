@@ -209,7 +209,8 @@ class SettingsViewModel: BaseViewModel {
                         .addressSettings(
                             flatId: flatId,
                             address: match.address,
-                            isContractOwner: match.contractOwner ?? false
+                            isContractOwner: match.contractOwner ?? false,
+                            hasDomophone: match.servicesAvailability[.domophone] == true
                         )
                     )
                 }
