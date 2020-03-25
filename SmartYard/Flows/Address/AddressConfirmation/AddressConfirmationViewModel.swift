@@ -19,8 +19,6 @@ class AddressConfirmationViewModel: BaseViewModel {
     
     private let address: String
     
-    private let offices = BehaviorSubject<[APIOffice]>(value: [])
-    
     init(
         router: WeakRouter<HomeRoute>,
         apiWrapper: APIWrapper,
@@ -37,13 +35,16 @@ class AddressConfirmationViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
+        let offices = BehaviorSubject<[APIOffice]>(value: [])
+        
         apiWrapper.getOffices()
             .trackActivity(activityTracker)
             .trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] response in
-                    self?.offices.onNext(response ?? [])
+                onNext: { response in
+                    offices.onNext(response)
                 }
             )
             .disposed(by: disposeBag)

@@ -15,20 +15,4 @@ struct APIOffice: Codable {
     let address: String
     let opening: String
     
-    private enum CodingKeys: String, CodingKey {
-        case lat
-        case lon
-        case address
-        case opening
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        lat = try container.decode(Double.self, forKey: .lat)
-        lon = try container.decode(Double.self, forKey: .lon)
-        address = try container.decode(String.self, forKey: .address)
-        opening = try container.decode(String.self, forKey: .opening)
-    }
-    
 }
