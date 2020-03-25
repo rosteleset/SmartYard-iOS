@@ -91,7 +91,6 @@ class QRCodeScanViewController: BaseViewController {
                     
                     let newState = !self.flashButton.isSelected
                     
-                    self.flashButton.isSelected = newState
                     self.toggleTorch(on: newState)
                 }
             )
@@ -121,30 +120,20 @@ class QRCodeScanViewController: BaseViewController {
     
     private func configureCaptureSession() -> Bool {
         let captureSession = AVCaptureSession()
-        
-        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
-            return false
-        }
-        
-        guard let videoInput = try? AVCaptureDeviceInput(device: videoCaptureDevice) else {
-            return false
-        }
-        
-        if captureSession.canAddInput(videoInput) {
-            captureSession.addInput(videoInput)
-        } else {
-            return false
-        }
-        
         let metadataOutput = AVCaptureMetadataOutput()
         
-        if captureSession.canAddOutput(metadataOutput) {
-            captureSession.addOutput(metadataOutput)
-            metadataOutput.setMetadataObjectsDelegate(self, queue: .main)
-            metadataOutput.metadataObjectTypes = [.qr]
-        } else {
+        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video),
+            let videoInput = try? AVCaptureDeviceInput(device: videoCaptureDevice),
+            captureSession.canAddInput(videoInput),
+            captureSession.canAddOutput(metadataOutput) else {
             return false
         }
+        
+        captureSession.addInput(videoInput)
+        captureSession.addOutput(metadataOutput)
+        
+        metadataOutput.setMetadataObjectsDelegate(self, queue: .main)
+        metadataOutput.metadataObjectTypes = [.qr]
         
         let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer.frame = view.layer.bounds
@@ -156,6 +145,8 @@ class QRCodeScanViewController: BaseViewController {
         
         return true
     }
+    
+    // MARK: Темный слой с прозрачной дырой для сканирования
     
     private func configureBlurLayer() {
         let blurLayer = CAShapeLayer()
@@ -179,6 +170,8 @@ class QRCodeScanViewController: BaseViewController {
         return fullPath.cgPath
     }
     
+    // MARK: Белая рамка вокруг дыры для сканирования
+    
     private func configureWhiteFrameLayer() {
         let whiteFrameLayer = CAShapeLayer()
         
@@ -191,6 +184,7 @@ class QRCodeScanViewController: BaseViewController {
         self.whiteFrameLayer = whiteFrameLayer
     }
     
+    /// Включение / выключение фонаря
     private func toggleTorch(on: Bool) {
         guard let device = AVCaptureDevice.default(for: AVMediaType.video), device.hasTorch else {
             return
@@ -200,6 +194,8 @@ class QRCodeScanViewController: BaseViewController {
             try device.lockForConfiguration()
             device.torchMode = on ? .on : .off
             device.unlockForConfiguration()
+            
+            flashButton.isSelected = on
         } catch {
             print("Torch could not be used")
         }
@@ -218,6 +214,10 @@ extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
             return
         }
         
+        // MARK: Вообще сканирование происходит всей камерой, а не только внутри какой-то рамки
+        // Но раз эта рамка есть, наверное, стоит сократить область сканирования именно до нее
+        // Поэтому просто фильтруем объекты, которые находятся внутри рамки
+        
         let objectsInsideFrame = metadataObjects
             .filter { object in
                 guard let objectBounds = previewLayer.transformedMetadataObject(for: object)?.bounds else {
@@ -226,9 +226,7 @@ extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
                 
                 return scanningArea.frame.contains(objectBounds)
             }
-            .compactMap {
-                $0 as? AVMetadataMachineReadableCodeObject
-            }
+            .compactMap { $0 as? AVMetadataMachineReadableCodeObject }
         
         readableObjects.onNext(objectsInsideFrame)
     }

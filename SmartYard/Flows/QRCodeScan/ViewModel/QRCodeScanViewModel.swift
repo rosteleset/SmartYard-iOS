@@ -29,6 +29,13 @@ class QRCodeScanViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
+        // MARK: Если попытаться вернуть QR-код до того, как будет завершен транзишен, может произойти глич
+        // Поэтому последовательность такая:
+        // 1. Ждем, пока полностью завершится транзишен показа экрана QRCodeScan
+        // 2. Начинаем сканирование, возвращаем результат
+        // 3. Закрываем экран QRCodeScan. Ждем, пока полностью завершится транзишен скрытия экрана
+        // 4. Делаем все остальное
+        
         let isTransitionCompleted = BehaviorSubject<Bool>(value: false)
         
         input.viewDidAppearTrigger
@@ -80,6 +87,7 @@ class QRCodeScanViewModel: BaseViewModel {
                     }
                     
                     AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+                    
                     self.delegate?.qrCodeScanViewModel(self, didExtractCode: code)
                 }
             )
@@ -111,6 +119,8 @@ class QRCodeScanViewModel: BaseViewModel {
     }
     
     private func extractCode(from readableObject: AVMetadataMachineReadableCodeObject) -> String? {
+        // MARK: Я думал, тут будет какая-то клиент-сайд валидация, но тут нет вообще ничего
+        
         return readableObject.stringValue
     }
     
