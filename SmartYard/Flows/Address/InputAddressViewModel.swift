@@ -341,13 +341,23 @@ extension InputAddressViewModel: QRCodeScanViewModelDelegate {
     }
     
     func qrCodeScanViewModel(_ viewModel: QRCodeScanViewModel, didExtractCode code: String) {
-        apiWrapper.registerQR(qr: code)
-            .trackActivity(activityTracker)
-            .trackError(errorTracker)
-            .asDriver(onErrorJustReturn: nil)
+        router.rx
+            .trigger(.back)
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .registerQR(qr: code)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
             .ignoreNil()
             .drive(
-                onNext: { [weak self] in
+                onNext: { [weak self] _ in
                     NotificationCenter.default.post(name: .addressAdded, object: nil)
                     
                     self?.router.trigger(.main)

@@ -110,6 +110,7 @@ class QRCodeScanViewController: BaseViewController {
             )
         
         let input = QRCodeScanViewModel.Input(
+            viewDidAppearTrigger: rx.viewDidAppear.asDriver(),
             readableObjects: readableObjects.asDriverOnErrorJustComplete(),
             backTrigger: backButton.rx.tap.asDriver(),
             cameraFailureTrigger: cameraFailure

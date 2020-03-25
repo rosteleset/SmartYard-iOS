@@ -29,7 +29,40 @@ class QRCodeScanViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
+        let isTransitionCompleted = BehaviorSubject<Bool>(value: false)
+        
+        input.viewDidAppearTrigger
+            .drive(
+                onNext: { _ in
+                    isTransitionCompleted.onNext(true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        let readableObjectsProxy = BehaviorSubject<[AVMetadataMachineReadableCodeObject]>(value: [])
+        
         input.readableObjects
+            .drive(
+                onNext: { objects in
+                    readableObjectsProxy.onNext(objects)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        Driver
+            .combineLatest(
+                isTransitionCompleted.asDriverOnErrorJustComplete(),
+                readableObjectsProxy.asDriverOnErrorJustComplete()
+            )
+            .flatMap { args -> Driver<[AVMetadataMachineReadableCodeObject]> in
+                let (isTransitionCompleted, objects) = args
+                
+                guard isTransitionCompleted else {
+                    return .empty()
+                }
+                
+                return .just(objects)
+            }
             .map { [weak self] readableObjects -> String? in
                 guard let self = self else {
                     return nil
@@ -48,7 +81,6 @@ class QRCodeScanViewModel: BaseViewModel {
                     
                     AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
                     self.delegate?.qrCodeScanViewModel(self, didExtractCode: code)
-                    self.router.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -87,6 +119,7 @@ class QRCodeScanViewModel: BaseViewModel {
 extension QRCodeScanViewModel {
     
     struct Input {
+        let viewDidAppearTrigger: Driver<Bool>
         let readableObjects: Driver<[AVMetadataMachineReadableCodeObject]>
         let backTrigger: Driver<Void>
         let cameraFailureTrigger: Driver<Void>
