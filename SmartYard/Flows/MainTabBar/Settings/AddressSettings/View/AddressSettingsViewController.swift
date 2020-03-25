@@ -34,6 +34,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private var collapsedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private var deleteButtonTopToNotificationsConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var deleteAddressButton: UIButton!
     
@@ -98,10 +99,6 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         
         voipContainerView.addGestureRecognizer(voipTapGesture)
         voipSwitch.isUserInteractionEnabled = false
-        
-        mainContainerView.isHidden = true
-        skeletonView.isHidden = false
-        skeletonView.showSkeletonAsynchronously()
     }
     
     private func toggleNotificationsSection() {
@@ -168,15 +165,48 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        output.isInitialLoadingFinished
-            .distinctUntilChanged()
-            .isTrue()
-            .delay(.milliseconds(500))
+        output.shouldBlockInteraction
+            .withLatestFrom(output.hasDomophone) { ($0, $1) }
             .drive(
-                onNext: { [weak self] _ in
-                    self?.mainContainerView.isHidden = false
-                    self?.skeletonView.hideSkeleton()
-                    self?.skeletonView.isHidden = true
+                onNext: { [weak self] args in
+                    let (shouldBlockInteraction, hasDomophone) = args
+                    
+                    let showSkeleton = {
+                        self?.mainContainerView.isHidden = true
+                        self?.skeletonView.isHidden = false
+                        self?.skeletonView.showSkeletonAsynchronously()
+                    }
+                    
+                    let hideSkeleton = {
+                        self?.mainContainerView.isHidden = false
+                        self?.skeletonView.isHidden = true
+                        self?.skeletonView.hideSkeleton()
+                    }
+                    
+                    // MARK: Если есть домофон, то лучше задержать скелетон на некоторое время
+                    // Иначе юзер может увидеть, как тумблеры меняют свое значение согласно загруженному стейту
+                    
+                    switch (shouldBlockInteraction, hasDomophone) {
+                    case (true, _):
+                        showSkeleton()
+                        
+                    case (false, false):
+                        hideSkeleton()
+                        
+                    case (false, true):
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            hideSkeleton()
+                        }
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.hasDomophone
+            .drive(
+                onNext: { [weak self] hasDomophone in
+                    self?.deleteButtonTopToNotificationsConstraint.isActive = hasDomophone
+                    self?.notificationsContainerView.isHidden = !hasDomophone
                 }
             )
             .disposed(by: disposeBag)

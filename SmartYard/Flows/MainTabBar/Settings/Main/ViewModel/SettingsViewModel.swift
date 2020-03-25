@@ -209,7 +209,8 @@ class SettingsViewModel: BaseViewModel {
                         .addressSettings(
                             flatId: flatId,
                             address: match.address,
-                            isContractOwner: match.contractOwner ?? false
+                            isContractOwner: match.contractOwner ?? false,
+                            hasDomophone: match.servicesAvailability[.domophone] == true
                         )
                     )
                 }
@@ -411,7 +412,7 @@ class SettingsViewModel: BaseViewModel {
                 }()
                 
                 let grantAccessAction: SettingsDataItem? = {
-                    guard item.flatId != nil else {
+                    guard item.flatId != nil, item.servicesAvailability[.domophone] == true else {
                         return nil
                     }
                     
