@@ -13,23 +13,6 @@ import RxCocoa
 
 extension AddressAccessViewModel {
     
-    func hasAccessToContacts() -> Single<Void?> {
-        return Single.create(
-            subscribe: { single in
-                CNContactStore().requestAccess(for: .contacts) { isPermissionGranted, error in
-                    guard isPermissionGranted else {
-                        single(.error(error ?? NSError.PermissionError.noContactsPermission))
-                        return
-                    }
-                    
-                    single(.success(()))
-                }
-                
-                return Disposables.create()
-            }
-        )
-    }
-    
     func getContacts() -> [CNContact] {
         let contactStore = CNContactStore()
         

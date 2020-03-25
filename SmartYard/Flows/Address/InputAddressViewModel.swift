@@ -16,6 +16,7 @@ class InputAddressViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
     private let apiWrapper: APIWrapper
+    private let permissionService: PermissionService
     
     private let citiesList = BehaviorSubject<[APILocation]>(value: [])
     private let streetsList = BehaviorSubject<[APIStreet]>(value: [])
@@ -29,9 +30,10 @@ class InputAddressViewModel: BaseViewModel {
     private let activityTracker = ActivityTracker()
     private let errorTracker = ErrorTracker()
     
-    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper) {
+    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, permissionService: PermissionService) {
         self.router = router
         self.apiWrapper = apiWrapper
+        self.permissionService = permissionService
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
@@ -126,7 +128,7 @@ class InputAddressViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                return self.hasAccess(to: .video)
+                return self.permissionService.hasAccess(to: .video)
                     .trackError(self.errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
@@ -323,22 +325,10 @@ extension InputAddressViewModel {
 
 extension InputAddressViewModel: QRCodeScanViewModelDelegate {
     
-    func hasAccess(to mediaType: AVMediaType) -> Single<Void?> {
-        return Single.create(
-            subscribe: { single in
-                AVCaptureDevice.requestAccess(for: mediaType) { isPermissionGranted in
-                    guard isPermissionGranted else {
-                        single(.error(NSError.PermissionError.noCameraPermission))
-                        return
-                    }
-                    
-                    single(.success(()))
-                }
-                
-                return Disposables.create()
-            }
-        )
-    }
+    // MARK: происходит глич анимации, если мы пытаемся презентануть ошибку до того, как завершился возврат назад
+    // Он пытается презентнуть ошибку от того экрана, с которого мы возвращаемся
+    // Поэтому было решено дергать back отсюда, ждать завершения транзишена, а потом уже делать запрос к API
+    // Если ошибка и выскочит, то она презентнется нормально, поскольку мы уже ушли с того экрана
     
     func qrCodeScanViewModel(_ viewModel: QRCodeScanViewModel, didExtractCode code: String) {
         router.rx

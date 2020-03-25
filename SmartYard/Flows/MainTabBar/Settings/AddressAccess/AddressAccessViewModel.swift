@@ -28,15 +28,23 @@ class AddressAccessViewModel: BaseViewModel {
     private let flatId: String
     
     private let apiWrapper: APIWrapper
+    private let permissionService: PermissionService
     
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
     
-    init(router: WeakRouter<SettingsRoute>, address: String, flatId: String, apiWrapper: APIWrapper) {
+    init(
+        router: WeakRouter<SettingsRoute>,
+        address: String,
+        flatId: String,
+        apiWrapper: APIWrapper,
+        permissionService: PermissionService
+    ) {
         self.router = router
         self.address = address
         self.flatId = flatId
         self.apiWrapper = apiWrapper
+        self.permissionService = permissionService
         
         addressSubject = BehaviorSubject<String?>(value: address)
         
@@ -47,7 +55,7 @@ class AddressAccessViewModel: BaseViewModel {
     func transform(input: Input) -> Output {
         // MARK: Загрузка локального списка контактов
         
-        hasAccessToContacts()
+        permissionService.hasAccessToContacts()
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(

@@ -31,17 +31,20 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
     private let issueService: IssueService
+    private let permissionService: PermissionService
     
     init(
         apiWrapper: APIWrapper,
         pushNotificationService: PushNotificationService,
         accessService: AccessService,
-        issueService: IssueService
+        issueService: IssueService,
+        permissionService: PermissionService
     ) {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
         self.accessService = accessService
         self.issueService = issueService
+        self.permissionService = permissionService
         
         super.init(initialRoute: .main)
         
@@ -81,7 +84,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case .inputAddress:
             let vm = InputAddressViewModel(
                 router: weakRouter,
-                apiWrapper: apiWrapper
+                apiWrapper: apiWrapper,
+                permissionService: permissionService
             )
             
             let vc = InputAddressViewController(viewModel: vm)
