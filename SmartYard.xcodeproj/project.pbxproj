@@ -292,7 +292,6 @@
 		E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */; };
 		E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4270823F2CD3000F5D593 /* ServiceFromOfficeView.swift */; };
 		E9E4270B23F2CD3900F5D593 /* ServiceFromOfficeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4270A23F2CD3900F5D593 /* ServiceFromOfficeView.xib */; };
-		E9E4270D23F3D62C00F5D593 /* MapPoint.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E9E4270C23F3D62C00F5D593 /* MapPoint.pdf */; };
 		E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4270F23F40D2500F5D593 /* AvailableServicesViewController.swift */; };
 		E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9E4271023F40D2500F5D593 /* AvailableServicesViewController.xib */; };
 		E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4271423F40DAF00F5D593 /* SmartYardCheckBoxView.swift */; };
@@ -634,7 +633,6 @@
 		E9E4270623F2CD1900F5D593 /* ServiceFromCourierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFromCourierView.swift; sourceTree = "<group>"; };
 		E9E4270823F2CD3000F5D593 /* ServiceFromOfficeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFromOfficeView.swift; sourceTree = "<group>"; };
 		E9E4270A23F2CD3900F5D593 /* ServiceFromOfficeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceFromOfficeView.xib; sourceTree = "<group>"; };
-		E9E4270C23F3D62C00F5D593 /* MapPoint.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = MapPoint.pdf; sourceTree = "<group>"; };
 		E9E4270F23F40D2500F5D593 /* AvailableServicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableServicesViewController.swift; sourceTree = "<group>"; };
 		E9E4271023F40D2500F5D593 /* AvailableServicesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AvailableServicesViewController.xib; sourceTree = "<group>"; };
 		E9E4271423F40DAF00F5D593 /* SmartYardCheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardCheckBoxView.swift; sourceTree = "<group>"; };
@@ -1295,7 +1293,6 @@
 			isa = PBXGroup;
 			children = (
 				84F840DC23E07DA5008DBE50 /* Assets.xcassets */,
-				E9E4270C23F3D62C00F5D593 /* MapPoint.pdf */,
 				84B9EC9B23E089C500979C39 /* GoogleService-Info.plist */,
 				84F840E123E07DA5008DBE50 /* Info.plist */,
 				84B9EC9223E0884400979C39 /* linphonerc_default */,
@@ -2458,7 +2455,6 @@
 				E9E4270523F2CD0F00F5D593 /* ServiceFromCourierView.xib in Resources */,
 				E9C256862423F31D00BE32E0 /* RestoreMethodCell.xib in Resources */,
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
-				E9E4270D23F3D62C00F5D593 /* MapPoint.pdf in Resources */,
 				847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */,
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
 				E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */,
