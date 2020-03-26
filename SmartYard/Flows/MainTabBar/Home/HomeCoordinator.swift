@@ -79,7 +79,19 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             let vc = AuthByContractNumViewController(viewModel: vm, isShowingManual: isManualTrigger)
             
-            return isManualTrigger ? .push(vc) : .set([vc], animation: .fade)
+            let transition: NavigationTransition = {
+                guard isManualTrigger else {
+                    return .set([vc], animation: .fade)
+                }
+                
+                if (rootViewController.viewControllers.contains { $0 is AuthByContractNumViewController }) {
+                    return .none()
+                } else {
+                    return .push(vc)
+                }
+            }()
+            
+            return transition
             
         case .inputAddress:
             let vm = InputAddressViewModel(

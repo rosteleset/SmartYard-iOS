@@ -209,7 +209,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .drive(
                 onNext: { [weak self] in
                     self?.trigger(.home)
-                    self?.homeRouter.trigger(.inputContract(isManualTrigger: false))
+                    self?.homeRouter.trigger(.inputContract(isManualTrigger: true))
                 }
             )
             .disposed(by: disposeBag)
