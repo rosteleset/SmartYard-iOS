@@ -159,7 +159,7 @@ DEPENDENCIES:
   - JGProgressHUD
   - Kingfisher
   - linphone-sdk (> 4.4.0-alpha)
-  - Mapbox-iOS-SDK (~> 5.7)
+  - Mapbox-iOS-SDK
   - Moya/RxSwift
   - PinLayout
   - PMNibLinkableView
@@ -276,6 +276,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: 6f72ab2125886600f1936e9e58f47ba09678f4ea
+PODFILE CHECKSUM: 332407e80f368e5b9b36c4c0e0210304dd2331d7
 
 COCOAPODS: 1.8.4
