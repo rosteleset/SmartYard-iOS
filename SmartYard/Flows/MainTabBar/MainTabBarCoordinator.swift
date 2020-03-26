@@ -210,7 +210,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
                     print("some")
                 }
             )
-            .disposed(by: DisposeBag())
+            .disposed(by: disposeBag)
     }
     
 }
