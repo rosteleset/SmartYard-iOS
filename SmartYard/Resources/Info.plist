@@ -19,15 +19,19 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>25</string>
+	<string>65</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSContactsUsageDescription</key>
-	<string>Доступ к списку контактов нужен для отображения имен и фотографий людей, на чьи номера выделен доступ к адресу</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Доступ к микрофону нужен для передачи звука во время звонка</string>
+	<key>MGLMapboxAccessToken</key>
+	<string>pk.eyJ1IjoibGFudGEiLCJhIjoiY2s4NndqbHRqMDFibjNuc2lvYjhzeTVhcCJ9.W-BMwoS8EqatJldtgxTuLg</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Доступ к камере нужен для возможности сканирования QR-кодов</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Доступ к списку контактов нужен для отображения имен и фотографий людей, на чьи номера выделен доступ к адресу</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Доступ к местоположению позволит отобразить Вашу позицию на карте</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Доступ к микрофону нужен для передачи звука во время звонка</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SourceSansPro-Regular.ttf</string>
@@ -52,9 +56,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>MGLMapboxAccessToken</key>
-	<string>pk.eyJ1IjoibGFudGEiLCJhIjoiY2s4NndqbHRqMDFibjNuc2lvYjhzeTVhcCJ9.W-BMwoS8EqatJldtgxTuLg</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Доступ к местоположению позволит отобразить Вашу позицию на карте</string>
 </dict>
 </plist>

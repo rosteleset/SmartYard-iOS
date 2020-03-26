@@ -10,7 +10,8 @@ platform :ios do
       scheme: 'SmartYard',
       test_groups: 'madbrains,customertesters',
       xcode_version: '~> 10.0',
-      force_full_cert_sync: true
+      force_full_cert_sync: true,
+      export_options: { compileBitcode: false, uploadBitcode: false }
     )
   end
 
@@ -19,7 +20,8 @@ platform :ios do
       scheme: 'SmartYard',
       app_store_connect_team_id: 'TODO!!!!!!!!',
       xcode_version: '~> 10.0',
-      force_full_cert_sync: true
+      force_full_cert_sync: true,
+      export_options: { compileBitcode: false, uploadBitcode: false }
     )
   end
 
