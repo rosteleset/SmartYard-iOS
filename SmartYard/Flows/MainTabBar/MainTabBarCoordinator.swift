@@ -205,9 +205,11 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         NotificationCenter.default.rx
             .notification(Notification.Name.addAddressFromSettings)
             .asDriverOnErrorJustComplete()
+            .mapToVoid()
             .drive(
-                onNext: { vl in
-                    print("some")
+                onNext: { [weak self] in
+                    self?.trigger(.home)
+                    self?.homeRouter.trigger(.inputContract(isManualTrigger: false))
                 }
             )
             .disposed(by: disposeBag)
