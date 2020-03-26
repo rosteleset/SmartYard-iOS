@@ -356,7 +356,10 @@ class SettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        let name = accessService.clientName?.name ?? ""
+        let name = [accessService.clientName?.name, accessService.clientName?.patronymic]
+            .compactMap { $0 }
+            .joined(separator: " ")
+        
         let phone = accessService.clientPhoneNumber?.formattedNumberFromRawNumber
         
         return Output(
