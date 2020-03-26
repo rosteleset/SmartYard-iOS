@@ -11,7 +11,7 @@ import RxDataSources
 enum AllowedPersonDataItem: IdentifiableType, Equatable {
     
     case addContact
-    case contact(person: AllowedPerson)
+    case contact(personType: AllowedPersonType, person: AllowedPerson)
     
 }
 
@@ -20,7 +20,7 @@ extension AllowedPersonDataItem {
     var identity: AllowedPersonDataItemIdentity {
         switch self {
         case .addContact: return .addContact
-        case let .contact(person): return .contact(person: person)
+        case let .contact(_, person): return .contact(person: person)
         }
     }
     

@@ -58,6 +58,7 @@
                             <constraint firstItem="fNa-ka-WMv" firstAttribute="centerY" secondItem="Tdf-XX-hRL" secondAttribute="centerY" id="F5h-aV-DPL"/>
                             <constraint firstItem="GwR-jd-bFn" firstAttribute="leading" secondItem="Tdf-XX-hRL" secondAttribute="leading" constant="24" id="f4X-w0-ByH"/>
                             <constraint firstItem="hDp-TG-q0z" firstAttribute="centerY" secondItem="Tdf-XX-hRL" secondAttribute="centerY" id="jin-Rz-usm"/>
+                            <constraint firstAttribute="trailing" secondItem="fNa-ka-WMv" secondAttribute="trailing" priority="999" constant="24" id="lTS-rB-4Ve"/>
                             <constraint firstAttribute="trailing" secondItem="hDp-TG-q0z" secondAttribute="trailing" constant="24" id="nfb-Dz-d14"/>
                             <constraint firstItem="fNa-ka-WMv" firstAttribute="leading" secondItem="GwR-jd-bFn" secondAttribute="trailing" constant="12" id="qBx-z4-BCN"/>
                             <constraint firstItem="hDp-TG-q0z" firstAttribute="leading" secondItem="fNa-ka-WMv" secondAttribute="trailing" constant="12" id="st9-lE-JnE"/>
@@ -83,6 +84,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="nameTrailingToSmsButtonConstraint" destination="st9-lE-JnE" id="5md-yA-SAr"/>
                 <outlet property="smsButton" destination="hDp-TG-q0z" id="JcP-Li-YeU"/>
                 <outlet property="userLogoImageView" destination="GwR-jd-bFn" id="qkR-1B-sED"/>
                 <outlet property="userNameLabel" destination="fNa-ka-WMv" id="EtQ-9M-Qpc"/>
