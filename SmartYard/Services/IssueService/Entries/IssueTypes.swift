@@ -125,5 +125,30 @@ enum IssueType {
             return [startWorkAction, callAction]
         }
     }
+    
+    var customFields: [String: String] {
+        switch self {
+        case .approveAddressIssue(let address):
+            return [:]
+        case .dontRememberAnythingIssue(let userInfo):
+            return [:]
+        case .unavailableAddressConnectionIssue(let userInfo, let services):
+            return [:]
+        case .connectSelectedServicesIssue(let userInfo, let services):
+            return [:]
+        case .confirmAddressByCourierIssue(let userInfo):
+            return [:]
+        case .confirmAddressInOfficeIssue(let userInfo):
+            return [:]
+        case .deleteAddressIssue(let userInfo, let reason):
+            return [:]
+        case .activateServiceIssue(let userInfo, let services):
+            return [:]
+        case .changeTariffIssue(let clientId):
+            return [:]
+        case .serviceUnavailableIssue(let userInfo, let service):
+            return [:]
+        }
+    }
 
 }

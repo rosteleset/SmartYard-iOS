@@ -14,9 +14,7 @@ extension APIWrapper {
     
     func createIssue(
         issue: IssueType,
-        userInfo: MainUserInfo,
-        lat: String? = nil,
-        lng: String? = nil
+        customFields: [String: String]
     ) -> Single<CreateIssueResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
@@ -28,22 +26,14 @@ extension APIWrapper {
             description: issue.description,
             type: "32"
         )
-        
-        let latitude = (lat ?? "").replacingOccurrences(of: ".", with: ",")
-        let longitude = (lng ?? "").replacingOccurrences(of: ".", with: ",")
-        
-        let customField = APIIssueCustomField(
-            code: issue.clientCode,
-            phoneNumber: userInfo.phoneNumber,
-            source: "Приложение",
-            lat: latitude,
-            lng: longitude
-        )
+//
+//        let latitude = (lat ?? "").replacingOccurrences(of: ".", with: ",")
+//        let longitude = (lng ?? "").replacingOccurrences(of: ".", with: ",")
         
         let request = CreateIssueRequest(
             accessToken: accessToken,
             issue: apiIssue,
-            customFields: customField,
+            customFields: customFields,
             actions: issue.actions
         )
         

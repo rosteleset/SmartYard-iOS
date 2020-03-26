@@ -172,7 +172,6 @@
 		E92EFBAF242A22F2003AF7FE /* APIIntercomSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB57242A22F2003AF7FE /* APIIntercomSettings.swift */; };
 		E92EFBB0242A22F2003AF7FE /* APISettingsAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB58242A22F2003AF7FE /* APISettingsAddress.swift */; };
 		E92EFBB1242A22F2003AF7FE /* APIIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB59242A22F2003AF7FE /* APIIssue.swift */; };
-		E92EFBB2242A22F2003AF7FE /* APIIssueCustomField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB5A242A22F2003AF7FE /* APIIssueCustomField.swift */; };
 		E92EFBB3242A22F2003AF7FE /* APIDoor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB5B242A22F2003AF7FE /* APIDoor.swift */; };
 		E92EFBB4242A22F2003AF7FE /* APICCTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB5C242A22F2003AF7FE /* APICCTV.swift */; };
 		E92EFBB5242A22F2003AF7FE /* BaseAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB5D242A22F2003AF7FE /* BaseAPIResponse.swift */; };
@@ -512,7 +511,6 @@
 		E92EFB57242A22F2003AF7FE /* APIIntercomSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIIntercomSettings.swift; sourceTree = "<group>"; };
 		E92EFB58242A22F2003AF7FE /* APISettingsAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APISettingsAddress.swift; sourceTree = "<group>"; };
 		E92EFB59242A22F2003AF7FE /* APIIssue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIIssue.swift; sourceTree = "<group>"; };
-		E92EFB5A242A22F2003AF7FE /* APIIssueCustomField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIIssueCustomField.swift; sourceTree = "<group>"; };
 		E92EFB5B242A22F2003AF7FE /* APIDoor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDoor.swift; sourceTree = "<group>"; };
 		E92EFB5C242A22F2003AF7FE /* APICCTV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICCTV.swift; sourceTree = "<group>"; };
 		E92EFB5D242A22F2003AF7FE /* BaseAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAPIResponse.swift; sourceTree = "<group>"; };
@@ -1631,7 +1629,6 @@
 				E92EFB57242A22F2003AF7FE /* APIIntercomSettings.swift */,
 				E92EFB58242A22F2003AF7FE /* APISettingsAddress.swift */,
 				E92EFB59242A22F2003AF7FE /* APIIssue.swift */,
-				E92EFB5A242A22F2003AF7FE /* APIIssueCustomField.swift */,
 				E92EFB5B242A22F2003AF7FE /* APIDoor.swift */,
 				E92EFB5C242A22F2003AF7FE /* APICCTV.swift */,
 				E92EFB5D242A22F2003AF7FE /* BaseAPIResponse.swift */,
@@ -2850,7 +2847,6 @@
 				E92EFBBD242A22F2003AF7FE /* GetAllLocationsRequest.swift in Sources */,
 				84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
-				E92EFBB2242A22F2003AF7FE /* APIIssueCustomField.swift in Sources */,
 				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,

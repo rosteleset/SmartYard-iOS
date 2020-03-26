@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct CreateIssueRequest {
+struct CreateIssueRequest: Codable {
     
     let accessToken: String
     let issue: APIIssue
-    let customFields: APIIssueCustomField
+    let customFields: [String: String]
     let actions: [String]
     
 }
@@ -22,7 +22,7 @@ extension CreateIssueRequest {
     var requestParameters: [String: Any] {
         return [
             "issue": issue.requestParameters,
-            "customFields": customFields.requestParameters,
+            "customFields": customFields,
             "actions": actions
         ]
     }
