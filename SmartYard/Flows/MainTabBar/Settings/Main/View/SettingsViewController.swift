@@ -34,6 +34,8 @@ class SettingsViewController: BaseViewController {
     private let itemsCountProxy = BehaviorSubject<[Int: Int]>(value: [:])
     private let serviceButtonTapTrigger = PublishSubject<(SettingsDataItemIdentity, SettingsServiceType)>()
     
+    private let addAddressTrigger = PublishSubject<Void>()
+    
     private let viewModel: SettingsViewModel
     
     init(viewModel: SettingsViewModel) {
@@ -73,8 +75,10 @@ class SettingsViewController: BaseViewController {
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
             serviceSelected: serviceButtonTapTrigger.asDriverOnErrorJustComplete(),
             advancedSettingsTrigger: settingsButton.rx.tap.asDriver(),
-            updateDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriverOnErrorJustComplete()
+            updateDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriverOnErrorJustComplete(),
+            addAddressTrigger: addAddressTrigger.asDriverOnErrorJustComplete()
         )
+        
         
         let output = viewModel.transform(input)
         
@@ -307,7 +311,17 @@ class SettingsViewController: BaseViewController {
                 return cell
                 
             case .addAddress:
-                return collectionView.dequeueReusableCell(withClass: SettingsAddAddressCell.self, for: indexPath)
+                let cell = collectionView.dequeueReusableCell(withClass: SettingsAddAddressCell.self, for: indexPath)
+                
+                let subject = PublishSubject<Void>()
+                
+                subject
+                    .bind(to: addAddressTrigger)
+                    .disposed(by: cell.disposeBag)
+                
+                cell.bind(with: subject)
+                
+                return cell
             }
         }()
         
