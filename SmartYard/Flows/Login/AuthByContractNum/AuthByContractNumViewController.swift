@@ -33,7 +33,7 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
     
     var loader: JGProgressHUD?
     
-    var isShowingManual: Bool
+    private let isShowingManual: Bool
     
     init(viewModel: AuthByContractNumViewModel, isShowingManual: Bool) {
         self.viewModel = viewModel
