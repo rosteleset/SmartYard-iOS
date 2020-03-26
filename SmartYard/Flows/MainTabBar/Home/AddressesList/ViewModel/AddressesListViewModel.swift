@@ -249,6 +249,13 @@ class AddressesListViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.addAddressTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.inputContract)
+                }
+            )
+            .disposed(by: disposeBag)
         let sectionModels = Driver
             .combineLatest(
                 loadedApprovedAddressesData.asDriver(onErrorJustReturn: nil),
@@ -403,6 +410,7 @@ extension AddressesListViewModel {
         let itemSelected: Driver<AddressesListDataItemIdentity>
         let guestAccessRequested: Driver<AddressesListDataItemIdentity>
         let refreshDataTrigger: Driver<Void>
+        let addAddressTrigger: Driver<Void>
     }
     
     struct Output {
