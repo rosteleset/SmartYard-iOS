@@ -387,12 +387,12 @@ class AddressesListViewModel: BaseViewModel {
         }
         
         let unapprovedAddressItems = unapprovedAddressesData.compactMap { issueInfo -> AddressesListDataItem? in
-            guard let houseId = issueInfo.houseId, let address = issueInfo.address else {
+            guard let address = issueInfo.address else {
                 return nil
             }
             
             return .unapprovedAddresses(
-                identity: .unapprovedObject(addressId: houseId),
+                identity: .unapprovedObject(addressId: issueInfo.key),
                 address: address
             )
         }
