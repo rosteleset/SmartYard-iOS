@@ -180,6 +180,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             let vc = SFSafariViewController(url: url)
             
             return .present(vc)
+        
         }
     }
     

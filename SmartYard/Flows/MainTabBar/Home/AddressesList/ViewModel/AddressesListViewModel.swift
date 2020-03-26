@@ -137,7 +137,7 @@ class AddressesListViewModel: BaseViewModel {
                     let (approvedAddresses, unapprovedAddresses) = newData
                     
                     guard !approvedAddresses.isEmpty || !unapprovedAddresses.isEmpty else {
-                        self?.router.trigger(.inputContract)
+                        self?.router.trigger(.inputContract(isManualTrigger: false))
                         return
                     }
                     
@@ -252,10 +252,11 @@ class AddressesListViewModel: BaseViewModel {
         input.addAddressTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.inputContract)
+                    self?.router.trigger(.inputContract(isManualTrigger: true))
                 }
             )
             .disposed(by: disposeBag)
+        
         let sectionModels = Driver
             .combineLatest(
                 loadedApprovedAddressesData.asDriver(onErrorJustReturn: nil),

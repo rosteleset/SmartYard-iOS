@@ -13,7 +13,7 @@ enum HomeRoute: Route {
     case main
     case alert(title: String, message: String?)
     case dialog(title: String, message: String?, actions: [UIAlertAction])
-    case inputContract
+    case inputContract(isManualTrigger: Bool)
     case inputAddress
     case availableServices(address: String, services: [APIServiceModel])
     case unavailableServices(address: String)
@@ -70,16 +70,16 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case let .dialog(title, message, actions):
             return .dialogTransition(title: title, message: message, actions: actions)
             
-        case .inputContract:
+        case let .inputContract(isManualTrigger):
             let vm = AuthByContractNumViewModel(
                 router: weakRouter,
                 issueService: issueService,
                 apiWrapper: apiWrapper
             )
             
-            let vc = AuthByContractNumViewController(viewModel: vm)
+            let vc = AuthByContractNumViewController(viewModel: vm, isShowingManual: isManualTrigger)
             
-            return .set([vc], animation: .fade)
+            return isManualTrigger ? .push(vc) : .set([vc], animation: .fade)
             
         case .inputAddress:
             let vm = InputAddressViewModel(

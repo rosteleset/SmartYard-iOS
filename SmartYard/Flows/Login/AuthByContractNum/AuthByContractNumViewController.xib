@@ -25,6 +25,7 @@
             <connections>
                 <outlet property="containerView" destination="U9N-qc-vvf" id="cjP-KV-96Y"/>
                 <outlet property="contractNumberTextField" destination="1fV-QD-lmA" id="Vav-Ds-UVc"/>
+                <outlet property="fakeNavBar" destination="hgL-WO-V9D" id="AuH-yS-yg1"/>
                 <outlet property="forgetEverythingButton" destination="L3p-t8-69e" id="FrR-zx-F3S"/>
                 <outlet property="forgetPassButton" destination="bBo-iL-hgv" id="iKh-tB-5Ue"/>
                 <outlet property="noContractButton" destination="ztw-Ug-GgA" id="VOj-eU-JvR"/>
@@ -47,23 +48,23 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U9N-qc-vvf">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="757.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="748.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3LY-I3-cQo" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="279.5" width="414" height="538.5"/>
+                                    <rect key="frame" x="0.0" y="270.5" width="414" height="547.5"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xiT-ww-dUY">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="279.5"/>
+                                    <rect key="frame" x="0.0" y="52" width="414" height="218.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="У вас есть договор c Лантой?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U90-l7-45t">
-                                            <rect key="frame" x="40" y="86" width="314" height="80.5"/>
+                                            <rect key="frame" x="40" y="25" width="314" height="80.5"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Введите номер и пароль договора, привязанного к данному адресу,  и управляйте услугами из этого приложения." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IL8-bB-yIA">
-                                            <rect key="frame" x="40" y="186.5" width="314" height="53"/>
+                                            <rect key="frame" x="40" y="125.5" width="314" height="53"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -72,7 +73,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="IL8-bB-yIA" firstAttribute="leading" secondItem="xiT-ww-dUY" secondAttribute="leading" constant="40" id="3ck-S5-Y88"/>
-                                        <constraint firstItem="U90-l7-45t" firstAttribute="top" secondItem="xiT-ww-dUY" secondAttribute="top" constant="86" id="641-5u-q3v"/>
+                                        <constraint firstItem="U90-l7-45t" firstAttribute="top" secondItem="xiT-ww-dUY" secondAttribute="top" constant="25" id="641-5u-q3v"/>
                                         <constraint firstAttribute="trailing" secondItem="IL8-bB-yIA" secondAttribute="trailing" constant="60" id="ZMK-h5-HDF"/>
                                         <constraint firstItem="U90-l7-45t" firstAttribute="leading" secondItem="xiT-ww-dUY" secondAttribute="leading" constant="40" id="aRM-OF-5V7"/>
                                         <constraint firstItem="IL8-bB-yIA" firstAttribute="top" secondItem="U90-l7-45t" secondAttribute="bottom" constant="20" id="c4P-H0-9aI"/>
@@ -81,7 +82,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmM-VH-arK" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="279.5" width="414" height="478"/>
+                                    <rect key="frame" x="0.0" y="270.5" width="414" height="478"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Номер договора" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1fV-QD-lmA" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="40" y="40" width="334" height="56"/>
@@ -169,18 +170,28 @@
                                         <constraint firstItem="L3p-t8-69e" firstAttribute="top" secondItem="Hma-MD-8gc" secondAttribute="bottom" constant="16" id="qep-mU-bf4"/>
                                     </constraints>
                                 </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hgL-WO-V9D" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="kdM-Ed-Zw8"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="mmM-VH-arK" firstAttribute="top" secondItem="xiT-ww-dUY" secondAttribute="bottom" id="4OC-Hk-jXM"/>
                                 <constraint firstItem="mmM-VH-arK" firstAttribute="leading" secondItem="U9N-qc-vvf" secondAttribute="leading" id="5bo-yX-xEN"/>
+                                <constraint firstItem="hgL-WO-V9D" firstAttribute="top" secondItem="U9N-qc-vvf" secondAttribute="top" id="AmM-dC-y7v"/>
+                                <constraint firstItem="xiT-ww-dUY" firstAttribute="top" secondItem="hgL-WO-V9D" secondAttribute="bottom" constant="8" symbolic="YES" id="DZc-fD-Ti9"/>
+                                <constraint firstItem="hgL-WO-V9D" firstAttribute="leading" secondItem="U9N-qc-vvf" secondAttribute="leading" id="Qhw-yT-9R0"/>
                                 <constraint firstItem="3LY-I3-cQo" firstAttribute="top" secondItem="mmM-VH-arK" secondAttribute="top" id="cTG-xr-nGE"/>
                                 <constraint firstAttribute="bottom" secondItem="mmM-VH-arK" secondAttribute="bottom" id="f5y-DT-kLZ"/>
                                 <constraint firstAttribute="trailing" secondItem="3LY-I3-cQo" secondAttribute="trailing" id="mg3-rB-hiZ"/>
+                                <constraint firstAttribute="trailing" secondItem="hgL-WO-V9D" secondAttribute="trailing" id="taK-W0-dj0"/>
                                 <constraint firstItem="xiT-ww-dUY" firstAttribute="leading" secondItem="U9N-qc-vvf" secondAttribute="leading" id="uYC-ol-g7A"/>
                                 <constraint firstItem="3LY-I3-cQo" firstAttribute="leading" secondItem="U9N-qc-vvf" secondAttribute="leading" id="w0P-5h-gla"/>
                                 <constraint firstAttribute="trailing" secondItem="xiT-ww-dUY" secondAttribute="trailing" id="yJK-lM-jIP"/>
-                                <constraint firstItem="xiT-ww-dUY" firstAttribute="top" secondItem="U9N-qc-vvf" secondAttribute="top" id="zSm-LU-twS"/>
                                 <constraint firstAttribute="trailing" secondItem="mmM-VH-arK" secondAttribute="trailing" id="zVY-VB-qgQ"/>
                             </constraints>
                         </view>
