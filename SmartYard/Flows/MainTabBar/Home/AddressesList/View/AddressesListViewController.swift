@@ -74,7 +74,8 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         let input = AddressesListViewModel.Input(
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
             guestAccessRequested: requestGuestAccess.asDriverOnErrorJustComplete(),
-            refreshDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriver()
+            refreshDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriver(),
+            addAddressTrigger: addButton.rx.tap.asDriver()
         )
         
         let output = viewModel.transform(input)

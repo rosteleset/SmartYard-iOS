@@ -110,6 +110,14 @@ class AuthByContractNumViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             isLoading: activityTracker.asDriver(),
             isAbleToProceed: isAbleToProceed.asDriver()
@@ -125,6 +133,7 @@ extension AuthByContractNumViewModel {
         let forgetEverythingTapped: Driver<Void>
         let noContractTapped: Driver<Void>
         let signInTapped: Driver<Void>
+        let backTrigger: Driver<Void>
         
         let inputContractNumText: Driver<String?>
         let inputPasswordNumText: Driver<String?>

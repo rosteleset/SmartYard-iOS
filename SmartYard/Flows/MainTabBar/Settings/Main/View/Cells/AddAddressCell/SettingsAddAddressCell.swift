@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class SettingsAddAddressCell: UICollectionViewCell {
     
     @IBOutlet private weak var addAddressButton: UIButton!
 
+    var disposeBag = DisposeBag()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
@@ -20,6 +24,12 @@ class SettingsAddAddressCell: UICollectionViewCell {
     private func configure() {
         addAddressButton.borderWidth = 1
         addAddressButton.borderColor = UIColor.SmartYard.blue
+    }
+    
+    func bind(with outerSubject: PublishSubject<Void>) {
+        addAddressButton.rx.tap
+            .bind(to: outerSubject)
+            .disposed(by: disposeBag)
     }
 
 }

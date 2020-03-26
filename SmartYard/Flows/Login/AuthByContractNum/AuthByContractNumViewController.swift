@@ -27,12 +27,18 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var noContractButton: WhiteButtonWithBorder!
     @IBOutlet private weak var signInButton: BlueButton!
     
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
+    
     private let viewModel: AuthByContractNumViewModel
     
     var loader: JGProgressHUD?
     
-    init(viewModel: AuthByContractNumViewModel) {
+    private let isShowingManual: Bool
+    
+    init(viewModel: AuthByContractNumViewModel, isShowingManual: Bool) {
         self.viewModel = viewModel
+        self.isShowingManual = isShowingManual
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -54,6 +60,7 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
             forgetEverythingTapped: forgetEverythingButton.rx.tap.asDriverOnErrorJustComplete(),
             noContractTapped: noContractButton.rx.tap.asDriverOnErrorJustComplete(),
             signInTapped: signInButton.rx.tap.asDriverOnErrorJustComplete(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             inputContractNumText: contractNumberTextField.rx.text.asDriver(onErrorJustReturn: nil),
             inputPasswordNumText: passTextField.rx.text.asDriver(onErrorJustReturn: nil)
         )
@@ -90,6 +97,7 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
         forgetEverythingButton.setRightAlignment()
         
         view.hideKeyboardWhenTapped = true
+        fakeNavBar.isHidden = !isShowingManual
     }
 
 }

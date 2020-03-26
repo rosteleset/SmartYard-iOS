@@ -137,7 +137,7 @@ class AddressesListViewModel: BaseViewModel {
                     let (approvedAddresses, unapprovedAddresses) = newData
                     
                     guard !approvedAddresses.isEmpty || !unapprovedAddresses.isEmpty else {
-                        self?.router.trigger(.inputContract)
+                        self?.router.trigger(.inputContract(isManualTrigger: false))
                         return
                     }
                     
@@ -245,6 +245,14 @@ class AddressesListViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] newDict in
                     self?.areSectionsExpanded.onNext(newDict)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.addAddressTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.inputContract(isManualTrigger: true))
                 }
             )
             .disposed(by: disposeBag)
@@ -379,12 +387,12 @@ class AddressesListViewModel: BaseViewModel {
         }
         
         let unapprovedAddressItems = unapprovedAddressesData.compactMap { issueInfo -> AddressesListDataItem? in
-            guard let houseId = issueInfo.houseId, let address = issueInfo.address else {
+            guard let address = issueInfo.address else {
                 return nil
             }
             
             return .unapprovedAddresses(
-                identity: .unapprovedObject(addressId: houseId),
+                identity: .unapprovedObject(addressId: issueInfo.key),
                 address: address
             )
         }
@@ -403,6 +411,7 @@ extension AddressesListViewModel {
         let itemSelected: Driver<AddressesListDataItemIdentity>
         let guestAccessRequested: Driver<AddressesListDataItemIdentity>
         let refreshDataTrigger: Driver<Void>
+        let addAddressTrigger: Driver<Void>
     }
     
     struct Output {

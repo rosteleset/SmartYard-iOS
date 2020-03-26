@@ -274,6 +274,16 @@ class SettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Обработка нажатия на добавление адреса
+        
+        input.addAddressTrigger
+            .drive(
+                onNext: { _ in
+                    NotificationCenter.default.post(.init(name: .addAddressFromSettings, object: nil))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг
         
         let updateKindSubject = PublishSubject<SettingsSectionUpdateKind>()
@@ -461,6 +471,7 @@ extension SettingsViewModel {
         let serviceSelected: Driver<(SettingsDataItemIdentity, SettingsServiceType)>
         let advancedSettingsTrigger: Driver<Void>
         let updateDataTrigger: Driver<Void>
+        let addAddressTrigger: Driver<Void>
     }
     
     struct Output {

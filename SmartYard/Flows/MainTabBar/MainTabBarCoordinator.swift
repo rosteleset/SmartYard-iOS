@@ -172,6 +172,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         rootViewController.tabBar.isTranslucent = false
         subscribeToBadgeUpdates()
+        subscribeToAddAddressNotifications()
     }
     
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
@@ -195,6 +196,20 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
                     }
                     
                     self?.notificationsTabBarItem.badgeValue = badgeNumber > 0 ? "\(badgeNumber)" : nil
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeToAddAddressNotifications() {
+        NotificationCenter.default.rx
+            .notification(Notification.Name.addAddressFromSettings)
+            .asDriverOnErrorJustComplete()
+            .mapToVoid()
+            .drive(
+                onNext: { [weak self] in
+                    self?.trigger(.home)
+                    self?.homeRouter.trigger(.inputContract(isManualTrigger: true))
                 }
             )
             .disposed(by: disposeBag)

@@ -14,6 +14,7 @@ extension Notification.Name {
     static let addressAdded = Notification.Name("AddressAdded")
     static let badgeNumberUpdated = Notification.Name("BadgeNumberUpdated")
     static let newInboxMessageReceived = Notification.Name("NewInboxMessageReceived")
+    static let addAddressFromSettings = Notification.Name("AddAddressFromSettings")
     
 }
 
