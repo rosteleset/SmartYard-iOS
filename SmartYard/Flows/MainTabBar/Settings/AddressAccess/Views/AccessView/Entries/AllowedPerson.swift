@@ -11,6 +11,7 @@ import UIKit
 
 struct AllowedPerson: Hashable {
     
+    let roommateType: APIRoommateAccessType
     let displayedName: String?
     
     // 10 цифр без префикса (9271234567)

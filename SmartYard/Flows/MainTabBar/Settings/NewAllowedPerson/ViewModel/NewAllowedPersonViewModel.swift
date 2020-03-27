@@ -10,6 +10,7 @@ import Foundation
 import XCoordinator
 import RxSwift
 import RxCocoa
+import Contacts
 
 protocol NewAllowedPersonViewModelDelegate: AnyObject {
     
@@ -30,7 +31,7 @@ class NewAllowedPersonViewModel: BaseViewModel {
     private let router: WeakRouter<SettingsRoute>
     private let allowedPersonType: AllowedPersonType
 
-    private let newAllowedPersonSubject = PublishSubject<AllowedPerson?>()
+    private let latestAddedPerson = BehaviorSubject<AllowedPerson?>(value: nil)
     
     private weak var delegate: NewAllowedPersonViewModelDelegate?
     
@@ -52,11 +53,101 @@ class NewAllowedPersonViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        
+        // MARK: Маппинг обычных введенных номеров
+        
+        input.rawPhoneAddedTrigger
+            .distinctUntilChanged()
+            .map { [weak self] phoneText in
+                guard let self = self, phoneText.count == Constants.phoneLengthWithoutPrefix else {
+                    return nil
+                }
+                
+                return AllowedPerson(
+                    roommateType: self.allowedPersonType == .temporary ? .outer : .inner,
+                    displayedName: nil,
+                    rawNumber: phoneText,
+                    logoImage: nil
+                )
+            }
+            .drive(
+                onNext: { [weak self] person in
+                    self?.latestAddedPerson.onNext(person)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Маппинг добавленных контактов
+        
+        let importedPerson = BehaviorSubject<AllowedPerson?>(value: nil)
+        
+        input.cnContactAddedTrigger
+            .map { [weak self] contact in
+                guard let self = self else {
+                    return nil
+                }
+                
+                let rawNumbers = contact.phoneNumbers.compactMap {
+                    $0.value.stringValue.rawPhoneNumberFromFullNumber
+                }
+                
+                guard let firstMatchingRawNumber = rawNumbers.first else {
+                    return nil
+                }
+                
+                let nameToShow: String? = {
+                    let joinedName = [contact.givenName, contact.familyName]
+                        .joined(separator: " ")
+                        .trimmed
+                    
+                    return joinedName.isEmpty ? nil : joinedName
+                }()
+
+                let icon: UIImage? = {
+                    if contact.imageDataAvailable, let imageData = contact.thumbnailImageData {
+                        return UIImage(data: imageData)
+                    } else {
+                        return nil
+                    }
+                }()
+                
+                let allowedPerson = AllowedPerson(
+                    roommateType: self.allowedPersonType == .temporary ? .outer : .inner,
+                    displayedName: nameToShow,
+                    rawNumber: firstMatchingRawNumber,
+                    logoImage: icon
+                )
+
+                return allowedPerson
+            }
+            .do(
+                onNext: { person in
+                    importedPerson.onNext(person)
+                }
+            )
+            .drive(
+                onNext: { [weak self] person in
+                    self?.latestAddedPerson.onNext(person)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        let personWasSuccessfullyImported = importedPerson
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+        
+        let isAbleToProceed = latestAddedPerson
+            .asDriver(onErrorJustReturn: nil)
+            .map { person -> Bool in
+                person?.rawNumber.count == Constants.phoneLengthWithoutPrefix
+            }
 
         input.addAccessTrigger
+            .withLatestFrom(latestAddedPerson.asDriver(onErrorJustReturn: nil))
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] newAllowedPerson in
-                    guard let self = self, let person = newAllowedPerson else {
+                onNext: { [weak self] person in
+                    guard let self = self else {
                         return
                     }
                     
@@ -79,7 +170,10 @@ class NewAllowedPersonViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output()
+        return Output(
+            isAbleToProceed: isAbleToProceed,
+            personWasSuccessfullyImported: personWasSuccessfullyImported
+        )
     }
     
 }
@@ -88,11 +182,14 @@ extension NewAllowedPersonViewModel {
     
     struct Input {
         let closeTrigger: Driver<Void>
-        let addAccessTrigger: Driver<AllowedPerson?>
+        let rawPhoneAddedTrigger: Driver<String>
+        let cnContactAddedTrigger: Driver<CNContact>
+        let addAccessTrigger: Driver<Void>
     }
     
     struct Output {
-        
+        let isAbleToProceed: Driver<Bool>
+        let personWasSuccessfullyImported: Driver<AllowedPerson>
     }
     
 }

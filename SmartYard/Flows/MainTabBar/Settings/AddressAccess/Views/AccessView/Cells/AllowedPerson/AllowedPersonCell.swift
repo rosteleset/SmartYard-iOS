@@ -16,6 +16,8 @@ class AllowedPersonCell: UITableViewCell {
     @IBOutlet private weak var userNameLabel: UILabel!
     @IBOutlet private weak var smsButton: UIButton!
     
+    @IBOutlet private var nameTrailingToSmsButtonConstraint: NSLayoutConstraint!
+    
     var disposeBag = DisposeBag()
     
     override func prepareForReuse() {
@@ -29,7 +31,14 @@ class AllowedPersonCell: UITableViewCell {
         userLogoImageView.image = person.logoImage ?? UIImage(named: "DefaultUserIcon")
     }
     
-    func bind(with outerSubject: PublishSubject<Void>) {
+    func configureSMSButton(isAvailable: Bool, subjectProxyIfAvailable: PublishSubject<Void>?) {
+        smsButton.isHidden = !isAvailable
+        nameTrailingToSmsButtonConstraint.isActive = isAvailable
+        
+        guard let outerSubject = subjectProxyIfAvailable else {
+            return
+        }
+        
         smsButton.rx.tap
             .subscribe(
                 onNext: { _ in

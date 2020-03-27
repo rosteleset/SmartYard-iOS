@@ -22,13 +22,22 @@ extension APIWrapper {
         return provider.rx
             .request(.registerQR(request: request))
             .filterSuccessfulCodes()
-            .map(BaseAPIResponse<String>.self)
             .flatMap { response in
-                if let errorDescription = response.data {
-                    return .error(NSError.APIWrapperError.qrRegistrationFailed(reason: errorDescription))
+                if response.statusCode == 204 {
+                    return .just(())
                 }
                 
-                return .just(())
+                do {
+                    let mappedResponse = try response.map(BaseAPIResponse<String>.self)
+                    
+                    if let errorDescription = mappedResponse.data {
+                        return .error(NSError.APIWrapperError.qrRegistrationFailed(reason: errorDescription))
+                    } else {
+                        return .error(NSError.APIWrapperError.noDataError)
+                    }
+                } catch {
+                    return .error(NSError.APIWrapperError.baseResponseMappingError)
+                }
             }
     }
     

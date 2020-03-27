@@ -82,13 +82,16 @@ extension AddressAccessViewModel {
                 }
             }()
             
-            let nameToShow: String = {
-                [match.givenName, match.familyName]
+            let nameToShow: String? = {
+                let joinedName = [match.givenName, match.familyName]
                     .joined(separator: " ")
                     .trimmed
+                
+                return joinedName.isEmpty ? nil : joinedName
             }()
             
             return AllowedPerson(
+                roommateType: $0.roommateType,
                 displayedName: nameToShow,
                 rawNumber: $0.rawNumber,
                 logoImage: icon

@@ -93,7 +93,10 @@ class AccessView: PMNibLinkableView {
                         .bind(to: self.sendSmsSubject)
                         .disposed(by: cell.disposeBag)
                     
-                    cell.bind(with: subject)
+                    cell.configureSMSButton(
+                        isAvailable: person.roommateType == .outer,
+                        subjectProxyIfAvailable: subject
+                    )
                     
                     return cell
                 }
@@ -101,7 +104,11 @@ class AccessView: PMNibLinkableView {
         )
         
         dataSource.canEditRowAtIndexPath = { dataSource, indexPath in
-            dataSource[indexPath].identity != .addContact
+            if case let .contact(person) = dataSource[indexPath].identity, person.roommateType != .owner {
+                return true
+            } else {
+                return false
+            }
         }
         
         dataSource.animationConfiguration = AnimationConfiguration(
