@@ -8,6 +8,26 @@
 
 import Foundation
 
+struct Issue {
+    
+    let issueFields: [String: String]
+    let customFields: [String: String]
+    let actions: [String]
+    
+    init(issueType: IssueType) {
+        issueFields = [
+            "project": issueType.project,
+            "summary": issueType.summary,
+            "description": issueType.description,
+            "type:": issueType.type
+        ]
+        
+        customFields = issueType.customFields
+        actions = issueType.actions
+    }
+    
+}
+
 enum IssueType {
     
     // экран 19
@@ -204,11 +224,11 @@ enum IssueType {
         }
     }
     
-    private var type: String {
+    var type: String {
         return "32"
     }
 
-    private var project: String {
+    var project: String {
         return "REM"
     }
     
