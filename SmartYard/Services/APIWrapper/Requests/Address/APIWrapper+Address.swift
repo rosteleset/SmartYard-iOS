@@ -32,9 +32,9 @@ extension APIWrapper {
                     
                     if let errorDescription = mappedResponse.data {
                         return .error(NSError.APIWrapperError.qrRegistrationFailed(reason: errorDescription))
+                    } else {
+                        return .error(NSError.APIWrapperError.noDataError)
                     }
-                    
-                    return .just(())
                 } catch {
                     return .error(NSError.APIWrapperError.baseResponseMappingError)
                 }
