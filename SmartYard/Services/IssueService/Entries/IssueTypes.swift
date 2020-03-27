@@ -10,29 +10,32 @@ import Foundation
 
 enum IssueType {
     
-    case approveAddressIssue(address: String)
-    
+    // экран 19
     case dontRememberAnythingIssue(userInfo: MainUserInfo)
     
-    case unavailableAddressConnectionIssue(userInfo: MainUserInfo, services: [SettingsServiceType], lat: String, lon: String)
-    
-    case connectSelectedServicesIssue(userInfo: MainUserInfo, services: [SettingsServiceType])
-    
+    // экран 23
     case confirmAddressByCourierIssue(userInfo: MainUserInfo, lat: String, lon: String)
     
+    // экран 24
     case confirmAddressInOfficeIssue(userInfo: MainUserInfo, lat: String, lon: String)
     
-    case deleteAddressIssue(userInfo: MainUserInfo, reason: String)
+    // экран 34.02.03
+    case deleteAddressIssue(userInfo: MainUserInfo, lat: String, lon: String, reason: String)
     
-    case activateServiceIssue(userInfo: MainUserInfo, services: [SettingsServiceType])
+    // экран 34.03
+    case changeTariffIssue(userInfo: MainUserInfo, lat: String, lon: String)
     
-    case changeTariffIssue(clientId: String)
+    // экран 21
+    case serviceUnavailableIssue(userInfo: MainUserInfo, service: SettingsServiceType, lat: String, lon: String)
     
-    case serviceUnavailableIssue(userInfo: MainUserInfo, service: SettingsServiceType)
+    // экран 28
+    case comeInOfficeMyselfIssue(userInfo: MainUserInfo, lat: String, lon: String, services: [SettingsServiceType])
     
-    case comeInOfficeMyselfIssue(userInfo: MainUserInfo, lat: String, lon: String)
+    // экран 29
+    case callCourierIssue(userInfo: MainUserInfo, lat: String, lon: String)
     
-    case connectOnlyNonHousesService(userInfo: MainUserInfo, lat: String, lon: String, service: SettingsServiceType)
+    // когда нет общедомовых услуг, но есть другие услуги для выбора
+    case connectOnlyNonHousesServices(userInfo: MainUserInfo, lat: String, lon: String, services: [SettingsServiceType])
     
     var summary: String {
         let webIssueDescription = "Авто: Заявка с сайта"
@@ -41,9 +44,8 @@ enum IssueType {
         let deleteAddressIssue = "Авто: Удаление адреса из приложения"
         
         switch self {
-        case .approveAddressIssue, .unavailableAddressConnectionIssue,
-             .connectSelectedServicesIssue, .confirmAddressByCourierIssue,
-             .confirmAddressInOfficeIssue, .serviceUnavailableIssue:
+        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .serviceUnavailableIssue,
+             .comeInOfficeMyselfIssue, .callCourierIssue, .connectOnlyNonHousesServices:
             return webIssueDescription
             
         case .dontRememberAnythingIssue:
@@ -52,84 +54,51 @@ enum IssueType {
         case .deleteAddressIssue:
             return deleteAddressIssue
             
-        case .activateServiceIssue, .changeTariffIssue:
+        case .changeTariffIssue:
             return resaleIssue
-            
-        case let .comeInOfficeMyselfIssue(userInfo, lat, lon):
-            break
-            
-        case let .connectOnlyNonHousesService(userInfo, lat, lon, service):
-            break
         }
     }
     
     var description: String {
         switch self {
-        case let .approveAddressIssue(address):
-            return "Заявка  на подтверждение адреса \(address)"
             
         case .dontRememberAnythingIssue:
             return "Выполнить звонок клиенту для напоминания номера договора и пароля от личного кабинета"
-            
-        case let .unavailableAddressConnectionIssue(userInfo, services, _, _):
-            return userInfo.convertToString() + "\nСписок подключаемых услуг \(services)"
-            
-        case let .connectSelectedServicesIssue(userInfo, services):
-            let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
-            return userInfo.convertToString() + "\nСписок подключаемых услуг: \(servicesStr)"
         
-        case let .confirmAddressByCourierIssue(userInfo, _, _):
+        case let .confirmAddressByCourierIssue(userInfo, _, _), let .callCourierIssue(userInfo, _, _):
             return userInfo.convertToString() + "\nПодготовить конверт с qr-кодом. Далее заявку отправить курьеру. "
             
         case let .confirmAddressInOfficeIssue(userInfo, _, _):
             return userInfo.convertToString() + "\nКлиент подойдет в офис для получения подтверждения."
         
-        case let .deleteAddressIssue(userInfo, reason):
+        case let .deleteAddressIssue(userInfo, reason, _, _):
             return userInfo.convertToString() + "\nУдаление адреса из приложения. Причина: \(reason)"
         
-        case let .activateServiceIssue(userInfo, services):
-            let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
-            return userInfo.convertToString() + "\nСписок подключаемых услуг: \(servicesStr)"
+        case let .changeTariffIssue(userInfo, _, _):
+            return userInfo.convertToString() + "\nЗапрос на смену тарифного плана. Выполнить звонок клиенту и осуществить консультацию"
         
-        case .changeTariffIssue:
-            return "Запрос на смену тарифного плана. Выполнить звонок клиенту и осуществить консультацию"
-        
-        case let .serviceUnavailableIssue(userInfo, services):
+        case let .serviceUnavailableIssue(userInfo, services, _, _):
             return userInfo.convertToString() + "\nСписок подключаемых услуг: \(services)"
             
-        case let .comeInOfficeMyselfIssue(userInfo, lat, lon):
-            return ""
+        case let .comeInOfficeMyselfIssue(userInfo, _, _, services):
+            return userInfo.convertToString() + "\nСписок подключаемых услуг: \(services)\nТребуется подтверждение адреса и подключение выбранных услуг"
             
-        case let .connectOnlyNonHousesService(userInfo, lat, lon, service):
-            return ""
+        case let .connectOnlyNonHousesServices(userInfo, _, _, services):
+            return userInfo.convertToString() + "\nПодключение услуг(и): \(services).\nВыполнить звонок клиенту и осуществить консультацию"
         }
     }
-    
+
     var clientCode: String {
         switch self {
-        case .approveAddressIssue, .unavailableAddressConnectionIssue,
-             .connectSelectedServicesIssue, .confirmAddressByCourierIssue,
-             .confirmAddressInOfficeIssue:
+        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .comeInOfficeMyselfIssue,
+             .callCourierIssue, .deleteAddressIssue, .connectOnlyNonHousesServices, .serviceUnavailableIssue:
             return "-1"
             
         case .dontRememberAnythingIssue:
             return "-3"
             
-        case let .deleteAddressIssue(userInfo, _),
-             let .activateServiceIssue(userInfo, _):
+        case let .changeTariffIssue(userInfo, _, _):
             return userInfo.clientId ?? "-1"
-            
-        case let .changeTariffIssue(clientId):
-            return clientId
-            
-        case let .serviceUnavailableIssue(userInfo, _):
-            return userInfo.clientId ?? ""
-            
-        case .comeInOfficeMyselfIssue(let userInfo, let lat, let lon):
-            return ""
-            
-        case .connectOnlyNonHousesService(let userInfo, let lat, let lon, let service):
-            return ""
         }
     }
     
@@ -139,50 +108,27 @@ enum IssueType {
         let sendToOfficeAction = "Передать в офис"
         
         switch self {
-        case .approveAddressIssue, .confirmAddressByCourierIssue,
-             .confirmAddressInOfficeIssue, .deleteAddressIssue:
+        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .deleteAddressIssue,
+             .comeInOfficeMyselfIssue, .callCourierIssue:
             return [startWorkAction, sendToOfficeAction]
             
-        case .dontRememberAnythingIssue, .unavailableAddressConnectionIssue,
-             .connectSelectedServicesIssue, .changeTariffIssue,
-             .activateServiceIssue, .serviceUnavailableIssue:
+        case .dontRememberAnythingIssue, .changeTariffIssue, .serviceUnavailableIssue, .connectOnlyNonHousesServices:
             return [startWorkAction, callAction]
-            
-        case .comeInOfficeMyselfIssue(let userInfo, let lat, let lon):
-            return []
-            
-        case .connectOnlyNonHousesService(let userInfo, let lat, let lon, let service):
-            return []
         }
     }
     
     var customFields: [String: String] {
         switch self {
-        case .approveAddressIssue(let address):
-            return [:]
-            
-        case .dontRememberAnythingIssue(let userInfo):
+        case let .dontRememberAnythingIssue(userInfo):
             return [
-                "10011" : "-3",
+                "10011" : clientCode,
                 "11841": userInfo.phoneNumber,
                 "12440": "Приложение"
             ]
             
-        case let .unavailableAddressConnectionIssue(userInfo, _, lat, lon):
-            return [
-                "10011": "-1",
-                "11841": userInfo.phoneNumber,
-                "12440": "Приложение",
-                "10743": lat,
-                "10744": lon
-            ]
-            
-        case .connectSelectedServicesIssue(let userInfo, let services):
-            return [:]
-            
         case let .confirmAddressByCourierIssue(userInfo, lat, lon):
             return [
-                "10011": "-1",
+                "10011": clientCode,
                 "11841": userInfo.phoneNumber,
                 "12440": "Приложение",
                 "10743": lat,
@@ -192,7 +138,7 @@ enum IssueType {
             
         case let .confirmAddressInOfficeIssue(userInfo, lat, lon):
             return [
-                "10011": "-1",
+                "10011": clientCode,
                 "11841": userInfo.phoneNumber,
                 "12440": "Приложение",
                 "10743": lat,
@@ -200,31 +146,69 @@ enum IssueType {
                 "10941": "10580"
             ]
             
-        case .deleteAddressIssue(let userInfo, let reason):
-            return [:]
+        case let .deleteAddressIssue(userInfo, _, lat, lon):
+            return [
+                "10011": clientCode,
+                "11841": userInfo.phoneNumber,
+                "12440": "Приложение",
+                "10743": lat,
+                "10744": lon
+            ]
             
-        case .activateServiceIssue(let userInfo, let services):
-            return [:]
+        case let .changeTariffIssue(userInfo, lat, lon):
+            return [
+                "10011": clientCode,
+                "11841": userInfo.phoneNumber,
+                "12440": "Приложение",
+                "10743": lat,
+                "10744": lon
+            ]
             
-        case .changeTariffIssue(let clientId):
-            return [:]
+        case let .serviceUnavailableIssue(userInfo, _, lat, lon):
+            return [
+                "10011": clientCode,
+                "11841": userInfo.phoneNumber,
+                "12440": "Приложение",
+                "10743": lat,
+                "10744": lon
+            ]
             
-        case .serviceUnavailableIssue(let userInfo, let service):
-            return [:]
+        case let .comeInOfficeMyselfIssue(userInfo, lat, lon, _):
+            return [
+                "10011": clientCode,
+                "11841": userInfo.phoneNumber,
+                "12440": "Приложение",
+                "10743": lat,
+                "10744": lon,
+                "10941": "10581"
+            ]
             
-        case .comeInOfficeMyselfIssue(let userInfo, let lat, let lon):
-            return [:]
+        case let .connectOnlyNonHousesServices(userInfo, lat, lon, _):
+            return [
+                "10011": clientCode,
+                "11841": userInfo.phoneNumber,
+                "12440": "Приложение",
+                "10743": lat,
+                "10744": lon,
+            ]
             
-        case .connectOnlyNonHousesService(let userInfo, let lat, let lon, let service):
-            return [:]
+        case let .callCourierIssue(userInfo, lat, lon):
+            return [
+                "10011": clientCode,
+                "11841": userInfo.phoneNumber,
+                "12440": "Приложение",
+                "10743": lat,
+                "10744": lon,
+                "10941": "10580"
+            ]
         }
     }
     
-    var type: String {
+    private var type: String {
         return "32"
     }
 
-    var project: String {
+    private var project: String {
         return "REM"
     }
     
