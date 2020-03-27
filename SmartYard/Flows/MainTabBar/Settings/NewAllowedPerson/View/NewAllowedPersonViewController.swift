@@ -133,7 +133,9 @@ class NewAllowedPersonViewController: BaseViewController {
                 onNext: { [weak self] importedPerson in
                     self?.contactNameLabel.text = importedPerson.displayedName
                     self?.contactNameLabel.isHidden = false
-                    self?.contactImageView.image = importedPerson.logoImage
+                    
+                    self?.contactImageView.image = importedPerson.logoImage ?? UIImage(named: "DefaultUserIcon")
+                    
                     self?.textField.isHidden = true
                 }
             )

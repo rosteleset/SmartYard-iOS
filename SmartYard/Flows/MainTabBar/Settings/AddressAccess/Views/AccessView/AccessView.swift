@@ -104,7 +104,11 @@ class AccessView: PMNibLinkableView {
         )
         
         dataSource.canEditRowAtIndexPath = { dataSource, indexPath in
-            dataSource[indexPath].identity != .addContact
+            if case let .contact(person) = dataSource[indexPath].identity, person.roommateType != .owner {
+                return true
+            } else {
+                return false
+            }
         }
         
         dataSource.animationConfiguration = AnimationConfiguration(
