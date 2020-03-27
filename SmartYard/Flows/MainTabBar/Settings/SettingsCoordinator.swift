@@ -25,6 +25,7 @@ enum SettingsRoute: Route {
     case addressAccess(address: String, flatId: String)
     case newAllowedPerson(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
     case safariPage(url: URL)
+    case editName
     
 }
 
@@ -181,6 +182,18 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
         
+        case .editName:
+            let vm = EditNameViewModel(
+                accessService: accessService,
+                apiWrapper: apiWrapper,
+                router: weakRouter
+            )
+            
+            let vc = EditNameViewController(viewModel: vm, preloadedName: accessService.clientName)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            
+            return .present(vc)
         }
     }
     

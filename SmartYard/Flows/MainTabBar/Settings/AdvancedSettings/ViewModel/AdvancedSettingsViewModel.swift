@@ -50,6 +50,14 @@ class AdvancedSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.editNameTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.editName)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         input.logoutTrigger
             .drive(
                 onNext: { [weak self] in
@@ -108,6 +116,7 @@ extension AdvancedSettingsViewModel {
     
     struct Input {
         let backTrigger: Driver<Void>
+        let editNameTrigger: Driver<Void>
         let logoutTrigger: Driver<Void>
     }
     

@@ -120,6 +120,7 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
         
         let input = AdvancedSettingsViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
+            editNameTrigger: editNameButton.rx.tap.asDriver(),
             logoutTrigger: logoutButton.rx.tap.asDriver()
         )
         

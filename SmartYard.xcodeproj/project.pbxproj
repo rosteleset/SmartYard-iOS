@@ -107,6 +107,9 @@
 		84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D6923E2F359001B3B43 /* CallPayload.swift */; };
 		84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D7C23E30C2B001B3B43 /* BaseViewController.swift */; };
 		84AA8D7F23E30C32001B3B43 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D7E23E30C32001B3B43 /* BaseViewModel.swift */; };
+		84AADD1D242E22550056994A /* EditNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AADD1C242E22550056994A /* EditNameViewModel.swift */; };
+		84AADD20242E22640056994A /* EditNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AADD1E242E22640056994A /* EditNameViewController.swift */; };
+		84AADD21242E22640056994A /* EditNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AADD1F242E22640056994A /* EditNameViewController.xib */; };
 		84B89A7C23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89A7B23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift */; };
 		84B89A9023F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89A8E23F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift */; };
 		84B89A9123F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B89A8F23F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib */; };
@@ -436,6 +439,9 @@
 		84AA8D6923E2F359001B3B43 /* CallPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPayload.swift; sourceTree = "<group>"; };
 		84AA8D7C23E30C2B001B3B43 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		84AA8D7E23E30C32001B3B43 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		84AADD1C242E22550056994A /* EditNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameViewModel.swift; sourceTree = "<group>"; };
+		84AADD1E242E22640056994A /* EditNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameViewController.swift; sourceTree = "<group>"; };
+		84AADD1F242E22640056994A /* EditNameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditNameViewController.xib; sourceTree = "<group>"; };
 		84B89A7B23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSectionUpdateKind.swift; sourceTree = "<group>"; };
 		84B89A8023F2F984009692B4 /* ServiceUnavailableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceUnavailableViewController.swift; sourceTree = "<group>"; };
 		84B89A8123F2F984009692B4 /* ServiceUnavailableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceUnavailableViewController.xib; sourceTree = "<group>"; };
@@ -901,6 +907,7 @@
 				84D6445A23F6ACA200AD87EF /* AddressDeletion */,
 				848D1B8423F29D3F00D6E368 /* AddressSettings */,
 				84D6445123F68A8200AD87EF /* AdvancedSettings */,
+				84AADD19242E22330056994A /* EditName */,
 				844AC3F023EBFF790066006D /* Main */,
 				E94B6C1523FAC53D00FD9F65 /* NewAllowedPerson */,
 				84B89A7D23F2F88E009692B4 /* ServiceIsActivated */,
@@ -1222,6 +1229,32 @@
 				84A67061241FB6E100BBA12B /* AddressAccessSkeletonView.xib */,
 			);
 			path = AddressAccessSkeletonView;
+			sourceTree = "<group>";
+		};
+		84AADD19242E22330056994A /* EditName */ = {
+			isa = PBXGroup;
+			children = (
+				84AADD1A242E22440056994A /* View */,
+				84AADD1B242E22470056994A /* ViewModel */,
+			);
+			path = EditName;
+			sourceTree = "<group>";
+		};
+		84AADD1A242E22440056994A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84AADD1E242E22640056994A /* EditNameViewController.swift */,
+				84AADD1F242E22640056994A /* EditNameViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84AADD1B242E22470056994A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				84AADD1C242E22550056994A /* EditNameViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		84B89A7D23F2F88E009692B4 /* ServiceIsActivated */ = {
@@ -2473,6 +2506,7 @@
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
 				E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
+				84AADD21242E22640056994A /* EditNameViewController.xib in Resources */,
 				E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */,
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
@@ -2693,6 +2727,7 @@
 				E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */,
 				E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */,
 				848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */,
+				84AADD1D242E22550056994A /* EditNameViewModel.swift in Sources */,
 				E92EFBB5242A22F2003AF7FE /* BaseAPIResponse.swift in Sources */,
 				E9618A332420ABC1003FF47D /* UnapprovedObjectCell.swift in Sources */,
 				84898A8E23F1540C00E6B78E /* SettingsActionCell.swift in Sources */,
@@ -2732,6 +2767,7 @@
 				E92EFBA9242A22F2003AF7FE /* APIIssueConnect.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E92EFBDA242A22F2003AF7FE /* APIWrapper+Address.swift in Sources */,
+				84AADD20242E22640056994A /* EditNameViewController.swift in Sources */,
 				E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				E92EFBBF242A22F2003AF7FE /* GetServicesRequest.swift in Sources */,
