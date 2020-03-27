@@ -95,10 +95,12 @@ class NewAllowedPersonViewModel: BaseViewModel {
                     return nil
                 }
                 
-                let nameToShow: String = {
-                    [contact.givenName, contact.familyName]
+                let nameToShow: String? = {
+                    let joinedName = [contact.givenName, contact.familyName]
                         .joined(separator: " ")
                         .trimmed
+                    
+                    return joinedName.isEmpty ? nil : joinedName
                 }()
 
                 let icon: UIImage? = {
