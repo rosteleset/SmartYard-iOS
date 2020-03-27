@@ -53,15 +53,8 @@ class ServiceUnavailableViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                return self.issueService
-                    .sendServiceUnavailableIssue(
-                        address: self.address,
-                        service: self.service,
-                        clientId: self.clientId
-                    )
-                    .trackError(self.errorTracker)
-                    .trackActivity(self.activityTracker)
-                    .asDriver(onErrorJustReturn: nil)
+                // TODO: open chat
+                return .empty()
             }
             .drive(
                 onNext: { [weak self] _ in

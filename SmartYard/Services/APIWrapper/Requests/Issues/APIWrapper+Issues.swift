@@ -12,7 +12,7 @@ import RxCocoa
 
 extension APIWrapper {
     
-    func createIssue(issue: Issue) -> Single<CreateIssueResponseData?> {
+    func sendIssue(issue: Issue) -> Single<CreateIssueResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }

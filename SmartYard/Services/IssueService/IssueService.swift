@@ -24,7 +24,31 @@ class IssueService {
     
     // экран 19 и 34.00
     func sendNothingRememberIssue() -> Single<CreateIssueResponseData?> {
-        return .just(nil)
+        let issue = Issue(issueType: .dontRememberAnythingIssue(userInfo: getUserInfo(address: nil, clientId: nil)))
+        return apiWrapper.sendIssue(issue: issue)
+    }
+    
+    // экраны 23, 29
+    func sendApproveAddressByCourierIssue(address: String) -> Single<CreateIssueResponseData?> {
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+
+                let issue = Issue(
+                    issueType: .confirmAddressByCourierIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        lat: latitude,
+                        lon: longitude
+                    )
+                )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
+            }
     }
     
     // экран 21
@@ -52,10 +76,6 @@ class IssueService {
         return
     }
     
-    // экраны 23, 29
-    func sendApproveAddressByCourierIssue(address: String) -> Single<CreateIssueResponseData?> {
-        return .just(nil)
-    }
     
     // экраны 24, 28
     func sendApproveAddressInOfficeIssue(address: String) -> Single<CreateIssueResponseData?> {
@@ -76,6 +96,17 @@ class IssueService {
         return .just(nil)
     }
     
+    private func sendIssueWithLocation(issue: IssueType, address: String) -> Single<CreateIssueResponseData?> {
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+
+                return self.apiWrapper.sendIssue(issue: <#T##Issue#>)
+        }
+    }
+
     private func getAddressCoordinates(address: String) -> Single<GeoCoderResponseData?> {
         return apiWrapper.getCoordinatesByAddress(address: address)
     }
