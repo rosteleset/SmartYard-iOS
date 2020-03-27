@@ -11,17 +11,24 @@ import Foundation
 struct CreateIssueRequest: Codable {
     
     let accessToken: String
-    let issue: APIIssue
+    let issue: [String: String]
     let customFields: [String: String]
     let actions: [String]
     
+    init(accessToken: String, issue: Issue) {
+        self.accessToken = accessToken
+        self.issue = issue.issueFields
+        self.customFields = issue.customFields
+        self.actions = issue.actions
+    }
+
 }
 
 extension CreateIssueRequest {
     
     var requestParameters: [String: Any] {
         return [
-            "issue": issue.requestParameters,
+            "issue": issue,
             "customFields": customFields,
             "actions": actions
         ]

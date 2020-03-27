@@ -89,8 +89,4 @@ class IssueService {
         )
     }
     
-    private func sendIssue(issue: IssueType) -> Single<CreateIssueResponseData?> {
-        apiWrapper.createIssue(issue: issue, customFields: customFields)
-    }
-    
 }
