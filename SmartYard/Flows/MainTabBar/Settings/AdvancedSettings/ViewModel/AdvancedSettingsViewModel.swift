@@ -15,7 +15,6 @@ class AdvancedSettingsViewModel: BaseViewModel {
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
     private let router: WeakRouter<SettingsRoute>
-    private let name: String
     
     init(
         accessService: AccessService,
@@ -26,13 +25,22 @@ class AdvancedSettingsViewModel: BaseViewModel {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
         self.router = router
-        self.name = name
     }
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
+        
+        let currentName = BehaviorSubject<APIClientName?>(value: accessService.clientName)
+        
+        let nameAsString = currentName
+            .asDriver(onErrorJustReturn: nil)
+            .map { clientName in
+                [clientName?.name, clientName?.patronymic]
+                    .compactMap { $0 }
+                    .joined(separator: " ")
+            }
         
         input.backTrigger
             .drive(
@@ -85,13 +93,11 @@ class AdvancedSettingsViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            name: .just(name),
+            name: nameAsString,
             enableNotifications: .just(true),
             enableText: .just(true),
             ringtone: .just("Нота"),
             enableAccountBalanceWarning: .just(false),
-            enableBiometry: .just(true),
-            enablePinCode: .just(false),
             isLoading: activityTracker.asDriver()
         )
     }
@@ -111,8 +117,6 @@ extension AdvancedSettingsViewModel {
         let enableText: Driver<Bool>
         let ringtone: Driver<String>
         let enableAccountBalanceWarning: Driver<Bool>
-        let enableBiometry: Driver<Bool>
-        let enablePinCode: Driver<Bool>
         let isLoading: Driver<Bool>
     }
     
