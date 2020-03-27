@@ -169,8 +169,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tua-bR-e0p" customClass="FullRoundedView" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="16" y="174" width="382" height="70"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Советская, 16, к. 4" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vjf-7h-gEU">
-                            <rect key="frame" x="40" y="23.5" width="302" height="23"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Советская, 16, к. 4" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vjf-7h-gEU">
+                            <rect key="frame" x="24" y="23.5" width="334" height="23"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                             <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -178,9 +178,9 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="Vjf-7h-gEU" firstAttribute="leading" secondItem="Tua-bR-e0p" secondAttribute="leading" constant="40" id="6kv-2E-eoo"/>
+                        <constraint firstItem="Vjf-7h-gEU" firstAttribute="leading" secondItem="Tua-bR-e0p" secondAttribute="leading" constant="24" id="6kv-2E-eoo"/>
                         <constraint firstItem="Vjf-7h-gEU" firstAttribute="centerY" secondItem="Tua-bR-e0p" secondAttribute="centerY" id="Vk6-Dw-mrz"/>
-                        <constraint firstAttribute="trailing" secondItem="Vjf-7h-gEU" secondAttribute="trailing" constant="40" id="lMS-sa-7gB"/>
+                        <constraint firstAttribute="trailing" secondItem="Vjf-7h-gEU" secondAttribute="trailing" constant="24" id="lMS-sa-7gB"/>
                         <constraint firstAttribute="height" constant="70" id="yDZ-Va-rZq"/>
                     </constraints>
                 </view>
