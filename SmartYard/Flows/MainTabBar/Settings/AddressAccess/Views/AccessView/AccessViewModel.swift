@@ -14,9 +14,9 @@ class AccessViewModel: BaseViewModel {
     
     let sectionModels = BehaviorSubject<[AllowedPersonSectionModel]>(value: [])
     
-    func updateData(allowedPersonType: AllowedPersonType, data: [AllowedPerson]) {
+    func updateData(data: [AllowedPerson]) {
         let headerItem = AllowedPersonDataItem.addContact
-        let contacts = data.map { AllowedPersonDataItem.contact(personType: allowedPersonType, person: $0) }
+        let contacts = data.map { AllowedPersonDataItem.contact(person: $0) }
         
         let sectionModel = AllowedPersonSectionModel(identity: "MainSection", items: contacts + [headerItem])
         sectionModels.onNext([sectionModel])

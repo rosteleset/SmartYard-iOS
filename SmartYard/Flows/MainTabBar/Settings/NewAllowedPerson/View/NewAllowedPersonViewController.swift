@@ -27,7 +27,8 @@ class NewAllowedPersonViewController: BaseViewController {
     
     private let contactPicker = CNContactPickerViewController()
     
-    var newContactTrigger = BehaviorSubject<AllowedPerson?>(value: nil)
+    private let rawPhoneAddedTrigger = PublishSubject<String>()
+    private let cnContactAddedTrigger = PublishSubject<CNContact>()
     
     private let viewModel: NewAllowedPersonViewModel
     
@@ -96,27 +97,6 @@ class NewAllowedPersonViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-        let phoneText = textField.rx.text
-            .orEmpty
-            .asDriver(onErrorJustReturn: "")
-        
-        phoneText
-            .map { $0.count == Constants.phoneLengthWithoutPrefix }
-            .drive(addAccessButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-        
-        phoneText
-            .filter { $0.count == Constants.phoneLengthWithoutPrefix }
-            .map { phoneText in
-                AllowedPerson(displayedName: nil, rawNumber: phoneText, logoImage: nil)
-            }
-            .drive(
-                onNext: { [weak self] newAllowedPerson in
-                    self?.newContactTrigger.onNext(newAllowedPerson)
-                }
-            )
-            .disposed(by: disposeBag)
-        
         selectFromContactButton.rx
             .tap
             .asDriver()
@@ -132,20 +112,32 @@ class NewAllowedPersonViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-        let addAccessTrigger = addAccessButton.rx.tap
-            .asDriverOnErrorJustComplete()
-            .withLatestFrom(newContactTrigger.asDriver(onErrorJustReturn: nil))
-            .asDriver()
-        
         let dismissTap = UITapGestureRecognizer()
         backgroundView.addGestureRecognizer(dismissTap)
         
         let input = NewAllowedPersonViewModel.Input(
             closeTrigger: dismissTap.rx.event.mapToVoid().asDriver(onErrorJustReturn: ()),
-            addAccessTrigger: addAccessTrigger.asDriver()
+            rawPhoneAddedTrigger: textField.rx.text.orEmpty.asDriver(onErrorJustReturn: ""),
+            cnContactAddedTrigger: cnContactAddedTrigger.asDriverOnErrorJustComplete(),
+            addAccessTrigger: addAccessButton.rx.tap.asDriver()
         )
         
-        _ = viewModel.transform(input)
+        let output = viewModel.transform(input)
+        
+        output.isAbleToProceed
+            .drive(addAccessButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        output.personWasSuccessfullyImported
+            .drive(
+                onNext: { [weak self] importedPerson in
+                    self?.contactNameLabel.text = importedPerson.displayedName
+                    self?.contactNameLabel.isHidden = false
+                    self?.contactImageView.image = importedPerson.logoImage
+                    self?.textField.isHidden = true
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureRxKeyboard() {
@@ -174,4 +166,12 @@ extension NewAllowedPersonViewController: UITextFieldDelegate {
         return true
     }
     
+}
+
+extension NewAllowedPersonViewController: CNContactPickerDelegate {
+    
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+        cnContactAddedTrigger.onNext(contact)
+    }
+
 }

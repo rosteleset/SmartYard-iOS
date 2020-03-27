@@ -123,7 +123,7 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-                    self.permanentAccessView.viewModel.updateData(allowedPersonType: .permanent, data: contacts)
+                    self.permanentAccessView.viewModel.updateData(data: contacts)
                     
                     let newHeight = self.calculateAccessViewHeight(countItems: contacts.count)
                     self.permanentAccessViewHeightConstraint.constant = newHeight
@@ -145,7 +145,7 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-                    self.temporaryAccessView.viewModel.updateData(allowedPersonType: .temporary, data: contacts)
+                    self.temporaryAccessView.viewModel.updateData(data: contacts)
                     
                     let newHeight = self.calculateAccessViewHeight(countItems: contacts.count)
                     self.tempAccessViewHeightConstraint.constant = newHeight

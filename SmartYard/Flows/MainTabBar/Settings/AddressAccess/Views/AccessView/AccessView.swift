@@ -82,7 +82,7 @@ class AccessView: PMNibLinkableView {
                     let cell = tableView.dequeueReusableCell(withClass: NewPersonCell.self, for: indexPath)
                     return cell
                     
-                case let .contact(personType, person):
+                case let .contact(person):
                     let cell = tableView.dequeueReusableCell(withClass: AllowedPersonCell.self, for: indexPath)
                     cell.configure(with: person)
                     
@@ -94,7 +94,7 @@ class AccessView: PMNibLinkableView {
                         .disposed(by: cell.disposeBag)
                     
                     cell.configureSMSButton(
-                        isAvailable: personType == .temporary,
+                        isAvailable: person.roommateType == .outer,
                         subjectProxyIfAvailable: subject
                     )
                     

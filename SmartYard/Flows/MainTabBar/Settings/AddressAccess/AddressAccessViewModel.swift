@@ -145,7 +145,12 @@ class AddressAccessViewModel: BaseViewModel {
                             return nil
                         }
                         
-                        return AllowedPerson(displayedName: nil, rawNumber: rawNumber, logoImage: nil)
+                        return AllowedPerson(
+                            roommateType: roommate.type,
+                            displayedName: nil,
+                            rawNumber: rawNumber,
+                            logoImage: nil
+                        )
                     }
                 
                 let permanentAccessRoommates: [AllowedPerson] = address.roommates
@@ -155,7 +160,12 @@ class AddressAccessViewModel: BaseViewModel {
                             return nil
                         }
                         
-                        return AllowedPerson(displayedName: nil, rawNumber: rawNumber, logoImage: nil)
+                        return AllowedPerson(
+                            roommateType: roommate.type,
+                            displayedName: nil,
+                            rawNumber: rawNumber,
+                            logoImage: nil
+                        )
                     }
                 
                 return (tempAccessRoommates, permanentAccessRoommates)
