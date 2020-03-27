@@ -356,14 +356,25 @@ class SettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        let name = [accessService.clientName?.name, accessService.clientName?.patronymic]
-            .compactMap { $0 }
-            .joined(separator: " ")
+        let currentName = Driver<APIClientName?>.merge(
+            .just(accessService.clientName),
+            NotificationCenter.default.rx.notification(.userNameUpdated)
+                .map { [weak self] _ in self?.accessService.clientName }
+                .asDriver(onErrorJustReturn: nil)
+        )
+        
+        let nameAsString = currentName
+            .asDriver(onErrorJustReturn: nil)
+            .map { clientName -> String? in
+                [clientName?.name, clientName?.patronymic]
+                    .compactMap { $0 }
+                    .joined(separator: " ")
+            }
         
         let phone = accessService.clientPhoneNumber?.formattedNumberFromRawNumber
         
         return Output(
-            clientName: .just(name),
+            clientName: nameAsString,
             clientPhone: .just(phone),
             sectionModels: sectionModels,
             updateKind: updateKind,

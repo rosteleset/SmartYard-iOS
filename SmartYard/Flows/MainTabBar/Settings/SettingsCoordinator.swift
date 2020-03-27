@@ -129,8 +129,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             let vm = AdvancedSettingsViewModel(
                 accessService: accessService,
                 pushNotificationService: pushNotificationService,
-                router: weakRouter,
-                name: name
+                router: weakRouter
             )
             
             let vc = AdvancedSettingsViewController(viewModel: vm)

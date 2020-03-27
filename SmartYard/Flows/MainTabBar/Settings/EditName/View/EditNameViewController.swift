@@ -143,11 +143,7 @@ class EditNameViewController: BaseViewController, LoaderPresentable {
 extension EditNameViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        switch textField {
-        case nameTextField: middleNameTextField.becomeFirstResponder()
-        case middleNameTextField: middleNameTextField.resignFirstResponder()
-        default: break
-        }
+        textField.resignFirstResponder()
         
         return true
     }

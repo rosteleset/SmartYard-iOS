@@ -19,8 +19,7 @@ class AdvancedSettingsViewModel: BaseViewModel {
     init(
         accessService: AccessService,
         pushNotificationService: PushNotificationService,
-        router: WeakRouter<SettingsRoute>,
-        name: String
+        router: WeakRouter<SettingsRoute>
     ) {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
@@ -32,7 +31,12 @@ class AdvancedSettingsViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
-        let currentName = BehaviorSubject<APIClientName?>(value: accessService.clientName)
+        let currentName = Driver<APIClientName?>.merge(
+            .just(accessService.clientName),
+            NotificationCenter.default.rx.notification(.userNameUpdated)
+                .map { [weak self] _ in self?.accessService.clientName }
+                .asDriver(onErrorJustReturn: nil)
+        )
         
         let nameAsString = currentName
             .asDriver(onErrorJustReturn: nil)
