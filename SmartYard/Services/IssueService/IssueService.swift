@@ -22,14 +22,6 @@ class IssueService {
         self.accessService = accessService
     }
     
-    // экран 00.01
-    func sendAddressApproveIssue(address: String) -> Single<CreateIssueResponseData?> {
-        return sendIssueWithLocation(
-            issue: .approveAddressIssue(address: address),
-            address: address
-        )
-    }
-    
     // экран 19 и 34.00
     func sendNothingRememberIssue() -> Single<CreateIssueResponseData?> {
         return .just(nil)
@@ -97,8 +89,8 @@ class IssueService {
         )
     }
     
-    private func sendIssue(issue: APIIssue, customFields: [String: String], actions: [String]) -> Single<CreateIssueResponseData?> {
-        
+    private func sendIssue(issue: IssueType) -> Single<CreateIssueResponseData?> {
+        apiWrapper.createIssue(issue: issue, customFields: customFields)
     }
     
 }

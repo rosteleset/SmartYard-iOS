@@ -14,13 +14,13 @@ enum IssueType {
     
     case dontRememberAnythingIssue(userInfo: MainUserInfo)
     
-    case unavailableAddressConnectionIssue(userInfo: MainUserInfo, services: [SettingsServiceType])
+    case unavailableAddressConnectionIssue(userInfo: MainUserInfo, services: [SettingsServiceType], lat: String, lon: String)
     
     case connectSelectedServicesIssue(userInfo: MainUserInfo, services: [SettingsServiceType])
     
-    case confirmAddressByCourierIssue(userInfo: MainUserInfo)
+    case confirmAddressByCourierIssue(userInfo: MainUserInfo, lat: String, lon: String)
     
-    case confirmAddressInOfficeIssue(userInfo: MainUserInfo)
+    case confirmAddressInOfficeIssue(userInfo: MainUserInfo, lat: String, lon: String)
     
     case deleteAddressIssue(userInfo: MainUserInfo, reason: String)
     
@@ -29,6 +29,10 @@ enum IssueType {
     case changeTariffIssue(clientId: String)
     
     case serviceUnavailableIssue(userInfo: MainUserInfo, service: SettingsServiceType)
+    
+    case comeInOfficeMyselfIssue(userInfo: MainUserInfo, lat: String, lon: String)
+    
+    case connectOnlyNonHousesService(userInfo: MainUserInfo, lat: String, lon: String, service: SettingsServiceType)
     
     var summary: String {
         let webIssueDescription = "Авто: Заявка с сайта"
@@ -50,6 +54,12 @@ enum IssueType {
             
         case .activateServiceIssue, .changeTariffIssue:
             return resaleIssue
+            
+        case let .comeInOfficeMyselfIssue(userInfo, lat, lon):
+            break
+            
+        case let .connectOnlyNonHousesService(userInfo, lat, lon, service):
+            break
         }
     }
     
@@ -61,16 +71,18 @@ enum IssueType {
         case .dontRememberAnythingIssue:
             return "Выполнить звонок клиенту для напоминания номера договора и пароля от личного кабинета"
             
-        case let .unavailableAddressConnectionIssue(userInfo, services),
-             let .connectSelectedServicesIssue(userInfo, services):
+        case let .unavailableAddressConnectionIssue(userInfo, services, _, _):
+            return userInfo.convertToString() + "\nСписок подключаемых услуг \(services)"
+            
+        case let .connectSelectedServicesIssue(userInfo, services):
             let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
             return userInfo.convertToString() + "\nСписок подключаемых услуг: \(servicesStr)"
         
-        case let .confirmAddressByCourierIssue(userInfo):
-            return userInfo.convertToString() + "\nДоставить клиенту конверт для подтверждения адреса."
-        
-        case let .confirmAddressInOfficeIssue(userInfo):
-            return userInfo.convertToString() + "\nКлиент подойдет в офис для получения подтверждения. Ждите!"
+        case let .confirmAddressByCourierIssue(userInfo, _, _):
+            return userInfo.convertToString() + "\nПодготовить конверт с qr-кодом. Далее заявку отправить курьеру. "
+            
+        case let .confirmAddressInOfficeIssue(userInfo, _, _):
+            return userInfo.convertToString() + "\nКлиент подойдет в офис для получения подтверждения."
         
         case let .deleteAddressIssue(userInfo, reason):
             return userInfo.convertToString() + "\nУдаление адреса из приложения. Причина: \(reason)"
@@ -84,6 +96,12 @@ enum IssueType {
         
         case let .serviceUnavailableIssue(userInfo, services):
             return userInfo.convertToString() + "\nСписок подключаемых услуг: \(services)"
+            
+        case let .comeInOfficeMyselfIssue(userInfo, lat, lon):
+            return ""
+            
+        case let .connectOnlyNonHousesService(userInfo, lat, lon, service):
+            return ""
         }
     }
     
@@ -106,6 +124,12 @@ enum IssueType {
             
         case let .serviceUnavailableIssue(userInfo, _):
             return userInfo.clientId ?? ""
+            
+        case .comeInOfficeMyselfIssue(let userInfo, let lat, let lon):
+            return ""
+            
+        case .connectOnlyNonHousesService(let userInfo, let lat, let lon, let service):
+            return ""
         }
     }
     
@@ -123,6 +147,12 @@ enum IssueType {
              .connectSelectedServicesIssue, .changeTariffIssue,
              .activateServiceIssue, .serviceUnavailableIssue:
             return [startWorkAction, callAction]
+            
+        case .comeInOfficeMyselfIssue(let userInfo, let lat, let lon):
+            return []
+            
+        case .connectOnlyNonHousesService(let userInfo, let lat, let lon, let service):
+            return []
         }
     }
     
@@ -130,25 +160,72 @@ enum IssueType {
         switch self {
         case .approveAddressIssue(let address):
             return [:]
+            
         case .dontRememberAnythingIssue(let userInfo):
-            return [:]
-        case .unavailableAddressConnectionIssue(let userInfo, let services):
-            return [:]
+            return [
+                "10011" : "-3",
+                "11841": userInfo.phoneNumber,
+                "12440": "Приложение"
+            ]
+            
+        case let .unavailableAddressConnectionIssue(userInfo, _, lat, lon):
+            return [
+                "10011": "-1",
+                "11841": userInfo.phoneNumber,
+                "12440": "Приложение",
+                "10743": lat,
+                "10744": lon
+            ]
+            
         case .connectSelectedServicesIssue(let userInfo, let services):
             return [:]
-        case .confirmAddressByCourierIssue(let userInfo):
-            return [:]
-        case .confirmAddressInOfficeIssue(let userInfo):
-            return [:]
+            
+        case let .confirmAddressByCourierIssue(userInfo, lat, lon):
+            return [
+                "10011": "-1",
+                "11841": userInfo.phoneNumber,
+                "12440": "Приложение",
+                "10743": lat,
+                "10744": lon,
+                "10941": "10581"
+            ]
+            
+        case let .confirmAddressInOfficeIssue(userInfo, lat, lon):
+            return [
+                "10011": "-1",
+                "11841": userInfo.phoneNumber,
+                "12440": "Приложение",
+                "10743": lat,
+                "10744": lon,
+                "10941": "10580"
+            ]
+            
         case .deleteAddressIssue(let userInfo, let reason):
             return [:]
+            
         case .activateServiceIssue(let userInfo, let services):
             return [:]
+            
         case .changeTariffIssue(let clientId):
             return [:]
+            
         case .serviceUnavailableIssue(let userInfo, let service):
+            return [:]
+            
+        case .comeInOfficeMyselfIssue(let userInfo, let lat, let lon):
+            return [:]
+            
+        case .connectOnlyNonHousesService(let userInfo, let lat, let lon, let service):
             return [:]
         }
     }
+    
+    var type: String {
+        return "32"
+    }
 
+    var project: String {
+        return "REM"
+    }
+    
 }
