@@ -28,13 +28,6 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private var collapsedNotificationsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedNotificationsBottomConstraint: NSLayoutConstraint!
     
-    @IBOutlet private weak var securityContainerView: UIView!
-    @IBOutlet private weak var securityHeader: UIView!
-    @IBOutlet private weak var securityHeaderArrowImageView: UIImageView!
-    
-    @IBOutlet private var collapsedSecurityBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private var expandedSecurityBottomConstraint: NSLayoutConstraint!
-    
     @IBOutlet private weak var logoutButton: UIButton!
     
     private let viewModel: AdvancedSettingsViewModel
@@ -70,9 +63,6 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
         notificationsContainerView.borderWidth = 1
         notificationsContainerView.borderColor = UIColor.SmartYard.grayBorder
         
-        securityContainerView.borderWidth = 1
-        securityContainerView.borderColor = UIColor.SmartYard.grayBorder
-        
         logoutButton.borderWidth = 1
         logoutButton.borderColor = UIColor.SmartYard.grayBorder
         
@@ -83,17 +73,6 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
             .subscribe(
                 onNext: { [weak self] _ in
                     self?.toggleNotificationsSection()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        let securityTapGesture = UITapGestureRecognizer()
-        securityHeader.addGestureRecognizer(securityTapGesture)
-        
-        securityTapGesture.rx.event
-            .subscribe(
-                onNext: { [weak self] _ in
-                    self?.toggleSecuritySection()
                 }
             )
             .disposed(by: disposeBag)
@@ -111,27 +90,6 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
             expandedNotificationsBottomConstraint.isActive = false
             collapsedNotificationsBottomConstraint.isActive = true
             notificationsHeaderArrowImageView.image = UIImage(named: "DownArrowIcon")
-            viewToScrollTo.onNext(nil)
-        }
-        
-        UIView.animate(withDuration: 0.35) { [weak self] in
-            self?.view.setNeedsLayout()
-            self?.view.layoutIfNeeded()
-        }
-    }
-    
-    private func toggleSecuritySection() {
-        let isCollapsed = collapsedSecurityBottomConstraint.isActive
-        
-        if isCollapsed {
-            collapsedSecurityBottomConstraint.isActive = false
-            expandedSecurityBottomConstraint.isActive = true
-            securityHeaderArrowImageView.image = UIImage(named: "UpArrowIcon")
-            viewToScrollTo.onNext(securityContainerView)
-        } else {
-            expandedSecurityBottomConstraint.isActive = false
-            collapsedSecurityBottomConstraint.isActive = true
-            securityHeaderArrowImageView.image = UIImage(named: "DownArrowIcon")
             viewToScrollTo.onNext(nil)
         }
         
