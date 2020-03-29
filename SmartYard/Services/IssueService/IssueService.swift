@@ -51,6 +51,51 @@ class IssueService {
             }
     }
     
+    // экран 24
+    func sendApproveAddressInOfficeIssue(address: String) -> Single<CreateIssueResponseData?> {
+        
+        getAddressCoordinates(address: address)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .flatMapLatest { [weak self] coordinates -> Driver<CreateIssueResponseData?> in
+                guard let
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+                
+                let issue = Issue(
+                    issueType: .confirmAddressByCourierIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        lat: latitude,
+                        lon: longitude
+                    )
+                )
+                
+                return apiWrapper
+            }
+        
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+                
+                let issue = Issue(
+                    issueType: .confirmAddressInOfficeIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        lat: latitude,
+                        lon: longitude
+                    )
+                )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
+        }
+    }
+    
+    
+    
     // экран 21
     func sendUnavailableAddressConnectionIssue(
         address: String,
@@ -74,12 +119,6 @@ class IssueService {
         services: [SettingsServiceType]
         ) -> Single<CreateIssueResponseData?> {
         return
-    }
-    
-    
-    // экраны 24, 28
-    func sendApproveAddressInOfficeIssue(address: String) -> Single<CreateIssueResponseData?> {
-        return .just(nil)
     }
     
     // экран 34.02.03
