@@ -25,26 +25,26 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Колхозная, 2А" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KCI-zo-wRE">
-                        <rect key="frame" x="24" y="40" width="179" height="18"/>
+                        <rect key="frame" x="24" y="40" width="168" height="18"/>
                         <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                         <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QrCodeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="JM7-jF-BDK">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w7e-wc-x3G">
                         <rect key="frame" x="227" y="37" width="24" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="24" id="PAQ-s9-iLo"/>
-                            <constraint firstAttribute="width" constant="24" id="bh7-YT-836"/>
+                            <constraint firstAttribute="width" constant="24" id="TSe-zd-Mau"/>
+                            <constraint firstAttribute="height" constant="24" id="YWH-Bf-WsM"/>
                         </constraints>
-                    </imageView>
+                        <state key="normal" image="QrCodeIcon"/>
+                    </button>
                 </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="JM7-jF-BDK" firstAttribute="leading" secondItem="KCI-zo-wRE" secondAttribute="trailing" constant="24" id="5lM-Mi-aeC"/>
-                <constraint firstAttribute="trailing" secondItem="JM7-jF-BDK" secondAttribute="trailing" constant="24" id="QCx-wM-XxH"/>
+                <constraint firstItem="w7e-wc-x3G" firstAttribute="centerY" secondItem="KCI-zo-wRE" secondAttribute="centerY" id="91U-4Z-QGy"/>
+                <constraint firstAttribute="trailing" secondItem="w7e-wc-x3G" secondAttribute="trailing" constant="24" id="Kw6-fg-tEn"/>
                 <constraint firstItem="KCI-zo-wRE" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="24" id="VbM-m7-Ugt"/>
-                <constraint firstItem="JM7-jF-BDK" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="fvj-U2-ZqC"/>
                 <constraint firstItem="KCI-zo-wRE" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="qjv-dl-Tia"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
@@ -59,6 +59,7 @@
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="addressLabel" destination="KCI-zo-wRE" id="xe1-Vg-Eq0"/>
+                <outlet property="qrCodeButton" destination="w7e-wc-x3G" id="doB-Ba-Yyv"/>
             </connections>
             <point key="canvasLocation" x="-25.362318840579711" y="131.25"/>
         </collectionViewCell>
