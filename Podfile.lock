@@ -103,6 +103,7 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - OnlineChatSdk (0.0.2)
   - PinLayout (1.8.13)
   - PMNibLinkableView (0.3.0)
   - PromisesObjC (1.2.8)
@@ -162,6 +163,7 @@ DEPENDENCIES:
   - linphone-sdk (> 4.4.0-alpha)
   - Mapbox-iOS-SDK
   - Moya/RxSwift
+  - OnlineChatSdk (from `https://github.com/MadBrains/OnlineChatSdk-Swift.git`, branch `feature/build-fix`)
   - PinLayout
   - PMNibLinkableView
   - RxCocoa
@@ -226,11 +228,17 @@ SPEC REPOS:
     - linphone-sdk
 
 EXTERNAL SOURCES:
+  OnlineChatSdk:
+    :branch: feature/build-fix
+    :git: https://github.com/MadBrains/OnlineChatSdk-Swift.git
   SSCustomTabbar:
     :branch: feature/add-animation-options
     :git: https://github.com/MadBrains/SSCustomTabbar.git
 
 CHECKOUT OPTIONS:
+  OnlineChatSdk:
+    :commit: 6751393fd1884b09581755efb735aa301c09a390
+    :git: https://github.com/MadBrains/OnlineChatSdk-Swift.git
   SSCustomTabbar:
     :commit: 90e83f277033d7cd2374e6fb71a926e800ce3659
     :git: https://github.com/MadBrains/SSCustomTabbar.git
@@ -261,6 +269,7 @@ SPEC CHECKSUMS:
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  OnlineChatSdk: 421b17a804f22c193f81f02a891e7d91128c525b
   PinLayout: e41a50260a76508b7a7fcee8955c76639adc69bc
   PMNibLinkableView: 06ebf6128feb70c3ba589d6be232748c1b7b1767
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
@@ -280,6 +289,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: 9a133f9bbde4c401bd62483be33c37ed47d27f9c
+PODFILE CHECKSUM: 9cdb736f6c2d0b28f35f7f0fc18750d61273d43c
 
 COCOAPODS: 1.8.4
