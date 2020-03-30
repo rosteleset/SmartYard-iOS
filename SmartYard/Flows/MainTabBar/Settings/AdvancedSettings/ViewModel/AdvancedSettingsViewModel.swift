@@ -12,15 +12,18 @@ import XCoordinator
 
 class AdvancedSettingsViewModel: BaseViewModel {
     
+    private let apiWrapper: APIWrapper
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
     private let router: WeakRouter<SettingsRoute>
     
     init(
+        apiWrapper: APIWrapper,
         accessService: AccessService,
         pushNotificationService: PushNotificationService,
         router: WeakRouter<SettingsRoute>
     ) {
+        self.apiWrapper = apiWrapper
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
         self.router = router
@@ -30,6 +33,67 @@ class AdvancedSettingsViewModel: BaseViewModel {
     func transform(_ input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
+        
+        let enableNotificationsSubject = BehaviorSubject<Bool>(value: false)
+        let enableAccountBalanceWarningSubject = BehaviorSubject<Bool>(value: false)
+        
+        let interactionBlockingRequestTracker = ActivityTracker()
+        
+        apiWrapper
+            .getCurrentNotificationState()
+            .trackError(errorTracker)
+            .trackActivity(interactionBlockingRequestTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    enableNotificationsSubject.onNext(state.enable)
+                    enableAccountBalanceWarningSubject.onNext(state.money)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.enableTrigger
+            .withLatestFrom(enableNotificationsSubject.asDriver(onErrorJustReturn: false))
+            .flatMapLatest { [weak self] isEnabled -> Driver<NotificationResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .setNotificationEnableState(isEnabled: !isEnabled)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    enableNotificationsSubject.onNext(state.enable)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.moneyTrigger
+            .withLatestFrom(enableAccountBalanceWarningSubject.asDriver(onErrorJustReturn: false))
+            .flatMapLatest { [weak self] isActive -> Driver<NotificationResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .setNotificationMoneyState(isActive: !isActive)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    enableAccountBalanceWarningSubject.onNext(state.money)
+                }
+            )
+            .disposed(by: disposeBag)
         
         let currentName = Driver<APIClientName?>.merge(
             .just(accessService.clientName),
@@ -106,10 +170,10 @@ class AdvancedSettingsViewModel: BaseViewModel {
         
         return Output(
             name: nameAsString,
-            enableNotifications: .just(true),
-            enableText: .just(true),
-            enableAccountBalanceWarning: .just(false),
-            isLoading: activityTracker.asDriver()
+            enableNotifications: enableNotificationsSubject.asDriverOnErrorJustComplete(),
+            enableAccountBalanceWarning: enableAccountBalanceWarningSubject.asDriverOnErrorJustComplete(),
+            isLoading: activityTracker.asDriver(),
+            shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
         )
     }
     
@@ -120,15 +184,17 @@ extension AdvancedSettingsViewModel {
     struct Input {
         let backTrigger: Driver<Void>
         let editNameTrigger: Driver<Void>
+        let enableTrigger: Driver<Void>
+        let moneyTrigger: Driver<Void>
         let logoutTrigger: Driver<Void>
     }
     
     struct Output {
         let name: Driver<String>
         let enableNotifications: Driver<Bool>
-        let enableText: Driver<Bool>
         let enableAccountBalanceWarning: Driver<Bool>
         let isLoading: Driver<Bool>
+        let shouldBlockInteraction: Driver<Bool>
     }
     
 }

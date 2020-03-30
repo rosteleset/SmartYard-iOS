@@ -25,6 +25,12 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var notificationsHeader: UIView!
     @IBOutlet private weak var notificationsHeaderArrowImageView: UIImageView!
     
+    @IBOutlet private weak var textNotificationsContainerView: UIView!
+    @IBOutlet private weak var textNotificationsSwitch: UISwitch!
+    
+    @IBOutlet private weak var balanceWarningContainerView: UIView!
+    @IBOutlet private weak var balanceWarningSwitch: UISwitch!
+    
     @IBOutlet private var collapsedNotificationsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedNotificationsBottomConstraint: NSLayoutConstraint!
     
@@ -33,6 +39,9 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     private let viewModel: AdvancedSettingsViewModel
     
     private let viewToScrollTo = BehaviorSubject<UIView?>(value: nil)
+    
+    private let textNotificationsTapGesture = UITapGestureRecognizer()
+    private let balanceWarningTapGesture = UITapGestureRecognizer()
     
     var loader: JGProgressHUD?
     
@@ -76,6 +85,12 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+        
+        textNotificationsContainerView.addGestureRecognizer(textNotificationsTapGesture)
+        textNotificationsSwitch.isUserInteractionEnabled = false
+        
+        balanceWarningContainerView.addGestureRecognizer(balanceWarningTapGesture)
+        balanceWarningSwitch.isUserInteractionEnabled = false
     }
     
     private func toggleNotificationsSection() {
@@ -121,6 +136,8 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
         let input = AdvancedSettingsViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             editNameTrigger: editNameButton.rx.tap.asDriver(),
+            enableTrigger: textNotificationsTapGesture.rx.event.asDriver().mapToVoid(),
+            moneyTrigger: balanceWarningTapGesture.rx.event.asDriver().mapToVoid(),
             logoutTrigger: logoutButton.rx.tap.asDriver()
         )
         
@@ -132,6 +149,22 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
                     self?.view.endEditing(true)
                     self?.nameTextField.text = name
                     self?.nameTextField.isEnabled = false
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.enableNotifications
+            .drive(
+                onNext: { [weak self] state in
+                    self?.textNotificationsSwitch.setOn(state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.enableAccountBalanceWarning
+            .drive(
+                onNext: { [weak self] state in
+                    self?.balanceWarningSwitch.setOn(state, animated: true)
                 }
             )
             .disposed(by: disposeBag)

@@ -127,6 +127,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
         case let .advancedSettings(name):
             let vm = AdvancedSettingsViewModel(
+                apiWrapper: apiWrapper,
                 accessService: accessService,
                 pushNotificationService: pushNotificationService,
                 router: weakRouter
