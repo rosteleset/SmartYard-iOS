@@ -46,7 +46,7 @@ enum IssueType {
     case changeTariffIssue(userInfo: MainUserInfo, lat: String, lon: String)
     
     // экран 21
-    case serviceUnavailableIssue(userInfo: MainUserInfo, service: SettingsServiceType, lat: String, lon: String)
+    case servicesUnavailableIssue(userInfo: MainUserInfo, services: [SettingsServiceType], lat: String, lon: String)
     
     // экран 28
     case comeInOfficeMyselfIssue(userInfo: MainUserInfo, lat: String, lon: String, services: [SettingsServiceType])
@@ -64,7 +64,7 @@ enum IssueType {
         let deleteAddressIssue = "Авто: Удаление адреса из приложения"
         
         switch self {
-        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .serviceUnavailableIssue,
+        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .servicesUnavailableIssue,
              .comeInOfficeMyselfIssue, .callCourierIssue, .connectOnlyNonHousesServices:
             return webIssueDescription
             
@@ -97,7 +97,7 @@ enum IssueType {
         case let .changeTariffIssue(userInfo, _, _):
             return userInfo.convertToString() + "\nЗапрос на смену тарифного плана. Выполнить звонок клиенту и осуществить консультацию"
         
-        case let .serviceUnavailableIssue(userInfo, services, _, _):
+        case let .servicesUnavailableIssue(userInfo, services, _, _):
             return userInfo.convertToString() + "\nСписок подключаемых услуг: \(services)"
             
         case let .comeInOfficeMyselfIssue(userInfo, _, _, services):
@@ -111,7 +111,7 @@ enum IssueType {
     var clientCode: String {
         switch self {
         case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .comeInOfficeMyselfIssue,
-             .callCourierIssue, .deleteAddressIssue, .connectOnlyNonHousesServices, .serviceUnavailableIssue:
+             .callCourierIssue, .deleteAddressIssue, .connectOnlyNonHousesServices, .servicesUnavailableIssue:
             return "-1"
             
         case .dontRememberAnythingIssue:
@@ -132,7 +132,7 @@ enum IssueType {
              .comeInOfficeMyselfIssue, .callCourierIssue:
             return [startWorkAction, sendToOfficeAction]
             
-        case .dontRememberAnythingIssue, .changeTariffIssue, .serviceUnavailableIssue, .connectOnlyNonHousesServices:
+        case .dontRememberAnythingIssue, .changeTariffIssue, .servicesUnavailableIssue, .connectOnlyNonHousesServices:
             return [startWorkAction, callAction]
         }
     }
@@ -184,7 +184,7 @@ enum IssueType {
                 "10744": lon
             ]
             
-        case let .serviceUnavailableIssue(userInfo, _, lat, lon):
+        case let .servicesUnavailableIssue(userInfo, _, lat, lon):
             return [
                 "10011": clientCode,
                 "11841": userInfo.phoneNumber,

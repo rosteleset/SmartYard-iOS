@@ -125,23 +125,51 @@ class IssueService {
         }
     }
     
-    
-    
     // экран 21
-    func sendUnavailableAddressConnectionIssue(
-        address: String,
-        services: [SettingsServiceType]
-    ) -> Single<CreateIssueResponseData?> {
-        return sendIssueWithLocation(
-            issue: .unavailableAddressConnectionIssue(
-                userInfo: getUserInfo(
-                    address: address,
-                    clientId: nil
-                ),
-                services: services
-            ),
-            address: address
-        )
+    func sendUnavailableAddressConnectionIssue(address: String, services: [SettingsServiceType]) -> Single<CreateIssueResponseData?> {
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+                
+                let issue = Issue(
+                    issueType: .servicesUnavailableIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        services: services,
+                        lat: latitude,
+                        lon: longitude
+                    )
+                )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
+        }
+    }
+    
+    func sendComeInOfficeMyselfIssue(address: String, services: [SettingsServiceType]) -> Single<CreateIssueResponseData?> {
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+                
+                let issue = Issue(
+                    issueType: .comeInOfficeMyselfIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        lat: latitude,
+                        lon: longitude,
+                        services: services
+                    )
+                )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
+        }
     }
     
     // экран 22
