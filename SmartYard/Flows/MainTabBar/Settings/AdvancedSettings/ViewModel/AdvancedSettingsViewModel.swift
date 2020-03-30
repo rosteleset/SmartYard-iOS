@@ -34,15 +34,19 @@ class AdvancedSettingsViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
+        // MARK: ActivityTracker для изначальной загрузки с показом скелетонов
+        
+        let initialLoadingTracker = ActivityTracker()
+        
+        // MARK: Загрузка изначального стейта
+        
         let enableNotificationsSubject = BehaviorSubject<Bool>(value: false)
         let enableAccountBalanceWarningSubject = BehaviorSubject<Bool>(value: false)
-        
-        let interactionBlockingRequestTracker = ActivityTracker()
         
         apiWrapper
             .getCurrentNotificationState()
             .trackError(errorTracker)
-            .trackActivity(interactionBlockingRequestTracker)
+            .trackActivity(initialLoadingTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
@@ -52,6 +56,8 @@ class AdvancedSettingsViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        
+        // MARK: Нажатие на "Показывать уведомления"
         
         input.enableTrigger
             .withLatestFrom(enableNotificationsSubject.asDriver(onErrorJustReturn: false))
@@ -74,6 +80,8 @@ class AdvancedSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Нажатие на "Оповестить о недостатке средств"
+        
         input.moneyTrigger
             .withLatestFrom(enableAccountBalanceWarningSubject.asDriver(onErrorJustReturn: false))
             .flatMapLatest { [weak self] isActive -> Driver<NotificationResponseData?> in
@@ -95,6 +103,8 @@ class AdvancedSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Отображение имени. Актуализируем при каждом обновлении имени в настройках
+        
         let currentName = Driver<APIClientName?>.merge(
             .just(accessService.clientName),
             NotificationCenter.default.rx.notification(.userNameUpdated)
@@ -110,6 +120,8 @@ class AdvancedSettingsViewModel: BaseViewModel {
                     .joined(separator: " ")
             }
         
+        // MARK: Переход назад
+        
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
@@ -118,6 +130,8 @@ class AdvancedSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Редактирование имени
+        
         input.editNameTrigger
             .drive(
                 onNext: { [weak self] in
@@ -125,6 +139,8 @@ class AdvancedSettingsViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        
+        // MARK: Выход из аккаунта
         
         input.logoutTrigger
             .drive(
@@ -173,7 +189,7 @@ class AdvancedSettingsViewModel: BaseViewModel {
             enableNotifications: enableNotificationsSubject.asDriverOnErrorJustComplete(),
             enableAccountBalanceWarning: enableAccountBalanceWarningSubject.asDriverOnErrorJustComplete(),
             isLoading: activityTracker.asDriver(),
-            shouldShowInitialLoading: interactionBlockingRequestTracker.asDriver()
+            shouldShowInitialLoading: initialLoadingTracker.asDriver()
         )
     }
     

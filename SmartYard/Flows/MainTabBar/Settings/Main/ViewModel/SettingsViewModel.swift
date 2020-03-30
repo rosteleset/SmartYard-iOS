@@ -337,6 +337,8 @@ class SettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Создание моделей секций
+        
         let sectionModels: Driver<[SettingsSectionModel]> = Driver
             .combineLatest(
                 loadedData.asDriver(onErrorJustReturn: []),
@@ -355,6 +357,8 @@ class SettingsViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        
+        // MARK: Отображение имени. Актуализируем при каждом обновлении имени в настройках
         
         let currentName = Driver<APIClientName?>.merge(
             .just(accessService.clientName),

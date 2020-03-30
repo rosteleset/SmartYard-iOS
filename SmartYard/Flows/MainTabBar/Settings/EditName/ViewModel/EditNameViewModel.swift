@@ -31,6 +31,8 @@ class EditNameViewModel: BaseViewModel {
         let isAbleToSave = input.name
             .map { !($0?.trimmed).isNilOrEmpty }
         
+        // MARK: Закрытие экрана
+        
         input.dismissTrigger
             .drive(
                 onNext: { [weak self] in
@@ -39,27 +41,20 @@ class EditNameViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Сохранение введенного имени / отчества
+        
         input.saveTrigger
             .withLatestFrom(input.name)
             .withLatestFrom(input.middleName) { ($0, $1) }
-            .flatMap { name, middleName -> Driver<(String, String?)> in
-                guard let unwrappedName = name else {
+            .flatMapLatest { [weak self] name, middleName -> Driver<APIClientName?> in
+                guard let self = self, let unwrappedName = name?.trimmed, !unwrappedName.isEmpty else {
                     return .empty()
                 }
                 
-                return .just((unwrappedName.trimmed, middleName?.trimmed))
-            }
-            .flatMapLatest { [weak self] args -> Driver<APIClientName?> in
-                guard let self = self else {
-                    return .just(nil)
-                }
-                
-                let (name, patronymic) = args
-                
-                return self.apiWrapper.sendName(name: name, patronymic: patronymic)
+                return self.apiWrapper.sendName(name: unwrappedName, patronymic: middleName?.trimmed)
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
-                    .map { _ in APIClientName(name: name, patronymic: patronymic) }
+                    .map { _ in APIClientName(name: unwrappedName, patronymic: middleName?.trimmed) }
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()

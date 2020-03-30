@@ -26,6 +26,7 @@ class EditNameViewController: BaseViewController, LoaderPresentable {
     init(viewModel: EditNameViewModel, preloadedName: APIClientName?) {
         self.viewModel = viewModel
         self.preloadedName = preloadedName
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -41,23 +42,8 @@ class EditNameViewController: BaseViewController, LoaderPresentable {
         bind()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        view.isUserInteractionEnabled = true
-    }
-    
     private func configureView() {
-        let gesture = UITapGestureRecognizer()
-        view.addGestureRecognizer(gesture)
-        
-        gesture.rx.event.asDriver()
-            .drive(
-                onNext: { [weak self] _ in
-                    self?.view.endEditing(true)
-                }
-            )
-            .disposed(by: disposeBag)
+        view.hideKeyboardWhenTapped = true
         
         nameTextField.setPlaceholder(string: "Имя", isRequiredField: true)
         nameTextField.delegate = self
