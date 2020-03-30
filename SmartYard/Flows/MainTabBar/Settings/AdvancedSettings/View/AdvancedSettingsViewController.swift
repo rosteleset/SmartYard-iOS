@@ -15,11 +15,13 @@ import JGProgressHUD
 class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    @IBOutlet private weak var scrollView: UIScrollView!
     
     @IBOutlet private weak var nameContainerView: UIView!
     @IBOutlet private weak var nameTextField: UITextField!
     @IBOutlet private weak var editNameButton: UIButton!
+    
+    @IBOutlet private weak var mainContainerView: UIView!
+    @IBOutlet private weak var skeletonView: AddressSettingsSkeletonView!
     
     @IBOutlet private weak var notificationsContainerView: UIView!
     @IBOutlet private weak var notificationsHeader: UIView!
@@ -59,6 +61,14 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
         super.viewDidLoad()
         configureView()
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if skeletonView.isSkeletonActive {
+            skeletonView.showSkeletonAsynchronously()
+        }
     }
     
     private func configureView() {
@@ -115,24 +125,6 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func bind() {
-        scrollView.rx
-            .observeWeakly(CGSize.self, "contentSize", options: [.new])
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
-            .withLatestFrom(viewToScrollTo.asDriver(onErrorJustReturn: nil))
-            .ignoreNil()
-            .do(
-                onNext: { [weak self] _ in
-                    self?.viewToScrollTo.onNext(nil)
-                }
-            )
-            .drive(
-                onNext: { [weak self] view in
-                    self?.performScrollUpdate(to: view)
-                }
-            )
-            .disposed(by: disposeBag)
-        
         let input = AdvancedSettingsViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             editNameTrigger: editNameButton.rx.tap.asDriver(),
@@ -181,18 +173,27 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
-    }
-    
-    private func performScrollUpdate(to view: UIView) {
-        let convertedOrigin = view.convert(view.bounds.origin, to: scrollView)
-        let desiredOffset = convertedOrigin.y
-        let maxPossibleOffset = scrollView.contentSize.height - scrollView.bounds.height
-        let finalOffset = max(min(desiredOffset, maxPossibleOffset), 0)
         
-        scrollView.setContentOffset(
-            CGPoint(x: 0, y: finalOffset),
-            animated: true
-        )
+        output.shouldBlockInteraction
+            .drive(
+                onNext: { [weak self] shouldBlockInteraction in
+                    if shouldBlockInteraction {
+                        self?.mainContainerView.isHidden = true
+                        self?.skeletonView.isHidden = false
+                        self?.skeletonView.showSkeletonAsynchronously()
+                    } else {
+                        // MARK: Если показать сразу, то пользователь увидит, как меняется положение тумблеров
+                        // Т.к. мы подгружаем стейт с сервера. Поэтому решил это закрыть за скелетоном
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self?.mainContainerView.isHidden = false
+                            self?.skeletonView.isHidden = true
+                            self?.skeletonView.hideSkeleton()
+                        }
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }
