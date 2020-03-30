@@ -132,7 +132,8 @@ enum IssueType {
              .comeInOfficeMyselfIssue, .callCourierIssue:
             return [startWorkAction, sendToOfficeAction]
             
-        case .dontRememberAnythingIssue, .changeTariffIssue, .servicesUnavailableIssue, .connectOnlyNonHousesServices:
+        case .dontRememberAnythingIssue, .changeTariffIssue,
+             .servicesUnavailableIssue, .connectOnlyNonHousesServices:
             return [startWorkAction, callAction]
         }
     }
