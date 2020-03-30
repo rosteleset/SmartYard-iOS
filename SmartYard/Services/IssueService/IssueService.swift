@@ -53,14 +53,14 @@ class IssueService {
     
     // экран 24
     func sendApproveAddressInOfficeIssue(address: String) -> Single<CreateIssueResponseData?> {
-        
-        getAddressCoordinates(address: address)
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
-            .flatMapLatest { [weak self] coordinates -> Driver<CreateIssueResponseData?> in
-                guard let
-                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
-                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] coordinates -> Single<CreateIssueResponseData?> in
+                guard let self = self, let uCoordinates = coordinates else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = uCoordinates.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = uCoordinates.lon.replacingOccurrences(of: ".", with: ",")
                 
                 let issue = Issue(
                     issueType: .confirmAddressByCourierIssue(
@@ -70,7 +70,7 @@ class IssueService {
                     )
                 )
                 
-                return apiWrapper
+                return self.apiWrapper.sendIssue(issue: issue)
             }
         
         return getAddressCoordinates(address: address)
