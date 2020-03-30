@@ -15,13 +15,11 @@ import JGProgressHUD
 class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
+    @IBOutlet private weak var mainContainerView: UIView!
     
     @IBOutlet private weak var nameContainerView: UIView!
     @IBOutlet private weak var nameTextField: UITextField!
     @IBOutlet private weak var editNameButton: UIButton!
-    
-    @IBOutlet private weak var mainContainerView: UIView!
-    @IBOutlet private weak var skeletonView: AddressSettingsSkeletonView!
     
     @IBOutlet private weak var notificationsContainerView: UIView!
     @IBOutlet private weak var notificationsHeader: UIView!
@@ -29,9 +27,11 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var textNotificationsContainerView: UIView!
     @IBOutlet private weak var textNotificationsSwitch: UISwitch!
+    @IBOutlet private weak var textNotificationsSkeleton: UIView!
     
     @IBOutlet private weak var balanceWarningContainerView: UIView!
     @IBOutlet private weak var balanceWarningSwitch: UISwitch!
+    @IBOutlet private weak var balanceWarningSkeleton: UIView!
     
     @IBOutlet private var collapsedNotificationsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedNotificationsBottomConstraint: NSLayoutConstraint!
@@ -66,8 +66,12 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if skeletonView.isSkeletonActive {
-            skeletonView.showSkeletonAsynchronously()
+        if textNotificationsSkeleton.isSkeletonActive {
+            textNotificationsSkeleton.showSkeletonAsynchronously()
+        }
+        
+        if balanceWarningSkeleton.isSkeletonActive {
+            balanceWarningSkeleton.showSkeletonAsynchronously()
         }
     }
     
@@ -174,26 +178,42 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        output.shouldBlockInteraction
+        output.shouldShowInitialLoading
             .drive(
-                onNext: { [weak self] shouldBlockInteraction in
-                    if shouldBlockInteraction {
-                        self?.mainContainerView.isHidden = true
-                        self?.skeletonView.isHidden = false
-                        self?.skeletonView.showSkeletonAsynchronously()
-                    } else {
-                        // MARK: Если показать сразу, то пользователь увидит, как меняется положение тумблеров
-                        // Т.к. мы подгружаем стейт с сервера. Поэтому решил это закрыть за скелетоном
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            self?.mainContainerView.isHidden = false
-                            self?.skeletonView.isHidden = true
-                            self?.skeletonView.hideSkeleton()
-                        }
-                    }
+                onNext: { [weak self] shouldShowInitialLoading in
+                    shouldShowInitialLoading ? self?.showInitialLoading() : self?.finishInitialLoading()
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    private func showInitialLoading() {
+        textNotificationsSwitch.isHidden = true
+        textNotificationsTapGesture.isEnabled = false
+        textNotificationsSkeleton.isHidden = false
+        textNotificationsSkeleton.showSkeletonAsynchronously()
+        
+        balanceWarningSwitch.isHidden = true
+        balanceWarningTapGesture.isEnabled = false
+        balanceWarningSkeleton.isHidden = false
+        balanceWarningSkeleton.showSkeletonAsynchronously()
+    }
+    
+    private func finishInitialLoading() {
+        // MARK: Если показать сразу, то пользователь увидит, как меняется положение тумблеров
+        // Т.к. мы подгружаем стейт с сервера. Поэтому решил это закрыть за скелетоном
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.textNotificationsSwitch.isHidden = false
+            self?.textNotificationsTapGesture.isEnabled = true
+            self?.textNotificationsSkeleton.isHidden = true
+            self?.textNotificationsSkeleton.hideSkeleton()
+            
+            self?.balanceWarningSwitch.isHidden = false
+            self?.balanceWarningTapGesture.isEnabled = true
+            self?.balanceWarningSkeleton.isHidden = true
+            self?.balanceWarningSkeleton.hideSkeleton()
+        }
     }
     
 }

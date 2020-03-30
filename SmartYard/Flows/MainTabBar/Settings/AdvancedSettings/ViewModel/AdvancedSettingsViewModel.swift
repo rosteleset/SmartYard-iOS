@@ -173,7 +173,7 @@ class AdvancedSettingsViewModel: BaseViewModel {
             enableNotifications: enableNotificationsSubject.asDriverOnErrorJustComplete(),
             enableAccountBalanceWarning: enableAccountBalanceWarningSubject.asDriverOnErrorJustComplete(),
             isLoading: activityTracker.asDriver(),
-            shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
+            shouldShowInitialLoading: interactionBlockingRequestTracker.asDriver()
         )
     }
     
@@ -194,7 +194,7 @@ extension AdvancedSettingsViewModel {
         let enableNotifications: Driver<Bool>
         let enableAccountBalanceWarning: Driver<Bool>
         let isLoading: Driver<Bool>
-        let shouldBlockInteraction: Driver<Bool>
+        let shouldShowInitialLoading: Driver<Bool>
     }
     
 }

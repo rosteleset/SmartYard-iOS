@@ -24,6 +24,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AdvancedSettingsViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="balanceWarningContainerView" destination="m61-Ou-EFl" id="7PX-Vh-dBc"/>
+                <outlet property="balanceWarningSkeleton" destination="YJs-4R-Kis" id="nkd-lo-mgM"/>
                 <outlet property="balanceWarningSwitch" destination="ehC-mw-0P1" id="fVU-3X-roA"/>
                 <outlet property="collapsedNotificationsBottomConstraint" destination="N57-Dx-SOM" id="ifc-tR-pnm"/>
                 <outlet property="editNameButton" destination="5O2-1l-OZC" id="78r-Qi-QKc"/>
@@ -36,8 +37,8 @@
                 <outlet property="notificationsContainerView" destination="Rja-ay-B0n" id="nnz-SJ-ubo"/>
                 <outlet property="notificationsHeader" destination="YXf-zN-Lm3" id="P2E-Ef-369"/>
                 <outlet property="notificationsHeaderArrowImageView" destination="kIZ-Qq-Puv" id="Z6X-TK-Edc"/>
-                <outlet property="skeletonView" destination="f1s-8U-tfR" id="pdV-qt-1fr"/>
                 <outlet property="textNotificationsContainerView" destination="tmr-Bi-Xv2" id="C2C-QA-uq5"/>
+                <outlet property="textNotificationsSkeleton" destination="Vdl-Qp-ZA7" id="UVO-Nv-RrU"/>
                 <outlet property="textNotificationsSwitch" destination="pqi-cU-gi7" id="dhL-1A-CnA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -120,6 +121,16 @@
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pqi-cU-gi7">
                                                             <rect key="frame" x="309" y="12" width="51" height="31"/>
                                                         </switch>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vdl-Qp-ZA7">
+                                                            <rect key="frame" x="309" y="12" width="49" height="31"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                    <real key="value" value="15.5"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jT1-XV-M10" userLabel="Separator ">
                                                             <rect key="frame" x="0.0" y="54" width="382" height="1"/>
                                                             <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -130,6 +141,8 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
+                                                        <constraint firstItem="pqi-cU-gi7" firstAttribute="leading" secondItem="Vdl-Qp-ZA7" secondAttribute="leading" id="8CR-oP-kbX"/>
+                                                        <constraint firstItem="pqi-cU-gi7" firstAttribute="bottom" secondItem="Vdl-Qp-ZA7" secondAttribute="bottom" id="BmO-T4-qbM"/>
                                                         <constraint firstAttribute="bottom" secondItem="jT1-XV-M10" secondAttribute="bottom" id="KPx-TX-VcM"/>
                                                         <constraint firstItem="pqi-cU-gi7" firstAttribute="centerY" secondItem="tmr-Bi-Xv2" secondAttribute="centerY" id="MS8-Ob-KbY"/>
                                                         <constraint firstAttribute="trailing" secondItem="jT1-XV-M10" secondAttribute="trailing" id="NBW-6w-5XR"/>
@@ -137,7 +150,9 @@
                                                         <constraint firstItem="tfa-8o-Ay8" firstAttribute="centerY" secondItem="tmr-Bi-Xv2" secondAttribute="centerY" id="fO5-oa-8cx"/>
                                                         <constraint firstAttribute="height" constant="55" id="gYf-Gz-tjf"/>
                                                         <constraint firstItem="pqi-cU-gi7" firstAttribute="leading" secondItem="tfa-8o-Ay8" secondAttribute="trailing" constant="24" id="gs7-Kb-1vX"/>
+                                                        <constraint firstItem="pqi-cU-gi7" firstAttribute="trailing" secondItem="Vdl-Qp-ZA7" secondAttribute="trailing" id="mSY-Wb-fD3"/>
                                                         <constraint firstItem="oDC-zq-xuT" firstAttribute="leading" secondItem="tmr-Bi-Xv2" secondAttribute="leading" id="mzS-tp-J1f"/>
+                                                        <constraint firstItem="pqi-cU-gi7" firstAttribute="top" secondItem="Vdl-Qp-ZA7" secondAttribute="top" id="oHm-II-v7R"/>
                                                         <constraint firstItem="oDC-zq-xuT" firstAttribute="top" secondItem="tmr-Bi-Xv2" secondAttribute="top" id="p57-Se-xGZ"/>
                                                         <constraint firstAttribute="trailing" secondItem="pqi-cU-gi7" secondAttribute="trailing" constant="24" id="th8-M6-PxG"/>
                                                         <constraint firstItem="jT1-XV-M10" firstAttribute="leading" secondItem="tmr-Bi-Xv2" secondAttribute="leading" id="wa7-Gh-296"/>
@@ -177,13 +192,27 @@
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ehC-mw-0P1">
                                                             <rect key="frame" x="309" y="29" width="51" height="31"/>
                                                         </switch>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJs-4R-Kis">
+                                                            <rect key="frame" x="309" y="29" width="49" height="31"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                    <real key="value" value="15.5"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="qN6-xJ-VU2" firstAttribute="leading" secondItem="m61-Ou-EFl" secondAttribute="leading" constant="24" id="08N-sj-e05"/>
                                                         <constraint firstItem="ehC-mw-0P1" firstAttribute="leading" secondItem="qN6-xJ-VU2" secondAttribute="trailing" constant="24" id="VI1-T6-yUz"/>
+                                                        <constraint firstItem="ehC-mw-0P1" firstAttribute="leading" secondItem="YJs-4R-Kis" secondAttribute="leading" id="hp4-fC-HCQ"/>
+                                                        <constraint firstItem="ehC-mw-0P1" firstAttribute="trailing" secondItem="YJs-4R-Kis" secondAttribute="trailing" id="m1b-YA-1k5"/>
                                                         <constraint firstItem="qN6-xJ-VU2" firstAttribute="top" secondItem="m61-Ou-EFl" secondAttribute="top" constant="18" id="mPD-Wu-pbr"/>
+                                                        <constraint firstItem="ehC-mw-0P1" firstAttribute="bottom" secondItem="YJs-4R-Kis" secondAttribute="bottom" id="mtp-SC-4Lq"/>
                                                         <constraint firstAttribute="trailing" secondItem="ehC-mw-0P1" secondAttribute="trailing" constant="24" id="nsK-up-FRp"/>
+                                                        <constraint firstItem="ehC-mw-0P1" firstAttribute="top" secondItem="YJs-4R-Kis" secondAttribute="top" id="rZR-sJ-QP5"/>
                                                         <constraint firstItem="ehC-mw-0P1" firstAttribute="centerY" secondItem="qN6-xJ-VU2" secondAttribute="centerY" id="wiG-Bx-6Fl"/>
                                                         <constraint firstAttribute="bottom" secondItem="qN6-xJ-VU2" secondAttribute="bottom" constant="18" id="zR5-sD-FZU"/>
                                                     </constraints>
@@ -252,18 +281,11 @@
                                 <constraint firstItem="Rja-ay-B0n" firstAttribute="leading" secondItem="OuL-ZB-YLW" secondAttribute="leading" id="T16-Ib-v1T"/>
                             </constraints>
                         </view>
-                        <view hidden="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="f1s-8U-tfR" customClass="AddressSettingsSkeletonView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="16" y="54" width="382" height="128"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <viewLayoutGuide key="safeArea" id="wr6-Kw-di0"/>
-                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="f1s-8U-tfR" firstAttribute="leading" secondItem="8MI-1O-eYe" secondAttribute="leading" constant="16" id="HXy-R4-Dmm"/>
                         <constraint firstAttribute="trailing" secondItem="OuL-ZB-YLW" secondAttribute="trailing" constant="16" id="JZR-xd-g8E"/>
                         <constraint firstItem="OuL-ZB-YLW" firstAttribute="leading" secondItem="8MI-1O-eYe" secondAttribute="leading" constant="16" id="WBw-lb-cbU"/>
-                        <constraint firstAttribute="trailing" secondItem="f1s-8U-tfR" secondAttribute="trailing" constant="16" id="xVG-zq-N09"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5nb-DY-DIs" userLabel="Name Edit View">
@@ -318,7 +340,6 @@
                 <constraint firstItem="8MI-1O-eYe" firstAttribute="top" secondItem="Fyv-Y1-rkc" secondAttribute="bottom" constant="54" id="lQc-QK-kXf"/>
                 <constraint firstItem="8MI-1O-eYe" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="lxl-BD-1XF"/>
                 <constraint firstItem="8MI-1O-eYe" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="rls-e9-bI7"/>
-                <constraint firstItem="f1s-8U-tfR" firstAttribute="top" secondItem="5nb-DY-DIs" secondAttribute="bottom" constant="8" id="sQA-RI-oG6"/>
                 <constraint firstAttribute="bottom" secondItem="0aH-ke-d7M" secondAttribute="bottom" id="ybc-Ra-vSM"/>
                 <constraint firstItem="H0v-1I-nbB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="yrt-WU-nnj"/>
             </constraints>
