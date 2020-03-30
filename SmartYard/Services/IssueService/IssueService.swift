@@ -71,7 +71,7 @@ class IssueService {
                 )
                 
                 return self.apiWrapper.sendIssue(issue: issue)
-        }
+            }
     }
     
     // экран 34.02.03
@@ -95,7 +95,7 @@ class IssueService {
                 )
                 
                 return self.apiWrapper.sendIssue(issue: issue)
-        }
+            }
     }
     
     // экран 34.03
@@ -122,7 +122,7 @@ class IssueService {
                 )
                 
                 return self.apiWrapper.sendIssue(issue: issue)
-        }
+            }
     }
     
     // экран 21
@@ -146,7 +146,7 @@ class IssueService {
                 )
                 
                 return self.apiWrapper.sendIssue(issue: issue)
-        }
+            }
     }
     
     // экран 28 и экран 22 в случае, если есть общедомовые услуги и выбран какой-либо другой сервис
@@ -170,7 +170,7 @@ class IssueService {
                 )
                 
                 return self.apiWrapper.sendIssue(issue: issue)
-        }
+            }
     }
     
     // экран 29
@@ -193,7 +193,7 @@ class IssueService {
                 )
                 
                 return self.apiWrapper.sendIssue(issue: issue)
-        }
+            }
     }
     
     // экран 22, кейс, когда нет общедомовых услуг
@@ -208,15 +208,16 @@ class IssueService {
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
                 
                 let issue = Issue(
-                    issueType: .callCourierIssue(
+                    issueType: .connectOnlyNonHousesServices(
                         userInfo: self.getUserInfo(address: address, clientId: nil),
                         lat: latitude,
-                        lon: longitude
+                        lon: longitude,
+                        services: services
                     )
                 )
                 
                 return self.apiWrapper.sendIssue(issue: issue)
-        }
+            }
     }
 
     private func getAddressCoordinates(address: String) -> Single<GeoCoderResponseData?> {
