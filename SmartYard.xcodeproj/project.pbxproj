@@ -110,6 +110,8 @@
 		84AADD1D242E22550056994A /* EditNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AADD1C242E22550056994A /* EditNameViewModel.swift */; };
 		84AADD20242E22640056994A /* EditNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AADD1E242E22640056994A /* EditNameViewController.swift */; };
 		84AADD21242E22640056994A /* EditNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AADD1F242E22640056994A /* EditNameViewController.xib */; };
+		84AADD242431FA9E0056994A /* NotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AADD232431FA9E0056994A /* NotificationRequest.swift */; };
+		84AADD262431FAA80056994A /* NotificationResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AADD252431FAA80056994A /* NotificationResponseData.swift */; };
 		84B89A7C23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89A7B23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift */; };
 		84B89A9023F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89A8E23F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift */; };
 		84B89A9123F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B89A8F23F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib */; };
@@ -442,6 +444,8 @@
 		84AADD1C242E22550056994A /* EditNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameViewModel.swift; sourceTree = "<group>"; };
 		84AADD1E242E22640056994A /* EditNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameViewController.swift; sourceTree = "<group>"; };
 		84AADD1F242E22640056994A /* EditNameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditNameViewController.xib; sourceTree = "<group>"; };
+		84AADD232431FA9E0056994A /* NotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRequest.swift; sourceTree = "<group>"; };
+		84AADD252431FAA80056994A /* NotificationResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationResponseData.swift; sourceTree = "<group>"; };
 		84B89A7B23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSectionUpdateKind.swift; sourceTree = "<group>"; };
 		84B89A8023F2F984009692B4 /* ServiceUnavailableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceUnavailableViewController.swift; sourceTree = "<group>"; };
 		84B89A8123F2F984009692B4 /* ServiceUnavailableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceUnavailableViewController.xib; sourceTree = "<group>"; };
@@ -1257,6 +1261,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		84AADD222431FA8A0056994A /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				84AADD232431FA9E0056994A /* NotificationRequest.swift */,
+				84AADD252431FAA80056994A /* NotificationResponseData.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
 		84B89A7D23F2F88E009692B4 /* ServiceIsActivated */ = {
 			isa = PBXGroup;
 			children = (
@@ -1776,6 +1789,7 @@
 				E92EFB81242A22F2003AF7FE /* RegisterPushToken */,
 				E92EFBE4242A247F003AF7FE /* Restore */,
 				E92EFB83242A22F2003AF7FE /* GetPaymentsList */,
+				84AADD222431FA8A0056994A /* Notification */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1836,7 +1850,7 @@
 				E92EFB99242A22F2003AF7FE /* APIWrapper+Address.swift */,
 				842FECB3242B89DF007CA0F3 /* Offices */,
 				E92EFB87242A22F2003AF7FE /* GetAddressList */,
-				E92EFB8A242A22F2003AF7FE /* HourGuestAccess */,
+				E92EFB8A242A22F2003AF7FE /* Intercom */,
 				E92EFB8D242A22F2003AF7FE /* Access */,
 				E92EFB8F242A22F2003AF7FE /* ResetCode */,
 				E92EFB92242A22F2003AF7FE /* OpenDoor */,
@@ -1856,13 +1870,13 @@
 			path = GetAddressList;
 			sourceTree = "<group>";
 		};
-		E92EFB8A242A22F2003AF7FE /* HourGuestAccess */ = {
+		E92EFB8A242A22F2003AF7FE /* Intercom */ = {
 			isa = PBXGroup;
 			children = (
 				E92EFB8B242A22F2003AF7FE /* IntercomRequest.swift */,
 				E92EFB8C242A22F2003AF7FE /* IntercomResponseData.swift */,
 			);
-			path = HourGuestAccess;
+			path = Intercom;
 			sourceTree = "<group>";
 		};
 		E92EFB8D242A22F2003AF7FE /* Access */ = {
@@ -2686,6 +2700,7 @@
 				E92EFBAE242A22F2003AF7FE /* APIHouse.swift in Sources */,
 				847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */,
 				843C38E9242A6E490035BF80 /* QRCodeScanViewController.swift in Sources */,
+				84AADD262431FAA80056994A /* NotificationResponseData.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
 				E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
@@ -2868,6 +2883,7 @@
 				844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */,
 				84B89A9523F2FA8A009692B4 /* ServiceIsActivatedViewModel.swift in Sources */,
 				844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */,
+				84AADD242431FA9E0056994A /* NotificationRequest.swift in Sources */,
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
