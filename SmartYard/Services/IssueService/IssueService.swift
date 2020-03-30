@@ -98,6 +98,33 @@ class IssueService {
         }
     }
     
+    // экран 34.03
+    func sendChangeTariffIssue(address: String, clientId: String?) -> Single<CreateIssueResponseData?> {
+        guard let clientId = clientId else {
+            return .error(NSError.APIWrapperError.clientIdMissingError)
+        }
+        
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+                
+                let issue = Issue(
+                    issueType: .changeTariffIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: clientId),
+                        lat: latitude,
+                        lon: longitude
+                    )
+                )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
+        }
+    }
+    
     
     
     // экран 21
@@ -125,14 +152,7 @@ class IssueService {
         return
     }
     
-    // экран 34.03
-    func sendChangeTariffIssue(clientId: String?) -> Single<CreateIssueResponseData?> {
-        guard let clientId = clientId else {
-            return .error(NSError.APIWrapperError.clientIdMissingError)
-        }
-        
-        return .just(nil)
-    }
+
     
     private func sendIssueWithLocation(issue: IssueType, address: String) -> Single<CreateIssueResponseData?> {
         return getAddressCoordinates(address: address)
