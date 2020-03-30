@@ -397,8 +397,9 @@ class AddressesListViewModel: BaseViewModel {
             )
         }
         
-        let unapprovedAddressSections = AddressesListSectionModel(identity: "unapproved", items: unapprovedAddressItems)
-        sectionModels.append(unapprovedAddressSections)
+        unapprovedAddressItems.forEach {
+            sectionModels.append(AddressesListSectionModel(identity: String($0.identity.hashValue), items: [$0]))
+        }
         
         return sectionModels
     }
