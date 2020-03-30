@@ -14,7 +14,11 @@ enum ChatRoute: Route {
 
 class ChatCoordinator: NavigationCoordinator<ChatRoute> {
     
-    init() {
+    private let accessService: AccessService
+    
+    init(accessService: AccessService) {
+        self.accessService = accessService
+        
         super.init(initialRoute: .main)
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
@@ -22,7 +26,7 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
     override func prepareTransition(for route: ChatRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vc = ChatViewController()
+            let vc = ChatViewController(userPhone: accessService.clientPhoneNumber)
             return .set([vc])
         }
     }
