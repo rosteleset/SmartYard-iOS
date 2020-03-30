@@ -49,8 +49,8 @@ class AvailableServicesViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let sendConnectSelectedServicesIssueTrigger = PublishSubject<(String, [ServiceModel])>()
-        let sendConnectOnlyNonHousesServicesIssueTrigger = PublishSubject<(String, [ServiceModel])>()
+        let сonnectSelectedServicesTrigger = PublishSubject<(String, [ServiceModel])>()
+        let сonnectOnlyNonHousesServicesTrigger = PublishSubject<(String, [ServiceModel])>()
         
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
@@ -77,7 +77,7 @@ class AvailableServicesViewModel: BaseViewModel {
                     
                     guard !housesServices.isEmpty else {
                         if !selectedServices.isEmpty {
-                            sendConnectOnlyNonHousesServicesIssueTrigger.onNext((address, selectedServices))
+                            сonnectOnlyNonHousesServicesTrigger.onNext((address, selectedServices))
                             return
                         }
                         
@@ -89,12 +89,12 @@ class AvailableServicesViewModel: BaseViewModel {
                         return
                     }
                     
-                    sendConnectSelectedServicesIssueTrigger.onNext((address, selectedServices))
+                    сonnectSelectedServicesTrigger.onNext((address, selectedServices))
                 }
             )
             .disposed(by: disposeBag)
         
-        sendConnectSelectedServicesIssueTrigger
+        сonnectSelectedServicesTrigger
             .asDriverOnErrorJustComplete()
             .flatMapLatest { [weak self] args -> Driver<CreateIssueResponseData?> in
                 guard let self = self else {
@@ -122,7 +122,7 @@ class AvailableServicesViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        sendConnectOnlyNonHousesServicesIssueTrigger
+        сonnectOnlyNonHousesServicesTrigger
             .asDriverOnErrorJustComplete()
             .flatMapLatest { [weak self] args -> Driver<CreateIssueResponseData?> in
                 guard let self = self else {
