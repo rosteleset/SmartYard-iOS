@@ -24,8 +24,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="275" height="88"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Колхозная, 2А" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KCI-zo-wRE">
-                        <rect key="frame" x="24" y="40" width="168" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Колхозная, 2А" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KCI-zo-wRE">
+                        <rect key="frame" x="24" y="40" width="193" height="18"/>
                         <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                         <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -46,6 +46,7 @@
                 <constraint firstAttribute="trailing" secondItem="w7e-wc-x3G" secondAttribute="trailing" constant="24" id="Kw6-fg-tEn"/>
                 <constraint firstItem="KCI-zo-wRE" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="24" id="VbM-m7-Ugt"/>
                 <constraint firstItem="KCI-zo-wRE" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="qjv-dl-Tia"/>
+                <constraint firstItem="w7e-wc-x3G" firstAttribute="leading" secondItem="KCI-zo-wRE" secondAttribute="trailing" constant="10" id="raO-Fr-YOq"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="275" height="88"/>
