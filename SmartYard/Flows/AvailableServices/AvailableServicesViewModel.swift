@@ -49,7 +49,8 @@ class AvailableServicesViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let sendConnectServicesIssueTrigger = PublishSubject<(String, [ServiceModel])>()
+        let sendConnectSelectedServicesIssueTrigger = PublishSubject<(String, [ServiceModel])>()
+        let sendConnectOnlyNonHousesServicesIssueTrigger = PublishSubject<(String, [ServiceModel])>()
         
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
@@ -62,20 +63,38 @@ class AvailableServicesViewModel: BaseViewModel {
                     guard let self = self, let address = address else {
                         return
                     }
+                     /*
+                     1) Если есть общедомовые сервисы и другие сервисы НЕ выбраны
+                     - переходим на экран выбора способа подтверждения курьер / офис.
+                     2) Если есть общедомовые услуги и выбран какой-либо другой сервис
+                     - делаем заявку sendComeInOfficeMyselfIssue
+                     3) Если НЕТ общедомовых услуг и выбран какой-либо сервис -
+                     делаем заявку "заявка только на услугу"
+                     */
                     
                     let selectedServices = services.filter { $0.state == .checkedActive }
+                    let housesServices = services.filter { $0.state == .checkedInactive }
+                    
+                    guard !housesServices.isEmpty else {
+                        if !selectedServices.isEmpty {
+                            sendConnectOnlyNonHousesServicesIssueTrigger.onNext((address, selectedServices))
+                            return
+                        }
+                        
+                        return
+                    }
                     
                     guard !selectedServices.isEmpty else {
                         self.router.trigger(.confirmAddress(address: address))
                         return
                     }
                     
-                    sendConnectServicesIssueTrigger.onNext((address, selectedServices))
+                    sendConnectSelectedServicesIssueTrigger.onNext((address, selectedServices))
                 }
             )
             .disposed(by: disposeBag)
         
-        sendConnectServicesIssueTrigger
+        sendConnectSelectedServicesIssueTrigger
             .asDriverOnErrorJustComplete()
             .flatMapLatest { [weak self] args -> Driver<CreateIssueResponseData?> in
                 guard let self = self else {
@@ -86,7 +105,35 @@ class AvailableServicesViewModel: BaseViewModel {
                 let selectedServices = services.compactMap { SettingsServiceType(rawValue: $0.icon) }
                 
                 return self.issueService
-                    .sendConnectSelectedServicesIssue(
+                    .sendComeInOfficeMyselfIssue(
+                        address: addressString,
+                        services: selectedServices
+                    )
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .mapToVoid()
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        sendConnectOnlyNonHousesServicesIssueTrigger
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] args -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                let (addressString, services) = args
+                let selectedServices = services.compactMap { SettingsServiceType(rawValue: $0.icon) }
+                
+                return self.issueService
+                    .sendConnectOnlyNonHousesServicesIssue(
                         address: addressString,
                         services: selectedServices
                     )
