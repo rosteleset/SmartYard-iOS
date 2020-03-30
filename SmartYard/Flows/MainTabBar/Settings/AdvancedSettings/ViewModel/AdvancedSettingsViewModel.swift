@@ -108,7 +108,6 @@ class AdvancedSettingsViewModel: BaseViewModel {
             name: nameAsString,
             enableNotifications: .just(true),
             enableText: .just(true),
-            ringtone: .just("Нота"),
             enableAccountBalanceWarning: .just(false),
             isLoading: activityTracker.asDriver()
         )
@@ -128,7 +127,6 @@ extension AdvancedSettingsViewModel {
         let name: Driver<String>
         let enableNotifications: Driver<Bool>
         let enableText: Driver<Bool>
-        let ringtone: Driver<String>
         let enableAccountBalanceWarning: Driver<Bool>
         let isLoading: Driver<Bool>
     }
