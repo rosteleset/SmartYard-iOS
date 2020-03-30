@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditNameViewController" customModule="SmartYard" customModuleProvider="target">
+            <connections>
+                <outlet property="backgroundView" destination="sf2-cn-pZ7" id="jHL-sR-cn5"/>
+                <outlet property="mainContainerBottomConstraint" destination="hiH-ju-CbG" id="Mhb-kg-Gek"/>
+                <outlet property="middleNameTextField" destination="5GP-gA-kaS" id="E9B-ot-2Es"/>
+                <outlet property="nameTextField" destination="YSb-Iy-ZEM" id="Iwe-b0-16S"/>
+                <outlet property="saveButton" destination="Hda-Fr-LzP" id="Pmz-WK-Xur"/>
+                <outlet property="view" destination="a6h-Jh-Mat" id="Ub7-Ka-6IC"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="a6h-Jh-Mat">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sf2-cn-pZ7">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Cg-I5-h1i" userLabel="AvoidingView">
+                    <rect key="frame" x="0.0" y="307" width="414" height="292"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AK2-qB-Z4e">
+                            <rect key="frame" x="16" y="16" width="382" height="260"/>
+                            <subviews>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YSb-Iy-ZEM" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="24" y="24" width="334" height="56"/>
+                                    <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="56" id="igS-jt-TX5"/>
+                                    </constraints>
+                                    <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" textContentType="name"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="8"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </textField>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5GP-gA-kaS" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="24" y="96" width="334" height="56"/>
+                                    <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="56" id="yLr-od-2OU"/>
+                                    </constraints>
+                                    <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" textContentType="additional-name"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="8"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </textField>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hda-Fr-LzP" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="24" y="176" width="334" height="60"/>
+                                    <color key="backgroundColor" red="0.16078431369999999" green="0.5450980392" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="60" id="bCo-bq-1CM"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                                    <color key="tintColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <state key="normal" title="Сохранить"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="12"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="YSb-Iy-ZEM" firstAttribute="top" secondItem="AK2-qB-Z4e" secondAttribute="top" constant="24" id="4ag-zk-746"/>
+                                <constraint firstAttribute="trailing" secondItem="Hda-Fr-LzP" secondAttribute="trailing" constant="24" id="AXx-H8-ZKW"/>
+                                <constraint firstItem="Hda-Fr-LzP" firstAttribute="top" secondItem="5GP-gA-kaS" secondAttribute="bottom" constant="24" id="DgZ-pg-0F9"/>
+                                <constraint firstAttribute="trailing" secondItem="5GP-gA-kaS" secondAttribute="trailing" constant="24" id="HJc-OF-Izo"/>
+                                <constraint firstAttribute="trailing" secondItem="YSb-Iy-ZEM" secondAttribute="trailing" constant="24" id="HgP-1d-H62"/>
+                                <constraint firstItem="5GP-gA-kaS" firstAttribute="top" secondItem="YSb-Iy-ZEM" secondAttribute="bottom" constant="16" id="NIt-2k-9Mj"/>
+                                <constraint firstAttribute="bottom" secondItem="Hda-Fr-LzP" secondAttribute="bottom" constant="24" id="TQh-vB-Aw0"/>
+                                <constraint firstItem="5GP-gA-kaS" firstAttribute="leading" secondItem="AK2-qB-Z4e" secondAttribute="leading" constant="24" id="Uao-yf-Gey"/>
+                                <constraint firstItem="YSb-Iy-ZEM" firstAttribute="leading" secondItem="AK2-qB-Z4e" secondAttribute="leading" constant="24" id="lZG-TQ-4jk"/>
+                                <constraint firstItem="Hda-Fr-LzP" firstAttribute="leading" secondItem="AK2-qB-Z4e" secondAttribute="leading" constant="24" id="sUd-HB-y6z"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="12"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="AK2-qB-Z4e" firstAttribute="leading" secondItem="0Cg-I5-h1i" secondAttribute="leading" constant="16" id="ILg-us-10c"/>
+                        <constraint firstAttribute="trailing" secondItem="AK2-qB-Z4e" secondAttribute="trailing" constant="16" id="QNG-tF-Csi"/>
+                        <constraint firstItem="AK2-qB-Z4e" firstAttribute="top" secondItem="0Cg-I5-h1i" secondAttribute="top" constant="16" id="g9H-hB-EgR"/>
+                        <constraint firstAttribute="bottom" secondItem="AK2-qB-Z4e" secondAttribute="bottom" constant="16" id="zsd-GU-f3P"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="U6j-bm-WBZ" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0Cg-I5-h1i" secondAttribute="bottom" constant="20" id="3i9-qh-Yls"/>
+                <constraint firstAttribute="trailing" secondItem="sf2-cn-pZ7" secondAttribute="trailing" id="Jpl-5r-485"/>
+                <constraint firstItem="U6j-bm-WBZ" firstAttribute="trailing" secondItem="0Cg-I5-h1i" secondAttribute="trailing" id="KZW-iC-f7M"/>
+                <constraint firstAttribute="bottom" secondItem="sf2-cn-pZ7" secondAttribute="bottom" id="O7v-rb-aba"/>
+                <constraint firstItem="0Cg-I5-h1i" firstAttribute="centerY" secondItem="U6j-bm-WBZ" secondAttribute="centerY" priority="999" id="S5u-SL-z9e"/>
+                <constraint firstItem="sf2-cn-pZ7" firstAttribute="leading" secondItem="a6h-Jh-Mat" secondAttribute="leading" id="XDy-ai-9mA"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0Cg-I5-h1i" secondAttribute="bottom" id="hiH-ju-CbG"/>
+                <constraint firstItem="0Cg-I5-h1i" firstAttribute="leading" secondItem="U6j-bm-WBZ" secondAttribute="leading" id="no1-9E-3Fg"/>
+                <constraint firstItem="sf2-cn-pZ7" firstAttribute="top" secondItem="a6h-Jh-Mat" secondAttribute="top" id="rVY-WA-40N"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="U6j-bm-WBZ"/>
+        </view>
+    </objects>
+</document>

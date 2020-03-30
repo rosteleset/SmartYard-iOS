@@ -16,7 +16,6 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var addressContainerView: UIView!
     @IBOutlet private weak var addressTextField: UITextField!
-    @IBOutlet private weak var editAddressButton: UIButton!
     
     @IBOutlet private weak var notificationsContainerView: UIView!
     @IBOutlet private weak var notificationsHeader: UIView!
@@ -72,10 +71,6 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     private func configureView() {
         addressContainerView.borderWidth = 1
         addressContainerView.borderColor = UIColor.SmartYard.grayBorder
-        
-        editAddressButton.setImage(UIImage(named: "EditIcon"), for: .normal)
-        editAddressButton.setImage(UIImage(named: "EditIcon")?.darkened(), for: .highlighted)
-        editAddressButton.touchAreaInsets = UIEdgeInsets(inset: 24)
         
         notificationsContainerView.borderWidth = 1
         notificationsContainerView.borderColor = UIColor.SmartYard.grayBorder

@@ -15,7 +15,7 @@ import JGProgressHUD
 class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var mainContainerView: UIView!
     
     @IBOutlet private weak var nameContainerView: UIView!
     @IBOutlet private weak var nameTextField: UITextField!
@@ -25,21 +25,25 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var notificationsHeader: UIView!
     @IBOutlet private weak var notificationsHeaderArrowImageView: UIImageView!
     
+    @IBOutlet private weak var textNotificationsContainerView: UIView!
+    @IBOutlet private weak var textNotificationsSwitch: UISwitch!
+    @IBOutlet private weak var textNotificationsSkeleton: UIView!
+    
+    @IBOutlet private weak var balanceWarningContainerView: UIView!
+    @IBOutlet private weak var balanceWarningSwitch: UISwitch!
+    @IBOutlet private weak var balanceWarningSkeleton: UIView!
+    
     @IBOutlet private var collapsedNotificationsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedNotificationsBottomConstraint: NSLayoutConstraint!
-    
-    @IBOutlet private weak var securityContainerView: UIView!
-    @IBOutlet private weak var securityHeader: UIView!
-    @IBOutlet private weak var securityHeaderArrowImageView: UIImageView!
-    
-    @IBOutlet private var collapsedSecurityBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private var expandedSecurityBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var logoutButton: UIButton!
     
     private let viewModel: AdvancedSettingsViewModel
     
     private let viewToScrollTo = BehaviorSubject<UIView?>(value: nil)
+    
+    private let textNotificationsTapGesture = UITapGestureRecognizer()
+    private let balanceWarningTapGesture = UITapGestureRecognizer()
     
     var loader: JGProgressHUD?
     
@@ -59,6 +63,18 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if textNotificationsSkeleton.isSkeletonActive {
+            textNotificationsSkeleton.showSkeletonAsynchronously()
+        }
+        
+        if balanceWarningSkeleton.isSkeletonActive {
+            balanceWarningSkeleton.showSkeletonAsynchronously()
+        }
+    }
+    
     private func configureView() {
         nameContainerView.borderWidth = 1
         nameContainerView.borderColor = UIColor.SmartYard.grayBorder
@@ -69,9 +85,6 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
         
         notificationsContainerView.borderWidth = 1
         notificationsContainerView.borderColor = UIColor.SmartYard.grayBorder
-        
-        securityContainerView.borderWidth = 1
-        securityContainerView.borderColor = UIColor.SmartYard.grayBorder
         
         logoutButton.borderWidth = 1
         logoutButton.borderColor = UIColor.SmartYard.grayBorder
@@ -87,16 +100,11 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        let securityTapGesture = UITapGestureRecognizer()
-        securityHeader.addGestureRecognizer(securityTapGesture)
+        textNotificationsContainerView.addGestureRecognizer(textNotificationsTapGesture)
+        textNotificationsSwitch.isUserInteractionEnabled = false
         
-        securityTapGesture.rx.event
-            .subscribe(
-                onNext: { [weak self] _ in
-                    self?.toggleSecuritySection()
-                }
-            )
-            .disposed(by: disposeBag)
+        balanceWarningContainerView.addGestureRecognizer(balanceWarningTapGesture)
+        balanceWarningSwitch.isUserInteractionEnabled = false
     }
     
     private func toggleNotificationsSection() {
@@ -120,48 +128,12 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
         }
     }
     
-    private func toggleSecuritySection() {
-        let isCollapsed = collapsedSecurityBottomConstraint.isActive
-        
-        if isCollapsed {
-            collapsedSecurityBottomConstraint.isActive = false
-            expandedSecurityBottomConstraint.isActive = true
-            securityHeaderArrowImageView.image = UIImage(named: "UpArrowIcon")
-            viewToScrollTo.onNext(securityContainerView)
-        } else {
-            expandedSecurityBottomConstraint.isActive = false
-            collapsedSecurityBottomConstraint.isActive = true
-            securityHeaderArrowImageView.image = UIImage(named: "DownArrowIcon")
-            viewToScrollTo.onNext(nil)
-        }
-        
-        UIView.animate(withDuration: 0.35) { [weak self] in
-            self?.view.setNeedsLayout()
-            self?.view.layoutIfNeeded()
-        }
-    }
-    
     private func bind() {
-        scrollView.rx
-            .observeWeakly(CGSize.self, "contentSize", options: [.new])
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
-            .withLatestFrom(viewToScrollTo.asDriver(onErrorJustReturn: nil))
-            .ignoreNil()
-            .do(
-                onNext: { [weak self] _ in
-                    self?.viewToScrollTo.onNext(nil)
-                }
-            )
-            .drive(
-                onNext: { [weak self] view in
-                    self?.performScrollUpdate(to: view)
-                }
-            )
-            .disposed(by: disposeBag)
-        
         let input = AdvancedSettingsViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
+            editNameTrigger: editNameButton.rx.tap.asDriver(),
+            enableTrigger: textNotificationsTapGesture.rx.event.asDriver().mapToVoid(),
+            moneyTrigger: balanceWarningTapGesture.rx.event.asDriver().mapToVoid(),
             logoutTrigger: logoutButton.rx.tap.asDriver()
         )
         
@@ -173,6 +145,22 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
                     self?.view.endEditing(true)
                     self?.nameTextField.text = name
                     self?.nameTextField.isEnabled = false
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.enableNotifications
+            .drive(
+                onNext: { [weak self] state in
+                    self?.textNotificationsSwitch.setOn(state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.enableAccountBalanceWarning
+            .drive(
+                onNext: { [weak self] state in
+                    self?.balanceWarningSwitch.setOn(state, animated: true)
                 }
             )
             .disposed(by: disposeBag)
@@ -189,18 +177,43 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.shouldShowInitialLoading
+            .drive(
+                onNext: { [weak self] shouldShowInitialLoading in
+                    shouldShowInitialLoading ? self?.showInitialLoading() : self?.finishInitialLoading()
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
-    private func performScrollUpdate(to view: UIView) {
-        let convertedOrigin = view.convert(view.bounds.origin, to: scrollView)
-        let desiredOffset = convertedOrigin.y
-        let maxPossibleOffset = scrollView.contentSize.height - scrollView.bounds.height
-        let finalOffset = max(min(desiredOffset, maxPossibleOffset), 0)
+    private func showInitialLoading() {
+        textNotificationsSwitch.isHidden = true
+        textNotificationsTapGesture.isEnabled = false
+        textNotificationsSkeleton.isHidden = false
+        textNotificationsSkeleton.showSkeletonAsynchronously()
         
-        scrollView.setContentOffset(
-            CGPoint(x: 0, y: finalOffset),
-            animated: true
-        )
+        balanceWarningSwitch.isHidden = true
+        balanceWarningTapGesture.isEnabled = false
+        balanceWarningSkeleton.isHidden = false
+        balanceWarningSkeleton.showSkeletonAsynchronously()
+    }
+    
+    private func finishInitialLoading() {
+        // MARK: Если показать сразу, то пользователь увидит, как меняется положение тумблеров
+        // Т.к. мы подгружаем стейт с сервера. Поэтому решил это закрыть за скелетоном
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.textNotificationsSwitch.isHidden = false
+            self?.textNotificationsTapGesture.isEnabled = true
+            self?.textNotificationsSkeleton.isHidden = true
+            self?.textNotificationsSkeleton.hideSkeleton()
+            
+            self?.balanceWarningSwitch.isHidden = false
+            self?.balanceWarningTapGesture.isEnabled = true
+            self?.balanceWarningSkeleton.isHidden = true
+            self?.balanceWarningSkeleton.hideSkeleton()
+        }
     }
     
 }

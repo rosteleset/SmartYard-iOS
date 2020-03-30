@@ -12,27 +12,115 @@ import XCoordinator
 
 class AdvancedSettingsViewModel: BaseViewModel {
     
+    private let apiWrapper: APIWrapper
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
     private let router: WeakRouter<SettingsRoute>
-    private let name: String
     
     init(
+        apiWrapper: APIWrapper,
         accessService: AccessService,
         pushNotificationService: PushNotificationService,
-        router: WeakRouter<SettingsRoute>,
-        name: String
+        router: WeakRouter<SettingsRoute>
     ) {
+        self.apiWrapper = apiWrapper
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
         self.router = router
-        self.name = name
     }
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
+        
+        // MARK: ActivityTracker для изначальной загрузки с показом скелетонов
+        
+        let initialLoadingTracker = ActivityTracker()
+        
+        // MARK: Загрузка изначального стейта
+        
+        let enableNotificationsSubject = BehaviorSubject<Bool>(value: false)
+        let enableAccountBalanceWarningSubject = BehaviorSubject<Bool>(value: false)
+        
+        apiWrapper
+            .getCurrentNotificationState()
+            .trackError(errorTracker)
+            .trackActivity(initialLoadingTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    enableNotificationsSubject.onNext(state.enable)
+                    enableAccountBalanceWarningSubject.onNext(state.money)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Нажатие на "Показывать уведомления"
+        
+        input.enableTrigger
+            .withLatestFrom(enableNotificationsSubject.asDriver(onErrorJustReturn: false))
+            .flatMapLatest { [weak self] isEnabled -> Driver<NotificationResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .setNotificationEnableState(isEnabled: !isEnabled)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    enableNotificationsSubject.onNext(state.enable)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Нажатие на "Оповестить о недостатке средств"
+        
+        input.moneyTrigger
+            .withLatestFrom(enableAccountBalanceWarningSubject.asDriver(onErrorJustReturn: false))
+            .flatMapLatest { [weak self] isActive -> Driver<NotificationResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .setNotificationMoneyState(isActive: !isActive)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    enableAccountBalanceWarningSubject.onNext(state.money)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Отображение имени. Актуализируем при каждом обновлении имени в настройках
+        
+        let currentName = Driver<APIClientName?>.merge(
+            .just(accessService.clientName),
+            NotificationCenter.default.rx.notification(.userNameUpdated)
+                .map { [weak self] _ in self?.accessService.clientName }
+                .asDriver(onErrorJustReturn: nil)
+        )
+        
+        let nameAsString = currentName
+            .asDriver(onErrorJustReturn: nil)
+            .map { clientName in
+                [clientName?.name, clientName?.patronymic]
+                    .compactMap { $0 }
+                    .joined(separator: " ")
+            }
+        
+        // MARK: Переход назад
         
         input.backTrigger
             .drive(
@@ -41,6 +129,18 @@ class AdvancedSettingsViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        
+        // MARK: Редактирование имени
+        
+        input.editNameTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.editName)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Выход из аккаунта
         
         input.logoutTrigger
             .drive(
@@ -85,14 +185,11 @@ class AdvancedSettingsViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            name: .just(name),
-            enableNotifications: .just(true),
-            enableText: .just(true),
-            ringtone: .just("Нота"),
-            enableAccountBalanceWarning: .just(false),
-            enableBiometry: .just(true),
-            enablePinCode: .just(false),
-            isLoading: activityTracker.asDriver()
+            name: nameAsString,
+            enableNotifications: enableNotificationsSubject.asDriverOnErrorJustComplete(),
+            enableAccountBalanceWarning: enableAccountBalanceWarningSubject.asDriverOnErrorJustComplete(),
+            isLoading: activityTracker.asDriver(),
+            shouldShowInitialLoading: initialLoadingTracker.asDriver()
         )
     }
     
@@ -102,18 +199,18 @@ extension AdvancedSettingsViewModel {
     
     struct Input {
         let backTrigger: Driver<Void>
+        let editNameTrigger: Driver<Void>
+        let enableTrigger: Driver<Void>
+        let moneyTrigger: Driver<Void>
         let logoutTrigger: Driver<Void>
     }
     
     struct Output {
         let name: Driver<String>
         let enableNotifications: Driver<Bool>
-        let enableText: Driver<Bool>
-        let ringtone: Driver<String>
         let enableAccountBalanceWarning: Driver<Bool>
-        let enableBiometry: Driver<Bool>
-        let enablePinCode: Driver<Bool>
         let isLoading: Driver<Bool>
+        let shouldShowInitialLoading: Driver<Bool>
     }
     
 }

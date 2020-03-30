@@ -129,4 +129,36 @@ extension APIWrapper {
             .mapToOptional()
     }
     
+    func getCurrentNotificationState() -> Single<NotificationResponseData?> {
+        return notification(money: nil, enable: nil)
+    }
+    
+    func setNotificationMoneyState(isActive: Bool) -> Single<NotificationResponseData?> {
+        return notification(money: isActive, enable: nil)
+    }
+    
+    func setNotificationEnableState(isEnabled: Bool) -> Single<NotificationResponseData?> {
+        return notification(money: nil, enable: isEnabled)
+    }
+    
+    func notification(money: Bool?, enable: Bool?) -> Single<NotificationResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = NotificationRequest(accessToken: accessToken, money: money, enable: enable)
+        
+        return provider.rx
+            .request(.notification(request: request))
+            .filterSuccessfulCodes()
+            .map(BaseAPIResponse<NotificationResponseData>.self)
+            .flatMap { response in
+                guard let data = response.data else {
+                    return .error(NSError.APIWrapperError.noDataError)
+                }
+                
+                return .just(data)
+            }
+    }
+    
 }
