@@ -14,12 +14,7 @@ enum ChatRoute: Route {
 
 class ChatCoordinator: NavigationCoordinator<ChatRoute> {
     
-    let apiWrapper: APIWrapper
-    
-    init(
-        apiWrapper: APIWrapper
-    ) {
-        self.apiWrapper = apiWrapper
+    init() {
         super.init(initialRoute: .main)
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
@@ -27,8 +22,7 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
     override func prepareTransition(for route: ChatRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = ChatViewModel()
-            let vc = ChatViewController(viewModel: vm)
+            let vc = ChatViewController()
             return .set([vc])
         }
     }

@@ -45,7 +45,6 @@
 		844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D723EBFE060066006D /* ChatCoordinator.swift */; };
 		844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D923EBFE140066006D /* ChatViewController.swift */; };
 		844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3DA23EBFE140066006D /* ChatViewController.xib */; };
-		844AC3DE23EBFE1E0066006D /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3DD23EBFE1E0066006D /* ChatViewModel.swift */; };
 		844AC3E823EBFEC50066006D /* PaymentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3E623EBFEC50066006D /* PaymentsViewController.swift */; };
 		844AC3E923EBFEC50066006D /* PaymentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3E723EBFEC50066006D /* PaymentsViewController.xib */; };
 		844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3EA23EBFED20066006D /* PaymentsViewModel.swift */; };
@@ -386,7 +385,6 @@
 		844AC3D723EBFE060066006D /* ChatCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCoordinator.swift; sourceTree = "<group>"; };
 		844AC3D923EBFE140066006D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		844AC3DA23EBFE140066006D /* ChatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatViewController.xib; sourceTree = "<group>"; };
-		844AC3DD23EBFE1E0066006D /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		844AC3E623EBFEC50066006D /* PaymentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewController.swift; sourceTree = "<group>"; };
 		844AC3E723EBFEC50066006D /* PaymentsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentsViewController.xib; sourceTree = "<group>"; };
 		844AC3EA23EBFED20066006D /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
@@ -937,7 +935,6 @@
 			isa = PBXGroup;
 			children = (
 				844AC3E123EBFE8E0066006D /* View */,
-				844AC3E223EBFE920066006D /* ViewModel */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -967,14 +964,6 @@
 				844AC3DA23EBFE140066006D /* ChatViewController.xib */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		844AC3E223EBFE920066006D /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				844AC3DD23EBFE1E0066006D /* ChatViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		844AC3E323EBFE9D0066006D /* Main */ = {
@@ -2890,7 +2879,6 @@
 				E92EFBE0242A22F2003AF7FE /* CreateIssueRequest.swift in Sources */,
 				843C38D1242A577C0035BF80 /* UnreadedResponseData.swift in Sources */,
 				E92EFBEC242A2507003AF7FE /* NotificationName+Extensions.swift in Sources */,
-				844AC3DE23EBFE1E0066006D /* ChatViewModel.swift in Sources */,
 				844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */,
 				E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */,
 				E92EFB4524287F4C003AF7FE /* PassConfirmationPinViewController.swift in Sources */,

@@ -94,9 +94,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.notificationsTabBarItem = notificationsTabBarItem
         
         // MARK: Chat Tab
-        let chatCoordinator = ChatCoordinator(
-            apiWrapper: apiWrapper
-        )
+        let chatCoordinator = ChatCoordinator()
         
         let chatTabBarItem = UITabBarItem(
             title: "Чат",
