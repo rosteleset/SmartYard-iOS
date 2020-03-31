@@ -13,8 +13,14 @@ class ChatViewModel: BaseViewModel {
     
     private let accessService: AccessService
     
+    private let clientIdSubject = BehaviorSubject<String?>(value: nil)
+    
     init(accessService: AccessService) {
         self.accessService = accessService
+    }
+    
+    func updateClientId(_ clientId: String?) {
+        clientIdSubject.onNext(clientId)
     }
     
     func transform(_ input: Input) -> Output {
@@ -26,18 +32,11 @@ class ChatViewModel: BaseViewModel {
             return "8" + clientPhoneNumber
         }()
         
-        let chatConfiguration = Driver<ChatConfiguration>.merge(
-            .just(ChatConfiguration(language: nil, clientId: nil)),
-            NotificationCenter.default.rx.notification(.chatRequested)
-                .asDriverOnErrorJustComplete()
-                .flatMap { notification -> Driver<ChatConfiguration> in
-                    guard let clientId = notification.userInfo?[NotificationKeys.clientIdKey] as? String else {
-                        return .empty()
-                    }
-                    
-                    return .just(ChatConfiguration(language: nil, clientId: clientId))
-                }
-        )
+        let chatConfiguration = clientIdSubject.asDriver(onErrorJustReturn: nil)
+            .map { clientId -> ChatConfiguration in
+                ChatConfiguration(language: nil, clientId: clientId)
+            }
+            .distinctUntilChanged()
         
         return Output(
             phone: .just(phone),

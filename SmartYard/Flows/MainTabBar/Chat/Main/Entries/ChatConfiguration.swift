@@ -6,7 +6,7 @@
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
-struct ChatConfiguration {
+struct ChatConfiguration: Equatable {
     
     let id = "3beb2614f4573475b18bd25deb77f6e9"
     let domain = "lanta-net.ru"

@@ -38,16 +38,19 @@ class ChatViewController: ChatController {
         let output = viewModel.transform(input)
         
         output.chatConfiguration
+            .withLatestFrom(output.phone) { ($0, $1) }
             .drive(
-                onNext: { [weak self] config in
+                onNext: { [weak self] args in
+                    let (config, phone) = args
+                    
                     self?.load(config.id, config.domain, config.language ?? "", config.clientId ?? "")
+                    
+                    if let uPhone = phone {
+                        self?.callJsSetClientInfo("{phone: \"\(uPhone)\"}")
+                    }
                 }
             )
             .disposed(by: disposeBag)
-        
-//        if let phone = userPhone {
-//            callJsSetClientInfo("{phone: \"\("8" + phone)\"}")
-//        }
     }
     
 }
