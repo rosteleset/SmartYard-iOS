@@ -13,11 +13,11 @@ import XCoordinator
 
 class ServiceSoonAvailableViewModel: BaseViewModel {
     
-    private let router: WeakRouter<AppRoute>
+    private let router: WeakRouter<HomeRoute>
     private let requestType: ServiceRequestType
     private let address: String?
     
-    init(router: WeakRouter<AppRoute>, requestType: ServiceRequestType, address: String? = nil) {
+    init(router: WeakRouter<HomeRoute>, requestType: ServiceRequestType, address: String? = nil) {
         self.router = router
         self.requestType = requestType
         self.address = address

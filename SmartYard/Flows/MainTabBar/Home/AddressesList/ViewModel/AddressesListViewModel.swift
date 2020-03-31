@@ -200,6 +200,21 @@ class AddressesListViewModel: BaseViewModel {
         let updateKindSubject = PublishSubject<AddressesListSectionUpdateKind>()
         let updateKind = updateKindSubject.asDriverOnErrorJustComplete()
         
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .unapprovedObject(_, address) = identity else {
+                    return .empty()
+                }
+                
+                return .just(address)
+            }
+            .drive(
+                onNext: { [weak self] address in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
         // Это приведет к обновлению секций
         
@@ -403,7 +418,7 @@ class AddressesListViewModel: BaseViewModel {
             }
             
             return .unapprovedAddresses(
-                identity: .unapprovedObject(addressId: issueInfo.key),
+                identity: .unapprovedObject(addressId: issueInfo.key, address: address),
                 address: address
             )
         }

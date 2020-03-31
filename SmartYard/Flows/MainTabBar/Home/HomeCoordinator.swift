@@ -22,6 +22,7 @@ enum HomeRoute: Route {
     case restorePassword(contractNum: String?)
     case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
     case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
+    case serviceSoonAvailable(type: ServiceRequestType)
     
 }
 
@@ -171,6 +172,12 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             let vc = QRCodeScanViewController(viewModel: vm)
             vc.hidesBottomBarWhenPushed = true
+            
+            return .push(vc)
+            
+        case .serviceSoonAvailable(let type):
+            let vm = ServiceSoonAvailableViewModel(router: weakRouter, requestType: type)
+            let vc = ServiceSoonAvailableViewController(viewModel: vm)
             
             return .push(vc)
         }
