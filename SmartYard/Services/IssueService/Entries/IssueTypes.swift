@@ -61,18 +61,14 @@ enum IssueType {
         let webIssueDescription = "Авто: Заявка с сайта"
         let appCallIssue = "Авто: Звонок с приложения"
         let resaleIssue = "Авто: Допродажа"
-        let deleteAddressIssue = "Авто: Удаление адреса из приложения"
         
         switch self {
         case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .servicesUnavailableIssue,
-             .comeInOfficeMyselfIssue, .callCourierIssue, .connectOnlyNonHousesServices:
+             .comeInOfficeMyselfIssue, .callCourierIssue, .connectOnlyNonHousesServices, .deleteAddressIssue:
             return webIssueDescription
             
         case .dontRememberAnythingIssue:
             return appCallIssue
-            
-        case .deleteAddressIssue:
-            return deleteAddressIssue
             
         case .changeTariffIssue:
             return resaleIssue
@@ -91,7 +87,7 @@ enum IssueType {
         case let .confirmAddressInOfficeIssue(userInfo, _, _):
             return userInfo.convertToString() + "\nКлиент подойдет в офис для получения подтверждения."
         
-        case let .deleteAddressIssue(userInfo, reason, _, _):
+        case let .deleteAddressIssue(userInfo, _, _, reason):
             return userInfo.convertToString() + "\nУдаление адреса из приложения. Причина: \(reason)"
         
         case let .changeTariffIssue(userInfo, _, _):
@@ -134,12 +130,12 @@ enum IssueType {
         let sendToOfficeAction = "Передать в офис"
         
         switch self {
-        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .deleteAddressIssue,
+        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue,
              .comeInOfficeMyselfIssue, .callCourierIssue:
             return [startWorkAction, sendToOfficeAction]
             
         case .dontRememberAnythingIssue, .changeTariffIssue,
-             .servicesUnavailableIssue, .connectOnlyNonHousesServices:
+             .servicesUnavailableIssue, .connectOnlyNonHousesServices, .deleteAddressIssue:
             return [startWorkAction, callAction]
         }
     }
@@ -173,7 +169,7 @@ enum IssueType {
                 "10941": "10580"
             ]
             
-        case let .deleteAddressIssue(userInfo, _, lat, lon):
+        case let .deleteAddressIssue(userInfo, lat, lon, _):
             return [
                 "10011": clientCode,
                 "11841": userInfo.phoneNumber,
