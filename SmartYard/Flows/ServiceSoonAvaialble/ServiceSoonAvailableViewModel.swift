@@ -14,20 +14,29 @@ import XCoordinator
 class ServiceSoonAvailableViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
-    private let requestType: ServiceRequestType
-    private let address: String?
+    private let issueService: IssueService
     
-    init(router: WeakRouter<HomeRoute>, requestType: ServiceRequestType, address: String? = nil) {
+    private let requestType: ServiceRequestType
+    private let address: String
+    
+    init(router: WeakRouter<HomeRoute>, issueService: IssueService, requestType: ServiceRequestType, address: String) {
         self.router = router
+        self.issueService = issueService
         self.requestType = requestType
         self.address = address
     }
     
     func transform(input: Input) -> Output {
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
+        
         let titleImageTrigger = PublishSubject<UIImage?>()
         let hintTextTrigger = PublishSubject<String?>()
         let actionTextTrigger = PublishSubject<String?>()
         let changeVisibilityQrCodeElementsTrigger = PublishSubject<Bool>()
+        
+        let callCourierTrigger = PublishSubject<Void>()
+        let comeInOfficeTrigger = PublishSubject<Void>()
         
         input.viewWillAppearTrigger
             .drive(
@@ -70,10 +79,55 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
                     }
                     
                     switch self.requestType {
-                    // TODO
-                    case .officeRequest: break
-                    case .courierRequest: break
+                    case .officeRequest: comeInOfficeTrigger.onNext(())
+                    case .courierRequest: callCourierTrigger.onNext(())
                     }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        comeInOfficeTrigger
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return
+                    self.issueService
+                        .sendApproveAddressInOfficeIssue(address: self.address)
+                        .trackActivity(activityTracker)
+                        .trackError(errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .mapToVoid()
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        callCourierTrigger
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return
+                    self.issueService
+                        .sendApproveAddressInOfficeIssue(address: self.address)
+                        .trackActivity(activityTracker)
+                        .trackError(errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .mapToVoid()
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
