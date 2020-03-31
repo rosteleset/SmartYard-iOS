@@ -19,7 +19,7 @@ struct Issue {
             "project": issueType.project,
             "summary": issueType.summary,
             "description": issueType.description,
-            "type:": issueType.type
+            "type": issueType.type
         ]
         
         customFields = issueType.customFields
@@ -95,16 +95,22 @@ enum IssueType {
             return userInfo.convertToString() + "\nУдаление адреса из приложения. Причина: \(reason)"
         
         case let .changeTariffIssue(userInfo, _, _):
-            return userInfo.convertToString() + "\nЗапрос на смену тарифного плана. Выполнить звонок клиенту и осуществить консультацию"
+            let hint = "\nЗапрос на смену тарифного плана. Выполнить звонок клиенту и осуществить консультацию"
+            return userInfo.convertToString() + hint
         
         case let .servicesUnavailableIssue(userInfo, services, _, _):
-            return userInfo.convertToString() + "\nСписок подключаемых услуг: \(services)"
+            let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
+            return userInfo.convertToString() + "\nСписок подключаемых услуг: \(servicesStr)"
             
         case let .comeInOfficeMyselfIssue(userInfo, _, _, services):
-            return userInfo.convertToString() + "\nСписок подключаемых услуг: \(services)\nТребуется подтверждение адреса и подключение выбранных услуг"
+            let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
+            let hint = "\nТребуется подтверждение адреса и подключение выбранных услуг"
+            return userInfo.convertToString() + "\nСписок подключаемых услуг: \(servicesStr)" + hint
             
         case let .connectOnlyNonHousesServices(userInfo, _, _, services):
-            return userInfo.convertToString() + "\nПодключение услуг(и): \(services).\nВыполнить звонок клиенту и осуществить консультацию"
+            let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
+            let hint = "\nПодключение услуг(и): \(servicesStr).\nВыполнить звонок клиенту и осуществить консультацию"
+            return userInfo.convertToString() + hint
         }
     }
 
@@ -142,7 +148,7 @@ enum IssueType {
         switch self {
         case let .dontRememberAnythingIssue(userInfo):
             return [
-                "10011" : clientCode,
+                "10011": clientCode,
                 "11841": userInfo.phoneNumber,
                 "12440": "Приложение"
             ]
@@ -210,7 +216,7 @@ enum IssueType {
                 "11841": userInfo.phoneNumber,
                 "12440": "Приложение",
                 "10743": lat,
-                "10744": lon,
+                "10744": lon
             ]
             
         case let .callCourierIssue(userInfo, lat, lon):
