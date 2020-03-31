@@ -303,14 +303,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             case let .unapprovedAddresses(_, address):
                 let cell = collectionView.dequeueReusableCell(withClass: UnapprovedObjectCell.self, for: indexPath)
                 cell.configure(address: address)
-                
-                let subject = PublishSubject<Void>()
-                
-                subject
-                    .bind(to: qrCodeTapped)
-                    .disposed(by: cell.disposeBag)
-                
-                cell.bind(with: subject)
+                cell.bind(with: qrCodeTapped)
                 
                 return cell
             }

@@ -23,6 +23,12 @@ class UnapprovedObjectCell: CustomBorderCollectionViewCell {
         configure(address: nil)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        disposeBag = DisposeBag()
+    }
+    
     func configure(address: String?) {
         addressLabel.text = address
     }
