@@ -49,7 +49,8 @@ class AvailableServicesViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let sendConnectServicesIssueTrigger = PublishSubject<(String, [ServiceModel])>()
+        let сonnectSelectedServicesTrigger = PublishSubject<(String, [ServiceModel])>()
+        let сonnectOnlyNonHousesServicesTrigger = PublishSubject<(String, [ServiceModel])>()
         
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
@@ -62,20 +63,29 @@ class AvailableServicesViewModel: BaseViewModel {
                     guard let self = self, let address = address else {
                         return
                     }
+                     /*
+                     1) Если есть общедомовые сервисы и другие сервисы НЕ выбраны
+                     - переходим на экран выбора способа подтверждения курьер / офис.
+                     2) Если есть общедомовые услуги и выбран какой-либо другой сервис
+                     - делаем заявку sendComeInOfficeMyselfIssue
+                     3) Если НЕТ общедомовых услуг и выбран какой-либо сервис -
+                     делаем заявку "заявка только на услугу"
+                     */
                     
                     let selectedServices = services.filter { $0.state == .checkedActive }
+                    let housesServices = services.filter { $0.state == .checkedInactive }
                     
-                    guard !selectedServices.isEmpty else {
-                        self.router.trigger(.confirmAddress(address: address))
-                        return
+                    switch (housesServices.isEmpty, selectedServices.isEmpty) {
+                    case (false, true): self.router.trigger(.confirmAddress(address: address)) // 1
+                    case (false, false): сonnectSelectedServicesTrigger.onNext((address, selectedServices)) // 2
+                    case (true, false): сonnectOnlyNonHousesServicesTrigger.onNext((address, selectedServices)) // 3
+                    default: self.router.trigger(.alert(title: "Не выбран ни один сервис", message: nil))
                     }
-                    
-                    sendConnectServicesIssueTrigger.onNext((address, selectedServices))
                 }
             )
             .disposed(by: disposeBag)
         
-        sendConnectServicesIssueTrigger
+        сonnectSelectedServicesTrigger
             .asDriverOnErrorJustComplete()
             .flatMapLatest { [weak self] args -> Driver<CreateIssueResponseData?> in
                 guard let self = self else {
@@ -86,7 +96,35 @@ class AvailableServicesViewModel: BaseViewModel {
                 let selectedServices = services.compactMap { SettingsServiceType(rawValue: $0.icon) }
                 
                 return self.issueService
-                    .sendConnectSelectedServicesIssue(
+                    .sendComeInOfficeMyselfIssue(
+                        address: addressString,
+                        services: selectedServices
+                    )
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .mapToVoid()
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        сonnectOnlyNonHousesServicesTrigger
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] args -> Driver<CreateIssueResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                let (addressString, services) = args
+                let selectedServices = services.compactMap { SettingsServiceType(rawValue: $0.icon) }
+                
+                return self.issueService
+                    .sendConnectOnlyNonHousesServicesIssue(
                         address: addressString,
                         services: selectedServices
                     )

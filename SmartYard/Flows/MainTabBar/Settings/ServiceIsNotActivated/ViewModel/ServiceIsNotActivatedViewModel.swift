@@ -51,10 +51,8 @@ class ServiceIsNotActivatedViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                return self.issueService.sendActivateServiceIssue(address: self.address, services: [self.service])
-                    .trackError(self.errorTracker)
-                    .trackActivity(self.activityTracker)
-                    .asDriver(onErrorJustReturn: nil)
+                // TODO: open chat
+                return .empty()
             }
             .drive(
                 onNext: { [weak self] _ in

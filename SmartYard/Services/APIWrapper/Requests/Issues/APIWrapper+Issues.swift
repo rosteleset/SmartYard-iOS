@@ -12,40 +12,12 @@ import RxCocoa
 
 extension APIWrapper {
     
-    func createIssue(
-        issue: IssueType,
-        userInfo: MainUserInfo,
-        lat: String? = nil,
-        lng: String? = nil
-    ) -> Single<CreateIssueResponseData?> {
+    func sendIssue(issue: Issue) -> Single<CreateIssueResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let apiIssue = APIIssue(
-            project: "REM",
-            summary: issue.summary,
-            description: issue.description,
-            type: "32"
-        )
-        
-        let latitude = (lat ?? "").replacingOccurrences(of: ".", with: ",")
-        let longitude = (lng ?? "").replacingOccurrences(of: ".", with: ",")
-        
-        let customField = APIIssueCustomField(
-            code: issue.clientCode,
-            phoneNumber: userInfo.phoneNumber,
-            source: "Приложение",
-            lat: latitude,
-            lng: longitude
-        )
-        
-        let request = CreateIssueRequest(
-            accessToken: accessToken,
-            issue: apiIssue,
-            customFields: customField,
-            actions: issue.actions
-        )
+        let request = CreateIssueRequest(accessToken: accessToken, issue: issue)
         
         return provider.rx
             .request(.createIssue(request: request))

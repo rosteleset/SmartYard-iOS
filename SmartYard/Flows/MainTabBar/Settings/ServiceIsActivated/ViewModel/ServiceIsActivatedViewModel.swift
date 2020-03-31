@@ -15,6 +15,7 @@ class ServiceIsActivatedViewModel: BaseViewModel {
     private let router: WeakRouter<SettingsRoute>
     private let issueService: IssueService
     private let clientId: String?
+    private let address: String
     
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
@@ -22,11 +23,13 @@ class ServiceIsActivatedViewModel: BaseViewModel {
     init(
         router: WeakRouter<SettingsRoute>,
         issueService: IssueService,
-        clientId: String?
+        clientId: String?,
+        address: String
     ) {
         self.router = router
         self.issueService = issueService
         self.clientId = clientId
+        self.address = address
     }
     
     func transform(_ input: Input) -> Output {
@@ -41,15 +44,9 @@ class ServiceIsActivatedViewModel: BaseViewModel {
         input.changePlanTrigger
             .asDriver()
             .debounce(.milliseconds(25))
-            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
-                return self.issueService.sendChangeTariffIssue(clientId: self.clientId)
-                    .trackError(self.errorTracker)
-                    .trackActivity(self.activityTracker)
-                    .asDriver(onErrorJustReturn: nil)
+            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in                
+                // TODO: open chat
+                return .empty()
             }
             .drive(
                 onNext: { [weak self] _ in

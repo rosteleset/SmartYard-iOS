@@ -22,179 +22,204 @@ class IssueService {
         self.accessService = accessService
     }
     
-    // экран 00.01
-    func sendAddressApproveIssue(address: String) -> Single<CreateIssueResponseData?> {
-        return sendIssueWithLocation(
-            issue: .approveAddressIssue(address: address),
-            address: address
-        )
-    }
-    
     // экран 19 и 34.00
     func sendNothingRememberIssue() -> Single<CreateIssueResponseData?> {
-        return sendSimpleIssue(
-            issue: .dontRememberAnythingIssue(
-                userInfo: getUserInfo(
-                    address: nil,
-                    clientId: nil
-                )
-            )
-        )
-    }
-    
-    // экран 21
-    func sendUnavailableAddressConnectionIssue(
-        address: String,
-        services: [SettingsServiceType]
-    ) -> Single<CreateIssueResponseData?> {
-        return sendIssueWithLocation(
-            issue: .unavailableAddressConnectionIssue(
-                userInfo: getUserInfo(
-                    address: address,
-                    clientId: nil
-                ),
-                services: services
-            ),
-            address: address
-        )
-    }
-    
-    // экран 22
-    func sendConnectSelectedServicesIssue(
-        address: String,
-        services: [SettingsServiceType]
-    ) -> Single<CreateIssueResponseData?> {
-        return sendIssueWithLocation(
-            issue: .connectSelectedServicesIssue(
-                userInfo: getUserInfo(
-                    address: address,
-                    clientId: nil
-                ),
-                services: services
-            ),
-            address: address
-        )
+        let issue = Issue(issueType: .dontRememberAnythingIssue(userInfo: getUserInfo(address: nil, clientId: nil)))
+        return apiWrapper.sendIssue(issue: issue)
     }
     
     // экраны 23, 29
     func sendApproveAddressByCourierIssue(address: String) -> Single<CreateIssueResponseData?> {
-        return sendIssueWithLocation(
-            issue: .confirmAddressByCourierIssue(
-                userInfo: getUserInfo(
-                    address: address,
-                    clientId: nil
-                )
-            ),
-            address: address
-        )
-    }
-    
-    // экраны 24, 28
-    func sendApproveAddressInOfficeIssue(address: String) -> Single<CreateIssueResponseData?> {
-        return sendIssueWithLocation(
-            issue: .confirmAddressInOfficeIssue(
-                userInfo: getUserInfo(
-                    address: address,
-                    clientId: nil
-                )
-            ),
-            address: address
-        )
-    }
-    
-    // экран 34.04
-    func sendActivateServiceIssue(
-        address: String,
-        services: [SettingsServiceType]
-    ) -> Single<CreateIssueResponseData?> {
-        return sendIssueWithLocation(
-            issue: .activateServiceIssue(
-                userInfo: getUserInfo(
-                    address: address,
-                    clientId: nil
-                ),
-                services: services
-            ),
-            address: address
-        )
-    }
-    
-    // экран 34.02.03
-    func sendDeleteAddressIssue(address: String, reason: String) -> Single<CreateIssueResponseData?> {
-        return sendSimpleIssue(
-            issue: .deleteAddressIssue(
-                userInfo: getUserInfo(
-                    address: address,
-                    clientId: nil
-                ),
-                reason: reason
-            )
-        )
-    }
-    
-    // экран 34.03
-    func sendChangeTariffIssue(clientId: String?) -> Single<CreateIssueResponseData?> {
-        guard let clientId = clientId else {
-            return .error(NSError.APIWrapperError.clientIdMissingError)
-        }
-        
-        return sendSimpleIssue(
-            issue: .changeTariffIssue(clientId: clientId)
-        )
-    }
-    
-    // экран 34.05
-    func sendServiceUnavailableIssue(
-        address: String,
-        service: SettingsServiceType,
-        clientId: String?
-    ) -> Single<CreateIssueResponseData?> {
-        guard let clientId = clientId else {
-            return .error(NSError.APIWrapperError.clientIdMissingError)
-        }
-        
-        return sendIssueWithLocation(
-            issue: .serviceUnavailableIssue(
-                userInfo: getUserInfo(
-                    address: address,
-                    clientId: clientId
-                ),
-                service: service
-            ),
-            address: address
-        )
-    }
-    
-    private func sendIssueWithLocation(issue: IssueType, address: String) -> Single<CreateIssueResponseData?> {
         return getAddressCoordinates(address: address)
             .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
                 guard let self = self, let unwrappedResponse = response else {
                     return .error(NSError.GenericError.selfIsDeadError)
                 }
                 
-                // TODO: пересоздание userInfo с пустым clientId может сломать логику
-                // Поскольку по факту мы в issue уже прокинули userInfo, где clientId может быть не равным nil
-                // Нужно будет либо поправить этот баг, чтобы не было путаницы с clientId
-                // Либо прокидывать только телефон, потому что юзается только он
-                
-                return self.apiWrapper.createIssue(
-                    issue: issue,
-                    userInfo: self.getUserInfo(address: address, clientId: nil),
-                    lat: unwrappedResponse.lat,
-                    lng: unwrappedResponse.lon
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+
+                let issue = Issue(
+                    issueType: .confirmAddressByCourierIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        lat: latitude,
+                        lon: longitude
+                    )
                 )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
             }
     }
     
-    private func sendSimpleIssue(issue: IssueType) -> Single<CreateIssueResponseData?> {
-        return self.apiWrapper.createIssue(
-            issue: issue,
-            userInfo: self.getUserInfo(address: nil, clientId: issue.clientCode),
-            lat: "",
-            lng: ""
-        )
+    // экран 24
+    func sendApproveAddressInOfficeIssue(address: String) -> Single<CreateIssueResponseData?> {
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+                
+                let issue = Issue(
+                    issueType: .confirmAddressInOfficeIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        lat: latitude,
+                        lon: longitude
+                    )
+                )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
+            }
     }
     
+    // экран 34.02.03
+    func sendDeleteAddressIssue(address: String, reason: String) -> Single<CreateIssueResponseData?> {
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+                
+                let issue = Issue(
+                    issueType: .deleteAddressIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        lat: latitude,
+                        lon: longitude,
+                        reason: reason
+                    )
+                )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
+            }
+    }
+    
+    // экран 34.03
+    func sendChangeTariffIssue(address: String, clientId: String?) -> Single<CreateIssueResponseData?> {
+        guard let clientId = clientId else {
+            return .error(NSError.APIWrapperError.clientIdMissingError)
+        }
+        
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+                
+                let issue = Issue(
+                    issueType: .changeTariffIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: clientId),
+                        lat: latitude,
+                        lon: longitude
+                    )
+                )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
+            }
+    }
+    
+    // экран 21
+    func sendUnavailableAddressConnectionIssue(address: String, services: [SettingsServiceType]) -> Single<CreateIssueResponseData?> {
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+                
+                let issue = Issue(
+                    issueType: .servicesUnavailableIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        services: services,
+                        lat: latitude,
+                        lon: longitude
+                    )
+                )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
+            }
+    }
+    
+    // экран 28 и экран 22 в случае, если есть общедомовые услуги и выбран какой-либо другой сервис
+    func sendComeInOfficeMyselfIssue(address: String, services: [SettingsServiceType]) -> Single<CreateIssueResponseData?> {
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+                
+                let issue = Issue(
+                    issueType: .comeInOfficeMyselfIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        lat: latitude,
+                        lon: longitude,
+                        services: services
+                    )
+                )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
+            }
+    }
+    
+    // экран 29
+    func sendCallCourierIssue(address: String) -> Single<CreateIssueResponseData?> {
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+                
+                let issue = Issue(
+                    issueType: .callCourierIssue(
+                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        lat: latitude,
+                        lon: longitude
+                    )
+                )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
+            }
+    }
+    
+    // экран 22, кейс, когда нет общедомовых услуг
+    func sendConnectOnlyNonHousesServicesIssue(address: String, services: [SettingsServiceType]) -> Single<CreateIssueResponseData?> {
+        return getAddressCoordinates(address: address)
+            .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
+                guard let self = self, let unwrappedResponse = response else {
+                    return .error(NSError.GenericError.selfIsDeadError)
+                }
+                
+                let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
+                let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
+                
+                let issue = Issue(
+                    issueType: .connectOnlyNonHousesServices(
+                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        lat: latitude,
+                        lon: longitude,
+                        services: services
+                    )
+                )
+                
+                return self.apiWrapper.sendIssue(issue: issue)
+            }
+    }
+
     private func getAddressCoordinates(address: String) -> Single<GeoCoderResponseData?> {
         return apiWrapper.getCoordinatesByAddress(address: address)
     }

@@ -128,7 +128,8 @@ class SettingsViewModel: BaseViewModel {
                 onNext: { [weak self] apiSettingsAddress in
                     self?.router.trigger(
                         .serviceIsActivated(
-                            clientId: apiSettingsAddress.clientId
+                            clientId: apiSettingsAddress.clientId,
+                            address: apiSettingsAddress.address
                         )
                     )
                 }
