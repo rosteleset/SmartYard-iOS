@@ -256,20 +256,14 @@ class AddressesListViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        input.qtCodeTrigger
+        input.issueQrCodeTrigger
             .drive(
-                onNext: { [weak self] identity in
+                onNext: { [weak self] _ in
                     guard let self = self else {
                         return
                     }
                     
-                    switch identity {
-                    case let .unapprovedObject(addressId, address):
-                        // TODO: open qr code reader
-                        self.router.trigger(.qrCodeScan(delegate: self))
-                        print(address)
-                    default: break
-                    }
+                    self.router.trigger(.qrCodeScan(delegate: self))
                 }
             )
             .disposed(by: disposeBag)
@@ -409,7 +403,7 @@ class AddressesListViewModel: BaseViewModel {
             }
             
             return .unapprovedAddresses(
-                identity: .unapprovedObject(addressId: issueInfo.key, address: issueInfo.address ?? ""),
+                identity: .unapprovedObject(addressId: issueInfo.key),
                 address: address
             )
         }
@@ -430,7 +424,7 @@ extension AddressesListViewModel {
         let guestAccessRequested: Driver<AddressesListDataItemIdentity>
         let refreshDataTrigger: Driver<Void>
         let addAddressTrigger: Driver<Void>
-        let qtCodeTrigger: Driver<AddressesListDataItemIdentity>
+        let issueQrCodeTrigger: Driver<Void>
     }
     
     struct Output {

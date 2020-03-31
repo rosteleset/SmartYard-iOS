@@ -35,7 +35,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
     private let viewModel: AddressesListViewModel
     
     private let requestGuestAccess = PublishSubject<AddressesListDataItemIdentity>()
-    private let qrCodeTapped = PublishSubject<AddressesListDataItemIdentity>()
+    private let qrCodeTapped = PublishSubject<Void>()
     
     var loader: JGProgressHUD?
     
@@ -77,7 +77,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             guestAccessRequested: requestGuestAccess.asDriverOnErrorJustComplete(),
             refreshDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriver(),
             addAddressTrigger: addButton.rx.tap.asDriver(),
-            qtCodeTrigger: qrCodeTapped.asDriverOnErrorJustComplete()
+            issueQrCodeTrigger: qrCodeTapped.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
@@ -307,7 +307,6 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
                 let subject = PublishSubject<Void>()
                 
                 subject
-                    .map { item.identity }
                     .bind(to: qrCodeTapped)
                     .disposed(by: cell.disposeBag)
                 
