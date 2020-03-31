@@ -176,7 +176,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             return .push(vc)
             
         case .serviceSoonAvailable(let type):
-            let vm = ServiceSoonAvailableViewModel(router: weakRouter, requestType: type)
+            let vm = ServiceSoonAvailableViewModel(router: weakRouter, issueService: issueService, requestType: type, address: "")
             let vc = ServiceSoonAvailableViewController(viewModel: vm)
             
             return .push(vc)
