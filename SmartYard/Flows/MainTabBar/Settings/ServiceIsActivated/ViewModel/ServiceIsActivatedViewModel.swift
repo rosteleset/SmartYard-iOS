@@ -44,15 +44,9 @@ class ServiceIsActivatedViewModel: BaseViewModel {
         input.changePlanTrigger
             .asDriver()
             .debounce(.milliseconds(25))
-            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
-                return self.issueService.sendChangeTariffIssue(address: self.address, clientId: self.clientId)
-                    .trackError(self.errorTracker)
-                    .trackActivity(self.activityTracker)
-                    .asDriver(onErrorJustReturn: nil)
+            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in                
+                // TODO: open chat
+                return .empty()
             }
             .drive(
                 onNext: { [weak self] _ in
