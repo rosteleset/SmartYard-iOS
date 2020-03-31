@@ -130,12 +130,12 @@ enum IssueType {
         let sendToOfficeAction = "Передать в офис"
         
         switch self {
-        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .deleteAddressIssue,
+        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue,
              .comeInOfficeMyselfIssue, .callCourierIssue:
             return [startWorkAction, sendToOfficeAction]
             
         case .dontRememberAnythingIssue, .changeTariffIssue,
-             .servicesUnavailableIssue, .connectOnlyNonHousesServices:
+             .servicesUnavailableIssue, .connectOnlyNonHousesServices, .deleteAddressIssue:
             return [startWorkAction, callAction]
         }
     }
