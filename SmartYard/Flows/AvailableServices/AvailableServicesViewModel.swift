@@ -75,21 +75,12 @@ class AvailableServicesViewModel: BaseViewModel {
                     let selectedServices = services.filter { $0.state == .checkedActive }
                     let housesServices = services.filter { $0.state == .checkedInactive }
                     
-                    guard !housesServices.isEmpty else {
-                        if !selectedServices.isEmpty {
-                            сonnectOnlyNonHousesServicesTrigger.onNext((address, selectedServices))
-                            return
-                        }
-                        
-                        return
+                    switch (housesServices.isEmpty, selectedServices.isEmpty) {
+                    case (false, true): self.router.trigger(.confirmAddress(address: address)) // 1
+                    case (false, false): сonnectSelectedServicesTrigger.onNext((address, selectedServices)) // 2
+                    case (true, false): сonnectOnlyNonHousesServicesTrigger.onNext((address, selectedServices)) // 3
+                    default: self.router.trigger(.alert(title: "Не выбран ни один сервис", message: nil))
                     }
-                    
-                    guard !selectedServices.isEmpty else {
-                        self.router.trigger(.confirmAddress(address: address))
-                        return
-                    }
-                    
-                    сonnectSelectedServicesTrigger.onNext((address, selectedServices))
                 }
             )
             .disposed(by: disposeBag)
