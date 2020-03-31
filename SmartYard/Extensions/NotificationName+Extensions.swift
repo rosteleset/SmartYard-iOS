@@ -16,11 +16,13 @@ extension Notification.Name {
     static let newInboxMessageReceived = Notification.Name("NewInboxMessageReceived")
     static let addAddressFromSettings = Notification.Name("AddAddressFromSettings")
     static let userNameUpdated = Notification.Name("UserNameUpdated")
+    static let chatRequested = Notification.Name("ChatRequested")
     
 }
 
 enum NotificationKeys {
     
     static let badgeNumberKey = "badgeNumberKey"
+    static let clientIdKey = "clientIdKey"
     
 }

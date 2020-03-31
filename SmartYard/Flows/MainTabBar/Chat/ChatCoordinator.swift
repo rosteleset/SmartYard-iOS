@@ -26,7 +26,8 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
     override func prepareTransition(for route: ChatRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vc = ChatViewController(userPhone: accessService.clientPhoneNumber)
+            let vm = ChatViewModel(accessService: accessService)
+            let vc = ChatViewController(viewModel: vm)
             return .set([vc])
         }
     }

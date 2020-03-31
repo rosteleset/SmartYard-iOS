@@ -170,6 +170,7 @@ class SettingsViewModel: BaseViewModel {
                 case true:
                     return .serviceIsNotActivated(
                         service: payload.serviceType,
+                        clientId: payload.apiSettingsAddress.clientId,
                         address: payload.apiSettingsAddress.address
                     )
                 case false:

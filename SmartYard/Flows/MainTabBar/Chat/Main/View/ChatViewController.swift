@@ -13,13 +13,11 @@ import OnlineChatSdk
 
 class ChatViewController: ChatController {
     
-    private let userPhone: String?
+    private let disposeBag = DisposeBag()
+    private let viewModel: ChatViewModel
     
-    private let id = "3beb2614f4573475b18bd25deb77f6e9"
-    private let domain = "lanta-net.ru"
-    
-    init(userPhone: String?) {
-        self.userPhone = userPhone
+    init(viewModel: ChatViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,15 +29,25 @@ class ChatViewController: ChatController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        load(id, domain)
-        
-        if let phone = userPhone {
-            callJsSetClientInfo("{phone: \"\("8" + phone)\"}")
-        }
+        bind()
     }
     
-    private func loadWithClientId(clientId: String) {
-        load(id, domain, clientId)
+    private func bind() {
+        let input = ChatViewModel.Input()
+        
+        let output = viewModel.transform(input)
+        
+        output.chatConfiguration
+            .drive(
+                onNext: { [weak self] config in
+                    self?.load(config.id, config.domain, config.language ?? "", config.clientId ?? "")
+                }
+            )
+            .disposed(by: disposeBag)
+        
+//        if let phone = userPhone {
+//            callJsSetClientInfo("{phone: \"\("8" + phone)\"}")
+//        }
     }
     
 }

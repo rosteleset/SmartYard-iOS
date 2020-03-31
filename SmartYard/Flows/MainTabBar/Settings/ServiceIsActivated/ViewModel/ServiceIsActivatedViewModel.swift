@@ -43,13 +43,16 @@ class ServiceIsActivatedViewModel: BaseViewModel {
         
         input.changePlanTrigger
             .asDriver()
-            .debounce(.milliseconds(25))
-            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in                
-                // TODO: open chat
-                return .empty()
-            }
             .drive(
                 onNext: { [weak self] _ in
+                    var userInfo = [AnyHashable: Any]()
+                    
+                    if let clientId = self?.clientId {
+                        userInfo[NotificationKeys.clientIdKey] = clientId
+                    }
+                    
+                    NotificationCenter.default.post(name: .chatRequested, object: nil, userInfo: userInfo)
+                    
                     self?.router.trigger(.dismiss)
                 }
             )

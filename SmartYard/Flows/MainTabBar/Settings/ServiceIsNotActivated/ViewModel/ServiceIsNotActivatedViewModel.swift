@@ -15,6 +15,7 @@ class ServiceIsNotActivatedViewModel: BaseViewModel {
     private let router: WeakRouter<SettingsRoute>
     
     private let service: SettingsServiceType
+    private let clientId: String?
     private let address: String
     
     private let issueService: IssueService
@@ -25,11 +26,13 @@ class ServiceIsNotActivatedViewModel: BaseViewModel {
     init(
         router: WeakRouter<SettingsRoute>,
         service: SettingsServiceType,
+        clientId: String?,
         address: String,
         issueService: IssueService
     ) {
         self.router = router
         self.service = service
+        self.clientId = clientId
         self.address = address
         self.issueService = issueService
     }
@@ -45,17 +48,16 @@ class ServiceIsNotActivatedViewModel: BaseViewModel {
         
         input.sendRequestTrigger
             .asDriver()
-            .debounce(.milliseconds(25))
-            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
-                // TODO: open chat
-                return .empty()
-            }
             .drive(
                 onNext: { [weak self] _ in
+                    var userInfo = [AnyHashable: Any]()
+                    
+                    if let clientId = self?.clientId {
+                        userInfo[NotificationKeys.clientIdKey] = clientId
+                    }
+                    
+                    NotificationCenter.default.post(name: .chatRequested, object: nil, userInfo: userInfo)
+                    
                     self?.router.trigger(.dismiss)
                 }
             )
