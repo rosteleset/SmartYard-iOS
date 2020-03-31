@@ -61,18 +61,14 @@ enum IssueType {
         let webIssueDescription = "Авто: Заявка с сайта"
         let appCallIssue = "Авто: Звонок с приложения"
         let resaleIssue = "Авто: Допродажа"
-        let deleteAddressIssue = "Авто: Удаление адреса из приложения"
         
         switch self {
         case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .servicesUnavailableIssue,
-             .comeInOfficeMyselfIssue, .callCourierIssue, .connectOnlyNonHousesServices:
+             .comeInOfficeMyselfIssue, .callCourierIssue, .connectOnlyNonHousesServices, .deleteAddressIssue:
             return webIssueDescription
             
         case .dontRememberAnythingIssue:
             return appCallIssue
-            
-        case .deleteAddressIssue:
-            return deleteAddressIssue
             
         case .changeTariffIssue:
             return resaleIssue
