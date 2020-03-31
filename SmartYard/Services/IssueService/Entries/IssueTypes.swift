@@ -91,7 +91,7 @@ enum IssueType {
         case let .confirmAddressInOfficeIssue(userInfo, _, _):
             return userInfo.convertToString() + "\nКлиент подойдет в офис для получения подтверждения."
         
-        case let .deleteAddressIssue(userInfo, reason, _, _):
+        case let .deleteAddressIssue(userInfo, _, _, reason):
             return userInfo.convertToString() + "\nУдаление адреса из приложения. Причина: \(reason)"
         
         case let .changeTariffIssue(userInfo, _, _):
@@ -173,7 +173,7 @@ enum IssueType {
                 "10941": "10580"
             ]
             
-        case let .deleteAddressIssue(userInfo, _, lat, lon):
+        case let .deleteAddressIssue(userInfo, lat, lon, _):
             return [
                 "10011": clientCode,
                 "11841": userInfo.phoneNumber,
