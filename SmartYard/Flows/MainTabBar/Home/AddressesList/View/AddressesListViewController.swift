@@ -35,6 +35,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
     private let viewModel: AddressesListViewModel
     
     private let requestGuestAccess = PublishSubject<AddressesListDataItemIdentity>()
+    private let qrCodeTapped = PublishSubject<Void>()
     
     var loader: JGProgressHUD?
     
@@ -75,7 +76,8 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
             guestAccessRequested: requestGuestAccess.asDriverOnErrorJustComplete(),
             refreshDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriver(),
-            addAddressTrigger: addButton.rx.tap.asDriver()
+            addAddressTrigger: addButton.rx.tap.asDriver(),
+            issueQrCodeTrigger: qrCodeTapped.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
@@ -301,6 +303,8 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             case let .unapprovedAddresses(_, address):
                 let cell = collectionView.dequeueReusableCell(withClass: UnapprovedObjectCell.self, for: indexPath)
                 cell.configure(address: address)
+                cell.bind(with: qrCodeTapped)
+                
                 return cell
             }
         }()

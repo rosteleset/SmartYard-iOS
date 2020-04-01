@@ -13,14 +13,28 @@ import XCoordinator
 
 class ServiceSoonAvailableViewModel: BaseViewModel {
     
-    private let router: WeakRouter<AppRoute>
-    private let requestType: ServiceRequestType
-    private let address: String?
+    private let router: WeakRouter<HomeRoute>
+    private let apiWrapper: APIWrapper
+    private let issueService: IssueService
+    private let permissionService: PermissionService
     
-    init(router: WeakRouter<AppRoute>, requestType: ServiceRequestType, address: String? = nil) {
+    private let issueSubject: BehaviorSubject<APIIssueConnect>
+    
+    let activityTracker = ActivityTracker()
+    let errorTracker = ErrorTracker()
+    
+    init(
+        router: WeakRouter<HomeRoute>,
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        permissionService: PermissionService,
+        issue: APIIssueConnect
+    ) {
         self.router = router
-        self.requestType = requestType
-        self.address = address
+        self.apiWrapper = apiWrapper
+        self.issueService = issueService
+        self.permissionService = permissionService
+        self.issueSubject = BehaviorSubject<APIIssueConnect>(value: issue)
     }
     
     func transform(input: Input) -> Output {
@@ -30,23 +44,21 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
         let changeVisibilityQrCodeElementsTrigger = PublishSubject<Bool>()
         
         input.viewWillAppearTrigger
+            .withLatestFrom(issueSubject.asDriverOnErrorJustComplete())
             .drive(
-                onNext: { [weak self] _ in
-                    guard let self = self else {
+                onNext: { issue in
+                    let issueDeliveryType: IssueDeliveryType = issue.isDeliveredByCourier ? .courier : .office
+                    titleImageTrigger.onNext(issueDeliveryType.image)
+                    actionTextTrigger.onNext(issueDeliveryType.changeTypeActionText)
+                    changeVisibilityQrCodeElementsTrigger.onNext(issueDeliveryType == .office)
+                    
+                    guard issueDeliveryType == .courier else {
+                        hintTextTrigger.onNext(issueDeliveryType.hintText)
                         return
                     }
                     
-                    titleImageTrigger.onNext(self.requestType.image)
-                    actionTextTrigger.onNext(self.requestType.actionText)
-                    changeVisibilityQrCodeElementsTrigger.onNext(self.requestType == .officeRequest)
-                    
-                    guard self.requestType == .courierRequest else {
-                        hintTextTrigger.onNext(self.requestType.hintText)
-                        return
-                    }
-                    
-                    let hintText = self.requestType.hintText.replacingOccurrences(
-                        of: "{value}", with: (self.address ?? "")
+                    let hintText = issueDeliveryType.hintText.replacingOccurrences(
+                        of: "{value}", with: (issue.address ?? "")
                     )
                     
                     hintTextTrigger.onNext(hintText)
@@ -55,25 +67,98 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
             .disposed(by: disposeBag)
                 
         input.qrCodeTapped
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.permissionService.hasAccess(to: .video)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
-                onNext: {
-                    // TODO
+                onNext: { [weak self] _ in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.router.trigger(.qrCodeScan(delegate: self))
                 }
             )
             .disposed(by: disposeBag)
         
         input.actionTapped
+            .withLatestFrom(issueSubject.asDriverOnErrorJustComplete())
+            .flatMapLatest { [weak self] issue -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                let newIssueDeliveryType: IssueDeliveryType = issue.isDeliveredByCourier ? .office : .courier
+                
+                return
+                    self.apiWrapper.changeDeliveryMethod(newMethod: newIssueDeliveryType, key: issue.key)
+                        .trackActivity(self.activityTracker)
+                        .trackError(self.errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .withLatestFrom(issueSubject.asDriverOnErrorJustComplete())
+            .flatMapLatest { [weak self] issue -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                let newDeliveryType: IssueDeliveryType = issue.isDeliveredByCourier ? .office : .courier
+                
+                return
+                    self.apiWrapper.sendCommentAfterDeliveryMethodChanging(newMethod: newDeliveryType, key: issue.key)
+                        .trackActivity(self.activityTracker)
+                        .trackError(self.errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    switch self.requestType {
-                    // TODO
-                    case .officeRequest: break
-                    case .courierRequest: break
-                    }
+                    self?.router.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.cancelTapped
+            .withLatestFrom(issueSubject.asDriverOnErrorJustComplete())
+            .flatMapLatest { [weak self] issue -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return
+                    self.apiWrapper.cancelIssue(key: issue.key)
+                        .trackActivity(self.activityTracker)
+                        .trackError(self.errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -82,7 +167,8 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
             titleImageTrigger: titleImageTrigger.asDriverOnErrorJustComplete(),
             hintTextTrigger: hintTextTrigger.asDriverOnErrorJustComplete(),
             actionTextTrigger: actionTextTrigger.asDriverOnErrorJustComplete(),
-            changeVisibilityQrCodeElementsTrigger: changeVisibilityQrCodeElementsTrigger.asDriverOnErrorJustComplete()
+            changeVisibilityQrCodeElementsTrigger: changeVisibilityQrCodeElementsTrigger.asDriverOnErrorJustComplete(),
+            isLoading: activityTracker.asDriver(onErrorJustReturn: false)
         )
     }
     
@@ -94,6 +180,8 @@ extension ServiceSoonAvailableViewModel {
         let qrCodeTapped: Driver<Void>
         let actionTapped: Driver<Void>
         let viewWillAppearTrigger: Driver<Bool>
+        let cancelTapped: Driver<Void>
+        let backTrigger: Driver<Void>
     }
     
     struct Output {
@@ -101,6 +189,34 @@ extension ServiceSoonAvailableViewModel {
         let hintTextTrigger: Driver<String?>
         let actionTextTrigger: Driver<String?>
         let changeVisibilityQrCodeElementsTrigger: Driver<Bool>
+        let isLoading: Driver<Bool>
+    }
+    
+}
+
+extension ServiceSoonAvailableViewModel: QRCodeScanViewModelDelegate {
+    
+    func qrCodeScanViewModel(_ viewModel: QRCodeScanViewModel, didExtractCode code: String) {
+        router.rx
+            .trigger(.back)
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .registerQR(qr: code)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.router.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

@@ -14,14 +14,20 @@ class AddressesListViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
+    private let permissionService: PermissionService
     private let router: WeakRouter<HomeRoute>
+    
+    let activityTracker = ActivityTracker()
+    let errorTracker = ErrorTracker()
     
     init(
         apiWrapper: APIWrapper,
+        permissionService: PermissionService,
         pushNotificationService: PushNotificationService,
         router: WeakRouter<HomeRoute>
     ) {
         self.apiWrapper = apiWrapper
+        self.permissionService = permissionService
         self.pushNotificationService = pushNotificationService
         self.router = router
     }
@@ -36,11 +42,7 @@ class AddressesListViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
-        let activityTracker = ActivityTracker()
-        let errorTracker = ErrorTracker()
-        
         // MARK: Подписка на уведомления
-        
         pushNotificationService.registerForPushNotifications()
             .trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
@@ -70,7 +72,7 @@ class AddressesListViewModel: BaseViewModel {
                 return Single
                     .zip(self.apiWrapper.getAddressList(), self.apiWrapper.getListConnect())
                     .trackActivity(interactionBlockingRequestTracker)
-                    .trackError(errorTracker)
+                    .trackError(self.errorTracker)
                     .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
                         let (firstResponse, secondResponse) = args
                         
@@ -98,7 +100,7 @@ class AddressesListViewModel: BaseViewModel {
 
                 return Single
                     .zip(self.apiWrapper.getAddressList(), self.apiWrapper.getListConnect())
-                    .trackError(errorTracker)
+                    .trackError(self.errorTracker)
                     .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
                         let (firstResponse, secondResponse) = args
                         
@@ -172,8 +174,8 @@ class AddressesListViewModel: BaseViewModel {
                 
                 return self.apiWrapper
                     .openDoor(domophoneId: domophoneId, doorId: doorId, blockReason: matchingDoor.blocked)
-                    .trackActivity(activityTracker)
-                    .trackError(errorTracker)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
                     .map { _ -> AddressesListDataItemIdentity? in identity }
                     .asDriver(onErrorJustReturn: nil)
             }
@@ -200,6 +202,34 @@ class AddressesListViewModel: BaseViewModel {
         
         let updateKindSubject = PublishSubject<AddressesListSectionUpdateKind>()
         let updateKind = updateKindSubject.asDriverOnErrorJustComplete()
+        
+        input.itemSelected
+            .withLatestFrom(loadedUnapprovedAddressesData.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .flatMap { args -> Driver<APIIssueConnect> in
+                let (identity, unapprovedAddresses) = args
+                
+                guard case let .unapprovedObject(issueId, _) = identity else {
+                    return .empty()
+                }
+                
+                let issue = unapprovedAddresses?.first { $0.key == issueId }
+                
+                guard let uIssue = issue else {
+                    return .empty()
+                }
+                
+                return .just(uIssue)
+            }
+            .drive(
+                onNext: { [weak self] issue in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.router.trigger(.serviceSoonAvailable(issue: issue))
+                }
+            )
+            .disposed(by: disposeBag)
         
         // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
         // Это приведет к обновлению секций
@@ -253,6 +283,28 @@ class AddressesListViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] in
                     self?.router.trigger(.inputContract(isManualTrigger: true))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.issueQrCodeTrigger
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.permissionService.hasAccess(to: .video)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] _ in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.router.trigger(.qrCodeScan(delegate: self))
                 }
             )
             .disposed(by: disposeBag)
@@ -392,13 +444,14 @@ class AddressesListViewModel: BaseViewModel {
             }
             
             return .unapprovedAddresses(
-                identity: .unapprovedObject(addressId: issueInfo.key),
+                identity: .unapprovedObject(issueId: issueInfo.key, address: address),
                 address: address
             )
         }
         
-        let unapprovedAddressSections = AddressesListSectionModel(identity: "unapproved", items: unapprovedAddressItems)
-        sectionModels.append(unapprovedAddressSections)
+        unapprovedAddressItems.forEach {
+            sectionModels.append(AddressesListSectionModel(identity: String($0.identity.hashValue), items: [$0]))
+        }
         
         return sectionModels
     }
@@ -412,6 +465,7 @@ extension AddressesListViewModel {
         let guestAccessRequested: Driver<AddressesListDataItemIdentity>
         let refreshDataTrigger: Driver<Void>
         let addAddressTrigger: Driver<Void>
+        let issueQrCodeTrigger: Driver<Void>
     }
     
     struct Output {
@@ -420,6 +474,34 @@ extension AddressesListViewModel {
         let isLoading: Driver<Bool>
         let reloadingFinished: Driver<Void>
         let shouldBlockInteraction: Driver<Bool>
+    }
+    
+}
+
+extension AddressesListViewModel: QRCodeScanViewModelDelegate {
+    
+    func qrCodeScanViewModel(_ viewModel: QRCodeScanViewModel, didExtractCode code: String) {
+        router.rx
+            .trigger(.back)
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .registerQR(qr: code)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.router.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

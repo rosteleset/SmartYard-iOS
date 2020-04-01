@@ -33,6 +33,8 @@ enum APITarget {
     
     case getListConnect(request: GetListConnectRequest)
     case createIssue(request: CreateIssueRequest)
+    case actionIssue(request: ActionIssueRequest)
+    case commentIssue(request: CommentIssueRequest)
     
     case addMyPhone(request: AddMyPhoneRequest)
     case requestCode(request: RequestCodeRequest)
@@ -76,6 +78,8 @@ extension APITarget: TargetType {
             
         case .getListConnect: return "issues/listConnect"
         case .createIssue: return "issues/create"
+        case .actionIssue: return "issues/action"
+        case .commentIssue: return "issues/comment"
             
         case .addMyPhone: return "user/addMyPhone"
         case .requestCode: return "user/requestCode"
@@ -123,6 +127,8 @@ extension APITarget: TargetType {
                 
             case .getListConnect(let request): return request.accessToken
             case .createIssue(let request): return request.accessToken
+            case .actionIssue(let request): return request.accessToken
+            case .commentIssue(let request): return request.accessToken
                 
             case .addMyPhone(let request): return request.accessToken
             case .registerPushToken(let request): return request.accessToken
@@ -171,6 +177,8 @@ extension APITarget: TargetType {
 
         case .getListConnect(let request): return request.requestParameters
         case .createIssue(let request): return request.requestParameters
+        case .actionIssue(let request): return request.requestParameters
+        case .commentIssue(let request): return request.requestParameters
             
         case .addMyPhone(let request): return request.requestParameters
         case .requestCode(let request): return request.requestParameters

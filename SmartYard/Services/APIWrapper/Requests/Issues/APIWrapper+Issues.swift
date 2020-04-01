@@ -46,4 +46,53 @@ extension APIWrapper {
             .mapToOptional()
     }
     
+    func cancelIssue(key: String) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = ActionIssueRequest(
+            accessToken: accessToken,
+            key: key,
+            action: "Jelly.Закрыть авто",
+            customFields: nil
+        )
+        
+        return provider.rx
+            .request(.actionIssue(request: request))
+            .filterSuccessfulCodes()
+            .map { _ in }
+    }
+    
+    func changeDeliveryMethod(newMethod: IssueDeliveryType, key: String) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+    
+        let request = ActionIssueRequest(
+            accessToken: accessToken,
+            key: key,
+            action: "Jelly.Способ доставки",
+            customFields: newMethod.deliveryCustomFields
+        )
+        
+        return provider.rx
+            .request(.actionIssue(request: request))
+            .filterSuccessfulCodes()
+            .map { _ in }
+    }
+    
+    func sendCommentAfterDeliveryMethodChanging(newMethod: IssueDeliveryType, key: String) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = CommentIssueRequest(accessToken: accessToken, key: key, comment: newMethod.deliveryComment)
+        
+        return provider.rx
+            .request(.commentIssue(request: request))
+            .filterSuccessfulCodes()
+            .map { _ in }
+    }
+    
 }

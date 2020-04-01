@@ -22,6 +22,7 @@ enum HomeRoute: Route {
     case restorePassword(contractNum: String?)
     case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
     case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
+    case serviceSoonAvailable(issue: APIIssueConnect)
     
 }
 
@@ -57,6 +58,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case .main:
             let vm = AddressesListViewModel(
                 apiWrapper: apiWrapper,
+                permissionService: permissionService,
                 pushNotificationService: pushNotificationService,
                 router: weakRouter
             )
@@ -171,6 +173,19 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             let vc = QRCodeScanViewController(viewModel: vm)
             vc.hidesBottomBarWhenPushed = true
+            
+            return .push(vc)
+            
+        case let .serviceSoonAvailable(issue):
+            let vm = ServiceSoonAvailableViewModel(
+                router: weakRouter,
+                apiWrapper: apiWrapper,
+                issueService: issueService,
+                permissionService: permissionService,
+                issue: issue
+            )
+            
+            let vc = ServiceSoonAvailableViewController(viewModel: vm)
             
             return .push(vc)
         }
