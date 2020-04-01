@@ -55,7 +55,7 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
                     }
                     
                     let hintText = self.requestType.hintText.replacingOccurrences(
-                        of: "{value}", with: (self.address ?? "")
+                        of: "{value}", with: (self.address)
                     )
                     
                     hintTextTrigger.onNext(hintText)

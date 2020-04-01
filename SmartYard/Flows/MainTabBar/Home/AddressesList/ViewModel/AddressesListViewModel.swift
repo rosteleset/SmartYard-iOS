@@ -202,20 +202,29 @@ class AddressesListViewModel: BaseViewModel {
         
         input.itemSelected
             .withLatestFrom(loadedUnapprovedAddressesData.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
-            .flatMap { args -> Driver<(String, ServiceRequestType)?> in
+            .flatMap { args -> Driver<APIIssueConnect> in
                 let (identity, unapprovedAddresses) = args
                 
-                guard case let .unapprovedObject(issueId, address) = identity else {
+                guard case let .unapprovedObject(issueId, _) = identity else {
                     return .empty()
                 }
                 
-                guard let issue = unapprovedAddresses?.filter { $0.key == issueId }.first else {
+                let issue = unapprovedAddresses?.first { $0.key == issueId }
+                
+                guard let uIssue = issue else {
                     return .empty()
                 }
+                
+                return .just(uIssue)
             }
             .drive(
-                onNext: { [weak self] address in
-                    self?.router.trigger(.serviceSoonAvailable(type: .officeRequest))
+                onNext: { [weak self] issue in
+                    guard let address = issue.address else {
+                        return
+                    }
+                    
+                    let deliveryType: ServiceRequestType = issue.isDeliveredByCourier ? .courierRequest : .officeRequest
+                    self?.router.trigger(.serviceSoonAvailable(type: deliveryType, address: address))
                 }
             )
             .disposed(by: disposeBag)

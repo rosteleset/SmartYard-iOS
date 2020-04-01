@@ -22,7 +22,7 @@ enum HomeRoute: Route {
     case restorePassword(contractNum: String?)
     case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
     case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
-    case serviceSoonAvailable(type: ServiceRequestType)
+    case serviceSoonAvailable(type: ServiceRequestType, address: String)
     
 }
 
@@ -175,8 +175,14 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             return .push(vc)
             
-        case .serviceSoonAvailable(let type):
-            let vm = ServiceSoonAvailableViewModel(router: weakRouter, issueService: issueService, requestType: type, address: "")
+        case let .serviceSoonAvailable(type, address):
+            let vm = ServiceSoonAvailableViewModel(
+                router: weakRouter,
+                issueService: issueService,
+                requestType: type,
+                address: address
+            )
+            
             let vc = ServiceSoonAvailableViewController(viewModel: vm)
             
             return .push(vc)
