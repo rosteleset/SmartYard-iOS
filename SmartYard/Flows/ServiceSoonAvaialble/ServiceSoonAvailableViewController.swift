@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import JGProgressHUD
 
-class ServiceSoonAvailableViewController: BaseViewController {
+class ServiceSoonAvailableViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var titleImageView: UIImageView!
     @IBOutlet private weak var hintLabel: UILabel!
@@ -16,6 +17,8 @@ class ServiceSoonAvailableViewController: BaseViewController {
     @IBOutlet private weak var actionButton: WhiteButtonWithBorder!
     @IBOutlet private weak var issueCancelButton: WhiteButtonWithBorder!
     
+    var loader: JGProgressHUD?
+
     private let viewModel: ServiceSoonAvailableViewModel
     
     init(viewModel: ServiceSoonAvailableViewModel) {
@@ -65,6 +68,19 @@ class ServiceSoonAvailableViewController: BaseViewController {
         
         output.titleImageTrigger
             .drive(titleImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
             .disposed(by: disposeBag)
     }
 

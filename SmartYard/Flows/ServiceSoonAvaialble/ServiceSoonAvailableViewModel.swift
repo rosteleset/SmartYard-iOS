@@ -158,7 +158,8 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
             titleImageTrigger: titleImageTrigger.asDriverOnErrorJustComplete(),
             hintTextTrigger: hintTextTrigger.asDriverOnErrorJustComplete(),
             actionTextTrigger: actionTextTrigger.asDriverOnErrorJustComplete(),
-            changeVisibilityQrCodeElementsTrigger: changeVisibilityQrCodeElementsTrigger.asDriverOnErrorJustComplete()
+            changeVisibilityQrCodeElementsTrigger: changeVisibilityQrCodeElementsTrigger.asDriverOnErrorJustComplete(),
+            isLoading: activityTracker.asDriver(onErrorJustReturn: false)
         )
     }
     
@@ -178,6 +179,7 @@ extension ServiceSoonAvailableViewModel {
         let hintTextTrigger: Driver<String?>
         let actionTextTrigger: Driver<String?>
         let changeVisibilityQrCodeElementsTrigger: Driver<Bool>
+        let isLoading: Driver<Bool>
     }
     
 }
