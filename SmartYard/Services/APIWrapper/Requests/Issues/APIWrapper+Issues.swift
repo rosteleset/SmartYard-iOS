@@ -59,7 +59,7 @@ extension APIWrapper {
         )
         
         return provider.rx
-            .request(.cancelIssue(request: request))
+            .request(.actionIssue(request: request))
             .filterSuccessfulCodes()
             .map { _ in }
     }
@@ -77,7 +77,7 @@ extension APIWrapper {
         )
         
         return provider.rx
-            .request(.cancelIssue(request: request))
+            .request(.actionIssue(request: request))
             .filterSuccessfulCodes()
             .map { _ in }
     }

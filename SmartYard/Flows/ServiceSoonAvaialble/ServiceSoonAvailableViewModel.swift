@@ -155,6 +155,14 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             titleImageTrigger: titleImageTrigger.asDriverOnErrorJustComplete(),
             hintTextTrigger: hintTextTrigger.asDriverOnErrorJustComplete(),
