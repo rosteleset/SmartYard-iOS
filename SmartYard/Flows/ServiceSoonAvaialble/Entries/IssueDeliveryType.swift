@@ -14,7 +14,7 @@ enum IssueDeliveryType {
     case office
     case courier
     
-    var actionText: String {
+    var changeTypeActionText: String {
         switch self {
         case .office: return "Вызвать курьера"
         case .courier: return "Приду в офис самостоятельно"

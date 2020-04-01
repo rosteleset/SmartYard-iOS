@@ -49,7 +49,7 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
                 onNext: { issue in
                     let issueDeliveryType: IssueDeliveryType = issue.isDeliveredByCourier ? .courier : .office
                     titleImageTrigger.onNext(issueDeliveryType.image)
-                    actionTextTrigger.onNext(issueDeliveryType.actionText)
+                    actionTextTrigger.onNext(issueDeliveryType.changeTypeActionText)
                     changeVisibilityQrCodeElementsTrigger.onNext(issueDeliveryType == .office)
                     
                     guard issueDeliveryType == .courier else {
