@@ -42,36 +42,26 @@ enum IssueType {
     // экран 34.02.03
     case deleteAddressIssue(userInfo: MainUserInfo, lat: String, lon: String, reason: String)
     
-    // экран 34.03
-    case changeTariffIssue(userInfo: MainUserInfo, lat: String, lon: String)
-    
     // экран 21
     case servicesUnavailableIssue(userInfo: MainUserInfo, services: [SettingsServiceType], lat: String, lon: String)
     
     // экран 28
     case comeInOfficeMyselfIssue(userInfo: MainUserInfo, lat: String, lon: String, services: [SettingsServiceType])
-    
-    // экран 29
-    case callCourierIssue(userInfo: MainUserInfo, lat: String, lon: String)
-    
+
     // когда нет общедомовых услуг, но есть другие услуги для выбора
     case connectOnlyNonHousesServices(userInfo: MainUserInfo, lat: String, lon: String, services: [SettingsServiceType])
     
     var summary: String {
         let webIssueDescription = "Авто: Заявка с сайта"
         let appCallIssue = "Авто: Звонок с приложения"
-        let resaleIssue = "Авто: Допродажа"
         
         switch self {
         case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .servicesUnavailableIssue,
-             .comeInOfficeMyselfIssue, .callCourierIssue, .connectOnlyNonHousesServices, .deleteAddressIssue:
+             .comeInOfficeMyselfIssue, .connectOnlyNonHousesServices, .deleteAddressIssue:
             return webIssueDescription
             
         case .dontRememberAnythingIssue:
             return appCallIssue
-            
-        case .changeTariffIssue:
-            return resaleIssue
         }
     }
     
@@ -81,7 +71,7 @@ enum IssueType {
         case .dontRememberAnythingIssue:
             return "Выполнить звонок клиенту для напоминания номера договора и пароля от личного кабинета"
         
-        case let .confirmAddressByCourierIssue(userInfo, _, _), let .callCourierIssue(userInfo, _, _):
+        case let .confirmAddressByCourierIssue(userInfo, _, _):
             return userInfo.convertToString() + "\nПодготовить конверт с qr-кодом. Далее заявку отправить курьеру. "
             
         case let .confirmAddressInOfficeIssue(userInfo, _, _):
@@ -89,10 +79,6 @@ enum IssueType {
         
         case let .deleteAddressIssue(userInfo, _, _, reason):
             return userInfo.convertToString() + "\nУдаление адреса из приложения. Причина: \(reason)"
-        
-        case let .changeTariffIssue(userInfo, _, _):
-            let hint = "\nЗапрос на смену тарифного плана. Выполнить звонок клиенту и осуществить консультацию"
-            return userInfo.convertToString() + hint
         
         case let .servicesUnavailableIssue(userInfo, services, _, _):
             let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
@@ -113,14 +99,11 @@ enum IssueType {
     var clientCode: String {
         switch self {
         case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue, .comeInOfficeMyselfIssue,
-             .callCourierIssue, .deleteAddressIssue, .connectOnlyNonHousesServices, .servicesUnavailableIssue:
+             .deleteAddressIssue, .connectOnlyNonHousesServices, .servicesUnavailableIssue:
             return "-1"
             
         case .dontRememberAnythingIssue:
             return "-3"
-            
-        case let .changeTariffIssue(userInfo, _, _):
-            return userInfo.clientId ?? "-1"
         }
     }
     
@@ -131,11 +114,11 @@ enum IssueType {
         
         switch self {
         case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue,
-             .comeInOfficeMyselfIssue, .callCourierIssue:
+             .comeInOfficeMyselfIssue:
             return [startWorkAction, sendToOfficeAction]
             
-        case .dontRememberAnythingIssue, .changeTariffIssue,
-             .servicesUnavailableIssue, .connectOnlyNonHousesServices, .deleteAddressIssue:
+        case .dontRememberAnythingIssue, .servicesUnavailableIssue,
+             .connectOnlyNonHousesServices, .deleteAddressIssue:
             return [startWorkAction, callAction]
         }
     }
@@ -178,15 +161,6 @@ enum IssueType {
                 "10744": lon
             ]
             
-        case let .changeTariffIssue(userInfo, lat, lon):
-            return [
-                "10011": clientCode,
-                "11841": userInfo.phoneNumber,
-                "12440": "Приложение",
-                "10743": lat,
-                "10744": lon
-            ]
-            
         case let .servicesUnavailableIssue(userInfo, _, lat, lon):
             return [
                 "10011": clientCode,
@@ -213,16 +187,6 @@ enum IssueType {
                 "12440": "Приложение",
                 "10743": lat,
                 "10744": lon
-            ]
-            
-        case let .callCourierIssue(userInfo, lat, lon):
-            return [
-                "10011": clientCode,
-                "11841": userInfo.phoneNumber,
-                "12440": "Приложение",
-                "10743": lat,
-                "10744": lon,
-                "10941": "10580"
             ]
         }
     }
