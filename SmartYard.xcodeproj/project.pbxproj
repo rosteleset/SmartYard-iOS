@@ -264,6 +264,7 @@
 		E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C383323F192600010BBC1 /* InputAddressViewController.swift */; };
 		E98C383623F192600010BBC1 /* InputAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C383423F192600010BBC1 /* InputAddressViewController.xib */; };
 		E99A837724349705001CEE95 /* ActionIssueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A837624349705001CEE95 /* ActionIssueRequest.swift */; };
+		E99A837E2434CBF1001CEE95 /* CommentIssueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A837D2434CBF1001CEE95 /* CommentIssueRequest.swift */; };
 		E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */; };
 		E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */; };
 		E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6C223EAA97900BECEE6 /* InputPhoneNumberViewModel.swift */; };
@@ -608,6 +609,7 @@
 		E98C383323F192600010BBC1 /* InputAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewController.swift; sourceTree = "<group>"; };
 		E98C383423F192600010BBC1 /* InputAddressViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputAddressViewController.xib; sourceTree = "<group>"; };
 		E99A837624349705001CEE95 /* ActionIssueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionIssueRequest.swift; sourceTree = "<group>"; };
+		E99A837D2434CBF1001CEE95 /* CommentIssueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentIssueRequest.swift; sourceTree = "<group>"; };
 		E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputPhoneNumberViewController.xib; sourceTree = "<group>"; };
 		E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
@@ -1932,9 +1934,10 @@
 			isa = PBXGroup;
 			children = (
 				E92EFB9D242A22F2003AF7FE /* APIWrapper+Issues.swift */,
-				E92EFB9E242A22F2003AF7FE /* IssuesListConnect */,
 				E92EFBA1242A22F2003AF7FE /* CreateIssue */,
 				E99A837524349693001CEE95 /* CancelIssue */,
+				E99A837C2434CBC6001CEE95 /* CommentIssue */,
+				E92EFB9E242A22F2003AF7FE /* IssuesListConnect */,
 			);
 			path = Issues;
 			sourceTree = "<group>";
@@ -2139,6 +2142,14 @@
 				E99A837624349705001CEE95 /* ActionIssueRequest.swift */,
 			);
 			path = CancelIssue;
+			sourceTree = "<group>";
+		};
+		E99A837C2434CBC6001CEE95 /* CommentIssue */ = {
+			isa = PBXGroup;
+			children = (
+				E99A837D2434CBF1001CEE95 /* CommentIssueRequest.swift */,
+			);
+			path = CommentIssue;
 			sourceTree = "<group>";
 		};
 		E99EA6B623EA9CED00BECEE6 /* Login */ = {
@@ -2727,6 +2738,7 @@
 				E92EFBAD242A22F2003AF7FE /* APIStreet.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
 				E92EFBAB242A22F2003AF7FE /* APILocation.swift in Sources */,
+				E99A837E2434CBF1001CEE95 /* CommentIssueRequest.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
 				E92EFBC2242A22F2003AF7FE /* GetHousesResponseData.swift in Sources */,
 				E96CC0D72423FAEA008DF44B /* RestoreMethodCellModel.swift in Sources */,
