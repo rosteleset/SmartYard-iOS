@@ -86,6 +86,17 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.cancelTapped
+//            .flatMapLatest { _ -> 
+//                
+//            }
+//            .drive(
+//                onNext: {
+//
+//                }
+//            )
+//            .disposed(by: disposeBag)
+        
         comeInOfficeTrigger
             .asDriverOnErrorJustComplete()
             .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
@@ -148,6 +159,7 @@ extension ServiceSoonAvailableViewModel {
         let qrCodeTapped: Driver<Void>
         let actionTapped: Driver<Void>
         let viewWillAppearTrigger: Driver<Bool>
+        let cancelTapped: Driver<Void>
     }
     
     struct Output {

@@ -14,6 +14,7 @@ class ServiceSoonAvailableViewController: BaseViewController {
     @IBOutlet private weak var hintLabel: UILabel!
     @IBOutlet private weak var qrCodeButton: BlueButton!
     @IBOutlet private weak var actionButton: WhiteButtonWithBorder!
+    @IBOutlet private weak var issueCancelButton: WhiteButtonWithBorder!
     
     private let viewModel: ServiceSoonAvailableViewModel
     
@@ -36,7 +37,8 @@ class ServiceSoonAvailableViewController: BaseViewController {
         let input = ServiceSoonAvailableViewModel.Input(
             qrCodeTapped: qrCodeButton.rx.tap.asDriverOnErrorJustComplete(),
             actionTapped: actionButton.rx.tap.asDriverOnErrorJustComplete(),
-            viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete()
+            viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete(),
+            cancelTapped: issueCancelButton.rx.tap.asDriver()
         )
         
         let output = viewModel.transform(input: input)
