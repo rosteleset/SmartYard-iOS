@@ -219,12 +219,11 @@ class AddressesListViewModel: BaseViewModel {
             }
             .drive(
                 onNext: { [weak self] issue in
-                    guard let address = issue.address else {
+                    guard let self = self else {
                         return
                     }
                     
-                    let deliveryType: ServiceRequestType = issue.isDeliveredByCourier ? .courierRequest : .officeRequest
-                    self?.router.trigger(.serviceSoonAvailable(type: deliveryType, address: address))
+                    self.router.trigger(.serviceSoonAvailable(issue: issue))
                 }
             )
             .disposed(by: disposeBag)

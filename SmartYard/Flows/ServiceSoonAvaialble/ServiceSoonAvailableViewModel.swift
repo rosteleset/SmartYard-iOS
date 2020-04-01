@@ -14,16 +14,18 @@ import XCoordinator
 class ServiceSoonAvailableViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
+    private let apiWrapper: APIWrapper
     private let issueService: IssueService
     
     private let requestType: ServiceRequestType
-    private let address: String
+    private let issue: APIIssueConnect
     
-    init(router: WeakRouter<HomeRoute>, issueService: IssueService, requestType: ServiceRequestType, address: String) {
+    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, issueService: IssueService, issue: APIIssueConnect) {
         self.router = router
+        self.apiWrapper = apiWrapper
         self.issueService = issueService
-        self.requestType = requestType
-        self.address = address
+        self.requestType = issue.isDeliveredByCourier ? .courierRequest : .officeRequest
+        self.issue = issue
     }
     
     func transform(input: Input) -> Output {
@@ -55,7 +57,7 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
                     }
                     
                     let hintText = self.requestType.hintText.replacingOccurrences(
-                        of: "{value}", with: (self.address)
+                        of: "{value}", with: (self.issue.address ?? "")
                     )
                     
                     hintTextTrigger.onNext(hintText)
@@ -87,26 +89,35 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.cancelTapped
-//            .flatMapLatest { _ -> 
-//                
-//            }
-//            .drive(
-//                onNext: {
-//
-//                }
-//            )
-//            .disposed(by: disposeBag)
-        
-        comeInOfficeTrigger
-            .asDriverOnErrorJustComplete()
-            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
                 guard let self = self else {
                     return .empty()
                 }
                 
                 return
+                    self.apiWrapper.cancelIssue(key: self.issue.key)
+                        .trackActivity(activityTracker)
+                        .trackError(errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        comeInOfficeTrigger
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
+                guard let self = self, let address = self.issue.address else {
+                    return .empty()
+                }
+                
+                return
                     self.issueService
-                        .sendApproveAddressInOfficeIssue(address: self.address)
+                        .sendApproveAddressInOfficeIssue(address: address)
                         .trackActivity(activityTracker)
                         .trackError(errorTracker)
                         .asDriver(onErrorJustReturn: nil)
@@ -123,13 +134,13 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
         callCourierTrigger
             .asDriverOnErrorJustComplete()
             .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
-                guard let self = self else {
+                guard let self = self, let address = self.issue.address else {
                     return .empty()
                 }
                 
                 return
                     self.issueService
-                        .sendApproveAddressInOfficeIssue(address: self.address)
+                        .sendApproveAddressInOfficeIssue(address: address)
                         .trackActivity(activityTracker)
                         .trackError(errorTracker)
                         .asDriver(onErrorJustReturn: nil)
