@@ -16,16 +16,14 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
-    
-    private let requestType: IssueDeliveryType
-    private let issue: APIIssueConnect
+
+    private let issueSubject: BehaviorSubject<APIIssueConnect>
     
     init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, issueService: IssueService, issue: APIIssueConnect) {
         self.router = router
         self.apiWrapper = apiWrapper
         self.issueService = issueService
-        self.requestType = issue.isDeliveredByCourier ? .courierRequest : .officeRequest
-        self.issue = issue
+        self.issueSubject = BehaviorSubject<APIIssueConnect>(value: issue)
     }
     
     func transform(input: Input) -> Output {
@@ -37,27 +35,22 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
         let actionTextTrigger = PublishSubject<String?>()
         let changeVisibilityQrCodeElementsTrigger = PublishSubject<Bool>()
         
-        let callCourierTrigger = PublishSubject<Void>()
-        let comeInOfficeTrigger = PublishSubject<Void>()
-        
         input.viewWillAppearTrigger
+            .withLatestFrom(issueSubject.asDriverOnErrorJustComplete())
             .drive(
-                onNext: { [weak self] _ in
-                    guard let self = self else {
+                onNext: { issue in
+                    let issueDeliveryType: IssueDeliveryType = issue.isDeliveredByCourier ? .courier : .office
+                    titleImageTrigger.onNext(issueDeliveryType.image)
+                    actionTextTrigger.onNext(issueDeliveryType.actionText)
+                    changeVisibilityQrCodeElementsTrigger.onNext(issueDeliveryType == .office)
+                    
+                    guard issueDeliveryType == .courier else {
+                        hintTextTrigger.onNext(issueDeliveryType.hintText)
                         return
                     }
                     
-                    titleImageTrigger.onNext(self.requestType.image)
-                    actionTextTrigger.onNext(self.requestType.actionText)
-                    changeVisibilityQrCodeElementsTrigger.onNext(self.requestType == .officeRequest)
-                    
-                    guard self.requestType == .courierRequest else {
-                        hintTextTrigger.onNext(self.requestType.hintText)
-                        return
-                    }
-                    
-                    let hintText = self.requestType.hintText.replacingOccurrences(
-                        of: "{value}", with: (self.issue.address ?? "")
+                    let hintText = issueDeliveryType.hintText.replacingOccurrences(
+                        of: "{value}", with: (issue.address ?? "")
                     )
                     
                     hintTextTrigger.onNext(hintText)
@@ -74,28 +67,52 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.actionTapped
+            .withLatestFrom(issueSubject.asDriverOnErrorJustComplete())
+            .flatMapLatest { [weak self] issue -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                let newIssueDeliveryType: IssueDeliveryType = issue.isDeliveredByCourier ? .office : .courier
+                
+                return
+                    self.apiWrapper.changeDeliveryMethod(newMethod: newIssueDeliveryType, key: issue.key)
+                        .trackActivity(activityTracker)
+                        .trackError(errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .withLatestFrom(issueSubject.asDriverOnErrorJustComplete())
+            .flatMapLatest { [weak self] issue -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                let newDeliveryType: IssueDeliveryType = issue.isDeliveredByCourier ? .office : .courier
+                
+                return
+                    self.apiWrapper.sendCommentAfterDeliveryMethodChanging(newMethod: newDeliveryType, key: issue.key)
+                        .trackActivity(activityTracker)
+                        .trackError(errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    switch self.requestType {
-                    case .officeRequest: comeInOfficeTrigger.onNext(())
-                    case .courierRequest: callCourierTrigger.onNext(())
-                    }
+                    self?.router.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
         
         input.cancelTapped
-            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+            .withLatestFrom(issueSubject.asDriverOnErrorJustComplete())
+            .flatMapLatest { [weak self] issue -> Driver<Void?> in
                 guard let self = self else {
                     return .empty()
                 }
                 
                 return
-                    self.apiWrapper.cancelIssue(key: self.issue.key)
+                    self.apiWrapper.cancelIssue(key: issue.key)
                         .trackActivity(activityTracker)
                         .trackError(errorTracker)
                         .asDriver(onErrorJustReturn: nil)
@@ -107,53 +124,6 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-        
-        comeInOfficeTrigger
-            .asDriverOnErrorJustComplete()
-            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
-                guard let self = self, let address = self.issue.address else {
-                    return .empty()
-                }
-                
-                return
-                    self.issueService
-                        .sendApproveAddressInOfficeIssue(address: address)
-                        .trackActivity(activityTracker)
-                        .trackError(errorTracker)
-                        .asDriver(onErrorJustReturn: nil)
-            }
-            .ignoreNil()
-            .mapToVoid()
-            .drive(
-                onNext: { [weak self] in
-                    self?.router.trigger(.main)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        callCourierTrigger
-            .asDriverOnErrorJustComplete()
-            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
-                guard let self = self, let address = self.issue.address else {
-                    return .empty()
-                }
-                
-                return
-                    self.issueService
-                        .sendApproveAddressInOfficeIssue(address: address)
-                        .trackActivity(activityTracker)
-                        .trackError(errorTracker)
-                        .asDriver(onErrorJustReturn: nil)
-            }
-            .ignoreNil()
-            .mapToVoid()
-            .drive(
-                onNext: { [weak self] in
-                    self?.router.trigger(.main)
-                }
-            )
-            .disposed(by: disposeBag)
-        
         
         input.backTrigger
             .drive(
@@ -162,7 +132,6 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-        
         
         return Output(
             titleImageTrigger: titleImageTrigger.asDriverOnErrorJustComplete(),

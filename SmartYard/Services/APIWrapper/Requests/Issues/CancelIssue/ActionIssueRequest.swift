@@ -13,7 +13,7 @@ struct ActionIssueRequest: Codable {
     let accessToken: String
     let key: String
     let action: String
-    let customFields: [String: String]?
+    let customFields: [[String: String]]?
     
 }
 
