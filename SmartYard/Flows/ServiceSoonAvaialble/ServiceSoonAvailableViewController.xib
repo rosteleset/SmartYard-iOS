@@ -45,7 +45,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ck-ZY-PK8" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="113" width="414" height="749"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="766"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Man" translatesAutoresizingMaskIntoConstraints="NO" id="k2J-IV-yeb">
                             <rect key="frame" x="157" y="20" width="100" height="100"/>
@@ -67,7 +67,7 @@
                             <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sY4-Hs-Ho1" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="20" y="533" width="374" height="60"/>
+                            <rect key="frame" x="20" y="550" width="374" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="1RN-Ac-GiR"/>
                             </constraints>
@@ -83,7 +83,7 @@
                             </state>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="YL9-kH-ngA" customClass="WhiteButtonWithBorder" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="20" y="603" width="374" height="60"/>
+                            <rect key="frame" x="20" y="620" width="374" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="Evk-Gk-2RY"/>
                             </constraints>
@@ -91,7 +91,7 @@
                             <state key="normal" title="Приду в офис самостоятельно"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Ot2-BH-XPn" customClass="WhiteButtonWithBorder" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="20" y="673" width="374" height="60"/>
+                            <rect key="frame" x="20" y="690" width="374" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="hM1-Y9-fqM"/>
                             </constraints>
@@ -142,8 +142,8 @@
                 <constraint firstItem="Qeb-n0-SC1" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="YHn-a4-p8s"/>
                 <constraint firstAttribute="bottom" secondItem="Qeb-n0-SC1" secondAttribute="bottom" id="Ys8-TO-qSF"/>
                 <constraint firstItem="1jL-Th-fpk" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ect-6R-kUz"/>
-                <constraint firstItem="6Ck-ZY-PK8" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="69" id="kgS-k5-5XH"/>
                 <constraint firstItem="Qeb-n0-SC1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="nXx-LW-yGR"/>
+                <constraint firstItem="6Ck-ZY-PK8" firstAttribute="top" secondItem="1jL-Th-fpk" secondAttribute="bottom" constant="8" symbolic="YES" id="nkJ-UA-tM0"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>

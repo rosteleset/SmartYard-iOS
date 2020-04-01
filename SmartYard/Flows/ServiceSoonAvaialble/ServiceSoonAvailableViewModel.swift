@@ -16,20 +16,29 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
-
+    private let permissionService: PermissionService
+    
     private let issueSubject: BehaviorSubject<APIIssueConnect>
     
-    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, issueService: IssueService, issue: APIIssueConnect) {
+    let activityTracker = ActivityTracker()
+    let errorTracker = ErrorTracker()
+    
+    init(
+        router: WeakRouter<HomeRoute>,
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        permissionService: PermissionService,
+        issue: APIIssueConnect
+    ) {
         self.router = router
         self.apiWrapper = apiWrapper
         self.issueService = issueService
+        self.permissionService = permissionService
         self.issueSubject = BehaviorSubject<APIIssueConnect>(value: issue)
     }
     
     func transform(input: Input) -> Output {
-        let activityTracker = ActivityTracker()
-        let errorTracker = ErrorTracker()
-        
+ 
         let titleImageTrigger = PublishSubject<UIImage?>()
         let hintTextTrigger = PublishSubject<String?>()
         let actionTextTrigger = PublishSubject<String?>()
@@ -59,9 +68,23 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
             .disposed(by: disposeBag)
                 
         input.qrCodeTapped
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.permissionService.hasAccess(to: .video)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
-                onNext: {
-                    // TODO
+                onNext: { [weak self] _ in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.router.trigger(.qrCodeScan(delegate: self))
                 }
             )
             .disposed(by: disposeBag)
@@ -77,8 +100,8 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
                 
                 return
                     self.apiWrapper.changeDeliveryMethod(newMethod: newIssueDeliveryType, key: issue.key)
-                        .trackActivity(activityTracker)
-                        .trackError(errorTracker)
+                        .trackActivity(self.activityTracker)
+                        .trackError(self.errorTracker)
                         .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
@@ -92,8 +115,8 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
                 
                 return
                     self.apiWrapper.sendCommentAfterDeliveryMethodChanging(newMethod: newDeliveryType, key: issue.key)
-                        .trackActivity(activityTracker)
-                        .trackError(errorTracker)
+                        .trackActivity(self.activityTracker)
+                        .trackError(self.errorTracker)
                         .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
@@ -113,8 +136,8 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
                 
                 return
                     self.apiWrapper.cancelIssue(key: issue.key)
-                        .trackActivity(activityTracker)
-                        .trackError(errorTracker)
+                        .trackActivity(self.activityTracker)
+                        .trackError(self.errorTracker)
                         .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
@@ -160,6 +183,33 @@ extension ServiceSoonAvailableViewModel {
         let actionTextTrigger: Driver<String?>
         let changeVisibilityQrCodeElementsTrigger: Driver<Bool>
         let isLoading: Driver<Bool>
+    }
+    
+}
+
+extension ServiceSoonAvailableViewModel: QRCodeScanViewModelDelegate {
+    
+    func qrCodeScanViewModel(_ viewModel: QRCodeScanViewModel, didExtractCode code: String) {
+        router.rx
+            .trigger(.back)
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .registerQR(qr: code)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.router.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

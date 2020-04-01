@@ -181,6 +181,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
                 router: weakRouter,
                 apiWrapper: apiWrapper,
                 issueService: issueService,
+                permissionService: permissionService,
                 issue: issue
             )
             
