@@ -14,6 +14,7 @@ class AddressesListViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
+    private let permissionService: PermissionService
     private let router: WeakRouter<HomeRoute>
     
     let activityTracker = ActivityTracker()
@@ -21,10 +22,12 @@ class AddressesListViewModel: BaseViewModel {
     
     init(
         apiWrapper: APIWrapper,
+        permissionService: PermissionService,
         pushNotificationService: PushNotificationService,
         router: WeakRouter<HomeRoute>
     ) {
         self.apiWrapper = apiWrapper
+        self.permissionService = permissionService
         self.pushNotificationService = pushNotificationService
         self.router = router
     }
@@ -285,6 +288,16 @@ class AddressesListViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.issueQrCodeTrigger
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.permissionService.hasAccess(to: .video)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] _ in
                     guard let self = self else {

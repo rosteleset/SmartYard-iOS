@@ -58,6 +58,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case .main:
             let vm = AddressesListViewModel(
                 apiWrapper: apiWrapper,
+                permissionService: permissionService,
                 pushNotificationService: pushNotificationService,
                 router: weakRouter
             )

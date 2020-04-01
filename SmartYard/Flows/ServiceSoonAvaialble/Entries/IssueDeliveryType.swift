@@ -1,5 +1,5 @@
 //
-//  ServiceRequestType.swift
+//  IssueDeliveryType.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 13.02.2020.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum ServiceRequestType {
+enum IssueDeliveryType {
     
     case officeRequest
     case courierRequest
@@ -42,6 +42,19 @@ enum ServiceRequestType {
         }
         
         return UIImage(named: name)
+    }
+    
+    var deliveryCustomFields: [String: String] {
+        var params: [String: String] = ["number": "10941"]
+        
+        switch self {
+        case .officeRequest:
+            params["value"] = "Самовывоз"
+        case .courierRequest:
+            params["value"] = "Курьер"
+        }
+        
+        return params
     }
     
 }

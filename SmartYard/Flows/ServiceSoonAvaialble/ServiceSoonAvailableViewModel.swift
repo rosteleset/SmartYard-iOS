@@ -17,7 +17,7 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     
-    private let requestType: ServiceRequestType
+    private let requestType: IssueDeliveryType
     private let issue: APIIssueConnect
     
     init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, issueService: IssueService, issue: APIIssueConnect) {

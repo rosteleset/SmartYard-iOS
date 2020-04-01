@@ -230,7 +230,7 @@
 		E92EFBE8242A24D2003AF7FE /* RestoreRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFBE7242A24D1003AF7FE /* RestoreRequest.swift */; };
 		E92EFBEA242A24EB003AF7FE /* APIRestoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFBE9242A24EB003AF7FE /* APIRestoreData.swift */; };
 		E92EFBEC242A2507003AF7FE /* NotificationName+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFBEB242A2507003AF7FE /* NotificationName+Extensions.swift */; };
-		E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F323F56BF800623746 /* ServiceRequestType.swift */; };
+		E94057F423F56BF800623746 /* IssueDeliveryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F323F56BF800623746 /* IssueDeliveryType.swift */; };
 		E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057F723F6721F00623746 /* AddressAccessViewController.swift */; };
 		E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E94057F823F6721F00623746 /* AddressAccessViewController.xib */; };
 		E94057FC23F6724100623746 /* AddressAccessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94057FB23F6724100623746 /* AddressAccessViewModel.swift */; };
@@ -263,7 +263,7 @@
 		E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C383023F181610010BBC1 /* AuthByContractNumViewModel.swift */; };
 		E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C383323F192600010BBC1 /* InputAddressViewController.swift */; };
 		E98C383623F192600010BBC1 /* InputAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C383423F192600010BBC1 /* InputAddressViewController.xib */; };
-		E99A837724349705001CEE95 /* CancelIssueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A837624349705001CEE95 /* CancelIssueRequest.swift */; };
+		E99A837724349705001CEE95 /* ActionIssueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A837624349705001CEE95 /* ActionIssueRequest.swift */; };
 		E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */; };
 		E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */; };
 		E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6C223EAA97900BECEE6 /* InputPhoneNumberViewModel.swift */; };
@@ -574,7 +574,7 @@
 		E92EFBE7242A24D1003AF7FE /* RestoreRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreRequest.swift; sourceTree = "<group>"; };
 		E92EFBE9242A24EB003AF7FE /* APIRestoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRestoreData.swift; sourceTree = "<group>"; };
 		E92EFBEB242A2507003AF7FE /* NotificationName+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotificationName+Extensions.swift"; sourceTree = "<group>"; };
-		E94057F323F56BF800623746 /* ServiceRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRequestType.swift; sourceTree = "<group>"; };
+		E94057F323F56BF800623746 /* IssueDeliveryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDeliveryType.swift; sourceTree = "<group>"; };
 		E94057F723F6721F00623746 /* AddressAccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessViewController.swift; sourceTree = "<group>"; };
 		E94057F823F6721F00623746 /* AddressAccessViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessViewController.xib; sourceTree = "<group>"; };
 		E94057FB23F6724100623746 /* AddressAccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessViewModel.swift; sourceTree = "<group>"; };
@@ -607,7 +607,7 @@
 		E98C383023F181610010BBC1 /* AuthByContractNumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthByContractNumViewModel.swift; sourceTree = "<group>"; };
 		E98C383323F192600010BBC1 /* InputAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewController.swift; sourceTree = "<group>"; };
 		E98C383423F192600010BBC1 /* InputAddressViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputAddressViewController.xib; sourceTree = "<group>"; };
-		E99A837624349705001CEE95 /* CancelIssueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelIssueRequest.swift; sourceTree = "<group>"; };
+		E99A837624349705001CEE95 /* ActionIssueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionIssueRequest.swift; sourceTree = "<group>"; };
 		E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputPhoneNumberViewController.xib; sourceTree = "<group>"; };
 		E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
@@ -1931,10 +1931,10 @@
 		E92EFB9C242A22F2003AF7FE /* Issues */ = {
 			isa = PBXGroup;
 			children = (
-				E99A837524349693001CEE95 /* CancelIssue */,
 				E92EFB9D242A22F2003AF7FE /* APIWrapper+Issues.swift */,
 				E92EFB9E242A22F2003AF7FE /* IssuesListConnect */,
 				E92EFBA1242A22F2003AF7FE /* CreateIssue */,
+				E99A837524349693001CEE95 /* CancelIssue */,
 			);
 			path = Issues;
 			sourceTree = "<group>";
@@ -1969,7 +1969,7 @@
 		E94057F223F56B6400623746 /* Entries */ = {
 			isa = PBXGroup;
 			children = (
-				E94057F323F56BF800623746 /* ServiceRequestType.swift */,
+				E94057F323F56BF800623746 /* IssueDeliveryType.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -2136,7 +2136,7 @@
 		E99A837524349693001CEE95 /* CancelIssue */ = {
 			isa = PBXGroup;
 			children = (
-				E99A837624349705001CEE95 /* CancelIssueRequest.swift */,
+				E99A837624349705001CEE95 /* ActionIssueRequest.swift */,
 			);
 			path = CancelIssue;
 			sourceTree = "<group>";
@@ -2783,7 +2783,7 @@
 				843C38CE242A577C0035BF80 /* InboxResponseData.swift in Sources */,
 				843C38E8242A6E490035BF80 /* QRCodeScanViewModel.swift in Sources */,
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
-				E94057F423F56BF800623746 /* ServiceRequestType.swift in Sources */,
+				E94057F423F56BF800623746 /* IssueDeliveryType.swift in Sources */,
 				E92EFBD1242A22F2003AF7FE /* IntercomRequest.swift in Sources */,
 				E92EFBE3242A22F2003AF7FE /* BaseRequestRetrier.swift in Sources */,
 				E94B6C8D2407F8E200FD9F65 /* IssueTypes.swift in Sources */,
@@ -2924,7 +2924,7 @@
 				84854B6523FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift in Sources */,
 				84CC15E323EC86D900A1CB95 /* ObjectLockButton.swift in Sources */,
 				843C38CF242A577C0035BF80 /* InboxRequest.swift in Sources */,
-				E99A837724349705001CEE95 /* CancelIssueRequest.swift in Sources */,
+				E99A837724349705001CEE95 /* ActionIssueRequest.swift in Sources */,
 				84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */,
 				843C38D0242A577C0035BF80 /* UnreadedRequest.swift in Sources */,
 				E92EFBC1242A22F2003AF7FE /* APIWrapper+Geo.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CancelIssueRequest: Codable {
+struct ActionIssueRequest: Codable {
     
     let accessToken: String
     let key: String
@@ -17,7 +17,7 @@ struct CancelIssueRequest: Codable {
     
 }
 
-extension CancelIssueRequest {
+extension ActionIssueRequest {
     
     var requestParameters: [String: Any] {
         var params: [String: Any] = [

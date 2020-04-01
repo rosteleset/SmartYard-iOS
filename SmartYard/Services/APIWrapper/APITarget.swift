@@ -33,7 +33,7 @@ enum APITarget {
     
     case getListConnect(request: GetListConnectRequest)
     case createIssue(request: CreateIssueRequest)
-    case cancelIssue(request: CancelIssueRequest)
+    case cancelIssue(request: ActionIssueRequest)
     
     case addMyPhone(request: AddMyPhoneRequest)
     case requestCode(request: RequestCodeRequest)
