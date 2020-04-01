@@ -57,4 +57,13 @@ enum IssueDeliveryType {
         return params
     }
     
+    var deliveryComment: String {
+        switch self {
+        case .officeRequest:
+            return "Cменился способ доставки. Клиент подойдет в офис."
+        case .courierRequest:
+            return "Cменился способ доставки. Подготовить пакет для курьера."
+        }
+    }
+    
 }
