@@ -38,7 +38,6 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
- 
         let titleImageTrigger = PublishSubject<UIImage?>()
         let hintTextTrigger = PublishSubject<String?>()
         let actionTextTrigger = PublishSubject<String?>()
