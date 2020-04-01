@@ -16,6 +16,7 @@ class ServiceSoonAvailableViewController: BaseViewController, LoaderPresentable 
     @IBOutlet private weak var qrCodeButton: BlueButton!
     @IBOutlet private weak var actionButton: WhiteButtonWithBorder!
     @IBOutlet private weak var issueCancelButton: WhiteButtonWithBorder!
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
     var loader: JGProgressHUD?
 
@@ -41,7 +42,8 @@ class ServiceSoonAvailableViewController: BaseViewController, LoaderPresentable 
             qrCodeTapped: qrCodeButton.rx.tap.asDriverOnErrorJustComplete(),
             actionTapped: actionButton.rx.tap.asDriverOnErrorJustComplete(),
             viewWillAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete(),
-            cancelTapped: issueCancelButton.rx.tap.asDriver()
+            cancelTapped: issueCancelButton.rx.tap.asDriver(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
         let output = viewModel.transform(input: input)

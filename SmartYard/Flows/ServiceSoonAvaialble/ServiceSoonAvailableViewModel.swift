@@ -154,6 +154,16 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        
         return Output(
             titleImageTrigger: titleImageTrigger.asDriverOnErrorJustComplete(),
             hintTextTrigger: hintTextTrigger.asDriverOnErrorJustComplete(),
@@ -172,6 +182,7 @@ extension ServiceSoonAvailableViewModel {
         let actionTapped: Driver<Void>
         let viewWillAppearTrigger: Driver<Bool>
         let cancelTapped: Driver<Void>
+        let backTrigger: Driver<Void>
     }
     
     struct Output {

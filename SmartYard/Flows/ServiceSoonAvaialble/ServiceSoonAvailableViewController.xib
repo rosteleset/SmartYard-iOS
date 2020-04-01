@@ -21,6 +21,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServiceSoonAvailableViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="actionButton" destination="YL9-kH-ngA" id="v2b-Kw-IwF"/>
+                <outlet property="fakeNavBar" destination="1jL-Th-fpk" id="qLN-gD-62T"/>
                 <outlet property="hintLabel" destination="C8F-0W-d0e" id="rdr-cc-pe6"/>
                 <outlet property="issueCancelButton" destination="Ot2-BH-XPn" id="Gyv-bb-6w0"/>
                 <outlet property="qrCodeButton" destination="sY4-Hs-Ho1" id="vK1-Xw-P52"/>
@@ -36,6 +37,13 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Qeb-n0-SC1">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1jL-Th-fpk" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="EKj-PZ-IuB"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ck-ZY-PK8" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="113" width="414" height="749"/>
                     <subviews>
@@ -125,12 +133,15 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="1jL-Th-fpk" secondAttribute="trailing" id="1vN-kp-ZjE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="6Ck-ZY-PK8" secondAttribute="bottom" id="8Pu-T5-ZyK"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6Ck-ZY-PK8" secondAttribute="trailing" id="9Q9-MQ-rct"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Qeb-n0-SC1" secondAttribute="trailing" id="IcY-O3-Eld"/>
                 <constraint firstItem="6Ck-ZY-PK8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="OQI-lV-q3r"/>
+                <constraint firstItem="1jL-Th-fpk" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="VS2-ar-0uA"/>
                 <constraint firstItem="Qeb-n0-SC1" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="YHn-a4-p8s"/>
                 <constraint firstAttribute="bottom" secondItem="Qeb-n0-SC1" secondAttribute="bottom" id="Ys8-TO-qSF"/>
+                <constraint firstItem="1jL-Th-fpk" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ect-6R-kUz"/>
                 <constraint firstItem="6Ck-ZY-PK8" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="69" id="kgS-k5-5XH"/>
                 <constraint firstItem="Qeb-n0-SC1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="nXx-LW-yGR"/>
             </constraints>
