@@ -46,4 +46,22 @@ extension APIWrapper {
             .mapToOptional()
     }
     
+    func cancelIssue(key: String) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = CancelIssueRequest(
+            accessToken: accessToken,
+            key: key,
+            action: "Jelly.Закрыть авто",
+            customFields: nil
+        )
+        
+        return provider.rx
+            .request(.cancelIssue(request: request))
+            .filterSuccessfulCodes()
+            .map { _ in }
+    }
+    
 }
