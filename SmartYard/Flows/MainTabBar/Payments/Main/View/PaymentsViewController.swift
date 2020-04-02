@@ -57,5 +57,9 @@ class PaymentsViewController: BaseViewController, LoaderPresentable {
     private func configureView() {
         
     }
+    
+    private func bind() {
+        
+    }
 
 }

@@ -267,7 +267,7 @@
 		E98C383623F192600010BBC1 /* InputAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C383423F192600010BBC1 /* InputAddressViewController.xib */; };
 		E99A837724349705001CEE95 /* ActionIssueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A837624349705001CEE95 /* ActionIssueRequest.swift */; };
 		E99A837E2434CBF1001CEE95 /* CommentIssueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A837D2434CBF1001CEE95 /* CommentIssueRequest.swift */; };
-		E99A83812435D591001CEE95 /* PaymentAddressesListDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A83802435D591001CEE95 /* PaymentAddressesListDataItem.swift */; };
+		E99A83812435D591001CEE95 /* PaymentAddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A83802435D591001CEE95 /* PaymentAddressItem.swift */; };
 		E99A83852435DA01001CEE95 /* PaymentAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A83832435DA01001CEE95 /* PaymentAddressCell.swift */; };
 		E99A83862435DA01001CEE95 /* PaymentAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99A83842435DA01001CEE95 /* PaymentAddressCell.xib */; };
 		E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */; };
@@ -617,7 +617,7 @@
 		E98C383423F192600010BBC1 /* InputAddressViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputAddressViewController.xib; sourceTree = "<group>"; };
 		E99A837624349705001CEE95 /* ActionIssueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionIssueRequest.swift; sourceTree = "<group>"; };
 		E99A837D2434CBF1001CEE95 /* CommentIssueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentIssueRequest.swift; sourceTree = "<group>"; };
-		E99A83802435D591001CEE95 /* PaymentAddressesListDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentAddressesListDataItem.swift; sourceTree = "<group>"; };
+		E99A83802435D591001CEE95 /* PaymentAddressItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentAddressItem.swift; sourceTree = "<group>"; };
 		E99A83832435DA01001CEE95 /* PaymentAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentAddressCell.swift; sourceTree = "<group>"; };
 		E99A83842435DA01001CEE95 /* PaymentAddressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentAddressCell.xib; sourceTree = "<group>"; };
 		E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberViewController.swift; sourceTree = "<group>"; };
@@ -2177,7 +2177,7 @@
 		E99A837F2435D571001CEE95 /* Entries */ = {
 			isa = PBXGroup;
 			children = (
-				E99A83802435D591001CEE95 /* PaymentAddressesListDataItem.swift */,
+				E99A83802435D591001CEE95 /* PaymentAddressItem.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -2964,7 +2964,7 @@
 				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
-				E99A83812435D591001CEE95 /* PaymentAddressesListDataItem.swift in Sources */,
+				E99A83812435D591001CEE95 /* PaymentAddressItem.swift in Sources */,
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,

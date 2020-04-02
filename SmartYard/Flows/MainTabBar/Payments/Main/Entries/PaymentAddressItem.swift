@@ -1,5 +1,5 @@
 //
-//  PaymentAddressesListDataItem.swift
+//  PaymentAddressItem.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 02.04.2020.
@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+struct PaymentAddressItem {
+    
+    let id: String
+    let address: String
+    
+}
