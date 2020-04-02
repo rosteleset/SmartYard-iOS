@@ -11,6 +11,7 @@ import XCoordinator
 enum PaymentsRoute: Route {
     
     case main
+    case alert(title: String, message: String)
     
 }
 
@@ -29,10 +30,14 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
     override func prepareTransition(for route: PaymentsRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = PaymentsViewModel()
+            let vm = PaymentsViewModel(apiWrapper: apiWrapper, router: weakRouter)
             let vc = PaymentsViewController(viewModel: vm)
             return .set([vc])
+            
+        case .alert(let title, let message):
+            return .alertTransition(title: title, message: message)
         }
+        
     }
     
 }
