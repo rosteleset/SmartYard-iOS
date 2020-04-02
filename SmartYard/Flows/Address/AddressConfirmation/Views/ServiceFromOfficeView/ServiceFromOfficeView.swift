@@ -38,8 +38,7 @@ class ServiceFromOfficeView: PMNibLinkableView {
         
         mapView.addAnnotations(officesPoints)
         
-        mapView.setCenter(Constants.tambovCoordinates, animated: true)
-        mapView.setZoomLevel(8, animated: true)
+        mapView.setCenter(Constants.tambovCoordinates, zoomLevel: 8, animated: true)
     }
 
 }
