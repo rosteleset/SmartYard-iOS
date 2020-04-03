@@ -40,7 +40,12 @@ class ChatViewController: ChatController {
         output.chatConfiguration
             .drive(
                 onNext: { [weak self] config in
-                    self?.load(config.id, config.domain, config.language ?? "", config.clientId ?? "")
+                    self?.load(
+                        config.id,
+                        config.domain,
+                        language: config.language ?? "",
+                        clientId: config.clientId ?? ""
+                    )
                 }
             )
             .disposed(by: disposeBag)

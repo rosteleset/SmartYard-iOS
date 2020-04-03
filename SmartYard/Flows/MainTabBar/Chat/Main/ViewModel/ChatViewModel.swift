@@ -26,7 +26,7 @@ class ChatViewModel: BaseViewModel {
     func sendAutomaticMessage(action: SettingsServiceAction, service: SettingsServiceType, clientId: String?) {
         let request = action.request(for: service, clientId: clientId)
         
-        let test = "Тестовое сообщение из мобильного клиента \"Lanta\". Не требует ответа \n"
+        let test = "Тестовое сообщение из мобильного клиента \"Lanta\". "
         
         automaticMessage.onNext(test + request)
     }
