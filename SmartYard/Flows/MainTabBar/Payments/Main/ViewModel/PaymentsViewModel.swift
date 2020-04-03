@@ -120,7 +120,7 @@ class PaymentsViewModel: BaseViewModel {
 extension PaymentsViewModel {
     
     struct Input {
-        let itemSelected: Driver<AddressesListDataItemIdentity>
+        let itemSelected: Driver<IndexPath>
         let refreshDataTrigger: Driver<Void>
     }
     
