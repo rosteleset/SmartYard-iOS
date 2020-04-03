@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="DotsSegmentView" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="334" height="96"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="suO-l5-pVg">
+                    <rect key="frame" x="0.0" y="0.0" width="334" height="96"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RGs-mE-dda">
+                            <rect key="frame" x="0.0" y="44" width="8" height="8"/>
+                            <color key="backgroundColor" red="0.16078431372549018" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="8" id="0Au-id-1Rn"/>
+                                <constraint firstAttribute="height" constant="8" id="w5s-wr-cwl"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K9k-HQ-1n8">
+                            <rect key="frame" x="163" y="44" width="8" height="8"/>
+                            <color key="backgroundColor" red="0.16078431369999999" green="0.5450980392" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="8" id="TSZ-Az-X71"/>
+                                <constraint firstAttribute="width" constant="8" id="h2F-Wv-OPg"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ETY-e8-KJw">
+                            <rect key="frame" x="326" y="44" width="8" height="8"/>
+                            <color key="backgroundColor" red="0.16078431369999999" green="0.5450980392" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="8" id="UgC-eh-WrY"/>
+                                <constraint firstAttribute="height" constant="8" id="qJm-3k-UPl"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="RGs-mE-dda" firstAttribute="leading" secondItem="suO-l5-pVg" secondAttribute="leading" id="9xn-1q-P3d"/>
+                        <constraint firstItem="RGs-mE-dda" firstAttribute="centerY" secondItem="suO-l5-pVg" secondAttribute="centerY" id="CR7-vM-jgn"/>
+                        <constraint firstItem="K9k-HQ-1n8" firstAttribute="centerX" secondItem="suO-l5-pVg" secondAttribute="centerX" id="DPt-9b-dEI"/>
+                        <constraint firstAttribute="trailing" secondItem="ETY-e8-KJw" secondAttribute="trailing" id="Omr-S2-EN1"/>
+                        <constraint firstItem="K9k-HQ-1n8" firstAttribute="centerY" secondItem="suO-l5-pVg" secondAttribute="centerY" id="gTV-98-Vo6"/>
+                        <constraint firstItem="ETY-e8-KJw" firstAttribute="centerY" secondItem="suO-l5-pVg" secondAttribute="centerY" id="hNx-Fr-zcV"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="suO-l5-pVg" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="8vK-Bb-FC6"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="suO-l5-pVg" secondAttribute="trailing" id="Fae-oY-ami"/>
+                <constraint firstItem="suO-l5-pVg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="U4E-sG-jyr"/>
+                <constraint firstAttribute="bottom" secondItem="suO-l5-pVg" secondAttribute="bottom" id="XsD-WY-a8x"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="centerDotView" destination="K9k-HQ-1n8" id="Xu1-9C-QNv"/>
+                <outlet property="leftDotView" destination="RGs-mE-dda" id="fnC-Ro-Jqd"/>
+                <outlet property="rightDotView" destination="ETY-e8-KJw" id="XTZ-3A-ZxI"/>
+            </connections>
+            <point key="canvasLocation" x="79.710144927536234" y="-153.34821428571428"/>
+        </view>
+    </objects>
+</document>
