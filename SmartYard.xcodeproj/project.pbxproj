@@ -910,7 +910,7 @@
 			isa = PBXGroup;
 			children = (
 				844AC3EC23EBFF0E0066006D /* PaymentsCoordinator.swift */,
-				844AC3E323EBFE9D0066006D /* Main */,
+				844AC3E323EBFE9D0066006D /* PaymentAddressesList */,
 			);
 			path = Payments;
 			sourceTree = "<group>";
@@ -980,14 +980,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		844AC3E323EBFE9D0066006D /* Main */ = {
+		844AC3E323EBFE9D0066006D /* PaymentAddressesList */ = {
 			isa = PBXGroup;
 			children = (
 				E99A837F2435D571001CEE95 /* Entries */,
 				844AC3E523EBFEB80066006D /* View */,
 				844AC3E423EBFEB40066006D /* ViewModel */,
 			);
-			path = Main;
+			path = PaymentAddressesList;
 			sourceTree = "<group>";
 		};
 		844AC3E423EBFEB40066006D /* ViewModel */ = {
