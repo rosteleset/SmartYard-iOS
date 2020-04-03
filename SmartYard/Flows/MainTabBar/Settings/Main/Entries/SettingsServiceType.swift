@@ -44,4 +44,16 @@ enum SettingsServiceType: String {
         }
     }
     
+    var localizedTitle: String? {
+        switch self {
+        case .internet: return "Интернет"
+        case .iptv: return "Телевидение"
+        case .phone: return "Телефония"
+        case .domophone: return "Умный домофон"
+        case .cctv: return "Видеонаблюдение"
+        case .ctv: return nil
+        case .gsm: return nil
+        }
+    }
+    
 }

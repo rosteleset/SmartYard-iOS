@@ -13,6 +13,8 @@ import XCoordinator
 class ServiceIsActivatedViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
+    
+    private let service: SettingsServiceType
     private let issueService: IssueService
     private let clientId: String?
     private let address: String
@@ -22,11 +24,13 @@ class ServiceIsActivatedViewModel: BaseViewModel {
     
     init(
         router: WeakRouter<SettingsRoute>,
+        service: SettingsServiceType,
         issueService: IssueService,
         clientId: String?,
         address: String
     ) {
         self.router = router
+        self.service = service
         self.issueService = issueService
         self.clientId = clientId
         self.address = address
@@ -47,8 +51,14 @@ class ServiceIsActivatedViewModel: BaseViewModel {
                 onNext: { [weak self] _ in
                     var userInfo = [AnyHashable: Any]()
                     
+                    userInfo[NotificationKeys.serviceActionKey] = SettingsServiceAction.changeTariff.rawValue
+                    
                     if let clientId = self?.clientId {
                         userInfo[NotificationKeys.clientIdKey] = clientId
+                    }
+                    
+                    if let service = self?.service.rawValue {
+                        userInfo[NotificationKeys.serviceTypeKey] = service
                     }
                     
                     NotificationCenter.default.post(name: .chatRequested, object: nil, userInfo: userInfo)

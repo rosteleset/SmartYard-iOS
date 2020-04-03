@@ -96,7 +96,7 @@ class SettingsViewModel: BaseViewModel {
         
         // MARK: Обработка нажатия на кнопку сервиса
         
-        let serviceActivatedTrigger = PublishSubject<APISettingsAddress>()
+        let serviceActivatedTrigger = PublishSubject<(SettingsServiceType, APISettingsAddress)>()
         let serviceUnactivatedTrigger = PublishSubject<(SettingsServiceType, APISettingsAddress)>()
         
         input.serviceSelected
@@ -117,7 +117,7 @@ class SettingsViewModel: BaseViewModel {
                         return
                     }
                     
-                    serviceActivatedTrigger.onNext(match)
+                    serviceActivatedTrigger.onNext((serviceType, match))
                 }
             )
             .disposed(by: disposeBag)
@@ -125,9 +125,12 @@ class SettingsViewModel: BaseViewModel {
         serviceActivatedTrigger
             .asDriverOnErrorJustComplete()
             .drive(
-                onNext: { [weak self] apiSettingsAddress in
+                onNext: { [weak self] args in
+                    let (service, apiSettingsAddress) = args
+                    
                     self?.router.trigger(
                         .serviceIsActivated(
+                            service: service,
                             clientId: apiSettingsAddress.clientId,
                             address: apiSettingsAddress.address
                         )

@@ -45,12 +45,19 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
     private func subscribeToChatNotifications() {
         NotificationCenter.default.rx.notification(.chatRequested)
             .asDriverOnErrorJustComplete()
-            .map { notification -> String? in
-                notification.userInfo?[NotificationKeys.clientIdKey] as? String
-            }
             .drive(
-                onNext: { [weak self] clientId in
-                    self?.chatVm?.updateClientId(clientId)
+                onNext: { [weak self] notification in
+                    guard let self = self,
+                        let rawServiceAction = notification.userInfo?[NotificationKeys.serviceActionKey] as? String,
+                        let serviceAction = SettingsServiceAction(rawValue: rawServiceAction),
+                        let rawServiceType = notification.userInfo?[NotificationKeys.serviceTypeKey] as? String,
+                        let serviceType = SettingsServiceType(rawValue: rawServiceType) else {
+                        return
+                    }
+                    
+                    let clientId = notification.userInfo?[NotificationKeys.clientIdKey] as? String
+                    
+                    self.chatVm?.sendAutomaticMessage(action: serviceAction, service: serviceType, clientId: clientId)
                 }
             )
             .disposed(by: disposeBag)

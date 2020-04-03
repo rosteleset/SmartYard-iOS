@@ -51,8 +51,14 @@ class ServiceUnavailableViewModel: BaseViewModel {
                 onNext: { [weak self] _ in
                     var userInfo = [AnyHashable: Any]()
                     
+                    userInfo[NotificationKeys.serviceActionKey] = SettingsServiceAction.talkAboutActivation.rawValue
+                    
                     if let clientId = self?.clientId {
                         userInfo[NotificationKeys.clientIdKey] = clientId
+                    }
+                    
+                    if let service = self?.service.rawValue {
+                        userInfo[NotificationKeys.serviceTypeKey] = service
                     }
                     
                     NotificationCenter.default.post(name: .chatRequested, object: nil, userInfo: userInfo)

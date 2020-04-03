@@ -15,7 +15,7 @@ enum SettingsRoute: Route {
     case addressSettings(flatId: String, address: String, isContractOwner: Bool, hasDomophone: Bool)
     case back
     case dismiss
-    case serviceIsActivated(clientId: String?, address: String)
+    case serviceIsActivated(service: SettingsServiceType, clientId: String?, address: String)
     case serviceIsNotActivated(service: SettingsServiceType, clientId: String?, address: String)
     case serviceUnavailable(service: SettingsServiceType, address: String, clientId: String?)
     case advancedSettings(name: String)
@@ -83,9 +83,10 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
         case .dismiss:
             return .dismiss()
             
-        case let .serviceIsActivated(clientId, address):
+        case let .serviceIsActivated(service, clientId, address):
             let vm = ServiceIsActivatedViewModel(
                 router: weakRouter,
+                service: service,
                 issueService: issueService,
                 clientId: clientId,
                 address: address

@@ -17,8 +17,8 @@ class ChatViewModel: BaseViewModel {
         self.accessService = accessService
     }
     
-    func updateClientId(_ clientId: String?) {
-//        clientIdSubject.onNext(clientId)
+    func sendAutomaticMessage(action: SettingsServiceAction, service: SettingsServiceType, clientId: String?) {
+        // TODO
     }
     
     func transform(_ input: Input) -> Output {

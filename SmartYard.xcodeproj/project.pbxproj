@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		842DBD00243750ED00A1D346 /* SettingsServiceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */; };
 		842FECB6242B89DF007CA0F3 /* OfficesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */; };
 		842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */; };
 		842FECB9242B8A04007CA0F3 /* APIOffice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB8242B8A04007CA0F3 /* APIOffice.swift */; };
@@ -348,6 +349,7 @@
 
 /* Begin PBXFileReference section */
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceAction.swift; sourceTree = "<group>"; };
 		842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesResponseData.swift; sourceTree = "<group>"; };
 		842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesRequest.swift; sourceTree = "<group>"; };
 		842FECB8242B8A04007CA0F3 /* APIOffice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIOffice.swift; sourceTree = "<group>"; };
@@ -1164,6 +1166,7 @@
 				84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */,
 				84B89A7B23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift */,
 				84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */,
+				842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -2894,6 +2897,7 @@
 				84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */,
 				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
 				E92EFBB1242A22F2003AF7FE /* APIIssue.swift in Sources */,
+				842DBD00243750ED00A1D346 /* SettingsServiceAction.swift in Sources */,
 				E92EFBBE242A22F2003AF7FE /* GetAllLocationsResponseData.swift in Sources */,
 				E92EFBCF242A22F2003AF7FE /* GetAddressListResponseData.swift in Sources */,
 				842FECB9242B8A04007CA0F3 /* APIOffice.swift in Sources */,
