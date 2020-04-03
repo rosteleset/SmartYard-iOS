@@ -223,6 +223,13 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="392" height="537"/>
+            <connections>
+                <outlet property="balanceLabel" destination="JUj-Mw-OWj" id="bWs-QM-8LV"/>
+                <outlet property="contractNumLabel" destination="3oE-pZ-xZP" id="6PU-zX-5ck"/>
+                <outlet property="openFullPersonalAccountButton" destination="wmH-hi-y0J" id="Ut7-fq-nJO"/>
+                <outlet property="payButton" destination="KeV-jw-V3D" id="3xA-IM-qPh"/>
+                <outlet property="recommendedSumLabel" destination="UEl-xC-Fex" id="Phf-zn-FLp"/>
+            </connections>
             <point key="canvasLocation" x="-57.971014492753625" y="276.89732142857139"/>
         </collectionViewCell>
     </objects>

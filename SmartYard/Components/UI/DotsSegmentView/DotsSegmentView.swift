@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
+import PMNibLinkableView
 
-class DotsSegmentView: UIView {
+class DotsSegmentView: PMNibLinkableView {
     
     @IBOutlet private weak var leftDotView: UIView!
     @IBOutlet private weak var centerDotView: UIView!

@@ -11,6 +11,7 @@ import XCoordinator
 enum PaymentsRoute: Route {
     
     case main
+    case contractPay(items: [PaymentAddressItem])
     case alert(title: String, message: String)
     
 }
@@ -36,6 +37,11 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             
         case .alert(let title, let message):
             return .alertTransition(title: title, message: message)
+            
+        case .contractPay(let items):
+            let vm = PayContractViewModel(items: items, apiWrapper: apiWrapper, router: weakRouter)
+            let vc = PayContractViewController(viewModel: vm)
+            return .push(vc)
         }
         
     }

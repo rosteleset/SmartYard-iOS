@@ -19,6 +19,7 @@
             <connections>
                 <outlet property="addressLabel" destination="th5-XX-p46" id="TGG-ML-tnp"/>
                 <outlet property="collectionView" destination="Y9v-vK-tKq" id="2hE-CM-RwU"/>
+                <outlet property="collectionViewFlowLayout" destination="P9K-rO-cXO" id="03z-wl-b3g"/>
                 <outlet property="dotsView" destination="6Hi-8S-0px" id="V1J-vv-Ceh"/>
                 <outlet property="fakeNavBar" destination="ux0-uJ-U1O" id="WJ1-BT-3ls"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -32,7 +33,7 @@
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Y9v-vK-tKq">
                     <rect key="frame" x="0.0" y="228.5" width="414" height="568.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="P9K-rO-cXO">
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="P9K-rO-cXO">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>

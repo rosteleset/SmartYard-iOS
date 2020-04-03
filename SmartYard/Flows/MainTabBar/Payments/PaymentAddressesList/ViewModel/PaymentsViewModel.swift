@@ -18,7 +18,7 @@ class PaymentsViewModel: BaseViewModel {
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
     
-    private let loadedAddressesData = BehaviorSubject<GetAddressListResponseData?>(value: nil)
+    private let items = BehaviorSubject<[PaymentAddressItem]>(value: [])
     
     init(
         apiWrapper: APIWrapper,
@@ -30,8 +30,26 @@ class PaymentsViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
-        // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
         
+        input.itemSelected
+            .withLatestFrom(items.asDriver(onErrorJustReturn: [PaymentAddressItem]())) { ($0, $1) }
+            .map { args -> [PaymentAddressItem] in
+                let (indexPath, data) = args
+                
+                var resultItems = data
+                resultItems.remove(at: indexPath.row)
+                resultItems.insert(data[indexPath.row], at: 0)
+                
+                return resultItems
+            }
+            .drive(
+                onNext: { [weak self] items in
+                    self?.router.trigger(.contractPay(items: items))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
         let interactionBlockingRequestTracker = ActivityTracker()
         
         let blockingRefresh = Driver
@@ -79,19 +97,15 @@ class PaymentsViewModel: BaseViewModel {
         Driver
             .merge(blockingRefresh, nonBlockingRefresh)
             .ignoreNil()
-            .drive(loadedAddressesData)
-            .disposed(by: disposeBag)
-        
-        let items = loadedAddressesData.asDriver(onErrorJustReturn: nil)
-            .map { [weak self] data -> [PaymentAddressItem] in
-                guard let self = self,
-                    let addresses = data
-                else {
-                    return []
+            .flatMapLatest { [weak self] data -> Driver<[PaymentAddressItem]> in
+                guard let self = self else {
+                    return .empty()
                 }
                 
-                return self.createItems(addresses: addresses)
+                return .just(self.createItems(addresses: data))
             }
+            .drive(items)
+            .disposed(by: disposeBag)
         
         errorTracker.asDriver()
             .drive(
@@ -102,7 +116,7 @@ class PaymentsViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            itemModels: items,
+            itemModels: items.asDriver(onErrorJustReturn: []),
             isLoading: activityTracker.asDriver(),
             reloadingFinished: reloadingFinished,
             shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
@@ -111,7 +125,9 @@ class PaymentsViewModel: BaseViewModel {
     
     func createItems(addresses: GetAddressListResponseData) -> [PaymentAddressItem] {
         return addresses.map {
-            PaymentAddressItem(id: $0.houseId, address: $0.address)
+            // Пока не понятно, что с апи, но я предполагаю, что нужно сделать один запрос на домашнем экране для запроса списка всей инфы по договорам
+            // Пока это будут частично моковые данные
+            PaymentAddressItem(id: $0.houseId, address: $0.address, contractNum: "43243", balance: "120 ₽", recommendedSum: "480 ₽")
         }
     }
     
