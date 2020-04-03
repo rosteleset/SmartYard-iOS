@@ -44,11 +44,15 @@ class PayContractViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fakeNavBar.configueDarkNavBar()
+        
         collectionView.delegate = self
         collectionView.dataSource = self
+        
         collectionView.register(nibWithCellClass: ContractCell.self)
         
         collectionViewFlowLayout.minimumLineSpacing = 0
+        
         bind()
     }
     
@@ -80,15 +84,10 @@ class PayContractViewController: BaseViewController {
     }
     
     private func calculateSectionInset() -> CGFloat {
-        let deviceIsIpad = UIDevice.current.userInterfaceIdiom == .pad
-        let deviceOrientationIsLandscape = UIDevice.current.orientation.isLandscape
-        let cellBodyViewIsExpended = deviceIsIpad || deviceOrientationIsLandscape
-        let cellBodyWidth: CGFloat = 236 + (cellBodyViewIsExpended ? 174 : 0)
+        let cellBodyWidth: CGFloat = 343
+        let inset = (collectionViewFlowLayout.collectionView!.frame.width - cellBodyWidth + 50) / 4
         
-        let buttonWidth: CGFloat = 50
-        
-        let inset = (collectionViewFlowLayout.collectionView!.frame.width - cellBodyWidth + buttonWidth) / 4
-        return inset
+        return 16
     }
     
     private func configureCollectionViewLayoutItemSize() {
@@ -143,10 +142,18 @@ extension PayContractViewController: UICollectionViewDelegate {
             let toValue = collectionViewFlowLayout.itemSize.width * CGFloat(snapToIndex)
             
             // Damping equal 1 => no oscillations => decay animation:
-            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: velocity.x, options: .allowUserInteraction, animations: {
-                scrollView.contentOffset = CGPoint(x: toValue, y: 0)
-                scrollView.layoutIfNeeded()
-            }, completion: nil)
+            UIView.animate(
+                withDuration: 0.3,
+                delay: 0,
+                usingSpringWithDamping: 1,
+                initialSpringVelocity: velocity.x,
+                options: .allowUserInteraction,
+                animations: {
+                    scrollView.contentOffset = CGPoint(x: toValue, y: 0)
+                    scrollView.layoutIfNeeded()
+                },
+                completion: nil
+            )
             
         } else {
             // This is a much better way to scroll to a cell:

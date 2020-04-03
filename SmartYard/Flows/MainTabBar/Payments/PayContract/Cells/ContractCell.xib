@@ -31,7 +31,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="84a-LZ-aDc">
-                        <rect key="frame" x="27.5" y="63" width="337.5" height="421"/>
+                        <rect key="frame" x="27.5" y="87.5" width="337.5" height="372"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Договор:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVm-PZ-gpv">
                                 <rect key="frame" x="24" y="24" width="72" height="18"/>
@@ -53,21 +53,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyn-8G-I6l">
-                                <rect key="frame" x="24" y="64" width="289.5" height="1"/>
+                                <rect key="frame" x="24" y="58" width="289.5" height="1"/>
                                 <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="6eM-yX-Rne"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vga-Fl-etu">
-                                <rect key="frame" x="24" y="189" width="289.5" height="1"/>
+                                <rect key="frame" x="24" y="163" width="289.5" height="1"/>
                                 <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="eTq-dg-gAf"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Баланс" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oHk-fr-a88">
-                                <rect key="frame" x="140" y="81" width="57" height="24"/>
+                                <rect key="frame" x="140" y="75" width="57" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="57" id="A2h-Zv-jH7"/>
                                     <constraint firstAttribute="height" constant="24" id="L39-z0-2wA"/>
@@ -77,16 +77,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="120 ₽" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUj-Mw-OWj">
-                                <rect key="frame" x="93" y="113" width="151" height="60"/>
+                                <rect key="frame" x="115.5" y="107" width="106" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="9so-xM-DDO"/>
+                                    <constraint firstAttribute="height" constant="40" id="9so-xM-DDO"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="64"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="45"/>
                                 <color key="textColor" red="0.16078431372549018" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рекомендуется пополнить на:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cfu-o2-e7n">
-                                <rect key="frame" x="24" y="210" width="237" height="18"/>
+                                <rect key="frame" x="24" y="184" width="237" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="4M7-2Z-fc0"/>
                                     <constraint firstAttribute="width" constant="237" id="JCZ-sO-5yd"/>
@@ -96,7 +96,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="480 ₽" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEl-xC-Fex">
-                                <rect key="frame" x="267" y="210" width="46.5" height="18"/>
+                                <rect key="frame" x="267" y="184" width="46.5" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="3GV-lz-p2a"/>
                                 </constraints>
@@ -105,7 +105,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TrH-Mr-eLq">
-                                <rect key="frame" x="64.5" y="251" width="208" height="32"/>
+                                <rect key="frame" x="64.5" y="218" width="208" height="32"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tg2-w1-NIk">
                                         <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -113,6 +113,7 @@
                                             <constraint firstAttribute="width" constant="32" id="2Ql-lt-spy"/>
                                             <constraint firstAttribute="height" constant="32" id="DRs-5g-Dsp"/>
                                         </constraints>
+                                        <state key="normal" image="SettingsWiFiSelectedIcon"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Mx-OW-SEi">
                                         <rect key="frame" x="44" y="0.0" width="32" height="32"/>
@@ -120,6 +121,7 @@
                                             <constraint firstAttribute="height" constant="32" id="6Cn-qK-ldQ"/>
                                             <constraint firstAttribute="width" constant="32" id="XcD-tW-bTG"/>
                                         </constraints>
+                                        <state key="normal" image="SettingsMonitorSelectedIcon"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCE-w5-KQd">
                                         <rect key="frame" x="88" y="0.0" width="32" height="32"/>
@@ -127,6 +129,7 @@
                                             <constraint firstAttribute="height" constant="32" id="4WC-vI-l1u"/>
                                             <constraint firstAttribute="width" constant="32" id="HyQ-Nr-TXR"/>
                                         </constraints>
+                                        <state key="normal" image="SettingsCallUnselectedIcon"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jpC-9t-j7G">
                                         <rect key="frame" x="132" y="0.0" width="32" height="32"/>
@@ -134,6 +137,7 @@
                                             <constraint firstAttribute="width" constant="32" id="IRU-Vh-rf5"/>
                                             <constraint firstAttribute="height" constant="32" id="O4f-KI-K8k"/>
                                         </constraints>
+                                        <state key="normal" image="SettingsEyeUnselectedIcon"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="COI-XV-GCz">
                                         <rect key="frame" x="176" y="0.0" width="32" height="32"/>
@@ -141,6 +145,7 @@
                                             <constraint firstAttribute="height" constant="32" id="5tH-ZI-60P"/>
                                             <constraint firstAttribute="width" constant="32" id="Q7g-yB-dJD"/>
                                         </constraints>
+                                        <state key="normal" image="SettingsKeySelectedIcon"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -165,7 +170,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KeV-jw-V3D" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                                <rect key="frame" x="24" y="315" width="289.5" height="52"/>
+                                <rect key="frame" x="24" y="266" width="289.5" height="52"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="oHQ-vk-6eN"/>
                                 </constraints>
@@ -173,7 +178,7 @@
                                 <state key="normal" title="Оплатить"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wmH-hi-y0J">
-                                <rect key="frame" x="80" y="383" width="177" height="18"/>
+                                <rect key="frame" x="80" y="334" width="177" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="b61-Kr-5Tc"/>
                                 </constraints>
@@ -196,27 +201,39 @@
                             <constraint firstItem="oHk-fr-a88" firstAttribute="centerX" secondItem="84a-LZ-aDc" secondAttribute="centerX" id="FF2-yZ-FcA"/>
                             <constraint firstAttribute="trailing" secondItem="Vga-Fl-etu" secondAttribute="trailing" constant="24" id="HtG-6E-OiB"/>
                             <constraint firstItem="zVm-PZ-gpv" firstAttribute="leading" secondItem="84a-LZ-aDc" secondAttribute="leading" constant="24" id="Mpn-q3-hek"/>
-                            <constraint firstItem="TrH-Mr-eLq" firstAttribute="top" secondItem="Cfu-o2-e7n" secondAttribute="bottom" constant="23" id="Zz9-Xv-axi"/>
+                            <constraint firstItem="TrH-Mr-eLq" firstAttribute="top" secondItem="Cfu-o2-e7n" secondAttribute="bottom" constant="16" id="Zz9-Xv-axi"/>
                             <constraint firstItem="Cfu-o2-e7n" firstAttribute="top" secondItem="Vga-Fl-etu" secondAttribute="bottom" constant="20" id="ajm-dQ-Iv0"/>
                             <constraint firstItem="JUj-Mw-OWj" firstAttribute="centerX" secondItem="oHk-fr-a88" secondAttribute="centerX" id="bYp-Dn-FVj"/>
                             <constraint firstItem="wmH-hi-y0J" firstAttribute="top" secondItem="KeV-jw-V3D" secondAttribute="bottom" constant="16" id="c5J-oS-cF5"/>
                             <constraint firstItem="Cfu-o2-e7n" firstAttribute="leading" secondItem="84a-LZ-aDc" secondAttribute="leading" constant="24" id="cuw-f8-ZHa"/>
                             <constraint firstItem="UEl-xC-Fex" firstAttribute="leading" secondItem="Cfu-o2-e7n" secondAttribute="trailing" constant="6" id="dOk-zT-GCd"/>
-                            <constraint firstItem="KeV-jw-V3D" firstAttribute="top" secondItem="TrH-Mr-eLq" secondAttribute="bottom" constant="32" id="fCN-0H-J0V"/>
+                            <constraint firstItem="KeV-jw-V3D" firstAttribute="top" secondItem="TrH-Mr-eLq" secondAttribute="bottom" constant="16" id="fCN-0H-J0V"/>
                             <constraint firstAttribute="trailing" secondItem="3oE-pZ-xZP" secondAttribute="trailing" constant="24" id="huA-mf-zDR"/>
                             <constraint firstAttribute="bottom" secondItem="wmH-hi-y0J" secondAttribute="bottom" constant="20" id="kbQ-wy-jTx"/>
                             <constraint firstItem="UEl-xC-Fex" firstAttribute="bottom" secondItem="Cfu-o2-e7n" secondAttribute="bottom" id="lJo-MX-gjN"/>
                             <constraint firstAttribute="trailing" secondItem="UEl-xC-Fex" secondAttribute="trailing" constant="24" id="mRt-eV-JS3"/>
-                            <constraint firstItem="xyn-8G-I6l" firstAttribute="top" secondItem="zVm-PZ-gpv" secondAttribute="bottom" constant="22" id="o5i-WB-mkP"/>
+                            <constraint firstItem="xyn-8G-I6l" firstAttribute="top" secondItem="zVm-PZ-gpv" secondAttribute="bottom" constant="16" id="o5i-WB-mkP"/>
                             <constraint firstItem="zVm-PZ-gpv" firstAttribute="top" secondItem="84a-LZ-aDc" secondAttribute="top" constant="24" id="oB0-lR-WTx"/>
                             <constraint firstItem="3oE-pZ-xZP" firstAttribute="leading" secondItem="zVm-PZ-gpv" secondAttribute="trailing" constant="6" id="pGz-Hv-8bl"/>
                             <constraint firstAttribute="trailing" secondItem="xyn-8G-I6l" secondAttribute="trailing" constant="24" id="qSh-Fu-WlT"/>
                             <constraint firstItem="3oE-pZ-xZP" firstAttribute="bottom" secondItem="zVm-PZ-gpv" secondAttribute="bottom" id="qUK-Tx-sVe"/>
                             <constraint firstItem="KeV-jw-V3D" firstAttribute="leading" secondItem="84a-LZ-aDc" secondAttribute="leading" constant="24" id="vP8-wg-vtt"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" red="0.94117647058823528" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
             </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="84a-LZ-aDc" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="JUS-ef-GE2"/>
                 <constraint firstItem="84a-LZ-aDc" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="k79-9U-PCZ"/>
@@ -233,4 +250,11 @@
             <point key="canvasLocation" x="-57.971014492753625" y="276.89732142857139"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="SettingsCallUnselectedIcon" width="40" height="40"/>
+        <image name="SettingsEyeUnselectedIcon" width="40" height="40"/>
+        <image name="SettingsKeySelectedIcon" width="40" height="40"/>
+        <image name="SettingsMonitorSelectedIcon" width="40" height="40"/>
+        <image name="SettingsWiFiSelectedIcon" width="40" height="40"/>
+    </resources>
 </document>
