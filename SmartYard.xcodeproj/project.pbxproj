@@ -274,6 +274,9 @@
 		E99A838B24372FF1001CEE95 /* PayContractViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99A838924372FF1001CEE95 /* PayContractViewController.xib */; };
 		E99A838E243733F8001CEE95 /* DotsSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A838D243733F8001CEE95 /* DotsSegmentView.swift */; };
 		E99A839024373406001CEE95 /* DotsSegmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99A838F24373406001CEE95 /* DotsSegmentView.xib */; };
+		E99A839224373E9D001CEE95 /* PayContractViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A839124373E9D001CEE95 /* PayContractViewModel.swift */; };
+		E99A839824373EE6001CEE95 /* ContractCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A839624373EE6001CEE95 /* ContractCell.swift */; };
+		E99A839924373EE6001CEE95 /* ContractCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99A839724373EE6001CEE95 /* ContractCell.xib */; };
 		E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */; };
 		E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */; };
 		E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99EA6C223EAA97900BECEE6 /* InputPhoneNumberViewModel.swift */; };
@@ -628,6 +631,9 @@
 		E99A838924372FF1001CEE95 /* PayContractViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PayContractViewController.xib; sourceTree = "<group>"; };
 		E99A838D243733F8001CEE95 /* DotsSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsSegmentView.swift; sourceTree = "<group>"; };
 		E99A838F24373406001CEE95 /* DotsSegmentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DotsSegmentView.xib; sourceTree = "<group>"; };
+		E99A839124373E9D001CEE95 /* PayContractViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayContractViewModel.swift; sourceTree = "<group>"; };
+		E99A839624373EE6001CEE95 /* ContractCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractCell.swift; sourceTree = "<group>"; };
+		E99A839724373EE6001CEE95 /* ContractCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContractCell.xib; sourceTree = "<group>"; };
 		E99EA6B823EA9D4400BECEE6 /* InputPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		E99EA6B923EA9D4400BECEE6 /* InputPhoneNumberViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputPhoneNumberViewController.xib; sourceTree = "<group>"; };
 		E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
@@ -1011,7 +1017,7 @@
 		844AC3E523EBFEB80066006D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E99A83822435D9DA001CEE95 /* Cell */,
+				E99A83822435D9DA001CEE95 /* Cells */,
 				844AC3E623EBFEC50066006D /* PaymentsViewController.swift */,
 				844AC3E723EBFEC50066006D /* PaymentsViewController.xib */,
 			);
@@ -2192,20 +2198,22 @@
 			path = Entries;
 			sourceTree = "<group>";
 		};
-		E99A83822435D9DA001CEE95 /* Cell */ = {
+		E99A83822435D9DA001CEE95 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				E99A83832435DA01001CEE95 /* PaymentAddressCell.swift */,
 				E99A83842435DA01001CEE95 /* PaymentAddressCell.xib */,
 			);
-			path = Cell;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		E99A838724372D1E001CEE95 /* PayContract */ = {
 			isa = PBXGroup;
 			children = (
+				E99A839324373EA4001CEE95 /* Cells */,
 				E99A838824372FF1001CEE95 /* PayContractViewController.swift */,
 				E99A838924372FF1001CEE95 /* PayContractViewController.xib */,
+				E99A839124373E9D001CEE95 /* PayContractViewModel.swift */,
 			);
 			path = PayContract;
 			sourceTree = "<group>";
@@ -2217,6 +2225,15 @@
 				E99A838F24373406001CEE95 /* DotsSegmentView.xib */,
 			);
 			path = DotsSegmentView;
+			sourceTree = "<group>";
+		};
+		E99A839324373EA4001CEE95 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E99A839624373EE6001CEE95 /* ContractCell.swift */,
+				E99A839724373EE6001CEE95 /* ContractCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		E99EA6B623EA9CED00BECEE6 /* Login */ = {
@@ -2627,6 +2644,7 @@
 				E9E4271723F40E0B00F5D593 /* SmartYardCheckBoxView.xib in Resources */,
 				E9A1D78423F27AE500234B2A /* AddressConfirmationViewController.xib in Resources */,
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
+				E99A839924373EE6001CEE95 /* ContractCell.xib in Resources */,
 				E940581223F682EA00623746 /* AllowedPersonCell.xib in Resources */,
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
 				E99A838B24372FF1001CEE95 /* PayContractViewController.xib in Resources */,
@@ -2870,6 +2888,7 @@
 				E94057F423F56BF800623746 /* IssueDeliveryType.swift in Sources */,
 				E92EFBD1242A22F2003AF7FE /* IntercomRequest.swift in Sources */,
 				E92EFBE3242A22F2003AF7FE /* BaseRequestRetrier.swift in Sources */,
+				E99A839824373EE6001CEE95 /* ContractCell.swift in Sources */,
 				E94B6C8D2407F8E200FD9F65 /* IssueTypes.swift in Sources */,
 				E92EFBA9242A22F2003AF7FE /* APIIssueConnect.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
@@ -2911,6 +2930,7 @@
 				E9C2568124224DF200BE32E0 /* RestoreMethod.swift in Sources */,
 				843C38DE242A57C40035BF80 /* NotificationsCoordinator.swift in Sources */,
 				E92EFBDF242A22F2003AF7FE /* CreateIssueResponseData.swift in Sources */,
+				E99A839224373E9D001CEE95 /* PayContractViewModel.swift in Sources */,
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
 				E92EFBEA242A24EB003AF7FE /* APIRestoreData.swift in Sources */,
 				E92EFBC0242A22F2003AF7FE /* GetServicesResponseData.swift in Sources */,
