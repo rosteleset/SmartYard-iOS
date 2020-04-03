@@ -13,14 +13,12 @@ class ChatViewModel: BaseViewModel {
     
     private let accessService: AccessService
     
-    private let clientIdSubject = BehaviorSubject<String?>(value: nil)
-    
     init(accessService: AccessService) {
         self.accessService = accessService
     }
     
     func updateClientId(_ clientId: String?) {
-        clientIdSubject.onNext(clientId)
+//        clientIdSubject.onNext(clientId)
     }
     
     func transform(_ input: Input) -> Output {
@@ -32,27 +30,31 @@ class ChatViewModel: BaseViewModel {
             return "8" + clientPhoneNumber
         }()
         
-        let name: String? = {
-            guard let clientName = accessService.clientName else {
-                return nil
-            }
-            
-            return [clientName.name, clientName.patronymic]
-                .compactMap { $0 }
-                .joined(separator: " ")
-                .trimmed
-        }()
+        let currentName = Driver<APIClientName?>.merge(
+            .just(accessService.clientName),
+            NotificationCenter.default.rx.notification(.userNameUpdated)
+                .map { [weak self] _ in self?.accessService.clientName }
+                .asDriver(onErrorJustReturn: nil)
+        )
         
-        let chatConfiguration = clientIdSubject.asDriver(onErrorJustReturn: nil)
-            .map { clientId -> ChatConfiguration in
-                ChatConfiguration(language: nil, clientId: clientId)
+        let nameAsString = currentName
+            .asDriver(onErrorJustReturn: nil)
+            .map { clientName -> String? in
+                guard let uClientName = clientName else {
+                    return nil
+                }
+                
+                return [uClientName.name, uClientName.patronymic]
+                    .compactMap { $0 }
+                    .joined(separator: " ")
             }
-            .distinctUntilChanged()
+        
+        let chatConfiguration = ChatConfiguration(language: nil, clientId: phone?.md5)
         
         return Output(
             phone: .just(phone),
-            name: .just(name),
-            chatConfiguration: chatConfiguration
+            name: nameAsString,
+            chatConfiguration: .just(chatConfiguration)
         )
     }
     

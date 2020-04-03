@@ -38,14 +38,18 @@ class ChatViewController: ChatController {
         let output = viewModel.transform(input)
         
         output.chatConfiguration
-            .withLatestFrom(output.name) { ($0, $1) }
-            .withLatestFrom(output.phone) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] config in
+                    self?.load(config.id, config.domain, config.language ?? "", config.clientId ?? "")
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        Driver.combineLatest(output.phone, output.name)
+            .debounce(.milliseconds(100))
             .drive(
                 onNext: { [weak self] args in
-                    let (firstPack, phone) = args
-                    let (config, name) = firstPack
-                    
-                    self?.load(config.id, config.domain, config.language ?? "", config.clientId ?? "")
+                    let (phone, name) = args
                     
                     var params = [String]()
                     
