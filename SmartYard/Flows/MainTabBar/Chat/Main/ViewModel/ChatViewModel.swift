@@ -13,12 +13,22 @@ class ChatViewModel: BaseViewModel {
     
     private let accessService: AccessService
     
+    private let automaticMessage = PublishSubject<String>()
+    
     init(accessService: AccessService) {
         self.accessService = accessService
+        
+        super.init()
+        
+        subscribeToChatNotifications()
     }
     
     func sendAutomaticMessage(action: SettingsServiceAction, service: SettingsServiceType, clientId: String?) {
-        // TODO
+        let request = action.request(for: service, clientId: clientId)
+        
+        let test = "Тестовое сообщение из мобильного клиента \"Lanta\". Не требует ответа \n"
+        
+        automaticMessage.onNext(test + request)
     }
     
     func transform(_ input: Input) -> Output {
@@ -54,8 +64,30 @@ class ChatViewModel: BaseViewModel {
         return Output(
             phone: .just(phone),
             name: nameAsString,
-            chatConfiguration: .just(chatConfiguration)
+            chatConfiguration: .just(chatConfiguration),
+            automaticMessage: automaticMessage.asDriverOnErrorJustComplete()
         )
+    }
+    
+    private func subscribeToChatNotifications() {
+        NotificationCenter.default.rx.notification(.chatRequested)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] notification in
+                    guard let self = self,
+                        let rawServiceAction = notification.userInfo?[NotificationKeys.serviceActionKey] as? String,
+                        let serviceAction = SettingsServiceAction(rawValue: rawServiceAction),
+                        let rawServiceType = notification.userInfo?[NotificationKeys.serviceTypeKey] as? String,
+                        let serviceType = SettingsServiceType(rawValue: rawServiceType) else {
+                        return
+                    }
+                    
+                    let clientId = notification.userInfo?[NotificationKeys.clientIdKey] as? String
+                    
+                    self.sendAutomaticMessage(action: serviceAction, service: serviceType, clientId: clientId)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }
@@ -69,6 +101,7 @@ extension ChatViewModel {
         let phone: Driver<String?>
         let name: Driver<String?>
         let chatConfiguration: Driver<ChatConfiguration>
+        let automaticMessage: Driver<String>
     }
     
 }

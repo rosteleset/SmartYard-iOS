@@ -45,6 +45,14 @@ class ChatViewController: ChatController {
             )
             .disposed(by: disposeBag)
         
+        output.automaticMessage
+            .drive(
+                onNext: { [weak self] message in
+                    self?.callJsSendMessage(message)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         Driver.combineLatest(output.phone, output.name)
             .debounce(.milliseconds(100))
             .drive(

@@ -27,8 +27,6 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
         super.init(initialRoute: .main)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
-        
-        subscribeToChatNotifications()
     }
     
     override func prepareTransition(for route: ChatRoute) -> NavigationTransition {
@@ -38,29 +36,17 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
             chatVm = vm
             
             let vc = ChatViewController(viewModel: vm)
+            
+            // MARK: Загружаю сразу, чтобы иметь возможность нормально отправлять сообщения с "тарелочек"
+            // Когда мы жмем на услугу, происходит отправка уведомления в Notification Center
+            // Оно перебрасывает нас во вкладку "Чат", а затем vm пытается отправить сообщение
+            // Вот только view в этот момент еще может быть не загружена, а transform - не вызван
+            // Поэтому проще сразу ее загрузить, чем разруливать сложности
+            
+            vc.loadViewIfNeeded()
+            
             return .set([vc])
         }
-    }
-    
-    private func subscribeToChatNotifications() {
-        NotificationCenter.default.rx.notification(.chatRequested)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] notification in
-                    guard let self = self,
-                        let rawServiceAction = notification.userInfo?[NotificationKeys.serviceActionKey] as? String,
-                        let serviceAction = SettingsServiceAction(rawValue: rawServiceAction),
-                        let rawServiceType = notification.userInfo?[NotificationKeys.serviceTypeKey] as? String,
-                        let serviceType = SettingsServiceType(rawValue: rawServiceType) else {
-                        return
-                    }
-                    
-                    let clientId = notification.userInfo?[NotificationKeys.clientIdKey] as? String
-                    
-                    self.chatVm?.sendAutomaticMessage(action: serviceAction, service: serviceType, clientId: clientId)
-                }
-            )
-            .disposed(by: disposeBag)
     }
     
 }
