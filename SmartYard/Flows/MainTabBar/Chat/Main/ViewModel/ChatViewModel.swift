@@ -32,6 +32,17 @@ class ChatViewModel: BaseViewModel {
             return "8" + clientPhoneNumber
         }()
         
+        let name: String? = {
+            guard let clientName = accessService.clientName else {
+                return nil
+            }
+            
+            return [clientName.name, clientName.patronymic]
+                .compactMap { $0 }
+                .joined(separator: " ")
+                .trimmed
+        }()
+        
         let chatConfiguration = clientIdSubject.asDriver(onErrorJustReturn: nil)
             .map { clientId -> ChatConfiguration in
                 ChatConfiguration(language: nil, clientId: clientId)
@@ -40,6 +51,7 @@ class ChatViewModel: BaseViewModel {
         
         return Output(
             phone: .just(phone),
+            name: .just(name),
             chatConfiguration: chatConfiguration
         )
     }
@@ -53,6 +65,7 @@ extension ChatViewModel {
     
     struct Output {
         let phone: Driver<String?>
+        let name: Driver<String?>
         let chatConfiguration: Driver<ChatConfiguration>
     }
     
