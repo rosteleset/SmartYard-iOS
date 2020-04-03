@@ -10,6 +10,11 @@ import UIKit
 
 class PayContractViewController: UIViewController {
 
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
+    @IBOutlet private weak var addressLabel: UILabel!
+    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var dotsView: DotsSegmentView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
