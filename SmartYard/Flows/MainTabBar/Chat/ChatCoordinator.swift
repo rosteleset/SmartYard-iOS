@@ -19,8 +19,6 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
     private let disposeBag = DisposeBag()
     private let accessService: AccessService
     
-    private var chatVm: ChatViewModel?
-    
     init(accessService: AccessService) {
         self.accessService = accessService
         
@@ -33,8 +31,6 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
         switch route {
         case .main:
             let vm = ChatViewModel(accessService: accessService)
-            chatVm = vm
-            
             let vc = ChatViewController(viewModel: vm)
             
             // MARK: Загружаю сразу, чтобы иметь возможность нормально отправлять сообщения с "тарелочек"

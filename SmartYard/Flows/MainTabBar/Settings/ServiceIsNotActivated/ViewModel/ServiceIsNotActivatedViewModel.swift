@@ -47,7 +47,6 @@ class ServiceIsNotActivatedViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.sendRequestTrigger
-            .asDriver()
             .drive(
                 onNext: { [weak self] _ in
                     var userInfo = [AnyHashable: Any]()
