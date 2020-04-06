@@ -267,7 +267,6 @@
 		E99A837E2434CBF1001CEE95 /* CommentIssueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A837D2434CBF1001CEE95 /* CommentIssueRequest.swift */; };
 		E99A83812435D591001CEE95 /* PaymentAddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A83802435D591001CEE95 /* PaymentAddressItem.swift */; };
 		E99A83852435DA01001CEE95 /* PaymentAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A83832435DA01001CEE95 /* PaymentAddressCell.swift */; };
-		E99A83862435DA01001CEE95 /* PaymentAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99A83842435DA01001CEE95 /* PaymentAddressCell.xib */; };
 		E99A838A24372FF1001CEE95 /* PayContractViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A838824372FF1001CEE95 /* PayContractViewController.swift */; };
 		E99A838B24372FF1001CEE95 /* PayContractViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99A838924372FF1001CEE95 /* PayContractViewController.xib */; };
 		E99A838E243733F8001CEE95 /* DotsSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A838D243733F8001CEE95 /* DotsSegmentView.swift */; };
@@ -297,6 +296,7 @@
 		E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */; };
 		E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */; };
 		E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */; };
+		E9B67376243B48C600457C74 /* PaymentAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B67374243B48C600457C74 /* PaymentAddressCell.xib */; };
 		E9B9EAC72421FCB8000A92B3 /* RestorePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9EAC52421FCB8000A92B3 /* RestorePasswordViewController.swift */; };
 		E9B9EAC82421FCB8000A92B3 /* RestorePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B9EAC62421FCB8000A92B3 /* RestorePasswordViewController.xib */; };
 		E9B9EACA2421FCCB000A92B3 /* RestorePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9EAC92421FCCB000A92B3 /* RestorePasswordViewModel.swift */; };
@@ -622,7 +622,6 @@
 		E99A837D2434CBF1001CEE95 /* CommentIssueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentIssueRequest.swift; sourceTree = "<group>"; };
 		E99A83802435D591001CEE95 /* PaymentAddressItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentAddressItem.swift; sourceTree = "<group>"; };
 		E99A83832435DA01001CEE95 /* PaymentAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentAddressCell.swift; sourceTree = "<group>"; };
-		E99A83842435DA01001CEE95 /* PaymentAddressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentAddressCell.xib; sourceTree = "<group>"; };
 		E99A838824372FF1001CEE95 /* PayContractViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayContractViewController.swift; sourceTree = "<group>"; };
 		E99A838924372FF1001CEE95 /* PayContractViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PayContractViewController.xib; sourceTree = "<group>"; };
 		E99A838D243733F8001CEE95 /* DotsSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsSegmentView.swift; sourceTree = "<group>"; };
@@ -656,6 +655,7 @@
 		E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthByContractNumViewController.swift; sourceTree = "<group>"; };
 		E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthByContractNumViewController.xib; sourceTree = "<group>"; };
 		E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteButtonWithBorder.swift; sourceTree = "<group>"; };
+		E9B67374243B48C600457C74 /* PaymentAddressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentAddressCell.xib; sourceTree = "<group>"; };
 		E9B9EAC52421FCB8000A92B3 /* RestorePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePasswordViewController.swift; sourceTree = "<group>"; };
 		E9B9EAC62421FCB8000A92B3 /* RestorePasswordViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestorePasswordViewController.xib; sourceTree = "<group>"; };
 		E9B9EAC92421FCCB000A92B3 /* RestorePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePasswordViewModel.swift; sourceTree = "<group>"; };
@@ -2188,7 +2188,7 @@
 			isa = PBXGroup;
 			children = (
 				E99A83832435DA01001CEE95 /* PaymentAddressCell.swift */,
-				E99A83842435DA01001CEE95 /* PaymentAddressCell.xib */,
+				E9B67374243B48C600457C74 /* PaymentAddressCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2640,7 +2640,6 @@
 				84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */,
 				84A67062241FB6E100BBA12B /* AddressAccessSkeletonView.xib in Resources */,
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
-				E99A83862435DA01001CEE95 /* PaymentAddressCell.xib in Resources */,
 				843C38E0242A57C40035BF80 /* NotificationsViewController.xib in Resources */,
 				E9004C5F23FABF2200B59976 /* IntercomTemporaryAccessView.xib in Resources */,
 				E9B9EAC82421FCB8000A92B3 /* RestorePasswordViewController.xib in Resources */,
@@ -2661,6 +2660,7 @@
 				844AC3E923EBFEC50066006D /* PaymentsViewController.xib in Resources */,
 				84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */,
 				E98C383623F192600010BBC1 /* InputAddressViewController.xib in Resources */,
+				E9B67376243B48C600457C74 /* PaymentAddressCell.xib in Resources */,
 				E9A4D48C23EC28760070A591 /* PinNumberField.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,19 +24,18 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ContractCell" customModule="SmartYard" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="498" height="561"/>
+            <rect key="frame" x="0.0" y="0.0" width="560" height="615"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="498" height="561"/>
+                <rect key="frame" x="0.0" y="0.0" width="560" height="615"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="84a-LZ-aDc">
-                        <rect key="frame" x="80.5" y="99.5" width="337.5" height="372"/>
+                        <rect key="frame" x="111.5" y="126.5" width="337.5" height="372"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Договор:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVm-PZ-gpv">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Договор:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVm-PZ-gpv">
                                 <rect key="frame" x="24" y="24" width="72" height="18"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="72" id="6YD-0z-bZl"/>
                                     <constraint firstAttribute="height" constant="18" id="ja6-i7-607"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
@@ -67,7 +68,6 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Баланс" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oHk-fr-a88">
                                 <rect key="frame" x="140" y="75" width="57" height="24"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="57" id="A2h-Zv-jH7"/>
                                     <constraint firstAttribute="height" constant="24" id="L39-z0-2wA"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
@@ -87,7 +87,6 @@
                                 <rect key="frame" x="24" y="184" width="237" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="4M7-2Z-fc0"/>
-                                    <constraint firstAttribute="width" constant="237" id="JCZ-sO-5yd"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
                                 <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -237,7 +236,7 @@
                 <constraint firstItem="84a-LZ-aDc" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="k79-9U-PCZ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="498" height="561"/>
+            <size key="customSize" width="560" height="615"/>
             <connections>
                 <outlet property="balanceLabel" destination="JUj-Mw-OWj" id="bWs-QM-8LV"/>
                 <outlet property="contractNumLabel" destination="3oE-pZ-xZP" id="6PU-zX-5ck"/>
@@ -245,7 +244,7 @@
                 <outlet property="payButton" destination="KeV-jw-V3D" id="3xA-IM-qPh"/>
                 <outlet property="recommendedSumLabel" destination="UEl-xC-Fex" id="Phf-zn-FLp"/>
             </connections>
-            <point key="canvasLocation" x="-134.78260869565219" y="284.26339285714283"/>
+            <point key="canvasLocation" x="-179.71014492753625" y="302.34375"/>
         </collectionViewCell>
     </objects>
     <resources>

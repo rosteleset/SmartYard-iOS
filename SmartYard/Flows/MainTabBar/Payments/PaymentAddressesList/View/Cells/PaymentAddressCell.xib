@@ -17,64 +17,64 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="148" id="KGk-i7-Jjw" customClass="PaymentAddressCell" customModule="SmartYard" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="416" height="148"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="416" height="147.5"/>
-                <autoresizingMask key="autoresizingMask"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="PaymentAddressCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="525" height="199"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="525" height="199"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RightArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="6Uo-FZ-pac">
-                        <rect key="frame" x="362" y="67.5" width="8" height="13"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ijj-J0-sii">
+                        <rect key="frame" x="0.0" y="0.0" width="525" height="199"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LoW-yP-fyj">
+                                <rect key="frame" x="24" y="90.5" width="32.5" height="18"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                                <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RightArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="1ZM-0t-Xkl">
+                                <rect key="frame" x="491" y="93" width="8" height="13"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="8" id="WBt-oF-FB3"/>
+                                    <constraint firstAttribute="height" constant="13" id="dkj-iB-BsR"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="13" id="HQX-Vm-ZnX"/>
-                            <constraint firstAttribute="width" constant="8" id="fwg-nq-fip"/>
+                            <constraint firstItem="LoW-yP-fyj" firstAttribute="centerY" secondItem="Ijj-J0-sii" secondAttribute="centerY" id="7xj-dT-j1T"/>
+                            <constraint firstItem="1ZM-0t-Xkl" firstAttribute="centerY" secondItem="Ijj-J0-sii" secondAttribute="centerY" id="Dgk-ef-LzC"/>
+                            <constraint firstItem="LoW-yP-fyj" firstAttribute="leading" secondItem="Ijj-J0-sii" secondAttribute="leading" constant="24" id="fmX-O5-VTu"/>
+                            <constraint firstAttribute="trailing" secondItem="1ZM-0t-Xkl" secondAttribute="trailing" constant="26" id="tZ2-Cc-zSc"/>
                         </constraints>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sq5-eJ-FRx">
-                        <rect key="frame" x="44" y="65" width="32.5" height="18"/>
-                        <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
-                        <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" red="0.94117647058823528" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
-                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                <constraints>
-                    <constraint firstItem="Sq5-eJ-FRx" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="LLP-OT-KXv"/>
-                    <constraint firstItem="Sq5-eJ-FRx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="NQP-m1-0it"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="6Uo-FZ-pac" secondAttribute="trailing" constant="26" id="hYO-Ua-gzc"/>
-                    <constraint firstItem="6Uo-FZ-pac" firstAttribute="centerY" secondItem="Sq5-eJ-FRx" secondAttribute="centerY" id="qw5-Fg-Rem"/>
-                </constraints>
-                <userDefinedRuntimeAttributes>
-                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                        <color key="value" red="0.94117647058823528" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </userDefinedRuntimeAttribute>
-                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                        <real key="value" value="1"/>
-                    </userDefinedRuntimeAttribute>
-                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                        <real key="value" value="12"/>
-                    </userDefinedRuntimeAttribute>
-                </userDefinedRuntimeAttributes>
-            </tableViewCellContentView>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                    <real key="value" value="0.0"/>
-                </userDefinedRuntimeAttribute>
-                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                    <real key="value" value="0.0"/>
-                </userDefinedRuntimeAttribute>
-                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                    <color key="value" red="0.94117647059999998" green="0.94117647059999998" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                </userDefinedRuntimeAttribute>
-            </userDefinedRuntimeAttributes>
+            </view>
+            <constraints>
+                <constraint firstItem="Ijj-J0-sii" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="36X-Wo-itx"/>
+                <constraint firstAttribute="trailing" secondItem="Ijj-J0-sii" secondAttribute="trailing" id="Gaz-DJ-tLs"/>
+                <constraint firstAttribute="bottom" secondItem="Ijj-J0-sii" secondAttribute="bottom" id="P77-Vt-e5R"/>
+                <constraint firstItem="Ijj-J0-sii" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ixW-ee-93R"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="525" height="199"/>
             <connections>
-                <outlet property="paymentLabel" destination="Sq5-eJ-FRx" id="byd-DL-I5C"/>
+                <outlet property="paymentLabel" destination="LoW-yP-fyj" id="Tga-7S-ddK"/>
             </connections>
-            <point key="canvasLocation" x="68.115942028985515" y="149.33035714285714"/>
-        </tableViewCell>
+            <point key="canvasLocation" x="-52.898550724637687" y="84.709821428571431"/>
+        </collectionViewCell>
     </objects>
     <resources>
         <image name="RightArrowIcon" width="8" height="13"/>
