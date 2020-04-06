@@ -207,6 +207,14 @@ extension PayContractViewController: UICollectionViewDataSource {
         
         cell.configure(with: data[indexPath.row])
         
+        let subject = PublishSubject<Void>()
+        
+        subject
+            .bind(to: payContractTrigger)
+            .disposed(by: cell.disposeBag)
+        
+        cell.bind(with: subject)
+
         return cell
     }
     

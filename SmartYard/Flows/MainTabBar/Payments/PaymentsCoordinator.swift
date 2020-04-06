@@ -14,6 +14,7 @@ enum PaymentsRoute: Route {
     case alert(title: String, message: String)
     case contractPay(items: [PaymentAddressItem])
     case back
+    case paymentPopup
     
 }
 
@@ -46,6 +47,13 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             
         case .back:
             return .pop(animation: .default)
+            
+        case .paymentPopup:
+            let vc = SmartYardPaymentController()
+            vc.modalPresentationStyle = .overFullScreen
+            //vc.delegate = mapVC
+            
+            return .present(vc)
         }
     }
     

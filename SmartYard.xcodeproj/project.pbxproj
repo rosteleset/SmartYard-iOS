@@ -299,6 +299,11 @@
 		E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */; };
 		E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */; };
 		E9B67376243B48C600457C74 /* PaymentAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B67374243B48C600457C74 /* PaymentAddressCell.xib */; };
+		E9B67380243BBC5500457C74 /* PickerPresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B6737D243BBC5500457C74 /* PickerPresentAnimator.swift */; };
+		E9B67381243BBC5500457C74 /* PickerDismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B6737E243BBC5500457C74 /* PickerDismissAnimator.swift */; };
+		E9B67382243BBC5500457C74 /* SwipeInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B6737F243BBC5500457C74 /* SwipeInteractionController.swift */; };
+		E9B67385243BCE4800457C74 /* SmartYardPaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B67383243BCE4800457C74 /* SmartYardPaymentController.swift */; };
+		E9B67386243BCE4800457C74 /* SmartYardPaymentController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B67384243BCE4800457C74 /* SmartYardPaymentController.xib */; };
 		E9B9EAC72421FCB8000A92B3 /* RestorePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9EAC52421FCB8000A92B3 /* RestorePasswordViewController.swift */; };
 		E9B9EAC82421FCB8000A92B3 /* RestorePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B9EAC62421FCB8000A92B3 /* RestorePasswordViewController.xib */; };
 		E9B9EACA2421FCCB000A92B3 /* RestorePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9EAC92421FCCB000A92B3 /* RestorePasswordViewModel.swift */; };
@@ -660,6 +665,11 @@
 		E9A4D4A323ED75D20070A591 /* AuthByContractNumViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthByContractNumViewController.xib; sourceTree = "<group>"; };
 		E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteButtonWithBorder.swift; sourceTree = "<group>"; };
 		E9B67374243B48C600457C74 /* PaymentAddressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentAddressCell.xib; sourceTree = "<group>"; };
+		E9B6737D243BBC5500457C74 /* PickerPresentAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerPresentAnimator.swift; sourceTree = "<group>"; };
+		E9B6737E243BBC5500457C74 /* PickerDismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerDismissAnimator.swift; sourceTree = "<group>"; };
+		E9B6737F243BBC5500457C74 /* SwipeInteractionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeInteractionController.swift; sourceTree = "<group>"; };
+		E9B67383243BCE4800457C74 /* SmartYardPaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardPaymentController.swift; sourceTree = "<group>"; };
+		E9B67384243BCE4800457C74 /* SmartYardPaymentController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmartYardPaymentController.xib; sourceTree = "<group>"; };
 		E9B9EAC52421FCB8000A92B3 /* RestorePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePasswordViewController.swift; sourceTree = "<group>"; };
 		E9B9EAC62421FCB8000A92B3 /* RestorePasswordViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestorePasswordViewController.xib; sourceTree = "<group>"; };
 		E9B9EAC92421FCCB000A92B3 /* RestorePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePasswordViewModel.swift; sourceTree = "<group>"; };
@@ -865,7 +875,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				E91724492410E27D00F2B810 /* SmartYardSearchTextField */,
+				E9B67377243BBA2900457C74 /* SmartYardPaymentController */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
@@ -877,9 +887,11 @@
 				E99A838C243733C9001CEE95 /* DotsSegmentView */,
 				843A7A7D23F29A0D00840E51 /* FakeNavBar */,
 				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
+				E91724492410E27D00F2B810 /* SmartYardSearchTextField */,
 				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
 				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
 				E9A4D48D23EC2A510070A591 /* PinTextField */,
+				E9B6737C243BBC5500457C74 /* PickerAnimator */,
 				E99EA6CC23EAD0C800BECEE6 /* RoundedView */,
 				E94B6C3523FD728F00FD9F65 /* RoundedImageView */,
 				E9E4271323F40D8100F5D593 /* SmartYardCheckBoxView */,
@@ -2367,6 +2379,25 @@
 			path = WhiteButtonWithBorder;
 			sourceTree = "<group>";
 		};
+		E9B67377243BBA2900457C74 /* SmartYardPaymentController */ = {
+			isa = PBXGroup;
+			children = (
+				E9B67383243BCE4800457C74 /* SmartYardPaymentController.swift */,
+				E9B67384243BCE4800457C74 /* SmartYardPaymentController.xib */,
+			);
+			path = SmartYardPaymentController;
+			sourceTree = "<group>";
+		};
+		E9B6737C243BBC5500457C74 /* PickerAnimator */ = {
+			isa = PBXGroup;
+			children = (
+				E9B6737D243BBC5500457C74 /* PickerPresentAnimator.swift */,
+				E9B6737E243BBC5500457C74 /* PickerDismissAnimator.swift */,
+				E9B6737F243BBC5500457C74 /* SwipeInteractionController.swift */,
+			);
+			path = PickerAnimator;
+			sourceTree = "<group>";
+		};
 		E9B9EAC42421FC91000A92B3 /* RestorePasswordFlow */ = {
 			isa = PBXGroup;
 			children = (
@@ -2623,6 +2654,7 @@
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
 				E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
+				E9B67386243BCE4800457C74 /* SmartYardPaymentController.xib in Resources */,
 				84AADD21242E22640056994A /* EditNameViewController.xib in Resources */,
 				E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */,
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
@@ -2801,6 +2833,7 @@
 				84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */,
 				E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */,
 				844AC3B323EAD09B0066006D /* IncomingCallDoorState.swift in Sources */,
+				E9B67380243BBC5500457C74 /* PickerPresentAnimator.swift in Sources */,
 				E92EFBC4242A22F2003AF7FE /* GeoCoderRequest.swift in Sources */,
 				84B89A7C23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift in Sources */,
 				E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */,
@@ -2866,6 +2899,7 @@
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				843C38D3242A577C0035BF80 /* DeliveredRequest.swift in Sources */,
 				845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */,
+				E9B67382243BBC5500457C74 /* SwipeInteractionController.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
 				E92EFBE2242A22F2003AF7FE /* EmptyDataInitializable.swift in Sources */,
 				E92EFBD3242A22F2003AF7FE /* AccessRequest.swift in Sources */,
@@ -2884,6 +2918,7 @@
 				E92EFBDD242A22F2003AF7FE /* GetListConnectResponseData.swift in Sources */,
 				843C38CE242A577C0035BF80 /* InboxResponseData.swift in Sources */,
 				843C38E8242A6E490035BF80 /* QRCodeScanViewModel.swift in Sources */,
+				E9B67385243BCE4800457C74 /* SmartYardPaymentController.swift in Sources */,
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				E94057F423F56BF800623746 /* IssueDeliveryType.swift in Sources */,
 				E92EFBD1242A22F2003AF7FE /* IntercomRequest.swift in Sources */,
@@ -3007,6 +3042,7 @@
 				847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */,
 				842FECB6242B89DF007CA0F3 /* OfficesResponseData.swift in Sources */,
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
+				E9B67381243BBC5500457C74 /* PickerDismissAnimator.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
 				E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */,
 				E92EFBBD242A22F2003AF7FE /* GetAllLocationsRequest.swift in Sources */,
