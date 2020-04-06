@@ -15,9 +15,6 @@ class PaymentsViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<PaymentsRoute>
     
-    let activityTracker = ActivityTracker()
-    let errorTracker = ErrorTracker()
-    
     private let items = BehaviorSubject<[PaymentAddressItem]>(value: [])
     
     init(
@@ -30,6 +27,8 @@ class PaymentsViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
         
         input.itemSelected
             .withLatestFrom(items.asDriver(onErrorJustReturn: [PaymentAddressItem]())) { ($0, $1) }
@@ -66,7 +65,7 @@ class PaymentsViewModel: BaseViewModel {
                 return
                     self.apiWrapper.getAddressList()
                         .trackActivity(interactionBlockingRequestTracker)
-                        .trackError(self.errorTracker)
+                        .trackError(errorTracker)
                         .asDriver(onErrorJustReturn: nil)
             }
         
@@ -85,7 +84,7 @@ class PaymentsViewModel: BaseViewModel {
                 
                 return
                     self.apiWrapper.getAddressList()
-                        .trackError(self.errorTracker)
+                        .trackError(errorTracker)
                         .asDriver(onErrorJustReturn: nil)
             }
             .do(

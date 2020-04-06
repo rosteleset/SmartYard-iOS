@@ -43,7 +43,6 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             let vc = PayContractViewController(viewModel: vm)
             return .push(vc)
         }
-        
     }
     
 }

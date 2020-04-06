@@ -13,9 +13,9 @@ import XCoordinator
 
 class PayContractViewModel: BaseViewModel {
     
-    var items: BehaviorSubject<[PaymentAddressItem]>
-    var apiWrapper: APIWrapper
-    var router: WeakRouter<PaymentsRoute>
+    private var items: BehaviorSubject<[PaymentAddressItem]>
+    private var apiWrapper: APIWrapper
+    private var router: WeakRouter<PaymentsRoute>
     
     init(
         items: [PaymentAddressItem],
@@ -29,6 +29,7 @@ class PayContractViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
+        // TODO
         return Output(items: items.asDriver(onErrorJustReturn: []))
     }
     

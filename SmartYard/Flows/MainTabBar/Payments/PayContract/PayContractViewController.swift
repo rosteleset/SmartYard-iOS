@@ -96,7 +96,7 @@ class PayContractViewController: BaseViewController {
         )
     }
     
-    private func indexOfMajorCell() -> Int {
+    private func getIndexOfMajorCell() -> Int {
         guard let data = try? itemsProxy.value() else {
             return 0
         }
@@ -121,7 +121,7 @@ class PayContractViewController: BaseViewController {
 extension PayContractViewController: UICollectionViewDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        currentIndex = indexOfMajorCell()
+        currentIndex = getIndexOfMajorCell()
     }
     
     func scrollViewWillEndDragging(
@@ -135,7 +135,7 @@ extension PayContractViewController: UICollectionViewDelegate {
         
         targetContentOffset.pointee = scrollView.contentOffset
         
-        let indexOfMajorCell = self.indexOfMajorCell()
+        let indexOfMajorCell = self.getIndexOfMajorCell()
         
         let neededVelocity: CGFloat = 0.5
         
