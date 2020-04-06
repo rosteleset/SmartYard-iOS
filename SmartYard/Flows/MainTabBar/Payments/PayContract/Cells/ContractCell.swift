@@ -40,7 +40,9 @@ class ContractCell: UICollectionViewCell {
     }
     
     func bind(with outerSubject: PublishSubject<Void>) {
-        // TODO
+        payButton.rx.tap
+            .bind(to: outerSubject)
+            .disposed(by: disposeBag)
     }
     
 }

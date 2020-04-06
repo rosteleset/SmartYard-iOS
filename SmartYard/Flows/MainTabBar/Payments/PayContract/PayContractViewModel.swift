@@ -37,6 +37,14 @@ class PayContractViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.payContractTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.paymentPopup)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(items: items.asDriver(onErrorJustReturn: []))
     }
     
