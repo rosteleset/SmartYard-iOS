@@ -40,7 +40,7 @@ class ContractCell: UICollectionViewCell {
     }
     
     func bind(with outerSubject: PublishSubject<Void>) {
-        
+        // TODO
     }
     
 }

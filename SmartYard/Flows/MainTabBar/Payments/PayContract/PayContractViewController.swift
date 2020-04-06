@@ -159,8 +159,8 @@ extension PayContractViewController: UICollectionViewDelegate {
             return
         }
         
-        let snapToIndex = currentIndex + (hasEnoughVelocityForSlideToNextCell ? 1 : -1)
-        let toContentOffset = collectionViewFlowLayout.itemSize.width * CGFloat(snapToIndex)
+        let swipeToIndex = currentIndex + (hasEnoughVelocityForSlideToNextCell ? 1 : -1)
+        let toContentOffset = collectionViewFlowLayout.itemSize.width * CGFloat(swipeToIndex)
         
         UIView.animate(
             withDuration: 0.3,
@@ -175,8 +175,8 @@ extension PayContractViewController: UICollectionViewDelegate {
             completion: nil
         )
     
-        self.dotsView.updateDotsViewIfNeeded(with: snapToIndex, maxIndex: data.count - 1)
-        self.updateAddressLabel(with: snapToIndex)
+        self.dotsView.updateDotsViewIfNeeded(with: swipeToIndex, maxIndex: data.count - 1)
+        self.updateAddressLabel(with: swipeToIndex)
     }
     
 }
