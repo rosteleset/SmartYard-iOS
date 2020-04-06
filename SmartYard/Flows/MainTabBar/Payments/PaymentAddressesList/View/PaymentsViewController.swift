@@ -141,7 +141,7 @@ extension PaymentsViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 16, left: 16, bottom: 20, right: 16)
+        return UIEdgeInsets(top: 8, left: 16, bottom: 20, right: 16)
     }
     
 }
