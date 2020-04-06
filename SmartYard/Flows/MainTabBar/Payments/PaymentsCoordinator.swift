@@ -35,7 +35,7 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             let vc = PaymentsViewController(viewModel: vm)
             return .set([vc])
             
-        case .alert(let title, let message):
+        case let .alert(title, message):
             return .alertTransition(title: title, message: message)
             
         case .contractPay(let items):
