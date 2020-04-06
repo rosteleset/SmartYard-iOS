@@ -47,6 +47,7 @@ class PayContractViewController: BaseViewController {
         fakeNavBar.configueDarkNavBar()
         configureCollectionView()
         bind()
+        updateAddressLabel(with: 0)
     }
     
     override func viewDidLayoutSubviews() {
@@ -91,7 +92,7 @@ class PayContractViewController: BaseViewController {
         
         collectionViewFlowLayout.itemSize = CGSize(
             width: collectionViewFlowLayout.collectionView!.frame.size.width - inset * 2,
-            height: collectionViewFlowLayout.collectionView!.frame.size.height
+            height: collectionViewFlowLayout.collectionView!.frame.size.height - inset
         )
     }
     
@@ -105,6 +106,14 @@ class PayContractViewController: BaseViewController {
         let index = Int(round(proportionalOffset))
         
         return max(0, min(data.count - 1, index))
+    }
+    
+    private func updateAddressLabel(with index: Int) {
+        guard let data = try? itemsProxy.value() else {
+            return
+        }
+        
+        addressLabel.text = data.item(at: index)?.address
     }
     
 }
@@ -167,6 +176,7 @@ extension PayContractViewController: UICollectionViewDelegate {
         )
     
         self.dotsView.updateDotsViewIfNeeded(with: snapToIndex, maxIndex: data.count - 1)
+        self.updateAddressLabel(with: snapToIndex)
     }
     
 }
