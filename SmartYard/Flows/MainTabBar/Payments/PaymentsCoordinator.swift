@@ -9,7 +9,9 @@
 import XCoordinator
 
 enum PaymentsRoute: Route {
+    
     case main
+    
 }
 
 class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
