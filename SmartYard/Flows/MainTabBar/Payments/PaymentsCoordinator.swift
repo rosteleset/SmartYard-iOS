@@ -11,8 +11,9 @@ import XCoordinator
 enum PaymentsRoute: Route {
     
     case main
-    case contractPay(items: [PaymentAddressItem])
     case alert(title: String, message: String)
+    case contractPay(items: [PaymentAddressItem])
+    case back
     
 }
 
@@ -42,6 +43,9 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             let vm = PayContractViewModel(items: items, apiWrapper: apiWrapper, router: weakRouter)
             let vc = PayContractViewController(viewModel: vm)
             return .push(vc)
+            
+        case .back:
+            return .pop(animation: .default)
         }
     }
     
