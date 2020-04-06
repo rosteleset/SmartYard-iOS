@@ -18,7 +18,7 @@ class PayContractViewController: BaseViewController {
     @IBOutlet private weak var dotsView: DotsSegmentView!
     @IBOutlet private weak var collectionViewFlowLayout: UICollectionViewFlowLayout!
     
-    private var indexOfCellBeforeDragging = 0
+    private var currentIndex = 0
     
     private let itemsProxy = BehaviorSubject<[PaymentAddressItem]>(value: [])
     
@@ -45,21 +45,22 @@ class PayContractViewController: BaseViewController {
         super.viewDidLoad()
         
         fakeNavBar.configueDarkNavBar()
-        
+        configureCollectionView()
+        bind()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        configureCollectionViewLayoutItemSize()
+    }
+    
+    private func configureCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
         
         collectionView.register(nibWithCellClass: ContractCell.self)
         
         collectionViewFlowLayout.minimumLineSpacing = 0
-        
-        bind()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        configureCollectionViewLayoutItemSize()
     }
     
     private func bind() {
@@ -83,15 +84,9 @@ class PayContractViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func calculateSectionInset() -> CGFloat {
-        let cellBodyWidth: CGFloat = 343
-        let inset = (collectionViewFlowLayout.collectionView!.frame.width - cellBodyWidth + 50) / 4
-        
-        return 16
-    }
-    
     private func configureCollectionViewLayoutItemSize() {
-        let inset: CGFloat = calculateSectionInset()
+        let inset: CGFloat = 16
+        
         collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
         
         collectionViewFlowLayout.itemSize = CGSize(
@@ -108,8 +103,8 @@ class PayContractViewController: BaseViewController {
         let itemWidth = collectionViewFlowLayout.itemSize.width
         let proportionalOffset = collectionViewFlowLayout.collectionView!.contentOffset.x / itemWidth
         let index = Int(round(proportionalOffset))
-        let safeIndex = max(0, min(data.count - 1, index))
-        return safeIndex
+        
+        return max(0, min(data.count - 1, index))
     }
     
 }
@@ -117,49 +112,61 @@ class PayContractViewController: BaseViewController {
 extension PayContractViewController: UICollectionViewDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        indexOfCellBeforeDragging = indexOfMajorCell()
+        currentIndex = indexOfMajorCell()
     }
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    func scrollViewWillEndDragging(
+        _ scrollView: UIScrollView,
+        withVelocity velocity: CGPoint,
+        targetContentOffset: UnsafeMutablePointer<CGPoint>
+    ) {
         guard let data = try? itemsProxy.value() else {
             return
         }
         
         targetContentOffset.pointee = scrollView.contentOffset
         
-        // calculate where scrollView should snap to:
         let indexOfMajorCell = self.indexOfMajorCell()
         
-        // calculate conditions:
-        let swipeVelocityThreshold: CGFloat = 0.5 // after some trail and error
-        let hasEnoughVelocityToSlideToTheNextCell = indexOfCellBeforeDragging + 1 < data.count && velocity.x > swipeVelocityThreshold
-        let hasEnoughVelocityToSlideToThePreviousCell = indexOfCellBeforeDragging - 1 >= 0 && velocity.x < -swipeVelocityThreshold
-        let majorCellIsTheCellBeforeDragging = indexOfMajorCell == indexOfCellBeforeDragging
-        let didUseSwipeToSkipCell = majorCellIsTheCellBeforeDragging && (hasEnoughVelocityToSlideToTheNextCell || hasEnoughVelocityToSlideToThePreviousCell)
+        let neededVelocity: CGFloat = 0.5
         
-        if didUseSwipeToSkipCell {
-            let snapToIndex = indexOfCellBeforeDragging + (hasEnoughVelocityToSlideToTheNextCell ? 1 : -1)
-            let toValue = collectionViewFlowLayout.itemSize.width * CGFloat(snapToIndex)
+        let hasEnoughVelocityForSlideToNextCell = currentIndex + 1 < data.count && velocity.x > neededVelocity
+        let hasEnoughVelocityForSlideToPrevCell = currentIndex - 1 >= 0 && velocity.x < -neededVelocity
+        
+        let majorCellIsTheCellBeforeDragging = indexOfMajorCell == currentIndex
+        
+        let didUseSwipeToSkipCell = majorCellIsTheCellBeforeDragging &&
+                                    (hasEnoughVelocityForSlideToNextCell || hasEnoughVelocityForSlideToPrevCell)
+        
+        guard didUseSwipeToSkipCell else {
+            let indexPath = IndexPath(row: indexOfMajorCell, section: 0)
             
-            // Damping equal 1 => no oscillations => decay animation:
-            UIView.animate(
-                withDuration: 0.3,
-                delay: 0,
-                usingSpringWithDamping: 1,
-                initialSpringVelocity: velocity.x,
-                options: .allowUserInteraction,
-                animations: {
-                    scrollView.contentOffset = CGPoint(x: toValue, y: 0)
-                    scrollView.layoutIfNeeded()
-                },
-                completion: nil
+            collectionViewFlowLayout.collectionView!.scrollToItem(
+                at: indexPath,
+                at: .centeredHorizontally,
+                animated: true
             )
             
-        } else {
-            // This is a much better way to scroll to a cell:
-            let indexPath = IndexPath(row: indexOfMajorCell, section: 0)
-            collectionViewFlowLayout.collectionView!.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            return
         }
+        
+        let snapToIndex = currentIndex + (hasEnoughVelocityForSlideToNextCell ? 1 : -1)
+        let toContentOffset = collectionViewFlowLayout.itemSize.width * CGFloat(snapToIndex)
+        
+        UIView.animate(
+            withDuration: 0.3,
+            delay: 0,
+            usingSpringWithDamping: 1,
+            initialSpringVelocity: velocity.x,
+            options: .allowUserInteraction,
+            animations: {
+                scrollView.contentOffset = CGPoint(x: toContentOffset, y: 0)
+                scrollView.layoutIfNeeded()
+            },
+            completion: nil
+        )
+    
+        self.dotsView.updateDotsViewIfNeeded(with: snapToIndex, maxIndex: data.count - 1)
     }
     
 }
@@ -174,7 +181,10 @@ extension PayContractViewController: UICollectionViewDataSource {
         return data.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         guard let data = try? itemsProxy.value() else {
             return UICollectionViewCell()
         }
