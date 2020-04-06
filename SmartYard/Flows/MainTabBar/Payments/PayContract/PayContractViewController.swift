@@ -157,6 +157,9 @@ extension PayContractViewController: UICollectionViewDelegate {
                 animated: true
             )
             
+            self.dotsView.updateDotsViewIfNeeded(with: indexPath.row, maxIndex: data.count - 1)
+            self.updateAddressLabel(with: indexPath.row)
+            
             return
         }
         
