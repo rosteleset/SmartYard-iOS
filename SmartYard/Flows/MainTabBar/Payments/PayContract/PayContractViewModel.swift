@@ -29,7 +29,14 @@ class PayContractViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
-        // TODO
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(items: items.asDriver(onErrorJustReturn: []))
     }
     
@@ -38,16 +45,13 @@ class PayContractViewModel: BaseViewModel {
 extension PayContractViewModel {
     
     struct Input {
-        
         let fullVersionPersonalAccountTrigger: Driver<Void>
         let payContractTrigger: Driver<Void>
-        
+        let backTrigger: Driver<Void>
     }
     
     struct Output {
-        
         let items: Driver<[PaymentAddressItem]>
-        
     }
     
 }

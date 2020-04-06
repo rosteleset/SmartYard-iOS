@@ -67,7 +67,8 @@ class PayContractViewController: BaseViewController {
     private func bind() {
         let input = PayContractViewModel.Input(
             fullVersionPersonalAccountTrigger: fullVersionPersonalAccountTrigger.asDriverOnErrorJustComplete(),
-            payContractTrigger: payContractTrigger.asDriverOnErrorJustComplete()
+            payContractTrigger: payContractTrigger.asDriverOnErrorJustComplete(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
         let output = viewModel.transform(input)
