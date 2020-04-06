@@ -29,7 +29,8 @@ extension RegisterPushTokenRequest {
     var requestParameters: [String: Any] {
         var params: [String: Any] = [
             "pushToken": pushToken,
-            "type": type.rawValue
+            "type": type.rawValue,
+            "platform": "ios"
         ]
         
         if let clientId = clientId {
