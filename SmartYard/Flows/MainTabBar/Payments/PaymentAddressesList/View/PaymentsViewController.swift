@@ -13,13 +13,13 @@ import JGProgressHUD
 
 class PaymentsViewController: BaseViewController, LoaderPresentable {
 
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var skeletonContainer: UIView!
     
     private var refreshControl = UIRefreshControl()
     
     private let viewModel: PaymentsViewModel
-
+    
     private let itemsProxy = BehaviorSubject<[PaymentAddressItem]>(value: [])
     
     var loader: JGProgressHUD?
@@ -55,7 +55,7 @@ class PaymentsViewController: BaseViewController, LoaderPresentable {
     
     private func bind() {
         let input = PaymentsViewModel.Input(
-            itemSelected: tableView.rx.itemSelected.asDriver(),
+            itemSelected: collectionView.rx.itemSelected.asDriver(),
             refreshDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriver()
         )
         
@@ -89,7 +89,7 @@ class PaymentsViewController: BaseViewController, LoaderPresentable {
         output.shouldBlockInteraction
             .drive(
                 onNext: { [weak self] shouldBlockInteraction in
-                    self?.tableView.isHidden = shouldBlockInteraction
+                    self?.collectionView.isHidden = shouldBlockInteraction
                     self?.skeletonContainer.isHidden = !shouldBlockInteraction
                     
                     shouldBlockInteraction ?
@@ -102,42 +102,52 @@ class PaymentsViewController: BaseViewController, LoaderPresentable {
         itemsProxy
             .subscribe(
                 onNext: { [weak self] _ in
-                    self?.tableView.reloadData()
+                    self?.collectionView.reloadData()
                 }
             )
             .disposed(by: disposeBag)
     }
     
     private func configureTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(nibWithCellClass: PaymentAddressCell.self)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(nibWithCellClass: PaymentAddressCell.self)
         
-        tableView.refreshControl = refreshControl
-        
-        tableView.tableFooterView = UIView(
-            frame: CGRect(
-                x: 0,
-                y: 0,
-                width: tableView.frame.size.width,
-                height: 1
-            )
-        )
+        collectionView.refreshControl = refreshControl
     }
     
 }
 
-extension PaymentsViewController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+extension PaymentsViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        return CGSize(width: collectionView.width - 32, height: 72)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 16, left: 16, bottom: 20, right: 16)
     }
     
 }
 
-extension PaymentsViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension PaymentsViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let data = try? itemsProxy.value() else {
             return 0
         }
@@ -145,12 +155,15 @@ extension PaymentsViewController: UITableViewDataSource {
         return data.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         guard let data = try? itemsProxy.value() else {
-            return UITableViewCell()
+            return UICollectionViewCell()
         }
         
-        let cell = tableView.dequeueReusableCell(withClass: PaymentAddressCell.self, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withClass: PaymentAddressCell.self, for: indexPath)
         cell.configure(address: data[indexPath.row].address)
         
         return cell

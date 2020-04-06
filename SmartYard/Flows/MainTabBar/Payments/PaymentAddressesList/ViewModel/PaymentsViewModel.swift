@@ -96,14 +96,11 @@ class PaymentsViewModel: BaseViewModel {
         Driver
             .merge(blockingRefresh, nonBlockingRefresh)
             .ignoreNil()
-            .flatMapLatest { [weak self] data -> Driver<[PaymentAddressItem]> in
-                guard let self = self else {
-                    return .empty()
+            .drive(
+                onNext: { [weak self] data in
+                    self?.items.onNext(self?.createItems(addresses: data) ?? [])
                 }
-                
-                return .just(self.createItems(addresses: data))
-            }
-            .drive(items)
+            )
             .disposed(by: disposeBag)
         
         errorTracker.asDriver()

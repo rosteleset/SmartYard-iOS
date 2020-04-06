@@ -17,8 +17,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PaymentsViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="collectionView" destination="816-NR-sjE" id="7Ck-8A-pV2"/>
                 <outlet property="skeletonContainer" destination="kS9-T1-r7s" id="UEU-cw-yOX"/>
-                <outlet property="tableView" destination="5p7-d9-44L" id="2Dx-it-PdM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -36,10 +36,16 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tza-JB-CqP">
                     <rect key="frame" x="0.0" y="154.5" width="414" height="707.5"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5p7-d9-44L">
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="816-NR-sjE">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="707.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </tableView>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="p01-3w-Wzm">
+                                <size key="itemSize" width="50" height="50"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kS9-T1-r7s" userLabel="Skeleton Container">
                             <rect key="frame" x="16" y="16" width="382" height="128"/>
                             <subviews>
@@ -74,13 +80,13 @@
                     </subviews>
                     <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="5p7-d9-44L" firstAttribute="top" secondItem="tza-JB-CqP" secondAttribute="top" id="GcC-Wd-OZW"/>
-                        <constraint firstAttribute="bottom" secondItem="5p7-d9-44L" secondAttribute="bottom" id="GeY-7b-aJZ"/>
+                        <constraint firstItem="816-NR-sjE" firstAttribute="top" secondItem="tza-JB-CqP" secondAttribute="top" id="60X-6d-mdK"/>
+                        <constraint firstAttribute="bottom" secondItem="816-NR-sjE" secondAttribute="bottom" id="BTX-Z8-vDZ"/>
+                        <constraint firstAttribute="trailing" secondItem="816-NR-sjE" secondAttribute="trailing" id="D0W-wW-Os1"/>
                         <constraint firstItem="kS9-T1-r7s" firstAttribute="leading" secondItem="tza-JB-CqP" secondAttribute="leading" constant="16" id="J3i-o9-Chc"/>
-                        <constraint firstItem="5p7-d9-44L" firstAttribute="leading" secondItem="tza-JB-CqP" secondAttribute="leading" id="Saf-dP-K4P"/>
                         <constraint firstItem="kS9-T1-r7s" firstAttribute="top" secondItem="tza-JB-CqP" secondAttribute="top" constant="16" id="Wz7-Ph-MsZ"/>
                         <constraint firstAttribute="trailing" secondItem="kS9-T1-r7s" secondAttribute="trailing" constant="16" id="l9x-JX-wxn"/>
-                        <constraint firstAttribute="trailing" secondItem="5p7-d9-44L" secondAttribute="trailing" id="mHD-O7-6qZ"/>
+                        <constraint firstItem="816-NR-sjE" firstAttribute="leading" secondItem="tza-JB-CqP" secondAttribute="leading" id="sZz-Gt-lgR"/>
                     </constraints>
                 </view>
             </subviews>
@@ -95,6 +101,7 @@
                 <constraint firstItem="nis-Xa-l5N" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="mxc-f8-Z4N"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="137.68115942028987" y="107.8125"/>
         </view>
     </objects>
 </document>
