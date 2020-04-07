@@ -113,20 +113,21 @@ class PaymentPopupController: BaseViewController {
     private func configureRxKeyboard() {
         RxKeyboard.instance.visibleHeight
             .drive(
-                onNext: { [weak self] keyboardVisibleHeight in
+                onNext: { [weak self] keyboardHeight in
                     guard let self = self else {
                         return
                     }
 
-                    self.configureGestures(with: keyboardVisibleHeight)
+                    self.configureGestures(with: keyboardHeight)
                     
                     let textFieldBottomOffset: CGFloat = 245
                     let defaultBottomOffset: CGFloat = -50
                     let textFieldOffsetToButton: CGFloat = 20
+                    let buttonWithOffset: CGFloat = 65
                     
-                    let calculatedOffset = keyboardVisibleHeight - textFieldBottomOffset + textFieldOffsetToButton
+                    let calcOffset = keyboardHeight - textFieldBottomOffset + textFieldOffsetToButton + buttonWithOffset
                     
-                    let offset = keyboardVisibleHeight == 0 ? defaultBottomOffset : calculatedOffset
+                    let offset = keyboardHeight == 0 ? defaultBottomOffset : calcOffset
                     
                     UIView.animate(
                         withDuration: 0.05,
@@ -142,6 +143,8 @@ class PaymentPopupController: BaseViewController {
     
     @IBAction private func payButtonDidTap(_ sender: Any) {
         // TODO: нужна будет обработка
+        sumTextField.resignFirstResponder()
+        sumTextField.isHidden = true
         successView.isHidden = false
     }
     
