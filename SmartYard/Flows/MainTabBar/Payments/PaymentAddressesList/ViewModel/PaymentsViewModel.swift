@@ -32,18 +32,10 @@ class PaymentsViewModel: BaseViewModel {
         
         input.itemSelected
             .withLatestFrom(items.asDriver(onErrorJustReturn: [PaymentAddressItem]())) { ($0, $1) }
-            .map { args -> [PaymentAddressItem] in
-                let (indexPath, data) = args
-                
-                var resultItems = data
-                resultItems.remove(at: indexPath.row)
-                resultItems.insert(data[indexPath.row], at: 0)
-                
-                return resultItems
-            }
             .drive(
-                onNext: { [weak self] items in
-                    self?.router.trigger(.contractPay(items: items))
+                onNext: { [weak self] args in
+                    let (indexPath, items) = args
+                    self?.router.trigger(.contractPay(items: items, selectedIndex: indexPath.row))
                 }
             )
             .disposed(by: disposeBag)
