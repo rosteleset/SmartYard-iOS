@@ -15,7 +15,6 @@ class PayContractViewController: BaseViewController {
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var collectionView: UICollectionView!
-    @IBOutlet private weak var dotsView: DotsSegmentView!
     @IBOutlet private weak var collectionViewFlowLayout: UICollectionViewFlowLayout!
     
     private var currentIndex = 0
@@ -43,9 +42,7 @@ class PayContractViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // TODO: скрыто, т.к. работает не так, как нужно. Кол-во кружков должно быть = кол-ву адресов в collectionView
-        dotsView.isHidden = true
+    
         fakeNavBar.configueDarkNavBar()
         configureCollectionView()
         bind()
@@ -168,8 +165,7 @@ extension PayContractViewController: UICollectionViewDelegate {
                 at: .centeredHorizontally,
                 animated: true
             )
-            
-            self.dotsView.updateDotsViewIfNeeded(with: indexPath.row, maxIndex: data.count - 1)
+
             self.updateAddressLabel(with: indexPath.row)
             
             return
@@ -191,7 +187,6 @@ extension PayContractViewController: UICollectionViewDelegate {
             completion: nil
         )
     
-        self.dotsView.updateDotsViewIfNeeded(with: swipeToIndex, maxIndex: data.count - 1)
         self.updateAddressLabel(with: swipeToIndex)
     }
     
