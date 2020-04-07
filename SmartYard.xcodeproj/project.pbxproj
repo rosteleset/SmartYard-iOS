@@ -271,8 +271,6 @@
 		E99A83852435DA01001CEE95 /* PaymentAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A83832435DA01001CEE95 /* PaymentAddressCell.swift */; };
 		E99A838A24372FF1001CEE95 /* PayContractViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A838824372FF1001CEE95 /* PayContractViewController.swift */; };
 		E99A838B24372FF1001CEE95 /* PayContractViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99A838924372FF1001CEE95 /* PayContractViewController.xib */; };
-		E99A838E243733F8001CEE95 /* DotsSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A838D243733F8001CEE95 /* DotsSegmentView.swift */; };
-		E99A839024373406001CEE95 /* DotsSegmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99A838F24373406001CEE95 /* DotsSegmentView.xib */; };
 		E99A839224373E9D001CEE95 /* PayContractViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A839124373E9D001CEE95 /* PayContractViewModel.swift */; };
 		E99A839824373EE6001CEE95 /* ContractCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99A839624373EE6001CEE95 /* ContractCell.swift */; };
 		E99A839924373EE6001CEE95 /* ContractCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99A839724373EE6001CEE95 /* ContractCell.xib */; };
@@ -633,8 +631,6 @@
 		E99A83832435DA01001CEE95 /* PaymentAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentAddressCell.swift; sourceTree = "<group>"; };
 		E99A838824372FF1001CEE95 /* PayContractViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayContractViewController.swift; sourceTree = "<group>"; };
 		E99A838924372FF1001CEE95 /* PayContractViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PayContractViewController.xib; sourceTree = "<group>"; };
-		E99A838D243733F8001CEE95 /* DotsSegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsSegmentView.swift; sourceTree = "<group>"; };
-		E99A838F24373406001CEE95 /* DotsSegmentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DotsSegmentView.xib; sourceTree = "<group>"; };
 		E99A839124373E9D001CEE95 /* PayContractViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayContractViewModel.swift; sourceTree = "<group>"; };
 		E99A839624373EE6001CEE95 /* ContractCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractCell.swift; sourceTree = "<group>"; };
 		E99A839724373EE6001CEE95 /* ContractCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContractCell.xib; sourceTree = "<group>"; };
@@ -883,7 +879,6 @@
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
 				E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */,
 				E9A4D49823EC3DD00070A591 /* BlueButton */,
-				E99A838C243733C9001CEE95 /* DotsSegmentView */,
 				843A7A7D23F29A0D00840E51 /* FakeNavBar */,
 				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
 				E91724492410E27D00F2B810 /* SmartYardSearchTextField */,
@@ -2228,15 +2223,6 @@
 			path = PayContract;
 			sourceTree = "<group>";
 		};
-		E99A838C243733C9001CEE95 /* DotsSegmentView */ = {
-			isa = PBXGroup;
-			children = (
-				E99A838D243733F8001CEE95 /* DotsSegmentView.swift */,
-				E99A838F24373406001CEE95 /* DotsSegmentView.xib */,
-			);
-			path = DotsSegmentView;
-			sourceTree = "<group>";
-		};
 		E99A839324373EA4001CEE95 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -2717,7 +2703,6 @@
 				843C38EA242A6E490035BF80 /* QRCodeScanViewController.xib in Resources */,
 				E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */,
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
-				E99A839024373406001CEE95 /* DotsSegmentView.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
 				844AC3E923EBFEC50066006D /* PaymentsViewController.xib in Resources */,
 				84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */,
@@ -2971,7 +2956,6 @@
 				84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */,
 				E92EFBCA242A22F2003AF7FE /* ConfirmCodeResponseData.swift in Sources */,
 				E92EFB4A2428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift in Sources */,
-				E99A838E243733F8001CEE95 /* DotsSegmentView.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
 				842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */,
