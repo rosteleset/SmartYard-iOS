@@ -41,7 +41,13 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             return .alertTransition(title: title, message: message)
             
         case let .contractPay(items, selectedIndex):
-            let vm = PayContractViewModel(items: items, selectedIndex: selectedIndex, apiWrapper: apiWrapper, router: weakRouter)
+            let vm = PayContractViewModel(
+                items: items,
+                selectedIndex: selectedIndex,
+                apiWrapper: apiWrapper,
+                router: weakRouter
+            )
+            
             let vc = PayContractViewController(viewModel: vm)
             return .push(vc)
             
