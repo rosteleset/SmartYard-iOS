@@ -10,6 +10,7 @@ import UIKit
 
 class SmartYardPaymentController: BaseViewController {
     
+    @IBOutlet private weak var successView: UIView!
     @IBOutlet private weak var allPaymentMethodButton: UIButton!
     @IBOutlet private weak var payButton: UIButton!
     @IBOutlet private weak var recommendedSumLabel: UILabel!
@@ -21,10 +22,6 @@ class SmartYardPaymentController: BaseViewController {
     
     private var swipeDismissInteractor: SwipeInteractionController?
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -32,7 +29,6 @@ class SmartYardPaymentController: BaseViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         swipeDismissInteractor?.animatedViewBottomOffset = animatedViewBottomOffset.constant
     }
     
@@ -40,6 +36,7 @@ class SmartYardPaymentController: BaseViewController {
         configureSwipeAction()
         configureRxKeyboard()
         view.backgroundColor = .clear
+        successView.isHidden = true
     }
     
     private func configureSwipeAction() {
@@ -97,14 +94,10 @@ class SmartYardPaymentController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func removeAllGestures() {
+    private func configureGestures(with keyboardHeight: CGFloat) {
         view.gestureRecognizers?.removeAll()
         animatedView.gestureRecognizers?.removeAll()
         backgroundView.gestureRecognizers?.removeAll()
-    }
-    
-    private func configureGestures(with keyboardHeight: CGFloat) {
-        self.removeAllGestures()
         
         switch keyboardHeight {
         case 0:
@@ -148,7 +141,8 @@ class SmartYardPaymentController: BaseViewController {
     }
     
     @IBAction private func payButtonDidTap(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        // TODO: нужна будет обработка
+        successView.isHidden = false
     }
     
 }
