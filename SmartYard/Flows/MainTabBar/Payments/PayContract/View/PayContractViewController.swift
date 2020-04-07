@@ -80,8 +80,7 @@ class PayContractViewController: BaseViewController {
             .withLatestFrom(output.selectedIndex.asDriver())
             .subscribe(
                 onNext: { [weak self] index in
-                    self?.collectionView.reloadData()
-                    DispatchQueue.main.async {
+                    self?.collectionView.reloadData {
                         self?.collectionView.scrollToItem(
                             at: IndexPath(row: index, section: 0),
                             at: .centeredHorizontally,
