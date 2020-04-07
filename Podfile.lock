@@ -83,6 +83,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.5.0):
     - GoogleUtilities/Logger
+  - InputMask (6.0.0)
   - JGProgressHUD (2.1)
   - Kingfisher (5.13.0):
     - Kingfisher/Core (= 5.13.0)
@@ -156,6 +157,7 @@ DEPENDENCIES:
   - Fabric
   - Firebase/Analytics
   - Firebase/Messaging
+  - InputMask
   - JGProgressHUD
   - Kingfisher
   - linphone-sdk (> 4.4.0-alpha)
@@ -197,6 +199,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
+    - InputMask
     - JGProgressHUD
     - Kingfisher
     - Mapbox-iOS-SDK
@@ -251,6 +254,7 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 574a983e829327d7c18f2627f65d9e80164ea8a4
   GoogleDataTransportCCTSupport: cad3cd6cdbdbad6b5c2c9206ec413402755faaaa
   GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
+  InputMask: f340bdc905a4c4f377e44d865f129f752ac2383d
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
   linphone-sdk: 82302f72c930a859a75acdcfed304272d3cfdae1
@@ -276,6 +280,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: 332407e80f368e5b9b36c4c0e0210304dd2331d7
+PODFILE CHECKSUM: 8ff3a668600800952145a0ec269f9666a3830686
 
 COCOAPODS: 1.8.4
