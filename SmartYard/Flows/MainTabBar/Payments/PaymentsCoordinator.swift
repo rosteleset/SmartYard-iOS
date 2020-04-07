@@ -49,7 +49,7 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             return .pop(animation: .default)
             
         case .paymentPopup:
-            let vc = SmartYardPaymentController()
+            let vc = PaymentPopupController()
             vc.modalPresentationStyle = .overFullScreen
             //vc.delegate = mapVC
             
