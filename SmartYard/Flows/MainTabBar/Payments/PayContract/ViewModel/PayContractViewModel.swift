@@ -18,8 +18,6 @@ class PayContractViewModel: BaseViewModel {
     private var apiWrapper: APIWrapper
     private var router: WeakRouter<PaymentsRoute>
     
-
-    
     init(
         items: [PaymentAddressItem],
         selectedIndex: Int,
