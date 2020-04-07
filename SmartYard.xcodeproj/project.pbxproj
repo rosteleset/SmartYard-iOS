@@ -302,8 +302,8 @@
 		E9B67380243BBC5500457C74 /* PickerPresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B6737D243BBC5500457C74 /* PickerPresentAnimator.swift */; };
 		E9B67381243BBC5500457C74 /* PickerDismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B6737E243BBC5500457C74 /* PickerDismissAnimator.swift */; };
 		E9B67382243BBC5500457C74 /* SwipeInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B6737F243BBC5500457C74 /* SwipeInteractionController.swift */; };
-		E9B67385243BCE4800457C74 /* SmartYardPaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B67383243BCE4800457C74 /* SmartYardPaymentController.swift */; };
-		E9B67386243BCE4800457C74 /* SmartYardPaymentController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B67384243BCE4800457C74 /* SmartYardPaymentController.xib */; };
+		E9B67385243BCE4800457C74 /* PaymentPopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B67383243BCE4800457C74 /* PaymentPopupController.swift */; };
+		E9B67386243BCE4800457C74 /* PaymentPopupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B67384243BCE4800457C74 /* PaymentPopupController.xib */; };
 		E9B9EAC72421FCB8000A92B3 /* RestorePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9EAC52421FCB8000A92B3 /* RestorePasswordViewController.swift */; };
 		E9B9EAC82421FCB8000A92B3 /* RestorePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B9EAC62421FCB8000A92B3 /* RestorePasswordViewController.xib */; };
 		E9B9EACA2421FCCB000A92B3 /* RestorePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9EAC92421FCCB000A92B3 /* RestorePasswordViewModel.swift */; };
@@ -668,8 +668,8 @@
 		E9B6737D243BBC5500457C74 /* PickerPresentAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerPresentAnimator.swift; sourceTree = "<group>"; };
 		E9B6737E243BBC5500457C74 /* PickerDismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerDismissAnimator.swift; sourceTree = "<group>"; };
 		E9B6737F243BBC5500457C74 /* SwipeInteractionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeInteractionController.swift; sourceTree = "<group>"; };
-		E9B67383243BCE4800457C74 /* SmartYardPaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardPaymentController.swift; sourceTree = "<group>"; };
-		E9B67384243BCE4800457C74 /* SmartYardPaymentController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmartYardPaymentController.xib; sourceTree = "<group>"; };
+		E9B67383243BCE4800457C74 /* PaymentPopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPopupController.swift; sourceTree = "<group>"; };
+		E9B67384243BCE4800457C74 /* PaymentPopupController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentPopupController.xib; sourceTree = "<group>"; };
 		E9B9EAC52421FCB8000A92B3 /* RestorePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePasswordViewController.swift; sourceTree = "<group>"; };
 		E9B9EAC62421FCB8000A92B3 /* RestorePasswordViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestorePasswordViewController.xib; sourceTree = "<group>"; };
 		E9B9EAC92421FCCB000A92B3 /* RestorePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePasswordViewModel.swift; sourceTree = "<group>"; };
@@ -875,7 +875,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				E9B67377243BBA2900457C74 /* SmartYardPaymentController */,
+				E9B67377243BBA2900457C74 /* PaymentPopupController */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
@@ -2379,13 +2379,13 @@
 			path = WhiteButtonWithBorder;
 			sourceTree = "<group>";
 		};
-		E9B67377243BBA2900457C74 /* SmartYardPaymentController */ = {
+		E9B67377243BBA2900457C74 /* PaymentPopupController */ = {
 			isa = PBXGroup;
 			children = (
-				E9B67383243BCE4800457C74 /* SmartYardPaymentController.swift */,
-				E9B67384243BCE4800457C74 /* SmartYardPaymentController.xib */,
+				E9B67383243BCE4800457C74 /* PaymentPopupController.swift */,
+				E9B67384243BCE4800457C74 /* PaymentPopupController.xib */,
 			);
-			path = SmartYardPaymentController;
+			path = PaymentPopupController;
 			sourceTree = "<group>";
 		};
 		E9B6737C243BBC5500457C74 /* PickerAnimator */ = {
@@ -2654,7 +2654,7 @@
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
 				E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
-				E9B67386243BCE4800457C74 /* SmartYardPaymentController.xib in Resources */,
+				E9B67386243BCE4800457C74 /* PaymentPopupController.xib in Resources */,
 				84AADD21242E22640056994A /* EditNameViewController.xib in Resources */,
 				E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */,
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
@@ -2918,7 +2918,7 @@
 				E92EFBDD242A22F2003AF7FE /* GetListConnectResponseData.swift in Sources */,
 				843C38CE242A577C0035BF80 /* InboxResponseData.swift in Sources */,
 				843C38E8242A6E490035BF80 /* QRCodeScanViewModel.swift in Sources */,
-				E9B67385243BCE4800457C74 /* SmartYardPaymentController.swift in Sources */,
+				E9B67385243BCE4800457C74 /* PaymentPopupController.swift in Sources */,
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				E94057F423F56BF800623746 /* IssueDeliveryType.swift in Sources */,
 				E92EFBD1242A22F2003AF7FE /* IntercomRequest.swift in Sources */,

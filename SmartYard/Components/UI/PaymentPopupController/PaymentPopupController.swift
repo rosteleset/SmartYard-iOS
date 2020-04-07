@@ -1,5 +1,5 @@
 //
-//  SmartYardPaymentController.swift
+//  PaymentPopupController.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 07.04.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SmartYardPaymentController: BaseViewController {
+class PaymentPopupController: BaseViewController {
     
     @IBOutlet private weak var successView: UIView!
     @IBOutlet private weak var allPaymentMethodButton: UIButton!
@@ -147,7 +147,7 @@ class SmartYardPaymentController: BaseViewController {
     
 }
 
-extension SmartYardPaymentController: PickerAnimatable {
+extension PaymentPopupController: PickerAnimatable {
     
     var animatedBackgroundView: UIView { return backgroundView }
     
@@ -155,7 +155,7 @@ extension SmartYardPaymentController: PickerAnimatable {
     
 }
 
-extension SmartYardPaymentController: UIViewControllerTransitioningDelegate {
+extension PaymentPopupController: UIViewControllerTransitioningDelegate {
     
     func animationController(
         forPresented presented: UIViewController,
