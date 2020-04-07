@@ -29,6 +29,7 @@
                 <outlet property="backgroundView" destination="aZa-Gd-3fU" id="MMj-Uo-XT3"/>
                 <outlet property="payButton" destination="St8-Dw-f2Z" id="gwm-PR-KLe"/>
                 <outlet property="recommendedSumLabel" destination="99Y-gl-f8E" id="T01-x6-V6o"/>
+                <outlet property="successView" destination="xmW-0h-krF" id="VjS-zL-v5f"/>
                 <outlet property="sumTextField" destination="Wwk-4I-F7O" id="Kdh-cs-fM3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -132,10 +133,45 @@
                             <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xmW-0h-krF">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="475"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SuccessIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ShM-HY-QDK">
+                                    <rect key="frame" x="157" y="99" width="100" height="100"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="100" id="hFz-kj-a20"/>
+                                        <constraint firstAttribute="width" constant="100" id="wGi-el-orL"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Готово!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fr5-sq-kBi">
+                                    <rect key="frame" x="152.5" y="279" width="109.5" height="40.5"/>
+                                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
+                                    <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ваш баланс пополнен" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0tA-bU-0fp">
+                                    <rect key="frame" x="139.5" y="331.5" width="135.5" height="18"/>
+                                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                                    <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="ShM-HY-QDK" firstAttribute="centerX" secondItem="xmW-0h-krF" secondAttribute="centerX" id="CDI-pt-u0T"/>
+                                <constraint firstItem="0tA-bU-0fp" firstAttribute="centerX" secondItem="xmW-0h-krF" secondAttribute="centerX" id="e74-l2-09r"/>
+                                <constraint firstItem="Fr5-sq-kBi" firstAttribute="top" secondItem="ShM-HY-QDK" secondAttribute="bottom" constant="80" id="fHm-dH-wzH"/>
+                                <constraint firstItem="Fr5-sq-kBi" firstAttribute="centerX" secondItem="xmW-0h-krF" secondAttribute="centerX" id="lFH-4E-VNK"/>
+                                <constraint firstItem="ShM-HY-QDK" firstAttribute="top" secondItem="xmW-0h-krF" secondAttribute="top" constant="99" id="lq5-xO-mR6"/>
+                                <constraint firstItem="0tA-bU-0fp" firstAttribute="top" secondItem="Fr5-sq-kBi" secondAttribute="bottom" constant="12" id="mA0-hf-E8p"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="99Y-gl-f8E" firstAttribute="top" secondItem="fd5-bC-tmj" secondAttribute="bottom" constant="1" id="659-4c-pEn"/>
+                        <constraint firstAttribute="trailing" secondItem="xmW-0h-krF" secondAttribute="trailing" id="9Ap-gL-5ag"/>
+                        <constraint firstItem="xmW-0h-krF" firstAttribute="top" secondItem="K63-GP-Chi" secondAttribute="top" id="C2N-o2-372"/>
                         <constraint firstItem="fd5-bC-tmj" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" constant="40" id="Ed8-hi-YsK"/>
                         <constraint firstItem="St8-Dw-f2Z" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" constant="40" id="ITk-gT-nmU"/>
                         <constraint firstItem="12B-12-a60" firstAttribute="top" secondItem="St8-Dw-f2Z" secondAttribute="bottom" constant="37" id="KWQ-tk-whf"/>
@@ -149,10 +185,12 @@
                         <constraint firstItem="IIm-3l-khM" firstAttribute="centerX" secondItem="K63-GP-Chi" secondAttribute="centerX" id="eWm-4c-ZaW"/>
                         <constraint firstAttribute="trailing" secondItem="St8-Dw-f2Z" secondAttribute="trailing" constant="40" id="f4y-ZZ-tp5"/>
                         <constraint firstAttribute="trailing" secondItem="99Y-gl-f8E" secondAttribute="trailing" constant="40" id="g0y-cK-y62"/>
+                        <constraint firstItem="xmW-0h-krF" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" id="hkQ-RJ-VuZ"/>
                         <constraint firstItem="St8-Dw-f2Z" firstAttribute="top" secondItem="Wwk-4I-F7O" secondAttribute="bottom" constant="20" id="kfM-7O-VWh"/>
                         <constraint firstItem="IIm-3l-khM" firstAttribute="top" secondItem="yfI-I0-XKC" secondAttribute="bottom" constant="25" id="mDH-uM-8aI"/>
                         <constraint firstAttribute="height" constant="525" id="nNP-Fz-8Ew"/>
                         <constraint firstItem="Wwk-4I-F7O" firstAttribute="top" secondItem="99Y-gl-f8E" secondAttribute="bottom" constant="12" id="pCA-7i-tAV"/>
+                        <constraint firstAttribute="bottom" secondItem="xmW-0h-krF" secondAttribute="bottom" constant="50" id="pFU-UP-1vh"/>
                         <constraint firstItem="99Y-gl-f8E" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" constant="40" id="pm9-U3-KIh"/>
                         <constraint firstItem="yfI-I0-XKC" firstAttribute="top" secondItem="BQr-46-A7T" secondAttribute="bottom" constant="30" id="sZv-yI-dbV"/>
                         <constraint firstItem="fd5-bC-tmj" firstAttribute="top" secondItem="IIm-3l-khM" secondAttribute="bottom" constant="48" id="v2w-dB-HYF"/>
@@ -175,5 +213,6 @@
     </objects>
     <resources>
         <image name="AppleIcon" width="16" height="16"/>
+        <image name="SuccessIcon" width="100" height="100"/>
     </resources>
 </document>
