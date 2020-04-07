@@ -44,6 +44,8 @@ class PayContractViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // TODO: скрыто, т.к. работает не так, как нужно. Кол-во кружков должно быть = кол-ву адресов в collectionView
+        dotsView.isHidden = true
         fakeNavBar.configueDarkNavBar()
         configureCollectionView()
         bind()
@@ -78,9 +80,19 @@ class PayContractViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         itemsProxy
+            .withLatestFrom(output.selectedIndex.asDriver())
             .subscribe(
-                onNext: { [weak self] _ in
+                onNext: { [weak self] index in
                     self?.collectionView.reloadData()
+                    DispatchQueue.main.async {
+                        self?.collectionView.scrollToItem(
+                            at: IndexPath(row: index, section: 0),
+                            at: .centeredHorizontally,
+                            animated: false
+                        )
+                        
+                        self?.updateAddressLabel(with: index)
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -209,6 +221,7 @@ extension PayContractViewController: UICollectionViewDataSource {
         
         let subject = PublishSubject<Void>()
         
+        // TODO: прокинуть данные для платежа
         subject
             .bind(to: payContractTrigger)
             .disposed(by: cell.disposeBag)
