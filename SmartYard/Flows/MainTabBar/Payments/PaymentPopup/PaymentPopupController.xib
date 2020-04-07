@@ -44,43 +44,21 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K63-GP-Chi" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="408.5" width="414" height="503.5"/>
+                    <rect key="frame" x="0.0" y="421" width="414" height="525"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQr-46-A7T">
-                            <rect key="frame" x="187" y="9" width="40" height="5"/>
-                            <color key="backgroundColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="40" id="hAq-Rn-UjQ"/>
-                                <constraint firstAttribute="height" constant="5" id="mSC-BY-JI6"/>
-                            </constraints>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                    <real key="value" value="0.0"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="2"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Пополнить баланс" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yfI-I0-XKC">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Пополнить баланс" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yfI-I0-XKC">
                             <rect key="frame" x="104.5" y="44" width="205" height="30.5"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="24"/>
                             <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="999" text="№68992" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IIm-3l-khM">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="№68992" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IIm-3l-khM">
                             <rect key="frame" x="170.5" y="99.5" width="73" height="25.5"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="20"/>
                             <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="998" verticalCompressionResistancePriority="998" text="Сумма:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fd5-bC-tmj">
-                            <rect key="frame" x="40" y="173" width="57" height="23"/>
-                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
-                            <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="997" verticalCompressionResistancePriority="997" text="Рекомендуемая - 480 рублей" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="99Y-gl-f8E">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рекомендуемвая - 480 рублей" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="99Y-gl-f8E">
                             <rect key="frame" x="40" y="197" width="334" height="15.5"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="12"/>
                             <color key="textColor" red="0.42745098040000001" green="0.47843137250000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -126,15 +104,21 @@
                                 <action selector="payButtonDidTap:" destination="-1" eventType="touchUpInside" id="GNX-4H-R5d"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="996" verticalCompressionResistancePriority="996" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12B-12-a60">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12B-12-a60">
                             <rect key="frame" x="127.5" y="393.5" width="159" height="30"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="14"/>
                             <state key="normal" title="Все способы пополнения">
                                 <color key="titleColor" red="0.42745098040000001" green="0.47843137250000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                         </button>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xmW-0h-krF">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="503.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Сумма:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fd5-bC-tmj">
+                            <rect key="frame" x="40" y="173" width="57" height="23"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                            <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xmW-0h-krF">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="475"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SuccessIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ShM-HY-QDK">
                                     <rect key="frame" x="157" y="99" width="100" height="100"/>
@@ -166,6 +150,22 @@
                                 <constraint firstItem="0tA-bU-0fp" firstAttribute="top" secondItem="Fr5-sq-kBi" secondAttribute="bottom" constant="12" id="mA0-hf-E8p"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQr-46-A7T">
+                            <rect key="frame" x="187" y="9" width="40" height="5"/>
+                            <color key="backgroundColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="hAq-Rn-UjQ"/>
+                                <constraint firstAttribute="height" constant="5" id="mSC-BY-JI6"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -179,7 +179,7 @@
                         <constraint firstItem="BQr-46-A7T" firstAttribute="top" secondItem="K63-GP-Chi" secondAttribute="top" constant="9" id="LQL-rM-OZz"/>
                         <constraint firstItem="BQr-46-A7T" firstAttribute="centerX" secondItem="K63-GP-Chi" secondAttribute="centerX" id="Svl-tA-9AF"/>
                         <constraint firstItem="Wwk-4I-F7O" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" constant="40" id="XYJ-oa-0sT"/>
-                        <constraint firstAttribute="bottom" secondItem="12B-12-a60" secondAttribute="bottom" constant="80" id="YRz-an-Eo9"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="12B-12-a60" secondAttribute="bottom" id="YRz-an-Eo9"/>
                         <constraint firstAttribute="trailing" secondItem="Wwk-4I-F7O" secondAttribute="trailing" constant="40" id="Yh8-ed-hUt"/>
                         <constraint firstItem="12B-12-a60" firstAttribute="centerX" secondItem="St8-Dw-f2Z" secondAttribute="centerX" id="c6f-Cy-4KE"/>
                         <constraint firstItem="IIm-3l-khM" firstAttribute="centerX" secondItem="K63-GP-Chi" secondAttribute="centerX" id="eWm-4c-ZaW"/>
@@ -188,8 +188,9 @@
                         <constraint firstItem="xmW-0h-krF" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" id="hkQ-RJ-VuZ"/>
                         <constraint firstItem="St8-Dw-f2Z" firstAttribute="top" secondItem="Wwk-4I-F7O" secondAttribute="bottom" constant="20" id="kfM-7O-VWh"/>
                         <constraint firstItem="IIm-3l-khM" firstAttribute="top" secondItem="yfI-I0-XKC" secondAttribute="bottom" constant="25" id="mDH-uM-8aI"/>
+                        <constraint firstAttribute="height" constant="525" id="nNP-Fz-8Ew"/>
                         <constraint firstItem="Wwk-4I-F7O" firstAttribute="top" secondItem="99Y-gl-f8E" secondAttribute="bottom" constant="12" id="pCA-7i-tAV"/>
-                        <constraint firstAttribute="bottom" secondItem="xmW-0h-krF" secondAttribute="bottom" id="pFU-UP-1vh"/>
+                        <constraint firstAttribute="bottom" secondItem="xmW-0h-krF" secondAttribute="bottom" constant="50" id="pFU-UP-1vh"/>
                         <constraint firstItem="99Y-gl-f8E" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" constant="40" id="pm9-U3-KIh"/>
                         <constraint firstItem="yfI-I0-XKC" firstAttribute="top" secondItem="BQr-46-A7T" secondAttribute="bottom" constant="30" id="sZv-yI-dbV"/>
                         <constraint firstItem="fd5-bC-tmj" firstAttribute="top" secondItem="IIm-3l-khM" secondAttribute="bottom" constant="48" id="v2w-dB-HYF"/>
@@ -200,7 +201,7 @@
             <constraints>
                 <constraint firstItem="K63-GP-Chi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ne5-if-Kju"/>
                 <constraint firstAttribute="trailing" secondItem="K63-GP-Chi" secondAttribute="trailing" id="QFh-iL-mBa"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="K63-GP-Chi" secondAttribute="bottom" constant="-50" id="Wei-5v-7aC"/>
+                <constraint firstAttribute="bottom" secondItem="K63-GP-Chi" secondAttribute="bottom" constant="-50" id="Wei-5v-7aC"/>
                 <constraint firstItem="aZa-Gd-3fU" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="YKm-9t-fKa"/>
                 <constraint firstItem="aZa-Gd-3fU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="d8O-ep-hlo"/>
                 <constraint firstAttribute="bottom" secondItem="aZa-Gd-3fU" secondAttribute="bottom" id="pKU-Tx-5CB"/>
