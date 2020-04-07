@@ -8,31 +8,28 @@
 
 import UIKit
 
-protocol SmartYardPaymentViewDelegate: AnyObject {
-    
-    func payContract(sum: Double)
-    
-}
-
 class SmartYardPaymentController: BaseViewController {
     
+    @IBOutlet private weak var allPaymentMethodButton: UIButton!
+    @IBOutlet private weak var payButton: UIButton!
+    @IBOutlet private weak var recommendedSumLabel: UILabel!
+    @IBOutlet private weak var sumTextField: UITextField!
     @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var animatedView: UIView!
+    
     @IBOutlet private var animatedViewBottomOffset: NSLayoutConstraint!
     
     private var swipeDismissInteractor: SwipeInteractionController?
-    
-    weak var delegate: SmartYardPaymentViewDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureView()
-    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureView()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -41,6 +38,7 @@ class SmartYardPaymentController: BaseViewController {
     
     private func configureView() {
         configureSwipeAction()
+        configureRxKeyboard()
         view.backgroundColor = .clear
     }
     
@@ -52,14 +50,42 @@ class SmartYardPaymentController: BaseViewController {
         
         swipeDismissInteractor?.animatedViewBottomOffset = animatedViewBottomOffset.constant
         swipeDismissInteractor?.velocityThreshold = 1500
+        
         transitioningDelegate = self
+    }
+    
+    private func addDismissKeyboardByTapGesture() {
+        let dismissKeyobardTapGesture = UITapGestureRecognizer()
+        animatedView.addGestureRecognizer(dismissKeyobardTapGesture)
+
+        dismissKeyobardTapGesture.rx.event
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.sumTextField.resignFirstResponder()
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func addDismissKeyboardBySwipeGesture() {
+        let swipeDown = UISwipeGestureRecognizer()
+        swipeDown.direction = .down
+        animatedView.addGestureRecognizer(swipeDown)
         
-        animatedView.layer.cornerRadius = 30
-        animatedView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        swipeDown.rx.event
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.sumTextField.resignFirstResponder()
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func addDismissViewGesture() {
+        let dismissViewTapGesture = UITapGestureRecognizer()
+        backgroundView.addGestureRecognizer(dismissViewTapGesture)
         
-        let tapGesture = UITapGestureRecognizer()
-        backgroundView.addGestureRecognizer(tapGesture)
-        tapGesture.rx.event
+        dismissViewTapGesture.rx.event
             .subscribe(
                 onNext: { [weak self] _ in
                     self?.dismiss(
@@ -71,8 +97,57 @@ class SmartYardPaymentController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    private func removeAllGestures() {
+        view.gestureRecognizers?.removeAll()
+        animatedView.gestureRecognizers?.removeAll()
+        backgroundView.gestureRecognizers?.removeAll()
+    }
+    
+    private func configureGestures(with keyboardHeight: CGFloat) {
+        self.removeAllGestures()
+        
+        switch keyboardHeight {
+        case 0:
+            self.addDismissViewGesture()
+            self.addDismissKeyboardByTapGesture()
+            self.configureSwipeAction()
+        default:
+            self.addDismissKeyboardByTapGesture()
+            self.addDismissKeyboardBySwipeGesture()
+        }
+    }
+    
+    private func configureRxKeyboard() {
+        RxKeyboard.instance.visibleHeight
+            .drive(
+                onNext: { [weak self] keyboardVisibleHeight in
+                    guard let self = self else {
+                        return
+                    }
+
+                    self.configureGestures(with: keyboardVisibleHeight)
+                    
+                    let textFieldBottomOffset: CGFloat = 245
+                    let defaultBottomOffset: CGFloat = -50
+                    let textFieldOffsetToButton: CGFloat = 20
+                    
+                    let calculatedOffset = keyboardVisibleHeight - textFieldBottomOffset + textFieldOffsetToButton
+                    
+                    let offset = keyboardVisibleHeight == 0 ? defaultBottomOffset : calculatedOffset
+                    
+                    UIView.animate(
+                        withDuration: 0.05,
+                        animations: { [weak self] in
+                            self?.animatedViewBottomOffset.constant = offset
+                            self?.view.layoutIfNeeded()
+                        }
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
     @IBAction private func payButtonDidTap(_ sender: Any) {
-        delegate?.payContract(sum: 100)
         dismiss(animated: true, completion: nil)
     }
     

@@ -23,9 +23,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SmartYardPaymentController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="allPaymentMethodButton" destination="12B-12-a60" id="APR-1E-tLm"/>
                 <outlet property="animatedView" destination="K63-GP-Chi" id="vx0-k0-eFh"/>
                 <outlet property="animatedViewBottomOffset" destination="Wei-5v-7aC" id="YJl-Xh-eV2"/>
                 <outlet property="backgroundView" destination="aZa-Gd-3fU" id="MMj-Uo-XT3"/>
+                <outlet property="payButton" destination="St8-Dw-f2Z" id="gwm-PR-KLe"/>
+                <outlet property="recommendedSumLabel" destination="99Y-gl-f8E" id="T01-x6-V6o"/>
+                <outlet property="sumTextField" destination="Wwk-4I-F7O" id="Kdh-cs-fM3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -39,7 +43,7 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K63-GP-Chi" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="421" width="414" height="475"/>
+                    <rect key="frame" x="0.0" y="421" width="414" height="525"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQr-46-A7T">
                             <rect key="frame" x="187" y="9" width="40" height="5"/>
@@ -50,7 +54,10 @@
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                    <real key="value" value="12"/>
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="2"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
@@ -144,7 +151,7 @@
                         <constraint firstAttribute="trailing" secondItem="99Y-gl-f8E" secondAttribute="trailing" constant="40" id="g0y-cK-y62"/>
                         <constraint firstItem="St8-Dw-f2Z" firstAttribute="top" secondItem="Wwk-4I-F7O" secondAttribute="bottom" constant="20" id="kfM-7O-VWh"/>
                         <constraint firstItem="IIm-3l-khM" firstAttribute="top" secondItem="yfI-I0-XKC" secondAttribute="bottom" constant="25" id="mDH-uM-8aI"/>
-                        <constraint firstAttribute="height" constant="475" id="nNP-Fz-8Ew"/>
+                        <constraint firstAttribute="height" constant="525" id="nNP-Fz-8Ew"/>
                         <constraint firstItem="Wwk-4I-F7O" firstAttribute="top" secondItem="99Y-gl-f8E" secondAttribute="bottom" constant="12" id="pCA-7i-tAV"/>
                         <constraint firstItem="99Y-gl-f8E" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" constant="40" id="pm9-U3-KIh"/>
                         <constraint firstItem="yfI-I0-XKC" firstAttribute="top" secondItem="BQr-46-A7T" secondAttribute="bottom" constant="30" id="sZv-yI-dbV"/>
@@ -156,7 +163,7 @@
             <constraints>
                 <constraint firstItem="K63-GP-Chi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ne5-if-Kju"/>
                 <constraint firstAttribute="trailing" secondItem="K63-GP-Chi" secondAttribute="trailing" id="QFh-iL-mBa"/>
-                <constraint firstAttribute="bottom" secondItem="K63-GP-Chi" secondAttribute="bottom" id="Wei-5v-7aC"/>
+                <constraint firstAttribute="bottom" secondItem="K63-GP-Chi" secondAttribute="bottom" constant="-50" id="Wei-5v-7aC"/>
                 <constraint firstItem="aZa-Gd-3fU" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="YKm-9t-fKa"/>
                 <constraint firstItem="aZa-Gd-3fU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="d8O-ep-hlo"/>
                 <constraint firstAttribute="bottom" secondItem="aZa-Gd-3fU" secondAttribute="bottom" id="pKU-Tx-5CB"/>
