@@ -875,7 +875,6 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				E9B67377243BBA2900457C74 /* PaymentPopupController */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
@@ -939,6 +938,7 @@
 				844AC3EC23EBFF0E0066006D /* PaymentsCoordinator.swift */,
 				844AC3E323EBFE9D0066006D /* PaymentAddressesList */,
 				E99A838724372D1E001CEE95 /* PayContract */,
+				E9B67377243BBA2900457C74 /* PaymentPopup */,
 			);
 			path = Payments;
 			sourceTree = "<group>";
@@ -2222,10 +2222,8 @@
 		E99A838724372D1E001CEE95 /* PayContract */ = {
 			isa = PBXGroup;
 			children = (
-				E99A839324373EA4001CEE95 /* Cells */,
-				E99A838824372FF1001CEE95 /* PayContractViewController.swift */,
-				E99A838924372FF1001CEE95 /* PayContractViewController.xib */,
-				E99A839124373E9D001CEE95 /* PayContractViewModel.swift */,
+				E9B67389243C6E4E00457C74 /* View */,
+				E9B6738A243C6E6000457C74 /* ViewModel */,
 			);
 			path = PayContract;
 			sourceTree = "<group>";
@@ -2379,13 +2377,13 @@
 			path = WhiteButtonWithBorder;
 			sourceTree = "<group>";
 		};
-		E9B67377243BBA2900457C74 /* PaymentPopupController */ = {
+		E9B67377243BBA2900457C74 /* PaymentPopup */ = {
 			isa = PBXGroup;
 			children = (
 				E9B67383243BCE4800457C74 /* PaymentPopupController.swift */,
 				E9B67384243BCE4800457C74 /* PaymentPopupController.xib */,
 			);
-			path = PaymentPopupController;
+			path = PaymentPopup;
 			sourceTree = "<group>";
 		};
 		E9B6737C243BBC5500457C74 /* PickerAnimator */ = {
@@ -2396,6 +2394,24 @@
 				E9B6737F243BBC5500457C74 /* SwipeInteractionController.swift */,
 			);
 			path = PickerAnimator;
+			sourceTree = "<group>";
+		};
+		E9B67389243C6E4E00457C74 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E99A839324373EA4001CEE95 /* Cells */,
+				E99A838824372FF1001CEE95 /* PayContractViewController.swift */,
+				E99A838924372FF1001CEE95 /* PayContractViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E9B6738A243C6E6000457C74 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E99A839124373E9D001CEE95 /* PayContractViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		E9B9EAC42421FC91000A92B3 /* RestorePasswordFlow */ = {
