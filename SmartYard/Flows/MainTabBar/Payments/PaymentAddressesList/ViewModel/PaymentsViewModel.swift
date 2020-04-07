@@ -113,9 +113,16 @@ class PaymentsViewModel: BaseViewModel {
     
     func createItems(addresses: GetAddressListResponseData) -> [PaymentAddressItem] {
         return addresses.map {
-            // Пока не понятно, что с апи, но я предполагаю, что нужно сделать один запрос на домашнем экране для запроса списка всей инфы по договорам
+            // Пока не понятно, что с апи, но я предполагаю,
+            // что нужно сделать один запрос на домашнем экране для запроса списка всей инфы по договорам
             // Пока это будут частично моковые данные
-            PaymentAddressItem(id: $0.houseId, address: $0.address, contractNum: "43243", balance: "120 ₽", recommendedSum: "480 ₽")
+            PaymentAddressItem(
+                id: $0.houseId,
+                address: $0.address,
+                contractNum: "43243",
+                balance: "120 ₽",
+                recommendedSum: "480 ₽"
+            )
         }
     }
     
