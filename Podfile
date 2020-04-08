@@ -32,7 +32,7 @@ target 'SmartYard' do
   pod 'JGProgressHUD'
   pod 'SkeletonView', '1.7'
   pod 'SearchTextField'
-  pod 'InputMask'
+  pod 'SHSPhoneComponent'
 
   # Map
   pod 'Mapbox-iOS-SDK'

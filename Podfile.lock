@@ -83,7 +83,6 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.5.0):
     - GoogleUtilities/Logger
-  - InputMask (6.0.0)
   - JGProgressHUD (2.1)
   - Kingfisher (5.13.0):
     - Kingfisher/Core (= 5.13.0)
@@ -122,6 +121,7 @@ PODS:
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
   - SearchTextField (1.2.4)
+  - SHSPhoneComponent (2.32)
   - SkeletonView (1.7)
   - SSCustomTabbar (2.0.2)
   - SwifterSwift (4.6.0):
@@ -157,7 +157,6 @@ DEPENDENCIES:
   - Fabric
   - Firebase/Analytics
   - Firebase/Messaging
-  - InputMask
   - JGProgressHUD
   - Kingfisher
   - linphone-sdk (> 4.4.0-alpha)
@@ -170,6 +169,7 @@ DEPENDENCIES:
   - RxSwift
   - RxViewController
   - SearchTextField
+  - SHSPhoneComponent
   - SkeletonView (= 1.7)
   - SSCustomTabbar (from `https://github.com/MadBrains/SSCustomTabbar.git`, branch `feature/add-animation-options`)
   - SwifterSwift (= 4.6)
@@ -199,7 +199,6 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
-    - InputMask
     - JGProgressHUD
     - Kingfisher
     - Mapbox-iOS-SDK
@@ -216,6 +215,7 @@ SPEC REPOS:
     - RxSwift
     - RxViewController
     - SearchTextField
+    - SHSPhoneComponent
     - SkeletonView
     - SwifterSwift
     - SwiftLint
@@ -254,7 +254,6 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 574a983e829327d7c18f2627f65d9e80164ea8a4
   GoogleDataTransportCCTSupport: cad3cd6cdbdbad6b5c2c9206ec413402755faaaa
   GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
-  InputMask: f340bdc905a4c4f377e44d865f129f752ac2383d
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
   linphone-sdk: 82302f72c930a859a75acdcfed304272d3cfdae1
@@ -272,6 +271,7 @@ SPEC CHECKSUMS:
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
   SearchTextField: 40dc3cc57def5a211f263cac263622c163bbc25a
+  SHSPhoneComponent: c491cf87a0d5c3fb11b8f54100d05fd2706cb401
   SkeletonView: 7d7378731b708f8a6e6b1ffefb68cc3903f10a03
   SSCustomTabbar: e18f8aa256bce5c8a4742e53e638f64b33fb0e10
   SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
@@ -280,6 +280,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: 8ff3a668600800952145a0ec269f9666a3830686
+PODFILE CHECKSUM: 9a133f9bbde4c401bd62483be33c37ed47d27f9c
 
 COCOAPODS: 1.8.4
