@@ -58,15 +58,23 @@ class NewAllowedPersonViewModel: BaseViewModel {
         
         input.rawPhoneAddedTrigger
             .distinctUntilChanged()
-            .map { [weak self] phoneText in
-                guard let self = self, phoneText.count == Constants.phoneLengthWithoutPrefix else {
+            .map { [weak self] phoneText -> AllowedPerson? in
+                guard let self = self, !phoneText.isEmpty else {
+                    return nil
+                }
+                
+                let phoneCharsArray = phoneText.components(separatedBy: CharacterSet.alphanumerics.inverted)
+                
+                let cleanPhone = String(phoneCharsArray.joined(separator: "").dropFirst())
+                
+                guard cleanPhone.count == Constants.phoneLengthWithoutPrefix else {
                     return nil
                 }
                 
                 return AllowedPerson(
                     roommateType: self.allowedPersonType == .temporary ? .outer : .inner,
                     displayedName: nil,
-                    rawNumber: phoneText,
+                    rawNumber: cleanPhone,
                     logoImage: nil
                 )
             }

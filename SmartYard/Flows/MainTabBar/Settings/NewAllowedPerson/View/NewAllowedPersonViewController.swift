@@ -11,11 +11,12 @@ import RxSwift
 import RxCocoa
 import ContactsUI
 import Contacts
+import SHSPhoneComponent
 
 class NewAllowedPersonViewController: BaseViewController {
     
     // swiftlint:disable all
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var textField: SHSPhoneTextField!
     @IBOutlet weak var selectFromContactButton: UIButton!
     @IBOutlet weak var contactImageView: RoundedImageView!
     @IBOutlet weak var contactNameLabel: UILabel!
@@ -56,14 +57,9 @@ class NewAllowedPersonViewController: BaseViewController {
         
         textField.isHidden = false
         textField.delegate = self
-
-        let prefixLabel = UILabel()
-        prefixLabel.text = "+7"
-        prefixLabel.font = UIFont.SourceSansPro.semibold(size: 18)
-        prefixLabel.sizeToFit()
-
-        textField.leftView = prefixLabel
-        textField.leftViewMode = .whileEditing
+        
+        textField.formatter.setDefaultOutputPattern(" (###) ###-##-##")
+        textField.formatter.prefix = "+7"
     }
     
     // swiftlint:disable:next function_body_length

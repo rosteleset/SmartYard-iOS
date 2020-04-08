@@ -121,6 +121,7 @@ PODS:
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
   - SearchTextField (1.2.4)
+  - SHSPhoneComponent (2.32)
   - SkeletonView (1.7)
   - SSCustomTabbar (2.0.2)
   - SwifterSwift (4.6.0):
@@ -168,6 +169,7 @@ DEPENDENCIES:
   - RxSwift
   - RxViewController
   - SearchTextField
+  - SHSPhoneComponent
   - SkeletonView (= 1.7)
   - SSCustomTabbar (from `https://github.com/MadBrains/SSCustomTabbar.git`, branch `feature/add-animation-options`)
   - SwifterSwift (= 4.6)
@@ -213,6 +215,7 @@ SPEC REPOS:
     - RxSwift
     - RxViewController
     - SearchTextField
+    - SHSPhoneComponent
     - SkeletonView
     - SwifterSwift
     - SwiftLint
@@ -268,6 +271,7 @@ SPEC CHECKSUMS:
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
   SearchTextField: 40dc3cc57def5a211f263cac263622c163bbc25a
+  SHSPhoneComponent: c491cf87a0d5c3fb11b8f54100d05fd2706cb401
   SkeletonView: 7d7378731b708f8a6e6b1ffefb68cc3903f10a03
   SSCustomTabbar: e18f8aa256bce5c8a4742e53e638f64b33fb0e10
   SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
@@ -276,6 +280,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: 332407e80f368e5b9b36c4c0e0210304dd2331d7
+PODFILE CHECKSUM: 9a133f9bbde4c401bd62483be33c37ed47d27f9c
 
 COCOAPODS: 1.8.4
