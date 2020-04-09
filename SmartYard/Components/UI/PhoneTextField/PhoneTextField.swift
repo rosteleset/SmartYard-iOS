@@ -112,6 +112,7 @@ class PhoneTextField: PMNibLinkableView {
         fakeTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         fakeTextField.keyboardType = .numberPad
         fakeTextField.textContentType = .telephoneNumber
+        fakeTextField.autocorrectionType = .no
     }
     
 }
