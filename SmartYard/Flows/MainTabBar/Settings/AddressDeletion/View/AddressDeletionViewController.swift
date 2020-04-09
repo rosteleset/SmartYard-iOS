@@ -90,11 +90,7 @@ class AddressDeletionViewController: BaseViewController {
             customDescription: reasonTextField.rx.text.asDriver().distinctUntilChanged()
         )
         
-        let output = viewModel.transform(input)
-        
-        output.isAbleToDelete
-            .drive(deleteButton.rx.isEnabled)
-            .disposed(by: disposeBag)
+        _ = viewModel.transform(input)
     }
     
     private func configureView() {
