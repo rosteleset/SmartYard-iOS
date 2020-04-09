@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2830E396E392AE070AD8399C /* Pods_SmartYardWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5284C907FEDA617405ADC19 /* Pods_SmartYardWidget.framework */; };
 		842DBD00243750ED00A1D346 /* SettingsServiceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */; };
 		842FECB6242B89DF007CA0F3 /* OfficesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */; };
 		842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */; };
@@ -164,6 +165,9 @@
 		E9004C6223FABF6800B59976 /* AccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9004C6123FABF6800B59976 /* AccessView.xib */; };
 		E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */; };
 		E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244C24125CAD00F2B810 /* AvailableServicesViewModel.swift */; };
+		E92AFE7C243F07EC001F131D /* SmartYardSharedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AFE7B243F07EC001F131D /* SmartYardSharedObject.swift */; };
+		E92AFE7E243F0834001F131D /* SmartYardSharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AFE7D243F0834001F131D /* SmartYardSharedData.swift */; };
+		E92AFE86243F4E18001F131D /* WidgetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AFE85243F4E18001F131D /* WidgetItem.swift */; };
 		E92EFB4524287F4C003AF7FE /* PassConfirmationPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB4324287F4C003AF7FE /* PassConfirmationPinViewController.swift */; };
 		E92EFB4624287F4C003AF7FE /* PassConfirmationPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92EFB4424287F4C003AF7FE /* PassConfirmationPinViewController.xib */; };
 		E92EFB4824287F72003AF7FE /* PassConfirmationPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB4724287F72003AF7FE /* PassConfirmationPinViewModel.swift */; };
@@ -257,6 +261,10 @@
 		E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E96CC0D72423FAEA008DF44B /* RestoreMethodCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96CC0D62423FAEA008DF44B /* RestoreMethodCellModel.swift */; };
+		E97EAFC7243DEE7900D81243 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
+		E97EAFE6243EFF3800D81243 /* SmartYardSharedDataFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = E97EAFE4243EFF3800D81243 /* SmartYardSharedDataFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E97EAFE9243EFF3800D81243 /* SmartYardSharedDataFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97EAFE2243EFF3800D81243 /* SmartYardSharedDataFramework.framework */; };
+		E97EAFEA243EFF3800D81243 /* SmartYardSharedDataFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97EAFE2243EFF3800D81243 /* SmartYardSharedDataFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
 		E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C382423F149F30010BBC1 /* PinCodeViewController.xib */; };
@@ -302,6 +310,12 @@
 		E9B67382243BBC5500457C74 /* SwipeInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B6737F243BBC5500457C74 /* SwipeInteractionController.swift */; };
 		E9B67385243BCE4800457C74 /* PaymentPopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B67383243BCE4800457C74 /* PaymentPopupController.swift */; };
 		E9B67386243BCE4800457C74 /* PaymentPopupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B67384243BCE4800457C74 /* PaymentPopupController.xib */; };
+		E9B673E6243DC98C00457C74 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B673C5243DC2AB00457C74 /* NotificationCenter.framework */; };
+		E9B673E9243DC98C00457C74 /* WidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B673E8243DC98C00457C74 /* WidgetViewController.swift */; };
+		E9B673EC243DC98C00457C74 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9B673EA243DC98C00457C74 /* MainInterface.storyboard */; };
+		E9B673F0243DC98C00457C74 /* SmartYardWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E9B673E5243DC98C00457C74 /* SmartYardWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E9B673F6243DCEE200457C74 /* WdgObjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B673F4243DCEE200457C74 /* WdgObjectCell.swift */; };
+		E9B673F7243DCEE200457C74 /* WdgObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B673F5243DCEE200457C74 /* WdgObjectCell.xib */; };
 		E9B9EAC72421FCB8000A92B3 /* RestorePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9EAC52421FCB8000A92B3 /* RestorePasswordViewController.swift */; };
 		E9B9EAC82421FCB8000A92B3 /* RestorePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B9EAC62421FCB8000A92B3 /* RestorePasswordViewController.xib */; };
 		E9B9EACA2421FCCB000A92B3 /* RestorePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9EAC92421FCCB000A92B3 /* RestorePasswordViewModel.swift */; };
@@ -344,6 +358,20 @@
 			remoteGlobalIDString = 84EEBC9C23F55A9A00C9557F;
 			remoteInfo = NotificationServiceExtension;
 		};
+		E97EAFE7243EFF3800D81243 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84F840CA23E07DA5008DBE50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E97EAFE1243EFF3800D81243;
+			remoteInfo = SmartYardSharedDataFramework;
+		};
+		E9B673EE243DC98C00457C74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84F840CA23E07DA5008DBE50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E9B673E4243DC98C00457C74;
+			remoteInfo = LanTa;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -354,14 +382,28 @@
 			dstSubfolderSpec = 13;
 			files = (
 				84EEBCA423F55A9B00C9557F /* NotificationServiceExtension.appex in Embed App Extensions */,
+				E9B673F0243DC98C00457C74 /* SmartYardWidget.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E97EAFD9243E048900D81243 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E97EAFEA243EFF3800D81243 /* SmartYardSharedDataFramework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1650E94C71A4E3DB4511FB19 /* Pods-SmartYardWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.release.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.release.xcconfig"; sourceTree = "<group>"; };
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		36F6A1B2514987D6D88AA8E3 /* Pods-SmartYardWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.debug.xcconfig"; sourceTree = "<group>"; };
 		842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceAction.swift; sourceTree = "<group>"; };
 		842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesResponseData.swift; sourceTree = "<group>"; };
 		842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesRequest.swift; sourceTree = "<group>"; };
@@ -518,12 +560,16 @@
 		84F840DF23E07DA5008DBE50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84F840E123E07DA5008DBE50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9446924CEBF5B1B90F3DD95E /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
+		A5284C907FEDA617405ADC19 /* Pods_SmartYardWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E590E291061ACD550E2CB9 /* Pods-SmartYard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.debug.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.debug.xcconfig"; sourceTree = "<group>"; };
 		E9004C5D23FABF1C00B59976 /* IntercomTemporaryAccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntercomTemporaryAccessView.xib; sourceTree = "<group>"; };
 		E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntercomTemporaryAccessView.swift; sourceTree = "<group>"; };
 		E9004C6123FABF6800B59976 /* AccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccessView.xib; sourceTree = "<group>"; };
 		E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSearchTextField.swift; sourceTree = "<group>"; };
 		E917244C24125CAD00F2B810 /* AvailableServicesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableServicesViewModel.swift; sourceTree = "<group>"; };
+		E92AFE7B243F07EC001F131D /* SmartYardSharedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSharedObject.swift; sourceTree = "<group>"; };
+		E92AFE7D243F0834001F131D /* SmartYardSharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSharedData.swift; sourceTree = "<group>"; };
+		E92AFE85243F4E18001F131D /* WidgetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetItem.swift; sourceTree = "<group>"; };
 		E92EFB4324287F4C003AF7FE /* PassConfirmationPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassConfirmationPinViewController.swift; sourceTree = "<group>"; };
 		E92EFB4424287F4C003AF7FE /* PassConfirmationPinViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PassConfirmationPinViewController.xib; sourceTree = "<group>"; };
 		E92EFB4724287F72003AF7FE /* PassConfirmationPinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassConfirmationPinViewModel.swift; sourceTree = "<group>"; };
@@ -617,6 +663,10 @@
 		E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnapprovedObjectCell.xib; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E96CC0D62423FAEA008DF44B /* RestoreMethodCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethodCellModel.swift; sourceTree = "<group>"; };
+		E97EAFDC243EF04E00D81243 /* LanTa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LanTa.entitlements; sourceTree = "<group>"; };
+		E97EAFE2243EFF3800D81243 /* SmartYardSharedDataFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SmartYardSharedDataFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E97EAFE4243EFF3800D81243 /* SmartYardSharedDataFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmartYardSharedDataFramework.h; sourceTree = "<group>"; };
+		E97EAFE5243EFF3800D81243 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E98C382423F149F30010BBC1 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
@@ -666,6 +716,13 @@
 		E9B6737F243BBC5500457C74 /* SwipeInteractionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeInteractionController.swift; sourceTree = "<group>"; };
 		E9B67383243BCE4800457C74 /* PaymentPopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPopupController.swift; sourceTree = "<group>"; };
 		E9B67384243BCE4800457C74 /* PaymentPopupController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentPopupController.xib; sourceTree = "<group>"; };
+		E9B673C5243DC2AB00457C74 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		E9B673E5243DC98C00457C74 /* SmartYardWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SmartYardWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9B673E8243DC98C00457C74 /* WidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetViewController.swift; sourceTree = "<group>"; };
+		E9B673EB243DC98C00457C74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		E9B673ED243DC98C00457C74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9B673F4243DCEE200457C74 /* WdgObjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WdgObjectCell.swift; sourceTree = "<group>"; };
+		E9B673F5243DCEE200457C74 /* WdgObjectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WdgObjectCell.xib; sourceTree = "<group>"; };
 		E9B9EAC52421FCB8000A92B3 /* RestorePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePasswordViewController.swift; sourceTree = "<group>"; };
 		E9B9EAC62421FCB8000A92B3 /* RestorePasswordViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestorePasswordViewController.xib; sourceTree = "<group>"; };
 		E9B9EAC92421FCCB000A92B3 /* RestorePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePasswordViewModel.swift; sourceTree = "<group>"; };
@@ -709,7 +766,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E97EAFE9243EFF3800D81243 /* SmartYardSharedDataFramework.framework in Frameworks */,
 				85E437EBD8028F17EA854687 /* Pods_SmartYard.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E97EAFDF243EFF3800D81243 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E9B673E2243DC98C00457C74 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9B673E6243DC98C00457C74 /* NotificationCenter.framework in Frameworks */,
+				2830E396E392AE070AD8399C /* Pods_SmartYardWidget.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1620,6 +1694,8 @@
 			children = (
 				84F840D423E07DA5008DBE50 /* SmartYard */,
 				84EEBC9E23F55A9B00C9557F /* NotificationServiceExtension */,
+				E9B673E7243DC98C00457C74 /* SmartYardWdg */,
+				E97EAFE3243EFF3800D81243 /* SmartYardSharedDataFramework */,
 				84F840D323E07DA5008DBE50 /* Products */,
 				B0B71A96C6C8995993C06C49 /* Pods */,
 				9597597AA6C1CAECCA7D92F7 /* Frameworks */,
@@ -1631,6 +1707,8 @@
 			children = (
 				84F840D223E07DA5008DBE50 /* SmartYard.app */,
 				84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */,
+				E9B673E5243DC98C00457C74 /* SmartYardWidget.appex */,
+				E97EAFE2243EFF3800D81243 /* SmartYardSharedDataFramework.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1654,6 +1732,8 @@
 			isa = PBXGroup;
 			children = (
 				3264A75344A37C60971E215B /* Pods_SmartYard.framework */,
+				E9B673C5243DC2AB00457C74 /* NotificationCenter.framework */,
+				A5284C907FEDA617405ADC19 /* Pods_SmartYardWidget.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1663,6 +1743,8 @@
 			children = (
 				E5E590E291061ACD550E2CB9 /* Pods-SmartYard.debug.xcconfig */,
 				9446924CEBF5B1B90F3DD95E /* Pods-SmartYard.release.xcconfig */,
+				36F6A1B2514987D6D88AA8E3 /* Pods-SmartYardWidget.debug.xcconfig */,
+				1650E94C71A4E3DB4511FB19 /* Pods-SmartYardWidget.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1673,6 +1755,43 @@
 				E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */,
 			);
 			path = SmartYardSearchTextField;
+			sourceTree = "<group>";
+		};
+		E92AFE81243F3500001F131D /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				E9B673ED243DC98C00457C74 /* Info.plist */,
+				E97EAFDC243EF04E00D81243 /* LanTa.entitlements */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		E92AFE82243F35D6001F131D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E92AFE84243F4E08001F131D /* Entry */,
+				E92AFE83243F35E2001F131D /* Cells */,
+				E9B673E8243DC98C00457C74 /* WidgetViewController.swift */,
+				E9B673EA243DC98C00457C74 /* MainInterface.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E92AFE83243F35E2001F131D /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E9B673F4243DCEE200457C74 /* WdgObjectCell.swift */,
+				E9B673F5243DCEE200457C74 /* WdgObjectCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		E92AFE84243F4E08001F131D /* Entry */ = {
+			isa = PBXGroup;
+			children = (
+				E92AFE85243F4E18001F131D /* WidgetItem.swift */,
+			);
+			path = Entry;
 			sourceTree = "<group>";
 		};
 		E92EFB4224287EE4003AF7FE /* PassConfirmationPin */ = {
@@ -2152,6 +2271,17 @@
 			path = UnapprovedObjectCell;
 			sourceTree = "<group>";
 		};
+		E97EAFE3243EFF3800D81243 /* SmartYardSharedDataFramework */ = {
+			isa = PBXGroup;
+			children = (
+				E97EAFE4243EFF3800D81243 /* SmartYardSharedDataFramework.h */,
+				E97EAFE5243EFF3800D81243 /* Info.plist */,
+				E92AFE7B243F07EC001F131D /* SmartYardSharedObject.swift */,
+				E92AFE7D243F0834001F131D /* SmartYardSharedData.swift */,
+			);
+			path = SmartYardSharedDataFramework;
+			sourceTree = "<group>";
+		};
 		E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */ = {
 			isa = PBXGroup;
 			children = (
@@ -2400,6 +2530,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		E9B673E7243DC98C00457C74 /* SmartYardWdg */ = {
+			isa = PBXGroup;
+			children = (
+				E92AFE82243F35D6001F131D /* View */,
+				E92AFE81243F3500001F131D /* Configurations */,
+			);
+			path = SmartYardWdg;
+			sourceTree = "<group>";
+		};
 		E9B9EAC42421FC91000A92B3 /* RestorePasswordFlow */ = {
 			isa = PBXGroup;
 			children = (
@@ -2546,6 +2685,17 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		E97EAFDD243EFF3800D81243 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E97EAFE6243EFF3800D81243 /* SmartYardSharedDataFramework.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		84EEBC9C23F55A9A00C9557F /* NotificationServiceExtension */ = {
 			isa = PBXNativeTarget;
@@ -2577,16 +2727,55 @@
 				58FA86B7B2CC8742E2CFDBCE /* [CP] Copy Pods Resources */,
 				84B9EC9F23E08D7500979C39 /* SwiftLint */,
 				84EEBCA823F55A9B00C9557F /* Embed App Extensions */,
+				E97EAFD9243E048900D81243 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				84EEBCA323F55A9B00C9557F /* PBXTargetDependency */,
+				E9B673EF243DC98C00457C74 /* PBXTargetDependency */,
+				E97EAFE8243EFF3800D81243 /* PBXTargetDependency */,
 			);
 			name = SmartYard;
 			productName = SmartYard;
 			productReference = 84F840D223E07DA5008DBE50 /* SmartYard.app */;
 			productType = "com.apple.product-type.application";
+		};
+		E97EAFE1243EFF3800D81243 /* SmartYardSharedDataFramework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E97EAFEB243EFF3800D81243 /* Build configuration list for PBXNativeTarget "SmartYardSharedDataFramework" */;
+			buildPhases = (
+				E97EAFDD243EFF3800D81243 /* Headers */,
+				E97EAFDE243EFF3800D81243 /* Sources */,
+				E97EAFDF243EFF3800D81243 /* Frameworks */,
+				E97EAFE0243EFF3800D81243 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SmartYardSharedDataFramework;
+			productName = SmartYardSharedDataFramework;
+			productReference = E97EAFE2243EFF3800D81243 /* SmartYardSharedDataFramework.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E9B673E4243DC98C00457C74 /* SmartYardWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E9B673F1243DC98C00457C74 /* Build configuration list for PBXNativeTarget "SmartYardWidget" */;
+			buildPhases = (
+				61327FD143F4B5262B280715 /* [CP] Check Pods Manifest.lock */,
+				E9B673E1243DC98C00457C74 /* Sources */,
+				E9B673E2243DC98C00457C74 /* Frameworks */,
+				E9B673E3243DC98C00457C74 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SmartYardWidget;
+			productName = LanTa;
+			productReference = E9B673E5243DC98C00457C74 /* SmartYardWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -2604,7 +2793,22 @@
 					84F840D123E07DA5008DBE50 = {
 						CreatedOnToolsVersion = 10.3;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.Push = {
+								enabled = 1;
+							};
+						};
+					};
+					E97EAFE1243EFF3800D81243 = {
+						CreatedOnToolsVersion = 10.3;
+						LastSwiftMigration = 1030;
+					};
+					E9B673E4243DC98C00457C74 = {
+						CreatedOnToolsVersion = 10.3;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
 						};
@@ -2626,6 +2830,8 @@
 			targets = (
 				84F840D123E07DA5008DBE50 /* SmartYard */,
 				84EEBC9C23F55A9A00C9557F /* NotificationServiceExtension */,
+				E9B673E4243DC98C00457C74 /* SmartYardWidget */,
+				E97EAFE1243EFF3800D81243 /* SmartYardSharedDataFramework */,
 			);
 		};
 /* End PBXProject section */
@@ -2712,6 +2918,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E97EAFE0243EFF3800D81243 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E9B673E3243DC98C00457C74 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9B673EC243DC98C00457C74 /* MainInterface.storyboard in Resources */,
+				E97EAFC7243DEE7900D81243 /* Assets.xcassets in Resources */,
+				E9B673F7243DCEE200457C74 /* WdgObjectCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -2730,6 +2953,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		61327FD143F4B5262B280715 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SmartYardWidget-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		79EEE7229A112A3ECB59FC9E /* [CP] Check Pods Manifest.lock */ = {
@@ -2847,6 +3092,7 @@
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				E92EFBCD242A22F2003AF7FE /* GetPaymentsListResponseData.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
+				E92AFE86243F4E18001F131D /* WidgetItem.swift in Sources */,
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
 				E92EFBB0242A22F2003AF7FE /* APISettingsAddress.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
@@ -3082,6 +3328,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E97EAFDE243EFF3800D81243 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E92AFE7E243F0834001F131D /* SmartYardSharedData.swift in Sources */,
+				E92AFE7C243F07EC001F131D /* SmartYardSharedObject.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E9B673E1243DC98C00457C74 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9B673E9243DC98C00457C74 /* WidgetViewController.swift in Sources */,
+				E9B673F6243DCEE200457C74 /* WdgObjectCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -3089,6 +3353,16 @@
 			isa = PBXTargetDependency;
 			target = 84EEBC9C23F55A9A00C9557F /* NotificationServiceExtension */;
 			targetProxy = 84EEBCA223F55A9B00C9557F /* PBXContainerItemProxy */;
+		};
+		E97EAFE8243EFF3800D81243 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E97EAFE1243EFF3800D81243 /* SmartYardSharedDataFramework */;
+			targetProxy = E97EAFE7243EFF3800D81243 /* PBXContainerItemProxy */;
+		};
+		E9B673EF243DC98C00457C74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E9B673E4243DC98C00457C74 /* SmartYardWidget */;
+			targetProxy = E9B673EE243DC98C00457C74 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3101,6 +3375,14 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		E9B673EA243DC98C00457C74 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E9B673EB243DC98C00457C74 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -3108,8 +3390,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPER_ACCOUNT = "alex10011997@gmail.com";
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = CDVQN43CHN;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3121,6 +3404,7 @@
 				MATCH_PROV_PROFILE_TYPES = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.madbrains.smartyard.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3133,7 +3417,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPER_ACCOUNT = "alex10011997@gmail.com";
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = CDVQN43CHN;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3145,7 +3429,7 @@
 				MATCH_PROV_PROFILE_TYPES = "adhoc,appstore";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.madbrains.smartyard.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc $(PRODUCT_BUNDLE_IDENTIFIER)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc ru.madbrains.smartyard.NotificationServiceExtension";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3156,6 +3440,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3217,6 +3502,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3277,7 +3563,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPER_ACCOUNT = "alex10011997@gmail.com";
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = CDVQN43CHN;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
@@ -3303,7 +3589,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPER_ACCOUNT = "alex10011997@gmail.com";
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = CDVQN43CHN;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
@@ -3317,6 +3603,125 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc $(PRODUCT_BUNDLE_IDENTIFIER)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		E97EAFEC243EFF3800D81243 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
+				DEVELOPMENT_TEAM = CDVQN43CHN;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = SmartYardSharedDataFramework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MATCH_PROV_PROFILE_TYPES = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.madbrains.smartyard.shared-data";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E97EAFED243EFF3800D81243 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
+				DEVELOPMENT_TEAM = CDVQN43CHN;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = SmartYardSharedDataFramework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MATCH_PROV_PROFILE_TYPES = "adhoc,appstore";
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.madbrains.smartyard.shared-data";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E9B673F2243DC98C00457C74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36F6A1B2514987D6D88AA8E3 /* Pods-SmartYardWidget.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SmartYardWdg/Configurations/LanTa.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
+				DEVELOPMENT_TEAM = CDVQN43CHN;
+				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWdg/Configurations/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MATCH_PROV_PROFILE_TYPES = "";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.madbrains.smartyard.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E9B673F3243DC98C00457C74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1650E94C71A4E3DB4511FB19 /* Pods-SmartYardWidget.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SmartYardWdg/Configurations/LanTa.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
+				DEVELOPMENT_TEAM = CDVQN43CHN;
+				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWdg/Configurations/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MATCH_PROV_PROFILE_TYPES = "adhoc,appstore";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.madbrains.smartyard.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc ru.madbrains.smartyard.widget";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -3348,6 +3753,24 @@
 			buildConfigurations = (
 				84F840E523E07DA5008DBE50 /* Debug */,
 				84F840E623E07DA5008DBE50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E97EAFEB243EFF3800D81243 /* Build configuration list for PBXNativeTarget "SmartYardSharedDataFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E97EAFEC243EFF3800D81243 /* Debug */,
+				E97EAFED243EFF3800D81243 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E9B673F1243DC98C00457C74 /* Build configuration list for PBXNativeTarget "SmartYardWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E9B673F2243DC98C00457C74 /* Debug */,
+				E9B673F3243DC98C00457C74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

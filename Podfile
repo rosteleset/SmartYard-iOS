@@ -54,6 +54,15 @@ target 'SmartYard' do
   
 end
 
+target 'SmartYardWidget' do
+  use_frameworks!
+  
+  # Reactive
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  
+  end
+
 post_install do |installer|
     installer.pods_project.build_configurations.each do |config|
         if config.name == 'Release'
