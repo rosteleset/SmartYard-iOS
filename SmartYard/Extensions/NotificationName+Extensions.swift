@@ -25,6 +25,6 @@ enum NotificationKeys {
     static let badgeNumberKey = "badgeNumberKey"
     static let clientIdKey = "clientIdKey"
     static let serviceTypeKey = "serviceTypeKey"
-    static let serviceActionKey = "serviceAction"
+    static let serviceActionKey = "serviceActionKey"
     
 }
