@@ -278,6 +278,15 @@ class InputAddressViewModel: BaseViewModel {
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
+                    let nsError = error as NSError
+                    
+                    // MARK: Если возвращается qrRegistrationError - это "не ошибка", поэтому показываем ее иначе
+                    
+                    if nsError.domain == NSError.APIWrapperError.domain, nsError.code == 3007 {
+                        self?.router.trigger(.alert(title: error.localizedDescription, message: nil))
+                        return
+                    }
+                    
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )

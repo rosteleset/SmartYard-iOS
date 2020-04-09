@@ -52,7 +52,7 @@ extension NSError {
     
     enum APIWrapperError {
         
-        private static let domain = "APIWrapperError"
+        static let domain = "APIWrapperError"
         
         static let baseResponseMappingError: NSError = {
             let description = "Не удалось представить ответ сервера в виде базовой модели"
