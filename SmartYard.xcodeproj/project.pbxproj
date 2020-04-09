@@ -3346,7 +3346,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = CDVQN43CHN;
@@ -3360,7 +3359,6 @@
 				MATCH_PROV_PROFILE_TYPES = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.madbrains.smartyard.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3385,7 +3383,7 @@
 				MATCH_PROV_PROFILE_TYPES = "adhoc,appstore";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc ru.madbrains.smartyard.NotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc $(PRODUCT_BUNDLE_IDENTIFIER)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3676,7 +3674,7 @@
 				MATCH_PROV_PROFILE_TYPES = "adhoc,appstore";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.madbrains.smartyard.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc ru.madbrains.smartyard.widget";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc $(PRODUCT_BUNDLE_IDENTIFIER)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
