@@ -46,18 +46,22 @@ class ServiceUnavailableViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.sendRequestTrigger
-            .asDriver()
-            .debounce(.milliseconds(25))
-            .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
-                // TODO: open chat
-                return .empty()
-            }
             .drive(
                 onNext: { [weak self] _ in
+                    var userInfo = [AnyHashable: Any]()
+                    
+                    userInfo[NotificationKeys.serviceActionKey] = SettingsServiceAction.talkAboutActivation.rawValue
+                    
+                    if let clientId = self?.clientId {
+                        userInfo[NotificationKeys.clientIdKey] = clientId
+                    }
+                    
+                    if let service = self?.service.rawValue {
+                        userInfo[NotificationKeys.serviceTypeKey] = service
+                    }
+                    
+                    NotificationCenter.default.post(name: .chatRequested, object: nil, userInfo: userInfo)
+                    
                     self?.router.trigger(.dismiss)
                 }
             )

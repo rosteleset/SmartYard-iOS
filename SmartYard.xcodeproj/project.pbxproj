@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		842DBD00243750ED00A1D346 /* SettingsServiceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */; };
 		842FECB6242B89DF007CA0F3 /* OfficesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */; };
 		842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */; };
 		842FECB9242B8A04007CA0F3 /* APIOffice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB8242B8A04007CA0F3 /* APIOffice.swift */; };
@@ -45,7 +46,6 @@
 		844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D723EBFE060066006D /* ChatCoordinator.swift */; };
 		844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D923EBFE140066006D /* ChatViewController.swift */; };
 		844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3DA23EBFE140066006D /* ChatViewController.xib */; };
-		844AC3DE23EBFE1E0066006D /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3DD23EBFE1E0066006D /* ChatViewModel.swift */; };
 		844AC3E823EBFEC50066006D /* PaymentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3E623EBFEC50066006D /* PaymentsViewController.swift */; };
 		844AC3E923EBFEC50066006D /* PaymentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3E723EBFEC50066006D /* PaymentsViewController.xib */; };
 		844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3EA23EBFED20066006D /* PaymentsViewModel.swift */; };
@@ -112,6 +112,8 @@
 		84AADD21242E22640056994A /* EditNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AADD1F242E22640056994A /* EditNameViewController.xib */; };
 		84AADD242431FA9E0056994A /* NotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AADD232431FA9E0056994A /* NotificationRequest.swift */; };
 		84AADD262431FAA80056994A /* NotificationResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AADD252431FAA80056994A /* NotificationResponseData.swift */; };
+		84AADD29243349630056994A /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AADD28243349630056994A /* ChatViewModel.swift */; };
+		84AADD2E24334DF70056994A /* ChatConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AADD2D24334DF70056994A /* ChatConfiguration.swift */; };
 		84B89A7C23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89A7B23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift */; };
 		84B89A9023F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89A8E23F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift */; };
 		84B89A9123F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B89A8F23F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib */; };
@@ -347,6 +349,7 @@
 
 /* Begin PBXFileReference section */
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceAction.swift; sourceTree = "<group>"; };
 		842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesResponseData.swift; sourceTree = "<group>"; };
 		842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesRequest.swift; sourceTree = "<group>"; };
 		842FECB8242B8A04007CA0F3 /* APIOffice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIOffice.swift; sourceTree = "<group>"; };
@@ -386,7 +389,6 @@
 		844AC3D723EBFE060066006D /* ChatCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCoordinator.swift; sourceTree = "<group>"; };
 		844AC3D923EBFE140066006D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		844AC3DA23EBFE140066006D /* ChatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatViewController.xib; sourceTree = "<group>"; };
-		844AC3DD23EBFE1E0066006D /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		844AC3E623EBFEC50066006D /* PaymentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewController.swift; sourceTree = "<group>"; };
 		844AC3E723EBFEC50066006D /* PaymentsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentsViewController.xib; sourceTree = "<group>"; };
 		844AC3EA23EBFED20066006D /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
@@ -447,6 +449,8 @@
 		84AADD1F242E22640056994A /* EditNameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditNameViewController.xib; sourceTree = "<group>"; };
 		84AADD232431FA9E0056994A /* NotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRequest.swift; sourceTree = "<group>"; };
 		84AADD252431FAA80056994A /* NotificationResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationResponseData.swift; sourceTree = "<group>"; };
+		84AADD28243349630056994A /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		84AADD2D24334DF70056994A /* ChatConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatConfiguration.swift; sourceTree = "<group>"; };
 		84B89A7B23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSectionUpdateKind.swift; sourceTree = "<group>"; };
 		84B89A8023F2F984009692B4 /* ServiceUnavailableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceUnavailableViewController.swift; sourceTree = "<group>"; };
 		84B89A8123F2F984009692B4 /* ServiceUnavailableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceUnavailableViewController.xib; sourceTree = "<group>"; };
@@ -936,8 +940,9 @@
 		844AC3D623EBFDFA0066006D /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				84AADD2A24334DBF0056994A /* Entries */,
 				844AC3E123EBFE8E0066006D /* View */,
-				844AC3E223EBFE920066006D /* ViewModel */,
+				84AADD272433494E0056994A /* ViewModel */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -967,14 +972,6 @@
 				844AC3DA23EBFE140066006D /* ChatViewController.xib */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		844AC3E223EBFE920066006D /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				844AC3DD23EBFE1E0066006D /* ChatViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		844AC3E323EBFE9D0066006D /* Main */ = {
@@ -1169,6 +1166,7 @@
 				84898A9723F1556B00E6B78E /* SettingsSectionModel.swift */,
 				84B89A7B23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift */,
 				84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */,
+				842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -1270,6 +1268,22 @@
 				84AADD252431FAA80056994A /* NotificationResponseData.swift */,
 			);
 			path = Notification;
+			sourceTree = "<group>";
+		};
+		84AADD272433494E0056994A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				84AADD28243349630056994A /* ChatViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		84AADD2A24334DBF0056994A /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				84AADD2D24334DF70056994A /* ChatConfiguration.swift */,
+			);
+			path = Entries;
 			sourceTree = "<group>";
 		};
 		84B89A7D23F2F88E009692B4 /* ServiceIsActivated */ = {
@@ -2860,6 +2874,7 @@
 				E92EFBCC242A22F2003AF7FE /* RegisterPushTokenRequest.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
 				84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */,
+				84AADD29243349630056994A /* ChatViewModel.swift in Sources */,
 				84898A9223F1554D00E6B78E /* SettingsDataItem.swift in Sources */,
 				E940580723F680F000623746 /* AccessView.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
@@ -2882,6 +2897,7 @@
 				84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */,
 				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
 				E92EFBB1242A22F2003AF7FE /* APIIssue.swift in Sources */,
+				842DBD00243750ED00A1D346 /* SettingsServiceAction.swift in Sources */,
 				E92EFBBE242A22F2003AF7FE /* GetAllLocationsResponseData.swift in Sources */,
 				E92EFBCF242A22F2003AF7FE /* GetAddressListResponseData.swift in Sources */,
 				842FECB9242B8A04007CA0F3 /* APIOffice.swift in Sources */,
@@ -2890,7 +2906,6 @@
 				E92EFBE0242A22F2003AF7FE /* CreateIssueRequest.swift in Sources */,
 				843C38D1242A577C0035BF80 /* UnreadedResponseData.swift in Sources */,
 				E92EFBEC242A2507003AF7FE /* NotificationName+Extensions.swift in Sources */,
-				844AC3DE23EBFE1E0066006D /* ChatViewModel.swift in Sources */,
 				844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */,
 				E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */,
 				E92EFB4524287F4C003AF7FE /* PassConfirmationPinViewController.swift in Sources */,
@@ -2917,6 +2932,7 @@
 				E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */,
 				E92EFBBD242A22F2003AF7FE /* GetAllLocationsRequest.swift in Sources */,
 				84854B5523FBFE44001B44F2 /* UNAuthorizationType+Extensions.swift in Sources */,
+				84AADD2E24334DF70056994A /* ChatConfiguration.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,

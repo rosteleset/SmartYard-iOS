@@ -94,9 +94,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.notificationsTabBarItem = notificationsTabBarItem
         
         // MARK: Chat Tab
-        let chatCoordinator = ChatCoordinator(
-            apiWrapper: apiWrapper
-        )
+        let chatCoordinator = ChatCoordinator(accessService: accessService)
         
         let chatTabBarItem = UITabBarItem(
             title: "Чат",
@@ -171,8 +169,10 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         )
         
         rootViewController.tabBar.isTranslucent = false
+        
         subscribeToBadgeUpdates()
         subscribeToAddAddressNotifications()
+        subscribeToChatNotifications()
     }
     
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
@@ -210,6 +210,19 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
                 onNext: { [weak self] in
                     self?.trigger(.home)
                     self?.homeRouter.trigger(.inputContract(isManualTrigger: true))
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeToChatNotifications() {
+        NotificationCenter.default.rx
+            .notification(Notification.Name.chatRequested)
+            .asDriverOnErrorJustComplete()
+            .mapToVoid()
+            .drive(
+                onNext: { [weak self] in
+                    self?.trigger(.chat)
                 }
             )
             .disposed(by: disposeBag)

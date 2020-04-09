@@ -49,6 +49,9 @@ target 'SmartYard' do
   pod 'XCoordinator'
   pod 'XCoordinator/RxSwift'
   
+  # Chat
+  pod 'OnlineChatSdk', :git => 'https://github.com/MadBrains/OnlineChatSdk-Swift.git', :branch => 'feature/build-fix'
+  
 end
 
 post_install do |installer|
