@@ -21,22 +21,44 @@ extension APIWrapper {
         
         return provider.rx
             .request(.registerQR(request: request))
-            .filterSuccessfulCodes()
             .flatMap { response in
+                // MARK: Если code == 204, значит, что регистрация успешно выполнилась
+                
                 if response.statusCode == 204 {
                     return .just(())
                 }
                 
+                // MARK: Если code == 200, значит, что-то пошло не так
+                // Да, 200 - значит, что-то не так. Достаем информацию об этом из респонза
+                
+                guard response.statusCode != 200 else {
+                    do {
+                        let mappedResponse = try response.map(BaseAPIResponse<String>.self)
+                        
+                        if let errorDescription = mappedResponse.data {
+                            return .error(NSError.APIWrapperError.qrRegistrationFailed(reason: errorDescription))
+                        } else {
+                            return .error(NSError.APIWrapperError.noDataError)
+                        }
+                    } catch {
+                        return .error(NSError.APIWrapperError.baseResponseMappingError)
+                    }
+                }
+                
+                // MARK: Если код отличается от 200, пытаемся достать информацию об ошибке
+                
                 do {
                     let mappedResponse = try response.map(BaseAPIResponse<String>.self)
                     
-                    if let errorDescription = mappedResponse.data {
-                        return .error(NSError.APIWrapperError.qrRegistrationFailed(reason: errorDescription))
-                    } else {
-                        return .error(NSError.APIWrapperError.noDataError)
-                    }
+                    return .error(
+                        NSError.APIWrapperError.codeIsNotSuccessfulExtended(
+                            code: mappedResponse.code,
+                            name: mappedResponse.name,
+                            message: mappedResponse.message
+                        )
+                    )
                 } catch {
-                    return .error(NSError.APIWrapperError.baseResponseMappingError)
+                    return .error(NSError.APIWrapperError.codeIsNotSuccessful(response.statusCode))
                 }
             }
     }
