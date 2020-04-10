@@ -59,7 +59,12 @@ class NewAllowedPersonViewController: BaseViewController {
         textField.delegate = self
         
         textField.formatter.setDefaultOutputPattern(" (###) ###-##-##")
-        textField.formatter.prefix = "+7"
+        
+        textField.placeholder = "+7 (000) 000-00-00"
+    }
+    
+    private func setPhoneNumberPrefix(prefix: String) {
+        textField.formatter.prefix = prefix
     }
     
     // swiftlint:disable:next function_body_length
@@ -158,6 +163,22 @@ class NewAllowedPersonViewController: BaseViewController {
 }
 
 extension NewAllowedPersonViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        guard textField.text.isNilOrEmpty else {
+            return
+        }
+        
+        setPhoneNumberPrefix(prefix: "+7")
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard textField.text.isNilOrEmpty || textField.text?.trimmed == "+7" else {
+            return
+        }
+        
+        setPhoneNumberPrefix(prefix: "")
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
