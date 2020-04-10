@@ -106,8 +106,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.openDoor(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func resetCode(flatId: String) -> Single<ResetCodeResponseData?> {
@@ -197,8 +197,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.access(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func resendSMS(flatId: String, guestPhone: String) -> Single<Void?> {
@@ -210,8 +210,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.resend(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func getOffices() -> Single<OfficesResponseData?> {

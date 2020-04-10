@@ -33,8 +33,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.delivered(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func unreaded() -> Single<UnreadedResponseData?> {

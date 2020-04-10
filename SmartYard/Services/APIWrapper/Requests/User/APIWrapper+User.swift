@@ -27,8 +27,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.addMyPhone(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func requestCode(userPhone: String) -> Single<Void?> {
@@ -36,8 +36,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.requestCode(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func registerPushToken(pushToken: String, clientId: String?, type: TokenType) -> Single<Void?> {
@@ -54,8 +54,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.registerPushToken(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func confirmCode(userPhone: String, smsCode: String) -> Single<ConfirmCodeResponseData?> {
@@ -92,8 +92,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.sendName(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func restore(contractNum: String?, contactId: String?, code: String?) -> Single<RestoreRequestResponseData?> {

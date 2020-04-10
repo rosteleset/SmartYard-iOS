@@ -32,13 +32,30 @@ class APIWrapper {
 
 extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     
-    func filterSuccessfulCodes() -> Single<Response> {
+    func mapAsVoidResponse() -> Single<Void> {
         return flatMap { response in
-            guard 200...299 ~= response.statusCode else {
+            // MARK: Если вернулся любой успешный код, то просто возвращаем Void
+
+            if 200...299 ~= response.statusCode {
+                return .just(())
+            }
+
+            // MARK: Если вернулся не особо успешный код, пытаемся распаковать стандартную модель
+            // Если не получилось получить стандартную модель - просто вернем код ошибки
+            
+            do {
+                let mappedResponse = try response.map(BaseAPIResponse<String>.self)
+
+                return .error(
+                    NSError.APIWrapperError.codeIsNotSuccessfulExtended(
+                        code: mappedResponse.code,
+                        name: mappedResponse.name,
+                        message: mappedResponse.message
+                    )
+                )
+            } catch {
                 return .error(NSError.APIWrapperError.codeIsNotSuccessful(response.statusCode))
             }
-            
-            return .just(response)
         }
     }
     

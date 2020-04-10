@@ -51,8 +51,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.actionIssue(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func changeDeliveryMethod(newMethod: IssueDeliveryType, key: String) -> Single<Void?> {
@@ -69,8 +69,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.actionIssue(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func sendCommentAfterDeliveryMethodChanging(newMethod: IssueDeliveryType, key: String) -> Single<Void?> {
@@ -82,8 +82,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.commentIssue(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
 }
