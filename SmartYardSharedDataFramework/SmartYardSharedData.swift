@@ -44,6 +44,11 @@ extension SmartYardSharedData {
         }
     }
     
+    public static func clearSharedData() {
+        let emptyData = SmartYardSharedData(accessToken: "", sharedObjects: [])
+        saveSharedData(data: emptyData)
+    }
+    
     static var sharedDataFileURL: URL {
         let appGroupIdentifier = "group.com.madbrains.smartyard.widget"
         

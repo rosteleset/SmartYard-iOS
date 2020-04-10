@@ -38,10 +38,10 @@ class WdgObjectCell: UITableViewCell {
         objectNameLabel.text = object?.objectName
         objectAddressLabel.text = object?.objectAddress
         
-        lockButton.isEnabled = !isOpened
+        lockButton.isUserInteractionEnabled = !isOpened
         lockButton.setImage(
             UIImage(
-                named: isOpened ? "CloseStateIcon" : "OpenStateIcon"
+                named: isOpened ? "OpenStateIcon" : "CloseStateIcon"
             ),
             for: .normal
         )
