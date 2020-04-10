@@ -9,6 +9,7 @@
 import RxCocoa
 import RxSwift
 import XCoordinator
+import SmartYardSharedDataFramework
 
 class AdvancedSettingsViewModel: BaseViewModel {
     
@@ -159,6 +160,7 @@ class AdvancedSettingsViewModel: BaseViewModel {
                             .ignoreNil()
                             .drive(
                                 onNext: { [weak self] in
+                                    SmartYardSharedData.clearSharedData()
                                     self?.accessService.logout()
                                 }
                             )

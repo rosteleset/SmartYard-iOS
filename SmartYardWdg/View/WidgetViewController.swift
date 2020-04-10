@@ -15,6 +15,7 @@ import RxCocoa
 class WidgetViewController: UIViewController, NCWidgetProviding {
     
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var noObjectsLabel: UILabel!
     
     private var objectsData = BehaviorSubject<SmartYardSharedData?>(value: SmartYardSharedData.loadSharedData())
 
@@ -142,10 +143,12 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
         objectsData.asDriver(onErrorJustReturn: nil)
             .drive(
                 onNext: { [weak self] objects in
-                    self?.tableView.reloadData()
-                    
                     guard let uObjects = objects else {
                         self?.areObjectsGrantAccessed.onNext([:])
+                        
+                        self?.noObjectsLabel.isHidden = false
+                        self?.tableView.isHidden = true
+                        
                         return
                     }
                     
@@ -156,6 +159,9 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
                     }
                     
                     self?.areObjectsGrantAccessed.onNext(newDict)
+                    
+                    self?.noObjectsLabel.isHidden = !uObjects.sharedObjects.isEmpty
+                    self?.tableView.isHidden = uObjects.sharedObjects.isEmpty
                 }
             )
             .disposed(by: disposeBag)
