@@ -63,7 +63,7 @@ class NewAllowedPersonViewController: BaseViewController {
         textField.placeholder = "+7 (000) 000-00-00"
     }
     
-    private func setPhoneNumberPrexix(prefix: String) {
+    private func setPhoneNumberPrefix(prefix: String) {
         textField.formatter.prefix = prefix
     }
     
@@ -169,7 +169,7 @@ extension NewAllowedPersonViewController: UITextFieldDelegate {
             return
         }
         
-        setPhoneNumberPrexix(prefix: "+7")
+        setPhoneNumberPrefix(prefix: "+7")
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -177,7 +177,7 @@ extension NewAllowedPersonViewController: UITextFieldDelegate {
             return
         }
         
-        setPhoneNumberPrexix(prefix: "")
+        setPhoneNumberPrefix(prefix: "")
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
