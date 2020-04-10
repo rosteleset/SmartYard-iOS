@@ -67,15 +67,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.confirmCode(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<ConfirmCodeResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
     func getPaymentsList() -> Single<GetPaymentsListResponseData?> {
@@ -150,15 +142,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.notification(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<NotificationResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
 }

@@ -90,15 +90,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.intercom(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<IntercomResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
     func openDoor(domophoneId: String, doorId: Int?, blockReason: String?) -> Single<Void?> {
@@ -127,15 +119,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.resetCode(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<ResetCodeResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
     func getSettingsAddresses() -> Single<GetSettingsListResponseData?> {

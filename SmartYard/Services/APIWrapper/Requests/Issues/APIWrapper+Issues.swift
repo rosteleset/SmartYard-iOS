@@ -21,15 +21,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.createIssue(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<CreateIssueResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
     func getListConnect() -> Single<GetListConnectResponseData?> {

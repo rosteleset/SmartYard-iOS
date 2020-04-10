@@ -42,6 +42,42 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         }
     }
     
+    func mapAsDefaultResponse<T: Decodable>() -> Single<T> {
+        return flatMap { response in
+            // MARK: Если успех (code == 200), то пытаемся просто замапить реквест
+            
+            guard response.statusCode != 200 else {
+                do {
+                    let mappedResponse = try response.map(BaseAPIResponse<T>.self)
+                    
+                    if let data = mappedResponse.data {
+                        return .just(data)
+                    } else {
+                        return .error(NSError.APIWrapperError.noDataError)
+                    }
+                } catch {
+                    return .error(NSError.APIWrapperError.baseResponseMappingError)
+                }
+            }
+            
+            // MARK: Если код отличается от 200, пытаемся достать информацию об ошибке
+            
+            do {
+                let mappedResponse = try response.map(BaseAPIResponse<T>.self)
+                
+                return .error(
+                    NSError.APIWrapperError.codeIsNotSuccessfulExtended(
+                        code: mappedResponse.code,
+                        name: mappedResponse.name,
+                        message: mappedResponse.message
+                    )
+                )
+            } catch {
+                return .error(NSError.APIWrapperError.codeIsNotSuccessful(response.statusCode))
+            }
+        }
+    }
+    
     func mapAsEmptyDataInitializable<T: Decodable & EmptyDataInitializable>() -> Single<T> {
         return flatMap { response in
             if response.statusCode == 204 {

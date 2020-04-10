@@ -82,6 +82,14 @@ extension NSError {
             )
         }
         
+        static func codeIsNotSuccessfulExtended(code: Int, name: String, message: String) -> NSError {
+            return NSError(
+                domain: domain,
+                code: code,
+                userInfo: [NSLocalizedDescriptionKey: "\(message)"]
+            )
+        }
+        
         static let accessTokenMissingError: NSError = {
             let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден access token. Выполнить запрос невозможно"]
             

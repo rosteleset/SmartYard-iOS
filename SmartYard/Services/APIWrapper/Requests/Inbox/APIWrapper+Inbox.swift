@@ -21,15 +21,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.inbox(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<InboxResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
     func delivered(messageId: String) -> Single<Void?> {
@@ -54,15 +46,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.unreaded(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<UnreadedResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
 }

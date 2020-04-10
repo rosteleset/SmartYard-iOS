@@ -21,15 +21,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAddress(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<GetAddressResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
     func getCoordinatesByAddress(address: String) -> Single<GeoCoderResponseData?> {
@@ -41,15 +33,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getGeoCoder(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<GeoCoderResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
     func getHousesByStreet(streetId: String) -> Single<GetHousesResponseData?> {
