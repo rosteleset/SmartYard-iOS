@@ -188,6 +188,43 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
         
         doorOpened.asDriver(onErrorJustReturn: nil)
             .withLatestFrom(objectsData.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (index, object) = args
+                    
+                    guard let uIndex = index, let uObject = object else {
+                        return
+                    }
+                    
+                    let curObject = uObject.sharedObjects[uIndex]
+                    
+                    self?.sendOpenDoorRequest(
+                        accessToken: uObject.accessToken,
+                        doorId: curObject.doorId,
+                        domophoneId: curObject.domophoneId
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func sendOpenDoorRequest(accessToken: String, doorId: Int, domophoneId: String) {
+        let json: [String: Any] = ["doorId": doorId, "domophoneId": domophoneId]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        guard let url = URL(string: "https://dm.lanta.me/api/address/openDoor") else {
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = jsonData
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-type")
+        request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request)
+        task.resume()
     }
     
 }
