@@ -30,7 +30,11 @@ class PermissionService {
         )
     }
     
-    func hasAccessToContacts() -> Single<Void?> {
+    func contactsAccessStatus() -> CNAuthorizationStatus {
+        return CNContactStore.authorizationStatus(for: .contacts)
+    }
+    
+    func requestAccessToContacts() -> Single<Void?> {
         return Single.create(
             subscribe: { single in
                 CNContactStore().requestAccess(for: .contacts) { isPermissionGranted, error in

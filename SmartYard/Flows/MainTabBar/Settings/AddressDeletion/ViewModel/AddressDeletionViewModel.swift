@@ -28,17 +28,6 @@ class AddressDeletionViewModel: BaseViewModel {
     }
     
     func transform(_ input: Input) -> Output {
-         let isAbleToDelete: Driver<Bool> = Driver
-            .combineLatest(input.deletionReason, input.customDescription)
-            .map { args in
-                let (reason, customDescription) = args
-                
-                switch reason {
-                case .other: return !(customDescription?.trimmed).isNilOrEmpty
-                default: return true
-                }
-            }
-        
         input.cancelTrigger
             .drive(
                 onNext: { [weak self] in
@@ -52,25 +41,30 @@ class AddressDeletionViewModel: BaseViewModel {
             .withLatestFrom(input.customDescription) { ($0, $1) }
             .drive(
                 onNext: { [weak self] args in
-                    let (deletionReason, customDescription) = args
-                    
-                    let reasonString: String? = {
-                        switch deletionReason {
-                        case .wantToBreakTheContract: return "Хочу расторгнуть договор"
-                        case .other: return customDescription?.trimmed
-                        }
-                    }()
-                    
-                    guard let self = self, let uReason = reasonString, !uReason.isEmpty else {
+                    guard let self = self else {
                         return
                     }
                     
-                    self.delegate?.addressDeletionViewModelDidConfirmDeletion(self, reason: uReason)
+                    let (deletionReason, customDescription) = args
+                    
+                    let reason: String = {
+                        switch deletionReason {
+                        case .wantToBreakTheContract:
+                            return "Хочу расторгнуть договор"
+                            
+                        case .other:
+                            let trimmed = (customDescription ?? "").trimmed
+                            
+                            return trimmed.isEmpty ? "Причину клиент не указал" : trimmed
+                        }
+                    }()
+                    
+                    self.delegate?.addressDeletionViewModelDidConfirmDeletion(self, reason: reason)
                 }
             )
             .disposed(by: disposeBag)
         
-        return Output(isAbleToDelete: isAbleToDelete)
+        return Output()
     }
     
 }
@@ -85,7 +79,6 @@ extension AddressDeletionViewModel {
     }
     
     struct Output {
-        let isAbleToDelete: Driver<Bool>
     }
     
 }

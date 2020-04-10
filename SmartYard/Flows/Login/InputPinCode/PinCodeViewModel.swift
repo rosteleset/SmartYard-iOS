@@ -87,7 +87,7 @@ class PinCodeViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                return self.apiWrapper.requestCode(userPhone: self.phoneNumber)
+                return self.apiWrapper.requestCode(userPhone: "8" + self.phoneNumber)
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)

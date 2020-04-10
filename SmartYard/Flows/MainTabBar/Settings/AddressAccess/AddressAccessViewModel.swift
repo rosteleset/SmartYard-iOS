@@ -53,21 +53,11 @@ class AddressAccessViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
-        // MARK: Загрузка локального списка контактов
+        // MARK: Если есть доступ к контактам - сразу подгружаем данные оттуда, чтобы не тратить время потом
         
-        permissionService.hasAccessToContacts()
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    self.loadedUserContacts.onNext(self.getContacts())
-                }
-            )
-            .disposed(by: disposeBag)
+        if permissionService.contactsAccessStatus() == .authorized {
+            loadedUserContacts.onNext(getContacts())
+        }
         
         // MARK: Загрузка изначального стейта
         
@@ -132,9 +122,36 @@ class AddressAccessViewModel: BaseViewModel {
             }
             .ignoreNil()
             .do(
-                onNext: { address in
-                    isOwnerSubject.onNext((address.flatOwner ?? false) || (address.contractOwner ?? false))
-                    hasGatesSubject.onNext(address.hasGates ?? false)
+                onNext: { [weak self] address in
+                    let isOwner = (address.flatOwner ?? false) || (address.contractOwner ?? false)
+                    let hasGates = address.hasGates ?? false
+                    
+                    isOwnerSubject.onNext(isOwner)
+                    hasGatesSubject.onNext(hasGates)
+                    
+                    // MARK: Здесь нужно запросить доступ к контактам при выполнении условий:
+                    // 1. Юзер может раздавать временный или постоянный доступ (иначе нет смысла)
+                    // 2. Статус доступа - .notDetermined (еще не запрашивали)
+                    
+                    guard let self = self,
+                        (isOwner || hasGates),
+                        self.permissionService.contactsAccessStatus() == .notDetermined else {
+                        return
+                    }
+                    
+                    self.permissionService.requestAccessToContacts()
+                        .asDriver(onErrorJustReturn: nil)
+                        .ignoreNil()
+                        .drive(
+                            onNext: { [weak self] in
+                                guard let self = self else {
+                                    return
+                                }
+                                
+                                self.loadedUserContacts.onNext(self.getContacts())
+                            }
+                        )
+                        .disposed(by: self.disposeBag)
                 }
             )
             .map { address -> ([AllowedPerson], [AllowedPerson]) in
