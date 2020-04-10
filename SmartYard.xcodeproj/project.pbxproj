@@ -167,7 +167,6 @@
 		E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244C24125CAD00F2B810 /* AvailableServicesViewModel.swift */; };
 		E92AFE7C243F07EC001F131D /* SmartYardSharedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AFE7B243F07EC001F131D /* SmartYardSharedObject.swift */; };
 		E92AFE7E243F0834001F131D /* SmartYardSharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AFE7D243F0834001F131D /* SmartYardSharedData.swift */; };
-		E92AFE86243F4E18001F131D /* WidgetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AFE85243F4E18001F131D /* WidgetItem.swift */; };
 		E92EFB4524287F4C003AF7FE /* PassConfirmationPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB4324287F4C003AF7FE /* PassConfirmationPinViewController.swift */; };
 		E92EFB4624287F4C003AF7FE /* PassConfirmationPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92EFB4424287F4C003AF7FE /* PassConfirmationPinViewController.xib */; };
 		E92EFB4824287F72003AF7FE /* PassConfirmationPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB4724287F72003AF7FE /* PassConfirmationPinViewModel.swift */; };
@@ -569,7 +568,6 @@
 		E917244C24125CAD00F2B810 /* AvailableServicesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableServicesViewModel.swift; sourceTree = "<group>"; };
 		E92AFE7B243F07EC001F131D /* SmartYardSharedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSharedObject.swift; sourceTree = "<group>"; };
 		E92AFE7D243F0834001F131D /* SmartYardSharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSharedData.swift; sourceTree = "<group>"; };
-		E92AFE85243F4E18001F131D /* WidgetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetItem.swift; sourceTree = "<group>"; };
 		E92EFB4324287F4C003AF7FE /* PassConfirmationPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassConfirmationPinViewController.swift; sourceTree = "<group>"; };
 		E92EFB4424287F4C003AF7FE /* PassConfirmationPinViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PassConfirmationPinViewController.xib; sourceTree = "<group>"; };
 		E92EFB4724287F72003AF7FE /* PassConfirmationPinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassConfirmationPinViewModel.swift; sourceTree = "<group>"; };
@@ -1769,7 +1767,6 @@
 		E92AFE82243F35D6001F131D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E92AFE84243F4E08001F131D /* Entry */,
 				E92AFE83243F35E2001F131D /* Cells */,
 				E9B673E8243DC98C00457C74 /* WidgetViewController.swift */,
 				E9B673EA243DC98C00457C74 /* MainInterface.storyboard */,
@@ -1784,14 +1781,6 @@
 				E9B673F5243DCEE200457C74 /* WdgObjectCell.xib */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		E92AFE84243F4E08001F131D /* Entry */ = {
-			isa = PBXGroup;
-			children = (
-				E92AFE85243F4E18001F131D /* WidgetItem.swift */,
-			);
-			path = Entry;
 			sourceTree = "<group>";
 		};
 		E92EFB4224287EE4003AF7FE /* PassConfirmationPin */ = {
@@ -3092,7 +3081,6 @@
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				E92EFBCD242A22F2003AF7FE /* GetPaymentsListResponseData.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
-				E92AFE86243F4E18001F131D /* WidgetItem.swift in Sources */,
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
 				E92EFBB0242A22F2003AF7FE /* APISettingsAddress.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
