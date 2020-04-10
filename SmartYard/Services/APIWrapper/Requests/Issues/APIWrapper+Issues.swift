@@ -33,8 +33,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getListConnect(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     

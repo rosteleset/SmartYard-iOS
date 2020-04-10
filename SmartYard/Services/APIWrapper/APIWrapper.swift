@@ -78,23 +78,17 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         }
     }
     
-    func mapAsEmptyDataInitializable<T: Decodable & EmptyDataInitializable>() -> Single<T> {
+    func mapAsEmptyDataInitializableResponse<T: Decodable & EmptyDataInitializable>() -> Single<T> {
         return flatMap { response in
+            // MARK: Если вернулся код 204 (пустой контент), то просто возвращаем пустой контент
+            
             if response.statusCode == 204 {
                 return .just(T())
             }
             
-            do {
-                let mappedResponse = try response.map(BaseAPIResponse<T>.self)
-                
-                if let data = mappedResponse.data {
-                    return .just(data)
-                } else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-            } catch {
-                return .error(NSError.APIWrapperError.baseResponseMappingError)
-            }
+            // MARK: Иначе - мапим ровно так же, как и обычный респонз
+            
+            return self.mapAsDefaultResponse()
         }
     }
     

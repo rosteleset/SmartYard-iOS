@@ -79,8 +79,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getPaymentsList(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
@@ -116,8 +115,7 @@ extension APIWrapper {
         )
         
         return provider.rx.request(.restore(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     

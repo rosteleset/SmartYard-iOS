@@ -131,8 +131,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getSettingsList(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
@@ -145,8 +144,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAddressList(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
@@ -225,8 +223,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.offices(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     

@@ -45,8 +45,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getHouses(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
@@ -63,8 +62,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getServices(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
@@ -77,8 +75,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAllLocations(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
@@ -91,8 +88,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getStreets(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
