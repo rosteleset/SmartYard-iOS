@@ -24,6 +24,7 @@ extension SmartYardSharedData {
     
     public static func loadSharedData() -> SmartYardSharedData {
         let decoder = PropertyListDecoder()
+        
         do {
             let data = try Data(contentsOf: sharedDataFileURL)
             return try decoder.decode(SmartYardSharedData.self, from: data)
