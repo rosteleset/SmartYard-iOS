@@ -18,14 +18,14 @@ class SelectCameraContainerViewModel: BaseViewModel {
 extension SelectCameraContainerViewModel {
     
     struct Input {
-        let confirmByCourierTapped: Driver<Void>
-        let confirmInOfficeTrigger: Driver<Void>
+        let selectedCameraTrigger: Driver<Void>
+        let selectedDateTrigger: Driver<Void>
         let backTrigger: Driver<Void>
     }
     
     struct Output {
         let isLoading: Driver<Bool>
-        let offices: Driver<[APIOffice]>
+        let cameras: Driver<Int>
     }
     
 }
