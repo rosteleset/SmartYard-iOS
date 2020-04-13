@@ -21,15 +21,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAddress(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<GetAddressResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
     func getCoordinatesByAddress(address: String) -> Single<GeoCoderResponseData?> {
@@ -41,15 +33,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getGeoCoder(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<GeoCoderResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
     func getHousesByStreet(streetId: String) -> Single<GetHousesResponseData?> {
@@ -61,8 +45,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getHouses(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
@@ -79,8 +62,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getServices(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
@@ -93,8 +75,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAllLocations(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
@@ -107,8 +88,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getStreets(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     

@@ -32,33 +32,88 @@ class APIWrapper {
 
 extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     
-    func filterSuccessfulCodes() -> Single<Response> {
+    func mapAsVoidResponse() -> Single<Void> {
         return flatMap { response in
-            guard 200...299 ~= response.statusCode else {
-                return .error(NSError.APIWrapperError.codeIsNotSuccessful(response.statusCode))
+            // MARK: Если вернулся успешный код, то просто возвращаем Void
+
+            if 200...299 ~= response.statusCode {
+                return .just(())
             }
+
+            // MARK: Если вернулся не особо успешный код, пытаемся достать информацию об ошибке
             
-            return .just(response)
+            return .error(response.extractBaseAPIResponseError())
         }
     }
     
-    func mapAsEmptyDataInitializable<T: Decodable & EmptyDataInitializable>() -> Single<T> {
+    func mapAsDefaultResponse<T: Decodable>() -> Single<T> {
         return flatMap { response in
+            // MARK: Если вернулся успешный код - пытаемся замапить реквест
+            
+            if 200...299 ~= response.statusCode {
+                do {
+                    let mappedResponse = try response.map(BaseAPIResponse<T>.self)
+                    
+                    guard let data = mappedResponse.data else {
+                        return .error(NSError.APIWrapperError.noDataError)
+                    }
+                    
+                    return .just(data)
+                } catch {
+                    return .error(NSError.APIWrapperError.baseResponseMappingError)
+                }
+            }
+            
+            // MARK: Если вернулся не особо успешный код, пытаемся достать информацию об ошибке
+            
+            return .error(response.extractBaseAPIResponseError())
+        }
+    }
+    
+    func mapAsEmptyDataInitializableResponse<T: Decodable & EmptyDataInitializable>() -> Single<T> {
+        return flatMap { response in
+            // MARK: Если вернулся код 204 (пустой контент), то просто возвращаем пустой контент
+            
             if response.statusCode == 204 {
                 return .just(T())
             }
             
-            do {
-                let mappedResponse = try response.map(BaseAPIResponse<T>.self)
-                
-                if let data = mappedResponse.data {
+            // MARK: Если вернулся успешный код - пытаемся замапить реквест
+            
+            if 200...299 ~= response.statusCode {
+                do {
+                    let mappedResponse = try response.map(BaseAPIResponse<T>.self)
+                    
+                    guard let data = mappedResponse.data else {
+                        return .error(NSError.APIWrapperError.noDataError)
+                    }
+                    
                     return .just(data)
-                } else {
-                    return .error(NSError.APIWrapperError.noDataError)
+                } catch {
+                    return .error(NSError.APIWrapperError.baseResponseMappingError)
                 }
-            } catch {
-                return .error(NSError.APIWrapperError.baseResponseMappingError)
             }
+            
+            // MARK: Если вернулся не особо успешный код, пытаемся достать информацию об ошибке
+            
+            return .error(response.extractBaseAPIResponseError())
+        }
+    }
+    
+}
+
+extension Response {
+    
+    func extractBaseAPIResponseError() -> Error {
+        do {
+            let mappedResponse = try map(BaseAPIResponse<String>.self)
+            
+            return NSError.APIWrapperError.codeIsNotSuccessfulExtended(
+                code: mappedResponse.code,
+                message: mappedResponse.message
+            )
+        } catch {
+            return NSError.APIWrapperError.codeIsNotSuccessful(statusCode)
         }
     }
     

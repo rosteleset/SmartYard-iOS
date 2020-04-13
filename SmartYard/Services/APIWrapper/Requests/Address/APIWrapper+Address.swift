@@ -21,23 +21,33 @@ extension APIWrapper {
         
         return provider.rx
             .request(.registerQR(request: request))
-            .filterSuccessfulCodes()
             .flatMap { response in
+                // MARK: Если code == 204, значит, что регистрация успешно выполнилась
+                
                 if response.statusCode == 204 {
                     return .just(())
                 }
                 
-                do {
-                    let mappedResponse = try response.map(BaseAPIResponse<String>.self)
-                    
-                    if let errorDescription = mappedResponse.data {
-                        return .error(NSError.APIWrapperError.qrRegistrationFailed(reason: errorDescription))
-                    } else {
-                        return .error(NSError.APIWrapperError.noDataError)
+                // MARK: Если code == 200, значит, что-то пошло не так
+                // Да, 200 - значит, что-то не так. Достаем информацию об этом из респонза
+                
+                if response.statusCode == 200 {
+                    do {
+                        let mappedResponse = try response.map(BaseAPIResponse<String>.self)
+                        
+                        if let errorDescription = mappedResponse.data {
+                            return .error(NSError.APIWrapperError.qrRegistrationFailed(reason: errorDescription))
+                        } else {
+                            return .error(NSError.APIWrapperError.noDataError)
+                        }
+                    } catch {
+                        return .error(NSError.APIWrapperError.baseResponseMappingError)
                     }
-                } catch {
-                    return .error(NSError.APIWrapperError.baseResponseMappingError)
                 }
+                
+                // MARK: Если код отличается от 200 и от 204, пытаемся достать информацию об ошибке
+                
+                return .error(response.extractBaseAPIResponseError())
             }
     }
     
@@ -90,15 +100,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.intercom(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<IntercomResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
     func openDoor(domophoneId: String, doorId: Int?, blockReason: String?) -> Single<Void?> {
@@ -114,8 +116,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.openDoor(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func resetCode(flatId: String) -> Single<ResetCodeResponseData?> {
@@ -127,15 +129,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.resetCode(request: request))
-            .filterSuccessfulCodes()
-            .map(BaseAPIResponse<ResetCodeResponseData>.self)
-            .flatMap { response in
-                guard let data = response.data else {
-                    return .error(NSError.APIWrapperError.noDataError)
-                }
-                
-                return .just(data)
-            }
+            .mapAsDefaultResponse()
     }
     
     func getSettingsAddresses() -> Single<GetSettingsListResponseData?> {
@@ -147,8 +141,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getSettingsList(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
@@ -161,8 +154,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAddressList(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
@@ -215,8 +207,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.access(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func resendSMS(flatId: String, guestPhone: String) -> Single<Void?> {
@@ -228,8 +220,8 @@ extension APIWrapper {
         
         return provider.rx
             .request(.resend(request: request))
-            .filterSuccessfulCodes()
-            .map { _ in }
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func getOffices() -> Single<OfficesResponseData?> {
@@ -241,8 +233,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.offices(request: request))
-            .filterSuccessfulCodes()
-            .mapAsEmptyDataInitializable()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
