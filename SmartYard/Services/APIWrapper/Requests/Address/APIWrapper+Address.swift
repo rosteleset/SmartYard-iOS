@@ -47,19 +47,7 @@ extension APIWrapper {
                 
                 // MARK: Если код отличается от 200, пытаемся достать информацию об ошибке
                 
-                do {
-                    let mappedResponse = try response.map(BaseAPIResponse<String>.self)
-                    
-                    return .error(
-                        NSError.APIWrapperError.codeIsNotSuccessfulExtended(
-                            code: mappedResponse.code,
-                            name: mappedResponse.name,
-                            message: mappedResponse.message
-                        )
-                    )
-                } catch {
-                    return .error(NSError.APIWrapperError.codeIsNotSuccessful(response.statusCode))
-                }
+                return .error(response.extractBaseAPIResponseError())
             }
     }
     

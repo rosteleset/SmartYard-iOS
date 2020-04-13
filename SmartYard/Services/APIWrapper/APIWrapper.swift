@@ -40,22 +40,9 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
                 return .just(())
             }
 
-            // MARK: Если вернулся не особо успешный код, пытаемся распаковать стандартную модель
-            // Если не получилось получить стандартную модель - просто вернем код ошибки
+            // MARK: Если вернулся не особо успешный код, пытаемся достать информацию об ошибке
             
-            do {
-                let mappedResponse = try response.map(BaseAPIResponse<String>.self)
-
-                return .error(
-                    NSError.APIWrapperError.codeIsNotSuccessfulExtended(
-                        code: mappedResponse.code,
-                        name: mappedResponse.name,
-                        message: mappedResponse.message
-                    )
-                )
-            } catch {
-                return .error(NSError.APIWrapperError.codeIsNotSuccessful(response.statusCode))
-            }
+            return .error(response.extractBaseAPIResponseError())
         }
     }
     
@@ -79,19 +66,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
             
             // MARK: Если код отличается от 200, пытаемся достать информацию об ошибке
             
-            do {
-                let mappedResponse = try response.map(BaseAPIResponse<T>.self)
-                
-                return .error(
-                    NSError.APIWrapperError.codeIsNotSuccessfulExtended(
-                        code: mappedResponse.code,
-                        name: mappedResponse.name,
-                        message: mappedResponse.message
-                    )
-                )
-            } catch {
-                return .error(NSError.APIWrapperError.codeIsNotSuccessful(response.statusCode))
-            }
+            return .error(response.extractBaseAPIResponseError())
         }
     }
     
@@ -102,8 +77,6 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
             if response.statusCode == 204 {
                 return .just(T())
             }
-            
-            // MARK: Иначе - мапим ровно так же, как и обычный респонз
             
             // MARK: Если успех (code == 200), то пытаемся просто замапить реквест
             
@@ -123,19 +96,25 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
             
             // MARK: Если код отличается от 200, пытаемся достать информацию об ошибке
             
-            do {
-                let mappedResponse = try response.map(BaseAPIResponse<T>.self)
-                
-                return .error(
-                    NSError.APIWrapperError.codeIsNotSuccessfulExtended(
-                        code: mappedResponse.code,
-                        name: mappedResponse.name,
-                        message: mappedResponse.message
-                    )
-                )
-            } catch {
-                return .error(NSError.APIWrapperError.codeIsNotSuccessful(response.statusCode))
-            }
+            return .error(response.extractBaseAPIResponseError())
+        }
+    }
+    
+}
+
+extension Response {
+    
+    func extractBaseAPIResponseError() -> Error {
+        do {
+            let mappedResponse = try map(BaseAPIResponse<String>.self)
+            
+            return NSError.APIWrapperError.codeIsNotSuccessfulExtended(
+                code: mappedResponse.code,
+                name: mappedResponse.name,
+                message: mappedResponse.message
+            )
+        } catch {
+            return NSError.APIWrapperError.codeIsNotSuccessful(statusCode)
         }
     }
     

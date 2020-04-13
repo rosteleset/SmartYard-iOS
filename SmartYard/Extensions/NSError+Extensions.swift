@@ -86,7 +86,7 @@ extension NSError {
             return NSError(
                 domain: domain,
                 code: code,
-                userInfo: [NSLocalizedDescriptionKey: "\(message)"]
+                userInfo: [NSLocalizedDescriptionKey: "\(message) (\(code))"]
             )
         }
         
