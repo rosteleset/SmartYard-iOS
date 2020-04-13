@@ -78,6 +78,7 @@
             </constraints>
             <size key="customSize" width="275" height="107"/>
             <connections>
+                <outlet property="arrowImageView" destination="cUS-jh-sG1" id="59V-fC-XaF"/>
                 <outlet property="cameraCountLabel" destination="mPJ-dN-ej9" id="Hyu-uK-2nH"/>
             </connections>
             <point key="canvasLocation" x="-25.362318840579711" y="113.50446428571428"/>

@@ -11,10 +11,13 @@ import UIKit
 class AddressesListCameraCell: CustomBorderCollectionViewCell {
     
     @IBOutlet private weak var cameraCountLabel: UILabel!
+    @IBOutlet private weak var arrowImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         configure(availableCameras: 0)
+        // TODO: remove in next release
+        arrowImageView.isHidden = true
     }
     
     func configure(availableCameras: Int) {
