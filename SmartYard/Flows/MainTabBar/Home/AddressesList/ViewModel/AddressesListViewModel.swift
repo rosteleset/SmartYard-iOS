@@ -172,7 +172,7 @@ class AddressesListViewModel: BaseViewModel {
                     
                     let sharedData = SmartYardSharedData(accessToken: accessToken, sharedObjects: sharedObjects)
                     
-                    SmartYardSharedData.saveSharedData(data: sharedData)
+                    SmartYardSharedDataUtilities.saveSharedData(data: sharedData)
                 }
             )
             .disposed(by: disposeBag)

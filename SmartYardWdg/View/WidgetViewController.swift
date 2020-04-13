@@ -17,7 +17,9 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var noObjectsLabel: UILabel!
     
-    private var objectsData = BehaviorSubject<SmartYardSharedData?>(value: SmartYardSharedData.loadSharedData())
+    private let objectsData = BehaviorSubject<SmartYardSharedData?>(
+        value: SmartYardSharedDataUtilities.loadSharedData()
+    )
 
     private let areObjectsGrantAccessed = BehaviorSubject<[Int: Bool]>(value: [:])
     private let doorOpened = PublishSubject<Int?>()
@@ -93,18 +95,18 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
     }
     
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
-        objectsData.onNext(SmartYardSharedData.loadSharedData())
+        objectsData.onNext(SmartYardSharedDataUtilities.loadSharedData())
         completionHandler(NCUpdateResult.newData)
     }
     
     fileprivate func numberOfTableRowsToDisplay() -> Int {
-        guard let data = try? objectsData.value() else {
+        guard let totalCount = try? objectsData.value()?.sharedObjects.count else {
             return 0
         }
         
-        let totalCount = data.sharedObjects.count
         return extensionContext?.widgetActiveDisplayMode == NCWidgetDisplayMode.compact ? 1 : totalCount
     }
+
     
     private func configureTableView() {
         tableView.delegate = self
@@ -143,25 +145,15 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
         objectsData.asDriver(onErrorJustReturn: nil)
             .drive(
                 onNext: { [weak self] objects in
-                    guard let uObjects = objects else {
-                        self?.areObjectsGrantAccessed.onNext([:])
-                        
-                        self?.noObjectsLabel.isHidden = false
-                        self?.tableView.isHidden = true
-                        
-                        return
+                    var accessStateDict = [Int: Bool]()
+                    
+                    objects?.sharedObjects.enumerated().forEach { offset, _ in
+                        accessStateDict[offset] = false
                     }
                     
-                    var newDict: [Int: Bool] = [:]
-                    
-                    uObjects.sharedObjects.enumerated().forEach { offset, _ in
-                        newDict[offset] = false
-                    }
-                    
-                    self?.areObjectsGrantAccessed.onNext(newDict)
-                    
-                    self?.noObjectsLabel.isHidden = !uObjects.sharedObjects.isEmpty
-                    self?.tableView.isHidden = uObjects.sharedObjects.isEmpty
+                    self?.areObjectsGrantAccessed.onNext(accessStateDict)
+                    self?.noObjectsLabel.isHidden = !accessStateDict.isEmpty
+                    self?.tableView.isHidden = accessStateDict.isEmpty
                 }
             )
             .disposed(by: disposeBag)

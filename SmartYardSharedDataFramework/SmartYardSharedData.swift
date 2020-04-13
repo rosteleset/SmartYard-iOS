@@ -20,7 +20,7 @@ public struct SmartYardSharedData: Codable {
 
 }
 
-extension SmartYardSharedData {
+public enum SmartYardSharedDataUtilities {
     
     public static func loadSharedData() -> SmartYardSharedData {
         let decoder = PropertyListDecoder()
@@ -54,7 +54,9 @@ extension SmartYardSharedData {
         let appGroupIdentifier = "group.com.madbrains.smartyard.widget"
         
         guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupIdentifier)
-        else { preconditionFailure("Expected a valid app group container") }
+        else {
+            preconditionFailure("Expected a valid app group container")
+        }
         
         return url.appendingPathComponent("Data.plist")
     }

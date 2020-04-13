@@ -23,28 +23,20 @@ class WdgObjectCell: UITableViewCell {
     
     var disposeBag = DisposeBag()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        configure(with: nil, isOpened: false)
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
     }
     
-    func configure(with object: SmartYardSharedObject?, isOpened: Bool) {
-        iconImageView.image = object == nil ? nil : UIImage(named: object!.logoImageName)
-        objectNameLabel.text = object?.objectName
-        objectAddressLabel.text = object?.objectAddress
+    func configure(with object: SmartYardSharedObject, isOpened: Bool) {
+        iconImageView.image = UIImage(named: object.logoImageName)
+        objectNameLabel.text = object.objectName
+        objectAddressLabel.text = object.objectAddress
         
         lockButton.isUserInteractionEnabled = !isOpened
-        lockButton.setImage(
-            UIImage(
-                named: isOpened ? "OpenStateIcon" : "CloseStateIcon"
-            ),
-            for: .normal
-        )
+        
+        let lockButtonImage = UIImage(named: isOpened ? "OpenStateIcon" : "CloseStateIcon")
+        lockButton.setImage(lockButtonImage, for: .normal)
     }
     
     func bind(with outerSubject: PublishSubject<Void>) {

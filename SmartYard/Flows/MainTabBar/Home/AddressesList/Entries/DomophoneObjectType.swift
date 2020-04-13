@@ -16,7 +16,7 @@ enum DomophoneObjectType: String, Decodable {
     case barrier
     
     var icon: UIImage? {
-        return UIImage(named: self.iconImageName)
+        return UIImage(named: iconImageName)
     }
     
     var iconImageName: String {
