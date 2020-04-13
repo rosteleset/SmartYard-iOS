@@ -31,7 +31,7 @@ extension APIWrapper {
                 // MARK: Если code == 200, значит, что-то пошло не так
                 // Да, 200 - значит, что-то не так. Достаем информацию об этом из респонза
                 
-                guard response.statusCode != 200 else {
+                if response.statusCode == 200 {
                     do {
                         let mappedResponse = try response.map(BaseAPIResponse<String>.self)
                         
@@ -45,7 +45,7 @@ extension APIWrapper {
                     }
                 }
                 
-                // MARK: Если код отличается от 200, пытаемся достать информацию об ошибке
+                // MARK: Если код отличается от 200 и от 204, пытаемся достать информацию об ошибке
                 
                 return .error(response.extractBaseAPIResponseError())
             }
