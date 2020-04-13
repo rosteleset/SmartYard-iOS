@@ -20,6 +20,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectCameraContainerViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="addressLabel" destination="ee5-rI-ERl" id="GVa-Lo-eGk"/>
+                <outlet property="archiveView" destination="XMW-5a-raE" id="g7C-eb-b1f"/>
+                <outlet property="cameraNameLabel" destination="MnK-n4-LKg" id="nhb-jz-KtR"/>
+                <outlet property="fakeNavBar" destination="1QV-aV-M8U" id="1yD-xE-KZS"/>
+                <outlet property="onlineView" destination="XHy-se-Gg3" id="Een-fL-L8z"/>
+                <outlet property="segmentControlView" destination="8IE-wm-vuP" id="NSl-hV-8Qb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -28,17 +34,20 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="oYf-Gn-iao">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y0b-WI-nlM">
                     <rect key="frame" x="0.0" y="88" width="414" height="120"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Как вам будет удобнее это сделать?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ee5-rI-ERl">
-                            <rect key="frame" x="40" y="84.5" width="219" height="18"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Советская, 16" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ee5-rI-ERl">
+                            <rect key="frame" x="40" y="56.5" width="165.5" height="18"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подтверждение адреса" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MnK-n4-LKg">
-                            <rect key="frame" x="40" y="0.0" width="334" height="80.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Камера 1, п. №2" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MnK-n4-LKg">
+                            <rect key="frame" x="40" y="12" width="334" height="40.5"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -51,12 +60,9 @@
                         <constraint firstAttribute="height" constant="120" id="ZXa-2j-U63"/>
                         <constraint firstItem="ee5-rI-ERl" firstAttribute="leading" secondItem="Y0b-WI-nlM" secondAttribute="leading" constant="40" id="ecN-8u-ffl"/>
                         <constraint firstItem="MnK-n4-LKg" firstAttribute="leading" secondItem="Y0b-WI-nlM" secondAttribute="leading" constant="40" id="ioM-vN-Wje"/>
-                        <constraint firstItem="MnK-n4-LKg" firstAttribute="top" secondItem="Y0b-WI-nlM" secondAttribute="top" id="kMA-EB-U4D"/>
+                        <constraint firstItem="MnK-n4-LKg" firstAttribute="top" secondItem="Y0b-WI-nlM" secondAttribute="top" constant="12" id="kMA-EB-U4D"/>
                     </constraints>
                 </view>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="oYf-Gn-iao">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1QV-aV-M8U" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -74,11 +80,11 @@
                                 <constraint firstAttribute="height" constant="57" id="BY7-1t-EOT"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XHy-se-Gg3" customClass="ServiceFromOfficeView" customModule="SmartYard" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XHy-se-Gg3" customClass="OnlineView" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="57" width="414" height="597"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XMW-5a-raE" customClass="ServiceFromCourierView" customModule="SmartYard" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XMW-5a-raE" customClass="ArchiveView" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="57" width="414" height="597"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>

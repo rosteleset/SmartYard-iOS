@@ -264,6 +264,13 @@
 		E97EAFE6243EFF3800D81243 /* SmartYardSharedDataFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = E97EAFE4243EFF3800D81243 /* SmartYardSharedDataFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E97EAFE9243EFF3800D81243 /* SmartYardSharedDataFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97EAFE2243EFF3800D81243 /* SmartYardSharedDataFramework.framework */; };
 		E97EAFEA243EFF3800D81243 /* SmartYardSharedDataFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97EAFE2243EFF3800D81243 /* SmartYardSharedDataFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E988DAA72444637B00C66371 /* SelectCameraContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E988DAA52444637B00C66371 /* SelectCameraContainerViewController.swift */; };
+		E988DAA82444637B00C66371 /* SelectCameraContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E988DAA62444637B00C66371 /* SelectCameraContainerViewController.xib */; };
+		E988DAB02444663700C66371 /* OnlineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E988DAAF2444663700C66371 /* OnlineView.xib */; };
+		E988DAB22444664400C66371 /* OnlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E988DAB12444664400C66371 /* OnlineView.swift */; };
+		E988DAB42444665500C66371 /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E988DAB32444665500C66371 /* ArchiveView.swift */; };
+		E988DAB62444666800C66371 /* ArchiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E988DAB52444666800C66371 /* ArchiveView.xib */; };
+		E988DAB8244469E500C66371 /* SelectCameraContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E988DAB7244469E500C66371 /* SelectCameraContainerViewModel.swift */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
 		E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C382423F149F30010BBC1 /* PinCodeViewController.xib */; };
@@ -665,6 +672,13 @@
 		E97EAFE2243EFF3800D81243 /* SmartYardSharedDataFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SmartYardSharedDataFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E97EAFE4243EFF3800D81243 /* SmartYardSharedDataFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmartYardSharedDataFramework.h; sourceTree = "<group>"; };
 		E97EAFE5243EFF3800D81243 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E988DAA52444637B00C66371 /* SelectCameraContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCameraContainerViewController.swift; sourceTree = "<group>"; };
+		E988DAA62444637B00C66371 /* SelectCameraContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectCameraContainerViewController.xib; sourceTree = "<group>"; };
+		E988DAAF2444663700C66371 /* OnlineView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnlineView.xib; sourceTree = "<group>"; };
+		E988DAB12444664400C66371 /* OnlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineView.swift; sourceTree = "<group>"; };
+		E988DAB32444665500C66371 /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
+		E988DAB52444666800C66371 /* ArchiveView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchiveView.xib; sourceTree = "<group>"; };
+		E988DAB7244469E500C66371 /* SelectCameraContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCameraContainerViewModel.swift; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E98C382423F149F30010BBC1 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
@@ -986,6 +1000,7 @@
 			children = (
 				844AC3CE23EBFD220066006D /* HomeCoordinator.swift */,
 				844AC3CD23EBFD0A0066006D /* AddressesList */,
+				E988DAA32444637B00C66371 /* Cameras */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -2271,6 +2286,60 @@
 			path = SmartYardSharedDataFramework;
 			sourceTree = "<group>";
 		};
+		E988DAA32444637B00C66371 /* Cameras */ = {
+			isa = PBXGroup;
+			children = (
+				E988DAAA2444657500C66371 /* SelectCamera */,
+			);
+			path = Cameras;
+			sourceTree = "<group>";
+		};
+		E988DAA42444637B00C66371 /* SelectCameraContainer */ = {
+			isa = PBXGroup;
+			children = (
+				E988DAA52444637B00C66371 /* SelectCameraContainerViewController.swift */,
+				E988DAA62444637B00C66371 /* SelectCameraContainerViewController.xib */,
+				E988DAB7244469E500C66371 /* SelectCameraContainerViewModel.swift */,
+			);
+			path = SelectCameraContainer;
+			sourceTree = "<group>";
+		};
+		E988DAA92444656D00C66371 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E988DAAE244465F800C66371 /* OnlineView */,
+				E988DAAC2444659F00C66371 /* ArchiveView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E988DAAA2444657500C66371 /* SelectCamera */ = {
+			isa = PBXGroup;
+			children = (
+				E988DAA42444637B00C66371 /* SelectCameraContainer */,
+				E988DAA92444656D00C66371 /* Views */,
+			);
+			path = SelectCamera;
+			sourceTree = "<group>";
+		};
+		E988DAAC2444659F00C66371 /* ArchiveView */ = {
+			isa = PBXGroup;
+			children = (
+				E988DAB32444665500C66371 /* ArchiveView.swift */,
+				E988DAB52444666800C66371 /* ArchiveView.xib */,
+			);
+			path = ArchiveView;
+			sourceTree = "<group>";
+		};
+		E988DAAE244465F800C66371 /* OnlineView */ = {
+			isa = PBXGroup;
+			children = (
+				E988DAAF2444663700C66371 /* OnlineView.xib */,
+				E988DAB12444664400C66371 /* OnlineView.swift */,
+			);
+			path = OnlineView;
+			sourceTree = "<group>";
+		};
 		E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */ = {
 			isa = PBXGroup;
 			children = (
@@ -2868,6 +2937,7 @@
 				84B89A9123F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib in Resources */,
 				844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */,
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
+				E988DAB62444666800C66371 /* ArchiveView.xib in Resources */,
 				84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */,
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
 				E9E4271723F40E0B00F5D593 /* SmartYardCheckBoxView.xib in Resources */,
@@ -2878,6 +2948,7 @@
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
 				E99A838B24372FF1001CEE95 /* PayContractViewController.xib in Resources */,
 				84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */,
+				E988DAB02444663700C66371 /* OnlineView.xib in Resources */,
 				E9E4270B23F2CD3900F5D593 /* ServiceFromOfficeView.xib in Resources */,
 				84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */,
 				84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */,
@@ -2900,6 +2971,7 @@
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
 				844AC3E923EBFEC50066006D /* PaymentsViewController.xib in Resources */,
+				E988DAA82444637B00C66371 /* SelectCameraContainerViewController.xib in Resources */,
 				84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */,
 				E98C383623F192600010BBC1 /* InputAddressViewController.xib in Resources */,
 				E9B67376243B48C600457C74 /* PaymentAddressCell.xib in Resources */,
@@ -3121,6 +3193,7 @@
 				84AADD1D242E22550056994A /* EditNameViewModel.swift in Sources */,
 				E92EFBB5242A22F2003AF7FE /* BaseAPIResponse.swift in Sources */,
 				E9618A332420ABC1003FF47D /* UnapprovedObjectCell.swift in Sources */,
+				E988DAA72444637B00C66371 /* SelectCameraContainerViewController.swift in Sources */,
 				84898A8E23F1540C00E6B78E /* SettingsActionCell.swift in Sources */,
 				E99A838A24372FF1001CEE95 /* PayContractViewController.swift in Sources */,
 				E9B9EACA2421FCCB000A92B3 /* RestorePasswordViewModel.swift in Sources */,
@@ -3141,6 +3214,7 @@
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
 				E92EFBB7242A22F2003AF7FE /* APIClientName.swift in Sources */,
 				E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */,
+				E988DAB8244469E500C66371 /* SelectCameraContainerViewModel.swift in Sources */,
 				E92EFBB3242A22F2003AF7FE /* APIDoor.swift in Sources */,
 				E92EFBAA242A22F2003AF7FE /* APIAddress.swift in Sources */,
 				E9A1D78323F27AE500234B2A /* AddressConfirmationViewController.swift in Sources */,
@@ -3221,6 +3295,7 @@
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
 				E92EFBCC242A22F2003AF7FE /* RegisterPushTokenRequest.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
+				E988DAB22444664400C66371 /* OnlineView.swift in Sources */,
 				84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */,
 				84AADD29243349630056994A /* ChatViewModel.swift in Sources */,
 				84898A9223F1554D00E6B78E /* SettingsDataItem.swift in Sources */,
@@ -3311,6 +3386,7 @@
 				84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */,
 				E92EFBCB242A22F2003AF7FE /* RequestCodeRequest.swift in Sources */,
 				E940581123F682EA00623746 /* AllowedPersonCell.swift in Sources */,
+				E988DAB42444665500C66371 /* ArchiveView.swift in Sources */,
 				84CC15D423EC40EE00A1CB95 /* AddressesListHeaderCell.swift in Sources */,
 				84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */,
 			);
