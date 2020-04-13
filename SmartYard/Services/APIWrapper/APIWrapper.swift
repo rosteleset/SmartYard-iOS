@@ -34,7 +34,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     
     func mapAsVoidResponse() -> Single<Void> {
         return flatMap { response in
-            // MARK: Если вернулся любой успешный код, то просто возвращаем Void
+            // MARK: Если вернулся успешный код, то просто возвращаем Void
 
             if 200...299 ~= response.statusCode {
                 return .just(())
@@ -48,23 +48,23 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     
     func mapAsDefaultResponse<T: Decodable>() -> Single<T> {
         return flatMap { response in
-            // MARK: Если успех (code == 200), то пытаемся просто замапить реквест
+            // MARK: Если вернулся успешный код - пытаемся замапить реквест
             
-            guard response.statusCode != 200 else {
+            if 200...299 ~= response.statusCode {
                 do {
                     let mappedResponse = try response.map(BaseAPIResponse<T>.self)
                     
-                    if let data = mappedResponse.data {
-                        return .just(data)
-                    } else {
+                    guard let data = mappedResponse.data else {
                         return .error(NSError.APIWrapperError.noDataError)
                     }
+                    
+                    return .just(data)
                 } catch {
                     return .error(NSError.APIWrapperError.baseResponseMappingError)
                 }
             }
             
-            // MARK: Если код отличается от 200, пытаемся достать информацию об ошибке
+            // MARK: Если вернулся не особо успешный код, пытаемся достать информацию об ошибке
             
             return .error(response.extractBaseAPIResponseError())
         }
@@ -78,23 +78,23 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
                 return .just(T())
             }
             
-            // MARK: Если успех (code == 200), то пытаемся просто замапить реквест
+            // MARK: Если вернулся успешный код - пытаемся замапить реквест
             
-            guard response.statusCode != 200 else {
+            if 200...299 ~= response.statusCode {
                 do {
                     let mappedResponse = try response.map(BaseAPIResponse<T>.self)
                     
-                    if let data = mappedResponse.data {
-                        return .just(data)
-                    } else {
+                    guard let data = mappedResponse.data else {
                         return .error(NSError.APIWrapperError.noDataError)
                     }
+                    
+                    return .just(data)
                 } catch {
                     return .error(NSError.APIWrapperError.baseResponseMappingError)
                 }
             }
             
-            // MARK: Если код отличается от 200, пытаемся достать информацию об ошибке
+            // MARK: Если вернулся не особо успешный код, пытаемся достать информацию об ошибке
             
             return .error(response.extractBaseAPIResponseError())
         }
