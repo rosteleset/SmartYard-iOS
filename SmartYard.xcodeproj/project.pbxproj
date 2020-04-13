@@ -128,7 +128,6 @@
 		84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */ = {isa = PBXBuildFile; fileRef = 84B9EC9123E0884400979C39 /* linphonerc_factory */; };
 		84B9EC9723E0884400979C39 /* linphonerc_default in Resources */ = {isa = PBXBuildFile; fileRef = 84B9EC9223E0884400979C39 /* linphonerc_default */; };
 		84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9EC9923E0888B00979C39 /* SipConfig.swift */; };
-		84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84B9EC9B23E089C500979C39 /* GoogleService-Info.plist */; };
 		84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15C123EC321C00A1CB95 /* AddressesListHeaderCell.xib */; };
 		84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15C823EC345800A1CB95 /* AddressesListDataItem.swift */; };
 		84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15CA23EC350100A1CB95 /* AddressesListDataItemIdentity.swift */; };
@@ -257,7 +256,6 @@
 		E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E96CC0D72423FAEA008DF44B /* RestoreMethodCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96CC0D62423FAEA008DF44B /* RestoreMethodCellModel.swift */; };
-		E988DABB2444AAAD00C66371 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
 		E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C382423F149F30010BBC1 /* PinCodeViewController.xib */; };
@@ -2552,7 +2550,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9004C6223FABF6800B59976 /* AccessView.xib in Resources */,
-				E988DABB2444AAAD00C66371 /* GoogleService-Info.plist in Resources */,
 				E9E4273623F55C5E00F5D593 /* ServiceUnavailableViewController.xib in Resources */,
 				E9E4273123F55B7800F5D593 /* ServicesActivationRequestViewController.xib in Resources */,
 				E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */,
@@ -2575,7 +2572,6 @@
 				845842D724223D7D0019635E /* AddressSettingsSkeletonView.xib in Resources */,
 				E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */,
 				847CF7DD240696D500070007 /* SettingsListSkeletonView.xib in Resources */,
-				84B9EC9C23E089C500979C39 /* GoogleService-Info.plist in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
 				84D6446023F6ACE600AD87EF /* AddressDeletionViewController.xib in Resources */,
