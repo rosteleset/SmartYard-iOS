@@ -3058,7 +3058,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MATCH_PROV_PROFILE_TYPES = "adhoc,appstore";
-				PRODUCT_BUNDLE_IDENTIFIER = ru.madbrains.smartyard.NotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc $(PRODUCT_BUNDLE_IDENTIFIER)";
 				SKIP_INSTALL = YES;
@@ -3228,7 +3228,7 @@
 					"@executable_path/Frameworks",
 				);
 				MATCH_PROV_PROFILE_TYPES = "adhoc,appstore";
-				PRODUCT_BUNDLE_IDENTIFIER = ru.madbrains.smartyard;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc $(PRODUCT_BUNDLE_IDENTIFIER)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
