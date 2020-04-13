@@ -18,7 +18,7 @@ platform :ios do
   lane :tf_release do
     tf(
       scheme: 'SmartYard',
-      app_store_connect_team_id: 'TODO!!!!!!!!',
+      app_store_connect_team_id: '4XDBUB87Z8',
       xcode_version: '~> 10.0',
       force_full_cert_sync: true,
       export_options: { compileBitcode: false, uploadBitcode: false }
