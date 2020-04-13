@@ -107,7 +107,6 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
         return extensionContext?.widgetActiveDisplayMode == NCWidgetDisplayMode.compact ? 1 : totalCount
     }
 
-    
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
