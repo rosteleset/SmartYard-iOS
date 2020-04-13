@@ -82,7 +82,7 @@ extension NSError {
             )
         }
         
-        static func codeIsNotSuccessfulExtended(code: Int, name: String, message: String) -> NSError {
+        static func codeIsNotSuccessfulExtended(code: Int, message: String) -> NSError {
             return NSError(
                 domain: domain,
                 code: code,

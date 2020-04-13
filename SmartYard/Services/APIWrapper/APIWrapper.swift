@@ -110,7 +110,6 @@ extension Response {
             
             return NSError.APIWrapperError.codeIsNotSuccessfulExtended(
                 code: mappedResponse.code,
-                name: mappedResponse.name,
                 message: mappedResponse.message
             )
         } catch {
