@@ -12,6 +12,7 @@ import RxCocoa
 import UIKit
 import linphonesw
 import XCoordinator
+import AVFoundation
 
 // swiftlint:disable:next type_body_length
 class IncomingCallViewModel: BaseViewModel {
@@ -150,6 +151,11 @@ class IncomingCallViewModel: BaseViewModel {
                     
                     do {
                         try call.acceptWithParams(params: callParams)
+                        
+                        if !call.speakerMuted {
+                            self?.enableLoudSpeaker()
+                        }
+                        
                         self?.currentStateSubject.onNext((.callAccepted, doorState))
                     } catch {
                         self?.router.trigger(.dismiss)
@@ -470,6 +476,14 @@ class IncomingCallViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    private func enableLoudSpeaker() {
+        do {
+            try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+        } catch {
+            print("Couldn't switch output port")
+        }
     }
     
 }
