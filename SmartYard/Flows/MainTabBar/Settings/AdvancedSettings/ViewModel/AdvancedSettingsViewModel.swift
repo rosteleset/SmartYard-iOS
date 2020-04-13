@@ -168,7 +168,7 @@ class AdvancedSettingsViewModel: BaseViewModel {
                             .ignoreNil()
                             .drive(
                                 onNext: { [weak self] in
-                                    SmartYardSharedData.clearSharedData()
+                                    SmartYardSharedDataUtilities.clearSharedData()
                                     self?.accessService.logout()
                                 }
                             )
