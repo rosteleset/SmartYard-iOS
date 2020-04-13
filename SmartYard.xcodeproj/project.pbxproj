@@ -257,6 +257,7 @@
 		E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
 		E96CC0D72423FAEA008DF44B /* RestoreMethodCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96CC0D62423FAEA008DF44B /* RestoreMethodCellModel.swift */; };
+		E988DABB2444AAAD00C66371 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */; };
 		E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */; };
 		E98C382323F1452D0010BBC1 /* PinCodeViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */; };
 		E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98C382423F149F30010BBC1 /* PinCodeViewController.xib */; };
@@ -604,6 +605,7 @@
 		E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnapprovedObjectCell.xib; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E96CC0D62423FAEA008DF44B /* RestoreMethodCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethodCellModel.swift; sourceTree = "<group>"; };
+		E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E98C382423F149F30010BBC1 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
@@ -1367,11 +1369,12 @@
 		84B9EC8523E0843D00979C39 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E988DAB92444AA8500C66371 /* Debug */,
 				84F840DC23E07DA5008DBE50 /* Assets.xcassets */,
-				84B9EC9B23E089C500979C39 /* GoogleService-Info.plist */,
 				84F840E123E07DA5008DBE50 /* Info.plist */,
 				84B9EC9223E0884400979C39 /* linphonerc_default */,
 				84B9EC9123E0884400979C39 /* linphonerc_factory */,
+				E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */,
 				84B9EC9D23E08BB100979C39 /* SmartYard.entitlements */,
 				84B9EC9323E0884400979C39 /* SmartYard-Bridging-Header.h */,
 				E99EA6BE23EAA6CE00BECEE6 /* Fonts */,
@@ -2121,6 +2124,14 @@
 			path = UnapprovedObjectCell;
 			sourceTree = "<group>";
 		};
+		E988DAB92444AA8500C66371 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				84B9EC9B23E089C500979C39 /* GoogleService-Info.plist */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
 		E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */ = {
 			isa = PBXGroup;
 			children = (
@@ -2468,6 +2479,7 @@
 				79EEE7229A112A3ECB59FC9E /* [CP] Check Pods Manifest.lock */,
 				84F840CE23E07DA5008DBE50 /* Sources */,
 				84F840CF23E07DA5008DBE50 /* Frameworks */,
+				E988DABC2444AB1D00C66371 /* Setup GoogleService-Info.plist */,
 				84F840D023E07DA5008DBE50 /* Resources */,
 				C380D67DCFB48F949692107B /* [CP] Embed Pods Frameworks */,
 				84B9ECA023E08DAD00979C39 /* Crashlytics */,
@@ -2540,6 +2552,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9004C6223FABF6800B59976 /* AccessView.xib in Resources */,
+				E988DABB2444AAAD00C66371 /* GoogleService-Info.plist in Resources */,
 				E9E4273623F55C5E00F5D593 /* ServiceUnavailableViewController.xib in Resources */,
 				E9E4273123F55B7800F5D593 /* ServicesActivationRequestViewController.xib in Resources */,
 				E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */,
@@ -2699,6 +2712,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		E988DABC2444AB1D00C66371 /* Setup GoogleService-Info.plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Setup GoogleService-Info.plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Name of the resource we're selectively copying\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\n\n# Get references to dev and prod versions of the GoogleService-Info.plist\n# NOTE: These should only live on the file system and should NOT be part of the target (since we'll be adding them to the target manually)\nGOOGLESERVICE_INFO_PROD=${PROJECT_DIR}/${TARGET_NAME}/Resources/${GOOGLESERVICE_INFO_PLIST}\nGOOGLESERVICE_INFO_DEV=${PROJECT_DIR}/${TARGET_NAME}/Resources/Debug/${GOOGLESERVICE_INFO_PLIST}\n\n# Make sure the dev version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_DEV}\"\nif [ ! -f $GOOGLESERVICE_INFO_DEV ]\nthen\necho \"No Development GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\nexit 1\nfi\n\n# Make sure the prod version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_PROD}\"\nif [ ! -f $GOOGLESERVICE_INFO_PROD ]\nthen\necho \"No Production GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\nexit 1\nfi\n\n# Get a reference to the destination location for the GoogleService-Info.plist\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\necho \"Will copy ${GOOGLESERVICE_INFO_PLIST} to final destination: ${PLIST_DESTINATION}\"\n\n# Copy over the prod GoogleService-Info.plist for Release builds\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\necho \"Using ${GOOGLESERVICE_INFO_PROD}\"\ncp \"${GOOGLESERVICE_INFO_PROD}\" \"${PLIST_DESTINATION}\"\nelse\necho \"Using ${GOOGLESERVICE_INFO_DEV}\"\ncp \"${GOOGLESERVICE_INFO_DEV}\" \"${PLIST_DESTINATION}\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
