@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>LanTa</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,15 +19,29 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>90</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MGLMapboxAccessToken</key>
+	<string>pk.eyJ1IjoibGFudGEiLCJhIjoiY2s4NndqbHRqMDFibjNuc2lvYjhzeTVhcCJ9.W-BMwoS8EqatJldtgxTuLg</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Used for VoIP video calls</string>
+	<string>Доступ к камере нужен для возможности сканирования QR-кодов</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Доступ к списку контактов нужен для отображения имен и фотографий людей, на чьи номера выделен доступ к адресу</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Доступ к местоположению позволит отобразить Вашу позицию на карте</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Used for VoIP calls</string>
+	<string>Доступ к микрофону нужен для передачи звука во время звонка</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SourceSansPro-Regular.ttf</string>
+		<string>SourceSansPro-Bold.ttf</string>
+		<string>SourceSansPro-SemiBold.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

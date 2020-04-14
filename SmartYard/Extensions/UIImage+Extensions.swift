@@ -1,0 +1,42 @@
+//
+//  UIImage+Extensions.swift
+//  SmartYard
+//
+//  Created by admin on 04/02/2020.
+//  Copyright © 2020 Mad Brains. All rights reserved.
+//
+
+import UIKit
+
+extension UIImage {
+    
+    func darkened(by value: CGFloat = 2) -> UIImage? {
+        return adjustExposure(adjustment: -value)
+    }
+    
+    func brightened(by value: CGFloat = 2) -> UIImage? {
+        return adjustExposure(adjustment: value)
+    }
+    
+    private func adjustExposure(adjustment: CGFloat) -> UIImage? {
+        guard let inputImage = CIImage(image: self),
+            let filter = CIFilter(name: "CIExposureAdjust") else {
+            return nil
+        }
+        
+        // The inputEV value on the CIFilter adjusts exposure (negative values darken, positive values brighten)
+        filter.setValue(inputImage, forKey: "inputImage")
+        filter.setValue(adjustment, forKey: "inputEV")
+        
+        let context = CIContext(options: nil)
+        
+        // Break early if the filter was not a success (.outputImage is optional in Swift)
+        guard let filteredImage = filter.outputImage,
+            let newImage = context.createCGImage(filteredImage, from: filteredImage.extent) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: newImage)
+    }
+    
+}

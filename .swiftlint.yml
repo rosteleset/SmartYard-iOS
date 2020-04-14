@@ -41,7 +41,6 @@ opt_in_rules:
   - private_outlet
   - redundant_type_annotation
   - sorted_first_last
-  - strict_fileprivate
   - unavailable_function
   - unneeded_parentheses_in_closure_argument
   - unused_enumerated

@@ -8,11 +8,6 @@
 
 import UIKit
 import Firebase
-import PushKit
-import Kingfisher
-import Alamofire
-import linphonesw
-import AVKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,12 +21,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         configureFirebase(for: application)
-        configureVoIPNotifications()
-        AVCaptureDevice.requestAccess(for: .video) { _ in }
-        
         appCoordinator.setRoot(for: mainWindow)
         
+        // MARK: При запуске приложения запрашиваем количество непрочитанных сообщений
+        // Пуши - вещь ненадежная, чисто в теории нам мог не дойти пуш с актуальным badge
+        
+        appCoordinator.syncBadgeNumber()
+        
+        // MARK: При запуске приложения помечаем все сообщения как доставленные
+        // То, что мы можем пометить одно и то же сообщение много раз - пофиг. Главное - пометить
+        
+        appCoordinator.markAllMessagesAsDelivered()
+        
         return true
+    }
+
+}
+
+// MARK: Push Notifications
+
+extension AppDelegate: MessagingDelegate {
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("DEBUG / PUSH NOTIFICATIONS / Firebase registration token: \(fcmToken)")
     }
     
     private func configureFirebase(for application: UIApplication) {
@@ -45,368 +57,91 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
     }
-
+    
 }
 
-// MARK: VoIP Notifications
-
-extension AppDelegate: PKPushRegistryDelegate {
+extension AppDelegate: UNUserNotificationCenterDelegate {
     
-    private func configureVoIPNotifications() {
-        let registry = PKPushRegistry(queue: DispatchQueue.main)
-        registry.delegate = self
-        registry.desiredPushTypes = [.voIP]
-    }
-    
-    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
-        let token = pushCredentials.token.map { String(format: "%02.2hhx", $0) }.joined()
-        print(token)
-        
-        sendTokenToBackend(token: token) { [weak self] result in
-            guard result.value == true else {
-                return
-            }
-            
-            self?.enableTokenOnBackend(token: token) { result in
-                guard result.value == true else {
-                    return
-                }
-                
-                self?.checkTokenOnBackend(token: token) { result in
-                    switch result {
-                    case .success(let value): print("DEBUG / IS TOKEN ACTIVE : \(value)")
-                    case .failure(let error): print(error.localizedDescription)
-                    }
-                }
-            }
-        }
-    }
-    
-    func pushRegistry(
-        _ registry: PKPushRegistry,
-        didReceiveIncomingPushWith payload: PKPushPayload,
-        for type: PKPushType,
-        completion: @escaping () -> Void
-        ) {
-        print(payload.dictionaryPayload)
-        
-        guard let data = payload.dictionaryPayload["data"] as? [AnyHashable: Any],
-            let username = data["extension"] as? String,
-            let password = data["pass"] as? String,
-            let server = data["server"] as? String,
-            let port = data["port"] as? String,
-            let rawTransport = data["transport"] as? String,
-            let liveImage = data["live"] as? String else {
-                completion()
-                return
-        }
-        
-        let domophoneId: String? = {
-            guard let domophoneId = data["domophone_id"] as? String else {
-                return nil
-            }
-            
-            return "ID домофона: \(domophoneId)"
-        }()
-        
-        let flatId: String? = {
-            guard let flatId = data["flat_id"] as? String else {
-                return nil
-            }
-            
-            return "ID квартиры: \(flatId)"
-        }()
-        
-        let content = UNMutableNotificationContent()
-        
-        content.title = "Звонок в домофон"
-        content.body = [domophoneId, flatId].compactMap { $0 }.joined(separator: ". ")
-        content.sound = UNNotificationSound.default
-        
-        content.userInfo = [
-            "extension": username,
-            "pass": password,
-            "server": server,
-            "port": port,
-            "rawTransport": rawTransport,
-            "live": liveImage
-        ]
-        
-        let finishHandler = {
-            let request = UNNotificationRequest(
-                identifier: "IncomingCall",
-                content: content,
-                trigger: nil
-            )
-            
-            UNUserNotificationCenter
-                .current()
-                .add(request, withCompletionHandler: nil)
-            
-            completion()
-        }
-        
-        guard let url = URL(string: liveImage) else {
-            finishHandler()
-            return
-        }
-        
-        KingfisherManager.shared.retrieveImage(with: url) { result in
-            guard let imageResult = try? result.get(),
-                let pngData = imageResult.image.pngData(),
-                let imgTarget = FileManager.default
-                    .urls(for: .libraryDirectory, in: .userDomainMask)
-                    .first?
-                    .appendingPathComponent("DomophonePreview.png"),
-                let _ = try? pngData.write(to: imgTarget),
-                let attachment = try? UNNotificationAttachment(
-                    identifier: "DomophonePreview",
-                    url: imgTarget,
-                    options: nil
-                ) else {
-                    finishHandler()
-                    return
-            }
-            
-            content.attachments = [attachment]
-            finishHandler()
-        }
-    }
+    // MARK: Чтобы отображались пуши, если приложение в данный момент активно (в foreground)
     
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
-        ) {
+    ) {
+        let userInfo = notification.request.content.userInfo
+        
+        if let messageID = userInfo["gcm.message_id"] {
+            print("DEBUG / PUSH NOTIFICATIONS / Message ID: \(messageID)")
+        }
+        
+        print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
+        
+        // MARK: Если в пуше пришел Badge - посылаем локальное уведомление, чтобы обновить Badge в таббаре
+        
+        if let aps = userInfo["aps"] as? [AnyHashable: Any],
+            let badge = aps["badge"] as? Int {
+            NotificationCenter.default.post(
+                name: .badgeNumberUpdated,
+                object: nil,
+                userInfo: [NotificationKeys.badgeNumberKey: badge]
+            )
+        }
+        
+        // MARK: Если пришел входящий звонок - переходим на экран входящего звонка, но не показываем пуш
+        
+        if let callPayload = CallPayload(pushNotificationPayload: userInfo) {
+            appCoordinator.processIncomingCallRequest(callPayload: callPayload)
+            completionHandler([])
+            return
+        }
+        
+        // MARK: Если пришло inbox message - сразу же помечаем его как доставленное
+        
+        if let rawMessageType = userInfo["messageType"] as? String,
+            let messageType = MessageType(rawValue: rawMessageType),
+            messageType == .inbox,
+            let messageId = userInfo["messageId"] as? String {
+            appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
+            
+            NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+        }
+        
         completionHandler([.alert, .badge, .sound])
     }
+    
+    // MARK: Чтобы при нажатии на пуш происходило какое-то действие
     
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
-        ) {
-        let request = response.notification.request
+    ) {
+        // MARK: Если нажали на уведомление о входящем звонке - процессим запрос
         
-        if request.identifier == "IncomingCall" {
-            // Показать окно с глазком или еще что-то
+        if let callPayload = CallPayload(
+            pushNotificationPayload: response.notification.request.content.userInfo
+        ) {
+            appCoordinator.processIncomingCallRequest(callPayload: callPayload)
+        }
+        
+        // MARK: Если нажали на inbox message - помечаем его как доставленное и переходим в уведомления
+        // Если нажали на chat message - переходим в чат
+        
+        if let rawMessageType = response.notification.request.content.userInfo["messageType"] as? String,
+            let messageType = MessageType(rawValue: rawMessageType) {
+            switch messageType {
+            case .inbox: appCoordinator.openNotificationsTab()
+            case .chat: appCoordinator.openChatTab()
+            }
+            
+            if let messageId = response.notification.request.content.userInfo["messageId"] as? String,
+                messageType == .inbox {
+                appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
+            }
         }
         
         completionHandler()
-    }
-    
-}
-
-// MARK: Push Notifications
-
-extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-        if let messageID = userInfo["gcm.message_id"] {
-            print("DEBUG / PUSH NOTIFICATIONS / Message ID: \(messageID)")
-        }
-        
-        print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
-        
-        guard let config = extractConfigFromData(userInfo) else {
-            return
-        }
-        
-        NotificationCenter.default.post(
-            name: .init("receivedConfigFromPushNotification"),
-            object: nil,
-            userInfo: ["config": config]
-        )
-    }
-    
-    func application(
-        _ application: UIApplication,
-        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
-        ) {
-        if let messageID = userInfo["gcm.message_id"] {
-            print("DEBUG / PUSH NOTIFICATIONS / Message ID: \(messageID)")
-        }
-        
-        print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
-        
-        guard let config = extractConfigFromData(userInfo) else {
-            completionHandler(.newData)
-            return
-        }
-        
-        NotificationCenter.default.post(
-            name: .init("receivedConfigFromPushNotification"),
-            object: nil,
-            userInfo: ["config": config]
-        )
-        
-        completionHandler(.newData)
-    }
-    
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        print("DEBUG / PUSH NOTIFICATIONS / Firebase registration token: \(fcmToken)")
-        
-        //        sendTokenToBackend(token: fcmToken) { [weak self] result in
-        //            guard result.value == true else {
-        //                return
-        //            }
-        //
-        //            self?.enableTokenOnBackend(token: fcmToken) { result in
-        //                guard result.value == true else {
-        //                    return
-        //                }
-        //
-        //                self?.checkTokenOnBackend(token: fcmToken) { result in
-        //                    switch result {
-        //                    case .success(let value): print("DEBUG / IS TOKEN ACTIVE : \(value)")
-        //                    case .failure(let error): print(error.localizedDescription)
-        //                    }
-        //                }
-        //            }
-        //        }
-    }
-    
-    private func sendTokenToBackend(token: String, completion: ((Result<Bool>) -> Void)?) {
-        let endpointUrl = "https://dm.lanta.me/api"
-        let login = "f70392"
-        let password = "d342a76ec"
-        
-        let parameters: [String: Any] = [
-            "action": "token_register",
-            "type": 2,
-            "login": login,
-            "password": password,
-            "token": token
-        ]
-        
-        Alamofire
-            .request(
-                endpointUrl,
-                method: .post,
-                parameters: parameters,
-                encoding: URLEncoding(destination: .queryString),
-                headers: nil
-            )
-            .responseJSON { response in
-                switch response.result {
-                case .success(let json):
-                    guard let dict = json as? [String: Any], let code = dict["code"] as? Int, code == 200 else {
-                        completion?(.success(false))
-                        return
-                    }
-                    
-                    completion?(.success(true))
-                    
-                case .failure(let error):
-                    completion?(.failure(error))
-                }
-        }
-    }
-    
-    private func enableTokenOnBackend(token: String, completion: ((Result<Bool>) -> Void)?) {
-        let endpointUrl = "https://dm.lanta.me/api"
-        let login = "f70392"
-        let password = "d342a76ec"
-        
-        let parameters: [String: Any] = [
-            "action": "token_intercom",
-            "login": login,
-            "password": password,
-            "token": token,
-            "enable": 1
-        ]
-        
-        Alamofire
-            .request(
-                endpointUrl,
-                method: .post,
-                parameters: parameters,
-                encoding: URLEncoding(destination: .queryString),
-                headers: nil
-            )
-            .responseJSON { response in
-                switch response.result {
-                case .success(let json):
-                    guard let dict = json as? [String: Any], let code = dict["code"] as? Int, code == 200 else {
-                        completion?(.success(false))
-                        return
-                    }
-                    
-                    completion?(.success(true))
-                    
-                case .failure(let error):
-                    completion?(.failure(error))
-                }
-        }
-    }
-    
-    private func checkTokenOnBackend(token: String, completion: ((Result<Bool>) -> Void)?) {
-        let endpointUrl = "https://dm.lanta.me/api"
-        let login = "f70392"
-        let password = "d342a76ec"
-        
-        let parameters: [String: Any] = [
-            "action": "token_intercom",
-            "login": login,
-            "password": password,
-            "token": token
-        ]
-        
-        Alamofire
-            .request(
-                endpointUrl,
-                method: .post,
-                parameters: parameters,
-                encoding: URLEncoding(destination: .queryString),
-                headers: nil
-            )
-            .responseJSON { response in
-                switch response.result {
-                case .success(let json):
-                    guard let dict = json as? [String: Any], let code = dict["code"] as? Int, code == 200 else {
-                        completion?(.success(false))
-                        return
-                    }
-                    
-                    completion?(.success(true))
-                    
-                case .failure(let error):
-                    completion?(.failure(error))
-                }
-        }
-    }
-    
-    private func extractConfigFromData(_ data: [AnyHashable: Any]) -> SipConfig? {
-        guard let username = data["extension"] as? String,
-            let password = data["pass"] as? String,
-            let server = data["server"] as? String,
-            let port = data["port"] as? String,
-            let rawTransport = data["transport"] as? String else {
-                return nil
-        }
-        
-        let transport: TransportType? = {
-            switch rawTransport {
-            case "udp": return .Udp
-            case "tcp": return .Tcp
-            case "tls": return .Tls
-            default: return nil
-            }
-        }()
-        
-        guard let unwrappedTransport = transport else {
-            return nil
-        }
-        
-        let domain = "\(server):\(port)"
-        
-        return SipConfig(
-            domain: domain,
-            username: username,
-            password: password,
-            transport: unwrappedTransport
-        )
     }
     
 }

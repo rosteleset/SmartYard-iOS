@@ -8,7 +8,7 @@ target 'SmartYard' do
   use_frameworks!
 
   # Networking
-  pod 'Moya'
+  pod 'Moya/RxSwift'
   pod 'Kingfisher'
   pod 'linphone-sdk' , '> 4.4.0-alpha'
   
@@ -16,6 +16,7 @@ target 'SmartYard' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxViewController'
+  pod 'RxDataSources'
 
   # Utilities
   pod 'SwiftLint', '0.35'
@@ -24,9 +25,17 @@ target 'SmartYard' do
   # UI
   pod 'Cartography'
   pod 'PMNibLinkableView'
-  pod 'IHKeyboardAvoiding'
   pod 'TouchAreaInsets'
   pod 'PinLayout'
+  pod 'SSCustomTabbar', :git => 'https://github.com/MadBrains/SSCustomTabbar.git', :branch => 'feature/add-animation-options'
+  pod 'TPKeyboardAvoiding'
+  pod 'JGProgressHUD'
+  pod 'SkeletonView', '1.7'
+  pod 'SearchTextField'
+  pod 'SHSPhoneComponent'
+
+  # Map
+  pod 'Mapbox-iOS-SDK'
   
   # Analytics
   pod 'Fabric'
@@ -39,6 +48,9 @@ target 'SmartYard' do
   # Routing
   pod 'XCoordinator'
   pod 'XCoordinator/RxSwift'
+  
+  # Chat
+  pod 'OnlineChatSdk', :git => 'https://github.com/MadBrains/OnlineChatSdk-Swift.git', :branch => 'feature/build-fix'
   
 end
 

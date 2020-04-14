@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="KGk-i7-Jjw" customClass="NewPersonCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1dY-MO-bgZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Добавить контакт" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pc8-qK-mIR">
+                                <rect key="frame" x="24" y="10.5" width="223" height="23"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                                <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AddButtonIcon" translatesAutoresizingMaskIntoConstraints="NO" id="XgF-pt-7zP">
+                                <rect key="frame" x="271" y="9.5" width="25" height="25"/>
+                                <color key="tintColor" red="0.16078431372549018" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="Q8O-bz-zMV"/>
+                                    <constraint firstAttribute="width" constant="25" id="gG4-GU-Xv8"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="XgF-pt-7zP" secondAttribute="trailing" constant="24" id="13k-tv-Qfx"/>
+                            <constraint firstItem="XgF-pt-7zP" firstAttribute="centerY" secondItem="1dY-MO-bgZ" secondAttribute="centerY" id="8To-8u-IJg"/>
+                            <constraint firstItem="XgF-pt-7zP" firstAttribute="leading" secondItem="Pc8-qK-mIR" secondAttribute="trailing" constant="24" id="FW4-LM-LCe"/>
+                            <constraint firstItem="Pc8-qK-mIR" firstAttribute="leading" secondItem="1dY-MO-bgZ" secondAttribute="leading" constant="24" id="R7D-Lf-80b"/>
+                            <constraint firstItem="Pc8-qK-mIR" firstAttribute="centerY" secondItem="1dY-MO-bgZ" secondAttribute="centerY" id="fWM-5U-g4C"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="1dY-MO-bgZ" secondAttribute="bottom" id="elB-AT-BPC"/>
+                    <constraint firstItem="1dY-MO-bgZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="oc0-av-GLt"/>
+                    <constraint firstAttribute="trailing" secondItem="1dY-MO-bgZ" secondAttribute="trailing" id="qOc-dj-D5P"/>
+                    <constraint firstItem="1dY-MO-bgZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="yEX-tQ-uFH"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="AddButtonIcon" width="25" height="25"/>
+    </resources>
+</document>

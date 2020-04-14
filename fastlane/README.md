@@ -48,6 +48,10 @@ Parameters:
 :test_groups - test groups in Fabric to test build for
 
 :export_options - additional options for build_ios_app (gym lane)
+
+:xcode_version - specify Xcode version if needed
+
+:force_full_cert_sync - force-load every provisioning profile and certificate bound to current project
 ### ios firebase
 ```
 fastlane ios firebase
@@ -71,6 +75,8 @@ Parameters:
 :export_options - additional options for build_ios_app (gym lane)
 
 :xcode_version - specify Xcode version if needed
+
+:force_full_cert_sync - force-load every provisioning profile and certificate bound to current project
 ### ios tf
 ```
 fastlane ios tf
@@ -90,6 +96,10 @@ Parameters:
 :app_store_connect_team_id - Team ID in App Store Connect (It is not the one from Provisioning Profiles!)
 
 :export_options - additional options for build_ios_app (gym lane)
+
+:xcode_version - specify Xcode version if needed
+
+:force_full_cert_sync - force-load every provisioning profile and certificate bound to current project
 ### ios sync_certs
 ```
 fastlane ios sync_certs

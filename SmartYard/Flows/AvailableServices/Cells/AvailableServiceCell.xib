@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="138" id="KGk-i7-Jjw" customClass="AvailableServiceCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="424" height="138"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="424" height="137.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fDQ-AC-t74">
+                        <rect key="frame" x="0.0" y="0.0" width="424" height="137.5"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NZj-TN-nzA" customClass="SmartYardCheckBoxView" customModule="SmartYard" customModuleProvider="target">
+                                <rect key="frame" x="40" y="55" width="28" height="28"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="cPi-Qe-gQu"/>
+                                    <constraint firstAttribute="width" constant="28" id="d0u-pi-bRk"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Умный домофон" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jb1-W5-xDz">
+                                <rect key="frame" x="83" y="37" width="301" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="Vfw-SE-jrX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                                <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="На шлагбаум, ворота и подъезд" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CO8-zf-Xxn">
+                                <rect key="frame" x="83" y="70.5" width="301" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="nJk-3U-pRC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="12"/>
+                                <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="NZj-TN-nzA" firstAttribute="centerY" secondItem="fDQ-AC-t74" secondAttribute="centerY" id="6Zw-Gf-25C"/>
+                            <constraint firstAttribute="trailing" secondItem="CO8-zf-Xxn" secondAttribute="trailing" constant="40" id="FX8-EH-git"/>
+                            <constraint firstAttribute="trailing" secondItem="Jb1-W5-xDz" secondAttribute="trailing" constant="40" id="iGt-sm-TDN"/>
+                            <constraint firstItem="Jb1-W5-xDz" firstAttribute="leading" secondItem="NZj-TN-nzA" secondAttribute="trailing" constant="15" id="ib4-gn-01t"/>
+                            <constraint firstItem="CO8-zf-Xxn" firstAttribute="centerY" secondItem="fDQ-AC-t74" secondAttribute="centerY" multiplier="1.2" id="lWQ-fR-OCv"/>
+                            <constraint firstItem="NZj-TN-nzA" firstAttribute="leading" secondItem="fDQ-AC-t74" secondAttribute="leading" constant="40" id="qfx-TF-VZz"/>
+                            <constraint firstItem="CO8-zf-Xxn" firstAttribute="leading" secondItem="NZj-TN-nzA" secondAttribute="trailing" constant="15" id="thj-mV-rnu"/>
+                            <constraint firstItem="Jb1-W5-xDz" firstAttribute="centerY" secondItem="fDQ-AC-t74" secondAttribute="centerY" multiplier="0.7" id="wYX-as-LY7"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="fDQ-AC-t74" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="7Yz-00-chc"/>
+                    <constraint firstItem="fDQ-AC-t74" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="WRJ-px-A9O"/>
+                    <constraint firstAttribute="trailing" secondItem="fDQ-AC-t74" secondAttribute="trailing" id="cLu-Qc-ClR"/>
+                    <constraint firstAttribute="bottom" secondItem="fDQ-AC-t74" secondAttribute="bottom" id="tYw-fS-FLd"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="checkBox" destination="NZj-TN-nzA" id="bc2-c5-djd"/>
+                <outlet property="descriptionLabel" destination="CO8-zf-Xxn" id="O0q-de-g9r"/>
+                <outlet property="titleLabel" destination="Jb1-W5-xDz" id="PTK-ZA-37b"/>
+            </connections>
+            <point key="canvasLocation" x="62.318840579710148" y="147.32142857142856"/>
+        </tableViewCell>
+    </objects>
+</document>

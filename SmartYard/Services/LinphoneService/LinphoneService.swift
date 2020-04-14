@@ -8,18 +8,29 @@
 
 import Foundation
 import linphonesw
+import UIKit
 
-class LinphoneService {
-    
-    static let shared = LinphoneService()
+// swiftlint:disable all
+class LinphoneService: CoreDelegate {
     
     private(set) var core: Core? = nil
     private var timer: Timer? = nil
     
-    private init() {
+    weak var delegate: LinphoneDelegate?
+    
+    var hasEnqueuedCalls = false
+    
+    override func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: RegistrationState, message: String) {
+        delegate?.onRegistrationStateChanged(lc: lc, cfg: cfg, cstate: cstate, message: message)
+    }
+    
+    override func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
+        delegate?.onCallStateChanged(lc: lc, call: call, cstate: cstate, message: message)
     }
     
     func start() {
+        stop()
+        
         do {
             let configName = "linphonerc_default"
             let factoryName = "linphonerc_factory"
@@ -39,16 +50,19 @@ class LinphoneService {
                     print("Unable to copy config file from bundle to library")
                 }
             }
-
+            
             core = try Factory.Instance.createCore(
                 configPath: configTarget.relativePath,
                 factoryConfigPath: Bundle.main.path(forResource: factoryName, ofType: "") ?? "",
                 systemContext: nil
             )
             
-            core?.avpfMode = .Enabled
-            
             try core?.start()
+            
+            core?.clearAllAuthInfo()
+            core?.clearProxyConfig()
+            
+            core?.addDelegate(delegate: self)
             
             timer = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { timer in
                 self.core?.iterate()
@@ -61,8 +75,57 @@ class LinphoneService {
     func stop() {
         timer?.invalidate()
         timer = nil
+        
+        try? core?.currentCall?.terminate()
+        
+        core?.removeDelegate(delegate: self)
         core?.stop()
-        core = nil        
+        core = nil
+    }
+    
+    func connect(config: SipConfig) {
+        start()
+        
+        guard let core = core else {
+            return
+        }
+        
+        let accountCreator = try! core.createAccountCreator(xmlrpcUrl: "")
+        accountCreator.setAccountConfiguration(config)
+        
+        let cfg = try! accountCreator.createProxyConfig()
+        
+        try! core.addProxyConfig(config: cfg)
+        
+        core.useInfoForDtmf = false
+        core.useRfc2833ForDtmf = true
+
+        core.audioPayloadTypes.forEach {
+            _ = $0.enable(enabled: true)
+        }
+        
+        core.videoPayloadTypes.forEach {
+            _ = $0.enable(enabled: $0.mimeType == "H264")
+        }
+        
+        try? core.setVideodevice(newValue: "StaticImage: Static picture")
+    }
+    
+    func setViews(videoView: UIView, cameraView: UIView) {
+        guard let core = core else {
+            return
+        }
+        
+        let videoViewPointer = UnsafeMutableRawPointer(mutating: bridge(obj: videoView))
+        core.nativeVideoWindowId = videoViewPointer
+        
+        let cameraViewPointer = UnsafeMutableRawPointer(mutating: bridge(obj: cameraView))
+        core.nativePreviewWindowId = cameraViewPointer
+    }
+    
+    private func bridge<T: AnyObject>(obj : T) -> UnsafeRawPointer {
+        let pointer = Unmanaged.passUnretained(obj).toOpaque()
+        return UnsafeRawPointer(pointer)
     }
     
 }

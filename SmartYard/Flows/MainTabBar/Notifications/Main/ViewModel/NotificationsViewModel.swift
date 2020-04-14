@@ -1,0 +1,94 @@
+//
+//  NotificationsViewModel.swift
+//  SmartYard
+//
+//  Created by admin on 23/03/2020.
+//  Copyright © 2020 Mad Brains. All rights reserved.
+//
+
+import RxSwift
+import RxCocoa
+import XCoordinator
+
+class NotificationsViewModel: BaseViewModel {
+    
+    private let apiWrapper: APIWrapper
+    private let pushNotificationService: PushNotificationService
+    private let router: WeakRouter<NotificationsRoute>
+    
+    init(
+        apiWrapper: APIWrapper,
+        pushNotificationService: PushNotificationService,
+        router: WeakRouter<NotificationsRoute>
+    ) {
+        self.apiWrapper = apiWrapper
+        self.pushNotificationService = pushNotificationService
+        self.router = router
+    }
+    
+    func transform(_ input: Input) -> Output {
+        let errorTracker = ErrorTracker()
+        let activityTracker = ActivityTracker()
+        
+        let inboxResponseSubject = BehaviorSubject<InboxResponseData?>(value: nil)
+        
+        Driver
+            .merge(
+                input.viewWillAppearTrigger.mapToVoid(),
+                NotificationCenter.default.rx.notification(.newInboxMessageReceived)
+                    .asDriverOnErrorJustComplete()
+                    .mapToVoid(),
+                .just(())
+            )
+            .flatMapLatest { [weak self] _ -> Driver<InboxResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper.inbox()
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] response in
+                    // MARK: При успешном выполнении метода inbox счетчик непрочитанных на сервере сбрасывается
+                    // Поэтому мы можем спокойно сбросить Badge до нуля
+                    // Более того, считаем, что юзер посмотрел все уведомления, так что удаляем их из NotificationCenter
+                    
+                    self?.pushNotificationService.markAllMessagesAsRead()
+                    
+                    inboxResponseSubject.onNext(response)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        return Output(
+            inboxResponse: inboxResponseSubject.asDriver(onErrorJustReturn: nil),
+            isLoading: activityTracker.asDriver()
+        )
+    }
+    
+}
+
+extension NotificationsViewModel {
+    
+    struct Input {
+        let viewWillAppearTrigger: Driver<Bool>
+    }
+    
+    struct Output {
+        let inboxResponse: Driver<InboxResponseData?>
+        let isLoading: Driver<Bool>
+    }
+    
+}
