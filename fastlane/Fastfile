@@ -9,7 +9,6 @@ platform :ios do
       firebase_app_id: '1:978817004542:ios:4da48f7a70a8a0f8e986af',
       scheme: 'SmartYard',
       test_groups: 'madbrains,customertesters',
-      xcode_version: '~> 10.0',
       force_full_cert_sync: true,
       export_options: { compileBitcode: false, uploadBitcode: false }
     )
@@ -19,7 +18,6 @@ platform :ios do
     tf(
       scheme: 'SmartYard',
       app_store_connect_team_id: '118338248',
-      xcode_version: '~> 10.0',
       force_full_cert_sync: true,
       export_options: { compileBitcode: false, uploadBitcode: false }
     )
