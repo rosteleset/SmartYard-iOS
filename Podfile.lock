@@ -87,9 +87,21 @@ PODS:
   - Kingfisher (5.13.0):
     - Kingfisher/Core (= 5.13.0)
   - Kingfisher/Core (5.13.0)
-  - "linphone-sdk (4.4.0-alpha.22+a27d5c6)":
-    - "linphone-sdk/basic-frameworks (= 4.4.0-alpha.22+a27d5c6)"
-  - "linphone-sdk/basic-frameworks (4.4.0-alpha.22+a27d5c6)"
+  - "linphone-sdk (4.4.0-alpha.170+30d17ef)":
+    - "linphone-sdk/all-frameworks (= 4.4.0-alpha.170+30d17ef)"
+    - "linphone-sdk/app-extension (= 4.4.0-alpha.170+30d17ef)"
+    - "linphone-sdk/app-extension-swift (= 4.4.0-alpha.170+30d17ef)"
+    - "linphone-sdk/basic-frameworks (= 4.4.0-alpha.170+30d17ef)"
+    - "linphone-sdk/swift (= 4.4.0-alpha.170+30d17ef)"
+  - "linphone-sdk/all-frameworks (4.4.0-alpha.170+30d17ef)"
+  - "linphone-sdk/app-extension (4.4.0-alpha.170+30d17ef)"
+  - "linphone-sdk/app-extension-swift (4.4.0-alpha.170+30d17ef)":
+    - linphone-sdk/app-extension
+  - "linphone-sdk/basic-frameworks (4.4.0-alpha.170+30d17ef)":
+    - linphone-sdk/app-extension
+  - "linphone-sdk/swift (4.4.0-alpha.170+30d17ef)":
+    - linphone-sdk/app-extension-swift
+    - linphone-sdk/basic-frameworks
   - Mapbox-iOS-SDK (5.7.0):
     - MapboxMobileEvents (= 0.10.2)
   - MapboxMobileEvents (0.10.2)
@@ -264,7 +276,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
-  linphone-sdk: 82302f72c930a859a75acdcfed304272d3cfdae1
+  linphone-sdk: 6b746767ece1d5702f9476661d504e28a02b1a90
   Mapbox-iOS-SDK: 1b7cb0e739247d20ef75f5f14aa6ce34e1f0660f
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
