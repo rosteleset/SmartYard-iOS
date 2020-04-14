@@ -35,7 +35,7 @@ target 'SmartYard' do
   pod 'SHSPhoneComponent'
 
   # Calendar
-  pod 'JTAppleCalendar'
+  pod 'JTAppleCalendar', '7.1.7'
   
   # Map
   pod 'Mapbox-iOS-SDK'

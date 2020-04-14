@@ -84,7 +84,7 @@ PODS:
   - GoogleUtilities/UserDefaults (6.5.0):
     - GoogleUtilities/Logger
   - JGProgressHUD (2.1)
-  - JTAppleCalendar (8.0.3)
+  - JTAppleCalendar (7.1.7)
   - Kingfisher (5.13.0):
     - Kingfisher/Core (= 5.13.0)
   - Kingfisher/Core (5.13.0)
@@ -160,7 +160,7 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Messaging
   - JGProgressHUD
-  - JTAppleCalendar
+  - JTAppleCalendar (= 7.1.7)
   - Kingfisher
   - linphone-sdk (> 4.4.0-alpha)
   - Mapbox-iOS-SDK
@@ -266,7 +266,7 @@ SPEC CHECKSUMS:
   GoogleDataTransportCCTSupport: cad3cd6cdbdbad6b5c2c9206ec413402755faaaa
   GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
-  JTAppleCalendar: 932cadea40b1051beab10f67843451d48ba16c99
+  JTAppleCalendar: 96da4d8388fa6dc82d6a60d41ef36a015e167e2f
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
   linphone-sdk: 82302f72c930a859a75acdcfed304272d3cfdae1
   Mapbox-iOS-SDK: 1b7cb0e739247d20ef75f5f14aa6ce34e1f0660f
@@ -293,6 +293,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: c7126bc10b9790b009898b8e60940e40782d8626
+PODFILE CHECKSUM: 5be0b7040967bde7702991c58f5453659ea69881
 
 COCOAPODS: 1.8.4

@@ -12,6 +12,6 @@ import JTAppleCalendar
 
 class ArchiveView: PMNibLinkableView {
     
-    @IBOutlet weak var calendarView: JTACMonthView!
+    @IBOutlet weak var calendarView: JTAppleCalendarView!
     
 }
