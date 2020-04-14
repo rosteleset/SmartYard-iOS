@@ -8,7 +8,10 @@
 
 import Foundation
 import PMNibLinkableView
+import JTAppleCalendar
 
 class ArchiveView: PMNibLinkableView {
+    
+    @IBOutlet weak var calendarView: JTACMonthView!
     
 }

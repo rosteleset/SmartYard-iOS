@@ -24,6 +24,9 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
     
     private let viewModel: SelectCameraContainerViewModel
     
+    let selectDataTrigger = PublishSubject<Date?>()
+    let selectCameraTrigger = PublishSubject<Int>()
+    
     init(viewModel: SelectCameraContainerViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -69,8 +72,8 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
             .disposed(by: disposeBag)
         
         let input = SelectCameraContainerViewModel.Input(
-            confirmByCourierTapped: courierView.rx.requestButtonTapped.asDriverOnErrorJustComplete(),
-            confirmInOfficeTrigger: officeView.rx.doSoButtonTapped.asDriverOnErrorJustComplete(),
+            selectedCameraTrigger: selectCameraTrigger.asDriverOnErrorJustComplete(),
+            selectedDateTrigger: selectDataTrigger.asDriverOnErrorJustComplete(),
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
@@ -81,14 +84,6 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
             .drive(
                 onNext: { [weak self] isLoading in
                     self?.updateLoader(isEnabled: isLoading, detailText: nil)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        output.offices
-            .drive(
-                onNext: { [weak self] offices in
-                    self?.officeView.setOffices(offices: offices)
                 }
             )
             .disposed(by: disposeBag)

@@ -34,6 +34,9 @@ target 'SmartYard' do
   pod 'SearchTextField'
   pod 'SHSPhoneComponent'
 
+  # Calendar
+  pod 'JTAppleCalendar'
+  
   # Map
   pod 'Mapbox-iOS-SDK'
   

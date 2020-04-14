@@ -2297,6 +2297,7 @@
 		E988DAA42444637B00C66371 /* SelectCameraContainer */ = {
 			isa = PBXGroup;
 			children = (
+				E988DAA92444656D00C66371 /* Views */,
 				E988DAA52444637B00C66371 /* SelectCameraContainerViewController.swift */,
 				E988DAA62444637B00C66371 /* SelectCameraContainerViewController.xib */,
 				E988DAB7244469E500C66371 /* SelectCameraContainerViewModel.swift */,
@@ -2317,7 +2318,6 @@
 			isa = PBXGroup;
 			children = (
 				E988DAA42444637B00C66371 /* SelectCameraContainer */,
-				E988DAA92444656D00C66371 /* Views */,
 			);
 			path = SelectCamera;
 			sourceTree = "<group>";
