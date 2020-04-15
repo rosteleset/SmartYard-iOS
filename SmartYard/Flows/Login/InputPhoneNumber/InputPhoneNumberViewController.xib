@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,10 +29,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lCk-sj-GES">
-                    <rect key="frame" x="0.0" y="20" width="414" height="876"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EhW-0V-SYx" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="69" width="414" height="807"/>
+                            <rect key="frame" x="0.0" y="69" width="414" height="783"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Soq-Bs-M2f" customClass="PhoneTextField" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="5" y="160" width="404" height="27"/>
@@ -40,7 +42,7 @@
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Введите номер телефона  для регистрации" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5mZ-NZ-IAo">
-                                    <rect key="frame" x="105.5" y="225" width="203" height="30.5"/>
+                                    <rect key="frame" x="105.5" y="225" width="203" height="33"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="203" id="CAP-Cu-dgQ"/>
                                     </constraints>
@@ -58,15 +60,6 @@
                                 <constraint firstItem="Soq-Bs-M2f" firstAttribute="top" secondItem="EhW-0V-SYx" secondAttribute="top" constant="160" id="yv9-cf-OY6"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="msZ-sy-B8z">
-                            <rect key="frame" x="374" y="31" width="24" height="24"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="24" id="c7y-lD-qEo"/>
-                                <constraint firstAttribute="height" constant="24" id="fcU-PG-5Lp"/>
-                            </constraints>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" image="CloseButtonIcon"/>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -74,8 +67,6 @@
                         <constraint firstAttribute="trailing" secondItem="EhW-0V-SYx" secondAttribute="trailing" id="Wov-dw-G4K"/>
                         <constraint firstItem="EhW-0V-SYx" firstAttribute="left" secondItem="lCk-sj-GES" secondAttribute="left" id="YiI-M4-Zv3"/>
                         <constraint firstAttribute="bottom" secondItem="EhW-0V-SYx" secondAttribute="bottom" id="d7G-tt-iB2"/>
-                        <constraint firstItem="EhW-0V-SYx" firstAttribute="top" secondItem="msZ-sy-B8z" secondAttribute="bottom" constant="14" id="o0V-kp-46h"/>
-                        <constraint firstAttribute="trailing" secondItem="msZ-sy-B8z" secondAttribute="trailing" constant="16" id="r5c-ub-VfO"/>
                     </constraints>
                 </view>
             </subviews>
@@ -96,7 +87,6 @@
         </view>
     </objects>
     <resources>
-        <image name="CloseButtonIcon" width="24" height="24"/>
         <image name="MainBackground" width="375" height="812"/>
     </resources>
 </document>
