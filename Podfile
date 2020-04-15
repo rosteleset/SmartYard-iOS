@@ -56,7 +56,10 @@ end
 
 post_install do |installer|
     installer.pods_project.build_configurations.each do |config|
-        config.build_settings['SWIFT_COMPILATION_MODE'] = 'wholemodule'
+        if config.name == 'Release'
+            config.build_settings['SWIFT_COMPILATION_MODE'] = 'wholemodule'
+        end
+
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
     end
 end
