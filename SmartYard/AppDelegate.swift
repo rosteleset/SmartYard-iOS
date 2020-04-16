@@ -103,8 +103,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             messageType == .inbox,
             let messageId = userInfo["messageId"] as? String {
             appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
-            
             NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+            
+            if let newAddress = userInfo["newAddress"] as? String, newAddress == "t" {
+                NotificationCenter.default.post(name: .addressAdded, object: nil)
+            }
         }
         
         completionHandler([.alert, .badge, .sound])
