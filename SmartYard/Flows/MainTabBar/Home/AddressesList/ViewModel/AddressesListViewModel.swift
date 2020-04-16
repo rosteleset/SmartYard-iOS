@@ -12,6 +12,10 @@ import XCoordinator
 
 class AddressesListViewModel: BaseViewModel {
     
+    // MARK: Я в курсе, что это хреновая идея
+    // Но это самый простой способ хранить значение переменной для одной сессии (до перезапуска)
+    static var shouldForceTransitionForCurrentSession = true
+    
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
     private let permissionService: PermissionService
@@ -138,7 +142,10 @@ class AddressesListViewModel: BaseViewModel {
                     let (newData, _) = args
                     let (approvedAddresses, unapprovedAddresses) = newData
                     
-                    guard !approvedAddresses.isEmpty || !unapprovedAddresses.isEmpty else {
+                    guard !approvedAddresses.isEmpty
+                        || !unapprovedAddresses.isEmpty
+                        || !AddressesListViewModel.shouldForceTransitionForCurrentSession else {
+                        AddressesListViewModel.shouldForceTransitionForCurrentSession = false
                         self?.router.trigger(.inputContract(isManualTrigger: false))
                         return
                     }
