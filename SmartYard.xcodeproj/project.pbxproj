@@ -100,6 +100,8 @@
 		848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
+		849F2AD72448687C005693B3 /* AddressesListEmptyStateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F2AD52448687C005693B3 /* AddressesListEmptyStateCell.swift */; };
+		849F2AD82448687C005693B3 /* AddressesListEmptyStateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849F2AD62448687C005693B3 /* AddressesListEmptyStateCell.xib */; };
 		84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A6705F241FB6CC00BBA12B /* AddressAccessSkeletonView.swift */; };
 		84A67062241FB6E100BBA12B /* AddressAccessSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A67061241FB6E100BBA12B /* AddressAccessSkeletonView.xib */; };
 		84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D6123E2E860001B3B43 /* NSError+Extensions.swift */; };
@@ -436,6 +438,8 @@
 		848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAction.swift; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
+		849F2AD52448687C005693B3 /* AddressesListEmptyStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListEmptyStateCell.swift; sourceTree = "<group>"; };
+		849F2AD62448687C005693B3 /* AddressesListEmptyStateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListEmptyStateCell.xib; sourceTree = "<group>"; };
 		84A6705F241FB6CC00BBA12B /* AddressAccessSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessSkeletonView.swift; sourceTree = "<group>"; };
 		84A67061241FB6E100BBA12B /* AddressAccessSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessSkeletonView.xib; sourceTree = "<group>"; };
 		84AA8D6123E2E860001B3B43 /* NSError+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Extensions.swift"; sourceTree = "<group>"; };
@@ -1226,6 +1230,15 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
+		849F2AD424486848005693B3 /* EmptyStateCell */ = {
+			isa = PBXGroup;
+			children = (
+				849F2AD52448687C005693B3 /* AddressesListEmptyStateCell.swift */,
+				849F2AD62448687C005693B3 /* AddressesListEmptyStateCell.xib */,
+			);
+			path = EmptyStateCell;
+			sourceTree = "<group>";
+		};
 		84A6705E241FB6B200BBA12B /* AddressAccessSkeletonView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1480,6 +1493,7 @@
 		84CC15BE23EC31D100A1CB95 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				849F2AD424486848005693B3 /* EmptyStateCell */,
 				E9618A302420AB6E003FF47D /* UnapprovedObjectCell */,
 				84CC15D923EC6A9300A1CB95 /* CameraCell */,
 				84CC15CE23EC404F00A1CB95 /* ObjectCell */,
@@ -2566,6 +2580,7 @@
 				E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */,
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
+				849F2AD82448687C005693B3 /* AddressesListEmptyStateCell.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */,
 				845842D724223D7D0019635E /* AddressSettingsSkeletonView.xib in Resources */,
@@ -2783,6 +2798,7 @@
 				E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */,
 				84898A9823F1556B00E6B78E /* SettingsSectionModel.swift in Sources */,
 				E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */,
+				849F2AD72448687C005693B3 /* AddressesListEmptyStateCell.swift in Sources */,
 				E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */,
 				848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */,
 				84AADD1D242E22550056994A /* EditNameViewModel.swift in Sources */,

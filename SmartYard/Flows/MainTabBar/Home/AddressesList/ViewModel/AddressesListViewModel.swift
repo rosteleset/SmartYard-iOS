@@ -460,6 +460,11 @@ class AddressesListViewModel: BaseViewModel {
             sectionModels.append(AddressesListSectionModel(identity: String($0.identity.hashValue), items: [$0]))
         }
         
+        if sectionModels.isEmpty {
+            let emptyStateSection = AddressesListSectionModel(identity: "EmptyStateSection", items: [.emptyState])
+            sectionModels.append(emptyStateSection)
+        }
+        
         return sectionModels
     }
     
