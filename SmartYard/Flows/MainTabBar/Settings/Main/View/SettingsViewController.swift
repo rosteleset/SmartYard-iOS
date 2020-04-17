@@ -237,13 +237,14 @@ class SettingsViewController: BaseViewController {
     
     private func configureCollectionView() {
         [
-            SettingsHeaderCell.self,
             SettingsControlPanelCell.self,
             SettingsActionCell.self,
             SettingsAddAddressCell.self
         ].forEach {
             collectionView.register(nibWithCellClass: $0)
         }
+        
+        collectionView.register(cellWithClass: SettingsHeaderCell.self)
         
         let dataSource = RxCollectionViewSectionedAnimatedDataSource<SettingsSectionModel>(
             configureCell: { [weak self] _, collectionView, indexPath, item in
@@ -354,7 +355,25 @@ extension SettingsViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: collectionView.width - 32, height: 80)
+        guard let item = dataSource?[indexPath] else {
+            return .zero
+        }
+        
+        let height: CGFloat = {
+            switch item {
+            case let .header(_, address, contractName, _):
+                return SettingsHeaderCell.preferredHeight(
+                    for: UIScreen.main.bounds.width - 16 * 2,
+                    title: address,
+                    subtitle: contractName
+                ).totalHeight
+                
+            default:
+                return 80
+            }
+        }()
+        
+        return CGSize(width: collectionView.width - 32, height: height)
     }
     
     func collectionView(
