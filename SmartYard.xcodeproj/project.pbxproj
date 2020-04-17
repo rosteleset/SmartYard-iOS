@@ -1734,9 +1734,9 @@
 		84F840C923E07DA5008DBE50 = {
 			isa = PBXGroup;
 			children = (
+				84F840D423E07DA5008DBE50 /* SmartYard */,
 				849652BE2472AF3B000E1375 /* SmartYardSharedDataFramework */,
 				849652B12472AF3B000E1375 /* SmartYardWdg */,
-				84F840D423E07DA5008DBE50 /* SmartYard */,
 				84EEBC9E23F55A9B00C9557F /* NotificationServiceExtension */,
 				84F840D323E07DA5008DBE50 /* Products */,
 				B0B71A96C6C8995993C06C49 /* Pods */,
