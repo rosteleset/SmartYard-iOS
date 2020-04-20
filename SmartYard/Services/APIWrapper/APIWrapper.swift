@@ -100,6 +100,23 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         }
     }
     
+    func catchNoConnectionError() -> PrimitiveSequence<Trait, Element> {
+        return catchError { error in
+            let nsError = error as NSError
+            
+            guard nsError.domain == "Moya.MoyaError",
+                nsError.code == 6,
+                let afError = nsError.userInfo["NSUnderlyingError"] as? AFError,
+                let underlyingError = afError.underlyingError as NSError?,
+                underlyingError.domain == "NSURLErrorDomain",
+                underlyingError.code == -1009 else {
+                throw error
+            }
+
+            throw NSError.APIWrapperError.noConnectionError
+        }
+    }
+    
 }
 
 extension Response {

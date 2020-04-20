@@ -13,6 +13,10 @@ import RxCocoa
 extension APIWrapper {
     
     func sendIssue(issue: Issue) -> Single<CreateIssueResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -21,10 +25,15 @@ extension APIWrapper {
         
         return provider.rx
             .request(.createIssue(request: request))
+            .catchNoConnectionError()
             .mapAsDefaultResponse()
     }
     
     func getListConnect() -> Single<GetListConnectResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -33,11 +42,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getListConnect(request: request))
+            .catchNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
     func cancelIssue(key: String) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -51,11 +65,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.actionIssue(request: request))
+            .catchNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
     
     func changeDeliveryMethod(newMethod: IssueDeliveryType, key: String) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -69,11 +88,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.actionIssue(request: request))
+            .catchNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
     
     func sendCommentAfterDeliveryMethodChanging(newMethod: IssueDeliveryType, key: String) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -82,6 +106,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.commentIssue(request: request))
+            .catchNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }

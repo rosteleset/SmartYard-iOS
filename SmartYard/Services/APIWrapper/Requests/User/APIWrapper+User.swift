@@ -13,6 +13,10 @@ import RxSwift
 extension APIWrapper {
     
     func addMyPhone(login: String, password: String, comment: String?, useForNotifications: Bool?) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -27,20 +31,30 @@ extension APIWrapper {
         
         return provider.rx
             .request(.addMyPhone(request: request))
+            .catchNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
     
     func requestCode(userPhone: String) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         let request = RequestCodeRequest(userPhone: userPhone)
         
         return provider.rx
             .request(.requestCode(request: request))
+            .catchNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
     
     func registerPushToken(pushToken: String, clientId: String?, type: TokenType) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -54,11 +68,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.registerPushToken(request: request))
+            .catchNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
     
     func confirmCode(userPhone: String, smsCode: String) -> Single<ConfirmCodeResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard accessService.accessToken == nil else {
             return .error(NSError.APIWrapperError.alreadyLoggedInError)
         }
@@ -67,10 +86,15 @@ extension APIWrapper {
         
         return provider.rx
             .request(.confirmCode(request: request))
+            .catchNoConnectionError()
             .mapAsDefaultResponse()
     }
     
     func getPaymentsList() -> Single<GetPaymentsListResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -79,11 +103,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getPaymentsList(request: request))
+            .catchNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
     func sendName(name: String, patronymic: String?) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -92,11 +121,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.sendName(request: request))
+            .catchNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
     
     func restore(contractNum: String?, contactId: String?, code: String?) -> Single<RestoreRequestResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -114,7 +148,9 @@ extension APIWrapper {
             notification: nil
         )
         
-        return provider.rx.request(.restore(request: request))
+        return provider.rx
+            .request(.restore(request: request))
+            .catchNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
@@ -132,6 +168,10 @@ extension APIWrapper {
     }
     
     func notification(money: Bool?, enable: Bool?) -> Single<NotificationResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -140,6 +180,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.notification(request: request))
+            .catchNoConnectionError()
             .mapAsDefaultResponse()
     }
     

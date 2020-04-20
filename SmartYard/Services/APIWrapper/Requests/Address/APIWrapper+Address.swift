@@ -13,6 +13,10 @@ import RxCocoa
 extension APIWrapper {
     
     func registerQR(qr: String) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -21,6 +25,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.registerQR(request: request))
+            .catchNoConnectionError()
             .flatMap { response in
                 // MARK: Если code == 204, значит, что регистрация успешно выполнилась
                 
@@ -92,6 +97,10 @@ extension APIWrapper {
     }
     
     func intercom(flatId: String, settings: APIIntercomSettings?) -> Single<IntercomResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -100,10 +109,15 @@ extension APIWrapper {
         
         return provider.rx
             .request(.intercom(request: request))
+            .catchNoConnectionError()
             .mapAsDefaultResponse()
     }
     
     func openDoor(domophoneId: String, doorId: Int?, blockReason: String?) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -116,11 +130,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.openDoor(request: request))
+            .catchNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
     
     func resetCode(flatId: String) -> Single<ResetCodeResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -129,10 +148,15 @@ extension APIWrapper {
         
         return provider.rx
             .request(.resetCode(request: request))
+            .catchNoConnectionError()
             .mapAsDefaultResponse()
     }
     
     func getSettingsAddresses() -> Single<GetSettingsListResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -141,11 +165,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getSettingsList(request: request))
+            .catchNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
     func getAddressList() -> Single<GetAddressListResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -154,6 +183,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAddressList(request: request))
+            .catchNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
@@ -193,6 +223,10 @@ extension APIWrapper {
         type: APIRoommateAccessType? = nil,
         expire: Date? = nil
     ) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -207,11 +241,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.access(request: request))
+            .catchNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
     
     func resendSMS(flatId: String, guestPhone: String) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -220,11 +259,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.resend(request: request))
+            .catchNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
     
     func getOffices() -> Single<OfficesResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -233,6 +277,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.offices(request: request))
+            .catchNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }

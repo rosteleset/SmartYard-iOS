@@ -20,9 +20,9 @@ class BaseRequestRetrier: RequestInterceptor {
         dueTo error: Error,
         completion: @escaping (RetryResult) -> Void
     ) {
-        // If task failed 5 attempts to finish, everything is very bad (connection is dead). TODO: Add Reachability
-        guard request.retryCount < 5 else {
-            print("REQUEST RETRIER: Task failed to finish in 5 attempts. RIP")
+        // If task failed 4 attempts to finish, everything is very bad (connection is dead). TODO: Add Reachability
+        guard request.retryCount < 4 else {
+            print("REQUEST RETRIER: Task failed to finish in 4 attempts. RIP")
             return completion(.doNotRetry)
         }
         

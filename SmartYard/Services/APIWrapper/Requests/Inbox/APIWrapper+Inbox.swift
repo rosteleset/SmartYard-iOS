@@ -13,6 +13,10 @@ import RxSwift
 extension APIWrapper {
     
     func inbox() -> Single<InboxResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -21,10 +25,15 @@ extension APIWrapper {
         
         return provider.rx
             .request(.inbox(request: request))
+            .catchNoConnectionError()
             .mapAsDefaultResponse()
     }
     
     func delivered(messageId: String) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -33,11 +42,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.delivered(request: request))
+            .catchNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
     
     func unreaded() -> Single<UnreadedResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -46,6 +60,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.unreaded(request: request))
+            .catchNoConnectionError()
             .mapAsDefaultResponse()
     }
     

@@ -74,6 +74,12 @@ extension NSError {
             )
         }()
         
+        static let noConnectionError = NSError(
+            domain: domain,
+            code: 3102,
+            userInfo: [NSLocalizedDescriptionKey: "Нет соединения"]
+        )
+        
         static func codeIsNotSuccessful(_ code: Int) -> NSError {
             return NSError(
                 domain: domain,
