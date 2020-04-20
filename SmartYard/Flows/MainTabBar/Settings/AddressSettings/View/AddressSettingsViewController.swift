@@ -15,7 +15,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
     @IBOutlet private weak var addressContainerView: UIView!
-    @IBOutlet private weak var addressTextField: UITextField!
+    @IBOutlet private weak var addressLabel: UILabel!
     
     @IBOutlet private weak var notificationsContainerView: UIView!
     @IBOutlet private weak var notificationsHeader: UIView!
@@ -34,6 +34,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private var collapsedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var deleteButtonTopToNotificationsConstraint: NSLayoutConstraint!
+    @IBOutlet private var notificationsViewTopConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var deleteAddressButton: UIButton!
     
@@ -66,6 +67,16 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         if skeletonView.isSkeletonActive {
             skeletonView.showSkeletonAsynchronously()
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // MARK: 24 px = это то, насколько addressContainerView выступает над scrollView
+        // 8 px - это отступ между addressContainerView и следующей за ней вьюхой
+        let neededInset = addressContainerView.bounds.height - 24 + 8
+        
+        notificationsViewTopConstraint.constant = neededInset
     }
     
     private func configureView() {
@@ -128,9 +139,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         output.address
             .drive(
                 onNext: { [weak self] address in
-                    self?.view.endEditing(true)
-                    self?.addressTextField.text = address
-                    self?.addressTextField.isEnabled = false
+                    self?.addressLabel.text = address
                 }
             )
             .disposed(by: disposeBag)
