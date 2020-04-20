@@ -25,7 +25,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Vm-pe-Hze">
-                        <rect key="frame" x="0.0" y="10" width="399" height="275"/>
+                        <rect key="frame" x="0.0" y="19" width="399" height="257.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Список пока пуст :(" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5D-C5-3Lf">
                                 <rect key="frame" x="25" y="50" width="349" height="35.5"/>
@@ -34,8 +34,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZ7-hx-jin">
-                                <rect key="frame" x="50" y="101.5" width="299" height="123.5"/>
-                                <string key="text">Для добавления адреса нажмите на "+" в верхней части экрана.  Если только что добавленный адрес не отображается в списке, пожалуйста, подождите несколько минут. Список обновится автоматически.</string>
+                                <rect key="frame" x="50" y="101.5" width="299" height="106"/>
+                                <string key="text">Для добавления адреса нажмите на "+" в верхней части экрана.  Если добавленный адрес не отображается, пожалуйста, подождите несколько минут. Список обновится автоматически.</string>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                 <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
