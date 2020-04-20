@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +22,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressSettingsViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="addressContainerView" destination="orr-Vl-FJW" id="qhI-lw-wXk"/>
-                <outlet property="addressTextField" destination="ayL-Ea-bZp" id="WgE-Ve-7E2"/>
+                <outlet property="addressLabel" destination="Lv1-z9-kae" id="fMe-xv-dFh"/>
                 <outlet property="cmsContainerView" destination="137-G2-w7g" id="WGI-Nq-uPa"/>
                 <outlet property="cmsSwitch" destination="bJY-jZ-mlo" id="zYF-LD-OdR"/>
                 <outlet property="collapsedBottomConstraint" destination="glm-ii-U7P" id="MK6-gt-ax6"/>
@@ -68,7 +66,7 @@
                     <rect key="frame" x="0.0" y="194.5" width="414" height="667.5"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOC-N6-riE">
-                            <rect key="frame" x="16" y="57" width="382" height="258"/>
+                            <rect key="frame" x="16" y="58" width="382" height="258"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="isu-7K-afz">
                                     <rect key="frame" x="0.0" y="0.0" width="382" height="182"/>
@@ -244,7 +242,7 @@
                             </constraints>
                         </view>
                         <view hidden="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="52q-3H-mZa" customClass="AddressSettingsSkeletonView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="16" y="57" width="382" height="128"/>
+                            <rect key="frame" x="16" y="58" width="382" height="128"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                     </subviews>
@@ -257,21 +255,21 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="orr-Vl-FJW">
-                    <rect key="frame" x="16" y="173.5" width="382" height="70"/>
+                    <rect key="frame" x="16" y="173.5" width="382" height="71"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Empty" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ayL-Ea-bZp">
-                            <rect key="frame" x="24" y="23.5" width="334" height="23"/>
-                            <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lv1-z9-kae">
+                            <rect key="frame" x="24" y="24" width="334" height="23"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
+                            <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="70" id="8XH-eH-ihg"/>
-                        <constraint firstItem="ayL-Ea-bZp" firstAttribute="leading" secondItem="orr-Vl-FJW" secondAttribute="leading" constant="24" id="I0a-zx-tvJ"/>
-                        <constraint firstAttribute="trailing" secondItem="ayL-Ea-bZp" secondAttribute="trailing" constant="24" id="b7v-kc-43d"/>
-                        <constraint firstItem="ayL-Ea-bZp" firstAttribute="centerY" secondItem="orr-Vl-FJW" secondAttribute="centerY" id="m6P-mj-u5U"/>
+                        <constraint firstAttribute="bottom" secondItem="Lv1-z9-kae" secondAttribute="bottom" constant="24" id="Ifl-3J-NR8"/>
+                        <constraint firstItem="Lv1-z9-kae" firstAttribute="leading" secondItem="orr-Vl-FJW" secondAttribute="leading" constant="24" id="JCq-la-eJM"/>
+                        <constraint firstItem="Lv1-z9-kae" firstAttribute="top" secondItem="orr-Vl-FJW" secondAttribute="top" constant="24" id="PCL-sw-FrX"/>
+                        <constraint firstAttribute="trailing" secondItem="Lv1-z9-kae" secondAttribute="trailing" constant="24" id="txT-y0-cjM"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

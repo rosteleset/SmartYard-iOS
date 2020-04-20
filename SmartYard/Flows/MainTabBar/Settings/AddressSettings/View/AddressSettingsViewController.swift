@@ -15,7 +15,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
     @IBOutlet private weak var addressContainerView: UIView!
-    @IBOutlet private weak var addressTextField: UITextField!
+    @IBOutlet private weak var addressLabel: UILabel!
     
     @IBOutlet private weak var notificationsContainerView: UIView!
     @IBOutlet private weak var notificationsHeader: UIView!
@@ -128,9 +128,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         output.address
             .drive(
                 onNext: { [weak self] address in
-                    self?.view.endEditing(true)
-                    self?.addressTextField.text = address
-                    self?.addressTextField.isEnabled = false
+                    self?.addressLabel.text = address
                 }
             )
             .disposed(by: disposeBag)
