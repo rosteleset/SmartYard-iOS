@@ -39,6 +39,13 @@ class SettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
+            .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
+            .skip(1)
+            .isTrue()
+            .mapToVoid()
+        
         // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
         
         let interactionBlockingRequestTracker = ActivityTracker()
@@ -47,6 +54,7 @@ class SettingsViewModel: BaseViewModel {
             .merge(
                 NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToVoid(),
                 NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToVoid(),
+                hasNetworkBecomeReachable,
                 .just(())
             )
             .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in

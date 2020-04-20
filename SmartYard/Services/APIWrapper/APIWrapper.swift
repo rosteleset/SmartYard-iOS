@@ -13,7 +13,10 @@ import RxCocoa
 
 class APIWrapper {
     
+    let reachability: NetworkReachabilityManager
     let accessService: AccessService
+    
+    let isReachableObservable: BehaviorSubject<Bool>
     
     let provider: MoyaProvider<APITarget> = {
         let session = Session(interceptor: BaseRequestRetrier())
@@ -21,11 +24,23 @@ class APIWrapper {
     }()
     
     var isReachable: Bool {
-        return NetworkReachabilityManager()?.isReachable ?? false
+        return reachability.isReachable
     }
     
     init(accessService: AccessService) {
         self.accessService = accessService
+        
+        reachability = NetworkReachabilityManager()!
+        
+        isReachableObservable = BehaviorSubject<Bool>(value: reachability.isReachable)
+        
+        reachability.startListening { [weak self] status in
+            if case .reachable = status {
+                self?.isReachableObservable.onNext(true)
+            } else {
+                self?.isReachableObservable.onNext(false)
+            }
+        }
     }
     
 }
