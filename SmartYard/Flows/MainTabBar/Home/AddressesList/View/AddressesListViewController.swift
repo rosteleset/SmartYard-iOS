@@ -240,6 +240,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             AddressesListHeaderCell.self,
             AddressesListObjectCell.self,
             AddressesListCameraCell.self,
+            AddressesListEmptyStateCell.self,
             UnapprovedObjectCell.self
         ].forEach {
             collectionView.register(nibWithCellClass: $0)
@@ -273,6 +274,11 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         indexPath: IndexPath,
         item: AddressesListDataItem
     ) -> UICollectionViewCell {
+        if case .emptyState = item {
+            let cell = collectionView.dequeueReusableCell(withClass: AddressesListEmptyStateCell.self, for: indexPath)
+            return cell
+        }
+        
         let customizableCell: CustomBorderCollectionViewCell = {
             switch item {
             case let .header(_, address, isExpanded):
@@ -306,6 +312,9 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
                 cell.bind(with: qrCodeTapped)
                 
                 return cell
+                
+            case .emptyState:
+                fatalError("Should be handled separately")
             }
         }()
         
@@ -337,7 +346,16 @@ extension AddressesListViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: collectionView.width - 32, height: 72)
+        guard let item = dataSource?[indexPath] else {
+            return .zero
+        }
+        
+        switch item.identity {
+        case .emptyState:
+            return CGSize(width: collectionView.width - 32, height: collectionView.bounds.height - 36)
+        default:
+            return CGSize(width: collectionView.width - 32, height: 72)
+        }
     }
     
     func collectionView(

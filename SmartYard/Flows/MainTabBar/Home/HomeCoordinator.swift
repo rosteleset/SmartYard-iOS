@@ -7,6 +7,8 @@
 //
 
 import XCoordinator
+import RxSwift
+import RxCocoa
 
 enum HomeRoute: Route {
     
@@ -27,6 +29,8 @@ enum HomeRoute: Route {
 }
 
 class HomeCoordinator: NavigationCoordinator<HomeRoute> {
+    
+    private let disposeBag = DisposeBag()
     
     private let apiWrapper: APIWrapper
     private let accessService: AccessService
@@ -50,6 +54,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         super.init(initialRoute: .main)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
+        
+        subscribeToNewAddressNotifications()
     }
     
     // swiftlint:disable:next function_body_length
@@ -189,6 +195,30 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             return .push(vc)
         }
+    }
+    
+    private func subscribeToNewAddressNotifications() {
+        NotificationCenter.default.rx.notification(.addressAdded)
+            .asDriverOnErrorJustComplete()
+            .mapToVoid()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    // MARK: Если в стеке уже есть AddressesListViewController - ничего делать не надо
+                    guard !(self.rootViewController.viewControllers.contains {
+                        $0 is AddressesListViewController
+                    }) else {
+                        return
+                    }
+                    
+                    // MARK: Если его нет в стеке - принудительно возвращаем юзера на главный экран
+                    self.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

@@ -103,8 +103,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             messageType == .inbox,
             let messageId = userInfo["messageId"] as? String {
             appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
-            
             NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+            
+            // MARK: Если пришло уведомление о добавленном адресе - отправляем .addressAdded
+            // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
+            
+            if let newAddress = userInfo["newAddress"] as? String, newAddress == "t" {
+                NotificationCenter.default.post(name: .addressAdded, object: nil)
+            }
         }
         
         completionHandler([.alert, .badge, .sound])
@@ -138,6 +144,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             if let messageId = response.notification.request.content.userInfo["messageId"] as? String,
                 messageType == .inbox {
                 appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
+            }
+            
+            // MARK: Если нажали на уведомление о добавленном адресе - отправляем .addressAdded
+            // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
+            
+            if let newAddress = response.notification.request.content.userInfo["newAddress"] as? String,
+                newAddress == "t" {
+                NotificationCenter.default.post(name: .addressAdded, object: nil)
             }
         }
         

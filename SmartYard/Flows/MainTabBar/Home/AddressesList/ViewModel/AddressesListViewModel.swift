@@ -12,6 +12,10 @@ import XCoordinator
 
 class AddressesListViewModel: BaseViewModel {
     
+    // MARK: Я в курсе, что это хреновая идея
+    // Но это самый простой способ хранить значение переменной для одной сессии (до перезапуска)
+    static var shouldForceTransitionForCurrentSession = true
+    
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
     private let permissionService: PermissionService
@@ -138,7 +142,18 @@ class AddressesListViewModel: BaseViewModel {
                     let (newData, _) = args
                     let (approvedAddresses, unapprovedAddresses) = newData
                     
-                    guard !approvedAddresses.isEmpty || !unapprovedAddresses.isEmpty else {
+                    // MARK: Если хотя бы одно из условий выполняется:
+                    // 1. Список подтвержденных адресов НЕ пустой
+                    // 2. Список неподтвержденных адресов НЕ пустой
+                    // 3. Если мы уже зафорсили транзишен один раз и больше не можем это сделать
+                    // То - просто отображаем список адресов на главном экране
+                    
+                    // Если не выполняется ни одно из них - форсим переход на экран "Добавление адреса"
+                    
+                    guard !approvedAddresses.isEmpty
+                        || !unapprovedAddresses.isEmpty
+                        || !AddressesListViewModel.shouldForceTransitionForCurrentSession else {
+                        AddressesListViewModel.shouldForceTransitionForCurrentSession = false
                         self?.router.trigger(.inputContract(isManualTrigger: false))
                         return
                     }
@@ -451,6 +466,11 @@ class AddressesListViewModel: BaseViewModel {
         
         unapprovedAddressItems.forEach {
             sectionModels.append(AddressesListSectionModel(identity: String($0.identity.hashValue), items: [$0]))
+        }
+        
+        if sectionModels.isEmpty {
+            let emptyStateSection = AddressesListSectionModel(identity: "EmptyStateSection", items: [.emptyState])
+            sectionModels.append(emptyStateSection)
         }
         
         return sectionModels
