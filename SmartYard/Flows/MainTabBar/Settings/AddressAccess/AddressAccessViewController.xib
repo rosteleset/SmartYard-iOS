@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,6 +29,8 @@
                 <outlet property="permanentAccessView" destination="mHK-Jf-tjL" id="eE5-eT-z1n"/>
                 <outlet property="scrollView" destination="JYd-ci-KLP" id="icI-P6-5Wo"/>
                 <outlet property="skeletonView" destination="YNy-Wq-FLV" id="Mfa-J1-Uev"/>
+                <outlet property="skeletonViewTopConstraint" destination="W0N-8u-F6s" id="fq0-9W-SvO"/>
+                <outlet property="stackViewTopConstraint" destination="n5k-wI-KM9" id="icK-7a-85f"/>
                 <outlet property="temporaryAccessContainer" destination="SS0-6Z-ZcB" id="1pq-2g-jxw"/>
                 <outlet property="temporaryAccessView" destination="CT0-UR-Z3l" id="dov-tp-o8h"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -167,10 +167,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tua-bR-e0p" customClass="FullRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="16" y="170.5" width="382" height="70"/>
+                    <rect key="frame" x="16" y="170.5" width="382" height="71"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Советская, 16, к. 4" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vjf-7h-gEU">
-                            <rect key="frame" x="24" y="23.5" width="334" height="23"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Советская, 16, к. 4" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vjf-7h-gEU">
+                            <rect key="frame" x="24" y="24" width="334" height="23"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                             <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -179,9 +179,9 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="Vjf-7h-gEU" firstAttribute="leading" secondItem="Tua-bR-e0p" secondAttribute="leading" constant="24" id="6kv-2E-eoo"/>
-                        <constraint firstItem="Vjf-7h-gEU" firstAttribute="centerY" secondItem="Tua-bR-e0p" secondAttribute="centerY" id="Vk6-Dw-mrz"/>
+                        <constraint firstAttribute="bottom" secondItem="Vjf-7h-gEU" secondAttribute="bottom" constant="24" id="HtK-fs-lHa"/>
+                        <constraint firstItem="Vjf-7h-gEU" firstAttribute="top" secondItem="Tua-bR-e0p" secondAttribute="top" constant="24" id="j8u-HM-E3D"/>
                         <constraint firstAttribute="trailing" secondItem="Vjf-7h-gEU" secondAttribute="trailing" constant="24" id="lMS-sa-7gB"/>
-                        <constraint firstAttribute="height" constant="70" id="yDZ-Va-rZq"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Доступ к адресу" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuZ-VJ-41V">
