@@ -116,8 +116,9 @@ class ServicesActivationRequestViewModel: BaseViewModel {
         return [
             ServiceModel(id: "0", icon: "domophone", name: "Умный домофон", description: "", state: .uncheckedActive),
             ServiceModel(id: "1", icon: "cctv", name: "Видеонаблюдение", description: "", state: .uncheckedActive),
-            ServiceModel(id: "2", icon: "internet", name: "Интернет и ТВ", description: "", state: .uncheckedActive),
-            ServiceModel(id: "3", icon: "phone", name: "Телефония", description: "", state: .uncheckedActive)
+            ServiceModel(id: "2", icon: "internet", name: "Интернет", description: "", state: .uncheckedActive),
+            ServiceModel(id: "3", icon: "iptv", name: "Телевидение", description: "", state: .uncheckedActive),
+            ServiceModel(id: "4", icon: "phone", name: "Телефония", description: "", state: .uncheckedActive)
         ]
     }
     
