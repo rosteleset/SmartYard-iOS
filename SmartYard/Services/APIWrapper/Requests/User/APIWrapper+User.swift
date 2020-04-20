@@ -31,7 +31,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.addMyPhone(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
@@ -45,7 +45,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.requestCode(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
@@ -68,7 +68,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.registerPushToken(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
@@ -86,7 +86,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.confirmCode(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
     
@@ -103,7 +103,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getPaymentsList(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
@@ -121,7 +121,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.sendName(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
@@ -150,7 +150,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.restore(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
@@ -180,7 +180,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.notification(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
     

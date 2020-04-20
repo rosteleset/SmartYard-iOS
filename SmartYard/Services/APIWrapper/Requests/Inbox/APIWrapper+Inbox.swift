@@ -25,7 +25,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.inbox(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
     
@@ -42,7 +42,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.delivered(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
@@ -60,7 +60,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.unreaded(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
     

@@ -25,7 +25,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.registerQR(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .flatMap { response in
                 // MARK: Если code == 204, значит, что регистрация успешно выполнилась
                 
@@ -109,7 +109,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.intercom(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
     
@@ -130,7 +130,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.openDoor(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
@@ -148,7 +148,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.resetCode(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
     
@@ -165,7 +165,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getSettingsList(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
@@ -183,7 +183,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAddressList(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
@@ -241,7 +241,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.access(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
@@ -259,7 +259,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.resend(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsVoidResponse()
             .mapToOptional()
     }
@@ -277,7 +277,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.offices(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }

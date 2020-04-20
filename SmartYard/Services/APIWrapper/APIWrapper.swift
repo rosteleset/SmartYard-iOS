@@ -100,7 +100,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         }
     }
     
-    func catchNoConnectionError() -> PrimitiveSequence<Trait, Element> {
+    func convertNoConnectionError() -> PrimitiveSequence<Trait, Element> {
         return catchError { error in
             let nsError = error as NSError
             

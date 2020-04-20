@@ -25,7 +25,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAddress(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
     
@@ -42,7 +42,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getGeoCoder(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
     
@@ -59,7 +59,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getHouses(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
@@ -81,7 +81,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getServices(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
@@ -99,7 +99,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAllLocations(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
@@ -117,7 +117,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getStreets(request: request))
-            .catchNoConnectionError()
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
