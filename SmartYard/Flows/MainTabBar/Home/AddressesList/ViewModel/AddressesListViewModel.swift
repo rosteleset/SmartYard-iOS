@@ -46,6 +46,14 @@ class AddressesListViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Подписка на уведомления
         pushNotificationService.registerForPushNotifications()
             .trackError(errorTracker)
@@ -349,14 +357,6 @@ class AddressesListViewModel: BaseViewModel {
                     objectAccessDict: objectAccessDict
                 )
             }
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
-                }
-            )
-            .disposed(by: disposeBag)
         
         return Output(
             sectionModels: sectionModels,

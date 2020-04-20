@@ -31,6 +31,14 @@ class SettingsViewModel: BaseViewModel {
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
         
         let interactionBlockingRequestTracker = ActivityTracker()
@@ -354,14 +362,6 @@ class SettingsViewModel: BaseViewModel {
                 
                 return self?.createSections(data: data, expansionStateDict: expansionStateDict) ?? []
             }
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
-                }
-            )
-            .disposed(by: disposeBag)
         
         // MARK: Отображение имени. Актуализируем при каждом обновлении имени в настройках
         

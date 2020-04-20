@@ -30,6 +30,14 @@ class NotificationsViewModel: BaseViewModel {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let inboxResponseSubject = BehaviorSubject<InboxResponseData?>(value: nil)
         
         Driver
@@ -60,14 +68,6 @@ class NotificationsViewModel: BaseViewModel {
                     self?.pushNotificationService.markAllMessagesAsRead()
                     
                     inboxResponseSubject.onNext(response)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
