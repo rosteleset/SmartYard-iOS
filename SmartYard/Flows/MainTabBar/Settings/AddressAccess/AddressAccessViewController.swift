@@ -35,7 +35,6 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
     private var permanentAccessViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet private var stackViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet private var skeletonViewTopConstraint: NSLayoutConstraint!
     
     init(viewModel: AddressAccessViewModel) {
         self.viewModel = viewModel
@@ -69,7 +68,6 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
         let neededInset = addressView.bounds.height - 24 + 16
         
         stackViewTopConstraint.constant = neededInset
-        skeletonViewTopConstraint.constant = neededInset
     }
     
     private func configureView() {

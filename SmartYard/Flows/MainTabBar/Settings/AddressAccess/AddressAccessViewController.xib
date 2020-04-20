@@ -29,7 +29,6 @@
                 <outlet property="permanentAccessView" destination="mHK-Jf-tjL" id="eE5-eT-z1n"/>
                 <outlet property="scrollView" destination="JYd-ci-KLP" id="icI-P6-5Wo"/>
                 <outlet property="skeletonView" destination="YNy-Wq-FLV" id="Mfa-J1-Uev"/>
-                <outlet property="skeletonViewTopConstraint" destination="W0N-8u-F6s" id="fq0-9W-SvO"/>
                 <outlet property="stackViewTopConstraint" destination="n5k-wI-KM9" id="icK-7a-85f"/>
                 <outlet property="temporaryAccessContainer" destination="SS0-6Z-ZcB" id="1pq-2g-jxw"/>
                 <outlet property="temporaryAccessView" destination="CT0-UR-Z3l" id="dov-tp-o8h"/>
@@ -162,7 +161,6 @@
                         <constraint firstItem="YNy-Wq-FLV" firstAttribute="leading" secondItem="wnz-X0-Nqd" secondAttribute="leading" id="G4R-O9-SI8"/>
                         <constraint firstAttribute="trailing" secondItem="YNy-Wq-FLV" secondAttribute="trailing" id="Q6X-uB-IZY"/>
                         <constraint firstItem="JYd-ci-KLP" firstAttribute="top" secondItem="wnz-X0-Nqd" secondAttribute="top" id="QgA-wn-3Qz"/>
-                        <constraint firstItem="YNy-Wq-FLV" firstAttribute="top" secondItem="wnz-X0-Nqd" secondAttribute="top" constant="63" id="W0N-8u-F6s"/>
                         <constraint firstItem="JYd-ci-KLP" firstAttribute="leading" secondItem="wnz-X0-Nqd" secondAttribute="leading" id="heM-38-b7E"/>
                     </constraints>
                 </view>
@@ -205,6 +203,7 @@
                 <constraint firstItem="Gcv-sW-Tql" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="T5h-It-3oZ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="wnz-X0-Nqd" secondAttribute="bottom" id="cjA-gq-yxy"/>
                 <constraint firstItem="Tua-bR-e0p" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="eCg-Ch-Li5"/>
+                <constraint firstItem="YNy-Wq-FLV" firstAttribute="top" secondItem="Tua-bR-e0p" secondAttribute="bottom" constant="16" id="hTf-mw-PMB"/>
                 <constraint firstAttribute="trailing" secondItem="ECQ-Ip-KTS" secondAttribute="trailing" id="ieZ-Dj-pQ6"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="iuZ-VJ-41V" secondAttribute="trailing" constant="40" id="iqU-zI-tr4"/>
                 <constraint firstItem="iuZ-VJ-41V" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="oNO-oT-whq"/>
