@@ -145,6 +145,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 messageType == .inbox {
                 appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
             }
+            
+            // MARK: Если нажали на уведомление о добавленном адресе - отправляем .addressAdded
+            // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
+            
+            if let newAddress = response.notification.request.content.userInfo["newAddress"] as? String,
+                newAddress == "t" {
+                NotificationCenter.default.post(name: .addressAdded, object: nil)
+            }
         }
         
         completionHandler()
