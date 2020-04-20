@@ -142,6 +142,14 @@ class AddressesListViewModel: BaseViewModel {
                     let (newData, _) = args
                     let (approvedAddresses, unapprovedAddresses) = newData
                     
+                    // MARK: Если хотя бы одно из условий выполняется:
+                    // 1. Список подтвержденных адресов НЕ пустой
+                    // 2. Список неподтвержденных адресов НЕ пустой
+                    // 3. Если мы уже зафорсили транзишен один раз и больше не можем это сделать
+                    // То - просто отображаем список адресов на главном экране
+                    
+                    // Если не выполняется ни одно из них - форсим переход на экран "Добавление адреса"
+                    
                     guard !approvedAddresses.isEmpty
                         || !unapprovedAddresses.isEmpty
                         || !AddressesListViewModel.shouldForceTransitionForCurrentSession else {
