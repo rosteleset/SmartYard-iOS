@@ -2533,10 +2533,10 @@
 			};
 			buildConfigurationList = 84F840CD23E07DA5008DBE50 /* Build configuration list for PBXProject "SmartYard" */;
 			compatibilityVersion = "Xcode 9.3";
-			developmentRegion = en;
+			developmentRegion = ru;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
+				ru,
 				Base,
 			);
 			mainGroup = 84F840C923E07DA5008DBE50;
