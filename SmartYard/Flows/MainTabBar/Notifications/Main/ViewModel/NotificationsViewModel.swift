@@ -40,14 +40,23 @@ class NotificationsViewModel: BaseViewModel {
         
         let inboxResponseSubject = BehaviorSubject<InboxResponseData?>(value: nil)
         
+        let newMessageRefresh = NotificationCenter.default.rx.notification(.newInboxMessageReceived)
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(input.isViewVisible)
+            .isTrue()
+            .mapToVoid()
+        
+        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
+            .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
+            .skip(1)
+            .isTrue()
+            .withLatestFrom(input.isViewVisible)
+            .isTrue()
+            .mapToVoid()
+            
         Driver
-            .merge(
-                input.viewWillAppearTrigger.mapToVoid(),
-                NotificationCenter.default.rx.notification(.inboxRefreshRequested)
-                    .asDriverOnErrorJustComplete()
-                    .mapToVoid(),
-                .just(())
-            )
+            .merge(input.viewWillAppearTrigger.mapToVoid(), newMessageRefresh, hasNetworkBecomeReachable)
             .flatMapLatest { [weak self] _ -> Driver<InboxResponseData?> in
                 guard let self = self else {
                     return .empty()
@@ -84,6 +93,7 @@ extension NotificationsViewModel {
     
     struct Input {
         let viewWillAppearTrigger: Driver<Bool>
+        let isViewVisible: Driver<Bool>
     }
     
     struct Output {
