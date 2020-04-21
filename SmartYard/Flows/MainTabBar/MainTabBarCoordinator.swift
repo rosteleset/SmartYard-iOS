@@ -175,6 +175,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         subscribeToBadgeUpdates()
         subscribeToAddAddressNotifications()
         subscribeToChatNotifications()
+        subscribeToNewInboxMessageNotifications()
     }
     
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
@@ -225,6 +226,23 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .drive(
                 onNext: { [weak self] in
                     self?.trigger(.chat)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeToNewInboxMessageNotifications() {
+        NotificationCenter.default.rx
+            .notification(Notification.Name.newInboxMessageReceived)
+            .asDriverOnErrorJustComplete()
+            .mapToVoid()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self, self.rootViewController.selectedIndex == 1 else {
+                        return
+                    }
+                    
+                    NotificationCenter.default.post(name: .inboxRefreshRequested, object: nil)
                 }
             )
             .disposed(by: disposeBag)

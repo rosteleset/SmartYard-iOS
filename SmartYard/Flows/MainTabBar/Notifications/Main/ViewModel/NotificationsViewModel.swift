@@ -43,7 +43,7 @@ class NotificationsViewModel: BaseViewModel {
         Driver
             .merge(
                 input.viewWillAppearTrigger.mapToVoid(),
-                NotificationCenter.default.rx.notification(.newInboxMessageReceived)
+                NotificationCenter.default.rx.notification(.inboxRefreshRequested)
                     .asDriverOnErrorJustComplete()
                     .mapToVoid(),
                 .just(())
