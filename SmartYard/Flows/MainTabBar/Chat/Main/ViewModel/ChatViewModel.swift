@@ -11,11 +11,13 @@ import RxCocoa
 
 class ChatViewModel: BaseViewModel {
     
+    private let apiWrapper: APIWrapper
     private let accessService: AccessService
     
     private let automaticMessage = PublishSubject<String>()
     
-    init(accessService: AccessService) {
+    init(apiWrapper: APIWrapper, accessService: AccessService) {
+        self.apiWrapper = apiWrapper
         self.accessService = accessService
         
         super.init()
@@ -57,12 +59,23 @@ class ChatViewModel: BaseViewModel {
                     .joined(separator: " ")
             }
         
-        let chatConfiguration = ChatConfiguration(language: nil, clientId: phone?.md5)
+        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
+            .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
+            .skip(1)
+            .isTrue()
+            .mapToVoid()
+        
+        let chatConfiguration = Driver
+            .merge(hasNetworkBecomeReachable, .just(()))
+            .map { _ -> ChatConfiguration in
+                ChatConfiguration(language: nil, clientId: phone?.md5)
+            }
         
         return Output(
             phone: .just(phone),
             name: nameAsString,
-            chatConfiguration: .just(chatConfiguration),
+            chatConfiguration: chatConfiguration,
             automaticMessage: automaticMessage.asDriverOnErrorJustComplete()
         )
     }

@@ -32,10 +32,9 @@ class BaseRequestRetrier: RequestInterceptor {
             return completion(.retryWithDelay(Double(request.retryCount) * 2.0))
         }
         
-        if response.statusCode == 401 {
-            completion(.retryWithDelay(1))
-        } else {
-            completion(.doNotRetry)
+        // Handle different status codes here
+        switch response.statusCode {
+        default: completion(.doNotRetry)
         }
     }
     
