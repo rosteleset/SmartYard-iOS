@@ -38,6 +38,14 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
     }
     
     func transform(input: Input) -> Output {
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let titleImageTrigger = PublishSubject<UIImage?>()
         let hintTextTrigger = PublishSubject<String?>()
         let actionTextTrigger = PublishSubject<String?>()
@@ -151,14 +159,6 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] in
                     self?.router.trigger(.back)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)

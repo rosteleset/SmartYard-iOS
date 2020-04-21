@@ -31,6 +31,23 @@ class InputPhoneNumberViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    let nsError = error as NSError
+                    
+                    switch nsError.code {
+                    case 429:
+                        let message = "Вы запрашиваете код слишком часто. Пожалуйста, попробуйте позже"
+                        self?.router.trigger(.alert(title: "Ошибка", message: message))
+                        
+                    default:
+                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let prepareTransitionTrigger = PublishSubject<Void>()
         
         input.inputPhoneText
@@ -65,23 +82,6 @@ class InputPhoneNumberViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] phone in
                     self?.router.trigger(.pinCode(phoneNumber: phone, isInitial: true))
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    let nsError = error as NSError
-                    
-                    switch nsError.code {
-                    case 429:
-                        let message = "Вы запрашиваете код слишком часто. Пожалуйста, попробуйте позже"
-                        self?.router.trigger(.alert(title: "Ошибка", message: message))
-                        
-                    default:
-                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
-                    }
                 }
             )
             .disposed(by: disposeBag)

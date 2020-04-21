@@ -46,6 +46,21 @@ class AddressesListViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
+        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
+            .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
+            .skip(1)
+            .isTrue()
+            .mapToVoid()
+        
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Подписка на уведомления
         pushNotificationService.registerForPushNotifications()
             .trackError(errorTracker)
@@ -66,6 +81,7 @@ class AddressesListViewModel: BaseViewModel {
             .merge(
                 NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToVoid(),
                 NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToVoid(),
+                hasNetworkBecomeReachable,
                 .just(())
             )
             .flatMapLatest { [weak self] _ -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in
@@ -349,14 +365,6 @@ class AddressesListViewModel: BaseViewModel {
                     objectAccessDict: objectAccessDict
                 )
             }
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
-                }
-            )
-            .disposed(by: disposeBag)
         
         return Output(
             sectionModels: sectionModels,

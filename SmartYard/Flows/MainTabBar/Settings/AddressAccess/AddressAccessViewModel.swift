@@ -53,6 +53,14 @@ class AddressAccessViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Если есть доступ к контактам - сразу подгружаем данные оттуда, чтобы не тратить время потом
         
         if permissionService.contactsAccessStatus() == .authorized {
@@ -340,14 +348,6 @@ class AddressAccessViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] in
                     self?.router.trigger(.back)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)

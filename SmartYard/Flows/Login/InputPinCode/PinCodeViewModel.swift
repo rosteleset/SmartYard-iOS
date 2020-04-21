@@ -34,6 +34,26 @@ class PinCodeViewModel: BaseViewModel {
         let isPinCorrect = BehaviorSubject<Bool>(value: true)
         let prepareTransitionTrigger = PublishSubject<Void>()
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    let nsError = error as NSError
+                    
+                    switch nsError.code {
+                    case 401:
+                        isPinCorrect.onNext(false)
+                        
+                    case 429:
+                        let message = "Вы запрашиваете код слишком часто. Пожалуйста, попробуйте позже"
+                        self?.router.trigger(.alert(title: "Ошибка", message: message))
+                        
+                    default:
+                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         input.inputPinText
             .distinctUntilChanged()
             .do(
@@ -94,26 +114,6 @@ class PinCodeViewModel: BaseViewModel {
             }
             .ignoreNil()
             .drive()
-            .disposed(by: disposeBag)
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    let nsError = error as NSError
-                    
-                    switch nsError.code {
-                    case 401:
-                        isPinCorrect.onNext(false)
-                        
-                    case 429:
-                        let message = "Вы запрашиваете код слишком часто. Пожалуйста, попробуйте позже"
-                        self?.router.trigger(.alert(title: "Ошибка", message: message))
-                        
-                    default:
-                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
-                    }
-                }
-            )
             .disposed(by: disposeBag)
         
         return Output(

@@ -13,6 +13,10 @@ import RxSwift
 extension APIWrapper {
     
     func getAddressByHouseId(houseId: String) -> Single<GetAddressResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -21,10 +25,15 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAddress(request: request))
+            .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
     
     func getCoordinatesByAddress(address: String) -> Single<GeoCoderResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -33,10 +42,15 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getGeoCoder(request: request))
+            .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
     
     func getHousesByStreet(streetId: String) -> Single<GetHousesResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -45,11 +59,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getHouses(request: request))
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
     func getServicesByHouseId(houseId: String?) -> Single<GetServicesResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -62,11 +81,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getServices(request: request))
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
     func getAllLocations() -> Single<GetAllLocationsResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -75,11 +99,16 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAllLocations(request: request))
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
     func getStreetsByLocation(locationId: String) -> Single<GetStreetsResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -88,6 +117,7 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getStreets(request: request))
+            .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }

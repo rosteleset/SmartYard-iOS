@@ -38,6 +38,34 @@ class InputAddressViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    let nsError = error as NSError
+                    
+                    // MARK: Если возвращается qrRegistrationError - это "не ошибка", поэтому показываем ее иначе
+                    
+                    if nsError.domain == NSError.APIWrapperError.domain, nsError.code == 3007 {
+                        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+                            self?.router.trigger(.main)
+                        }
+                        
+                        self?.router.trigger(
+                            .dialog(
+                                title: error.localizedDescription,
+                                message: nil,
+                                actions: [okAction]
+                            )
+                        )
+                        
+                        return
+                    }
+                    
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         apiWrapper.getAllLocations()
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
@@ -271,34 +299,6 @@ class InputAddressViewModel: BaseViewModel {
                             services: services
                         )
                     )
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    let nsError = error as NSError
-                    
-                    // MARK: Если возвращается qrRegistrationError - это "не ошибка", поэтому показываем ее иначе
-                    
-                    if nsError.domain == NSError.APIWrapperError.domain, nsError.code == 3007 {
-                        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
-                            self?.router.trigger(.main)
-                        }
-                        
-                        self?.router.trigger(
-                            .dialog(
-                                title: error.localizedDescription,
-                                message: nil,
-                                actions: [okAction]
-                            )
-                        )
-                        
-                        return
-                    }
-                    
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)

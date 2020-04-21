@@ -74,6 +74,12 @@ extension NSError {
             )
         }()
         
+        static let noConnectionError = NSError(
+            domain: domain,
+            code: 3102,
+            userInfo: [NSLocalizedDescriptionKey: "Нет соединения"]
+        )
+        
         static func codeIsNotSuccessful(_ code: Int) -> NSError {
             return NSError(
                 domain: domain,
@@ -229,6 +235,12 @@ extension NSError {
             domain: domain,
             code: 5004,
             userInfo: [NSLocalizedDescriptionKey: "InstanceID не инициализирован"]
+        )
+        
+        static let connectionRequired = NSError(
+            domain: domain,
+            code: 5005,
+            userInfo: [NSLocalizedDescriptionKey: "Для смены пользователя требуется интернет-соединение"]
         )
         
     }
