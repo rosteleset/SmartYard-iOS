@@ -237,6 +237,12 @@ extension NSError {
             userInfo: [NSLocalizedDescriptionKey: "InstanceID не инициализирован"]
         )
         
+        static let connectionRequired = NSError(
+            domain: domain,
+            code: 5005,
+            userInfo: [NSLocalizedDescriptionKey: "Для смены пользователя требуется интернет-соединение"]
+        )
+        
     }
     
 }

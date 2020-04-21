@@ -30,7 +30,13 @@ class PushNotificationService {
                     return
                 }
                 
-                single(.error(error))
+                let nsError = error as NSError
+                
+                if nsError.domain == "NSURLErrorDomain", nsError.code == -1009 {
+                    single(.error(NSError.PushNotificationServiceError.connectionRequired))
+                } else {
+                    single(.error(error))
+                }
             }
             
             return Disposables.create()
