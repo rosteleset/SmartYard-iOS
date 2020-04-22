@@ -16,7 +16,13 @@ class SmartYardSegmentedControl: UIView {
     fileprivate let segmentControl: UISegmentedControl = {
         let control = UISegmentedControl()
         control.backgroundColor = .white
-        control.tintColor = .clear
+        control.tintColor = .white
+        
+        if #available(iOS 13.0, *) {
+            control.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 1)
+            control.selectedSegmentTintColor = UIColor(red: 255, green: 255, blue: 255, alpha: 1)
+            control.layer.borderWidth = 0
+        }
         
         let selectedControlFont = UIFont.SourceSansPro.semibold(size: 18)
         let unselectedControlFont = UIFont.SourceSansPro.regular(size: 18)

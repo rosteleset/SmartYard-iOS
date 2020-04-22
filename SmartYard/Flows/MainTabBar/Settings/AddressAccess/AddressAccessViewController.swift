@@ -34,6 +34,8 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
     private var tempAccessViewHeightConstraint: NSLayoutConstraint!
     private var permanentAccessViewHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet private var stackViewTopConstraint: NSLayoutConstraint!
+    
     init(viewModel: AddressAccessViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -56,6 +58,16 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
         if skeletonView.isSkeletonActive {
             skeletonView.showSkeletonAsynchronously()
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // MARK: 24 px = это то, насколько addressView выступает над scrollView
+        // 16 px - это отступ между addressView и следующей за ней вьюхой
+        let neededInset = addressView.bounds.height - 24 + 16
+        
+        stackViewTopConstraint.constant = neededInset
     }
     
     private func configureView() {

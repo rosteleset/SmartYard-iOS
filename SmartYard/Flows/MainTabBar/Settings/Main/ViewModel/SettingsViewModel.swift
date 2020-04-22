@@ -31,6 +31,21 @@ class SettingsViewModel: BaseViewModel {
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
+            .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
+            .skip(1)
+            .isTrue()
+            .mapToVoid()
+        
         // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
         
         let interactionBlockingRequestTracker = ActivityTracker()
@@ -39,6 +54,7 @@ class SettingsViewModel: BaseViewModel {
             .merge(
                 NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToVoid(),
                 NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToVoid(),
+                hasNetworkBecomeReachable,
                 .just(())
             )
             .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
@@ -354,14 +370,6 @@ class SettingsViewModel: BaseViewModel {
                 
                 return self?.createSections(data: data, expansionStateDict: expansionStateDict) ?? []
             }
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
-                }
-            )
-            .disposed(by: disposeBag)
         
         // MARK: Отображение имени. Актуализируем при каждом обновлении имени в настройках
         

@@ -39,6 +39,22 @@ class PassConfirmationPinViewModel: BaseViewModel {
         let isPinCorrect = BehaviorSubject<Bool>(value: true)
         let prepareTransitionTrigger = PublishSubject<Void>()
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    let nsError = error as NSError
+                    
+                    switch nsError.code {
+                    case 403:
+                        isPinCorrect.onNext(false)
+                        
+                    default:
+                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         input.inputPinText
             .distinctUntilChanged()
             .do(
@@ -108,22 +124,6 @@ class PassConfirmationPinViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] in
                     self?.router.trigger(.back)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    let nsError = error as NSError
-                    
-                    switch nsError.code {
-                    case 403:
-                        isPinCorrect.onNext(false)
-                        
-                    default:
-                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
-                    }
                 }
             )
             .disposed(by: disposeBag)

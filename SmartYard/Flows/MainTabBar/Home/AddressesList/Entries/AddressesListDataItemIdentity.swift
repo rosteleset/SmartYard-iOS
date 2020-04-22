@@ -12,5 +12,6 @@ enum AddressesListDataItemIdentity: Hashable {
     case object(addressId: String, domophoneId: String, doorId: Int, entrance: String?)
     case cameras(addressId: String)
     case unapprovedObject(issueId: String, address: String)
+    case emptyState
     
 }

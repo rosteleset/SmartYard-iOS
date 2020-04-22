@@ -34,6 +34,14 @@ class AdvancedSettingsViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: ActivityTracker для изначальной загрузки с показом скелетонов
         
         let initialLoadingTracker = ActivityTracker()
@@ -172,14 +180,6 @@ class AdvancedSettingsViewModel: BaseViewModel {
                             actions: [noAction, yesAction]
                         )
                     )
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)

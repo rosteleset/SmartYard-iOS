@@ -32,6 +32,23 @@ class RestorePasswordViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    let nsError = error as NSError
+                    
+                    switch nsError.code {
+                    case 422, 404:
+                        let message = "Введен неверный номер договора"
+                        self?.router.trigger(.alert(title: "Ошибка", message: message))
+                        
+                    default:
+                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let contractNum = input.inputContractNum
             .asDriver(onErrorJustReturn: nil)
             .do(
@@ -138,23 +155,6 @@ class RestorePasswordViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] in
                     self?.router.trigger(.back)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    let nsError = error as NSError
-                    
-                    switch nsError.code {                        
-                    case 422, 404:
-                        let message = "Введен неверный номер договора"
-                        self?.router.trigger(.alert(title: "Ошибка", message: message))
-                        
-                    default:
-                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
-                    }
                 }
             )
             .disposed(by: disposeBag)

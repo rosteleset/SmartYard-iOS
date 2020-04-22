@@ -26,6 +26,14 @@ class UserNameViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let prepareTransitionTrigger = PublishSubject<Void>()
         
         let isAbleToContinue = input.name
@@ -67,14 +75,6 @@ class UserNameViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] _ in
                     self?.router.trigger(.main)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)

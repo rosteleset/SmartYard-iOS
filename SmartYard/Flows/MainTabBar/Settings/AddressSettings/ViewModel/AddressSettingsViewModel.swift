@@ -43,6 +43,14 @@ class AddressSettingsViewModel: BaseViewModel {
     }
     
     func transform(_ input: Input) -> Output {
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let isCmsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let areCallsEnabledSubject = BehaviorSubject<Bool>(value: false)
         
@@ -118,14 +126,6 @@ class AddressSettingsViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] in
                     self?.deleteAddress()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)

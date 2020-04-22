@@ -30,16 +30,33 @@ class NotificationsViewModel: BaseViewModel {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()
         
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let inboxResponseSubject = BehaviorSubject<InboxResponseData?>(value: nil)
         
+        let newMessageRefresh = NotificationCenter.default.rx.notification(.newInboxMessageReceived)
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(input.isViewVisible)
+            .isTrue()
+            .mapToVoid()
+        
+        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
+            .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
+            .skip(1)
+            .isTrue()
+            .withLatestFrom(input.isViewVisible)
+            .isTrue()
+            .mapToVoid()
+            
         Driver
-            .merge(
-                input.viewWillAppearTrigger.mapToVoid(),
-                NotificationCenter.default.rx.notification(.newInboxMessageReceived)
-                    .asDriverOnErrorJustComplete()
-                    .mapToVoid(),
-                .just(())
-            )
+            .merge(input.viewWillAppearTrigger.mapToVoid(), newMessageRefresh, hasNetworkBecomeReachable)
             .flatMapLatest { [weak self] _ -> Driver<InboxResponseData?> in
                 guard let self = self else {
                     return .empty()
@@ -64,14 +81,6 @@ class NotificationsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
-                }
-            )
-            .disposed(by: disposeBag)
-        
         return Output(
             inboxResponse: inboxResponseSubject.asDriver(onErrorJustReturn: nil),
             isLoading: activityTracker.asDriver()
@@ -84,6 +93,7 @@ extension NotificationsViewModel {
     
     struct Input {
         let viewWillAppearTrigger: Driver<Bool>
+        let isViewVisible: Driver<Bool>
     }
     
     struct Output {

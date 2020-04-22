@@ -58,7 +58,17 @@ class IncomingCallViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
+        // MARK: Обработка ошибок
+        
         let errorTracker = ErrorTracker()
+        
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
         
         // MARK: Общий стейт экрана
         
@@ -407,16 +417,6 @@ class IncomingCallViewModel: BaseViewModel {
             .subscribe(
                 onNext: {
                     counterDisposable.dispose()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        // MARK: Обработка ошибок
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)

@@ -13,7 +13,10 @@ import RxCocoa
 
 class APIWrapper {
     
+    let reachability: NetworkReachabilityManager
     let accessService: AccessService
+    
+    let isReachableObservable: BehaviorSubject<Bool>
     
     let provider: MoyaProvider<APITarget> = {
         let session = Session(interceptor: BaseRequestRetrier())
@@ -21,11 +24,23 @@ class APIWrapper {
     }()
     
     var isReachable: Bool {
-        return NetworkReachabilityManager()?.isReachable ?? false
+        return reachability.isReachable
     }
     
     init(accessService: AccessService) {
         self.accessService = accessService
+        
+        reachability = NetworkReachabilityManager()!
+        
+        isReachableObservable = BehaviorSubject<Bool>(value: reachability.isReachable)
+        
+        reachability.startListening { [weak self] status in
+            if case .reachable = status {
+                self?.isReachableObservable.onNext(true)
+            } else {
+                self?.isReachableObservable.onNext(false)
+            }
+        }
     }
     
 }
@@ -97,6 +112,23 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
             // MARK: Если вернулся не особо успешный код, пытаемся достать информацию об ошибке
             
             return .error(response.extractBaseAPIResponseError())
+        }
+    }
+    
+    func convertNoConnectionError() -> PrimitiveSequence<Trait, Element> {
+        return catchError { error in
+            let nsError = error as NSError
+            
+            guard nsError.domain == "Moya.MoyaError",
+                nsError.code == 6,
+                let afError = nsError.userInfo["NSUnderlyingError"] as? AFError,
+                let underlyingError = afError.underlyingError as NSError?,
+                underlyingError.domain == "NSURLErrorDomain",
+                underlyingError.code == -1009 else {
+                throw error
+            }
+
+            throw NSError.APIWrapperError.noConnectionError
         }
     }
     
