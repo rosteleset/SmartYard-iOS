@@ -13,6 +13,7 @@ struct AccessRequest {
     let accessToken: String
     let flatId: String
     
+    let clientId: String?
     let guestPhone: String?
     let type: APIRoommateAccessType?
     let expire: Date?
@@ -25,6 +26,10 @@ extension AccessRequest {
         var params: [String: Any] = [
             "flatId": flatId
         ]
+        
+        if let clientId = clientId {
+            params["clientId"] = clientId
+        }
         
         if let guestPhone = guestPhone {
             params["guestPhone"] = guestPhone

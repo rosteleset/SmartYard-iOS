@@ -12,7 +12,7 @@ import SafariServices
 enum SettingsRoute: Route {
     
     case main
-    case addressSettings(flatId: String, address: String, isContractOwner: Bool, hasDomophone: Bool)
+    case addressSettings(flatId: String, clientId: String?, address: String, isContractOwner: Bool, hasDomophone: Bool)
     case back
     case dismiss
     case serviceIsActivated(service: SettingsServiceType, clientId: String?, address: String)
@@ -22,7 +22,7 @@ enum SettingsRoute: Route {
     case addressDeletion(delegate: AddressDeletionViewModelDelegate)
     case alert(title: String, message: String?)
     case dialog(title: String, message: String?, actions: [UIAlertAction])
-    case addressAccess(address: String, flatId: String)
+    case addressAccess(address: String, flatId: String, clientId: String?)
     case newAllowedPerson(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
     case safariPage(url: URL)
     case editName
@@ -63,11 +63,12 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             let vc = SettingsViewController(viewModel: vm)
             return .set([vc])
             
-        case let .addressSettings(flatId, address, isContractOwner, hasDomophone):
+        case let .addressSettings(flatId, clientId, address, isContractOwner, hasDomophone):
             let vm = AddressSettingsViewModel(
                 apiWrapper: apiWrapper,
                 issueService: issueService,
                 flatId: flatId,
+                clientId: clientId,
                 address: address,
                 isContractOwner: isContractOwner,
                 hasDomophone: hasDomophone,
@@ -167,11 +168,12 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case let .addressAccess(address, flatId):
+        case let .addressAccess(address, flatId, clientId):
             let vm = AddressAccessViewModel(
                 router: weakRouter,
                 address: address,
                 flatId: flatId,
+                clientId: clientId,
                 apiWrapper: apiWrapper,
                 permissionService: permissionService
             )
