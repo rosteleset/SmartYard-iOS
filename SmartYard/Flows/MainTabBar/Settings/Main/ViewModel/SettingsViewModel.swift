@@ -229,6 +229,7 @@ class SettingsViewModel: BaseViewModel {
                     self?.router.trigger(
                         .addressSettings(
                             flatId: flatId,
+                            clientId: match.clientId,
                             address: match.address,
                             isContractOwner: match.contractOwner ?? false,
                             hasDomophone: match.servicesAvailability[.domophone] == true
@@ -253,16 +254,15 @@ class SettingsViewModel: BaseViewModel {
                 onNext: { [weak self] args in
                     let (uniqueId, loadedData) = args
                     
-                    guard let match = (loadedData.first { $0.uniqueId == uniqueId }),
-                          let flatId = match.flatId
-                    else {
+                    guard let match = (loadedData.first { $0.uniqueId == uniqueId }), let flatId = match.flatId else {
                         return
                     }
                     
                     self?.router.trigger(
                         .addressAccess(
                             address: match.address,
-                            flatId: flatId
+                            flatId: flatId,
+                            clientId: match.clientId
                         )
                     )
                 }

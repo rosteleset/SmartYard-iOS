@@ -26,6 +26,7 @@ class AddressAccessViewModel: BaseViewModel {
     
     private let address: String
     private let flatId: String
+    private let clientId: String?
     
     private let apiWrapper: APIWrapper
     private let permissionService: PermissionService
@@ -37,12 +38,14 @@ class AddressAccessViewModel: BaseViewModel {
         router: WeakRouter<SettingsRoute>,
         address: String,
         flatId: String,
+        clientId: String?,
         apiWrapper: APIWrapper,
         permissionService: PermissionService
     ) {
         self.router = router
         self.address = address
         self.flatId = flatId
+        self.clientId = clientId
         self.apiWrapper = apiWrapper
         self.permissionService = permissionService
         
@@ -126,7 +129,7 @@ class AddressAccessViewModel: BaseViewModel {
             )
             .ignoreNil()
             .map { [weak self] addresses in
-                addresses.first { $0.flatId == self?.flatId }
+                addresses.first { $0.flatId == self?.flatId && $0.clientId == self?.clientId }
             }
             .ignoreNil()
             .do(
@@ -442,7 +445,7 @@ class AddressAccessViewModel: BaseViewModel {
         }
         
         apiWrapper
-            .revokeAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .outer)
+            .revokeAccess(flatId: flatId, clientId: clientId, guestPhone: allowedPerson.apiNumber, type: .outer)
             .trackError(errorTracker)
             .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
@@ -465,7 +468,7 @@ class AddressAccessViewModel: BaseViewModel {
         }
         
         apiWrapper
-            .revokeAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .inner)
+            .revokeAccess(flatId: flatId, clientId: clientId, guestPhone: allowedPerson.apiNumber, type: .inner)
             .trackError(errorTracker)
             .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)

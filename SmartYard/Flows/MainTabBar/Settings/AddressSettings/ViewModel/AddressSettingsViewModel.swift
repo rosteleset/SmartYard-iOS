@@ -16,6 +16,7 @@ class AddressSettingsViewModel: BaseViewModel {
     private let issueService: IssueService
     
     private let flatId: String
+    private let clientId: String?
     private let address: String
     private let isContractOwner: Bool
     private let hasDomophone: Bool
@@ -28,6 +29,7 @@ class AddressSettingsViewModel: BaseViewModel {
         apiWrapper: APIWrapper,
         issueService: IssueService,
         flatId: String,
+        clientId: String?,
         address: String,
         isContractOwner: Bool,
         hasDomophone: Bool,
@@ -36,6 +38,7 @@ class AddressSettingsViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
         self.issueService = issueService
         self.flatId = flatId
+        self.clientId = clientId
         self.address = address
         self.isContractOwner = isContractOwner
         self.hasDomophone = hasDomophone
@@ -155,7 +158,7 @@ class AddressSettingsViewModel: BaseViewModel {
             }
             
             self.apiWrapper
-                .deleteAddress(flatId: self.flatId)
+                .deleteAddress(flatId: self.flatId, clientId: self.clientId)
                 .trackActivity(self.activityTracker)
                 .trackError(self.errorTracker)
                 .asDriver(onErrorJustReturn: nil)

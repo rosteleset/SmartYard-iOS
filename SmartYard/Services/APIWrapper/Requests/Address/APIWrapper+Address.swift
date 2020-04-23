@@ -205,20 +205,37 @@ extension APIWrapper {
         return access(flatId: flatId, guestPhone: guestPhone, type: type, expire: expire)
     }
     
-    func revokeAccess(flatId: String, guestPhone: String, type: APIRoommateAccessType) -> Single<Void?> {
-        return access(flatId: flatId, guestPhone: guestPhone, type: type, expire: Date.distantPast)
+    func revokeAccess(
+        flatId: String,
+        clientId: String?,
+        guestPhone: String,
+        type: APIRoommateAccessType
+    ) -> Single<Void?> {
+        return access(
+            flatId: flatId,
+            clientId: clientId,
+            guestPhone: guestPhone,
+            type: type,
+            expire: Date.distantPast
+        )
     }
     
-    func deleteAddress(flatId: String) -> Single<Void?> {
+    func deleteAddress(flatId: String, clientId: String?) -> Single<Void?> {
         guard let phone = accessService.clientPhoneNumber else {
             return .error(NSError.APIWrapperError.userPhoneMissing)
         }
         
-        return access(flatId: flatId, guestPhone: "8" + phone, expire: Date.distantPast)
+        return access(
+            flatId: flatId,
+            clientId: clientId,
+            guestPhone: "8" + phone,
+            expire: Date.distantPast
+        )
     }
     
     func access(
         flatId: String,
+        clientId: String? = nil,
         guestPhone: String? = nil,
         type: APIRoommateAccessType? = nil,
         expire: Date? = nil
@@ -234,6 +251,7 @@ extension APIWrapper {
         let request = AccessRequest(
             accessToken: accessToken,
             flatId: flatId,
+            clientId: clientId,
             guestPhone: guestPhone,
             type: type,
             expire: expire
