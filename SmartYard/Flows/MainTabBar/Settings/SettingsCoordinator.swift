@@ -15,9 +15,9 @@ enum SettingsRoute: Route {
     case addressSettings(flatId: String, clientId: String?, address: String, isContractOwner: Bool, hasDomophone: Bool)
     case back
     case dismiss
-    case serviceIsActivated(service: SettingsServiceType, clientId: String?, address: String)
-    case serviceIsNotActivated(service: SettingsServiceType, clientId: String?, address: String)
-    case serviceUnavailable(service: SettingsServiceType, address: String, clientId: String?)
+    case serviceIsActivated(service: SettingsServiceType, contractName: String?, address: String)
+    case serviceIsNotActivated(service: SettingsServiceType, contractName: String?, address: String)
+    case serviceUnavailable(service: SettingsServiceType, address: String, contractName: String?)
     case advancedSettings(name: String)
     case addressDeletion(delegate: AddressDeletionViewModelDelegate)
     case alert(title: String, message: String?)
@@ -84,12 +84,12 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
         case .dismiss:
             return .dismiss()
             
-        case let .serviceIsActivated(service, clientId, address):
+        case let .serviceIsActivated(service, contractName, address):
             let vm = ServiceIsActivatedViewModel(
                 router: weakRouter,
                 service: service,
                 issueService: issueService,
-                clientId: clientId,
+                contractName: contractName,
                 address: address
             )
             
@@ -99,11 +99,11 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case let .serviceIsNotActivated(service, clientId, address):
+        case let .serviceIsNotActivated(service, contractName, address):
             let vm = ServiceIsNotActivatedViewModel(
                 router: weakRouter,
                 service: service,
-                clientId: clientId,
+                contractName: contractName,
                 address: address,
                 issueService: issueService
             )
@@ -114,13 +114,13 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case let .serviceUnavailable(service, address, clientId):
+        case let .serviceUnavailable(service, address, contractName):
             let vm = ServiceUnavailableViewModel(
                 router: weakRouter,
                 service: service,
                 address: address,
                 issueService: issueService,
-                clientId: clientId
+                contractName: contractName
             )
             
             let vc = ServiceUnavailableViewController(viewModel: vm)

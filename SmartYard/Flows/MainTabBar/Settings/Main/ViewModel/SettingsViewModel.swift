@@ -147,7 +147,7 @@ class SettingsViewModel: BaseViewModel {
                     self?.router.trigger(
                         .serviceIsActivated(
                             service: service,
-                            clientId: apiSettingsAddress.clientId,
+                            contractName: apiSettingsAddress.contractName,
                             address: apiSettingsAddress.address
                         )
                     )
@@ -189,14 +189,14 @@ class SettingsViewModel: BaseViewModel {
                 case true:
                     return .serviceIsNotActivated(
                         service: payload.serviceType,
-                        clientId: payload.apiSettingsAddress.clientId,
+                        contractName: payload.apiSettingsAddress.contractName,
                         address: payload.apiSettingsAddress.address
                     )
                 case false:
                     return .serviceUnavailable(
                         service: payload.serviceType,
                         address: payload.apiSettingsAddress.address,
-                        clientId: payload.apiSettingsAddress.clientId
+                        contractName: payload.apiSettingsAddress.contractName
                     )
                 }
             }

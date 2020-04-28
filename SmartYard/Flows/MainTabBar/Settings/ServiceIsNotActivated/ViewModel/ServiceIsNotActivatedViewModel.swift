@@ -15,7 +15,7 @@ class ServiceIsNotActivatedViewModel: BaseViewModel {
     private let router: WeakRouter<SettingsRoute>
     
     private let service: SettingsServiceType
-    private let clientId: String?
+    private let contractName: String?
     private let address: String
     
     private let issueService: IssueService
@@ -26,13 +26,13 @@ class ServiceIsNotActivatedViewModel: BaseViewModel {
     init(
         router: WeakRouter<SettingsRoute>,
         service: SettingsServiceType,
-        clientId: String?,
+        contractName: String?,
         address: String,
         issueService: IssueService
     ) {
         self.router = router
         self.service = service
-        self.clientId = clientId
+        self.contractName = contractName
         self.address = address
         self.issueService = issueService
     }
@@ -53,8 +53,8 @@ class ServiceIsNotActivatedViewModel: BaseViewModel {
                     
                     userInfo[NotificationKeys.serviceActionKey] = SettingsServiceAction.activateService.rawValue
                     
-                    if let clientId = self?.clientId {
-                        userInfo[NotificationKeys.clientIdKey] = clientId
+                    if let contractName = self?.contractName {
+                        userInfo[NotificationKeys.contractNameKey] = contractName
                     }
                     
                     if let service = self?.service.rawValue {
