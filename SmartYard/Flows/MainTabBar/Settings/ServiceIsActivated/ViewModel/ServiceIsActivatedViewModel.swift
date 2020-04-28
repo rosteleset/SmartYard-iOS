@@ -16,7 +16,7 @@ class ServiceIsActivatedViewModel: BaseViewModel {
     
     private let service: SettingsServiceType
     private let issueService: IssueService
-    private let clientId: String?
+    private let contractName: String?
     private let address: String
     
     let activityTracker = ActivityTracker()
@@ -26,13 +26,13 @@ class ServiceIsActivatedViewModel: BaseViewModel {
         router: WeakRouter<SettingsRoute>,
         service: SettingsServiceType,
         issueService: IssueService,
-        clientId: String?,
+        contractName: String?,
         address: String
     ) {
         self.router = router
         self.service = service
         self.issueService = issueService
-        self.clientId = clientId
+        self.contractName = contractName
         self.address = address
     }
     
@@ -52,8 +52,8 @@ class ServiceIsActivatedViewModel: BaseViewModel {
                     
                     userInfo[NotificationKeys.serviceActionKey] = SettingsServiceAction.changeTariff.rawValue
                     
-                    if let clientId = self?.clientId {
-                        userInfo[NotificationKeys.clientIdKey] = clientId
+                    if let contractName = self?.contractName {
+                        userInfo[NotificationKeys.contractNameKey] = contractName
                     }
                     
                     if let service = self?.service.rawValue {

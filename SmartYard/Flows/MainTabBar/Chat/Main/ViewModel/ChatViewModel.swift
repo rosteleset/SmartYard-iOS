@@ -25,12 +25,6 @@ class ChatViewModel: BaseViewModel {
         subscribeToChatNotifications()
     }
     
-    func sendAutomaticMessage(action: SettingsServiceAction, service: SettingsServiceType, clientId: String?) {
-        let request = action.request(for: service, clientId: clientId)
-        
-        automaticMessage.onNext(request)
-    }
-    
     func transform(_ input: Input) -> Output {
         let phone: String? = {
             guard let clientPhoneNumber = accessService.clientPhoneNumber else {
@@ -93,9 +87,10 @@ class ChatViewModel: BaseViewModel {
                         return
                     }
                     
-                    let clientId = notification.userInfo?[NotificationKeys.clientIdKey] as? String
-                    
-                    self.sendAutomaticMessage(action: serviceAction, service: serviceType, clientId: clientId)
+                    let contractName = notification.userInfo?[NotificationKeys.contractNameKey] as? String
+                    let request = serviceAction.request(for: serviceType, contractName: contractName)
+                            
+                    self.automaticMessage.onNext(request)
                 }
             )
             .disposed(by: disposeBag)
