@@ -67,6 +67,7 @@ class InputAddressViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         apiWrapper.getAllLocations()
+            .trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(citiesList)
@@ -84,6 +85,7 @@ class InputAddressViewModel: BaseViewModel {
 
                 guard let cachedStreets = self.loadedStreets[city.name] else {
                     return self.apiWrapper.getStreetsByLocation(locationId: city.locationId)
+                        .trackError(self.errorTracker)
                         .map {
                             guard let response = $0 else {
                                 return nil
@@ -123,6 +125,7 @@ class InputAddressViewModel: BaseViewModel {
                 
                 guard let cachedBuildings = self.loadedBuildings[street.name] else {
                     return self.apiWrapper.getHousesByStreet(streetId: street.streetId)
+                        .trackError(self.errorTracker)
                         .map {
                             guard let response = $0 else {
                                 return nil
@@ -270,6 +273,7 @@ class InputAddressViewModel: BaseViewModel {
                 let (address, houseId) = args
 
                 return self.apiWrapper.getServicesByHouseId(houseId: houseId)
+                    .trackError(self.errorTracker)
                     .map {
                         guard let response = $0 else {
                             return nil
