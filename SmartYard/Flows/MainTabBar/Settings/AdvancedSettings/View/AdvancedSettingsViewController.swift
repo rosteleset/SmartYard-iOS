@@ -35,6 +35,7 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private var collapsedNotificationsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedNotificationsBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private var notificationsViewTopConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var logoutButton: UIButton!
     
@@ -73,6 +74,16 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
         if balanceWarningSkeleton.isSkeletonActive {
             balanceWarningSkeleton.showSkeletonAsynchronously()
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // MARK: 24 px = это то, насколько addressContainerView выступает над scrollView
+        // 8 px - это отступ между addressContainerView и следующей за ней вьюхой
+        let neededInset = nameContainerView.bounds.height - 24 + 8
+        
+        notificationsViewTopConstraint.constant = neededInset
     }
     
     private func configureView() {
