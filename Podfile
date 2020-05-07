@@ -38,8 +38,7 @@ target 'SmartYard' do
   pod 'Mapbox-iOS-SDK'
   
   # Analytics
-  pod 'Fabric'
-  pod 'Crashlytics'
+  pod 'Firebase/Crashlytics'
   pod 'Firebase/Analytics'
   
   # Push Notifications
