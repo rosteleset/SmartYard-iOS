@@ -2560,7 +2560,6 @@
 				84F840D023E07DA5008DBE50 /* Resources */,
 				C380D67DCFB48F949692107B /* [CP] Embed Pods Frameworks */,
 				84B9ECA023E08DAD00979C39 /* Crashlytics */,
-				58FA86B7B2CC8742E2CFDBCE /* [CP] Copy Pods Resources */,
 				84B9EC9F23E08D7500979C39 /* SwiftLint */,
 				84EEBCA823F55A9B00C9557F /* Embed App Extensions */,
 			);
@@ -2701,23 +2700,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		58FA86B7B2CC8742E2CFDBCE /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		79EEE7229A112A3ECB59FC9E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
