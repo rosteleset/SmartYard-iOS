@@ -87,9 +87,21 @@ PODS:
   - Kingfisher (5.13.0):
     - Kingfisher/Core (= 5.13.0)
   - Kingfisher/Core (5.13.0)
-  - "linphone-sdk (4.4.0-alpha.22+a27d5c6)":
-    - "linphone-sdk/basic-frameworks (= 4.4.0-alpha.22+a27d5c6)"
-  - "linphone-sdk/basic-frameworks (4.4.0-alpha.22+a27d5c6)"
+  - "linphone-sdk (4.4.0-alpha.170+30d17ef)":
+    - "linphone-sdk/all-frameworks (= 4.4.0-alpha.170+30d17ef)"
+    - "linphone-sdk/app-extension (= 4.4.0-alpha.170+30d17ef)"
+    - "linphone-sdk/app-extension-swift (= 4.4.0-alpha.170+30d17ef)"
+    - "linphone-sdk/basic-frameworks (= 4.4.0-alpha.170+30d17ef)"
+    - "linphone-sdk/swift (= 4.4.0-alpha.170+30d17ef)"
+  - "linphone-sdk/all-frameworks (4.4.0-alpha.170+30d17ef)"
+  - "linphone-sdk/app-extension (4.4.0-alpha.170+30d17ef)"
+  - "linphone-sdk/app-extension-swift (4.4.0-alpha.170+30d17ef)":
+    - linphone-sdk/app-extension
+  - "linphone-sdk/basic-frameworks (4.4.0-alpha.170+30d17ef)":
+    - linphone-sdk/app-extension
+  - "linphone-sdk/swift (4.4.0-alpha.170+30d17ef)":
+    - linphone-sdk/app-extension-swift
+    - linphone-sdk/basic-frameworks
   - Mapbox-iOS-SDK (5.7.0):
     - MapboxMobileEvents (= 0.10.2)
   - MapboxMobileEvents (0.10.2)
@@ -103,24 +115,26 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - OnlineChatSdk (0.0.2)
   - PinLayout (1.8.13)
   - PMNibLinkableView (0.3.0)
   - PromisesObjC (1.2.8)
   - Protobuf (3.11.2)
-  - RxCocoa (5.0.1):
+  - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
   - RxDataSources (4.0.1):
     - Differentiator (~> 4.0)
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
-  - RxRelay (5.0.1):
+  - RxRelay (5.1.1):
     - RxSwift (~> 5)
-  - RxSwift (5.0.1)
+  - RxSwift (5.1.1)
   - RxViewController (1.0.0):
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
   - SearchTextField (1.2.4)
+  - SHSPhoneComponent (2.32)
   - SkeletonView (1.7)
   - SSCustomTabbar (2.0.2)
   - SwifterSwift (4.6.0):
@@ -161,6 +175,7 @@ DEPENDENCIES:
   - linphone-sdk (> 4.4.0-alpha)
   - Mapbox-iOS-SDK
   - Moya/RxSwift
+  - OnlineChatSdk (from `https://github.com/MadBrains/OnlineChatSdk-Swift.git`, branch `feature/build-fix`)
   - PinLayout
   - PMNibLinkableView
   - RxCocoa
@@ -168,6 +183,7 @@ DEPENDENCIES:
   - RxSwift
   - RxViewController
   - SearchTextField
+  - SHSPhoneComponent
   - SkeletonView (= 1.7)
   - SSCustomTabbar (from `https://github.com/MadBrains/SSCustomTabbar.git`, branch `feature/add-animation-options`)
   - SwifterSwift (= 4.6)
@@ -213,6 +229,7 @@ SPEC REPOS:
     - RxSwift
     - RxViewController
     - SearchTextField
+    - SHSPhoneComponent
     - SkeletonView
     - SwifterSwift
     - SwiftLint
@@ -223,11 +240,17 @@ SPEC REPOS:
     - linphone-sdk
 
 EXTERNAL SOURCES:
+  OnlineChatSdk:
+    :branch: feature/build-fix
+    :git: https://github.com/MadBrains/OnlineChatSdk-Swift.git
   SSCustomTabbar:
     :branch: feature/add-animation-options
     :git: https://github.com/MadBrains/SSCustomTabbar.git
 
 CHECKOUT OPTIONS:
+  OnlineChatSdk:
+    :commit: 6751393fd1884b09581755efb735aa301c09a390
+    :git: https://github.com/MadBrains/OnlineChatSdk-Swift.git
   SSCustomTabbar:
     :commit: 90e83f277033d7cd2374e6fb71a926e800ce3659
     :git: https://github.com/MadBrains/SSCustomTabbar.git
@@ -253,21 +276,23 @@ SPEC CHECKSUMS:
   GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
-  linphone-sdk: 82302f72c930a859a75acdcfed304272d3cfdae1
+  linphone-sdk: 6b746767ece1d5702f9476661d504e28a02b1a90
   Mapbox-iOS-SDK: 1b7cb0e739247d20ef75f5f14aa6ce34e1f0660f
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  OnlineChatSdk: 421b17a804f22c193f81f02a891e7d91128c525b
   PinLayout: e41a50260a76508b7a7fcee8955c76639adc69bc
   PMNibLinkableView: 06ebf6128feb70c3ba589d6be232748c1b7b1767
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
-  RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
-  RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
-  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
   SearchTextField: 40dc3cc57def5a211f263cac263622c163bbc25a
+  SHSPhoneComponent: c491cf87a0d5c3fb11b8f54100d05fd2706cb401
   SkeletonView: 7d7378731b708f8a6e6b1ffefb68cc3903f10a03
   SSCustomTabbar: e18f8aa256bce5c8a4742e53e638f64b33fb0e10
   SwifterSwift: 812ffec6f301922f5430e75be3f2939ea3a80024
@@ -276,6 +301,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: 332407e80f368e5b9b36c4c0e0210304dd2331d7
+PODFILE CHECKSUM: ca29b6f115b4738d2b98d743de19241a4fc70db9
 
 COCOAPODS: 1.8.4

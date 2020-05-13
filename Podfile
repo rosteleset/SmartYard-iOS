@@ -32,6 +32,7 @@ target 'SmartYard' do
   pod 'JGProgressHUD'
   pod 'SkeletonView', '1.7'
   pod 'SearchTextField'
+  pod 'SHSPhoneComponent'
 
   # Map
   pod 'Mapbox-iOS-SDK'
@@ -48,12 +49,19 @@ target 'SmartYard' do
   pod 'XCoordinator'
   pod 'XCoordinator/RxSwift'
   
+  # Chat
+  pod 'OnlineChatSdk', :git => 'https://github.com/MadBrains/OnlineChatSdk-Swift.git', :branch => 'feature/build-fix'
+  
 end
 
 post_install do |installer|
-    installer.pods_project.build_configurations.each do |config|
-        if config.name == 'Release'
-            config.build_settings['SWIFT_COMPILATION_MODE'] = 'wholemodule'
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+            
+            if config.name == 'Release'
+                config.build_settings['SWIFT_COMPILATION_MODE'] = 'wholemodule'
+            end
         end
     end
 end
