@@ -27,13 +27,13 @@ class PaymentPopupController: BaseViewController {
     
     private var paymentRequest: PKPaymentRequest = {
         let request = PKPaymentRequest()
-        request.merchantIdentifier = "merchant.stfalcon.com.applepayexample"
+        request.merchantIdentifier = "merchant.ru.lanta-net.pays"
         request.supportedNetworks = [.visa, .masterCard]
         request.supportedCountries = ["RU"]
         request.merchantCapabilities = .capability3DS
         request.countryCode = Locale.current.regionCode ?? "RUS"
         request.currencyCode = "RUB"
-        request.paymentSummaryItems = [PKPaymentSummaryItem(label: "iPhone Xs 64 Gb", amount: 1.55)]
+        request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Ланта", amount: 1)]
         return request
     }()
     
