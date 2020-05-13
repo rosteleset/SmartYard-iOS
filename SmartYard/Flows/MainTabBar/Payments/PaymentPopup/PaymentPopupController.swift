@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import PassKit
+import RxSwift
+import RxCocoa
 
 class PaymentPopupController: BaseViewController {
     
@@ -22,14 +25,50 @@ class PaymentPopupController: BaseViewController {
     
     private var swipeDismissInteractor: SwipeInteractionController?
     
+    private var paymentRequest: PKPaymentRequest = {
+        let request = PKPaymentRequest()
+        request.merchantIdentifier = "merchant.stfalcon.com.applepayexample"
+        request.supportedNetworks = [.visa, .masterCard]
+        request.supportedCountries = ["RU"]
+        request.merchantCapabilities = .capability3DS
+        request.countryCode = Locale.current.regionCode ?? "RUS"
+        request.currencyCode = "RUB"
+        request.paymentSummaryItems = [PKPaymentSummaryItem(label: "iPhone Xs 64 Gb", amount: 1.55)]
+        return request
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        bind()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         swipeDismissInteractor?.animatedViewBottomOffset = animatedViewBottomOffset.constant
+    }
+    
+    private func bind() {
+        payButton.rx
+            .tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    // TODO: нужна будет обработка
+                    self.sumTextField.resignFirstResponder()
+//                    self?.sumTextField.isHidden = true
+//                    self?.successView.isHidden = false
+                    if let controller = PKPaymentAuthorizationViewController(paymentRequest: self.paymentRequest) {
+                        controller.delegate = self
+                        self.present(controller, animated: true, completion: nil)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureView() {
@@ -141,13 +180,6 @@ class PaymentPopupController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    @IBAction private func payButtonDidTap(_ sender: Any) {
-        // TODO: нужна будет обработка
-        sumTextField.resignFirstResponder()
-        sumTextField.isHidden = true
-        successView.isHidden = false
-    }
-    
 }
 
 extension PaymentPopupController: PickerAnimatable {
@@ -181,4 +213,20 @@ extension PaymentPopupController: UIViewControllerTransitioningDelegate {
         return interactionInProgress ? swipeDismissInteractor : nil
     }
     
+}
+
+extension PaymentPopupController: PKPaymentAuthorizationViewControllerDelegate {
+ 
+    func paymentAuthorizationViewController(
+        _ controller: PKPaymentAuthorizationViewController,
+        didAuthorizePayment payment: PKPayment,
+        handler completion: @escaping (PKPaymentAuthorizationResult) -> Void
+    ) {
+        completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+    }
+ 
+    func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+ 
 }
