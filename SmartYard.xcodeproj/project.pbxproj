@@ -438,6 +438,7 @@
 		848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAction.swift; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
+		849652A2246C0EB2000E1375 /* SmartYard.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = SmartYard.entitlements; sourceTree = "<group>"; };
 		849F2AD52448687C005693B3 /* AddressesListEmptyStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListEmptyStateCell.swift; sourceTree = "<group>"; };
 		849F2AD62448687C005693B3 /* AddressesListEmptyStateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListEmptyStateCell.xib; sourceTree = "<group>"; };
 		84A6705F241FB6CC00BBA12B /* AddressAccessSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessSkeletonView.swift; sourceTree = "<group>"; };
@@ -1385,8 +1386,8 @@
 				84F840E123E07DA5008DBE50 /* Info.plist */,
 				84B9EC9223E0884400979C39 /* linphonerc_default */,
 				84B9EC9123E0884400979C39 /* linphonerc_factory */,
-				E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */,
 				84B9EC9D23E08BB100979C39 /* SmartYard.entitlements */,
+				E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */,
 				84B9EC9323E0884400979C39 /* SmartYard-Bridging-Header.h */,
 				E99EA6BE23EAA6CE00BECEE6 /* Fonts */,
 			);
@@ -2139,6 +2140,7 @@
 		E988DAB92444AA8500C66371 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
+				849652A2246C0EB2000E1375 /* SmartYard.entitlements */,
 				84B9EC9B23E089C500979C39 /* GoogleService-Info.plist */,
 			);
 			path = Debug;
@@ -3183,7 +3185,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
