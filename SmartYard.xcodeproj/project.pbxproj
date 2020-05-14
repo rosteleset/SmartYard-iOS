@@ -273,6 +273,9 @@
 		E95673B5246D3DB40009C910 /* PaymentPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673B4246D3DB40009C910 /* PaymentPopupViewModel.swift */; };
 		E95673B7246D6D100009C910 /* PayProcessRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673B6246D6D100009C910 /* PayProcessRequest.swift */; };
 		E95673B9246D6D320009C910 /* PayProcessResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673B8246D6D320009C910 /* PayProcessResponseData.swift */; };
+		E95673BE246D8AFC0009C910 /* SberbankPayProcessRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673BD246D8AFC0009C910 /* SberbankPayProcessRequest.swift */; };
+		E95673C0246D8B140009C910 /* SberbankPayProcessResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673BF246D8B140009C910 /* SberbankPayProcessResponseData.swift */; };
+		E95673C2246D8E200009C910 /* SberbankPayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673C1246D8E200009C910 /* SberbankPayData.swift */; };
 		E9618A332420ABC1003FF47D /* UnapprovedObjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9618A312420ABC1003FF47D /* UnapprovedObjectCell.swift */; };
 		E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
@@ -642,6 +645,9 @@
 		E95673B4246D3DB40009C910 /* PaymentPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPopupViewModel.swift; sourceTree = "<group>"; };
 		E95673B6246D6D100009C910 /* PayProcessRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayProcessRequest.swift; sourceTree = "<group>"; };
 		E95673B8246D6D320009C910 /* PayProcessResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayProcessResponseData.swift; sourceTree = "<group>"; };
+		E95673BD246D8AFC0009C910 /* SberbankPayProcessRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SberbankPayProcessRequest.swift; sourceTree = "<group>"; };
+		E95673BF246D8B140009C910 /* SberbankPayProcessResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SberbankPayProcessResponseData.swift; sourceTree = "<group>"; };
+		E95673C1246D8E200009C910 /* SberbankPayData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SberbankPayData.swift; sourceTree = "<group>"; };
 		E9618A312420ABC1003FF47D /* UnapprovedObjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnapprovedObjectCell.swift; sourceTree = "<group>"; };
 		E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnapprovedObjectCell.xib; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
@@ -2249,6 +2255,7 @@
 			isa = PBXGroup;
 			children = (
 				E95673B0246D38BA0009C910 /* APIWrapper+Payment.swift */,
+				E95673BC246D89E40009C910 /* SberbankPayProcess */,
 				E95673BB246D76FA0009C910 /* PayPrepare */,
 				E95673BA246D76EC0009C910 /* PayProcess */,
 			);
@@ -2271,6 +2278,16 @@
 				E95673B2246D3A000009C910 /* PayPrepareResponseData.swift */,
 			);
 			path = PayPrepare;
+			sourceTree = "<group>";
+		};
+		E95673BC246D89E40009C910 /* SberbankPayProcess */ = {
+			isa = PBXGroup;
+			children = (
+				E95673BD246D8AFC0009C910 /* SberbankPayProcessRequest.swift */,
+				E95673BF246D8B140009C910 /* SberbankPayProcessResponseData.swift */,
+				E95673C1246D8E200009C910 /* SberbankPayData.swift */,
+			);
+			path = SberbankPayProcess;
 			sourceTree = "<group>";
 		};
 		E9618A302420AB6E003FF47D /* UnapprovedObjectCell */ = {
@@ -2924,6 +2941,7 @@
 				84AA8D6623E2F2A8001B3B43 /* TransportType+Extensions.swift in Sources */,
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
 				E92EFBE8242A24D2003AF7FE /* RestoreRequest.swift in Sources */,
+				E95673C2246D8E200009C910 /* SberbankPayData.swift in Sources */,
 				E9B9EAC72421FCB8000A92B3 /* RestorePasswordViewController.swift in Sources */,
 				E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */,
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
@@ -3092,6 +3110,7 @@
 				842FECB9242B8A04007CA0F3 /* APIOffice.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
 				E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */,
+				E95673BE246D8AFC0009C910 /* SberbankPayProcessRequest.swift in Sources */,
 				E92EFBE0242A22F2003AF7FE /* CreateIssueRequest.swift in Sources */,
 				843C38D1242A577C0035BF80 /* UnreadedResponseData.swift in Sources */,
 				E92EFBEC242A2507003AF7FE /* NotificationName+Extensions.swift in Sources */,
@@ -3108,6 +3127,7 @@
 				84B89A9523F2FA8A009692B4 /* ServiceIsActivatedViewModel.swift in Sources */,
 				84AADD242431FA9E0056994A /* NotificationRequest.swift in Sources */,
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
+				E95673C0246D8B140009C910 /* SberbankPayProcessResponseData.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
 				E9C256852423F31D00BE32E0 /* RestoreMethodCell.swift in Sources */,

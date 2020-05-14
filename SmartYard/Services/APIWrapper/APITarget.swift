@@ -47,12 +47,19 @@ enum APITarget {
     
     case payPrepare(request: PayPrepareRequest)
     case payProcess(request: PayProcessRequest)
+    case sberbankPayProcess(request: SberbankPayProcessRequest)
+    
 }
 
 extension APITarget: TargetType {
     
     var baseURL: URL {
-        return URL(string: "https://dm.lanta.me/api")!
+        switch self {
+        case .sberbankPayProcess:
+            return URL(string: "https://3dsec.sberbank.ru/payment/rest")!
+        default:
+            return URL(string: "https://dm.lanta.me/api")!
+        }
     }
     
     var path: String {
@@ -94,6 +101,7 @@ extension APITarget: TargetType {
             
         case .payPrepare: return "pay/prepare"
         case .payProcess: return "pay/process"
+        case .sberbankPayProcess: return "payment.do"
         }
     }
     
@@ -199,6 +207,7 @@ extension APITarget: TargetType {
             
         case .payPrepare(let request): return request.requestParameters
         case .payProcess(let request): return request.requestParameters
+        case .sberbankPayProcess(let request): return request.requestParameters
         }
     }
     
