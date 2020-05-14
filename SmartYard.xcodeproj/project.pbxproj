@@ -267,6 +267,10 @@
 		E95673AA246C17A60009C910 /* PickerPresentAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673A7246C17A60009C910 /* PickerPresentAnimator.swift */; };
 		E95673AB246C17A60009C910 /* PickerDismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673A8246C17A60009C910 /* PickerDismissAnimator.swift */; };
 		E95673AC246C17A60009C910 /* SwipeInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673A9246C17A60009C910 /* SwipeInteractionController.swift */; };
+		E95673AF246D37560009C910 /* PayPrepareRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673AE246D37560009C910 /* PayPrepareRequest.swift */; };
+		E95673B1246D38BA0009C910 /* APIWrapper+Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673B0246D38BA0009C910 /* APIWrapper+Payment.swift */; };
+		E95673B3246D3A000009C910 /* PayPrepareResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673B2246D3A000009C910 /* PayPrepareResponseData.swift */; };
+		E95673B5246D3DB40009C910 /* PaymentPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673B4246D3DB40009C910 /* PaymentPopupViewModel.swift */; };
 		E9618A332420ABC1003FF47D /* UnapprovedObjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9618A312420ABC1003FF47D /* UnapprovedObjectCell.swift */; };
 		E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
@@ -630,6 +634,10 @@
 		E95673A7246C17A60009C910 /* PickerPresentAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerPresentAnimator.swift; sourceTree = "<group>"; };
 		E95673A8246C17A60009C910 /* PickerDismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerDismissAnimator.swift; sourceTree = "<group>"; };
 		E95673A9246C17A60009C910 /* SwipeInteractionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeInteractionController.swift; sourceTree = "<group>"; };
+		E95673AE246D37560009C910 /* PayPrepareRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPrepareRequest.swift; sourceTree = "<group>"; };
+		E95673B0246D38BA0009C910 /* APIWrapper+Payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIWrapper+Payment.swift"; sourceTree = "<group>"; };
+		E95673B2246D3A000009C910 /* PayPrepareResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPrepareResponseData.swift; sourceTree = "<group>"; };
+		E95673B4246D3DB40009C910 /* PaymentPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPopupViewModel.swift; sourceTree = "<group>"; };
 		E9618A312420ABC1003FF47D /* UnapprovedObjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnapprovedObjectCell.swift; sourceTree = "<group>"; };
 		E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnapprovedObjectCell.xib; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
@@ -1724,6 +1732,7 @@
 		E92EFB61242A22F2003AF7FE /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				E95673AD246D373E0009C910 /* Payment */,
 				E92EFB86242A22F2003AF7FE /* Address */,
 				E92EFB62242A22F2003AF7FE /* Geo */,
 				843C38C4242A577B0035BF80 /* Inbox */,
@@ -2136,6 +2145,7 @@
 			children = (
 				E9567381246C16F90009C910 /* PaymentPopupController.swift */,
 				E9567382246C16F90009C910 /* PaymentPopupController.xib */,
+				E95673B4246D3DB40009C910 /* PaymentPopupViewModel.swift */,
 			);
 			path = PaymentPopup;
 			sourceTree = "<group>";
@@ -2229,6 +2239,16 @@
 				E95673A9246C17A60009C910 /* SwipeInteractionController.swift */,
 			);
 			path = PickerAnimator;
+			sourceTree = "<group>";
+		};
+		E95673AD246D373E0009C910 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				E95673B0246D38BA0009C910 /* APIWrapper+Payment.swift */,
+				E95673AE246D37560009C910 /* PayPrepareRequest.swift */,
+				E95673B2246D3A000009C910 /* PayPrepareResponseData.swift */,
+			);
+			path = Payment;
 			sourceTree = "<group>";
 		};
 		E9618A302420AB6E003FF47D /* UnapprovedObjectCell */ = {
@@ -2864,6 +2884,7 @@
 				E92EFBC4242A22F2003AF7FE /* GeoCoderRequest.swift in Sources */,
 				84B89A7C23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift in Sources */,
 				E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */,
+				E95673B3246D3A000009C910 /* PayPrepareResponseData.swift in Sources */,
 				E92EFBAE242A22F2003AF7FE /* APIHouse.swift in Sources */,
 				847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */,
 				843C38E9242A6E490035BF80 /* QRCodeScanViewController.swift in Sources */,
@@ -2983,11 +3004,13 @@
 				E92EFBAC242A22F2003AF7FE /* APIServiceModel.swift in Sources */,
 				84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */,
 				E92EFBCA242A22F2003AF7FE /* ConfirmCodeResponseData.swift in Sources */,
+				E95673B1246D38BA0009C910 /* APIWrapper+Payment.swift in Sources */,
 				E92EFB4A2428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
 				842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */,
 				E9A4D48A23EC27E20070A591 /* PinNumberField.swift in Sources */,
+				E95673B5246D3DB40009C910 /* PaymentPopupViewModel.swift in Sources */,
 				E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */,
 				E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */,
 				E9C2568124224DF200BE32E0 /* RestoreMethod.swift in Sources */,
@@ -2997,6 +3020,7 @@
 				E92EFBEA242A24EB003AF7FE /* APIRestoreData.swift in Sources */,
 				E92EFBC0242A22F2003AF7FE /* GetServicesResponseData.swift in Sources */,
 				843C38D5242A57B70035BF80 /* MessageType.swift in Sources */,
+				E95673AF246D37560009C910 /* PayPrepareRequest.swift in Sources */,
 				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
 				E94B6C4323FFF2A800FD9F65 /* Date+Helper.swift in Sources */,
 				E92EFBD6242A22F2003AF7FE /* OpenDoorRequest.swift in Sources */,
@@ -3330,6 +3354,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;

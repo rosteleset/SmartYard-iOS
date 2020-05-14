@@ -25,6 +25,20 @@ class PaymentPopupController: BaseViewController {
     
     private var swipeDismissInteractor: SwipeInteractionController?
     
+    private let viewModel: PaymentPopupViewModel
+    
+    private let preparePayTrigger = PublishSubject<String>()
+    
+    init(viewModel: PaymentPopupViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -68,6 +82,12 @@ class PaymentPopupController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        let input = PaymentPopupViewModel.Input(
+            preparePay: preparePayTrigger.asDriverOnErrorJustComplete()
+        )
+        
+        let output = viewModel.transform(input)
     }
     
     private func configureView() {
@@ -180,7 +200,7 @@ class PaymentPopupController: BaseViewController {
     }
     
     func processPayment(_ token: Data? = nil, completion: ((PKPaymentAuthorizationResult) -> Void)? = nil) {
-        // TODO: ждем API
+        
     }
     
 }
@@ -225,8 +245,8 @@ extension PaymentPopupController: PKPaymentAuthorizationViewControllerDelegate {
         didAuthorizePayment payment: PKPayment,
         handler completion: @escaping (PKPaymentAuthorizationResult) -> Void
     ) {
-        completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
-        //processPayment(payment.token.paymentData, completion: completion)
+        //completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+        processPayment(payment.token.paymentData, completion: completion)
     }
  
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {

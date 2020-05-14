@@ -45,6 +45,8 @@ enum APITarget {
     case restore(request: RestoreRequest)
     case notification(request: NotificationRequest)
     
+    case payPrepare(request: PayPrepareRequest)
+    
 }
 
 extension APITarget: TargetType {
@@ -89,6 +91,8 @@ extension APITarget: TargetType {
         case .sendName: return "user/sendName"
         case .restore: return "user/restore"
         case .notification: return "user/notification"
+            
+        case .payPrepare: return "pay/prepare"
         }
     }
     
@@ -188,6 +192,8 @@ extension APITarget: TargetType {
         case .sendName(let request): return request.requestParameters
         case .restore(let request): return request.requestParameters
         case .notification(let request): return request.requestParameters
+            
+        case .payPrepare(let request): return request.requestParameters
         }
     }
     
