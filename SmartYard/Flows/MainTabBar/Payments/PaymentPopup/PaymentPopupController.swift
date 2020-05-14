@@ -78,6 +78,7 @@ class PaymentPopupController: BaseViewController {
                     if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
                         controller.delegate = self
                         self.present(controller, animated: true, completion: nil)
+                        self.preparePayTrigger.onNext(String(self.sumTextField.text ?? "0"))
                     }
                 }
             )
@@ -199,8 +200,9 @@ class PaymentPopupController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func processPayment(_ token: Data? = nil, completion: ((PKPaymentAuthorizationResult) -> Void)? = nil) {
-        
+    func processPayment(_ token: Data? = nil, completion: ((PKPaymentAuthorizationStatus) -> Void)? = nil) {
+        print("processPayment")
+         "https://3dsec.sberbank.ru/payment/rest/register.do"
     }
     
 }
@@ -239,13 +241,12 @@ extension PaymentPopupController: UIViewControllerTransitioningDelegate {
 }
 
 extension PaymentPopupController: PKPaymentAuthorizationViewControllerDelegate {
- 
+    
     func paymentAuthorizationViewController(
         _ controller: PKPaymentAuthorizationViewController,
         didAuthorizePayment payment: PKPayment,
-        handler completion: @escaping (PKPaymentAuthorizationResult) -> Void
+        completion: @escaping (PKPaymentAuthorizationStatus) -> Void
     ) {
-        //completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
         processPayment(payment.token.paymentData, completion: completion)
     }
  

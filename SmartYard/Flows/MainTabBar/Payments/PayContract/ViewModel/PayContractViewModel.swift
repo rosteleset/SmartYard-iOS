@@ -47,7 +47,7 @@ class PayContractViewModel: BaseViewModel {
                         return
                     }
                     
-                    self.router.trigger(.paymentPopup(apiWrapper: self.apiWrapper, clientId: "777"))
+                    self.router.trigger(.paymentPopup(apiWrapper: self.apiWrapper, clientId: "68747"))
                 }
             )
             .disposed(by: disposeBag)

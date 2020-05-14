@@ -46,7 +46,7 @@ enum APITarget {
     case notification(request: NotificationRequest)
     
     case payPrepare(request: PayPrepareRequest)
-    
+    case payProcess(request: PayProcessRequest)
 }
 
 extension APITarget: TargetType {
@@ -93,6 +93,7 @@ extension APITarget: TargetType {
         case .notification: return "user/notification"
             
         case .payPrepare: return "pay/prepare"
+        case .payProcess: return "pay/process"
         }
     }
     
@@ -140,6 +141,9 @@ extension APITarget: TargetType {
             case .sendName(let request): return request.accessToken
             case .restore(let request): return request.accessToken
             case .notification(let request): return request.accessToken
+                
+            case .payPrepare(let request): return request.accessToken
+            case .payProcess(let request): return request.accessToken
                 
             default: return nil
             }
@@ -194,6 +198,7 @@ extension APITarget: TargetType {
         case .notification(let request): return request.requestParameters
             
         case .payPrepare(let request): return request.requestParameters
+        case .payProcess(let request): return request.requestParameters
         }
     }
     

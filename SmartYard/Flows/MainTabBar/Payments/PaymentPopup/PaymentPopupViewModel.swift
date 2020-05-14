@@ -28,7 +28,7 @@ class PaymentPopupViewModel: BaseViewModel {
     func transform(_ input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
-    
+        
         input.preparePay
             .flatMapLatest { [weak self] amount -> Driver<PayPrepareResponseData?> in
                 guard let self = self else {
@@ -39,14 +39,41 @@ class PaymentPopupViewModel: BaseViewModel {
                     .trackError(errorTracker)
                     .trackActivity(activityTracker)
                     .asDriver(onErrorJustReturn: nil)
+        }
+        .ignoreNil()
+        .drive(
+            onNext: { response in
+                
             }
-            .ignoreNil()
-            .drive(
-                onNext: { [weak self] innerPaymentId in
-                    print("INNER PAYMENT ID: \(innerPaymentId)")
-                }
-            )
-            .disposed(by: disposeBag)
+        )
+        .disposed(by: disposeBag)
+        
+//        .drive(
+//                onNext: { [weak self] innerPaymentId in
+//                    print("INNER PAYMENT ID: \(innerPaymentId)")
+//                }
+//            )
+//            .disposed(by: disposeBag)
+        
+//        input.preparePay
+//            .flatMapLatest { [weak self] amount -> Driver<GetPaymentsListResponseData?> in
+//                guard let self = self else {
+//                    return .empty()
+//                }
+//
+//                return self.apiWrapper.getPaymentsList()
+//                    .trackError(errorTracker)
+//                    .trackActivity(activityTracker)
+//                    .asDriverOnErrorJustComplete()
+//
+//            }
+//            .ignoreNil()
+//            .drive(
+//                onNext: { paymentsList in
+//                    print(paymentsList.count)
+//                }
+//            )
+//            .disposed(by: disposeBag)
         
         return Output()
     }

@@ -271,6 +271,8 @@
 		E95673B1246D38BA0009C910 /* APIWrapper+Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673B0246D38BA0009C910 /* APIWrapper+Payment.swift */; };
 		E95673B3246D3A000009C910 /* PayPrepareResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673B2246D3A000009C910 /* PayPrepareResponseData.swift */; };
 		E95673B5246D3DB40009C910 /* PaymentPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673B4246D3DB40009C910 /* PaymentPopupViewModel.swift */; };
+		E95673B7246D6D100009C910 /* PayProcessRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673B6246D6D100009C910 /* PayProcessRequest.swift */; };
+		E95673B9246D6D320009C910 /* PayProcessResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95673B8246D6D320009C910 /* PayProcessResponseData.swift */; };
 		E9618A332420ABC1003FF47D /* UnapprovedObjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9618A312420ABC1003FF47D /* UnapprovedObjectCell.swift */; };
 		E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */; };
 		E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */; };
@@ -638,6 +640,8 @@
 		E95673B0246D38BA0009C910 /* APIWrapper+Payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIWrapper+Payment.swift"; sourceTree = "<group>"; };
 		E95673B2246D3A000009C910 /* PayPrepareResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPrepareResponseData.swift; sourceTree = "<group>"; };
 		E95673B4246D3DB40009C910 /* PaymentPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPopupViewModel.swift; sourceTree = "<group>"; };
+		E95673B6246D6D100009C910 /* PayProcessRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayProcessRequest.swift; sourceTree = "<group>"; };
+		E95673B8246D6D320009C910 /* PayProcessResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayProcessResponseData.swift; sourceTree = "<group>"; };
 		E9618A312420ABC1003FF47D /* UnapprovedObjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnapprovedObjectCell.swift; sourceTree = "<group>"; };
 		E9618A322420ABC1003FF47D /* UnapprovedObjectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnapprovedObjectCell.xib; sourceTree = "<group>"; };
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
@@ -2245,10 +2249,28 @@
 			isa = PBXGroup;
 			children = (
 				E95673B0246D38BA0009C910 /* APIWrapper+Payment.swift */,
+				E95673BB246D76FA0009C910 /* PayPrepare */,
+				E95673BA246D76EC0009C910 /* PayProcess */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		E95673BA246D76EC0009C910 /* PayProcess */ = {
+			isa = PBXGroup;
+			children = (
+				E95673B6246D6D100009C910 /* PayProcessRequest.swift */,
+				E95673B8246D6D320009C910 /* PayProcessResponseData.swift */,
+			);
+			path = PayProcess;
+			sourceTree = "<group>";
+		};
+		E95673BB246D76FA0009C910 /* PayPrepare */ = {
+			isa = PBXGroup;
+			children = (
 				E95673AE246D37560009C910 /* PayPrepareRequest.swift */,
 				E95673B2246D3A000009C910 /* PayPrepareResponseData.swift */,
 			);
-			path = Payment;
+			path = PayPrepare;
 			sourceTree = "<group>";
 		};
 		E9618A302420AB6E003FF47D /* UnapprovedObjectCell */ = {
@@ -2986,6 +3008,7 @@
 				E95673AC246C17A60009C910 /* SwipeInteractionController.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
+				E95673B7246D6D100009C910 /* PayProcessRequest.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
 				E92EFBDC242A22F2003AF7FE /* APIWrapper+Issues.swift in Sources */,
 				E94B6C3723FD728F00FD9F65 /* RoundedImageView.swift in Sources */,
@@ -3004,6 +3027,7 @@
 				E92EFBAC242A22F2003AF7FE /* APIServiceModel.swift in Sources */,
 				84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */,
 				E92EFBCA242A22F2003AF7FE /* ConfirmCodeResponseData.swift in Sources */,
+				E95673B9246D6D320009C910 /* PayProcessResponseData.swift in Sources */,
 				E95673B1246D38BA0009C910 /* APIWrapper+Payment.swift in Sources */,
 				E92EFB4A2428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,

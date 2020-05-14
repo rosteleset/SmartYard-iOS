@@ -29,4 +29,21 @@ extension APIWrapper {
             .mapAsDefaultResponse()
     }
     
+    func payProcess(paymentId: String, sbId: String) -> Single<PayProcessResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = PayProcessRequest(accessToken: accessToken, paymentId: paymentId, sbId: sbId)
+        
+        return provider.rx
+            .request(.payProcess(request: request))
+            .convertNoConnectionError()
+            .mapAsDefaultResponse()
+    }
+    
 }
