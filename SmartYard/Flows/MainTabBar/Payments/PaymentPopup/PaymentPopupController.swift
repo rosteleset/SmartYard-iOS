@@ -20,15 +20,17 @@ class PaymentPopupController: BaseViewController {
     @IBOutlet private weak var sumTextField: UITextField!
     @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var animatedView: UIView!
-    
+
     @IBOutlet private var animatedViewBottomOffset: NSLayoutConstraint!
     
     private var swipeDismissInteractor: SwipeInteractionController?
     
     private let viewModel: PaymentPopupViewModel
+
+    private var payCompletion: ((PKPaymentAuthorizationStatus) -> Void)?
     
-    private let preparePayTrigger = PublishSubject<String>()
-    
+    private let payTrigger = PublishSubject<(Data?, String)>()
+
     init(viewModel: PaymentPopupViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -78,17 +80,29 @@ class PaymentPopupController: BaseViewController {
                     if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
                         controller.delegate = self
                         self.present(controller, animated: true, completion: nil)
-                        self.preparePayTrigger.onNext(String(self.sumTextField.text ?? "0"))
                     }
                 }
             )
             .disposed(by: disposeBag)
         
         let input = PaymentPopupViewModel.Input(
-            preparePay: preparePayTrigger.asDriverOnErrorJustComplete()
+            payProcess: payTrigger.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
+        
+        output.isPaySuccessTrigger
+            .drive(
+                onNext: { [weak self] isSuccess in
+                    guard let self = self, let uPayCompletion = self.payCompletion else {
+                        return
+                    }
+                    
+                    let status: PKPaymentAuthorizationStatus = isSuccess ? .success : .failure
+                    uPayCompletion(status)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureView() {
@@ -201,8 +215,17 @@ class PaymentPopupController: BaseViewController {
     }
     
     func processPayment(_ token: Data? = nil, completion: ((PKPaymentAuthorizationStatus) -> Void)? = nil) {
-        print("processPayment")
-         "https://3dsec.sberbank.ru/payment/rest/register.do"
+        guard let uCompletion = completion else {
+            return
+        }
+        
+        guard let amount = sumTextField.text else {
+            uCompletion(PKPaymentAuthorizationStatus.failure)
+            return
+        }
+        
+        payCompletion = uCompletion
+        payTrigger.onNext((token, amount))
     }
     
 }

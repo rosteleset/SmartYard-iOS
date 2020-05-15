@@ -46,4 +46,21 @@ extension APIWrapper {
             .mapAsDefaultResponse()
     }
     
+    func sberbankPayProcess(merchant: String, orderNumber: String, paymentToken: String) -> Single<SberbankPayProcessResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        let request = SberbankPayProcessRequest(
+            merchant: merchant,
+            orderNumber: orderNumber,
+            paymentToken: paymentToken
+        )
+        
+        return provider.rx
+            .request(.sberbankPayProcess(request: request))
+            .convertNoConnectionError()
+            .mapAsDefaultResponse()
+    }
+    
 }

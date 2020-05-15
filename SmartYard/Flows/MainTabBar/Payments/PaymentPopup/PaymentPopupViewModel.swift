@@ -24,58 +24,93 @@ class PaymentPopupViewModel: BaseViewModel {
         self.clientId = clientId
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
-        input.preparePay
-            .flatMapLatest { [weak self] amount -> Driver<PayPrepareResponseData?> in
+        let isPaySuccessTrigger = PublishSubject<Bool>()
+        
+        input.payProcess
+            .flatMapLatest { [weak self] args -> Driver<(Data?, PayPrepareResponseData?)?> in
+                let (token, amount) = args
+                
                 guard let self = self else {
+                    isPaySuccessTrigger.onNext(false)
+                    print("_1")
                     return .empty()
                 }
-                
+                print("client id: \(self.clientId)")
+
                 return self.apiWrapper.payPrepare(clientId: self.clientId, amount: amount)
                     .trackError(errorTracker)
-                    .trackActivity(activityTracker)
+                    .map {
+                        guard let response = $0 else {
+                            isPaySuccessTrigger.onNext(false)
+                            print("_2")
+                            return nil
+                        }
+                        print("here")
+                        
+                        return (token, response)
+                    }
                     .asDriver(onErrorJustReturn: nil)
-        }
-        .ignoreNil()
-        .drive(
-            onNext: { response in
-                
             }
-        )
-        .disposed(by: disposeBag)
+            .flatMapLatest { [weak self] args -> Driver<(String, SberbankPayProcessResponseData)?> in
+                print("_HERE")
+                guard let self = self, let (token, response) = args, let orderNumber = response else {
+                    isPaySuccessTrigger.onNext(false)
+                    print("_3")
+                    return .empty()
+                }
+            
+                let coddedToken = token?.base64EncodedString()
+                
+                return
+                    self.apiWrapper.sberbankPayProcess(
+                            merchant: Constants.merchant,
+                            orderNumber: orderNumber,
+                            paymentToken: coddedToken ?? ""
+                        )
+                        .trackError(errorTracker)
+                        .map {
+                            guard let response = $0 else {
+                                isPaySuccessTrigger.onNext(false)
+                                print("_4")
+                                return nil
+                            }
+                            
+                            return (orderNumber, response)
+                        }
+                        .asDriverOnErrorJustComplete()
+            }
+            .flatMapLatest { [weak self] args -> Driver<PayProcessResponseData?> in
+                guard let self = self,
+                      let (innerPaymentId, response) = args,
+                      let sberbankOrderId = response.data?.orderId
+                else {
+                    isPaySuccessTrigger.onNext(false)
+                    print("_5")
+                    return .empty()
+                }
+            
+                return
+                    self.apiWrapper.payProcess(
+                            paymentId: innerPaymentId,
+                            sbId: sberbankOrderId
+                        )
+                        .trackError(errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+            }
+            .drive(
+                onNext: { result in
+                    // TODO: на серваке пока нет обработки успеха, поэтому будет считать, что все проходит успешно
+                    print("_6")
+                    isPaySuccessTrigger.onNext(true)
+                }
+            )
+            .disposed(by: disposeBag)
         
-//        .drive(
-//                onNext: { [weak self] innerPaymentId in
-//                    print("INNER PAYMENT ID: \(innerPaymentId)")
-//                }
-//            )
-//            .disposed(by: disposeBag)
-        
-//        input.preparePay
-//            .flatMapLatest { [weak self] amount -> Driver<GetPaymentsListResponseData?> in
-//                guard let self = self else {
-//                    return .empty()
-//                }
-//
-//                return self.apiWrapper.getPaymentsList()
-//                    .trackError(errorTracker)
-//                    .trackActivity(activityTracker)
-//                    .asDriverOnErrorJustComplete()
-//
-//            }
-//            .ignoreNil()
-//            .drive(
-//                onNext: { paymentsList in
-//                    print(paymentsList.count)
-//                }
-//            )
-//            .disposed(by: disposeBag)
-        
-        return Output()
+        return Output(isPaySuccessTrigger: isPaySuccessTrigger.asDriver(onErrorJustReturn: false))
     }
     
 }
@@ -83,11 +118,11 @@ class PaymentPopupViewModel: BaseViewModel {
 extension PaymentPopupViewModel {
     
     struct Input {
-        let preparePay: Driver<String>
+        let payProcess: Driver<(Data?, String)>
     }
     
     struct Output {
-
+        let isPaySuccessTrigger: Driver<Bool>
     }
     
 }

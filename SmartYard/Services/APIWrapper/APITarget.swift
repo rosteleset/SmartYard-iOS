@@ -56,7 +56,7 @@ extension APITarget: TargetType {
     var baseURL: URL {
         switch self {
         case .sberbankPayProcess:
-            return URL(string: "https://3dsec.sberbank.ru/payment/rest")!
+            return URL(string: "https://3dsec.sberbank.ru/payment/applepay")!
         default:
             return URL(string: "https://dm.lanta.me/api")!
         }

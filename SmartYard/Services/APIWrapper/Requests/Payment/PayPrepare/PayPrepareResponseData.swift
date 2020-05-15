@@ -8,4 +8,4 @@
 
 import Foundation
 
-struct PayPrepareResponseData: Codable { }
+typealias PayPrepareResponseData = String
