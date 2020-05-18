@@ -559,6 +559,7 @@
 		84D6445E23F6ACE600AD87EF /* AddressDeletionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressDeletionViewController.xib; sourceTree = "<group>"; };
 		84D6446323F6AD3F00AD87EF /* AddressDeletionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDeletionViewModel.swift; sourceTree = "<group>"; };
 		84D6446623F6AF5100AD87EF /* AddressDeletionReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDeletionReason.swift; sourceTree = "<group>"; };
+		84E5AABB2472CECF0034080A /* SmartYard.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = SmartYard.entitlements; sourceTree = "<group>"; };
 		84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceType.swift; sourceTree = "<group>"; };
 		84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EEBC9F23F55A9B00C9557F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -2284,6 +2285,7 @@
 		E988DAB92444AA8500C66371 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
+				84E5AABB2472CECF0034080A /* SmartYard.entitlements */,
 				84B9EC9B23E089C500979C39 /* GoogleService-Info.plist */,
 			);
 			path = Debug;
@@ -3560,7 +3562,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
