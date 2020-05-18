@@ -295,6 +295,12 @@
 		E9B9EACA2421FCCB000A92B3 /* RestorePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9EAC92421FCCB000A92B3 /* RestorePasswordViewModel.swift */; };
 		E9BB83CF23F69FE80071F91E /* AllowedPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BB83CE23F69FE80071F91E /* AllowedPerson.swift */; };
 		E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BB83D223F6B1E70071F91E /* AccessViewModel.swift */; };
+		E9C0E811247282DE001CE018 /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C0E80A247282DE001CE018 /* OnboardingPage.swift */; };
+		E9C0E812247282DE001CE018 /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9C0E80B247282DE001CE018 /* OnboardingViewController.xib */; };
+		E9C0E813247282DE001CE018 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C0E80C247282DE001CE018 /* OnboardingViewController.swift */; };
+		E9C0E814247282DE001CE018 /* OnboardingBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C0E80E247282DE001CE018 /* OnboardingBaseView.swift */; };
+		E9C0E815247282DE001CE018 /* OnboardingBaseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9C0E80F247282DE001CE018 /* OnboardingBaseView.xib */; };
+		E9C0E816247282DE001CE018 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C0E810247282DE001CE018 /* OnboardingViewModel.swift */; };
 		E9C2568124224DF200BE32E0 /* RestoreMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2568024224DF200BE32E0 /* RestoreMethod.swift */; };
 		E9C256852423F31D00BE32E0 /* RestoreMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C256832423F31D00BE32E0 /* RestoreMethodCell.swift */; };
 		E9C256862423F31D00BE32E0 /* RestoreMethodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9C256842423F31D00BE32E0 /* RestoreMethodCell.xib */; };
@@ -649,6 +655,12 @@
 		E9B9EAC92421FCCB000A92B3 /* RestorePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePasswordViewModel.swift; sourceTree = "<group>"; };
 		E9BB83CE23F69FE80071F91E /* AllowedPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPerson.swift; sourceTree = "<group>"; };
 		E9BB83D223F6B1E70071F91E /* AccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessViewModel.swift; sourceTree = "<group>"; };
+		E9C0E80A247282DE001CE018 /* OnboardingPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
+		E9C0E80B247282DE001CE018 /* OnboardingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
+		E9C0E80C247282DE001CE018 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		E9C0E80E247282DE001CE018 /* OnboardingBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingBaseView.swift; sourceTree = "<group>"; };
+		E9C0E80F247282DE001CE018 /* OnboardingBaseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingBaseView.xib; sourceTree = "<group>"; };
+		E9C0E810247282DE001CE018 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		E9C2568024224DF200BE32E0 /* RestoreMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethod.swift; sourceTree = "<group>"; };
 		E9C256832423F31D00BE32E0 /* RestoreMethodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethodCell.swift; sourceTree = "<group>"; };
 		E9C256842423F31D00BE32E0 /* RestoreMethodCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestoreMethodCell.xib; sourceTree = "<group>"; };
@@ -1456,13 +1468,14 @@
 				84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */,
 				E98C383223F192430010BBC1 /* Address */,
 				E9E4270E23F40D0800F5D593 /* AvailableServices */,
+				844AC39A23E9871F0066006D /* IncomingCall */,
 				E99EA6B623EA9CED00BECEE6 /* Login */,
 				844AC3C623EBFC240066006D /* MainTabBar */,
-				E9E4273723F5605A00F5D593 /* ServiceSoonAvaialble */,
 				E9E4272523F53B0300F5D593 /* NotAvailableServices */,
-				844AC3B423EB0FD80066006D /* UserName */,
-				844AC39A23E9871F0066006D /* IncomingCall */,
+				E9C0E808247282DE001CE018 /* Onboarding */,
 				843C38E2242A6E490035BF80 /* QRCodeScan */,
+				E9E4273723F5605A00F5D593 /* ServiceSoonAvaialble */,
+				844AC3B423EB0FD80066006D /* UserName */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -2341,6 +2354,35 @@
 			path = Entries;
 			sourceTree = "<group>";
 		};
+		E9C0E808247282DE001CE018 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				E9C0E809247282DE001CE018 /* Entry */,
+				E9C0E80B247282DE001CE018 /* OnboardingViewController.xib */,
+				E9C0E80C247282DE001CE018 /* OnboardingViewController.swift */,
+				E9C0E80D247282DE001CE018 /* Views */,
+				E9C0E810247282DE001CE018 /* OnboardingViewModel.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		E9C0E809247282DE001CE018 /* Entry */ = {
+			isa = PBXGroup;
+			children = (
+				E9C0E80A247282DE001CE018 /* OnboardingPage.swift */,
+			);
+			path = Entry;
+			sourceTree = "<group>";
+		};
+		E9C0E80D247282DE001CE018 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E9C0E80E247282DE001CE018 /* OnboardingBaseView.swift */,
+				E9C0E80F247282DE001CE018 /* OnboardingBaseView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		E9C2567F24224D1E00BE32E0 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
@@ -2564,6 +2606,7 @@
 			files = (
 				E9004C6223FABF6800B59976 /* AccessView.xib in Resources */,
 				E9E4273623F55C5E00F5D593 /* ServiceUnavailableViewController.xib in Resources */,
+				E9C0E815247282DE001CE018 /* OnboardingBaseView.xib in Resources */,
 				E9E4273123F55B7800F5D593 /* ServicesActivationRequestViewController.xib in Resources */,
 				E98C382523F149F30010BBC1 /* PinCodeViewController.xib in Resources */,
 				844AC3B823EB104E0066006D /* UserNameViewController.xib in Resources */,
@@ -2577,6 +2620,7 @@
 				E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				84AADD21242E22640056994A /* EditNameViewController.xib in Resources */,
+				E9C0E812247282DE001CE018 /* OnboardingViewController.xib in Resources */,
 				E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */,
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
@@ -2816,6 +2860,7 @@
 				843C38D3242A577C0035BF80 /* DeliveredRequest.swift in Sources */,
 				845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
+				E9C0E813247282DE001CE018 /* OnboardingViewController.swift in Sources */,
 				E92EFBE2242A22F2003AF7FE /* EmptyDataInitializable.swift in Sources */,
 				E92EFBD3242A22F2003AF7FE /* AccessRequest.swift in Sources */,
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
@@ -2867,6 +2912,7 @@
 				E92EFBAC242A22F2003AF7FE /* APIServiceModel.swift in Sources */,
 				84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */,
 				E92EFBCA242A22F2003AF7FE /* ConfirmCodeResponseData.swift in Sources */,
+				E9C0E816247282DE001CE018 /* OnboardingViewModel.swift in Sources */,
 				E92EFB4A2428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
@@ -2888,6 +2934,7 @@
 				E92EFBC7242A22F2003AF7FE /* SendNameRequest.swift in Sources */,
 				84854B6323FD7FDE001B44F2 /* AllowedPersonDataItem.swift in Sources */,
 				843C38D2242A577C0035BF80 /* APIWrapper+Inbox.swift in Sources */,
+				E9C0E811247282DE001CE018 /* OnboardingPage.swift in Sources */,
 				E92EFBD7242A22F2003AF7FE /* GetSettingsListResponseData.swift in Sources */,
 				E92EFBB9242A22F2003AF7FE /* GetStreetsResponseData.swift in Sources */,
 				E92EFBE6242A2494003AF7FE /* RestoreResponseData.swift in Sources */,
@@ -2945,6 +2992,7 @@
 				844AC3EB23EBFED20066006D /* PaymentsViewModel.swift in Sources */,
 				84AADD242431FA9E0056994A /* NotificationRequest.swift in Sources */,
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
+				E9C0E814247282DE001CE018 /* OnboardingBaseView.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
 				E9C256852423F31D00BE32E0 /* RestoreMethodCell.swift in Sources */,
