@@ -9,6 +9,7 @@
 import RxSwift
 import RxCocoa
 import XCoordinator
+import SmartYardSharedDataFramework
 
 class AddressesListViewModel: BaseViewModel {
     
@@ -19,6 +20,8 @@ class AddressesListViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
     private let permissionService: PermissionService
+    private let accessService: AccessService
+    
     private let router: WeakRouter<HomeRoute>
     
     let activityTracker = ActivityTracker()
@@ -28,11 +31,13 @@ class AddressesListViewModel: BaseViewModel {
         apiWrapper: APIWrapper,
         permissionService: PermissionService,
         pushNotificationService: PushNotificationService,
+        accessService: AccessService,
         router: WeakRouter<HomeRoute>
     ) {
         self.apiWrapper = apiWrapper
         self.permissionService = permissionService
         self.pushNotificationService = pushNotificationService
+        self.accessService = accessService
         self.router = router
     }
     
@@ -176,6 +181,29 @@ class AddressesListViewModel: BaseViewModel {
                     
                     self?.loadedApprovedAddressesData.onNext(approvedAddresses)
                     self?.loadedUnapprovedAddressesData.onNext(unapprovedAddresses)
+                    
+                    guard let accessToken = self?.accessService.accessToken else {
+                        return
+                    }
+                    
+                    let sharedObjects = approvedAddresses.flatMap { addressObject -> [SmartYardSharedObject] in
+                        let address = addressObject.address
+                        
+                        return addressObject.doors.map {
+                            SmartYardSharedObject(
+                                objectName: $0.name,
+                                objectAddress: address,
+                                domophoneId: $0.domophoneId,
+                                doorId: $0.doorId,
+                                blockReason: $0.blocked,
+                                logoImageName: $0.type.iconImageName
+                            )
+                        }
+                    }
+                    
+                    let sharedData = SmartYardSharedData(accessToken: accessToken, sharedObjects: sharedObjects)
+                    
+                    SmartYardSharedData.saveSharedData(data: sharedData)
                 }
             )
             .disposed(by: disposeBag)
