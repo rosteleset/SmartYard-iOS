@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-enum OnboardingPage: Int, CaseIterable {
+enum OnboardingPages: Int {
     
-    case cctv
+    case cctv = 0
     case fullControl
     case smartYard
     
@@ -38,11 +38,5 @@ enum OnboardingPage: Int, CaseIterable {
         case .smartYard: return "Управляй домофоном, воротами или шлагбаумом со смартфона"
         }
     }
-
+    
 }
-//
-//extension OnboardingPage {
-//
-//    static let allPages: [OnboardingPage] = [.cctv, .fullControl, .smartYard]
-//
-//}
