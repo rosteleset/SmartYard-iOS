@@ -63,17 +63,17 @@ class PaymentPopupViewModel: BaseViewModel {
                     return .empty()
                 }
             
-                let coddedToken = token?.base64EncodedString()
-                
+                print("Token1: \(token)")
+            
                 return
                     self.apiWrapper.sberbankPayProcess(
                             merchant: Constants.merchant,
                             orderNumber: orderNumber,
-                            paymentToken: coddedToken ?? ""
+                            paymentToken: token?.base64EncodedString() ?? ""
                         )
                         .trackError(errorTracker)
                         .map {
-                            guard let response = $0 else {
+                            guard let response = $0, response.success else {
                                 isPaySuccessTrigger.onNext(false)
                                 print("_4")
                                 return nil

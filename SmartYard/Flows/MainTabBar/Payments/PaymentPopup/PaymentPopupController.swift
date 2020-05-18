@@ -27,7 +27,7 @@ class PaymentPopupController: BaseViewController {
     
     private let viewModel: PaymentPopupViewModel
 
-    private var payCompletion: ((PKPaymentAuthorizationStatus) -> Void)?
+    private var payCompletion: ((PKPaymentAuthorizationResult) -> Void)?
     
     private let payTrigger = PublishSubject<(Data?, String)>()
 
@@ -99,7 +99,7 @@ class PaymentPopupController: BaseViewController {
                     }
                     
                     let status: PKPaymentAuthorizationStatus = isSuccess ? .success : .failure
-                    uPayCompletion(status)
+                    uPayCompletion(PKPaymentAuthorizationResult(status: status, errors: []))
                 }
             )
             .disposed(by: disposeBag)
@@ -214,13 +214,16 @@ class PaymentPopupController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func processPayment(_ token: Data? = nil, completion: ((PKPaymentAuthorizationStatus) -> Void)? = nil) {
+    func processPayment(_ token: Data? = nil, completion: ((PKPaymentAuthorizationResult) -> Void)? = nil) {
+        print("here")
         guard let uCompletion = completion else {
+            print("11111111")
             return
         }
-        
+        print("2222222")
         guard let amount = sumTextField.text else {
-            uCompletion(PKPaymentAuthorizationStatus.failure)
+            print("333333333")
+            uCompletion(PKPaymentAuthorizationResult(status: .failure, errors: []))
             return
         }
         
@@ -268,7 +271,7 @@ extension PaymentPopupController: PKPaymentAuthorizationViewControllerDelegate {
     func paymentAuthorizationViewController(
         _ controller: PKPaymentAuthorizationViewController,
         didAuthorizePayment payment: PKPayment,
-        completion: @escaping (PKPaymentAuthorizationStatus) -> Void
+        handler completion: @escaping (PKPaymentAuthorizationResult) -> Void
     ) {
         processPayment(payment.token.paymentData, completion: completion)
     }
