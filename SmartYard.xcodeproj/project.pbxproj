@@ -162,6 +162,7 @@
 		84D6446023F6ACE600AD87EF /* AddressDeletionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D6445E23F6ACE600AD87EF /* AddressDeletionViewController.xib */; };
 		84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6446323F6AD3F00AD87EF /* AddressDeletionViewModel.swift */; };
 		84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6446623F6AF5100AD87EF /* AddressDeletionReason.swift */; };
+		84E5AAC12472D3DE0034080A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */; };
 		84EEBCA023F55A9B00C9557F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9F23F55A9B00C9557F /* NotificationService.swift */; };
 		84EEBCA423F55A9B00C9557F /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -2794,6 +2795,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				849653212472C96F000E1375 /* WdgObjectCell.xib in Resources */,
+				84E5AAC12472D3DE0034080A /* Assets.xcassets in Resources */,
 				849653222472C96F000E1375 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
