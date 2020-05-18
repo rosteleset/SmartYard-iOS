@@ -176,9 +176,6 @@
 		E9004C6223FABF6800B59976 /* AccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9004C6123FABF6800B59976 /* AccessView.xib */; };
 		E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */; };
 		E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244C24125CAD00F2B810 /* AvailableServicesViewModel.swift */; };
-		E92AFE7C243F07EC001F131D /* (null) in Sources */ = {isa = PBXBuildFile; };
-		E92AFE7E243F0834001F131D /* (null) in Sources */ = {isa = PBXBuildFile; };
-		E92AFE86243F4E18001F131D /* (null) in Sources */ = {isa = PBXBuildFile; };
 		E92EFB4524287F4C003AF7FE /* PassConfirmationPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB4324287F4C003AF7FE /* PassConfirmationPinViewController.swift */; };
 		E92EFB4624287F4C003AF7FE /* PassConfirmationPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E92EFB4424287F4C003AF7FE /* PassConfirmationPinViewController.xib */; };
 		E92EFB4824287F72003AF7FE /* PassConfirmationPinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB4724287F72003AF7FE /* PassConfirmationPinViewModel.swift */; };
@@ -3052,7 +3049,6 @@
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				E92EFBCD242A22F2003AF7FE /* GetPaymentsListResponseData.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
-				E92AFE86243F4E18001F131D /* (null) in Sources */,
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
 				E92EFBB0242A22F2003AF7FE /* APISettingsAddress.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
@@ -3290,8 +3286,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				849652CC2472AF44000E1375 /* SmartYardSharedData.swift in Sources */,
-				E92AFE7E243F0834001F131D /* (null) in Sources */,
-				E92AFE7C243F07EC001F131D /* (null) in Sources */,
 				849652CE2472AF4A000E1375 /* SmartYardSharedObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
