@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum OnboardingPages: Int {
+enum OnboardingPage: Int, CaseIterable {
     
     case cctv = 0
     case fullControl

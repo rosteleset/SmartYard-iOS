@@ -2358,9 +2358,9 @@
 			isa = PBXGroup;
 			children = (
 				E9C0E809247282DE001CE018 /* Entry */,
+				E9C0E80D247282DE001CE018 /* Views */,
 				E9C0E80B247282DE001CE018 /* OnboardingViewController.xib */,
 				E9C0E80C247282DE001CE018 /* OnboardingViewController.swift */,
-				E9C0E80D247282DE001CE018 /* Views */,
 				E9C0E810247282DE001CE018 /* OnboardingViewModel.swift */,
 			);
 			path = Onboarding;

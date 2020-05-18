@@ -68,7 +68,7 @@ class AccessService {
     
     var routeForCurrentState: AppRoute {
         switch appState {
-        case .onboarding: return .phoneNumber
+        case .onboarding: return .onboarding
         case .phoneNumber: return .phoneNumber
         case .smsCode(let phoneNumber): return .pinCode(phoneNumber: phoneNumber, isInitial: false)
         case .userName: return .userName(preloadedName: clientName)
