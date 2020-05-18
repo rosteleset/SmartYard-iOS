@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		079315DE713B31AE71737C3A /* Pods_SmartYardWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B39F8B748C32EE679BAD55 /* Pods_SmartYardWidget.framework */; };
-		2830E396E392AE070AD8399C /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		842DBD00243750ED00A1D346 /* SettingsServiceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */; };
 		842FECB6242B89DF007CA0F3 /* OfficesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */; };
 		842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */; };
@@ -109,6 +108,7 @@
 		849652D32472AF6F000E1375 /* WdgObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849652B82472AF3B000E1375 /* WdgObjectCell.xib */; };
 		849652D52472AF77000E1375 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 849652BB2472AF3B000E1375 /* MainInterface.storyboard */; };
 		849652D62472AF7B000E1375 /* WidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652BD2472AF3B000E1375 /* WidgetViewController.swift */; };
+		849652DA2472C55D000E1375 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849652D82472C538000E1375 /* NotificationCenter.framework */; };
 		849F2AD72448687C005693B3 /* AddressesListEmptyStateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F2AD52448687C005693B3 /* AddressesListEmptyStateCell.swift */; };
 		849F2AD82448687C005693B3 /* AddressesListEmptyStateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849F2AD62448687C005693B3 /* AddressesListEmptyStateCell.xib */; };
 		84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A6705F241FB6CC00BBA12B /* AddressAccessSkeletonView.swift */; };
@@ -495,6 +495,7 @@
 		849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartYardSharedDataFramework.h; sourceTree = "<group>"; };
 		849652C12472AF3B000E1375 /* SmartYardSharedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardSharedObject.swift; sourceTree = "<group>"; };
 		849652C22472AF3B000E1375 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		849652D82472C538000E1375 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		849F2AD52448687C005693B3 /* AddressesListEmptyStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListEmptyStateCell.swift; sourceTree = "<group>"; };
 		849F2AD62448687C005693B3 /* AddressesListEmptyStateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListEmptyStateCell.xib; sourceTree = "<group>"; };
 		84A6705F241FB6CC00BBA12B /* AddressAccessSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessSkeletonView.swift; sourceTree = "<group>"; };
@@ -769,7 +770,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2830E396E392AE070AD8399C /* (null) in Frameworks */,
+				849652DA2472C55D000E1375 /* NotificationCenter.framework in Frameworks */,
 				079315DE713B31AE71737C3A /* Pods_SmartYardWidget.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1772,6 +1773,7 @@
 		9597597AA6C1CAECCA7D92F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				849652D82472C538000E1375 /* NotificationCenter.framework */,
 				3264A75344A37C60971E215B /* Pods_SmartYard.framework */,
 				97B39F8B748C32EE679BAD55 /* Pods_SmartYardWidget.framework */,
 			);
