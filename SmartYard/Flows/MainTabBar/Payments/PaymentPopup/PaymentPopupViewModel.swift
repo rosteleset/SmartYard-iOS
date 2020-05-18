@@ -63,11 +63,13 @@ class PaymentPopupViewModel: BaseViewModel {
                     return .empty()
                 }
             
-                print("Token1: \(token)")
+                let uToken = token?.base64EncodedString() ?? ""
+            
+                print("Token1: \(uToken)")
             
                 return
                     self.apiWrapper.sberbankPayProcess(
-                            merchant: Constants.merchant,
+                            merchant: "lanta",
                             orderNumber: orderNumber,
                             paymentToken: token?.base64EncodedString() ?? ""
                         )
