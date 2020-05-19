@@ -26,7 +26,7 @@ enum OnboardingPage: Int, CaseIterable {
     var titleText: String {
         switch self {
         case .cctv: return "Видеонаблюдение"
-        case .fullControl: return "Все под контролем"
+        case .fullControl: return "Всё под контролем"
         case .smartYard: return "Умный двор"
         }
     }
