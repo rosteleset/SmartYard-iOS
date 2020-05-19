@@ -178,6 +178,15 @@
 		84F6497D24741545000C0028 /* PaymentAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6496F24741545000C0028 /* PaymentAddressCell.swift */; };
 		84F6497E24741545000C0028 /* PaymentPopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6497124741545000C0028 /* PaymentPopupController.swift */; };
 		84F6497F24741545000C0028 /* PaymentPopupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F6497224741545000C0028 /* PaymentPopupController.xib */; };
+		84F6498C247417DA000C0028 /* APIWrapper+Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64981247417D9000C0028 /* APIWrapper+Payment.swift */; };
+		84F6498D247417DA000C0028 /* SberbankPayProcessResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64983247417DA000C0028 /* SberbankPayProcessResponseData.swift */; };
+		84F6498E247417DA000C0028 /* SberbankPayProcessRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64984247417DA000C0028 /* SberbankPayProcessRequest.swift */; };
+		84F6498F247417DA000C0028 /* SberbankPayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64985247417DA000C0028 /* SberbankPayData.swift */; };
+		84F64990247417DA000C0028 /* PayPrepareRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64987247417DA000C0028 /* PayPrepareRequest.swift */; };
+		84F64991247417DA000C0028 /* PayPrepareResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64988247417DA000C0028 /* PayPrepareResponseData.swift */; };
+		84F64992247417DA000C0028 /* PayProcessRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6498A247417DA000C0028 /* PayProcessRequest.swift */; };
+		84F64993247417DA000C0028 /* PayProcessResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6498B247417DA000C0028 /* PayProcessResponseData.swift */; };
+		84F64995247417F4000C0028 /* PaymentPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64994247417F4000C0028 /* PaymentPopupViewModel.swift */; };
 		84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F840D523E07DA5008DBE50 /* AppDelegate.swift */; };
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
@@ -586,6 +595,15 @@
 		84F6496F24741545000C0028 /* PaymentAddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentAddressCell.swift; sourceTree = "<group>"; };
 		84F6497124741545000C0028 /* PaymentPopupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentPopupController.swift; sourceTree = "<group>"; };
 		84F6497224741545000C0028 /* PaymentPopupController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentPopupController.xib; sourceTree = "<group>"; };
+		84F64981247417D9000C0028 /* APIWrapper+Payment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "APIWrapper+Payment.swift"; sourceTree = "<group>"; };
+		84F64983247417DA000C0028 /* SberbankPayProcessResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SberbankPayProcessResponseData.swift; sourceTree = "<group>"; };
+		84F64984247417DA000C0028 /* SberbankPayProcessRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SberbankPayProcessRequest.swift; sourceTree = "<group>"; };
+		84F64985247417DA000C0028 /* SberbankPayData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SberbankPayData.swift; sourceTree = "<group>"; };
+		84F64987247417DA000C0028 /* PayPrepareRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayPrepareRequest.swift; sourceTree = "<group>"; };
+		84F64988247417DA000C0028 /* PayPrepareResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayPrepareResponseData.swift; sourceTree = "<group>"; };
+		84F6498A247417DA000C0028 /* PayProcessRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayProcessRequest.swift; sourceTree = "<group>"; };
+		84F6498B247417DA000C0028 /* PayProcessResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayProcessResponseData.swift; sourceTree = "<group>"; };
+		84F64994247417F4000C0028 /* PaymentPopupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentPopupViewModel.swift; sourceTree = "<group>"; };
 		84F840D223E07DA5008DBE50 /* SmartYard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartYard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F840D523E07DA5008DBE50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84F840DC23E07DA5008DBE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1821,10 +1839,50 @@
 		84F6497024741545000C0028 /* PaymentPopup */ = {
 			isa = PBXGroup;
 			children = (
+				84F64994247417F4000C0028 /* PaymentPopupViewModel.swift */,
 				84F6497124741545000C0028 /* PaymentPopupController.swift */,
 				84F6497224741545000C0028 /* PaymentPopupController.xib */,
 			);
 			path = PaymentPopup;
+			sourceTree = "<group>";
+		};
+		84F64980247417D9000C0028 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				84F64981247417D9000C0028 /* APIWrapper+Payment.swift */,
+				84F64982247417D9000C0028 /* SberbankPayProcess */,
+				84F64986247417DA000C0028 /* PayPrepare */,
+				84F64989247417DA000C0028 /* PayProcess */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		84F64982247417D9000C0028 /* SberbankPayProcess */ = {
+			isa = PBXGroup;
+			children = (
+				84F64983247417DA000C0028 /* SberbankPayProcessResponseData.swift */,
+				84F64984247417DA000C0028 /* SberbankPayProcessRequest.swift */,
+				84F64985247417DA000C0028 /* SberbankPayData.swift */,
+			);
+			path = SberbankPayProcess;
+			sourceTree = "<group>";
+		};
+		84F64986247417DA000C0028 /* PayPrepare */ = {
+			isa = PBXGroup;
+			children = (
+				84F64987247417DA000C0028 /* PayPrepareRequest.swift */,
+				84F64988247417DA000C0028 /* PayPrepareResponseData.swift */,
+			);
+			path = PayPrepare;
+			sourceTree = "<group>";
+		};
+		84F64989247417DA000C0028 /* PayProcess */ = {
+			isa = PBXGroup;
+			children = (
+				84F6498A247417DA000C0028 /* PayProcessRequest.swift */,
+				84F6498B247417DA000C0028 /* PayProcessResponseData.swift */,
+			);
+			path = PayProcess;
 			sourceTree = "<group>";
 		};
 		84F840C923E07DA5008DBE50 = {
@@ -1972,6 +2030,7 @@
 				843C38C4242A577B0035BF80 /* Inbox */,
 				E92EFB9C242A22F2003AF7FE /* Issues */,
 				E92EFB76242A22F2003AF7FE /* User */,
+				84F64980247417D9000C0028 /* Payment */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -3150,6 +3209,7 @@
 				E92EFBB0242A22F2003AF7FE /* APISettingsAddress.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
 				E92EFBC6242A22F2003AF7FE /* APIWrapper+User.swift in Sources */,
+				84F64991247417DA000C0028 /* PayPrepareResponseData.swift in Sources */,
 				84AA8D6623E2F2A8001B3B43 /* TransportType+Extensions.swift in Sources */,
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
 				E92EFBE8242A24D2003AF7FE /* RestoreRequest.swift in Sources */,
@@ -3196,6 +3256,7 @@
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
+				84F64992247417DA000C0028 /* PayProcessRequest.swift in Sources */,
 				E92EFBE1242A22F2003AF7FE /* APITarget.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				843C38D3242A577C0035BF80 /* DeliveredRequest.swift in Sources */,
@@ -3256,6 +3317,7 @@
 				84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */,
 				E92EFBCA242A22F2003AF7FE /* ConfirmCodeResponseData.swift in Sources */,
 				E9C0E816247282DE001CE018 /* OnboardingViewModel.swift in Sources */,
+				84F6498C247417DA000C0028 /* APIWrapper+Payment.swift in Sources */,
 				E92EFB4A2428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
@@ -3272,6 +3334,7 @@
 				843C38D5242A57B70035BF80 /* MessageType.swift in Sources */,
 				84F649592474152C000C0028 /* PickerPresentAnimator.swift in Sources */,
 				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
+				84F64993247417DA000C0028 /* PayProcessResponseData.swift in Sources */,
 				E94B6C4323FFF2A800FD9F65 /* Date+Helper.swift in Sources */,
 				E92EFBD6242A22F2003AF7FE /* OpenDoorRequest.swift in Sources */,
 				E92EFBDB242A22F2003AF7FE /* ResendRequest.swift in Sources */,
@@ -3288,6 +3351,7 @@
 				E92EFBD2242A22F2003AF7FE /* IntercomResponseData.swift in Sources */,
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
 				E92EFBCC242A22F2003AF7FE /* RegisterPushTokenRequest.swift in Sources */,
+				84F6498D247417DA000C0028 /* SberbankPayProcessResponseData.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
 				84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */,
 				84AADD29243349630056994A /* ChatViewModel.swift in Sources */,
@@ -3303,6 +3367,7 @@
 				84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */,
 				844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */,
 				84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */,
+				84F64990247417DA000C0028 /* PayPrepareRequest.swift in Sources */,
 				84854B5023FBD3E7001B44F2 /* AppState.swift in Sources */,
 				844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */,
 				E92EFBAF242A22F2003AF7FE /* APIIntercomSettings.swift in Sources */,
@@ -3320,6 +3385,7 @@
 				E92EFBCF242A22F2003AF7FE /* GetAddressListResponseData.swift in Sources */,
 				842FECB9242B8A04007CA0F3 /* APIOffice.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
+				84F6498E247417DA000C0028 /* SberbankPayProcessRequest.swift in Sources */,
 				E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */,
 				E92EFBE0242A22F2003AF7FE /* CreateIssueRequest.swift in Sources */,
 				843C38D1242A577C0035BF80 /* UnreadedResponseData.swift in Sources */,
@@ -3335,6 +3401,7 @@
 				844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */,
 				84B89A9523F2FA8A009692B4 /* ServiceIsActivatedViewModel.swift in Sources */,
 				84AADD242431FA9E0056994A /* NotificationRequest.swift in Sources */,
+				84F64995247417F4000C0028 /* PaymentPopupViewModel.swift in Sources */,
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
 				E9C0E814247282DE001CE018 /* OnboardingBaseView.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
@@ -3379,6 +3446,7 @@
 				84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */,
 				84F6495A2474152C000C0028 /* PickerDismissAnimator.swift in Sources */,
 				E92EFBCB242A22F2003AF7FE /* RequestCodeRequest.swift in Sources */,
+				84F6498F247417DA000C0028 /* SberbankPayData.swift in Sources */,
 				E940581123F682EA00623746 /* AllowedPersonCell.swift in Sources */,
 				84CC15D423EC40EE00A1CB95 /* AddressesListHeaderCell.swift in Sources */,
 				84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */,

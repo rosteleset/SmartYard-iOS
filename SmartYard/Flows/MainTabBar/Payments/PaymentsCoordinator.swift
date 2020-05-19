@@ -15,8 +15,8 @@ enum PaymentsRoute: Route {
     case alert(title: String, message: String)
     case contractPay(address: String, items: [APIPaymentsListAccount])
     case back
-    case paymentPopup
     case safariPage(url: URL)
+    case paymentPopup(apiWrapper: APIWrapper, clientId: String)
     
 }
 
@@ -56,8 +56,9 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
         case .back:
             return .pop(animation: .default)
             
-        case .paymentPopup:
-            let vc = PaymentPopupController()
+        case let .paymentPopup(apiWrapper, clientId):
+            let vm = PaymentPopupViewModel(apiWrapper: apiWrapper, clientId: clientId)
+            let vc = PaymentPopupController(viewModel: vm)
             vc.modalPresentationStyle = .overFullScreen
             
             return .present(vc)

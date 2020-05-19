@@ -44,7 +44,11 @@ class PayContractViewModel: BaseViewModel {
         input.payContractTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.paymentPopup)
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.router.trigger(.paymentPopup(apiWrapper: self.apiWrapper, clientId: "68747"))
                 }
             )
             .disposed(by: disposeBag)

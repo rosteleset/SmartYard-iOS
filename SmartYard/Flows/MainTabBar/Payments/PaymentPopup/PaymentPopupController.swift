@@ -20,22 +20,26 @@ class PaymentPopupController: BaseViewController {
     @IBOutlet private weak var sumTextField: UITextField!
     @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var animatedView: UIView!
-    
+
     @IBOutlet private var animatedViewBottomOffset: NSLayoutConstraint!
     
     private var swipeDismissInteractor: SwipeInteractionController?
     
-    private var paymentRequest: PKPaymentRequest = {
-        let request = PKPaymentRequest()
-        request.merchantIdentifier = "merchant.stfalcon.com.applepayexample"
-        request.supportedNetworks = [.visa, .masterCard]
-        request.supportedCountries = ["RU"]
-        request.merchantCapabilities = .capability3DS
-        request.countryCode = Locale.current.regionCode ?? "RUS"
-        request.currencyCode = "RUB"
-        request.paymentSummaryItems = [PKPaymentSummaryItem(label: "iPhone Xs 64 Gb", amount: 1.55)]
-        return request
-    }()
+    private let viewModel: PaymentPopupViewModel
+
+    private var payCompletion: ((PKPaymentAuthorizationResult) -> Void)?
+    
+    private let payTrigger = PublishSubject<(Data?, String)>()
+
+    init(viewModel: PaymentPopupViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,15 +61,45 @@ class PaymentPopupController: BaseViewController {
                     guard let self = self else {
                         return
                     }
-                    
-                    // TODO: нужна будет обработка
+ 
                     self.sumTextField.resignFirstResponder()
-//                    self?.sumTextField.isHidden = true
-//                    self?.successView.isHidden = false
-                    if let controller = PKPaymentAuthorizationViewController(paymentRequest: self.paymentRequest) {
+                    
+                    let request = PKPaymentRequest()
+                    request.merchantIdentifier = "merchant.ru.lanta-net.pays"
+                    request.supportedNetworks = [.visa, .masterCard]
+                    request.supportedCountries = ["RU"]
+                    request.merchantCapabilities = .capability3DS
+                    request.countryCode = Locale.current.regionCode ?? "RUS"
+                    request.currencyCode = "RUB"
+                    
+                    let decimalSeparator = [NSLocale.Key.decimalSeparator: Locale.current.decimalSeparator]
+                    let amount = NSDecimalNumber(string: self.sumTextField.text, locale: decimalSeparator)
+                    
+                    request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Ланта", amount: amount)]
+                    
+                    if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
                         controller.delegate = self
                         self.present(controller, animated: true, completion: nil)
                     }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        let input = PaymentPopupViewModel.Input(
+            payProcess: payTrigger.asDriverOnErrorJustComplete()
+        )
+        
+        let output = viewModel.transform(input)
+        
+        output.isPaySuccessTrigger
+            .drive(
+                onNext: { [weak self] isSuccess in
+                    guard let self = self, let uPayCompletion = self.payCompletion else {
+                        return
+                    }
+                    
+                    let status: PKPaymentAuthorizationStatus = isSuccess ? .success : .failure
+                    uPayCompletion(PKPaymentAuthorizationResult(status: status, errors: []))
                 }
             )
             .disposed(by: disposeBag)
@@ -180,6 +214,23 @@ class PaymentPopupController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    func processPayment(_ token: Data? = nil, completion: ((PKPaymentAuthorizationResult) -> Void)? = nil) {
+        print("here")
+        guard let uCompletion = completion else {
+            print("11111111")
+            return
+        }
+        print("2222222")
+        guard let amount = sumTextField.text else {
+            print("333333333")
+            uCompletion(PKPaymentAuthorizationResult(status: .failure, errors: []))
+            return
+        }
+        
+        payCompletion = uCompletion
+        payTrigger.onNext((token, amount))
+    }
+    
 }
 
 extension PaymentPopupController: PickerAnimatable {
@@ -216,17 +267,19 @@ extension PaymentPopupController: UIViewControllerTransitioningDelegate {
 }
 
 extension PaymentPopupController: PKPaymentAuthorizationViewControllerDelegate {
- 
+    
     func paymentAuthorizationViewController(
         _ controller: PKPaymentAuthorizationViewController,
         didAuthorizePayment payment: PKPayment,
         handler completion: @escaping (PKPaymentAuthorizationResult) -> Void
     ) {
-        completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+        processPayment(payment.token.paymentData, completion: completion)
     }
  
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
         controller.dismiss(animated: true, completion: nil)
+        sumTextField.isHidden = true
+        successView.isHidden = false
     }
  
 }
