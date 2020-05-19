@@ -16,9 +16,12 @@ class SelectCameraContainerViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     private let apiWrapper: APIWrapper
     
-    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper) {
+    private let address: BehaviorSubject<String>
+    
+    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, address: String) {
         self.router = router
         self.apiWrapper = apiWrapper
+        self.address = BehaviorSubject<String>(value: address)
     }
     
     func transform(_ input: Input) -> Output {
@@ -35,7 +38,11 @@ class SelectCameraContainerViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output(isLoading: activityTracker.asDriver(), cameras: tempCameras.asDriverOnErrorJustComplete())
+        return Output(
+            isLoading: activityTracker.asDriver(),
+            cameras: tempCameras.asDriverOnErrorJustComplete(),
+            address: address.asDriverOnErrorJustComplete()
+        )
     }
     
 }
@@ -51,6 +58,7 @@ extension SelectCameraContainerViewModel {
     struct Output {
         let isLoading: Driver<Bool>
         let cameras: Driver<Int?>
+        let address: Driver<String>
     }
     
 }

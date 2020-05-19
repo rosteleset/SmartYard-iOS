@@ -25,7 +25,8 @@ enum HomeRoute: Route {
     case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
     case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
     case serviceSoonAvailable(issue: APIIssueConnect)
-    case tempCameraRoute
+    case cameraContainer(address: String)
+    case yardCamerasMap(addressId: String, address: String)
     
 }
 
@@ -197,8 +198,14 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             return .push(vc)
             
-        case .tempCameraRoute:
-            let vm = SelectCameraContainerViewModel(router: weakRouter, apiWrapper: apiWrapper)
+        case let .yardCamerasMap(_, address):
+            let vm = YardMapViewModel(router: weakRouter, address: address)
+            let vc = YardMapViewController(viewModel: vm)
+            
+            return .push(vc)
+            
+        case let .cameraContainer(address):
+            let vm = SelectCameraContainerViewModel(router: weakRouter, apiWrapper: apiWrapper, address: address)
             let vc = SelectCameraContainerViewController(viewModel: vm)
             
             return .push(vc)

@@ -1,0 +1,133 @@
+//
+//  YardMapViewController.swift
+//  SmartYard
+//
+//  Created by Mad Brains on 27.04.2020.
+//  Copyright © 2020 Mad Brains. All rights reserved.
+//
+
+import UIKit
+import Mapbox
+import JGProgressHUD
+import RxSwift
+import RxCocoa
+
+class YardMapViewController: BaseViewController, LoaderPresentable {
+    
+    @IBOutlet private weak var mapView: MGLMapView!
+    @IBOutlet private weak var addressLabel: UILabel!
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
+    
+    var loader: JGProgressHUD?
+    
+    private let viewModel: YardMapViewModel
+    
+    private let cameraSelectedTrigger = PublishSubject<String?>()
+    private let camerasProxy = BehaviorSubject<[MapCameraObject]>(value: [])
+    
+    init(viewModel: YardMapViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        mapView.delegate = self
+        bind()
+    }
+
+    func bind() {
+        let input = YardMapViewModel.Input(
+            cameraSelected: cameraSelectedTrigger.asDriver(onErrorJustReturn: nil),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
+        )
+        
+        let output = viewModel.transform(input)
+        
+        output.cameras
+            .drive(
+                onNext: { [weak self] cameras in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.camerasProxy.onNext(cameras)
+                    self.removeAllAnnotations()
+                    
+                    let pointAnnotations = cameras.map { camera -> MGLPointAnnotation in
+                        let point = MGLPointAnnotation()
+                        point.coordinate = camera.position
+                        return point
+                    }
+                     
+                    self.mapView.addAnnotations(pointAnnotations)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.centerCoordinates
+            .drive(
+                onNext: { [weak self] coordinates in
+                    guard let self = self, let uCoordinates = coordinates else {
+                        return
+                    }
+        
+                    self.mapView.setCenter(uCoordinates, zoomLevel: 17, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.address
+            .drive(addressLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+    
+    func removeAllAnnotations() {
+        guard let uAnnotations = mapView.annotations else {
+            return
+        }
+        
+        mapView.removeAnnotations(uAnnotations)
+    }
+    
+}
+
+extension YardMapViewController: MGLMapViewDelegate {
+    
+    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
+        guard let camerasData = try? self.camerasProxy.value() else {
+            return nil
+        }
+        
+        let filteredCameras = camerasData.filter {
+            $0.position == annotation.coordinate
+        }
+        
+        guard let curCamera = filteredCameras.first else {
+            return nil
+        }
+
+        let annotationView = CamerasMapPointView()
+
+        annotationView.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
+        annotationView.configure(cameraNum: String(curCamera.cameraNumber))
+
+        return annotationView
+    }
+        
+    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        return false
+    }
+    
+    func mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView) {
+        let cameraNumber = (annotationView as? CamerasMapPointView)?.getCameraNumber()
+        cameraSelectedTrigger.onNext(cameraNumber)
+    }
+    
+}

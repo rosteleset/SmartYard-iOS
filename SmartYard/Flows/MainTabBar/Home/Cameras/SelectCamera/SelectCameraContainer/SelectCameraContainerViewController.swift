@@ -95,6 +95,10 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.address
+            .drive(addressLabel.rx.text)
+            .disposed(by: disposeBag)
     }
     
 }

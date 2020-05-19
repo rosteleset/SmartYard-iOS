@@ -302,9 +302,17 @@ class AddressesListViewModel: BaseViewModel {
                 
                 return .just(addressId)
             }
+            .withLatestFrom(loadedApprovedAddressesData.asDriverOnErrorJustComplete()) { ($0, $1) }
             .drive(
-                onNext: { [weak self] addressId in
-                    self?.router.trigger(.tempCameraRoute)
+                onNext: { [weak self] args in
+                    let (addressId, loadedAddresses) = args
+                    let matchingAddress = loadedAddresses?.first { $0.houseId == addressId }
+                    
+                    guard let uAddress = matchingAddress?.address else {
+                        return
+                    }
+                
+                    self?.router.trigger(.yardCamerasMap(addressId: addressId, address: uAddress))
                 }
             )
             .disposed(by: disposeBag)
