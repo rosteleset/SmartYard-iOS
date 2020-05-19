@@ -176,12 +176,14 @@
 		84F6493C247402DC000C0028 /* CustomDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64931247402DC000C0028 /* CustomDayCell.swift */; };
 		84F6493D247402DC000C0028 /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64932247402DC000C0028 /* ArchiveView.swift */; };
 		84F6493E247402DC000C0028 /* ArchiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F64933247402DC000C0028 /* ArchiveView.xib */; };
-		84F6494724740E90000C0028 /* MapCameraObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494124740E8F000C0028 /* MapCameraObject.swift */; };
 		84F6494824740E90000C0028 /* YardMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494224740E8F000C0028 /* YardMapViewController.swift */; };
 		84F6494924740E90000C0028 /* YardMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F6494324740E8F000C0028 /* YardMapViewController.xib */; };
 		84F6494A24740E90000C0028 /* CamerasMapPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494524740E8F000C0028 /* CamerasMapPointView.swift */; };
 		84F6494B24740E90000C0028 /* YardMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494624740E8F000C0028 /* YardMapViewModel.swift */; };
 		84F6494D24740F33000C0028 /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494C24740F33000C0028 /* CLLocationCoordinate2D+Extensions.swift */; };
+		84F6494F247410DE000C0028 /* CameraObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494E247410DD000C0028 /* CameraObject.swift */; };
+		84F64953247410F9000C0028 /* CameraNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64951247410F9000C0028 /* CameraNumberCell.swift */; };
+		84F64954247410F9000C0028 /* CameraNumberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F64952247410F9000C0028 /* CameraNumberCell.xib */; };
 		84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F840D523E07DA5008DBE50 /* AppDelegate.swift */; };
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
@@ -588,12 +590,14 @@
 		84F64931247402DC000C0028 /* CustomDayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDayCell.swift; sourceTree = "<group>"; };
 		84F64932247402DC000C0028 /* ArchiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
 		84F64933247402DC000C0028 /* ArchiveView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ArchiveView.xib; sourceTree = "<group>"; };
-		84F6494124740E8F000C0028 /* MapCameraObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCameraObject.swift; sourceTree = "<group>"; };
 		84F6494224740E8F000C0028 /* YardMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YardMapViewController.swift; sourceTree = "<group>"; };
 		84F6494324740E8F000C0028 /* YardMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YardMapViewController.xib; sourceTree = "<group>"; };
 		84F6494524740E8F000C0028 /* CamerasMapPointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CamerasMapPointView.swift; sourceTree = "<group>"; };
 		84F6494624740E8F000C0028 /* YardMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YardMapViewModel.swift; sourceTree = "<group>"; };
 		84F6494C24740F33000C0028 /* CLLocationCoordinate2D+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extensions.swift"; sourceTree = "<group>"; };
+		84F6494E247410DD000C0028 /* CameraObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraObject.swift; sourceTree = "<group>"; };
+		84F64951247410F9000C0028 /* CameraNumberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraNumberCell.swift; sourceTree = "<group>"; };
+		84F64952247410F9000C0028 /* CameraNumberCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraNumberCell.xib; sourceTree = "<group>"; };
 		84F840D223E07DA5008DBE50 /* SmartYard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartYard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F840D523E07DA5008DBE50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84F840DC23E07DA5008DBE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1808,6 +1812,7 @@
 		84F64929247402DB000C0028 /* OnlineView */ = {
 			isa = PBXGroup;
 			children = (
+				84F64950247410F9000C0028 /* Cells */,
 				84F6492A247402DB000C0028 /* OnlineView.xib */,
 				84F6492B247402DB000C0028 /* OnlineView.swift */,
 			);
@@ -1850,7 +1855,7 @@
 		84F6494024740E8F000C0028 /* Entries */ = {
 			isa = PBXGroup;
 			children = (
-				84F6494124740E8F000C0028 /* MapCameraObject.swift */,
+				84F6494E247410DD000C0028 /* CameraObject.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -1861,6 +1866,15 @@
 				84F6494524740E8F000C0028 /* CamerasMapPointView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		84F64950247410F9000C0028 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				84F64951247410F9000C0028 /* CameraNumberCell.swift */,
+				84F64952247410F9000C0028 /* CameraNumberCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		84F840C923E07DA5008DBE50 = {
@@ -2957,6 +2971,7 @@
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
 				849F2AD82448687C005693B3 /* AddressesListEmptyStateCell.xib in Resources */,
+				84F64954247410F9000C0028 /* CameraNumberCell.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				845842D724223D7D0019635E /* AddressSettingsSkeletonView.xib in Resources */,
 				E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */,
@@ -3177,6 +3192,7 @@
 				847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */,
 				843C38E9242A6E490035BF80 /* QRCodeScanViewController.swift in Sources */,
 				84AADD262431FAA80056994A /* NotificationResponseData.swift in Sources */,
+				84F64953247410F9000C0028 /* CameraNumberCell.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
 				E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */,
 				84F64939247402DC000C0028 /* WhiteSectionHeaderView.swift in Sources */,
@@ -3208,7 +3224,6 @@
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				E92EFBB8242A22F2003AF7FE /* APIPaymentsListAccount.swift in Sources */,
 				E92EFBC9242A22F2003AF7FE /* ConfirmCodeRequest.swift in Sources */,
-				84F6494724740E90000C0028 /* MapCameraObject.swift in Sources */,
 				84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */,
 				E92EFBB6242A22F2003AF7FE /* APIRoommate.swift in Sources */,
 				E94B6C922408EF6B00FD9F65 /* MainUserInfo.swift in Sources */,
@@ -3276,6 +3291,7 @@
 				E92EFBA7242A22F2003AF7FE /* APIWrapper.swift in Sources */,
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
+				84F6494F247410DE000C0028 /* CameraObject.swift in Sources */,
 				84F64936247402DC000C0028 /* SelectCameraContainerViewModel.swift in Sources */,
 				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,

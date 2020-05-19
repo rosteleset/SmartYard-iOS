@@ -27,14 +27,20 @@ class YardMapViewModel: BaseViewModel {
             .withLatestFrom(address.asDriverOnErrorJustComplete()) { ($0, $1) }
             .drive(
                 onNext: { [weak self] args in
-                    // TODO: прокинуть номер выбранной камеры
-                    let (_, address) = args
+                    // TODO: лучше использовать id камеры
+                    let (cameraNum, address) = args
                     
-                    guard let uAddress = address else {
+                    guard let self = self, let uAddress = address else {
                         return
                     }
                     
-                    self?.router.trigger(.cameraContainer(address: uAddress))
+                    self.router.trigger(
+                        .cameraContainer(
+                            address: uAddress,
+                            cameras: self.createMockData(),
+                            selectedCamera: cameraNum
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -58,13 +64,26 @@ class YardMapViewModel: BaseViewModel {
         return CLLocationCoordinate2D(latitude: 54.308083, longitude: 48.390917)
     }
     
-    func createMockData() -> [MapCameraObject] {
+    func createMockData() -> [CameraObject] {
         return [
-            MapCameraObject(position: CLLocationCoordinate2DMake(54.307966, 48.390189), cameraNumber: 1),
-            MapCameraObject(position: CLLocationCoordinate2DMake(54.308001, 48.390666), cameraNumber: 2),
-            MapCameraObject(position: CLLocationCoordinate2DMake(54.308062, 48.391106), cameraNumber: 3),
-            MapCameraObject(position: CLLocationCoordinate2DMake(54.308100, 48.391543), cameraNumber: 4),
-            MapCameraObject(position: CLLocationCoordinate2DMake(54.308170, 48.390905), cameraNumber: 5)
+            CameraObject(position: CLLocationCoordinate2DMake(54.307966, 48.390189), cameraNumber: 1),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308001, 48.390666), cameraNumber: 2),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308062, 48.391106), cameraNumber: 3),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308100, 48.391543), cameraNumber: 4),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308170, 48.390905), cameraNumber: 5),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308216, 48.390616), cameraNumber: 6),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308261, 48.391831), cameraNumber: 7),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308175, 48.390227), cameraNumber: 8),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308366, 48.390522), cameraNumber: 9),
+            CameraObject(position: CLLocationCoordinate2DMake(54.307966, 48.390189), cameraNumber: 1),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308001, 48.390666), cameraNumber: 2),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308062, 48.391106), cameraNumber: 3),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308100, 48.391543), cameraNumber: 4),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308170, 48.390905), cameraNumber: 5),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308216, 48.390616), cameraNumber: 6),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308261, 48.391831), cameraNumber: 7),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308175, 48.390227), cameraNumber: 8),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308366, 48.390522), cameraNumber: 9)
         ]
     }
     
@@ -73,12 +92,12 @@ class YardMapViewModel: BaseViewModel {
 extension YardMapViewModel {
     
     struct Input {
-        let cameraSelected: Driver<String?>
+        let cameraSelected: Driver<String>
         let backTrigger: Driver<Void>
     }
     
     struct Output {
-        let cameras: Driver<[MapCameraObject]>
+        let cameras: Driver<[CameraObject]>
         let centerCoordinates: Driver<CLLocationCoordinate2D?>
         let address: Driver<String?>
     }

@@ -99,6 +99,8 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         output.address
             .drive(addressLabel.rx.text)
             .disposed(by: disposeBag)
+
+        onlineView.bind(with: output.cameras)
     }
     
 }

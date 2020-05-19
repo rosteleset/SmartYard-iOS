@@ -22,8 +22,8 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
     
     private let viewModel: YardMapViewModel
     
-    private let cameraSelectedTrigger = PublishSubject<String?>()
-    private let camerasProxy = BehaviorSubject<[MapCameraObject]>(value: [])
+    private let cameraSelectedTrigger = PublishSubject<String>()
+    private let camerasProxy = BehaviorSubject<[CameraObject]>(value: [])
     
     init(viewModel: YardMapViewModel) {
         self.viewModel = viewModel
@@ -44,7 +44,7 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
 
     func bind() {
         let input = YardMapViewModel.Input(
-            cameraSelected: cameraSelectedTrigger.asDriver(onErrorJustReturn: nil),
+            cameraSelected: cameraSelectedTrigger.asDriverOnErrorJustComplete(),
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
@@ -126,7 +126,10 @@ extension YardMapViewController: MGLMapViewDelegate {
     }
     
     func mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView) {
-        let cameraNumber = (annotationView as? CamerasMapPointView)?.getCameraNumber()
+        guard let cameraNumber = (annotationView as? CamerasMapPointView)?.getCameraNumber() else {
+            return
+        }
+        
         cameraSelectedTrigger.onNext(cameraNumber)
     }
     

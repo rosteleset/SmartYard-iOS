@@ -17,18 +17,23 @@ class SelectCameraContainerViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     
     private let address: BehaviorSubject<String>
+    private let cameras: BehaviorSubject<[CameraObject]>
     
-    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, address: String) {
+    init(
+        router: WeakRouter<HomeRoute>,
+        apiWrapper: APIWrapper,
+        address: String,
+        cameras: [CameraObject]
+    ) {
         self.router = router
         self.apiWrapper = apiWrapper
         self.address = BehaviorSubject<String>(value: address)
+        self.cameras = BehaviorSubject<[CameraObject]>(value: cameras)
     }
     
     func transform(_ input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
-        
-        let tempCameras = BehaviorSubject<Int?>(value: nil)
         
         input.backTrigger
             .drive(
@@ -40,8 +45,8 @@ class SelectCameraContainerViewModel: BaseViewModel {
         
         return Output(
             isLoading: activityTracker.asDriver(),
-            cameras: tempCameras.asDriverOnErrorJustComplete(),
-            address: address.asDriverOnErrorJustComplete()
+            address: address.asDriverOnErrorJustComplete(),
+            cameras: cameras.asDriverOnErrorJustComplete()
         )
     }
     
@@ -57,8 +62,8 @@ extension SelectCameraContainerViewModel {
     
     struct Output {
         let isLoading: Driver<Bool>
-        let cameras: Driver<Int?>
         let address: Driver<String>
+        let cameras: Driver<[CameraObject]>
     }
     
 }

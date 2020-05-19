@@ -9,9 +9,9 @@
 import Foundation
 import CoreLocation
 
-struct MapCameraObject {
+struct CameraObject {
     
     let position: CLLocationCoordinate2D
     let cameraNumber: Int
-    
+    // TODO
 }
