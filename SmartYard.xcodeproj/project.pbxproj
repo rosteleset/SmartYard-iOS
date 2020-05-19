@@ -82,7 +82,6 @@
 		84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */; };
 		84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3D123EBFDA30066006D /* AddressesListViewController.xib */; };
 		84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */; };
-		84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */; };
 		84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */; };
 		84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84898A8623F14CB100E6B78E /* SettingsControlPanelCell.xib */; };
 		84898A8A23F1510600E6B78E /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84898A8923F1510600E6B78E /* UIButton+Extensions.swift */; };
@@ -477,7 +476,6 @@
 		84854B6623FD809E001B44F2 /* AllowedPersonSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedPersonSectionModel.swift; sourceTree = "<group>"; };
 		84878DE42420DB3B004C11B2 /* AddressAccessViewModel+ContactParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddressAccessViewModel+ContactParsing.swift"; sourceTree = "<group>"; };
 		84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderCell.swift; sourceTree = "<group>"; };
-		84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderCell.xib; sourceTree = "<group>"; };
 		84898A8523F14CB100E6B78E /* SettingsControlPanelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControlPanelCell.swift; sourceTree = "<group>"; };
 		84898A8623F14CB100E6B78E /* SettingsControlPanelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsControlPanelCell.xib; sourceTree = "<group>"; };
 		84898A8923F1510600E6B78E /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
@@ -1247,7 +1245,6 @@
 			isa = PBXGroup;
 			children = (
 				84898A7F23F144FA00E6B78E /* SettingsHeaderCell.swift */,
-				84898A8023F144FA00E6B78E /* SettingsHeaderCell.xib */,
 			);
 			path = HeaderCell;
 			sourceTree = "<group>";
@@ -2919,7 +2916,6 @@
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
 				849F2AD82448687C005693B3 /* AddressesListEmptyStateCell.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
-				84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */,
 				845842D724223D7D0019635E /* AddressSettingsSkeletonView.xib in Resources */,
 				E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */,
 				84F6493A247402DC000C0028 /* WhiteSectionHeaderView.xib in Resources */,
