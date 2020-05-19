@@ -9,7 +9,13 @@
 import XCoordinator
 
 enum PaymentsRoute: Route {
+    
     case main
+    case alert(title: String, message: String)
+    case contractPay(items: [PaymentAddressItem], selectedIndex: Int)
+    case back
+    case paymentPopup
+    
 }
 
 class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
@@ -27,9 +33,32 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
     override func prepareTransition(for route: PaymentsRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = PaymentsViewModel()
+            let vm = PaymentsViewModel(apiWrapper: apiWrapper, router: weakRouter)
             let vc = PaymentsViewController(viewModel: vm)
             return .set([vc])
+            
+        case let .alert(title, message):
+            return .alertTransition(title: title, message: message)
+            
+        case let .contractPay(items, selectedIndex):
+            let vm = PayContractViewModel(
+                items: items,
+                selectedIndex: selectedIndex,
+                apiWrapper: apiWrapper,
+                router: weakRouter
+            )
+            
+            let vc = PayContractViewController(viewModel: vm)
+            return .push(vc)
+            
+        case .back:
+            return .pop(animation: .default)
+            
+        case .paymentPopup:
+            let vc = PaymentPopupController()
+            vc.modalPresentationStyle = .overFullScreen
+            
+            return .present(vc)
         }
     }
     
