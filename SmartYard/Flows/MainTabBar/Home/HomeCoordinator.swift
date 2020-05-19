@@ -25,6 +25,7 @@ enum HomeRoute: Route {
     case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
     case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
     case serviceSoonAvailable(issue: APIIssueConnect)
+    case tempCameraRoute
     
 }
 
@@ -193,6 +194,12 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             )
             
             let vc = ServiceSoonAvailableViewController(viewModel: vm)
+            
+            return .push(vc)
+            
+        case .tempCameraRoute:
+            let vm = SelectCameraContainerViewModel(router: weakRouter, apiWrapper: apiWrapper)
+            let vc = SelectCameraContainerViewController(viewModel: vm)
             
             return .push(vc)
         }

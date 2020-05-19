@@ -68,6 +68,8 @@ class SettingsHeaderCell: CustomBorderCollectionViewCell {
             .right()
             .vCenter()
         
+        arrowImageView.tintColor = UIColor(hex: 0x6D7A8A)?.withAlphaComponent(0.5)
+        
         centeringContainer.pin.top().left().bottom().width(dimensions.centeringContainerWidth)
         
         if dimensions.titleLabelHeight != 0 {

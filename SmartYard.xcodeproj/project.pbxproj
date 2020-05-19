@@ -166,6 +166,17 @@
 		84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9323F3F44300C9557F /* SettingsServiceType.swift */; };
 		84EEBCA023F55A9B00C9557F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EEBC9F23F55A9B00C9557F /* NotificationService.swift */; };
 		84EEBCA423F55A9B00C9557F /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		84F64934247402DC000C0028 /* SelectCameraContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64925247402DB000C0028 /* SelectCameraContainerViewController.swift */; };
+		84F64935247402DC000C0028 /* SelectCameraContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F64926247402DB000C0028 /* SelectCameraContainerViewController.xib */; };
+		84F64936247402DC000C0028 /* SelectCameraContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64927247402DB000C0028 /* SelectCameraContainerViewModel.swift */; };
+		84F64937247402DC000C0028 /* OnlineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F6492A247402DB000C0028 /* OnlineView.xib */; };
+		84F64938247402DC000C0028 /* OnlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6492B247402DB000C0028 /* OnlineView.swift */; };
+		84F64939247402DC000C0028 /* WhiteSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6492E247402DB000C0028 /* WhiteSectionHeaderView.swift */; };
+		84F6493A247402DC000C0028 /* WhiteSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F6492F247402DB000C0028 /* WhiteSectionHeaderView.xib */; };
+		84F6493B247402DC000C0028 /* CustomDayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F64930247402DC000C0028 /* CustomDayCell.xib */; };
+		84F6493C247402DC000C0028 /* CustomDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64931247402DC000C0028 /* CustomDayCell.swift */; };
+		84F6493D247402DC000C0028 /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64932247402DC000C0028 /* ArchiveView.swift */; };
+		84F6493E247402DC000C0028 /* ArchiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F64933247402DC000C0028 /* ArchiveView.xib */; };
 		84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F840D523E07DA5008DBE50 /* AppDelegate.swift */; };
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
@@ -562,6 +573,17 @@
 		84EEBC9D23F55A9A00C9557F /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EEBC9F23F55A9B00C9557F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		84EEBCA123F55A9B00C9557F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84F64925247402DB000C0028 /* SelectCameraContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCameraContainerViewController.swift; sourceTree = "<group>"; };
+		84F64926247402DB000C0028 /* SelectCameraContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectCameraContainerViewController.xib; sourceTree = "<group>"; };
+		84F64927247402DB000C0028 /* SelectCameraContainerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCameraContainerViewModel.swift; sourceTree = "<group>"; };
+		84F6492A247402DB000C0028 /* OnlineView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnlineView.xib; sourceTree = "<group>"; };
+		84F6492B247402DB000C0028 /* OnlineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineView.swift; sourceTree = "<group>"; };
+		84F6492E247402DB000C0028 /* WhiteSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteSectionHeaderView.swift; sourceTree = "<group>"; };
+		84F6492F247402DB000C0028 /* WhiteSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhiteSectionHeaderView.xib; sourceTree = "<group>"; };
+		84F64930247402DC000C0028 /* CustomDayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomDayCell.xib; sourceTree = "<group>"; };
+		84F64931247402DC000C0028 /* CustomDayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDayCell.swift; sourceTree = "<group>"; };
+		84F64932247402DC000C0028 /* ArchiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
+		84F64933247402DC000C0028 /* ArchiveView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ArchiveView.xib; sourceTree = "<group>"; };
 		84F840D223E07DA5008DBE50 /* SmartYard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartYard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F840D523E07DA5008DBE50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84F840DC23E07DA5008DBE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -977,6 +999,7 @@
 			children = (
 				844AC3CE23EBFD220066006D /* HomeCoordinator.swift */,
 				844AC3CD23EBFD0A0066006D /* AddressesList */,
+				84F64922247402DB000C0028 /* Cameras */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1733,6 +1756,72 @@
 				84EEBCA123F55A9B00C9557F /* Info.plist */,
 			);
 			path = NotificationServiceExtension;
+			sourceTree = "<group>";
+		};
+		84F64922247402DB000C0028 /* Cameras */ = {
+			isa = PBXGroup;
+			children = (
+				84F64923247402DB000C0028 /* SelectCamera */,
+			);
+			path = Cameras;
+			sourceTree = "<group>";
+		};
+		84F64923247402DB000C0028 /* SelectCamera */ = {
+			isa = PBXGroup;
+			children = (
+				84F64924247402DB000C0028 /* SelectCameraContainer */,
+			);
+			path = SelectCamera;
+			sourceTree = "<group>";
+		};
+		84F64924247402DB000C0028 /* SelectCameraContainer */ = {
+			isa = PBXGroup;
+			children = (
+				84F64925247402DB000C0028 /* SelectCameraContainerViewController.swift */,
+				84F64926247402DB000C0028 /* SelectCameraContainerViewController.xib */,
+				84F64927247402DB000C0028 /* SelectCameraContainerViewModel.swift */,
+				84F64928247402DB000C0028 /* Views */,
+			);
+			path = SelectCameraContainer;
+			sourceTree = "<group>";
+		};
+		84F64928247402DB000C0028 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				84F64929247402DB000C0028 /* OnlineView */,
+				84F6492C247402DB000C0028 /* ArchiveView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		84F64929247402DB000C0028 /* OnlineView */ = {
+			isa = PBXGroup;
+			children = (
+				84F6492A247402DB000C0028 /* OnlineView.xib */,
+				84F6492B247402DB000C0028 /* OnlineView.swift */,
+			);
+			path = OnlineView;
+			sourceTree = "<group>";
+		};
+		84F6492C247402DB000C0028 /* ArchiveView */ = {
+			isa = PBXGroup;
+			children = (
+				84F6492D247402DB000C0028 /* Cells */,
+				84F64932247402DC000C0028 /* ArchiveView.swift */,
+				84F64933247402DC000C0028 /* ArchiveView.xib */,
+			);
+			path = ArchiveView;
+			sourceTree = "<group>";
+		};
+		84F6492D247402DB000C0028 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				84F6492E247402DB000C0028 /* WhiteSectionHeaderView.swift */,
+				84F6492F247402DB000C0028 /* WhiteSectionHeaderView.xib */,
+				84F64930247402DC000C0028 /* CustomDayCell.xib */,
+				84F64931247402DC000C0028 /* CustomDayCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		84F840C923E07DA5008DBE50 = {
@@ -2833,11 +2922,13 @@
 				84898A8223F144FA00E6B78E /* SettingsHeaderCell.xib in Resources */,
 				845842D724223D7D0019635E /* AddressSettingsSkeletonView.xib in Resources */,
 				E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */,
+				84F6493A247402DC000C0028 /* WhiteSectionHeaderView.xib in Resources */,
 				847CF7DD240696D500070007 /* SettingsListSkeletonView.xib in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
 				84D6446023F6ACE600AD87EF /* AddressDeletionViewController.xib in Resources */,
 				84B89A9123F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib in Resources */,
+				84F6493E247402DC000C0028 /* ArchiveView.xib in Resources */,
 				844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */,
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
 				84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */,
@@ -2849,6 +2940,7 @@
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
 				84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */,
 				E9E4270B23F2CD3900F5D593 /* ServiceFromOfficeView.xib in Resources */,
+				84F6493B247402DC000C0028 /* CustomDayCell.xib in Resources */,
 				84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */,
 				84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */,
 				84A67062241FB6E100BBA12B /* AddressAccessSkeletonView.xib in Resources */,
@@ -2858,6 +2950,7 @@
 				E9B9EAC82421FCB8000A92B3 /* RestorePasswordViewController.xib in Resources */,
 				E9E4271C23F41C6600F5D593 /* AvailableServiceCell.xib in Resources */,
 				E92EFB4624287F4C003AF7FE /* PassConfirmationPinViewController.xib in Resources */,
+				84F64937247402DC000C0028 /* OnlineView.xib in Resources */,
 				843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */,
 				E9E4273B23F5609E00F5D593 /* ServiceSoonAvailableViewController.xib in Resources */,
 				E94B6C1923FAC5B600FD9F65 /* NewAllowedPersonViewController.xib in Resources */,
@@ -2873,6 +2966,7 @@
 				84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */,
 				E98C383623F192600010BBC1 /* InputAddressViewController.xib in Resources */,
 				E9A4D48C23EC28760070A591 /* PinNumberField.xib in Resources */,
+				84F64935247402DC000C0028 /* SelectCameraContainerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3046,6 +3140,7 @@
 				84AADD262431FAA80056994A /* NotificationResponseData.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
 				E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */,
+				84F64939247402DC000C0028 /* WhiteSectionHeaderView.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				E92EFBCD242A22F2003AF7FE /* GetPaymentsListResponseData.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
@@ -3101,6 +3196,7 @@
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				843C38D3242A577C0035BF80 /* DeliveredRequest.swift in Sources */,
 				845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */,
+				84F6493D247402DC000C0028 /* ArchiveView.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
 				E9C0E813247282DE001CE018 /* OnboardingViewController.swift in Sources */,
 				E92EFBE2242A22F2003AF7FE /* EmptyDataInitializable.swift in Sources */,
@@ -3132,9 +3228,12 @@
 				E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				E92EFBBF242A22F2003AF7FE /* GetServicesRequest.swift in Sources */,
+				84F64938247402DC000C0028 /* OnlineView.swift in Sources */,
+				84F6493C247402DC000C0028 /* CustomDayCell.swift in Sources */,
 				E92EFBA7242A22F2003AF7FE /* APIWrapper.swift in Sources */,
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
+				84F64936247402DC000C0028 /* SelectCameraContainerViewModel.swift in Sources */,
 				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
 				E92EFBDC242A22F2003AF7FE /* APIWrapper+Issues.swift in Sources */,
@@ -3198,6 +3297,7 @@
 				E92EFBD0242A22F2003AF7FE /* GetAddressListRequest.swift in Sources */,
 				84854B4E23FAEC4F001B44F2 /* BasicTransitions.swift in Sources */,
 				84AA8D7F23E30C32001B3B43 /* BaseViewModel.swift in Sources */,
+				84F64934247402DC000C0028 /* SelectCameraContainerViewController.swift in Sources */,
 				84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */,
 				844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */,
 				84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */,

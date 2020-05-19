@@ -2,7 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "RightArrowIcon.pdf"
+      "filename" : "Arrow Left (1).pdf",
+      "language-direction" : "right-to-left"
     }
   ],
   "info" : {
@@ -10,7 +11,6 @@
     "author" : "xcode"
   },
   "properties" : {
-    "template-rendering-intent" : "template",
-    "preserves-vector-representation" : true
+    "template-rendering-intent" : "template"
   }
 }

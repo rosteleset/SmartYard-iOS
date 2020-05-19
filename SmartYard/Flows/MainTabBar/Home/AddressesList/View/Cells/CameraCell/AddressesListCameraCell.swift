@@ -16,8 +16,6 @@ class AddressesListCameraCell: CustomBorderCollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         configure(availableCameras: 0)
-        // TODO: remove in next release
-        arrowImageView.isHidden = true
     }
     
     func configure(availableCameras: Int) {
