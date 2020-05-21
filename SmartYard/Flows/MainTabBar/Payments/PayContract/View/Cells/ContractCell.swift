@@ -14,6 +14,7 @@ class ContractCell: UICollectionViewCell {
 
     @IBOutlet private weak var contractNumLabel: UILabel!
     @IBOutlet private weak var balanceLabel: UILabel!
+    @IBOutlet private weak var recommendedSumHintLabel: UILabel!
     @IBOutlet private weak var recommendedSumLabel: UILabel!
     @IBOutlet private weak var payButton: BlueButton!
     @IBOutlet private weak var openFullPersonalAccountButton: UIButton!
@@ -33,10 +34,15 @@ class ContractCell: UICollectionViewCell {
         disposeBag = DisposeBag()
     }
     
-    func configure(with item: PaymentAddressItem) {
-        contractNumLabel.text = item.contractNum
-        balanceLabel.text = item.balance
-        recommendedSumLabel.text = item.recommendedSum
+    func configure(with item: APIPaymentsListAccount) {
+        contractNumLabel.text = item.contractName
+        
+        let formattedBalance = item.balance == 0 ? "0" : String(item.balance)
+        balanceLabel.text = formattedBalance
+        
+        recommendedSumLabel.text = String(item.payAdvice ?? 0)
+        recommendedSumLabel.isHidden = item.payAdvice == nil
+        recommendedSumHintLabel.isHidden = item.payAdvice == nil
     }
     
     func bind(with outerSubject: PublishSubject<Void>) {

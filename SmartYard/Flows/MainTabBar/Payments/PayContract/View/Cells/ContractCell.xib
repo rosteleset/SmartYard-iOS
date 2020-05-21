@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -149,7 +147,7 @@
                                             <constraint firstAttribute="width" constant="32" id="2Ql-lt-spy"/>
                                             <constraint firstAttribute="height" constant="32" id="DRs-5g-Dsp"/>
                                         </constraints>
-                                        <state key="normal" image="SettingsWiFiSelectedIcon"/>
+                                        <state key="normal" image="PayWiFiIcon"/>
                                     </button>
                                     <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Mx-OW-SEi">
                                         <rect key="frame" x="44" y="0.0" width="32" height="32"/>
@@ -157,7 +155,7 @@
                                             <constraint firstAttribute="height" constant="32" id="6Cn-qK-ldQ"/>
                                             <constraint firstAttribute="width" constant="32" id="XcD-tW-bTG"/>
                                         </constraints>
-                                        <state key="normal" image="SettingsMonitorSelectedIcon"/>
+                                        <state key="normal" image="PayMonitorIcon"/>
                                     </button>
                                     <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCE-w5-KQd">
                                         <rect key="frame" x="88" y="0.0" width="32" height="32"/>
@@ -165,7 +163,7 @@
                                             <constraint firstAttribute="height" constant="32" id="4WC-vI-l1u"/>
                                             <constraint firstAttribute="width" constant="32" id="HyQ-Nr-TXR"/>
                                         </constraints>
-                                        <state key="normal" image="SettingsCallUnselectedIcon"/>
+                                        <state key="normal" image="PayCallIcon"/>
                                     </button>
                                     <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jpC-9t-j7G">
                                         <rect key="frame" x="132" y="0.0" width="32" height="32"/>
@@ -173,7 +171,7 @@
                                             <constraint firstAttribute="width" constant="32" id="IRU-Vh-rf5"/>
                                             <constraint firstAttribute="height" constant="32" id="O4f-KI-K8k"/>
                                         </constraints>
-                                        <state key="normal" image="SettingsEyeUnselectedIcon"/>
+                                        <state key="normal" image="PayKeyIcon"/>
                                     </button>
                                     <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="COI-XV-GCz">
                                         <rect key="frame" x="176" y="0.0" width="32" height="32"/>
@@ -181,7 +179,7 @@
                                             <constraint firstAttribute="height" constant="32" id="5tH-ZI-60P"/>
                                             <constraint firstAttribute="width" constant="32" id="Q7g-yB-dJD"/>
                                         </constraints>
-                                        <state key="normal" image="SettingsKeySelectedIcon"/>
+                                        <state key="normal" image="PayEyeIcon"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -276,16 +274,17 @@
                 <outlet property="contractNumLabel" destination="3oE-pZ-xZP" id="6PU-zX-5ck"/>
                 <outlet property="openFullPersonalAccountButton" destination="wmH-hi-y0J" id="Ut7-fq-nJO"/>
                 <outlet property="payButton" destination="KeV-jw-V3D" id="3xA-IM-qPh"/>
+                <outlet property="recommendedSumHintLabel" destination="Cfu-o2-e7n" id="GVp-kJ-ZIj"/>
                 <outlet property="recommendedSumLabel" destination="UEl-xC-Fex" id="Phf-zn-FLp"/>
             </connections>
             <point key="canvasLocation" x="-549.27536231884062" y="374.33035714285711"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="SettingsCallUnselectedIcon" width="40" height="40"/>
-        <image name="SettingsEyeUnselectedIcon" width="40" height="40"/>
-        <image name="SettingsKeySelectedIcon" width="40" height="40"/>
-        <image name="SettingsMonitorSelectedIcon" width="40" height="40"/>
-        <image name="SettingsWiFiSelectedIcon" width="40" height="40"/>
+        <image name="PayCallIcon" width="32" height="32"/>
+        <image name="PayEyeIcon" width="32" height="32"/>
+        <image name="PayKeyIcon" width="32" height="32"/>
+        <image name="PayMonitorIcon" width="32" height="32"/>
+        <image name="PayWiFiIcon" width="32" height="32"/>
     </resources>
 </document>

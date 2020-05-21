@@ -20,7 +20,7 @@ class PaymentsViewController: BaseViewController, LoaderPresentable {
     
     private let viewModel: PaymentsViewModel
     
-    private let itemsProxy = BehaviorSubject<[PaymentAddressItem]>(value: [])
+    private let itemsProxy = BehaviorSubject<[APIPaymentsListAddress]>(value: [])
     
     var loader: JGProgressHUD?
     

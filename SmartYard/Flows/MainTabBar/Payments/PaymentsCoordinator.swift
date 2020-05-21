@@ -12,7 +12,7 @@ enum PaymentsRoute: Route {
     
     case main
     case alert(title: String, message: String)
-    case contractPay(items: [PaymentAddressItem], selectedIndex: Int)
+    case contractPay(items: [APIPaymentsListAccount])
     case back
     case paymentPopup
     
@@ -40,10 +40,9 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
             
-        case let .contractPay(items, selectedIndex):
+        case let .contractPay(items):
             let vm = PayContractViewModel(
                 items: items,
-                selectedIndex: selectedIndex,
                 apiWrapper: apiWrapper,
                 router: weakRouter
             )

@@ -19,7 +19,7 @@ class PayContractViewController: BaseViewController {
     
     private var currentIndex = 0
     
-    private let itemsProxy = BehaviorSubject<[PaymentAddressItem]>(value: [])
+    private let itemsProxy = BehaviorSubject<[APIPaymentsListAccount]>(value: [])
     
     private let payContractTrigger = PublishSubject<Void>()
     private let fullVersionPersonalAccountTrigger = PublishSubject<Void>()
@@ -46,7 +46,6 @@ class PayContractViewController: BaseViewController {
         fakeNavBar.configueDarkNavBar()
         configureCollectionView()
         bind()
-        updateAddressLabel(with: 0)
     }
     
     override func viewDidLayoutSubviews() {
@@ -75,23 +74,6 @@ class PayContractViewController: BaseViewController {
         output.items
             .drive(itemsProxy)
             .disposed(by: disposeBag)
-        
-        itemsProxy
-            .withLatestFrom(output.selectedIndex.asDriver())
-            .subscribe(
-                onNext: { [weak self] index in
-                    self?.collectionView.reloadData {
-                        self?.collectionView.scrollToItem(
-                            at: IndexPath(row: index, section: 0),
-                            at: .centeredHorizontally,
-                            animated: false
-                        )
-                        
-                        self?.updateAddressLabel(with: index)
-                    }
-                }
-            )
-            .disposed(by: disposeBag)
     }
     
     private func configureCollectionViewLayoutItemSize() {
@@ -115,14 +97,6 @@ class PayContractViewController: BaseViewController {
         let index = Int(round(proportionalOffset))
         
         return max(0, min(data.count - 1, index))
-    }
-    
-    private func updateAddressLabel(with index: Int) {
-        guard let data = try? itemsProxy.value() else {
-            return
-        }
-        
-        addressLabel.text = data.item(at: index)?.address
     }
     
 }
@@ -164,8 +138,6 @@ extension PayContractViewController: UICollectionViewDelegate {
                 at: .centeredHorizontally,
                 animated: true
             )
-
-            self.updateAddressLabel(with: indexPath.row)
             
             return
         }
@@ -185,8 +157,6 @@ extension PayContractViewController: UICollectionViewDelegate {
             },
             completion: nil
         )
-    
-        self.updateAddressLabel(with: swipeToIndex)
     }
     
 }
