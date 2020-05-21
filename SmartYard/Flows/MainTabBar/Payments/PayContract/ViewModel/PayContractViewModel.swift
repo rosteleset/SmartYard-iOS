@@ -13,17 +13,21 @@ import XCoordinator
 
 class PayContractViewModel: BaseViewModel {
     
-    private var items: BehaviorSubject<[APIPaymentsListAccount]>
     private var apiWrapper: APIWrapper
     private var router: WeakRouter<PaymentsRoute>
     
+    private let items: BehaviorSubject<[APIPaymentsListAccount]>
+    private let address: BehaviorSubject<String>
+    
     init(
+        address: String,
         items: [APIPaymentsListAccount],
         apiWrapper: APIWrapper,
         router: WeakRouter<PaymentsRoute>
     ) {
         self.apiWrapper = apiWrapper
         self.items = BehaviorSubject<[APIPaymentsListAccount]>(value: items)
+        self.address = BehaviorSubject<String>(value: address)
         self.router = router
     }
     
@@ -46,7 +50,8 @@ class PayContractViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            items: items.asDriver(onErrorJustReturn: [])
+            items: items.asDriver(onErrorJustReturn: []),
+            address: address.asDriver(onErrorJustReturn: "")
         )
     }
     
@@ -62,6 +67,7 @@ extension PayContractViewModel {
     
     struct Output {
         let items: Driver<[APIPaymentsListAccount]>
+        let address: Driver<String>
     }
     
 }

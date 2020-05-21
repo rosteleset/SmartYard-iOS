@@ -35,7 +35,12 @@ class PaymentsViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] args in
                     let (indexPath, items) = args
-                    self?.router.trigger(.contractPay(items: items[indexPath.row].accounts))
+                    self?.router.trigger(
+                        .contractPay(
+                            address: items[indexPath.row].address,
+                            items: items[indexPath.row].accounts
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)

@@ -74,6 +74,10 @@ class PayContractViewController: BaseViewController {
         output.items
             .drive(itemsProxy)
             .disposed(by: disposeBag)
+        
+        output.address
+            .drive(addressLabel.rx.text)
+            .disposed(by: disposeBag)
     }
     
     private func configureCollectionViewLayoutItemSize() {
