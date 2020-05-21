@@ -271,11 +271,16 @@
             <size key="customSize" width="534" height="444"/>
             <connections>
                 <outlet property="balanceLabel" destination="JUj-Mw-OWj" id="bWs-QM-8LV"/>
+                <outlet property="callButton" destination="qCE-w5-KQd" id="rdU-Mi-qNf"/>
                 <outlet property="contractNumLabel" destination="3oE-pZ-xZP" id="6PU-zX-5ck"/>
+                <outlet property="eyeButton" destination="COI-XV-GCz" id="MiL-OM-MmO"/>
+                <outlet property="keyButton" destination="jpC-9t-j7G" id="oa2-57-Tlg"/>
+                <outlet property="monitorButton" destination="5Mx-OW-SEi" id="cOE-Ua-9h8"/>
                 <outlet property="openFullPersonalAccountButton" destination="wmH-hi-y0J" id="Ut7-fq-nJO"/>
                 <outlet property="payButton" destination="KeV-jw-V3D" id="3xA-IM-qPh"/>
                 <outlet property="recommendedSumHintLabel" destination="Cfu-o2-e7n" id="GVp-kJ-ZIj"/>
                 <outlet property="recommendedSumLabel" destination="UEl-xC-Fex" id="Phf-zn-FLp"/>
+                <outlet property="wifiButton" destination="Tg2-w1-NIk" id="qec-Sc-Djg"/>
             </connections>
             <point key="canvasLocation" x="-549.27536231884062" y="374.33035714285711"/>
         </collectionViewCell>

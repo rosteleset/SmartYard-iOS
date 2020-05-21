@@ -19,6 +19,12 @@ class ContractCell: UICollectionViewCell {
     @IBOutlet private weak var payButton: BlueButton!
     @IBOutlet private weak var openFullPersonalAccountButton: UIButton!
     
+    @IBOutlet private weak var eyeButton: UIButton!
+    @IBOutlet private weak var wifiButton: UIButton!
+    @IBOutlet private weak var monitorButton: UIButton!
+    @IBOutlet private weak var callButton: UIButton!
+    @IBOutlet private weak var keyButton: UIButton!
+    
     var disposeBag = DisposeBag()
     
     override func awakeFromNib() {
@@ -43,6 +49,15 @@ class ContractCell: UICollectionViewCell {
         recommendedSumLabel.text = String(item.payAdvice ?? 0)
         recommendedSumLabel.isHidden = item.payAdvice == nil
         recommendedSumHintLabel.isHidden = item.payAdvice == nil
+        
+        let enableColor = UIColor.SmartYard.blue
+        let disableColor = UIColor.SmartYard.gray
+
+        wifiButton.tintColor = (item.servicesAvailability[.internet] ?? false) ? enableColor : disableColor
+        eyeButton.tintColor = (item.servicesAvailability[.cctv] ?? false) ? enableColor : disableColor
+        monitorButton.tintColor = (item.servicesAvailability[.iptv] ?? false) ? enableColor : disableColor
+        callButton.tintColor = (item.servicesAvailability[.phone] ?? false) ? enableColor : disableColor
+        keyButton.tintColor = (item.servicesAvailability[.domophone] ?? false) ? enableColor : disableColor
     }
     
     func bind(with outerSubject: PublishSubject<Void>) {
