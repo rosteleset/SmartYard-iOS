@@ -18,6 +18,18 @@ struct APIPaymentsListAccount: Decodable {
     let payAdvice: Double?
     let services: [String]
     
+    var servicesAvailability: [SettingsServiceType: Bool] {
+        return [
+            .internet: services.contains("internet"),
+            .iptv: services.contains("iptv"),
+            .ctv: services.contains("ctv"),
+            .phone: services.contains("phone"),
+            .cctv: services.contains("cctv"),
+            .domophone: services.contains("domophone"),
+            .gsm: services.contains("gsm")
+        ]
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case clientId
         case contractName

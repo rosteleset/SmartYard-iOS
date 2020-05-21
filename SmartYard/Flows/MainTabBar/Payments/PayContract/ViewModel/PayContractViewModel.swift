@@ -13,20 +13,21 @@ import XCoordinator
 
 class PayContractViewModel: BaseViewModel {
     
-    private var items: BehaviorSubject<[PaymentAddressItem]>
-    private var selectedIndex: BehaviorSubject<Int>
     private var apiWrapper: APIWrapper
     private var router: WeakRouter<PaymentsRoute>
     
+    private let items: BehaviorSubject<[APIPaymentsListAccount]>
+    private let address: BehaviorSubject<String>
+    
     init(
-        items: [PaymentAddressItem],
-        selectedIndex: Int,
+        address: String,
+        items: [APIPaymentsListAccount],
         apiWrapper: APIWrapper,
         router: WeakRouter<PaymentsRoute>
     ) {
         self.apiWrapper = apiWrapper
-        self.items = BehaviorSubject<[PaymentAddressItem]>(value: items)
-        self.selectedIndex = BehaviorSubject<Int>(value: selectedIndex)
+        self.items = BehaviorSubject<[APIPaymentsListAccount]>(value: items)
+        self.address = BehaviorSubject<String>(value: address)
         self.router = router
     }
     
@@ -50,7 +51,7 @@ class PayContractViewModel: BaseViewModel {
         
         return Output(
             items: items.asDriver(onErrorJustReturn: []),
-            selectedIndex: selectedIndex.asDriverOnErrorJustComplete()
+            address: address.asDriver(onErrorJustReturn: "")
         )
     }
     
@@ -65,8 +66,8 @@ extension PayContractViewModel {
     }
     
     struct Output {
-        let items: Driver<[PaymentAddressItem]>
-        let selectedIndex: Driver<Int>
+        let items: Driver<[APIPaymentsListAccount]>
+        let address: Driver<String>
     }
     
 }

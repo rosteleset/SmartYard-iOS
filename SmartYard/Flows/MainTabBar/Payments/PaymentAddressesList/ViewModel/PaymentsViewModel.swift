@@ -15,7 +15,7 @@ class PaymentsViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<PaymentsRoute>
     
-    private let items = BehaviorSubject<[PaymentAddressItem]>(value: [])
+    private let items = BehaviorSubject<[APIPaymentsListAddress]>(value: [])
     
     init(
         apiWrapper: APIWrapper,
@@ -31,11 +31,16 @@ class PaymentsViewModel: BaseViewModel {
         let errorTracker = ErrorTracker()
         
         input.itemSelected
-            .withLatestFrom(items.asDriver(onErrorJustReturn: [PaymentAddressItem]())) { ($0, $1) }
+            .withLatestFrom(items.asDriver(onErrorJustReturn: [APIPaymentsListAddress]())) { ($0, $1) }
             .drive(
                 onNext: { [weak self] args in
                     let (indexPath, items) = args
-                    self?.router.trigger(.contractPay(items: items, selectedIndex: indexPath.row))
+                    self?.router.trigger(
+                        .contractPay(
+                            address: items[indexPath.row].address,
+                            items: items[indexPath.row].accounts
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -49,13 +54,13 @@ class PaymentsViewModel: BaseViewModel {
                 NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToVoid(),
                 .just(())
             )
-            .flatMapLatest { [weak self] _ -> Driver<GetAddressListResponseData?> in
+            .flatMapLatest { [weak self] _ -> Driver<GetPaymentsListResponseData?> in
                 guard let self = self else {
                     return .empty()
                 }
                 
                 return
-                    self.apiWrapper.getAddressList()
+                    self.apiWrapper.getPaymentsList()
                         .trackActivity(interactionBlockingRequestTracker)
                         .trackError(errorTracker)
                         .asDriver(onErrorJustReturn: nil)
@@ -69,13 +74,13 @@ class PaymentsViewModel: BaseViewModel {
         let nonBlockingRefresh = input.refreshDataTrigger
             .asDriver()
             .delay(.milliseconds(1000))
-            .flatMapLatest { [weak self] _ -> Driver<GetAddressListResponseData?> in
+            .flatMapLatest { [weak self] _ -> Driver<GetPaymentsListResponseData?> in
                 guard let self = self else {
                     return .empty()
                 }
                 
                 return
-                    self.apiWrapper.getAddressList()
+                    self.apiWrapper.getPaymentsList()
                         .trackError(errorTracker)
                         .asDriver(onErrorJustReturn: nil)
             }
@@ -90,7 +95,7 @@ class PaymentsViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] data in
-                    self?.items.onNext(self?.createItems(addresses: data) ?? [])
+                    self?.items.onNext(data)
                 }
             )
             .disposed(by: disposeBag)
@@ -111,21 +116,6 @@ class PaymentsViewModel: BaseViewModel {
         )
     }
     
-    func createItems(addresses: GetAddressListResponseData) -> [PaymentAddressItem] {
-        return addresses.map {
-            // Пока не понятно, что с апи, но я предполагаю,
-            // что нужно сделать один запрос на домашнем экране для запроса списка всей инфы по договорам
-            // Пока это будут частично моковые данные
-            PaymentAddressItem(
-                id: $0.houseId,
-                address: $0.address,
-                contractNum: "43243",
-                balance: "120 ₽",
-                recommendedSum: "480 ₽"
-            )
-        }
-    }
-    
 }
 
 extension PaymentsViewModel {
@@ -136,7 +126,7 @@ extension PaymentsViewModel {
     }
     
     struct Output {
-        let itemModels: Driver<[PaymentAddressItem]>
+        let itemModels: Driver<[APIPaymentsListAddress]>
         let isLoading: Driver<Bool>
         let reloadingFinished: Driver<Void>
         let shouldBlockInteraction: Driver<Bool>
