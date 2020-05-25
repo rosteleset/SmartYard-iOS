@@ -49,6 +49,18 @@ class PayContractViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.fullVersionPersonalAccountTrigger
+            .drive(
+            onNext: { [weak self] linkStr in
+                guard let uLinkStr = linkStr, let lcabUrl = URL(string: uLinkStr) else {
+                    return
+                }
+                
+                self?.router.trigger(.safariPage(url: lcabUrl))
+            }
+        )
+        .disposed(by: disposeBag)
+        
         return Output(
             items: items.asDriver(onErrorJustReturn: []),
             address: address.asDriver(onErrorJustReturn: "")
@@ -60,7 +72,7 @@ class PayContractViewModel: BaseViewModel {
 extension PayContractViewModel {
     
     struct Input {
-        let fullVersionPersonalAccountTrigger: Driver<Void>
+        let fullVersionPersonalAccountTrigger: Driver<String?>
         let payContractTrigger: Driver<Void>
         let backTrigger: Driver<Void>
     }

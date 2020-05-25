@@ -58,11 +58,17 @@ class ContractCell: UICollectionViewCell {
         monitorButton.tintColor = (item.servicesAvailability[.iptv] ?? false) ? enableColor : disableColor
         callButton.tintColor = (item.servicesAvailability[.phone] ?? false) ? enableColor : disableColor
         keyButton.tintColor = (item.servicesAvailability[.domophone] ?? false) ? enableColor : disableColor
+        
+        openFullPersonalAccountButton.isHidden = item.lcab == nil
     }
     
-    func bind(with outerSubject: PublishSubject<Void>) {
+    func bind(with payOuterSubject: PublishSubject<Void>, openLkOuterSubject: PublishSubject<Void>) {
         payButton.rx.tap
-            .bind(to: outerSubject)
+            .bind(to: payOuterSubject)
+            .disposed(by: disposeBag)
+        
+        openFullPersonalAccountButton.rx.tap
+            .bind(to: openLkOuterSubject)
             .disposed(by: disposeBag)
     }
     
