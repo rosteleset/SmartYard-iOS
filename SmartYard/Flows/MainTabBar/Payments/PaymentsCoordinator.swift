@@ -7,6 +7,7 @@
 //
 
 import XCoordinator
+import SafariServices
 
 enum PaymentsRoute: Route {
     
@@ -15,6 +16,7 @@ enum PaymentsRoute: Route {
     case contractPay(address: String, items: [APIPaymentsListAccount])
     case back
     case paymentPopup
+    case safariPage(url: URL)
     
 }
 
@@ -58,6 +60,10 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             let vc = PaymentPopupController()
             vc.modalPresentationStyle = .overFullScreen
             
+            return .present(vc)
+            
+        case let .safariPage(url):
+            let vc = SFSafariViewController(url: url)
             return .present(vc)
         }
     }

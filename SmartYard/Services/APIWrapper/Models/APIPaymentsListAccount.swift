@@ -12,11 +12,14 @@ struct APIPaymentsListAccount: Decodable {
     
     let clientId: String
     let contractName: String
+    let contractPayName: String
     let isBlocked: Bool
     let balance: Double
     let bonus: Double
     let payAdvice: Double?
     let services: [String]
+    let lcab: String?
+    let lcabPay: String?
     
     var servicesAvailability: [SettingsServiceType: Bool] {
         return [
@@ -33,11 +36,14 @@ struct APIPaymentsListAccount: Decodable {
     private enum CodingKeys: String, CodingKey {
         case clientId
         case contractName
+        case contractPayName
         case isBlocked = "blocked"
         case balance
         case bonus
         case payAdvice
         case services
+        case lcab
+        case lcabPay
     }
     
     init(from decoder: Decoder) throws {
@@ -45,6 +51,7 @@ struct APIPaymentsListAccount: Decodable {
         
         clientId = try container.decode(String.self, forKey: .clientId)
         contractName = try container.decode(String.self, forKey: .contractName)
+        contractPayName = try container.decode(String.self, forKey: .contractPayName)
         
         let isBlockedRawValue = try container.decode(String.self, forKey: .isBlocked)
         
@@ -58,6 +65,9 @@ struct APIPaymentsListAccount: Decodable {
         bonus = try container.decode(Double.self, forKey: .bonus)
         payAdvice = try? container.decode(Double.self, forKey: .payAdvice)
         services = try container.decode([String].self, forKey: .services)
+        
+        lcab = try? container.decode(String.self, forKey: .lcab)
+        lcabPay = try? container.decode(String.self, forKey: .lcabPay)
     }
     
 }

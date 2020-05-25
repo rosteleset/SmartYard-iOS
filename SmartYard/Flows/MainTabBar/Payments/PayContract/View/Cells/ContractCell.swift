@@ -44,9 +44,9 @@ class ContractCell: UICollectionViewCell {
         contractNumLabel.text = item.contractName
         
         let formattedBalance = item.balance == 0 ? "0" : String(item.balance)
-        balanceLabel.text = formattedBalance
+        balanceLabel.text = formattedBalance.replacingOccurrences(of: ".", with: ",") + " ₽"
         
-        recommendedSumLabel.text = String(item.payAdvice ?? 0)
+        recommendedSumLabel.text = String(item.payAdvice ?? 0).replacingOccurrences(of: ".", with: ",") + " ₽"
         recommendedSumLabel.isHidden = item.payAdvice == nil
         recommendedSumHintLabel.isHidden = item.payAdvice == nil
         
@@ -58,11 +58,17 @@ class ContractCell: UICollectionViewCell {
         monitorButton.tintColor = (item.servicesAvailability[.iptv] ?? false) ? enableColor : disableColor
         callButton.tintColor = (item.servicesAvailability[.phone] ?? false) ? enableColor : disableColor
         keyButton.tintColor = (item.servicesAvailability[.domophone] ?? false) ? enableColor : disableColor
+        
+        openFullPersonalAccountButton.isHidden = item.lcab == nil
     }
     
-    func bind(with outerSubject: PublishSubject<Void>) {
+    func bind(with payOuterSubject: PublishSubject<Void>, openLkOuterSubject: PublishSubject<Void>) {
         payButton.rx.tap
-            .bind(to: outerSubject)
+            .bind(to: payOuterSubject)
+            .disposed(by: disposeBag)
+        
+        openFullPersonalAccountButton.rx.tap
+            .bind(to: openLkOuterSubject)
             .disposed(by: disposeBag)
     }
     
