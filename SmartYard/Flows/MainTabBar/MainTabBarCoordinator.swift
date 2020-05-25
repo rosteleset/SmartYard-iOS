@@ -86,7 +86,9 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         let notificationsCoordinator = NotificationsCoordinator(
             apiWrapper: apiWrapper,
-            pushNotificationService: pushNotificationService
+            pushNotificationService: pushNotificationService,
+            logoutHelper: logoutHelper,
+            alertService: alertService
         )
         
         let notificationsTabBarItem = UITabBarItem(
@@ -133,7 +135,9 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             pushNotificationService: pushNotificationService,
             apiWrapper: apiWrapper,
             issueService: issueService,
-            permissionService: permissionService
+            permissionService: permissionService,
+            logoutHelper: logoutHelper,
+            alertService: alertService
         )
         
         let settingsTabBarItem = UITabBarItem(

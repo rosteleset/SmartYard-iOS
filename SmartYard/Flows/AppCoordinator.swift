@@ -96,12 +96,24 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .dismiss()
             
         case let .userName(preloadedName):
-            let vm = UserNameViewModel(accessService: accessService, apiWrapper: apiWrapper, router: weakRouter)
+            let vm = UserNameViewModel(
+                accessService: accessService,
+                apiWrapper: apiWrapper,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
+                router: weakRouter
+            )
+            
             let vc = UserNameViewController(viewModel: vm, preloadedName: preloadedName)
             return .set([vc], animation: .fade)
             
         case .phoneNumber:
-            let vm = InputPhoneNumberViewModel(accessService: accessService, apiWrapper: apiWrapper, router: weakRouter)
+            let vm = InputPhoneNumberViewModel(
+                accessService: accessService,
+                apiWrapper: apiWrapper,
+                router: weakRouter
+            )
+            
             let vc = InputPhoneNumberViewController(viewModel: vm)
             return .set([vc], animation: .fade)
             

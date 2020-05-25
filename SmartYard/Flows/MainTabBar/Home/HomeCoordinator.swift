@@ -91,7 +91,9 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let vm = AuthByContractNumViewModel(
                 router: weakRouter,
                 issueService: issueService,
-                apiWrapper: apiWrapper
+                apiWrapper: apiWrapper,
+                logoutHelper: logoutHelper,
+                alertService: alertService
             )
             
             let vc = AuthByContractNumViewController(viewModel: vm, isShowingManual: isManualTrigger)
@@ -114,7 +116,9 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let vm = InputAddressViewModel(
                 router: weakRouter,
                 apiWrapper: apiWrapper,
-                permissionService: permissionService
+                permissionService: permissionService,
+                logoutHelper: logoutHelper,
+                alertService: alertService
             )
             
             let vc = InputAddressViewController(viewModel: vm)
@@ -164,6 +168,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case let .restorePassword(contractNum):
             let vm = RestorePasswordViewModel(
                 apiWrapper: apiWrapper,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
                 router: weakRouter
             )
             
@@ -174,6 +180,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case let .pinCode(contractNum, restoreMethod):
             let vm = PassConfirmationPinViewModel(
                 apiWrapper: apiWrapper,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
                 router: weakRouter,
                 contractNum: contractNum,
                 selectedRestoreMethod: restoreMethod
@@ -197,6 +205,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
                 apiWrapper: apiWrapper,
                 issueService: issueService,
                 permissionService: permissionService,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
                 issue: issue
             )
             

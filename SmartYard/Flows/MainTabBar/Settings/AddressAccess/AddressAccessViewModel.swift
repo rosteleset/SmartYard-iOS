@@ -30,6 +30,8 @@ class AddressAccessViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let permissionService: PermissionService
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
@@ -40,7 +42,9 @@ class AddressAccessViewModel: BaseViewModel {
         flatId: String,
         clientId: String?,
         apiWrapper: APIWrapper,
-        permissionService: PermissionService
+        permissionService: PermissionService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
     ) {
         self.router = router
         self.address = address
@@ -48,6 +52,8 @@ class AddressAccessViewModel: BaseViewModel {
         self.clientId = clientId
         self.apiWrapper = apiWrapper
         self.permissionService = permissionService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         
         addressSubject = BehaviorSubject<String?>(value: address)
         
@@ -57,6 +63,18 @@ class AddressAccessViewModel: BaseViewModel {
     // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: self.activityTracker,
+                    errorTracker: self.errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))

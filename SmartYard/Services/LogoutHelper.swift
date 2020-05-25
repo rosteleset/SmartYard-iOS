@@ -13,9 +13,9 @@ import SmartYardSharedDataFramework
 
 class LogoutHelper {
     
-    let pushNotificationService: PushNotificationService
-    let accessService: AccessService
-    let alertService: AlertService
+    private let pushNotificationService: PushNotificationService
+    private let accessService: AccessService
+    private let alertService: AlertService
     
     init(
         pushNotificationService: PushNotificationService,

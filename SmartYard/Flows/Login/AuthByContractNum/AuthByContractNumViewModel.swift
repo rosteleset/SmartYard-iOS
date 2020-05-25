@@ -16,15 +16,21 @@ class AuthByContractNumViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     private let issueService: IssueService
     private let apiWrapper: APIWrapper
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
 
     init(
         router: WeakRouter<HomeRoute>,
         issueService: IssueService,
-        apiWrapper: APIWrapper
+        apiWrapper: APIWrapper,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
     ) {
         self.router = router
         self.issueService = issueService
         self.apiWrapper = apiWrapper
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
     }
     
     // swiftlint:disable:next function_body_length
@@ -33,6 +39,18 @@ class AuthByContractNumViewModel: BaseViewModel {
         let errorTracker = ErrorTracker()
         
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: activityTracker,
+                    errorTracker: errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
