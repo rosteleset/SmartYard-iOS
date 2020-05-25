@@ -29,6 +29,8 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     private let permissionService: PermissionService
+    private let alertService: AlertService
+    private let logoutHelper: LogoutHelper
     
     private let homeRouter: StrongRouter<HomeRoute>
     private let notificationsRouter: StrongRouter<NotificationsRoute>
@@ -48,13 +50,17 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         pushNotificationService: PushNotificationService,
         apiWrapper: APIWrapper,
         issueService: IssueService,
-        permissionService: PermissionService
+        permissionService: PermissionService,
+        alertService: AlertService,
+        logoutHelper: LogoutHelper
     ) {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
         self.apiWrapper = apiWrapper
         self.issueService = issueService
         self.permissionService = permissionService
+        self.alertService = alertService
+        self.logoutHelper = logoutHelper
         
         // MARK: Home Tab
         let homeCoordinator = HomeCoordinator(
@@ -62,7 +68,9 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             pushNotificationService: pushNotificationService,
             accessService: accessService,
             issueService: issueService,
-            permissionService: permissionService
+            permissionService: permissionService,
+            alertService: alertService,
+            logoutHelper: logoutHelper
         )
         
         let homeTabBarItem = UITabBarItem(

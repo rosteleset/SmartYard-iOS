@@ -34,6 +34,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     private let pushNotificationService: PushNotificationService
+    private let alertService = AlertService()
+    private let logoutHelper: LogoutHelper
     
     private var mainTabBarRouter: StrongRouter<MainTabBarRoute>?
     
@@ -43,6 +45,12 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         apiWrapper = APIWrapper(accessService: accessService)
         issueService = IssueService(apiWrapper: apiWrapper, accessService: accessService)
         pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
+        
+        logoutHelper = LogoutHelper(
+            pushNotificationService: pushNotificationService,
+            accessService: accessService,
+            alertService: alertService
+        )
         
         super.init(initialRoute: accessService.routeForCurrentState)
         
@@ -60,7 +68,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 pushNotificationService: pushNotificationService,
                 apiWrapper: apiWrapper,
                 issueService: issueService,
-                permissionService: permissionService
+                permissionService: permissionService,
+                alertService: alertService,
+                logoutHelper: logoutHelper
             ).strongRouter
             
             mainTabBarRouter = router

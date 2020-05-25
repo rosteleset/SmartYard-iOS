@@ -37,19 +37,25 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
     private let pushNotificationService: PushNotificationService
     private let issueService: IssueService
     private let permissionService: PermissionService
+    private let alertService: AlertService
+    private let logoutHelper: LogoutHelper
     
     init(
         apiWrapper: APIWrapper,
         pushNotificationService: PushNotificationService,
         accessService: AccessService,
         issueService: IssueService,
-        permissionService: PermissionService
+        permissionService: PermissionService,
+        alertService: AlertService,
+        logoutHelper: LogoutHelper
     ) {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
         self.accessService = accessService
         self.issueService = issueService
         self.permissionService = permissionService
+        self.alertService = alertService
+        self.logoutHelper = logoutHelper
         
         super.init(initialRoute: .main)
         
@@ -67,6 +73,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
                 permissionService: permissionService,
                 pushNotificationService: pushNotificationService,
                 accessService: accessService,
+                alertService: alertService,
+                logoutHelper: logoutHelper,
                 router: weakRouter
             )
             
