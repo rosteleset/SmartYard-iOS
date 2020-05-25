@@ -20,10 +20,10 @@ enum SettingsServiceAction: String {
         }
     }
     
-    func request(for serviceType: SettingsServiceType, clientId: String?) -> String {
+    func request(for serviceType: SettingsServiceType, contractName: String?) -> String {
         return templateText
             .replacingOccurrences(of: "%(X)", with: serviceType.localizedTitle)
-            .replacingOccurrences(of: "%(Y)", with: clientId ?? "Номер неизвестен")
+            .replacingOccurrences(of: "%(Y)", with: contractName ?? "Номер договора неизвестен")
     }
     
     private var changeTariffTemplate: String {

@@ -23,7 +23,7 @@ extension Notification.Name {
 enum NotificationKeys {
     
     static let badgeNumberKey = "badgeNumberKey"
-    static let clientIdKey = "clientIdKey"
+    static let contractNameKey = "contractNameKey"
     static let serviceTypeKey = "serviceTypeKey"
     static let serviceActionKey = "serviceActionKey"
     

@@ -38,8 +38,7 @@ target 'SmartYard' do
   pod 'Mapbox-iOS-SDK'
   
   # Analytics
-  pod 'Fabric'
-  pod 'Crashlytics'
+  pod 'Firebase/Crashlytics'
   pod 'Firebase/Analytics'
   
   # Push Notifications
@@ -52,6 +51,15 @@ target 'SmartYard' do
   # Chat
   pod 'OnlineChatSdk', :git => 'https://github.com/MadBrains/OnlineChatSdk-Swift.git', :branch => 'feature/build-fix'
   
+end
+
+target 'SmartYardWidget' do
+  use_frameworks!
+
+  # Reactive
+  pod 'RxSwift'
+  pod 'RxCocoa'
+
 end
 
 post_install do |installer|

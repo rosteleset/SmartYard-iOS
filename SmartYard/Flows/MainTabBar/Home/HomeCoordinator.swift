@@ -66,6 +66,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
                 apiWrapper: apiWrapper,
                 permissionService: permissionService,
                 pushNotificationService: pushNotificationService,
+                accessService: accessService,
                 router: weakRouter
             )
             

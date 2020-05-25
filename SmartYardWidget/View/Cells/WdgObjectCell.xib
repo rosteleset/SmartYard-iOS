@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="75" id="KGk-i7-Jjw" customClass="WdgObjectCell" customModule="SmartYardWidget" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="407" height="75"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="407" height="74.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BarrierIcon" translatesAutoresizingMaskIntoConstraints="NO" id="G4g-b6-89R">
+                        <rect key="frame" x="16" y="25.5" width="24" height="24"/>
+                        <color key="tintColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="D80-Wv-Aoh"/>
+                            <constraint firstAttribute="width" constant="24" id="KJw-Zz-dhE"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Шлагбаум Север" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="XcV-3t-tNa">
+                        <rect key="frame" x="62" y="19.5" width="271" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Тамбов, ул. Советская, д.4, кв.56" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0js-YH-Rm4">
+                        <rect key="frame" x="62" y="42" width="271" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.20668888092041016" green="0.25703451037406921" blue="0.31051170825958252" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYh-kR-Bpb">
+                        <rect key="frame" x="343" y="13.5" width="48" height="48"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="48" id="4NU-hx-WMO"/>
+                            <constraint firstAttribute="width" constant="48" id="LDw-Qf-FOG"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="CloseStateIcon"/>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="AYh-kR-Bpb" secondAttribute="trailing" constant="16" id="5Sq-M0-Wa8"/>
+                    <constraint firstItem="G4g-b6-89R" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="6JA-qa-Epk"/>
+                    <constraint firstItem="XcV-3t-tNa" firstAttribute="leading" secondItem="G4g-b6-89R" secondAttribute="trailing" constant="22" id="AOn-I4-B8V"/>
+                    <constraint firstItem="AYh-kR-Bpb" firstAttribute="leading" secondItem="0js-YH-Rm4" secondAttribute="trailing" constant="10" id="CW8-BE-dLu"/>
+                    <constraint firstItem="0js-YH-Rm4" firstAttribute="leading" secondItem="G4g-b6-89R" secondAttribute="trailing" constant="22" id="EuP-pI-zhP"/>
+                    <constraint firstItem="0js-YH-Rm4" firstAttribute="top" secondItem="XcV-3t-tNa" secondAttribute="bottom" constant="2" id="GlH-5c-LLl"/>
+                    <constraint firstItem="G4g-b6-89R" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PrX-Qe-HGv"/>
+                    <constraint firstItem="AYh-kR-Bpb" firstAttribute="leading" secondItem="XcV-3t-tNa" secondAttribute="trailing" constant="10" id="dLW-Yq-Lpr"/>
+                    <constraint firstItem="XcV-3t-tNa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" multiplier="0.8" id="fOT-mf-Sbm"/>
+                    <constraint firstItem="AYh-kR-Bpb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="sHt-1c-Q44"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="iconImageView" destination="G4g-b6-89R" id="RMk-pU-RK5"/>
+                <outlet property="lockButton" destination="AYh-kR-Bpb" id="WQx-Vv-4Lk"/>
+                <outlet property="objectAddressLabel" destination="0js-YH-Rm4" id="rcr-54-NF0"/>
+                <outlet property="objectNameLabel" destination="XcV-3t-tNa" id="MGc-nt-UvP"/>
+            </connections>
+            <point key="canvasLocation" x="74.637681159420296" y="112.16517857142857"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="BarrierIcon" width="27" height="26"/>
+        <image name="CloseStateIcon" width="48" height="48"/>
+    </resources>
+</document>

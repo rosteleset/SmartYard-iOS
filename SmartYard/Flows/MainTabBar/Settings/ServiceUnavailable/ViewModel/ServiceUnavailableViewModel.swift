@@ -16,7 +16,7 @@ class ServiceUnavailableViewModel: BaseViewModel {
     
     private let service: SettingsServiceType
     private let address: String
-    private let clientId: String?
+    private let contractName: String?
     
     private let issueService: IssueService
     
@@ -27,13 +27,13 @@ class ServiceUnavailableViewModel: BaseViewModel {
          service: SettingsServiceType,
          address: String,
          issueService: IssueService,
-         clientId: String?
+         contractName: String?
     ) {
         self.router = router
         self.service = service
         self.address = address
         self.issueService = issueService
-        self.clientId = clientId
+        self.contractName = contractName
     }
     
     func transform(_ input: Input) -> Output {
@@ -52,8 +52,8 @@ class ServiceUnavailableViewModel: BaseViewModel {
                     
                     userInfo[NotificationKeys.serviceActionKey] = SettingsServiceAction.talkAboutActivation.rawValue
                     
-                    if let clientId = self?.clientId {
-                        userInfo[NotificationKeys.clientIdKey] = clientId
+                    if let contractName = self?.contractName {
+                        userInfo[NotificationKeys.contractNameKey] = contractName
                     }
                     
                     if let service = self?.service.rawValue {

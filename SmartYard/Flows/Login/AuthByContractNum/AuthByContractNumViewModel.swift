@@ -49,7 +49,10 @@ class AuthByContractNumViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        input.forgetEverythingTapped
+        let restoreContractDataSubject = PublishSubject<Void>()
+        
+        restoreContractDataSubject
+            .asDriverOnErrorJustComplete()
             .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
                 guard let self = self else {
                     return .empty()
@@ -61,6 +64,26 @@ class AuthByContractNumViewModel: BaseViewModel {
                     .asDriver(onErrorJustReturn: nil)
             }
             .drive()
+            .disposed(by: disposeBag)
+        
+        input.forgetEverythingTapped
+            .drive(
+                onNext: { [weak self] in
+                    let okAction = UIAlertAction(title: "Создать", style: .default) { _ in
+                        restoreContractDataSubject.onNext(())
+                    }
+                    
+                    let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+                    
+                    self?.router.trigger(
+                        .dialog(
+                            title: "Создать заявку на восстановление данных по договору?",
+                            message: nil,
+                            actions: [okAction, cancelAction]
+                        )
+                    )
+                }
+            )
             .disposed(by: disposeBag)
         
         input.noContractTapped

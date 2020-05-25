@@ -21,7 +21,7 @@ enum AppRoute: Route {
     case phoneNumber
     case pinCode(phoneNumber: String, isInitial: Bool)
     case alert(title: String, message: String?)
-    
+    case onboarding
 }
 
 class AppCoordinator: NavigationCoordinator<AppRoute> {
@@ -108,6 +108,11 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
+            
+        case .onboarding:
+            let vm = OnboardingViewModel(router: weakRouter, accessService: accessService)
+            let vc = OnboardingViewController(viewModel: vm)
+            return .set([vc], animation: .fade)
         }
     }
     
