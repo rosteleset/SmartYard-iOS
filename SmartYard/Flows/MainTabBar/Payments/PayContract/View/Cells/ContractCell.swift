@@ -44,9 +44,9 @@ class ContractCell: UICollectionViewCell {
         contractNumLabel.text = item.contractName
         
         let formattedBalance = item.balance == 0 ? "0" : String(item.balance)
-        balanceLabel.text = formattedBalance
+        balanceLabel.text = formattedBalance.replacingOccurrences(of: ".", with: ",") + " ₽"
         
-        recommendedSumLabel.text = String(item.payAdvice ?? 0)
+        recommendedSumLabel.text = String(item.payAdvice ?? 0).replacingOccurrences(of: ".", with: ",") + " ₽"
         recommendedSumLabel.isHidden = item.payAdvice == nil
         recommendedSumHintLabel.isHidden = item.payAdvice == nil
         
