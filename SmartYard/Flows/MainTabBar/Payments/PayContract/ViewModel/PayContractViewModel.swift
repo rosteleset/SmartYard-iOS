@@ -51,15 +51,15 @@ class PayContractViewModel: BaseViewModel {
         
         input.fullVersionPersonalAccountTrigger
             .drive(
-            onNext: { [weak self] linkStr in
-                guard let uLinkStr = linkStr, let lcabUrl = URL(string: uLinkStr) else {
-                    return
+                onNext: { [weak self] linkStr in
+                    guard let uLinkStr = linkStr, let lcabUrl = URL(string: uLinkStr) else {
+                        return
+                    }
+                    
+                    self?.router.trigger(.safariPage(url: lcabUrl))
                 }
-                
-                self?.router.trigger(.safariPage(url: lcabUrl))
-            }
-        )
-        .disposed(by: disposeBag)
+            )
+            .disposed(by: disposeBag)
         
         return Output(
             items: items.asDriver(onErrorJustReturn: []),
