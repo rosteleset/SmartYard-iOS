@@ -105,6 +105,8 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         
         voipContainerView.addGestureRecognizer(voipTapGesture)
         voipSwitch.isUserInteractionEnabled = false
+        
+        skeletonView.isHidden = true
     }
     
     private func toggleNotificationsSection() {
