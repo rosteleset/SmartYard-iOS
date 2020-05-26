@@ -60,8 +60,8 @@ class LogoutHelper {
         }
         
         alertService.showDialog(
-            title: "Произведена авторизация на другом устройстве",
-            message: nil,
+            title: "Ошибка",
+            message: "Произведена авторизация на другом устройстве",
             actions: [okAction],
             priority: 1000
         )
