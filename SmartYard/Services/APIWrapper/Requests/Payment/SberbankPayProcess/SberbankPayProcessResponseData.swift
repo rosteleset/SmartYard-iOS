@@ -12,5 +12,6 @@ struct SberbankPayProcessResponseData: Codable {
     
     let success: Bool
     let data: SberbankPayData?
+    let error: SberbankPayError?
     
 }

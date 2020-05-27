@@ -56,11 +56,11 @@ extension APIWrapper {
             orderNumber: orderNumber,
             paymentToken: paymentToken
         )
-        
+
         return provider.rx
             .request(.sberbankPayProcess(request: request))
             .convertNoConnectionError()
-            .mapAsDefaultResponse()
+            .mapAsSberbankResponse()
     }
     
 }

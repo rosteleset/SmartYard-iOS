@@ -63,8 +63,9 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     
     func mapAsDefaultResponse<T: Decodable>() -> Single<T> {
         return flatMap { response in
-            // MARK: Если вернулся успешный код - пытаемся замапить реквест
             
+            // MARK: Если вернулся успешный код - пытаемся замапить реквест
+            print("response data: \(try response.mapString())")
             if 200...299 ~= response.statusCode {
                 do {
                     let mappedResponse = try response.map(BaseAPIResponse<T>.self)
@@ -72,7 +73,6 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
                     guard let data = mappedResponse.data else {
                         return .error(NSError.APIWrapperError.noDataError)
                     }
-                    
                     return .just(data)
                 } catch {
                     return .error(NSError.APIWrapperError.baseResponseMappingError)
@@ -82,6 +82,15 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
             // MARK: Если вернулся не особо успешный код, пытаемся достать информацию об ошибке
             
             return .error(response.extractBaseAPIResponseError())
+        }
+    }
+    
+    func mapAsSberbankResponse() -> Single<SberbankPayProcessResponseData?> {
+        return flatMap { response in
+            // MARK: Если вернулся успешный код - пытаемся замапить реквест
+            print("response data: \(try response.mapString())")
+            let mappedResponse = try? response.map(SberbankPayProcessResponseData.self)
+            return .just(mappedResponse)
         }
     }
     

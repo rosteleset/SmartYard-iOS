@@ -53,59 +53,66 @@ class PaymentPopupViewModel: BaseViewModel {
                         
                         return (token, response)
                     }
-                    .asDriver(onErrorJustReturn: nil)
-            }
-            .flatMapLatest { [weak self] args -> Driver<(String, SberbankPayProcessResponseData)?> in
+                .asDriver(onErrorJustReturn: nil)
+        }
+            //.flatMapLatest { [weak self] args -> Driver<(String, SberbankPayProcessResponseData)?> in
+            .flatMapLatest { [weak self] args -> Driver<SberbankPayProcessResponseData?> in
                 print("_HERE")
                 guard let self = self, let (token, response) = args, let orderNumber = response, let uToken = token?.base64EncodedString(), !uToken.isEmpty else {
                     isPaySuccessTrigger.onNext(false)
                     print("_3")
                     return .empty()
                 }
- 
+                
                 print("Token1: \(uToken)")
-            
+                
                 return
                     self.apiWrapper.sberbankPayProcess(
-                            merchant: "lanta",
-                            orderNumber: orderNumber,
-                            paymentToken: token?.base64EncodedString() ?? ""
-                        )
-                        .trackError(errorTracker)
-                        .map {
-                            guard let response = $0, response.success else {
-                                isPaySuccessTrigger.onNext(false)
-                                print("_4")
-                                return nil
-                            }
-                            
-                            return (orderNumber, response)
-                        }
-                        .asDriverOnErrorJustComplete()
-            }
-            .flatMapLatest { [weak self] args -> Driver<PayProcessResponseData?> in
-                guard let self = self,
-                      let (innerPaymentId, response) = args,
-                      let sberbankOrderId = response.data?.orderId
-                else {
-                    isPaySuccessTrigger.onNext(false)
-                    print("_5")
-                    return .empty()
-                }
-            
-                return
-                    self.apiWrapper.payProcess(
-                            paymentId: innerPaymentId,
-                            sbId: sberbankOrderId
+                        merchant: "lanta",
+                        orderNumber: orderNumber,
+                        paymentToken: uToken
                         )
                         .trackError(errorTracker)
                         .asDriver(onErrorJustReturn: nil)
+        }
+        .drive(
+            onNext: { response in
+                print(response)
             }
+        )
+        .disposed(by: disposeBag)
+//            .flatMapLatest { [weak self] args -> Driver<PayProcessResponseData?> in
+//                guard let self = self,
+//                      let (innerPaymentId, response) = args,
+//                      let sberbankOrderId = response.data?.orderId
+//                else {
+//                    isPaySuccessTrigger.onNext(false)
+//                    print("_5")
+//                    return .empty()
+//                }
+//
+//                return
+//                    self.apiWrapper.payProcess(
+//                            paymentId: innerPaymentId,
+//                            sbId: sberbankOrderId
+//                        )
+//                        .trackError(errorTracker)
+//                        .asDriver(onErrorJustReturn: nil)
+//            }
+//            .drive(
+//                onNext: { result in
+//                    // TODO: на серваке пока нет обработки успеха, поэтому будет считать, что все проходит успешно
+//                    print("_6")
+//                    isPaySuccessTrigger.onNext(true)
+//                }
+//            )
+//            .disposed(by: disposeBag)
+        
+        errorTracker.asDriver()
             .drive(
-                onNext: { result in
-                    // TODO: на серваке пока нет обработки успеха, поэтому будет считать, что все проходит успешно
-                    print("_6")
-                    isPaySuccessTrigger.onNext(true)
+                onNext: { [weak self] error in
+                    let nsError = error as NSError
+                    print(error)
                 }
             )
             .disposed(by: disposeBag)
