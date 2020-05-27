@@ -57,14 +57,12 @@ class PaymentPopupViewModel: BaseViewModel {
             }
             .flatMapLatest { [weak self] args -> Driver<(String, SberbankPayProcessResponseData)?> in
                 print("_HERE")
-                guard let self = self, let (token, response) = args, let orderNumber = response else {
+                guard let self = self, let (token, response) = args, let orderNumber = response, let uToken = token?.base64EncodedString(), !uToken.isEmpty else {
                     isPaySuccessTrigger.onNext(false)
                     print("_3")
                     return .empty()
                 }
-            
-                let uToken = token?.base64EncodedString() ?? ""
-            
+ 
                 print("Token1: \(uToken)")
             
                 return
