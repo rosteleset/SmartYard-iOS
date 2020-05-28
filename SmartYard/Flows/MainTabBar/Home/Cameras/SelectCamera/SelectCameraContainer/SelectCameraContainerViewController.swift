@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import JGProgressHUD
+import AVKit
 
 class SelectCameraContainerViewController: BaseViewController, LoaderPresentable {
 
@@ -21,6 +22,9 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
     @IBOutlet private weak var archiveView: ArchiveView!
     
     var loader: JGProgressHUD?
+    
+    private var playerViewController: AVPlayerViewController?
+    private var player: AVPlayer?
     
     private let viewModel: SelectCameraContainerViewModel
     
@@ -46,6 +50,8 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         super.viewDidLoad()
         
         configureUI()
+        configureOnlineView()
+        
         bind()
     }
     
@@ -58,6 +64,20 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         segmentControlView.segmentItems = ["Онлайн", "Архив"]
         archiveView.isHidden = true
         onlineView.isHidden = false
+    }
+    
+    private func configureOnlineView() {
+        let playerViewController = AVPlayerViewController()
+        playerViewController.videoGravity = .resizeAspect
+        self.playerViewController = playerViewController
+        
+        let player = AVPlayer()
+        playerViewController.player = player
+        self.player = player
+        
+        addChild(playerViewController)
+        onlineView.setPlayer(player, playerView: playerViewController.view)
+        playerViewController.didMove(toParent: self)
     }
     
     private func bind() {
@@ -99,8 +119,19 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         output.address
             .drive(addressLabel.rx.text)
             .disposed(by: disposeBag)
-
-        onlineView.bind(with: output.cameras)
+        
+        Driver
+            .combineLatest(output.preselectedCameraNumber, output.cameras)
+            .drive(
+                onNext: { [weak self] preselectedCameraNumber, cameras in
+                    guard !cameras.isEmpty else {
+                        return
+                    }
+                    
+                    self?.onlineView.setCameras(cameras, selectedNumber: preselectedCameraNumber)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

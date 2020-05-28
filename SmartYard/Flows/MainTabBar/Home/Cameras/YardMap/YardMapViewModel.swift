@@ -27,7 +27,6 @@ class YardMapViewModel: BaseViewModel {
             .withLatestFrom(address.asDriverOnErrorJustComplete()) { ($0, $1) }
             .drive(
                 onNext: { [weak self] args in
-                    // TODO: лучше использовать id камеры
                     let (cameraNum, address) = args
                     
                     guard let self = self, let uAddress = address else {
@@ -38,7 +37,7 @@ class YardMapViewModel: BaseViewModel {
                         .cameraContainer(
                             address: uAddress,
                             cameras: self.createMockData(),
-                            selectedCamera: cameraNum
+                            selectedCameraNumber: cameraNum
                         )
                     )
                 }
@@ -55,35 +54,26 @@ class YardMapViewModel: BaseViewModel {
         
         return Output(
             cameras: Single.just(createMockData()).asDriver(onErrorJustReturn: []),
-            centerCoordinates: Single.just(getHomeCoordinates()).asDriver(onErrorJustReturn: nil),
             address: address.asDriverOnErrorJustComplete()
         )
     }
     
-    func getHomeCoordinates() -> CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: 54.308083, longitude: 48.390917)
-    }
-    
     func createMockData() -> [CameraObject] {
+        let url1 = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+        let url2 = "http://playertest.longtailvideo.com/adaptive/oceans_aes/oceans_aes.m3u8"
+        let url3 = "https://mnmedias.api.telequebec.tv/m3u8/29880.m3u8"
+        
         return [
-            CameraObject(position: CLLocationCoordinate2DMake(54.307966, 48.390189), cameraNumber: 1),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308001, 48.390666), cameraNumber: 2),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308062, 48.391106), cameraNumber: 3),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308100, 48.391543), cameraNumber: 4),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308170, 48.390905), cameraNumber: 5),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308216, 48.390616), cameraNumber: 6),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308261, 48.391831), cameraNumber: 7),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308175, 48.390227), cameraNumber: 8),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308366, 48.390522), cameraNumber: 9),
-            CameraObject(position: CLLocationCoordinate2DMake(54.307966, 48.390189), cameraNumber: 1),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308001, 48.390666), cameraNumber: 2),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308062, 48.391106), cameraNumber: 3),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308100, 48.391543), cameraNumber: 4),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308170, 48.390905), cameraNumber: 5),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308216, 48.390616), cameraNumber: 6),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308261, 48.391831), cameraNumber: 7),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308175, 48.390227), cameraNumber: 8),
-            CameraObject(position: CLLocationCoordinate2DMake(54.308366, 48.390522), cameraNumber: 9)
+            CameraObject(position: CLLocationCoordinate2DMake(54.307966, 48.390189), cameraNumber: 1, hlsString: url1),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308001, 48.390666), cameraNumber: 2, hlsString: url2),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308062, 48.391106), cameraNumber: 3, hlsString: url3),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308100, 48.391543), cameraNumber: 4, hlsString: url1),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308170, 48.390905), cameraNumber: 5, hlsString: url2),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308216, 48.390616), cameraNumber: 6, hlsString: url3),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308261, 48.391831), cameraNumber: 7, hlsString: url1),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308175, 48.390227), cameraNumber: 8, hlsString: url2),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308366, 48.390522), cameraNumber: 9, hlsString: url3),
+            CameraObject(position: CLLocationCoordinate2DMake(54.308532, 48.390522), cameraNumber: 10, hlsString: url1)
         ]
     }
     
@@ -92,13 +82,12 @@ class YardMapViewModel: BaseViewModel {
 extension YardMapViewModel {
     
     struct Input {
-        let cameraSelected: Driver<String>
+        let cameraSelected: Driver<Int>
         let backTrigger: Driver<Void>
     }
     
     struct Output {
         let cameras: Driver<[CameraObject]>
-        let centerCoordinates: Driver<CLLocationCoordinate2D?>
         let address: Driver<String?>
     }
     

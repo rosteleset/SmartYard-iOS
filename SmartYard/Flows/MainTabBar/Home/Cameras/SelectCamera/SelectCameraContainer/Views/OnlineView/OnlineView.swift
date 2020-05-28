@@ -10,38 +10,70 @@ import Foundation
 import PMNibLinkableView
 import RxCocoa
 import RxSwift
+import AVKit
 
 class OnlineView: PMNibLinkableView {
     
     @IBOutlet private weak var collectionView: UICollectionView!
-    @IBOutlet private weak var cameraImageView: UIView!
     @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var cameraContainer: UIView!
     
     @IBOutlet private var collectionViewHeightConstraint: NSLayoutConstraint!
     
-    private let itemsProxy = BehaviorSubject<[CameraObject]>(value: [])
-    private let itemStateChanged = PublishSubject<String>()
+    private var player: AVPlayer?
+    private var playerView: UIView?
+    
+    private var cameras = [CameraObject]()
+    private var selectedCameraNumber: Int?
     
     private let disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        configureCollectionView()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        playerView?.frame = cameraContainer.bounds
+    }
+    
+    func setPlayer(_ player: AVPlayer, playerView: UIView) {
+        playerView.removeFromSuperview()
+
+        self.player = player
+        self.playerView = playerView
+
+        cameraContainer.addSubview(playerView)
+    }
+    
+    func setCameras(_ cameras: [CameraObject], selectedNumber: Int) {
+        self.cameras = cameras
+        
+        collectionView.reloadData { [weak self] in
+            guard let index = (cameras.firstIndex { $0.cameraNumber == selectedNumber }) else {
+                return
+            }
+            
+            let indexPath = IndexPath(row: index, section: 0)
+            
+            self?.collectionView.selectItem(
+                at: indexPath,
+                animated: false,
+                scrollPosition: .top
+            )
+            
+            self?.reloadCameraIfNeeded(selectedIndexPath: indexPath)
+        }
+    }
+    
+    private func configureCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
         
         collectionView.register(nibWithCellClass: CameraNumberCell.self)
-    }
-    
-    func bind(with cameras: Driver<[CameraObject]>) {
-        cameras
-            .drive(
-                onNext: { [weak self] data in
-                    self?.itemsProxy.onNext(data)
-                    self?.collectionView.reloadData()
-                }
-            )
-            .disposed(by: disposeBag)
         
         collectionView.rx
             .observeWeakly(CGSize.self, "contentSize")
@@ -51,18 +83,43 @@ class OnlineView: PMNibLinkableView {
                         return
                     }
 
-                    self.collectionViewHeightConstraint.constant = uSize.height                    
-                    self.layoutIfNeeded()
+                    self.collectionViewHeightConstraint.constant = uSize.height
+                    self.setNeedsLayout()
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    private func reloadCameraIfNeeded(selectedIndexPath: IndexPath) {
+        let camera = cameras[selectedIndexPath.row]
+        
+        print("Selected Camera #\(camera.cameraNumber)")
+        
+        guard camera.cameraNumber != selectedCameraNumber else {
+            return
+        }
+        
+        selectedCameraNumber = camera.cameraNumber
+        
+        let newPlayerItem: AVPlayerItem? = {
+            guard let hlsString = camera.hlsString, let url = URL(string: hlsString) else {
+                return nil
+            }
+
+            return AVPlayerItem(url: url)
+        }()
+
+        player?.replaceCurrentItem(with: newPlayerItem)
+        player?.play()
     }
     
 }
 
 extension OnlineView: UICollectionViewDelegate {
     
-    // TODO?
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        reloadCameraIfNeeded(selectedIndexPath: indexPath)
+    }
     
 }
 
@@ -73,24 +130,16 @@ extension OnlineView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let data = try? itemsProxy.value() else {
-            return 0
-        }
-
-        return data.count
+        return cameras.count
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let data = try? itemsProxy.value() else {
-            return UICollectionViewCell()
-        }
-        
         let cell = collectionView.dequeueReusableCell(withClass: CameraNumberCell.self, for: indexPath)
         
-        cell.configure(curCamera: data[indexPath.row])
+        cell.configure(curCamera: cameras[indexPath.row])
         
         return cell
     }

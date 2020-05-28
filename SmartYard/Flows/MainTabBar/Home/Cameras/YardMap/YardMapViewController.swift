@@ -22,7 +22,7 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
     
     private let viewModel: YardMapViewModel
     
-    private let cameraSelectedTrigger = PublishSubject<String>()
+    private let cameraSelectedTrigger = PublishSubject<Int>()
     private let camerasProxy = BehaviorSubject<[CameraObject]>(value: [])
     
     init(viewModel: YardMapViewModel) {
@@ -65,20 +65,15 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
                         point.coordinate = camera.position
                         return point
                     }
-                     
+                    
                     self.mapView.addAnnotations(pointAnnotations)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        output.centerCoordinates
-            .drive(
-                onNext: { [weak self] coordinates in
-                    guard let self = self, let uCoordinates = coordinates else {
-                        return
-                    }
-        
-                    self.mapView.setCenter(uCoordinates, zoomLevel: 17, animated: true)
+                    
+                    self.mapView.showAnnotations(
+                        pointAnnotations,
+                        edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
+                        animated: false,
+                        completionHandler: nil
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -116,7 +111,7 @@ extension YardMapViewController: MGLMapViewDelegate {
         let annotationView = CamerasMapPointView()
 
         annotationView.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
-        annotationView.configure(cameraNum: String(curCamera.cameraNumber))
+        annotationView.configure(cameraNumber: curCamera.cameraNumber)
 
         return annotationView
     }
@@ -126,7 +121,7 @@ extension YardMapViewController: MGLMapViewDelegate {
     }
     
     func mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView) {
-        guard let cameraNumber = (annotationView as? CamerasMapPointView)?.getCameraNumber() else {
+        guard let cameraNumber = (annotationView as? CamerasMapPointView)?.cameraNumber else {
             return
         }
         

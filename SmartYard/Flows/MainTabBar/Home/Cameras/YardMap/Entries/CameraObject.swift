@@ -13,5 +13,6 @@ struct CameraObject {
     
     let position: CLLocationCoordinate2D
     let cameraNumber: Int
-    // TODO
+    let hlsString: String?
+    
 }

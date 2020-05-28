@@ -12,6 +12,8 @@ import PinLayout
 
 class CamerasMapPointView: MGLAnnotationView {
     
+    private(set) var cameraNumber: Int?
+    
     private let cameraImageView: UIImageView = {
         let imageView = UIImageView()
         
@@ -55,12 +57,10 @@ class CamerasMapPointView: MGLAnnotationView {
         cameraNumberLabel.pin.height(15).below(of: cameraImageView).hCenter().sizeToFit(.height)
     }
     
-    func configure(cameraNum: String) {
-        cameraNumberLabel.text = cameraNum
-    }
-    
-    func getCameraNumber() -> String? {
-        return cameraNumberLabel.text
+    func configure(cameraNumber: Int) {
+        self.cameraNumber = cameraNumber
+        
+        cameraNumberLabel.text = "\(cameraNumber)"
     }
     
 }
