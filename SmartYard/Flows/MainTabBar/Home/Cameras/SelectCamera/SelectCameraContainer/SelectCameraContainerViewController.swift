@@ -57,7 +57,9 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         archiveView.setupCalendar()
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
     private func configureUI() {
