@@ -8,8 +8,12 @@
 
 struct APICCTV: Decodable {
     
-    let cctvId: String
-    let number: String
+    let houseId: Int?
+    let id: Int
     let name: String
+    let lat: String
+    let lon: String
+    let preview: String
+    let video: String
     
 }

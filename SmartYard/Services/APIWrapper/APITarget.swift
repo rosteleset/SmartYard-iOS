@@ -20,6 +20,8 @@ enum APITarget {
     case resend(request: ResendRequest)
     case offices(request: OfficesRequest)
     
+    case allCCTV(request: AllCCTVRequest)
+    
     case getAddress(request: GetAddressRequest)
     case getGeoCoder(request: GeoCoderRequest)
     case getHouses(request: GetHousesRequest)
@@ -64,6 +66,8 @@ extension APITarget: TargetType {
         case .access: return "address/access"
         case .resend: return "address/resend"
         case .offices: return "address/offices"
+            
+        case .allCCTV: return "cctv/all"
             
         case .getAddress: return "geo/address"
         case .getGeoCoder: return "geo/coder"
@@ -114,6 +118,8 @@ extension APITarget: TargetType {
             case .resend(let request): return request.accessToken
             case .offices(let request): return request.accessToken
                 
+            case .allCCTV(let request): return request.accessToken
+                
             case .getAddress(let request): return request.accessToken
             case .getGeoCoder(let request): return request.accessToken
             case .getHouses(let request): return request.accessToken
@@ -163,6 +169,8 @@ extension APITarget: TargetType {
         case .access(let request): return request.requestParameters
         case .resend(let request): return request.requestParameters
         case .offices(let request): return request.requestParameters
+            
+        case .allCCTV(let request): return request.requestParameters
             
         case .getAddress(let request): return request.requestParameters
         case .getGeoCoder(let request): return request.requestParameters
