@@ -80,6 +80,8 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         addChild(playerViewController)
         onlineView.setPlayer(player, playerView: playerViewController.view)
         playerViewController.didMove(toParent: self)
+        
+        onlineView.delegate = self
     }
     
     private func bind() {
@@ -134,6 +136,14 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+}
+
+extension SelectCameraContainerViewController: OnlineViewDelegate {
+    
+    func onlineView(_ onlineView: OnlineView, didSelectCamera camera: CameraObject) {
+        cameraNameLabel.text = camera.name
     }
     
 }

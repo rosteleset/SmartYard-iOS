@@ -12,6 +12,12 @@ import RxCocoa
 import RxSwift
 import AVKit
 
+protocol OnlineViewDelegate: AnyObject {
+    
+    func onlineView(_ onlineView: OnlineView, didSelectCamera camera: CameraObject)
+    
+}
+
 class OnlineView: PMNibLinkableView {
     
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -27,6 +33,8 @@ class OnlineView: PMNibLinkableView {
     private var selectedCameraNumber: Int?
     
     private let disposeBag = DisposeBag()
+    
+    weak var delegate: OnlineViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -100,6 +108,8 @@ class OnlineView: PMNibLinkableView {
         }
         
         selectedCameraNumber = camera.cameraNumber
+        
+        delegate?.onlineView(self, didSelectCamera: camera)
 
         player?.replaceCurrentItem(with: AVPlayerItem(url: camera.video))
         player?.play()

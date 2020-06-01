@@ -68,12 +68,25 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
                     
                     self.mapView.addAnnotations(pointAnnotations)
                     
-                    self.mapView.showAnnotations(
-                        pointAnnotations,
-                        edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
-                        animated: false,
-                        completionHandler: nil
-                    )
+                    let differentCoordinatesCount = pointAnnotations
+                        .map { $0.coordinate }
+                        .withoutDuplicates()
+                        .count
+                    
+                    switch differentCoordinatesCount {
+                    case 1:
+                        self.mapView.setCenter(pointAnnotations[0].coordinate, zoomLevel: 17, animated: false)
+                        
+                    case let count where count > 1:
+                        self.mapView.showAnnotations(
+                            pointAnnotations,
+                            edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
+                            animated: false,
+                            completionHandler: nil
+                        )
+                        
+                    default: break
+                    }
                 }
             )
             .disposed(by: disposeBag)
