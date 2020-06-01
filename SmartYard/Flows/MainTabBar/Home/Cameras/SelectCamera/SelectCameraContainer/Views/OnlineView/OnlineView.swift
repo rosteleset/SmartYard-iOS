@@ -100,16 +100,8 @@ class OnlineView: PMNibLinkableView {
         }
         
         selectedCameraNumber = camera.cameraNumber
-        
-        let newPlayerItem: AVPlayerItem? = {
-            guard let hlsString = camera.hlsString, let url = URL(string: hlsString) else {
-                return nil
-            }
 
-            return AVPlayerItem(url: url)
-        }()
-
-        player?.replaceCurrentItem(with: newPlayerItem)
+        player?.replaceCurrentItem(with: AVPlayerItem(url: camera.video))
         player?.play()
     }
     

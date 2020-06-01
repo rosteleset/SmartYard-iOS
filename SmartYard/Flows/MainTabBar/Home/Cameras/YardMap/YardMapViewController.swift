@@ -81,6 +81,15 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
         output.address
             .drive(addressLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     func removeAllAnnotations() {
@@ -96,22 +105,15 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
 extension YardMapViewController: MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
-        guard let camerasData = try? self.camerasProxy.value() else {
-            return nil
-        }
-        
-        let filteredCameras = camerasData.filter {
-            $0.position == annotation.coordinate
-        }
-        
-        guard let curCamera = filteredCameras.first else {
+        guard let cameras = try? self.camerasProxy.value(),
+            let camera = (cameras.first { $0.position == annotation.coordinate }) else {
             return nil
         }
 
         let annotationView = CamerasMapPointView()
 
         annotationView.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
-        annotationView.configure(cameraNumber: curCamera.cameraNumber)
+        annotationView.configure(cameraNumber: camera.cameraNumber)
 
         return annotationView
     }
