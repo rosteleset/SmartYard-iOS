@@ -17,6 +17,10 @@ class PlayArchiveVideoViewController: BaseViewController {
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var videoContainer: UIView!
     
+    @IBOutlet private weak var playButton: UIButton!
+    @IBOutlet private weak var halfSpeedButton: UIButton!
+    @IBOutlet private weak var oneAndHalfSpeedButton: UIButton!
+    
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
     
@@ -35,6 +39,9 @@ class PlayArchiveVideoViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configurePlayButton()
+        configureHalfSpeedButton()
+        configureOneAndHalfSpeedButton()
         configurePlayer()
         
         bind()
@@ -46,6 +53,88 @@ class PlayArchiveVideoViewController: BaseViewController {
         playerViewController?.view.frame = videoContainer.bounds
     }
     
+    private func configurePlayButton() {
+        playButton.configureSelectableButton(
+            imageForNormal: UIImage(named: "Play"),
+            imageForSelected: UIImage(named: "Pause")
+        )
+        
+        playButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let newState = !self.playButton.isSelected
+                    
+                    self.playButton.isSelected = newState
+                    
+                    newState ? self.player?.play() : self.player?.pause()
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func configureHalfSpeedButton() {
+        halfSpeedButton.setTitleColor(UIColor.SmartYard.gray, for: .normal)
+        halfSpeedButton.setTitleColor(UIColor.SmartYard.gray.darken(by: 0.1), for: [.normal, .highlighted])
+        halfSpeedButton.setTitleColor(UIColor.SmartYard.blue, for: .selected)
+        halfSpeedButton.setTitleColor(UIColor.SmartYard.blue.darken(by: 0.1), for: [.selected, .highlighted])
+        
+        halfSpeedButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let newState = !self.halfSpeedButton.isSelected
+                    
+                    self.halfSpeedButton.isSelected = newState
+                    
+                    if newState {
+                        self.oneAndHalfSpeedButton.isSelected = false
+                        self.player?.rate = 0.5
+                    } else {
+                        self.player?.rate = 1
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func configureOneAndHalfSpeedButton() {
+        oneAndHalfSpeedButton.setTitleColor(UIColor.SmartYard.gray, for: .normal)
+        oneAndHalfSpeedButton.setTitleColor(UIColor.SmartYard.gray.darken(by: 0.1), for: [.normal, .highlighted])
+        oneAndHalfSpeedButton.setTitleColor(UIColor.SmartYard.blue, for: .selected)
+        oneAndHalfSpeedButton.setTitleColor(UIColor.SmartYard.blue.darken(by: 0.1), for: [.selected, .highlighted])
+        
+        oneAndHalfSpeedButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let newState = !self.oneAndHalfSpeedButton.isSelected
+                    
+                    self.oneAndHalfSpeedButton.isSelected = newState
+                    
+                    if newState {
+                        self.halfSpeedButton.isSelected = false
+                        self.player?.rate = 1.5
+                    } else {
+                        self.player?.rate = 1
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
     private func configurePlayer() {
         let playerViewController = AVPlayerViewController()
         playerViewController.videoGravity = .resizeAspect
@@ -53,6 +142,7 @@ class PlayArchiveVideoViewController: BaseViewController {
         
         let player = AVPlayer()
         playerViewController.player = player
+        playerViewController.showsPlaybackControls = false
         self.player = player
         
         addChild(playerViewController)
