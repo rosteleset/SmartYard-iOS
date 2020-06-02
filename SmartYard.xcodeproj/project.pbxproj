@@ -105,6 +105,8 @@
 		8496396B248667040086B6E9 /* PlayArchiveVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496396A248667040086B6E9 /* PlayArchiveVideoViewModel.swift */; };
 		8496396E248667300086B6E9 /* PlayArchiveVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496396C248667300086B6E9 /* PlayArchiveVideoViewController.swift */; };
 		8496396F248667300086B6E9 /* PlayArchiveVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8496396D248667300086B6E9 /* PlayArchiveVideoViewController.xib */; };
+		84963973248680C10086B6E9 /* VideoPeriodPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84963971248680C10086B6E9 /* VideoPeriodPickerCell.swift */; };
+		84963974248680C10086B6E9 /* VideoPeriodPickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84963972248680C10086B6E9 /* VideoPeriodPickerCell.xib */; };
 		849652CC2472AF44000E1375 /* SmartYardSharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652BF2472AF3B000E1375 /* SmartYardSharedData.swift */; };
 		849652CD2472AF47000E1375 /* SmartYardSharedDataFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		849652CE2472AF4A000E1375 /* SmartYardSharedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652C12472AF3B000E1375 /* SmartYardSharedObject.swift */; };
@@ -513,6 +515,8 @@
 		8496396A248667040086B6E9 /* PlayArchiveVideoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayArchiveVideoViewModel.swift; sourceTree = "<group>"; };
 		8496396C248667300086B6E9 /* PlayArchiveVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayArchiveVideoViewController.swift; sourceTree = "<group>"; };
 		8496396D248667300086B6E9 /* PlayArchiveVideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayArchiveVideoViewController.xib; sourceTree = "<group>"; };
+		84963971248680C10086B6E9 /* VideoPeriodPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPeriodPickerCell.swift; sourceTree = "<group>"; };
+		84963972248680C10086B6E9 /* VideoPeriodPickerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPeriodPickerCell.xib; sourceTree = "<group>"; };
 		849652BF2472AF3B000E1375 /* SmartYardSharedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardSharedData.swift; sourceTree = "<group>"; };
 		849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartYardSharedDataFramework.h; sourceTree = "<group>"; };
 		849652C12472AF3B000E1375 /* SmartYardSharedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardSharedObject.swift; sourceTree = "<group>"; };
@@ -1401,6 +1405,7 @@
 		84963968248666F20086B6E9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				849639702486809D0086B6E9 /* PeriodPickerCell */,
 				8496396C248667300086B6E9 /* PlayArchiveVideoViewController.swift */,
 				8496396D248667300086B6E9 /* PlayArchiveVideoViewController.xib */,
 			);
@@ -1413,6 +1418,15 @@
 				8496396A248667040086B6E9 /* PlayArchiveVideoViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		849639702486809D0086B6E9 /* PeriodPickerCell */ = {
+			isa = PBXGroup;
+			children = (
+				84963971248680C10086B6E9 /* VideoPeriodPickerCell.swift */,
+				84963972248680C10086B6E9 /* VideoPeriodPickerCell.xib */,
+			);
+			path = PeriodPickerCell;
 			sourceTree = "<group>";
 		};
 		849652BE2472AF3B000E1375 /* SmartYardSharedDataFramework */ = {
@@ -3038,6 +3052,7 @@
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
 				849F2AD82448687C005693B3 /* AddressesListEmptyStateCell.xib in Resources */,
+				84963974248680C10086B6E9 /* VideoPeriodPickerCell.xib in Resources */,
 				84F64954247410F9000C0028 /* CameraNumberCell.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				845842D724223D7D0019635E /* AddressSettingsSkeletonView.xib in Resources */,
@@ -3241,6 +3256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9E4273423F55C4400F5D593 /* ServiceUnavailableViewController.swift in Sources */,
+				84963973248680C10086B6E9 /* VideoPeriodPickerCell.swift in Sources */,
 				E9E4273523F55C4400F5D593 /* ServiceUnavailableViewModel.swift in Sources */,
 				E94B6C902408ED5900FD9F65 /* IssueService.swift in Sources */,
 				E9E4273223F55B9700F5D593 /* ServicesActivationRequestViewController.swift in Sources */,

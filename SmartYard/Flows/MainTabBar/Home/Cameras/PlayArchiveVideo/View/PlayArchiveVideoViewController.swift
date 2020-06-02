@@ -17,6 +17,8 @@ class PlayArchiveVideoViewController: BaseViewController {
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var videoContainer: UIView!
     
+    @IBOutlet private weak var periodCollectionView: UICollectionView!
+    
     @IBOutlet private weak var playButton: UIButton!
     @IBOutlet private weak var halfSpeedButton: UIButton!
     @IBOutlet private weak var oneAndHalfSpeedButton: UIButton!
@@ -39,6 +41,7 @@ class PlayArchiveVideoViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configurePeriodPicker()
         configurePlayButton()
         configureHalfSpeedButton()
         configureOneAndHalfSpeedButton()
@@ -51,6 +54,13 @@ class PlayArchiveVideoViewController: BaseViewController {
         super.viewDidLayoutSubviews()
         
         playerViewController?.view.frame = videoContainer.bounds
+    }
+    
+    private func configurePeriodPicker() {
+        periodCollectionView.register(nibWithCellClass: VideoPeriodPickerCell.self)
+        
+        periodCollectionView.dataSource = self
+        periodCollectionView.delegate = self
     }
     
     private func configurePlayButton() {
@@ -148,6 +158,11 @@ class PlayArchiveVideoViewController: BaseViewController {
         addChild(playerViewController)
         videoContainer.addSubview(playerViewController.view)
         playerViewController.didMove(toParent: self)
+        
+        let urlString = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+        let url = URL(string: urlString)!
+        let playerItem = AVPlayerItem(url: url)
+        player.replaceCurrentItem(with: playerItem)
     }
 
     private func bind() {
@@ -172,4 +187,76 @@ class PlayArchiveVideoViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
 
+}
+
+extension PlayArchiveVideoViewController: UICollectionViewDataSource {
+    
+    var periods: [String] {
+        return [
+            "00.00 - 03.00",
+            "03.00 - 06.00",
+            "06.00 - 09.00",
+            "09.00 - 12.00",
+            "12.00 - 15.00",
+            "15.00 - 18.00",
+            "18.00 - 21.00",
+            "21.00 - 00.00"
+        ]
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return periods.count
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withClass: VideoPeriodPickerCell.self, for: indexPath)
+        
+        cell.setTitle(periods[indexPath.row])
+        
+        return cell
+    }
+    
+}
+
+extension PlayArchiveVideoViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        return CGSize(width: 96, height: 24)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 18
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 18
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
+    
 }

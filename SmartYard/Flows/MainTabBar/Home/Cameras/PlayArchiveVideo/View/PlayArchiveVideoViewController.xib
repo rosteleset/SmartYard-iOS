@@ -25,6 +25,7 @@
                 <outlet property="fakeNavBar" destination="WOo-JF-vkg" id="eGb-o1-hpz"/>
                 <outlet property="halfSpeedButton" destination="UDc-4s-ZnY" id="MEk-aP-AKT"/>
                 <outlet property="oneAndHalfSpeedButton" destination="fr5-Hf-wxY" id="bbz-TP-1X0"/>
+                <outlet property="periodCollectionView" destination="8od-sE-j0B" id="WpC-H6-pGy"/>
                 <outlet property="playButton" destination="5f4-F5-jna" id="dzY-fn-tKq"/>
                 <outlet property="videoContainer" destination="Oe3-0L-wZ8" id="MSN-XB-913"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -60,24 +61,19 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hqu-KX-8y8">
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8od-sE-j0B">
                             <rect key="frame" x="0.0" y="294.5" width="414" height="24"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j0I-Gn-SEb">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="24"/>
-                                    <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </view>
-                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="j0I-Gn-SEb" secondAttribute="trailing" id="2nv-59-wQW"/>
-                                <constraint firstItem="j0I-Gn-SEb" firstAttribute="top" secondItem="Hqu-KX-8y8" secondAttribute="top" id="Hu5-Cy-ehV"/>
-                                <constraint firstItem="j0I-Gn-SEb" firstAttribute="width" secondItem="Hqu-KX-8y8" secondAttribute="width" priority="999" id="Trr-Yx-tpf"/>
-                                <constraint firstItem="j0I-Gn-SEb" firstAttribute="height" secondItem="Hqu-KX-8y8" secondAttribute="height" id="UDh-GI-0Fw"/>
-                                <constraint firstItem="j0I-Gn-SEb" firstAttribute="leading" secondItem="Hqu-KX-8y8" secondAttribute="leading" id="i4Y-Kq-Eyk"/>
-                                <constraint firstAttribute="bottom" secondItem="j0I-Gn-SEb" secondAttribute="bottom" id="xjB-ZU-Uo5"/>
-                                <constraint firstAttribute="height" constant="24" id="zLL-HC-r3c"/>
+                                <constraint firstAttribute="height" constant="24" id="0KH-ud-MwN"/>
                             </constraints>
-                        </scrollView>
+                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="uVn-JW-awO">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkd-4A-ePf" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="40" y="589" width="334" height="60"/>
                             <constraints>
@@ -138,17 +134,17 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="Oe3-0L-wZ8" firstAttribute="top" secondItem="2Nk-mk-3jm" secondAttribute="top" constant="16" id="0JP-MM-KRk"/>
-                        <constraint firstItem="jwK-tW-GMy" firstAttribute="top" secondItem="j0I-Gn-SEb" secondAttribute="bottom" constant="20" id="5Vy-qH-UOp"/>
-                        <constraint firstItem="Hqu-KX-8y8" firstAttribute="top" secondItem="Oe3-0L-wZ8" secondAttribute="bottom" constant="20" id="5bF-Go-QQT"/>
+                        <constraint firstItem="jwK-tW-GMy" firstAttribute="top" secondItem="8od-sE-j0B" secondAttribute="bottom" constant="20" id="BRh-4i-kTy"/>
                         <constraint firstAttribute="trailing" secondItem="Oe3-0L-wZ8" secondAttribute="trailing" constant="16" id="ME2-CX-W12"/>
+                        <constraint firstItem="8od-sE-j0B" firstAttribute="top" secondItem="Oe3-0L-wZ8" secondAttribute="bottom" constant="20" id="Mix-Vi-VNK"/>
                         <constraint firstAttribute="trailing" secondItem="jwK-tW-GMy" secondAttribute="trailing" id="Oye-VA-z0x"/>
                         <constraint firstItem="wkd-4A-ePf" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" constant="40" id="PIl-1d-KPv"/>
                         <constraint firstItem="Oe3-0L-wZ8" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" constant="16" id="PLT-Ll-44V"/>
                         <constraint firstItem="jwK-tW-GMy" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" id="Rgq-0h-85M"/>
-                        <constraint firstItem="Hqu-KX-8y8" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" id="XeE-st-60j"/>
-                        <constraint firstAttribute="trailing" secondItem="Hqu-KX-8y8" secondAttribute="trailing" id="cVM-9O-kR4"/>
                         <constraint firstItem="wkd-4A-ePf" firstAttribute="top" secondItem="jwK-tW-GMy" secondAttribute="bottom" constant="20" id="d2f-gU-dnP"/>
                         <constraint firstAttribute="trailing" secondItem="wkd-4A-ePf" secondAttribute="trailing" constant="40" id="eJz-YI-req"/>
+                        <constraint firstItem="8od-sE-j0B" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" id="qyY-p4-CpW"/>
+                        <constraint firstAttribute="trailing" secondItem="8od-sE-j0B" secondAttribute="trailing" id="t2y-UX-pA4"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dqz-l5-6XG">
