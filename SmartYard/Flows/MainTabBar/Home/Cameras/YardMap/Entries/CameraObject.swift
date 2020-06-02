@@ -11,7 +11,11 @@ import CoreLocation
 
 struct CameraObject {
     
+    let id: Int
     let position: CLLocationCoordinate2D
     let cameraNumber: Int
-    // TODO
+    let name: String
+    let preview: URL
+    let video: URL
+    
 }

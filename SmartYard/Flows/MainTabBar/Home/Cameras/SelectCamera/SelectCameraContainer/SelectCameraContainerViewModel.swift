@@ -13,6 +13,7 @@ import XCoordinator
 
 class SelectCameraContainerViewModel: BaseViewModel {
     
+    private let preselectedCameraNumber: Int
     private let router: WeakRouter<HomeRoute>
     private let apiWrapper: APIWrapper
     
@@ -20,11 +21,13 @@ class SelectCameraContainerViewModel: BaseViewModel {
     private let cameras: BehaviorSubject<[CameraObject]>
     
     init(
+        preselectedCameraNumber: Int,
         router: WeakRouter<HomeRoute>,
         apiWrapper: APIWrapper,
         address: String,
         cameras: [CameraObject]
     ) {
+        self.preselectedCameraNumber = preselectedCameraNumber
         self.router = router
         self.apiWrapper = apiWrapper
         self.address = BehaviorSubject<String>(value: address)
@@ -46,7 +49,8 @@ class SelectCameraContainerViewModel: BaseViewModel {
         return Output(
             isLoading: activityTracker.asDriver(),
             address: address.asDriverOnErrorJustComplete(),
-            cameras: cameras.asDriverOnErrorJustComplete()
+            cameras: cameras.asDriverOnErrorJustComplete(),
+            preselectedCameraNumber: .just(preselectedCameraNumber)
         )
     }
     
@@ -64,6 +68,7 @@ extension SelectCameraContainerViewModel {
         let isLoading: Driver<Bool>
         let address: Driver<String>
         let cameras: Driver<[CameraObject]>
+        let preselectedCameraNumber: Driver<Int>
     }
     
 }

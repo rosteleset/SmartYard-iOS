@@ -22,7 +22,7 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
     
     private let viewModel: YardMapViewModel
     
-    private let cameraSelectedTrigger = PublishSubject<String>()
+    private let cameraSelectedTrigger = PublishSubject<Int>()
     private let camerasProxy = BehaviorSubject<[CameraObject]>(value: [])
     
     init(viewModel: YardMapViewModel) {
@@ -65,26 +65,43 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
                         point.coordinate = camera.position
                         return point
                     }
-                     
+                    
                     self.mapView.addAnnotations(pointAnnotations)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        output.centerCoordinates
-            .drive(
-                onNext: { [weak self] coordinates in
-                    guard let self = self, let uCoordinates = coordinates else {
-                        return
+                    
+                    let differentCoordinatesCount = pointAnnotations
+                        .map { $0.coordinate }
+                        .withoutDuplicates()
+                        .count
+                    
+                    switch differentCoordinatesCount {
+                    case 1:
+                        self.mapView.setCenter(pointAnnotations[0].coordinate, zoomLevel: 17, animated: false)
+                        
+                    case let count where count > 1:
+                        self.mapView.showAnnotations(
+                            pointAnnotations,
+                            edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
+                            animated: false,
+                            completionHandler: nil
+                        )
+                        
+                    default: break
                     }
-        
-                    self.mapView.setCenter(uCoordinates, zoomLevel: 17, animated: true)
                 }
             )
             .disposed(by: disposeBag)
         
         output.address
             .drive(addressLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
             .disposed(by: disposeBag)
     }
     
@@ -101,22 +118,15 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
 extension YardMapViewController: MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
-        guard let camerasData = try? self.camerasProxy.value() else {
-            return nil
-        }
-        
-        let filteredCameras = camerasData.filter {
-            $0.position == annotation.coordinate
-        }
-        
-        guard let curCamera = filteredCameras.first else {
+        guard let cameras = try? self.camerasProxy.value(),
+            let camera = (cameras.first { $0.position == annotation.coordinate }) else {
             return nil
         }
 
         let annotationView = CamerasMapPointView()
 
         annotationView.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
-        annotationView.configure(cameraNum: String(curCamera.cameraNumber))
+        annotationView.configure(cameraNumber: camera.cameraNumber)
 
         return annotationView
     }
@@ -126,7 +136,7 @@ extension YardMapViewController: MGLMapViewDelegate {
     }
     
     func mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView) {
-        guard let cameraNumber = (annotationView as? CamerasMapPointView)?.getCameraNumber() else {
+        guard let cameraNumber = (annotationView as? CamerasMapPointView)?.cameraNumber else {
             return
         }
         

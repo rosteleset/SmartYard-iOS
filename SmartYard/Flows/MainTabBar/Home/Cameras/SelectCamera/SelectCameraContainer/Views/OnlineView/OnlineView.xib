@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -75,7 +75,7 @@
                 <constraint firstItem="6vp-5L-0ip" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="wol-6x-nvE"/>
             </constraints>
             <connections>
-                <outlet property="cameraImageView" destination="Kxe-C7-GFI" id="hZt-m0-HsW"/>
+                <outlet property="cameraContainer" destination="Kxe-C7-GFI" id="fdC-c4-Azc"/>
                 <outlet property="collectionView" destination="jrd-7f-cMA" id="K6P-Sf-Kvg"/>
                 <outlet property="collectionViewHeightConstraint" destination="VrM-d7-XJV" id="g2L-O8-Dkf"/>
                 <outlet property="scrollView" destination="6vp-5L-0ip" id="Lsl-8b-jTZ"/>

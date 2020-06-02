@@ -308,11 +308,11 @@ class AddressesListViewModel: BaseViewModel {
                     let (addressId, loadedAddresses) = args
                     let matchingAddress = loadedAddresses?.first { $0.houseId == addressId }
                     
-                    guard let uAddress = matchingAddress?.address else {
+                    guard let uHouseId = matchingAddress?.houseId, let uAddress = matchingAddress?.address else {
                         return
                     }
                 
-                    self?.router.trigger(.yardCamerasMap(addressId: addressId, address: uAddress))
+                    self?.router.trigger(.yardCamerasMap(houseId: uHouseId, address: uAddress))
                 }
             )
             .disposed(by: disposeBag)

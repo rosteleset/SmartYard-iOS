@@ -99,6 +99,9 @@
 		848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
+		8496396024851B660086B6E9 /* ApiWrapper+CCTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496395F24851B660086B6E9 /* ApiWrapper+CCTV.swift */; };
+		8496396324851B7E0086B6E9 /* AllCCTVRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496396224851B7E0086B6E9 /* AllCCTVRequest.swift */; };
+		8496396524851B8B0086B6E9 /* AllCCTVResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496396424851B8B0086B6E9 /* AllCCTVResponseData.swift */; };
 		849652CC2472AF44000E1375 /* SmartYardSharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652BF2472AF3B000E1375 /* SmartYardSharedData.swift */; };
 		849652CD2472AF47000E1375 /* SmartYardSharedDataFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		849652CE2472AF4A000E1375 /* SmartYardSharedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652C12472AF3B000E1375 /* SmartYardSharedObject.swift */; };
@@ -501,6 +504,9 @@
 		848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAction.swift; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
+		8496395F24851B660086B6E9 /* ApiWrapper+CCTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApiWrapper+CCTV.swift"; sourceTree = "<group>"; };
+		8496396224851B7E0086B6E9 /* AllCCTVRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCCTVRequest.swift; sourceTree = "<group>"; };
+		8496396424851B8B0086B6E9 /* AllCCTVResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCCTVResponseData.swift; sourceTree = "<group>"; };
 		849652BF2472AF3B000E1375 /* SmartYardSharedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardSharedData.swift; sourceTree = "<group>"; };
 		849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartYardSharedDataFramework.h; sourceTree = "<group>"; };
 		849652C12472AF3B000E1375 /* SmartYardSharedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardSharedObject.swift; sourceTree = "<group>"; };
@@ -1352,6 +1358,24 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
+		8496395E24851B4D0086B6E9 /* CCTV */ = {
+			isa = PBXGroup;
+			children = (
+				8496395F24851B660086B6E9 /* ApiWrapper+CCTV.swift */,
+				8496396124851B6B0086B6E9 /* All */,
+			);
+			path = CCTV;
+			sourceTree = "<group>";
+		};
+		8496396124851B6B0086B6E9 /* All */ = {
+			isa = PBXGroup;
+			children = (
+				8496396224851B7E0086B6E9 /* AllCCTVRequest.swift */,
+				8496396424851B8B0086B6E9 /* AllCCTVResponseData.swift */,
+			);
+			path = All;
+			sourceTree = "<group>";
+		};
 		849652BE2472AF3B000E1375 /* SmartYardSharedDataFramework */ = {
 			isa = PBXGroup;
 			children = (
@@ -2018,6 +2042,7 @@
 			isa = PBXGroup;
 			children = (
 				E92EFB86242A22F2003AF7FE /* Address */,
+				8496395E24851B4D0086B6E9 /* CCTV */,
 				E92EFB62242A22F2003AF7FE /* Geo */,
 				843C38C4242A577B0035BF80 /* Inbox */,
 				E92EFB9C242A22F2003AF7FE /* Issues */,
@@ -3256,6 +3281,7 @@
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
 				E9C0E813247282DE001CE018 /* OnboardingViewController.swift in Sources */,
 				E92EFBE2242A22F2003AF7FE /* EmptyDataInitializable.swift in Sources */,
+				8496396324851B7E0086B6E9 /* AllCCTVRequest.swift in Sources */,
 				E92EFBD3242A22F2003AF7FE /* AccessRequest.swift in Sources */,
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
 				E92EFBB7242A22F2003AF7FE /* APIClientName.swift in Sources */,
@@ -3290,6 +3316,7 @@
 				84F6493C247402DC000C0028 /* CustomDayCell.swift in Sources */,
 				E92EFBA7242A22F2003AF7FE /* APIWrapper.swift in Sources */,
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
+				8496396524851B8B0086B6E9 /* AllCCTVResponseData.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				84F6494F247410DE000C0028 /* CameraObject.swift in Sources */,
 				84F64936247402DC000C0028 /* SelectCameraContainerViewModel.swift in Sources */,
@@ -3321,6 +3348,7 @@
 				E9A4D48A23EC27E20070A591 /* PinNumberField.swift in Sources */,
 				E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */,
 				E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */,
+				8496396024851B660086B6E9 /* ApiWrapper+CCTV.swift in Sources */,
 				E9C2568124224DF200BE32E0 /* RestoreMethod.swift in Sources */,
 				843C38DE242A57C40035BF80 /* NotificationsCoordinator.swift in Sources */,
 				E92EFBDF242A22F2003AF7FE /* CreateIssueResponseData.swift in Sources */,

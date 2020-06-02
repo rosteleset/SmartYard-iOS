@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import JGProgressHUD
+import AVKit
 
 class SelectCameraContainerViewController: BaseViewController, LoaderPresentable {
 
@@ -21,6 +22,9 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
     @IBOutlet private weak var archiveView: ArchiveView!
     
     var loader: JGProgressHUD?
+    
+    private var playerViewController: AVPlayerViewController?
+    private var player: AVPlayer?
     
     private let viewModel: SelectCameraContainerViewModel
     
@@ -46,18 +50,38 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         super.viewDidLoad()
         
         configureUI()
+        configureOnlineView()
+        
         bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         archiveView.setupCalendar()
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
     private func configureUI() {
         segmentControlView.segmentItems = ["Онлайн", "Архив"]
         archiveView.isHidden = true
         onlineView.isHidden = false
+    }
+    
+    private func configureOnlineView() {
+        let playerViewController = AVPlayerViewController()
+        playerViewController.videoGravity = .resizeAspect
+        self.playerViewController = playerViewController
+        
+        let player = AVPlayer()
+        playerViewController.player = player
+        self.player = player
+        
+        addChild(playerViewController)
+        onlineView.setPlayer(player, playerView: playerViewController.view)
+        playerViewController.didMove(toParent: self)
+        
+        onlineView.delegate = self
     }
     
     private func bind() {
@@ -99,8 +123,27 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         output.address
             .drive(addressLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        Driver
+            .combineLatest(output.preselectedCameraNumber, output.cameras)
+            .drive(
+                onNext: { [weak self] preselectedCameraNumber, cameras in
+                    guard !cameras.isEmpty else {
+                        return
+                    }
+                    
+                    self?.onlineView.setCameras(cameras, selectedNumber: preselectedCameraNumber)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+}
 
-        onlineView.bind(with: output.cameras)
+extension SelectCameraContainerViewController: OnlineViewDelegate {
+    
+    func onlineView(_ onlineView: OnlineView, didSelectCamera camera: CameraObject) {
+        cameraNameLabel.text = camera.name
     }
     
 }
