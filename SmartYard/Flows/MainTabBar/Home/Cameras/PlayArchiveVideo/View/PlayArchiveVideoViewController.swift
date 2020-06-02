@@ -26,6 +26,18 @@ class PlayArchiveVideoViewController: BaseViewController {
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
     
+    private var preferredPlaybackRate: Float = 1 {
+        didSet {
+            guard let player = player else {
+                return
+            }
+            
+            if player.rate != 0 {
+                player.rate = preferredPlaybackRate
+            }
+        }
+    }
+    
     private let viewModel: PlayArchiveVideoViewModel
     
     init(viewModel: PlayArchiveVideoViewModel) {
@@ -81,7 +93,7 @@ class PlayArchiveVideoViewController: BaseViewController {
                     
                     self.playButton.isSelected = newState
                     
-                    newState ? self.player?.play() : self.player?.pause()
+                    self.player?.rate = newState ? self.preferredPlaybackRate : 0
                 }
             )
             .disposed(by: disposeBag)
@@ -107,9 +119,9 @@ class PlayArchiveVideoViewController: BaseViewController {
                     
                     if newState {
                         self.oneAndHalfSpeedButton.isSelected = false
-                        self.player?.rate = 0.5
+                        self.preferredPlaybackRate = 0.5
                     } else {
-                        self.player?.rate = 1
+                        self.preferredPlaybackRate = 1
                     }
                 }
             )
@@ -136,9 +148,9 @@ class PlayArchiveVideoViewController: BaseViewController {
                     
                     if newState {
                         self.halfSpeedButton.isSelected = false
-                        self.player?.rate = 1.5
+                        self.preferredPlaybackRate = 1.5
                     } else {
-                        self.player?.rate = 1
+                        self.preferredPlaybackRate = 1
                     }
                 }
             )
