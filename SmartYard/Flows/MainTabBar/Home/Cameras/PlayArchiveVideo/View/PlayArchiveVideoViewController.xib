@@ -17,6 +17,7 @@
             <connections>
                 <outlet property="dateLabel" destination="Dqz-l5-6XG" id="mPY-Is-qNG"/>
                 <outlet property="fakeNavBar" destination="WOo-JF-vkg" id="eGb-o1-hpz"/>
+                <outlet property="videoContainer" destination="Oe3-0L-wZ8" id="MSN-XB-913"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -37,7 +38,26 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Nk-mk-3jm" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="181" width="414" height="681"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oe3-0L-wZ8">
+                            <rect key="frame" x="16" y="16" width="382" height="258.5"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Oe3-0L-wZ8" secondAttribute="height" multiplier="343:232" id="YS3-A7-0LO"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="20"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Oe3-0L-wZ8" firstAttribute="top" secondItem="2Nk-mk-3jm" secondAttribute="top" constant="16" id="0JP-MM-KRk"/>
+                        <constraint firstAttribute="trailing" secondItem="Oe3-0L-wZ8" secondAttribute="trailing" constant="16" id="ME2-CX-W12"/>
+                        <constraint firstItem="Oe3-0L-wZ8" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" constant="16" id="PLT-Ll-44V"/>
+                    </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dqz-l5-6XG">
                     <rect key="frame" x="40" y="100" width="334" height="41"/>

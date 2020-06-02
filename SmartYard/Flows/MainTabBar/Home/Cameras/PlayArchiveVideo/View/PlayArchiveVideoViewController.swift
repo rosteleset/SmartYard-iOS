@@ -9,11 +9,16 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import AVKit
 
 class PlayArchiveVideoViewController: BaseViewController {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var videoContainer: UIView!
+    
+    private var playerViewController: AVPlayerViewController?
+    private var player: AVPlayer?
     
     private let viewModel: PlayArchiveVideoViewModel
     
@@ -30,10 +35,32 @@ class PlayArchiveVideoViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configurePlayer()
+        
         bind()
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        playerViewController?.view.frame = videoContainer.bounds
+    }
+    
+    private func configurePlayer() {
+        let playerViewController = AVPlayerViewController()
+        playerViewController.videoGravity = .resizeAspect
+        self.playerViewController = playerViewController
+        
+        let player = AVPlayer()
+        playerViewController.player = player
+        self.player = player
+        
+        addChild(playerViewController)
+        videoContainer.addSubview(playerViewController.view)
+        playerViewController.didMove(toParent: self)
+    }
 
-    func bind() {
+    private func bind() {
         let input = PlayArchiveVideoViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
