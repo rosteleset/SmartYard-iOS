@@ -171,6 +171,23 @@ class PlayArchiveVideoViewController: BaseViewController {
         videoContainer.addSubview(playerViewController.view)
         playerViewController.didMove(toParent: self)
         
+        player.rx
+            .observeWeakly(AVPlayer.Status.self, "status", options: [.new])
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] status in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    [self.halfSpeedButton, self.playButton, self.oneAndHalfSpeedButton].forEach {
+                        $0?.isEnabled = status == .readyToPlay
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let urlString = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
         let url = URL(string: urlString)!
         let playerItem = AVPlayerItem(url: url)
