@@ -21,6 +21,7 @@ target 'SmartYard' do
   # Utilities
   pod 'SwiftLint', '0.35'
   pod 'SwifterSwift', '4.6'
+  pod 'HLSThumbnailGenerator'
   
   # UI
   pod 'Cartography'

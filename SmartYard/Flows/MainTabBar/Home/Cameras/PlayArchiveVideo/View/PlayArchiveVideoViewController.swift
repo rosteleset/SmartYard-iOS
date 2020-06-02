@@ -10,12 +10,14 @@ import UIKit
 import RxSwift
 import RxCocoa
 import AVKit
+import HLSThumbnailGenerator
 
 class PlayArchiveVideoViewController: BaseViewController {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var videoContainer: UIView!
+    @IBOutlet private weak var videoRangeSlider: AMVideoRangeSlider!
     
     @IBOutlet private weak var periodCollectionView: UICollectionView!
     
@@ -25,6 +27,7 @@ class PlayArchiveVideoViewController: BaseViewController {
     
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
+    private var thumbnailGenerator: ThumbnailGenerator?
     
     private var preferredPlaybackRate: Float = 1 {
         didSet {
@@ -58,6 +61,7 @@ class PlayArchiveVideoViewController: BaseViewController {
         configureHalfSpeedButton()
         configureOneAndHalfSpeedButton()
         configurePlayer()
+        configureRangeSlider()
         
         bind()
     }
@@ -168,7 +172,7 @@ class PlayArchiveVideoViewController: BaseViewController {
         self.player = player
         
         addChild(playerViewController)
-        videoContainer.addSubview(playerViewController.view)
+        videoContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
         
         player.rx
@@ -192,6 +196,21 @@ class PlayArchiveVideoViewController: BaseViewController {
         let url = URL(string: urlString)!
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
+    }
+    
+    private func configureRangeSlider() {
+        let urlString = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+        let url = URL(string: urlString)!
+        
+//        videoRangeSlider.videoAsset = AVAsset(url: url)
+        
+        let asset = AVAsset(url: url)
+        
+        let generator = ThumbnailGenerator(asset: asset)
+        generator.delegate = self
+        generator.generateThumbnails(atTimesInSeconds: [16.1, 33.2, 55.2])
+        
+        self.thumbnailGenerator = generator
     }
 
     private func bind() {
@@ -286,6 +305,26 @@ extension PlayArchiveVideoViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
+    }
+    
+}
+
+extension PlayArchiveVideoViewController: ThumbnailGeneratorDelegate {
+    
+    func thumbnailGenerator(
+        _ thumbnailGenerator: ThumbnailGenerator,
+        didGenerateThumbnail thumbnail: Image,
+        atTime time: Double
+    ) {
+        
+    }
+    
+    func thumbnailGenerator(
+        _ thumbnailGenerator: ThumbnailGenerator,
+        thumbnailGenerationDidFailWithError error: ThumbnailGenerationError,
+        atTime time: Double
+    ) {
+        
     }
     
 }
