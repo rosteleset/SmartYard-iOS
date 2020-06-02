@@ -28,7 +28,7 @@
                 <outlet property="periodCollectionView" destination="8od-sE-j0B" id="WpC-H6-pGy"/>
                 <outlet property="playButton" destination="5f4-F5-jna" id="dzY-fn-tKq"/>
                 <outlet property="videoContainer" destination="Oe3-0L-wZ8" id="MSN-XB-913"/>
-                <outlet property="videoRangeSlider" destination="atb-6e-HJf" id="zbj-77-Zdi"/>
+                <outlet property="videoRangeSlider" destination="atb-6e-HJf" id="U0l-s8-nZa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -53,7 +53,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oe3-0L-wZ8">
                             <rect key="frame" x="16" y="16" width="382" height="258.5"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="atb-6e-HJf" customClass="AMVideoRangeSlider" customModule="SmartYard" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="atb-6e-HJf" customClass="ABVideoRangeSlider" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="12" y="205.5" width="358" height="37"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <constraints>
