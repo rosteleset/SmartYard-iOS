@@ -27,6 +27,7 @@ enum HomeRoute: Route {
     case serviceSoonAvailable(issue: APIIssueConnect)
     case cameraContainer(address: String, cameras: [CameraObject], selectedCameraNumber: Int)
     case yardCamerasMap(houseId: String, address: String)
+    case playArchiveVideo(date: Date)
     
 }
 
@@ -214,6 +215,12 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             )
             
             let vc = SelectCameraContainerViewController(viewModel: vm)
+            
+            return .push(vc)
+            
+        case let .playArchiveVideo(date):
+            let vm = PlayArchiveVideoViewModel()
+            let vc = PlayArchiveVideoViewController(viewModel: vm)
             
             return .push(vc)
         }

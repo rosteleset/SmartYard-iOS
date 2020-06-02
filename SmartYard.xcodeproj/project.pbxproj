@@ -102,6 +102,9 @@
 		8496396024851B660086B6E9 /* ApiWrapper+CCTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496395F24851B660086B6E9 /* ApiWrapper+CCTV.swift */; };
 		8496396324851B7E0086B6E9 /* AllCCTVRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496396224851B7E0086B6E9 /* AllCCTVRequest.swift */; };
 		8496396524851B8B0086B6E9 /* AllCCTVResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496396424851B8B0086B6E9 /* AllCCTVResponseData.swift */; };
+		8496396B248667040086B6E9 /* PlayArchiveVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496396A248667040086B6E9 /* PlayArchiveVideoViewModel.swift */; };
+		8496396E248667300086B6E9 /* PlayArchiveVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496396C248667300086B6E9 /* PlayArchiveVideoViewController.swift */; };
+		8496396F248667300086B6E9 /* PlayArchiveVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8496396D248667300086B6E9 /* PlayArchiveVideoViewController.xib */; };
 		849652CC2472AF44000E1375 /* SmartYardSharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652BF2472AF3B000E1375 /* SmartYardSharedData.swift */; };
 		849652CD2472AF47000E1375 /* SmartYardSharedDataFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		849652CE2472AF4A000E1375 /* SmartYardSharedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652C12472AF3B000E1375 /* SmartYardSharedObject.swift */; };
@@ -507,6 +510,9 @@
 		8496395F24851B660086B6E9 /* ApiWrapper+CCTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApiWrapper+CCTV.swift"; sourceTree = "<group>"; };
 		8496396224851B7E0086B6E9 /* AllCCTVRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCCTVRequest.swift; sourceTree = "<group>"; };
 		8496396424851B8B0086B6E9 /* AllCCTVResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCCTVResponseData.swift; sourceTree = "<group>"; };
+		8496396A248667040086B6E9 /* PlayArchiveVideoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayArchiveVideoViewModel.swift; sourceTree = "<group>"; };
+		8496396C248667300086B6E9 /* PlayArchiveVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayArchiveVideoViewController.swift; sourceTree = "<group>"; };
+		8496396D248667300086B6E9 /* PlayArchiveVideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayArchiveVideoViewController.xib; sourceTree = "<group>"; };
 		849652BF2472AF3B000E1375 /* SmartYardSharedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardSharedData.swift; sourceTree = "<group>"; };
 		849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartYardSharedDataFramework.h; sourceTree = "<group>"; };
 		849652C12472AF3B000E1375 /* SmartYardSharedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardSharedObject.swift; sourceTree = "<group>"; };
@@ -1376,6 +1382,39 @@
 			path = All;
 			sourceTree = "<group>";
 		};
+		849639662486668A0086B6E9 /* PlayArchiveVideo */ = {
+			isa = PBXGroup;
+			children = (
+				84963969248666F60086B6E9 /* ViewModel */,
+				84963968248666F20086B6E9 /* View */,
+			);
+			path = PlayArchiveVideo;
+			sourceTree = "<group>";
+		};
+		84963967248666D70086B6E9 /* ExportArchiveVideo */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ExportArchiveVideo;
+			sourceTree = "<group>";
+		};
+		84963968248666F20086B6E9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8496396C248667300086B6E9 /* PlayArchiveVideoViewController.swift */,
+				8496396D248667300086B6E9 /* PlayArchiveVideoViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84963969248666F60086B6E9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8496396A248667040086B6E9 /* PlayArchiveVideoViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		849652BE2472AF3B000E1375 /* SmartYardSharedDataFramework */ = {
 			isa = PBXGroup;
 			children = (
@@ -1799,6 +1838,8 @@
 		84F64922247402DB000C0028 /* Cameras */ = {
 			isa = PBXGroup;
 			children = (
+				84963967248666D70086B6E9 /* ExportArchiveVideo */,
+				849639662486668A0086B6E9 /* PlayArchiveVideo */,
 				84F64923247402DB000C0028 /* SelectCamera */,
 				84F6493F24740E8F000C0028 /* YardMap */,
 			);
@@ -2988,6 +3029,7 @@
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */,
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
+				8496396F248667300086B6E9 /* PlayArchiveVideoViewController.xib in Resources */,
 				E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				84AADD21242E22640056994A /* EditNameViewController.xib in Resources */,
@@ -3249,6 +3291,7 @@
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				E92EFBB8242A22F2003AF7FE /* APIPaymentsListAccount.swift in Sources */,
 				E92EFBC9242A22F2003AF7FE /* ConfirmCodeRequest.swift in Sources */,
+				8496396E248667300086B6E9 /* PlayArchiveVideoViewController.swift in Sources */,
 				84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */,
 				E92EFBB6242A22F2003AF7FE /* APIRoommate.swift in Sources */,
 				E94B6C922408EF6B00FD9F65 /* MainUserInfo.swift in Sources */,
@@ -3327,6 +3370,7 @@
 				84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */,
 				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
 				E92EFBBA242A22F2003AF7FE /* GetStreetsRequest.swift in Sources */,
+				8496396B248667040086B6E9 /* PlayArchiveVideoViewModel.swift in Sources */,
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				E92EFBC8242A22F2003AF7FE /* AddMyPhoneRequest.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,

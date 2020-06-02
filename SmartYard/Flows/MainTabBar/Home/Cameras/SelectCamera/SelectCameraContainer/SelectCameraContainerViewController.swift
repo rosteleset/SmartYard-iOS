@@ -28,7 +28,7 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
     
     private let viewModel: SelectCameraContainerViewModel
     
-    let selectDataTrigger = PublishSubject<Date?>()
+    let selectDateTrigger = PublishSubject<Date>()
     let selectCameraTrigger = PublishSubject<Int>()
     
     init(viewModel: SelectCameraContainerViewModel) {
@@ -51,6 +51,7 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         
         configureUI()
         configureOnlineView()
+        configureArchiveView()
         
         bind()
     }
@@ -84,6 +85,10 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         onlineView.delegate = self
     }
     
+    private func configureArchiveView() {
+        archiveView.delegate = self
+    }
+    
     private func bind() {
         segmentControlView.rx
             .selectedIndex
@@ -105,7 +110,7 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         
         let input = SelectCameraContainerViewModel.Input(
             selectedCameraTrigger: selectCameraTrigger.asDriverOnErrorJustComplete(),
-            selectedDateTrigger: selectDataTrigger.asDriverOnErrorJustComplete(),
+            selectedDateTrigger: selectDateTrigger.asDriverOnErrorJustComplete(),
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
@@ -144,6 +149,14 @@ extension SelectCameraContainerViewController: OnlineViewDelegate {
     
     func onlineView(_ onlineView: OnlineView, didSelectCamera camera: CameraObject) {
         cameraNameLabel.text = camera.name
+    }
+    
+}
+
+extension SelectCameraContainerViewController: ArchiveViewDelegate {
+    
+    func archiveView(_ archiveView: ArchiveView, didSelectDate date: Date) {
+        selectDateTrigger.onNext(date)
     }
     
 }

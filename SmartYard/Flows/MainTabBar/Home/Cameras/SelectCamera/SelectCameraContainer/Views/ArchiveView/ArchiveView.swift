@@ -13,6 +13,12 @@ import SwifterSwift
 import RxSwift
 import RxCocoa
 
+protocol ArchiveViewDelegate: AnyObject {
+    
+    func archiveView(_ archiveView: ArchiveView, didSelectDate date: Date)
+    
+}
+
 class ArchiveView: PMNibLinkableView {
     
     @IBOutlet private weak var calendarView: JTACMonthView!
@@ -24,6 +30,8 @@ class ArchiveView: PMNibLinkableView {
     private let currentCalendar = Calendar.current
     
     private let disposeBag = DisposeBag()
+    
+    weak var delegate: ArchiveViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -204,6 +212,8 @@ extension ArchiveView: JTACMonthViewDataSource, JTACMonthViewDelegate {
         }
         
         configureCell(view: cell, cellState: cellState)
+        
+        delegate?.archiveView(self, didSelectDate: date)
     }
     
     func calendar(

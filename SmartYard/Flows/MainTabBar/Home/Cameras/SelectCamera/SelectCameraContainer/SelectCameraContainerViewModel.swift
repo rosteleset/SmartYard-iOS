@@ -46,6 +46,14 @@ class SelectCameraContainerViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.selectedDateTrigger
+            .drive(
+                onNext: { [weak self] date in
+                    self?.router.trigger(.playArchiveVideo(date: date))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             isLoading: activityTracker.asDriver(),
             address: address.asDriverOnErrorJustComplete(),
@@ -60,7 +68,7 @@ extension SelectCameraContainerViewModel {
     
     struct Input {
         let selectedCameraTrigger: Driver<Int>
-        let selectedDateTrigger: Driver<Date?>
+        let selectedDateTrigger: Driver<Date>
         let backTrigger: Driver<Void>
     }
     
