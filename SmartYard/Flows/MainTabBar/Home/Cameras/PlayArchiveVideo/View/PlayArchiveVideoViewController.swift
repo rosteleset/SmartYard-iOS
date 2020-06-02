@@ -16,6 +16,7 @@ class PlayArchiveVideoViewController: BaseViewController {
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var videoContainer: UIView!
+    @IBOutlet private weak var videoRangeSlider: ABVideoRangeSlider!
     
     @IBOutlet private weak var periodCollectionView: UICollectionView!
     
@@ -169,7 +170,7 @@ class PlayArchiveVideoViewController: BaseViewController {
         self.player = player
         
         addChild(playerViewController)
-        videoContainer.addSubview(playerViewController.view)
+        videoContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
         
         player.rx

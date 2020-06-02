@@ -28,6 +28,7 @@
                 <outlet property="periodCollectionView" destination="8od-sE-j0B" id="WpC-H6-pGy"/>
                 <outlet property="playButton" destination="5f4-F5-jna" id="dzY-fn-tKq"/>
                 <outlet property="videoContainer" destination="Oe3-0L-wZ8" id="MSN-XB-913"/>
+                <outlet property="videoRangeSlider" destination="gTL-Y7-3LT" id="bKy-0r-Vsa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -51,9 +52,21 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oe3-0L-wZ8">
                             <rect key="frame" x="16" y="16" width="382" height="258.5"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gTL-Y7-3LT" customClass="ABVideoRangeSlider" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="12" y="205.5" width="358" height="37"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="37" id="QQg-ft-Cm3"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
                             <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
+                                <constraint firstAttribute="trailing" secondItem="gTL-Y7-3LT" secondAttribute="trailing" constant="12" id="VSo-rp-oEe"/>
                                 <constraint firstAttribute="width" secondItem="Oe3-0L-wZ8" secondAttribute="height" multiplier="343:232" id="YS3-A7-0LO"/>
+                                <constraint firstItem="gTL-Y7-3LT" firstAttribute="leading" secondItem="Oe3-0L-wZ8" secondAttribute="leading" constant="12" id="cVb-al-fEe"/>
+                                <constraint firstAttribute="bottom" secondItem="gTL-Y7-3LT" secondAttribute="bottom" constant="16" id="iRa-TS-ZzJ"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
