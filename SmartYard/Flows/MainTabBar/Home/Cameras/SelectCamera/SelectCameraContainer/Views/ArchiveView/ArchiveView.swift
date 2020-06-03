@@ -110,6 +110,8 @@ class ArchiveView: PMNibLinkableView {
         calendarView.scrollingMode = .stopAtEachCalendarFrame
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
+        
+        calendarView.scrollToDate(Date())
     }
     
     private func bind() {
@@ -171,7 +173,11 @@ extension ArchiveView: JTACMonthViewDataSource, JTACMonthViewDelegate {
         indexPath: IndexPath
     ) -> JTACDayCell {
         // swiftlint: force_cast
-        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomDayCell", for: indexPath) as! CustomDayCell
+        let cell = calendar.dequeueReusableJTAppleCell(
+            withReuseIdentifier: "CustomDayCell",
+            for: indexPath
+        ) as! CustomDayCell
+        
         configureCell(view: cell, cellState: cellState)
         
         return cell
@@ -182,9 +188,8 @@ extension ArchiveView: JTACMonthViewDataSource, JTACMonthViewDelegate {
         formatter.timeZone = currentCalendar.timeZone
         formatter.locale = .init(identifier: "RU")
         
-        // TODO: set real data
-        let startDate = formatter.date(from: "2020 01 01")!
-        let endDate = formatter.date(from: "2020 12 01")!
+        let startDate = Date().adding(.month, value: -1)
+        let endDate = Date()
         
         let parameters = ConfigurationParameters(
             startDate: startDate,

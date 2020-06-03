@@ -107,6 +107,7 @@
 		8496396F248667300086B6E9 /* PlayArchiveVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8496396D248667300086B6E9 /* PlayArchiveVideoViewController.xib */; };
 		84963973248680C10086B6E9 /* VideoPeriodPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84963971248680C10086B6E9 /* VideoPeriodPickerCell.swift */; };
 		84963974248680C10086B6E9 /* VideoPeriodPickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84963972248680C10086B6E9 /* VideoPeriodPickerCell.xib */; };
+		8496398B2487ED5D0086B6E9 /* ArchiveVideoHourPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496398A2487ED5D0086B6E9 /* ArchiveVideoHourPeriod.swift */; };
 		849652CC2472AF44000E1375 /* SmartYardSharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652BF2472AF3B000E1375 /* SmartYardSharedData.swift */; };
 		849652CD2472AF47000E1375 /* SmartYardSharedDataFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		849652CE2472AF4A000E1375 /* SmartYardSharedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652C12472AF3B000E1375 /* SmartYardSharedObject.swift */; };
@@ -517,6 +518,7 @@
 		8496396D248667300086B6E9 /* PlayArchiveVideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayArchiveVideoViewController.xib; sourceTree = "<group>"; };
 		84963971248680C10086B6E9 /* VideoPeriodPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPeriodPickerCell.swift; sourceTree = "<group>"; };
 		84963972248680C10086B6E9 /* VideoPeriodPickerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPeriodPickerCell.xib; sourceTree = "<group>"; };
+		8496398A2487ED5D0086B6E9 /* ArchiveVideoHourPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveVideoHourPeriod.swift; sourceTree = "<group>"; };
 		849652BF2472AF3B000E1375 /* SmartYardSharedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardSharedData.swift; sourceTree = "<group>"; };
 		849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartYardSharedDataFramework.h; sourceTree = "<group>"; };
 		849652C12472AF3B000E1375 /* SmartYardSharedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardSharedObject.swift; sourceTree = "<group>"; };
@@ -1389,6 +1391,7 @@
 		849639662486668A0086B6E9 /* PlayArchiveVideo */ = {
 			isa = PBXGroup;
 			children = (
+				849639892487ED4A0086B6E9 /* Entries */,
 				84963969248666F60086B6E9 /* ViewModel */,
 				84963968248666F20086B6E9 /* View */,
 			);
@@ -1427,6 +1430,14 @@
 				84963972248680C10086B6E9 /* VideoPeriodPickerCell.xib */,
 			);
 			path = PeriodPickerCell;
+			sourceTree = "<group>";
+		};
+		849639892487ED4A0086B6E9 /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				8496398A2487ED5D0086B6E9 /* ArchiveVideoHourPeriod.swift */,
+			);
+			path = Entries;
 			sourceTree = "<group>";
 		};
 		849652BE2472AF3B000E1375 /* SmartYardSharedDataFramework */ = {
@@ -3464,6 +3475,7 @@
 				E92EFBCF242A22F2003AF7FE /* GetAddressListResponseData.swift in Sources */,
 				842FECB9242B8A04007CA0F3 /* APIOffice.swift in Sources */,
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
+				8496398B2487ED5D0086B6E9 /* ArchiveVideoHourPeriod.swift in Sources */,
 				E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */,
 				E92EFBE0242A22F2003AF7FE /* CreateIssueRequest.swift in Sources */,
 				843C38D1242A577C0035BF80 /* UnreadedResponseData.swift in Sources */,

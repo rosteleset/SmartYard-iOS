@@ -40,6 +40,9 @@ class PlayArchiveVideoViewController: BaseViewController {
     
     private let viewModel: PlayArchiveVideoViewModel
     
+    private let periodsProxy = BehaviorSubject<[ArchiveVideoHourPeriod]>(value: [])
+    private let periodSelectedTrigger = PublishSubject<ArchiveVideoHourPeriod?>()
+    
     init(viewModel: PlayArchiveVideoViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -90,8 +93,6 @@ class PlayArchiveVideoViewController: BaseViewController {
                     }
                     
                     let newState = !self.playButton.isSelected
-                    
-                    self.playButton.isSelected = newState
                     
                     self.player?.rate = newState ? self.preferredPlaybackRate : 0
                 }
@@ -172,7 +173,7 @@ class PlayArchiveVideoViewController: BaseViewController {
         playerViewController.didMove(toParent: self)
         
         player.rx
-            .observeWeakly(AVPlayer.Status.self, "status", options: [.new])
+            .observe(AVPlayer.Status.self, "status", options: [.new])
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
@@ -188,15 +189,26 @@ class PlayArchiveVideoViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-        let urlString = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
-        let url = URL(string: urlString)!
-        let playerItem = AVPlayerItem(url: url)
-        player.replaceCurrentItem(with: playerItem)
+        player.rx
+            .observe(Float.self, "rate", options: [.new])
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] rate in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.playButton.isSelected = rate != 0
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
     private func bind() {
         let input = PlayArchiveVideoViewModel.Input(
-            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
+            periodSelectedTrigger: periodSelectedTrigger.asDriver(onErrorJustReturn: nil)
         )
         
         let output = viewModel.transform(input)
@@ -214,36 +226,59 @@ class PlayArchiveVideoViewController: BaseViewController {
             }
             .drive(dateLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        output.videoURL
+            .drive(
+                onNext: { [weak self] url in
+                    let playerItem: AVPlayerItem? = {
+                        guard let url = url else {
+                            return nil
+                        }
+                        
+                        return AVPlayerItem(url: url)
+                    }()
+                    
+                    self?.player?.replaceCurrentItem(with: playerItem)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.periodConfiguration
+            .drive(
+                onNext: { [weak self] in
+                    self?.periodsProxy.onNext($0)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        periodsProxy
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.periodCollectionView.reloadData()
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
 }
 
 extension PlayArchiveVideoViewController: UICollectionViewDataSource {
     
-    var periods: [String] {
-        return [
-            "00.00 - 03.00",
-            "03.00 - 06.00",
-            "06.00 - 09.00",
-            "09.00 - 12.00",
-            "12.00 - 15.00",
-            "15.00 - 18.00",
-            "18.00 - 21.00",
-            "21.00 - 00.00"
-        ]
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return periods.count
+        return (try? periodsProxy.value())?.count ?? 0
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
+        guard let period = (try? periodsProxy.value())?[safe: indexPath.row] else {
+            return VideoPeriodPickerCell()
+        }
+        
         let cell = collectionView.dequeueReusableCell(withClass: VideoPeriodPickerCell.self, for: indexPath)
         
-        cell.setTitle(periods[indexPath.row])
+        cell.setTitle(period.title)
         
         return cell
     }
@@ -285,7 +320,11 @@ extension PlayArchiveVideoViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+        guard let period = (try? periodsProxy.value())?[safe: indexPath.row] else {
+            return
+        }
+        
+        periodSelectedTrigger.onNext(period)
     }
     
 }
