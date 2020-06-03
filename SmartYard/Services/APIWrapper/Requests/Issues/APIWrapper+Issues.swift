@@ -85,7 +85,7 @@ extension APIWrapper {
             action: "Jelly.Способ доставки",
             customFields: newMethod.deliveryCustomFields
         )
-        
+
         return provider.rx
             .request(.actionIssue(request: request))
             .convertNoConnectionError()

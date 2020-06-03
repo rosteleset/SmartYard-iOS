@@ -66,6 +66,8 @@ class PaymentPopupViewModel: BaseViewModel {
                 
                 print("Token1: \(uToken)")
                 
+                print("Token: \(String(decoding: token!, as: UTF8.self))")
+                
                 return
                     self.apiWrapper.sberbankPayProcess(
                         merchant: "lanta",

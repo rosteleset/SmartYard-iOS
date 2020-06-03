@@ -57,6 +57,8 @@ extension APIWrapper {
             paymentToken: paymentToken
         )
 
+        print(request)
+        
         return provider.rx
             .request(.sberbankPayProcess(request: request))
             .convertNoConnectionError()

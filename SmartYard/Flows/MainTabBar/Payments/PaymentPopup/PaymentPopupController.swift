@@ -63,23 +63,32 @@ class PaymentPopupController: BaseViewController {
                     }
  
                     self.sumTextField.resignFirstResponder()
-                    
-                    let request = PKPaymentRequest()
-                    request.merchantIdentifier = "merchant.ru.lanta-net.pays"
-                    request.supportedNetworks = [.visa, .masterCard]
-                    request.supportedCountries = ["RU"]
-                    request.merchantCapabilities = .capability3DS
-                    request.countryCode = Locale.current.regionCode ?? "RUS"
-                    request.currencyCode = "RUB"
-                    
-                    let decimalSeparator = [NSLocale.Key.decimalSeparator: Locale.current.decimalSeparator]
-                    let amount = NSDecimalNumber(string: self.sumTextField.text, locale: decimalSeparator)
-                    
-                    request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Ланта", amount: amount)]
-                    
-                    if let controller = PKPaymentAuthorizationViewController(paymentRequest: request) {
-                        controller.delegate = self
-                        self.present(controller, animated: true, completion: nil)
+                    let paymentNetworks:[PKPaymentNetwork] = [.amex, .masterCard,.visa]
+                     print("Can make payment ?")
+                    if PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks) {
+                        print("Yes we can")
+                        let request = PKPaymentRequest()
+                        request.merchantIdentifier = "merchant.ru.lanta-net.pays"
+                        request.countryCode = "RU"
+                        request.currencyCode = "RUB"
+                        request.supportedNetworks = paymentNetworks
+                        request.merchantCapabilities = [.capabilityCredit, .capabilityDebit, .capability3DS, .capabilityEMV]
+                        
+                        print("HERE1: \(PKPaymentRequest.availableNetworks())")
+                        print("HERE2: \(request.supportedNetworks)")
+                        let decimalSeparator = [NSLocale.Key.decimalSeparator: Locale.current.decimalSeparator]
+                        let amount = NSDecimalNumber(string: self.sumTextField.text, locale: decimalSeparator)
+                        
+                        request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Ланта", amount: amount)]
+                        
+                        let authorizationViewController = PKPaymentAuthorizationViewController(paymentRequest: request)
+                          print("Can we create viewController ?")
+                        
+                        if let controller = authorizationViewController {
+                            print("Yes we can we create viewController")
+                            controller.delegate = self
+                            self.present(controller, animated: true, completion: nil)
+                        }
                     }
                 }
             )
@@ -223,7 +232,7 @@ class PaymentPopupController: BaseViewController {
         print("2222222")
         guard let amount = sumTextField.text else {
             print("333333333")
-            uCompletion(PKPaymentAuthorizationResult(status: .failure, errors: []))
+           // uCompletion(PKPaymentAuthorizationResult(status: .failure, errors: []))
             return
         }
         
