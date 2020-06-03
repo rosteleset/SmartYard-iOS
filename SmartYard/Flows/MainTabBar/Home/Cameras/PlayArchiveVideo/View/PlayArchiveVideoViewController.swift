@@ -17,7 +17,7 @@ class PlayArchiveVideoViewController: BaseViewController {
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var videoContainer: UIView!
-    @IBOutlet private weak var videoRangeSlider: ABVideoRangeSlider!
+    @IBOutlet private weak var videoRangeSlider: AMVideoRangeSlider!
     
     @IBOutlet private weak var periodCollectionView: UICollectionView!
     
@@ -202,19 +202,15 @@ class PlayArchiveVideoViewController: BaseViewController {
         let urlString = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
         let url = URL(string: urlString)!
         
-        videoRangeSlider.setVideoURL(videoURL: url)
-        videoRangeSlider.setStartIndicatorImage(image: UIImage(named: "RangeSliderStart")!)
-        videoRangeSlider.setEndIndicatorImage(image: UIImage(named: "RangeSliderEnd")!)
-        videoRangeSlider.setProgressIndicatorImage(image: UIImage(named: "RangeSliderProgress")!)
 //        videoRangeSlider.videoAsset = AVAsset(url: url)
         
-//        let asset = AVAsset(url: url)
-//
-//        let generator = ThumbnailGenerator(asset: asset)
-//        generator.delegate = self
-//        generator.generateThumbnails(atTimesInSeconds: [16.1, 33.2, 55.2])
-//
-//        self.thumbnailGenerator = generator
+        let asset = AVAsset(url: url)
+        
+        let generator = ThumbnailGenerator(asset: asset)
+        generator.delegate = self
+        generator.generateThumbnails(atTimesInSeconds: [16.1, 33.2, 55.2])
+        
+        self.thumbnailGenerator = generator
     }
 
     private func bind() {
