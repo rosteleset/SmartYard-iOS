@@ -88,7 +88,6 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.5.0):
     - GoogleUtilities/Logger
-  - HLSThumbnailGenerator (0.5.0)
   - JGProgressHUD (2.1)
   - JTAppleCalendar (8.0.3)
   - Kingfisher (5.13.0):
@@ -176,7 +175,6 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Crashlytics
   - Firebase/Messaging
-  - HLSThumbnailGenerator
   - JGProgressHUD
   - JTAppleCalendar
   - Kingfisher
@@ -220,7 +218,6 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
-    - HLSThumbnailGenerator
     - JGProgressHUD
     - JTAppleCalendar
     - Kingfisher
@@ -282,7 +279,6 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 574a983e829327d7c18f2627f65d9e80164ea8a4
   GoogleDataTransportCCTSupport: cad3cd6cdbdbad6b5c2c9206ec413402755faaaa
   GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
-  HLSThumbnailGenerator: cd84556e92c9a5f5f0fc26d6d9b7e78f1ec6d4d6
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
   JTAppleCalendar: 932cadea40b1051beab10f67843451d48ba16c99
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
@@ -311,6 +307,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
 
-PODFILE CHECKSUM: f522454e1b6fa42286a09d64857d845ad5e7b684
+PODFILE CHECKSUM: c9c239f8c524de1fc213e51c98572d52b5401f05
 
 COCOAPODS: 1.8.4
