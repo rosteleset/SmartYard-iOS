@@ -57,11 +57,12 @@ class OnlineView: PMNibLinkableView {
         cameraContainer.addSubview(playerView)
     }
     
-    func setCameras(_ cameras: [CameraObject], selectedNumber: Int) {
+    func setCameras(_ cameras: [CameraObject], selectedCamera: CameraObject?) {
         self.cameras = cameras
         
         collectionView.reloadData { [weak self] in
-            guard let index = (cameras.firstIndex { $0.cameraNumber == selectedNumber }) else {
+            guard let selectedCamera = selectedCamera,
+                let index = cameras.firstIndex(of: selectedCamera) else {
                 return
             }
             

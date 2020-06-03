@@ -49,7 +49,9 @@ class YardMapViewModel: BaseViewModel {
                     let (firstPack, cameras) = args
                     let (cameraNum, address) = firstPack
                     
-                    guard let self = self, let uAddress = address else {
+                    guard let self = self,
+                        let uAddress = address,
+                        let selectedCamera = (cameras.first { $0.cameraNumber == cameraNum }) else {
                         return
                     }
                     
@@ -57,7 +59,7 @@ class YardMapViewModel: BaseViewModel {
                         .cameraContainer(
                             address: uAddress,
                             cameras: cameras,
-                            selectedCameraNumber: cameraNum
+                            selectedCamera: selectedCamera
                         )
                     )
                 }

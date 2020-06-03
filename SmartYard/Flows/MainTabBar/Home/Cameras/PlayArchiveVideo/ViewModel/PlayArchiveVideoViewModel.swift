@@ -14,11 +14,13 @@ class PlayArchiveVideoViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
     
+    private let camera: CameraObject
     private let date: BehaviorSubject<Date?>
     
-    init(date: Date, router: WeakRouter<HomeRoute>) {
+    init(camera: CameraObject, date: Date, router: WeakRouter<HomeRoute>) {
         self.router = router
         
+        self.camera = camera
         self.date = BehaviorSubject<Date?>(value: date)
     }
     

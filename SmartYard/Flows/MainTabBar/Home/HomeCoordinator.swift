@@ -25,9 +25,9 @@ enum HomeRoute: Route {
     case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
     case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
     case serviceSoonAvailable(issue: APIIssueConnect)
-    case cameraContainer(address: String, cameras: [CameraObject], selectedCameraNumber: Int)
+    case cameraContainer(address: String, cameras: [CameraObject], selectedCamera: CameraObject)
     case yardCamerasMap(houseId: String, address: String)
-    case playArchiveVideo(date: Date)
+    case playArchiveVideo(camera: CameraObject, date: Date)
     
 }
 
@@ -205,21 +205,21 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             return .push(vc)
             
-        case let .cameraContainer(address, cameras, selectedCameraNumber):
+        case let .cameraContainer(address, cameras, selectedCamera):
             let vm = SelectCameraContainerViewModel(
-                preselectedCameraNumber: selectedCameraNumber,
-                router: weakRouter,
                 apiWrapper: apiWrapper,
                 address: address,
-                cameras: cameras
+                cameras: cameras,
+                selectedCamera: selectedCamera,
+                router: weakRouter
             )
             
             let vc = SelectCameraContainerViewController(viewModel: vm)
             
             return .push(vc)
             
-        case let .playArchiveVideo(date):
-            let vm = PlayArchiveVideoViewModel(date: date, router: weakRouter)
+        case let .playArchiveVideo(camera, date):
+            let vm = PlayArchiveVideoViewModel(camera: camera, date: date, router: weakRouter)
             let vc = PlayArchiveVideoViewController(viewModel: vm)
             
             return .push(vc)
