@@ -13,31 +13,32 @@ import XCoordinator
 
 class SelectCameraContainerViewModel: BaseViewModel {
     
-    private let preselectedCameraNumber: Int
-    private let router: WeakRouter<HomeRoute>
-    private let apiWrapper: APIWrapper
+    private let address: String
+    private let cameras: [CameraObject]
+    private let preselectedCamera: CameraObject
     
-    private let address: BehaviorSubject<String>
-    private let cameras: BehaviorSubject<[CameraObject]>
+    private let apiWrapper: APIWrapper
+    private let router: WeakRouter<HomeRoute>
+    
+    private let selectedCamera: BehaviorSubject<CameraObject?>
     
     init(
-        preselectedCameraNumber: Int,
-        router: WeakRouter<HomeRoute>,
         apiWrapper: APIWrapper,
         address: String,
-        cameras: [CameraObject]
+        cameras: [CameraObject],
+        selectedCamera: CameraObject,
+        router: WeakRouter<HomeRoute>
     ) {
-        self.preselectedCameraNumber = preselectedCameraNumber
+        self.address = address
+        self.cameras = cameras
+        self.preselectedCamera = selectedCamera
         self.router = router
         self.apiWrapper = apiWrapper
-        self.address = BehaviorSubject<String>(value: address)
-        self.cameras = BehaviorSubject<[CameraObject]>(value: cameras)
+        
+        self.selectedCamera = BehaviorSubject<CameraObject?>(value: selectedCamera)
     }
     
     func transform(_ input: Input) -> Output {
-        let activityTracker = ActivityTracker()
-        let errorTracker = ErrorTracker()
-        
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
@@ -46,11 +47,30 @@ class SelectCameraContainerViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.selectedDateTrigger
+            .withLatestFrom(selectedCamera.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] date, camera in
+                    guard let camera = camera else {
+                        return
+                    }
+                    
+                    self?.router.trigger(.playArchiveVideo(camera: camera, date: date))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.selectedCameraTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.selectedCamera.onNext($0)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
-            isLoading: activityTracker.asDriver(),
-            address: address.asDriverOnErrorJustComplete(),
-            cameras: cameras.asDriverOnErrorJustComplete(),
-            preselectedCameraNumber: .just(preselectedCameraNumber)
+            address: .just(address),
+            cameraConfiguration: .just((cameras: cameras, preselectedCamera: preselectedCamera))
         )
     }
     
@@ -59,16 +79,14 @@ class SelectCameraContainerViewModel: BaseViewModel {
 extension SelectCameraContainerViewModel {
     
     struct Input {
-        let selectedCameraTrigger: Driver<Int>
-        let selectedDateTrigger: Driver<Date?>
+        let selectedCameraTrigger: Driver<CameraObject>
+        let selectedDateTrigger: Driver<Date>
         let backTrigger: Driver<Void>
     }
     
     struct Output {
-        let isLoading: Driver<Bool>
         let address: Driver<String>
-        let cameras: Driver<[CameraObject]>
-        let preselectedCameraNumber: Driver<Int>
+        let cameraConfiguration: Driver<(cameras: [CameraObject], preselectedCamera: CameraObject)>
     }
     
 }

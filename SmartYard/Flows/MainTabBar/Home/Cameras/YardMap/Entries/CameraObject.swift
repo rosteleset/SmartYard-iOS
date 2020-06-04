@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-struct CameraObject {
+struct CameraObject: Equatable {
     
     let id: Int
     let position: CLLocationCoordinate2D

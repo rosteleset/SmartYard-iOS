@@ -9,10 +9,9 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import JGProgressHUD
 import AVKit
 
-class SelectCameraContainerViewController: BaseViewController, LoaderPresentable {
+class SelectCameraContainerViewController: BaseViewController {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var cameraNameLabel: UILabel!
@@ -21,15 +20,13 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
     @IBOutlet private weak var onlineView: OnlineView!
     @IBOutlet private weak var archiveView: ArchiveView!
     
-    var loader: JGProgressHUD?
-    
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
     
     private let viewModel: SelectCameraContainerViewModel
     
-    let selectDataTrigger = PublishSubject<Date?>()
-    let selectCameraTrigger = PublishSubject<Int>()
+    let selectDateTrigger = PublishSubject<Date>()
+    let selectCameraTrigger = PublishSubject<CameraObject>()
     
     init(viewModel: SelectCameraContainerViewModel) {
         self.viewModel = viewModel
@@ -51,6 +48,7 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         
         configureUI()
         configureOnlineView()
+        configureArchiveView()
         
         bind()
     }
@@ -84,6 +82,10 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         onlineView.delegate = self
     }
     
+    private func configureArchiveView() {
+        archiveView.delegate = self
+    }
+    
     private func bind() {
         segmentControlView.rx
             .selectedIndex
@@ -105,34 +107,24 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
         
         let input = SelectCameraContainerViewModel.Input(
             selectedCameraTrigger: selectCameraTrigger.asDriverOnErrorJustComplete(),
-            selectedDateTrigger: selectDataTrigger.asDriverOnErrorJustComplete(),
+            selectedDateTrigger: selectDateTrigger.asDriverOnErrorJustComplete(),
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
         let output = viewModel.transform(input)
         
-        output.isLoading
-            .debounce(.milliseconds(25))
+        output.address
             .drive(
-                onNext: { [weak self] isLoading in
-                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                onNext: { [weak self] in
+                    self?.addressLabel.text = $0
                 }
             )
             .disposed(by: disposeBag)
         
-        output.address
-            .drive(addressLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        Driver
-            .combineLatest(output.preselectedCameraNumber, output.cameras)
+        output.cameraConfiguration
             .drive(
-                onNext: { [weak self] preselectedCameraNumber, cameras in
-                    guard !cameras.isEmpty else {
-                        return
-                    }
-                    
-                    self?.onlineView.setCameras(cameras, selectedNumber: preselectedCameraNumber)
+                onNext: { [weak self] config in
+                    self?.onlineView.setCameras(config.cameras, selectedCamera: config.preselectedCamera)
                 }
             )
             .disposed(by: disposeBag)
@@ -143,7 +135,17 @@ class SelectCameraContainerViewController: BaseViewController, LoaderPresentable
 extension SelectCameraContainerViewController: OnlineViewDelegate {
     
     func onlineView(_ onlineView: OnlineView, didSelectCamera camera: CameraObject) {
+        selectCameraTrigger.onNext(camera)
+        
         cameraNameLabel.text = camera.name
+    }
+    
+}
+
+extension SelectCameraContainerViewController: ArchiveViewDelegate {
+    
+    func archiveView(_ archiveView: ArchiveView, didSelectDate date: Date) {
+        selectDateTrigger.onNext(date)
     }
     
 }
