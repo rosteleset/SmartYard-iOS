@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 
 // swiftlint:disable all
 
@@ -36,16 +37,10 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     public var endTimeView         = ABTimeView()
     
     var duration: Float64   = 0.0
-    var videoURL            = URL(fileURLWithPath: "")
 
     var progressPercentage: CGFloat = 0         // Represented in percentage
     var startPercentage: CGFloat    = 0         // Represented in percentage
     var endPercentage: CGFloat      = 100       // Represented in percentage
-
-    let topBorderHeight: CGFloat      = 5
-    let bottomBorderHeight: CGFloat   = 5
-
-    let indicatorWidth: CGFloat = 20.0
 
     public var minSpace: Float = 1              // In Seconds
     public var maxSpace: Float = 0              // In Seconds
@@ -76,47 +71,74 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     }
 
     private func setup(){
+//        layer.cornerRadius = 3
+        layer.borderColor = UIColor(hex: 0xffe38e)?.cgColor
+        layer.borderWidth = 1
+        
         self.isUserInteractionEnabled = true
 
         // Setup Start Indicator
-        let startDrag = UIPanGestureRecognizer(target:self,
-                                               action: #selector(startDragged(recognizer:)))
+        let startDrag = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(startDragged(recognizer:))
+        )
 
-        startIndicator = ABStartIndicator(frame: CGRect(x: 0,
-                                                        y: -topBorderHeight,
-                                                        width: 20,
-                                                        height: self.frame.size.height + bottomBorderHeight + topBorderHeight))
+        startIndicator = ABStartIndicator(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: 12,
+                height: self.frame.size.height
+            )
+        )
+        
         startIndicator.layer.anchorPoint = CGPoint(x: 1, y: 0.5)
         startIndicator.addGestureRecognizer(startDrag)
         self.addSubview(startIndicator)
 
         // Setup End Indicator
 
-        let endDrag = UIPanGestureRecognizer(target:self,
-                                             action: #selector(endDragged(recognizer:)))
+        let endDrag = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(endDragged(recognizer:))
+        )
 
-        endIndicator = ABEndIndicator(frame: CGRect(x: 0,
-                                                    y: -topBorderHeight,
-                                                    width: indicatorWidth,
-                                                    height: self.frame.size.height + bottomBorderHeight + topBorderHeight))
+        endIndicator = ABEndIndicator(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: 12,
+                height: self.frame.size.height
+            )
+        )
+        
         endIndicator.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
         endIndicator.addGestureRecognizer(endDrag)
         self.addSubview(endIndicator)
 
-        self.addObserver(self,
-                         forKeyPath: "bounds",
-                         options: NSKeyValueObservingOptions(rawValue: 0),
-                         context: nil)
+        self.addObserver(
+            self,
+            forKeyPath: "bounds",
+            options: NSKeyValueObservingOptions(rawValue: 0),
+            context: nil
+        )
 
         // Setup Progress Indicator
 
-        let progressDrag = UIPanGestureRecognizer(target:self,
-                                                  action: #selector(progressDragged(recognizer:)))
+        let progressDrag = UIPanGestureRecognizer(
+            target:self,
+            action: #selector(progressDragged(recognizer:))
+        )
 
-        progressIndicator = ABProgressIndicator(frame: CGRect(x: 0,
-                                                              y: -topBorderHeight,
-                                                              width: 10,
-                                                              height: self.frame.size.height + bottomBorderHeight + topBorderHeight))
+        progressIndicator = ABProgressIndicator(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: 3,
+                height: self.frame.size.height
+            )
+        )
+        
         progressIndicator.addGestureRecognizer(progressDrag)
         self.addSubview(progressIndicator)
 
@@ -199,9 +221,17 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         }
     }
 
-    public func setVideoURL(videoURL: URL){
-        self.duration = ABVideoHelper.videoDuration(videoURL: videoURL)
-        self.videoURL = videoURL
+    public func setVideoURL(videoURL: URL?) {
+        let duration: Double = {
+            guard let url = videoURL else {
+                return 0
+            }
+            
+            let source = AVURLAsset(url: url)
+            return CMTimeGetSeconds(source.duration)
+        }()
+        
+        self.duration = duration
         self.superview?.layoutSubviews()
         self.updateThumbnails()
     }
@@ -507,16 +537,15 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         endTimeView.center = CGPoint(x: endIndicator.center.x, y: endTimeView.center.y)
     }
 
-//
-//    override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-//        let extendedBounds = CGRect(x: -startIndicator.frame.size.width,
-//                                    y: 0,
-//                                    width: self.frame.size.width + startIndicator.frame.size.width + endIndicator.frame.size.width,
-//                                    height: self.frame.size.height)
-//
-//        return extendedBounds.contains(point)
-//    }
 
+    override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let extendedBounds = CGRect(x: -startIndicator.frame.size.width,
+                                    y: 0,
+                                    width: self.frame.size.width + startIndicator.frame.size.width + endIndicator.frame.size.width,
+                                    height: self.frame.size.height)
+
+        return extendedBounds.contains(point)
+    }
 
     private func secondsToFormattedString(totalSeconds: Float64) -> String{
         let hours:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 86400) / 3600)

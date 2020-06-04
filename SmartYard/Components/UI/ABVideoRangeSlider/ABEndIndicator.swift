@@ -1,36 +1,29 @@
-//
-//  ABStartIndicator.swift
-//  selfband
-//
-//  Created by Oscar J. Irun on 27/11/16.
-//  Copyright © 2016 appsboulevard. All rights reserved.
-//
-
 import UIKit
-
-// swiftlint:disable all
 
 class ABEndIndicator: UIView {
     
-    public var imageView = UIImageView()
+    let imageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.isUserInteractionEnabled = true
         
-        let bundle = Bundle(for: ABStartIndicator.self)
-        let image = UIImage(named: "EndIndicator", in: bundle, compatibleWith: nil)
-        
         imageView.frame = self.bounds
-        imageView.image = image
+        imageView.image = UIImage(named: "RangeSliderEnd")
         imageView.contentMode = .scaleToFill
-        self.addSubview(imageView)
+        
+        addSubview(imageView)
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        imageView.frame = self.bounds
+    }
+    
 }
-
-// swiftlint:enable all

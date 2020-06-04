@@ -1242,10 +1242,10 @@
 		845E9ED624895AE3000CBBC6 /* ABVideoRangeSlider */ = {
 			isa = PBXGroup;
 			children = (
+				845E9EDC24895AE3000CBBC6 /* ABStartIndicator.swift */,
 				845E9ED824895AE3000CBBC6 /* ABEndIndicator.swift */,
 				845E9ED924895AE3000CBBC6 /* ABProgressIndicator.swift */,
 				845E9EDB24895AE3000CBBC6 /* ABVideoRangeSlider.swift */,
-				845E9EDC24895AE3000CBBC6 /* ABStartIndicator.swift */,
 				845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */,
 				845E9EDE24895AE3000CBBC6 /* ABVideoHelper.swift */,
 			);

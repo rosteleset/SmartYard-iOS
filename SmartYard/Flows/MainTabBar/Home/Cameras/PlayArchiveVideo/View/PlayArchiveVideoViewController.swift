@@ -240,6 +240,7 @@ class PlayArchiveVideoViewController: BaseViewController {
                     }()
                     
                     self?.player?.replaceCurrentItem(with: playerItem)
+                    self?.videoRangeSlider.setVideoURL(videoURL: url)
                 }
             )
             .disposed(by: disposeBag)
