@@ -84,6 +84,14 @@ class InputAddressViewModel: BaseViewModel {
                         return
                     }
                     
+                    if nsError == NSError.PermissionError.noCameraPermission {
+                        let msg = "Чтобы использовать эту функцию, перейдите в настройки и предоставьте доступ к камере"
+                        
+                        self?.router.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
+                        
+                        return
+                    }
+                    
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
