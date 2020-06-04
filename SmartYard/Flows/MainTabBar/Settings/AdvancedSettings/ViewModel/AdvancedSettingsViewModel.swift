@@ -16,17 +16,24 @@ class AdvancedSettingsViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
+    
     private let router: WeakRouter<SettingsRoute>
     
     init(
         apiWrapper: APIWrapper,
         accessService: AccessService,
         pushNotificationService: PushNotificationService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
         router: WeakRouter<SettingsRoute>
     ) {
         self.apiWrapper = apiWrapper
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         self.router = router
     }
     
@@ -36,6 +43,18 @@ class AdvancedSettingsViewModel: BaseViewModel {
         let errorTracker = ErrorTracker()
         
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: activityTracker,
+                    errorTracker: errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
