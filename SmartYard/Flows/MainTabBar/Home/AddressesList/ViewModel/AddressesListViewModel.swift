@@ -85,6 +85,23 @@ class AddressesListViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Заказчик попросил запрашивать все разрешения сразу после авторизации. Хозяин - барин
+        
+        permissionService.requestAccessToMic()
+            .asDriver(onErrorJustReturn: nil)
+            .drive()
+            .disposed(by: disposeBag)
+        
+        permissionService.hasAccess(to: .video)
+            .asDriver(onErrorJustReturn: nil)
+            .drive()
+            .disposed(by: disposeBag)
+        
+        permissionService.requestAccessToContacts()
+            .asDriver(onErrorJustReturn: nil)
+            .drive()
+            .disposed(by: disposeBag)
+        
         // MARK: Подписка на уведомления
         pushNotificationService.registerForPushNotifications()
             .trackError(errorTracker)
