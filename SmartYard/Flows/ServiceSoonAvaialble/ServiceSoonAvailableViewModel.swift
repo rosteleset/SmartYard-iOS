@@ -43,6 +43,7 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
         self.issueSubject = BehaviorSubject<APIIssueConnect>(value: issue)
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         errorTracker.asDriver()
             .catchAuthorizationError { [weak self] in
