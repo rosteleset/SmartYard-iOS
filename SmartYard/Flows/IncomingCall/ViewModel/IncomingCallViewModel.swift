@@ -70,7 +70,7 @@ class IncomingCallViewModel: BaseViewModel {
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
-                    if (error as NSError) == NSError.PermissionError.noCameraPermission {
+                    if (error as NSError) == NSError.PermissionError.noMicPermission {
                         self?.router.trigger(.appSettings(title: "Нет доступа к микрофону", message: micMsg))
                         return
                     }
