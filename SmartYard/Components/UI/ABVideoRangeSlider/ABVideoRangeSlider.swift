@@ -362,14 +362,14 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         endPosition = endPosition + translation.x
         progressPosition = progressPosition + translation.x
 
-        if startPosition < 0 {
-            startPosition = 0
+        if startPosition < startIndicator.bounds.width {
+            startPosition = startIndicator.bounds.width
             endPosition = endPosition - translation.x
             progressPosition = progressPosition - translation.x
         }
 
-        if endPosition > self.frame.size.width{
-            endPosition = self.frame.size.width
+        if endPosition > self.frame.size.width - endIndicator.bounds.width {
+            endPosition = self.frame.size.width - endIndicator.bounds.width
             startPosition = startPosition - translation.x
             progressPosition = progressPosition - translation.x
         }
@@ -380,9 +380,9 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         startIndicator.center = CGPoint(x: startPosition , y: startIndicator.center.y)
         endIndicator.center = CGPoint(x: endPosition , y: endIndicator.center.y)
 
-        let startPercentage = startIndicator.center.x * 100 / self.frame.width
-        let endPercentage = endIndicator.center.x * 100 / self.frame.width
-        let progressPercentage = progressIndicator.center.x * 100 / self.frame.width
+        let startPercentage = valueFromPosition(position: startIndicator.center.x)
+        let endPercentage = valueFromPosition(position: endIndicator.center.x)
+        let progressPercentage = valueFromPosition(position: progressIndicator.center.x)
 
         let startSeconds = secondsFromValue(value: startPercentage)
         let endSeconds = secondsFromValue(value: endPercentage)
