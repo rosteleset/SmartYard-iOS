@@ -34,6 +34,8 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     var progressIndicator   = ABProgressIndicator()
     var draggableView       = UIView()
     
+    private let startCropBlurView = UIView()
+    private let endCropBlurView = UIView()
     private let fakeThumbnailsContainer = UIView()
     private var fakeThumbnailImageViews = [UIImageView]()
 
@@ -161,6 +163,12 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         // Setup fake previews
         
+        startCropBlurView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+        endCropBlurView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+        
+        fakeThumbnailsContainer.addSubview(startCropBlurView)
+        fakeThumbnailsContainer.addSubview(endCropBlurView)
+        
         addSubview(fakeThumbnailsContainer)
         sendSubviewToBack(fakeThumbnailsContainer)
         fakeThumbnailsContainer.cornerRadius = 3
@@ -171,6 +179,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             $0.contentMode = .scaleAspectFill
             $0.clipsToBounds = true
             fakeThumbnailsContainer.addSubview($0)
+            fakeThumbnailsContainer.sendSubviewToBack($0)
         }
         
         self.fakeThumbnailImageViews = imageViews
@@ -307,7 +316,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         }
         
         progressIndicator.center = CGPoint(x: progressPosition , y: progressIndicator.center.y)
-        let progressPercentage = progressIndicator.center.x * 100 / self.frame.width
+        let progressPercentage = valueFromPosition(position: progressIndicator.center.x)
         
         if self.progressPercentage != progressPercentage {
             let progressSeconds = secondsFromValue(value: progressPercentage)
@@ -346,7 +355,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
 
         progressIndicator.center = CGPoint(x: position , y: progressIndicator.center.y)
 
-        let percentage = progressIndicator.center.x * 100 / self.frame.width
+        let percentage = valueFromPosition(position: progressIndicator.center.x)
 
         let progressSeconds = secondsFromValue(value: progressPercentage)
 
@@ -528,6 +537,20 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         )
         
         // Update fake thumbnails frames
+        
+        startCropBlurView.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: startIndicator.frame.origin.x + 3,
+            height: bounds.height
+        )
+        
+        endCropBlurView.frame = CGRect(
+            x: endIndicator.frame.origin.x + endIndicator.frame.size.width - 3,
+            y: 0,
+            width: bounds.width - (endIndicator.frame.origin.x + endIndicator.frame.size.width) + 3,
+            height: bounds.height
+        )
         
         fakeThumbnailsContainer.frame = bounds
         
