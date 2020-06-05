@@ -33,8 +33,8 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     var progressIndicator   = ABProgressIndicator()
     var draggableView       = UIView()
 
-    public var startTimeView       = ABTimeView()
-    public var endTimeView         = ABTimeView()
+    public var startTimeView       = ABTimeView(size: .zero)
+    public var endTimeView         = ABTimeView(size: .zero)
     
     var duration: Float64   = 0.0
 
@@ -71,7 +71,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     }
 
     private func setup(){
-//        layer.cornerRadius = 3
+        layer.cornerRadius = 3
         layer.borderColor = UIColor(hex: 0xffe38e)?.cgColor
         layer.borderWidth = 1
         
@@ -154,11 +154,11 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
 
         // Setup time labels
 
-        startTimeView = ABTimeView(size: CGSize(width: 60, height: 30), position: 1)
+        startTimeView = ABTimeView(size: CGSize(width: 60, height: 30))
         startTimeView.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.addSubview(startTimeView)
 
-        endTimeView = ABTimeView(size: CGSize(width: 60, height: 30), position: 1)
+        endTimeView = ABTimeView(size: CGSize(width: 60, height: 30))
         endTimeView.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.addSubview(endTimeView)
     }
@@ -167,12 +167,6 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         if keyPath == "bounds"{
             self.updateThumbnails()
         }
-    }
-
-    // MARK: Public functions
-
-    public func setProgressIndicatorImage(image: UIImage){
-        self.progressIndicator.imageView.image = image
     }
 
     public func hideProgressIndicator(){
@@ -197,30 +191,6 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         }
     }
 
-    public func setStartIndicatorImage(image: UIImage){
-        self.startIndicator.imageView.image = image
-    }
-
-    public func setEndIndicatorImage(image: UIImage){
-        self.endIndicator.imageView.image = image
-    }
-
-    public func setTimeView(view: ABTimeView){
-        self.startTimeView = view
-        self.endTimeView = view
-    }
-
-    public func setTimeViewPosition(position: ABTimeViewPosition){
-        switch position {
-        case .top:
-
-            break
-        case .bottom:
-
-            break
-        }
-    }
-
     public func setVideoURL(videoURL: URL?) {
         let duration: Double = {
             guard let url = videoURL else {
@@ -236,16 +206,16 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         self.updateThumbnails()
     }
 
-    public func updateThumbnails(){
+    public func updateThumbnails() {
         // set fake thumbnails here
     }
 
-    public func setStartPosition(seconds: Float){
+    public func setStartPosition(seconds: Float) {
         self.startPercentage = self.valueFromSeconds(seconds: seconds)
         layoutSubviews()
     }
 
-    public func setEndPosition(seconds: Float){
+    public func setEndPosition(seconds: Float) {
         self.endPercentage = self.valueFromSeconds(seconds: seconds)
         layoutSubviews()
     }
@@ -533,10 +503,20 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
                                      height: self.frame.height)
 
         // Update time view
-        startTimeView.center = CGPoint(x: startIndicator.center.x, y: startTimeView.center.y)
-        endTimeView.center = CGPoint(x: endIndicator.center.x, y: endTimeView.center.y)
+        startTimeView.frame = CGRect(
+            x: startIndicator.frame.origin.x,
+            y: -startTimeView.intrinsicContentSize.height - 7,
+            width: startTimeView.intrinsicContentSize.width,
+            height: startTimeView.intrinsicContentSize.height
+        )
+        
+        endTimeView.frame = CGRect(
+            x: endIndicator.frame.origin.x + endIndicator.frame.width - endTimeView.intrinsicContentSize.width,
+            y: -endTimeView.intrinsicContentSize.height - 7,
+            width: endTimeView.intrinsicContentSize.width,
+            height: endTimeView.intrinsicContentSize.height
+        )
     }
-
 
     override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         let extendedBounds = CGRect(x: -startIndicator.frame.size.width,
@@ -553,7 +533,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         let seconds:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 60))
 
         if hours > 0 {
-            return String(format: "%i:%02i:%02i", hours, minutes, seconds)
+            return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
         } else {
             return String(format: "%02i:%02i", minutes, seconds)
         }

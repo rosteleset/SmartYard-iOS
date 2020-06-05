@@ -11,39 +11,26 @@ import UIKit
 // swiftlint:disable all
 
 open class ABTimeView: UIView {
-
-    let space: CGFloat = 8.0
     
-    public var timeLabel       = UILabel()
-    public var backgroundView  = UIView() {
-        willSet(newBackgroundView){
-            self.backgroundView.removeFromSuperview()
-        }
-        didSet {
-            self.frame = CGRect(x: 0,
-                                y: -backgroundView.frame.height - space,
-                                width: backgroundView.frame.width,
-                                height: backgroundView.frame.height)
-            
-            self.addSubview(backgroundView)
-            self.sendSubviewToBack(backgroundView)
-        }
+    let timeLabel = UILabel()
+    let backgroundView = UIView()
+    
+    open override var intrinsicContentSize: CGSize {
+        let height: CGFloat = 16
+        let labelWidth = timeLabel.sizeThatFits(CGSize(width: .greatestFiniteMagnitude, height: height)).width
+        let width: CGFloat = 4 * 2 + labelWidth
+        
+        return CGSize(width: width, height: height)
     }
     
-    public var marginTop: CGFloat       = 5.0
-    public var marginBottom: CGFloat    = 5.0
-    public var marginLeft: CGFloat      = 5.0
-    public var marginRight: CGFloat     = 5.0
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    public init(size: CGSize, position: Int){
-        let frame = CGRect(x: 0,
-                           y: -size.height - space,
-                           width: size.width,
-                           height: size.height)
+    public init(size: CGSize) {
+        let frame = CGRect(
+            x: 0,
+            y: -size.height - 7,
+            width: size.width,
+            height: size.height
+        )
+        
         super.init(frame: frame)
         
         // Add Background View
@@ -51,23 +38,27 @@ open class ABTimeView: UIView {
         self.backgroundView.backgroundColor = UIColor.yellow
         self.addSubview(self.backgroundView)
         
+        backgroundView.backgroundColor = .white
+        backgroundView.cornerRadius = 3
+        
         // Add time label
-        self.timeLabel = UILabel()
         self.timeLabel.textAlignment = .center
-        self.timeLabel.textColor = UIColor.lightGray
+        self.timeLabel.textColor = UIColor(hex: 0x333333)
+        self.timeLabel.font = UIFont.SourceSansPro.semibold(size: 12)
         self.addSubview(self.timeLabel)
-
     }
     
     open override func layoutSubviews() {
         super.layoutSubviews()
+
         self.backgroundView.frame = self.bounds
-		let timeLabelFrameWidth = self.frame.width - (marginRight + marginLeft)
-		let timeLabelFrameHeight = self.frame.height - (marginBottom + marginTop)
-        self.timeLabel.frame = CGRect(x: marginLeft,
-                                      y: marginTop - self.timeLabel.bounds.height / 2,
-                                      width: timeLabelFrameWidth,
-                                      height: timeLabelFrameHeight)
+        
+        self.timeLabel.frame = CGRect(
+            x: 4,
+            y: 0,
+            width: self.frame.width - 4 * 2,
+            height: self.frame.height
+        )
     }
     
     required public init?(coder aDecoder: NSCoder) {
