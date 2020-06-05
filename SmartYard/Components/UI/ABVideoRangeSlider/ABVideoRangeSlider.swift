@@ -8,6 +8,7 @@
 
 import UIKit
 import AVKit
+import Kingfisher
 
 // swiftlint:disable all
 
@@ -32,6 +33,9 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     var endIndicator        = ABEndIndicator()
     var progressIndicator   = ABProgressIndicator()
     var draggableView       = UIView()
+    
+    private let fakeThumbnailsContainer = UIView()
+    private var fakeThumbnailImageViews = [UIImageView]()
 
     public var startTimeView       = ABTimeView(size: .zero)
     public var endTimeView         = ABTimeView(size: .zero)
@@ -116,13 +120,6 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         endIndicator.addGestureRecognizer(endDrag)
         self.addSubview(endIndicator)
 
-        self.addObserver(
-            self,
-            forKeyPath: "bounds",
-            options: NSKeyValueObservingOptions(rawValue: 0),
-            context: nil
-        )
-
         // Setup Progress Indicator
 
         let progressDrag = UIPanGestureRecognizer(
@@ -161,12 +158,22 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         endTimeView = ABTimeView(size: CGSize(width: 60, height: 30))
         endTimeView.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.addSubview(endTimeView)
-    }
-
-    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "bounds"{
-            self.updateThumbnails()
+        
+        // Setup fake previews
+        
+        addSubview(fakeThumbnailsContainer)
+        sendSubviewToBack(fakeThumbnailsContainer)
+        fakeThumbnailsContainer.cornerRadius = 3
+        
+        let imageViews = [UIImageView(), UIImageView(), UIImageView(), UIImageView(), UIImageView()]
+        
+        imageViews.forEach {
+            $0.contentMode = .scaleAspectFill
+            $0.clipsToBounds = true
+            fakeThumbnailsContainer.addSubview($0)
         }
+        
+        self.fakeThumbnailImageViews = imageViews
     }
 
     public func hideProgressIndicator(){
@@ -203,11 +210,12 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         self.duration = duration
         self.superview?.layoutSubviews()
-        self.updateThumbnails()
     }
-
-    public func updateThumbnails() {
-        // set fake thumbnails here
+    
+    public func setFakeThumbnailURL(thumbnailURL: URL?) {
+        fakeThumbnailImageViews.forEach {
+            $0.kf.setImage(with: thumbnailURL)
+        }
     }
 
     // MARK: - Private functions
@@ -518,6 +526,25 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             width: endTimeView.intrinsicContentSize.width,
             height: endTimeView.intrinsicContentSize.height
         )
+        
+        // Update fake thumbnails frames
+        
+        fakeThumbnailsContainer.frame = bounds
+        
+        guard !fakeThumbnailImageViews.isEmpty else {
+            return
+        }
+        
+        let imageWidth = bounds.width / CGFloat(fakeThumbnailImageViews.count)
+        
+        fakeThumbnailImageViews.enumerated().forEach { offset, element in
+            element.frame = CGRect(
+                x: CGFloat(offset) * imageWidth,
+                y: 0,
+                width: imageWidth,
+                height: bounds.height
+            )
+        }
     }
 
     override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
@@ -540,10 +567,7 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             return String(format: "%02i:%02i", minutes, seconds)
         }
     }
-
-    deinit {
-      // removeObserver(self, forKeyPath: "bounds")
-    }
+    
 }
 
 // swiftlint:enable all

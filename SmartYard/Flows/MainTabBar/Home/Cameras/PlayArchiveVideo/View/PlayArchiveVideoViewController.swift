@@ -245,6 +245,14 @@ class PlayArchiveVideoViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
+        output.preview
+            .drive(
+                onNext: { [weak self] url in
+                    self?.videoRangeSlider.setFakeThumbnailURL(thumbnailURL: url)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         output.periodConfiguration
             .drive(
                 onNext: { [weak self] in
