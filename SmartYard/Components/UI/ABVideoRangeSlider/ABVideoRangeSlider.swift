@@ -210,16 +210,6 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         // set fake thumbnails here
     }
 
-    public func setStartPosition(seconds: Float) {
-        self.startPercentage = self.valueFromSeconds(seconds: seconds)
-        layoutSubviews()
-    }
-
-    public func setEndPosition(seconds: Float) {
-        self.endPercentage = self.valueFromSeconds(seconds: seconds)
-        layoutSubviews()
-    }
-
     // MARK: - Private functions
 
     // MARK: - Crop Handle Drag Functions
@@ -256,10 +246,10 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         position = position + translation.x
         
-        if position < 0 { position = 0 }
+        if position < startIndicator.bounds.width { position = startIndicator.bounds.width }
         
-        if position > self.frame.size.width {
-            position = self.frame.size.width
+        if position > self.frame.size.width - endIndicator.bounds.width {
+            position = self.frame.size.width - endIndicator.bounds.width
         }
 
         let positionLimits = getPositionLimits(with: drag)
@@ -281,7 +271,8 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         currentIndicator.center = CGPoint(x: position , y: currentIndicator.center.y)
         
-		let percentage = currentIndicator.center.x * 100 / self.frame.width
+//		let percentage = currentIndicator.center.x * 100 / self.frame.width
+        let percentage = valueFromPosition(position: currentIndicator.center.x)
         
         let startSeconds = secondsFromValue(value: self.startPercentage)
         let endSeconds = secondsFromValue(value: self.endPercentage)
@@ -411,9 +402,20 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     }
     
     // MARK: - Drag Functions Helpers
-    private func positionFromValue(value: CGFloat) -> CGFloat{
-        let position = value * self.frame.size.width / 100
-        return position
+    private func positionFromValue(value: CGFloat) -> CGFloat {
+        let startPosition = startIndicator.bounds.width
+        let endPosition = frame.size.width - endIndicator.bounds.width
+        let neededPosition = startPosition + value * (endPosition - startPosition) / 100
+
+        return neededPosition
+//        return frame.size.width / 100 * value
+    }
+    
+    private func valueFromPosition(position: CGFloat) -> CGFloat {
+        let startPosition = startIndicator.bounds.width
+        let endPosition = frame.size.width - endIndicator.bounds.width
+        
+        return (position - startPosition) * 100 / (endPosition - startPosition)
     }
     
     private func getPositionLimits(with drag: DragHandleChoice) -> (min: CGFloat, max: CGFloat) {
