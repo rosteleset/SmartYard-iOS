@@ -524,21 +524,41 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
                                      y: 0,
                                      width: endIndicator.frame.origin.x - startIndicator.frame.origin.x - endIndicator.frame.size.width,
                                      height: self.frame.height)
-
-        // Update time view
-        startTimeView.frame = CGRect(
-            x: startIndicator.frame.origin.x,
-            y: -startTimeView.intrinsicContentSize.height - 7,
-            width: startTimeView.intrinsicContentSize.width,
-            height: startTimeView.intrinsicContentSize.height
-        )
         
-        endTimeView.frame = CGRect(
-            x: endIndicator.frame.origin.x + endIndicator.frame.width - endTimeView.intrinsicContentSize.width,
-            y: -endTimeView.intrinsicContentSize.height - 7,
-            width: endTimeView.intrinsicContentSize.width,
-            height: endTimeView.intrinsicContentSize.height
-        )
+        UIView.animate(withDuration: 0.05) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            let startTimeViewX = self.startIndicator.frame.origin.x
+            let startTimeViewWidth = self.startTimeView.intrinsicContentSize.width
+            let startTimeViewHeight = self.startTimeView.intrinsicContentSize.height
+
+            // Update time view
+            self.startTimeView.frame = CGRect(
+                x: startTimeViewX,
+                y: -self.startTimeView.intrinsicContentSize.height - 7,
+                width: startTimeViewWidth,
+                height: startTimeViewHeight
+            )
+            
+            let endTimeViewX = self.endIndicator.frame.origin.x + self.endIndicator.frame.width - self.endTimeView.intrinsicContentSize.width
+            
+            let endTimeViewY: CGFloat = {
+                guard endTimeViewX >= startTimeViewX + startTimeViewWidth + 7 else {
+                    return -self.endTimeView.intrinsicContentSize.height - 7 - startTimeViewHeight - 7
+                }
+                
+                return -self.endTimeView.intrinsicContentSize.height - 7
+            }()
+            
+            self.endTimeView.frame = CGRect(
+                x: endTimeViewX,
+                y: endTimeViewY,
+                width: self.endTimeView.intrinsicContentSize.width,
+                height: self.endTimeView.intrinsicContentSize.height
+            )
+        }
         
         // Update fake thumbnails frames
         
