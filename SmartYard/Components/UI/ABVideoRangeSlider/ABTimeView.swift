@@ -1,21 +1,11 @@
-//
-//  ABTimeView.swift
-//  Pods
-//
-//  Created by Oscar J. Irun on 12/12/16.
-//
-//
-
 import UIKit
-
-// swiftlint:disable all
 
 open class ABTimeView: UIView {
     
     let timeLabel = UILabel()
     let backgroundView = UIView()
     
-    open override var intrinsicContentSize: CGSize {
+    override open var intrinsicContentSize: CGSize {
         let height: CGFloat = 16
         let labelWidth = timeLabel.sizeThatFits(CGSize(width: .greatestFiniteMagnitude, height: height)).width
         let width: CGFloat = 4 * 2 + labelWidth
@@ -48,7 +38,7 @@ open class ABTimeView: UIView {
         self.addSubview(self.timeLabel)
     }
     
-    open override func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
 
         self.backgroundView.frame = self.bounds
@@ -61,10 +51,9 @@ open class ABTimeView: UIView {
         )
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
 }
-
-// swiftlint:enable all

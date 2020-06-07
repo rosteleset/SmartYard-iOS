@@ -51,16 +51,9 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     public var minSpace: Float = 1              // In Seconds
     public var maxSpace: Float = 0              // In Seconds
     
-    public var isProgressIndicatorSticky: Bool = false
     public var isProgressIndicatorDraggable: Bool = true
     
-    var isUpdatingThumbnails = false
     var isReceivingGesture: Bool = false
-    
-    public enum ABTimeViewPosition{
-        case top
-        case bottom
-    }
 
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -218,6 +211,8 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         }()
         
         self.duration = duration
+        
+        self.layoutSubviews()
         self.superview?.layoutSubviews()
     }
     
@@ -253,7 +248,10 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         drag: DragHandleChoice,
         currentPositionPercentage: CGFloat,
         currentIndicator: UIView
-        ) {
+    ) {
+        guard duration > 0 else {
+            return
+        }
         
         self.updateGestureStatus(recognizer: recognizer)
         
@@ -288,7 +286,6 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         currentIndicator.center = CGPoint(x: position , y: currentIndicator.center.y)
         
-//		let percentage = currentIndicator.center.x * 100 / self.frame.width
         let percentage = valueFromPosition(position: currentIndicator.center.x)
         
         let startSeconds = secondsFromValue(value: self.startPercentage)
@@ -328,7 +325,11 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         layoutSubviews()
     }
     
-	@objc func progressDragged(recognizer: UIPanGestureRecognizer){
+	@objc func progressDragged(recognizer: UIPanGestureRecognizer) {
+        guard duration > 0 else {
+            return
+        }
+        
         if !isProgressIndicatorDraggable {
             return
         }
@@ -366,7 +367,11 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         layoutSubviews()
     }
 
-	@objc func viewDragged(recognizer: UIPanGestureRecognizer){
+	@objc func viewDragged(recognizer: UIPanGestureRecognizer) {
+        guard duration > 0 else {
+            return
+        }
+        
         updateGestureStatus(recognizer: recognizer)
         
         let translation = recognizer.translation(in: self)
@@ -425,7 +430,6 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         let neededPosition = startPosition + value * (endPosition - startPosition) / 100
 
         return neededPosition
-//        return frame.size.width / 100 * value
     }
     
     private func valueFromPosition(position: CGFloat) -> CGFloat {
