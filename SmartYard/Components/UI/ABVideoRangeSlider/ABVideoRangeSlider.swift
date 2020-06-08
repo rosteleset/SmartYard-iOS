@@ -1,11 +1,3 @@
-//
-//  ABVideoRangeSlider.swift
-//  selfband
-//
-//  Created by Oscar J. Irun on 26/11/16.
-//  Copyright © 2016 appsboulevard. All rights reserved.
-//
-
 import UIKit
 import AVKit
 import Kingfisher
@@ -592,15 +584,6 @@ public class ABVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
                 height: bounds.height
             )
         }
-    }
-
-    override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        let extendedBounds = CGRect(x: -startIndicator.frame.size.width,
-                                    y: 0,
-                                    width: self.frame.size.width + startIndicator.frame.size.width + endIndicator.frame.size.width,
-                                    height: self.frame.size.height)
-
-        return extendedBounds.contains(point)
     }
 
     private func secondsToFormattedString(totalSeconds: Float64) -> String{

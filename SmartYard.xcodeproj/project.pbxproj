@@ -65,6 +65,7 @@
 		845E9EE324895AE4000CBBC6 /* ABVideoRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDB24895AE3000CBBC6 /* ABVideoRangeSlider.swift */; };
 		845E9EE424895AE4000CBBC6 /* ABStartIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDC24895AE3000CBBC6 /* ABStartIndicator.swift */; };
 		845E9EE524895AE4000CBBC6 /* ABTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */; };
+		845E9EEF248E8903000CBBC6 /* SimpleVideoProgressSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */; };
 		847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */; };
 		847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */; };
 		847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */; };
@@ -483,6 +484,7 @@
 		845E9EDB24895AE3000CBBC6 /* ABVideoRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABVideoRangeSlider.swift; sourceTree = "<group>"; };
 		845E9EDC24895AE3000CBBC6 /* ABStartIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABStartIndicator.swift; sourceTree = "<group>"; };
 		845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABTimeView.swift; sourceTree = "<group>"; };
+		845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleVideoProgressSlider.swift; sourceTree = "<group>"; };
 		847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListSkeletonView.swift; sourceTree = "<group>"; };
 		847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListSkeletonView.xib; sourceTree = "<group>"; };
 		847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListSkeletonView.swift; sourceTree = "<group>"; };
@@ -1245,6 +1247,7 @@
 				845E9ED924895AE3000CBBC6 /* ABProgressIndicator.swift */,
 				845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */,
 				845E9EDB24895AE3000CBBC6 /* ABVideoRangeSlider.swift */,
+				845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */,
 			);
 			path = ABVideoRangeSlider;
 			sourceTree = "<group>";
@@ -3320,6 +3323,7 @@
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
 				E92EFBB0242A22F2003AF7FE /* APISettingsAddress.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
+				845E9EEF248E8903000CBBC6 /* SimpleVideoProgressSlider.swift in Sources */,
 				E92EFBC6242A22F2003AF7FE /* APIWrapper+User.swift in Sources */,
 				84AA8D6623E2F2A8001B3B43 /* TransportType+Extensions.swift in Sources */,
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,

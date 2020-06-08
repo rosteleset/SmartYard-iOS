@@ -27,8 +27,8 @@
                 <outlet property="oneAndHalfSpeedButton" destination="fr5-Hf-wxY" id="bbz-TP-1X0"/>
                 <outlet property="periodCollectionView" destination="8od-sE-j0B" id="WpC-H6-pGy"/>
                 <outlet property="playButton" destination="5f4-F5-jna" id="dzY-fn-tKq"/>
+                <outlet property="progressSlider" destination="gTL-Y7-3LT" id="bKy-0r-Vsa"/>
                 <outlet property="videoContainer" destination="Oe3-0L-wZ8" id="MSN-XB-913"/>
-                <outlet property="videoRangeSlider" destination="gTL-Y7-3LT" id="bKy-0r-Vsa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -53,7 +53,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oe3-0L-wZ8">
                             <rect key="frame" x="16" y="16" width="382" height="258.5"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gTL-Y7-3LT" customClass="ABVideoRangeSlider" customModule="SmartYard" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gTL-Y7-3LT" customClass="SimpleVideoProgressSlider" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="12" y="205.5" width="358" height="37"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <constraints>
