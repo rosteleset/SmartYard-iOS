@@ -12,6 +12,24 @@ import RxSwift
 
 extension APIWrapper {
     
+    func checkAppVersion() -> Single<APIAppVersionCheckResult?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = AppVersionRequest(accessToken: accessToken)
+        
+        return provider.rx
+            .request(.appVersion(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
+    
     func addMyPhone(login: String, password: String, comment: String?, useForNotifications: Bool?) -> Single<Void?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)

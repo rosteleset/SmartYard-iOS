@@ -210,6 +210,8 @@
 		84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */; };
 		84CD304524D2CFDE00CC079E /* IncomingCallSoundOutputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD304424D2CFDE00CC079E /* IncomingCallSoundOutputState.swift */; };
 		84CD304724D305F500CC079E /* IncomingCallScreenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD304624D305F500CC079E /* IncomingCallScreenType.swift */; };
+		84CD304A24D4053C00CC079E /* AppVersionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD304924D4053C00CC079E /* AppVersionRequest.swift */; };
+		84CD304C24D4055600CC079E /* APIAppVersionCheckResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD304B24D4055600CC079E /* APIAppVersionCheckResult.swift */; };
 		84D29B9024B7999A00CFBE6B /* APIArchiveRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B8E24B7999A00CFBE6B /* APIArchiveRange.swift */; };
 		84D29B9124B7999A00CFBE6B /* APIArchiveStreamInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B8F24B7999A00CFBE6B /* APIArchiveStreamInfo.swift */; };
 		84D29B9524B799B100CFBE6B /* StreamInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9324B799B100CFBE6B /* StreamInfoRequest.swift */; };
@@ -685,6 +687,8 @@
 		84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTransitions.swift; sourceTree = "<group>"; };
 		84CD304424D2CFDE00CC079E /* IncomingCallSoundOutputState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallSoundOutputState.swift; sourceTree = "<group>"; };
 		84CD304624D305F500CC079E /* IncomingCallScreenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallScreenType.swift; sourceTree = "<group>"; };
+		84CD304924D4053C00CC079E /* AppVersionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersionRequest.swift; sourceTree = "<group>"; };
+		84CD304B24D4055600CC079E /* APIAppVersionCheckResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIAppVersionCheckResult.swift; sourceTree = "<group>"; };
 		84D29B8E24B7999A00CFBE6B /* APIArchiveRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIArchiveRange.swift; sourceTree = "<group>"; };
 		84D29B8F24B7999A00CFBE6B /* APIArchiveStreamInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIArchiveStreamInfo.swift; sourceTree = "<group>"; };
 		84D29B9324B799B100CFBE6B /* StreamInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamInfoRequest.swift; sourceTree = "<group>"; };
@@ -2113,6 +2117,14 @@
 			path = CameraCell;
 			sourceTree = "<group>";
 		};
+		84CD304824D4053C00CC079E /* AppVersion */ = {
+			isa = PBXGroup;
+			children = (
+				84CD304924D4053C00CC079E /* AppVersionRequest.swift */,
+			);
+			path = AppVersion;
+			sourceTree = "<group>";
+		};
 		84D29B9224B799B100CFBE6B /* StreamInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -2378,6 +2390,7 @@
 		E92EFB4E242A22F2003AF7FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				84CD304B24D4055600CC079E /* APIAppVersionCheckResult.swift */,
 				84D29B8E24B7999A00CFBE6B /* APIArchiveRange.swift */,
 				84D29B8F24B7999A00CFBE6B /* APIArchiveStreamInfo.swift */,
 				E92EFB52242A22F2003AF7FE /* Geo */,
@@ -2498,6 +2511,7 @@
 				E92EFB77242A22F2003AF7FE /* APIWrapper+User.swift */,
 				E92EFB78242A22F2003AF7FE /* SendName */,
 				E92EFB7A242A22F2003AF7FE /* AddMyPhone */,
+				84CD304824D4053C00CC079E /* AppVersion */,
 				E92EFB7C242A22F2003AF7FE /* ConfirmCode */,
 				E92EFB7F242A22F2003AF7FE /* RequestCode */,
 				E92EFB81242A22F2003AF7FE /* RegisterPushToken */,
@@ -3731,6 +3745,7 @@
 				E94B6C3723FD728F00FD9F65 /* RoundedImageView.swift in Sources */,
 				84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */,
 				846DC64D24B3143B00A11914 /* ArchiveVideoPlaybackSpeed.swift in Sources */,
+				84CD304A24D4053C00CC079E /* AppVersionRequest.swift in Sources */,
 				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
 				E92EFBBA242A22F2003AF7FE /* GetStreetsRequest.swift in Sources */,
 				8496396B248667040086B6E9 /* PlayArchiveVideoViewModel.swift in Sources */,
@@ -3750,6 +3765,7 @@
 				E92EFBD4242A22F2003AF7FE /* ResetCodeResponseData.swift in Sources */,
 				E92EFBAC242A22F2003AF7FE /* APIServiceModel.swift in Sources */,
 				846DC6C324B33DC600A11914 /* PaymentsViewController.swift in Sources */,
+				84CD304C24D4055600CC079E /* APIAppVersionCheckResult.swift in Sources */,
 				84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */,
 				E92EFBCA242A22F2003AF7FE /* ConfirmCodeResponseData.swift in Sources */,
 				E9C0E816247282DE001CE018 /* OnboardingViewModel.swift in Sources */,

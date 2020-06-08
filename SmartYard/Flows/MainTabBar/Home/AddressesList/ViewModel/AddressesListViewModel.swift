@@ -125,6 +125,18 @@ class AddressesListViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Проверка версии приложения
+        apiWrapper.checkAppVersion()
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] action in
+                    print(action)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
         
         let interactionBlockingRequestTracker = ActivityTracker()
