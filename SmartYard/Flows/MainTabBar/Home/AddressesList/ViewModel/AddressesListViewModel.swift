@@ -109,11 +109,6 @@ class AddressesListViewModel: BaseViewModel {
             .drive()
             .disposed(by: disposeBag)
         
-        permissionService.requestAccessToContacts()
-            .asDriver(onErrorJustReturn: nil)
-            .drive()
-            .disposed(by: disposeBag)
-        
         // MARK: Подписка на уведомления
         pushNotificationService.registerForPushNotifications()
             .trackError(errorTracker)

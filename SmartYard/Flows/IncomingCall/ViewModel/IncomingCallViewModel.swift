@@ -65,13 +65,14 @@ class IncomingCallViewModel: BaseViewModel {
         
         let errorTracker = ErrorTracker()
         
-        let micMsg = "Чтобы передавать звук во время звонка, перейдите в настройки и предоставьте доступ к микрофону"
+        let micMsg = "Исходящего звука в этом звонке не будет. " +
+        "Чтобы он появился в следующих звонках, предоставьте доступ к микрофону в настройках"
         
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
                     if (error as NSError) == NSError.PermissionError.noMicPermission {
-                        self?.router.trigger(.appSettings(title: "Нет доступа к микрофону", message: micMsg))
+                        self?.router.trigger(.alert(title: "Нет доступа к микрофону", message: micMsg))
                         return
                     }
                     
