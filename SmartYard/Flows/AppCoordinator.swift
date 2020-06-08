@@ -22,6 +22,8 @@ enum AppRoute: Route {
     case pinCode(phoneNumber: String, isInitial: Bool)
     case alert(title: String, message: String?)
     case onboarding
+    case appSettings(title: String, message: String?)
+    
 }
 
 class AppCoordinator: NavigationCoordinator<AppRoute> {
@@ -79,6 +81,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         case let .incomingCall(callPayload):
             let vm = IncomingCallViewModel(
                 linphoneService: linphoneService,
+                permissionService: permissionService,
                 apiWrapper: apiWrapper,
                 router: weakRouter,
                 callPayload: callPayload
@@ -135,6 +138,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             let vm = OnboardingViewModel(router: weakRouter, accessService: accessService)
             let vc = OnboardingViewController(viewModel: vm)
             return .set([vc], animation: .fade)
+            
+        case let .appSettings(title, message):
+            return .appSettingsTransition(title: title, message: message)
         }
     }
     

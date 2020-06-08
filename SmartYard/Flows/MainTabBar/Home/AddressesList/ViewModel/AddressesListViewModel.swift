@@ -80,9 +80,33 @@ class AddressesListViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
-                    self?.alertService.showAlert(title: "Ошибка", message: error.localizedDescription, priority: 250)
+                    if (error as NSError) == NSError.PermissionError.noCameraPermission {
+                        let msg = "Чтобы использовать эту функцию, перейдите в настройки и предоставьте доступ к камере"
+                        
+                        self?.router.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
+                        
+                        return
+                    }
+                    
+                    self?.alertService.showAlert(
+                        title: "Ошибка",
+                        message: error.localizedDescription,
+                        priority: 250
+                    )
                 }
             )
+            .disposed(by: disposeBag)
+        
+        // MARK: Заказчик попросил запрашивать все разрешения сразу после авторизации. Хозяин - барин
+        
+        permissionService.requestAccessToMic()
+            .asDriver(onErrorJustReturn: nil)
+            .drive()
+            .disposed(by: disposeBag)
+        
+        permissionService.hasAccess(to: .video)
+            .asDriver(onErrorJustReturn: nil)
+            .drive()
             .disposed(by: disposeBag)
         
         // MARK: Подписка на уведомления
@@ -421,7 +445,11 @@ class AddressesListViewModel: BaseViewModel {
             shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
         )
     }
+    
+}
 
+extension AddressesListViewModel {
+    
     private func closeObjectAccessAfterTimeout(identity: AddressesListDataItemIdentity) {
         Timer.scheduledTimer(
             withTimeInterval: 5,

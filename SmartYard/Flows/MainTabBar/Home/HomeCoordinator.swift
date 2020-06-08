@@ -15,6 +15,7 @@ enum HomeRoute: Route {
     case main
     case alert(title: String, message: String?)
     case dialog(title: String, message: String?, actions: [UIAlertAction])
+    case appSettings(title: String, message: String?)
     case inputContract(isManualTrigger: Bool)
     case inputAddress
     case availableServices(address: String, services: [APIServiceModel])
@@ -86,6 +87,9 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
         case let .dialog(title, message, actions):
             return .dialogTransition(title: title, message: message, actions: actions)
+            
+        case let .appSettings(title, message):
+            return .appSettingsTransition(title: title, message: message)
             
         case let .inputContract(isManualTrigger):
             let vm = AuthByContractNumViewModel(
