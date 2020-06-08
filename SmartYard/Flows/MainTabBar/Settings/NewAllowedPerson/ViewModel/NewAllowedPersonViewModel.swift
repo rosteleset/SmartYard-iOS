@@ -172,8 +172,6 @@ class NewAllowedPersonViewModel: BaseViewModel {
                             allowedPerson: person
                         )
                     }
-                    
-                    self.router.trigger(.dismiss)
                 }
             )
             .disposed(by: disposeBag)

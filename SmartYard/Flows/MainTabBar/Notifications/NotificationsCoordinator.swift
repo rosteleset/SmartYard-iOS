@@ -19,10 +19,19 @@ class NotificationsCoordinator: NavigationCoordinator<NotificationsRoute> {
     
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     
-    init(apiWrapper: APIWrapper, pushNotificationService: PushNotificationService) {
+    init(
+        apiWrapper: APIWrapper,
+        pushNotificationService: PushNotificationService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
+    ) {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         
         super.init(initialRoute: .main)
         rootViewController.setNavigationBarHidden(true, animated: false)
@@ -34,6 +43,8 @@ class NotificationsCoordinator: NavigationCoordinator<NotificationsRoute> {
             let vm = NotificationsViewModel(
                 apiWrapper: apiWrapper,
                 pushNotificationService: pushNotificationService,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
                 router: weakRouter
             )
             

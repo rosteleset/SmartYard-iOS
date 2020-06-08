@@ -30,6 +30,8 @@ class AddressAccessViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let permissionService: PermissionService
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     
     let activityTracker = ActivityTracker()
     let errorTracker = ErrorTracker()
@@ -40,7 +42,9 @@ class AddressAccessViewModel: BaseViewModel {
         flatId: String,
         clientId: String?,
         apiWrapper: APIWrapper,
-        permissionService: PermissionService
+        permissionService: PermissionService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
     ) {
         self.router = router
         self.address = address
@@ -48,6 +52,8 @@ class AddressAccessViewModel: BaseViewModel {
         self.clientId = clientId
         self.apiWrapper = apiWrapper
         self.permissionService = permissionService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         
         addressSubject = BehaviorSubject<String?>(value: address)
         
@@ -57,6 +63,18 @@ class AddressAccessViewModel: BaseViewModel {
     // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: self.activityTracker,
+                    errorTracker: self.errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
@@ -538,15 +556,29 @@ extension AddressAccessViewModel {
 
 extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
     
+    // MARK: алерт не показывается, если мы пытаемся презентануть ошибку до того, как завершился возврат назад
+    // Он пытается презентнуть ошибку от того экрана, который мы дисмиссаем
+    // Поэтому было решено дергать dismiss отсюда, ждать завершения транзишена, а потом уже делать запрос к API
+    // Если ошибка и выскочит, то она презентнется нормально, поскольку мы уже ушли с того экрана
+    
     func newAllowedPersonViewModelDidAddNewTemp(
         _ viewModel: NewAllowedPersonViewModel,
         allowedPerson: AllowedPerson
     ) {
-        apiWrapper
-            .grantAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .outer)
-            .trackError(errorTracker)
-            .trackActivity(activityTracker)
-            .asDriver(onErrorJustReturn: nil)
+        router.rx
+            .trigger(.dismiss)
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .grantAccess(flatId: self.flatId, guestPhone: allowedPerson.apiNumber, type: .outer)
+                    .trackError(self.errorTracker)
+                    .trackActivity(self.activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
             .ignoreNil()
             .withLatestFrom(tempAccessContactsSubject.asDriver(onErrorJustReturn: []))
             .map { contacts -> [AllowedPerson] in
@@ -564,11 +596,20 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
         _ viewModel: NewAllowedPersonViewModel,
         allowedPerson: AllowedPerson
     ) {
-        apiWrapper
-            .grantAccess(flatId: flatId, guestPhone: allowedPerson.apiNumber, type: .inner)
-            .trackError(errorTracker)
-            .trackActivity(activityTracker)
-            .asDriver(onErrorJustReturn: nil)
+        router.rx
+            .trigger(.dismiss)
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .grantAccess(flatId: self.flatId, guestPhone: allowedPerson.apiNumber, type: .inner)
+                    .trackError(self.errorTracker)
+                    .trackActivity(self.activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
             .ignoreNil()
             .withLatestFrom(permanentAccessContactsSubject.asDriver(onErrorJustReturn: []))
             .map { contacts -> [AllowedPerson] in

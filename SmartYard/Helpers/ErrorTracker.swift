@@ -45,3 +45,21 @@ extension ObservableConvertibleType {
     }
     
 }
+
+extension SharedSequenceConvertibleType where Element == Error {
+    
+    func catchAuthorizationError(block: @escaping () -> Void) -> SharedSequence<SharingStrategy, Element?> {
+        return map { error -> Error? in
+            let nsError = error as NSError
+            
+            guard nsError.code == 401 else {
+                return error
+            }
+            
+            block()
+            
+            return nil
+        }
+    }
+    
+}

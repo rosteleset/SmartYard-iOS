@@ -17,6 +17,8 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     private let permissionService: PermissionService
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     
     private let issueSubject: BehaviorSubject<APIIssueConnect>
     
@@ -28,17 +30,33 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
         apiWrapper: APIWrapper,
         issueService: IssueService,
         permissionService: PermissionService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
         issue: APIIssueConnect
     ) {
         self.router = router
         self.apiWrapper = apiWrapper
         self.issueService = issueService
         self.permissionService = permissionService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         self.issueSubject = BehaviorSubject<APIIssueConnect>(value: issue)
     }
     
     func transform(input: Input) -> Output {
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: self.activityTracker,
+                    errorTracker: self.errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))

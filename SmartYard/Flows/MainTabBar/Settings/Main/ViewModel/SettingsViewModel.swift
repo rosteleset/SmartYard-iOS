@@ -16,22 +16,45 @@ class SettingsViewModel: BaseViewModel {
     private let router: WeakRouter<SettingsRoute>
     private let apiWrapper: APIWrapper
     private let accessService: AccessService
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
     private let loadedData = BehaviorSubject<[APISettingsAddress]>(value: [])
     
-    init(router: WeakRouter<SettingsRoute>, apiWrapper: APIWrapper, accessService: AccessService) {
+    init(
+        router: WeakRouter<SettingsRoute>,
+        apiWrapper: APIWrapper,
+        accessService: AccessService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
+    ) {
         self.router = router
         self.apiWrapper = apiWrapper
         self.accessService = accessService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
+        let activityTracker = ActivityTracker()
         
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: activityTracker,
+                    errorTracker: errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
@@ -396,7 +419,8 @@ class SettingsViewModel: BaseViewModel {
             sectionModels: sectionModels,
             updateKind: updateKind,
             reloadingFinished: reloadingFinished,
-            shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
+            shouldBlockInteraction: interactionBlockingRequestTracker.asDriver(),
+            isLoading: activityTracker.asDriver()
         )
     }
     
@@ -512,6 +536,7 @@ extension SettingsViewModel {
         let updateKind: Driver<SettingsSectionUpdateKind>
         let reloadingFinished: Driver<Void>
         let shouldBlockInteraction: Driver<Bool>
+        let isLoading: Driver<Bool>
     }
     
     struct ServiceUnactivatedResponsePayload {

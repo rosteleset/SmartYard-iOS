@@ -14,6 +14,8 @@ class AddressSettingsViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     
     private let flatId: String
     private let clientId: String?
@@ -28,6 +30,8 @@ class AddressSettingsViewModel: BaseViewModel {
     init(
         apiWrapper: APIWrapper,
         issueService: IssueService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
         flatId: String,
         clientId: String?,
         address: String,
@@ -37,6 +41,8 @@ class AddressSettingsViewModel: BaseViewModel {
     ) {
         self.apiWrapper = apiWrapper
         self.issueService = issueService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         self.flatId = flatId
         self.clientId = clientId
         self.address = address
@@ -47,6 +53,18 @@ class AddressSettingsViewModel: BaseViewModel {
     
     func transform(_ input: Input) -> Output {
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: self.activityTracker,
+                    errorTracker: self.errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
