@@ -56,6 +56,8 @@ class AddressesListViewModel: BaseViewModel {
     // MARK: Словарь необходим для того, чтобы хранить состояния предоставленного доступа к объекту
     private let areObjectsGrantAccessed = BehaviorSubject<[AddressesListDataItemIdentity: Bool]>(value: [:])
     
+    private let appVersionCheckResult = BehaviorSubject<APIAppVersionCheckResult?>(value: nil)
+    
     // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
@@ -126,13 +128,31 @@ class AddressesListViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         // MARK: Проверка версии приложения
+        
         apiWrapper.checkAppVersion()
             .trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
-                onNext: { [weak self] action in
-                    print(action)
+                onNext: { [weak self] result in
+                    self?.appVersionCheckResult.onNext(result)
+                    self?.handleAppVersionCheckResult(result)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Если нажать на "Обновить", то алерт закроется. При этом юзер может просто сразу же зайти обратно
+        // Поэтому при повторном разворачивании приложения снова показываем алерт
+        
+        NotificationCenter.default.rx
+            .notification(UIApplication.willEnterForegroundNotification)
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(appVersionCheckResult.asDriver(onErrorJustReturn: nil))
+            .filter { $0 == .forceUpgrade }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] result in
+                    self?.handleAppVersionCheckResult(result)
                 }
             )
             .disposed(by: disposeBag)
@@ -597,6 +617,47 @@ extension AddressesListViewModel {
         }
         
         return sectionModels
+    }
+    
+    private func handleAppVersionCheckResult(_ result: APIAppVersionCheckResult) {
+        switch result {
+        case .ok:
+            break
+            
+        case .upgrade:
+            let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+            
+            let updateAction = UIAlertAction(title: "Обновить", style: .default) { _ in
+                guard let url = URL(string: Constants.appstoreUrl) else {
+                    return
+                }
+                
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            
+            alertService.showDialog(
+                title: "Доступна новая версия приложения",
+                message: nil,
+                actions: [cancelAction, updateAction],
+                priority: 5000
+            )
+            
+        case .forceUpgrade:
+            let updateAction = UIAlertAction(title: "Обновить", style: .default) { _ in
+                guard let url = URL(string: Constants.appstoreUrl) else {
+                    return
+                }
+                
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            
+            alertService.showDialog(
+                title: "Версия приложения устарела",
+                message: "Чтобы продолжить пользоваться приложением, пожалуйста, обновите его",
+                actions: [updateAction],
+                priority: 5000
+            )
+        }
     }
     
 }
