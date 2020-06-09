@@ -16,6 +16,7 @@ class PlayArchiveVideoViewController: BaseViewController {
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var videoContainer: UIView!
+    @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
     
     @IBOutlet private weak var periodCollectionView: UICollectionView!
     
@@ -169,7 +170,7 @@ class PlayArchiveVideoViewController: BaseViewController {
         self.player = player
         
         addChild(playerViewController)
-        videoContainer.addSubview(playerViewController.view)
+        videoContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
         
         player.rx
@@ -203,6 +204,15 @@ class PlayArchiveVideoViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        player.addPeriodicTimeObserver(
+            forInterval: CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
+            queue: .main
+        ) { [weak self] time in
+            self?.progressSlider.setCurrentTime(time)
+        }
+        
+        progressSlider.delegate = self
     }
 
     private func bind() {
@@ -239,6 +249,15 @@ class PlayArchiveVideoViewController: BaseViewController {
                     }()
                     
                     self?.player?.replaceCurrentItem(with: playerItem)
+                    self?.progressSlider.setVideoURL(videoURL: url)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.preview
+            .drive(
+                onNext: { [weak self] url in
+                    self?.progressSlider.setFakeThumbnailURL(thumbnailURL: url)
                 }
             )
             .disposed(by: disposeBag)
@@ -325,6 +344,14 @@ extension PlayArchiveVideoViewController: UICollectionViewDelegateFlowLayout {
         }
         
         periodSelectedTrigger.onNext(period)
+    }
+    
+}
+
+extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
+    
+    func indicatorDidChangePosition(videoRangeSlider: SimpleVideoProgressSlider, position: Float64) {
+        player?.seek(to: CMTime(seconds: position, preferredTimescale: CMTimeScale(NSEC_PER_SEC)))
     }
     
 }

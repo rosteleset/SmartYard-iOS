@@ -60,6 +60,12 @@
 		844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */; };
 		845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845842D424223D690019635E /* AddressSettingsSkeletonView.swift */; };
 		845842D724223D7D0019635E /* AddressSettingsSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845842D624223D7D0019635E /* AddressSettingsSkeletonView.xib */; };
+		845E9EE024895AE4000CBBC6 /* ABEndIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9ED824895AE3000CBBC6 /* ABEndIndicator.swift */; };
+		845E9EE124895AE4000CBBC6 /* ABProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9ED924895AE3000CBBC6 /* ABProgressIndicator.swift */; };
+		845E9EE324895AE4000CBBC6 /* ABVideoRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDB24895AE3000CBBC6 /* ABVideoRangeSlider.swift */; };
+		845E9EE424895AE4000CBBC6 /* ABStartIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDC24895AE3000CBBC6 /* ABStartIndicator.swift */; };
+		845E9EE524895AE4000CBBC6 /* ABTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */; };
+		845E9EEF248E8903000CBBC6 /* SimpleVideoProgressSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */; };
 		847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */; };
 		847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */; };
 		847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */; };
@@ -473,6 +479,12 @@
 		844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		845842D424223D690019635E /* AddressSettingsSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSettingsSkeletonView.swift; sourceTree = "<group>"; };
 		845842D624223D7D0019635E /* AddressSettingsSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressSettingsSkeletonView.xib; sourceTree = "<group>"; };
+		845E9ED824895AE3000CBBC6 /* ABEndIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABEndIndicator.swift; sourceTree = "<group>"; };
+		845E9ED924895AE3000CBBC6 /* ABProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABProgressIndicator.swift; sourceTree = "<group>"; };
+		845E9EDB24895AE3000CBBC6 /* ABVideoRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABVideoRangeSlider.swift; sourceTree = "<group>"; };
+		845E9EDC24895AE3000CBBC6 /* ABStartIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABStartIndicator.swift; sourceTree = "<group>"; };
+		845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABTimeView.swift; sourceTree = "<group>"; };
+		845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleVideoProgressSlider.swift; sourceTree = "<group>"; };
 		847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListSkeletonView.swift; sourceTree = "<group>"; };
 		847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListSkeletonView.xib; sourceTree = "<group>"; };
 		847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListSkeletonView.swift; sourceTree = "<group>"; };
@@ -989,6 +1001,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				845E9ED624895AE3000CBBC6 /* ABVideoRangeSlider */,
 				E91724492410E27D00F2B810 /* SmartYardSearchTextField */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
@@ -1224,6 +1237,19 @@
 				845842D624223D7D0019635E /* AddressSettingsSkeletonView.xib */,
 			);
 			path = AddressSettingsSkeletonView;
+			sourceTree = "<group>";
+		};
+		845E9ED624895AE3000CBBC6 /* ABVideoRangeSlider */ = {
+			isa = PBXGroup;
+			children = (
+				845E9EDC24895AE3000CBBC6 /* ABStartIndicator.swift */,
+				845E9ED824895AE3000CBBC6 /* ABEndIndicator.swift */,
+				845E9ED924895AE3000CBBC6 /* ABProgressIndicator.swift */,
+				845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */,
+				845E9EDB24895AE3000CBBC6 /* ABVideoRangeSlider.swift */,
+				845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */,
+			);
+			path = ABVideoRangeSlider;
 			sourceTree = "<group>";
 		};
 		847CF7D3240689C400070007 /* Skeletons */ = {
@@ -3273,6 +3299,7 @@
 				E9E4273223F55B9700F5D593 /* ServicesActivationRequestViewController.swift in Sources */,
 				E9E4273323F55B9700F5D593 /* ServicesActivationRequestViewModel.swift in Sources */,
 				E92EFBDE242A22F2003AF7FE /* GetListConnectRequest.swift in Sources */,
+				845E9EE424895AE4000CBBC6 /* ABStartIndicator.swift in Sources */,
 				844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */,
 				E9E4271F23F41DDF00F5D593 /* SmartYardCheckBoxState.swift in Sources */,
 				844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */,
@@ -3296,6 +3323,7 @@
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
 				E92EFBB0242A22F2003AF7FE /* APISettingsAddress.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
+				845E9EEF248E8903000CBBC6 /* SimpleVideoProgressSlider.swift in Sources */,
 				E92EFBC6242A22F2003AF7FE /* APIWrapper+User.swift in Sources */,
 				84AA8D6623E2F2A8001B3B43 /* TransportType+Extensions.swift in Sources */,
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
@@ -3345,10 +3373,12 @@
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
 				E92EFBE1242A22F2003AF7FE /* APITarget.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
+				845E9EE024895AE4000CBBC6 /* ABEndIndicator.swift in Sources */,
 				843C38D3242A577C0035BF80 /* DeliveredRequest.swift in Sources */,
 				845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */,
 				84F6493D247402DC000C0028 /* ArchiveView.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
+				845E9EE124895AE4000CBBC6 /* ABProgressIndicator.swift in Sources */,
 				E9C0E813247282DE001CE018 /* OnboardingViewController.swift in Sources */,
 				E92EFBE2242A22F2003AF7FE /* EmptyDataInitializable.swift in Sources */,
 				8496396324851B7E0086B6E9 /* AllCCTVRequest.swift in Sources */,
@@ -3385,6 +3415,7 @@
 				84F6494B24740E90000C0028 /* YardMapViewModel.swift in Sources */,
 				84F6493C247402DC000C0028 /* CustomDayCell.swift in Sources */,
 				E92EFBA7242A22F2003AF7FE /* APIWrapper.swift in Sources */,
+				845E9EE524895AE4000CBBC6 /* ABTimeView.swift in Sources */,
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
 				8496396524851B8B0086B6E9 /* AllCCTVResponseData.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
@@ -3477,6 +3508,7 @@
 				84AA8D6A23E2F359001B3B43 /* CallPayload.swift in Sources */,
 				8496398B2487ED5D0086B6E9 /* ArchiveVideoHourPeriod.swift in Sources */,
 				E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */,
+				845E9EE324895AE4000CBBC6 /* ABVideoRangeSlider.swift in Sources */,
 				E92EFBE0242A22F2003AF7FE /* CreateIssueRequest.swift in Sources */,
 				843C38D1242A577C0035BF80 /* UnreadedResponseData.swift in Sources */,
 				E92EFBEC242A2507003AF7FE /* NotificationName+Extensions.swift in Sources */,

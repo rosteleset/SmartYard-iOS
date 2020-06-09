@@ -68,7 +68,8 @@ class PlayArchiveVideoViewModel: BaseViewModel {
         return Output(
             date: .just(date),
             periodConfiguration: .just(periods),
-            videoURL: videoURL
+            videoURL: videoURL,
+            preview: .just(camera.preview)
         )
     }
     
@@ -85,6 +86,7 @@ extension PlayArchiveVideoViewModel {
         let date: Driver<Date?>
         let periodConfiguration: Driver<[ArchiveVideoHourPeriod]>
         let videoURL: Driver<URL?>
+        let preview: Driver<URL?>
     }
     
 }
