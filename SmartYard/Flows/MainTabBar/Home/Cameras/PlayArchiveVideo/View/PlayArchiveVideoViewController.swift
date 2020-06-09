@@ -40,6 +40,7 @@ class PlayArchiveVideoViewController: BaseViewController {
     @IBOutlet private weak var fastBackwardButton: UIButton!
     @IBOutlet private weak var rangeSlider: SimpleVideoRangeSlider!
     @IBOutlet private weak var downloadButton: BlueButton!
+    @IBOutlet private weak var backToPreviewButton: UIButton!
     
     private var preferredPlaybackRate: Float = 1 {
         didSet {
@@ -81,6 +82,7 @@ class PlayArchiveVideoViewController: BaseViewController {
         configureFastBackwardButton()
         configureFastForwardButton()
         configureDownloadButton()
+        configureBackToPreviewButton()
         configurePlayer()
         configureUIBindings()
         
@@ -240,6 +242,21 @@ class PlayArchiveVideoViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    private func configureBackToPreviewButton() {
+        backToPreviewButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.currentMode.onNext(.preview)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
     private func configurePlayer() {
         let playerViewController = AVPlayerViewController()
         playerViewController.videoGravity = .resizeAspect
@@ -356,6 +373,15 @@ class PlayArchiveVideoViewController: BaseViewController {
                     self?.fastBackwardButton.isHidden = mode == .preview
                     self?.rangeSlider?.isHidden = mode == .preview
                     self?.downloadButton.isHidden = mode == .preview
+                    
+                    if mode == .edit {
+                        self?.player?.rate = 0
+                    }
+                    
+                    // Temp
+                    
+                    self?.playButton.isHidden = mode == .edit
+                    self?.backToPreviewButton.isHidden = mode == .preview
                 }
             )
             .disposed(by: disposeBag)

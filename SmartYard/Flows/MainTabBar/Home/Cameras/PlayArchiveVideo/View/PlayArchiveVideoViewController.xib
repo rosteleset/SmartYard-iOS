@@ -21,6 +21,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayArchiveVideoViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="backToPreviewButton" destination="yby-aQ-gID" id="hdZ-0w-Z0Z"/>
                 <outlet property="dateLabel" destination="Dqz-l5-6XG" id="mPY-Is-qNG"/>
                 <outlet property="downloadButton" destination="JBH-Xw-Dmj" id="GUQ-cf-DGn"/>
                 <outlet property="fakeNavBar" destination="WOo-JF-vkg" id="eGb-o1-hpz"/>
@@ -128,6 +129,15 @@
                                                 <constraint firstAttribute="height" constant="68" id="OYt-G4-7Ex"/>
                                             </constraints>
                                         </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yby-aQ-gID" userLabel="BackToPreview">
+                                            <rect key="frame" x="133" y="0.0" width="68" height="68"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="68" id="7rr-Y2-zbs"/>
+                                                <constraint firstAttribute="height" constant="68" id="Vq6-8y-JyQ"/>
+                                            </constraints>
+                                            <color key="tintColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <state key="normal" image="video.fill" catalog="system"/>
+                                        </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nAB-g9-OY2">
                                             <rect key="frame" x="287" y="10.5" width="47" height="47"/>
                                             <constraints>
@@ -147,6 +157,7 @@
                                         <constraint firstItem="5f4-F5-jna" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zE5-O3-9ie" secondAttribute="trailing" constant="20" id="5qG-UI-wPz"/>
                                         <constraint firstItem="zE5-O3-9ie" firstAttribute="leading" secondItem="25D-Cj-lb4" secondAttribute="leading" id="Ecw-zk-C2n"/>
                                         <constraint firstAttribute="trailing" secondItem="fr5-Hf-wxY" secondAttribute="trailing" constant="20" id="H8x-js-uih"/>
+                                        <constraint firstAttribute="bottom" secondItem="yby-aQ-gID" secondAttribute="bottom" id="Ic8-Nl-dlP"/>
                                         <constraint firstItem="5f4-F5-jna" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UDc-4s-ZnY" secondAttribute="trailing" constant="20" id="JMI-mj-Agq"/>
                                         <constraint firstItem="nAB-g9-OY2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5f4-F5-jna" secondAttribute="trailing" constant="20" id="L8T-4w-qi1"/>
                                         <constraint firstItem="nAB-g9-OY2" firstAttribute="centerY" secondItem="25D-Cj-lb4" secondAttribute="centerY" id="LQH-Wc-UYO"/>
@@ -154,9 +165,11 @@
                                         <constraint firstAttribute="bottom" secondItem="5f4-F5-jna" secondAttribute="bottom" id="Q67-UY-M6N"/>
                                         <constraint firstItem="UDc-4s-ZnY" firstAttribute="leading" secondItem="25D-Cj-lb4" secondAttribute="leading" constant="20" id="TnZ-4b-7rI"/>
                                         <constraint firstItem="zE5-O3-9ie" firstAttribute="centerY" secondItem="25D-Cj-lb4" secondAttribute="centerY" id="WzV-Pv-Rar"/>
+                                        <constraint firstItem="yby-aQ-gID" firstAttribute="centerX" secondItem="25D-Cj-lb4" secondAttribute="centerX" id="Xdt-ZN-nW2"/>
                                         <constraint firstItem="UDc-4s-ZnY" firstAttribute="centerY" secondItem="25D-Cj-lb4" secondAttribute="centerY" id="fep-dP-ZSH"/>
                                         <constraint firstItem="fr5-Hf-wxY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5f4-F5-jna" secondAttribute="trailing" constant="20" id="iFT-RW-yza"/>
                                         <constraint firstAttribute="trailing" secondItem="nAB-g9-OY2" secondAttribute="trailing" id="knZ-JE-F45"/>
+                                        <constraint firstItem="yby-aQ-gID" firstAttribute="top" secondItem="25D-Cj-lb4" secondAttribute="top" id="mzQ-dp-39f"/>
                                         <constraint firstItem="5f4-F5-jna" firstAttribute="centerX" secondItem="25D-Cj-lb4" secondAttribute="centerX" id="np4-Ev-FOx"/>
                                         <constraint firstItem="5f4-F5-jna" firstAttribute="top" secondItem="25D-Cj-lb4" secondAttribute="top" id="vph-Bm-bwo"/>
                                     </constraints>
@@ -246,5 +259,6 @@
         <image name="FastBackward" width="47" height="47"/>
         <image name="FastForward" width="47" height="47"/>
         <image name="MainBackground" width="375" height="812"/>
+        <image name="video.fill" catalog="system" width="128" height="82"/>
     </resources>
 </document>
