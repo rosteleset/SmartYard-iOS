@@ -22,6 +22,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayArchiveVideoViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="dateLabel" destination="Dqz-l5-6XG" id="mPY-Is-qNG"/>
+                <outlet property="downloadButton" destination="JBH-Xw-Dmj" id="GUQ-cf-DGn"/>
                 <outlet property="fakeNavBar" destination="WOo-JF-vkg" id="eGb-o1-hpz"/>
                 <outlet property="fastBackwardButton" destination="zE5-O3-9ie" id="KVz-P9-O65"/>
                 <outlet property="fastForwardButton" destination="nAB-g9-OY2" id="gF5-fm-G0m"/>
@@ -31,6 +32,7 @@
                 <outlet property="playButton" destination="5f4-F5-jna" id="dzY-fn-tKq"/>
                 <outlet property="progressSlider" destination="gTL-Y7-3LT" id="bKy-0r-Vsa"/>
                 <outlet property="rangeSlider" destination="P3w-7n-zkQ" id="EyD-RT-E1V"/>
+                <outlet property="selectFragmentButton" destination="wkd-4A-ePf" id="g5B-Zw-XrB"/>
                 <outlet property="videoContainer" destination="Oe3-0L-wZ8" id="MSN-XB-913"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -100,15 +102,6 @@
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkd-4A-ePf" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="40" y="589" width="334" height="60"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="60" id="0Wl-IZ-B7H"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" title="Выбрать фрагмент"/>
-                        </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwK-tW-GMy" userLabel="PreviewButtonsCentering">
                             <rect key="frame" x="0.0" y="338.5" width="414" height="230.5"/>
                             <subviews>
@@ -124,7 +117,7 @@
                                             <state key="normal" image="FastBackward"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UDc-4s-ZnY">
-                                            <rect key="frame" x="20" y="16" width="39" height="36"/>
+                                            <rect key="frame" x="20" y="15" width="34" height="38"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="20"/>
                                             <state key="normal" title="0.5x"/>
                                         </button>
@@ -144,7 +137,7 @@
                                             <state key="normal" image="FastForward"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fr5-Hf-wxY">
-                                            <rect key="frame" x="275" y="16" width="39" height="36"/>
+                                            <rect key="frame" x="280" y="15" width="34" height="38"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="20"/>
                                             <state key="normal" title="1.5x"/>
                                         </button>
@@ -178,19 +171,41 @@
                                 <constraint firstItem="25D-Cj-lb4" firstAttribute="centerY" secondItem="jwK-tW-GMy" secondAttribute="centerY" id="xr8-oc-eHr"/>
                             </constraints>
                         </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JBH-Xw-Dmj" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="40" y="589" width="334" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="T7m-MH-yug"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Получить ссылку"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkd-4A-ePf" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="40" y="589" width="334" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="0Wl-IZ-B7H"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Выбрать фрагмент"/>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="Oe3-0L-wZ8" firstAttribute="top" secondItem="2Nk-mk-3jm" secondAttribute="top" constant="16" id="0JP-MM-KRk"/>
                         <constraint firstItem="jwK-tW-GMy" firstAttribute="top" secondItem="8od-sE-j0B" secondAttribute="bottom" constant="20" id="BRh-4i-kTy"/>
                         <constraint firstAttribute="trailing" secondItem="Oe3-0L-wZ8" secondAttribute="trailing" constant="16" id="ME2-CX-W12"/>
+                        <constraint firstItem="JBH-Xw-Dmj" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" constant="40" id="MNK-o1-oCC"/>
                         <constraint firstItem="8od-sE-j0B" firstAttribute="top" secondItem="Oe3-0L-wZ8" secondAttribute="bottom" constant="20" id="Mix-Vi-VNK"/>
                         <constraint firstAttribute="trailing" secondItem="jwK-tW-GMy" secondAttribute="trailing" id="Oye-VA-z0x"/>
                         <constraint firstItem="wkd-4A-ePf" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" constant="40" id="PIl-1d-KPv"/>
                         <constraint firstItem="Oe3-0L-wZ8" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" constant="16" id="PLT-Ll-44V"/>
                         <constraint firstItem="jwK-tW-GMy" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" id="Rgq-0h-85M"/>
+                        <constraint firstItem="JBH-Xw-Dmj" firstAttribute="top" secondItem="jwK-tW-GMy" secondAttribute="bottom" constant="20" id="aRQ-q8-4Yo"/>
                         <constraint firstItem="wkd-4A-ePf" firstAttribute="top" secondItem="jwK-tW-GMy" secondAttribute="bottom" constant="20" id="d2f-gU-dnP"/>
                         <constraint firstAttribute="trailing" secondItem="wkd-4A-ePf" secondAttribute="trailing" constant="40" id="eJz-YI-req"/>
+                        <constraint firstAttribute="bottom" secondItem="JBH-Xw-Dmj" secondAttribute="bottom" constant="32" id="lV2-21-Rvo"/>
+                        <constraint firstAttribute="trailing" secondItem="JBH-Xw-Dmj" secondAttribute="trailing" constant="40" id="qOY-rr-v2L"/>
                         <constraint firstItem="8od-sE-j0B" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" id="qyY-p4-CpW"/>
                         <constraint firstAttribute="trailing" secondItem="8od-sE-j0B" secondAttribute="trailing" id="t2y-UX-pA4"/>
                     </constraints>

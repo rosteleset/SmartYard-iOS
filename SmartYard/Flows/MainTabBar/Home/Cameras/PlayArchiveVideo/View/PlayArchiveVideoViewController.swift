@@ -32,12 +32,14 @@ class PlayArchiveVideoViewController: BaseViewController {
     @IBOutlet private weak var halfSpeedButton: UIButton!
     @IBOutlet private weak var oneAndHalfSpeedButton: UIButton!
     @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
+    @IBOutlet private weak var selectFragmentButton: BlueButton!
     
     // MARK: Edit mode
     
     @IBOutlet private weak var fastForwardButton: UIButton!
     @IBOutlet private weak var fastBackwardButton: UIButton!
     @IBOutlet private weak var rangeSlider: SimpleVideoRangeSlider!
+    @IBOutlet private weak var downloadButton: BlueButton!
     
     private var preferredPlaybackRate: Float = 1 {
         didSet {
@@ -75,11 +77,12 @@ class PlayArchiveVideoViewController: BaseViewController {
         configurePlayButton()
         configureHalfSpeedButton()
         configureOneAndHalfSpeedButton()
+        configureSelectFragmentButton()
         configureFastBackwardButton()
         configureFastForwardButton()
+        configureDownloadButton()
         configurePlayer()
-        
-        currentMode.onNext(.edit)
+        configureUIBindings()
         
         bind()
     }
@@ -177,6 +180,21 @@ class PlayArchiveVideoViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    private func configureSelectFragmentButton() {
+        selectFragmentButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.currentMode.onNext(.edit)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
     private func configureFastBackwardButton() {
         fastBackwardButton.rx.tap
             .asDriver()
@@ -202,6 +220,21 @@ class PlayArchiveVideoViewController: BaseViewController {
                     }
                     
                     self.rangeSlider?.moveEndIndicatorByValueInSeconds(15)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func configureDownloadButton() {
+        downloadButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    print("download")
                 }
             )
             .disposed(by: disposeBag)
@@ -250,26 +283,6 @@ class PlayArchiveVideoViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-//        player.rx
-//            .observe(AVPlayer.Status.self, "status", options: [.new])
-//            .asDriver(onErrorJustReturn: nil)
-//            .map { [weak self] status -> Bool in
-//                guard let self = self,
-//                    status == .readyToPlay,
-//                    let asset = self.player?.currentItem?.asset,
-//                    asset.duration.seconds > 0 else {
-//                    return false
-//                }
-//
-//                return true
-//            }
-//            .drive(
-//                onNext: { [weak self] isVideoValid in
-//                    self?.isVideoValid.onNext(isVideoValid)
-//                }
-//            )
-//            .disposed(by: disposeBag)
-        
         // MARK: Проверка, воспроизводится ли видео в данный момент
         
         player.rx
@@ -298,6 +311,54 @@ class PlayArchiveVideoViewController: BaseViewController {
         
         progressSlider.delegate = self
         rangeSlider.delegate = self
+    }
+    
+    private func configureUIBindings() {
+        // MARK: local UI bindings
+        
+        Driver
+            .combineLatest(
+                currentMode.asDriverOnErrorJustComplete(), isVideoValid.asDriverOnErrorJustComplete()
+            )
+            .drive(
+                onNext: { [weak self] args in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let (mode, isVideoValid) = args
+                    
+                    [
+                        self.halfSpeedButton,
+                        self.oneAndHalfSpeedButton,
+                        self.fastBackwardButton,
+                        self.fastForwardButton,
+                        self.selectFragmentButton
+                    ].forEach {
+                        $0?.isEnabled = isVideoValid
+                    }
+                    
+                    self.playButton.isEnabled = isVideoValid && mode == .preview
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        currentMode
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] mode in
+                    self?.halfSpeedButton.isHidden = mode == .edit
+                    self?.oneAndHalfSpeedButton.isHidden = mode == .edit
+                    self?.progressSlider.isHidden = mode == .edit
+                    self?.selectFragmentButton.isHidden = mode == .edit
+                    
+                    self?.fastForwardButton.isHidden = mode == .preview
+                    self?.fastBackwardButton.isHidden = mode == .preview
+                    self?.rangeSlider?.isHidden = mode == .preview
+                    self?.downloadButton.isHidden = mode == .preview
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
     private func bind() {
@@ -361,49 +422,6 @@ class PlayArchiveVideoViewController: BaseViewController {
             .subscribe(
                 onNext: { [weak self] _ in
                     self?.periodCollectionView.reloadData()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        // MARK: local UI bindings
-        
-        Driver
-            .combineLatest(
-                currentMode.asDriverOnErrorJustComplete(), isVideoValid.asDriverOnErrorJustComplete()
-            )
-            .drive(
-                onNext: { [weak self] args in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    let (mode, isVideoValid) = args
-                    
-                    [
-                        self.halfSpeedButton,
-                        self.oneAndHalfSpeedButton,
-                        self.fastBackwardButton,
-                        self.fastForwardButton
-                    ].forEach {
-                        $0?.isEnabled = isVideoValid
-                    }
-                    
-                    self.playButton.isEnabled = isVideoValid && mode == .preview
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        currentMode
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] mode in
-                    self?.halfSpeedButton.isHidden = mode == .edit
-                    self?.oneAndHalfSpeedButton.isHidden = mode == .edit
-                    self?.progressSlider.isHidden = mode == .edit
-                    
-                    self?.fastForwardButton.isHidden = mode == .preview
-                    self?.fastBackwardButton.isHidden = mode == .preview
-                    self?.rangeSlider?.isHidden = mode == .preview
                 }
             )
             .disposed(by: disposeBag)
