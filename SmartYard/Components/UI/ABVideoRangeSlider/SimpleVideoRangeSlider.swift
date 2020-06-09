@@ -286,11 +286,15 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         return position
     }
     
-    private func secondsFromValue(value: CGFloat) -> Float64{
+    private func secondsFromValue(value: CGFloat) -> Float64 {
         return duration * Float64((value / 100))
     }
 
-    private func valueFromSeconds(seconds: Float) -> CGFloat{
+    private func valueFromSeconds(seconds: Float) -> CGFloat {
+        guard duration > 0 else {
+            return 0
+        }
+        
         return CGFloat(seconds * 100) / CGFloat(duration)
     }
     

@@ -55,6 +55,8 @@ class PlayArchiveVideoViewController: BaseViewController {
     
     private let periodsProxy = BehaviorSubject<[ArchiveVideoHourPeriod]>(value: [])
     private let periodSelectedTrigger = PublishSubject<ArchiveVideoHourPeriod?>()
+    private let currentMode = BehaviorSubject<Mode>(value: .preview)
+    private let isVideoValid = BehaviorSubject<Bool>(value: false)
     
     init(viewModel: PlayArchiveVideoViewModel) {
         self.viewModel = viewModel
@@ -77,7 +79,7 @@ class PlayArchiveVideoViewController: BaseViewController {
         configureFastForwardButton()
         configurePlayer()
         
-        changeViewMode(to: .edit)
+        currentMode.onNext(.edit)
         
         bind()
     }
@@ -86,18 +88,6 @@ class PlayArchiveVideoViewController: BaseViewController {
         super.viewDidLayoutSubviews()
         
         playerViewController?.view.frame = videoContainer.bounds
-    }
-    
-    private func changeViewMode(to mode: Mode) {
-        halfSpeedButton.isHidden = mode == .edit
-        oneAndHalfSpeedButton.isHidden = mode == .edit
-        progressSlider.isHidden = mode == .edit
-        
-        fastForwardButton.isHidden = mode == .preview
-        fastBackwardButton.isHidden = mode == .preview
-        rangeSlider?.isHidden = mode == .preview
-        
-        playButton.isEnabled = mode == .preview
     }
     
     private func configurePeriodPicker() {
@@ -231,22 +221,56 @@ class PlayArchiveVideoViewController: BaseViewController {
         videoContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
         
-        player.rx
-            .observe(AVPlayer.Status.self, "status", options: [.new])
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
+        // MARK: Проверка, валидно ли текущее видео
+        
+        Driver
+            .combineLatest(
+                player.rx
+                    .observe(AVPlayer.Status.self, "status", options: [.new])
+                    .asDriver(onErrorJustReturn: nil),
+                player.rx
+                    .observe(AVPlayerItem.self, "currentItem", options: [.new])
+                    .asDriver(onErrorJustReturn: nil)
+            )
+            .map { args -> Bool in
+                let (status, currentItem) = args
+                
+                guard status == .readyToPlay,
+                    let asset = currentItem?.asset,
+                    asset.duration.seconds > 0 else {
+                    return false
+                }
+                
+                return true
+            }
             .drive(
-                onNext: { [weak self] status in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    [self.halfSpeedButton, self.playButton, self.oneAndHalfSpeedButton].forEach {
-                        $0?.isEnabled = status == .readyToPlay
-                    }
+                onNext: { [weak self] isVideoValid in
+                    self?.isVideoValid.onNext(isVideoValid)
                 }
             )
             .disposed(by: disposeBag)
+        
+//        player.rx
+//            .observe(AVPlayer.Status.self, "status", options: [.new])
+//            .asDriver(onErrorJustReturn: nil)
+//            .map { [weak self] status -> Bool in
+//                guard let self = self,
+//                    status == .readyToPlay,
+//                    let asset = self.player?.currentItem?.asset,
+//                    asset.duration.seconds > 0 else {
+//                    return false
+//                }
+//
+//                return true
+//            }
+//            .drive(
+//                onNext: { [weak self] isVideoValid in
+//                    self?.isVideoValid.onNext(isVideoValid)
+//                }
+//            )
+//            .disposed(by: disposeBag)
+        
+        // MARK: Проверка, воспроизводится ли видео в данный момент
         
         player.rx
             .observe(Float.self, "rate", options: [.new])
@@ -262,6 +286,8 @@ class PlayArchiveVideoViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        // MARK: Привязка к обновлению текущего времени проигрываемого видео
         
         player.addPeriodicTimeObserver(
             forInterval: CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
@@ -335,6 +361,49 @@ class PlayArchiveVideoViewController: BaseViewController {
             .subscribe(
                 onNext: { [weak self] _ in
                     self?.periodCollectionView.reloadData()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: local UI bindings
+        
+        Driver
+            .combineLatest(
+                currentMode.asDriverOnErrorJustComplete(), isVideoValid.asDriverOnErrorJustComplete()
+            )
+            .drive(
+                onNext: { [weak self] args in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let (mode, isVideoValid) = args
+                    
+                    [
+                        self.halfSpeedButton,
+                        self.oneAndHalfSpeedButton,
+                        self.fastBackwardButton,
+                        self.fastForwardButton
+                    ].forEach {
+                        $0?.isEnabled = isVideoValid
+                    }
+                    
+                    self.playButton.isEnabled = isVideoValid && mode == .preview
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        currentMode
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] mode in
+                    self?.halfSpeedButton.isHidden = mode == .edit
+                    self?.oneAndHalfSpeedButton.isHidden = mode == .edit
+                    self?.progressSlider.isHidden = mode == .edit
+                    
+                    self?.fastForwardButton.isHidden = mode == .preview
+                    self?.fastBackwardButton.isHidden = mode == .preview
+                    self?.rangeSlider?.isHidden = mode == .preview
                 }
             )
             .disposed(by: disposeBag)
