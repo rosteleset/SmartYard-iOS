@@ -13,19 +13,31 @@ import AVKit
 
 class PlayArchiveVideoViewController: BaseViewController {
     
+    enum Mode {
+        case preview
+        case edit
+    }
+    
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var videoContainer: UIView!
-    @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
-    
     @IBOutlet private weak var periodCollectionView: UICollectionView!
-    
     @IBOutlet private weak var playButton: UIButton!
-    @IBOutlet private weak var halfSpeedButton: UIButton!
-    @IBOutlet private weak var oneAndHalfSpeedButton: UIButton!
     
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
+    
+    // MARK: Preview mode
+    
+    @IBOutlet private weak var halfSpeedButton: UIButton!
+    @IBOutlet private weak var oneAndHalfSpeedButton: UIButton!
+    @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
+    
+    // MARK: Edit mode
+    
+    @IBOutlet private weak var fastForwardButton: UIButton!
+    @IBOutlet private weak var fastBackwardButton: UIButton!
+    @IBOutlet private weak var rangeSlider: SimpleVideoRangeSlider!
     
     private var preferredPlaybackRate: Float = 1 {
         didSet {
@@ -61,7 +73,11 @@ class PlayArchiveVideoViewController: BaseViewController {
         configurePlayButton()
         configureHalfSpeedButton()
         configureOneAndHalfSpeedButton()
+        configureFastBackwardButton()
+        configureFastForwardButton()
         configurePlayer()
+        
+        changeViewMode(to: .edit)
         
         bind()
     }
@@ -70,6 +86,18 @@ class PlayArchiveVideoViewController: BaseViewController {
         super.viewDidLayoutSubviews()
         
         playerViewController?.view.frame = videoContainer.bounds
+    }
+    
+    private func changeViewMode(to mode: Mode) {
+        halfSpeedButton.isHidden = mode == .edit
+        oneAndHalfSpeedButton.isHidden = mode == .edit
+        progressSlider.isHidden = mode == .edit
+        
+        fastForwardButton.isHidden = mode == .preview
+        fastBackwardButton.isHidden = mode == .preview
+        rangeSlider?.isHidden = mode == .preview
+        
+        playButton.isEnabled = mode == .preview
     }
     
     private func configurePeriodPicker() {
@@ -159,6 +187,36 @@ class PlayArchiveVideoViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    private func configureFastBackwardButton() {
+        fastBackwardButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.rangeSlider?.moveEndIndicatorByValueInSeconds(-15)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func configureFastForwardButton() {
+        fastForwardButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.rangeSlider?.moveEndIndicatorByValueInSeconds(15)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
     private func configurePlayer() {
         let playerViewController = AVPlayerViewController()
         playerViewController.videoGravity = .resizeAspect
@@ -213,6 +271,7 @@ class PlayArchiveVideoViewController: BaseViewController {
         }
         
         progressSlider.delegate = self
+        rangeSlider.delegate = self
     }
 
     private func bind() {
@@ -250,6 +309,7 @@ class PlayArchiveVideoViewController: BaseViewController {
                     
                     self?.player?.replaceCurrentItem(with: playerItem)
                     self?.progressSlider.setVideoURL(videoURL: url)
+                    self?.rangeSlider?.setVideoURL(videoURL: url)
                 }
             )
             .disposed(by: disposeBag)
@@ -258,6 +318,7 @@ class PlayArchiveVideoViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] url in
                     self?.progressSlider.setFakeThumbnailURL(thumbnailURL: url)
+                    self?.rangeSlider?.setFakeThumbnailURL(thumbnailURL: url)
                 }
             )
             .disposed(by: disposeBag)
@@ -352,6 +413,14 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
     
     func indicatorDidChangePosition(videoRangeSlider: SimpleVideoProgressSlider, position: Float64) {
         player?.seek(to: CMTime(seconds: position, preferredTimescale: CMTimeScale(NSEC_PER_SEC)))
+    }
+    
+}
+
+extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
+    
+    func didChangeValue(videoRangeSlider: SimpleVideoRangeSlider, startTime: Float64, endTime: Float64) {
+        print(startTime, endTime)
     }
     
 }
