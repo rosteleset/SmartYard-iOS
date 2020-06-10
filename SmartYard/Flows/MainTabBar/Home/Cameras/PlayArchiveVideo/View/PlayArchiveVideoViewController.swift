@@ -33,6 +33,7 @@ class PlayArchiveVideoViewController: BaseViewController {
     @IBOutlet private weak var oneAndHalfSpeedButton: UIButton!
     @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
     @IBOutlet private weak var selectFragmentButton: BlueButton!
+    @IBOutlet private weak var previewButtonsContainer: UIView!
     
     // MARK: Edit mode
     
@@ -41,6 +42,7 @@ class PlayArchiveVideoViewController: BaseViewController {
     @IBOutlet private weak var rangeSlider: SimpleVideoRangeSlider!
     @IBOutlet private weak var downloadButton: BlueButton!
     @IBOutlet private weak var backToPreviewButton: UIButton!
+    @IBOutlet private weak var editButtonsContainer: UIView!
     
     private var preferredPlaybackRate: Float = 1 {
         didSet {
@@ -364,11 +366,13 @@ class PlayArchiveVideoViewController: BaseViewController {
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] mode in
+                    self?.previewButtonsContainer.isHidden = mode == .edit
                     self?.halfSpeedButton.isHidden = mode == .edit
                     self?.oneAndHalfSpeedButton.isHidden = mode == .edit
                     self?.progressSlider.isHidden = mode == .edit
                     self?.selectFragmentButton.isHidden = mode == .edit
                     
+                    self?.editButtonsContainer.isHidden = mode == .preview
                     self?.fastForwardButton.isHidden = mode == .preview
                     self?.fastBackwardButton.isHidden = mode == .preview
                     self?.rangeSlider?.isHidden = mode == .preview
