@@ -25,8 +25,12 @@ struct ArchiveVideoHourPeriod: Equatable {
             return ""
         }
         
-        let startDate = date.adding(.hour, value: startHours)
-        let endDate = date.adding(.hour, value: endHours)
+        let currentOffsetFromGMT = Calendar.current.timeZone.secondsFromGMT() / 3600
+        let moscowOffsetFromGMT = 3
+        let diff = currentOffsetFromGMT - moscowOffsetFromGMT
+        
+        let startDate = date.adding(.hour, value: startHours + diff)
+        let endDate = date.adding(.hour, value: endHours + diff)
         
         let startTimestamp = startDate.unixTimestamp.int
         let duration = endDate.timeIntervalSince(startDate).int
