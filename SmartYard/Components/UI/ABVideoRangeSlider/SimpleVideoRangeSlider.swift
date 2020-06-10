@@ -110,6 +110,28 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         self.fakeThumbnailImageViews = imageViews
     }
     
+    public func moveStartIndicatorByValueInSeconds(_ value: Double) {
+        guard !isReceivingGesture, duration > 0 else {
+            return
+        }
+        
+        let currentStartIndicatorTime = secondsFromValue(value: startPercentage)
+        let preferredStartIndicatorTime = currentStartIndicatorTime + value
+        
+        let newPreferredPercentage = valueFromSeconds(seconds: Float(preferredStartIndicatorTime))
+        let minPossiblePercentage: CGFloat = 0
+        let maxPossiblePercentage = endPercentage - valueFromSeconds(seconds: minSpace)
+        
+        startPercentage = max(minPossiblePercentage, min(newPreferredPercentage, maxPossiblePercentage))
+
+        let startSeconds = secondsFromValue(value: self.startPercentage)
+        let endSeconds = secondsFromValue(value: self.endPercentage)
+        
+        self.delegate?.didChangeValue(videoRangeSlider: self, startTime: startSeconds, endTime: endSeconds)
+        
+        layoutSubviews()
+    }
+    
     public func moveEndIndicatorByValueInSeconds(_ value: Double) {
         guard !isReceivingGesture, duration > 0 else {
             return

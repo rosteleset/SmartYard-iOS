@@ -36,9 +36,13 @@ class PlayArchiveVideoViewController: BaseViewController {
     @IBOutlet private weak var previewButtonsContainer: UIView!
     
     // MARK: Edit mode
+
+    @IBOutlet private weak var startIndicatorBackwardButton: UIButton!
+    @IBOutlet private weak var startIndicatorForwardButton: UIButton!
     
-    @IBOutlet private weak var fastForwardButton: UIButton!
-    @IBOutlet private weak var fastBackwardButton: UIButton!
+    @IBOutlet private weak var endIndicatorBackwardButton: UIButton!
+    @IBOutlet private weak var endIndicatorForwardButton: UIButton!
+
     @IBOutlet private weak var rangeSlider: SimpleVideoRangeSlider!
     @IBOutlet private weak var downloadButton: BlueButton!
     @IBOutlet private weak var backToPreviewButton: UIButton!
@@ -81,8 +85,7 @@ class PlayArchiveVideoViewController: BaseViewController {
         configureHalfSpeedButton()
         configureOneAndHalfSpeedButton()
         configureSelectFragmentButton()
-        configureFastBackwardButton()
-        configureFastForwardButton()
+        configureIndicatorMovementButtons()
         configureDownloadButton()
         configureBackToPreviewButton()
         configurePlayer()
@@ -199,8 +202,34 @@ class PlayArchiveVideoViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func configureFastBackwardButton() {
-        fastBackwardButton.rx.tap
+    private func configureIndicatorMovementButtons() {
+        startIndicatorBackwardButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.rangeSlider?.moveStartIndicatorByValueInSeconds(-15)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        startIndicatorForwardButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.rangeSlider?.moveStartIndicatorByValueInSeconds(15)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        endIndicatorBackwardButton.rx.tap
             .asDriver()
             .drive(
                 onNext: { [weak self] in
@@ -212,10 +241,8 @@ class PlayArchiveVideoViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
-    }
-    
-    private func configureFastForwardButton() {
-        fastForwardButton.rx.tap
+        
+        endIndicatorForwardButton.rx.tap
             .asDriver()
             .drive(
                 onNext: { [weak self] in
@@ -350,8 +377,8 @@ class PlayArchiveVideoViewController: BaseViewController {
                     [
                         self.halfSpeedButton,
                         self.oneAndHalfSpeedButton,
-                        self.fastBackwardButton,
-                        self.fastForwardButton,
+                        self.startIndicatorBackwardButton,
+                        self.endIndicatorForwardButton,
                         self.selectFragmentButton
                     ].forEach {
                         $0?.isEnabled = isVideoValid
@@ -373,8 +400,8 @@ class PlayArchiveVideoViewController: BaseViewController {
                     self?.selectFragmentButton.isHidden = mode == .edit
                     
                     self?.editButtonsContainer.isHidden = mode == .preview
-                    self?.fastForwardButton.isHidden = mode == .preview
-                    self?.fastBackwardButton.isHidden = mode == .preview
+                    self?.endIndicatorForwardButton.isHidden = mode == .preview
+                    self?.startIndicatorBackwardButton.isHidden = mode == .preview
                     self?.rangeSlider?.isHidden = mode == .preview
                     self?.downloadButton.isHidden = mode == .preview
                     
