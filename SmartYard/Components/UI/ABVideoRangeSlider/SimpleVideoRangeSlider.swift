@@ -166,6 +166,10 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         self.duration = duration
         
+        self.startPercentage = 0
+        self.endPercentage = 100
+        self.delegate?.didChangeValue(videoRangeSlider: self, startTime: 0, endTime: duration)
+        
         self.layoutSubviews()
         self.superview?.layoutSubviews()
     }

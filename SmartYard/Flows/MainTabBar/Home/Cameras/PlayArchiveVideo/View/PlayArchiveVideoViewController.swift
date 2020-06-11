@@ -378,12 +378,16 @@ class PlayArchiveVideoViewController: BaseViewController {
                         self.halfSpeedButton,
                         self.oneAndHalfSpeedButton,
                         self.startIndicatorBackwardButton,
+                        self.startIndicatorForwardButton,
+                        self.endIndicatorBackwardButton,
                         self.endIndicatorForwardButton,
                         self.selectFragmentButton
                     ].forEach {
                         $0?.isEnabled = isVideoValid
                     }
                     
+                    self.progressSlider.isHidden = mode == .edit || !isVideoValid
+                    self.rangeSlider.isHidden = mode == .preview || !isVideoValid
                     self.playButton.isEnabled = isVideoValid && mode == .preview
                 }
             )
@@ -396,13 +400,11 @@ class PlayArchiveVideoViewController: BaseViewController {
                     self?.previewButtonsContainer.isHidden = mode == .edit
                     self?.halfSpeedButton.isHidden = mode == .edit
                     self?.oneAndHalfSpeedButton.isHidden = mode == .edit
-                    self?.progressSlider.isHidden = mode == .edit
                     self?.selectFragmentButton.isHidden = mode == .edit
                     
                     self?.editButtonsContainer.isHidden = mode == .preview
                     self?.endIndicatorForwardButton.isHidden = mode == .preview
                     self?.startIndicatorBackwardButton.isHidden = mode == .preview
-                    self?.rangeSlider?.isHidden = mode == .preview
                     self?.downloadButton.isHidden = mode == .preview
                     
                     if mode == .edit {
