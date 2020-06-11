@@ -124,9 +124,8 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         startPercentage = max(minPossiblePercentage, min(newPreferredPercentage, maxPossiblePercentage))
 
-        let startSeconds = secondsFromValue(value: self.startPercentage)
-        let endSeconds = secondsFromValue(value: self.endPercentage)
-        
+        let startSeconds = negateConversionLosses(secondsFromValue(value: self.startPercentage))
+        let endSeconds = negateConversionLosses(secondsFromValue(value: self.endPercentage))
         self.delegate?.didChangeValue(videoRangeSlider: self, startTime: startSeconds, endTime: endSeconds)
         
         layoutSubviews()
@@ -146,9 +145,8 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         endPercentage = max(minPossiblePercentage, min(newPreferredPercentage, maxPossiblePercentage))
 
-        let startSeconds = secondsFromValue(value: self.startPercentage)
-        let endSeconds = secondsFromValue(value: self.endPercentage)
-        
+        let startSeconds = negateConversionLosses(secondsFromValue(value: self.startPercentage))
+        let endSeconds = negateConversionLosses(secondsFromValue(value: self.endPercentage))
         self.delegate?.didChangeValue(videoRangeSlider: self, startTime: startSeconds, endTime: endSeconds)
         
         layoutSubviews()
@@ -171,7 +169,6 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         self.delegate?.didChangeValue(videoRangeSlider: self, startTime: 0, endTime: duration)
         
         self.layoutSubviews()
-        self.superview?.layoutSubviews()
     }
     
     public func setFakeThumbnailURL(thumbnailURL: URL?) {
@@ -246,16 +243,15 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         let percentage = valueFromPosition(position: currentIndicator.center.x)
         
-        let startSeconds = secondsFromValue(value: self.startPercentage)
-        let endSeconds = secondsFromValue(value: self.endPercentage)
-        
-        self.delegate?.didChangeValue(videoRangeSlider: self, startTime: startSeconds, endTime: endSeconds)
-        
         if drag == .start {
             self.startPercentage = percentage
         } else {
             self.endPercentage = percentage
         }
+        
+        let startSeconds = negateConversionLosses(secondsFromValue(value: self.startPercentage))
+        let endSeconds = negateConversionLosses(secondsFromValue(value: self.endPercentage))
+        self.delegate?.didChangeValue(videoRangeSlider: self, startTime: startSeconds, endTime: endSeconds)
         
         layoutSubviews()
     }
@@ -341,9 +337,12 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
 
     override public func layoutSubviews() {
         super.layoutSubviews()
+        
+        let startSeconds = negateConversionLosses(secondsFromValue(value: startPercentage))
+        let endSeconds = negateConversionLosses(secondsFromValue(value: endPercentage))
 
-        startTimeView.timeLabel.text = self.secondsToFormattedString(totalSeconds: secondsFromValue(value: self.startPercentage))
-        endTimeView.timeLabel.text = self.secondsToFormattedString(totalSeconds: secondsFromValue(value: self.endPercentage))
+        startTimeView.timeLabel.text = self.secondsToFormattedString(totalSeconds: startSeconds)
+        endTimeView.timeLabel.text = self.secondsToFormattedString(totalSeconds: endSeconds)
 
         let startPosition = positionFromValue(value: self.startPercentage)
         let endPosition = positionFromValue(value: self.endPercentage)
@@ -441,6 +440,14 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
         } else {
             return String(format: "%02i:%02i", minutes, seconds)
+        }
+    }
+    
+    private func negateConversionLosses(_ value: Float64) -> Float64 {
+        if abs(value.rounded() - value) < 0.00001 {
+            return value.rounded()
+        } else {
+            return value
         }
     }
     

@@ -149,8 +149,7 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
 
         let percentage = valueFromPosition(position: progressIndicator.center.x)
 
-        let progressSeconds = secondsFromValue(value: progressPercentage)
-
+        let progressSeconds = negateConversionLosses(secondsFromValue(value: progressPercentage))
         self.delegate?.indicatorDidChangePosition(videoRangeSlider: self, position: progressSeconds)
 
         self.progressPercentage = percentage
@@ -204,9 +203,9 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     override public func layoutSubviews() {
         super.layoutSubviews()
 
-        progressTimeView.timeLabel.text = self.secondsToFormattedString(
-            totalSeconds: secondsFromValue(value: self.progressPercentage)
-        )
+        let progressSeconds = negateConversionLosses(secondsFromValue(value: progressPercentage))
+        
+        progressTimeView.timeLabel.text = self.secondsToFormattedString(totalSeconds: progressSeconds)
         
         let progressPosition = positionFromValue(value: self.progressPercentage)
         
@@ -269,6 +268,14 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
             return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
         } else {
             return String(format: "%02i:%02i", minutes, seconds)
+        }
+    }
+    
+    private func negateConversionLosses(_ value: Float64) -> Float64 {
+        if abs(value.rounded() - value) < 0.00001 {
+            return value.rounded()
+        } else {
+            return value
         }
     }
     

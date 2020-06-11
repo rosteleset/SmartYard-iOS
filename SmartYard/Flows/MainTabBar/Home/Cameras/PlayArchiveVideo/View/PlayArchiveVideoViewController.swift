@@ -561,7 +561,11 @@ extension PlayArchiveVideoViewController: UICollectionViewDelegateFlowLayout {
 extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
     
     func indicatorDidChangePosition(videoRangeSlider: SimpleVideoProgressSlider, position: Float64) {
-        player?.seek(to: CMTime(seconds: position, preferredTimescale: CMTimeScale(NSEC_PER_SEC)))
+        player?.seek(
+            to: CMTime(seconds: position, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
+            toleranceBefore: .zero,
+            toleranceAfter: .zero
+        )
     }
     
 }
