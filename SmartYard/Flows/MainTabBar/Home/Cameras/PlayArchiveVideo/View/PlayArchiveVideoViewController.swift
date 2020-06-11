@@ -10,8 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 import AVKit
+import JGProgressHUD
 
-class PlayArchiveVideoViewController: BaseViewController {
+class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     enum Mode {
         case preview
@@ -26,6 +27,8 @@ class PlayArchiveVideoViewController: BaseViewController {
     
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
+    
+    var loader: JGProgressHUD?
     
     // MARK: Preview mode
     
@@ -87,7 +90,6 @@ class PlayArchiveVideoViewController: BaseViewController {
         configureOneAndHalfSpeedButton()
         configureSelectFragmentButton()
         configureIndicatorMovementButtons()
-        configureDownloadButton()
         configureBackToPreviewButton()
         configurePlayer()
         configureUIBindings()
@@ -252,21 +254,6 @@ class PlayArchiveVideoViewController: BaseViewController {
                     }
                     
                     self.rangeSlider?.moveEndIndicatorByValueInSeconds(15)
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-    private func configureDownloadButton() {
-        downloadButton.rx.tap
-            .asDriver()
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    print("download")
                 }
             )
             .disposed(by: disposeBag)
@@ -484,6 +471,15 @@ class PlayArchiveVideoViewController: BaseViewController {
             .subscribe(
                 onNext: { [weak self] _ in
                     self?.periodCollectionView.reloadData()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
                 }
             )
             .disposed(by: disposeBag)

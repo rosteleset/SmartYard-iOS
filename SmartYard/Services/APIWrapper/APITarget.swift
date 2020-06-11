@@ -21,6 +21,7 @@ enum APITarget {
     case offices(request: OfficesRequest)
     
     case allCCTV(request: AllCCTVRequest)
+    case recPrepare(request: RecPrepareRequest)
     
     case getAddress(request: GetAddressRequest)
     case getGeoCoder(request: GeoCoderRequest)
@@ -68,6 +69,7 @@ extension APITarget: TargetType {
         case .offices: return "address/offices"
             
         case .allCCTV: return "cctv/all"
+        case .recPrepare: return "cctv/recPrepare"
             
         case .getAddress: return "geo/address"
         case .getGeoCoder: return "geo/coder"
@@ -119,6 +121,7 @@ extension APITarget: TargetType {
             case .offices(let request): return request.accessToken
                 
             case .allCCTV(let request): return request.accessToken
+            case .recPrepare(let request): return request.accessToken
                 
             case .getAddress(let request): return request.accessToken
             case .getGeoCoder(let request): return request.accessToken
@@ -171,6 +174,7 @@ extension APITarget: TargetType {
         case .offices(let request): return request.requestParameters
             
         case .allCCTV(let request): return request.requestParameters
+        case .recPrepare(let request): return request.requestParameters
             
         case .getAddress(let request): return request.requestParameters
         case .getGeoCoder(let request): return request.requestParameters

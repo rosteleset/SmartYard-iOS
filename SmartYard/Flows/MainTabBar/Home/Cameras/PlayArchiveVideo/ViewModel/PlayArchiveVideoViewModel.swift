@@ -12,6 +12,7 @@ import RxCocoa
 
 class PlayArchiveVideoViewModel: BaseViewModel {
     
+    private let apiWrapper: APIWrapper
     private let router: WeakRouter<HomeRoute>
     
     private let date: Date
@@ -20,7 +21,8 @@ class PlayArchiveVideoViewModel: BaseViewModel {
     private let selectedStartEnd = BehaviorSubject<(Float64, Float64)?>(value: nil)
     private let selectedPeriod = BehaviorSubject<ArchiveVideoHourPeriod?>(value: nil)
     
-    init(camera: CameraObject, date: Date, router: WeakRouter<HomeRoute>) {
+    init(apiWrapper: APIWrapper, camera: CameraObject, date: Date, router: WeakRouter<HomeRoute>) {
+        self.apiWrapper = apiWrapper
         self.router = router
         
         self.camera = camera
@@ -28,6 +30,18 @@ class PlayArchiveVideoViewModel: BaseViewModel {
     }
     
     func transform(_ input: Input) -> Output {
+        let errorTracker = ErrorTracker()
+        
+        errorTracker.asDriver()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        let activityTracker = ActivityTracker()
+        
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
@@ -71,10 +85,21 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 
                 return .just(recPrepareComps)
             }
+            .flatMapLatest { [weak self] range -> Driver<Int?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .recPrepare(id: self.camera.id, from: range.from, to: range.to)
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] comps in
-                    print(comps.from)
-                    print(comps.to)
+                onNext: { [weak self] num in
+                    print(num)
                 }
             )
             .disposed(by: disposeBag)
@@ -104,7 +129,8 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             date: .just(date),
             periodConfiguration: .just(periods),
             videoURL: videoURL,
-            preview: .just(camera.preview)
+            preview: .just(camera.preview),
+            isLoading: activityTracker.asDriver()
         )
     }
     
@@ -124,6 +150,7 @@ extension PlayArchiveVideoViewModel {
         let periodConfiguration: Driver<[ArchiveVideoHourPeriod]>
         let videoURL: Driver<URL?>
         let preview: Driver<URL?>
+        let isLoading: Driver<Bool>
     }
     
 }

@@ -66,6 +66,7 @@
 		845E9EE424895AE4000CBBC6 /* ABStartIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDC24895AE3000CBBC6 /* ABStartIndicator.swift */; };
 		845E9EE524895AE4000CBBC6 /* ABTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */; };
 		845E9EEF248E8903000CBBC6 /* SimpleVideoProgressSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */; };
+		845E9EF224927630000CBBC6 /* RecPrepareRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */; };
 		847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */; };
 		847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */; };
 		847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */; };
@@ -485,6 +486,7 @@
 		845E9EDC24895AE3000CBBC6 /* ABStartIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABStartIndicator.swift; sourceTree = "<group>"; };
 		845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABTimeView.swift; sourceTree = "<group>"; };
 		845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleVideoProgressSlider.swift; sourceTree = "<group>"; };
+		845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecPrepareRequest.swift; sourceTree = "<group>"; };
 		847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListSkeletonView.swift; sourceTree = "<group>"; };
 		847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListSkeletonView.xib; sourceTree = "<group>"; };
 		847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListSkeletonView.swift; sourceTree = "<group>"; };
@@ -1252,6 +1254,14 @@
 			path = ABVideoRangeSlider;
 			sourceTree = "<group>";
 		};
+		845E9EF02492761D000CBBC6 /* RecPrepare */ = {
+			isa = PBXGroup;
+			children = (
+				845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */,
+			);
+			path = RecPrepare;
+			sourceTree = "<group>";
+		};
 		847CF7D3240689C400070007 /* Skeletons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1401,6 +1411,7 @@
 			children = (
 				8496395F24851B660086B6E9 /* ApiWrapper+CCTV.swift */,
 				8496396124851B6B0086B6E9 /* All */,
+				845E9EF02492761D000CBBC6 /* RecPrepare */,
 			);
 			path = CCTV;
 			sourceTree = "<group>";
@@ -3481,6 +3492,7 @@
 				84898A9223F1554D00E6B78E /* SettingsDataItem.swift in Sources */,
 				E940580723F680F000623746 /* AccessView.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
+				845E9EF224927630000CBBC6 /* RecPrepareRequest.swift in Sources */,
 				843C38DF242A57C40035BF80 /* NotificationsViewModel.swift in Sources */,
 				84B9EC8C23E085AE00979C39 /* Observable+Extensions.swift in Sources */,
 				E92EFBBB242A22F2003AF7FE /* GetAddressRequest.swift in Sources */,
