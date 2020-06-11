@@ -36,7 +36,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     private var endPercentage: CGFloat = 100       // Represented in percentage
     private var isReceivingGesture: Bool = false
 
-    public var minSpace: Float = 1              // In Seconds
+    public var minSpace: Float = 10              // In Seconds
     public var maxSpace: Float = 0              // In Seconds
 
     override public func awakeFromNib() {
@@ -359,22 +359,31 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
                 return
             }
             
-            let startTimeViewX = self.startIndicator.frame.origin.x
             let startTimeViewWidth = self.startTimeView.intrinsicContentSize.width
             let startTimeViewHeight = self.startTimeView.intrinsicContentSize.height
-
+            
+            let preferredStartTimeViewX = self.startIndicator.frame.origin.x
+            let minStartTimeViewX: CGFloat = 0
+            let maxStartTimeViewX = self.bounds.width - startTimeViewWidth
+            let resultingStartTimeViewX = min(maxStartTimeViewX, max(minStartTimeViewX, preferredStartTimeViewX))
+            
             // Update time view
             self.startTimeView.frame = CGRect(
-                x: startTimeViewX,
+                x: resultingStartTimeViewX,
                 y: -self.startTimeView.intrinsicContentSize.height - 7,
                 width: startTimeViewWidth,
                 height: startTimeViewHeight
             )
             
-            let endTimeViewX = self.endIndicator.frame.origin.x + self.endIndicator.frame.width - self.endTimeView.intrinsicContentSize.width
+            let endTimeViewWidth = self.endTimeView.intrinsicContentSize.width
+            
+            let preferredEndTimeViewX = self.endIndicator.frame.origin.x + self.endIndicator.frame.width - self.endTimeView.intrinsicContentSize.width
+            let minEndTimeViewX: CGFloat = 0
+            let maxEndTimeViewX = self.bounds.width - endTimeViewWidth
+            let resultingEndTimeViewX = min(maxEndTimeViewX, max(minEndTimeViewX, preferredEndTimeViewX))
             
             let endTimeViewY: CGFloat = {
-                guard endTimeViewX >= startTimeViewX + startTimeViewWidth + 7 else {
+                guard resultingEndTimeViewX >= resultingStartTimeViewX + startTimeViewWidth + 7 else {
                     return -self.endTimeView.intrinsicContentSize.height - 7 - startTimeViewHeight - 7
                 }
                 
@@ -382,7 +391,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             }()
             
             self.endTimeView.frame = CGRect(
-                x: endTimeViewX,
+                x: resultingEndTimeViewX,
                 y: endTimeViewY,
                 width: self.endTimeView.intrinsicContentSize.width,
                 height: self.endTimeView.intrinsicContentSize.height

@@ -66,6 +66,7 @@ class PlayArchiveVideoViewController: BaseViewController {
     private let periodSelectedTrigger = PublishSubject<ArchiveVideoHourPeriod?>()
     private let currentMode = BehaviorSubject<Mode>(value: .preview)
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
+    private let startEndSelectedTrigger = PublishSubject<(Float64, Float64)>()
     
     init(viewModel: PlayArchiveVideoViewModel) {
         self.viewModel = viewModel
@@ -423,7 +424,9 @@ class PlayArchiveVideoViewController: BaseViewController {
     private func bind() {
         let input = PlayArchiveVideoViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
-            periodSelectedTrigger: periodSelectedTrigger.asDriver(onErrorJustReturn: nil)
+            downloadTrigger: downloadButton.rx.tap.asDriver(),
+            periodSelectedTrigger: periodSelectedTrigger.asDriver(onErrorJustReturn: nil),
+            startEndSelectedTrigger: startEndSelectedTrigger.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
@@ -566,6 +569,7 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
 extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
     
     func didChangeValue(videoRangeSlider: SimpleVideoRangeSlider, startTime: Float64, endTime: Float64) {
+        startEndSelectedTrigger.onNext((startTime, endTime))
         print(startTime, endTime)
     }
     

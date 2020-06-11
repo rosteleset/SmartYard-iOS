@@ -17,15 +17,14 @@ class PlayArchiveVideoViewModel: BaseViewModel {
     private let date: Date
     private let camera: CameraObject
     
-    private let selectedPeriod: BehaviorSubject<ArchiveVideoHourPeriod?>
+    private let selectedStartEnd = BehaviorSubject<(Float64, Float64)?>(value: nil)
+    private let selectedPeriod = BehaviorSubject<ArchiveVideoHourPeriod?>(value: nil)
     
     init(camera: CameraObject, date: Date, router: WeakRouter<HomeRoute>) {
         self.router = router
         
         self.camera = camera
         self.date = date
-        
-        self.selectedPeriod = BehaviorSubject<ArchiveVideoHourPeriod?>(value: nil)
     }
     
     func transform(_ input: Input) -> Output {
@@ -45,17 +44,53 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.startEndSelectedTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.selectedStartEnd.onNext(($0))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.downloadTrigger
+            .withLatestFrom(selectedPeriod.asDriver(onErrorJustReturn: nil))
+            .withLatestFrom(selectedStartEnd.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .flatMap { args -> Driver<(from: String, to: String)> in
+                let (period, startEnd) = args
+                
+                guard let uPeriod = period, let uStartEnd = startEnd else {
+                    return .empty()
+                }
+                
+                let (start, end) = uStartEnd
+                
+                guard end - start > 0,
+                    let recPrepareComps = uPeriod.recPrepareComponents(start: start, end: end) else {
+                    return .empty()
+                }
+                
+                return .just(recPrepareComps)
+            }
+            .drive(
+                onNext: { [weak self] comps in
+                    print(comps.from)
+                    print(comps.to)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let videoURL = selectedPeriod
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .map { [weak self] period -> URL? in
-                guard let self = self else {
+                guard let self = self,
+                    let urlComps = period.videoUrlComponents else {
                     return nil
                 }
                 
                 let stringUrl = self.camera.video.absoluteString.replacingOccurrences(
                     of: "index.m3u8",
-                    with: period.videoUrlComponents
+                    with: urlComps
                 )
                 
                 return URL(string: stringUrl)
@@ -79,7 +114,9 @@ extension PlayArchiveVideoViewModel {
     
     struct Input {
         let backTrigger: Driver<Void>
+        let downloadTrigger: Driver<Void>
         let periodSelectedTrigger: Driver<ArchiveVideoHourPeriod?>
+        let startEndSelectedTrigger: Driver<(Float64, Float64)>
     }
     
     struct Output {
