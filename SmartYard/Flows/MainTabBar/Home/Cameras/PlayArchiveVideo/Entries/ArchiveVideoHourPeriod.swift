@@ -47,11 +47,11 @@ struct ArchiveVideoHourPeriod: Equatable {
         
         let startDate = date
             .adding(.hour, value: startHours)
-            .adding(.second, value: start.rounded().int)
+            .adding(.second, value: start.floor.int)
         
         let endDate = date
             .adding(.hour, value: startHours)
-            .adding(.second, value: end.rounded().int)
+            .adding(.second, value: end.ceil.int)
         
         return (from: startDate.apiString, to: endDate.apiString)
     }
