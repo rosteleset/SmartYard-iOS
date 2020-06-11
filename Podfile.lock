@@ -168,6 +168,14 @@ PODS:
   - XCoordinator/RxSwift (2.0.6):
     - RxSwift (~> 5.0)
     - XCoordinator/Core
+  - YandexMobileMetrica (3.9.4):
+    - YandexMobileMetrica/Static (= 3.9.4)
+  - YandexMobileMetrica/Static (3.9.4):
+    - YandexMobileMetrica/Static/Core (= 3.9.4)
+    - YandexMobileMetrica/Static/Crashes (= 3.9.4)
+  - YandexMobileMetrica/Static/Core (3.9.4)
+  - YandexMobileMetrica/Static/Crashes (3.9.4):
+    - YandexMobileMetrica/Static/Core
 
 DEPENDENCIES:
   - Cartography
@@ -196,6 +204,7 @@ DEPENDENCIES:
   - TPKeyboardAvoiding
   - XCoordinator
   - XCoordinator/RxSwift
+  - YandexMobileMetrica
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -239,6 +248,7 @@ SPEC REPOS:
     - TouchAreaInsets
     - TPKeyboardAvoiding
     - XCoordinator
+    - YandexMobileMetrica
   https://gitlab.linphone.org/BC/public/podspec.git:
     - linphone-sdk
 
@@ -302,7 +312,8 @@ SPEC CHECKSUMS:
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
+  YandexMobileMetrica: 1030df2959c886a7be3bc3d274eb54c8e86afd6f
 
-PODFILE CHECKSUM: d03a724d64b53b9410d44f9e69cd5518132c98b0
+PODFILE CHECKSUM: 1f408c9c23450532cc03a535d3fd4a3e9b4cc39d
 
 COCOAPODS: 1.8.4
