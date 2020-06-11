@@ -192,7 +192,7 @@
                                                 <constraint firstAttribute="height" constant="68" id="iWE-uR-auM"/>
                                             </constraints>
                                             <color key="tintColor" red="0.42745098040000001" green="0.47843137250000001" blue="0.54117647059999996" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <state key="normal" image="video.fill" catalog="system"/>
+                                            <state key="normal" image="CameraIcon"/>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yCs-ij-Tc4" userLabel="EndIndicatorButtons">
                                             <rect key="frame" x="271" y="5.5" width="63" height="57"/>
@@ -331,9 +331,9 @@
         </view>
     </objects>
     <resources>
+        <image name="CameraIcon" width="30" height="26"/>
         <image name="FastBackward" width="47" height="47"/>
         <image name="FastForward" width="47" height="47"/>
         <image name="MainBackground" width="375" height="812"/>
-        <image name="video.fill" catalog="system" width="128" height="82"/>
     </resources>
 </document>
