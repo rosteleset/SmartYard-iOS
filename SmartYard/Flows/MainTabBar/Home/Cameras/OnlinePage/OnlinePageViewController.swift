@@ -192,7 +192,7 @@ extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 18, left: 0, bottom: 18, right: 0)
+        return UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

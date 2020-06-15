@@ -26,10 +26,10 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X2h-ae-Edv">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="908"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPd-UE-6AD">
-                                    <rect key="frame" x="16" y="16" width="382" height="258.5"/>
+                                    <rect key="frame" x="16" y="28" width="382" height="258.5"/>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="JPd-UE-6AD" secondAttribute="height" multiplier="343:232" id="DNG-x6-Bgs"/>
@@ -41,7 +41,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="sxT-kK-WHV">
-                                    <rect key="frame" x="41" y="274.5" width="332" height="621.5"/>
+                                    <rect key="frame" x="41" y="286.5" width="332" height="621.5"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="621.5" id="oSU-TK-D9Z"/>
@@ -57,7 +57,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="sxT-kK-WHV" firstAttribute="leading" secondItem="X2h-ae-Edv" secondAttribute="leading" constant="41" id="1J1-6I-Xld"/>
-                                <constraint firstItem="JPd-UE-6AD" firstAttribute="top" secondItem="X2h-ae-Edv" secondAttribute="top" constant="16" id="6qG-2y-r79"/>
+                                <constraint firstItem="JPd-UE-6AD" firstAttribute="top" secondItem="X2h-ae-Edv" secondAttribute="top" constant="28" id="6qG-2y-r79"/>
                                 <constraint firstAttribute="trailing" secondItem="sxT-kK-WHV" secondAttribute="trailing" constant="41" id="GlE-NE-rK3"/>
                                 <constraint firstAttribute="bottom" secondItem="sxT-kK-WHV" secondAttribute="bottom" id="UTA-aM-63F"/>
                                 <constraint firstAttribute="trailing" secondItem="JPd-UE-6AD" secondAttribute="trailing" constant="16" id="aqk-6S-pic"/>
