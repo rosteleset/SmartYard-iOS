@@ -30,4 +30,39 @@ extension APIWrapper {
             .mapToOptional()
     }
     
+    func recPrepare(id: Int, from: String, to: String) -> Single<Int?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = RecPrepareRequest(accessToken: accessToken, id: id, from: from, to: to)
+        
+        return provider.rx
+            .request(.recPrepare(request: request))
+            .convertNoConnectionError()
+            .mapAsDefaultResponse()
+    }
+    
+    func recDownload(id: Int) -> Single<RecDownloadResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = RecDownloadRequest(accessToken: accessToken, id: id)
+        
+        return provider.rx
+            .request(.recDownload(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
+    
 }

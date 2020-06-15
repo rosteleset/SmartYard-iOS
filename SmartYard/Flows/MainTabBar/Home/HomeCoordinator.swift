@@ -219,7 +219,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             return .push(vc)
             
         case let .playArchiveVideo(camera, date):
-            let vm = PlayArchiveVideoViewModel(camera: camera, date: date, router: weakRouter)
+            let vm = PlayArchiveVideoViewModel(apiWrapper: apiWrapper, camera: camera, date: date, router: weakRouter)
             let vc = PlayArchiveVideoViewController(viewModel: vm)
             
             return .push(vc)
