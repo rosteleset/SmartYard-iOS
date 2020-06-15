@@ -112,7 +112,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] responseData in
                     // Если нет урла - показываем "видео готовится"
-                    guard let url = responseData.url else {
+                    guard let stringUrl = responseData.url else {
                         let msg = """
                         Как только процесс закончится, вам придет сообщение в чат.
                         В зависимости от длины видео процесс загрузки может занять от нескольких минут до нескольких часов.
@@ -131,15 +131,23 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                         return
                     }
                     
-                    // Если есть урл - копируем урл в пастборд и показываем алерт
-                    UIPasteboard.general.string = url
-                    
-                    self?.router.trigger(
-                        .alert(
-                            title: "Ссылка на видео скопирована в буфер обмена",
-                            message: nil
+                    guard let encodedString = stringUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                        let url = URL(string: encodedString) else {
+                        // Если есть ссылка, но она кривая - копируем урл в пастборд и показываем алерт
+                        UIPasteboard.general.string = stringUrl
+                        
+                        self?.router.trigger(
+                            .alert(
+                                title: "Ссылка на видео скопирована в буфер обмена",
+                                message: nil
+                            )
                         )
-                    )
+                        
+                        return
+                    }
+                    
+                    // Если смог получить нормальный URL - показываем share
+                    self?.router.trigger(.share(items: [url]))
                 }
             )
             .disposed(by: disposeBag)
