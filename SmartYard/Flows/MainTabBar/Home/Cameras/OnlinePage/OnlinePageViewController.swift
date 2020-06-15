@@ -11,6 +11,12 @@ import RxSwift
 import RxCocoa
 import AVKit
 
+protocol OnlinePageViewControllerDelegate: AnyObject {
+    
+    func onlinePageViewController(_ vc: OnlinePageViewController, didSelectCamera camera: CameraObject)
+    
+}
+
 class OnlinePageViewController: BaseViewController {
     
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -22,14 +28,12 @@ class OnlinePageViewController: BaseViewController {
     
     @IBOutlet private var collectionViewHeightConstraint: NSLayoutConstraint!
     
-    private let viewModel: OnlinePageViewModel
-    
     private var cameras = [CameraObject]()
     private var selectedCameraNumber: Int?
     
-    init(viewModel: OnlinePageViewModel) {
-        self.viewModel = viewModel
-        
+    weak var delegate: OnlinePageViewControllerDelegate?
+    
+    init() {
         super.init(nibName: nil, bundle: nil)
         
         title = "Онлайн"
@@ -45,8 +49,6 @@ class OnlinePageViewController: BaseViewController {
         
         configurePlayer()
         configureCollectionView()
-        
-        bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,24 +69,19 @@ class OnlinePageViewController: BaseViewController {
         collectionView.reloadData { [weak self] in
             guard let selectedCamera = selectedCamera,
                 let index = cameras.firstIndex(of: selectedCamera) else {
-                    return
+                return
             }
-            
+
             let indexPath = IndexPath(row: index, section: 0)
-            
+
             self?.collectionView.selectItem(
                 at: indexPath,
                 animated: false,
                 scrollPosition: .top
             )
-            
+
             self?.reloadCameraIfNeeded(selectedIndexPath: indexPath)
         }
-    }
-    
-    private func bind() {
-        let input = OnlinePageViewModel.Input()
-        let output = viewModel.transform(input)
     }
     
     private func configurePlayer() {
@@ -133,7 +130,7 @@ class OnlinePageViewController: BaseViewController {
         
         selectedCameraNumber = camera.cameraNumber
         
-//        delegate?.onlineView(self, didSelectCamera: camera)
+        delegate?.onlinePageViewController(self, didSelectCamera: camera)
         
         player?.replaceCurrentItem(with: AVPlayerItem(url: camera.video))
         player?.play()

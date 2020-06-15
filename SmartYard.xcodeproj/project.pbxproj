@@ -69,8 +69,6 @@
 		845E9EF224927630000CBBC6 /* RecPrepareRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */; };
 		845E9EF52497727A000CBBC6 /* RecDownloadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */; };
 		845E9EF72497741B000CBBC6 /* RecDownloadResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF62497741B000CBBC6 /* RecDownloadResponseData.swift */; };
-		847721712497C2EB003FCC24 /* OnlinePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847721702497C2EB003FCC24 /* OnlinePageViewModel.swift */; };
-		847721732497C2F5003FCC24 /* ArchivePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847721722497C2F5003FCC24 /* ArchivePageViewModel.swift */; };
 		847721762497C31D003FCC24 /* ArchivePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847721742497C31D003FCC24 /* ArchivePageViewController.swift */; };
 		847721772497C31D003FCC24 /* ArchivePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847721752497C31D003FCC24 /* ArchivePageViewController.xib */; };
 		8477217A2497C329003FCC24 /* OnlinePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847721782497C329003FCC24 /* OnlinePageViewController.swift */; };
@@ -497,8 +495,6 @@
 		845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecPrepareRequest.swift; sourceTree = "<group>"; };
 		845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecDownloadRequest.swift; sourceTree = "<group>"; };
 		845E9EF62497741B000CBBC6 /* RecDownloadResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecDownloadResponseData.swift; sourceTree = "<group>"; };
-		847721702497C2EB003FCC24 /* OnlinePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlinePageViewModel.swift; sourceTree = "<group>"; };
-		847721722497C2F5003FCC24 /* ArchivePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePageViewModel.swift; sourceTree = "<group>"; };
 		847721742497C31D003FCC24 /* ArchivePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePageViewController.swift; sourceTree = "<group>"; };
 		847721752497C31D003FCC24 /* ArchivePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchivePageViewController.xib; sourceTree = "<group>"; };
 		847721782497C329003FCC24 /* OnlinePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlinePageViewController.swift; sourceTree = "<group>"; };
@@ -1290,8 +1286,8 @@
 		8477216A2497C2B3003FCC24 /* OnlinePage */ = {
 			isa = PBXGroup;
 			children = (
-				8477216F2497C2D7003FCC24 /* ViewModel */,
-				8477216E2497C2D4003FCC24 /* View */,
+				847721782497C329003FCC24 /* OnlinePageViewController.swift */,
+				847721792497C329003FCC24 /* OnlinePageViewController.xib */,
 			);
 			path = OnlinePage;
 			sourceTree = "<group>";
@@ -1299,44 +1295,10 @@
 		8477216B2497C2BF003FCC24 /* ArchivePage */ = {
 			isa = PBXGroup;
 			children = (
-				8477216D2497C2D0003FCC24 /* ViewModel */,
-				8477216C2497C2CD003FCC24 /* View */,
-			);
-			path = ArchivePage;
-			sourceTree = "<group>";
-		};
-		8477216C2497C2CD003FCC24 /* View */ = {
-			isa = PBXGroup;
-			children = (
 				847721742497C31D003FCC24 /* ArchivePageViewController.swift */,
 				847721752497C31D003FCC24 /* ArchivePageViewController.xib */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		8477216D2497C2D0003FCC24 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				847721722497C2F5003FCC24 /* ArchivePageViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		8477216E2497C2D4003FCC24 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				847721782497C329003FCC24 /* OnlinePageViewController.swift */,
-				847721792497C329003FCC24 /* OnlinePageViewController.xib */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		8477216F2497C2D7003FCC24 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				847721702497C2EB003FCC24 /* OnlinePageViewModel.swift */,
-			);
-			path = ViewModel;
+			path = ArchivePage;
 			sourceTree = "<group>";
 		};
 		847CF7D3240689C400070007 /* Skeletons */ = {
@@ -3430,7 +3392,6 @@
 				E92EFBAB242A22F2003AF7FE /* APILocation.swift in Sources */,
 				E99A837E2434CBF1001CEE95 /* CommentIssueRequest.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
-				847721712497C2EB003FCC24 /* OnlinePageViewModel.swift in Sources */,
 				E92EFBC2242A22F2003AF7FE /* GetHousesResponseData.swift in Sources */,
 				E96CC0D72423FAEA008DF44B /* RestoreMethodCellModel.swift in Sources */,
 				84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */,
@@ -3500,7 +3461,6 @@
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				E94057F423F56BF800623746 /* IssueDeliveryType.swift in Sources */,
 				E92EFBD1242A22F2003AF7FE /* IntercomRequest.swift in Sources */,
-				847721732497C2F5003FCC24 /* ArchivePageViewModel.swift in Sources */,
 				E92EFBE3242A22F2003AF7FE /* BaseRequestRetrier.swift in Sources */,
 				E94B6C8D2407F8E200FD9F65 /* IssueTypes.swift in Sources */,
 				E92EFBA9242A22F2003AF7FE /* APIIssueConnect.swift in Sources */,

@@ -11,14 +11,18 @@ import RxSwift
 import RxCocoa
 import JTAppleCalendar
 
+protocol ArchivePageViewControllerDelegate: AnyObject {
+    
+    func archivePageViewController(_ vc: ArchivePageViewController, didSelectDate date: Date)
+    
+}
+
 class ArchivePageViewController: BaseViewController {
     
     @IBOutlet private weak var calendarView: JTACMonthView!
     @IBOutlet private weak var monthLabel: UILabel!
     @IBOutlet private weak var leftArrowButton: UIButton!
     @IBOutlet private weak var rightArrowButton: UIButton!
-    
-    private let viewModel: ArchivePageViewModel
     
     private let formatter = DateFormatter()
     private let currentCalendar = Calendar.current
@@ -29,9 +33,9 @@ class ArchivePageViewController: BaseViewController {
         return endDate.adding(.day, value: -7)
     }
     
-    init(viewModel: ArchivePageViewModel) {
-        self.viewModel = viewModel
-        
+    weak var delegate: ArchivePageViewControllerDelegate?
+    
+    init() {
         super.init(nibName: nil, bundle: nil)
         
         title = "Архив"
@@ -47,8 +51,6 @@ class ArchivePageViewController: BaseViewController {
         
         configureCalendarView()
         setupCalendar()
-        
-        bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,7 +69,7 @@ class ArchivePageViewController: BaseViewController {
         setupCalendarHeader(from: calendarView.visibleDates())
     }
     
-    fileprivate func configureCell(view: JTACDayCell?, cellState: CellState) {
+    private func configureCell(view: JTACDayCell?, cellState: CellState) {
         guard let myCustomCell = view as? CustomDayCell else {
             return
         }
@@ -140,11 +142,6 @@ class ArchivePageViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
-    }
-    
-    private func bind() {
-        let input = ArchivePageViewModel.Input()
-        let output = viewModel.transform(input)
     }
     
 }
@@ -232,7 +229,7 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
     ) {
         configureCell(view: cell, cellState: cellState)
 
-//        delegate?.archiveView(self, didSelectDate: date)
+        delegate?.archivePageViewController(self, didSelectDate: date)
     }
 
     func calendar(

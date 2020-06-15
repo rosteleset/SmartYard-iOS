@@ -11,7 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnlinePageViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="cameraContainer" destination="JPd-UE-6AD" id="67Q-VT-fkM"/>
-                <outlet property="collectionView" destination="sxT-kK-WHV" id="mD5-Lm-vEr"/>
+                <outlet property="collectionView" destination="sxT-kK-WHV" id="IOW-Nu-g61"/>
                 <outlet property="collectionViewHeightConstraint" destination="oSU-TK-D9Z" id="ajc-Xp-GIS"/>
                 <outlet property="scrollView" destination="BCu-Kg-FKQ" id="TyJ-Po-4DJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

@@ -77,6 +77,9 @@ class SelectCameraContainerViewController: BaseViewController {
         
         pagingController.collectionView.isScrollEnabled = false
         pagingController.contentInteraction = .none
+        
+        onlinePage.delegate = self
+        archivePage.delegate = self
     }
     
     private func bind() {
@@ -99,7 +102,7 @@ class SelectCameraContainerViewController: BaseViewController {
         output.cameraConfiguration
             .drive(
                 onNext: { [weak self] config in
-//                    self?.onlineView.setCameras(config.cameras, selectedCamera: config.preselectedCamera)
+                    self?.onlinePage.setCameras(config.cameras, selectedCamera: config.preselectedCamera)
                 }
             )
             .disposed(by: disposeBag)
@@ -107,20 +110,20 @@ class SelectCameraContainerViewController: BaseViewController {
     
 }
 
-//extension SelectCameraContainerViewController: OnlineViewDelegate {
-//
-//    func onlineView(_ onlineView: OnlineView, didSelectCamera camera: CameraObject) {
-//        selectCameraTrigger.onNext(camera)
-//
-//        cameraNameLabel.text = camera.name
-//    }
-//
-//}
-//
-//extension SelectCameraContainerViewController: ArchiveViewDelegate {
-//
-//    func archiveView(_ archiveView: ArchiveView, didSelectDate date: Date) {
-//        selectDateTrigger.onNext(date)
-//    }
-//
-//}
+extension SelectCameraContainerViewController: OnlinePageViewControllerDelegate {
+    
+    func onlinePageViewController(_ vc: OnlinePageViewController, didSelectCamera camera: CameraObject) {
+        selectCameraTrigger.onNext(camera)
+        
+        cameraNameLabel.text = camera.name
+    }
+    
+}
+
+extension SelectCameraContainerViewController: ArchivePageViewControllerDelegate {
+    
+    func archivePageViewController(_ vc: ArchivePageViewController, didSelectDate date: Date) {
+        selectDateTrigger.onNext(date)
+    }
+    
+}

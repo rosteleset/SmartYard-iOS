@@ -218,11 +218,11 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
                 router: weakRouter
             )
             
-            let onlineVm = OnlinePageViewModel()
-            let onlineVc = OnlinePageViewController(viewModel: onlineVm)
+            let onlineVc = OnlinePageViewController()
+            onlineVc.loadViewIfNeeded()
             
-            let archiveVm = ArchivePageViewModel()
-            let archiveVc = ArchivePageViewController(viewModel: archiveVm)
+            let archiveVc = ArchivePageViewController()
+            archiveVc.loadViewIfNeeded()
             
             let vc = SelectCameraContainerViewController(
                 onlinePage: onlineVc,
