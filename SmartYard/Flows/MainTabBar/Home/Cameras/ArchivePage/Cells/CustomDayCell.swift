@@ -22,16 +22,20 @@ class CustomDayCell: JTACDayCell {
         bottomSeparatorHeightConstraint.constant = 0.5
     }
     
-    func configureDate(dayText: String) {
-        dayLabel.text = dayText
-    }
-    
-    func configureColor(from hex: Int) {
-        dayLabel.textColor = UIColor(hex: hex)
-    }
-    
-    func setSelectedViewVisibility(isHidden: Bool) {
-        selectedView.isHidden = isHidden
+    func configure(with state: CellState, isValidDate: Bool) {
+        dayLabel.text = state.text
+        
+        selectedView.isHidden = !state.isSelected
+        
+        let textColor: UIColor? = {
+            guard !state.isSelected else {
+                return .white
+            }
+            
+            return isValidDate ? .black : UIColor(hex: 0xBEBEBE)
+        }()
+        
+        dayLabel.textColor = textColor
     }
     
 }

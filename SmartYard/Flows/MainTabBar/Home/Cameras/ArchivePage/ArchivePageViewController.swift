@@ -1,25 +1,23 @@
 //
-//  ArchiveView.swift
+//  ArchivePageViewController.swift
 //  SmartYard
 //
-//  Created by Mad Brains on 13.04.2020.
+//  Created by admin on 15.06.2020.
 //  Copyright © 2020 Mad Brains. All rights reserved.
 //
 
-import Foundation
-import PMNibLinkableView
-import JTAppleCalendar
-import SwifterSwift
+import UIKit
 import RxSwift
 import RxCocoa
+import JTAppleCalendar
 
-protocol ArchiveViewDelegate: AnyObject {
+protocol ArchivePageViewControllerDelegate: AnyObject {
     
-    func archiveView(_ archiveView: ArchiveView, didSelectDate date: Date)
+    func archivePageViewController(_ vc: ArchivePageViewController, didSelectDate date: Date)
     
 }
 
-class ArchiveView: PMNibLinkableView {
+class ArchivePageViewController: BaseViewController {
     
     @IBOutlet private weak var calendarView: JTACMonthView!
     @IBOutlet private weak var monthLabel: UILabel!
@@ -29,19 +27,39 @@ class ArchiveView: PMNibLinkableView {
     private let formatter = DateFormatter()
     private let currentCalendar = Calendar.current
     
-    private let disposeBag = DisposeBag()
+    private let endDate = Date()
     
-    weak var delegate: ArchiveViewDelegate?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        configureCalendarView()
-        setupCalendar()
-        bind()
+    private var startDate: Date {
+        return endDate.adding(.day, value: -7)
     }
     
-    func parrentViewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    weak var delegate: ArchivePageViewControllerDelegate?
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        
+        title = "Архив"
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureCalendarView()
+        setupCalendar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupCalendar()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         let visibleDates = calendarView.visibleDates()
         calendarView.viewWillTransition(to: size, with: coordinator, anchorDate: visibleDates.monthDates.first?.date)
         setupCalendar()
@@ -51,49 +69,41 @@ class ArchiveView: PMNibLinkableView {
         setupCalendarHeader(from: calendarView.visibleDates())
     }
     
-    fileprivate func configureCell(view: JTACDayCell?, cellState: CellState) {
+    private func configureCell(view: JTACDayCell?, cellState: CellState) {
         guard let myCustomCell = view as? CustomDayCell else {
             return
         }
         
-        handleCellTextColor(view: myCustomCell, cellState: cellState)
-        handleCellSelection(view: myCustomCell, cellState: cellState)
-        handleCellDate(view: view, cellState: cellState)
-    }
-    
-    private func handleCellSelection(view: JTACDayCell?, cellState: CellState) {
-        guard let myCustomCell = view as? CustomDayCell else {
-            return
-        }
-        
-        myCustomCell.setSelectedViewVisibility(isHidden: !cellState.isSelected)
-    }
-    
-    private func handleCellDate(view: JTACDayCell?, cellState: CellState) {
-        guard let myCustomCell = view as? CustomDayCell else {
-            return
-        }
-        
-        myCustomCell.configureDate(dayText: cellState.text)
-    }
-    
-    private func handleCellTextColor(view: CustomDayCell, cellState: CellState) {
-        let hex = cellState.dateBelongsTo == .thisMonth ? 0x28323E : 0xBEBEBE
-        view.configureColor(from: hex)
+        myCustomCell.configure(
+            with: cellState,
+            isValidDate: cellState.date.isBetween(startDate, endDate, includeBounds: true)
+        )
     }
     
     private func setupCalendarHeader(from visibleDates: DateSegmentInfo) {
-        guard let startDate = visibleDates.monthDates.first?.date else {
+        guard let visibleDate = visibleDates.monthDates.first?.date else {
             return
         }
-    
+        
+        // MARK: Заголовок
+        
         formatter.dateFormat = "LLLL"
-        let nameOfMonth = formatter.string(from: startDate).capitalized
-        let year = currentCalendar.component(.year, from: startDate)
+        
+        let nameOfMonth = formatter.string(from: visibleDate).capitalized
+        let year = currentCalendar.component(.year, from: visibleDate)
         
         monthLabel.text = nameOfMonth + " " + String(year)
+        
+        // MARK: Показ и скрытие стрелочек
+        
+        let startDateMonth = startDate.month
+        let endDateMonth = endDate.month
+        let visibleDateMonth = visibleDate.month
+        
+        leftArrowButton.isHidden = visibleDateMonth <= startDateMonth
+        rightArrowButton.isHidden = visibleDateMonth >= endDateMonth
     }
-
+    
     private func configureCalendarView() {
         calendarView.register(nibWithCellClass: CustomDayCell.self)
         
@@ -103,7 +113,7 @@ class ArchiveView: PMNibLinkableView {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: "WhiteSectionHeaderView"
         )
-
+        
         calendarView.calendarDelegate = self
         calendarView.calendarDataSource = self
         
@@ -112,9 +122,7 @@ class ArchiveView: PMNibLinkableView {
         calendarView.minimumInteritemSpacing = 0
         
         calendarView.scrollToDate(Date())
-    }
-    
-    private func bind() {
+        
         leftArrowButton.rx
             .tap
             .asDriver()
@@ -138,8 +146,8 @@ class ArchiveView: PMNibLinkableView {
     
 }
 
-extension ArchiveView: JTACMonthViewDataSource, JTACMonthViewDelegate {
-    
+extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDelegate {
+
     func calendar(
         _ calendar: JTACMonthView,
         headerViewForDateRange range: (start: Date, end: Date),
@@ -151,11 +159,11 @@ extension ArchiveView: JTACMonthViewDataSource, JTACMonthViewDelegate {
             for: indexPath
         ) as! WhiteSectionHeaderView
     }
-    
+
     func calendarSizeForMonths(_ calendar: JTACMonthView?) -> MonthSize? {
         return MonthSize(defaultSize: 40)
     }
-    
+
     func calendar(
         _ calendar: JTACMonthView,
         willDisplay cell: JTACDayCell,
@@ -165,7 +173,7 @@ extension ArchiveView: JTACMonthViewDataSource, JTACMonthViewDelegate {
     ) {
         configureCell(view: cell, cellState: cellState)
     }
-    
+
     func calendar(
         _ calendar: JTACMonthView,
         cellForItemAt date: Date,
@@ -177,20 +185,17 @@ extension ArchiveView: JTACMonthViewDataSource, JTACMonthViewDelegate {
             withReuseIdentifier: "CustomDayCell",
             for: indexPath
         ) as! CustomDayCell
-        
+
         configureCell(view: cell, cellState: cellState)
-        
+
         return cell
     }
-    
+
     func configureCalendar(_ calendar: JTACMonthView) -> ConfigurationParameters {
         formatter.dateFormat = "yyyy MM dd"
         formatter.timeZone = currentCalendar.timeZone
         formatter.locale = .init(identifier: "RU")
-        
-        let startDate = Date().adding(.month, value: -1)
-        let endDate = Date()
-        
+
         let parameters = ConfigurationParameters(
             startDate: startDate,
             endDate: endDate,
@@ -201,10 +206,20 @@ extension ArchiveView: JTACMonthViewDataSource, JTACMonthViewDelegate {
             firstDayOfWeek: .monday,
             hasStrictBoundaries: true
         )
-        
+
         return parameters
     }
-    
+
+    func calendar(
+        _ calendar: JTACMonthView,
+        shouldSelectDate date: Date,
+        cell: JTACDayCell?,
+        cellState: CellState,
+        indexPath: IndexPath
+    ) -> Bool {
+        return date.isBetween(startDate, endDate, includeBounds: true)
+    }
+
     func calendar(
         _ calendar: JTACMonthView,
         didSelectDate date: Date,
@@ -212,15 +227,11 @@ extension ArchiveView: JTACMonthViewDataSource, JTACMonthViewDelegate {
         cellState: CellState,
         indexPath: IndexPath
     ) {
-        guard cellState.dateBelongsTo == .thisMonth else {
-            return
-        }
-        
         configureCell(view: cell, cellState: cellState)
-        
-        delegate?.archiveView(self, didSelectDate: date)
+
+        delegate?.archivePageViewController(self, didSelectDate: date)
     }
-    
+
     func calendar(
         _ calendar: JTACMonthView,
         didDeselectDate date: Date,
@@ -230,9 +241,9 @@ extension ArchiveView: JTACMonthViewDataSource, JTACMonthViewDelegate {
     ) {
         configureCell(view: cell, cellState: cellState)
     }
-    
+
     func calendar(_ calendar: JTACMonthView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
         setupCalendarHeader(from: visibleDates)
     }
-    
+
 }

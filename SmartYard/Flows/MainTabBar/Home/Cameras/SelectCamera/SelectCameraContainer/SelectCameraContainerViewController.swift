@@ -10,26 +10,33 @@ import UIKit
 import RxSwift
 import RxCocoa
 import AVKit
+import Parchment
 
 class SelectCameraContainerViewController: BaseViewController {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var cameraNameLabel: UILabel!
     @IBOutlet private weak var addressLabel: UILabel!
-    @IBOutlet private weak var segmentControlView: SmartYardSegmentedControl!
-    @IBOutlet private weak var onlineView: OnlineView!
-    @IBOutlet private weak var archiveView: ArchiveView!
+    @IBOutlet private weak var pagingContainer: TopRoundedView!
     
-    private var playerViewController: AVPlayerViewController?
-    private var player: AVPlayer?
+    private var pagingController: PagingViewController?
     
+    private let onlinePage: OnlinePageViewController
+    private let archivePage: ArchivePageViewController
     private let viewModel: SelectCameraContainerViewModel
     
     let selectDateTrigger = PublishSubject<Date>()
     let selectCameraTrigger = PublishSubject<CameraObject>()
     
-    init(viewModel: SelectCameraContainerViewModel) {
+    init(
+        onlinePage: OnlinePageViewController,
+        archivePage: ArchivePageViewController,
+        viewModel: SelectCameraContainerViewModel
+    ) {
+        self.onlinePage = onlinePage
+        self.archivePage = archivePage
         self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,73 +45,44 @@ class SelectCameraContainerViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        archiveView.parrentViewWillTransition(to: size, with: coordinator)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureUI()
-        configureOnlineView()
-        configureArchiveView()
+        configurePaging()
         
         bind()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        archiveView.setupCalendar()
-        try? AVAudioSession.sharedInstance().setCategory(.playback)
+        pagingController?.view.frame = pagingContainer.bounds
     }
     
-    private func configureUI() {
-        segmentControlView.segmentItems = ["Онлайн", "Архив"]
-        archiveView.isHidden = true
-        onlineView.isHidden = false
-    }
-    
-    private func configureOnlineView() {
-        let playerViewController = AVPlayerViewController()
-        playerViewController.videoGravity = .resizeAspect
-        self.playerViewController = playerViewController
+    private func configurePaging() {
+        let pagingController = PagingViewController(viewControllers: [onlinePage, archivePage])
+        self.pagingController = pagingController
         
-        let player = AVPlayer()
-        playerViewController.player = player
-        self.player = player
+        addChild(pagingController)
+        pagingContainer.addSubview(pagingController.view)
+        pagingController.didMove(toParent: self)
         
-        addChild(playerViewController)
-        onlineView.setPlayer(player, playerView: playerViewController.view)
-        playerViewController.didMove(toParent: self)
+        pagingController.font = UIFont.SourceSansPro.regular(size: 18)
+        pagingController.selectedFont = UIFont.SourceSansPro.semibold(size: 18)
         
-        onlineView.delegate = self
-    }
-    
-    private func configureArchiveView() {
-        archiveView.delegate = self
+        pagingController.textColor = UIColor.SmartYard.gray
+        pagingController.selectedTextColor = UIColor.SmartYard.semiBlack
+        
+        pagingController.menuItemSize = .sizeToFit(minWidth: 100, height: 70)
+        
+        pagingController.collectionView.isScrollEnabled = false
+        pagingController.contentInteraction = .none
+        
+        onlinePage.delegate = self
+        archivePage.delegate = self
     }
     
     private func bind() {
-        segmentControlView.rx
-            .selectedIndex
-            .asDriver()
-            .drive(
-                onNext: { [weak self] index in
-                    guard index == 0 else {
-                        self?.archiveView.isHidden = false
-                        self?.onlineView.isHidden = true
-                        
-                        return
-                    }
-                    
-                    self?.archiveView.isHidden = true
-                    self?.onlineView.isHidden = false
-                }
-            )
-            .disposed(by: disposeBag)
-        
         let input = SelectCameraContainerViewModel.Input(
             selectedCameraTrigger: selectCameraTrigger.asDriverOnErrorJustComplete(),
             selectedDateTrigger: selectDateTrigger.asDriverOnErrorJustComplete(),
@@ -124,7 +102,7 @@ class SelectCameraContainerViewController: BaseViewController {
         output.cameraConfiguration
             .drive(
                 onNext: { [weak self] config in
-                    self?.onlineView.setCameras(config.cameras, selectedCamera: config.preselectedCamera)
+                    self?.onlinePage.setCameras(config.cameras, selectedCamera: config.preselectedCamera)
                 }
             )
             .disposed(by: disposeBag)
@@ -132,9 +110,9 @@ class SelectCameraContainerViewController: BaseViewController {
     
 }
 
-extension SelectCameraContainerViewController: OnlineViewDelegate {
+extension SelectCameraContainerViewController: OnlinePageViewControllerDelegate {
     
-    func onlineView(_ onlineView: OnlineView, didSelectCamera camera: CameraObject) {
+    func onlinePageViewController(_ vc: OnlinePageViewController, didSelectCamera camera: CameraObject) {
         selectCameraTrigger.onNext(camera)
         
         cameraNameLabel.text = camera.name
@@ -142,9 +120,9 @@ extension SelectCameraContainerViewController: OnlineViewDelegate {
     
 }
 
-extension SelectCameraContainerViewController: ArchiveViewDelegate {
+extension SelectCameraContainerViewController: ArchivePageViewControllerDelegate {
     
-    func archiveView(_ archiveView: ArchiveView, didSelectDate date: Date) {
+    func archivePageViewController(_ vc: ArchivePageViewController, didSelectDate date: Date) {
         selectDateTrigger.onNext(date)
     }
     

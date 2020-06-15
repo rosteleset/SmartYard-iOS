@@ -69,6 +69,10 @@
 		845E9EF224927630000CBBC6 /* RecPrepareRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */; };
 		845E9EF52497727A000CBBC6 /* RecDownloadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */; };
 		845E9EF72497741B000CBBC6 /* RecDownloadResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF62497741B000CBBC6 /* RecDownloadResponseData.swift */; };
+		847721762497C31D003FCC24 /* ArchivePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847721742497C31D003FCC24 /* ArchivePageViewController.swift */; };
+		847721772497C31D003FCC24 /* ArchivePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847721752497C31D003FCC24 /* ArchivePageViewController.xib */; };
+		8477217A2497C329003FCC24 /* OnlinePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847721782497C329003FCC24 /* OnlinePageViewController.swift */; };
+		8477217B2497C329003FCC24 /* OnlinePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847721792497C329003FCC24 /* OnlinePageViewController.xib */; };
 		847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */; };
 		847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */; };
 		847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */; };
@@ -186,14 +190,10 @@
 		84F64934247402DC000C0028 /* SelectCameraContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64925247402DB000C0028 /* SelectCameraContainerViewController.swift */; };
 		84F64935247402DC000C0028 /* SelectCameraContainerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F64926247402DB000C0028 /* SelectCameraContainerViewController.xib */; };
 		84F64936247402DC000C0028 /* SelectCameraContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64927247402DB000C0028 /* SelectCameraContainerViewModel.swift */; };
-		84F64937247402DC000C0028 /* OnlineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F6492A247402DB000C0028 /* OnlineView.xib */; };
-		84F64938247402DC000C0028 /* OnlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6492B247402DB000C0028 /* OnlineView.swift */; };
 		84F64939247402DC000C0028 /* WhiteSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6492E247402DB000C0028 /* WhiteSectionHeaderView.swift */; };
 		84F6493A247402DC000C0028 /* WhiteSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F6492F247402DB000C0028 /* WhiteSectionHeaderView.xib */; };
 		84F6493B247402DC000C0028 /* CustomDayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F64930247402DC000C0028 /* CustomDayCell.xib */; };
 		84F6493C247402DC000C0028 /* CustomDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64931247402DC000C0028 /* CustomDayCell.swift */; };
-		84F6493D247402DC000C0028 /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64932247402DC000C0028 /* ArchiveView.swift */; };
-		84F6493E247402DC000C0028 /* ArchiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F64933247402DC000C0028 /* ArchiveView.xib */; };
 		84F6494824740E90000C0028 /* YardMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494224740E8F000C0028 /* YardMapViewController.swift */; };
 		84F6494924740E90000C0028 /* YardMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F6494324740E8F000C0028 /* YardMapViewController.xib */; };
 		84F6494A24740E90000C0028 /* CamerasMapPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494524740E8F000C0028 /* CamerasMapPointView.swift */; };
@@ -491,6 +491,10 @@
 		845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecPrepareRequest.swift; sourceTree = "<group>"; };
 		845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecDownloadRequest.swift; sourceTree = "<group>"; };
 		845E9EF62497741B000CBBC6 /* RecDownloadResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecDownloadResponseData.swift; sourceTree = "<group>"; };
+		847721742497C31D003FCC24 /* ArchivePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePageViewController.swift; sourceTree = "<group>"; };
+		847721752497C31D003FCC24 /* ArchivePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchivePageViewController.xib; sourceTree = "<group>"; };
+		847721782497C329003FCC24 /* OnlinePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlinePageViewController.swift; sourceTree = "<group>"; };
+		847721792497C329003FCC24 /* OnlinePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnlinePageViewController.xib; sourceTree = "<group>"; };
 		847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListSkeletonView.swift; sourceTree = "<group>"; };
 		847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListSkeletonView.xib; sourceTree = "<group>"; };
 		847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListSkeletonView.swift; sourceTree = "<group>"; };
@@ -618,14 +622,10 @@
 		84F64925247402DB000C0028 /* SelectCameraContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCameraContainerViewController.swift; sourceTree = "<group>"; };
 		84F64926247402DB000C0028 /* SelectCameraContainerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectCameraContainerViewController.xib; sourceTree = "<group>"; };
 		84F64927247402DB000C0028 /* SelectCameraContainerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCameraContainerViewModel.swift; sourceTree = "<group>"; };
-		84F6492A247402DB000C0028 /* OnlineView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnlineView.xib; sourceTree = "<group>"; };
-		84F6492B247402DB000C0028 /* OnlineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineView.swift; sourceTree = "<group>"; };
 		84F6492E247402DB000C0028 /* WhiteSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteSectionHeaderView.swift; sourceTree = "<group>"; };
 		84F6492F247402DB000C0028 /* WhiteSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhiteSectionHeaderView.xib; sourceTree = "<group>"; };
 		84F64930247402DC000C0028 /* CustomDayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomDayCell.xib; sourceTree = "<group>"; };
 		84F64931247402DC000C0028 /* CustomDayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDayCell.swift; sourceTree = "<group>"; };
-		84F64932247402DC000C0028 /* ArchiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
-		84F64933247402DC000C0028 /* ArchiveView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ArchiveView.xib; sourceTree = "<group>"; };
 		84F6494224740E8F000C0028 /* YardMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YardMapViewController.swift; sourceTree = "<group>"; };
 		84F6494324740E8F000C0028 /* YardMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YardMapViewController.xib; sourceTree = "<group>"; };
 		84F6494524740E8F000C0028 /* CamerasMapPointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CamerasMapPointView.swift; sourceTree = "<group>"; };
@@ -1275,6 +1275,26 @@
 			path = RecDownload;
 			sourceTree = "<group>";
 		};
+		8477216A2497C2B3003FCC24 /* OnlinePage */ = {
+			isa = PBXGroup;
+			children = (
+				84F64950247410F9000C0028 /* Cells */,
+				847721782497C329003FCC24 /* OnlinePageViewController.swift */,
+				847721792497C329003FCC24 /* OnlinePageViewController.xib */,
+			);
+			path = OnlinePage;
+			sourceTree = "<group>";
+		};
+		8477216B2497C2BF003FCC24 /* ArchivePage */ = {
+			isa = PBXGroup;
+			children = (
+				84F6492D247402DB000C0028 /* Cells */,
+				847721742497C31D003FCC24 /* ArchivePageViewController.swift */,
+				847721752497C31D003FCC24 /* ArchivePageViewController.xib */,
+			);
+			path = ArchivePage;
+			sourceTree = "<group>";
+		};
 		847CF7D3240689C400070007 /* Skeletons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1447,13 +1467,6 @@
 				84963968248666F20086B6E9 /* View */,
 			);
 			path = PlayArchiveVideo;
-			sourceTree = "<group>";
-		};
-		84963967248666D70086B6E9 /* ExportArchiveVideo */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ExportArchiveVideo;
 			sourceTree = "<group>";
 		};
 		84963968248666F20086B6E9 /* View */ = {
@@ -1914,7 +1927,8 @@
 		84F64922247402DB000C0028 /* Cameras */ = {
 			isa = PBXGroup;
 			children = (
-				84963967248666D70086B6E9 /* ExportArchiveVideo */,
+				8477216B2497C2BF003FCC24 /* ArchivePage */,
+				8477216A2497C2B3003FCC24 /* OnlinePage */,
 				849639662486668A0086B6E9 /* PlayArchiveVideo */,
 				84F64923247402DB000C0028 /* SelectCamera */,
 				84F6493F24740E8F000C0028 /* YardMap */,
@@ -1936,38 +1950,8 @@
 				84F64925247402DB000C0028 /* SelectCameraContainerViewController.swift */,
 				84F64926247402DB000C0028 /* SelectCameraContainerViewController.xib */,
 				84F64927247402DB000C0028 /* SelectCameraContainerViewModel.swift */,
-				84F64928247402DB000C0028 /* Views */,
 			);
 			path = SelectCameraContainer;
-			sourceTree = "<group>";
-		};
-		84F64928247402DB000C0028 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				84F64929247402DB000C0028 /* OnlineView */,
-				84F6492C247402DB000C0028 /* ArchiveView */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		84F64929247402DB000C0028 /* OnlineView */ = {
-			isa = PBXGroup;
-			children = (
-				84F64950247410F9000C0028 /* Cells */,
-				84F6492A247402DB000C0028 /* OnlineView.xib */,
-				84F6492B247402DB000C0028 /* OnlineView.swift */,
-			);
-			path = OnlineView;
-			sourceTree = "<group>";
-		};
-		84F6492C247402DB000C0028 /* ArchiveView */ = {
-			isa = PBXGroup;
-			children = (
-				84F6492D247402DB000C0028 /* Cells */,
-				84F64932247402DC000C0028 /* ArchiveView.swift */,
-				84F64933247402DC000C0028 /* ArchiveView.xib */,
-			);
-			path = ArchiveView;
 			sourceTree = "<group>";
 		};
 		84F6492D247402DB000C0028 /* Cells */ = {
@@ -3092,6 +3076,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				847721772497C31D003FCC24 /* ArchivePageViewController.xib in Resources */,
 				E9004C6223FABF6800B59976 /* AccessView.xib in Resources */,
 				E9E4273623F55C5E00F5D593 /* ServiceUnavailableViewController.xib in Resources */,
 				E9C0E815247282DE001CE018 /* OnboardingBaseView.xib in Resources */,
@@ -3112,6 +3097,7 @@
 				E9C0E812247282DE001CE018 /* OnboardingViewController.xib in Resources */,
 				E94057FA23F6721F00623746 /* AddressAccessViewController.xib in Resources */,
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
+				8477217B2497C329003FCC24 /* OnlinePageViewController.xib in Resources */,
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
 				849F2AD82448687C005693B3 /* AddressesListEmptyStateCell.xib in Resources */,
 				84963974248680C10086B6E9 /* VideoPeriodPickerCell.xib in Resources */,
@@ -3125,7 +3111,6 @@
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
 				84D6446023F6ACE600AD87EF /* AddressDeletionViewController.xib in Resources */,
 				84B89A9123F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib in Resources */,
-				84F6493E247402DC000C0028 /* ArchiveView.xib in Resources */,
 				844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */,
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
 				84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */,
@@ -3147,7 +3132,6 @@
 				E9B9EAC82421FCB8000A92B3 /* RestorePasswordViewController.xib in Resources */,
 				E9E4271C23F41C6600F5D593 /* AvailableServiceCell.xib in Resources */,
 				E92EFB4624287F4C003AF7FE /* PassConfirmationPinViewController.xib in Resources */,
-				84F64937247402DC000C0028 /* OnlineView.xib in Resources */,
 				843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */,
 				E9E4273B23F5609E00F5D593 /* ServiceSoonAvailableViewController.xib in Resources */,
 				E94B6C1923FAC5B600FD9F65 /* NewAllowedPersonViewController.xib in Resources */,
@@ -3349,6 +3333,7 @@
 				E92EFBB0242A22F2003AF7FE /* APISettingsAddress.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
 				845E9EEF248E8903000CBBC6 /* SimpleVideoProgressSlider.swift in Sources */,
+				847721762497C31D003FCC24 /* ArchivePageViewController.swift in Sources */,
 				E92EFBC6242A22F2003AF7FE /* APIWrapper+User.swift in Sources */,
 				84AA8D6623E2F2A8001B3B43 /* TransportType+Extensions.swift in Sources */,
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
@@ -3402,13 +3387,13 @@
 				845E9EE024895AE4000CBBC6 /* ABEndIndicator.swift in Sources */,
 				843C38D3242A577C0035BF80 /* DeliveredRequest.swift in Sources */,
 				845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */,
-				84F6493D247402DC000C0028 /* ArchiveView.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
 				845E9EE124895AE4000CBBC6 /* ABProgressIndicator.swift in Sources */,
 				E9C0E813247282DE001CE018 /* OnboardingViewController.swift in Sources */,
 				E92EFBE2242A22F2003AF7FE /* EmptyDataInitializable.swift in Sources */,
 				8496396324851B7E0086B6E9 /* AllCCTVRequest.swift in Sources */,
 				E92EFBD3242A22F2003AF7FE /* AccessRequest.swift in Sources */,
+				8477217A2497C329003FCC24 /* OnlinePageViewController.swift in Sources */,
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
 				E92EFBB7242A22F2003AF7FE /* APIClientName.swift in Sources */,
 				E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */,
@@ -3438,7 +3423,6 @@
 				E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				E92EFBBF242A22F2003AF7FE /* GetServicesRequest.swift in Sources */,
-				84F64938247402DC000C0028 /* OnlineView.swift in Sources */,
 				84F6494B24740E90000C0028 /* YardMapViewModel.swift in Sources */,
 				84F6493C247402DC000C0028 /* CustomDayCell.swift in Sources */,
 				E92EFBA7242A22F2003AF7FE /* APIWrapper.swift in Sources */,

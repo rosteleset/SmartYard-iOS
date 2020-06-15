@@ -33,6 +33,7 @@ target 'SmartYard' do
   pod 'SkeletonView', '1.7'
   pod 'SearchTextField'
   pod 'SHSPhoneComponent'
+  pod 'Parchment'
 
   # Calendar
   pod 'JTAppleCalendar'
