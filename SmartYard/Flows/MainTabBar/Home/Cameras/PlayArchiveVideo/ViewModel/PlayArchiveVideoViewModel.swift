@@ -100,6 +100,21 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] num in
                     print(num)
+                    
+                    let msg = """
+                    Как только процесс закончится, вам придет сообщение в чат.
+                    В зависимости от длины видео процесс загрузки может занять от нескольких минут до нескольких часов.
+                    """
+                    
+                    let okAction = UIAlertAction(title: "Спасибо", style: .default, handler: nil)
+                    
+                    self?.router.trigger(
+                        .dialog(
+                            title: "Видео готовится",
+                            message: msg,
+                            actions: [okAction]
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
