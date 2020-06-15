@@ -29,7 +29,10 @@ class OnlinePageViewController: BaseViewController {
     
     init(viewModel: OnlinePageViewModel) {
         self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
+        
+        title = "Онлайн"
     }
     
     @available(*, unavailable)

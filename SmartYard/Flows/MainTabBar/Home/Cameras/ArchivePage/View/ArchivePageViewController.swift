@@ -31,7 +31,10 @@ class ArchivePageViewController: BaseViewController {
     
     init(viewModel: ArchivePageViewModel) {
         self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
+        
+        title = "Архив"
     }
     
     @available(*, unavailable)
@@ -46,6 +49,12 @@ class ArchivePageViewController: BaseViewController {
         setupCalendar()
         
         bind()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupCalendar()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

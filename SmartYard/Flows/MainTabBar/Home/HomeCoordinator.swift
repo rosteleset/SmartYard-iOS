@@ -218,7 +218,17 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
                 router: weakRouter
             )
             
-            let vc = SelectCameraContainerViewController(viewModel: vm)
+            let onlineVm = OnlinePageViewModel()
+            let onlineVc = OnlinePageViewController(viewModel: onlineVm)
+            
+            let archiveVm = ArchivePageViewModel()
+            let archiveVc = ArchivePageViewController(viewModel: archiveVm)
+            
+            let vc = SelectCameraContainerViewController(
+                onlinePage: onlineVc,
+                archivePage: archiveVc,
+                viewModel: vm
+            )
             
             return .push(vc)
             
