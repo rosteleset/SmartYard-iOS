@@ -67,6 +67,8 @@
 		845E9EE524895AE4000CBBC6 /* ABTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */; };
 		845E9EEF248E8903000CBBC6 /* SimpleVideoProgressSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */; };
 		845E9EF224927630000CBBC6 /* RecPrepareRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */; };
+		845E9EF52497727A000CBBC6 /* RecDownloadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */; };
+		845E9EF72497741B000CBBC6 /* RecDownloadResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF62497741B000CBBC6 /* RecDownloadResponseData.swift */; };
 		847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */; };
 		847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */; };
 		847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */; };
@@ -487,6 +489,8 @@
 		845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABTimeView.swift; sourceTree = "<group>"; };
 		845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleVideoProgressSlider.swift; sourceTree = "<group>"; };
 		845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecPrepareRequest.swift; sourceTree = "<group>"; };
+		845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecDownloadRequest.swift; sourceTree = "<group>"; };
+		845E9EF62497741B000CBBC6 /* RecDownloadResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecDownloadResponseData.swift; sourceTree = "<group>"; };
 		847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListSkeletonView.swift; sourceTree = "<group>"; };
 		847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListSkeletonView.xib; sourceTree = "<group>"; };
 		847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListSkeletonView.swift; sourceTree = "<group>"; };
@@ -1262,6 +1266,15 @@
 			path = RecPrepare;
 			sourceTree = "<group>";
 		};
+		845E9EF324977264000CBBC6 /* RecDownload */ = {
+			isa = PBXGroup;
+			children = (
+				845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */,
+				845E9EF62497741B000CBBC6 /* RecDownloadResponseData.swift */,
+			);
+			path = RecDownload;
+			sourceTree = "<group>";
+		};
 		847CF7D3240689C400070007 /* Skeletons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1411,6 +1424,7 @@
 			children = (
 				8496395F24851B660086B6E9 /* ApiWrapper+CCTV.swift */,
 				8496396124851B6B0086B6E9 /* All */,
+				845E9EF324977264000CBBC6 /* RecDownload */,
 				845E9EF02492761D000CBBC6 /* RecPrepare */,
 			);
 			path = CCTV;
@@ -3365,6 +3379,7 @@
 				E92EFBD9242A22F2003AF7FE /* RegisterQRRequest.swift in Sources */,
 				844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */,
 				E94B6C1823FAC5B600FD9F65 /* NewAllowedPersonViewController.swift in Sources */,
+				845E9EF52497727A000CBBC6 /* RecDownloadRequest.swift in Sources */,
 				E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */,
 				84898A9823F1556B00E6B78E /* SettingsSectionModel.swift in Sources */,
 				E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */,
@@ -3397,6 +3412,7 @@
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
 				E92EFBB7242A22F2003AF7FE /* APIClientName.swift in Sources */,
 				E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */,
+				845E9EF72497741B000CBBC6 /* RecDownloadResponseData.swift in Sources */,
 				E92EFBB3242A22F2003AF7FE /* APIDoor.swift in Sources */,
 				84F6494824740E90000C0028 /* YardMapViewController.swift in Sources */,
 				E92EFBAA242A22F2003AF7FE /* APIAddress.swift in Sources */,
