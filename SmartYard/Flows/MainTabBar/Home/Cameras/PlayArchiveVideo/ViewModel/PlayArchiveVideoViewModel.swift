@@ -97,22 +97,47 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
+            .flatMapLatest { [weak self] fragmentId -> Driver<RecDownloadResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .recDownload(id: fragmentId)
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .drive(
-                onNext: { [weak self] num in
-                    print(num)
+                onNext: { [weak self] responseData in
+                    // Если нет урла - показываем "видео готовится"
+                    guard let url = responseData.url else {
+                        let msg = """
+                        Как только процесс закончится, вам придет сообщение в чат.
+                        В зависимости от длины видео процесс загрузки может занять от нескольких минут до нескольких часов.
+                        """
+                        
+                        let okAction = UIAlertAction(title: "Спасибо", style: .default, handler: nil)
+                        
+                        self?.router.trigger(
+                            .dialog(
+                                title: "Видео готовится",
+                                message: msg,
+                                actions: [okAction]
+                            )
+                        )
+                        
+                        return
+                    }
                     
-                    let msg = """
-                    Как только процесс закончится, вам придет сообщение в чат.
-                    В зависимости от длины видео процесс загрузки может занять от нескольких минут до нескольких часов.
-                    """
-                    
-                    let okAction = UIAlertAction(title: "Спасибо", style: .default, handler: nil)
+                    // Если есть урл - копируем урл в пастборд и показываем алерт
+                    UIPasteboard.general.string = url
                     
                     self?.router.trigger(
-                        .dialog(
-                            title: "Видео готовится",
-                            message: msg,
-                            actions: [okAction]
+                        .alert(
+                            title: "Ссылка на видео скопирована в буфер обмена",
+                            message: nil
                         )
                     )
                 }
