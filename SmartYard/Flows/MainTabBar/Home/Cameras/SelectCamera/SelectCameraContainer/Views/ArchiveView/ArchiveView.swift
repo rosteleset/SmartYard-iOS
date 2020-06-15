@@ -33,6 +33,16 @@ class ArchiveView: PMNibLinkableView {
     
     weak var delegate: ArchiveViewDelegate?
     
+    // MARK: Записи можно выбрать за последние 7 дней
+    // Поэтому дата окончания - это текущая дата
+    // Дата начала - это текущая дата минус 7 дней
+    
+    private let endDate = Date()
+    
+    private var startDate: Date {
+        return endDate.adding(.day, value: -7)
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -41,7 +51,7 @@ class ArchiveView: PMNibLinkableView {
         bind()
     }
     
-    func parrentViewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    func parentViewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         let visibleDates = calendarView.visibleDates()
         calendarView.viewWillTransition(to: size, with: coordinator, anchorDate: visibleDates.monthDates.first?.date)
         setupCalendar()
@@ -56,42 +66,34 @@ class ArchiveView: PMNibLinkableView {
             return
         }
         
-        handleCellTextColor(view: myCustomCell, cellState: cellState)
-        handleCellSelection(view: myCustomCell, cellState: cellState)
-        handleCellDate(view: view, cellState: cellState)
-    }
-    
-    private func handleCellSelection(view: JTACDayCell?, cellState: CellState) {
-        guard let myCustomCell = view as? CustomDayCell else {
-            return
-        }
-        
-        myCustomCell.setSelectedViewVisibility(isHidden: !cellState.isSelected)
-    }
-    
-    private func handleCellDate(view: JTACDayCell?, cellState: CellState) {
-        guard let myCustomCell = view as? CustomDayCell else {
-            return
-        }
-        
-        myCustomCell.configureDate(dayText: cellState.text)
-    }
-    
-    private func handleCellTextColor(view: CustomDayCell, cellState: CellState) {
-        let hex = cellState.dateBelongsTo == .thisMonth ? 0x28323E : 0xBEBEBE
-        view.configureColor(from: hex)
+        myCustomCell.configure(
+            with: cellState,
+            isValidDate: cellState.date.isBetween(startDate, endDate, includeBounds: true)
+        )
     }
     
     private func setupCalendarHeader(from visibleDates: DateSegmentInfo) {
-        guard let startDate = visibleDates.monthDates.first?.date else {
+        guard let visibleDate = visibleDates.monthDates.first?.date else {
             return
         }
+        
+        // MARK: Заголовок
     
         formatter.dateFormat = "LLLL"
-        let nameOfMonth = formatter.string(from: startDate).capitalized
-        let year = currentCalendar.component(.year, from: startDate)
+        
+        let nameOfMonth = formatter.string(from: visibleDate).capitalized
+        let year = currentCalendar.component(.year, from: visibleDate)
         
         monthLabel.text = nameOfMonth + " " + String(year)
+        
+        // MARK: Показ и скрытие стрелочек
+        
+        let startDateMonth = startDate.month
+        let endDateMonth = endDate.month
+        let visibleDateMonth = visibleDate.month
+        
+        leftArrowButton.isHidden = visibleDateMonth <= startDateMonth
+        rightArrowButton.isHidden = visibleDateMonth >= endDateMonth
     }
 
     private func configureCalendarView() {
@@ -188,9 +190,6 @@ extension ArchiveView: JTACMonthViewDataSource, JTACMonthViewDelegate {
         formatter.timeZone = currentCalendar.timeZone
         formatter.locale = .init(identifier: "RU")
         
-        let startDate = Date().adding(.month, value: -1)
-        let endDate = Date()
-        
         let parameters = ConfigurationParameters(
             startDate: startDate,
             endDate: endDate,
@@ -207,15 +206,21 @@ extension ArchiveView: JTACMonthViewDataSource, JTACMonthViewDelegate {
     
     func calendar(
         _ calendar: JTACMonthView,
+        shouldSelectDate date: Date,
+        cell: JTACDayCell?,
+        cellState: CellState,
+        indexPath: IndexPath
+    ) -> Bool {
+        return date.isBetween(startDate, endDate, includeBounds: true)
+    }
+    
+    func calendar(
+        _ calendar: JTACMonthView,
         didSelectDate date: Date,
         cell: JTACDayCell?,
         cellState: CellState,
         indexPath: IndexPath
     ) {
-        guard cellState.dateBelongsTo == .thisMonth else {
-            return
-        }
-        
         configureCell(view: cell, cellState: cellState)
         
         delegate?.archiveView(self, didSelectDate: date)

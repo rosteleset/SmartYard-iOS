@@ -40,7 +40,7 @@ class SelectCameraContainerViewController: BaseViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        archiveView.parrentViewWillTransition(to: size, with: coordinator)
+        archiveView.parentViewWillTransition(to: size, with: coordinator)
     }
     
     override func viewDidLoad() {

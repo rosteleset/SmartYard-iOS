@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,47 +39,28 @@
                     <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RightArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="dZ7-eg-0Aj">
-                    <rect key="frame" x="343" y="81" width="8" height="13"/>
-                    <color key="tintColor" red="0.50980392156862742" green="0.50980392156862742" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="13" id="8mF-Ec-uIC"/>
-                        <constraint firstAttribute="width" constant="8" id="x6k-go-h3m"/>
-                    </constraints>
-                </imageView>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LeftArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ahH-gB-yTg">
-                    <rect key="frame" x="63" y="81" width="8" height="13"/>
-                    <color key="tintColor" red="0.50980392156862742" green="0.50980392156862742" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="13" id="RCR-Gl-gMx"/>
-                        <constraint firstAttribute="width" constant="8" id="x2i-aw-SYB"/>
-                    </constraints>
-                </imageView>
-                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VWR-Ph-2S4">
+                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VWR-Ph-2S4">
                     <rect key="frame" x="52" y="72.5" width="30" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="Q1S-DJ-JK1"/>
                         <constraint firstAttribute="width" constant="30" id="caB-eT-bf9"/>
                     </constraints>
                     <color key="tintColor" red="0.50980392156862742" green="0.50980392156862742" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" title="Button"/>
+                    <state key="normal" image="LeftArrowIcon"/>
                 </button>
-                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gl2-Dz-Wok">
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gl2-Dz-Wok">
                     <rect key="frame" x="332" y="72.5" width="30" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="ELK-Sr-g2g"/>
                         <constraint firstAttribute="width" constant="30" id="Nh8-RP-QhU"/>
                     </constraints>
                     <color key="tintColor" red="0.50980392156862742" green="0.50980392156862742" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" title="Button"/>
+                    <state key="normal" image="RightArrowIcon"/>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Gl2-Dz-Wok" secondAttribute="trailing" constant="52" id="2Bj-BC-0Pw"/>
-                <constraint firstItem="dZ7-eg-0Aj" firstAttribute="centerX" secondItem="Gl2-Dz-Wok" secondAttribute="centerX" id="7fW-5d-W7o"/>
-                <constraint firstItem="ahH-gB-yTg" firstAttribute="centerX" secondItem="VWR-Ph-2S4" secondAttribute="centerX" id="CuY-cL-Esn"/>
-                <constraint firstItem="dZ7-eg-0Aj" firstAttribute="centerY" secondItem="Gl2-Dz-Wok" secondAttribute="centerY" id="HKE-CW-xC2"/>
                 <constraint firstItem="VWR-Ph-2S4" firstAttribute="centerY" secondItem="yrB-Zy-Mil" secondAttribute="centerY" id="IYE-qG-1r7"/>
                 <constraint firstItem="VWR-Ph-2S4" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="52" id="Kda-xc-LNN"/>
                 <constraint firstItem="yrB-Zy-Mil" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="PHu-BH-hwf"/>
@@ -94,7 +73,6 @@
                 <constraint firstItem="C0a-HB-iju" firstAttribute="top" secondItem="yrB-Zy-Mil" secondAttribute="bottom" constant="31" id="iuZ-25-MO9"/>
                 <constraint firstItem="yrB-Zy-Mil" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="28" id="mm4-TK-Sff"/>
                 <constraint firstItem="Gl2-Dz-Wok" firstAttribute="centerY" secondItem="yrB-Zy-Mil" secondAttribute="centerY" id="pue-KH-Of5"/>
-                <constraint firstItem="ahH-gB-yTg" firstAttribute="centerY" secondItem="VWR-Ph-2S4" secondAttribute="centerY" id="qZi-rf-Z4H"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="BUY-0o-7sA" secondAttribute="trailing" id="rps-pY-T1t"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
