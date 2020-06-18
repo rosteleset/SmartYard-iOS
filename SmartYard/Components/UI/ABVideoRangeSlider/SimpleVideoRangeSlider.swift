@@ -31,7 +31,8 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     private let startTimeView = ABTimeView(size: .zero)
     private let endTimeView = ABTimeView(size: .zero)
     
-    private var duration: Float64 = 0.0
+    private let duration: Float64 = 3600 // limiting timespan to one hour
+    
     private var startPercentage: CGFloat = 0         // Represented in percentage
     private var endPercentage: CGFloat = 100       // Represented in percentage
     private var isReceivingGesture: Bool = false
@@ -39,6 +40,12 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     public var minSpace: Float = 10              // In Seconds
     public var maxSpace: Float = 0              // In Seconds
 
+    private var currentTimelineEndDate = Date()
+    
+    private var currentTimelineStartDate: Date {
+        return currentTimelineEndDate.addingTimeInterval(-duration)
+    }
+    
     override public func awakeFromNib() {
         super.awakeFromNib()
         self.setup()
@@ -151,30 +158,17 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         layoutSubviews()
     }
-
-    public func setVideoURL(videoURL: URL?) {
-        let duration: Double = {
-            guard let url = videoURL else {
-                return 0
-            }
-            
-            let source = AVURLAsset(url: url)
-            return CMTimeGetSeconds(source.duration)
-        }()
-        
-        self.duration = duration
-        
-        self.startPercentage = 0
-        self.endPercentage = 100
-        self.delegate?.didChangeValue(videoRangeSlider: self, startTime: 0, endTime: duration)
-        
-        self.layoutSubviews()
-    }
     
     public func setFakeThumbnailURL(thumbnailURL: URL?) {
         fakeThumbnailImageViews.forEach {
             $0.kf.setImage(with: thumbnailURL)
         }
+    }
+    
+    public func setTimelineEndDate(_ date: Date) {
+        currentTimelineEndDate = date
+        
+        layoutSubviews()
     }
 
     // MARK: - Private functions
@@ -338,11 +332,13 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     override public func layoutSubviews() {
         super.layoutSubviews()
         
-        let startSeconds = negateConversionLosses(secondsFromValue(value: startPercentage))
-        let endSeconds = negateConversionLosses(secondsFromValue(value: endPercentage))
-
-        startTimeView.timeLabel.text = self.secondsToFormattedString(totalSeconds: startSeconds)
-        endTimeView.timeLabel.text = self.secondsToFormattedString(totalSeconds: endSeconds)
+        let startEndTextValues = getStartEndIndicatorTextValues(
+            startPercentage: startPercentage,
+            endPercentage: endPercentage
+        )
+        
+        startTimeView.timeLabel.text = startEndTextValues.startText
+        endTimeView.timeLabel.text = startEndTextValues.endText
 
         let startPosition = positionFromValue(value: self.startPercentage)
         let endPosition = positionFromValue(value: self.endPercentage)
@@ -430,17 +426,21 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             )
         }
     }
-
-    private func secondsToFormattedString(totalSeconds: Float64) -> String{
-        let hours:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 86400) / 3600)
-        let minutes:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 3600) / 60)
-        let seconds:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 60))
-
-        if hours > 0 {
-            return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
-        } else {
-            return String(format: "%02i:%02i", minutes, seconds)
-        }
+    
+    private func getStartEndIndicatorTextValues(
+        startPercentage: CGFloat, endPercentage: CGFloat
+    ) -> (startText: String, endText: String) {
+        let startSeconds = negateConversionLosses(secondsFromValue(value: startPercentage))
+        let startIndicatorDate = currentTimelineStartDate.addingTimeInterval(startSeconds)
+        
+        let endSeconds = negateConversionLosses(secondsFromValue(value: endPercentage))
+        let endIndicatorDate = currentTimelineStartDate.addingTimeInterval(endSeconds)
+        
+        let format: String = {
+            return startIndicatorDate.day == endIndicatorDate.day ? "HH:mm:ss" : "dd.MM HH:mm:ss"
+        }()
+        
+        return (startIndicatorDate.string(withFormat: format), endIndicatorDate.string(withFormat: format))
     }
     
     private func negateConversionLosses(_ value: Float64) -> Float64 {

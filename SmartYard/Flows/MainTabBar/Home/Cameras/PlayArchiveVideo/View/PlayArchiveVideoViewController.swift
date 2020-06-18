@@ -41,11 +41,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     // MARK: Edit mode
     
-    @IBOutlet private weak var startIndicatorBackwardButton: UIButton!
-    @IBOutlet private weak var startIndicatorForwardButton: UIButton!
-    
-    @IBOutlet private weak var endIndicatorBackwardButton: UIButton!
-    @IBOutlet private weak var endIndicatorForwardButton: UIButton!
+    @IBOutlet private weak var shiftTimelineBackwardButton: UIButton!
+    @IBOutlet private weak var shiftTimelineForwardButton: UIButton!
     
     @IBOutlet private weak var downloadButton: BlueButton!
     @IBOutlet private weak var backToPreviewButton: UIButton!
@@ -90,17 +87,24 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Preview mode
+        
         configurePeriodPicker()
         configurePlayButton()
         configureHalfSpeedButton()
         configureOneAndHalfSpeedButton()
         configureSelectFragmentButton()
-        configureIndicatorMovementButtons()
-        configureBackToPreviewButton()
         configureRealVideoPlayer()
-        configureScreenshotPlayer()
-        configureUIBindings()
         
+        // Edit mode
+
+        configureTimelineButtons()
+        configureBackToPreviewButton()
+        configureScreenshotPlayer()
+        
+        // Common
+        
+        configureUIBindings()
         bind()
     }
     
@@ -213,8 +217,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
     
-    private func configureIndicatorMovementButtons() {
-        startIndicatorBackwardButton.rx.tap
+    private func configureTimelineButtons() {
+        shiftTimelineBackwardButton.rx.tap
             .asDriver()
             .drive(
                 onNext: { [weak self] in
@@ -222,12 +226,12 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-                    self.rangeSlider?.moveStartIndicatorByValueInSeconds(-15)
+//                    self.rangeSlider?.moveStartIndicatorByValueInSeconds(-15)
                 }
             )
             .disposed(by: disposeBag)
         
-        startIndicatorForwardButton.rx.tap
+        shiftTimelineForwardButton.rx.tap
             .asDriver()
             .drive(
                 onNext: { [weak self] in
@@ -235,33 +239,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-                    self.rangeSlider?.moveStartIndicatorByValueInSeconds(15)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        endIndicatorBackwardButton.rx.tap
-            .asDriver()
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    self.rangeSlider?.moveEndIndicatorByValueInSeconds(-15)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        endIndicatorForwardButton.rx.tap
-            .asDriver()
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    self.rangeSlider?.moveEndIndicatorByValueInSeconds(15)
+//                    self.rangeSlider?.moveStartIndicatorByValueInSeconds(-15)
                 }
             )
             .disposed(by: disposeBag)
@@ -394,41 +372,32 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         [
             halfSpeedButton,
             oneAndHalfSpeedButton,
-            startIndicatorBackwardButton,
-            startIndicatorForwardButton,
-            endIndicatorBackwardButton,
-            endIndicatorForwardButton,
             selectFragmentButton
         ].forEach {
             $0?.isEnabled = isVideoValid
         }
         
         progressSlider.isHidden = mode == .edit || !isVideoValid
-        playButton.isEnabled = isVideoValid && mode == .preview
+        playButton.isEnabled = mode == .preview && isVideoValid
         
         previewButtonsContainer.isHidden = mode == .edit
         halfSpeedButton.isHidden = mode == .edit
         oneAndHalfSpeedButton.isHidden = mode == .edit
         selectFragmentButton.isHidden = mode == .edit
+        playButton.isHidden = mode == .edit
+        realVideoContainer.isHidden = mode == .edit
+        periodCollectionView.isHidden = mode == .edit
         
         editButtonsContainer.isHidden = mode == .preview
-        endIndicatorForwardButton.isHidden = mode == .preview
-        startIndicatorBackwardButton.isHidden = mode == .preview
+        shiftTimelineBackwardButton.isHidden = mode == .preview
+        shiftTimelineForwardButton.isHidden = mode == .preview
         downloadButton.isHidden = mode == .preview
+        backToPreviewButton.isHidden = mode == .preview
+        screenshotVideoContainer.isHidden = mode == .preview
         
         if mode == .edit {
             realVideoPlayer?.rate = 0
         }
-        
-        // Temp
-        
-        playButton.isHidden = mode == .edit
-        backToPreviewButton.isHidden = mode == .preview
-        
-        realVideoContainer.isHidden = mode == .edit
-        screenshotVideoContainer.isHidden = mode == .preview
-        
-        periodCollectionView.isHidden = mode == .edit
     }
 
     private func bind() {
