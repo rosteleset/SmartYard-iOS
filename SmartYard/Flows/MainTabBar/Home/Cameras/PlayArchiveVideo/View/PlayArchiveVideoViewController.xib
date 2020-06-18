@@ -35,10 +35,11 @@
                 <outlet property="previewButtonsContainer" destination="25D-Cj-lb4" id="ktE-qn-FjY"/>
                 <outlet property="progressSlider" destination="gTL-Y7-3LT" id="bKy-0r-Vsa"/>
                 <outlet property="rangeSlider" destination="P3w-7n-zkQ" id="EyD-RT-E1V"/>
+                <outlet property="realVideoContainer" destination="gbA-7j-j0f" id="UBg-QP-se9"/>
+                <outlet property="screenshotVideoContainer" destination="iCv-cW-g6T" id="tqe-V9-0n6"/>
                 <outlet property="selectFragmentButton" destination="wkd-4A-ePf" id="g5B-Zw-XrB"/>
                 <outlet property="startIndicatorBackwardButton" destination="CPg-RE-9lw" id="nRa-5q-Bj3"/>
                 <outlet property="startIndicatorForwardButton" destination="ikM-QT-uEa" id="He2-Jv-xgE"/>
-                <outlet property="videoContainer" destination="Oe3-0L-wZ8" id="MSN-XB-913"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -63,30 +64,54 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oe3-0L-wZ8">
                             <rect key="frame" x="16" y="16" width="382" height="258.5"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P3w-7n-zkQ" customClass="SimpleVideoRangeSlider" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="12" y="205.5" width="358" height="37"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbA-7j-j0f" userLabel="RealVideoContainer">
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="258.5"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gTL-Y7-3LT" customClass="SimpleVideoProgressSlider" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="12" y="205.5" width="358" height="37"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="37" id="QQg-ft-Cm3"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="37" id="cgj-1M-4Tn"/>
+                                        <constraint firstItem="gTL-Y7-3LT" firstAttribute="leading" secondItem="gbA-7j-j0f" secondAttribute="leading" constant="12" id="lwW-yC-7QN"/>
+                                        <constraint firstAttribute="bottom" secondItem="gTL-Y7-3LT" secondAttribute="bottom" constant="16" id="oo0-8N-jyU"/>
+                                        <constraint firstAttribute="trailing" secondItem="gTL-Y7-3LT" secondAttribute="trailing" constant="12" id="qxt-Od-ra8"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gTL-Y7-3LT" customClass="SimpleVideoProgressSlider" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="12" y="205.5" width="358" height="37"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iCv-cW-g6T" userLabel="ScreenshotVideoContainer">
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="258.5"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P3w-7n-zkQ" customClass="SimpleVideoRangeSlider" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="12" y="205.5" width="358" height="37"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="37" id="cgj-1M-4Tn"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="37" id="QQg-ft-Cm3"/>
+                                        <constraint firstAttribute="trailing" secondItem="P3w-7n-zkQ" secondAttribute="trailing" constant="12" id="aNG-RK-3Tn"/>
+                                        <constraint firstAttribute="bottom" secondItem="P3w-7n-zkQ" secondAttribute="bottom" constant="16" id="d5q-uK-hRa"/>
+                                        <constraint firstItem="P3w-7n-zkQ" firstAttribute="leading" secondItem="iCv-cW-g6T" secondAttribute="leading" constant="12" id="uoP-qS-o1x"/>
                                     </constraints>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="gTL-Y7-3LT" secondAttribute="trailing" constant="12" id="VSo-rp-oEe"/>
+                                <constraint firstAttribute="trailing" secondItem="gbA-7j-j0f" secondAttribute="trailing" id="29j-A0-QCH"/>
+                                <constraint firstAttribute="bottom" secondItem="iCv-cW-g6T" secondAttribute="bottom" id="7lc-oP-Pqj"/>
+                                <constraint firstItem="gbA-7j-j0f" firstAttribute="top" secondItem="Oe3-0L-wZ8" secondAttribute="top" id="JG5-9o-8eq"/>
+                                <constraint firstItem="iCv-cW-g6T" firstAttribute="top" secondItem="Oe3-0L-wZ8" secondAttribute="top" id="TwY-JK-ZLe"/>
                                 <constraint firstAttribute="width" secondItem="Oe3-0L-wZ8" secondAttribute="height" multiplier="343:232" id="YS3-A7-0LO"/>
-                                <constraint firstItem="gTL-Y7-3LT" firstAttribute="leading" secondItem="Oe3-0L-wZ8" secondAttribute="leading" constant="12" id="cVb-al-fEe"/>
-                                <constraint firstItem="P3w-7n-zkQ" firstAttribute="leading" secondItem="Oe3-0L-wZ8" secondAttribute="leading" constant="12" id="eFY-Dp-9Ir"/>
-                                <constraint firstAttribute="bottom" secondItem="gTL-Y7-3LT" secondAttribute="bottom" constant="16" id="iRa-TS-ZzJ"/>
-                                <constraint firstAttribute="trailing" secondItem="P3w-7n-zkQ" secondAttribute="trailing" constant="12" id="lMz-CN-1hu"/>
-                                <constraint firstAttribute="bottom" secondItem="P3w-7n-zkQ" secondAttribute="bottom" constant="16" id="vJM-Yg-Xye"/>
+                                <constraint firstItem="gbA-7j-j0f" firstAttribute="leading" secondItem="Oe3-0L-wZ8" secondAttribute="leading" id="Yfg-4v-fqd"/>
+                                <constraint firstAttribute="trailing" secondItem="iCv-cW-g6T" secondAttribute="trailing" id="Yje-cC-cGi"/>
+                                <constraint firstItem="iCv-cW-g6T" firstAttribute="leading" secondItem="Oe3-0L-wZ8" secondAttribute="leading" id="mjZ-fD-q4R"/>
+                                <constraint firstAttribute="bottom" secondItem="gbA-7j-j0f" secondAttribute="bottom" id="qaj-n0-9OK"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

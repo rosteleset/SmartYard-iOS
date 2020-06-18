@@ -21,12 +21,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var dateLabel: UILabel!
-    @IBOutlet private weak var videoContainer: UIView!
     @IBOutlet private weak var periodCollectionView: UICollectionView!
     @IBOutlet private weak var playButton: UIButton!
-    
-    private var playerViewController: AVPlayerViewController?
-    private var player: AVPlayer?
     
     var loader: JGProgressHUD?
     
@@ -34,26 +30,36 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var halfSpeedButton: UIButton!
     @IBOutlet private weak var oneAndHalfSpeedButton: UIButton!
-    @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
     @IBOutlet private weak var selectFragmentButton: BlueButton!
     @IBOutlet private weak var previewButtonsContainer: UIView!
     
+    @IBOutlet private weak var realVideoContainer: UIView!
+    @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
+    
+    private var realVideoPlayerViewController: AVPlayerViewController?
+    private var realVideoPlayer: AVPlayer?
+    
     // MARK: Edit mode
-
+    
     @IBOutlet private weak var startIndicatorBackwardButton: UIButton!
     @IBOutlet private weak var startIndicatorForwardButton: UIButton!
     
     @IBOutlet private weak var endIndicatorBackwardButton: UIButton!
     @IBOutlet private weak var endIndicatorForwardButton: UIButton!
-
-    @IBOutlet private weak var rangeSlider: SimpleVideoRangeSlider!
+    
     @IBOutlet private weak var downloadButton: BlueButton!
     @IBOutlet private weak var backToPreviewButton: UIButton!
     @IBOutlet private weak var editButtonsContainer: UIView!
     
+    @IBOutlet private weak var screenshotVideoContainer: UIView!
+    @IBOutlet private weak var rangeSlider: SimpleVideoRangeSlider!
+    
+    private var screenshotPlayerViewController: AVPlayerViewController?
+    private var screenshotPlayer: AVPlayer?
+    
     private var preferredPlaybackRate: Float = 1 {
         didSet {
-            guard let player = player else {
+            guard let player = realVideoPlayer else {
                 return
             }
             
@@ -91,7 +97,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         configureSelectFragmentButton()
         configureIndicatorMovementButtons()
         configureBackToPreviewButton()
-        configurePlayer()
+        configureRealVideoPlayer()
+        configureScreenshotPlayer()
         configureUIBindings()
         
         bind()
@@ -100,7 +107,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        playerViewController?.view.frame = videoContainer.bounds
+        realVideoPlayerViewController?.view.frame = realVideoContainer.bounds
+        screenshotPlayerViewController?.view.frame = screenshotVideoContainer.bounds
     }
     
     private func configurePeriodPicker() {
@@ -126,7 +134,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     
                     let newState = !self.playButton.isSelected
                     
-                    self.player?.rate = newState ? self.preferredPlaybackRate : 0
+                    self.realVideoPlayer?.rate = newState ? self.preferredPlaybackRate : 0
                 }
             )
             .disposed(by: disposeBag)
@@ -274,18 +282,18 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
     
-    private func configurePlayer() {
+    private func configureRealVideoPlayer() {
         let playerViewController = AVPlayerViewController()
         playerViewController.videoGravity = .resizeAspect
-        self.playerViewController = playerViewController
+        self.realVideoPlayerViewController = playerViewController
         
         let player = AVPlayer()
         playerViewController.player = player
         playerViewController.showsPlaybackControls = false
-        self.player = player
+        self.realVideoPlayer = player
         
         addChild(playerViewController)
-        videoContainer.insertSubview(playerViewController.view, at: 0)
+        realVideoContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
         
         // MARK: Проверка, валидно ли текущее видео
@@ -344,6 +352,22 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         }
         
         progressSlider.delegate = self
+    }
+    
+    private func configureScreenshotPlayer() {
+        let playerViewController = AVPlayerViewController()
+        playerViewController.videoGravity = .resizeAspect
+        self.screenshotPlayerViewController = playerViewController
+        
+        let player = AVPlayer()
+        playerViewController.player = player
+        playerViewController.showsPlaybackControls = false
+        self.screenshotPlayer = player
+        
+        addChild(playerViewController)
+        screenshotVideoContainer.insertSubview(playerViewController.view, at: 0)
+        playerViewController.didMove(toParent: self)
+        
         rangeSlider.delegate = self
     }
     
@@ -375,7 +399,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     }
                     
                     self.progressSlider.isHidden = mode == .edit || !isVideoValid
-                    self.rangeSlider.isHidden = mode == .preview || !isVideoValid
                     self.playButton.isEnabled = isVideoValid && mode == .preview
                 }
             )
@@ -396,13 +419,18 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     self?.downloadButton.isHidden = mode == .preview
                     
                     if mode == .edit {
-                        self?.player?.rate = 0
+                        self?.realVideoPlayer?.rate = 0
                     }
                     
                     // Temp
                     
                     self?.playButton.isHidden = mode == .edit
                     self?.backToPreviewButton.isHidden = mode == .preview
+                    
+                    self?.realVideoContainer.isHidden = mode == .edit
+                    self?.screenshotVideoContainer.isHidden = mode == .preview
+                    
+                    self?.periodCollectionView.isHidden = mode == .edit
                 }
             )
             .disposed(by: disposeBag)
@@ -443,9 +471,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return AVPlayerItem(url: url)
                     }()
                     
-                    self?.player?.replaceCurrentItem(with: playerItem)
+                    self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
                     self?.progressSlider.setVideoURL(videoURL: url)
-                    self?.rangeSlider?.setVideoURL(videoURL: url)
                 }
             )
             .disposed(by: disposeBag)
@@ -557,7 +584,7 @@ extension PlayArchiveVideoViewController: UICollectionViewDelegateFlowLayout {
 extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
     
     func indicatorDidChangePosition(videoRangeSlider: SimpleVideoProgressSlider, position: Float64) {
-        player?.seek(
+        realVideoPlayer?.seek(
             to: CMTime(seconds: position, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
             toleranceBefore: .zero,
             toleranceAfter: .zero
