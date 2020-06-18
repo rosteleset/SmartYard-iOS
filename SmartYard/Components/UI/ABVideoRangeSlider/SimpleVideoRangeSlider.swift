@@ -40,11 +40,14 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     public var minSpace: Float = 10              // In Seconds
     public var maxSpace: Float = 0              // In Seconds
 
-    private var currentTimelineEndDate = Date()
+    private var visibleTimelineEndDate = Date()
     
-    private var currentTimelineStartDate: Date {
-        return currentTimelineEndDate.addingTimeInterval(-duration)
+    private var visibleTimelineStartDate: Date {
+        return visibleTimelineEndDate.addingTimeInterval(-duration)
     }
+    
+    private var absoluteTimelineLowerBound: Date?
+    private var absoluteTimelineUpperBound: Date?
     
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -117,50 +120,100 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         self.fakeThumbnailImageViews = imageViews
     }
     
-    public func shiftTimelineByValueInSeconds(_ value: Double) {
-        guard !isReceivingGesture, value != 0 else {
-            return
-        }
+    private func shiftTimelineBackward(_ value: Double) {
+        let preferredVisibleTimelineStartDate = visibleTimelineStartDate.addingTimeInterval(-value)
         
-        currentTimelineEndDate = currentTimelineEndDate.addingTimeInterval(value)
+        let resultingVisibleTimelineStartDate: Date = {
+            guard let lowerBound = absoluteTimelineLowerBound,
+                (absoluteTimelineUpperBound ?? Date.distantFuture).timeIntervalSince(lowerBound) >= 3600 else {
+                return preferredVisibleTimelineStartDate
+            }
+            
+            return max(lowerBound, preferredVisibleTimelineStartDate)
+        }()
+        
+        let actualShift = visibleTimelineStartDate.timeIntervalSince(resultingVisibleTimelineStartDate)
+        print(actualShift)
+        
+        let resultingVisibleTimelineEndDate = resultingVisibleTimelineStartDate.addingTimeInterval(3600)
+        
+        visibleTimelineEndDate = resultingVisibleTimelineEndDate
         
         let currentStartIndicatorTime = secondsFromValue(value: startPercentage)
-        let preferredStartIndicatorTime = currentStartIndicatorTime - value
-        let minStartIndicatorTime: Double = 0
+        let preferredStartIndicatorTime = currentStartIndicatorTime + value
         
         let currentEndIndicatorTime = secondsFromValue(value: endPercentage)
-        let preferredEndIndicatorTime = currentEndIndicatorTime - value
+        let preferredEndIndicatorTime = currentEndIndicatorTime + value
         let maxEndIndicatorTime: Double = 3600
         
-        let resultingStartIndicatorTime: Double
-        let resultingEndIndicatorTime: Double
+        let resultingEndIndicatorTime = min(preferredEndIndicatorTime, maxEndIndicatorTime)
         
-        if value < 0 {
-            resultingEndIndicatorTime = min(preferredEndIndicatorTime, maxEndIndicatorTime)
-            
-            resultingStartIndicatorTime = min(
-                resultingEndIndicatorTime - Double(minSpace),
-                preferredStartIndicatorTime
-            )
-        } else {
-            resultingStartIndicatorTime = max(preferredStartIndicatorTime, minStartIndicatorTime)
-            
-            resultingEndIndicatorTime = max(
-                resultingStartIndicatorTime + Double(minSpace),
-                preferredEndIndicatorTime
-            )
-        }
+        let resultingStartIndicatorTime = min(
+            resultingEndIndicatorTime - Double(minSpace),
+            preferredStartIndicatorTime
+        )
         
         startPercentage = valueFromSeconds(seconds: Float(resultingStartIndicatorTime))
         endPercentage = valueFromSeconds(seconds: Float(resultingEndIndicatorTime))
         
         delegate?.didChangeDate(
             videoRangeSlider: self,
-            startDate: currentTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
-            endDate: currentTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime)
+            startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
+            endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime)
         )
         
         layoutSubviews()
+    }
+    
+    private func shiftTimelineForward(_ value: Double) {
+        let newPreferredVisibleTimelineEndDate = visibleTimelineEndDate.addingTimeInterval(value)
+        
+        let resultingVisibleTimelineEndDate: Date = {
+            guard let upperBound = absoluteTimelineUpperBound,
+                upperBound.timeIntervalSince(absoluteTimelineLowerBound ?? Date.distantPast) >= 3600 else {
+                return newPreferredVisibleTimelineEndDate
+            }
+            
+            return min(upperBound, newPreferredVisibleTimelineEndDate)
+        }()
+        
+        let actualShift = resultingVisibleTimelineEndDate.timeIntervalSince(visibleTimelineEndDate)
+        print(actualShift)
+        
+        visibleTimelineEndDate = resultingVisibleTimelineEndDate
+
+        let currentStartIndicatorTime = secondsFromValue(value: startPercentage)
+        let preferredStartIndicatorTime = currentStartIndicatorTime - value
+        let minStartIndicatorTime: Double = 0
+        
+        let currentEndIndicatorTime = secondsFromValue(value: endPercentage)
+        let preferredEndIndicatorTime = currentEndIndicatorTime - value
+        
+        let resultingStartIndicatorTime = max(preferredStartIndicatorTime, minStartIndicatorTime)
+        
+        let resultingEndIndicatorTime = max(
+            resultingStartIndicatorTime + Double(minSpace),
+            preferredEndIndicatorTime
+        )
+        
+        startPercentage = valueFromSeconds(seconds: Float(resultingStartIndicatorTime))
+        endPercentage = valueFromSeconds(seconds: Float(resultingEndIndicatorTime))
+        
+        delegate?.didChangeDate(
+            videoRangeSlider: self,
+            startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
+            endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime)
+        )
+        
+        layoutSubviews()
+    }
+    
+    public func shiftTimelineByValueInSeconds(_ value: Double) {
+        guard !isReceivingGesture, value != 0 else {
+            return
+        }
+        
+        value < 0 ? shiftTimelineBackward(abs(value)) : shiftTimelineForward(value)
     }
     
     public func setFakeThumbnailURL(thumbnailURL: URL?) {
@@ -169,13 +222,16 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    public func setTimelineEndDate(_ date: Date) {
-        currentTimelineEndDate = date
+    public func setTimelineConfiguration(visibleTimelineEndDate: Date, lowerBound: Date?, upperBound: Date?) {
+        self.visibleTimelineEndDate = visibleTimelineEndDate
+        
+        self.absoluteTimelineLowerBound = lowerBound
+        self.absoluteTimelineUpperBound = upperBound
         
         delegate?.didChangeDate(
             videoRangeSlider: self,
-            startDate: currentTimelineStartDate.addingTimeInterval(secondsFromValue(value: startPercentage)),
-            endDate: currentTimelineStartDate.addingTimeInterval(secondsFromValue(value: endPercentage))
+            startDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: startPercentage)),
+            endDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: endPercentage))
         )
         
         layoutSubviews()
@@ -258,8 +314,8 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         delegate?.didChangeDate(
             videoRangeSlider: self,
-            startDate: currentTimelineStartDate.addingTimeInterval(startSeconds),
-            endDate: currentTimelineStartDate.addingTimeInterval(endSeconds)
+            startDate: visibleTimelineStartDate.addingTimeInterval(startSeconds),
+            endDate: visibleTimelineStartDate.addingTimeInterval(endSeconds)
         )
         
         layoutSubviews()
@@ -446,10 +502,10 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         startPercentage: CGFloat, endPercentage: CGFloat
     ) -> (startText: String, endText: String) {
         let startSeconds = negateConversionLosses(secondsFromValue(value: startPercentage))
-        let startIndicatorDate = currentTimelineStartDate.addingTimeInterval(startSeconds)
+        let startIndicatorDate = visibleTimelineStartDate.addingTimeInterval(startSeconds)
         
         let endSeconds = negateConversionLosses(secondsFromValue(value: endPercentage))
-        let endIndicatorDate = currentTimelineStartDate.addingTimeInterval(endSeconds)
+        let endIndicatorDate = visibleTimelineStartDate.addingTimeInterval(endSeconds)
         
         let format: String = {
             return startIndicatorDate.day == endIndicatorDate.day ? "HH:mm:ss" : "dd.MM HH:mm:ss"

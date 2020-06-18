@@ -556,7 +556,14 @@ extension PlayArchiveVideoViewController: UICollectionViewDelegateFlowLayout {
             return
         }
         
-        rangeSlider.setTimelineEndDate(period.baseDate.adding(.hour, value: period.endHours))
+        let upperBound = Date()
+        let lowerBound = upperBound.adding(.day, value: -7)
+        
+        rangeSlider.setTimelineConfiguration(
+            visibleTimelineEndDate: period.baseDate.adding(.hour, value: period.endHours),
+            lowerBound: lowerBound,
+            upperBound: upperBound
+        )
         
         periodSelectedTrigger.onNext(period)
     }
