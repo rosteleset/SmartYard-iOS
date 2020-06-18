@@ -20,13 +20,14 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     }
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    @IBOutlet private weak var dateLabel: UILabel!
     
     var loader: JGProgressHUD?
     
     @IBOutlet private var buttonsContainerToCollectionViewConstraint: NSLayoutConstraint!
     
     // MARK: Preview mode
+    
+    @IBOutlet private weak var previewDateLabel: UILabel!
     
     @IBOutlet private weak var halfSpeedButton: UIButton!
     @IBOutlet private weak var oneAndHalfSpeedButton: UIButton!
@@ -42,7 +43,21 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private var realVideoPlayerViewController: AVPlayerViewController?
     private var realVideoPlayer: AVPlayer?
     
+    private var preferredPlaybackRate: Float = 1 {
+        didSet {
+            guard let player = realVideoPlayer else {
+                return
+            }
+            
+            if player.rate != 0 {
+                player.rate = preferredPlaybackRate
+            }
+        }
+    }
+    
     // MARK: Edit mode
+    
+    @IBOutlet private weak var editDateLabel: UILabel!
     
     @IBOutlet private weak var shiftTimelineBackwardButton: UIButton!
     @IBOutlet private weak var shiftTimelineForwardButton: UIButton!
@@ -56,18 +71,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     private var screenshotPlayerViewController: AVPlayerViewController?
     private var screenshotPlayer: AVPlayer?
-    
-    private var preferredPlaybackRate: Float = 1 {
-        didSet {
-            guard let player = realVideoPlayer else {
-                return
-            }
-            
-            if player.rate != 0 {
-                player.rate = preferredPlaybackRate
-            }
-        }
-    }
     
     private let viewModel: PlayArchiveVideoViewModel
     
@@ -390,6 +393,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         playButton.isHidden = mode == .edit
         realVideoContainer.isHidden = mode == .edit
         periodCollectionView.isHidden = mode == .edit
+        previewDateLabel.isHidden = mode == .edit
         
         editButtonsContainer.isHidden = mode == .preview
         shiftTimelineBackwardButton.isHidden = mode == .preview
@@ -397,6 +401,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         downloadButton.isHidden = mode == .preview
         backToPreviewButton.isHidden = mode == .preview
         screenshotVideoContainer.isHidden = mode == .preview
+        editDateLabel.isHidden = mode == .preview
         
         buttonsContainerToCollectionViewConstraint.isActive = mode == .preview
         
@@ -426,7 +431,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 
                 return "Видео от \(dateFormatter.string(from: date))"
             }
-            .drive(dateLabel.rx.text)
+            .drive(previewDateLabel.rx.text)
             .disposed(by: disposeBag)
         
         output.videoURL
@@ -600,6 +605,11 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         
         shiftTimelineBackwardButton.isEnabled = !isLowerBoundReached
         shiftTimelineForwardButton.isEnabled = !isUpperBoundReached
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yy"
+        
+        editDateLabel.text = "Видео от \(dateFormatter.string(from: startDate))"
     }
     
 }

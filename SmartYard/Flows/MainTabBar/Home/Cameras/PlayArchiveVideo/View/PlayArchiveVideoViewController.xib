@@ -23,15 +23,16 @@
             <connections>
                 <outlet property="backToPreviewButton" destination="Pcc-3N-WGv" id="un8-42-IMe"/>
                 <outlet property="buttonsContainerToCollectionViewConstraint" destination="BRh-4i-kTy" id="OEu-Jj-dNc"/>
-                <outlet property="dateLabel" destination="Dqz-l5-6XG" id="mPY-Is-qNG"/>
                 <outlet property="downloadButton" destination="JBH-Xw-Dmj" id="GUQ-cf-DGn"/>
                 <outlet property="editButtonsContainer" destination="I2I-wA-dkd" id="eUx-Tv-Rlq"/>
+                <outlet property="editDateLabel" destination="0x5-ZA-ub8" id="20C-EX-v4r"/>
                 <outlet property="fakeNavBar" destination="WOo-JF-vkg" id="eGb-o1-hpz"/>
                 <outlet property="halfSpeedButton" destination="UDc-4s-ZnY" id="MEk-aP-AKT"/>
                 <outlet property="oneAndHalfSpeedButton" destination="fr5-Hf-wxY" id="bbz-TP-1X0"/>
                 <outlet property="periodCollectionView" destination="8od-sE-j0B" id="WpC-H6-pGy"/>
                 <outlet property="playButton" destination="5f4-F5-jna" id="dzY-fn-tKq"/>
                 <outlet property="previewButtonsContainer" destination="25D-Cj-lb4" id="ktE-qn-FjY"/>
+                <outlet property="previewDateLabel" destination="Dqz-l5-6XG" id="gOr-AC-8i1"/>
                 <outlet property="progressSlider" destination="gTL-Y7-3LT" id="bKy-0r-Vsa"/>
                 <outlet property="rangeSlider" destination="P3w-7n-zkQ" id="EyD-RT-E1V"/>
                 <outlet property="realVideoContainer" destination="gbA-7j-j0f" id="UBg-QP-se9"/>
@@ -272,6 +273,15 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0x5-ZA-ub8">
+                    <rect key="frame" x="40" y="100" width="334" height="41"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="DTh-B0-A8g"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
@@ -281,6 +291,8 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="WOo-JF-vkg" secondAttribute="trailing" id="DgD-SA-Haz"/>
                 <constraint firstItem="Dqz-l5-6XG" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-40" id="PiK-DZ-g82"/>
                 <constraint firstItem="2Nk-mk-3jm" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="SYL-c9-wA4"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0x5-ZA-ub8" secondAttribute="trailing" constant="40" id="Zny-ky-eEf"/>
+                <constraint firstItem="2Nk-mk-3jm" firstAttribute="top" secondItem="0x5-ZA-ub8" secondAttribute="bottom" constant="40" id="aAK-FQ-Pji"/>
                 <constraint firstItem="wtb-oa-JK1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="aRv-uI-aPA"/>
                 <constraint firstAttribute="trailing" secondItem="wtb-oa-JK1" secondAttribute="trailing" id="guX-4c-wur"/>
                 <constraint firstItem="wtb-oa-JK1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ifT-eA-nNE"/>
@@ -288,6 +300,8 @@
                 <constraint firstItem="2Nk-mk-3jm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="mXz-7w-Z6E"/>
                 <constraint firstItem="2Nk-mk-3jm" firstAttribute="top" secondItem="Dqz-l5-6XG" secondAttribute="bottom" constant="40" id="ox8-xt-pbO"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="wkd-4A-ePf" secondAttribute="bottom" constant="32" id="rLm-Av-EOc"/>
+                <constraint firstItem="0x5-ZA-ub8" firstAttribute="top" secondItem="WOo-JF-vkg" secondAttribute="bottom" constant="12" id="rcL-LZ-U7M"/>
+                <constraint firstItem="0x5-ZA-ub8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="sX7-a1-Z0y"/>
                 <constraint firstItem="2Nk-mk-3jm" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="wPk-0P-LmZ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="WOo-JF-vkg" secondAttribute="leading" id="y0v-hD-eqn"/>
             </constraints>

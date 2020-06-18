@@ -233,8 +233,11 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     public func setTimelineConfiguration(visibleTimelineEndDate: Date, lowerBound: Date?, upperBound: Date?) {
         self.visibleTimelineEndDate = visibleTimelineEndDate
         
-        self.absoluteTimelineLowerBound = lowerBound
-        self.absoluteTimelineUpperBound = upperBound
+        startPercentage = 0
+        endPercentage = 100
+        
+        absoluteTimelineLowerBound = lowerBound
+        absoluteTimelineUpperBound = upperBound
         
         delegate?.didChangeDate(
             videoRangeSlider: self,
