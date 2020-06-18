@@ -372,8 +372,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureUIBindings() {
-        // MARK: local UI bindings
-        
         Driver
             .combineLatest(
                 currentMode.asDriverOnErrorJustComplete(), isVideoValid.asDriverOnErrorJustComplete()
@@ -386,54 +384,51 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     
                     let (mode, isVideoValid) = args
                     
-                    [
-                        self.halfSpeedButton,
-                        self.oneAndHalfSpeedButton,
-                        self.startIndicatorBackwardButton,
-                        self.startIndicatorForwardButton,
-                        self.endIndicatorBackwardButton,
-                        self.endIndicatorForwardButton,
-                        self.selectFragmentButton
-                    ].forEach {
-                        $0?.isEnabled = isVideoValid
-                    }
-                    
-                    self.progressSlider.isHidden = mode == .edit || !isVideoValid
-                    self.playButton.isEnabled = isVideoValid && mode == .preview
+                    self.updateUI(mode: mode, isVideoValid: isVideoValid)
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    private func updateUI(mode: Mode, isVideoValid: Bool) {
+        [
+            halfSpeedButton,
+            oneAndHalfSpeedButton,
+            startIndicatorBackwardButton,
+            startIndicatorForwardButton,
+            endIndicatorBackwardButton,
+            endIndicatorForwardButton,
+            selectFragmentButton
+        ].forEach {
+            $0?.isEnabled = isVideoValid
+        }
         
-        currentMode
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] mode in
-                    self?.previewButtonsContainer.isHidden = mode == .edit
-                    self?.halfSpeedButton.isHidden = mode == .edit
-                    self?.oneAndHalfSpeedButton.isHidden = mode == .edit
-                    self?.selectFragmentButton.isHidden = mode == .edit
-                    
-                    self?.editButtonsContainer.isHidden = mode == .preview
-                    self?.endIndicatorForwardButton.isHidden = mode == .preview
-                    self?.startIndicatorBackwardButton.isHidden = mode == .preview
-                    self?.downloadButton.isHidden = mode == .preview
-                    
-                    if mode == .edit {
-                        self?.realVideoPlayer?.rate = 0
-                    }
-                    
-                    // Temp
-                    
-                    self?.playButton.isHidden = mode == .edit
-                    self?.backToPreviewButton.isHidden = mode == .preview
-                    
-                    self?.realVideoContainer.isHidden = mode == .edit
-                    self?.screenshotVideoContainer.isHidden = mode == .preview
-                    
-                    self?.periodCollectionView.isHidden = mode == .edit
-                }
-            )
-            .disposed(by: disposeBag)
+        progressSlider.isHidden = mode == .edit || !isVideoValid
+        playButton.isEnabled = isVideoValid && mode == .preview
+        
+        previewButtonsContainer.isHidden = mode == .edit
+        halfSpeedButton.isHidden = mode == .edit
+        oneAndHalfSpeedButton.isHidden = mode == .edit
+        selectFragmentButton.isHidden = mode == .edit
+        
+        editButtonsContainer.isHidden = mode == .preview
+        endIndicatorForwardButton.isHidden = mode == .preview
+        startIndicatorBackwardButton.isHidden = mode == .preview
+        downloadButton.isHidden = mode == .preview
+        
+        if mode == .edit {
+            realVideoPlayer?.rate = 0
+        }
+        
+        // Temp
+        
+        playButton.isHidden = mode == .edit
+        backToPreviewButton.isHidden = mode == .preview
+        
+        realVideoContainer.isHidden = mode == .edit
+        screenshotVideoContainer.isHidden = mode == .preview
+        
+        periodCollectionView.isHidden = mode == .edit
     }
 
     private func bind() {
