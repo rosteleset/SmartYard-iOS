@@ -5,7 +5,13 @@ import Kingfisher
 // swiftlint:disable all
 
 @objc public protocol SimpleVideoRangeSliderDelegate: class {
-    func didChangeDate(videoRangeSlider: SimpleVideoRangeSlider, startDate: Date, endDate: Date)
+    func didChangeDate(
+        videoRangeSlider: SimpleVideoRangeSlider,
+        startDate: Date,
+        endDate: Date,
+        isLowerBoundReached: Bool,
+        isUpperBoundReached: Bool
+    )
     
     @objc optional func sliderGesturesBegan()
     @objc optional func sliderGesturesEnded()
@@ -133,17 +139,16 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         }()
         
         let actualShift = visibleTimelineStartDate.timeIntervalSince(resultingVisibleTimelineStartDate)
-        print(actualShift)
-        
+
         let resultingVisibleTimelineEndDate = resultingVisibleTimelineStartDate.addingTimeInterval(3600)
         
         visibleTimelineEndDate = resultingVisibleTimelineEndDate
         
         let currentStartIndicatorTime = secondsFromValue(value: startPercentage)
-        let preferredStartIndicatorTime = currentStartIndicatorTime + value
+        let preferredStartIndicatorTime = currentStartIndicatorTime + actualShift
         
         let currentEndIndicatorTime = secondsFromValue(value: endPercentage)
-        let preferredEndIndicatorTime = currentEndIndicatorTime + value
+        let preferredEndIndicatorTime = currentEndIndicatorTime + actualShift
         let maxEndIndicatorTime: Double = 3600
         
         let resultingEndIndicatorTime = min(preferredEndIndicatorTime, maxEndIndicatorTime)
@@ -159,7 +164,9 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         delegate?.didChangeDate(
             videoRangeSlider: self,
             startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
-            endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime)
+            endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
+            isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
+            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound
         )
         
         layoutSubviews()
@@ -178,16 +185,15 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         }()
         
         let actualShift = resultingVisibleTimelineEndDate.timeIntervalSince(visibleTimelineEndDate)
-        print(actualShift)
         
         visibleTimelineEndDate = resultingVisibleTimelineEndDate
 
         let currentStartIndicatorTime = secondsFromValue(value: startPercentage)
-        let preferredStartIndicatorTime = currentStartIndicatorTime - value
+        let preferredStartIndicatorTime = currentStartIndicatorTime - actualShift
         let minStartIndicatorTime: Double = 0
         
         let currentEndIndicatorTime = secondsFromValue(value: endPercentage)
-        let preferredEndIndicatorTime = currentEndIndicatorTime - value
+        let preferredEndIndicatorTime = currentEndIndicatorTime - actualShift
         
         let resultingStartIndicatorTime = max(preferredStartIndicatorTime, minStartIndicatorTime)
         
@@ -202,7 +208,9 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         delegate?.didChangeDate(
             videoRangeSlider: self,
             startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
-            endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime)
+            endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
+            isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
+            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound
         )
         
         layoutSubviews()
@@ -231,7 +239,9 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         delegate?.didChangeDate(
             videoRangeSlider: self,
             startDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: startPercentage)),
-            endDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: endPercentage))
+            endDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: endPercentage)),
+            isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
+            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound
         )
         
         layoutSubviews()
@@ -315,7 +325,9 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         delegate?.didChangeDate(
             videoRangeSlider: self,
             startDate: visibleTimelineStartDate.addingTimeInterval(startSeconds),
-            endDate: visibleTimelineStartDate.addingTimeInterval(endSeconds)
+            endDate: visibleTimelineStartDate.addingTimeInterval(endSeconds),
+            isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
+            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound
         )
         
         layoutSubviews()

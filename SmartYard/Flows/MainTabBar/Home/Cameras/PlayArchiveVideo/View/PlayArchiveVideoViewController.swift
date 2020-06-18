@@ -21,17 +21,20 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var dateLabel: UILabel!
-    @IBOutlet private weak var periodCollectionView: UICollectionView!
-    @IBOutlet private weak var playButton: UIButton!
     
     var loader: JGProgressHUD?
+    
+    @IBOutlet private var buttonsContainerToCollectionViewConstraint: NSLayoutConstraint!
     
     // MARK: Preview mode
     
     @IBOutlet private weak var halfSpeedButton: UIButton!
     @IBOutlet private weak var oneAndHalfSpeedButton: UIButton!
-    @IBOutlet private weak var selectFragmentButton: BlueButton!
+    
+    @IBOutlet private weak var periodCollectionView: UICollectionView!
     @IBOutlet private weak var previewButtonsContainer: UIView!
+    @IBOutlet private weak var playButton: UIButton!
+    @IBOutlet private weak var selectFragmentButton: BlueButton!
     
     @IBOutlet private weak var realVideoContainer: UIView!
     @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
@@ -44,9 +47,9 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var shiftTimelineBackwardButton: UIButton!
     @IBOutlet private weak var shiftTimelineForwardButton: UIButton!
     
-    @IBOutlet private weak var downloadButton: BlueButton!
-    @IBOutlet private weak var backToPreviewButton: UIButton!
     @IBOutlet private weak var editButtonsContainer: UIView!
+    @IBOutlet private weak var backToPreviewButton: UIButton!
+    @IBOutlet private weak var downloadButton: BlueButton!
     
     @IBOutlet private weak var screenshotVideoContainer: UIView!
     @IBOutlet private weak var rangeSlider: SimpleVideoRangeSlider!
@@ -395,6 +398,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         backToPreviewButton.isHidden = mode == .preview
         screenshotVideoContainer.isHidden = mode == .preview
         
+        buttonsContainerToCollectionViewConstraint.isActive = mode == .preview
+        
         if mode == .edit {
             realVideoPlayer?.rate = 0
         }
@@ -584,8 +589,17 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
 
 extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
     
-    func didChangeDate(videoRangeSlider: SimpleVideoRangeSlider, startDate: Date, endDate: Date) {
+    func didChangeDate(
+        videoRangeSlider: SimpleVideoRangeSlider,
+        startDate: Date,
+        endDate: Date,
+        isLowerBoundReached: Bool,
+        isUpperBoundReached: Bool
+    ) {
         startEndSelectedTrigger.onNext((startDate, endDate))
+        
+        shiftTimelineBackwardButton.isEnabled = !isLowerBoundReached
+        shiftTimelineForwardButton.isEnabled = !isUpperBoundReached
     }
     
 }

@@ -22,6 +22,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayArchiveVideoViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="backToPreviewButton" destination="Pcc-3N-WGv" id="un8-42-IMe"/>
+                <outlet property="buttonsContainerToCollectionViewConstraint" destination="BRh-4i-kTy" id="OEu-Jj-dNc"/>
                 <outlet property="dateLabel" destination="Dqz-l5-6XG" id="mPY-Is-qNG"/>
                 <outlet property="downloadButton" destination="JBH-Xw-Dmj" id="GUQ-cf-DGn"/>
                 <outlet property="editButtonsContainer" destination="I2I-wA-dkd" id="eUx-Tv-Rlq"/>
@@ -244,6 +245,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="Oe3-0L-wZ8" firstAttribute="top" secondItem="2Nk-mk-3jm" secondAttribute="top" constant="16" id="0JP-MM-KRk"/>
+                        <constraint firstItem="jwK-tW-GMy" firstAttribute="top" secondItem="iCv-cW-g6T" secondAttribute="bottom" priority="900" constant="20" id="4cP-Z1-QTY"/>
                         <constraint firstItem="jwK-tW-GMy" firstAttribute="top" secondItem="8od-sE-j0B" secondAttribute="bottom" constant="20" id="BRh-4i-kTy"/>
                         <constraint firstAttribute="trailing" secondItem="Oe3-0L-wZ8" secondAttribute="trailing" constant="16" id="ME2-CX-W12"/>
                         <constraint firstItem="JBH-Xw-Dmj" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" constant="40" id="MNK-o1-oCC"/>
