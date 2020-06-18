@@ -226,7 +226,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-//                    self.rangeSlider?.moveStartIndicatorByValueInSeconds(-15)
+                    self.rangeSlider.shiftTimelineByValueInSeconds(-900)
                 }
             )
             .disposed(by: disposeBag)
@@ -239,7 +239,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-//                    self.rangeSlider?.moveStartIndicatorByValueInSeconds(-15)
+                    self.rangeSlider.shiftTimelineByValueInSeconds(900)
                 }
             )
             .disposed(by: disposeBag)

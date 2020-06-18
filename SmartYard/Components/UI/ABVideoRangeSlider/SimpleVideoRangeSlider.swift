@@ -117,44 +117,42 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         self.fakeThumbnailImageViews = imageViews
     }
     
-    public func moveStartIndicatorByValueInSeconds(_ value: Double) {
-        guard !isReceivingGesture, duration > 0 else {
+    public func shiftTimelineByValueInSeconds(_ value: Double) {
+        guard !isReceivingGesture, value != 0 else {
             return
         }
+        
+        currentTimelineEndDate = currentTimelineEndDate.addingTimeInterval(value)
         
         let currentStartIndicatorTime = secondsFromValue(value: startPercentage)
-        let preferredStartIndicatorTime = currentStartIndicatorTime + value
-        
-        let newPreferredPercentage = valueFromSeconds(seconds: Float(preferredStartIndicatorTime))
-        let minPossiblePercentage: CGFloat = 0
-        let maxPossiblePercentage = endPercentage - valueFromSeconds(seconds: minSpace)
-        
-        startPercentage = max(minPossiblePercentage, min(newPreferredPercentage, maxPossiblePercentage))
-
-        let startSeconds = negateConversionLosses(secondsFromValue(value: self.startPercentage))
-        let endSeconds = negateConversionLosses(secondsFromValue(value: self.endPercentage))
-        self.delegate?.didChangeValue(videoRangeSlider: self, startTime: startSeconds, endTime: endSeconds)
-        
-        layoutSubviews()
-    }
-    
-    public func moveEndIndicatorByValueInSeconds(_ value: Double) {
-        guard !isReceivingGesture, duration > 0 else {
-            return
-        }
+        let preferredStartIndicatorTime = currentStartIndicatorTime - value
+        let minStartIndicatorTime: Double = 0
         
         let currentEndIndicatorTime = secondsFromValue(value: endPercentage)
-        let preferredEndIndicatorTime = currentEndIndicatorTime + value
+        let preferredEndIndicatorTime = currentEndIndicatorTime - value
+        let maxEndIndicatorTime: Double = 3600
         
-        let newPreferredPercentage = valueFromSeconds(seconds: Float(preferredEndIndicatorTime))
-        let minPossiblePercentage = startPercentage + valueFromSeconds(seconds: minSpace)
-        let maxPossiblePercentage: CGFloat = 100
+        let resultingStartIndicatorTime: Double
+        let resultingEndIndicatorTime: Double
         
-        endPercentage = max(minPossiblePercentage, min(newPreferredPercentage, maxPossiblePercentage))
-
-        let startSeconds = negateConversionLosses(secondsFromValue(value: self.startPercentage))
-        let endSeconds = negateConversionLosses(secondsFromValue(value: self.endPercentage))
-        self.delegate?.didChangeValue(videoRangeSlider: self, startTime: startSeconds, endTime: endSeconds)
+        if value < 0 {
+            resultingEndIndicatorTime = min(preferredEndIndicatorTime, maxEndIndicatorTime)
+            
+            resultingStartIndicatorTime = min(
+                resultingEndIndicatorTime - Double(minSpace),
+                preferredStartIndicatorTime
+            )
+        } else {
+            resultingStartIndicatorTime = max(preferredStartIndicatorTime, minStartIndicatorTime)
+            
+            resultingEndIndicatorTime = max(
+                resultingStartIndicatorTime + Double(minSpace),
+                preferredEndIndicatorTime
+            )
+        }
+        
+        startPercentage = valueFromSeconds(seconds: Float(resultingStartIndicatorTime))
+        endPercentage = valueFromSeconds(seconds: Float(resultingEndIndicatorTime))
         
         layoutSubviews()
     }
