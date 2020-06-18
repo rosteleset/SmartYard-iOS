@@ -18,7 +18,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
     private let date: Date
     private let camera: CameraObject
     
-    private let selectedStartEnd = BehaviorSubject<(Float64, Float64)?>(value: nil)
+    private let selectedStartEnd = BehaviorSubject<(Date, Date)?>(value: nil)
     private let selectedPeriod = BehaviorSubject<ArchiveVideoHourPeriod?>(value: nil)
     
     init(apiWrapper: APIWrapper, camera: CameraObject, date: Date, router: WeakRouter<HomeRoute>) {
@@ -66,91 +66,91 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        input.downloadTrigger
-            .withLatestFrom(selectedPeriod.asDriver(onErrorJustReturn: nil))
-            .withLatestFrom(selectedStartEnd.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
-            .flatMap { args -> Driver<(from: String, to: String)> in
-                let (period, startEnd) = args
-                
-                guard let uPeriod = period, let uStartEnd = startEnd else {
-                    return .empty()
-                }
-                
-                let (start, end) = uStartEnd
-                
-                guard end - start > 0,
-                    let recPrepareComps = uPeriod.recPrepareComponents(start: start, end: end) else {
-                    return .empty()
-                }
-                
-                return .just(recPrepareComps)
-            }
-            .flatMapLatest { [weak self] range -> Driver<Int?> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
-                return self.apiWrapper
-                    .recPrepare(id: self.camera.id, from: range.from, to: range.to)
-                    .trackError(errorTracker)
-                    .trackActivity(activityTracker)
-                    .asDriver(onErrorJustReturn: nil)
-            }
-            .ignoreNil()
-            .flatMapLatest { [weak self] fragmentId -> Driver<RecDownloadResponseData?> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
-                return self.apiWrapper
-                    .recDownload(id: fragmentId)
-                    .trackError(errorTracker)
-                    .trackActivity(activityTracker)
-                    .asDriver(onErrorJustReturn: nil)
-            }
-            .ignoreNil()
-            .drive(
-                onNext: { [weak self] responseData in
-                    // Если нет урла - показываем "видео готовится"
-                    guard let stringUrl = responseData.url else {
-                        let msg = """
-                        Как только процесс закончится, вам придет сообщение в чат.
-                        В зависимости от длины видео процесс загрузки может занять от нескольких минут до нескольких часов.
-                        """
-                        
-                        let okAction = UIAlertAction(title: "Спасибо", style: .default, handler: nil)
-                        
-                        self?.router.trigger(
-                            .dialog(
-                                title: "Видео готовится",
-                                message: msg,
-                                actions: [okAction]
-                            )
-                        )
-                        
-                        return
-                    }
-                    
-                    guard let encodedString = stringUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-                        let url = URL(string: encodedString) else {
-                        // Если есть ссылка, но она кривая - копируем урл в пастборд и показываем алерт
-                        UIPasteboard.general.string = stringUrl
-                        
-                        self?.router.trigger(
-                            .alert(
-                                title: "Ссылка на видео скопирована в буфер обмена",
-                                message: nil
-                            )
-                        )
-                        
-                        return
-                    }
-                    
-                    // Если смог получить нормальный URL - показываем share
-                    self?.router.trigger(.share(items: [url]))
-                }
-            )
-            .disposed(by: disposeBag)
+//        input.downloadTrigger
+//            .withLatestFrom(selectedPeriod.asDriver(onErrorJustReturn: nil))
+//            .withLatestFrom(selectedStartEnd.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+//            .flatMap { args -> Driver<(from: String, to: String)> in
+//                let (period, startEnd) = args
+//
+//                guard let uPeriod = period, let uStartEnd = startEnd else {
+//                    return .empty()
+//                }
+//
+//                let (start, end) = uStartEnd
+//
+//                guard end - start > 0,
+//                    let recPrepareComps = uPeriod.recPrepareComponents(start: start, end: end) else {
+//                    return .empty()
+//                }
+//
+//                return .just(recPrepareComps)
+//            }
+//            .flatMapLatest { [weak self] range -> Driver<Int?> in
+//                guard let self = self else {
+//                    return .empty()
+//                }
+//
+//                return self.apiWrapper
+//                    .recPrepare(id: self.camera.id, from: range.from, to: range.to)
+//                    .trackError(errorTracker)
+//                    .trackActivity(activityTracker)
+//                    .asDriver(onErrorJustReturn: nil)
+//            }
+//            .ignoreNil()
+//            .flatMapLatest { [weak self] fragmentId -> Driver<RecDownloadResponseData?> in
+//                guard let self = self else {
+//                    return .empty()
+//                }
+//
+//                return self.apiWrapper
+//                    .recDownload(id: fragmentId)
+//                    .trackError(errorTracker)
+//                    .trackActivity(activityTracker)
+//                    .asDriver(onErrorJustReturn: nil)
+//            }
+//            .ignoreNil()
+//            .drive(
+//                onNext: { [weak self] responseData in
+//                    // Если нет урла - показываем "видео готовится"
+//                    guard let stringUrl = responseData.url else {
+//                        let msg = """
+//                        Как только процесс закончится, вам придет сообщение в чат.
+//                        В зависимости от длины видео процесс загрузки может занять от нескольких минут до нескольких часов.
+//                        """
+//
+//                        let okAction = UIAlertAction(title: "Спасибо", style: .default, handler: nil)
+//
+//                        self?.router.trigger(
+//                            .dialog(
+//                                title: "Видео готовится",
+//                                message: msg,
+//                                actions: [okAction]
+//                            )
+//                        )
+//
+//                        return
+//                    }
+//
+//                    guard let encodedString = stringUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+//                        let url = URL(string: encodedString) else {
+//                        // Если есть ссылка, но она кривая - копируем урл в пастборд и показываем алерт
+//                        UIPasteboard.general.string = stringUrl
+//
+//                        self?.router.trigger(
+//                            .alert(
+//                                title: "Ссылка на видео скопирована в буфер обмена",
+//                                message: nil
+//                            )
+//                        )
+//
+//                        return
+//                    }
+//
+//                    // Если смог получить нормальный URL - показываем share
+//                    self?.router.trigger(.share(items: [url]))
+//                }
+//            )
+//            .disposed(by: disposeBag)
         
         let videoURL = selectedPeriod
             .asDriver(onErrorJustReturn: nil)
@@ -169,6 +169,17 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 return URL(string: stringUrl)
             }
         
+        let screenshotURL = input.startEndSelectedTrigger
+            .debounce(.milliseconds(250))
+            .distinctUntilChanged { lhs, rhs in
+                lhs.0 == rhs.0
+            }
+            .map { [weak self] dates -> URL? in
+                let (startDate, endDate) = dates
+                
+                return nil
+            }
+        
         let periods: [ArchiveVideoHourPeriod] = (0...23).map {
             ArchiveVideoHourPeriod(baseDate: date, startHours: $0 * 1, endHours: $0 * 1 + 1)
         }
@@ -177,6 +188,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             date: .just(date),
             periodConfiguration: .just(periods),
             videoURL: videoURL,
+            screenshotURL: screenshotURL,
             preview: .just(camera.preview),
             isLoading: activityTracker.asDriver()
         )
@@ -190,13 +202,14 @@ extension PlayArchiveVideoViewModel {
         let backTrigger: Driver<Void>
         let downloadTrigger: Driver<Void>
         let periodSelectedTrigger: Driver<ArchiveVideoHourPeriod?>
-        let startEndSelectedTrigger: Driver<(Float64, Float64)>
+        let startEndSelectedTrigger: Driver<(Date, Date)>
     }
     
     struct Output {
         let date: Driver<Date?>
         let periodConfiguration: Driver<[ArchiveVideoHourPeriod]>
         let videoURL: Driver<URL?>
+        let screenshotURL: Driver<URL?>
         let preview: Driver<URL?>
         let isLoading: Driver<Bool>
     }

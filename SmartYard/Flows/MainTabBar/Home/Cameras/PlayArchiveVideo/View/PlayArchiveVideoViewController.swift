@@ -72,7 +72,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private let periodSelectedTrigger = PublishSubject<ArchiveVideoHourPeriod?>()
     private let currentMode = BehaviorSubject<Mode>(value: .preview)
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
-    private let startEndSelectedTrigger = PublishSubject<(Float64, Float64)>()
+    private let startEndSelectedTrigger = PublishSubject<(Date, Date)>()
     
     init(viewModel: PlayArchiveVideoViewModel) {
         self.viewModel = viewModel
@@ -441,6 +441,22 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
+        output.screenshotURL
+            .drive(
+                onNext: { [weak self] url in
+                    let playerItem: AVPlayerItem? = {
+                        guard let url = url else {
+                            return nil
+                        }
+                        
+                        return AVPlayerItem(url: url)
+                    }()
+                    
+                    self?.screenshotPlayer?.replaceCurrentItem(with: playerItem)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         output.preview
             .drive(
                 onNext: { [weak self] url in
@@ -540,6 +556,8 @@ extension PlayArchiveVideoViewController: UICollectionViewDelegateFlowLayout {
             return
         }
         
+        rangeSlider.setTimelineEndDate(period.baseDate.adding(.hour, value: period.endHours))
+        
         periodSelectedTrigger.onNext(period)
     }
     
@@ -559,9 +577,8 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
 
 extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
     
-    func didChangeValue(videoRangeSlider: SimpleVideoRangeSlider, startTime: Float64, endTime: Float64) {
-        startEndSelectedTrigger.onNext((startTime, endTime))
-        print(startTime, endTime)
+    func didChangeDate(videoRangeSlider: SimpleVideoRangeSlider, startDate: Date, endDate: Date) {
+        startEndSelectedTrigger.onNext((startDate, endDate))
     }
     
 }

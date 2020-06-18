@@ -5,7 +5,7 @@ import Kingfisher
 // swiftlint:disable all
 
 @objc public protocol SimpleVideoRangeSliderDelegate: class {
-    func didChangeValue(videoRangeSlider: SimpleVideoRangeSlider, startTime: Float64, endTime: Float64)
+    func didChangeDate(videoRangeSlider: SimpleVideoRangeSlider, startDate: Date, endDate: Date)
     
     @objc optional func sliderGesturesBegan()
     @objc optional func sliderGesturesEnded()
@@ -154,6 +154,12 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         startPercentage = valueFromSeconds(seconds: Float(resultingStartIndicatorTime))
         endPercentage = valueFromSeconds(seconds: Float(resultingEndIndicatorTime))
         
+        delegate?.didChangeDate(
+            videoRangeSlider: self,
+            startDate: currentTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
+            endDate: currentTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime)
+        )
+        
         layoutSubviews()
     }
     
@@ -165,6 +171,12 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     
     public func setTimelineEndDate(_ date: Date) {
         currentTimelineEndDate = date
+        
+        delegate?.didChangeDate(
+            videoRangeSlider: self,
+            startDate: currentTimelineStartDate.addingTimeInterval(secondsFromValue(value: startPercentage)),
+            endDate: currentTimelineStartDate.addingTimeInterval(secondsFromValue(value: endPercentage))
+        )
         
         layoutSubviews()
     }
@@ -243,7 +255,12 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         let startSeconds = negateConversionLosses(secondsFromValue(value: self.startPercentage))
         let endSeconds = negateConversionLosses(secondsFromValue(value: self.endPercentage))
-        self.delegate?.didChangeValue(videoRangeSlider: self, startTime: startSeconds, endTime: endSeconds)
+        
+        delegate?.didChangeDate(
+            videoRangeSlider: self,
+            startDate: currentTimelineStartDate.addingTimeInterval(startSeconds),
+            endDate: currentTimelineStartDate.addingTimeInterval(endSeconds)
+        )
         
         layoutSubviews()
     }
