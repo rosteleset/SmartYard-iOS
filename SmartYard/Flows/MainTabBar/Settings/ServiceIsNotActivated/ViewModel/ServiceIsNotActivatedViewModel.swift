@@ -68,7 +68,10 @@ class ServiceIsNotActivatedViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        return Output(isLoading: activityTracker.asDriver())
+        return Output(
+            service: .just(service),
+            isLoading: activityTracker.asDriver()
+        )
     }
     
 }
@@ -81,6 +84,7 @@ extension ServiceIsNotActivatedViewModel {
     }
     
     struct Output {
+        let service: Driver<SettingsServiceType>
         let isLoading: Driver<Bool>
     }
     

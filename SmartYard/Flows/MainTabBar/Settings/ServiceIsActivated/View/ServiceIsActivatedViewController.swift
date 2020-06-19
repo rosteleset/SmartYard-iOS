@@ -13,6 +13,7 @@ import JGProgressHUD
 
 class ServiceIsActivatedViewController: BaseViewController, LoaderPresentable {
 
+    @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var changePlanButton: BlueButton!
     @IBOutlet private weak var backgroundView: UIView!
@@ -58,6 +59,14 @@ class ServiceIsActivatedViewController: BaseViewController, LoaderPresentable {
         )
         
         let output = viewModel.transform(input)
+        
+        output.service
+            .drive(
+                onNext: { [weak self] service in
+                    self?.titleLabel.text = "Услуга \"\(service.localizedTitle)\" подключена"
+                }
+            )
+            .disposed(by: disposeBag)
         
         output.isLoading
             .debounce(.milliseconds(25))
