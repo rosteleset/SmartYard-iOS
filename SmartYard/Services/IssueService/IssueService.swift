@@ -101,7 +101,7 @@ class IssueService {
     // экран 21
     func sendUnavailableAddressConnectionIssue(
         address: String,
-        services: [SettingsServiceType]
+        serviceNames: [String]
     ) -> Single<CreateIssueResponseData?> {
         return getAddressCoordinates(address: address)
             .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
@@ -115,7 +115,7 @@ class IssueService {
                 let issue = Issue(
                     issueType: .servicesUnavailableIssue(
                         userInfo: self.getUserInfo(address: address, clientId: nil),
-                        services: services,
+                        serviceNames: serviceNames,
                         lat: latitude,
                         lon: longitude
                     )
@@ -155,7 +155,7 @@ class IssueService {
     // экран 22, кейс, когда нет общедомовых услуг
     func sendConnectOnlyNonHousesServicesIssue(
         address: String,
-        services: [SettingsServiceType]
+        serviceNames: [String]
     ) -> Single<CreateIssueResponseData?> {
         return getAddressCoordinates(address: address)
             .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
@@ -171,7 +171,7 @@ class IssueService {
                         userInfo: self.getUserInfo(address: address, clientId: nil),
                         lat: latitude,
                         lon: longitude,
-                        services: services
+                        serviceNames: serviceNames
                     )
                 )
                 
