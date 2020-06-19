@@ -46,7 +46,7 @@ enum IssueType {
     case servicesUnavailableIssue(userInfo: MainUserInfo, services: [SettingsServiceType], lat: String, lon: String)
     
     // экран 28
-    case comeInOfficeMyselfIssue(userInfo: MainUserInfo, lat: String, lon: String, services: [SettingsServiceType])
+    case comeInOfficeMyselfIssue(userInfo: MainUserInfo, lat: String, lon: String, serviceNames: [String])
 
     // когда нет общедомовых услуг, но есть другие услуги для выбора
     case connectOnlyNonHousesServices(userInfo: MainUserInfo, lat: String, lon: String, services: [SettingsServiceType])
@@ -84,8 +84,8 @@ enum IssueType {
             let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
             return userInfo.convertToString() + "\nСписок подключаемых услуг: \(servicesStr)"
             
-        case let .comeInOfficeMyselfIssue(userInfo, _, _, services):
-            let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
+        case let .comeInOfficeMyselfIssue(userInfo, _, _, serviceNames):
+            let servicesStr = serviceNames.joined(separator: ", ")
             let hint = "\nТребуется подтверждение адреса и подключение выбранных услуг"
             return userInfo.convertToString() + "\nСписок подключаемых услуг: \(servicesStr)" + hint
             
@@ -113,12 +113,12 @@ enum IssueType {
         let sendToOfficeAction = "Передать в офис"
         
         switch self {
-        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue,
-             .comeInOfficeMyselfIssue:
+        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue:
             return [startWorkAction, sendToOfficeAction]
             
         case .dontRememberAnythingIssue, .servicesUnavailableIssue,
-             .connectOnlyNonHousesServices, .deleteAddressIssue:
+             .connectOnlyNonHousesServices, .deleteAddressIssue,
+             .comeInOfficeMyselfIssue:
             return [startWorkAction, callAction]
         }
     }

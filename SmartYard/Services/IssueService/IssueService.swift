@@ -128,7 +128,7 @@ class IssueService {
     // экран 22 в случае, если есть общедомовые услуги и выбран какой-либо другой сервис
     func sendComeInOfficeMyselfIssue(
         address: String,
-        services: [SettingsServiceType]
+        serviceNames: [String]
     ) -> Single<CreateIssueResponseData?> {
         return getAddressCoordinates(address: address)
             .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
@@ -144,7 +144,7 @@ class IssueService {
                         userInfo: self.getUserInfo(address: address, clientId: nil),
                         lat: latitude,
                         lon: longitude,
-                        services: services
+                        serviceNames: serviceNames
                     )
                 )
                 
