@@ -63,29 +63,24 @@ class PaymentPopupController: BaseViewController {
                     }
  
                     self.sumTextField.resignFirstResponder()
-                    let paymentNetworks:[PKPaymentNetwork] = [.amex, .masterCard,.visa]
-                     print("Can make payment ?")
+                    let paymentNetworks: [PKPaymentNetwork] = [.masterCard, .visa]
+                    
                     if PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks) {
-                        print("Yes we can")
                         let request = PKPaymentRequest()
                         request.merchantIdentifier = "merchant.ru.lanta-net.pays"
                         request.countryCode = "RU"
                         request.currencyCode = "RUB"
                         request.supportedNetworks = paymentNetworks
-                        request.merchantCapabilities = [.capabilityCredit, .capabilityDebit, .capability3DS, .capabilityEMV]
+                        request.merchantCapabilities = [.capability3DS]
                         
-                        print("HERE1: \(PKPaymentRequest.availableNetworks())")
-                        print("HERE2: \(request.supportedNetworks)")
                         let decimalSeparator = [NSLocale.Key.decimalSeparator: Locale.current.decimalSeparator]
                         let amount = NSDecimalNumber(string: self.sumTextField.text, locale: decimalSeparator)
                         
                         request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Ланта", amount: amount)]
                         
                         let authorizationViewController = PKPaymentAuthorizationViewController(paymentRequest: request)
-                          print("Can we create viewController ?")
                         
                         if let controller = authorizationViewController {
-                            print("Yes we can we create viewController")
                             controller.delegate = self
                             self.present(controller, animated: true, completion: nil)
                         }
