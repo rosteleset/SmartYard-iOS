@@ -31,7 +31,17 @@ class SmartYardPasswordTextField: SmartYardTextField {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        configureButton()
+        configureUI()
+    }
+    
+    override init() {
+        super.init()
+        
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
@@ -49,31 +59,6 @@ class SmartYardPasswordTextField: SmartYardTextField {
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: UIEdgeInsets(top: 16, left: 20, bottom: 16, right: 20 + 20 + 24))
-    }
-    
-    private func configureButton() {
-        rightViewMode = .always
-        
-        rightView = visibilityButton
-        
-        visibilityButton.touchAreaInsets = UIEdgeInsets(inset: 20)
-        
-        visibilityButton.rx.tap
-            .asDriver()
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    let newState = !self.visibilityButton.isSelected
-                    
-                    self.visibilityButton.isSelected = newState
-                    
-                    self.setPasswordVisible(newState)
-                }
-            )
-            .disposed(by: disposeBag)
     }
     
     private func setPasswordVisible(_ visible: Bool) {
@@ -99,6 +84,33 @@ class SmartYardPasswordTextField: SmartYardTextField {
             selectedTextRange = nil
             selectedTextRange = existingSelectedTextRange
         }
+    }
+    
+    private func configureUI() {
+        tintColor = UIColor.SmartYard.semiBlack
+        
+        rightViewMode = .always
+        
+        rightView = visibilityButton
+        
+        visibilityButton.touchAreaInsets = UIEdgeInsets(inset: 20)
+        
+        visibilityButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let newState = !self.visibilityButton.isSelected
+                    
+                    self.visibilityButton.isSelected = newState
+                    
+                    self.setPasswordVisible(newState)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }
