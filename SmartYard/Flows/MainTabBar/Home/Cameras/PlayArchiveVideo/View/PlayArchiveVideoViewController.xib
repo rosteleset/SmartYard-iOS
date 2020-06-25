@@ -36,7 +36,8 @@
                 <outlet property="progressSlider" destination="gTL-Y7-3LT" id="bKy-0r-Vsa"/>
                 <outlet property="rangeSlider" destination="P3w-7n-zkQ" id="EyD-RT-E1V"/>
                 <outlet property="realVideoContainer" destination="gbA-7j-j0f" id="UBg-QP-se9"/>
-                <outlet property="screenshotVideoContainer" destination="iCv-cW-g6T" id="tqe-V9-0n6"/>
+                <outlet property="screenshotContainer" destination="iCv-cW-g6T" id="iKM-kL-AUM"/>
+                <outlet property="screenshotImageView" destination="nZH-bq-bB9" id="Itd-Qa-txe"/>
                 <outlet property="selectFragmentButton" destination="wkd-4A-ePf" id="g5B-Zw-XrB"/>
                 <outlet property="shiftTimelineBackwardButton" destination="CPg-RE-9lw" id="ruA-dh-Lhu"/>
                 <outlet property="shiftTimelineForwardButton" destination="eey-Hz-Pq4" id="JQa-tR-LNq"/>
@@ -85,6 +86,10 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iCv-cW-g6T" userLabel="ScreenshotVideoContainer">
                                     <rect key="frame" x="0.0" y="0.0" width="382" height="258.5"/>
                                     <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nZH-bq-bB9">
+                                            <rect key="frame" x="0.0" y="0.0" width="382" height="258.5"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P3w-7n-zkQ" customClass="SimpleVideoRangeSlider" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="12" y="205.5" width="358" height="37"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -95,6 +100,10 @@
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <constraints>
+                                        <constraint firstItem="nZH-bq-bB9" firstAttribute="leading" secondItem="iCv-cW-g6T" secondAttribute="leading" id="BO9-jg-aLi"/>
+                                        <constraint firstAttribute="bottom" secondItem="nZH-bq-bB9" secondAttribute="bottom" id="KUq-7T-FrT"/>
+                                        <constraint firstAttribute="trailing" secondItem="nZH-bq-bB9" secondAttribute="trailing" id="UsM-A7-cw0"/>
+                                        <constraint firstItem="nZH-bq-bB9" firstAttribute="top" secondItem="iCv-cW-g6T" secondAttribute="top" id="Z8X-fs-tEQ"/>
                                         <constraint firstAttribute="trailing" secondItem="P3w-7n-zkQ" secondAttribute="trailing" constant="12" id="aNG-RK-3Tn"/>
                                         <constraint firstAttribute="bottom" secondItem="P3w-7n-zkQ" secondAttribute="bottom" constant="16" id="d5q-uK-hRa"/>
                                         <constraint firstItem="P3w-7n-zkQ" firstAttribute="leading" secondItem="iCv-cW-g6T" secondAttribute="leading" constant="12" id="uoP-qS-o1x"/>

@@ -66,11 +66,9 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var backToPreviewButton: UIButton!
     @IBOutlet private weak var downloadButton: BlueButton!
     
-    @IBOutlet private weak var screenshotVideoContainer: UIView!
+    @IBOutlet private weak var screenshotContainer: UIView!
+    @IBOutlet private weak var screenshotImageView: UIImageView!
     @IBOutlet private weak var rangeSlider: SimpleVideoRangeSlider!
-    
-    private var screenshotPlayerViewController: AVPlayerViewController?
-    private var screenshotPlayer: AVPlayer?
     
     private let viewModel: PlayArchiveVideoViewModel
     
@@ -107,10 +105,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
 
         configureTimelineButtons()
         configureBackToPreviewButton()
-        configureScreenshotPlayer()
         
         // Common
         
+        configureSliders()
         configureUIBindings()
         bind()
     }
@@ -119,7 +117,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         super.viewDidLayoutSubviews()
         
         realVideoPlayerViewController?.view.frame = realVideoContainer.bounds
-        screenshotPlayerViewController?.view.frame = screenshotVideoContainer.bounds
     }
     
     private func configurePeriodPicker() {
@@ -335,24 +332,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         ) { [weak self] time in
             self?.progressSlider.setCurrentTime(time)
         }
-        
-        progressSlider.delegate = self
     }
     
-    private func configureScreenshotPlayer() {
-        let playerViewController = AVPlayerViewController()
-        playerViewController.videoGravity = .resizeAspect
-        self.screenshotPlayerViewController = playerViewController
-        
-        let player = AVPlayer()
-        playerViewController.player = player
-        playerViewController.showsPlaybackControls = false
-        self.screenshotPlayer = player
-        
-        addChild(playerViewController)
-        screenshotVideoContainer.insertSubview(playerViewController.view, at: 0)
-        playerViewController.didMove(toParent: self)
-        
+    private func configureSliders() {
+        progressSlider.delegate = self
         rangeSlider.delegate = self
     }
     
@@ -401,7 +384,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         shiftTimelineForwardButton.isHidden = mode == .preview
         downloadButton.isHidden = mode == .preview
         backToPreviewButton.isHidden = mode == .preview
-        screenshotVideoContainer.isHidden = mode == .preview
+        screenshotContainer.isHidden = mode == .preview
         editDateLabel.isHidden = mode == .preview
         
         buttonsContainerToCollectionViewConstraint.isActive = mode == .preview
@@ -456,15 +439,12 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         output.screenshotURL
             .drive(
                 onNext: { [weak self] url in
-                    let playerItem: AVPlayerItem? = {
-                        guard let url = url else {
-                            return nil
-                        }
-                        
-                        return AVPlayerItem(url: url)
-                    }()
+                    guard let screenshotUrl = url else {
+                        return
+                    }
                     
-                    self?.screenshotPlayer?.replaceCurrentItem(with: playerItem)
+                    let image = ScreenshotHelper.generateThumbnailFromVideoUrl(url: screenshotUrl, forTime: .zero)
+                    self?.screenshotImageView.image = image
                 }
             )
             .disposed(by: disposeBag)
