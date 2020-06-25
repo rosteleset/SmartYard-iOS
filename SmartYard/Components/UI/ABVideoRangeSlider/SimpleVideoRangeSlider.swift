@@ -1,6 +1,5 @@
 import UIKit
 import AVKit
-import Kingfisher
 
 // swiftlint:disable all
 
@@ -115,6 +114,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         startCropBlurView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         endCropBlurView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         
+        fakeThumbnailsContainer.backgroundColor = .black
         fakeThumbnailsContainer.addSubview(startCropBlurView)
         fakeThumbnailsContainer.addSubview(endCropBlurView)
         
@@ -234,9 +234,9 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         value < 0 ? shiftTimelineBackward(abs(value)) : shiftTimelineForward(value)
     }
     
-    public func setFakeThumbnailURL(thumbnailURL: URL?) {
+    public func setFakeThumbnailImage(_ image: UIImage?) {
         fakeThumbnailImageViews.forEach {
-            $0.kf.setImage(with: thumbnailURL)
+            $0.image = image
         }
     }
     

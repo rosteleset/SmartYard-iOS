@@ -8,7 +8,6 @@
 
 import UIKit
 import AVKit
-import Kingfisher
 
 // swiftlint:disable all
 
@@ -70,6 +69,7 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         
         // Setup fake previews
         
+        fakeThumbnailsContainer.backgroundColor = .black
         addSubview(fakeThumbnailsContainer)
         sendSubviewToBack(fakeThumbnailsContainer)
         fakeThumbnailsContainer.cornerRadius = 3
@@ -112,9 +112,9 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         self.superview?.layoutSubviews()
     }
     
-    public func setFakeThumbnailURL(thumbnailURL: URL?) {
+    public func setFakeThumbnailImage(_ image: UIImage?) {
         fakeThumbnailImageViews.forEach {
-            $0.kf.setImage(with: thumbnailURL)
+            $0.image = image
         }
     }
 

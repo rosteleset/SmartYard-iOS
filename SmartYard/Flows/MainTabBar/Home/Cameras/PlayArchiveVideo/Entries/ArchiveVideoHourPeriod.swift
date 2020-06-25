@@ -35,7 +35,25 @@ struct ArchiveVideoHourPeriod: Equatable {
         let startTimestamp = startDate.unixTimestamp.int
         let duration = endDate.timeIntervalSince(startDate).int
         
-        return "index-\(startTimestamp)-\(duration).m3u8"
+        return "/index-\(startTimestamp)-\(duration).m3u8"
+    }
+    
+    var videoThumbnailComponents: String? {
+        let components = Calendar.current.dateComponents([.year, .month, .day], from: baseDate)
+        
+        guard let date = Calendar.current.date(from: components) else {
+            return nil
+        }
+        
+        let moscowOffsetFromGMT = 3
+        
+        let startDate = date.adding(.hour, value: startHours - moscowOffsetFromGMT)
+        
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
+        
+        return "/\(dateFormatter.string(from: startDate))-preview.mp4"
     }
     
     func recPrepareComponents(start: Float64, end: Float64) -> (from: String, to: String)? {
