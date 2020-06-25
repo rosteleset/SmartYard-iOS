@@ -188,7 +188,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     return nil
                 }
                 
-                let utcDate = date.adding(.hour, value: -3)
+                let utcDate = date.adding(.hour, value: -Date.moscowOffsetFromGMT)
                 
                 let dateFormatter = DateFormatter()
                 

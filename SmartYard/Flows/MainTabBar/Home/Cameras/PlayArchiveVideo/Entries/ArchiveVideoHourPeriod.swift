@@ -25,9 +25,8 @@ struct ArchiveVideoHourPeriod: Equatable {
             return nil
         }
         
-        let currentOffsetFromGMT = Calendar.current.timeZone.secondsFromGMT() / 3600
-        let moscowOffsetFromGMT = 3
-        let diff = currentOffsetFromGMT - moscowOffsetFromGMT
+        let currentOffsetFromGMT = TimeZone.current.secondsFromGMT() / 3600
+        let diff = currentOffsetFromGMT - Date.moscowOffsetFromGMT
         
         let startDate = date.adding(.hour, value: startHours + diff)
         let endDate = date.adding(.hour, value: endHours + diff)
@@ -45,9 +44,7 @@ struct ArchiveVideoHourPeriod: Equatable {
             return nil
         }
         
-        let moscowOffsetFromGMT = 3
-        
-        let startDate = date.adding(.hour, value: startHours - moscowOffsetFromGMT)
+        let startDate = date.adding(.hour, value: startHours - Date.moscowOffsetFromGMT)
         
         let dateFormatter = DateFormatter()
         
