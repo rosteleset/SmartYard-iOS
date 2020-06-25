@@ -26,6 +26,9 @@
                 <outlet property="animatedViewBottomOffset" destination="Wei-5v-7aC" id="YJl-Xh-eV2"/>
                 <outlet property="backgroundView" destination="aZa-Gd-3fU" id="MMj-Uo-XT3"/>
                 <outlet property="payButton" destination="St8-Dw-f2Z" id="gwm-PR-KLe"/>
+                <outlet property="payResultHint" destination="0tA-bU-0fp" id="ljR-Vc-atH"/>
+                <outlet property="payResultImageView" destination="ShM-HY-QDK" id="WTZ-5U-JHx"/>
+                <outlet property="payResultTitle" destination="Fr5-sq-kBi" id="Hxw-0G-fGt"/>
                 <outlet property="recommendedSumLabel" destination="99Y-gl-f8E" id="T01-x6-V6o"/>
                 <outlet property="successView" destination="xmW-0h-krF" id="VjS-zL-v5f"/>
                 <outlet property="sumTextField" destination="Wwk-4I-F7O" id="Kdh-cs-fM3"/>

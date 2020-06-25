@@ -20,7 +20,11 @@ class PaymentPopupController: BaseViewController {
     @IBOutlet private weak var sumTextField: UITextField!
     @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var animatedView: UIView!
-
+    
+    @IBOutlet private weak var payResultImageView: UIImageView!
+    @IBOutlet private weak var payResultTitle: UILabel!
+    @IBOutlet private weak var payResultHint: UILabel!
+    
     @IBOutlet private var animatedViewBottomOffset: NSLayoutConstraint!
     
     private var swipeDismissInteractor: SwipeInteractionController?
@@ -101,6 +105,15 @@ class PaymentPopupController: BaseViewController {
                     guard let self = self, let uPayCompletion = self.payCompletion else {
                         return
                     }
+                    
+                    self.sumTextField.isHidden = true
+                    self.successView.isHidden = false
+                    
+                    self.payResultTitle.text = isSuccess ? "Готово!" : "Ошибка!"
+                    self.payResultHint.text = isSuccess ? "Ваш баланс пополнен" : "Оплата не прошла"
+                    
+                    let resultImageName = isSuccess ? "SuccessIcon" : "ErrorIcon"
+                    self.payResultImageView.image = UIImage(named: resultImageName)
                     
                     let status: PKPaymentAuthorizationStatus = isSuccess ? .success : .failure
                     uPayCompletion(PKPaymentAuthorizationResult(status: status, errors: []))
@@ -219,15 +232,11 @@ class PaymentPopupController: BaseViewController {
     }
     
     func processPayment(_ token: Data? = nil, completion: ((PKPaymentAuthorizationResult) -> Void)? = nil) {
-        print("here")
         guard let uCompletion = completion else {
-            print("11111111")
             return
         }
-        print("2222222")
         guard let amount = sumTextField.text else {
-            print("333333333")
-           // uCompletion(PKPaymentAuthorizationResult(status: .failure, errors: []))
+            uCompletion(PKPaymentAuthorizationResult(status: .failure, errors: []))
             return
         }
         
@@ -282,8 +291,6 @@ extension PaymentPopupController: PKPaymentAuthorizationViewControllerDelegate {
  
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
         controller.dismiss(animated: true, completion: nil)
-        sumTextField.isHidden = true
-        successView.isHidden = false
     }
  
 }
