@@ -385,7 +385,13 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-                    let upperBound = Date()
+                    // MARK: Максимальная дата, которую можно выбрать. Равняется текущей дате по МСК
+                    // Если у нас 00:00, то в Москве еще 23:00. Соответственно, максимум можно выбрать 23:00
+                    // Поэтому вычитаем разницу между локальной таймзоной и МСК из текущего времени
+                    
+                    let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
+                    
+                    let upperBound = Date().adding(.hour, value: -diffWithMoscow)
                     let lowerBound = upperBound.adding(.day, value: -7)
                     
                     let visibleTimelineEndDate = uPeriod.baseDate

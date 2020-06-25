@@ -27,7 +27,18 @@ class ArchivePageViewController: BaseViewController {
     private let formatter = DateFormatter()
     private let currentCalendar = Calendar.current
     
-    private let endDate = Date()
+    // MARK: Максимальная дата, которую можно выбрать в календаре. Равняется текущей дате по МСК
+    // Если у нас 00:00, то в Москве еще 23:00. Соответственно, у них не наступил новый день и выбрать его нельзя
+    // Поэтому вычитаем разницу между локальной таймзоной и МСК из текущего времени
+    
+    private let endDate: Date = {
+        let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
+        
+        return Date().adding(.hour, value: -diffWithMoscow)
+    }()
+    
+    // MARK: Минимальная дата, которую можно выбрать в календаре
+    // Равняется текущей минус семь дней (можно выбирать последнюю неделю)
     
     private var startDate: Date {
         return endDate.adding(.day, value: -7)
@@ -121,7 +132,7 @@ class ArchivePageViewController: BaseViewController {
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
         
-        calendarView.scrollToDate(Date())
+        calendarView.scrollToDate(endDate)
         
         leftArrowButton.rx
             .tap

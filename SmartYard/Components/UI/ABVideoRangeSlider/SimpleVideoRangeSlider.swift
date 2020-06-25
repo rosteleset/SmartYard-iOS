@@ -58,6 +58,22 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         return visibleTimelineEndDate.addingTimeInterval(-duration)
     }
     
+    private var isLowerBoundReached: Bool {
+        guard let lowerBound = absoluteTimelineLowerBound else {
+            return false
+        }
+        
+        return visibleTimelineStartDate <= lowerBound
+    }
+    
+    private var isUpperBoundReached: Bool {
+        guard let upperBound = absoluteTimelineUpperBound else {
+            return false
+        }
+        
+        return visibleTimelineEndDate >= upperBound
+    }
+    
     private var absoluteTimelineLowerBound: Date?
     private var absoluteTimelineUpperBound: Date?
     
@@ -174,8 +190,8 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             videoRangeSlider: self,
             startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
             endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
-            isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
-            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound,
+            isLowerBoundReached: isLowerBoundReached,
+            isUpperBoundReached: isUpperBoundReached,
             screenshotPolicy: latestScreenshotPolicy
         )
         
@@ -256,8 +272,8 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             videoRangeSlider: self,
             startDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: startPercentage)),
             endDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: endPercentage)),
-            isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
-            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound,
+            isLowerBoundReached: isLowerBoundReached,
+            isUpperBoundReached: isUpperBoundReached,
             screenshotPolicy: latestScreenshotPolicy
         )
         
@@ -345,8 +361,8 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             videoRangeSlider: self,
             startDate: visibleTimelineStartDate.addingTimeInterval(startSeconds),
             endDate: visibleTimelineStartDate.addingTimeInterval(endSeconds),
-            isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
-            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound,
+            isLowerBoundReached: isLowerBoundReached,
+            isUpperBoundReached: isUpperBoundReached,
             screenshotPolicy: latestScreenshotPolicy
         )
         

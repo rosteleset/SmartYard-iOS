@@ -188,6 +188,11 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     return nil
                 }
                 
+                // MARK: Здесь нам нужно получить дату скриншота
+                // Поскольку используется строковый формат, нам не нужно переводить время из МСК в локальное
+                // Но сервер для этого запроса почему-то ожидает время по UTC
+                // Поэтому нам нужно отнять разницу между МСК и UTC, чтобы получить правильный скриншот
+                
                 let utcDate = date.adding(.hour, value: -Date.moscowOffsetFromGMT)
                 
                 let dateFormatter = DateFormatter()
