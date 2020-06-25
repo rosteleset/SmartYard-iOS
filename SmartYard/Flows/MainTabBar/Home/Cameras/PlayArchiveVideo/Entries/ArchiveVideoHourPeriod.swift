@@ -63,26 +63,4 @@ struct ArchiveVideoHourPeriod: Equatable {
         return "/\(dateFormatter.string(from: startDate))-preview.mp4"
     }
     
-    // MARK: Здесь нам нужно получить дату начала и конца промежутка видео
-    // Поскольку используется строковый формат, нам не нужно переводить время из МСК в локальное
-    // В отличие от предыдущего метода, сервер работает не с UTC, а с МСК, поэтому конверсии не требуются
-    
-    func recPrepareComponents(start: Float64, end: Float64) -> (from: String, to: String)? {
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: baseDate)
-        
-        guard let date = Calendar.current.date(from: components) else {
-            return nil
-        }
-        
-        let startDate = date
-            .adding(.hour, value: startHours)
-            .adding(.second, value: start.floor.int)
-        
-        let endDate = date
-            .adding(.hour, value: startHours)
-            .adding(.second, value: end.ceil.int)
-        
-        return (from: startDate.apiString, to: endDate.apiString)
-    }
-    
 }

@@ -29,6 +29,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
         self.date = date
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         
@@ -66,91 +67,87 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-//        input.downloadTrigger
-//            .withLatestFrom(selectedPeriod.asDriver(onErrorJustReturn: nil))
-//            .withLatestFrom(selectedStartEnd.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
-//            .flatMap { args -> Driver<(from: String, to: String)> in
-//                let (period, startEnd) = args
-//
-//                guard let uPeriod = period, let uStartEnd = startEnd else {
-//                    return .empty()
-//                }
-//
-//                let (start, end) = uStartEnd
-//
-//                guard end - start > 0,
-//                    let recPrepareComps = uPeriod.recPrepareComponents(start: start, end: end) else {
-//                    return .empty()
-//                }
-//
-//                return .just(recPrepareComps)
-//            }
-//            .flatMapLatest { [weak self] range -> Driver<Int?> in
-//                guard let self = self else {
-//                    return .empty()
-//                }
-//
-//                return self.apiWrapper
-//                    .recPrepare(id: self.camera.id, from: range.from, to: range.to)
-//                    .trackError(errorTracker)
-//                    .trackActivity(activityTracker)
-//                    .asDriver(onErrorJustReturn: nil)
-//            }
-//            .ignoreNil()
-//            .flatMapLatest { [weak self] fragmentId -> Driver<RecDownloadResponseData?> in
-//                guard let self = self else {
-//                    return .empty()
-//                }
-//
-//                return self.apiWrapper
-//                    .recDownload(id: fragmentId)
-//                    .trackError(errorTracker)
-//                    .trackActivity(activityTracker)
-//                    .asDriver(onErrorJustReturn: nil)
-//            }
-//            .ignoreNil()
-//            .drive(
-//                onNext: { [weak self] responseData in
-//                    // Если нет урла - показываем "видео готовится"
-//                    guard let stringUrl = responseData.url else {
-//                        let msg = """
-//                        Как только процесс закончится, вам придет сообщение в чат.
-//                        В зависимости от длины видео процесс загрузки может занять от нескольких минут до нескольких часов.
-//                        """
-//
-//                        let okAction = UIAlertAction(title: "Спасибо", style: .default, handler: nil)
-//
-//                        self?.router.trigger(
-//                            .dialog(
-//                                title: "Видео готовится",
-//                                message: msg,
-//                                actions: [okAction]
-//                            )
-//                        )
-//
-//                        return
-//                    }
-//
-//                    guard let encodedString = stringUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-//                        let url = URL(string: encodedString) else {
-//                        // Если есть ссылка, но она кривая - копируем урл в пастборд и показываем алерт
-//                        UIPasteboard.general.string = stringUrl
-//
-//                        self?.router.trigger(
-//                            .alert(
-//                                title: "Ссылка на видео скопирована в буфер обмена",
-//                                message: nil
-//                            )
-//                        )
-//
-//                        return
-//                    }
-//
-//                    // Если смог получить нормальный URL - показываем share
-//                    self?.router.trigger(.share(items: [url]))
-//                }
-//            )
-//            .disposed(by: disposeBag)
+        input.downloadTrigger
+            .withLatestFrom(selectedStartEnd.asDriver(onErrorJustReturn: nil))
+            .flatMap { args -> Driver<(from: String, to: String)> in
+                guard let uArgs = args else {
+                    return .empty()
+                }
+                
+                let (start, end) = uArgs
+                
+                guard end > start else {
+                    return .empty()
+                }
+                
+                return .just((from: start.apiString, to: end.apiString))
+            }
+            .flatMapLatest { [weak self] range -> Driver<Int?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .recPrepare(id: self.camera.id, from: range.from, to: range.to)
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .flatMapLatest { [weak self] fragmentId -> Driver<RecDownloadResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .recDownload(id: fragmentId)
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] responseData in
+                    // Если нет урла - показываем "видео готовится"
+                    guard let stringUrl = responseData.url else {
+                        let msg = """
+                                    Как только процесс закончится, вам придет сообщение в чат.
+                                    В зависимости от длины видео процесс загрузки может занять от нескольких минут до нескольких часов.
+                                    """
+                        
+                        let okAction = UIAlertAction(title: "Спасибо", style: .default, handler: nil)
+                        
+                        self?.router.trigger(
+                            .dialog(
+                                title: "Видео готовится",
+                                message: msg,
+                                actions: [okAction]
+                            )
+                        )
+                        
+                        return
+                    }
+                    
+                    guard let encodedString = stringUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                        let url = URL(string: encodedString) else {
+                            // Если есть ссылка, но она кривая - копируем урл в пастборд и показываем алерт
+                            UIPasteboard.general.string = stringUrl
+                            
+                            self?.router.trigger(
+                                .alert(
+                                    title: "Ссылка на видео скопирована в буфер обмена",
+                                    message: nil
+                                )
+                            )
+                            
+                            return
+                    }
+                    
+                    // Если смог получить нормальный URL - показываем share
+                    self?.router.trigger(.share(items: [url]))
+                }
+            )
+            .disposed(by: disposeBag)
         
         let videoURL = selectedPeriod
             .asDriver(onErrorJustReturn: nil)
