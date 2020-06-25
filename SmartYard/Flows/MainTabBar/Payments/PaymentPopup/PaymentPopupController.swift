@@ -120,6 +120,20 @@ class PaymentPopupController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.recommendedSum
+            .drive(
+                onNext: { [weak self] sum in
+                    guard let uSum = sum else {
+                        self?.recommendedSumLabel.isHidden = true
+                        return
+                    }
+                    
+                    self?.recommendedSumLabel.isHidden = false
+                    self?.recommendedSumLabel.text = "Рекомендуемая - " + String(uSum)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureView() {

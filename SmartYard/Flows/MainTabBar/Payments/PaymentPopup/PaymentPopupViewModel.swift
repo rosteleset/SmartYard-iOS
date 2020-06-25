@@ -16,12 +16,16 @@ class PaymentPopupViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let clientId: String
     
+    private let recommendedSum: BehaviorSubject<Double?>
+    
     init(
         apiWrapper: APIWrapper,
-        clientId: String
+        clientId: String,
+        recommendedSum: Double?
     ) {
         self.apiWrapper = apiWrapper
         self.clientId = clientId
+        self.recommendedSum = BehaviorSubject<Double?>(value: recommendedSum)
     }
     
     func transform(_ input: Input) -> Output {
@@ -38,8 +42,11 @@ class PaymentPopupViewModel: BaseViewModel {
                     isPaySuccessTrigger.onNext(false)
                     return .empty()
                 }
-
-                return self.apiWrapper.payPrepare(clientId: self.clientId, amount: String(pennyAmount * 100))
+                
+                return self.apiWrapper.payPrepare(
+                        clientId: self.clientId,
+                        amount: String(pennyAmount * 100)
+                    )
                     .trackError(errorTracker)
                     .map {
                         guard let response = $0 else {
@@ -98,13 +105,16 @@ class PaymentPopupViewModel: BaseViewModel {
                     .asDriver(onErrorJustReturn: nil)
         }
         .drive(
-            onNext: { result in
+            onNext: { _ in
                 isPaySuccessTrigger.onNext(true)
             }
         )
         .disposed(by: disposeBag)
         
-        return Output(isPaySuccessTrigger: isPaySuccessTrigger.asDriver(onErrorJustReturn: false))
+        return Output(
+            isPaySuccessTrigger: isPaySuccessTrigger.asDriver(onErrorJustReturn: false),
+            recommendedSum: recommendedSum.asDriver(onErrorJustReturn: nil)
+        )
     }
     
 }
@@ -117,6 +127,7 @@ extension PaymentPopupViewModel {
     
     struct Output {
         let isPaySuccessTrigger: Driver<Bool>
+        let recommendedSum: Driver<Double?>
     }
     
 }
