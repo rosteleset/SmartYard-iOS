@@ -4,20 +4,26 @@ import Kingfisher
 
 // swiftlint:disable all
 
-@objc public protocol SimpleVideoRangeSliderDelegate: class {
+public protocol SimpleVideoRangeSliderDelegate: class {
+    
     func didChangeDate(
         videoRangeSlider: SimpleVideoRangeSlider,
         startDate: Date,
         endDate: Date,
         isLowerBoundReached: Bool,
-        isUpperBoundReached: Bool
+        isUpperBoundReached: Bool,
+        screenshotPolicy: SimpleVideoRangeSlider.ScreenshotPolicy
     )
     
-    @objc optional func sliderGesturesBegan()
-    @objc optional func sliderGesturesEnded()
 }
 
 public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
+    
+    public enum ScreenshotPolicy {
+        case start
+        case end
+        case none
+    }
 
     private enum DragHandleChoice {
         case start
@@ -54,6 +60,8 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     
     private var absoluteTimelineLowerBound: Date?
     private var absoluteTimelineUpperBound: Date?
+    
+    private var latestScreenshotPolicy: ScreenshotPolicy = .start
     
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -166,7 +174,8 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
             endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
             isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
-            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound
+            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound,
+            screenshotPolicy: latestScreenshotPolicy
         )
         
         layoutSubviews()
@@ -210,7 +219,8 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
             endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
             isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
-            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound
+            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound,
+            screenshotPolicy: latestScreenshotPolicy
         )
         
         layoutSubviews()
@@ -239,12 +249,15 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         absoluteTimelineLowerBound = lowerBound
         absoluteTimelineUpperBound = upperBound
         
+        latestScreenshotPolicy = .start
+        
         delegate?.didChangeDate(
             videoRangeSlider: self,
             startDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: startPercentage)),
             endDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: endPercentage)),
             isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
-            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound
+            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound,
+            screenshotPolicy: latestScreenshotPolicy
         )
         
         layoutSubviews()
@@ -325,12 +338,15 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         let startSeconds = negateConversionLosses(secondsFromValue(value: self.startPercentage))
         let endSeconds = negateConversionLosses(secondsFromValue(value: self.endPercentage))
         
+        latestScreenshotPolicy = drag == .end ? .end : .start
+        
         delegate?.didChangeDate(
             videoRangeSlider: self,
             startDate: visibleTimelineStartDate.addingTimeInterval(startSeconds),
             endDate: visibleTimelineStartDate.addingTimeInterval(endSeconds),
             isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
-            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound
+            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound,
+            screenshotPolicy: latestScreenshotPolicy
         )
         
         layoutSubviews()
@@ -402,14 +418,9 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     
     private func updateGestureStatus(recognizer: UIGestureRecognizer) {
         if recognizer.state == .began {
-            
             self.isReceivingGesture = true
-            self.delegate?.sliderGesturesBegan?()
-            
         } else if recognizer.state == .ended {
-            
             self.isReceivingGesture = false
-            self.delegate?.sliderGesturesEnded?()
         }
     }
 

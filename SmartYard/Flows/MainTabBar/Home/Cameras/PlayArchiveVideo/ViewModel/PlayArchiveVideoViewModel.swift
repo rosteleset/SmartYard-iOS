@@ -166,15 +166,27 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 return URL(string: resultingString)
             }
         
-        let screenshotURL = input.startEndSelectedTrigger
+        let screenshotURL = input.screenshotTrigger
             .debounce(.milliseconds(250))
-            .distinctUntilChanged { lhs, rhs in
-                lhs.0 == rhs.0
-            }
-            .map { [weak self] dates -> URL? in
-                let (startDate, endDate) = dates
+            .distinctUntilChanged()
+            .map { [weak self] date -> URL? in
+                guard let self = self else {
+                    return nil
+                }
                 
-                return nil
+                let utcDate = date.adding(.hour, value: -3)
+                
+                let dateFormatter = DateFormatter()
+                
+                dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
+                
+                let resultingString = self.camera.video +
+                    "/" +
+                    dateFormatter.string(from: utcDate) +
+                    "-preview.mp4" +
+                    "?token=\(self.camera.token)"
+                
+                return URL(string: resultingString)
             }
         
         let periods: [ArchiveVideoHourPeriod] = (0...23).map {
@@ -200,6 +212,7 @@ extension PlayArchiveVideoViewModel {
         let downloadTrigger: Driver<Void>
         let periodSelectedTrigger: Driver<ArchiveVideoHourPeriod?>
         let startEndSelectedTrigger: Driver<(Date, Date)>
+        let screenshotTrigger: Driver<Date>
     }
     
     struct Output {

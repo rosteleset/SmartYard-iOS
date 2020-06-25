@@ -79,6 +79,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private let currentMode = BehaviorSubject<Mode>(value: .preview)
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
     private let startEndSelectedTrigger = PublishSubject<(Date, Date)>()
+    private let screenshotTrigger = PublishSubject<Date>()
     
     init(viewModel: PlayArchiveVideoViewModel) {
         self.viewModel = viewModel
@@ -415,7 +416,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             downloadTrigger: downloadButton.rx.tap.asDriver(),
             periodSelectedTrigger: periodSelectedTrigger.asDriver(onErrorJustReturn: nil),
-            startEndSelectedTrigger: startEndSelectedTrigger.asDriverOnErrorJustComplete()
+            startEndSelectedTrigger: startEndSelectedTrigger.asDriverOnErrorJustComplete(),
+            screenshotTrigger: screenshotTrigger.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
@@ -599,7 +601,8 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         startDate: Date,
         endDate: Date,
         isLowerBoundReached: Bool,
-        isUpperBoundReached: Bool
+        isUpperBoundReached: Bool,
+        screenshotPolicy: SimpleVideoRangeSlider.ScreenshotPolicy
     ) {
         startEndSelectedTrigger.onNext((startDate, endDate))
         
@@ -610,6 +613,12 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         dateFormatter.dateFormat = "dd.MM.yy"
         
         editDateLabel.text = "Видео от \(dateFormatter.string(from: startDate))"
+        
+        switch screenshotPolicy {
+        case .start: screenshotTrigger.onNext(startDate)
+        case .end: screenshotTrigger.onNext(endDate)
+        case .none: break
+        }
     }
     
 }
