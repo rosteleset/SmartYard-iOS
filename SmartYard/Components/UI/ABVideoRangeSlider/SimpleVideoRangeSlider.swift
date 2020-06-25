@@ -7,6 +7,7 @@ public protocol SimpleVideoRangeSliderDelegate: class {
     
     func didChangeDate(
         videoRangeSlider: SimpleVideoRangeSlider,
+        isReceivingGesture: Bool,
         startDate: Date,
         endDate: Date,
         isLowerBoundReached: Bool,
@@ -188,6 +189,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         delegate?.didChangeDate(
             videoRangeSlider: self,
+            isReceivingGesture: isReceivingGesture,
             startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
             endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
             isLowerBoundReached: isLowerBoundReached,
@@ -233,6 +235,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         delegate?.didChangeDate(
             videoRangeSlider: self,
+            isReceivingGesture: isReceivingGesture,
             startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
             endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
             isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
@@ -270,6 +273,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         delegate?.didChangeDate(
             videoRangeSlider: self,
+            isReceivingGesture: isReceivingGesture,
             startDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: startPercentage)),
             endDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: endPercentage)),
             isLowerBoundReached: isLowerBoundReached,
@@ -359,6 +363,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         delegate?.didChangeDate(
             videoRangeSlider: self,
+            isReceivingGesture: isReceivingGesture,
             startDate: visibleTimelineStartDate.addingTimeInterval(startSeconds),
             endDate: visibleTimelineStartDate.addingTimeInterval(endSeconds),
             isLowerBoundReached: isLowerBoundReached,

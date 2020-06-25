@@ -12,10 +12,16 @@ import AVKit
 // swiftlint:disable all
 
 @objc public protocol SimpleVideoProgressSliderDelegate: class {
-    func indicatorDidChangePosition(videoRangeSlider: SimpleVideoProgressSlider, position: Float64)
+    
+    func indicatorDidChangePosition(
+        videoRangeSlider: SimpleVideoProgressSlider,
+        isReceivingGesture: Bool,
+        position: Float64
+    )
     
     @objc optional func sliderGesturesBegan()
     @objc optional func sliderGesturesEnded()
+    
 }
 
 public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
@@ -150,7 +156,12 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         let percentage = valueFromPosition(position: progressIndicator.center.x)
 
         let progressSeconds = negateConversionLosses(secondsFromValue(value: progressPercentage))
-        self.delegate?.indicatorDidChangePosition(videoRangeSlider: self, position: progressSeconds)
+        
+        self.delegate?.indicatorDidChangePosition(
+            videoRangeSlider: self,
+            isReceivingGesture: isReceivingGesture,
+            position: progressSeconds
+        )
 
         self.progressPercentage = percentage
 

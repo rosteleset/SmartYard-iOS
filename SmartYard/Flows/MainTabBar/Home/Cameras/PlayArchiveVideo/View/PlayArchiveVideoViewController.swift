@@ -368,10 +368,17 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
+        let currentPlaybackTimeDistinctSeconds = currentPlaybackTime
+            .asDriverOnErrorJustComplete()
+            .map { $0.seconds }
+            .distinctUntilChanged { lhs, rhs in
+                abs(lhs - rhs) < 0.001
+            }
+        
         Driver
             .combineLatest(
                 periodSelectedTrigger.asDriverOnErrorJustComplete(),
-                currentPlaybackTime.asDriverOnErrorJustComplete()
+                currentPlaybackTimeDistinctSeconds
             )
             .drive(
                 onNext: { [weak self] args in
@@ -396,7 +403,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     
                     let visibleTimelineEndDate = uPeriod.baseDate
                         .adding(.hour, value: uPeriod.startHours)
-                        .addingTimeInterval(playbackTime.seconds)
+                        .addingTimeInterval(playbackTime)
                         .adding(.minute, value: 30)
                     
                     self.rangeSlider.setTimelineConfiguration(
@@ -612,7 +619,15 @@ extension PlayArchiveVideoViewController: UICollectionViewDelegateFlowLayout {
 
 extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
     
-    func indicatorDidChangePosition(videoRangeSlider: SimpleVideoProgressSlider, position: Float64) {
+    func indicatorDidChangePosition(
+        videoRangeSlider: SimpleVideoProgressSlider,
+        isReceivingGesture: Bool,
+        position: Float64
+    ) {
+        guard !isReceivingGesture else {
+            return
+        }
+        
         realVideoPlayer?.seek(
             to: CMTime(seconds: position, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
             toleranceBefore: .zero,
@@ -626,6 +641,7 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
     
     func didChangeDate(
         videoRangeSlider: SimpleVideoRangeSlider,
+        isReceivingGesture: Bool,
         startDate: Date,
         endDate: Date,
         isLowerBoundReached: Bool,
@@ -641,6 +657,10 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         dateFormatter.dateFormat = "dd.MM.yy"
         
         editDateLabel.text = "Видео от \(dateFormatter.string(from: startDate))"
+        
+        guard !isReceivingGesture else {
+            return
+        }
         
         switch screenshotPolicy {
         case .start:
