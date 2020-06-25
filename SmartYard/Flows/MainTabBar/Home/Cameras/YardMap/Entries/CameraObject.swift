@@ -15,7 +15,7 @@ struct CameraObject: Equatable {
     let position: CLLocationCoordinate2D
     let cameraNumber: Int
     let name: String
-    let preview: URL
-    let video: URL
+    let video: String
+    let token: String
     
 }

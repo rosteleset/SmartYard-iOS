@@ -161,12 +161,9 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     return nil
                 }
                 
-                let stringUrl = self.camera.video.absoluteString.replacingOccurrences(
-                    of: "index.m3u8",
-                    with: urlComps
-                )
+                let resultingString = self.camera.video + "/" + urlComps + "?token=\(self.camera.token)"
                 
-                return URL(string: stringUrl)
+                return URL(string: resultingString)
             }
         
         let screenshotURL = input.startEndSelectedTrigger
@@ -189,7 +186,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             periodConfiguration: .just(periods),
             videoURL: videoURL,
             screenshotURL: screenshotURL,
-            preview: .just(camera.preview),
+            preview: .just(nil),
             isLoading: activityTracker.asDriver()
         )
     }

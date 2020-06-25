@@ -87,6 +87,7 @@ class OnlinePageViewController: BaseViewController {
     private func configurePlayer() {
         let playerViewController = AVPlayerViewController()
         playerViewController.videoGravity = .resizeAspect
+        playerViewController.showsPlaybackControls = false
         self.playerViewController = playerViewController
         
         let player = AVPlayer()
@@ -132,7 +133,17 @@ class OnlinePageViewController: BaseViewController {
         
         delegate?.onlinePageViewController(self, didSelectCamera: camera)
         
-        player?.replaceCurrentItem(with: AVPlayerItem(url: camera.video))
+        let resultingString = camera.video + "/index.m3u8" + "?token=\(camera.token)"
+        
+        let item: AVPlayerItem? = {
+            guard let url = URL(string: resultingString) else {
+                return nil
+            }
+            
+            return AVPlayerItem(url: url)
+        }()
+        
+        player?.replaceCurrentItem(with: item)
         player?.play()
     }
     
