@@ -21,6 +21,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     public enum ScreenshotPolicy {
         case start
         case end
+        case middle
         case none
     }
 
@@ -60,7 +61,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     private var absoluteTimelineLowerBound: Date?
     private var absoluteTimelineUpperBound: Date?
     
-    private var latestScreenshotPolicy: ScreenshotPolicy = .start
+    private var latestScreenshotPolicy: ScreenshotPolicy = .middle
     
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -249,7 +250,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         absoluteTimelineLowerBound = lowerBound
         absoluteTimelineUpperBound = upperBound
         
-        latestScreenshotPolicy = .start
+        latestScreenshotPolicy = .middle
         
         delegate?.didChangeDate(
             videoRangeSlider: self,

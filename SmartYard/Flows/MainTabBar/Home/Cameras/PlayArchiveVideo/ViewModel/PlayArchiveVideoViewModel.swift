@@ -203,8 +203,8 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 return URL(string: resultingString)
             }
         
-        let periods: [ArchiveVideoHourPeriod] = (0...23).map {
-            ArchiveVideoHourPeriod(baseDate: date, startHours: $0 * 1, endHours: $0 * 1 + 1)
+        let periods: [ArchiveVideoHourPeriod] = (0...7).map {
+            ArchiveVideoHourPeriod(baseDate: date, startHours: $0 * 3, endHours: $0 * 3 + 3)
         }
         
         return Output(

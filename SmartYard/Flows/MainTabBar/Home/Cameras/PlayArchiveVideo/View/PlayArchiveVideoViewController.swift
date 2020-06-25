@@ -74,10 +74,12 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     private let periodsProxy = BehaviorSubject<[ArchiveVideoHourPeriod]>(value: [])
     private let periodSelectedTrigger = PublishSubject<ArchiveVideoHourPeriod?>()
-    private let currentMode = BehaviorSubject<Mode>(value: .preview)
-    private let isVideoValid = BehaviorSubject<Bool>(value: false)
     private let startEndSelectedTrigger = PublishSubject<(Date, Date)>()
     private let screenshotTrigger = PublishSubject<Date>()
+    
+    private let currentMode = BehaviorSubject<Mode>(value: .preview)
+    private let isVideoValid = BehaviorSubject<Bool>(value: false)
+    private let currentPlaybackTime = BehaviorSubject<CMTime>(value: .zero)
     
     init(viewModel: PlayArchiveVideoViewModel) {
         self.viewModel = viewModel
@@ -330,7 +332,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             forInterval: CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
             queue: .main
         ) { [weak self] time in
-            self?.progressSlider.setCurrentTime(time)
+            self?.currentPlaybackTime.onNext(time)
         }
     }
     
@@ -353,6 +355,49 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     let (mode, isVideoValid) = args
                     
                     self.updateUI(mode: mode, isVideoValid: isVideoValid)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        currentPlaybackTime
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] time in
+                    self?.progressSlider.setCurrentTime(time)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        Driver
+            .combineLatest(
+                periodSelectedTrigger.asDriverOnErrorJustComplete(),
+                currentPlaybackTime.asDriverOnErrorJustComplete()
+            )
+            .drive(
+                onNext: { [weak self] args in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let (period, playbackTime) = args
+                    
+                    guard let uPeriod = period else {
+                        return
+                    }
+                    
+                    let upperBound = Date()
+                    let lowerBound = upperBound.adding(.day, value: -7)
+                    
+                    let visibleTimelineEndDate = uPeriod.baseDate
+                        .adding(.hour, value: uPeriod.startHours)
+                        .addingTimeInterval(playbackTime.seconds)
+                        .adding(.minute, value: 30)
+                    
+                    self.rangeSlider.setTimelineConfiguration(
+                        visibleTimelineEndDate: visibleTimelineEndDate,
+                        lowerBound: lowerBound,
+                        upperBound: upperBound
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -554,15 +599,6 @@ extension PlayArchiveVideoViewController: UICollectionViewDelegateFlowLayout {
             return
         }
         
-        let upperBound = Date()
-        let lowerBound = upperBound.adding(.day, value: -7)
-        
-        rangeSlider.setTimelineConfiguration(
-            visibleTimelineEndDate: period.baseDate.adding(.hour, value: period.endHours),
-            lowerBound: lowerBound,
-            upperBound: upperBound
-        )
-        
         periodSelectedTrigger.onNext(period)
     }
     
@@ -601,9 +637,20 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         editDateLabel.text = "Видео от \(dateFormatter.string(from: startDate))"
         
         switch screenshotPolicy {
-        case .start: screenshotTrigger.onNext(startDate)
-        case .end: screenshotTrigger.onNext(endDate)
-        case .none: break
+        case .start:
+            screenshotTrigger.onNext(startDate)
+            
+        case .end:
+            screenshotTrigger.onNext(endDate)
+            
+        case .middle:
+            let diff = endDate.timeIntervalSince(startDate)
+            let dateInMiddle = startDate.addingTimeInterval(diff / 2)
+            
+            screenshotTrigger.onNext(dateInMiddle)
+            
+        case .none:
+            break
         }
     }
     
