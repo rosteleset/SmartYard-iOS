@@ -18,7 +18,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
     private let date: Date
     private let camera: CameraObject
     
-    private let selectedStartEnd = BehaviorSubject<(Float64, Float64)?>(value: nil)
+    private let selectedStartEnd = BehaviorSubject<(Date, Date)?>(value: nil)
     private let selectedPeriod = BehaviorSubject<ArchiveVideoHourPeriod?>(value: nil)
     
     init(apiWrapper: APIWrapper, camera: CameraObject, date: Date, router: WeakRouter<HomeRoute>) {
@@ -29,6 +29,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
         self.date = date
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         
@@ -67,23 +68,19 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.downloadTrigger
-            .withLatestFrom(selectedPeriod.asDriver(onErrorJustReturn: nil))
-            .withLatestFrom(selectedStartEnd.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
+            .withLatestFrom(selectedStartEnd.asDriver(onErrorJustReturn: nil))
             .flatMap { args -> Driver<(from: String, to: String)> in
-                let (period, startEnd) = args
-                
-                guard let uPeriod = period, let uStartEnd = startEnd else {
+                guard let uArgs = args else {
                     return .empty()
                 }
                 
-                let (start, end) = uStartEnd
+                let (start, end) = uArgs
                 
-                guard end - start > 0,
-                    let recPrepareComps = uPeriod.recPrepareComponents(start: start, end: end) else {
+                guard end > start else {
                     return .empty()
                 }
                 
-                return .just(recPrepareComps)
+                return .just((from: start.apiString, to: end.apiString))
             }
             .flatMapLatest { [weak self] range -> Driver<Int?> in
                 guard let self = self else {
@@ -133,17 +130,17 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     
                     guard let encodedString = stringUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
                         let url = URL(string: encodedString) else {
-                        // Если есть ссылка, но она кривая - копируем урл в пастборд и показываем алерт
-                        UIPasteboard.general.string = stringUrl
-                        
-                        self?.router.trigger(
-                            .alert(
-                                title: "Ссылка на видео скопирована в буфер обмена",
-                                message: nil
+                            // Если есть ссылка, но она кривая - копируем урл в пастборд и показываем алерт
+                            UIPasteboard.general.string = stringUrl
+                            
+                            self?.router.trigger(
+                                .alert(
+                                    title: "Ссылка на видео скопирована в буфер обмена",
+                                    message: nil
+                                )
                             )
-                        )
-                        
-                        return
+                            
+                            return
                     }
                     
                     // Если смог получить нормальный URL - показываем share
@@ -161,23 +158,63 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     return nil
                 }
                 
-                let stringUrl = self.camera.video.absoluteString.replacingOccurrences(
-                    of: "index.m3u8",
-                    with: urlComps
-                )
+                let resultingString = self.camera.video + urlComps + "?token=\(self.camera.token)"
                 
-                return URL(string: stringUrl)
+                return URL(string: resultingString)
             }
         
-        let periods: [ArchiveVideoHourPeriod] = (0...23).map {
-            ArchiveVideoHourPeriod(baseDate: date, startHours: $0 * 1, endHours: $0 * 1 + 1)
+        let videoThumbnailURL = selectedPeriod
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .map { [weak self] period -> URL? in
+                guard let self = self,
+                    let urlComps = period.videoThumbnailComponents else {
+                    return nil
+                }
+                
+                let resultingString = self.camera.video + urlComps + "?token=\(self.camera.token)"
+                
+                return URL(string: resultingString)
+            }
+        
+        let screenshotURL = input.screenshotTrigger
+            .debounce(.milliseconds(250))
+            .distinctUntilChanged()
+            .map { [weak self] date -> URL? in
+                guard let self = self else {
+                    return nil
+                }
+                
+                // MARK: Здесь нам нужно получить дату скриншота
+                // Поскольку используется строковый формат, нам не нужно переводить время из МСК в локальное
+                // Но сервер для этого запроса почему-то ожидает время по UTC
+                // Поэтому нам нужно отнять разницу между МСК и UTC, чтобы получить правильный скриншот
+                
+                let utcDate = date.adding(.hour, value: -Date.moscowOffsetFromGMT)
+                
+                let dateFormatter = DateFormatter()
+                
+                dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
+                
+                let resultingString = self.camera.video +
+                    "/" +
+                    dateFormatter.string(from: utcDate) +
+                    "-preview.mp4" +
+                    "?token=\(self.camera.token)"
+                
+                return URL(string: resultingString)
+            }
+        
+        let periods: [ArchiveVideoHourPeriod] = (0...7).map {
+            ArchiveVideoHourPeriod(baseDate: date, startHours: $0 * 3, endHours: $0 * 3 + 3)
         }
         
         return Output(
             date: .just(date),
             periodConfiguration: .just(periods),
             videoURL: videoURL,
-            preview: .just(camera.preview),
+            videoThumbnailURL: videoThumbnailURL,
+            screenshotURL: screenshotURL,
             isLoading: activityTracker.asDriver()
         )
     }
@@ -190,14 +227,16 @@ extension PlayArchiveVideoViewModel {
         let backTrigger: Driver<Void>
         let downloadTrigger: Driver<Void>
         let periodSelectedTrigger: Driver<ArchiveVideoHourPeriod?>
-        let startEndSelectedTrigger: Driver<(Float64, Float64)>
+        let startEndSelectedTrigger: Driver<(Date, Date)>
+        let screenshotTrigger: Driver<Date>
     }
     
     struct Output {
         let date: Driver<Date?>
         let periodConfiguration: Driver<[ArchiveVideoHourPeriod]>
         let videoURL: Driver<URL?>
-        let preview: Driver<URL?>
+        let videoThumbnailURL: Driver<URL?>
+        let screenshotURL: Driver<URL?>
         let isLoading: Driver<Bool>
     }
     

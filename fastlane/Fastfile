@@ -6,7 +6,7 @@ platform :ios do
 
    lane :firebase_release do
     firebase(
-      firebase_app_id: '1:978817004542:ios:4da48f7a70a8a0f8e986af',
+      firebase_app_id: '1:978817004542:ios:e57f3368196f4d6ce986af',
       scheme: 'SmartYard',
       test_groups: 'madbrains,customertesters',
       force_full_cert_sync: true,

@@ -1,17 +1,30 @@
 import UIKit
 import AVKit
-import Kingfisher
 
 // swiftlint:disable all
 
-@objc public protocol SimpleVideoRangeSliderDelegate: class {
-    func didChangeValue(videoRangeSlider: SimpleVideoRangeSlider, startTime: Float64, endTime: Float64)
+public protocol SimpleVideoRangeSliderDelegate: class {
     
-    @objc optional func sliderGesturesBegan()
-    @objc optional func sliderGesturesEnded()
+    func didChangeDate(
+        videoRangeSlider: SimpleVideoRangeSlider,
+        isReceivingGesture: Bool,
+        startDate: Date,
+        endDate: Date,
+        isLowerBoundReached: Bool,
+        isUpperBoundReached: Bool,
+        screenshotPolicy: SimpleVideoRangeSlider.ScreenshotPolicy
+    )
+    
 }
 
 public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
+    
+    public enum ScreenshotPolicy {
+        case start
+        case end
+        case middle
+        case none
+    }
 
     private enum DragHandleChoice {
         case start
@@ -31,7 +44,8 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     private let startTimeView = ABTimeView(size: .zero)
     private let endTimeView = ABTimeView(size: .zero)
     
-    private var duration: Float64 = 0.0
+    private let duration: Float64 = 3600 // limiting timespan to one hour
+    
     private var startPercentage: CGFloat = 0         // Represented in percentage
     private var endPercentage: CGFloat = 100       // Represented in percentage
     private var isReceivingGesture: Bool = false
@@ -39,6 +53,33 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     public var minSpace: Float = 10              // In Seconds
     public var maxSpace: Float = 0              // In Seconds
 
+    private var visibleTimelineEndDate = Date()
+    
+    private var visibleTimelineStartDate: Date {
+        return visibleTimelineEndDate.addingTimeInterval(-duration)
+    }
+    
+    private var isLowerBoundReached: Bool {
+        guard let lowerBound = absoluteTimelineLowerBound else {
+            return false
+        }
+        
+        return visibleTimelineStartDate <= lowerBound
+    }
+    
+    private var isUpperBoundReached: Bool {
+        guard let upperBound = absoluteTimelineUpperBound else {
+            return false
+        }
+        
+        return visibleTimelineEndDate >= upperBound
+    }
+    
+    private var absoluteTimelineLowerBound: Date?
+    private var absoluteTimelineUpperBound: Date?
+    
+    private var latestScreenshotPolicy: ScreenshotPolicy = .middle
+    
     override public func awakeFromNib() {
         super.awakeFromNib()
         self.setup()
@@ -91,6 +132,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         startCropBlurView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         endCropBlurView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         
+        fakeThumbnailsContainer.backgroundColor = .black
         fakeThumbnailsContainer.addSubview(startCropBlurView)
         fakeThumbnailsContainer.addSubview(endCropBlurView)
         
@@ -110,71 +152,136 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         self.fakeThumbnailImageViews = imageViews
     }
     
-    public func moveStartIndicatorByValueInSeconds(_ value: Double) {
-        guard !isReceivingGesture, duration > 0 else {
-            return
-        }
+    private func shiftTimelineBackward(_ value: Double) {
+        let preferredVisibleTimelineStartDate = visibleTimelineStartDate.addingTimeInterval(-value)
         
-        let currentStartIndicatorTime = secondsFromValue(value: startPercentage)
-        let preferredStartIndicatorTime = currentStartIndicatorTime + value
-        
-        let newPreferredPercentage = valueFromSeconds(seconds: Float(preferredStartIndicatorTime))
-        let minPossiblePercentage: CGFloat = 0
-        let maxPossiblePercentage = endPercentage - valueFromSeconds(seconds: minSpace)
-        
-        startPercentage = max(minPossiblePercentage, min(newPreferredPercentage, maxPossiblePercentage))
-
-        let startSeconds = negateConversionLosses(secondsFromValue(value: self.startPercentage))
-        let endSeconds = negateConversionLosses(secondsFromValue(value: self.endPercentage))
-        self.delegate?.didChangeValue(videoRangeSlider: self, startTime: startSeconds, endTime: endSeconds)
-        
-        layoutSubviews()
-    }
-    
-    public func moveEndIndicatorByValueInSeconds(_ value: Double) {
-        guard !isReceivingGesture, duration > 0 else {
-            return
-        }
-        
-        let currentEndIndicatorTime = secondsFromValue(value: endPercentage)
-        let preferredEndIndicatorTime = currentEndIndicatorTime + value
-        
-        let newPreferredPercentage = valueFromSeconds(seconds: Float(preferredEndIndicatorTime))
-        let minPossiblePercentage = startPercentage + valueFromSeconds(seconds: minSpace)
-        let maxPossiblePercentage: CGFloat = 100
-        
-        endPercentage = max(minPossiblePercentage, min(newPreferredPercentage, maxPossiblePercentage))
-
-        let startSeconds = negateConversionLosses(secondsFromValue(value: self.startPercentage))
-        let endSeconds = negateConversionLosses(secondsFromValue(value: self.endPercentage))
-        self.delegate?.didChangeValue(videoRangeSlider: self, startTime: startSeconds, endTime: endSeconds)
-        
-        layoutSubviews()
-    }
-
-    public func setVideoURL(videoURL: URL?) {
-        let duration: Double = {
-            guard let url = videoURL else {
-                return 0
+        let resultingVisibleTimelineStartDate: Date = {
+            guard let lowerBound = absoluteTimelineLowerBound,
+                (absoluteTimelineUpperBound ?? Date.distantFuture).timeIntervalSince(lowerBound) >= 3600 else {
+                return preferredVisibleTimelineStartDate
             }
             
-            let source = AVURLAsset(url: url)
-            return CMTimeGetSeconds(source.duration)
+            return max(lowerBound, preferredVisibleTimelineStartDate)
         }()
         
-        self.duration = duration
+        let actualShift = visibleTimelineStartDate.timeIntervalSince(resultingVisibleTimelineStartDate)
+
+        let resultingVisibleTimelineEndDate = resultingVisibleTimelineStartDate.addingTimeInterval(3600)
         
-        self.startPercentage = 0
-        self.endPercentage = 100
-        self.delegate?.didChangeValue(videoRangeSlider: self, startTime: 0, endTime: duration)
+        visibleTimelineEndDate = resultingVisibleTimelineEndDate
         
-        self.layoutSubviews()
+        let currentStartIndicatorTime = secondsFromValue(value: startPercentage)
+        let preferredStartIndicatorTime = currentStartIndicatorTime + actualShift
+        
+        let currentEndIndicatorTime = secondsFromValue(value: endPercentage)
+        let preferredEndIndicatorTime = currentEndIndicatorTime + actualShift
+        let maxEndIndicatorTime: Double = 3600
+        
+        let resultingEndIndicatorTime = min(preferredEndIndicatorTime, maxEndIndicatorTime)
+        
+        let resultingStartIndicatorTime = min(
+            resultingEndIndicatorTime - Double(minSpace),
+            preferredStartIndicatorTime
+        )
+        
+        startPercentage = valueFromSeconds(seconds: Float(resultingStartIndicatorTime))
+        endPercentage = valueFromSeconds(seconds: Float(resultingEndIndicatorTime))
+        
+        delegate?.didChangeDate(
+            videoRangeSlider: self,
+            isReceivingGesture: isReceivingGesture,
+            startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
+            endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
+            isLowerBoundReached: isLowerBoundReached,
+            isUpperBoundReached: isUpperBoundReached,
+            screenshotPolicy: latestScreenshotPolicy
+        )
+        
+        layoutSubviews()
     }
     
-    public func setFakeThumbnailURL(thumbnailURL: URL?) {
-        fakeThumbnailImageViews.forEach {
-            $0.kf.setImage(with: thumbnailURL)
+    private func shiftTimelineForward(_ value: Double) {
+        let newPreferredVisibleTimelineEndDate = visibleTimelineEndDate.addingTimeInterval(value)
+        
+        let resultingVisibleTimelineEndDate: Date = {
+            guard let upperBound = absoluteTimelineUpperBound,
+                upperBound.timeIntervalSince(absoluteTimelineLowerBound ?? Date.distantPast) >= 3600 else {
+                return newPreferredVisibleTimelineEndDate
+            }
+            
+            return min(upperBound, newPreferredVisibleTimelineEndDate)
+        }()
+        
+        let actualShift = resultingVisibleTimelineEndDate.timeIntervalSince(visibleTimelineEndDate)
+        
+        visibleTimelineEndDate = resultingVisibleTimelineEndDate
+
+        let currentStartIndicatorTime = secondsFromValue(value: startPercentage)
+        let preferredStartIndicatorTime = currentStartIndicatorTime - actualShift
+        let minStartIndicatorTime: Double = 0
+        
+        let currentEndIndicatorTime = secondsFromValue(value: endPercentage)
+        let preferredEndIndicatorTime = currentEndIndicatorTime - actualShift
+        
+        let resultingStartIndicatorTime = max(preferredStartIndicatorTime, minStartIndicatorTime)
+        
+        let resultingEndIndicatorTime = max(
+            resultingStartIndicatorTime + Double(minSpace),
+            preferredEndIndicatorTime
+        )
+        
+        startPercentage = valueFromSeconds(seconds: Float(resultingStartIndicatorTime))
+        endPercentage = valueFromSeconds(seconds: Float(resultingEndIndicatorTime))
+        
+        delegate?.didChangeDate(
+            videoRangeSlider: self,
+            isReceivingGesture: isReceivingGesture,
+            startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
+            endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
+            isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
+            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound,
+            screenshotPolicy: latestScreenshotPolicy
+        )
+        
+        layoutSubviews()
+    }
+    
+    public func shiftTimelineByValueInSeconds(_ value: Double) {
+        guard !isReceivingGesture, value != 0 else {
+            return
         }
+        
+        value < 0 ? shiftTimelineBackward(abs(value)) : shiftTimelineForward(value)
+    }
+    
+    public func setFakeThumbnailImage(_ image: UIImage?) {
+        fakeThumbnailImageViews.forEach {
+            $0.image = image
+        }
+    }
+    
+    public func setTimelineConfiguration(visibleTimelineEndDate: Date, lowerBound: Date?, upperBound: Date?) {
+        self.visibleTimelineEndDate = visibleTimelineEndDate
+        
+        startPercentage = 0
+        endPercentage = 100
+        
+        absoluteTimelineLowerBound = lowerBound
+        absoluteTimelineUpperBound = upperBound
+        
+        latestScreenshotPolicy = .middle
+        
+        delegate?.didChangeDate(
+            videoRangeSlider: self,
+            isReceivingGesture: isReceivingGesture,
+            startDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: startPercentage)),
+            endDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: endPercentage)),
+            isLowerBoundReached: isLowerBoundReached,
+            isUpperBoundReached: isUpperBoundReached,
+            screenshotPolicy: latestScreenshotPolicy
+        )
+        
+        layoutSubviews()
     }
 
     // MARK: - Private functions
@@ -251,7 +358,18 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         let startSeconds = negateConversionLosses(secondsFromValue(value: self.startPercentage))
         let endSeconds = negateConversionLosses(secondsFromValue(value: self.endPercentage))
-        self.delegate?.didChangeValue(videoRangeSlider: self, startTime: startSeconds, endTime: endSeconds)
+        
+        latestScreenshotPolicy = drag == .end ? .end : .start
+        
+        delegate?.didChangeDate(
+            videoRangeSlider: self,
+            isReceivingGesture: isReceivingGesture,
+            startDate: visibleTimelineStartDate.addingTimeInterval(startSeconds),
+            endDate: visibleTimelineStartDate.addingTimeInterval(endSeconds),
+            isLowerBoundReached: isLowerBoundReached,
+            isUpperBoundReached: isUpperBoundReached,
+            screenshotPolicy: latestScreenshotPolicy
+        )
         
         layoutSubviews()
     }
@@ -322,14 +440,9 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     
     private func updateGestureStatus(recognizer: UIGestureRecognizer) {
         if recognizer.state == .began {
-            
             self.isReceivingGesture = true
-            self.delegate?.sliderGesturesBegan?()
-            
         } else if recognizer.state == .ended {
-            
             self.isReceivingGesture = false
-            self.delegate?.sliderGesturesEnded?()
         }
     }
 
@@ -338,11 +451,13 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     override public func layoutSubviews() {
         super.layoutSubviews()
         
-        let startSeconds = negateConversionLosses(secondsFromValue(value: startPercentage))
-        let endSeconds = negateConversionLosses(secondsFromValue(value: endPercentage))
-
-        startTimeView.timeLabel.text = self.secondsToFormattedString(totalSeconds: startSeconds)
-        endTimeView.timeLabel.text = self.secondsToFormattedString(totalSeconds: endSeconds)
+        let startEndTextValues = getStartEndIndicatorTextValues(
+            startPercentage: startPercentage,
+            endPercentage: endPercentage
+        )
+        
+        startTimeView.timeLabel.text = startEndTextValues.startText
+        endTimeView.timeLabel.text = startEndTextValues.endText
 
         let startPosition = positionFromValue(value: self.startPercentage)
         let endPosition = positionFromValue(value: self.endPercentage)
@@ -430,17 +545,21 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             )
         }
     }
-
-    private func secondsToFormattedString(totalSeconds: Float64) -> String{
-        let hours:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 86400) / 3600)
-        let minutes:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 3600) / 60)
-        let seconds:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 60))
-
-        if hours > 0 {
-            return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
-        } else {
-            return String(format: "%02i:%02i", minutes, seconds)
-        }
+    
+    private func getStartEndIndicatorTextValues(
+        startPercentage: CGFloat, endPercentage: CGFloat
+    ) -> (startText: String, endText: String) {
+        let startSeconds = negateConversionLosses(secondsFromValue(value: startPercentage))
+        let startIndicatorDate = visibleTimelineStartDate.addingTimeInterval(startSeconds)
+        
+        let endSeconds = negateConversionLosses(secondsFromValue(value: endPercentage))
+        let endIndicatorDate = visibleTimelineStartDate.addingTimeInterval(endSeconds)
+        
+        let format: String = {
+            return startIndicatorDate.day == endIndicatorDate.day ? "HH:mm:ss" : "dd.MM HH:mm:ss"
+        }()
+        
+        return (startIndicatorDate.string(withFormat: format), endIndicatorDate.string(withFormat: format))
     }
     
     private func negateConversionLosses(_ value: Float64) -> Float64 {

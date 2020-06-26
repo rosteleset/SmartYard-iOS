@@ -86,8 +86,8 @@ class YardMapViewModel: BaseViewModel {
                         position: element.coordinate,
                         cameraNumber: offset + 1,
                         name: element.name,
-                        preview: element.preview,
-                        video: element.video
+                        video: element.video,
+                        token: element.token
                     )
                 }
             }

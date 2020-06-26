@@ -17,8 +17,8 @@ struct APICCTV: Decodable {
     let lat: String
     let lon: String
     let coordinate: CLLocationCoordinate2D
-    let preview: URL
-    let video: URL
+    let video: String
+    let token: String
     
     private enum CodingKeys: String, CodingKey {
         case houseId
@@ -26,8 +26,8 @@ struct APICCTV: Decodable {
         case name
         case lat
         case lon
-        case preview
-        case video
+        case url
+        case token
     }
     
     init(from decoder: Decoder) throws {
@@ -47,11 +47,8 @@ struct APICCTV: Decodable {
         
         coordinate = CLLocationCoordinate2D(latitude: latDouble, longitude: lonDouble)
         
-        let previewString = try container.decode(String.self, forKey: .preview)
-        preview = try URL(string: previewString).unwrapped(or: NSError.APIWrapperError.noDataError)
-        
-        let videoString = try container.decode(String.self, forKey: .video)
-        video = try URL(string: videoString).unwrapped(or: NSError.APIWrapperError.noDataError)
+        video = try container.decode(String.self, forKey: .url)
+        token = try container.decode(String.self, forKey: .token)
     }
     
 }

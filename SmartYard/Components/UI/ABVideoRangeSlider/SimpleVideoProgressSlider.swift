@@ -8,15 +8,20 @@
 
 import UIKit
 import AVKit
-import Kingfisher
 
 // swiftlint:disable all
 
 @objc public protocol SimpleVideoProgressSliderDelegate: class {
-    func indicatorDidChangePosition(videoRangeSlider: SimpleVideoProgressSlider, position: Float64)
+    
+    func indicatorDidChangePosition(
+        videoRangeSlider: SimpleVideoProgressSlider,
+        isReceivingGesture: Bool,
+        position: Float64
+    )
     
     @objc optional func sliderGesturesBegan()
     @objc optional func sliderGesturesEnded()
+    
 }
 
 public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
@@ -70,6 +75,7 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         
         // Setup fake previews
         
+        fakeThumbnailsContainer.backgroundColor = .black
         addSubview(fakeThumbnailsContainer)
         sendSubviewToBack(fakeThumbnailsContainer)
         fakeThumbnailsContainer.cornerRadius = 3
@@ -112,9 +118,9 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         self.superview?.layoutSubviews()
     }
     
-    public func setFakeThumbnailURL(thumbnailURL: URL?) {
+    public func setFakeThumbnailImage(_ image: UIImage?) {
         fakeThumbnailImageViews.forEach {
-            $0.kf.setImage(with: thumbnailURL)
+            $0.image = image
         }
     }
 
@@ -150,7 +156,12 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         let percentage = valueFromPosition(position: progressIndicator.center.x)
 
         let progressSeconds = negateConversionLosses(secondsFromValue(value: progressPercentage))
-        self.delegate?.indicatorDidChangePosition(videoRangeSlider: self, position: progressSeconds)
+        
+        self.delegate?.indicatorDidChangePosition(
+            videoRangeSlider: self,
+            isReceivingGesture: isReceivingGesture,
+            position: progressSeconds
+        )
 
         self.progressPercentage = percentage
 
