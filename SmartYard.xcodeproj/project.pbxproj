@@ -1193,9 +1193,9 @@
 		8477218A24A0F076003FCC24 /* Payments */ = {
 			isa = PBXGroup;
 			children = (
+				8477219824A0F076003FCC24 /* PaymentsCoordinator.swift */,
 				8477218B24A0F076003FCC24 /* PaymentPopup */,
 				8477218F24A0F076003FCC24 /* PaymentAddressesList */,
-				8477219824A0F076003FCC24 /* PaymentsCoordinator.swift */,
 				8477219924A0F076003FCC24 /* PayContract */,
 			);
 			path = Payments;

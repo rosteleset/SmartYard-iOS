@@ -52,6 +52,7 @@ class PaymentsViewModel: BaseViewModel {
             .merge(
                 NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToVoid(),
                 NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToVoid(),
+                NotificationCenter.default.rx.notification(.paymentCompleted).asDriverOnErrorJustComplete().mapToVoid(),
                 .just(())
             )
             .flatMapLatest { [weak self] _ -> Driver<GetPaymentsListResponseData?> in
