@@ -10,5 +10,9 @@ enum MessageType: String {
     
     case inbox
     case chat
+    case newAddress
+    case paySuccess
+    case payError
+    case videoReady
     
 }
