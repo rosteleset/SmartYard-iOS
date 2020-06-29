@@ -104,19 +104,21 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             return
         }
         
-        // MARK: Если пришло inbox message - сразу же помечаем его как доставленное
+        // MARK: Если есть действие - обрабатываем его
         
-        if let rawMessageType = userInfo["messageType"] as? String,
-            let messageType = MessageType(rawValue: rawMessageType),
-            messageType == .inbox,
-            let messageId = userInfo["messageId"] as? String {
-            appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
-            NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+        if let rawMessageType = userInfo["action"] as? String,
+            let messageType = MessageType(rawValue: rawMessageType) {
+            // MARK: Если есть messageId - помечаем сообщение как доставленное и обновляем таб "Уведомления"
+            
+            if let messageId = userInfo["messageId"] as? String {
+                appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
+                NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+            }
             
             // MARK: Если пришло уведомление о добавленном адресе - отправляем .addressAdded
             // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
             
-            if let newAddress = userInfo["newAddress"] as? String, newAddress == "t" {
+            if messageType == .newAddress {
                 NotificationCenter.default.post(name: .addressAdded, object: nil)
             }
         }
@@ -139,29 +141,38 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             appCoordinator.processIncomingCallRequest(callPayload: callPayload)
         }
         
-        // MARK: Если нажали на inbox message - помечаем его как доставленное и переходим в уведомления
-        // Если нажали на chat message - переходим в чат
+        // MARK: Если в уведомлении нет никакого действия, то ничего не делаем
         
-        if let rawMessageType = response.notification.request.content.userInfo["messageType"] as? String,
-            let messageType = MessageType(rawValue: rawMessageType) {
-            switch messageType {
-            case .inbox: appCoordinator.openNotificationsTab()
-            case .chat: appCoordinator.openChatTab()
-            }
-            
-            if let messageId = response.notification.request.content.userInfo["messageId"] as? String,
-                messageType == .inbox {
-                appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
-            }
-            
-            // MARK: Если нажали на уведомление о добавленном адресе - отправляем .addressAdded
-            // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
-            
-            if let newAddress = response.notification.request.content.userInfo["newAddress"] as? String,
-                newAddress == "t" {
-                NotificationCenter.default.post(name: .addressAdded, object: nil)
-            }
+        guard let rawMessageType = response.notification.request.content.userInfo["action"] as? String,
+            let messageType = MessageType(rawValue: rawMessageType) else {
+            completionHandler()
+            return
         }
+        
+        // MARK: Если есть messageId - помечаем сообщение как доставленное
+        
+        if let messageId = response.notification.request.content.userInfo["messageId"] as? String {
+            appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
+        }
+        
+        // MARK: Переход в конкретный таб при нажатии на уведомление
+        
+        switch messageType {
+        case .inbox, .newAddress, .paySuccess, .payError, .videoReady:
+            appCoordinator.openNotificationsTab()
+        case .chat:
+            appCoordinator.openChatTab()
+        }
+        
+        // MARK: Если нажали на уведомление о добавленном адресе - отправляем .addressAdded
+        // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
+        // Сделано это вроде для того, чтобы если приложение ушло в бекграунд, данные обновились при нажатии
+        
+        if messageType == .newAddress {
+            NotificationCenter.default.post(name: .addressAdded, object: nil)
+        }
+        
+        // MARK: Завершение работы
         
         completionHandler()
     }
