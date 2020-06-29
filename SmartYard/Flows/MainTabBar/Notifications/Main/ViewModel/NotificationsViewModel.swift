@@ -38,6 +38,14 @@ class NotificationsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.shareUrlTrigger
+            .drive(
+                onNext: { [weak self] url in
+                    self?.router.trigger(.share(items: [url]))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let inboxResponseSubject = BehaviorSubject<InboxResponseData?>(value: nil)
         
         let newMessageRefresh = NotificationCenter.default.rx.notification(.newInboxMessageReceived)
@@ -94,6 +102,7 @@ extension NotificationsViewModel {
     struct Input {
         let viewWillAppearTrigger: Driver<Bool>
         let isViewVisible: Driver<Bool>
+        let shareUrlTrigger: Driver<URL>
     }
     
     struct Output {
