@@ -40,7 +40,7 @@ class PinCodeViewModel: BaseViewModel {
                     let nsError = error as NSError
                     
                     switch nsError.code {
-                    case 401:
+                    case 403:
                         isPinCorrect.onNext(false)
                         
                     case 429:
