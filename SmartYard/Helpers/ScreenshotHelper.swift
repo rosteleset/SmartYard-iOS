@@ -11,21 +11,24 @@ import AVKit
 
 enum ScreenshotHelper {
     
-    static func generateThumbnailFromVideoUrl(url: URL, forTime time: CMTime) -> UIImage? {
+    static func generateThumbnailFromVideoUrlAsync(
+        url: URL,
+        forTime time: CMTime,
+        completion: ((CGImage?) -> Void)?
+    ) {
         let asset = AVAsset(url: url)
         
         let imageGenerator = AVAssetImageGenerator(asset: asset)
         imageGenerator.appliesPreferredTrackTransform = true
         
-        var actualTime: CMTime = .zero
-        
-        do {
-            let imageRef = try imageGenerator.copyCGImage(at: time, actualTime: &actualTime)
-            let image = UIImage(cgImage: imageRef)
-            return image
-        } catch {
-            return nil
+        let completionHandler: AVAssetImageGeneratorCompletionHandler = { _, image, _, _, _ in
+            completion?(image)
         }
+        
+        imageGenerator.generateCGImagesAsynchronously(
+            forTimes: [NSValue(time: time)],
+            completionHandler: completionHandler
+        )
     }
     
 }

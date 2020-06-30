@@ -561,10 +561,21 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-                    let image = ScreenshotHelper.generateThumbnailFromVideoUrl(url: thumbnailUrl, forTime: .zero)
-                    
-                    self?.progressSlider.setFakeThumbnailImage(image)
-                    self?.rangeSlider.setFakeThumbnailImage(image)
+                    ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
+                        url: thumbnailUrl,
+                        forTime: .zero
+                    ) { cgImage in
+                        guard let cgImage = cgImage else {
+                            return
+                        }
+                        
+                        DispatchQueue.main.async {
+                            let uiImage = UIImage(cgImage: cgImage)
+                            
+                            self?.progressSlider.setFakeThumbnailImage(uiImage)
+                            self?.rangeSlider.setFakeThumbnailImage(uiImage)
+                        }
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -591,8 +602,18 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-                    let image = ScreenshotHelper.generateThumbnailFromVideoUrl(url: screenshotUrl, forTime: .zero)
-                    self?.screenshotImageView.image = image
+                    ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
+                        url: screenshotUrl,
+                        forTime: .zero
+                    ) { cgImage in
+                        guard let cgImage = cgImage else {
+                            return
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self?.screenshotImageView.image = UIImage(cgImage: cgImage)
+                        }
+                    }
                 }
             )
             .disposed(by: disposeBag)
