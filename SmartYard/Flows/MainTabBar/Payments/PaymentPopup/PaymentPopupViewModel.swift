@@ -17,15 +17,18 @@ class PaymentPopupViewModel: BaseViewModel {
     private let clientId: String
     
     private let recommendedSum: BehaviorSubject<Double?>
+    private let contractNumber: BehaviorSubject<String?>
     
     init(
         apiWrapper: APIWrapper,
         clientId: String,
-        recommendedSum: Double?
+        recommendedSum: Double?,
+        contractNumber: String?
     ) {
         self.apiWrapper = apiWrapper
         self.clientId = clientId
         self.recommendedSum = BehaviorSubject<Double?>(value: recommendedSum)
+        self.contractNumber = BehaviorSubject<String?>(value: contractNumber)
     }
     
     func transform(_ input: Input) -> Output {
@@ -113,7 +116,8 @@ class PaymentPopupViewModel: BaseViewModel {
         
         return Output(
             isPaySuccessTrigger: isPaySuccessTrigger.asDriver(onErrorJustReturn: false),
-            recommendedSum: recommendedSum.asDriver(onErrorJustReturn: nil)
+            recommendedSum: recommendedSum.asDriver(onErrorJustReturn: nil),
+            contractNumber: contractNumber.asDriver(onErrorJustReturn: nil)
         )
     }
     
@@ -128,6 +132,7 @@ extension PaymentPopupViewModel {
     struct Output {
         let isPaySuccessTrigger: Driver<Bool>
         let recommendedSum: Driver<Double?>
+        let contractNumber: Driver<String?>
     }
     
 }

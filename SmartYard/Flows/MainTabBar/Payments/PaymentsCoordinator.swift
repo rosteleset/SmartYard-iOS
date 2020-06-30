@@ -18,7 +18,13 @@ enum PaymentsRoute: Route {
     case contractPay(address: String, items: [APIPaymentsListAccount])
     case back
     case safariPage(url: URL)
-    case paymentPopup(apiWrapper: APIWrapper, clientId: String, recommendedSum: Double?)
+    
+    case paymentPopup(
+        apiWrapper: APIWrapper,
+        clientId: String,
+        recommendedSum: Double?,
+        constracNumber: String?
+    )
     
 }
 
@@ -61,11 +67,12 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
         case .back:
             return .pop(animation: .default)
             
-        case let .paymentPopup(apiWrapper, clientId, recommendedSum):
+        case let .paymentPopup(apiWrapper, clientId, recommendedSum, contractNumber):
             let vm = PaymentPopupViewModel(
                 apiWrapper: apiWrapper,
                 clientId: clientId,
-                recommendedSum: recommendedSum
+                recommendedSum: recommendedSum,
+                contractNumber: contractNumber
             )
             
             let vc = PaymentPopupController(viewModel: vm)

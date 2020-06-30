@@ -14,6 +14,7 @@ import RxCocoa
 class PaymentPopupController: BaseViewController {
     
     @IBOutlet private weak var successView: UIView!
+    @IBOutlet private weak var contractNumberLabel: UILabel!
     @IBOutlet private weak var allPaymentMethodButton: UIButton!
     @IBOutlet private weak var payButton: UIButton!
     @IBOutlet private weak var recommendedSumLabel: UILabel!
@@ -134,6 +135,20 @@ class PaymentPopupController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.contractNumber
+            .drive(
+                onNext: { [weak self] value in
+                    guard let uValue = value else {
+                        self?.contractNumberLabel.text = nil
+                        return
+                    }
+                    
+                    self?.contractNumberLabel.text = "№\(uValue)"
+                }
+            )
+            .disposed(by: disposeBag)
+        
     }
     
     private func configureView() {

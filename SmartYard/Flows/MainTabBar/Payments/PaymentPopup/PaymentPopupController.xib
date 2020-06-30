@@ -25,6 +25,7 @@
                 <outlet property="animatedView" destination="K63-GP-Chi" id="vx0-k0-eFh"/>
                 <outlet property="animatedViewBottomOffset" destination="Wei-5v-7aC" id="YJl-Xh-eV2"/>
                 <outlet property="backgroundView" destination="aZa-Gd-3fU" id="MMj-Uo-XT3"/>
+                <outlet property="contractNumberLabel" destination="IIm-3l-khM" id="3v6-w0-5Lp"/>
                 <outlet property="payButton" destination="St8-Dw-f2Z" id="gwm-PR-KLe"/>
                 <outlet property="payResultHint" destination="0tA-bU-0fp" id="ljR-Vc-atH"/>
                 <outlet property="payResultImageView" destination="ShM-HY-QDK" id="WTZ-5U-JHx"/>
