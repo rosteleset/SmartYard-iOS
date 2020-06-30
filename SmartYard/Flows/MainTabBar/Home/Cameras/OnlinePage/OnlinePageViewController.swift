@@ -90,6 +90,7 @@ class OnlinePageViewController: BaseViewController {
     private func configurePlayer() {
         let playerViewController = AVPlayerViewController()
         playerViewController.videoGravity = .resizeAspect
+        playerViewController.showsPlaybackControls = false
         self.playerViewController = playerViewController
         
         let player = AVPlayer()
@@ -119,26 +120,15 @@ class OnlinePageViewController: BaseViewController {
                     playerVc.willMove(toParent: nil)
                     playerVc.view.removeFromSuperview()
                     playerVc.removeFromParent()
-                    playerVc.modalPresentationStyle = .overFullScreen
-                    playerVc.modalTransitionStyle = .crossDissolve
-                    
-                    self?.present(playerVc, animated: true) {
+
+                    let fullscreenVc = FullscreenPlayerViewController()
+                    fullscreenVc.modalPresentationStyle = .overFullScreen
+                    fullscreenVc.modalTransitionStyle = .crossDissolve
+                    fullscreenVc.setPlayerViewController(playerVc)
+
+                    self?.present(fullscreenVc, animated: true) {
                         playerVc.player?.play()
                     }
-                    
-//                    playerVc.showsPlaybackControls = true
-//                    playerVc.willMove(toParent: nil)
-//                    playerVc.view.removeFromSuperview()
-//                    playerVc.removeFromParent()
-//
-//                    let fullscreenVc = FullscreenPlayerViewController()
-//                    fullscreenVc.modalPresentationStyle = .overFullScreen
-//                    fullscreenVc.modalTransitionStyle = .crossDissolve
-//                    fullscreenVc.setPlayerViewController(playerVc)
-//
-//                    self?.present(fullscreenVc, animated: true) {
-//                        playerVc.player?.play()
-//                    }
                 }
             )
             .disposed(by: disposeBag)

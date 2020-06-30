@@ -13,8 +13,10 @@ class FullscreenPlayerViewController: UIViewController {
 
     private var playerViewController: AVPlayerViewController?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        UIViewController.attemptRotationToDeviceOrientation()
     }
     
     override func viewDidLayoutSubviews() {

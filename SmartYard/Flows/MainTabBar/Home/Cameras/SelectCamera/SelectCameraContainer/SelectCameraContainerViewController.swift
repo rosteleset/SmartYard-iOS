@@ -57,6 +57,7 @@ class SelectCameraContainerViewController: BaseViewController {
         super.viewDidLayoutSubviews()
         
         pagingController?.view.frame = pagingContainer.bounds
+        pagingController?.menuItemSize = .sizeToFit(minWidth: 100, height: 70)
     }
     
     private func configurePaging() {
