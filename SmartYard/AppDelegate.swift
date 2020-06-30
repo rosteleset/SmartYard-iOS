@@ -10,6 +10,26 @@ import UIKit
 import Firebase
 import YandexMobileMetrica
 
+extension UIViewController {
+    
+    var topViewController: UIViewController? {
+        if let navigationController = self as? UINavigationController {
+            return navigationController.visibleViewController?.topViewController
+        }
+        
+        if let tabBarController = self as? UITabBarController {
+            return tabBarController.selectedViewController?.topViewController
+        }
+        
+        if let presentedController = presentedViewController {
+            return presentedController.topViewController
+        }
+        
+        return self
+    }
+    
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
