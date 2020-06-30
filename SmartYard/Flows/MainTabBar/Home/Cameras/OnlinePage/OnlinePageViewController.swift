@@ -101,6 +101,8 @@ class OnlinePageViewController: BaseViewController {
         cameraContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
         
+        // MARK: Когда полноэкранное видео будет закрыто, нужно добавить child controller заново
+        
         NotificationCenter.default.rx
             .notification(.onlineFullscreenModeClosed)
             .asDriverOnErrorJustComplete()
@@ -129,6 +131,8 @@ class OnlinePageViewController: BaseViewController {
         fullscreenButton.setImage(UIImage(named: "Fullscreen")?.darkened(), for: [.normal, .highlighted])
         
         fullscreenButton.touchAreaInsets = UIEdgeInsets(inset: 12)
+        
+        // MARK: При нажатии на кнопку фуллскрина показываем новый VC с видео на весь экран
         
         fullscreenButton.rx.tap
             .asDriver()

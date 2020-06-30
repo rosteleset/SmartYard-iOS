@@ -11,7 +11,9 @@ import RxSwift
 import RxCocoa
 import AVKit
 import JGProgressHUD
+import TouchAreaInsets
 
+// swiftlint:disable:next type_body_length
 class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     enum Mode {
@@ -39,6 +41,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var realVideoContainer: UIView!
     @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
+    @IBOutlet private weak var fullscreenButton: UIButton!
     
     private var realVideoPlayerViewController: AVPlayerViewController?
     private var realVideoPlayer: AVPlayer?
@@ -102,6 +105,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         configureOneAndHalfSpeedButton()
         configureSelectFragmentButton()
         configureRealVideoPlayer()
+        configureFullscreenButton()
         
         // Edit mode
 
@@ -280,6 +284,29 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         realVideoContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
         
+        // MARK: Когда полноэкранное видео будет закрыто, нужно добавить child controller заново
+        
+        NotificationCenter.default.rx
+            .notification(.archiveFullscreenModeClosed)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    guard let self = self, let playerVc = self.realVideoPlayerViewController else {
+                        return
+                    }
+                    
+                    playerVc.showsPlaybackControls = false
+                    playerVc.willMove(toParent: nil)
+                    playerVc.view.removeFromSuperview()
+                    playerVc.removeFromParent()
+                    
+                    self.addChild(playerVc)
+                    self.realVideoContainer.insertSubview(playerVc.view, at: 0)
+                    playerVc.didMove(toParent: self)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Проверка, валидно ли текущее видео
         
         Driver
@@ -334,6 +361,38 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         ) { [weak self] time in
             self?.currentPlaybackTime.onNext(time)
         }
+    }
+    
+    private func configureFullscreenButton() {
+        fullscreenButton.setImage(UIImage(named: "Fullscreen"), for: .normal)
+        fullscreenButton.setImage(UIImage(named: "Fullscreen")?.darkened(), for: [.normal, .highlighted])
+        
+        fullscreenButton.touchAreaInsets = UIEdgeInsets(inset: 12)
+        
+        // MARK: При нажатии на кнопку фуллскрина показываем новый VC с видео на весь экран
+        
+        fullscreenButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let playerVc = self?.realVideoPlayerViewController else {
+                        return
+                    }
+                    
+                    playerVc.showsPlaybackControls = true
+                    playerVc.willMove(toParent: nil)
+                    playerVc.view.removeFromSuperview()
+                    playerVc.removeFromParent()
+
+                    let fullscreenVc = FullscreenPlayerViewController(playedVideoType: .archive)
+                    fullscreenVc.modalPresentationStyle = .overFullScreen
+                    fullscreenVc.modalTransitionStyle = .crossDissolve
+                    fullscreenVc.setPlayerViewController(playerVc)
+
+                    self?.present(fullscreenVc, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureSliders() {
@@ -425,6 +484,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             $0?.isEnabled = isVideoValid
         }
         
+        fullscreenButton.isHidden = mode == .edit || !isVideoValid
         progressSlider.isHidden = mode == .edit || !isVideoValid
         playButton.isEnabled = mode == .preview && isVideoValid
         
