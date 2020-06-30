@@ -75,6 +75,7 @@
 		8477217B2497C329003FCC24 /* OnlinePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847721792497C329003FCC24 /* OnlinePageViewController.xib */; };
 		8477218824A0B345003FCC24 /* SmartYardPasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477218724A0B345003FCC24 /* SmartYardPasswordTextField.swift */; };
 		847880E024A4BB3B008D9E33 /* ScreenshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847880DF24A4BB3B008D9E33 /* ScreenshotHelper.swift */; };
+		847880E824AB3ED4008D9E33 /* FullscreenPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847880E724AB3ED4008D9E33 /* FullscreenPlayerViewController.swift */; };
 		847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */; };
 		847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */; };
 		847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */; };
@@ -502,6 +503,7 @@
 		847721792497C329003FCC24 /* OnlinePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnlinePageViewController.xib; sourceTree = "<group>"; };
 		8477218724A0B345003FCC24 /* SmartYardPasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardPasswordTextField.swift; sourceTree = "<group>"; };
 		847880DF24A4BB3B008D9E33 /* ScreenshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotHelper.swift; sourceTree = "<group>"; };
+		847880E724AB3ED4008D9E33 /* FullscreenPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenPlayerViewController.swift; sourceTree = "<group>"; };
 		847CF7D524068B3D00070007 /* AddressesListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListSkeletonView.swift; sourceTree = "<group>"; };
 		847CF7D724068B5100070007 /* AddressesListSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListSkeletonView.xib; sourceTree = "<group>"; };
 		847CF7DA240696BE00070007 /* SettingsListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsListSkeletonView.swift; sourceTree = "<group>"; };
@@ -1305,6 +1307,14 @@
 			path = ArchivePage;
 			sourceTree = "<group>";
 		};
+		847880E624AB3EAC008D9E33 /* FullscreenPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				847880E724AB3ED4008D9E33 /* FullscreenPlayerViewController.swift */,
+			);
+			path = FullscreenPlayer;
+			sourceTree = "<group>";
+		};
 		847CF7D3240689C400070007 /* Skeletons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1949,6 +1959,7 @@
 		84F64922247402DB000C0028 /* Cameras */ = {
 			isa = PBXGroup;
 			children = (
+				847880E624AB3EAC008D9E33 /* FullscreenPlayer */,
 				8477216B2497C2BF003FCC24 /* ArchivePage */,
 				8477216A2497C2B3003FCC24 /* OnlinePage */,
 				849639662486668A0086B6E9 /* PlayArchiveVideo */,
@@ -3496,6 +3507,7 @@
 				E92EFBC0242A22F2003AF7FE /* GetServicesResponseData.swift in Sources */,
 				843C38D5242A57B70035BF80 /* MessageType.swift in Sources */,
 				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
+				847880E824AB3ED4008D9E33 /* FullscreenPlayerViewController.swift in Sources */,
 				E94B6C4323FFF2A800FD9F65 /* Date+Helper.swift in Sources */,
 				E92EFBD6242A22F2003AF7FE /* OpenDoorRequest.swift in Sources */,
 				E92EFBDB242A22F2003AF7FE /* ResendRequest.swift in Sources */,

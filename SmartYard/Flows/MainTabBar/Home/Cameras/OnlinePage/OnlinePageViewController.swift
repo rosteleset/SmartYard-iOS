@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import AVKit
+import TouchAreaInsets
 
 protocol OnlinePageViewControllerDelegate: AnyObject {
     
@@ -22,6 +23,7 @@ class OnlinePageViewController: BaseViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var cameraContainer: UIView!
+    @IBOutlet private weak var fullscreenButton: UIButton!
     
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
@@ -48,6 +50,7 @@ class OnlinePageViewController: BaseViewController {
         super.viewDidLoad()
         
         configurePlayer()
+        configureFullscreenButton()
         configureCollectionView()
     }
     
@@ -87,7 +90,6 @@ class OnlinePageViewController: BaseViewController {
     private func configurePlayer() {
         let playerViewController = AVPlayerViewController()
         playerViewController.videoGravity = .resizeAspect
-        playerViewController.showsPlaybackControls = false
         self.playerViewController = playerViewController
         
         let player = AVPlayer()
@@ -95,8 +97,51 @@ class OnlinePageViewController: BaseViewController {
         self.player = player
         
         addChild(playerViewController)
-        cameraContainer.addSubview(playerViewController.view)
+        cameraContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
+    }
+    
+    private func configureFullscreenButton() {
+        fullscreenButton.setImage(UIImage(named: "Fullscreen"), for: .normal)
+        fullscreenButton.setImage(UIImage(named: "Fullscreen")?.darkened(), for: [.normal, .highlighted])
+        
+        fullscreenButton.touchAreaInsets = UIEdgeInsets(inset: 12)
+        
+        fullscreenButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let playerVc = self?.playerViewController else {
+                        return
+                    }
+                    
+                    playerVc.showsPlaybackControls = true
+                    playerVc.willMove(toParent: nil)
+                    playerVc.view.removeFromSuperview()
+                    playerVc.removeFromParent()
+                    playerVc.modalPresentationStyle = .overFullScreen
+                    playerVc.modalTransitionStyle = .crossDissolve
+                    
+                    self?.present(playerVc, animated: true) {
+                        playerVc.player?.play()
+                    }
+                    
+//                    playerVc.showsPlaybackControls = true
+//                    playerVc.willMove(toParent: nil)
+//                    playerVc.view.removeFromSuperview()
+//                    playerVc.removeFromParent()
+//
+//                    let fullscreenVc = FullscreenPlayerViewController()
+//                    fullscreenVc.modalPresentationStyle = .overFullScreen
+//                    fullscreenVc.modalTransitionStyle = .crossDissolve
+//                    fullscreenVc.setPlayerViewController(playerVc)
+//
+//                    self?.present(fullscreenVc, animated: true) {
+//                        playerVc.player?.play()
+//                    }
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureCollectionView() {
