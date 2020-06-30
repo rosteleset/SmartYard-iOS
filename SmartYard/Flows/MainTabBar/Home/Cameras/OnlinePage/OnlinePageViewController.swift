@@ -100,6 +100,28 @@ class OnlinePageViewController: BaseViewController {
         addChild(playerViewController)
         cameraContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
+        
+        NotificationCenter.default.rx
+            .notification(.onlineFullscreenModeClosed)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    guard let self = self, let playerVc = self.playerViewController else {
+                        return
+                    }
+                    
+                    playerVc.showsPlaybackControls = false
+                    playerVc.willMove(toParent: nil)
+                    playerVc.view.removeFromSuperview()
+                    playerVc.removeFromParent()
+                    
+                    self.addChild(playerVc)
+                    self.cameraContainer.insertSubview(playerVc.view, at: 0)
+                    playerVc.didMove(toParent: self)
+                    playerVc.player?.play()
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureFullscreenButton() {
@@ -121,7 +143,7 @@ class OnlinePageViewController: BaseViewController {
                     playerVc.view.removeFromSuperview()
                     playerVc.removeFromParent()
 
-                    let fullscreenVc = FullscreenPlayerViewController()
+                    let fullscreenVc = FullscreenPlayerViewController(playedVideoType: .online)
                     fullscreenVc.modalPresentationStyle = .overFullScreen
                     fullscreenVc.modalTransitionStyle = .crossDissolve
                     fullscreenVc.setPlayerViewController(playerVc)
