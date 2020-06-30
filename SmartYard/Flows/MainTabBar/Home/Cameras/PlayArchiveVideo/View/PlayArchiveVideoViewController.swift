@@ -569,7 +569,22 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        output.screenshotURL
+        Driver
+            .combineLatest(
+                currentMode.asDriverOnErrorJustComplete(),
+                output.screenshotURL
+            )
+            .filter { args in
+                let (mode, _) = args
+                
+                return mode == .edit
+            }
+            .map { args -> URL? in
+                let (_, url) = args
+                
+                return url
+            }
+            .distinctUntilChanged()
             .drive(
                 onNext: { [weak self] url in
                     guard let screenshotUrl = url else {
