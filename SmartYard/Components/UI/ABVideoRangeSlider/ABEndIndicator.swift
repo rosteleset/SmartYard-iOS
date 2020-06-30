@@ -26,4 +26,15 @@ class ABEndIndicator: UIView {
         imageView.frame = self.bounds
     }
     
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let extendedBounds = CGRect(
+            x: 0,
+            y: 0,
+            width: self.frame.size.width + 15,
+            height: self.frame.size.height
+        )
+        
+        return extendedBounds.contains(point)
+    }
+    
 }

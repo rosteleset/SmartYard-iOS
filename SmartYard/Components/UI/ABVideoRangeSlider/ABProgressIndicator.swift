@@ -24,16 +24,16 @@ class ABProgressIndicator: UIView {
         
         imageView.frame = self.bounds
     }
-
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let frame = CGRect(
-            x: -self.frame.size.width / 2,
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let extendedBounds = CGRect(
+            x: -15 - self.frame.size.width / 2,
             y: 0,
-            width: self.frame.size.width * 2,
+            width: self.frame.size.width * 2 + 30,
             height: self.frame.size.height
         )
         
-        return frame.contains(point) ? self : nil
+        return extendedBounds.contains(point)
     }
     
 }

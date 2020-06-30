@@ -570,6 +570,17 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let extendedBounds = CGRect(
+            x: -15,
+            y: 0,
+            width: self.frame.size.width + 30,
+            height: self.frame.size.height
+        )
+        
+        return extendedBounds.contains(point)
+    }
+    
 }
 
 // swiftlint:enable all
