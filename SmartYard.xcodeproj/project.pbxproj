@@ -60,11 +60,11 @@
 		844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */; };
 		845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845842D424223D690019635E /* AddressSettingsSkeletonView.swift */; };
 		845842D724223D7D0019635E /* AddressSettingsSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845842D624223D7D0019635E /* AddressSettingsSkeletonView.xib */; };
-		845E9EE024895AE4000CBBC6 /* ABEndIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9ED824895AE3000CBBC6 /* ABEndIndicator.swift */; };
-		845E9EE124895AE4000CBBC6 /* ABProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9ED924895AE3000CBBC6 /* ABProgressIndicator.swift */; };
+		845E9EE024895AE4000CBBC6 /* SimpleVideoEndIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9ED824895AE3000CBBC6 /* SimpleVideoEndIndicator.swift */; };
+		845E9EE124895AE4000CBBC6 /* SimpleVideoProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9ED924895AE3000CBBC6 /* SimpleVideoProgressIndicator.swift */; };
 		845E9EE324895AE4000CBBC6 /* SimpleVideoRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDB24895AE3000CBBC6 /* SimpleVideoRangeSlider.swift */; };
-		845E9EE424895AE4000CBBC6 /* ABStartIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDC24895AE3000CBBC6 /* ABStartIndicator.swift */; };
-		845E9EE524895AE4000CBBC6 /* ABTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */; };
+		845E9EE424895AE4000CBBC6 /* SimpleVideoStartIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDC24895AE3000CBBC6 /* SimpleVideoStartIndicator.swift */; };
+		845E9EE524895AE4000CBBC6 /* SimpleVideoTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EDD24895AE3000CBBC6 /* SimpleVideoTimeView.swift */; };
 		845E9EEF248E8903000CBBC6 /* SimpleVideoProgressSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */; };
 		845E9EF224927630000CBBC6 /* RecPrepareRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */; };
 		845E9EF52497727A000CBBC6 /* RecDownloadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */; };
@@ -488,11 +488,11 @@
 		844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		845842D424223D690019635E /* AddressSettingsSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSettingsSkeletonView.swift; sourceTree = "<group>"; };
 		845842D624223D7D0019635E /* AddressSettingsSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressSettingsSkeletonView.xib; sourceTree = "<group>"; };
-		845E9ED824895AE3000CBBC6 /* ABEndIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABEndIndicator.swift; sourceTree = "<group>"; };
-		845E9ED924895AE3000CBBC6 /* ABProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABProgressIndicator.swift; sourceTree = "<group>"; };
+		845E9ED824895AE3000CBBC6 /* SimpleVideoEndIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleVideoEndIndicator.swift; sourceTree = "<group>"; };
+		845E9ED924895AE3000CBBC6 /* SimpleVideoProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleVideoProgressIndicator.swift; sourceTree = "<group>"; };
 		845E9EDB24895AE3000CBBC6 /* SimpleVideoRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleVideoRangeSlider.swift; sourceTree = "<group>"; };
-		845E9EDC24895AE3000CBBC6 /* ABStartIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABStartIndicator.swift; sourceTree = "<group>"; };
-		845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ABTimeView.swift; sourceTree = "<group>"; };
+		845E9EDC24895AE3000CBBC6 /* SimpleVideoStartIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleVideoStartIndicator.swift; sourceTree = "<group>"; };
+		845E9EDD24895AE3000CBBC6 /* SimpleVideoTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleVideoTimeView.swift; sourceTree = "<group>"; };
 		845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleVideoProgressSlider.swift; sourceTree = "<group>"; };
 		845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecPrepareRequest.swift; sourceTree = "<group>"; };
 		845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecDownloadRequest.swift; sourceTree = "<group>"; };
@@ -1019,7 +1019,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				845E9ED624895AE3000CBBC6 /* ABVideoRangeSlider */,
+				845E9ED624895AE3000CBBC6 /* VideoSliders */,
 				E91724492410E27D00F2B810 /* SmartYardSearchTextField */,
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
@@ -1257,17 +1257,17 @@
 			path = AddressSettingsSkeletonView;
 			sourceTree = "<group>";
 		};
-		845E9ED624895AE3000CBBC6 /* ABVideoRangeSlider */ = {
+		845E9ED624895AE3000CBBC6 /* VideoSliders */ = {
 			isa = PBXGroup;
 			children = (
-				845E9EDC24895AE3000CBBC6 /* ABStartIndicator.swift */,
-				845E9ED824895AE3000CBBC6 /* ABEndIndicator.swift */,
-				845E9ED924895AE3000CBBC6 /* ABProgressIndicator.swift */,
-				845E9EDD24895AE3000CBBC6 /* ABTimeView.swift */,
+				845E9EDC24895AE3000CBBC6 /* SimpleVideoStartIndicator.swift */,
+				845E9ED824895AE3000CBBC6 /* SimpleVideoEndIndicator.swift */,
+				845E9ED924895AE3000CBBC6 /* SimpleVideoProgressIndicator.swift */,
+				845E9EDD24895AE3000CBBC6 /* SimpleVideoTimeView.swift */,
 				845E9EDB24895AE3000CBBC6 /* SimpleVideoRangeSlider.swift */,
 				845E9EEE248E8903000CBBC6 /* SimpleVideoProgressSlider.swift */,
 			);
-			path = ABVideoRangeSlider;
+			path = VideoSliders;
 			sourceTree = "<group>";
 		};
 		845E9EF02492761D000CBBC6 /* RecPrepare */ = {
@@ -3342,7 +3342,7 @@
 				E9E4273223F55B9700F5D593 /* ServicesActivationRequestViewController.swift in Sources */,
 				E9E4273323F55B9700F5D593 /* ServicesActivationRequestViewModel.swift in Sources */,
 				E92EFBDE242A22F2003AF7FE /* GetListConnectRequest.swift in Sources */,
-				845E9EE424895AE4000CBBC6 /* ABStartIndicator.swift in Sources */,
+				845E9EE424895AE4000CBBC6 /* SimpleVideoStartIndicator.swift in Sources */,
 				844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */,
 				E9E4271F23F41DDF00F5D593 /* SmartYardCheckBoxState.swift in Sources */,
 				8477218824A0B345003FCC24 /* SmartYardPasswordTextField.swift in Sources */,
@@ -3421,11 +3421,11 @@
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
 				E92EFBE1242A22F2003AF7FE /* APITarget.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
-				845E9EE024895AE4000CBBC6 /* ABEndIndicator.swift in Sources */,
+				845E9EE024895AE4000CBBC6 /* SimpleVideoEndIndicator.swift in Sources */,
 				843C38D3242A577C0035BF80 /* DeliveredRequest.swift in Sources */,
 				845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
-				845E9EE124895AE4000CBBC6 /* ABProgressIndicator.swift in Sources */,
+				845E9EE124895AE4000CBBC6 /* SimpleVideoProgressIndicator.swift in Sources */,
 				E9C0E813247282DE001CE018 /* OnboardingViewController.swift in Sources */,
 				E92EFBE2242A22F2003AF7FE /* EmptyDataInitializable.swift in Sources */,
 				8496396324851B7E0086B6E9 /* AllCCTVRequest.swift in Sources */,
@@ -3463,7 +3463,7 @@
 				84F6494B24740E90000C0028 /* YardMapViewModel.swift in Sources */,
 				84F6493C247402DC000C0028 /* CustomDayCell.swift in Sources */,
 				E92EFBA7242A22F2003AF7FE /* APIWrapper.swift in Sources */,
-				845E9EE524895AE4000CBBC6 /* ABTimeView.swift in Sources */,
+				845E9EE524895AE4000CBBC6 /* SimpleVideoTimeView.swift in Sources */,
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
 				8496396524851B8B0086B6E9 /* AllCCTVResponseData.swift in Sources */,
 				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,

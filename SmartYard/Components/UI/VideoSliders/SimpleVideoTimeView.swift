@@ -1,11 +1,11 @@
 import UIKit
 
-open class ABTimeView: UIView {
+class SimpleVideoTimeView: UIView {
     
     let timeLabel = UILabel()
     let backgroundView = UIView()
     
-    override open var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         let height: CGFloat = 16
         let labelWidth = timeLabel.sizeThatFits(CGSize(width: .greatestFiniteMagnitude, height: height)).width
         let width: CGFloat = 4 * 2 + labelWidth
@@ -13,7 +13,7 @@ open class ABTimeView: UIView {
         return CGSize(width: width, height: height)
     }
     
-    public init(size: CGSize) {
+    init(size: CGSize) {
         let frame = CGRect(
             x: 0,
             y: -size.height - 7,
@@ -24,35 +24,35 @@ open class ABTimeView: UIView {
         super.init(frame: frame)
         
         // Add Background View
-        self.backgroundView.frame = self.bounds
-        self.backgroundView.backgroundColor = UIColor.yellow
-        self.addSubview(self.backgroundView)
+        backgroundView.frame = bounds
+        backgroundView.backgroundColor = .yellow
+        addSubview(backgroundView)
         
         backgroundView.backgroundColor = .white
         backgroundView.cornerRadius = 3
         
         // Add time label
-        self.timeLabel.textAlignment = .center
-        self.timeLabel.textColor = UIColor(hex: 0x333333)
-        self.timeLabel.font = UIFont.SourceSansPro.semibold(size: 12)
-        self.addSubview(self.timeLabel)
+        timeLabel.textAlignment = .center
+        timeLabel.textColor = UIColor(hex: 0x333333)
+        timeLabel.font = UIFont.SourceSansPro.semibold(size: 12)
+        addSubview(timeLabel)
     }
     
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.backgroundView.frame = self.bounds
+        backgroundView.frame = bounds
         
-        self.timeLabel.frame = CGRect(
+        timeLabel.frame = CGRect(
             x: 4,
             y: 0,
-            width: self.frame.width - 4 * 2,
-            height: self.frame.height
+            width: frame.width - 4 * 2,
+            height: frame.height
         )
     }
     
     @available(*, unavailable)
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

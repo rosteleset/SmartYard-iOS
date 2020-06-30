@@ -11,7 +11,7 @@ import AVKit
 
 // swiftlint:disable all
 
-@objc public protocol SimpleVideoProgressSliderDelegate: class {
+@objc protocol SimpleVideoProgressSliderDelegate: class {
     
     func indicatorDidChangePosition(
         videoRangeSlider: SimpleVideoProgressSlider,
@@ -24,12 +24,12 @@ import AVKit
     
 }
 
-public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
+class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     
-    public weak var delegate: SimpleVideoProgressSliderDelegate? = nil
+    weak var delegate: SimpleVideoProgressSliderDelegate? = nil
     
-    private let progressTimeView = ABTimeView(size: .zero)
-    private let progressIndicator = ABProgressIndicator()
+    private let progressTimeView = SimpleVideoTimeView(size: .zero)
+    private let progressIndicator = SimpleVideoProgressIndicator()
 
     private let fakeThumbnailsContainer = UIView()
     private var fakeThumbnailImageViews = [UIImageView]()
@@ -38,7 +38,7 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     private var progressPercentage: CGFloat = 0         // Represented in percentage
     private var isReceivingGesture: Bool = false
 
-    override public func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         self.setup()
     }
@@ -48,7 +48,7 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         self.setup()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
@@ -92,7 +92,7 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         self.fakeThumbnailImageViews = imageViews
     }
     
-    public func setCurrentTime(_ time: CMTime) {
+    func setCurrentTime(_ time: CMTime) {
         guard !isReceivingGesture, time.seconds <= duration else {
             return
         }
@@ -102,7 +102,7 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         layoutSubviews()
     }
 
-    public func setVideoURL(videoURL: URL?) {
+    func setVideoURL(videoURL: URL?) {
         let duration: Double = {
             guard let url = videoURL else {
                 return 0
@@ -118,7 +118,7 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         self.superview?.layoutSubviews()
     }
     
-    public func setFakeThumbnailImage(_ image: UIImage?) {
+    func setFakeThumbnailImage(_ image: UIImage?) {
         fakeThumbnailImageViews.forEach {
             $0.image = image
         }
@@ -211,7 +211,7 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
 
     // MARK: -
 
-    override public func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
 
         let progressSeconds = negateConversionLosses(secondsFromValue(value: progressPercentage))
@@ -290,7 +290,7 @@ public class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         let extendedBounds = CGRect(
             x: -15,
             y: 0,
