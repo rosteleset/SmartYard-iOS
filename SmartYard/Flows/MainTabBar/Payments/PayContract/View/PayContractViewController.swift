@@ -190,7 +190,7 @@ extension PayContractViewController: UICollectionViewDataSource {
         let paymentSubject = PublishSubject<Void>()
         
         paymentSubject
-            .map { (data[indexPath.row].clientId, data[indexPath.row].payAdvice, data[indexPath.row].contractName)}
+            .map { (data[indexPath.row].clientId, data[indexPath.row].payAdvice, data[indexPath.row].contractName) }
             .bind(to: payContractTrigger)
             .disposed(by: cell.disposeBag)
         

@@ -168,6 +168,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             NotificationCenter.default.post(name: .addressAdded, object: nil)
         }
         
+        if messageType == .paySuccess {
+            NotificationCenter.default.post(name: .paymentCompleted, object: nil)
+        }
+        
         // MARK: Завершение работы
         
         completionHandler()

@@ -87,10 +87,14 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     
     func mapAsSberbankResponse() -> Single<SberbankPayProcessResponseData?> {
         return flatMap { response in
-            // MARK: Если вернулся успешный код - пытаемся замапить реквест
             print("response data: \(try response.mapString())")
-            let mappedResponse = try? response.map(SberbankPayProcessResponseData.self)
-            return .just(mappedResponse)
+            
+            do {
+                let mappedResponse = try response.map(SberbankPayProcessResponseData.self)
+                return .just(mappedResponse)
+            } catch {
+                return .error(NSError.APIWrapperError.baseResponseMappingError)
+            }
         }
     }
     
