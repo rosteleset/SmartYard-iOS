@@ -84,6 +84,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
     private let currentPlaybackTime = BehaviorSubject<CMTime>(value: .zero)
     
+    private var latestThumbnailConfig: VideoThumbnailConfiguration?
+    
     init(viewModel: PlayArchiveVideoViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -561,15 +563,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-                    self?.progressSlider.resetThumbnailImages()
-                    self?.progressSlider.setActivityIndicatorsHidden(false)
-                    
-                    self?.rangeSlider.resetThumbnailImages()
-                    self?.rangeSlider.setActivityIndicatorsHidden(false)
-                    
-                    config.thumbnailUrls.enumerated().forEach { offset, url in
-                        self?.loadThumbnail(index: offset, preferredUrl: url, fallbackUrl: config.fallbackUrl)
-                    }
+                    self?.loadThumbnails(config: config)
                 }
             )
             .disposed(by: disposeBag)
@@ -638,13 +632,36 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
     
-    private func loadThumbnail(index: Int, preferredUrl: URL, fallbackUrl: URL) {
+    private func loadThumbnails(config: VideoThumbnailConfiguration) {
+        progressSlider.resetThumbnailImages()
+        progressSlider.setActivityIndicatorsHidden(false)
+        
+        rangeSlider.resetThumbnailImages()
+        rangeSlider.setActivityIndicatorsHidden(false)
+        
+        latestThumbnailConfig = config
+        
+        config.thumbnailUrls.enumerated().forEach { offset, url in
+            loadThumbnail(
+                index: offset,
+                preferredUrl: url,
+                fallbackUrl: config.fallbackUrl,
+                identifier: config.identifier
+            )
+        }
+    }
+    
+    private func loadThumbnail(index: Int, preferredUrl: URL, fallbackUrl: URL, identifier: String) {
         ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
             url: preferredUrl,
             forTime: .zero
         ) { [weak self] cgImage in
+            guard identifier == self?.latestThumbnailConfig?.identifier else {
+                return
+            }
+            
             guard let cgImage = cgImage else {
-                self?.loadFallbackThumbnail(index: index, url: fallbackUrl)
+                self?.loadFallbackThumbnail(index: index, url: fallbackUrl, identifier: identifier)
                 return
             }
             
@@ -657,11 +674,15 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         }
     }
     
-    private func loadFallbackThumbnail(index: Int, url: URL) {
+    private func loadFallbackThumbnail(index: Int, url: URL, identifier: String) {
         ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
             url: url,
             forTime: .zero
         ) { [weak self] cgImage in
+            guard identifier == self?.latestThumbnailConfig?.identifier else {
+                return
+            }
+            
             DispatchQueue.main.async {
                 guard let cgImage = cgImage else {
                     self?.progressSlider.setThumbnailImage(nil, atIndex: index)

@@ -179,7 +179,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 }
                 
                 return VideoThumbnailConfiguration(
-                    identifier: "",
+                    identifier: period.baseDate.adding(.hour, value: period.startHours).apiString,
                     thumbnailUrls: thumbnailUrls,
                     fallbackUrl: fallbackUrl
                 )
