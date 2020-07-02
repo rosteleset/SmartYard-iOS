@@ -9,6 +9,7 @@
 import XCoordinator
 import RxSwift
 import RxCocoa
+import AVKit
 
 class PlayArchiveVideoViewModel: BaseViewModel {
     
@@ -168,11 +169,21 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             .ignoreNil()
             .map { [weak self] period -> VideoThumbnailConfiguration? in
                 guard let self = self,
+                    let fullVideoComps = period.videoUrlComponents else {
+                    return nil
+                }
+                
+                let fullVideoString = self.camera.video + fullVideoComps + "?token=\(self.camera.token)"
+                
+                guard let fullVideoUrl = URL(string: fullVideoString),
                     let fallbackUrl = URL(string: self.camera.video + "/preview.mp4?token=\(self.camera.token)") else {
                     return nil
                 }
                 
-                let thumbnailStrings = period.getThumbnailComponents(numberOfThumbnailsFromPeriod: 5)
+                let thumbnailStrings = period.getThumbnailComponents(
+                    thumbnailsCount: 5,
+                    actualDuration: CMTimeGetSeconds(AVURLAsset(url: fullVideoUrl).duration)
+                )
                 
                 let thumbnailUrls = thumbnailStrings.compactMap {
                     URL(string: self.camera.video + $0 + "?token=\(self.camera.token)")

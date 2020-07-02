@@ -63,8 +63,8 @@ struct ArchiveVideoHourPeriod: Equatable {
         return "/\(dateFormatter.string(from: startDate))-preview.mp4"
     }
     
-    func getThumbnailComponents(numberOfThumbnailsFromPeriod: Int) -> [String] {
-        guard numberOfThumbnailsFromPeriod > 0 else {
+    func getThumbnailComponents(thumbnailsCount: Int, actualDuration: TimeInterval) -> [String] {
+        guard thumbnailsCount > 0 else {
             return []
         }
         
@@ -75,16 +75,13 @@ struct ArchiveVideoHourPeriod: Equatable {
         }
         
         let startDate = date.adding(.hour, value: startHours - Date.moscowOffsetFromGMT)
-        let endDate = date.adding(.hour, value: endHours - Date.moscowOffsetFromGMT)
-        
-        let diff = endDate.timeIntervalSince(startDate)
-        let intervalForOnePeriod = diff / Double(numberOfThumbnailsFromPeriod)
+        let intervalForOneThumbnail = actualDuration / Double(thumbnailsCount)
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
         
-        return (0 ..< numberOfThumbnailsFromPeriod).map {
-            let date = startDate.addingTimeInterval(Double($0) * intervalForOnePeriod)
+        return (0 ..< thumbnailsCount).map {
+            let date = startDate.addingTimeInterval(Double($0) * intervalForOneThumbnail)
             
             return "/\(dateFormatter.string(from: date))-preview.mp4"
         }
