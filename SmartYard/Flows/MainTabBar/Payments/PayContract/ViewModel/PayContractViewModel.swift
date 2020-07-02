@@ -43,8 +43,21 @@ class PayContractViewModel: BaseViewModel {
         
         input.payContractTrigger
             .drive(
-                onNext: { [weak self] in
-                    self?.router.trigger(.paymentPopup)
+                onNext: { [weak self] args in
+                    let (clientID, recommendedSum, contractNumber) = args
+                    
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.router.trigger(
+                        .paymentPopup(
+                            apiWrapper: self.apiWrapper,
+                            clientId: clientID,
+                            recommendedSum: recommendedSum,
+                            constracNumber: contractNumber
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -73,7 +86,7 @@ extension PayContractViewModel {
     
     struct Input {
         let fullVersionPersonalAccountTrigger: Driver<String?>
-        let payContractTrigger: Driver<Void>
+        let payContractTrigger: Driver<(String, Double?, String?)>
         let backTrigger: Driver<Void>
     }
     

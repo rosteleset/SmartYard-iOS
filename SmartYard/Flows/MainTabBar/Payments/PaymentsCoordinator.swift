@@ -8,6 +8,8 @@
 
 import XCoordinator
 import SafariServices
+import RxSwift
+import RxCocoa
 
 enum PaymentsRoute: Route {
     
@@ -15,12 +17,20 @@ enum PaymentsRoute: Route {
     case alert(title: String, message: String)
     case contractPay(address: String, items: [APIPaymentsListAccount])
     case back
-    case paymentPopup
     case safariPage(url: URL)
+    
+    case paymentPopup(
+        apiWrapper: APIWrapper,
+        clientId: String,
+        recommendedSum: Double?,
+        constracNumber: String?
+    )
     
 }
 
 class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
+    
+    private let disposeBag = DisposeBag()
     
     let apiWrapper: APIWrapper
     
@@ -30,6 +40,7 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
         self.apiWrapper = apiWrapper
         super.init(initialRoute: .main)
         rootViewController.setNavigationBarHidden(true, animated: false)
+        subscribeToPaymentsNotifications()
     }
     
     override func prepareTransition(for route: PaymentsRoute) -> NavigationTransition {
@@ -56,8 +67,16 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
         case .back:
             return .pop(animation: .default)
             
-        case .paymentPopup:
-            let vc = PaymentPopupController()
+        case let .paymentPopup(apiWrapper, clientId, recommendedSum, contractNumber):
+            let vm = PaymentPopupViewModel(
+                apiWrapper: apiWrapper,
+                clientId: clientId,
+                recommendedSum: recommendedSum,
+                contractNumber: contractNumber
+            )
+            
+            let vc = PaymentPopupController(viewModel: vm)
+            
             vc.modalPresentationStyle = .overFullScreen
             
             return .present(vc)
@@ -66,6 +85,30 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             let vc = SFSafariViewController(url: url)
             return .present(vc)
         }
+    }
+    
+    private func subscribeToPaymentsNotifications() {
+        NotificationCenter.default.rx.notification(.paymentCompleted)
+            .asDriverOnErrorJustComplete()
+            .mapToVoid()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    // MARK: Если в стеке уже есть PaymentsViewController - ничего делать не надо
+                    guard !(self.rootViewController.viewControllers.contains {
+                        $0 is PaymentsViewController
+                    }) else {
+                        return
+                    }
+                    
+                    // MARK: Если его нет в стеке - принудительно возвращаем юзера на главный экран
+                    self.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

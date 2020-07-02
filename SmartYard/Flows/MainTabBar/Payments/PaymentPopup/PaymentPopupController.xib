@@ -25,7 +25,11 @@
                 <outlet property="animatedView" destination="K63-GP-Chi" id="vx0-k0-eFh"/>
                 <outlet property="animatedViewBottomOffset" destination="Wei-5v-7aC" id="YJl-Xh-eV2"/>
                 <outlet property="backgroundView" destination="aZa-Gd-3fU" id="MMj-Uo-XT3"/>
+                <outlet property="contractNumberLabel" destination="IIm-3l-khM" id="3v6-w0-5Lp"/>
                 <outlet property="payButton" destination="St8-Dw-f2Z" id="gwm-PR-KLe"/>
+                <outlet property="payResultHint" destination="0tA-bU-0fp" id="ljR-Vc-atH"/>
+                <outlet property="payResultImageView" destination="ShM-HY-QDK" id="WTZ-5U-JHx"/>
+                <outlet property="payResultTitle" destination="Fr5-sq-kBi" id="Hxw-0G-fGt"/>
                 <outlet property="recommendedSumLabel" destination="99Y-gl-f8E" id="T01-x6-V6o"/>
                 <outlet property="successView" destination="xmW-0h-krF" id="VjS-zL-v5f"/>
                 <outlet property="sumTextField" destination="Wwk-4I-F7O" id="Kdh-cs-fM3"/>
@@ -99,7 +103,7 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12B-12-a60">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12B-12-a60">
                             <rect key="frame" x="127.5" y="393.5" width="159" height="30"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="14"/>
                             <state key="normal" title="Все способы пополнения">
