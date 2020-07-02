@@ -43,6 +43,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    func application(
+        _ application: UIApplication,
+        supportedInterfaceOrientationsFor window: UIWindow?
+    ) -> UIInterfaceOrientationMask {
+        if let topVc = window?.rootViewController?.topViewController,
+            topVc is FullscreenPlayerViewController,
+            !topVc.isBeingDismissed,
+            !topVc.isBeingPresented {
+            return .allButUpsideDown
+        } else {
+            return .portrait
+        }
+    }
 
 }
 

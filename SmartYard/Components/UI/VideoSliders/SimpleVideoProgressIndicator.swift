@@ -1,13 +1,13 @@
 import UIKit
 
-class ABProgressIndicator: UIView {
+class SimpleVideoProgressIndicator: UIView {
     
     let imageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        imageView.frame = self.bounds
+        imageView.frame = bounds
         imageView.image = UIImage(named: "RangeSliderProgress")
         imageView.contentMode = .scaleToFill
         
@@ -22,18 +22,18 @@ class ABProgressIndicator: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        imageView.frame = self.bounds
+        imageView.frame = bounds
     }
-
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let frame = CGRect(
-            x: -self.frame.size.width / 2,
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let extendedBounds = CGRect(
+            x: -15 - frame.size.width / 2,
             y: 0,
-            width: self.frame.size.width * 2,
-            height: self.frame.size.height
+            width: frame.size.width * 2 + 30,
+            height: frame.size.height
         )
         
-        return frame.contains(point) ? self : nil
+        return extendedBounds.contains(point)
     }
     
 }

@@ -3,7 +3,7 @@ import AVKit
 
 // swiftlint:disable all
 
-public protocol SimpleVideoRangeSliderDelegate: class {
+protocol SimpleVideoRangeSliderDelegate: class {
     
     func didChangeDate(
         videoRangeSlider: SimpleVideoRangeSlider,
@@ -17,9 +17,9 @@ public protocol SimpleVideoRangeSliderDelegate: class {
     
 }
 
-public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
+class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     
-    public enum ScreenshotPolicy {
+    enum ScreenshotPolicy {
         case start
         case end
         case middle
@@ -31,18 +31,19 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         case end
     }
     
-    public weak var delegate: SimpleVideoRangeSliderDelegate? = nil
+    weak var delegate: SimpleVideoRangeSliderDelegate? = nil
 
-    private let startIndicator = ABStartIndicator()
-    private let endIndicator = ABEndIndicator()
+    private let startIndicator = SimpleVideoStartIndicator()
+    private let endIndicator = SimpleVideoEndIndicator()
     
     private let startCropBlurView = UIView()
     private let endCropBlurView = UIView()
-    private let fakeThumbnailsContainer = UIView()
-    private var fakeThumbnailImageViews = [UIImageView]()
+    
+    private let thumbnailsContainer = UIView()
+    private var thumbnailViews = [(UIImageView, UIActivityIndicatorView)]()
 
-    private let startTimeView = ABTimeView(size: .zero)
-    private let endTimeView = ABTimeView(size: .zero)
+    private let startTimeView = SimpleVideoTimeView(size: .zero)
+    private let endTimeView = SimpleVideoTimeView(size: .zero)
     
     private let duration: Float64 = 3600 // limiting timespan to one hour
     
@@ -50,8 +51,8 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     private var endPercentage: CGFloat = 100       // Represented in percentage
     private var isReceivingGesture: Bool = false
 
-    public var minSpace: Float = 10              // In Seconds
-    public var maxSpace: Float = 0              // In Seconds
+    var minSpace: Float = 10              // In Seconds
+    var maxSpace: Float = 0              // In Seconds
 
     private var visibleTimelineEndDate = Date()
     
@@ -80,7 +81,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     
     private var latestScreenshotPolicy: ScreenshotPolicy = .middle
     
-    override public func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         self.setup()
     }
@@ -90,11 +91,13 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         self.setup()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
     private func setup(){
+        backgroundColor = .clear
+        
         layer.cornerRadius = 3
         layer.borderColor = UIColor(hex: 0xffe38e)?.cgColor
         layer.borderWidth = 1
@@ -127,29 +130,40 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         self.addSubview(startTimeView)
         self.addSubview(endTimeView)
         
-        // Setup fake previews
+        // Setup previews
         
         startCropBlurView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         endCropBlurView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         
-        fakeThumbnailsContainer.backgroundColor = .black
-        fakeThumbnailsContainer.addSubview(startCropBlurView)
-        fakeThumbnailsContainer.addSubview(endCropBlurView)
+        thumbnailsContainer.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        thumbnailsContainer.addSubview(startCropBlurView)
+        thumbnailsContainer.addSubview(endCropBlurView)
         
-        addSubview(fakeThumbnailsContainer)
-        sendSubviewToBack(fakeThumbnailsContainer)
-        fakeThumbnailsContainer.cornerRadius = 3
+        addSubview(thumbnailsContainer)
+        sendSubviewToBack(thumbnailsContainer)
+        thumbnailsContainer.cornerRadius = 3
         
-        let imageViews = [UIImageView(), UIImageView(), UIImageView(), UIImageView(), UIImageView()]
+        let thumbnailViews = [
+            (UIImageView(), UIActivityIndicatorView()),
+            (UIImageView(), UIActivityIndicatorView()),
+            (UIImageView(), UIActivityIndicatorView()),
+            (UIImageView(), UIActivityIndicatorView()),
+            (UIImageView(), UIActivityIndicatorView())
+        ]
         
-        imageViews.forEach {
-            $0.contentMode = .scaleAspectFill
-            $0.clipsToBounds = true
-            fakeThumbnailsContainer.addSubview($0)
-            fakeThumbnailsContainer.sendSubviewToBack($0)
+        self.thumbnailViews = thumbnailViews
+        
+        thumbnailViews.forEach { imageView, activityIndicator in
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            
+            thumbnailsContainer.addSubview(imageView)
+            thumbnailsContainer.sendSubviewToBack(imageView)
+            
+            activityIndicator.color = .white
+            
+            thumbnailsContainer.insertSubview(activityIndicator, aboveSubview: imageView)
         }
-        
-        self.fakeThumbnailImageViews = imageViews
     }
     
     private func shiftTimelineBackward(_ value: Double) {
@@ -246,7 +260,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         layoutSubviews()
     }
     
-    public func shiftTimelineByValueInSeconds(_ value: Double) {
+    func shiftTimelineByValueInSeconds(_ value: Double) {
         guard !isReceivingGesture, value != 0 else {
             return
         }
@@ -254,13 +268,28 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         value < 0 ? shiftTimelineBackward(abs(value)) : shiftTimelineForward(value)
     }
     
-    public func setFakeThumbnailImage(_ image: UIImage?) {
-        fakeThumbnailImageViews.forEach {
-            $0.image = image
+    func setThumbnailImage(_ image: UIImage?, atIndex index: Int) {
+        guard let (imageView, activityIndicator) = thumbnailViews[safe: index] else {
+            return
+        }
+        
+        imageView.image = image
+        activityIndicator.stopAnimating()
+    }
+    
+    func resetThumbnailImages() {
+        thumbnailViews.forEach { imageView, _ in
+            imageView.image = nil
         }
     }
     
-    public func setTimelineConfiguration(visibleTimelineEndDate: Date, lowerBound: Date?, upperBound: Date?) {
+    func setActivityIndicatorsHidden(_ isHidden: Bool) {
+        thumbnailViews.forEach { _, activityIndicator in
+            isHidden ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
+        }
+    }
+    
+    func setTimelineConfiguration(visibleTimelineEndDate: Date, lowerBound: Date?, upperBound: Date?) {
         self.visibleTimelineEndDate = visibleTimelineEndDate
         
         startPercentage = 0
@@ -448,7 +477,7 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
 
     // MARK: -
 
-    override public func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         
         let startEndTextValues = getStartEndIndicatorTextValues(
@@ -528,21 +557,25 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             height: bounds.height
         )
         
-        fakeThumbnailsContainer.frame = bounds
+        thumbnailsContainer.frame = bounds
         
-        guard !fakeThumbnailImageViews.isEmpty else {
+        guard !thumbnailViews.isEmpty else {
             return
         }
         
-        let imageWidth = bounds.width / CGFloat(fakeThumbnailImageViews.count)
+        let imageWidth = bounds.width / CGFloat(thumbnailViews.count)
         
-        fakeThumbnailImageViews.enumerated().forEach { offset, element in
-            element.frame = CGRect(
+        thumbnailViews.enumerated().forEach { offset, element in
+            let (imageView, activityIndicator) = element
+            
+            imageView.frame = CGRect(
                 x: CGFloat(offset) * imageWidth,
                 y: 0,
                 width: imageWidth,
                 height: bounds.height
             )
+            
+            activityIndicator.center = imageView.center
         }
     }
     
@@ -568,6 +601,17 @@ public class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         } else {
             return value
         }
+    }
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let extendedBounds = CGRect(
+            x: -15,
+            y: 0,
+            width: self.frame.size.width + 30,
+            height: self.frame.size.height
+        )
+        
+        return extendedBounds.contains(point)
     }
     
 }

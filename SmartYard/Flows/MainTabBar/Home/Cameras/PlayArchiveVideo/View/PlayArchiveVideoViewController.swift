@@ -11,7 +11,9 @@ import RxSwift
 import RxCocoa
 import AVKit
 import JGProgressHUD
+import TouchAreaInsets
 
+// swiftlint:disable:next type_body_length
 class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     enum Mode {
@@ -39,6 +41,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var realVideoContainer: UIView!
     @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
+    @IBOutlet private weak var fullscreenButton: UIButton!
     
     private var realVideoPlayerViewController: AVPlayerViewController?
     private var realVideoPlayer: AVPlayer?
@@ -81,6 +84,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
     private let currentPlaybackTime = BehaviorSubject<CMTime>(value: .zero)
     
+    private var latestThumbnailConfig: VideoThumbnailConfiguration?
+    
     init(viewModel: PlayArchiveVideoViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -102,6 +107,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         configureOneAndHalfSpeedButton()
         configureSelectFragmentButton()
         configureRealVideoPlayer()
+        configureFullscreenButton()
         
         // Edit mode
 
@@ -280,6 +286,29 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         realVideoContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
         
+        // MARK: Когда полноэкранное видео будет закрыто, нужно добавить child controller заново
+        
+        NotificationCenter.default.rx
+            .notification(.archiveFullscreenModeClosed)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    guard let self = self, let playerVc = self.realVideoPlayerViewController else {
+                        return
+                    }
+                    
+                    playerVc.showsPlaybackControls = false
+                    playerVc.willMove(toParent: nil)
+                    playerVc.view.removeFromSuperview()
+                    playerVc.removeFromParent()
+                    
+                    self.addChild(playerVc)
+                    self.realVideoContainer.insertSubview(playerVc.view, at: 0)
+                    playerVc.didMove(toParent: self)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Проверка, валидно ли текущее видео
         
         Driver
@@ -334,6 +363,38 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         ) { [weak self] time in
             self?.currentPlaybackTime.onNext(time)
         }
+    }
+    
+    private func configureFullscreenButton() {
+        fullscreenButton.setImage(UIImage(named: "Fullscreen"), for: .normal)
+        fullscreenButton.setImage(UIImage(named: "Fullscreen")?.darkened(), for: [.normal, .highlighted])
+        
+        fullscreenButton.touchAreaInsets = UIEdgeInsets(inset: 12)
+        
+        // MARK: При нажатии на кнопку фуллскрина показываем новый VC с видео на весь экран
+        
+        fullscreenButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let playerVc = self?.realVideoPlayerViewController else {
+                        return
+                    }
+                    
+                    playerVc.showsPlaybackControls = true
+                    playerVc.willMove(toParent: nil)
+                    playerVc.view.removeFromSuperview()
+                    playerVc.removeFromParent()
+
+                    let fullscreenVc = FullscreenPlayerViewController(playedVideoType: .archive)
+                    fullscreenVc.modalPresentationStyle = .overFullScreen
+                    fullscreenVc.modalTransitionStyle = .crossDissolve
+                    fullscreenVc.setPlayerViewController(playerVc)
+
+                    self?.present(fullscreenVc, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureSliders() {
@@ -425,6 +486,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             $0?.isEnabled = isVideoValid
         }
         
+        fullscreenButton.isHidden = mode == .edit || !isVideoValid
         progressSlider.isHidden = mode == .edit || !isVideoValid
         playButton.isEnabled = mode == .preview && isVideoValid
         
@@ -494,30 +556,70 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        output.videoThumbnailURL
+        let thumbnailsShouldStartUpdatingSubject = PublishSubject<VideoThumbnailConfiguration>()
+        
+        output.videoThumbnailConfig
             .drive(
-                onNext: { [weak self] url in
-                    guard let thumbnailUrl = url else {
+                onNext: { [weak self] config in
+                    guard let config = config else {
                         return
                     }
                     
-                    let image = ScreenshotHelper.generateThumbnailFromVideoUrl(url: thumbnailUrl, forTime: .zero)
+                    self?.progressSlider.resetThumbnailImages()
+                    self?.progressSlider.setActivityIndicatorsHidden(false)
                     
-                    self?.progressSlider.setFakeThumbnailImage(image)
-                    self?.rangeSlider.setFakeThumbnailImage(image)
+                    self?.rangeSlider.resetThumbnailImages()
+                    self?.rangeSlider.setActivityIndicatorsHidden(false)
+                    
+                    thumbnailsShouldStartUpdatingSubject.onNext(config)
                 }
             )
             .disposed(by: disposeBag)
         
-        output.screenshotURL
+        thumbnailsShouldStartUpdatingSubject
+            .asDriverOnErrorJustComplete()
+            .debounce(.milliseconds(350))
+            .drive(
+                onNext: { [weak self] config in
+                    self?.loadThumbnails(config: config)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        Driver
+            .combineLatest(
+                currentMode.asDriverOnErrorJustComplete(),
+                output.screenshotURL
+            )
+            .filter { args in
+                let (mode, _) = args
+                
+                return mode == .edit
+            }
+            .map { args -> URL? in
+                let (_, url) = args
+                
+                return url
+            }
+            .distinctUntilChanged()
             .drive(
                 onNext: { [weak self] url in
                     guard let screenshotUrl = url else {
                         return
                     }
                     
-                    let image = ScreenshotHelper.generateThumbnailFromVideoUrl(url: screenshotUrl, forTime: .zero)
-                    self?.screenshotImageView.image = image
+                    ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
+                        url: screenshotUrl,
+                        forTime: .zero
+                    ) { cgImage in
+                        guard let cgImage = cgImage else {
+                            return
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self?.screenshotImageView.image = UIImage(cgImage: cgImage)
+                        }
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -546,6 +648,67 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    private func loadThumbnails(config: VideoThumbnailConfiguration) {
+        latestThumbnailConfig = config
+        
+        config.thumbnailUrls.enumerated().forEach { offset, url in
+            loadThumbnail(
+                index: offset,
+                preferredUrl: url,
+                fallbackUrl: config.fallbackUrl,
+                identifier: config.identifier
+            )
+        }
+    }
+    
+    private func loadThumbnail(index: Int, preferredUrl: URL, fallbackUrl: URL, identifier: String) {
+        ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
+            url: preferredUrl,
+            forTime: .zero
+        ) { [weak self] cgImage in
+            guard identifier == self?.latestThumbnailConfig?.identifier else {
+                return
+            }
+            
+            guard let cgImage = cgImage else {
+                self?.loadFallbackThumbnail(index: index, url: fallbackUrl, identifier: identifier)
+                return
+            }
+            
+            DispatchQueue.main.async {
+                let uiImage = UIImage(cgImage: cgImage)
+                
+                self?.progressSlider.setThumbnailImage(uiImage, atIndex: index)
+                self?.rangeSlider.setThumbnailImage(uiImage, atIndex: index)
+            }
+        }
+    }
+    
+    private func loadFallbackThumbnail(index: Int, url: URL, identifier: String) {
+        ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
+            url: url,
+            forTime: .zero
+        ) { [weak self] cgImage in
+            guard identifier == self?.latestThumbnailConfig?.identifier else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                guard let cgImage = cgImage else {
+                    self?.progressSlider.setThumbnailImage(nil, atIndex: index)
+                    self?.rangeSlider.setThumbnailImage(nil, atIndex: index)
+                    
+                    return
+                }
+                
+                let uiImage = UIImage(cgImage: cgImage)
+                
+                self?.progressSlider.setThumbnailImage(uiImage, atIndex: index)
+                self?.rangeSlider.setThumbnailImage(uiImage, atIndex: index)
+            }
+        }
     }
 
 }

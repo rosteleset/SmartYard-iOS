@@ -13,6 +13,7 @@
                 <outlet property="cameraContainer" destination="JPd-UE-6AD" id="67Q-VT-fkM"/>
                 <outlet property="collectionView" destination="sxT-kK-WHV" id="IOW-Nu-g61"/>
                 <outlet property="collectionViewHeightConstraint" destination="oSU-TK-D9Z" id="ajc-Xp-GIS"/>
+                <outlet property="fullscreenButton" destination="2iH-Th-533" id="Euh-ru-yCS"/>
                 <outlet property="scrollView" destination="BCu-Kg-FKQ" id="TyJ-Po-4DJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -30,9 +31,22 @@
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPd-UE-6AD">
                                     <rect key="frame" x="16" y="28" width="382" height="258.5"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2iH-Th-533">
+                                            <rect key="frame" x="354" y="12" width="16" height="11"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="11" id="0OU-Xb-grg"/>
+                                                <constraint firstAttribute="width" constant="16" id="eYx-cM-GfS"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" image="Fullscreen"/>
+                                        </button>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="JPd-UE-6AD" secondAttribute="height" multiplier="343:232" id="DNG-x6-Bgs"/>
+                                        <constraint firstItem="2iH-Th-533" firstAttribute="top" secondItem="JPd-UE-6AD" secondAttribute="top" constant="12" id="G1L-Jz-1oi"/>
+                                        <constraint firstAttribute="trailing" secondItem="2iH-Th-533" secondAttribute="trailing" constant="12" id="Kk8-Ai-IAa"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -87,4 +101,7 @@
             <point key="canvasLocation" x="139" y="129"/>
         </view>
     </objects>
+    <resources>
+        <image name="Fullscreen" width="16" height="11"/>
+    </resources>
 </document>

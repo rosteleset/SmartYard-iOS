@@ -9,6 +9,7 @@
 import XCoordinator
 import RxSwift
 import RxCocoa
+import AVKit
 
 class PlayArchiveVideoViewModel: BaseViewModel {
     
@@ -163,18 +164,36 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 return URL(string: resultingString)
             }
         
-        let videoThumbnailURL = selectedPeriod
+        let videoThumbnailConfiguration = selectedPeriod
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
-            .map { [weak self] period -> URL? in
+            .map { [weak self] period -> VideoThumbnailConfiguration? in
                 guard let self = self,
-                    let urlComps = period.videoThumbnailComponents else {
+                    let fullVideoComps = period.videoUrlComponents else {
                     return nil
                 }
                 
-                let resultingString = self.camera.video + urlComps + "?token=\(self.camera.token)"
+                let fullVideoString = self.camera.video + fullVideoComps + "?token=\(self.camera.token)"
                 
-                return URL(string: resultingString)
+                guard let fullVideoUrl = URL(string: fullVideoString),
+                    let fallbackUrl = URL(string: self.camera.video + "/preview.mp4?token=\(self.camera.token)") else {
+                    return nil
+                }
+                
+                let thumbnailStrings = period.getThumbnailComponents(
+                    thumbnailsCount: 5,
+                    actualDuration: CMTimeGetSeconds(AVURLAsset(url: fullVideoUrl).duration)
+                )
+                
+                let thumbnailUrls = thumbnailStrings.compactMap {
+                    URL(string: self.camera.video + $0 + "?token=\(self.camera.token)")
+                }
+                
+                return VideoThumbnailConfiguration(
+                    identifier: period.baseDate.adding(.hour, value: period.startHours).apiString,
+                    thumbnailUrls: thumbnailUrls,
+                    fallbackUrl: fallbackUrl
+                )
             }
         
         let screenshotURL = input.screenshotTrigger
@@ -213,7 +232,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             date: .just(date),
             periodConfiguration: .just(periods),
             videoURL: videoURL,
-            videoThumbnailURL: videoThumbnailURL,
+            videoThumbnailConfig: videoThumbnailConfiguration,
             screenshotURL: screenshotURL,
             isLoading: activityTracker.asDriver()
         )
@@ -235,9 +254,17 @@ extension PlayArchiveVideoViewModel {
         let date: Driver<Date?>
         let periodConfiguration: Driver<[ArchiveVideoHourPeriod]>
         let videoURL: Driver<URL?>
-        let videoThumbnailURL: Driver<URL?>
+        let videoThumbnailConfig: Driver<VideoThumbnailConfiguration?>
         let screenshotURL: Driver<URL?>
         let isLoading: Driver<Bool>
     }
+    
+}
+
+struct VideoThumbnailConfiguration {
+    
+    let identifier: String
+    let thumbnailUrls: [URL]
+    let fallbackUrl: URL
     
 }

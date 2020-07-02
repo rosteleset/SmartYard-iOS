@@ -1,14 +1,15 @@
 import UIKit
 
-class ABStartIndicator: UIView {
+class SimpleVideoStartIndicator: UIView {
     
     let imageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.isUserInteractionEnabled = true
         
-        imageView.frame = self.bounds
+        isUserInteractionEnabled = true
+        
+        imageView.frame = bounds
         imageView.image = UIImage(named: "RangeSliderStart")
         imageView.contentMode = .scaleToFill
         
@@ -23,7 +24,18 @@ class ABStartIndicator: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        imageView.frame = self.bounds
+        imageView.frame = bounds
+    }
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let extendedBounds = CGRect(
+            x: -15,
+            y: 0,
+            width: frame.size.width + 15,
+            height: frame.size.height
+        )
+        
+        return extendedBounds.contains(point)
     }
 
 }
