@@ -43,13 +43,13 @@ enum IssueType {
     case deleteAddressIssue(userInfo: MainUserInfo, lat: String, lon: String, reason: String)
     
     // экран 21
-    case servicesUnavailableIssue(userInfo: MainUserInfo, services: [SettingsServiceType], lat: String, lon: String)
+    case servicesUnavailableIssue(userInfo: MainUserInfo, serviceNames: [String], lat: String, lon: String)
     
     // экран 28
-    case comeInOfficeMyselfIssue(userInfo: MainUserInfo, lat: String, lon: String, services: [SettingsServiceType])
+    case comeInOfficeMyselfIssue(userInfo: MainUserInfo, lat: String, lon: String, serviceNames: [String])
 
     // когда нет общедомовых услуг, но есть другие услуги для выбора
-    case connectOnlyNonHousesServices(userInfo: MainUserInfo, lat: String, lon: String, services: [SettingsServiceType])
+    case connectOnlyNonHousesServices(userInfo: MainUserInfo, lat: String, lon: String, serviceNames: [String])
     
     var summary: String {
         let webIssueDescription = "Авто: Заявка с сайта"
@@ -80,17 +80,17 @@ enum IssueType {
         case let .deleteAddressIssue(userInfo, _, _, reason):
             return userInfo.convertToString() + "\nУдаление адреса из приложения. Причина: \(reason)"
         
-        case let .servicesUnavailableIssue(userInfo, services, _, _):
-            let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
+        case let .servicesUnavailableIssue(userInfo, serviceNames, _, _):
+            let servicesStr = serviceNames.joined(separator: ", ")
             return userInfo.convertToString() + "\nСписок подключаемых услуг: \(servicesStr)"
             
-        case let .comeInOfficeMyselfIssue(userInfo, _, _, services):
-            let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
+        case let .comeInOfficeMyselfIssue(userInfo, _, _, serviceNames):
+            let servicesStr = serviceNames.joined(separator: ", ")
             let hint = "\nТребуется подтверждение адреса и подключение выбранных услуг"
             return userInfo.convertToString() + "\nСписок подключаемых услуг: \(servicesStr)" + hint
             
-        case let .connectOnlyNonHousesServices(userInfo, _, _, services):
-            let servicesStr = services.map { $0.rawValue }.joined(separator: ", ")
+        case let .connectOnlyNonHousesServices(userInfo, _, _, serviceNames):
+            let servicesStr = serviceNames.joined(separator: ", ")
             let hint = "\nПодключение услуг(и): \(servicesStr).\nВыполнить звонок клиенту и осуществить консультацию"
             return userInfo.convertToString() + hint
         }
@@ -113,12 +113,12 @@ enum IssueType {
         let sendToOfficeAction = "Передать в офис"
         
         switch self {
-        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue,
-             .comeInOfficeMyselfIssue:
+        case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue:
             return [startWorkAction, sendToOfficeAction]
             
         case .dontRememberAnythingIssue, .servicesUnavailableIssue,
-             .connectOnlyNonHousesServices, .deleteAddressIssue:
+             .connectOnlyNonHousesServices, .deleteAddressIssue,
+             .comeInOfficeMyselfIssue:
             return [startWorkAction, callAction]
         }
     }

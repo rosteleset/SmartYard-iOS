@@ -16,6 +16,7 @@ enum HomeRoute: Route {
     case alert(title: String, message: String?)
     case dialog(title: String, message: String?, actions: [UIAlertAction])
     case share(items: [Any])
+    case appSettings(title: String, message: String?)
     case inputContract(isManualTrigger: Bool)
     case inputAddress
     case availableServices(address: String, services: [APIServiceModel])
@@ -41,19 +42,25 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
     private let pushNotificationService: PushNotificationService
     private let issueService: IssueService
     private let permissionService: PermissionService
+    private let alertService: AlertService
+    private let logoutHelper: LogoutHelper
     
     init(
         apiWrapper: APIWrapper,
         pushNotificationService: PushNotificationService,
         accessService: AccessService,
         issueService: IssueService,
-        permissionService: PermissionService
+        permissionService: PermissionService,
+        alertService: AlertService,
+        logoutHelper: LogoutHelper
     ) {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
         self.accessService = accessService
         self.issueService = issueService
         self.permissionService = permissionService
+        self.alertService = alertService
+        self.logoutHelper = logoutHelper
         
         super.init(initialRoute: .main)
         
@@ -71,6 +78,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
                 permissionService: permissionService,
                 pushNotificationService: pushNotificationService,
                 accessService: accessService,
+                alertService: alertService,
+                logoutHelper: logoutHelper,
                 router: weakRouter
             )
             
@@ -85,12 +94,17 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
         case let .share(items):
             return .shareTransition(items: items)
+
+        case let .appSettings(title, message):
+            return .appSettingsTransition(title: title, message: message)
             
         case let .inputContract(isManualTrigger):
             let vm = AuthByContractNumViewModel(
                 router: weakRouter,
                 issueService: issueService,
-                apiWrapper: apiWrapper
+                apiWrapper: apiWrapper,
+                logoutHelper: logoutHelper,
+                alertService: alertService
             )
             
             let vc = AuthByContractNumViewController(viewModel: vm, isShowingManual: isManualTrigger)
@@ -113,7 +127,9 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let vm = InputAddressViewModel(
                 router: weakRouter,
                 apiWrapper: apiWrapper,
-                permissionService: permissionService
+                permissionService: permissionService,
+                logoutHelper: logoutHelper,
+                alertService: alertService
             )
             
             let vc = InputAddressViewController(viewModel: vm)
@@ -163,6 +179,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case let .restorePassword(contractNum):
             let vm = RestorePasswordViewModel(
                 apiWrapper: apiWrapper,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
                 router: weakRouter
             )
             
@@ -173,6 +191,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case let .pinCode(contractNum, restoreMethod):
             let vm = PassConfirmationPinViewModel(
                 apiWrapper: apiWrapper,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
                 router: weakRouter,
                 contractNum: contractNum,
                 selectedRestoreMethod: restoreMethod
@@ -196,6 +216,8 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
                 apiWrapper: apiWrapper,
                 issueService: issueService,
                 permissionService: permissionService,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
                 issue: issue
             )
             

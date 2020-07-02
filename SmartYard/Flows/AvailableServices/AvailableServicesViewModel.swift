@@ -93,12 +93,11 @@ class AvailableServicesViewModel: BaseViewModel {
                 }
                 
                 let (addressString, services) = args
-                let selectedServices = services.compactMap { SettingsServiceType(rawValue: $0.icon) }
                 
                 return self.issueService
                     .sendComeInOfficeMyselfIssue(
                         address: addressString,
-                        services: selectedServices
+                        serviceNames: services.map { $0.name }
                     )
                     .trackError(errorTracker)
                     .trackActivity(activityTracker)
@@ -121,12 +120,11 @@ class AvailableServicesViewModel: BaseViewModel {
                 }
                 
                 let (addressString, services) = args
-                let selectedServices = services.compactMap { SettingsServiceType(rawValue: $0.icon) }
                 
                 return self.issueService
                     .sendConnectOnlyNonHousesServicesIssue(
                         address: addressString,
-                        services: selectedServices
+                        serviceNames: services.map { $0.name }
                     )
                     .trackError(errorTracker)
                     .trackActivity(activityTracker)

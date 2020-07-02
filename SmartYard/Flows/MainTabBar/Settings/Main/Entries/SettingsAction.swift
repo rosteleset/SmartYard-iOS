@@ -15,7 +15,7 @@ enum SettingsAction: Hashable {
     var localizedTitle: String {
         switch self {
         case .openAddressSettings: return "Настройки адреса"
-        case .grantAccess: return "Предоставить доступ"
+        case .grantAccess: return "Управление доступом"
         case .openWebVersion: return "Открыть веб-версию личного кабинета"
         }
     }

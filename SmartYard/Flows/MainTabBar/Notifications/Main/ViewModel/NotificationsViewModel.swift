@@ -14,15 +14,21 @@ class NotificationsViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     private let router: WeakRouter<NotificationsRoute>
     
     init(
         apiWrapper: APIWrapper,
         pushNotificationService: PushNotificationService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
         router: WeakRouter<NotificationsRoute>
     ) {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         self.router = router
     }
     
@@ -31,6 +37,18 @@ class NotificationsViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: activityTracker,
+                    errorTracker: errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))

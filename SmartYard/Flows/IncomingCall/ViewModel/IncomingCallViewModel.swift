@@ -18,6 +18,7 @@ import AVFoundation
 class IncomingCallViewModel: BaseViewModel {
     
     private let linphoneService: LinphoneService
+    private let permissionService: PermissionService
     private let apiWrapper: APIWrapper
     
     private let router: WeakRouter<AppRoute>
@@ -36,11 +37,13 @@ class IncomingCallViewModel: BaseViewModel {
     
     init(
         linphoneService: LinphoneService,
+        permissionService: PermissionService,
         apiWrapper: APIWrapper,
         router: WeakRouter<AppRoute>,
         callPayload: CallPayload
     ) {
         self.linphoneService = linphoneService
+        self.permissionService = permissionService
         self.apiWrapper = apiWrapper
         self.router = router
         self.callPayload = callPayload
@@ -62,9 +65,17 @@ class IncomingCallViewModel: BaseViewModel {
         
         let errorTracker = ErrorTracker()
         
+        let micMsg = "Исходящего звука в этом звонке не будет. " +
+        "Чтобы он появился в следующих звонках, предоставьте доступ к микрофону в настройках"
+        
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
+                    if (error as NSError) == NSError.PermissionError.noMicPermission {
+                        self?.router.trigger(.alert(title: "Нет доступа к микрофону", message: micMsg))
+                        return
+                    }
+                    
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
@@ -122,6 +133,24 @@ class IncomingCallViewModel: BaseViewModel {
                     self.openTheDoor(call: call)
                 }
             )
+            .disposed(by: disposeBag)
+        
+        // MARK: Если пользователь нажал на "Принять звонок", проверяем, есть ли у него доступ к микрофону
+        // Если нет - кидаем алерт о необходимости включить микрофон для передачи звука
+        
+        incomingCallAcceptedByUser
+            .asDriver(onErrorJustReturn: false)
+            .isTrue()
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.permissionService.requestAccessToMic()
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .drive()
             .disposed(by: disposeBag)
         
         // MARK: После того, как будут выполнены два условия:

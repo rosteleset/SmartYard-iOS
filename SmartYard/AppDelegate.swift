@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import YandexMobileMetrica
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         configureFirebase(for: application)
+        
+        if let yandexConfig = YMMYandexMetricaConfiguration(apiKey: "686bcc1e-69e5-4412-8d54-3e11e362624a") {
+            YMMYandexMetrica.activate(with: yandexConfig)
+        } else {
+            print("Couldn't activate YMM")
+        }
+        
         appCoordinator.setRoot(for: mainWindow)
         
         // MARK: При запуске приложения запрашиваем количество непрочитанных сообщений

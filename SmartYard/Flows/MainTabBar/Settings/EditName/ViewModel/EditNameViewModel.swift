@@ -14,11 +14,21 @@ class EditNameViewModel: BaseViewModel {
     
     private let accessService: AccessService
     private let apiWrapper: APIWrapper
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     private let router: WeakRouter<SettingsRoute>
     
-    init(accessService: AccessService, apiWrapper: APIWrapper, router: WeakRouter<SettingsRoute>) {
+    init(
+        accessService: AccessService,
+        apiWrapper: APIWrapper,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
+        router: WeakRouter<SettingsRoute>
+    ) {
         self.accessService = accessService
         self.apiWrapper = apiWrapper
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         self.router = router
     }
     
@@ -27,6 +37,18 @@ class EditNameViewModel: BaseViewModel {
         let errorTracker = ErrorTracker()
         
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: activityTracker,
+                    errorTracker: errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))

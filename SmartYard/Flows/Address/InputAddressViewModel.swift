@@ -15,8 +15,11 @@ import AVFoundation
 class InputAddressViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
+    
     private let apiWrapper: APIWrapper
     private let permissionService: PermissionService
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     
     private let citiesList = BehaviorSubject<[APILocation]>(value: [])
     private let streetsList = BehaviorSubject<[APIStreet]>(value: [])
@@ -30,15 +33,35 @@ class InputAddressViewModel: BaseViewModel {
     private let activityTracker = ActivityTracker()
     private let errorTracker = ErrorTracker()
     
-    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, permissionService: PermissionService) {
+    init(
+        router: WeakRouter<HomeRoute>,
+        apiWrapper: APIWrapper,
+        permissionService: PermissionService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
+    ) {
         self.router = router
         self.apiWrapper = apiWrapper
         self.permissionService = permissionService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: self.activityTracker,
+                    errorTracker: self.errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
                     let nsError = error as NSError
@@ -57,6 +80,14 @@ class InputAddressViewModel: BaseViewModel {
                                 actions: [okAction]
                             )
                         )
+                        
+                        return
+                    }
+                    
+                    if nsError == NSError.PermissionError.noCameraPermission {
+                        let msg = "Чтобы использовать эту функцию, перейдите в настройки и предоставьте доступ к камере"
+                        
+                        self?.router.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
                         
                         return
                     }

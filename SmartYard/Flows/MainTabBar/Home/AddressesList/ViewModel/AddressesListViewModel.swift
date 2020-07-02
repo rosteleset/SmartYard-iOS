@@ -21,6 +21,8 @@ class AddressesListViewModel: BaseViewModel {
     private let pushNotificationService: PushNotificationService
     private let permissionService: PermissionService
     private let accessService: AccessService
+    private let alertService: AlertService
+    private let logoutHelper: LogoutHelper
     
     private let router: WeakRouter<HomeRoute>
     
@@ -32,12 +34,17 @@ class AddressesListViewModel: BaseViewModel {
         permissionService: PermissionService,
         pushNotificationService: PushNotificationService,
         accessService: AccessService,
+        alertService: AlertService,
+        logoutHelper: LogoutHelper,
         router: WeakRouter<HomeRoute>
     ) {
         self.apiWrapper = apiWrapper
         self.permissionService = permissionService
         self.pushNotificationService = pushNotificationService
         self.accessService = accessService
+        self.alertService = alertService
+        self.logoutHelper = logoutHelper
+        
         self.router = router
     }
     
@@ -59,11 +66,47 @@ class AddressesListViewModel: BaseViewModel {
             .mapToVoid()
         
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: self.activityTracker,
+                    errorTracker: self.errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    if (error as NSError) == NSError.PermissionError.noCameraPermission {
+                        let msg = "Чтобы использовать эту функцию, перейдите в настройки и предоставьте доступ к камере"
+                        
+                        self?.router.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
+                        
+                        return
+                    }
+                    
+                    self?.alertService.showAlert(
+                        title: "Ошибка",
+                        message: error.localizedDescription,
+                        priority: 250
+                    )
                 }
             )
+            .disposed(by: disposeBag)
+        
+        // MARK: Заказчик попросил запрашивать все разрешения сразу после авторизации. Хозяин - барин
+        
+        permissionService.requestAccessToMic()
+            .asDriver(onErrorJustReturn: nil)
+            .drive()
+            .disposed(by: disposeBag)
+        
+        permissionService.hasAccess(to: .video)
+            .asDriver(onErrorJustReturn: nil)
+            .drive()
             .disposed(by: disposeBag)
         
         // MARK: Подписка на уведомления
@@ -426,7 +469,11 @@ class AddressesListViewModel: BaseViewModel {
             shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
         )
     }
+    
+}
 
+extension AddressesListViewModel {
+    
     private func closeObjectAccessAfterTimeout(identity: AddressesListDataItemIdentity) {
         Timer.scheduledTimer(
             withTimeInterval: 5,
