@@ -554,31 +554,21 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        output.videoThumbnailURLs
+        output.videoThumbnailConfig
             .drive(
-                onNext: { [weak self] urls in
+                onNext: { [weak self] config in
+                    guard let config = config else {
+                        return
+                    }
+                    
                     self?.progressSlider.resetThumbnailImages()
                     self?.progressSlider.setActivityIndicatorsHidden(false)
                     
                     self?.rangeSlider.resetThumbnailImages()
                     self?.rangeSlider.setActivityIndicatorsHidden(false)
                     
-                    urls.enumerated().forEach { offset, url in
-                        ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
-                            url: url,
-                            forTime: .zero
-                        ) { cgImage in
-                            guard let cgImage = cgImage else {
-                                return
-                            }
-                            
-                            DispatchQueue.main.async {
-                                let uiImage = UIImage(cgImage: cgImage)
-                                
-                                self?.progressSlider.setThumbnailImage(uiImage, atIndex: offset)
-                                self?.rangeSlider.setThumbnailImage(uiImage, atIndex: offset)
-                            }
-                        }
+                    config.thumbnailUrls.enumerated().forEach { offset, url in
+                        self?.loadThumbnail(index: offset, preferredUrl: url, fallbackUrl: config.fallbackUrl)
                     }
                 }
             )
@@ -646,6 +636,46 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    private func loadThumbnail(index: Int, preferredUrl: URL, fallbackUrl: URL) {
+        ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
+            url: preferredUrl,
+            forTime: .zero
+        ) { [weak self] cgImage in
+            guard let cgImage = cgImage else {
+                self?.loadFallbackThumbnail(index: index, url: fallbackUrl)
+                return
+            }
+            
+            DispatchQueue.main.async {
+                let uiImage = UIImage(cgImage: cgImage)
+                
+                self?.progressSlider.setThumbnailImage(uiImage, atIndex: index)
+                self?.rangeSlider.setThumbnailImage(uiImage, atIndex: index)
+            }
+        }
+    }
+    
+    private func loadFallbackThumbnail(index: Int, url: URL) {
+        ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
+            url: url,
+            forTime: .zero
+        ) { [weak self] cgImage in
+            DispatchQueue.main.async {
+                guard let cgImage = cgImage else {
+                    self?.progressSlider.setThumbnailImage(nil, atIndex: index)
+                    self?.rangeSlider.setThumbnailImage(nil, atIndex: index)
+                    
+                    return
+                }
+                
+                let uiImage = UIImage(cgImage: cgImage)
+                
+                self?.progressSlider.setThumbnailImage(uiImage, atIndex: index)
+                self?.rangeSlider.setThumbnailImage(uiImage, atIndex: index)
+            }
+        }
     }
 
 }
