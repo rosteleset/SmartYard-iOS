@@ -556,6 +556,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
+        let thumbnailsShouldStartUpdatingSubject = PublishSubject<VideoThumbnailConfiguration>()
+        
         output.videoThumbnailConfig
             .drive(
                 onNext: { [weak self] config in
@@ -563,6 +565,22 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
+                    self?.progressSlider.resetThumbnailImages()
+                    self?.progressSlider.setActivityIndicatorsHidden(false)
+                    
+                    self?.rangeSlider.resetThumbnailImages()
+                    self?.rangeSlider.setActivityIndicatorsHidden(false)
+                    
+                    thumbnailsShouldStartUpdatingSubject.onNext(config)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        thumbnailsShouldStartUpdatingSubject
+            .asDriverOnErrorJustComplete()
+            .debounce(.milliseconds(350))
+            .drive(
+                onNext: { [weak self] config in
                     self?.loadThumbnails(config: config)
                 }
             )
@@ -633,12 +651,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     }
     
     private func loadThumbnails(config: VideoThumbnailConfiguration) {
-        progressSlider.resetThumbnailImages()
-        progressSlider.setActivityIndicatorsHidden(false)
-        
-        rangeSlider.resetThumbnailImages()
-        rangeSlider.setActivityIndicatorsHidden(false)
-        
         latestThumbnailConfig = config
         
         config.thumbnailUrls.enumerated().forEach { offset, url in
