@@ -105,6 +105,8 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         
         voipContainerView.addGestureRecognizer(voipTapGesture)
         voipSwitch.isUserInteractionEnabled = false
+        
+        skeletonView.isHidden = true
     }
     
     private func toggleNotificationsSection() {
@@ -147,7 +149,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         output.isCmsEnabled
             .drive(
                 onNext: { [weak self] state in
-                    self?.cmsSwitch.setOn(!state, animated: true)
+                    self?.cmsSwitch.setOn(state, animated: true)
                 }
             )
             .disposed(by: disposeBag)

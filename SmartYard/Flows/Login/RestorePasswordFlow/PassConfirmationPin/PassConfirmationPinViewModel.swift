@@ -14,6 +14,8 @@ import XCoordinator
 class PassConfirmationPinViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     private let router: WeakRouter<HomeRoute>
     
     private let selectedRestoreMethod: RestoreMethod
@@ -21,11 +23,15 @@ class PassConfirmationPinViewModel: BaseViewModel {
     
     init(
         apiWrapper: APIWrapper,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
         router: WeakRouter<HomeRoute>,
         contractNum: String,
         selectedRestoreMethod: RestoreMethod
     ) {
         self.apiWrapper = apiWrapper
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         self.router = router
         self.selectedRestoreMethod = selectedRestoreMethod
         self.contractNum = contractNum
@@ -40,6 +46,18 @@ class PassConfirmationPinViewModel: BaseViewModel {
         let prepareTransitionTrigger = PublishSubject<Void>()
         
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: activityTracker,
+                    errorTracker: errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
                     let nsError = error as NSError

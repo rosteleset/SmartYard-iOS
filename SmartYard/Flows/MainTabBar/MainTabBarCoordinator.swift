@@ -29,6 +29,8 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     private let permissionService: PermissionService
+    private let alertService: AlertService
+    private let logoutHelper: LogoutHelper
     
     private let homeRouter: StrongRouter<HomeRoute>
     private let notificationsRouter: StrongRouter<NotificationsRoute>
@@ -48,13 +50,17 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         pushNotificationService: PushNotificationService,
         apiWrapper: APIWrapper,
         issueService: IssueService,
-        permissionService: PermissionService
+        permissionService: PermissionService,
+        alertService: AlertService,
+        logoutHelper: LogoutHelper
     ) {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
         self.apiWrapper = apiWrapper
         self.issueService = issueService
         self.permissionService = permissionService
+        self.alertService = alertService
+        self.logoutHelper = logoutHelper
         
         // MARK: Home Tab
         let homeCoordinator = HomeCoordinator(
@@ -62,7 +68,9 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             pushNotificationService: pushNotificationService,
             accessService: accessService,
             issueService: issueService,
-            permissionService: permissionService
+            permissionService: permissionService,
+            alertService: alertService,
+            logoutHelper: logoutHelper
         )
         
         let homeTabBarItem = UITabBarItem(
@@ -78,7 +86,9 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         let notificationsCoordinator = NotificationsCoordinator(
             apiWrapper: apiWrapper,
-            pushNotificationService: pushNotificationService
+            pushNotificationService: pushNotificationService,
+            logoutHelper: logoutHelper,
+            alertService: alertService
         )
         
         let notificationsTabBarItem = UITabBarItem(
@@ -86,9 +96,6 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             image: UIImage(named: "NotificationsTabUnselected"),
             selectedImage: UIImage(named: "NotificationsTabSelected")
         )
-        
-        let currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
-        notificationsTabBarItem.badgeValue = currentBadgeNumber > 0 ? "\(currentBadgeNumber)" : nil
         
         notificationsCoordinator.rootViewController.tabBarItem = notificationsTabBarItem
         self.notificationsTabBarItem = notificationsTabBarItem
@@ -125,7 +132,9 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             pushNotificationService: pushNotificationService,
             apiWrapper: apiWrapper,
             issueService: issueService,
-            permissionService: permissionService
+            permissionService: permissionService,
+            logoutHelper: logoutHelper,
+            alertService: alertService
         )
         
         let settingsTabBarItem = UITabBarItem(
@@ -168,6 +177,8 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             select: homeRouter
         )
         
+        updateNotificationsTab(shouldShowBadge: UIApplication.shared.applicationIconBadgeNumber > 0)
+        
         rootViewController.tabBar.isTranslucent = false
         
         subscribeToBadgeUpdates()
@@ -185,6 +196,20 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         }
     }
     
+    private func updateNotificationsTab(shouldShowBadge: Bool) {
+        notificationsTabBarItem.image = UIImage(
+            named: shouldShowBadge ? "NotificationsTabBadgeUnselected" : "NotificationsTabUnselected"
+        )
+        
+        notificationsTabBarItem.selectedImage = UIImage(
+            named: shouldShowBadge ? "NotificationsTabBadgeSelected" : "NotificationsTabSelected"
+        )
+        
+        notificationsTabBarItem.imageInsets = shouldShowBadge ?
+            UIEdgeInsets(top: -2, left: 0, bottom: 2, right: 0) :
+            .zero
+    }
+    
     private func subscribeToBadgeUpdates() {
         NotificationCenter.default.rx
             .notification(Notification.Name.badgeNumberUpdated)
@@ -195,7 +220,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
                         return
                     }
                     
-                    self?.notificationsTabBarItem.badgeValue = badgeNumber > 0 ? "\(badgeNumber)" : nil
+                    self?.updateNotificationsTab(shouldShowBadge: badgeNumber > 0)
                 }
             )
             .disposed(by: disposeBag)

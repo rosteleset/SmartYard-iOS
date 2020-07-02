@@ -15,15 +15,21 @@ class RestorePasswordViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<HomeRoute>
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     
     private let selectedRestoreMethod = BehaviorSubject<RestoreMethodCellModel?>(value: nil)
     private let restoreMethods = BehaviorSubject<[RestoreMethodCellModel]>(value: [])
     
     init(
         apiWrapper: APIWrapper,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
         router: WeakRouter<HomeRoute>
     ) {
         self.apiWrapper = apiWrapper
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         self.router = router
     }
     
@@ -33,6 +39,18 @@ class RestorePasswordViewModel: BaseViewModel {
         let errorTracker = ErrorTracker()
         
         errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: activityTracker,
+                    errorTracker: errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
                     let nsError = error as NSError

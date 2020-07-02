@@ -19,6 +19,22 @@ class SmartYardSearchTextField: SearchTextField {
         return bounds.inset(by: UIEdgeInsets(top: 16, left: 20, bottom: 16, right: 20))
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        configureUI()
+    }
+    
+    init() {
+        super.init(frame: .zero)
+        
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     func setPlaceholder(string: String, isRequiredField: Bool = false, isSemiBold: Bool = false) {
         let font = isSemiBold ? UIFont.SourceSansPro.semibold(size: 18)
             : UIFont.SourceSansPro.regular(size: 18)
@@ -46,6 +62,10 @@ class SmartYardSearchTextField: SearchTextField {
         )
         
         attributedPlaceholder = attrString + requirementString
+    }
+    
+    private func configureUI() {
+        tintColor = UIColor.SmartYard.semiBlack
     }
     
 }

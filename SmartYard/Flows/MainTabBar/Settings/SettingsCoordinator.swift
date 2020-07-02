@@ -36,19 +36,25 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     private let permissionService: PermissionService
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     
     init(
         accessService: AccessService,
         pushNotificationService: PushNotificationService,
         apiWrapper: APIWrapper,
         issueService: IssueService,
-        permissionService: PermissionService
+        permissionService: PermissionService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
     ) {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
         self.apiWrapper = apiWrapper
         self.issueService = issueService
         self.permissionService = permissionService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         
         super.init(initialRoute: .main)
         
@@ -59,7 +65,14 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     override func prepareTransition(for route: SettingsRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = SettingsViewModel(router: weakRouter, apiWrapper: apiWrapper, accessService: accessService)
+            let vm = SettingsViewModel(
+                router: weakRouter,
+                apiWrapper: apiWrapper,
+                accessService: accessService,
+                logoutHelper: logoutHelper,
+                alertService: alertService
+            )
+            
             let vc = SettingsViewController(viewModel: vm)
             return .set([vc])
             
@@ -67,6 +80,8 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             let vm = AddressSettingsViewModel(
                 apiWrapper: apiWrapper,
                 issueService: issueService,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
                 flatId: flatId,
                 clientId: clientId,
                 address: address,
@@ -134,6 +149,8 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
                 apiWrapper: apiWrapper,
                 accessService: accessService,
                 pushNotificationService: pushNotificationService,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
                 router: weakRouter
             )
             
@@ -175,7 +192,9 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
                 flatId: flatId,
                 clientId: clientId,
                 apiWrapper: apiWrapper,
-                permissionService: permissionService
+                permissionService: permissionService,
+                logoutHelper: logoutHelper,
+                alertService: alertService
             )
             
             let vc = AddressAccessViewController(viewModel: vm)
@@ -191,6 +210,8 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             let vm = EditNameViewModel(
                 accessService: accessService,
                 apiWrapper: apiWrapper,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
                 router: weakRouter
             )
             

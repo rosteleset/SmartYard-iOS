@@ -10,8 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import JGProgressHUD
 
-class SettingsViewController: BaseViewController {
+class SettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var phoneNumberLabel: UILabel!
@@ -37,6 +38,8 @@ class SettingsViewController: BaseViewController {
     private let addAddressTrigger = PublishSubject<Void>()
     
     private let viewModel: SettingsViewModel
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: SettingsViewModel) {
         self.viewModel = viewModel
@@ -192,6 +195,19 @@ class SettingsViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] phone in
                     self?.phoneNumberLabel.text = phone
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
                 }
             )
             .disposed(by: disposeBag)

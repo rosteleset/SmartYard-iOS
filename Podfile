@@ -10,7 +10,7 @@ target 'SmartYard' do
   # Networking
   pod 'Moya/RxSwift'
   pod 'Kingfisher'
-  pod 'linphone-sdk' , '> 4.4.0-alpha'
+  pod 'linphone-sdk' , '4.4.0'
   
   # Reactive
   pod 'RxSwift'
@@ -40,6 +40,7 @@ target 'SmartYard' do
   # Analytics
   pod 'Firebase/Crashlytics'
   pod 'Firebase/Analytics'
+  pod 'YandexMobileMetrica'
   
   # Push Notifications
   pod 'Firebase/Messaging'

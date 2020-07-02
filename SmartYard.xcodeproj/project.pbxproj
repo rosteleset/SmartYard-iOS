@@ -56,6 +56,7 @@
 		844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */; };
 		845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845842D424223D690019635E /* AddressSettingsSkeletonView.swift */; };
 		845842D724223D7D0019635E /* AddressSettingsSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845842D624223D7D0019635E /* AddressSettingsSkeletonView.xib */; };
+		8477218824A0B345003FCC24 /* SmartYardPasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477218724A0B345003FCC24 /* SmartYardPasswordTextField.swift */; };
 		847721A224A0F077003FCC24 /* PaymentPopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477218C24A0F076003FCC24 /* PaymentPopupController.swift */; };
 		847721A324A0F077003FCC24 /* PaymentPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477218D24A0F076003FCC24 /* PaymentPopupViewModel.swift */; };
 		847721A424A0F077003FCC24 /* PaymentPopupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8477218E24A0F076003FCC24 /* PaymentPopupController.xib */; };
@@ -111,6 +112,9 @@
 		848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */; };
 		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
+		8496394E247BF8850086B6E9 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496394D247BF8850086B6E9 /* AlertService.swift */; };
+		84963950247BFAE20086B6E9 /* UIViewController+Top.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496394F247BFAE20086B6E9 /* UIViewController+Top.swift */; };
+		84963952247C25C50086B6E9 /* LogoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84963951247C25C50086B6E9 /* LogoutHelper.swift */; };
 		849652CC2472AF44000E1375 /* SmartYardSharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652BF2472AF3B000E1375 /* SmartYardSharedData.swift */; };
 		849652CD2472AF47000E1375 /* SmartYardSharedDataFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		849652CE2472AF4A000E1375 /* SmartYardSharedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849652C12472AF3B000E1375 /* SmartYardSharedObject.swift */; };
@@ -464,6 +468,7 @@
 		844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		845842D424223D690019635E /* AddressSettingsSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSettingsSkeletonView.swift; sourceTree = "<group>"; };
 		845842D624223D7D0019635E /* AddressSettingsSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressSettingsSkeletonView.xib; sourceTree = "<group>"; };
+		8477218724A0B345003FCC24 /* SmartYardPasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardPasswordTextField.swift; sourceTree = "<group>"; };
 		8477218C24A0F076003FCC24 /* PaymentPopupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentPopupController.swift; sourceTree = "<group>"; };
 		8477218D24A0F076003FCC24 /* PaymentPopupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentPopupViewModel.swift; sourceTree = "<group>"; };
 		8477218E24A0F076003FCC24 /* PaymentPopupController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentPopupController.xib; sourceTree = "<group>"; };
@@ -517,6 +522,9 @@
 		848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAction.swift; sourceTree = "<group>"; };
 		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
+		8496394D247BF8850086B6E9 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		8496394F247BFAE20086B6E9 /* UIViewController+Top.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Top.swift"; sourceTree = "<group>"; };
+		84963951247C25C50086B6E9 /* LogoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutHelper.swift; sourceTree = "<group>"; };
 		849652BF2472AF3B000E1375 /* SmartYardSharedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardSharedData.swift; sourceTree = "<group>"; };
 		849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartYardSharedDataFramework.h; sourceTree = "<group>"; };
 		849652C12472AF3B000E1375 /* SmartYardSharedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardSharedObject.swift; sourceTree = "<group>"; };
@@ -620,7 +628,6 @@
 		E9004C6123FABF6800B59976 /* AccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccessView.xib; sourceTree = "<group>"; };
 		E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSearchTextField.swift; sourceTree = "<group>"; };
 		E917244C24125CAD00F2B810 /* AvailableServicesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableServicesViewModel.swift; sourceTree = "<group>"; };
-		E9207124247EA01000264CD5 /* SberbankPayError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SberbankPayError.swift; sourceTree = "<group>"; };
 		E92EFB4324287F4C003AF7FE /* PassConfirmationPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassConfirmationPinViewController.swift; sourceTree = "<group>"; };
 		E92EFB4424287F4C003AF7FE /* PassConfirmationPinViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PassConfirmationPinViewController.xib; sourceTree = "<group>"; };
 		E92EFB4724287F72003AF7FE /* PassConfirmationPinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassConfirmationPinViewModel.swift; sourceTree = "<group>"; };
@@ -1182,14 +1189,6 @@
 			path = AddressSettingsSkeletonView;
 			sourceTree = "<group>";
 		};
-		8477218924A0F03B003FCC24 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				E9207124247EA01000264CD5 /* SberbankPayError.swift */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		8477218A24A0F076003FCC24 /* Payments */ = {
 			isa = PBXGroup;
 			children = (
@@ -1428,6 +1427,14 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
+		8496394C247BF8750086B6E9 /* AlertService */ = {
+			isa = PBXGroup;
+			children = (
+				8496394D247BF8850086B6E9 /* AlertService.swift */,
+			);
+			path = AlertService;
+			sourceTree = "<group>";
+		};
 		849652BE2472AF3B000E1375 /* SmartYardSharedDataFramework */ = {
 			isa = PBXGroup;
 			children = (
@@ -1659,6 +1666,7 @@
 				E94B6C2323FBFEA600FD9F65 /* String+Extensions.swift */,
 				E94B6C4223FFF2A800FD9F65 /* Date+Helper.swift */,
 				E94B6C4423FFFF5D00FD9F65 /* Date+Conversion.swift */,
+				8496394F247BFAE20086B6E9 /* UIViewController+Top.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1687,11 +1695,13 @@
 			isa = PBXGroup;
 			children = (
 				844AC39323E9776F0066006D /* AccessService */,
+				8496394C247BF8750086B6E9 /* AlertService */,
 				E92EFB4C242A22F2003AF7FE /* APIWrapper */,
 				E94B6C8E2408ECB400FD9F65 /* IssueService */,
 				84B9EC9823E0886000979C39 /* LinphoneService */,
 				843C38EB242B5A720035BF80 /* PermissionService */,
 				84854B5123FBFDBF001B44F2 /* PushNotificationService */,
+				84963951247C25C50086B6E9 /* LogoutHelper.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1907,7 +1917,6 @@
 				84F840D323E07DA5008DBE50 /* Products */,
 				B0B71A96C6C8995993C06C49 /* Pods */,
 				9597597AA6C1CAECCA7D92F7 /* Frameworks */,
-				8477218924A0F03B003FCC24 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2617,6 +2626,7 @@
 			isa = PBXGroup;
 			children = (
 				E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */,
+				8477218724A0B345003FCC24 /* SmartYardPasswordTextField.swift */,
 			);
 			path = SmartYardTextField;
 			sourceTree = "<group>";
@@ -3201,6 +3211,7 @@
 				E92EFBDE242A22F2003AF7FE /* GetListConnectRequest.swift in Sources */,
 				844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */,
 				E9E4271F23F41DDF00F5D593 /* SmartYardCheckBoxState.swift in Sources */,
+				8477218824A0B345003FCC24 /* SmartYardPasswordTextField.swift in Sources */,
 				844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */,
 				84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */,
 				847721A224A0F077003FCC24 /* PaymentPopupController.swift in Sources */,
@@ -3266,6 +3277,7 @@
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
+				84963952247C25C50086B6E9 /* LogoutHelper.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
 				84F64992247417DA000C0028 /* PayProcessRequest.swift in Sources */,
 				E92EFBE1242A22F2003AF7FE /* APITarget.swift in Sources */,
@@ -3375,6 +3387,7 @@
 				E92EFBBB242A22F2003AF7FE /* GetAddressRequest.swift in Sources */,
 				E92EFBD0242A22F2003AF7FE /* GetAddressListRequest.swift in Sources */,
 				84854B4E23FAEC4F001B44F2 /* BasicTransitions.swift in Sources */,
+				84963950247BFAE20086B6E9 /* UIViewController+Top.swift in Sources */,
 				84AA8D7F23E30C32001B3B43 /* BaseViewModel.swift in Sources */,
 				84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */,
 				844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */,
@@ -3420,6 +3433,7 @@
 				84878DE52420DB3B004C11B2 /* AddressAccessViewModel+ContactParsing.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
 				847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */,
+				8496394E247BF8850086B6E9 /* AlertService.swift in Sources */,
 				842FECB6242B89DF007CA0F3 /* OfficesResponseData.swift in Sources */,
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,

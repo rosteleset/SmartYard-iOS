@@ -22,6 +22,8 @@ enum AppRoute: Route {
     case pinCode(phoneNumber: String, isInitial: Bool)
     case alert(title: String, message: String?)
     case onboarding
+    case appSettings(title: String, message: String?)
+    
 }
 
 class AppCoordinator: NavigationCoordinator<AppRoute> {
@@ -34,6 +36,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     private let pushNotificationService: PushNotificationService
+    private let alertService = AlertService()
+    private let logoutHelper: LogoutHelper
     
     private var mainTabBarRouter: StrongRouter<MainTabBarRoute>?
     
@@ -43,6 +47,12 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         apiWrapper = APIWrapper(accessService: accessService)
         issueService = IssueService(apiWrapper: apiWrapper, accessService: accessService)
         pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
+        
+        logoutHelper = LogoutHelper(
+            pushNotificationService: pushNotificationService,
+            accessService: accessService,
+            alertService: alertService
+        )
         
         super.init(initialRoute: accessService.routeForCurrentState)
         
@@ -60,7 +70,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 pushNotificationService: pushNotificationService,
                 apiWrapper: apiWrapper,
                 issueService: issueService,
-                permissionService: permissionService
+                permissionService: permissionService,
+                alertService: alertService,
+                logoutHelper: logoutHelper
             ).strongRouter
             
             mainTabBarRouter = router
@@ -69,6 +81,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         case let .incomingCall(callPayload):
             let vm = IncomingCallViewModel(
                 linphoneService: linphoneService,
+                permissionService: permissionService,
                 apiWrapper: apiWrapper,
                 router: weakRouter,
                 callPayload: callPayload
@@ -86,12 +99,24 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .dismiss()
             
         case let .userName(preloadedName):
-            let vm = UserNameViewModel(accessService: accessService, apiWrapper: apiWrapper, router: weakRouter)
+            let vm = UserNameViewModel(
+                accessService: accessService,
+                apiWrapper: apiWrapper,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
+                router: weakRouter
+            )
+            
             let vc = UserNameViewController(viewModel: vm, preloadedName: preloadedName)
             return .set([vc], animation: .fade)
             
         case .phoneNumber:
-            let vm = InputPhoneNumberViewModel(accessService: accessService, apiWrapper: apiWrapper, router: weakRouter)
+            let vm = InputPhoneNumberViewModel(
+                accessService: accessService,
+                apiWrapper: apiWrapper,
+                router: weakRouter
+            )
+            
             let vc = InputPhoneNumberViewController(viewModel: vm)
             return .set([vc], animation: .fade)
             
@@ -113,6 +138,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             let vm = OnboardingViewModel(router: weakRouter, accessService: accessService)
             let vc = OnboardingViewController(viewModel: vm)
             return .set([vc], animation: .fade)
+            
+        case let .appSettings(title, message):
+            return .appSettingsTransition(title: title, message: message)
         }
     }
     
