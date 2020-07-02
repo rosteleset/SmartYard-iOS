@@ -31,8 +31,8 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     private let progressTimeView = SimpleVideoTimeView(size: .zero)
     private let progressIndicator = SimpleVideoProgressIndicator()
 
-    private let fakeThumbnailsContainer = UIView()
-    private var fakeThumbnailImageViews = [UIImageView]()
+    private let thumbnailsContainer = UIView()
+    private var thumbnailViews = [(UIImageView, UIActivityIndicatorView)]()
     
     private var duration: Float64 = 0
     private var progressPercentage: CGFloat = 0         // Represented in percentage
@@ -53,6 +53,8 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     }
 
     private func setup(){
+        backgroundColor = .clear
+        
         layer.cornerRadius = 3
         layer.borderColor = UIColor(hex: 0xffe38e)?.cgColor
         layer.borderWidth = 1
@@ -73,23 +75,34 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         
         self.addSubview(progressTimeView)
         
-        // Setup fake previews
+        // Setup previews
         
-        fakeThumbnailsContainer.backgroundColor = .black
-        addSubview(fakeThumbnailsContainer)
-        sendSubviewToBack(fakeThumbnailsContainer)
-        fakeThumbnailsContainer.cornerRadius = 3
+        thumbnailsContainer.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        addSubview(thumbnailsContainer)
+        sendSubviewToBack(thumbnailsContainer)
+        thumbnailsContainer.cornerRadius = 3
         
-        let imageViews = [UIImageView(), UIImageView(), UIImageView(), UIImageView(), UIImageView()]
+        let thumbnailViews = [
+            (UIImageView(), UIActivityIndicatorView()),
+            (UIImageView(), UIActivityIndicatorView()),
+            (UIImageView(), UIActivityIndicatorView()),
+            (UIImageView(), UIActivityIndicatorView()),
+            (UIImageView(), UIActivityIndicatorView())
+        ]
         
-        imageViews.forEach {
-            $0.contentMode = .scaleAspectFill
-            $0.clipsToBounds = true
-            fakeThumbnailsContainer.addSubview($0)
-            fakeThumbnailsContainer.sendSubviewToBack($0)
+        self.thumbnailViews = thumbnailViews
+        
+        thumbnailViews.forEach { imageView, activityIndicator in
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            
+            thumbnailsContainer.addSubview(imageView)
+            thumbnailsContainer.sendSubviewToBack(imageView)
+            
+            activityIndicator.color = .white
+            
+            thumbnailsContainer.addSubview(activityIndicator)
         }
-        
-        self.fakeThumbnailImageViews = imageViews
     }
     
     func setCurrentTime(_ time: CMTime) {
@@ -119,7 +132,24 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     }
     
     func setThumbnailImage(_ image: UIImage?, atIndex index: Int) {
-        fakeThumbnailImageViews[safe: index]?.image = image
+        guard let (imageView, activityIndicator) = thumbnailViews[safe: index] else {
+            return
+        }
+        
+        imageView.image = image
+        activityIndicator.stopAnimating()
+    }
+    
+    func resetThumbnailImages() {
+        thumbnailViews.forEach { imageView, _ in
+            imageView.image = nil
+        }
+    }
+    
+    func setActivityIndicatorsHidden(_ isHidden: Bool) {
+        thumbnailViews.forEach { _, activityIndicator in
+            isHidden ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
+        }
     }
 
     // MARK: - Private functions
@@ -250,21 +280,25 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         
         // Update fake thumbnails frames
         
-        fakeThumbnailsContainer.frame = bounds
+        thumbnailsContainer.frame = bounds
         
-        guard !fakeThumbnailImageViews.isEmpty else {
+        guard !thumbnailViews.isEmpty else {
             return
         }
         
-        let imageWidth = bounds.width / CGFloat(fakeThumbnailImageViews.count)
+        let imageWidth = bounds.width / CGFloat(thumbnailViews.count)
         
-        fakeThumbnailImageViews.enumerated().forEach { offset, element in
-            element.frame = CGRect(
+        thumbnailViews.enumerated().forEach { offset, element in
+            let (imageView, activityIndicator) = element
+            
+            imageView.frame = CGRect(
                 x: CGFloat(offset) * imageWidth,
                 y: 0,
                 width: imageWidth,
                 height: bounds.height
             )
+            
+            activityIndicator.center = imageView.center
         }
     }
 

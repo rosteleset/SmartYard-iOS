@@ -557,6 +557,12 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         output.videoThumbnailURLs
             .drive(
                 onNext: { [weak self] urls in
+                    self?.progressSlider.resetThumbnailImages()
+                    self?.progressSlider.setActivityIndicatorsHidden(false)
+                    
+                    self?.rangeSlider.resetThumbnailImages()
+                    self?.rangeSlider.setActivityIndicatorsHidden(false)
+                    
                     urls.enumerated().forEach { offset, url in
                         ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
                             url: url,
