@@ -10,7 +10,7 @@ target 'SmartYard' do
   # Networking
   pod 'Moya/RxSwift'
   pod 'Kingfisher'
-  pod 'linphone-sdk' , '> 4.4.0-alpha'
+  pod 'linphone-sdk' , '4.4.0'
   
   # Reactive
   pod 'RxSwift'
