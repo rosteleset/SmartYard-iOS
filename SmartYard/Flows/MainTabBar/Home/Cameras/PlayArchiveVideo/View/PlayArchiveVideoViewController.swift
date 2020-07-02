@@ -554,26 +554,24 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        output.videoThumbnailURL
+        output.videoThumbnailURLs
             .drive(
-                onNext: { [weak self] url in
-                    guard let thumbnailUrl = url else {
-                        return
-                    }
-                    
-                    ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
-                        url: thumbnailUrl,
-                        forTime: .zero
-                    ) { cgImage in
-                        guard let cgImage = cgImage else {
-                            return
-                        }
-                        
-                        DispatchQueue.main.async {
-                            let uiImage = UIImage(cgImage: cgImage)
+                onNext: { [weak self] urls in
+                    urls.enumerated().forEach { offset, url in
+                        ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
+                            url: url,
+                            forTime: .zero
+                        ) { cgImage in
+                            guard let cgImage = cgImage else {
+                                return
+                            }
                             
-                            self?.progressSlider.setFakeThumbnailImage(uiImage)
-                            self?.rangeSlider.setFakeThumbnailImage(uiImage)
+                            DispatchQueue.main.async {
+                                let uiImage = UIImage(cgImage: cgImage)
+                                
+                                self?.progressSlider.setThumbnailImage(uiImage, atIndex: offset)
+                                self?.rangeSlider.setThumbnailImage(uiImage, atIndex: offset)
+                            }
                         }
                     }
                 }

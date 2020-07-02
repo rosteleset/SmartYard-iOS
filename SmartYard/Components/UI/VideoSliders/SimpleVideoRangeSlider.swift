@@ -254,10 +254,8 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         value < 0 ? shiftTimelineBackward(abs(value)) : shiftTimelineForward(value)
     }
     
-    func setFakeThumbnailImage(_ image: UIImage?) {
-        fakeThumbnailImageViews.forEach {
-            $0.image = image
-        }
+    func setThumbnailImage(_ image: UIImage?, atIndex index: Int) {
+        fakeThumbnailImageViews[safe: index]?.image = image
     }
     
     func setTimelineConfiguration(visibleTimelineEndDate: Date, lowerBound: Date?, upperBound: Date?) {

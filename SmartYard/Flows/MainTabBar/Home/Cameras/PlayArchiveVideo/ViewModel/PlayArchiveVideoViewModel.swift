@@ -163,18 +163,19 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 return URL(string: resultingString)
             }
         
-        let videoThumbnailURL = selectedPeriod
+        let videoThumbnailURLs = selectedPeriod
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
-            .map { [weak self] period -> URL? in
-                guard let self = self,
-                    let urlComps = period.videoThumbnailComponents else {
-                    return nil
+            .map { [weak self] period -> [URL] in
+                guard let self = self else {
+                    return []
                 }
                 
-                let resultingString = self.camera.video + urlComps + "?token=\(self.camera.token)"
+                let thumbnailStrings = period.getThumbnailComponents(numberOfThumbnailsFromPeriod: 5)
                 
-                return URL(string: resultingString)
+                return thumbnailStrings.compactMap {
+                    URL(string: self.camera.video + $0 + "?token=\(self.camera.token)")
+                }
             }
         
         let screenshotURL = input.screenshotTrigger
@@ -213,7 +214,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             date: .just(date),
             periodConfiguration: .just(periods),
             videoURL: videoURL,
-            videoThumbnailURL: videoThumbnailURL,
+            videoThumbnailURLs: videoThumbnailURLs,
             screenshotURL: screenshotURL,
             isLoading: activityTracker.asDriver()
         )
@@ -235,7 +236,7 @@ extension PlayArchiveVideoViewModel {
         let date: Driver<Date?>
         let periodConfiguration: Driver<[ArchiveVideoHourPeriod]>
         let videoURL: Driver<URL?>
-        let videoThumbnailURL: Driver<URL?>
+        let videoThumbnailURLs: Driver<[URL]>
         let screenshotURL: Driver<URL?>
         let isLoading: Driver<Bool>
     }

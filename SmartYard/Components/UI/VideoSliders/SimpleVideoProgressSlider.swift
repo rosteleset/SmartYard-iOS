@@ -118,10 +118,8 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         self.superview?.layoutSubviews()
     }
     
-    func setFakeThumbnailImage(_ image: UIImage?) {
-        fakeThumbnailImageViews.forEach {
-            $0.image = image
-        }
+    func setThumbnailImage(_ image: UIImage?, atIndex index: Int) {
+        fakeThumbnailImageViews[safe: index]?.image = image
     }
 
     // MARK: - Private functions
