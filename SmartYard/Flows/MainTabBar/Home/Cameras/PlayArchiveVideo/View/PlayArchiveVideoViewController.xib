@@ -29,6 +29,8 @@
                 <outlet property="fakeNavBar" destination="WOo-JF-vkg" id="eGb-o1-hpz"/>
                 <outlet property="fullscreenButton" destination="sTb-NK-D3v" id="3aT-kW-RWt"/>
                 <outlet property="halfSpeedButton" destination="UDc-4s-ZnY" id="MEk-aP-AKT"/>
+                <outlet property="mainContainerToAnotherLabelConstraint" destination="ox8-xt-pbO" id="zw6-hv-O3B"/>
+                <outlet property="mainContainerToVideoLabelConstraint" destination="aAK-FQ-Pji" id="YIf-Gu-rxG"/>
                 <outlet property="oneAndHalfSpeedButton" destination="fr5-Hf-wxY" id="bbz-TP-1X0"/>
                 <outlet property="periodCollectionView" destination="8od-sE-j0B" id="WpC-H6-pGy"/>
                 <outlet property="playButton" destination="5f4-F5-jna" id="dzY-fn-tKq"/>
@@ -60,6 +62,24 @@
                         <constraint firstAttribute="height" constant="44" id="Q1A-uw-tf3"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dqz-l5-6XG">
+                    <rect key="frame" x="40" y="100" width="334" height="41"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="2f7-hX-NGA"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0x5-ZA-ub8">
+                    <rect key="frame" x="40" y="100" width="334" height="41"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="DTh-B0-A8g"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Nk-mk-3jm" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="181" width="414" height="681"/>
                     <subviews>
@@ -184,6 +204,7 @@
                                         <constraint firstItem="fr5-Hf-wxY" firstAttribute="centerY" secondItem="25D-Cj-lb4" secondAttribute="centerY" id="NMG-0P-RuA"/>
                                         <constraint firstAttribute="bottom" secondItem="5f4-F5-jna" secondAttribute="bottom" id="Q67-UY-M6N"/>
                                         <constraint firstItem="UDc-4s-ZnY" firstAttribute="leading" secondItem="25D-Cj-lb4" secondAttribute="leading" constant="20" id="TnZ-4b-7rI"/>
+                                        <constraint firstAttribute="height" constant="68" id="fW5-wr-4Fx"/>
                                         <constraint firstItem="UDc-4s-ZnY" firstAttribute="centerY" secondItem="25D-Cj-lb4" secondAttribute="centerY" id="fep-dP-ZSH"/>
                                         <constraint firstItem="fr5-Hf-wxY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5f4-F5-jna" secondAttribute="trailing" constant="20" id="iFT-RW-yza"/>
                                         <constraint firstItem="5f4-F5-jna" firstAttribute="centerX" secondItem="25D-Cj-lb4" secondAttribute="centerX" id="np4-Ev-FOx"/>
@@ -227,6 +248,7 @@
                                         <constraint firstItem="Pcc-3N-WGv" firstAttribute="top" secondItem="I2I-wA-dkd" secondAttribute="top" id="Rco-dA-Zqb"/>
                                         <constraint firstItem="CPg-RE-9lw" firstAttribute="centerY" secondItem="I2I-wA-dkd" secondAttribute="centerY" id="iWT-49-qGB"/>
                                         <constraint firstItem="CPg-RE-9lw" firstAttribute="leading" secondItem="I2I-wA-dkd" secondAttribute="leading" id="lUl-HD-8Xj"/>
+                                        <constraint firstAttribute="height" constant="68" id="mi6-Nl-cM9"/>
                                         <constraint firstAttribute="bottom" secondItem="Pcc-3N-WGv" secondAttribute="bottom" id="sKY-nb-aOD"/>
                                     </constraints>
                                 </view>
@@ -248,7 +270,8 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JBH-Xw-Dmj" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="40" y="589" width="334" height="60"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="60" id="T7m-MH-yug"/>
+                                <constraint firstAttribute="height" priority="999" constant="60" id="T7m-MH-yug"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="zO7-GK-WKz"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -257,7 +280,8 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkd-4A-ePf" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="40" y="589" width="334" height="60"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="60" id="0Wl-IZ-B7H"/>
+                                <constraint firstAttribute="height" priority="999" constant="60" id="0Wl-IZ-B7H"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="xab-LC-QE7"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -285,24 +309,6 @@
                         <constraint firstAttribute="trailing" secondItem="8od-sE-j0B" secondAttribute="trailing" id="t2y-UX-pA4"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dqz-l5-6XG">
-                    <rect key="frame" x="40" y="100" width="334" height="41"/>
-                    <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="2f7-hX-NGA"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0x5-ZA-ub8">
-                    <rect key="frame" x="40" y="100" width="334" height="41"/>
-                    <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="DTh-B0-A8g"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
@@ -310,8 +316,10 @@
                 <constraint firstItem="Dqz-l5-6XG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="Buv-5M-w7z"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="WOo-JF-vkg" secondAttribute="top" id="DO8-oI-aR1"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="WOo-JF-vkg" secondAttribute="trailing" id="DgD-SA-Haz"/>
+                <constraint firstItem="2Nk-mk-3jm" firstAttribute="top" secondItem="WOo-JF-vkg" secondAttribute="bottom" priority="999" constant="12" id="DlI-E4-KT5"/>
                 <constraint firstItem="Dqz-l5-6XG" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-40" id="PiK-DZ-g82"/>
                 <constraint firstItem="2Nk-mk-3jm" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="SYL-c9-wA4"/>
+                <constraint firstItem="2Nk-mk-3jm" firstAttribute="top" relation="greaterThanOrEqual" secondItem="WOo-JF-vkg" secondAttribute="bottom" constant="12" id="Swa-9N-cwW"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0x5-ZA-ub8" secondAttribute="trailing" constant="40" id="Zny-ky-eEf"/>
                 <constraint firstItem="2Nk-mk-3jm" firstAttribute="top" secondItem="0x5-ZA-ub8" secondAttribute="bottom" constant="40" id="aAK-FQ-Pji"/>
                 <constraint firstItem="wtb-oa-JK1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="aRv-uI-aPA"/>
@@ -327,7 +335,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="WOo-JF-vkg" secondAttribute="leading" id="y0v-hD-eqn"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="139" y="129"/>
+            <point key="canvasLocation" x="137.68115942028987" y="128.57142857142856"/>
         </view>
     </objects>
     <resources>

@@ -25,6 +25,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     var loader: JGProgressHUD?
     
+    @IBOutlet private var mainContainerToVideoLabelConstraint: NSLayoutConstraint!
+    @IBOutlet private var mainContainerToAnotherLabelConstraint: NSLayoutConstraint!
     @IBOutlet private var buttonsContainerToCollectionViewConstraint: NSLayoutConstraint!
     
     // MARK: Preview mode
@@ -98,6 +100,17 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let minViewSize = view.systemLayoutSizeFitting(
+            CGSize(width: UIScreen.main.bounds.width, height: 0),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .defaultLow
+        )
+        
+        if minViewSize.height > UIScreen.main.bounds.height {
+            mainContainerToVideoLabelConstraint.isActive = false
+            mainContainerToAnotherLabelConstraint.isActive = false
+        }
         
         // Preview mode
         
