@@ -135,6 +135,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             if messageType == .newAddress {
                 NotificationCenter.default.post(name: .addressAdded, object: nil)
             }
+            
+            if messageType == .paySuccess {
+                NotificationCenter.default.post(name: .paymentCompleted, object: nil)
+            }
         }
         
         completionHandler([.alert, .badge, .sound])
@@ -184,6 +188,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         if messageType == .newAddress {
             NotificationCenter.default.post(name: .addressAdded, object: nil)
+        }
+        
+        if messageType == .paySuccess {
+            NotificationCenter.default.post(name: .paymentCompleted, object: nil)
         }
         
         // MARK: Завершение работы
