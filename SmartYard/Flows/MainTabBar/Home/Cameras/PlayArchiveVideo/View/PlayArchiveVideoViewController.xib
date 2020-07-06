@@ -28,14 +28,14 @@
                 <outlet property="editDateLabel" destination="0x5-ZA-ub8" id="20C-EX-v4r"/>
                 <outlet property="fakeNavBar" destination="WOo-JF-vkg" id="eGb-o1-hpz"/>
                 <outlet property="fullscreenButton" destination="sTb-NK-D3v" id="3aT-kW-RWt"/>
-                <outlet property="halfSpeedButton" destination="UDc-4s-ZnY" id="MEk-aP-AKT"/>
                 <outlet property="mainContainerToAnotherLabelConstraint" destination="ox8-xt-pbO" id="zw6-hv-O3B"/>
                 <outlet property="mainContainerToVideoLabelConstraint" destination="aAK-FQ-Pji" id="YIf-Gu-rxG"/>
-                <outlet property="oneAndHalfSpeedButton" destination="fr5-Hf-wxY" id="bbz-TP-1X0"/>
+                <outlet property="nextSpeedButton" destination="fr5-Hf-wxY" id="eXW-NV-SNT"/>
                 <outlet property="periodCollectionView" destination="8od-sE-j0B" id="WpC-H6-pGy"/>
                 <outlet property="playButton" destination="5f4-F5-jna" id="dzY-fn-tKq"/>
                 <outlet property="previewButtonsContainer" destination="25D-Cj-lb4" id="ktE-qn-FjY"/>
                 <outlet property="previewDateLabel" destination="Dqz-l5-6XG" id="gOr-AC-8i1"/>
+                <outlet property="previousSpeedButton" destination="UDc-4s-ZnY" id="MiK-9s-0Yo"/>
                 <outlet property="progressSlider" destination="gTL-Y7-3LT" id="bKy-0r-Vsa"/>
                 <outlet property="rangeSlider" destination="P3w-7n-zkQ" id="EyD-RT-E1V"/>
                 <outlet property="realVideoContainer" destination="gbA-7j-j0f" id="UBg-QP-se9"/>

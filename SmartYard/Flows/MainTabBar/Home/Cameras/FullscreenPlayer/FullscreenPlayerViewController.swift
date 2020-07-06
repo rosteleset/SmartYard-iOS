@@ -8,6 +8,8 @@
 
 import UIKit
 import AVKit
+import RxSwift
+import RxCocoa
 
 class FullscreenPlayerViewController: UIViewController {
     
@@ -17,11 +19,15 @@ class FullscreenPlayerViewController: UIViewController {
     }
     
     private let playedVideoType: PlayedVideoType
+    private let preferredPlaybackRate: Float
 
     private var playerViewController: AVPlayerViewController?
     
-    init(playedVideoType: PlayedVideoType) {
+    private var disposeBag = DisposeBag()
+    
+    init(playedVideoType: PlayedVideoType, preferredPlaybackRate: Float) {
         self.playedVideoType = playedVideoType
+        self.preferredPlaybackRate = preferredPlaybackRate
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -64,6 +70,34 @@ class FullscreenPlayerViewController: UIViewController {
         addChild(playerViewController)
         view.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
+        
+        disposeBag = DisposeBag()
+        
+        guard let player = playerViewController.player else {
+            return
+        }
+        
+        player.rx
+            .observe(Float.self, "rate", options: [.new])
+            .observeOn(MainScheduler.asyncInstance)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] rate in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    // MARK: Если мы нажимаем на стандартную кнопку Play, то воспроизведение будет со скоростью 1x
+                    // Нам нужно, чтобы видео воспроизводилось с заданной скоростью
+                    // Поэтому отслеживаем изменения, если вдруг rate стал равен 1 - меняем его на preferred
+                    
+                    if rate == 1, self.preferredPlaybackRate != 1 {
+                        self.playerViewController?.player?.rate = self.preferredPlaybackRate
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
 }
