@@ -147,7 +147,11 @@ class OnlinePageViewController: BaseViewController {
                     playerVc.view.removeFromSuperview()
                     playerVc.removeFromParent()
 
-                    let fullscreenVc = FullscreenPlayerViewController(playedVideoType: .online)
+                    let fullscreenVc = FullscreenPlayerViewController(
+                        playedVideoType: .online,
+                        preferredPlaybackRate: 1
+                    )
+                    
                     fullscreenVc.modalPresentationStyle = .overFullScreen
                     fullscreenVc.modalTransitionStyle = .crossDissolve
                     fullscreenVc.setPlayerViewController(playerVc)

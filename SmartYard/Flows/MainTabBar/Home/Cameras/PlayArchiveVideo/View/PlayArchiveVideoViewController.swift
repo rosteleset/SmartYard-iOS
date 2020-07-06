@@ -25,14 +25,16 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     var loader: JGProgressHUD?
     
+    @IBOutlet private var mainContainerToVideoLabelConstraint: NSLayoutConstraint!
+    @IBOutlet private var mainContainerToAnotherLabelConstraint: NSLayoutConstraint!
     @IBOutlet private var buttonsContainerToCollectionViewConstraint: NSLayoutConstraint!
     
     // MARK: Preview mode
     
     @IBOutlet private weak var previewDateLabel: UILabel!
     
-    @IBOutlet private weak var halfSpeedButton: UIButton!
-    @IBOutlet private weak var oneAndHalfSpeedButton: UIButton!
+    @IBOutlet private weak var previousSpeedButton: UIButton!
+    @IBOutlet private weak var nextSpeedButton: UIButton!
     
     @IBOutlet private weak var periodCollectionView: UICollectionView!
     @IBOutlet private weak var previewButtonsContainer: UIView!
@@ -46,15 +48,21 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private var realVideoPlayerViewController: AVPlayerViewController?
     private var realVideoPlayer: AVPlayer?
     
-    private var preferredPlaybackRate: Float = 1 {
+    private var preferredPlaybackSpeedConfig: ArchiveVideoPlaybackSpeed = .normal {
         didSet {
             guard let player = realVideoPlayer else {
                 return
             }
             
             if player.rate != 0 {
-                player.rate = preferredPlaybackRate
+                player.rate = preferredPlaybackSpeedConfig.value
             }
+            
+            previousSpeedButton.isHidden = preferredPlaybackSpeedConfig.previousSpeed == nil
+            previousSpeedButton.setTitleForAllStates(preferredPlaybackSpeedConfig.previousSpeed?.title ?? "")
+            
+            nextSpeedButton.isHidden = preferredPlaybackSpeedConfig.nextSpeed == nil
+            nextSpeedButton.setTitleForAllStates(preferredPlaybackSpeedConfig.nextSpeed?.title ?? "")
         }
     }
     
@@ -99,15 +107,27 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let minViewSize = view.systemLayoutSizeFitting(
+            CGSize(width: UIScreen.main.bounds.width, height: 0),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .defaultLow
+        )
+        
+        if minViewSize.height > UIScreen.main.bounds.height {
+            mainContainerToVideoLabelConstraint.isActive = false
+            mainContainerToAnotherLabelConstraint.isActive = false
+        }
+        
         // Preview mode
         
         configurePeriodPicker()
         configurePlayButton()
-        configureHalfSpeedButton()
-        configureOneAndHalfSpeedButton()
+        configureSpeedButtons()
         configureSelectFragmentButton()
         configureRealVideoPlayer()
         configureFullscreenButton()
+        
+        preferredPlaybackSpeedConfig = .normal
         
         // Edit mode
 
@@ -150,65 +170,41 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     
                     let newState = !self.playButton.isSelected
                     
-                    self.realVideoPlayer?.rate = newState ? self.preferredPlaybackRate : 0
+                    self.realVideoPlayer?.rate = newState ? self.preferredPlaybackSpeedConfig.value : 0
                 }
             )
             .disposed(by: disposeBag)
     }
     
-    private func configureHalfSpeedButton() {
-        halfSpeedButton.setTitleColor(UIColor.SmartYard.gray, for: .normal)
-        halfSpeedButton.setTitleColor(UIColor.SmartYard.gray.darken(by: 0.1), for: [.normal, .highlighted])
-        halfSpeedButton.setTitleColor(UIColor.SmartYard.blue, for: .selected)
-        halfSpeedButton.setTitleColor(UIColor.SmartYard.blue.darken(by: 0.1), for: [.selected, .highlighted])
+    private func configureSpeedButtons() {
+        previousSpeedButton.setTitleColor(UIColor.SmartYard.gray, for: .normal)
+        previousSpeedButton.setTitleColor(UIColor.SmartYard.gray.darken(by: 0.1), for: [.normal, .highlighted])
         
-        halfSpeedButton.rx.tap
+        nextSpeedButton.setTitleColor(UIColor.SmartYard.gray, for: .normal)
+        nextSpeedButton.setTitleColor(UIColor.SmartYard.gray.darken(by: 0.1), for: [.normal, .highlighted])
+        
+        previousSpeedButton.rx.tap
             .asDriver()
             .drive(
                 onNext: { [weak self] in
-                    guard let self = self else {
+                    guard let self = self, let previousSpeed = self.preferredPlaybackSpeedConfig.previousSpeed else {
                         return
                     }
                     
-                    let newState = !self.halfSpeedButton.isSelected
-                    
-                    self.halfSpeedButton.isSelected = newState
-                    
-                    if newState {
-                        self.oneAndHalfSpeedButton.isSelected = false
-                        self.preferredPlaybackRate = 0.5
-                    } else {
-                        self.preferredPlaybackRate = 1
-                    }
+                    self.preferredPlaybackSpeedConfig = previousSpeed
                 }
             )
             .disposed(by: disposeBag)
-    }
-    
-    private func configureOneAndHalfSpeedButton() {
-        oneAndHalfSpeedButton.setTitleColor(UIColor.SmartYard.gray, for: .normal)
-        oneAndHalfSpeedButton.setTitleColor(UIColor.SmartYard.gray.darken(by: 0.1), for: [.normal, .highlighted])
-        oneAndHalfSpeedButton.setTitleColor(UIColor.SmartYard.blue, for: .selected)
-        oneAndHalfSpeedButton.setTitleColor(UIColor.SmartYard.blue.darken(by: 0.1), for: [.selected, .highlighted])
         
-        oneAndHalfSpeedButton.rx.tap
+        nextSpeedButton.rx.tap
             .asDriver()
             .drive(
                 onNext: { [weak self] in
-                    guard let self = self else {
+                    guard let self = self, let nextSpeed = self.preferredPlaybackSpeedConfig.nextSpeed else {
                         return
                     }
                     
-                    let newState = !self.oneAndHalfSpeedButton.isSelected
-                    
-                    self.oneAndHalfSpeedButton.isSelected = newState
-                    
-                    if newState {
-                        self.halfSpeedButton.isSelected = false
-                        self.preferredPlaybackRate = 1.5
-                    } else {
-                        self.preferredPlaybackRate = 1
-                    }
+                    self.preferredPlaybackSpeedConfig = nextSpeed
                 }
             )
             .disposed(by: disposeBag)
@@ -377,7 +373,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .asDriver()
             .drive(
                 onNext: { [weak self] in
-                    guard let playerVc = self?.realVideoPlayerViewController else {
+                    guard let self = self, let playerVc = self.realVideoPlayerViewController else {
                         return
                     }
                     
@@ -386,12 +382,16 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     playerVc.view.removeFromSuperview()
                     playerVc.removeFromParent()
 
-                    let fullscreenVc = FullscreenPlayerViewController(playedVideoType: .archive)
+                    let fullscreenVc = FullscreenPlayerViewController(
+                        playedVideoType: .archive,
+                        preferredPlaybackRate: self.preferredPlaybackSpeedConfig.value
+                    )
+                    
                     fullscreenVc.modalPresentationStyle = .overFullScreen
                     fullscreenVc.modalTransitionStyle = .crossDissolve
                     fullscreenVc.setPlayerViewController(playerVc)
 
-                    self?.present(fullscreenVc, animated: true)
+                    self.present(fullscreenVc, animated: true)
                 }
             )
             .disposed(by: disposeBag)
@@ -479,8 +479,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     private func updateUI(mode: Mode, isVideoValid: Bool) {
         [
-            halfSpeedButton,
-            oneAndHalfSpeedButton,
+            previousSpeedButton,
+            nextSpeedButton,
             selectFragmentButton
         ].forEach {
             $0?.isEnabled = isVideoValid
@@ -491,8 +491,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         playButton.isEnabled = mode == .preview && isVideoValid
         
         previewButtonsContainer.isHidden = mode == .edit
-        halfSpeedButton.isHidden = mode == .edit
-        oneAndHalfSpeedButton.isHidden = mode == .edit
         selectFragmentButton.isHidden = mode == .edit
         playButton.isHidden = mode == .edit
         realVideoContainer.isHidden = mode == .edit

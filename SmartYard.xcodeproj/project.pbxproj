@@ -69,6 +69,7 @@
 		845E9EF224927630000CBBC6 /* RecPrepareRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */; };
 		845E9EF52497727A000CBBC6 /* RecDownloadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */; };
 		845E9EF72497741B000CBBC6 /* RecDownloadResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF62497741B000CBBC6 /* RecDownloadResponseData.swift */; };
+		846DC64D24B3143B00A11914 /* ArchiveVideoPlaybackSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DC64C24B3143B00A11914 /* ArchiveVideoPlaybackSpeed.swift */; };
 		847721762497C31D003FCC24 /* ArchivePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847721742497C31D003FCC24 /* ArchivePageViewController.swift */; };
 		847721772497C31D003FCC24 /* ArchivePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847721752497C31D003FCC24 /* ArchivePageViewController.xib */; };
 		8477217A2497C329003FCC24 /* OnlinePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847721782497C329003FCC24 /* OnlinePageViewController.swift */; };
@@ -497,6 +498,7 @@
 		845E9EF124927630000CBBC6 /* RecPrepareRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecPrepareRequest.swift; sourceTree = "<group>"; };
 		845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecDownloadRequest.swift; sourceTree = "<group>"; };
 		845E9EF62497741B000CBBC6 /* RecDownloadResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecDownloadResponseData.swift; sourceTree = "<group>"; };
+		846DC64C24B3143B00A11914 /* ArchiveVideoPlaybackSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveVideoPlaybackSpeed.swift; sourceTree = "<group>"; };
 		847721742497C31D003FCC24 /* ArchivePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePageViewController.swift; sourceTree = "<group>"; };
 		847721752497C31D003FCC24 /* ArchivePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchivePageViewController.xib; sourceTree = "<group>"; };
 		847721782497C329003FCC24 /* OnlinePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlinePageViewController.swift; sourceTree = "<group>"; };
@@ -1520,6 +1522,7 @@
 			isa = PBXGroup;
 			children = (
 				8496398A2487ED5D0086B6E9 /* ArchiveVideoHourPeriod.swift */,
+				846DC64C24B3143B00A11914 /* ArchiveVideoPlaybackSpeed.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -3474,6 +3477,7 @@
 				E92EFBDC242A22F2003AF7FE /* APIWrapper+Issues.swift in Sources */,
 				E94B6C3723FD728F00FD9F65 /* RoundedImageView.swift in Sources */,
 				84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */,
+				846DC64D24B3143B00A11914 /* ArchiveVideoPlaybackSpeed.swift in Sources */,
 				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
 				E92EFBBA242A22F2003AF7FE /* GetStreetsRequest.swift in Sources */,
 				8496396B248667040086B6E9 /* PlayArchiveVideoViewModel.swift in Sources */,
