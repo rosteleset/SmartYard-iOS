@@ -436,6 +436,23 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 abs(lhs - rhs) < 0.001
             }
         
+        periodSelectedTrigger
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] period in
+                    let startDate: Date? = {
+                        guard let period = period else {
+                            return nil
+                        }
+                        
+                        return period.baseDate.adding(.hour, value: period.startHours)
+                    }()
+                    
+                    self?.progressSlider.setRelativeStartDate(startDate)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         Driver
             .combineLatest(
                 periodSelectedTrigger.asDriverOnErrorJustComplete(),
