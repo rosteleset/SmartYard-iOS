@@ -22,7 +22,8 @@ enum DomophoneObjectType: String, Decodable {
     var iconImageName: String {
         switch self {
         case .entrance: return "HouseIcon"
-        case .wicket, .gate: return "GateIcon"
+        case .wicket: return "WicketIcon"
+        case .gate: return "GateIcon"
         case .barrier: return "BarrierIcon"
         }
     }
