@@ -37,6 +37,8 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     private var duration: Float64 = 0
     private var progressPercentage: CGFloat = 0         // Represented in percentage
     private var isReceivingGesture: Bool = false
+    
+    private var relativeStartDate: Date?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -151,6 +153,12 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
             isHidden ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
         }
     }
+    
+    func setRelativeStartDate(_ date: Date?) {
+        relativeStartDate = date
+        
+        layoutSubviews()
+    }
 
     // MARK: - Private functions
     
@@ -241,10 +249,8 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
-        let progressSeconds = negateConversionLosses(secondsFromValue(value: progressPercentage))
         
-        progressTimeView.timeLabel.text = self.secondsToFormattedString(totalSeconds: progressSeconds)
+        progressTimeView.timeLabel.text = getProgressTextValue(percentage: progressPercentage)
         
         let progressPosition = positionFromValue(value: self.progressPercentage)
         
@@ -301,17 +307,25 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
             activityIndicator.center = imageView.center
         }
     }
-
-    private func secondsToFormattedString(totalSeconds: Float64) -> String{
-        let hours:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 86400) / 3600)
-        let minutes:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 3600) / 60)
-        let seconds:Int = Int(totalSeconds.truncatingRemainder(dividingBy: 60))
-
-        if hours > 0 {
-            return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
-        } else {
-            return String(format: "%02i:%02i", minutes, seconds)
+    
+    private func getProgressTextValue(percentage: CGFloat) -> String {
+        let progressSeconds = negateConversionLosses(secondsFromValue(value: percentage))
+        
+        guard let relativeStartDate = relativeStartDate else {
+            let hours:Int = Int(progressSeconds.truncatingRemainder(dividingBy: 86400) / 3600)
+            let minutes:Int = Int(progressSeconds.truncatingRemainder(dividingBy: 3600) / 60)
+            let seconds:Int = Int(progressSeconds.truncatingRemainder(dividingBy: 60))
+            
+            if hours > 0 {
+                return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
+            } else {
+                return String(format: "%02i:%02i", minutes, seconds)
+            }
         }
+        
+        let progressIndicatorDate = relativeStartDate.addingTimeInterval(progressSeconds)
+        
+        return progressIndicatorDate.string(withFormat: "HH:mm:ss")
     }
     
     private func negateConversionLosses(_ value: Float64) -> Float64 {

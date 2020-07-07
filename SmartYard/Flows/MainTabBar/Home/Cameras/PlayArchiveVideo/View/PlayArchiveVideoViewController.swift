@@ -436,6 +436,23 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 abs(lhs - rhs) < 0.001
             }
         
+        periodSelectedTrigger
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] period in
+                    let startDate: Date? = {
+                        guard let period = period else {
+                            return nil
+                        }
+                        
+                        return period.baseDate.adding(.hour, value: period.startHours)
+                    }()
+                    
+                    self?.progressSlider.setRelativeStartDate(startDate)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         Driver
             .combineLatest(
                 periodSelectedTrigger.asDriverOnErrorJustComplete(),
@@ -632,8 +649,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         
         periodsProxy
             .subscribe(
-                onNext: { [weak self] _ in
-                    self?.periodCollectionView.reloadData()
+                onNext: { [weak self] periods in
+                    self?.periodCollectionView.reloadData {
+                        self?.selectFirstPeriod()
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -646,6 +665,25 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    private func selectFirstPeriod() {
+        guard periodCollectionView.numberOfItems(inSection: 0) > 0 else {
+            return
+        }
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        
+        periodCollectionView.selectItem(
+            at: indexPath,
+            animated: false,
+            scrollPosition: .centeredHorizontally
+        )
+        
+        periodCollectionView.delegate?.collectionView?(
+            periodCollectionView,
+            didSelectItemAt: indexPath
+        )
     }
     
     private func loadThumbnails(config: VideoThumbnailConfiguration) {
