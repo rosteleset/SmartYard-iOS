@@ -130,15 +130,3 @@ class LinphoneService: CoreDelegate {
     }
     
 }
-
-extension LinphoneService: CXProviderProxyDelegate {
-    
-    func providerDidEndCall(_ provider: CXProvider) {
-        
-    }
-    
-    func providerDidAnswerCall(_ provider: CXProvider) {
-        
-    }
-    
-}

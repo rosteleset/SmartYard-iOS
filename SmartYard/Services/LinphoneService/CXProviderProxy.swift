@@ -17,6 +17,9 @@ protocol CXProviderProxyDelegate: AnyObject {
     func providerDidEndCall(_ provider: CXProvider)
     func providerDidAnswerCall(_ provider: CXProvider)
     
+    func provider(_ provider: CXProvider, didActivateAudioSession audioSession: AVAudioSession)
+    func provider(_ provider: CXProvider, didDeactivateAudioSession audioSession: AVAudioSession)
+    
 }
 
 class CXProviderProxy: NSObject {
@@ -111,11 +114,11 @@ extension CXProviderProxy: CXProviderDelegate {
     }
 
     func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
-        
+        delegate?.provider(provider, didActivateAudioSession: audioSession)
     }
 
     func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
-        
+        delegate?.provider(provider, didDeactivateAudioSession: audioSession)
     }
     
 }

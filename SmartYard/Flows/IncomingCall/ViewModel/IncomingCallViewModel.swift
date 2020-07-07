@@ -288,8 +288,6 @@ class IncomingCallViewModel: BaseViewModel {
                     self.currentStateSubject.onNext((.establishingConnection, doorState))
                     self.incomingCallAcceptedByUser.onNext(true)
                     
-                    self.configureAudioSession()
-                    
                     if let uViews = views {
                         let (videoView, cameraView) = uViews
                         self.linphoneService.setViews(videoView: videoView, cameraView: cameraView)
@@ -570,22 +568,6 @@ class IncomingCallViewModel: BaseViewModel {
         }
     }
     
-    private func configureAudioSession() {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(
-                .playAndRecord,
-                mode: .voiceChat
-            )
-
-            try AVAudioSession.sharedInstance().setMode(.voiceChat)
-            try AVAudioSession.sharedInstance().setPreferredSampleRate(48000)
-            try AVAudioSession.sharedInstance().setActive(true, options: [])
-            try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
-        } catch {
-            print("Couldn't configure audio session")
-        }
-    }
-    
 }
 
 extension IncomingCallViewModel: LinphoneDelegate {
@@ -631,6 +613,14 @@ extension IncomingCallViewModel: CXProviderProxyDelegate {
     
     func providerDidAnswerCall(_ provider: CXProvider) {
         cxProviderAnswerTapTrigger.onNext(())
+    }
+    
+    func provider(_ provider: CXProvider, didActivateAudioSession audioSession: AVAudioSession) {
+        linphoneService.core?.activateAudioSession(actived: true)
+    }
+    
+    func provider(_ provider: CXProvider, didDeactivateAudioSession audioSession: AVAudioSession) {
+        linphoneService.core?.activateAudioSession(actived: false)
     }
     
     // swiftlint:disable:next file_length
