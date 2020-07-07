@@ -288,6 +288,8 @@ class IncomingCallViewModel: BaseViewModel {
                     self.currentStateSubject.onNext((.establishingConnection, doorState))
                     self.incomingCallAcceptedByUser.onNext(true)
                     
+                    self.configureAudioSession()
+                    
                     if let uViews = views {
                         let (videoView, cameraView) = uViews
                         self.linphoneService.setViews(videoView: videoView, cameraView: cameraView)
@@ -565,6 +567,22 @@ class IncomingCallViewModel: BaseViewModel {
             try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
         } catch {
             print("Couldn't switch output port")
+        }
+    }
+    
+    private func configureAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(
+                .playAndRecord,
+                mode: .voiceChat
+            )
+
+            try AVAudioSession.sharedInstance().setMode(.voiceChat)
+            try AVAudioSession.sharedInstance().setPreferredSampleRate(48000)
+            try AVAudioSession.sharedInstance().setActive(true, options: [])
+            try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+        } catch {
+            print("Couldn't configure audio session")
         }
     }
     
