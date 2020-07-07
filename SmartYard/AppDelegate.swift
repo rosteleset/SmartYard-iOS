@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import YandexMobileMetrica
+import PushKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         configureFirebase(for: application)
+        
+        configureVoIPNotifications()
         
         if let yandexConfig = YMMYandexMetricaConfiguration(apiKey: "686bcc1e-69e5-4412-8d54-3e11e362624a") {
             YMMYandexMetrica.activate(with: yandexConfig)
@@ -113,7 +116,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // MARK: Если пришел входящий звонок - переходим на экран входящего звонка, но не показываем пуш
         
         if let callPayload = CallPayload(pushNotificationPayload: userInfo) {
-            appCoordinator.processIncomingCallRequest(callPayload: callPayload)
+            appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: false)
             completionHandler([])
             return
         }
@@ -156,7 +159,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if let callPayload = CallPayload(
             pushNotificationPayload: response.notification.request.content.userInfo
         ) {
-            appCoordinator.processIncomingCallRequest(callPayload: callPayload)
+            appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: false)
         }
         
         // MARK: Если в уведомлении нет никакого действия, то ничего не делаем
@@ -197,6 +200,48 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // MARK: Завершение работы
         
         completionHandler()
+    }
+    
+}
+
+// MARK: VoIP Notifications
+
+extension AppDelegate: PKPushRegistryDelegate {
+    
+    func pushRegistry(
+        _ registry: PKPushRegistry,
+        didUpdate pushCredentials: PKPushCredentials,
+        for type: PKPushType
+    ) {
+        let token = pushCredentials.token
+            .map { String(format: "%02.2hhx", $0) }
+            .joined()
+        
+        print(token)
+    }
+    
+    func pushRegistry(
+        _ registry: PKPushRegistry,
+        didReceiveIncomingPushWith payload: PKPushPayload,
+        for type: PKPushType,
+        completion: @escaping () -> Void
+    ) {
+        print("DEBUG / VOIP NOTIFICATIONS / Payload: \(payload.dictionaryPayload)")
+        
+        guard let data = payload.dictionaryPayload["data"] as? [AnyHashable: Any],
+            let callPayload = CallPayload(pushNotificationPayload: data) else {
+            appCoordinator.reportInvalidCall()
+            completion()
+            return
+        }
+        
+        appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: true)
+    }
+    
+    private func configureVoIPNotifications() {
+        let registry = PKPushRegistry(queue: DispatchQueue.main)
+        registry.delegate = self
+        registry.desiredPushTypes = [.voIP]
     }
     
 }

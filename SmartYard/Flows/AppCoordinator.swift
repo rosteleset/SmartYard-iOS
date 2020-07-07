@@ -144,7 +144,15 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         }
     }
     
-    func processIncomingCallRequest(callPayload: CallPayload) {
+    func processIncomingCallRequest(callPayload: CallPayload, useCallKit: Bool) {
+        if useCallKit {
+            linphoneService.providerDelegate.reportIncomingCall(
+                uuid: UUID(),
+                handle: callPayload.callerId,
+                hasVideo: false
+            )
+        }
+        
         // MARK: Проверяем, есть ли у нас уже входящие звонки на данный момент
         // Скорее всего, дальше надо будет делать какую-то очередь, но сейчас для демо и так сгодится
         
@@ -160,6 +168,18 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         DispatchQueue.main.async { [weak self] in
             self?.trigger(.incomingCall(callPayload: callPayload))
         }
+    }
+    
+    func reportInvalidCall() {
+        let uuid = UUID()
+        
+        linphoneService.providerDelegate.reportIncomingCall(
+            uuid: uuid,
+            handle: "Входящий звонок",
+            hasVideo: false
+        )
+        
+        linphoneService.providerDelegate.endCall(uuid: uuid)
     }
     
     func markAllMessagesAsDelivered() {

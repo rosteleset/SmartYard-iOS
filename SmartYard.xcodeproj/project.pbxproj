@@ -97,6 +97,7 @@
 		847721772497C31D003FCC24 /* ArchivePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847721752497C31D003FCC24 /* ArchivePageViewController.xib */; };
 		8477217A2497C329003FCC24 /* OnlinePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847721782497C329003FCC24 /* OnlinePageViewController.swift */; };
 		8477217B2497C329003FCC24 /* OnlinePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847721792497C329003FCC24 /* OnlinePageViewController.xib */; };
+		846DC6EA24B3653300A11914 /* ProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DC6E924B3653300A11914 /* ProviderDelegate.swift */; };
 		8477218824A0B345003FCC24 /* SmartYardPasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477218724A0B345003FCC24 /* SmartYardPasswordTextField.swift */; };
 		847880E024A4BB3B008D9E33 /* ScreenshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847880DF24A4BB3B008D9E33 /* ScreenshotHelper.swift */; };
 		847880E824AB3ED4008D9E33 /* FullscreenPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847880E724AB3ED4008D9E33 /* FullscreenPlayerViewController.swift */; };
@@ -555,6 +556,7 @@
 		847721752497C31D003FCC24 /* ArchivePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchivePageViewController.xib; sourceTree = "<group>"; };
 		847721782497C329003FCC24 /* OnlinePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlinePageViewController.swift; sourceTree = "<group>"; };
 		847721792497C329003FCC24 /* OnlinePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnlinePageViewController.xib; sourceTree = "<group>"; };
+		846DC6E924B3653300A11914 /* ProviderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderDelegate.swift; sourceTree = "<group>"; };
 		8477218724A0B345003FCC24 /* SmartYardPasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardPasswordTextField.swift; sourceTree = "<group>"; };
 		847880DF24A4BB3B008D9E33 /* ScreenshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotHelper.swift; sourceTree = "<group>"; };
 		847880E724AB3ED4008D9E33 /* FullscreenPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenPlayerViewController.swift; sourceTree = "<group>"; };
@@ -2005,6 +2007,7 @@
 				84B9EC8F23E0884400979C39 /* LinphoneDelegate.swift */,
 				84B9EC9023E0884400979C39 /* LinphoneService.swift */,
 				84B9EC9923E0888B00979C39 /* SipConfig.swift */,
+				846DC6E924B3653300A11914 /* ProviderDelegate.swift */,
 			);
 			path = LinphoneService;
 			sourceTree = "<group>";
@@ -3772,6 +3775,7 @@
 				8496398B2487ED5D0086B6E9 /* ArchiveVideoHourPeriod.swift in Sources */,
 				E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */,
 				845E9EE324895AE4000CBBC6 /* SimpleVideoRangeSlider.swift in Sources */,
+				846DC6EA24B3653300A11914 /* ProviderDelegate.swift in Sources */,
 				E92EFBE0242A22F2003AF7FE /* CreateIssueRequest.swift in Sources */,
 				843C38D1242A577C0035BF80 /* UnreadedResponseData.swift in Sources */,
 				E92EFBEC242A2507003AF7FE /* NotificationName+Extensions.swift in Sources */,

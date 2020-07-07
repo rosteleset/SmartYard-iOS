@@ -16,6 +16,8 @@ class LinphoneService: CoreDelegate {
     private(set) var core: Core? = nil
     private var timer: Timer? = nil
     
+    let providerDelegate = ProviderDelegate()
+    
     weak var delegate: LinphoneDelegate?
     
     var hasEnqueuedCalls = false
