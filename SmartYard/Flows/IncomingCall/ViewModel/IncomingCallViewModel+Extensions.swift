@@ -17,7 +17,8 @@ extension IncomingCallViewModel {
         
         // MARK: Ну я хз, придется либо прокидывать вьюхи сюда, либо UnsafeRawPointer. И то, и то - говно
         
-        let callTrigger: Driver<(UIView, UIView)>
+        let callTrigger: Driver<Void>
+        let videoViewsTrigger: Driver<(UIView, UIView)>
         let ignoreTrigger: Driver<Void>
         let openTrigger: Driver<Void>
     }

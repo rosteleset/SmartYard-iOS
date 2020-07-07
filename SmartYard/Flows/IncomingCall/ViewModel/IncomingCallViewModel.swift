@@ -40,6 +40,8 @@ class IncomingCallViewModel: BaseViewModel {
     private let cxProviderAnswerTapTrigger = PublishSubject<Void>()
     private let cxProviderEndTapTrigger = PublishSubject<Void>()
     
+    private let videoViews = BehaviorSubject<(UIView, UIView)?>(value: nil)
+    
     init(
         providerProxy: CXProviderProxy,
         linphoneService: LinphoneService,
@@ -242,14 +244,25 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        // MARK: Обработка нажатия на кнопку "Звонок"
+        // MARK: Сохраняем вьюхи для показа видео
         
-        input.callTrigger
+        input.videoViewsTrigger
+            .drive(
+                onNext: { [weak self] args in
+                    self?.videoViews.onNext(args)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Звонок" во вьюхе приложения либо в CallKit
+        
+        Driver
+            .merge(input.callTrigger, cxProviderAnswerTapTrigger.asDriverOnErrorJustComplete())
+            .withLatestFrom(videoViews.asDriver(onErrorJustReturn: nil))
             .withLatestFrom(currentState) { ($0, $1) }
             .drive(
                 onNext: { [weak self] args in
                     let (views, currentState) = args
-                    let (videoView, cameraView) = views
                     let (callState, doorState) = currentState
                     
                     guard let self = self,
@@ -259,8 +272,12 @@ class IncomingCallViewModel: BaseViewModel {
                     }
                     
                     self.currentStateSubject.onNext((.establishingConnection, doorState))
-                    self.linphoneService.setViews(videoView: videoView, cameraView: cameraView)
                     self.incomingCallAcceptedByUser.onNext(true)
+                    
+                    if let uViews = views {
+                        let (videoView, cameraView) = uViews
+                        self.linphoneService.setViews(videoView: videoView, cameraView: cameraView)
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -268,8 +285,10 @@ class IncomingCallViewModel: BaseViewModel {
         // MARK: Обработка нажатия на кнопку "Игнорировать / Отклонить"
         // Если мы еще не приняли звонок, то просто закрываем окно (человек у домофона думает, что нас нет дома)
         // Если мы уже приняли звонок и жмем "Отклонить", то завершаем звонок и закрываем окно
+        // UPD: Сюда же и нажатие на кнопку сброса в нативной вьюхе CallKit
         
-        input.ignoreTrigger
+        Driver
+            .merge(input.ignoreTrigger, cxProviderEndTapTrigger.asDriverOnErrorJustComplete())
             .withLatestFrom(currentState)
             .do(
                 onNext: { [weak self] currentState in

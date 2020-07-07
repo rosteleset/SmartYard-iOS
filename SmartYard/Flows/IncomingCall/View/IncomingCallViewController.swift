@@ -94,13 +94,6 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
     // swiftlint:disable:next function_body_length
     private func bind() {
         let callTrigger = callButton.rx.tap
-            .flatMap { [weak self] _ -> Driver<(UIView, UIView)> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
-                return .just((self.videoPreview, UIView()))
-            }
             .do(
                 onNext: { [weak self] _ in
                     self?.imageViewActivityIndicator.stopAnimating()
@@ -110,6 +103,7 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
         let input = IncomingCallViewModel.Input(
             previewTrigger: previewButton.rx.tap.asDriver(),
             callTrigger: callTrigger.asDriverOnErrorJustComplete(),
+            videoViewsTrigger: .just((videoPreview, UIView())),
             ignoreTrigger: ignoreButton.rx.tap.asDriver(),
             openTrigger: openButton.rx.tap.asDriver()
         )
