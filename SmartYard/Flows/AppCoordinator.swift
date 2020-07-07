@@ -182,6 +182,10 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         linphoneService.providerDelegate.endCall(uuid: uuid)
     }
     
+    func setVoipToken(_ token: String) {
+        accessService.voipToken = token
+    }
+    
     func markAllMessagesAsDelivered() {
         pushNotificationService.markAllMessagesAsDelivered()
     }

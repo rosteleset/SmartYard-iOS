@@ -19,6 +19,7 @@ struct RegisterPushTokenRequest {
     
     let accessToken: String
     let pushToken: String
+    let voipToken: String?
     let clientId: String?
     let type: TokenType
     
@@ -35,6 +36,10 @@ extension RegisterPushTokenRequest {
         
         if let clientId = clientId {
             params["clientId"] = clientId
+        }
+        
+        if let voipToken = voipToken {
+            params["voipToken"] = voipToken
         }
         
         return params

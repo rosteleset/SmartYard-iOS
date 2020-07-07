@@ -50,7 +50,12 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-    func registerPushToken(pushToken: String, clientId: String?, type: TokenType) -> Single<Void?> {
+    func registerPushToken(
+        pushToken: String,
+        voipToken: String?,
+        clientId: String?,
+        type: TokenType
+    ) -> Single<Void?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -62,6 +67,7 @@ extension APIWrapper {
         let request = RegisterPushTokenRequest(
             accessToken: accessToken,
             pushToken: pushToken,
+            voipToken: voipToken,
             clientId: clientId,
             type: type
         )

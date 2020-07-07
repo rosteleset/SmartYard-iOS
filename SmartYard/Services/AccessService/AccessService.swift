@@ -10,6 +10,7 @@ import Foundation
 
 private let appStateKey = "appState"
 private let accessTokenKey = "accessToken"
+private let voipTokenKey = "voipToken"
 private let clientNameKey = "clientName"
 private let clientPhoneNumberKey = "clientPhoneNumber"
 
@@ -35,6 +36,20 @@ class AccessService {
             }
             
             UserDefaults.standard.setValue(newValue, forKey: accessTokenKey)
+        }
+    }
+    
+    var voipToken: String? {
+        get {
+            return UserDefaults.standard.string(forKey: voipTokenKey)
+        }
+        set {
+            guard let newValue = newValue else {
+                UserDefaults.standard.removeObject(forKey: voipTokenKey)
+                return
+            }
+            
+            UserDefaults.standard.setValue(newValue, forKey: voipTokenKey)
         }
     }
     
@@ -79,6 +94,7 @@ class AccessService {
     func logout() {
         appState = .phoneNumber
         accessToken = nil
+        voipToken = nil
         clientName = nil
         clientPhoneNumber = nil
         
