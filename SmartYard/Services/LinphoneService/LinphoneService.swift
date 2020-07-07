@@ -9,14 +9,13 @@
 import Foundation
 import linphonesw
 import UIKit
+import CallKit
 
 // swiftlint:disable all
 class LinphoneService: CoreDelegate {
     
     private(set) var core: Core? = nil
     private var timer: Timer? = nil
-    
-    let providerDelegate = ProviderDelegate()
     
     weak var delegate: LinphoneDelegate?
     
@@ -128,6 +127,18 @@ class LinphoneService: CoreDelegate {
     private func bridge<T: AnyObject>(obj : T) -> UnsafeRawPointer {
         let pointer = Unmanaged.passUnretained(obj).toOpaque()
         return UnsafeRawPointer(pointer)
+    }
+    
+}
+
+extension LinphoneService: CXProviderProxyDelegate {
+    
+    func providerDidEndCall(_ provider: CXProvider) {
+        
+    }
+    
+    func providerDidAnswerCall(_ provider: CXProvider) {
+        
     }
     
 }

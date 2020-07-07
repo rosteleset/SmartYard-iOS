@@ -38,15 +38,24 @@ class CallInfo: NSObject {
     
 }
 
-class ProviderDelegate: NSObject {
+protocol CXProviderProxyDelegate: AnyObject {
+    
+    func providerDidEndCall(_ provider: CXProvider)
+    func providerDidAnswerCall(_ provider: CXProvider)
+    
+}
+
+class CXProviderProxy: NSObject {
     
     private let provider: CXProvider
+    
+    weak var delegate: CXProviderProxyDelegate?
     
     var uuids: [String: UUID] = [:]
     var callInfos: [UUID: CallInfo] = [:]
 
     override init() {
-        provider = CXProvider(configuration: ProviderDelegate.providerConfiguration)
+        provider = CXProvider(configuration: CXProviderProxy.providerConfiguration)
         
         super.init()
         
@@ -60,6 +69,7 @@ class ProviderDelegate: NSObject {
         
         providerConfiguration.supportsVideo = false
         providerConfiguration.supportedHandleTypes = [.generic]
+        providerConfiguration.iconTemplateImageData = UIImage(named: "LantaSquareLogo")?.pngData()
 
         providerConfiguration.maximumCallsPerCallGroup = 1
         providerConfiguration.maximumCallGroups = 1
@@ -100,13 +110,17 @@ class ProviderDelegate: NSObject {
     
 }
 
-extension ProviderDelegate: CXProviderDelegate {
+extension CXProviderProxy: CXProviderDelegate {
     
     func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
+        delegate?.providerDidEndCall(provider)
+        
         action.fulfill()
     }
 
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
+        delegate?.providerDidAnswerCall(provider)
+        
         action.fulfill()
     }
 

@@ -31,6 +31,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let disposeBag = DisposeBag()
     
     private let linphoneService = LinphoneService()
+    private let providerProxy = CXProviderProxy()
+    
     private let accessService = AccessService()
     private let permissionService = PermissionService()
     private let apiWrapper: APIWrapper
@@ -80,6 +82,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             
         case let .incomingCall(callPayload):
             let vm = IncomingCallViewModel(
+                providerProxy: providerProxy,
                 linphoneService: linphoneService,
                 permissionService: permissionService,
                 apiWrapper: apiWrapper,
@@ -146,7 +149,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     func processIncomingCallRequest(callPayload: CallPayload, useCallKit: Bool) {
         if useCallKit {
-            linphoneService.providerDelegate.reportIncomingCall(
+            providerProxy.reportIncomingCall(
                 uuid: UUID(),
                 handle: callPayload.callerId,
                 hasVideo: false
@@ -173,13 +176,13 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     func reportInvalidCall() {
         let uuid = UUID()
         
-        linphoneService.providerDelegate.reportIncomingCall(
+        providerProxy.reportIncomingCall(
             uuid: uuid,
             handle: "Входящий звонок",
             hasVideo: false
         )
         
-        linphoneService.providerDelegate.endCall(uuid: uuid)
+        providerProxy.endCall(uuid: uuid)
     }
     
     func setVoipToken(_ token: String) {

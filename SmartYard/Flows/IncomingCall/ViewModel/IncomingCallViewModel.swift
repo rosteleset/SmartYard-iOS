@@ -13,10 +13,12 @@ import UIKit
 import linphonesw
 import XCoordinator
 import AVFoundation
+import CallKit
 
 // swiftlint:disable:next type_body_length
 class IncomingCallViewModel: BaseViewModel {
     
+    private let providerProxy: CXProviderProxy
     private let linphoneService: LinphoneService
     private let permissionService: PermissionService
     private let apiWrapper: APIWrapper
@@ -35,13 +37,18 @@ class IncomingCallViewModel: BaseViewModel {
     private let doorOpeningRequestedByUser = BehaviorSubject<Bool>(value: false)
     private let isDoorBeingOpened = BehaviorSubject<Bool>(value: false)
     
+    private let cxProviderAnswerTapTrigger = PublishSubject<Void>()
+    private let cxProviderEndTapTrigger = PublishSubject<Void>()
+    
     init(
+        providerProxy: CXProviderProxy,
         linphoneService: LinphoneService,
         permissionService: PermissionService,
         apiWrapper: APIWrapper,
         router: WeakRouter<AppRoute>,
         callPayload: CallPayload
     ) {
+        self.providerProxy = providerProxy
         self.linphoneService = linphoneService
         self.permissionService = permissionService
         self.apiWrapper = apiWrapper
@@ -52,6 +59,8 @@ class IncomingCallViewModel: BaseViewModel {
         
         linphoneService.delegate = self
         linphoneService.connect(config: callPayload.sipConfig)
+        
+        providerProxy.delegate = self
     }
     
     deinit {
@@ -547,6 +556,18 @@ extension IncomingCallViewModel: LinphoneDelegate {
             }
         }
     }
+    
+}
 
-// swiftlint:disable:next file_length
+extension IncomingCallViewModel: CXProviderProxyDelegate {
+    
+    func providerDidEndCall(_ provider: CXProvider) {
+        
+    }
+    
+    func providerDidAnswerCall(_ provider: CXProvider) {
+        
+    }
+    
+    // swiftlint:disable:next file_length
 }

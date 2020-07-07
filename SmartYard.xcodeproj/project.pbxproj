@@ -97,7 +97,6 @@
 		847721772497C31D003FCC24 /* ArchivePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847721752497C31D003FCC24 /* ArchivePageViewController.xib */; };
 		8477217A2497C329003FCC24 /* OnlinePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847721782497C329003FCC24 /* OnlinePageViewController.swift */; };
 		8477217B2497C329003FCC24 /* OnlinePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847721792497C329003FCC24 /* OnlinePageViewController.xib */; };
-		846DC6EA24B3653300A11914 /* ProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DC6E924B3653300A11914 /* ProviderDelegate.swift */; };
 		8477218824A0B345003FCC24 /* SmartYardPasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477218724A0B345003FCC24 /* SmartYardPasswordTextField.swift */; };
 		847880E024A4BB3B008D9E33 /* ScreenshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847880DF24A4BB3B008D9E33 /* ScreenshotHelper.swift */; };
 		847880E824AB3ED4008D9E33 /* FullscreenPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847880E724AB3ED4008D9E33 /* FullscreenPlayerViewController.swift */; };
@@ -213,6 +212,7 @@
 		84D29B9624B799B100CFBE6B /* StreamInfoResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9424B799B100CFBE6B /* StreamInfoResponseData.swift */; };
 		84D29B9824B79B5400CFBE6B /* Calendar+Moscow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */; };
 		84D29BA324B865EF00CFBE6B /* LoaderAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 84D29BA224B865EF00CFBE6B /* LoaderAnimation.json */; };
+		84D29BA124B79E6300CFBE6B /* CXProviderProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DC6E924B3653300A11914 /* CXProviderProxy.swift */; };
 		84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */; };
 		84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */; };
 		84D6445923F68AB200AD87EF /* AdvancedSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */; };
@@ -551,12 +551,12 @@
 		846DC6E324B33E1C00A11914 /* PickerPresentAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerPresentAnimator.swift; sourceTree = "<group>"; };
 		846DC6E424B33E1C00A11914 /* PickerDismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerDismissAnimator.swift; sourceTree = "<group>"; };
 		846DC6E524B33E1C00A11914 /* SwipeInteractionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeInteractionController.swift; sourceTree = "<group>"; };
+		846DC6E924B3653300A11914 /* CXProviderProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CXProviderProxy.swift; sourceTree = "<group>"; };
 		846DC70124B7397800A11914 /* VideoThumbnailConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoThumbnailConfiguration.swift; sourceTree = "<group>"; };
 		847721742497C31D003FCC24 /* ArchivePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePageViewController.swift; sourceTree = "<group>"; };
 		847721752497C31D003FCC24 /* ArchivePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchivePageViewController.xib; sourceTree = "<group>"; };
 		847721782497C329003FCC24 /* OnlinePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlinePageViewController.swift; sourceTree = "<group>"; };
 		847721792497C329003FCC24 /* OnlinePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnlinePageViewController.xib; sourceTree = "<group>"; };
-		846DC6E924B3653300A11914 /* ProviderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderDelegate.swift; sourceTree = "<group>"; };
 		8477218724A0B345003FCC24 /* SmartYardPasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardPasswordTextField.swift; sourceTree = "<group>"; };
 		847880DF24A4BB3B008D9E33 /* ScreenshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotHelper.swift; sourceTree = "<group>"; };
 		847880E724AB3ED4008D9E33 /* FullscreenPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenPlayerViewController.swift; sourceTree = "<group>"; };
@@ -2007,7 +2007,7 @@
 				84B9EC8F23E0884400979C39 /* LinphoneDelegate.swift */,
 				84B9EC9023E0884400979C39 /* LinphoneService.swift */,
 				84B9EC9923E0888B00979C39 /* SipConfig.swift */,
-				846DC6E924B3653300A11914 /* ProviderDelegate.swift */,
+				846DC6E924B3653300A11914 /* CXProviderProxy.swift */,
 			);
 			path = LinphoneService;
 			sourceTree = "<group>";
@@ -3775,7 +3775,6 @@
 				8496398B2487ED5D0086B6E9 /* ArchiveVideoHourPeriod.swift in Sources */,
 				E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */,
 				845E9EE324895AE4000CBBC6 /* SimpleVideoRangeSlider.swift in Sources */,
-				846DC6EA24B3653300A11914 /* ProviderDelegate.swift in Sources */,
 				E92EFBE0242A22F2003AF7FE /* CreateIssueRequest.swift in Sources */,
 				843C38D1242A577C0035BF80 /* UnreadedResponseData.swift in Sources */,
 				E92EFBEC242A2507003AF7FE /* NotificationName+Extensions.swift in Sources */,
@@ -3811,6 +3810,7 @@
 				84AADD2E24334DF70056994A /* ChatConfiguration.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				846DC6E024B33DEA00A11914 /* PayProcessRequest.swift in Sources */,
+				84D29BA124B79E6300CFBE6B /* CXProviderProxy.swift in Sources */,
 				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
