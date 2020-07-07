@@ -49,6 +49,8 @@ class PushNotificationService {
             return .error(NSError.PushNotificationServiceError.fcmTokenMissing)
         }
         
+        print("DEBUG / REGISTER WITH VOIP TOKEN \(voipToken)")
+        
         return apiWrapper.registerPushToken(
             pushToken: fcmToken,
             voipToken: voipToken,
