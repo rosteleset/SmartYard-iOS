@@ -581,11 +581,11 @@ extension IncomingCallViewModel: LinphoneDelegate {
 extension IncomingCallViewModel: CXProviderProxyDelegate {
     
     func providerDidEndCall(_ provider: CXProvider) {
-        
+        cxProviderEndTapTrigger.onNext(())
     }
     
     func providerDidAnswerCall(_ provider: CXProvider) {
-        
+        cxProviderAnswerTapTrigger.onNext(())
     }
     
     // swiftlint:disable:next file_length

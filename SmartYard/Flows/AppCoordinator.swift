@@ -92,6 +92,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             
             let vc = IncomingCallViewController(viewModel: vm)
             
+            vc.loadViewIfNeeded()
+            
             vc.modalPresentationStyle = .overFullScreen
             vc.modalPresentationCapturesStatusBarAppearance = true
             vc.modalTransitionStyle = .crossDissolve
