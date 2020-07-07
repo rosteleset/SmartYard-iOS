@@ -152,7 +152,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     func processIncomingCallRequest(callPayload: CallPayload, useCallKit: Bool) {
         if useCallKit {
             providerProxy.reportIncomingCall(
-                uuid: UUID(),
+                uuid: callPayload.uuid,
                 handle: callPayload.callerId,
                 hasVideo: false
             )

@@ -195,6 +195,10 @@ class IncomingCallViewModel: BaseViewModel {
             .withLatestFrom(currentStateSubject.asDriverOnErrorJustComplete()) { ($0, $1) }
             .drive(
                 onNext: { [weak self] args in
+                    guard let self = self else {
+                        return
+                    }
+                    
                     let (callInfo, currentState) = args
                     let (_, doorState) = currentState
                     let (call, callParams) = callInfo
@@ -202,13 +206,17 @@ class IncomingCallViewModel: BaseViewModel {
                     do {
                         try call.acceptWithParams(params: callParams)
                         
+                        self.providerProxy.updateCall(uuid: self.callPayload.uuid, handle: self.callPayload.callerId)
+                        
                         if !call.speakerMuted {
-                            self?.enableLoudSpeaker()
+                            self.enableLoudSpeaker()
                         }
                         
-                        self?.currentStateSubject.onNext((.callAccepted, doorState))
+                        self.currentStateSubject.onNext((.callAccepted, doorState))
                     } catch {
-                        self?.router.trigger(.dismiss)
+                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                        
+                        self.router.trigger(.dismiss)
                     }
                 }
             )
@@ -239,7 +247,13 @@ class IncomingCallViewModel: BaseViewModel {
             .delay(.milliseconds(2000))
             .drive(
                 onNext: { [weak self] _ in
-                    self?.router.trigger(.dismiss)
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                    
+                    self.router.trigger(.dismiss)
                 }
             )
             .disposed(by: disposeBag)
@@ -310,13 +324,18 @@ class IncomingCallViewModel: BaseViewModel {
                     
                     guard let currentCall = callInfo?.0,
                         (currentCall.state == .Connected || currentCall.state == .StreamsRunning) else {
+                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                            
                         self.router.trigger(.dismiss)
+                        
                         return
                     }
 
                     do {
                         try currentCall.terminate()
                     } catch {
+                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                        
                         self.router.trigger(.dismiss)
                     }
                 }
@@ -527,7 +546,13 @@ class IncomingCallViewModel: BaseViewModel {
                         try call.terminate()
                     } catch {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                            self?.router.trigger(.dismiss)
+                            guard let self = self else {
+                                return
+                            }
+                            
+                            self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                            
+                            self.router.trigger(.dismiss)
                         }
                     }
                 }
@@ -569,6 +594,8 @@ extension IncomingCallViewModel: LinphoneDelegate {
             if let (_, doorState) = try? currentStateSubject.value() {
                 currentStateSubject.onNext((.callFinished, doorState))
             }
+            
+            providerProxy.endCall(uuid: callPayload.uuid)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 self?.router.trigger(.dismiss)

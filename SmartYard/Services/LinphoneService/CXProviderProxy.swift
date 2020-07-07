@@ -12,32 +12,6 @@ import CallKit
 import linphonesw
 import AVKit
 
-class CallInfo: NSObject {
-    
-    var callId: String = ""
-    var accepted = false
-    var toAddr: Address?
-    var isOutgoing = false
-    var sasEnabled = false
-    var declined = false
-    var connected = false
-    
-    static func newIncomingCallInfo(callId: String) -> CallInfo {
-        let callInfo = CallInfo()
-        callInfo.callId = callId
-        return callInfo
-    }
-    
-    static func newOutgoingCallInfo(addr: Address, isSas: Bool) -> CallInfo {
-        let callInfo = CallInfo()
-        callInfo.isOutgoing = true
-        callInfo.sasEnabled = isSas
-        callInfo.toAddr = addr
-        return callInfo
-    }
-    
-}
-
 protocol CXProviderProxyDelegate: AnyObject {
     
     func providerDidEndCall(_ provider: CXProvider)
@@ -50,9 +24,6 @@ class CXProviderProxy: NSObject {
     private let provider: CXProvider
     
     weak var delegate: CXProviderProxyDelegate?
-    
-    var uuids: [String: UUID] = [:]
-    var callInfos: [UUID: CallInfo] = [:]
 
     override init() {
         provider = CXProvider(configuration: CXProviderProxy.providerConfiguration)
@@ -82,9 +53,11 @@ class CXProviderProxy: NSObject {
         
         update.remoteHandle = CXHandle(type: .generic, value: handle)
         update.hasVideo = hasVideo
-
-        let callInfo = callInfos[uuid]
-        let callId = callInfo?.callId
+        
+        update.supportsGrouping = false
+        update.supportsUngrouping = false
+        update.supportsHolding = false
+        update.supportsDTMF = false
         
         provider.reportNewIncomingCall(with: uuid, update: update) { error in
             if error == nil {
@@ -100,6 +73,11 @@ class CXProviderProxy: NSObject {
         
         update.remoteHandle = CXHandle(type: .generic, value: handle)
         update.hasVideo = hasVideo
+        
+        update.supportsGrouping = false
+        update.supportsUngrouping = false
+        update.supportsHolding = false
+        update.supportsDTMF = false
         
         provider.reportCall(with: uuid, updated: update)
     }

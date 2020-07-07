@@ -10,6 +10,8 @@ import linphonesw
 
 struct CallPayload {
     
+    let uuid = UUID()
+    
     let username: String
     let password: String
     let server: String
