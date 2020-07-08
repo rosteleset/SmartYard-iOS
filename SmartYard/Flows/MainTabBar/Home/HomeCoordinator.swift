@@ -243,7 +243,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let onlineVc = OnlinePageViewController()
             onlineVc.loadViewIfNeeded()
             
-            let archiveVc = ArchivePageViewController()
+            let archiveVc = ArchivePageViewController(apiWrapper: apiWrapper)
             archiveVc.loadViewIfNeeded()
             
             let vc = SelectCameraContainerViewController(

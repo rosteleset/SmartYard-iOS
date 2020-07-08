@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import JTAppleCalendar
+import JGProgressHUD
 
 protocol ArchivePageViewControllerDelegate: AnyObject {
     
@@ -17,7 +18,7 @@ protocol ArchivePageViewControllerDelegate: AnyObject {
     
 }
 
-class ArchivePageViewController: BaseViewController {
+class ArchivePageViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var calendarView: JTACMonthView!
     @IBOutlet private weak var monthLabel: UILabel!
@@ -26,6 +27,15 @@ class ArchivePageViewController: BaseViewController {
     
     private let formatter = DateFormatter()
     private let currentCalendar = Calendar.current
+    
+    private let apiWrapper: APIWrapper
+    
+    private let activityTracker = ActivityTracker()
+    private let errorTracker = ErrorTracker()
+    
+    private var archiveRangesDisposeBag = DisposeBag()
+    
+    var loader: JGProgressHUD?
     
     // MARK: Максимальная дата, которую можно выбрать в календаре. Равняется текущей дате по МСК
     // Если у нас 00:00, то в Москве еще 23:00. Соответственно, у них не наступил новый день и выбрать его нельзя
@@ -46,7 +56,9 @@ class ArchivePageViewController: BaseViewController {
     
     weak var delegate: ArchivePageViewControllerDelegate?
     
-    init() {
+    init(apiWrapper: APIWrapper) {
+        self.apiWrapper = apiWrapper
+        
         super.init(nibName: nil, bundle: nil)
         
         title = "Архив"
@@ -62,6 +74,8 @@ class ArchivePageViewController: BaseViewController {
         
         configureCalendarView()
         setupCalendar()
+        
+        bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -78,6 +92,36 @@ class ArchivePageViewController: BaseViewController {
     
     func setupCalendar() {
         setupCalendarHeader(from: calendarView.visibleDates())
+    }
+    
+    func updateAvailableDates(camera: CameraObject) {
+        archiveRangesDisposeBag = DisposeBag()
+        
+        apiWrapper
+            .getArchiveRanges(cameraUrl: camera.video, from: 1525186456, token: camera.token)
+            .trackActivity(activityTracker)
+            .trackError(errorTracker)
+            .debug()
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] ranges in
+                    print(ranges)
+                }
+            )
+            .disposed(by: archiveRangesDisposeBag)
+    }
+    
+    private func bind() {
+        activityTracker
+            .asDriver()
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureCell(view: JTACDayCell?, cellState: CellState) {

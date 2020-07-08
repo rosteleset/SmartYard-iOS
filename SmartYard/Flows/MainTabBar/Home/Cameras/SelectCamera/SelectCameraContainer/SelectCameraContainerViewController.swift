@@ -117,6 +117,8 @@ extension SelectCameraContainerViewController: OnlinePageViewControllerDelegate 
         selectCameraTrigger.onNext(camera)
         
         cameraNameLabel.text = camera.name
+        
+        archivePage.updateAvailableDates(camera: camera)
     }
     
 }
