@@ -17,17 +17,25 @@ class PlayArchiveVideoViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     
     private let date: Date
+    private let ranges: [APIArchiveRange]
     private let camera: CameraObject
     
     private let selectedStartEnd = BehaviorSubject<(Date, Date)?>(value: nil)
     private let selectedPeriod = BehaviorSubject<ArchiveVideoHourPeriod?>(value: nil)
     
-    init(apiWrapper: APIWrapper, camera: CameraObject, date: Date, router: WeakRouter<HomeRoute>) {
+    init(
+        apiWrapper: APIWrapper,
+        camera: CameraObject,
+        date: Date,
+        availableRanges: [APIArchiveRange],
+        router: WeakRouter<HomeRoute>
+    ) {
         self.apiWrapper = apiWrapper
         self.router = router
         
         self.camera = camera
         self.date = date
+        self.ranges = availableRanges
     }
     
     // swiftlint:disable:next function_body_length

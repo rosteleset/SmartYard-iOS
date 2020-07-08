@@ -116,22 +116,8 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         setupCalendarHeader(from: calendarView.visibleDates())
     }
     
-    func updateAvailableDates(camera: CameraObject) {
-        archiveRangesDisposeBag = DisposeBag()
-        availableRanges = []
-        
-        apiWrapper
-            .getArchiveRanges(cameraUrl: camera.video, from: 1525186456, token: camera.token)
-            .trackActivity(activityTracker)
-            .trackError(errorTracker)
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
-            .drive(
-                onNext: { [weak self] ranges in
-                    self?.availableRanges = ranges
-                }
-            )
-            .disposed(by: archiveRangesDisposeBag)
+    func setAvailableRanges(_ ranges: [APIArchiveRange]?) {
+        availableRanges = ranges
     }
     
     private func bind() {

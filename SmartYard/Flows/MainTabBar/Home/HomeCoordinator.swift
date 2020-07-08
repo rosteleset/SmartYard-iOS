@@ -29,7 +29,7 @@ enum HomeRoute: Route {
     case serviceSoonAvailable(issue: APIIssueConnect)
     case cameraContainer(address: String, cameras: [CameraObject], selectedCamera: CameraObject)
     case yardCamerasMap(houseId: String, address: String)
-    case playArchiveVideo(camera: CameraObject, date: Date)
+    case playArchiveVideo(camera: CameraObject, date: Date, availableRanges: [APIArchiveRange])
     
 }
 
@@ -254,8 +254,15 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             return .push(vc)
             
-        case let .playArchiveVideo(camera, date):
-            let vm = PlayArchiveVideoViewModel(apiWrapper: apiWrapper, camera: camera, date: date, router: weakRouter)
+        case let .playArchiveVideo(camera, date, availableRanges):
+            let vm = PlayArchiveVideoViewModel(
+                apiWrapper: apiWrapper,
+                camera: camera,
+                date: date,
+                availableRanges: availableRanges,
+                router: weakRouter
+            )
+            
             let vc = PlayArchiveVideoViewController(viewModel: vm)
             
             return .push(vc)
