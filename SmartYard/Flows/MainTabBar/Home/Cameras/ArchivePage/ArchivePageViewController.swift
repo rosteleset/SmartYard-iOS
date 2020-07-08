@@ -37,24 +37,46 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
     
     var loader: JGProgressHUD?
     
-    // MARK: Максимальная дата, которую можно выбрать в календаре. Равняется текущей дате по МСК
-    // Если у нас 00:00, то в Москве еще 23:00. Соответственно, у них не наступил новый день и выбрать его нельзя
-    // Поэтому вычитаем разницу между локальной таймзоной и МСК из текущего времени
+    weak var delegate: ArchivePageViewControllerDelegate?
     
-    private let endDate: Date = {
-        let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
-        
-        return Date().adding(.hour, value: -diffWithMoscow)
-    }()
+    // MARK: Доступные периоды для просмотра архивных видео
+    // При получении новых данных - обновляем датасорс, чтобы конфигурация календаря поменялась
     
-    // MARK: Минимальная дата, которую можно выбрать в календаре
-    // Равняется текущей минус семь дней (можно выбирать последнюю неделю)
-    
-    private var startDate: Date {
-        return endDate.adding(.day, value: -7)
+    private var availableRanges: [APIArchiveRange]? {
+        didSet {
+            calendarView.calendarDataSource = self
+        }
     }
     
-    weak var delegate: ArchivePageViewControllerDelegate?
+    // MARK: Максимальная доступная дата среди всех интервалов. Нужна для конфигурации календаря
+    
+    private var upperDateLimit: Date? {
+        let maxDate = availableRanges?
+            .map { $0.endDate }
+            .max()
+        
+        // Если у нас 00:00, то в Москве еще 23:00. Соответственно, у них не наступил новый день и выбрать его нельзя
+        // Поэтому вычитаем разницу между локальной таймзоной и МСК из текущего времени
+        
+        let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
+        
+        return maxDate?.adding(.hour, value: -diffWithMoscow)
+    }
+    
+    // MARK: Минимальная доступная дата среди всех интервалов. Нужна для конфигурации календаря
+    
+    private var lowerDateLimit: Date? {
+        let minDate = availableRanges?
+            .map { $0.startDate }
+            .min()
+        
+        // Если у нас 00:00, то в Москве еще 23:00. Соответственно, у них не наступил новый день и выбрать его нельзя
+        // Поэтому вычитаем разницу между локальной таймзоной и МСК из текущего времени
+        
+        let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
+        
+        return minDate?.adding(.hour, value: -diffWithMoscow)
+    }
     
     init(apiWrapper: APIWrapper) {
         self.apiWrapper = apiWrapper
@@ -96,17 +118,17 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
     
     func updateAvailableDates(camera: CameraObject) {
         archiveRangesDisposeBag = DisposeBag()
+        availableRanges = []
         
         apiWrapper
             .getArchiveRanges(cameraUrl: camera.video, from: 1525186456, token: camera.token)
             .trackActivity(activityTracker)
             .trackError(errorTracker)
-            .debug()
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
                 onNext: { [weak self] ranges in
-                    print(ranges)
+                    self?.availableRanges = ranges
                 }
             )
             .disposed(by: archiveRangesDisposeBag)
@@ -122,6 +144,15 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+        
+        errorTracker
+            .asDriver()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.availableRanges = nil
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureCell(view: JTACDayCell?, cellState: CellState) {
@@ -129,9 +160,20 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
             return
         }
         
+        let matchingRange = availableRanges?.first { range in
+            let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
+            
+            guard let startDate = range.startDate.adding(.hour, value: -diffWithMoscow).beginning(of: .day),
+                let endDate = range.endDate.adding(.hour, value: -diffWithMoscow).end(of: .day) else {
+                return false
+            }
+            
+            return cellState.date.isBetween(startDate, endDate, includeBounds: true)
+        }
+        
         myCustomCell.configure(
             with: cellState,
-            isValidDate: cellState.date.isBetween(startDate, endDate, includeBounds: true)
+            isValidDate: matchingRange != nil
         )
     }
     
@@ -151,8 +193,15 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         
         // MARK: Показ и скрытие стрелочек
         
-        let startDateMonth = startDate.month
-        let endDateMonth = endDate.month
+        guard let lowerBound = lowerDateLimit, let upperBound = upperDateLimit else {
+            leftArrowButton.isHidden = true
+            rightArrowButton.isHidden = true
+            
+            return
+        }
+        
+        let startDateMonth = lowerBound.month
+        let endDateMonth = upperBound.month
         let visibleDateMonth = visibleDate.month
         
         leftArrowButton.isHidden = visibleDateMonth <= startDateMonth
@@ -176,7 +225,7 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
         
-        calendarView.scrollToDate(endDate)
+        calendarView.scrollToDate(Date())
         
         leftArrowButton.rx
             .tap
@@ -250,6 +299,16 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
         formatter.dateFormat = "yyyy MM dd"
         formatter.timeZone = currentCalendar.timeZone
         formatter.locale = .init(identifier: "RU")
+        
+        let (startDate, endDate): (Date, Date) = {
+            guard let lowerBound = lowerDateLimit, let upperBound = upperDateLimit else {
+                let date = Date()
+                
+                return (date, date)
+            }
+            
+            return (lowerBound, upperBound)
+        }()
 
         let parameters = ConfigurationParameters(
             startDate: startDate,
@@ -272,7 +331,22 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
         cellState: CellState,
         indexPath: IndexPath
     ) -> Bool {
-        return date.isBetween(startDate, endDate, includeBounds: true)
+        guard let availableRanges = availableRanges, !availableRanges.isEmpty else {
+            return false
+        }
+        
+        let matchingRange = availableRanges.first { range in
+            let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
+            
+            guard let startDate = range.startDate.adding(.hour, value: -diffWithMoscow).beginning(of: .day),
+                let endDate = range.endDate.adding(.hour, value: -diffWithMoscow).end(of: .day) else {
+                return false
+            }
+            
+            return date.isBetween(startDate, endDate, includeBounds: true)
+        }
+        
+        return matchingRange != nil
     }
 
     func calendar(

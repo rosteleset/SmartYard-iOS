@@ -13,4 +13,12 @@ struct APIArchiveRange: Decodable {
     let duration: Int
     let from: Int
     
+    var startDate: Date {
+        return Date(timeIntervalSince1970: from.double)
+    }
+    
+    var endDate: Date {
+        return startDate.addingTimeInterval(duration.double)
+    }
+    
 }
