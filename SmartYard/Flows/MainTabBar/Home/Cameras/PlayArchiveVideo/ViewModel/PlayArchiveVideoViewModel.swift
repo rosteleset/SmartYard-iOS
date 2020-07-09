@@ -206,9 +206,25 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 return URL(string: resultingString)
             }
         
-        let periods: [ArchiveVideoHourPeriod] = (0...7).map {
-            ArchiveVideoHourPeriod(baseDate: date, startHours: $0 * 3, endHours: $0 * 3 + 3)
-        }
+        let periods: [ArchiveVideoHourPeriod] = (0...7)
+            .map {
+                ArchiveVideoHourPeriod(baseDate: date, startHours: $0 * 3, endHours: $0 * 3 + 3)
+            }
+            .filter { period in
+                let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
+                
+                let startDate = period.baseDate.adding(.hour, value: period.startHours)
+                let endDate = period.baseDate.adding(.hour, value: period.endHours)
+                
+                let match = ranges.first { range in
+                    let rangeStart = range.startDate.adding(.hour, value: -diffWithMoscow)
+                    let rangeEnd = range.endDate.adding(.hour, value: -diffWithMoscow)
+                    
+                    return startDate.isBetween(rangeStart, rangeEnd) && endDate.isBetween(rangeStart, rangeEnd)
+                }
+                
+                return match != nil
+            }
         
         return Output(
             date: .just(date),
