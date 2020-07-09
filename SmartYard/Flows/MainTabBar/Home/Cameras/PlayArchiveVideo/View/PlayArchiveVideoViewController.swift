@@ -557,16 +557,18 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         output.videoURL
             .drive(
                 onNext: { [weak self] url in
-                    let playerItem: AVPlayerItem? = {
-                        guard let url = url else {
-                            return nil
-                        }
+                    DispatchQueue.main.async {
+                        let playerItem: AVPlayerItem? = {
+                            guard let url = url else {
+                                return nil
+                            }
+
+                            return AVPlayerItem(url: url)
+                        }()
                         
-                        return AVPlayerItem(url: url)
-                    }()
-                    
-                    self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
-                    self?.progressSlider.setVideoURL(videoURL: url)
+                        self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
+                        self?.progressSlider.setVideoURL(videoURL: url)
+                    }
                 }
             )
             .disposed(by: disposeBag)
