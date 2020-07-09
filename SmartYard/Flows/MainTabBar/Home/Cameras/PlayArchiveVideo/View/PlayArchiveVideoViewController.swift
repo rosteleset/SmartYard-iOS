@@ -48,6 +48,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private var realVideoPlayerViewController: AVPlayerViewController?
     private var realVideoPlayer: AVPlayer?
     
+    private var loadingAsset: AVAsset?
+    
     private var preferredPlaybackSpeedConfig: ArchiveVideoPlaybackSpeed = .normal {
         didSet {
             guard let player = realVideoPlayer else {
@@ -529,6 +531,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         }
     }
 
+    // swiftlint:disable:next function_body_length
     private func bind() {
         let input = PlayArchiveVideoViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
@@ -555,6 +558,12 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.videoURL
+            .do(
+                onNext: { [weak self] _ in
+                    self?.loadingAsset?.cancelLoading()
+                    self?.loadingAsset = nil
+                }
+            )
             .drive(
                 onNext: { [weak self] url in
                     // MARK: Сбрасываем видео. У нас возможность пройти дальше привязана к isValid. Нужно инвалидировать
@@ -569,6 +578,9 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     // MARK: Грузим ассет асинхронно
                     
                     let asset = AVAsset(url: url)
+                    
+                    self?.loadingAsset = asset
+                    
                     let playerItem = AVPlayerItem(asset: asset)
                     
                     asset.loadValuesAsynchronously(forKeys: ["playable"]) { [weak asset] in
@@ -583,6 +595,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         switch playableStatus {
                         case .loaded:
                             DispatchQueue.main.async {
+                                self?.loadingAsset = nil
                                 self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
                                 self?.progressSlider.setVideoDuration(CMTimeGetSeconds(asset.duration))
                             }
