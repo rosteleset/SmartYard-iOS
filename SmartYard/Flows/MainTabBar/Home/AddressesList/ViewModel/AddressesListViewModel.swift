@@ -305,6 +305,7 @@ class AddressesListViewModel: BaseViewModel {
         let updateKindSubject = PublishSubject<AddressesListSectionUpdateKind>()
         let updateKind = updateKindSubject.asDriverOnErrorJustComplete()
         
+        // Обработка нажатия по заявке (адрес в красной рамке)
         input.itemSelected
             .withLatestFrom(loadedUnapprovedAddressesData.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .flatMap { args -> Driver<APIIssueConnect> in
@@ -335,6 +336,29 @@ class AddressesListViewModel: BaseViewModel {
         
         // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
         // Это приведет к обновлению секций
+        
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .cameras(addressId) = identity else {
+                    return .empty()
+                }
+                
+                return .just(addressId)
+            }
+            .withLatestFrom(loadedApprovedAddressesData.asDriverOnErrorJustComplete()) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (addressId, loadedAddresses) = args
+                    let matchingAddress = loadedAddresses?.first { $0.houseId == addressId }
+                    
+                    guard let uHouseId = matchingAddress?.houseId, let uAddress = matchingAddress?.address else {
+                        return
+                    }
+                
+                    self?.router.trigger(.yardCamerasMap(houseId: uHouseId, address: uAddress))
+                }
+            )
+            .disposed(by: disposeBag)
         
         input.itemSelected
             .flatMap { identity -> Driver<String> in

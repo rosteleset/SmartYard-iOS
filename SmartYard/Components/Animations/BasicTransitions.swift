@@ -25,6 +25,12 @@ extension Transition {
         return .present(alert)
     }
     
+    static func shareTransition(items: [Any]) -> Transition {
+        let activityController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        
+        return .present(activityController)
+    }
+    
     static func appSettingsTransition(title: String, message: String?) -> Transition {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         

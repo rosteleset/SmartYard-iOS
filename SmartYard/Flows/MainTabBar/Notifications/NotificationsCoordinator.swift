@@ -12,6 +12,7 @@ enum NotificationsRoute: Route {
     
     case main
     case alert(title: String, message: String?)
+    case share(items: [Any])
     
 }
 
@@ -53,6 +54,9 @@ class NotificationsCoordinator: NavigationCoordinator<NotificationsRoute> {
             
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
+            
+        case let .share(items):
+            return .shareTransition(items: items)
         }
     }
     

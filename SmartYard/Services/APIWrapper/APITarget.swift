@@ -20,6 +20,10 @@ enum APITarget {
     case resend(request: ResendRequest)
     case offices(request: OfficesRequest)
     
+    case allCCTV(request: AllCCTVRequest)
+    case recPrepare(request: RecPrepareRequest)
+    case recDownload(request: RecDownloadRequest)
+    
     case getAddress(request: GetAddressRequest)
     case getGeoCoder(request: GeoCoderRequest)
     case getHouses(request: GetHousesRequest)
@@ -45,12 +49,21 @@ enum APITarget {
     case restore(request: RestoreRequest)
     case notification(request: NotificationRequest)
     
+    case payPrepare(request: PayPrepareRequest)
+    case payProcess(request: PayProcessRequest)
+    case sberbankPayProcess(request: SberbankPayProcessRequest)
+    
 }
 
 extension APITarget: TargetType {
     
     var baseURL: URL {
-        return URL(string: "https://dm.lanta.me/api")!
+        switch self {
+        case .sberbankPayProcess:
+            return URL(string: "https://securepayments.sberbank.ru/payment/applepay")!
+        default:
+            return URL(string: "https://dm.lanta.me/api")!
+        }
     }
     
     var path: String {
@@ -64,6 +77,10 @@ extension APITarget: TargetType {
         case .access: return "address/access"
         case .resend: return "address/resend"
         case .offices: return "address/offices"
+            
+        case .allCCTV: return "cctv/all"
+        case .recPrepare: return "cctv/recPrepare"
+        case .recDownload: return "cctv/recDownload"
             
         case .getAddress: return "geo/address"
         case .getGeoCoder: return "geo/coder"
@@ -89,6 +106,10 @@ extension APITarget: TargetType {
         case .sendName: return "user/sendName"
         case .restore: return "user/restore"
         case .notification: return "user/notification"
+            
+        case .payPrepare: return "pay/prepare"
+        case .payProcess: return "pay/process"
+        case .sberbankPayProcess: return "payment.do"
         }
     }
     
@@ -114,6 +135,10 @@ extension APITarget: TargetType {
             case .resend(let request): return request.accessToken
             case .offices(let request): return request.accessToken
                 
+            case .allCCTV(let request): return request.accessToken
+            case .recPrepare(let request): return request.accessToken
+            case .recDownload(let request): return request.accessToken
+                
             case .getAddress(let request): return request.accessToken
             case .getGeoCoder(let request): return request.accessToken
             case .getHouses(let request): return request.accessToken
@@ -136,6 +161,9 @@ extension APITarget: TargetType {
             case .sendName(let request): return request.accessToken
             case .restore(let request): return request.accessToken
             case .notification(let request): return request.accessToken
+                
+            case .payPrepare(let request): return request.accessToken
+            case .payProcess(let request): return request.accessToken
                 
             default: return nil
             }
@@ -164,6 +192,10 @@ extension APITarget: TargetType {
         case .resend(let request): return request.requestParameters
         case .offices(let request): return request.requestParameters
             
+        case .allCCTV(let request): return request.requestParameters
+        case .recPrepare(let request): return request.requestParameters
+        case .recDownload(let request): return request.requestParameters
+            
         case .getAddress(let request): return request.requestParameters
         case .getGeoCoder(let request): return request.requestParameters
         case .getHouses(let request): return request.requestParameters
@@ -188,6 +220,10 @@ extension APITarget: TargetType {
         case .sendName(let request): return request.requestParameters
         case .restore(let request): return request.requestParameters
         case .notification(let request): return request.requestParameters
+            
+        case .payPrepare(let request): return request.requestParameters
+        case .payProcess(let request): return request.requestParameters
+        case .sberbankPayProcess(let request): return request.requestParameters
         }
     }
     

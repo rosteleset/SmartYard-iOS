@@ -171,11 +171,9 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             initialSpringVelocity: 0
         )
         
-        // TODO: вернуть paymentsRouter после релиза
-        
         super.init(
             rootViewController: customTabBarController,
-            tabs: [homeRouter, notificationsRouter, chatRouter, settingsRouter],
+            tabs: [homeRouter, notificationsRouter, chatRouter, paymentsRouter, settingsRouter],
             select: homeRouter
         )
         

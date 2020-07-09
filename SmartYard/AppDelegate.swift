@@ -43,6 +43,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    func application(
+        _ application: UIApplication,
+        supportedInterfaceOrientationsFor window: UIWindow?
+    ) -> UIInterfaceOrientationMask {
+        if let topVc = window?.rootViewController?.topViewController,
+            topVc is FullscreenPlayerViewController,
+            !topVc.isBeingDismissed,
+            !topVc.isBeingPresented {
+            return .allButUpsideDown
+        } else {
+            return .portrait
+        }
+    }
 
 }
 
@@ -121,6 +135,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             if messageType == .newAddress {
                 NotificationCenter.default.post(name: .addressAdded, object: nil)
             }
+            
+            if messageType == .paySuccess {
+                NotificationCenter.default.post(name: .paymentCompleted, object: nil)
+            }
         }
         
         completionHandler([.alert, .badge, .sound])
@@ -170,6 +188,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         if messageType == .newAddress {
             NotificationCenter.default.post(name: .addressAdded, object: nil)
+        }
+        
+        if messageType == .paySuccess {
+            NotificationCenter.default.post(name: .paymentCompleted, object: nil)
         }
         
         // MARK: Завершение работы

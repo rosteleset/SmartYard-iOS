@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import JGProgressHUD
+import AVKit
 
 class IncomingCallViewController: BaseViewController, LoaderPresentable {
     
@@ -48,6 +49,17 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
         super.viewDidLoad()
         configureButtons()
         bind()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        // MARK: После ухода с экрана, меняем категорию AVAudioSession с разговора на просмотр видео
+        // Не знаю, нужно ли, но по идее если мы зайдем на экран видео, а потом нам придет звонок - пропадет звук видео
+        // Из-за того, что тип сессии поменялся с просмотра видео на разговор
+        // Потом чекнем, нужно или нет
+        
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
     override func viewDidLayoutSubviews() {
