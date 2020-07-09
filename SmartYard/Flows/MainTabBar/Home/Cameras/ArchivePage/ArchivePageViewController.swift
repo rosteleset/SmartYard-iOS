@@ -157,8 +157,8 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         
         let formatter = DateFormatter()
         
-        formatter.timeZone = TimeZone(identifier: "Europe/Moscow")
-        formatter.locale = .init(identifier: "RU")
+        formatter.timeZone = Calendar.moscowCalendar.timeZone
+        formatter.locale = Calendar.moscowCalendar.locale
         formatter.dateFormat = "LLLL"
         
         let nameOfMonth = formatter.string(from: visibleDate).capitalized

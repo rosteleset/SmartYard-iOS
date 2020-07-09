@@ -93,7 +93,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 
                 // MARK: А тут сервак жрет строки не в GMT, а в MSK
                 
-                formatter.timeZone = TimeZone(identifier: "Europe/Moscow")
+                formatter.timeZone = Calendar.moscowCalendar.timeZone
                 formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 
                 return .just((from: formatter.string(from: start), to: formatter.string(from: end)))
@@ -218,16 +218,26 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 let endDate = period.baseDate.adding(.hour, value: period.endHours)
                 
                 let match = ranges.first { range in
-                    return startDate.isBetween(range.startDate, range.endDate) &&
+                    startDate.isBetween(range.startDate, range.endDate) &&
                         endDate.isBetween(range.startDate, range.endDate)
                 }
                 
                 return match != nil
             }
         
+        let rangeBounds: (lower: Date, upper: Date)? = {
+            guard let lower = (ranges.map { $0.startDate }.min()),
+                let upper = (ranges.map { $0.endDate }.max()) else {
+                return nil
+            }
+                
+            return (lower, upper)
+        }()
+        
         return Output(
             date: .just(date),
             periodConfiguration: .just(periods),
+            rangeBounds: .just(rangeBounds),
             videoData: videoData,
             screenshotURL: screenshotURL,
             isLoading: activityTracker.asDriver()
@@ -249,6 +259,7 @@ extension PlayArchiveVideoViewModel {
     struct Output {
         let date: Driver<Date?>
         let periodConfiguration: Driver<[ArchiveVideoHourPeriod]>
+        let rangeBounds: Driver<(lower: Date, upper: Date)?>
         let videoData: Driver<(URL, VideoThumbnailConfiguration)?>
         let screenshotURL: Driver<URL?>
         let isLoading: Driver<Bool>
