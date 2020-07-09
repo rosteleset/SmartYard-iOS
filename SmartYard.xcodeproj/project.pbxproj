@@ -70,6 +70,7 @@
 		845E9EF52497727A000CBBC6 /* RecDownloadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */; };
 		845E9EF72497741B000CBBC6 /* RecDownloadResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E9EF62497741B000CBBC6 /* RecDownloadResponseData.swift */; };
 		846DC64D24B3143B00A11914 /* ArchiveVideoPlaybackSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DC64C24B3143B00A11914 /* ArchiveVideoPlaybackSpeed.swift */; };
+		846DC70224B7397800A11914 /* VideoThumbnailConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DC70124B7397800A11914 /* VideoThumbnailConfiguration.swift */; };
 		847721762497C31D003FCC24 /* ArchivePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847721742497C31D003FCC24 /* ArchivePageViewController.swift */; };
 		847721772497C31D003FCC24 /* ArchivePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847721752497C31D003FCC24 /* ArchivePageViewController.xib */; };
 		8477217A2497C329003FCC24 /* OnlinePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847721782497C329003FCC24 /* OnlinePageViewController.swift */; };
@@ -499,6 +500,7 @@
 		845E9EF42497727A000CBBC6 /* RecDownloadRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecDownloadRequest.swift; sourceTree = "<group>"; };
 		845E9EF62497741B000CBBC6 /* RecDownloadResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecDownloadResponseData.swift; sourceTree = "<group>"; };
 		846DC64C24B3143B00A11914 /* ArchiveVideoPlaybackSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveVideoPlaybackSpeed.swift; sourceTree = "<group>"; };
+		846DC70124B7397800A11914 /* VideoThumbnailConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoThumbnailConfiguration.swift; sourceTree = "<group>"; };
 		847721742497C31D003FCC24 /* ArchivePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePageViewController.swift; sourceTree = "<group>"; };
 		847721752497C31D003FCC24 /* ArchivePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchivePageViewController.xib; sourceTree = "<group>"; };
 		847721782497C329003FCC24 /* OnlinePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlinePageViewController.swift; sourceTree = "<group>"; };
@@ -1523,6 +1525,7 @@
 			children = (
 				8496398A2487ED5D0086B6E9 /* ArchiveVideoHourPeriod.swift */,
 				846DC64C24B3143B00A11914 /* ArchiveVideoPlaybackSpeed.swift */,
+				846DC70124B7397800A11914 /* VideoThumbnailConfiguration.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -3394,6 +3397,7 @@
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				E92EFBB8242A22F2003AF7FE /* APIPaymentsListAccount.swift in Sources */,
 				E92EFBC9242A22F2003AF7FE /* ConfirmCodeRequest.swift in Sources */,
+				846DC70224B7397800A11914 /* VideoThumbnailConfiguration.swift in Sources */,
 				8496396E248667300086B6E9 /* PlayArchiveVideoViewController.swift in Sources */,
 				84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */,
 				E92EFBB6242A22F2003AF7FE /* APIRoommate.swift in Sources */,

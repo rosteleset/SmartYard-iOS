@@ -150,50 +150,24 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        let videoURL = selectedPeriod
+        let videoData = selectedPeriod
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
-            .map { [weak self] period -> URL? in
+            .map { [weak self] period -> (URL, VideoThumbnailConfiguration)? in
                 guard let self = self,
-                    let urlComps = period.videoUrlComponents else {
-                    return nil
-                }
-                
-                let resultingString = self.camera.video + urlComps + "?token=\(self.camera.token)"
-                
-                return URL(string: resultingString)
-            }
-        
-        let videoThumbnailConfiguration = selectedPeriod
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
-            .map { [weak self] period -> VideoThumbnailConfiguration? in
-                guard let self = self,
-                    let fullVideoComps = period.videoUrlComponents else {
-                    return nil
-                }
-                
-                let fullVideoString = self.camera.video + fullVideoComps + "?token=\(self.camera.token)"
-                
-                guard let fullVideoUrl = URL(string: fullVideoString),
+                    let videoUrlComps = period.videoUrlComponents,
+                    let videoUrl = URL(string: self.camera.video + videoUrlComps + "?token=\(self.camera.token)"),
                     let fallbackUrl = URL(string: self.camera.video + "/preview.mp4?token=\(self.camera.token)") else {
                     return nil
                 }
                 
-                let thumbnailStrings = period.getThumbnailComponents(
-                    thumbnailsCount: 5,
-                    actualDuration: CMTimeGetSeconds(AVURLAsset(url: fullVideoUrl).duration)
-                )
-                
-                let thumbnailUrls = thumbnailStrings.compactMap {
-                    URL(string: self.camera.video + $0 + "?token=\(self.camera.token)")
-                }
-                
-                return VideoThumbnailConfiguration(
-                    identifier: period.baseDate.adding(.hour, value: period.startHours).apiString,
-                    thumbnailUrls: thumbnailUrls,
+                let thumbnailConfig = VideoThumbnailConfiguration(
+                    camera: self.camera,
+                    period: period,
                     fallbackUrl: fallbackUrl
                 )
+                
+                return (videoUrl, thumbnailConfig)
             }
         
         let screenshotURL = input.screenshotTrigger
@@ -231,8 +205,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
         return Output(
             date: .just(date),
             periodConfiguration: .just(periods),
-            videoURL: videoURL,
-            videoThumbnailConfig: videoThumbnailConfiguration,
+            videoData: videoData,
             screenshotURL: screenshotURL,
             isLoading: activityTracker.asDriver()
         )
@@ -253,18 +226,9 @@ extension PlayArchiveVideoViewModel {
     struct Output {
         let date: Driver<Date?>
         let periodConfiguration: Driver<[ArchiveVideoHourPeriod]>
-        let videoURL: Driver<URL?>
-        let videoThumbnailConfig: Driver<VideoThumbnailConfiguration?>
+        let videoData: Driver<(URL, VideoThumbnailConfiguration)?>
         let screenshotURL: Driver<URL?>
         let isLoading: Driver<Bool>
     }
-    
-}
-
-struct VideoThumbnailConfiguration {
-    
-    let identifier: String
-    let thumbnailUrls: [URL]
-    let fallbackUrl: URL
     
 }
