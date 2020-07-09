@@ -576,30 +576,35 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     }
                     
                     // MARK: Грузим ассет асинхронно
-                    
+
                     let asset = AVAsset(url: url)
-                    
+
                     self?.loadingAsset = asset
                     
-                    let playerItem = AVPlayerItem(asset: asset)
-                    
-                    asset.loadValuesAsynchronously(forKeys: ["playable"]) { [weak asset] in
+                    // MARK: Грузим ключи tracks и duration, т.к. только они сработают для m3u8 потока
+
+                    asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { [weak asset] in
                         guard let asset = asset else {
                             return
                         }
 
-                        var error: NSError?
-
-                        let playableStatus = asset.statusOfValue(forKey: "playable", error: &error)
-
-                        switch playableStatus {
-                        case .loaded:
+                        var tracksError: NSError?
+                        var durationError: NSError?
+                        
+                        let tracksStatus = asset.statusOfValue(forKey: "tracks", error: &tracksError)
+                        let durationStatus = asset.statusOfValue(forKey: "duration", error: &durationError)
+                        
+                        switch (tracksStatus, durationStatus) {
+                        case (.loaded, .loaded):
                             DispatchQueue.main.async {
                                 self?.loadingAsset = nil
+
+                                let playerItem = AVPlayerItem(asset: asset)
+
                                 self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
                                 self?.progressSlider.setVideoDuration(CMTimeGetSeconds(asset.duration))
                             }
-
+                            
                         default:
                             break
                         }
