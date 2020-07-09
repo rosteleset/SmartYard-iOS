@@ -97,9 +97,6 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             selectedImage: UIImage(named: "NotificationsTabSelected")
         )
         
-        let currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
-        notificationsTabBarItem.badgeValue = currentBadgeNumber > 0 ? "\(currentBadgeNumber)" : nil
-        
         notificationsCoordinator.rootViewController.tabBarItem = notificationsTabBarItem
         self.notificationsTabBarItem = notificationsTabBarItem
         
@@ -174,13 +171,13 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             initialSpringVelocity: 0
         )
         
-        // TODO: вернуть paymentsRouter после релиза
-        
         super.init(
             rootViewController: customTabBarController,
-            tabs: [homeRouter, notificationsRouter, chatRouter, settingsRouter],
+            tabs: [homeRouter, notificationsRouter, chatRouter, paymentsRouter, settingsRouter],
             select: homeRouter
         )
+        
+        updateNotificationsTab(shouldShowBadge: UIApplication.shared.applicationIconBadgeNumber > 0)
         
         rootViewController.tabBar.isTranslucent = false
         
@@ -199,6 +196,20 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         }
     }
     
+    private func updateNotificationsTab(shouldShowBadge: Bool) {
+        notificationsTabBarItem.image = UIImage(
+            named: shouldShowBadge ? "NotificationsTabBadgeUnselected" : "NotificationsTabUnselected"
+        )
+        
+        notificationsTabBarItem.selectedImage = UIImage(
+            named: shouldShowBadge ? "NotificationsTabBadgeSelected" : "NotificationsTabSelected"
+        )
+        
+        notificationsTabBarItem.imageInsets = shouldShowBadge ?
+            UIEdgeInsets(top: -2, left: 0, bottom: 2, right: 0) :
+            .zero
+    }
+    
     private func subscribeToBadgeUpdates() {
         NotificationCenter.default.rx
             .notification(Notification.Name.badgeNumberUpdated)
@@ -209,7 +220,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
                         return
                     }
                     
-                    self?.notificationsTabBarItem.badgeValue = badgeNumber > 0 ? "\(badgeNumber)" : nil
+                    self?.updateNotificationsTab(shouldShowBadge: badgeNumber > 0)
                 }
             )
             .disposed(by: disposeBag)

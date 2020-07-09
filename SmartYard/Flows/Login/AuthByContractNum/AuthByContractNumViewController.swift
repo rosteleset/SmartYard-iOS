@@ -18,7 +18,8 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var containerView: UIView!
     
     @IBOutlet private weak var contractNumberTextField: SmartYardTextField!
-    @IBOutlet private weak var passTextField: SmartYardTextField!
+    @IBOutlet private weak var passTextField: SmartYardPasswordTextField!
+    
     @IBOutlet private weak var roundedView: UIView!
     
     @IBOutlet private weak var forgetPassButton: ClearButtonWithDashedUnderline!
@@ -96,8 +97,26 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
         forgetPassButton.setLeftAlignment()
         forgetEverythingButton.setRightAlignment()
         
-        view.hideKeyboardWhenTapped = true
+        let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGestureReconizer.cancelsTouchesInView = false
+        tapGestureReconizer.delegate = self
+        view.addGestureRecognizer(tapGestureReconizer)
+        
         fakeNavBar.isHidden = !isShowingManual
     }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
 
+}
+
+extension AuthByContractNumViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        let point = touch.location(in: passTextField)
+        
+        return passTextField.hitTest(point, with: nil) == nil
+    }
+    
 }

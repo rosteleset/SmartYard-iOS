@@ -45,13 +45,9 @@ class AddressConfirmationViewController: BaseViewController, LoaderPresentable {
     }
     
     private func bind() {
-        let selectedSegmentIndex = PublishSubject<Int>()
-        
-        segmentControl.rx.selectedIndex
-            .bind(to: selectedSegmentIndex)
-            .disposed(by: disposeBag)
-        
-        selectedSegmentIndex.asDriverOnErrorJustComplete()
+        segmentControl.rx
+            .selectedIndex
+            .asDriver()
             .drive(
                 onNext: { [weak self] index in
                     guard index == 0 else {

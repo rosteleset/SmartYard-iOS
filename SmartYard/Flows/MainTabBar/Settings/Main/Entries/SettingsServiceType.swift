@@ -18,7 +18,6 @@ enum SettingsServiceType: String {
     case domophone
     case gsm
     
-    // TODO: не хватает иконок?
     var unselectedIcon: UIImage? {
         switch self {
         case .internet: return UIImage(named: "SettingsWiFiUnselectedIcon")
@@ -31,7 +30,6 @@ enum SettingsServiceType: String {
         }
     }
     
-    // TODO: не хватает иконок?
     var selectedIcon: UIImage? {
         switch self {
         case .internet: return UIImage(named: "SettingsWiFiSelectedIcon")

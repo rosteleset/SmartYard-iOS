@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -34,7 +32,8 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RightArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="cUS-jh-sG1">
-                        <rect key="frame" x="234" y="47" width="8" height="13"/>
+                        <rect key="frame" x="243" y="47" width="8" height="13"/>
+                        <color key="tintColor" red="0.72156862745098038" green="0.76470588235294112" blue="0.81568627450980391" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="8" id="Q33-2O-yy1"/>
                             <constraint firstAttribute="height" constant="13" id="jlE-ka-VDo"/>
@@ -72,7 +71,7 @@
                 <constraint firstItem="VqD-it-4ni" firstAttribute="leading" secondItem="aQK-bW-8un" secondAttribute="trailing" constant="8" id="Ilq-rf-Out"/>
                 <constraint firstItem="cUS-jh-sG1" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="JA9-bN-iWy"/>
                 <constraint firstItem="VqD-it-4ni" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="SUQ-wJ-bmn"/>
-                <constraint firstAttribute="trailing" secondItem="cUS-jh-sG1" secondAttribute="trailing" constant="33" id="Z1A-n7-1eH"/>
+                <constraint firstAttribute="trailing" secondItem="cUS-jh-sG1" secondAttribute="trailing" constant="24" id="Z1A-n7-1eH"/>
                 <constraint firstItem="cUS-jh-sG1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VqD-it-4ni" secondAttribute="trailing" constant="8" id="gtY-N3-h2O"/>
                 <constraint firstItem="aQK-bW-8un" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="69" id="muT-gY-Nq3"/>
                 <constraint firstItem="YOp-QB-y6y" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="24" id="xar-S8-CBT"/>

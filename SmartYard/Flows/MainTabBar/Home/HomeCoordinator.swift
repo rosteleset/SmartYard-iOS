@@ -15,6 +15,8 @@ enum HomeRoute: Route {
     case main
     case alert(title: String, message: String?)
     case dialog(title: String, message: String?, actions: [UIAlertAction])
+    case share(items: [Any])
+    case appSettings(title: String, message: String?)
     case inputContract(isManualTrigger: Bool)
     case inputAddress
     case availableServices(address: String, services: [APIServiceModel])
@@ -25,6 +27,9 @@ enum HomeRoute: Route {
     case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
     case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
     case serviceSoonAvailable(issue: APIIssueConnect)
+    case cameraContainer(address: String, cameras: [CameraObject], selectedCamera: CameraObject)
+    case yardCamerasMap(houseId: String, address: String)
+    case playArchiveVideo(camera: CameraObject, date: Date)
     
 }
 
@@ -86,6 +91,12 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
         case let .dialog(title, message, actions):
             return .dialogTransition(title: title, message: message, actions: actions)
+            
+        case let .share(items):
+            return .shareTransition(items: items)
+
+        case let .appSettings(title, message):
+            return .appSettingsTransition(title: title, message: message)
             
         case let .inputContract(isManualTrigger):
             let vm = AuthByContractNumViewModel(
@@ -211,6 +222,41 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             )
             
             let vc = ServiceSoonAvailableViewController(viewModel: vm)
+            
+            return .push(vc)
+            
+        case let .yardCamerasMap(houseId, address):
+            let vm = YardMapViewModel(apiWrapper: apiWrapper, houseId: houseId, address: address, router: weakRouter)
+            let vc = YardMapViewController(viewModel: vm)
+            
+            return .push(vc)
+            
+        case let .cameraContainer(address, cameras, selectedCamera):
+            let vm = SelectCameraContainerViewModel(
+                apiWrapper: apiWrapper,
+                address: address,
+                cameras: cameras,
+                selectedCamera: selectedCamera,
+                router: weakRouter
+            )
+            
+            let onlineVc = OnlinePageViewController()
+            onlineVc.loadViewIfNeeded()
+            
+            let archiveVc = ArchivePageViewController()
+            archiveVc.loadViewIfNeeded()
+            
+            let vc = SelectCameraContainerViewController(
+                onlinePage: onlineVc,
+                archivePage: archiveVc,
+                viewModel: vm
+            )
+            
+            return .push(vc)
+            
+        case let .playArchiveVideo(camera, date):
+            let vm = PlayArchiveVideoViewModel(apiWrapper: apiWrapper, camera: camera, date: date, router: weakRouter)
+            let vc = PlayArchiveVideoViewController(viewModel: vm)
             
             return .push(vc)
         }

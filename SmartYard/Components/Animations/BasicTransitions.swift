@@ -25,4 +25,29 @@ extension Transition {
         return .present(alert)
     }
     
+    static func shareTransition(items: [Any]) -> Transition {
+        let activityController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        
+        return .present(activityController)
+    }
+    
+    static func appSettingsTransition(title: String, message: String?) -> Transition {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        
+        let settingsAction = UIAlertAction(title: "Настройки", style: .default) { _ in
+            UIApplication.shared.open(
+                URL(string: UIApplication.openSettingsURLString)!,
+                options: [:],
+                completionHandler: nil
+            )
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(settingsAction)
+        
+        return .present(alert)
+    }
+    
 }

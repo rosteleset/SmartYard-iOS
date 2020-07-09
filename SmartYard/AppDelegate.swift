@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import YandexMobileMetrica
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         configureFirebase(for: application)
+        
+        if let yandexConfig = YMMYandexMetricaConfiguration(apiKey: "686bcc1e-69e5-4412-8d54-3e11e362624a") {
+            YMMYandexMetrica.activate(with: yandexConfig)
+        } else {
+            print("Couldn't activate YMM")
+        }
+        
         appCoordinator.setRoot(for: mainWindow)
         
         // MARK: При запуске приложения запрашиваем количество непрочитанных сообщений
@@ -34,6 +42,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appCoordinator.markAllMessagesAsDelivered()
         
         return true
+    }
+    
+    func application(
+        _ application: UIApplication,
+        supportedInterfaceOrientationsFor window: UIWindow?
+    ) -> UIInterfaceOrientationMask {
+        if let topVc = window?.rootViewController?.topViewController,
+            topVc is FullscreenPlayerViewController,
+            !topVc.isBeingDismissed,
+            !topVc.isBeingPresented {
+            return .allButUpsideDown
+        } else {
+            return .portrait
+        }
     }
 
 }
@@ -96,20 +118,26 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             return
         }
         
-        // MARK: Если пришло inbox message - сразу же помечаем его как доставленное
+        // MARK: Если есть действие - обрабатываем его
         
-        if let rawMessageType = userInfo["messageType"] as? String,
-            let messageType = MessageType(rawValue: rawMessageType),
-            messageType == .inbox,
-            let messageId = userInfo["messageId"] as? String {
-            appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
-            NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+        if let rawMessageType = userInfo["action"] as? String,
+            let messageType = MessageType(rawValue: rawMessageType) {
+            // MARK: Если есть messageId - помечаем сообщение как доставленное и обновляем таб "Уведомления"
+            
+            if let messageId = userInfo["messageId"] as? String {
+                appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
+                NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+            }
             
             // MARK: Если пришло уведомление о добавленном адресе - отправляем .addressAdded
             // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
             
-            if let newAddress = userInfo["newAddress"] as? String, newAddress == "t" {
+            if messageType == .newAddress {
                 NotificationCenter.default.post(name: .addressAdded, object: nil)
+            }
+            
+            if messageType == .paySuccess {
+                NotificationCenter.default.post(name: .paymentCompleted, object: nil)
             }
         }
         
@@ -131,29 +159,42 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             appCoordinator.processIncomingCallRequest(callPayload: callPayload)
         }
         
-        // MARK: Если нажали на inbox message - помечаем его как доставленное и переходим в уведомления
-        // Если нажали на chat message - переходим в чат
+        // MARK: Если в уведомлении нет никакого действия, то ничего не делаем
         
-        if let rawMessageType = response.notification.request.content.userInfo["messageType"] as? String,
-            let messageType = MessageType(rawValue: rawMessageType) {
-            switch messageType {
-            case .inbox: appCoordinator.openNotificationsTab()
-            case .chat: appCoordinator.openChatTab()
-            }
-            
-            if let messageId = response.notification.request.content.userInfo["messageId"] as? String,
-                messageType == .inbox {
-                appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
-            }
-            
-            // MARK: Если нажали на уведомление о добавленном адресе - отправляем .addressAdded
-            // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
-            
-            if let newAddress = response.notification.request.content.userInfo["newAddress"] as? String,
-                newAddress == "t" {
-                NotificationCenter.default.post(name: .addressAdded, object: nil)
-            }
+        guard let rawMessageType = response.notification.request.content.userInfo["action"] as? String,
+            let messageType = MessageType(rawValue: rawMessageType) else {
+            completionHandler()
+            return
         }
+        
+        // MARK: Если есть messageId - помечаем сообщение как доставленное
+        
+        if let messageId = response.notification.request.content.userInfo["messageId"] as? String {
+            appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
+        }
+        
+        // MARK: Переход в конкретный таб при нажатии на уведомление
+        
+        switch messageType {
+        case .inbox, .newAddress, .paySuccess, .payError, .videoReady:
+            appCoordinator.openNotificationsTab()
+        case .chat:
+            appCoordinator.openChatTab()
+        }
+        
+        // MARK: Если нажали на уведомление о добавленном адресе - отправляем .addressAdded
+        // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
+        // Сделано это вроде для того, чтобы если приложение ушло в бекграунд, данные обновились при нажатии
+        
+        if messageType == .newAddress {
+            NotificationCenter.default.post(name: .addressAdded, object: nil)
+        }
+        
+        if messageType == .paySuccess {
+            NotificationCenter.default.post(name: .paymentCompleted, object: nil)
+        }
+        
+        // MARK: Завершение работы
         
         completionHandler()
     }

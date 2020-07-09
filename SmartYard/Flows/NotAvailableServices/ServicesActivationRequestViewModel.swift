@@ -53,17 +53,15 @@ class ServicesActivationRequestViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                let services = servicesData
+                let serviceNames = servicesData
                     .filter { $0.state == .checkedActive }
-                    .compactMap { serviceItem -> SettingsServiceType? in
-                        SettingsServiceType(rawValue: serviceItem.icon)
-                    }
+                    .map { $0.name }
                 
-                return
-                    self.issueService.sendUnavailableAddressConnectionIssue(address: self.address, services: services)
-                        .trackError(errorTracker)
-                        .trackActivity(activityTracker)
-                        .asDriver(onErrorJustReturn: nil)
+                return self.issueService
+                    .sendUnavailableAddressConnectionIssue(address: self.address, serviceNames: serviceNames)
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
             .mapToVoid()

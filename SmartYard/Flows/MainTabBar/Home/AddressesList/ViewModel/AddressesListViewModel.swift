@@ -80,9 +80,33 @@ class AddressesListViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
-                    self?.alertService.showAlert(title: "Ошибка", message: error.localizedDescription, priority: 250)
+                    if (error as NSError) == NSError.PermissionError.noCameraPermission {
+                        let msg = "Чтобы использовать эту функцию, перейдите в настройки и предоставьте доступ к камере"
+                        
+                        self?.router.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
+                        
+                        return
+                    }
+                    
+                    self?.alertService.showAlert(
+                        title: "Ошибка",
+                        message: error.localizedDescription,
+                        priority: 250
+                    )
                 }
             )
+            .disposed(by: disposeBag)
+        
+        // MARK: Заказчик попросил запрашивать все разрешения сразу после авторизации. Хозяин - барин
+        
+        permissionService.requestAccessToMic()
+            .asDriver(onErrorJustReturn: nil)
+            .drive()
+            .disposed(by: disposeBag)
+        
+        permissionService.hasAccess(to: .video)
+            .asDriver(onErrorJustReturn: nil)
+            .drive()
             .disposed(by: disposeBag)
         
         // MARK: Подписка на уведомления
@@ -281,6 +305,7 @@ class AddressesListViewModel: BaseViewModel {
         let updateKindSubject = PublishSubject<AddressesListSectionUpdateKind>()
         let updateKind = updateKindSubject.asDriverOnErrorJustComplete()
         
+        // Обработка нажатия по заявке (адрес в красной рамке)
         input.itemSelected
             .withLatestFrom(loadedUnapprovedAddressesData.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .flatMap { args -> Driver<APIIssueConnect> in
@@ -311,6 +336,29 @@ class AddressesListViewModel: BaseViewModel {
         
         // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
         // Это приведет к обновлению секций
+        
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .cameras(addressId) = identity else {
+                    return .empty()
+                }
+                
+                return .just(addressId)
+            }
+            .withLatestFrom(loadedApprovedAddressesData.asDriverOnErrorJustComplete()) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (addressId, loadedAddresses) = args
+                    let matchingAddress = loadedAddresses?.first { $0.houseId == addressId }
+                    
+                    guard let uHouseId = matchingAddress?.houseId, let uAddress = matchingAddress?.address else {
+                        return
+                    }
+                
+                    self?.router.trigger(.yardCamerasMap(houseId: uHouseId, address: uAddress))
+                }
+            )
+            .disposed(by: disposeBag)
         
         input.itemSelected
             .flatMap { identity -> Driver<String> in
@@ -421,7 +469,11 @@ class AddressesListViewModel: BaseViewModel {
             shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
         )
     }
+    
+}
 
+extension AddressesListViewModel {
+    
     private func closeObjectAccessAfterTimeout(identity: AddressesListDataItemIdentity) {
         Timer.scheduledTimer(
             withTimeInterval: 5,

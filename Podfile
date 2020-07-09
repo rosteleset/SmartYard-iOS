@@ -10,7 +10,7 @@ target 'SmartYard' do
   # Networking
   pod 'Moya/RxSwift'
   pod 'Kingfisher'
-  pod 'linphone-sdk' , '> 4.4.0-alpha'
+  pod 'linphone-sdk' , '4.4.0'
   
   # Reactive
   pod 'RxSwift'
@@ -33,13 +33,18 @@ target 'SmartYard' do
   pod 'SkeletonView', '1.7'
   pod 'SearchTextField'
   pod 'SHSPhoneComponent'
+  pod 'Parchment'
 
+  # Calendar
+  pod 'JTAppleCalendar'
+  
   # Map
   pod 'Mapbox-iOS-SDK'
   
   # Analytics
   pod 'Firebase/Crashlytics'
   pod 'Firebase/Analytics'
+  pod 'YandexMobileMetrica'
   
   # Push Notifications
   pod 'Firebase/Messaging'

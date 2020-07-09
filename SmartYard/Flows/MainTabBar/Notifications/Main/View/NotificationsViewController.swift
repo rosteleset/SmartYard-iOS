@@ -20,6 +20,8 @@ class NotificationsViewController: BaseViewController, LoaderPresentable {
     
     private let viewModel: NotificationsViewModel
     
+    private let shareUrlTrigger = PublishSubject<URL>()
+    
     init(viewModel: NotificationsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -42,12 +44,14 @@ class NotificationsViewController: BaseViewController, LoaderPresentable {
         webView.layer.maskedCorners = .topCorners
         
         webView.scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 17, left: 0, bottom: 5, right: 0)
+        webView.navigationDelegate = self
     }
     
     private func bind() {
         let input = NotificationsViewModel.Input(
             viewWillAppearTrigger: rx.viewWillAppear.asDriver(),
-            isViewVisible: rx.isVisible.asDriver(onErrorJustReturn: false)
+            isViewVisible: rx.isVisible.asDriver(onErrorJustReturn: false),
+            shareUrlTrigger: shareUrlTrigger.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
@@ -75,4 +79,25 @@ class NotificationsViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
 
+}
+
+extension NotificationsViewController: WKNavigationDelegate {
+    
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
+    ) {
+        guard navigationAction.navigationType == .linkActivated else {
+            decisionHandler(WKNavigationActionPolicy.allow)
+            return
+        }
+        
+        if let url = navigationAction.request.url {
+            shareUrlTrigger.onNext(url)
+        }
+        
+        decisionHandler(WKNavigationActionPolicy.cancel)
+    }
+    
 }

@@ -269,6 +269,12 @@ extension NSError {
             userInfo: [NSLocalizedDescriptionKey: "Доступ к камере отсутствует"]
         )
         
+        static let noMicPermission = NSError(
+            domain: domain,
+            code: 6003,
+            userInfo: [NSLocalizedDescriptionKey: "Доступ к микрофону отсутствует"]
+        )
+        
     }
     
 }

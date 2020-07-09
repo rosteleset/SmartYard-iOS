@@ -89,22 +89,23 @@ PODS:
   - GoogleUtilities/UserDefaults (6.5.0):
     - GoogleUtilities/Logger
   - JGProgressHUD (2.1)
+  - JTAppleCalendar (8.0.3)
   - Kingfisher (5.13.0):
     - Kingfisher/Core (= 5.13.0)
   - Kingfisher/Core (5.13.0)
-  - "linphone-sdk (4.4.0-alpha.170+30d17ef)":
-    - "linphone-sdk/all-frameworks (= 4.4.0-alpha.170+30d17ef)"
-    - "linphone-sdk/app-extension (= 4.4.0-alpha.170+30d17ef)"
-    - "linphone-sdk/app-extension-swift (= 4.4.0-alpha.170+30d17ef)"
-    - "linphone-sdk/basic-frameworks (= 4.4.0-alpha.170+30d17ef)"
-    - "linphone-sdk/swift (= 4.4.0-alpha.170+30d17ef)"
-  - "linphone-sdk/all-frameworks (4.4.0-alpha.170+30d17ef)"
-  - "linphone-sdk/app-extension (4.4.0-alpha.170+30d17ef)"
-  - "linphone-sdk/app-extension-swift (4.4.0-alpha.170+30d17ef)":
+  - linphone-sdk (4.4.0):
+    - linphone-sdk/all-frameworks (= 4.4.0)
+    - linphone-sdk/app-extension (= 4.4.0)
+    - linphone-sdk/app-extension-swift (= 4.4.0)
+    - linphone-sdk/basic-frameworks (= 4.4.0)
+    - linphone-sdk/swift (= 4.4.0)
+  - linphone-sdk/all-frameworks (4.4.0)
+  - linphone-sdk/app-extension (4.4.0)
+  - linphone-sdk/app-extension-swift (4.4.0):
     - linphone-sdk/app-extension
-  - "linphone-sdk/basic-frameworks (4.4.0-alpha.170+30d17ef)":
+  - linphone-sdk/basic-frameworks (4.4.0):
     - linphone-sdk/app-extension
-  - "linphone-sdk/swift (4.4.0-alpha.170+30d17ef)":
+  - linphone-sdk/swift (4.4.0):
     - linphone-sdk/app-extension-swift
     - linphone-sdk/basic-frameworks
   - Mapbox-iOS-SDK (5.7.0):
@@ -121,6 +122,7 @@ PODS:
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - OnlineChatSdk (0.0.2)
+  - Parchment (2.3.0)
   - PinLayout (1.8.13)
   - PMNibLinkableView (0.3.0)
   - PromisesObjC (1.2.8)
@@ -168,6 +170,14 @@ PODS:
   - XCoordinator/RxSwift (2.0.6):
     - RxSwift (~> 5.0)
     - XCoordinator/Core
+  - YandexMobileMetrica (3.9.4):
+    - YandexMobileMetrica/Static (= 3.9.4)
+  - YandexMobileMetrica/Static (3.9.4):
+    - YandexMobileMetrica/Static/Core (= 3.9.4)
+    - YandexMobileMetrica/Static/Crashes (= 3.9.4)
+  - YandexMobileMetrica/Static/Core (3.9.4)
+  - YandexMobileMetrica/Static/Crashes (3.9.4):
+    - YandexMobileMetrica/Static/Core
 
 DEPENDENCIES:
   - Cartography
@@ -175,11 +185,13 @@ DEPENDENCIES:
   - Firebase/Crashlytics
   - Firebase/Messaging
   - JGProgressHUD
+  - JTAppleCalendar
   - Kingfisher
-  - linphone-sdk (> 4.4.0-alpha)
+  - linphone-sdk (= 4.4.0)
   - Mapbox-iOS-SDK
   - Moya/RxSwift
   - OnlineChatSdk (from `https://github.com/MadBrains/OnlineChatSdk-Swift.git`, branch `feature/build-fix`)
+  - Parchment
   - PinLayout
   - PMNibLinkableView
   - RxCocoa
@@ -196,6 +208,7 @@ DEPENDENCIES:
   - TPKeyboardAvoiding
   - XCoordinator
   - XCoordinator/RxSwift
+  - YandexMobileMetrica
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -217,11 +230,13 @@ SPEC REPOS:
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
     - JGProgressHUD
+    - JTAppleCalendar
     - Kingfisher
     - Mapbox-iOS-SDK
     - MapboxMobileEvents
     - Moya
     - nanopb
+    - Parchment
     - PinLayout
     - PMNibLinkableView
     - PromisesObjC
@@ -239,6 +254,7 @@ SPEC REPOS:
     - TouchAreaInsets
     - TPKeyboardAvoiding
     - XCoordinator
+    - YandexMobileMetrica
   https://gitlab.linphone.org/BC/public/podspec.git:
     - linphone-sdk
 
@@ -277,13 +293,15 @@ SPEC CHECKSUMS:
   GoogleDataTransportCCTSupport: cad3cd6cdbdbad6b5c2c9206ec413402755faaaa
   GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
+  JTAppleCalendar: 932cadea40b1051beab10f67843451d48ba16c99
   Kingfisher: 0d334cada987fcddbe9b5cec516406e1ee9d4748
-  linphone-sdk: 6b746767ece1d5702f9476661d504e28a02b1a90
+  linphone-sdk: c5765e58b2b17f292e7792c6f4b231dfe4079c68
   Mapbox-iOS-SDK: 1b7cb0e739247d20ef75f5f14aa6ce34e1f0660f
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   OnlineChatSdk: 421b17a804f22c193f81f02a891e7d91128c525b
+  Parchment: 72a7eb8072454a9500a53dd84776e04fba24e740
   PinLayout: e41a50260a76508b7a7fcee8955c76639adc69bc
   PMNibLinkableView: 06ebf6128feb70c3ba589d6be232748c1b7b1767
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
@@ -302,7 +320,8 @@ SPEC CHECKSUMS:
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   TPKeyboardAvoiding: 6dd3fe3268b8f2627beb7ff3d82a3cacbdf66a36
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
+  YandexMobileMetrica: 1030df2959c886a7be3bc3d274eb54c8e86afd6f
 
-PODFILE CHECKSUM: d03a724d64b53b9410d44f9e69cd5518132c98b0
+PODFILE CHECKSUM: 6b1ddafe684b0f4b37ebeaf6cb60adbcc4703862
 
 COCOAPODS: 1.8.4
