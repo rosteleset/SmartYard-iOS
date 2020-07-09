@@ -557,7 +557,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .drive(previewDateLabel.rx.text)
             .disposed(by: disposeBag)
         
-        output.videoURL
+        output.videoData
             .do(
                 onNext: { [weak self] _ in
                     self?.loadingAsset?.cancelLoading()
@@ -565,13 +565,13 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .drive(
-                onNext: { [weak self] url in
+                onNext: { [weak self] args in
                     // MARK: Сбрасываем видео. У нас возможность пройти дальше привязана к isValid. Нужно инвалидировать
                     
                     self?.realVideoPlayer?.replaceCurrentItem(with: nil)
                     self?.progressSlider.setVideoDuration(0)
                     
-                    guard let url = url else {
+                    guard let (url, thumbnailsConfig) = args else {
                         return
                     }
                     
@@ -597,48 +597,36 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         switch (tracksStatus, durationStatus) {
                         case (.loaded, .loaded):
                             DispatchQueue.main.async {
+                                // MARK: Ассет загружен, больше хранить его не нужно
+                                
                                 self?.loadingAsset = nil
 
+                                // MARK: Видео готово к просмотру, засовываем его в плеер
+                                
                                 let playerItem = AVPlayerItem(asset: asset)
 
                                 self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
                                 self?.progressSlider.setVideoDuration(CMTimeGetSeconds(asset.duration))
+                                
+                                // MARK: Грузим thumbnails
+                                
+                                self?.progressSlider.resetThumbnailImages()
+                                self?.progressSlider.setActivityIndicatorsHidden(false)
+
+                                self?.rangeSlider.resetThumbnailImages()
+                                self?.rangeSlider.setActivityIndicatorsHidden(false)
+
+                                self?.loadThumbnails(
+                                    config: thumbnailsConfig,
+                                    count: 5,
+                                    videoDuration: CMTimeGetSeconds(asset.duration)
+                                )
                             }
                             
                         default:
                             break
                         }
                     }
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        let thumbnailsShouldStartUpdatingSubject = PublishSubject<VideoThumbnailConfiguration>()
-        
-        output.videoThumbnailConfig
-            .drive(
-                onNext: { [weak self] config in
-                    guard let config = config else {
-                        return
-                    }
-
-                    self?.progressSlider.resetThumbnailImages()
-                    self?.progressSlider.setActivityIndicatorsHidden(false)
-
-                    self?.rangeSlider.resetThumbnailImages()
-                    self?.rangeSlider.setActivityIndicatorsHidden(false)
-
-                    thumbnailsShouldStartUpdatingSubject.onNext(config)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        thumbnailsShouldStartUpdatingSubject
-            .asDriverOnErrorJustComplete()
-            .debounce(.milliseconds(350))
-            .drive(
-                onNext: { [weak self] config in
-                    self?.loadThumbnails(config: config)
                 }
             )
             .disposed(by: disposeBag)
@@ -728,17 +716,20 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         )
     }
     
-    private func loadThumbnails(config: VideoThumbnailConfiguration) {
+    private func loadThumbnails(config: VideoThumbnailConfiguration, count: Int, videoDuration: Double) {
         latestThumbnailConfig = config
         
-        config.thumbnailUrls.enumerated().forEach { offset, url in
-            loadThumbnail(
-                index: offset,
-                preferredUrl: url,
-                fallbackUrl: config.fallbackUrl,
-                identifier: config.identifier
-            )
-        }
+        config
+            .thumbnailUrls(thumbnailsCount: count, actualDuration: videoDuration)
+            .enumerated()
+            .forEach { offset, url in
+                loadThumbnail(
+                    index: offset,
+                    preferredUrl: url,
+                    fallbackUrl: config.fallbackUrl,
+                    identifier: config.identifier
+                )
+            }
     }
     
     private func loadThumbnail(index: Int, preferredUrl: URL, fallbackUrl: URL, identifier: String) {
