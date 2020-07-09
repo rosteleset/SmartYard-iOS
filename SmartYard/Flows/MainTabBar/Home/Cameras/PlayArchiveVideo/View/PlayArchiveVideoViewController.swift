@@ -557,17 +557,39 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         output.videoURL
             .drive(
                 onNext: { [weak self] url in
-                    DispatchQueue.main.async {
-                        let playerItem: AVPlayerItem? = {
-                            guard let url = url else {
-                                return nil
+                    // MARK: Сбрасываем видео. У нас возможность пройти дальше привязана к isValid. Нужно инвалидировать
+                    
+                    self?.realVideoPlayer?.replaceCurrentItem(with: nil)
+                    self?.progressSlider.setVideoDuration(0)
+                    
+                    guard let url = url else {
+                        return
+                    }
+                    
+                    // MARK: Грузим ассет асинхронно
+                    
+                    let asset = AVAsset(url: url)
+                    let playerItem = AVPlayerItem(asset: asset)
+                    
+                    asset.loadValuesAsynchronously(forKeys: ["playable"]) { [weak asset] in
+                        guard let asset = asset else {
+                            return
+                        }
+
+                        var error: NSError?
+
+                        let playableStatus = asset.statusOfValue(forKey: "playable", error: &error)
+
+                        switch playableStatus {
+                        case .loaded:
+                            DispatchQueue.main.async {
+                                self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
+                                self?.progressSlider.setVideoDuration(CMTimeGetSeconds(asset.duration))
                             }
 
-                            return AVPlayerItem(url: url)
-                        }()
-                        
-                        self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
-                        self?.progressSlider.setVideoURL(videoURL: url)
+                        default:
+                            break
+                        }
                     }
                 }
             )
@@ -581,13 +603,13 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     guard let config = config else {
                         return
                     }
-                    
+
                     self?.progressSlider.resetThumbnailImages()
                     self?.progressSlider.setActivityIndicatorsHidden(false)
-                    
+
                     self?.rangeSlider.resetThumbnailImages()
                     self?.rangeSlider.setActivityIndicatorsHidden(false)
-                    
+
                     thumbnailsShouldStartUpdatingSubject.onNext(config)
                 }
             )

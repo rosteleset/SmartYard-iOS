@@ -116,21 +116,11 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
 
         layoutSubviews()
     }
-
-    func setVideoURL(videoURL: URL?) {
-        let duration: Double = {
-            guard let url = videoURL else {
-                return 0
-            }
-            
-            let source = AVURLAsset(url: url)
-            return CMTimeGetSeconds(source.duration)
-        }()
-        
+    
+    func setVideoDuration(_ duration: Double) {
         self.duration = duration
         
         self.layoutSubviews()
-        self.superview?.layoutSubviews()
     }
     
     func setThumbnailImage(_ image: UIImage?, atIndex index: Int) {
