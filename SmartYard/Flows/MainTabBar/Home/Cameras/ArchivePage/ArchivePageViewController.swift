@@ -25,8 +25,14 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var leftArrowButton: UIButton!
     @IBOutlet private weak var rightArrowButton: UIButton!
     
-    private let formatter = DateFormatter()
-    private let currentCalendar = Calendar.current
+    private let moscowCalendar: Calendar = {
+        var calendar = Calendar(identifier: .gregorian)
+        
+        calendar.timeZone = TimeZone(identifier: "Europe/Moscow") ?? TimeZone.current
+        calendar.locale = .init(identifier: "RU")
+        
+        return calendar
+    }()
     
     private let apiWrapper: APIWrapper
     
@@ -51,31 +57,17 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
     // MARK: Максимальная доступная дата среди всех интервалов. Нужна для конфигурации календаря
     
     private var upperDateLimit: Date? {
-        let maxDate = availableRanges?
+        return availableRanges?
             .map { $0.endDate }
             .max()
-        
-        // Если у нас 00:00, то в Москве еще 23:00. Соответственно, у них не наступил новый день и выбрать его нельзя
-        // Поэтому вычитаем разницу между локальной таймзоной и МСК из текущего времени
-        
-        let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
-        
-        return maxDate?.adding(.hour, value: -diffWithMoscow)
     }
     
     // MARK: Минимальная доступная дата среди всех интервалов. Нужна для конфигурации календаря
     
     private var lowerDateLimit: Date? {
-        let minDate = availableRanges?
+        return availableRanges?
             .map { $0.startDate }
             .min()
-        
-        // Если у нас 00:00, то в Москве еще 23:00. Соответственно, у них не наступил новый день и выбрать его нельзя
-        // Поэтому вычитаем разницу между локальной таймзоной и МСК из текущего времени
-        
-        let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
-        
-        return minDate?.adding(.hour, value: -diffWithMoscow)
     }
     
     init(apiWrapper: APIWrapper) {
@@ -147,14 +139,16 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         }
         
         let matchingRange = availableRanges?.first { range in
-            let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
+            let beginningOfFirstDay = moscowCalendar.startOfDay(for: range.startDate)
             
-            guard let startDate = range.startDate.adding(.hour, value: -diffWithMoscow).beginning(of: .day),
-                let endDate = range.endDate.adding(.hour, value: -diffWithMoscow).end(of: .day) else {
-                return false
-            }
+            let endOfLastDay: Date = {
+                let nextDay = range.endDate.adding(.day, value: 1)
+                let startOfNextDay = moscowCalendar.startOfDay(for: nextDay)
+                
+                return startOfNextDay.adding(.second, value: -1)
+            }()
             
-            return cellState.date.isBetween(startDate, endDate, includeBounds: true)
+            return cellState.date.isBetween(beginningOfFirstDay, endOfLastDay, includeBounds: true)
         }
         
         myCustomCell.configure(
@@ -170,10 +164,14 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         
         // MARK: Заголовок
         
+        let formatter = DateFormatter()
+        
+        formatter.timeZone = TimeZone(identifier: "Europe/Moscow")
+        formatter.locale = .init(identifier: "RU")
         formatter.dateFormat = "LLLL"
         
         let nameOfMonth = formatter.string(from: visibleDate).capitalized
-        let year = currentCalendar.component(.year, from: visibleDate)
+        let year = moscowCalendar.component(.year, from: visibleDate)
         
         monthLabel.text = nameOfMonth + " " + String(year)
         
@@ -282,10 +280,6 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
     }
 
     func configureCalendar(_ calendar: JTACMonthView) -> ConfigurationParameters {
-        formatter.dateFormat = "yyyy MM dd"
-        formatter.timeZone = currentCalendar.timeZone
-        formatter.locale = .init(identifier: "RU")
-        
         let (startDate, endDate): (Date, Date) = {
             guard let lowerBound = lowerDateLimit, let upperBound = upperDateLimit else {
                 let date = Date()
@@ -300,7 +294,7 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
             startDate: startDate,
             endDate: endDate,
             numberOfRows: 6,
-            calendar: currentCalendar,
+            calendar: moscowCalendar,
             generateInDates: .forAllMonths,
             generateOutDates: .tillEndOfGrid,
             firstDayOfWeek: .monday,
@@ -322,14 +316,16 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
         }
         
         let matchingRange = availableRanges.first { range in
-            let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
+            let beginningOfFirstDay = moscowCalendar.startOfDay(for: range.startDate)
             
-            guard let startDate = range.startDate.adding(.hour, value: -diffWithMoscow).beginning(of: .day),
-                let endDate = range.endDate.adding(.hour, value: -diffWithMoscow).end(of: .day) else {
-                return false
-            }
+            let endOfLastDay: Date = {
+                let nextDay = range.endDate.adding(.day, value: 1)
+                let startOfNextDay = moscowCalendar.startOfDay(for: nextDay)
+                
+                return startOfNextDay.adding(.second, value: -1)
+            }()
             
-            return date.isBetween(startDate, endDate, includeBounds: true)
+            return date.isBetween(beginningOfFirstDay, endOfLastDay, includeBounds: true)
         }
         
         return matchingRange != nil
