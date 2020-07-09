@@ -25,15 +25,6 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var leftArrowButton: UIButton!
     @IBOutlet private weak var rightArrowButton: UIButton!
     
-    private let moscowCalendar: Calendar = {
-        var calendar = Calendar(identifier: .gregorian)
-        
-        calendar.timeZone = TimeZone(identifier: "Europe/Moscow") ?? TimeZone.current
-        calendar.locale = .init(identifier: "RU")
-        
-        return calendar
-    }()
-    
     private let apiWrapper: APIWrapper
     
     private let activityTracker = ActivityTracker()
@@ -139,11 +130,11 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         }
         
         let matchingRange = availableRanges?.first { range in
-            let beginningOfFirstDay = moscowCalendar.startOfDay(for: range.startDate)
+            let beginningOfFirstDay = Calendar.moscowCalendar.startOfDay(for: range.startDate)
             
             let endOfLastDay: Date = {
                 let nextDay = range.endDate.adding(.day, value: 1)
-                let startOfNextDay = moscowCalendar.startOfDay(for: nextDay)
+                let startOfNextDay = Calendar.moscowCalendar.startOfDay(for: nextDay)
                 
                 return startOfNextDay.adding(.second, value: -1)
             }()
@@ -171,7 +162,7 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         formatter.dateFormat = "LLLL"
         
         let nameOfMonth = formatter.string(from: visibleDate).capitalized
-        let year = moscowCalendar.component(.year, from: visibleDate)
+        let year = Calendar.moscowCalendar.component(.year, from: visibleDate)
         
         monthLabel.text = nameOfMonth + " " + String(year)
         
@@ -294,7 +285,7 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
             startDate: startDate,
             endDate: endDate,
             numberOfRows: 6,
-            calendar: moscowCalendar,
+            calendar: Calendar.moscowCalendar,
             generateInDates: .forAllMonths,
             generateOutDates: .tillEndOfGrid,
             firstDayOfWeek: .monday,
@@ -316,11 +307,11 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
         }
         
         let matchingRange = availableRanges.first { range in
-            let beginningOfFirstDay = moscowCalendar.startOfDay(for: range.startDate)
+            let beginningOfFirstDay = Calendar.moscowCalendar.startOfDay(for: range.startDate)
             
             let endOfLastDay: Date = {
                 let nextDay = range.endDate.adding(.day, value: 1)
-                let startOfNextDay = moscowCalendar.startOfDay(for: nextDay)
+                let startOfNextDay = Calendar.moscowCalendar.startOfDay(for: nextDay)
                 
                 return startOfNextDay.adding(.second, value: -1)
             }()

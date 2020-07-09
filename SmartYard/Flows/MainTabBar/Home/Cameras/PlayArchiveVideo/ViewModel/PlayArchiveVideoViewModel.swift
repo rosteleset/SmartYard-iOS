@@ -89,7 +89,14 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                return .just((from: start.apiString, to: end.apiString))
+                let formatter = DateFormatter()
+                
+                // MARK: А тут сервак жрет строки не в GMT, а в MSK
+                
+                formatter.timeZone = TimeZone(identifier: "Europe/Moscow")
+                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                
+                return .just((from: formatter.string(from: start), to: formatter.string(from: end)))
             }
             .flatMapLatest { [weak self] range -> Driver<Int?> in
                 guard let self = self else {
@@ -186,20 +193,16 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     return nil
                 }
                 
-                // MARK: Здесь нам нужно получить дату скриншота
-                // Поскольку используется строковый формат, нам не нужно переводить время из МСК в локальное
-                // Но сервер для этого запроса почему-то ожидает время по UTC
-                // Поэтому нам нужно отнять разницу между МСК и UTC, чтобы получить правильный скриншот
-                
-                let utcDate = date.adding(.hour, value: -Date.moscowOffsetFromGMT)
+                // MARK: А здесь сервак жрет дату в GMT. Р - разнообразие
                 
                 let dateFormatter = DateFormatter()
                 
+                dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
                 dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
                 
                 let resultingString = self.camera.video +
                     "/" +
-                    dateFormatter.string(from: utcDate) +
+                    dateFormatter.string(from: date) +
                     "-preview.mp4" +
                     "?token=\(self.camera.token)"
                 
@@ -211,16 +214,12 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 ArchiveVideoHourPeriod(baseDate: date, startHours: $0 * 3, endHours: $0 * 3 + 3)
             }
             .filter { period in
-                let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
-                
                 let startDate = period.baseDate.adding(.hour, value: period.startHours)
                 let endDate = period.baseDate.adding(.hour, value: period.endHours)
                 
                 let match = ranges.first { range in
-                    let rangeStart = range.startDate.adding(.hour, value: -diffWithMoscow)
-                    let rangeEnd = range.endDate.adding(.hour, value: -diffWithMoscow)
-                    
-                    return startDate.isBetween(rangeStart, rangeEnd) && endDate.isBetween(rangeStart, rangeEnd)
+                    return startDate.isBetween(range.startDate, range.endDate) &&
+                        endDate.isBetween(range.startDate, range.endDate)
                 }
                 
                 return match != nil
