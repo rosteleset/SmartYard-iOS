@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import AVKit
 import TouchAreaInsets
+import Lottie
 
 protocol OnlinePageViewControllerDelegate: AnyObject {
     
@@ -24,6 +25,7 @@ class OnlinePageViewController: BaseViewController {
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var cameraContainer: UIView!
     @IBOutlet private weak var fullscreenButton: UIButton!
+    @IBOutlet private weak var videoLoadingAnimationView: AnimationView!
     
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
@@ -32,6 +34,11 @@ class OnlinePageViewController: BaseViewController {
     
     private var cameras = [CameraObject]()
     private var selectedCameraNumber: Int?
+    
+    private var loadingAsset: AVAsset?
+    
+    private let isVideoValid = BehaviorSubject<Bool>(value: false)
+    private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: false)
     
     weak var delegate: OnlinePageViewControllerDelegate?
     
@@ -52,6 +59,7 @@ class OnlinePageViewController: BaseViewController {
         configurePlayer()
         configureFullscreenButton()
         configureCollectionView()
+        bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -87,6 +95,29 @@ class OnlinePageViewController: BaseViewController {
         }
     }
     
+    private func bind() {
+        isVideoBeingLoaded
+            .asDriver(onErrorJustReturn: false)
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.videoLoadingAnimationView.isHidden = !isLoading
+                    
+                    isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        isVideoValid
+            .asDriver(onErrorJustReturn: false)
+            .drive(
+                onNext: { [weak self] isVideoValid in
+                    self?.fullscreenButton.isHidden = !isVideoValid
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
     private func configurePlayer() {
         let playerViewController = AVPlayerViewController()
         playerViewController.videoGravity = .resizeAspect
@@ -100,6 +131,14 @@ class OnlinePageViewController: BaseViewController {
         addChild(playerViewController)
         cameraContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
+        
+        // MARK: Настройка лоадера
+        
+        let animation = Animation.named("LoaderAnimation")
+        
+        videoLoadingAnimationView.animation = animation
+        videoLoadingAnimationView.loopMode = .loop
+        videoLoadingAnimationView.backgroundBehavior = .pauseAndRestore
         
         // MARK: Когда полноэкранное видео будет закрыто, нужно добавить child controller заново
         
@@ -121,6 +160,35 @@ class OnlinePageViewController: BaseViewController {
                     self.cameraContainer.insertSubview(playerVc.view, at: 0)
                     playerVc.didMove(toParent: self)
                     playerVc.player?.play()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Проверка, валидно ли текущее видео
+        
+        Driver
+            .combineLatest(
+                player.rx
+                    .observe(AVPlayer.Status.self, "status", options: [.new])
+                    .asDriver(onErrorJustReturn: nil),
+                player.rx
+                    .observe(AVPlayerItem.self, "currentItem", options: [.new])
+                    .asDriver(onErrorJustReturn: nil)
+            )
+            .map { args -> Bool in
+                let (status, currentItem) = args
+                
+                guard status == .readyToPlay,
+                    let asset = currentItem?.asset,
+                    asset.duration.seconds > 0 || asset.duration.flags.rawValue == 17 else {
+                    return false
+                }
+                
+                return true
+            }
+            .drive(
+                onNext: { [weak self] isVideoValid in
+                    self?.isVideoValid.onNext(isVideoValid)
                 }
             )
             .disposed(by: disposeBag)
@@ -198,18 +266,61 @@ class OnlinePageViewController: BaseViewController {
         
         delegate?.onlinePageViewController(self, didSelectCamera: camera)
         
+        player?.replaceCurrentItem(with: nil)
+        
+        loadingAsset?.cancelLoading()
+        loadingAsset = nil
+        
         let resultingString = camera.video + "/index.m3u8" + "?token=\(camera.token)"
         
-        let item: AVPlayerItem? = {
-            guard let url = URL(string: resultingString) else {
-                return nil
+        guard let url = URL(string: resultingString) else {
+            return
+        }
+        
+        let asset = AVAsset(url: url)
+        
+        loadingAsset = asset
+        
+        isVideoBeingLoaded.onNext(true)
+        
+        asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { [weak self, weak asset] in
+            guard let asset = asset else {
+                return
             }
             
-            return AVPlayerItem(url: url)
-        }()
-        
-        player?.replaceCurrentItem(with: item)
-        player?.play()
+            var tracksError: NSError?
+            var durationError: NSError?
+            
+            let tracksStatus = asset.statusOfValue(forKey: "tracks", error: &tracksError)
+            let durationStatus = asset.statusOfValue(forKey: "duration", error: &durationError)
+            
+            if tracksStatus == .cancelled ||
+                tracksStatus == .failed ||
+                durationStatus == .cancelled ||
+                durationStatus == .failed {
+                self?.isVideoBeingLoaded.onNext(false)
+                return
+            }
+            
+            guard tracksStatus == .loaded, durationStatus == .loaded else {
+                return
+            }
+            
+            self?.isVideoBeingLoaded.onNext(false)
+            
+            DispatchQueue.main.async {
+                // MARK: Ассет загружен, больше хранить его не нужно
+                
+                self?.loadingAsset = nil
+                
+                // MARK: Видео готово к просмотру, засовываем его в плеер
+                
+                let playerItem = AVPlayerItem(asset: asset)
+                
+                self?.player?.replaceCurrentItem(with: playerItem)
+                self?.player?.play()
+            }
+        }
     }
     
 }
