@@ -36,12 +36,23 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
     
     weak var delegate: ArchivePageViewControllerDelegate?
     
+    // Если вызывать reloadData в то время, когда календаря нет на экране - все идет по 3.14зде
+    // Почему? Потому что разработчики библиотеки - кайфовые ребята
+    // Что делать? Добавляем флаг
+    
+    private var shouldReloadOnAppear = false
+    
     // MARK: Доступные периоды для просмотра архивных видео
-    // При получении новых данных - обновляем датасорс, чтобы конфигурация календаря поменялась
+    // Если календарь видно - обновляемся. Если не видно - выставляем флаг
     
     private var availableRanges: [APIArchiveRange]? {
         didSet {
-            calendarView.calendarDataSource = self
+            guard isVisible else {
+                shouldReloadOnAppear = true
+                return
+            }
+            
+            calendarView.reloadData()
         }
     }
     
@@ -77,26 +88,49 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // MARK: Именно пробел. Если оставить nil или "", календарь скакать будет при первой загрузке
+        
+        monthLabel.text = " "
+        leftArrowButton.isHidden = true
+        rightArrowButton.isHidden = true
+        
         configureCalendarView()
-        setupCalendar()
         
         bind()
     }
     
+    // MARK: Костыль, чтобы не моргал хэдер (иначе он будет пустой до viewDidAppear)
+    // А обновить данные прямо здесь мы не можем, только во viewDidAppear
+    // Поэтому тут обновляем хэдер
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard shouldReloadOnAppear else {
+            return
+        }
+        
+        setupCalendarHeader(from: upperDateLimit)
+    }
+    
+    // А тут обновляем данные, а потом еще и хэдер на всякий случай
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        setupCalendar()
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        let visibleDates = calendarView.visibleDates()
-        calendarView.viewWillTransition(to: size, with: coordinator, anchorDate: visibleDates.monthDates.first?.date)
-        setupCalendar()
-    }
-    
-    func setupCalendar() {
-        setupCalendarHeader(from: calendarView.visibleDates())
+        guard shouldReloadOnAppear else {
+            return
+        }
+        
+        shouldReloadOnAppear = false
+        
+        calendarView.reloadData(withAnchor: upperDateLimit) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            self.setupCalendarHeader(from: self.calendarView.visibleDates().monthDates.first?.date)
+        }
     }
     
     func setAvailableRanges(_ ranges: [APIArchiveRange]?) {
@@ -148,8 +182,8 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         )
     }
     
-    private func setupCalendarHeader(from visibleDates: DateSegmentInfo) {
-        guard let visibleDate = visibleDates.monthDates.first?.date else {
+    private func setupCalendarHeader(from visibleDate: Date?) {
+        guard let visibleDate = visibleDate else {
             return
         }
         
@@ -200,7 +234,7 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
         
-        calendarView.scrollToDate(Date())
+        calendarView.reloadData(withAnchor: Date())
         
         leftArrowButton.rx
             .tap
@@ -345,7 +379,7 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
     }
 
     func calendar(_ calendar: JTACMonthView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
-        setupCalendarHeader(from: visibleDates)
+        setupCalendarHeader(from: visibleDates.monthDates.first?.date)
     }
 
 }
