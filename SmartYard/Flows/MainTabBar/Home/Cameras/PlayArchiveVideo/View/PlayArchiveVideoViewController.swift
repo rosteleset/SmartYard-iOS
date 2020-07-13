@@ -12,6 +12,7 @@ import RxCocoa
 import AVKit
 import JGProgressHUD
 import TouchAreaInsets
+import Lottie
 
 // swiftlint:disable:next type_body_length
 class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
@@ -44,6 +45,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var realVideoContainer: UIView!
     @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
     @IBOutlet private weak var fullscreenButton: UIButton!
+    @IBOutlet private weak var videoLoadingAnimationView: AnimationView!
     
     private var realVideoPlayerViewController: AVPlayerViewController?
     private var realVideoPlayer: AVPlayer?
@@ -92,6 +94,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     private let currentMode = BehaviorSubject<Mode>(value: .preview)
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
+    private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: false)
     private let currentPlaybackTime = BehaviorSubject<CMTime>(value: .zero)
     
     private var latestThumbnailConfig: VideoThumbnailConfiguration?
@@ -283,6 +286,14 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         addChild(playerViewController)
         realVideoContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
+        
+        // MARK: Настройка лоадера
+        
+        let animation = Animation.named("LoaderAnimation")
+        
+        videoLoadingAnimationView.animation = animation
+        videoLoadingAnimationView.loopMode = .loop
+        videoLoadingAnimationView.backgroundBehavior = .pauseAndRestore
         
         // MARK: Когда полноэкранное видео будет закрыто, нужно добавить child controller заново
         
@@ -494,6 +505,18 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+        
+        isVideoBeingLoaded
+            .asDriver(onErrorJustReturn: false)
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.videoLoadingAnimationView.isHidden = !isLoading
+                    
+                    isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func updateUI(mode: Mode, isVideoValid: Bool) {
@@ -582,6 +605,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     self?.loadingAsset = asset
                     
                     // MARK: Грузим ключи tracks и duration, т.к. только они сработают для m3u8 потока
+                    
+                    self?.isVideoBeingLoaded.onNext(true)
 
                     asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { [weak asset] in
                         guard let asset = asset else {
@@ -594,37 +619,45 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         let tracksStatus = asset.statusOfValue(forKey: "tracks", error: &tracksError)
                         let durationStatus = asset.statusOfValue(forKey: "duration", error: &durationError)
                         
-                        switch (tracksStatus, durationStatus) {
-                        case (.loaded, .loaded):
-                            DispatchQueue.main.async {
-                                // MARK: Ассет загружен, больше хранить его не нужно
-                                
-                                self?.loadingAsset = nil
-
-                                // MARK: Видео готово к просмотру, засовываем его в плеер
-                                
-                                let playerItem = AVPlayerItem(asset: asset)
-
-                                self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
-                                self?.progressSlider.setVideoDuration(CMTimeGetSeconds(asset.duration))
-                                
-                                // MARK: Грузим thumbnails
-                                
-                                self?.progressSlider.resetThumbnailImages()
-                                self?.progressSlider.setActivityIndicatorsHidden(false)
-
-                                self?.rangeSlider.resetThumbnailImages()
-                                self?.rangeSlider.setActivityIndicatorsHidden(false)
-
-                                self?.loadThumbnails(
-                                    config: thumbnailsConfig,
-                                    count: 5,
-                                    videoDuration: CMTimeGetSeconds(asset.duration)
-                                )
-                            }
+                        if tracksStatus == .cancelled ||
+                            tracksStatus == .failed ||
+                            durationStatus == .cancelled ||
+                            durationStatus == .failed {
+                            self?.isVideoBeingLoaded.onNext(false)
+                            return
+                        }
+                        
+                        guard tracksStatus == .loaded, durationStatus == .loaded else {
+                            return
+                        }
+                        
+                        self?.isVideoBeingLoaded.onNext(false)
+                        
+                        DispatchQueue.main.async {
+                            // MARK: Ассет загружен, больше хранить его не нужно
                             
-                        default:
-                            break
+                            self?.loadingAsset = nil
+
+                            // MARK: Видео готово к просмотру, засовываем его в плеер
+                            
+                            let playerItem = AVPlayerItem(asset: asset)
+
+                            self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
+                            self?.progressSlider.setVideoDuration(CMTimeGetSeconds(asset.duration))
+                            
+                            // MARK: Грузим thumbnails
+                            
+                            self?.progressSlider.resetThumbnailImages()
+                            self?.progressSlider.setActivityIndicatorsHidden(false)
+
+                            self?.rangeSlider.resetThumbnailImages()
+                            self?.rangeSlider.setActivityIndicatorsHidden(false)
+
+                            self?.loadThumbnails(
+                                config: thumbnailsConfig,
+                                count: 5,
+                                videoDuration: CMTimeGetSeconds(asset.duration)
+                            )
                         }
                     }
                 }
