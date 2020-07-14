@@ -81,6 +81,8 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     
     private var latestScreenshotPolicy: ScreenshotPolicy = .middle
     
+    private var referenceCalendar = Calendar.current
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.setup()
@@ -309,6 +311,12 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             isUpperBoundReached: isUpperBoundReached,
             screenshotPolicy: latestScreenshotPolicy
         )
+        
+        layoutSubviews()
+    }
+    
+    func setReferenceCalendar(_ calendar: Calendar) {
+        referenceCalendar = calendar
         
         layoutSubviews()
     }
@@ -592,7 +600,15 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             return startIndicatorDate.day == endIndicatorDate.day ? "HH:mm:ss" : "dd.MM HH:mm:ss"
         }()
         
-        return (startIndicatorDate.string(withFormat: format), endIndicatorDate.string(withFormat: format))
+        let formatter = DateFormatter()
+        
+        formatter.timeZone = referenceCalendar.timeZone
+        formatter.dateFormat = format
+        
+        return (
+            formatter.string(from: startIndicatorDate),
+            formatter.string(from: endIndicatorDate)
+        )
     }
     
     private func negateConversionLosses(_ value: Float64) -> Float64 {

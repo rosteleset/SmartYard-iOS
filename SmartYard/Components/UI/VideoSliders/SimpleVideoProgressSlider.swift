@@ -39,6 +39,7 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     private var isReceivingGesture: Bool = false
     
     private var relativeStartDate: Date?
+    private var referenceCalendar = Calendar.current
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -146,6 +147,12 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     
     func setRelativeStartDate(_ date: Date?) {
         relativeStartDate = date
+        
+        layoutSubviews()
+    }
+    
+    func setReferenceCalendar(_ calendar: Calendar) {
+        referenceCalendar = calendar
         
         layoutSubviews()
     }
@@ -315,7 +322,12 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         
         let progressIndicatorDate = relativeStartDate.addingTimeInterval(progressSeconds)
         
-        return progressIndicatorDate.string(withFormat: "HH:mm:ss")
+        let formatter = DateFormatter()
+        
+        formatter.timeZone = referenceCalendar.timeZone
+        formatter.dateFormat = "HH:mm:ss"
+        
+        return formatter.string(from: progressIndicatorDate)
     }
     
     private func negateConversionLosses(_ value: Float64) -> Float64 {

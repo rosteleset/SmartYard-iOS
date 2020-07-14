@@ -10,31 +10,26 @@ import Foundation
 
 struct ArchiveVideoHourPeriod: Equatable {
     
+    /// Дата по МСК, 00:00
     let baseDate: Date
+    
+    /// Начало периода (в часах)
     let startHours: Int
+    
+    /// Конец периода (в часах)
     let endHours: Int
     
     var title: String {
         return String(format: "%02d", startHours) + ".00 - " + String(format: "%02d", endHours) + ".00"
     }
     
-    // MARK: Здесь нам нужно получить таймстамп начала промежутка
-    // Время, которое выбирается в пикере - по МСК. Таймстамп же создастся по локальной таймзоне
-    // То есть, если мы выбрали 03.00 - 06.00, то по нашему времени это 04.00 - 07.00
-    // Поэтому добавляем разницу между локальной таймзоной и МСК, чтобы получить правильный таймстамп
+    /// Компоненты URL для трехчасового видео
     
     var videoUrlComponents: String? {
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: baseDate)
-        
-        guard let date = Calendar.current.date(from: components) else {
-            return nil
-        }
-        
-        let currentOffsetFromGMT = TimeZone.current.secondsFromGMT() / 3600
-        let diff = currentOffsetFromGMT - Date.moscowOffsetFromGMT
-        
-        let startDate = date.adding(.hour, value: startHours + diff)
-        let endDate = date.adding(.hour, value: endHours + diff)
+        let startOfDay = Calendar.moscowCalendar.startOfDay(for: baseDate)
+
+        let startDate = startOfDay.adding(.hour, value: startHours)
+        let endDate = startOfDay.adding(.hour, value: endHours)
         
         let startTimestamp = startDate.unixTimestamp.int
         let duration = endDate.timeIntervalSince(startDate).int
@@ -42,43 +37,24 @@ struct ArchiveVideoHourPeriod: Equatable {
         return "/index-\(startTimestamp)-\(duration).m3u8"
     }
     
-    // MARK: Здесь нам нужно получить дату скриншота
-    // Поскольку используется строковый формат, нам не нужно переводить время из МСК в локальное
-    // Но сервер для этого запроса почему-то ожидает время по UTC
-    // Поэтому нам нужно отнять разницу между МСК и UTC, чтобы получить правильный скриншот
-    
-    var videoThumbnailComponents: String? {
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: baseDate)
-        
-        guard let date = Calendar.current.date(from: components) else {
-            return nil
-        }
-        
-        let startDate = date.adding(.hour, value: startHours - Date.moscowOffsetFromGMT)
-        
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
-        
-        return "/\(dateFormatter.string(from: startDate))-preview.mp4"
-    }
+    // MARK: Сервер жрет время по GMT, поэтому переводим в GMT
+    /// Компоненты URL для получения thumbnails
     
     func getThumbnailComponents(thumbnailsCount: Int, actualDuration: TimeInterval) -> [String] {
         guard thumbnailsCount > 0 else {
             return []
         }
         
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: baseDate)
+        let startOfDay = Calendar.moscowCalendar.startOfDay(for: baseDate)
         
-        guard let date = Calendar.current.date(from: components) else {
-            return []
-        }
-        
-        let startDate = date.adding(.hour, value: startHours - Date.moscowOffsetFromGMT)
         let intervalForOneThumbnail = actualDuration / Double(thumbnailsCount)
         
         let dateFormatter = DateFormatter()
+        
         dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        let startDate = startOfDay.adding(.hour, value: startHours)
         
         return (0 ..< thumbnailsCount).map {
             let date = startDate.addingTimeInterval(Double($0) * intervalForOneThumbnail)

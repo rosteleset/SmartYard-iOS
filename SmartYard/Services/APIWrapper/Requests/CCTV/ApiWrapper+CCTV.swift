@@ -65,4 +65,21 @@ extension APIWrapper {
             .mapToOptional()
     }
     
+    func getArchiveRanges(cameraUrl: String, from: Int, token: String) -> Single<[APIArchiveRange]?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        let request = StreamInfoRequest(cameraUrl: cameraUrl, from: from, token: token)
+        
+        return provider.rx
+            .request(.streamInfo(request: request))
+            .convertNoConnectionError()
+            .map([APIArchiveStreamInfo].self)
+            .map { streamInfo in
+                streamInfo.first?.ranges ?? []
+            }
+            .mapToOptional()
+    }
+    
 }

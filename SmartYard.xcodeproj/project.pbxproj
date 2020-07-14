@@ -206,6 +206,11 @@
 		84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */; };
 		84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */; };
 		84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */; };
+		84D29B9024B7999A00CFBE6B /* APIArchiveRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B8E24B7999A00CFBE6B /* APIArchiveRange.swift */; };
+		84D29B9124B7999A00CFBE6B /* APIArchiveStreamInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B8F24B7999A00CFBE6B /* APIArchiveStreamInfo.swift */; };
+		84D29B9524B799B100CFBE6B /* StreamInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9324B799B100CFBE6B /* StreamInfoRequest.swift */; };
+		84D29B9624B799B100CFBE6B /* StreamInfoResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9424B799B100CFBE6B /* StreamInfoResponseData.swift */; };
+		84D29B9824B79B5400CFBE6B /* Calendar+Moscow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */; };
 		84D29BA324B865EF00CFBE6B /* LoaderAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 84D29BA224B865EF00CFBE6B /* LoaderAnimation.json */; };
 		84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */; };
 		84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */; };
@@ -668,6 +673,11 @@
 		84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CACornerMask+Extensions.swift"; sourceTree = "<group>"; };
 		84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTabBarController.xib; sourceTree = "<group>"; };
 		84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTransitions.swift; sourceTree = "<group>"; };
+		84D29B8E24B7999A00CFBE6B /* APIArchiveRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIArchiveRange.swift; sourceTree = "<group>"; };
+		84D29B8F24B7999A00CFBE6B /* APIArchiveStreamInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIArchiveStreamInfo.swift; sourceTree = "<group>"; };
+		84D29B9324B799B100CFBE6B /* StreamInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamInfoRequest.swift; sourceTree = "<group>"; };
+		84D29B9424B799B100CFBE6B /* StreamInfoResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamInfoResponseData.swift; sourceTree = "<group>"; };
+		84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Calendar+Moscow.swift"; sourceTree = "<group>"; };
 		84D29BA224B865EF00CFBE6B /* LoaderAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LoaderAnimation.json; sourceTree = "<group>"; };
 		84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewController.swift; sourceTree = "<group>"; };
 		84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvancedSettingsViewController.xib; sourceTree = "<group>"; };
@@ -1625,6 +1635,7 @@
 				8496396124851B6B0086B6E9 /* All */,
 				845E9EF324977264000CBBC6 /* RecDownload */,
 				845E9EF02492761D000CBBC6 /* RecPrepare */,
+				84D29B9224B799B100CFBE6B /* StreamInfo */,
 			);
 			path = CCTV;
 			sourceTree = "<group>";
@@ -1909,6 +1920,7 @@
 		84B9EC8623E0844500979C39 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */,
 				84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */,
 				84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */,
 				84F6494C24740F33000C0028 /* CLLocationCoordinate2D+Extensions.swift */,
@@ -2046,6 +2058,15 @@
 				84CC15DB23EC6AA800A1CB95 /* AddressesListCameraCell.xib */,
 			);
 			path = CameraCell;
+			sourceTree = "<group>";
+		};
+		84D29B9224B799B100CFBE6B /* StreamInfo */ = {
+			isa = PBXGroup;
+			children = (
+				84D29B9324B799B100CFBE6B /* StreamInfoRequest.swift */,
+				84D29B9424B799B100CFBE6B /* StreamInfoResponseData.swift */,
+			);
+			path = StreamInfo;
 			sourceTree = "<group>";
 		};
 		84D6445123F68A8200AD87EF /* AdvancedSettings */ = {
@@ -2304,6 +2325,8 @@
 		E92EFB4E242A22F2003AF7FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				84D29B8E24B7999A00CFBE6B /* APIArchiveRange.swift */,
+				84D29B8F24B7999A00CFBE6B /* APIArchiveStreamInfo.swift */,
 				E92EFB52242A22F2003AF7FE /* Geo */,
 				842FECB8242B8A04007CA0F3 /* APIOffice.swift */,
 				E92EFB4F242A22F2003AF7FE /* APIPaymentsListAddress.swift */,
@@ -3558,6 +3581,7 @@
 				E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */,
 				E92EFBC3242A22F2003AF7FE /* GetHousesRequest.swift in Sources */,
 				84B89A9023F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift in Sources */,
+				84D29B9124B7999A00CFBE6B /* APIArchiveStreamInfo.swift in Sources */,
 				E9BB83CF23F69FE80071F91E /* AllowedPerson.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				E92EFBB8242A22F2003AF7FE /* APIPaymentsListAccount.swift in Sources */,
@@ -3572,6 +3596,7 @@
 				844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */,
 				E94B6C1823FAC5B600FD9F65 /* NewAllowedPersonViewController.swift in Sources */,
 				845E9EF52497727A000CBBC6 /* RecDownloadRequest.swift in Sources */,
+				84D29B9024B7999A00CFBE6B /* APIArchiveRange.swift in Sources */,
 				E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */,
 				84AF095D24ADF9AF005CEECE /* AlertService.swift in Sources */,
 				84898A9823F1556B00E6B78E /* SettingsSectionModel.swift in Sources */,
@@ -3618,6 +3643,7 @@
 				844AC3D523EBFDAF0066006D /* AddressesListViewModel.swift in Sources */,
 				E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */,
 				844AC39523E977810066006D /* AccessService.swift in Sources */,
+				84D29B9824B79B5400CFBE6B /* Calendar+Moscow.swift in Sources */,
 				E92EFBDD242A22F2003AF7FE /* GetListConnectResponseData.swift in Sources */,
 				843C38CE242A577C0035BF80 /* InboxResponseData.swift in Sources */,
 				843C38E8242A6E490035BF80 /* QRCodeScanViewModel.swift in Sources */,
@@ -3632,6 +3658,7 @@
 				E92EFBDA242A22F2003AF7FE /* APIWrapper+Address.swift in Sources */,
 				84AADD20242E22640056994A /* EditNameViewController.swift in Sources */,
 				E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */,
+				84D29B9524B799B100CFBE6B /* StreamInfoRequest.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				E92EFBBF242A22F2003AF7FE /* GetServicesRequest.swift in Sources */,
 				84F6494B24740E90000C0028 /* YardMapViewModel.swift in Sources */,
@@ -3657,6 +3684,7 @@
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
 				84F6494A24740E90000C0028 /* CamerasMapPointView.swift in Sources */,
 				846DC6C724B33DC600A11914 /* PayContractViewModel.swift in Sources */,
+				84D29B9624B799B100CFBE6B /* StreamInfoResponseData.swift in Sources */,
 				846DC6DC24B33DEA00A11914 /* SberbankPayProcessRequest.swift in Sources */,
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
 				846DC6DB24B33DEA00A11914 /* SberbankPayError.swift in Sources */,

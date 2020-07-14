@@ -23,6 +23,7 @@ enum APITarget {
     case allCCTV(request: AllCCTVRequest)
     case recPrepare(request: RecPrepareRequest)
     case recDownload(request: RecDownloadRequest)
+    case streamInfo(request: StreamInfoRequest)
     
     case getAddress(request: GetAddressRequest)
     case getGeoCoder(request: GeoCoderRequest)
@@ -61,6 +62,10 @@ extension APITarget: TargetType {
         switch self {
         case .sberbankPayProcess:
             return URL(string: "https://securepayments.sberbank.ru/payment/applepay")!
+            
+        case .streamInfo(let request):
+            return URL(string: request.cameraUrl)!
+            
         default:
             return URL(string: "https://dm.lanta.me/api")!
         }
@@ -81,6 +86,7 @@ extension APITarget: TargetType {
         case .allCCTV: return "cctv/all"
         case .recPrepare: return "cctv/recPrepare"
         case .recDownload: return "cctv/recDownload"
+        case .streamInfo: return "recording_status.json"
             
         case .getAddress: return "geo/address"
         case .getGeoCoder: return "geo/coder"
@@ -114,7 +120,10 @@ extension APITarget: TargetType {
     }
     
     var method: Moya.Method {
-        return .post
+        switch self {
+        case .streamInfo: return .get
+        default: return .post
+        }
     }
     
     var headers: [String: String]? {
@@ -177,7 +186,10 @@ extension APITarget: TargetType {
     }
     
     var task: Task {
-        return .requestParameters(parameters: requestParameters, encoding: JSONEncoding.default)
+        switch self {
+        case .streamInfo: return .requestParameters(parameters: requestParameters, encoding: URLEncoding.default)
+        default: return .requestParameters(parameters: requestParameters, encoding: JSONEncoding.default)
+        }
     }
     
     var requestParameters: [String: Any] {
@@ -195,6 +207,7 @@ extension APITarget: TargetType {
         case .allCCTV(let request): return request.requestParameters
         case .recPrepare(let request): return request.requestParameters
         case .recDownload(let request): return request.requestParameters
+        case .streamInfo(let request): return request.requestParameters
             
         case .getAddress(let request): return request.requestParameters
         case .getGeoCoder(let request): return request.requestParameters

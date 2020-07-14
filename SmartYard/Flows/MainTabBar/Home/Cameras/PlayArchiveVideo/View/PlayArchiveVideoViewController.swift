@@ -411,7 +411,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureSliders() {
+        progressSlider.setReferenceCalendar(.moscowCalendar)
         progressSlider.delegate = self
+        
+        rangeSlider.setReferenceCalendar(.moscowCalendar)
         rangeSlider.delegate = self
     }
     
@@ -442,13 +445,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        let currentPlaybackTimeDistinctSeconds = currentPlaybackTime
-            .asDriverOnErrorJustComplete()
-            .map { $0.seconds }
-            .distinctUntilChanged { lhs, rhs in
-                abs(lhs - rhs) < 0.001
-            }
-        
         periodSelectedTrigger
             .asDriverOnErrorJustComplete()
             .drive(
@@ -462,46 +458,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     }()
                     
                     self?.progressSlider.setRelativeStartDate(startDate)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        Driver
-            .combineLatest(
-                periodSelectedTrigger.asDriverOnErrorJustComplete(),
-                currentPlaybackTimeDistinctSeconds
-            )
-            .drive(
-                onNext: { [weak self] args in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    let (period, playbackTime) = args
-                    
-                    guard let uPeriod = period else {
-                        return
-                    }
-                    
-                    // MARK: Максимальная дата, которую можно выбрать. Равняется текущей дате по МСК
-                    // Если у нас 00:00, то в Москве еще 23:00. Соответственно, максимум можно выбрать 23:00
-                    // Поэтому вычитаем разницу между локальной таймзоной и МСК из текущего времени
-                    
-                    let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
-                    
-                    let upperBound = Date().adding(.hour, value: -diffWithMoscow)
-                    let lowerBound = upperBound.adding(.day, value: -7)
-                    
-                    let visibleTimelineEndDate = uPeriod.baseDate
-                        .adding(.hour, value: uPeriod.startHours)
-                        .addingTimeInterval(playbackTime)
-                        .adding(.minute, value: 30)
-                    
-                    self.rangeSlider.setTimelineConfiguration(
-                        visibleTimelineEndDate: visibleTimelineEndDate,
-                        lowerBound: lowerBound,
-                        upperBound: upperBound
-                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -578,6 +534,45 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 return "Видео от \(dateFormatter.string(from: date))"
             }
             .drive(previewDateLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        let currentPlaybackTimeDistinctSeconds = currentPlaybackTime
+            .asDriverOnErrorJustComplete()
+            .map { $0.seconds }
+            .distinctUntilChanged { lhs, rhs in
+                abs(lhs - rhs) < 0.001
+            }
+        
+        Driver
+            .combineLatest(
+                output.rangeBounds,
+                periodSelectedTrigger.asDriverOnErrorJustComplete(),
+                currentPlaybackTimeDistinctSeconds
+            )
+            .drive(
+                onNext: { [weak self] args in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let (rangeBounds, period, playbackTime) = args
+                    
+                    guard let uPeriod = period else {
+                        return
+                    }
+                    
+                    let visibleTimelineEndDate = uPeriod.baseDate
+                        .adding(.hour, value: uPeriod.startHours)
+                        .addingTimeInterval(playbackTime)
+                        .adding(.minute, value: 30)
+                    
+                    self.rangeSlider.setTimelineConfiguration(
+                        visibleTimelineEndDate: visibleTimelineEndDate,
+                        lowerBound: rangeBounds?.lower,
+                        upperBound: rangeBounds?.upper
+                    )
+                }
+            )
             .disposed(by: disposeBag)
         
         output.videoData
@@ -919,6 +914,8 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         shiftTimelineForwardButton.isEnabled = !isUpperBoundReached
         
         let dateFormatter = DateFormatter()
+        
+        dateFormatter.timeZone = Calendar.moscowCalendar.timeZone
         dateFormatter.dateFormat = "dd.MM.yy"
         
         editDateLabel.text = "Видео от \(dateFormatter.string(from: startDate))"
