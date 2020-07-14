@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_0" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,8 +28,10 @@
                 <outlet property="openButton" destination="EmL-iG-h79" id="7Ij-kJ-7VN"/>
                 <outlet property="openButtonContainer" destination="lPP-Rf-bcR" id="cy4-Mr-yfm"/>
                 <outlet property="previewButton" destination="rwT-mp-rJV" id="BtZ-YJ-EHv"/>
+                <outlet property="previewButtonLabel" destination="6nl-Pt-61e" id="6lo-dj-jei"/>
                 <outlet property="subtitleLabel" destination="Rh6-Xt-7AB" id="kJV-nO-5XR"/>
                 <outlet property="titleLabel" destination="EaG-bR-VV0" id="SPP-lu-dvx"/>
+                <outlet property="videoBackgroundBlur" destination="4Wg-Q1-NS9" id="6LI-CV-5HG"/>
                 <outlet property="videoPreview" destination="qZy-mX-wC7" id="00X-h0-Zjs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -49,22 +49,22 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Звонок в домофон" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EaG-bR-VV0">
-                    <rect key="frame" x="25" y="60" width="270" height="40.5"/>
+                    <rect key="frame" x="25" y="40" width="270" height="40.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="Тамбов, ул. Советская 20, кв. 52" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rh6-Xt-7AB">
-                    <rect key="frame" x="50" y="110.5" width="220" height="20.5"/>
+                    <rect key="frame" x="50" y="90.5" width="220" height="20.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o7y-sM-LFP">
-                    <rect key="frame" x="16" y="163" width="288" height="146.5"/>
+                    <rect key="frame" x="16" y="143" width="288" height="166.5"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="640" placeholderIntrinsicHeight="480" translatesAutoresizingMaskIntoConstraints="NO" id="ws9-YM-GBC">
-                            <rect key="frame" x="13.5" y="0.0" width="261" height="146.5"/>
+                            <rect key="frame" x="0.0" y="2.5" width="288" height="162"/>
                             <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="ws9-YM-GBC" secondAttribute="height" multiplier="1280:720" id="qZi-Zw-Jqz"/>
@@ -76,10 +76,19 @@
                             </userDefinedRuntimeAttributes>
                         </imageView>
                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="HGl-tO-Nut">
-                            <rect key="frame" x="125.5" y="55" width="37" height="37"/>
+                            <rect key="frame" x="125.5" y="65" width="37" height="37"/>
                         </activityIndicatorView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Wg-Q1-NS9" userLabel="Video Background Blur">
+                            <rect key="frame" x="0.0" y="2.5" width="288" height="162"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="24"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qZy-mX-wC7">
-                            <rect key="frame" x="-496" y="-286.5" width="1280" height="720"/>
+                            <rect key="frame" x="-496" y="-276.5" width="1280" height="720"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="1280" id="ZJJ-nL-hxI"/>
@@ -94,15 +103,19 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="4Wg-Q1-NS9" firstAttribute="bottom" secondItem="ws9-YM-GBC" secondAttribute="bottom" id="IpC-Mc-xIA"/>
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="o7y-sM-LFP" secondAttribute="top" id="KMz-Gh-K0p"/>
                         <constraint firstItem="HGl-tO-Nut" firstAttribute="centerX" secondItem="ws9-YM-GBC" secondAttribute="centerX" id="MgF-uY-1ei"/>
                         <constraint firstItem="HGl-tO-Nut" firstAttribute="centerY" secondItem="ws9-YM-GBC" secondAttribute="centerY" id="Qrd-vU-6uW"/>
+                        <constraint firstItem="4Wg-Q1-NS9" firstAttribute="leading" secondItem="ws9-YM-GBC" secondAttribute="leading" id="Sj2-ws-Di1"/>
+                        <constraint firstItem="4Wg-Q1-NS9" firstAttribute="trailing" secondItem="ws9-YM-GBC" secondAttribute="trailing" id="XBf-AM-rU0"/>
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="centerX" secondItem="o7y-sM-LFP" secondAttribute="centerX" id="XDY-iC-MOS"/>
                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ws9-YM-GBC" secondAttribute="bottom" id="Xuk-K8-1zR"/>
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="leading" secondItem="o7y-sM-LFP" secondAttribute="leading" priority="751" id="YEb-42-zkF"/>
                         <constraint firstItem="qZy-mX-wC7" firstAttribute="centerY" secondItem="ws9-YM-GBC" secondAttribute="centerY" id="bZ1-dO-JbJ"/>
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="centerY" secondItem="o7y-sM-LFP" secondAttribute="centerY" id="dY5-x5-eAd"/>
                         <constraint firstItem="qZy-mX-wC7" firstAttribute="centerX" secondItem="ws9-YM-GBC" secondAttribute="centerX" id="n6N-hY-uUy"/>
+                        <constraint firstItem="4Wg-Q1-NS9" firstAttribute="top" secondItem="ws9-YM-GBC" secondAttribute="top" id="qpA-lh-qs2"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kK5-Z2-k0l" userLabel="Button Container">

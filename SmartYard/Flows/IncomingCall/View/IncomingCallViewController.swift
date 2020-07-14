@@ -26,8 +26,11 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var ignoreButtonLabel: UILabel!
+    @IBOutlet private weak var previewButtonLabel: UILabel!
     
+    @IBOutlet private weak var videoBackgroundBlur: UIView!
     @IBOutlet private weak var videoPreview: UIView!
+    
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
     
@@ -146,13 +149,17 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
     private func applyState(_ state: IncomingCallStateContainer) {
         view.isUserInteractionEnabled = state.callState != .callFinished
         
-        previewButton.isSelected = state.previewState == .video
+        previewButton.isSelected = state.previewState == .video && state.doorState == .notDetermined
         callButton.isSelected = (state.callState == .establishingConnection || state.callState == .callActive)
             && state.doorState == .notDetermined
         
-        videoPreview.isHidden = {
-            !(state.callState == .callActive && state.previewState == .video)
-        }()
+        let shouldShowVideo = state.callState == .callActive && state.previewState == .video
+        
+        videoBackgroundBlur.isHidden = !shouldShowVideo
+        videoPreview.isHidden = !shouldShowVideo
+        
+        imageView.isHidden = shouldShowVideo
+        imageViewActivityIndicator.isHidden = shouldShowVideo
         
         alreadyOpenedButtonContainer.isHidden = state.doorState != .opened
         openButtonContainer.isHidden = state.doorState == .opened
@@ -162,18 +169,22 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
         case (.callReceived, .staticImage):
             titleLabel.text = "Звонок в домофон"
             ignoreButtonLabel.text = "Игнорировать"
+            previewButtonLabel.text = "Глазок"
             
         case (.callReceived, .video):
             titleLabel.text = "Глазок включен"
             ignoreButtonLabel.text = "Игнорировать"
+            previewButtonLabel.text = "Глазок"
             
         case (.establishingConnection, _):
             titleLabel.text = "Соединение..."
             ignoreButtonLabel.text = "Отклонить"
+            previewButtonLabel.text = "Видео"
             
         case (.callActive, _):
             titleLabel.text = "Разговор"
             ignoreButtonLabel.text = "Отклонить"
+            previewButtonLabel.text = "Видео"
             
         case (.callFinished, _):
             titleLabel.text = "Звонок завершен"
