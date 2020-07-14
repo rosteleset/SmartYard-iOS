@@ -133,18 +133,16 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-                    let (callState, doorState) = state
+                    self.view.isUserInteractionEnabled = state.callState != .callFinished
+                    self.previewButton.isSelected = state.callState == .callPreviewed && state.doorState == .notDetermined
+                    self.callButton.isSelected = (state.callState == .establishingConnection || state.callState == .callAccepted)
+                        && state.doorState == .notDetermined
                     
-                    self.view.isUserInteractionEnabled = callState != .callFinished
-                    self.previewButton.isSelected = callState == .callPreviewed && doorState == .notDetermined
-                    self.callButton.isSelected = (callState == .establishingConnection || callState == .callAccepted)
-                        && doorState == .notDetermined
+                    self.alreadyOpenedButtonContainer.isHidden = state.doorState != .opened
+                    self.openButtonContainer.isHidden = state.doorState == .opened
+                    self.ignoreButtonContainer.isHidden = state.doorState == .opened
                     
-                    self.alreadyOpenedButtonContainer.isHidden = doorState != .opened
-                    self.openButtonContainer.isHidden = doorState == .opened
-                    self.ignoreButtonContainer.isHidden = doorState == .opened
-                    
-                    switch callState {
+                    switch state.callState {
                     case .callReceived:
                         self.titleLabel.text = "Звонок в домофон"
                         self.ignoreButtonLabel.text = "Игнорировать"

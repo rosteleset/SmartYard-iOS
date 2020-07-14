@@ -27,9 +27,7 @@ class IncomingCallViewModel: BaseViewModel {
     
     private let callPayload: CallPayload
     
-    private let currentStateSubject = BehaviorSubject<(IncomingCallState, IncomingCallDoorState)>(
-        value: (.callReceived, .notDetermined)
-    )
+    private let currentStateSubject = BehaviorSubject<IncomingCallStateContainer>(value: .initial)
     
     private let registrationFinished = BehaviorSubject<Bool>(value: false)
     private let incomingCall = BehaviorSubject<(Call, CallParams)?>(value: nil)
@@ -103,10 +101,14 @@ class IncomingCallViewModel: BaseViewModel {
             .withLatestFrom(currentState)
             .drive(
                 onNext: { [weak self] currentState in
-                    let (callState, doorState) = currentState
-                    
-                    if callState == .callReceived {
-                        self?.currentStateSubject.onNext((.establishingConnection, doorState))
+                    if currentState.callState == .callReceived {
+                        let newState = IncomingCallStateContainer(
+                            callState: .establishingConnection,
+                            doorState: currentState.doorState,
+                            previewState: currentState.previewState
+                        )
+                        
+                        self?.currentStateSubject.onNext(newState)
                     }
                     
                     self?.doorOpeningRequestedByUser.onNext(true)
@@ -127,9 +129,10 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .filter { args in
                 let (currentState, isDoorOpeningRequested) = args
-                let (callState, doorState) = currentState
                 
-                return callState == .callAccepted && doorState == .notDetermined && isDoorOpeningRequested
+                return currentState.callState == .callAccepted &&
+                    currentState.doorState == .notDetermined &&
+                    isDoorOpeningRequested
             }
             .mapToVoid()
             .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
@@ -200,7 +203,6 @@ class IncomingCallViewModel: BaseViewModel {
                     }
                     
                     let (callInfo, currentState) = args
-                    let (_, doorState) = currentState
                     let (call, callParams) = callInfo
                     
                     do {
@@ -212,7 +214,13 @@ class IncomingCallViewModel: BaseViewModel {
                             self.enableLoudSpeaker()
                         }
                         
-                        self.currentStateSubject.onNext((.callAccepted, doorState))
+                        let newState = IncomingCallStateContainer(
+                            callState: .callAccepted,
+                            doorState: currentState.doorState,
+                            previewState: currentState.previewState
+                        )
+                        
+                        self.currentStateSubject.onNext(newState)
                     } catch {
                         self.providerProxy.endCall(uuid: self.callPayload.uuid)
                         
@@ -233,13 +241,20 @@ class IncomingCallViewModel: BaseViewModel {
             .withLatestFrom(currentState)
             .do(
                 onNext: { [weak self] currentState in
-                    let (callState, doorState) = currentState
-                    
-                    guard let self = self, callState != .callFinished, doorState == .notDetermined else {
+                    guard let self = self,
+                        currentState.callState != .callFinished,
+                        currentState.doorState == .notDetermined else {
                         return
                     }
                     
-                    self.currentStateSubject.onNext((.callFinished, doorState))
+                    let newState = IncomingCallStateContainer(
+                        callState: .callFinished,
+                        doorState: currentState.doorState,
+                        previewState: .staticImage
+                    )
+                    
+                    self.currentStateSubject.onNext(newState)
+                    
                     self.linphoneService.stop()
                     self.linphoneService.hasEnqueuedCalls = false
                 }
@@ -277,15 +292,21 @@ class IncomingCallViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] args in
                     let (views, currentState) = args
-                    let (callState, doorState) = currentState
                     
                     guard let self = self,
-                        callState == .callReceived || callState == .callPreviewed,
-                        doorState == .notDetermined else {
+                        currentState.callState == .callReceived || currentState.callState == .callPreviewed,
+                        currentState.doorState == .notDetermined else {
                         return
                     }
                     
-                    self.currentStateSubject.onNext((.establishingConnection, doorState))
+                    let newState = IncomingCallStateContainer(
+                        callState: .establishingConnection,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState
+                    )
+                    
+                    self.currentStateSubject.onNext(newState)
+                    
                     self.incomingCallAcceptedByUser.onNext(true)
                     
                     if let uViews = views {
@@ -306,13 +327,19 @@ class IncomingCallViewModel: BaseViewModel {
             .withLatestFrom(currentState)
             .do(
                 onNext: { [weak self] currentState in
-                    let (callState, doorState) = currentState
-                    
-                    guard let self = self, callState != .callFinished, doorState == .notDetermined else {
+                    guard let self = self,
+                        currentState.callState != .callFinished,
+                        currentState.doorState == .notDetermined else {
                         return
                     }
                     
-                    self.currentStateSubject.onNext((.callFinished, .notDetermined))
+                    let newState = IncomingCallStateContainer(
+                        callState: .callFinished,
+                        doorState: .notDetermined,
+                        previewState: .staticImage
+                    )
+                    
+                    self.currentStateSubject.onNext(newState)
                 }
             )
             .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
@@ -348,15 +375,29 @@ class IncomingCallViewModel: BaseViewModel {
             .withLatestFrom(currentState)
             .drive(
                 onNext: { [weak self] currentState in
-                    let (callState, doorState) = currentState
-                    
-                    guard let self = self, doorState == .notDetermined else {
+                    guard let self = self, currentState.doorState == .notDetermined else {
                         return
                     }
                     
-                    switch callState {
-                    case .callReceived: self.currentStateSubject.onNext((.callPreviewed, doorState))
-                    case .callPreviewed: self.currentStateSubject.onNext((.callReceived, doorState))
+                    switch currentState.callState {
+                    case .callReceived:
+                        let newState = IncomingCallStateContainer(
+                            callState: .callPreviewed,
+                            doorState: currentState.doorState,
+                            previewState: currentState.previewState
+                        )
+                        
+                        self.currentStateSubject.onNext(newState)
+                        
+                    case .callPreviewed:
+                        let newState = IncomingCallStateContainer(
+                            callState: .callReceived,
+                            doorState: currentState.doorState,
+                            previewState: currentState.previewState
+                        )
+                        
+                        self.currentStateSubject.onNext(newState)
+                        
                     default: break
                     }
                 }
@@ -376,9 +417,8 @@ class IncomingCallViewModel: BaseViewModel {
                 .combineLatest(loadNextImage, currentState)
                 .filter { args in
                     let (_, currentState) = args
-                    let (callState, _) = currentState
                     
-                    return callState == .callPreviewed || callState == .callAccepted
+                    return currentState.callState == .callPreviewed || currentState.callState == .callAccepted
                 }
                 .mapToVoid()
                 .drive(
@@ -435,9 +475,8 @@ class IncomingCallViewModel: BaseViewModel {
             .combineLatest(initialImage, liveImage, currentState)
             .map { args in
                 let (initialImage, liveImage, currentState) = args
-                let (callState, _) = currentState
                 
-                switch callState {
+                switch currentState.callState {
                 case .callReceived: return initialImage
                 default: return liveImage
                 }
@@ -451,8 +490,7 @@ class IncomingCallViewModel: BaseViewModel {
         
         let callStartedEvent = currentStateSubject
             .filter { currentState in
-                let (callState, _) = currentState
-                return callState == .callAccepted
+                currentState.callState == .callAccepted
             }
             .take(1)
         
@@ -460,8 +498,7 @@ class IncomingCallViewModel: BaseViewModel {
         
         let callFinishedEvent = currentStateSubject
             .filter { currentState in
-                let (callState, _) = currentState
-                return callState == .callFinished
+                currentState.callState == .callFinished
             }
             .take(1)
         
@@ -540,7 +577,14 @@ class IncomingCallViewModel: BaseViewModel {
                     print("DTMF code was sent. Delivery is not guaranteed tho")
                     
                     self?.isDoorBeingOpened.onNext(false)
-                    self?.currentStateSubject.onNext((.callFinished, .opened))
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: .callFinished,
+                        doorState: .opened,
+                        previewState: .staticImage
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
                     
                     do {
                         try call.terminate()
@@ -591,8 +635,14 @@ extension IncomingCallViewModel: LinphoneDelegate {
         }
         
         if cstate == .End {
-            if let (_, doorState) = try? currentStateSubject.value() {
-                currentStateSubject.onNext((.callFinished, doorState))
+            if let currentState = try? currentStateSubject.value() {
+                let newState = IncomingCallStateContainer(
+                    callState: .callFinished,
+                    doorState: currentState.doorState,
+                    previewState: .staticImage
+                )
+                
+                currentStateSubject.onNext(newState)
             }
             
             providerProxy.endCall(uuid: callPayload.uuid)

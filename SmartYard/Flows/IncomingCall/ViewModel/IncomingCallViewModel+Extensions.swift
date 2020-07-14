@@ -24,7 +24,7 @@ extension IncomingCallViewModel {
     }
     
     struct Output {
-        let state: Driver<(IncomingCallState, IncomingCallDoorState)>
+        let state: Driver<IncomingCallStateContainer>
         let subtitle: Driver<String?>
         let image: Driver<UIImage?>
         let isDoorBeingOpened: Driver<Bool>
