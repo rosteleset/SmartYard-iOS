@@ -130,7 +130,7 @@ class IncomingCallViewModel: BaseViewModel {
             .filter { args in
                 let (currentState, isDoorOpeningRequested) = args
                 
-                return currentState.callState == .callAccepted &&
+                return currentState.callState == .callActive &&
                     currentState.doorState == .notDetermined &&
                     isDoorOpeningRequested
             }
@@ -215,9 +215,9 @@ class IncomingCallViewModel: BaseViewModel {
                         }
                         
                         let newState = IncomingCallStateContainer(
-                            callState: .callAccepted,
+                            callState: .callActive,
                             doorState: currentState.doorState,
-                            previewState: currentState.previewState
+                            previewState: .video
                         )
                         
                         self.currentStateSubject.onNext(newState)
@@ -294,7 +294,7 @@ class IncomingCallViewModel: BaseViewModel {
                     let (views, currentState) = args
                     
                     guard let self = self,
-                        currentState.callState == .callReceived || currentState.callState == .callPreviewed,
+                        currentState.callState == .callReceived,
                         currentState.doorState == .notDetermined else {
                         return
                     }
@@ -379,27 +379,13 @@ class IncomingCallViewModel: BaseViewModel {
                         return
                     }
                     
-                    switch currentState.callState {
-                    case .callReceived:
-                        let newState = IncomingCallStateContainer(
-                            callState: .callPreviewed,
-                            doorState: currentState.doorState,
-                            previewState: currentState.previewState
-                        )
-                        
-                        self.currentStateSubject.onNext(newState)
-                        
-                    case .callPreviewed:
-                        let newState = IncomingCallStateContainer(
-                            callState: .callReceived,
-                            doorState: currentState.doorState,
-                            previewState: currentState.previewState
-                        )
-                        
-                        self.currentStateSubject.onNext(newState)
-                        
-                    default: break
-                    }
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState == .staticImage ? .video : .staticImage
+                    )
+                    
+                    self.currentStateSubject.onNext(newState)
                 }
             )
             .disposed(by: disposeBag)
@@ -418,7 +404,7 @@ class IncomingCallViewModel: BaseViewModel {
                 .filter { args in
                     let (_, currentState) = args
                     
-                    return currentState.callState == .callPreviewed || currentState.callState == .callAccepted
+                    return currentState.callState == .callReceived && currentState.previewState == .video
                 }
                 .mapToVoid()
                 .drive(
@@ -476,9 +462,9 @@ class IncomingCallViewModel: BaseViewModel {
             .map { args in
                 let (initialImage, liveImage, currentState) = args
                 
-                switch currentState.callState {
-                case .callReceived: return initialImage
-                default: return liveImage
+                switch currentState.previewState {
+                case .staticImage: return initialImage
+                case .video: return liveImage
                 }
             }
             .distinctUntilChanged()
@@ -490,7 +476,7 @@ class IncomingCallViewModel: BaseViewModel {
         
         let callStartedEvent = currentStateSubject
             .filter { currentState in
-                currentState.callState == .callAccepted
+                currentState.callState == .callActive
             }
             .take(1)
         

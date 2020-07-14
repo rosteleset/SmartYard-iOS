@@ -127,35 +127,8 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
         
         output.state
             .drive(
-                // swiftlint:disable:next closure_body_length
                 onNext: { [weak self] state in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    self.view.isUserInteractionEnabled = state.callState != .callFinished
-                    self.previewButton.isSelected = state.callState == .callPreviewed && state.doorState == .notDetermined
-                    self.callButton.isSelected = (state.callState == .establishingConnection || state.callState == .callAccepted)
-                        && state.doorState == .notDetermined
-                    
-                    self.alreadyOpenedButtonContainer.isHidden = state.doorState != .opened
-                    self.openButtonContainer.isHidden = state.doorState == .opened
-                    self.ignoreButtonContainer.isHidden = state.doorState == .opened
-                    
-                    switch state.callState {
-                    case .callReceived:
-                        self.titleLabel.text = "Звонок в домофон"
-                        self.ignoreButtonLabel.text = "Игнорировать"
-                    case .callPreviewed:
-                        self.titleLabel.text = "Глазок включен"
-                    case .establishingConnection:
-                        self.titleLabel.text = "Соединение..."
-                    case .callAccepted:
-                        self.titleLabel.text = "Разговор"
-                        self.ignoreButtonLabel.text = "Отклонить"
-                    case .callFinished:
-                        self.titleLabel.text = "Звонок завершен"
-                    }
+                    self?.applyState(state)
                 }
             )
             .disposed(by: disposeBag)
@@ -170,5 +143,41 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
     
+    private func applyState(_ state: IncomingCallStateContainer) {
+        view.isUserInteractionEnabled = state.callState != .callFinished
+        
+        previewButton.isSelected = state.previewState == .video
+        callButton.isSelected = (state.callState == .establishingConnection || state.callState == .callActive)
+            && state.doorState == .notDetermined
+        
+        videoPreview.isHidden = {
+            !(state.callState == .callActive && state.previewState == .video)
+        }()
+        
+        alreadyOpenedButtonContainer.isHidden = state.doorState != .opened
+        openButtonContainer.isHidden = state.doorState == .opened
+        ignoreButtonContainer.isHidden = state.doorState == .opened
+        
+        switch (state.callState, state.previewState) {
+        case (.callReceived, .staticImage):
+            titleLabel.text = "Звонок в домофон"
+            ignoreButtonLabel.text = "Игнорировать"
+            
+        case (.callReceived, .video):
+            titleLabel.text = "Глазок включен"
+            ignoreButtonLabel.text = "Игнорировать"
+            
+        case (.establishingConnection, _):
+            titleLabel.text = "Соединение..."
+            ignoreButtonLabel.text = "Отклонить"
+            
+        case (.callActive, _):
+            titleLabel.text = "Разговор"
+            ignoreButtonLabel.text = "Отклонить"
+            
+        case (.callFinished, _):
+            titleLabel.text = "Звонок завершен"
+        }
+    }
+    
 }
-
