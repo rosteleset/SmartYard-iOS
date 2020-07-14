@@ -208,7 +208,11 @@ class IncomingCallViewModel: BaseViewModel {
                     do {
                         try call.acceptWithParams(params: callParams)
                         
-                        self.providerProxy.updateCall(uuid: self.callPayload.uuid, handle: self.callPayload.callerId)
+                        self.providerProxy.updateCall(
+                            uuid: self.callPayload.uuid,
+                            handle: self.callPayload.callerId,
+                            hasVideo: true
+                        )
                         
                         if !call.speakerMuted {
                             self.enableLoudSpeaker()

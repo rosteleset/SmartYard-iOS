@@ -41,7 +41,7 @@ class CXProviderProxy: NSObject {
             localizedName: Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "SmartYard"
         )
         
-        providerConfiguration.supportsVideo = false
+        providerConfiguration.supportsVideo = true
         providerConfiguration.supportedHandleTypes = [.generic]
         providerConfiguration.iconTemplateImageData = UIImage(named: "LantaSquareLogo")?.pngData()
 
@@ -71,7 +71,7 @@ class CXProviderProxy: NSObject {
         }
     }
 
-    func updateCall(uuid: UUID, handle: String, hasVideo: Bool = false) {
+    func updateCall(uuid: UUID, handle: String, hasVideo: Bool) {
         let update = CXCallUpdate()
         
         update.remoteHandle = CXHandle(type: .generic, value: handle)

@@ -154,7 +154,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             providerProxy.reportIncomingCall(
                 uuid: callPayload.uuid,
                 handle: callPayload.callerId,
-                hasVideo: false
+                hasVideo: true
             )
         }
         
@@ -181,7 +181,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         providerProxy.reportIncomingCall(
             uuid: uuid,
             handle: "Входящий звонок",
-            hasVideo: false
+            hasVideo: true
         )
         
         providerProxy.endCall(uuid: uuid)
