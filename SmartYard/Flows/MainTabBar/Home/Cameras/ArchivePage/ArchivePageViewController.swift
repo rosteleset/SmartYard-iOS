@@ -47,6 +47,8 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
     
     private var availableRanges: [APIArchiveRange]? {
         didSet {
+            calculateDateLimits(for: availableRanges)
+            
             guard isVisible else {
                 shouldReloadOnAppear = true
                 return
@@ -58,18 +60,34 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
     
     // MARK: Максимальная доступная дата среди всех интервалов. Нужна для конфигурации календаря
     
-    private var upperDateLimit: Date? {
-        return availableRanges?
-            .map { $0.endDate }
-            .max()
-    }
+    private var upperDateLimit: Date?
     
     // MARK: Минимальная доступная дата среди всех интервалов. Нужна для конфигурации календаря
     
-    private var lowerDateLimit: Date? {
-        return availableRanges?
-            .map { $0.startDate }
+    private var lowerDateLimit: Date?
+    
+    private func calculateDateLimits(for ranges: [APIArchiveRange]?) {
+        guard let ranges = ranges else {
+            lowerDateLimit = nil
+            upperDateLimit = nil
+            return
+        }
+        
+        let lowerDateLimit = ranges
+            .compactMap {
+                $0.lowerDateLimitForCalendar
+            }
             .min()
+        
+        self.lowerDateLimit = lowerDateLimit
+        
+        let upperDateLimit = ranges
+            .compactMap {
+                $0.upperDateLimitForCalendar
+            }
+            .max()
+        
+        self.upperDateLimit = upperDateLimit
     }
     
     init(apiWrapper: APIWrapper) {

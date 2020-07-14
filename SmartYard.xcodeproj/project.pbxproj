@@ -206,12 +206,12 @@
 		84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */; };
 		84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */; };
 		84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */; };
-		84D29BA324B865EF00CFBE6B /* LoaderAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 84D29BA224B865EF00CFBE6B /* LoaderAnimation.json */; };
 		84D29B9024B7999A00CFBE6B /* APIArchiveRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B8E24B7999A00CFBE6B /* APIArchiveRange.swift */; };
 		84D29B9124B7999A00CFBE6B /* APIArchiveStreamInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B8F24B7999A00CFBE6B /* APIArchiveStreamInfo.swift */; };
 		84D29B9524B799B100CFBE6B /* StreamInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9324B799B100CFBE6B /* StreamInfoRequest.swift */; };
 		84D29B9624B799B100CFBE6B /* StreamInfoResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9424B799B100CFBE6B /* StreamInfoResponseData.swift */; };
 		84D29B9824B79B5400CFBE6B /* Calendar+Moscow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */; };
+		84D29BA324B865EF00CFBE6B /* LoaderAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 84D29BA224B865EF00CFBE6B /* LoaderAnimation.json */; };
 		84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */; };
 		84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */; };
 		84D6445923F68AB200AD87EF /* AdvancedSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */; };
@@ -673,12 +673,12 @@
 		84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CACornerMask+Extensions.swift"; sourceTree = "<group>"; };
 		84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTabBarController.xib; sourceTree = "<group>"; };
 		84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTransitions.swift; sourceTree = "<group>"; };
-		84D29BA224B865EF00CFBE6B /* LoaderAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LoaderAnimation.json; sourceTree = "<group>"; };
 		84D29B8E24B7999A00CFBE6B /* APIArchiveRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIArchiveRange.swift; sourceTree = "<group>"; };
 		84D29B8F24B7999A00CFBE6B /* APIArchiveStreamInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIArchiveStreamInfo.swift; sourceTree = "<group>"; };
 		84D29B9324B799B100CFBE6B /* StreamInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamInfoRequest.swift; sourceTree = "<group>"; };
 		84D29B9424B799B100CFBE6B /* StreamInfoResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamInfoResponseData.swift; sourceTree = "<group>"; };
 		84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Calendar+Moscow.swift"; sourceTree = "<group>"; };
+		84D29BA224B865EF00CFBE6B /* LoaderAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LoaderAnimation.json; sourceTree = "<group>"; };
 		84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewController.swift; sourceTree = "<group>"; };
 		84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvancedSettingsViewController.xib; sourceTree = "<group>"; };
 		84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewModel.swift; sourceTree = "<group>"; };

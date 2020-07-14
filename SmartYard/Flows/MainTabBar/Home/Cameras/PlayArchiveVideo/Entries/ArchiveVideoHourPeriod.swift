@@ -10,7 +10,7 @@ import Foundation
 
 struct ArchiveVideoHourPeriod: Equatable {
     
-    /// Дата по МСК. Часы / минуты / секунды не важны - мы достанем отсюда startOfDay
+    /// Дата по МСК, 00:00
     let baseDate: Date
     
     /// Начало периода (в часах)
