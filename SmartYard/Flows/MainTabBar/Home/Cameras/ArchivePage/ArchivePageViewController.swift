@@ -182,16 +182,7 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         }
         
         let matchingRange = availableRanges?.first { range in
-            let beginningOfFirstDay = Calendar.moscowCalendar.startOfDay(for: range.startDate)
-            
-            let endOfLastDay: Date = {
-                let nextDay = range.endDate.adding(.day, value: 1)
-                let startOfNextDay = Calendar.moscowCalendar.startOfDay(for: nextDay)
-                
-                return startOfNextDay.adding(.second, value: -1)
-            }()
-            
-            return cellState.date.isBetween(beginningOfFirstDay, endOfLastDay, includeBounds: true)
+            !range.validPeriodsForDate(cellState.date).isEmpty
         }
         
         myCustomCell.configure(
@@ -359,16 +350,7 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
         }
         
         let matchingRange = availableRanges.first { range in
-            let beginningOfFirstDay = Calendar.moscowCalendar.startOfDay(for: range.startDate)
-            
-            let endOfLastDay: Date = {
-                let nextDay = range.endDate.adding(.day, value: 1)
-                let startOfNextDay = Calendar.moscowCalendar.startOfDay(for: nextDay)
-                
-                return startOfNextDay.adding(.second, value: -1)
-            }()
-            
-            return date.isBetween(beginningOfFirstDay, endOfLastDay, includeBounds: true)
+            !range.validPeriodsForDate(date).isEmpty
         }
         
         return matchingRange != nil

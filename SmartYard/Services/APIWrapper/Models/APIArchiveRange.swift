@@ -37,6 +37,22 @@ extension APIArchiveRange {
         return upperDateLimitForCalendar(baseDate: startOfDay)
     }
     
+    func validPeriodsForDate(_ date: Date) -> [ArchiveVideoHourPeriod] {
+        let startOfDay = Calendar.moscowCalendar.startOfDay(for: date)
+        
+        let periods = (0...7).map {
+            ArchiveVideoHourPeriod(baseDate: startOfDay, startHours: $0 * 3, endHours: $0 * 3 + 3)
+        }
+        
+        return periods.filter { period in
+            let periodStart = period.baseDate.adding(.hour, value: period.startHours)
+            let periodEnd = period.baseDate.adding(.hour, value: period.endHours)
+            
+            return periodStart.isBetween(startDate, endDate, includeBounds: true) &&
+                periodEnd.isBetween(startDate, endDate, includeBounds: true)
+        }
+    }
+    
     private func lowerDateLimitForCalendar(baseDate: Date) -> Date? {
         let periods = (0...7).map {
             ArchiveVideoHourPeriod(baseDate: baseDate, startHours: $0 * 3, endHours: $0 * 3 + 3)
