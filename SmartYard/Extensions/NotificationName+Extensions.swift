@@ -20,6 +20,7 @@ extension Notification.Name {
     static let onlineFullscreenModeClosed = Notification.Name("OnlineFullscreenModeClosed")
     static let archiveFullscreenModeClosed = Notification.Name("ArchiveFullscreenModeClosed")
     static let paymentCompleted = Notification.Name("PaymentCompleted")
+    static let videoRequestedByCallKit = Notification.Name("VideoRequestedByCallKit")
     
 }
 

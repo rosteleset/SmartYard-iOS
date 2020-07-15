@@ -110,7 +110,11 @@ class AddressesListViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         // MARK: Подписка на уведомления
-        pushNotificationService.registerForPushNotifications()
+        
+        pushNotificationService
+            .registerForPushNotifications(
+                voipToken: accessService.prefersVoipForCalls ? accessService.voipToken : nil
+            )
             .trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()

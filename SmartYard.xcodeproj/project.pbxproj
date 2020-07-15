@@ -211,7 +211,10 @@
 		84D29B9524B799B100CFBE6B /* StreamInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9324B799B100CFBE6B /* StreamInfoRequest.swift */; };
 		84D29B9624B799B100CFBE6B /* StreamInfoResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9424B799B100CFBE6B /* StreamInfoResponseData.swift */; };
 		84D29B9824B79B5400CFBE6B /* Calendar+Moscow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */; };
+		84D29BA124B79E6300CFBE6B /* CXProviderProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DC6E924B3653300A11914 /* CXProviderProxy.swift */; };
 		84D29BA324B865EF00CFBE6B /* LoaderAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 84D29BA224B865EF00CFBE6B /* LoaderAnimation.json */; };
+		84D29BAB24BDCB6900CFBE6B /* IncomingCallPreviewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29BAA24BDCB6900CFBE6B /* IncomingCallPreviewState.swift */; };
+		84D29BAD24BDCBC300CFBE6B /* IncomingCallStateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29BAC24BDCBC300CFBE6B /* IncomingCallStateContainer.swift */; };
 		84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */; };
 		84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */; };
 		84D6445923F68AB200AD87EF /* AdvancedSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */; };
@@ -550,6 +553,7 @@
 		846DC6E324B33E1C00A11914 /* PickerPresentAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerPresentAnimator.swift; sourceTree = "<group>"; };
 		846DC6E424B33E1C00A11914 /* PickerDismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerDismissAnimator.swift; sourceTree = "<group>"; };
 		846DC6E524B33E1C00A11914 /* SwipeInteractionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeInteractionController.swift; sourceTree = "<group>"; };
+		846DC6E924B3653300A11914 /* CXProviderProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CXProviderProxy.swift; sourceTree = "<group>"; };
 		846DC70124B7397800A11914 /* VideoThumbnailConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoThumbnailConfiguration.swift; sourceTree = "<group>"; };
 		847721742497C31D003FCC24 /* ArchivePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePageViewController.swift; sourceTree = "<group>"; };
 		847721752497C31D003FCC24 /* ArchivePageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArchivePageViewController.xib; sourceTree = "<group>"; };
@@ -679,6 +683,8 @@
 		84D29B9424B799B100CFBE6B /* StreamInfoResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamInfoResponseData.swift; sourceTree = "<group>"; };
 		84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Calendar+Moscow.swift"; sourceTree = "<group>"; };
 		84D29BA224B865EF00CFBE6B /* LoaderAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LoaderAnimation.json; sourceTree = "<group>"; };
+		84D29BAA24BDCB6900CFBE6B /* IncomingCallPreviewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallPreviewState.swift; sourceTree = "<group>"; };
+		84D29BAC24BDCBC300CFBE6B /* IncomingCallStateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallStateContainer.swift; sourceTree = "<group>"; };
 		84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewController.swift; sourceTree = "<group>"; };
 		84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvancedSettingsViewController.xib; sourceTree = "<group>"; };
 		84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -1281,6 +1287,8 @@
 			children = (
 				844AC3B023EAD0930066006D /* IncomingCallState.swift */,
 				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
+				84D29BAA24BDCB6900CFBE6B /* IncomingCallPreviewState.swift */,
+				84D29BAC24BDCBC300CFBE6B /* IncomingCallStateContainer.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -2005,6 +2013,7 @@
 				84B9EC8F23E0884400979C39 /* LinphoneDelegate.swift */,
 				84B9EC9023E0884400979C39 /* LinphoneService.swift */,
 				84B9EC9923E0888B00979C39 /* SipConfig.swift */,
+				846DC6E924B3653300A11914 /* CXProviderProxy.swift */,
 			);
 			path = LinphoneService;
 			sourceTree = "<group>";
@@ -3620,6 +3629,7 @@
 				E92EFBE1242A22F2003AF7FE /* APITarget.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				845E9EE024895AE4000CBBC6 /* SimpleVideoEndIndicator.swift in Sources */,
+				84D29BAB24BDCB6900CFBE6B /* IncomingCallPreviewState.swift in Sources */,
 				843C38D3242A577C0035BF80 /* DeliveredRequest.swift in Sources */,
 				845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
@@ -3781,6 +3791,7 @@
 				E92EFB4524287F4C003AF7FE /* PassConfirmationPinViewController.swift in Sources */,
 				E98C382923F173480010BBC1 /* ClearButtonWithDashedUnderline.swift in Sources */,
 				84B89A9823F2FA97009692B4 /* ServiceIsActivatedViewController.swift in Sources */,
+				84D29BAD24BDCBC300CFBE6B /* IncomingCallStateContainer.swift in Sources */,
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				E92EFBC5242A22F2003AF7FE /* GeoCoderResponseData.swift in Sources */,
 				84D6445923F68AB200AD87EF /* AdvancedSettingsViewModel.swift in Sources */,
@@ -3807,6 +3818,7 @@
 				84AADD2E24334DF70056994A /* ChatConfiguration.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
 				846DC6E024B33DEA00A11914 /* PayProcessRequest.swift in Sources */,
+				84D29BA124B79E6300CFBE6B /* CXProviderProxy.swift in Sources */,
 				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,

@@ -44,12 +44,19 @@ class PushNotificationService {
     }
     
     /// Подписка на уведомления
-    func registerForPushNotifications() -> Single<Void?> {
+    func registerForPushNotifications(voipToken: String?) -> Single<Void?> {
         guard let fcmToken = Messaging.messaging().fcmToken else {
             return .error(NSError.PushNotificationServiceError.fcmTokenMissing)
         }
         
-        return apiWrapper.registerPushToken(pushToken: fcmToken, clientId: nil, type: .fcmRepeating)
+        print("DEBUG / REGISTER WITH VOIP TOKEN \(voipToken)")
+        
+        return apiWrapper.registerPushToken(
+            pushToken: fcmToken,
+            voipToken: voipToken,
+            clientId: nil,
+            type: .fcmRepeating
+        )
     }
     
     /// Помечает все inbox message, которые сейчас есть в NotificationCenter, как доставленные

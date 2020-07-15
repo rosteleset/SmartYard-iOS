@@ -15,7 +15,7 @@ import SwifterSwift
 enum AppRoute: Route {
     
     case main
-    case incomingCall(callPayload: CallPayload)
+    case incomingCall(callPayload: CallPayload, isCallKitUsed: Bool)
     case dismiss
     case userName(preloadedName: APIClientName?)
     case phoneNumber
@@ -31,6 +31,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let disposeBag = DisposeBag()
     
     private let linphoneService = LinphoneService()
+    private let providerProxy = CXProviderProxy()
+    
     private let accessService = AccessService()
     private let permissionService = PermissionService()
     private let apiWrapper: APIWrapper
@@ -78,16 +80,20 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             mainTabBarRouter = router
             return .set([router], animation: .fade)
             
-        case let .incomingCall(callPayload):
+        case let .incomingCall(callPayload, isCallKitUsed):
             let vm = IncomingCallViewModel(
+                providerProxy: providerProxy,
                 linphoneService: linphoneService,
                 permissionService: permissionService,
                 apiWrapper: apiWrapper,
                 router: weakRouter,
-                callPayload: callPayload
+                callPayload: callPayload,
+                isCallKitUsed: isCallKitUsed
             )
             
             let vc = IncomingCallViewController(viewModel: vm)
+            
+            vc.loadViewIfNeeded()
             
             vc.modalPresentationStyle = .overFullScreen
             vc.modalPresentationCapturesStatusBarAppearance = true
@@ -144,7 +150,15 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         }
     }
     
-    func processIncomingCallRequest(callPayload: CallPayload) {
+    func processIncomingCallRequest(callPayload: CallPayload, useCallKit: Bool) {
+        if useCallKit {
+            providerProxy.reportIncomingCall(
+                uuid: callPayload.uuid,
+                handle: callPayload.callerId,
+                hasVideo: true
+            )
+        }
+        
         // MARK: Проверяем, есть ли у нас уже входящие звонки на данный момент
         // Скорее всего, дальше надо будет делать какую-то очередь, но сейчас для демо и так сгодится
         
@@ -158,8 +172,24 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         // MARK: Здесь решил перестраховаться, хотя вроде все и работало раньше
         
         DispatchQueue.main.async { [weak self] in
-            self?.trigger(.incomingCall(callPayload: callPayload))
+            self?.trigger(.incomingCall(callPayload: callPayload, isCallKitUsed: useCallKit))
         }
+    }
+    
+    func reportInvalidCall() {
+        let uuid = UUID()
+        
+        providerProxy.reportIncomingCall(
+            uuid: uuid,
+            handle: "Входящий звонок",
+            hasVideo: true
+        )
+        
+        providerProxy.endCall(uuid: uuid)
+    }
+    
+    func setVoipToken(_ token: String) {
+        accessService.voipToken = token
     }
     
     func markAllMessagesAsDelivered() {
