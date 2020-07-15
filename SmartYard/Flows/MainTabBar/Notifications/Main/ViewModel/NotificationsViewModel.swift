@@ -96,11 +96,8 @@ class NotificationsViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] response in
-                    // MARK: При успешном выполнении метода inbox счетчик непрочитанных на сервере сбрасывается
-                    // Поэтому мы можем спокойно сбросить Badge до нуля
-                    // Более того, считаем, что юзер посмотрел все уведомления, так что удаляем их из NotificationCenter
-                    
-                    self?.pushNotificationService.markAllMessagesAsRead()
+                    self?.pushNotificationService.deleteAllDeliveredNotifications(withActionType: .inbox)
+                    self?.pushNotificationService.synchronizeBadgeCount()
                     
                     inboxResponseSubject.onNext(response)
                 }

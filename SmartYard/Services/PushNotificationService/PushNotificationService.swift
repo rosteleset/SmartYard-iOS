@@ -43,7 +43,7 @@ class PushNotificationService {
         }
     }
     
-    /// Подписка на уведомления
+    /// Подписка на уведомления. Если прокинуты оба токена, звонки будут идти через VoIP пуши
     func registerForPushNotifications(voipToken: String?) -> Single<Void?> {
         guard let fcmToken = Messaging.messaging().fcmToken else {
             return .error(NSError.PushNotificationServiceError.fcmTokenMissing)
@@ -59,7 +59,7 @@ class PushNotificationService {
         )
     }
     
-    /// Помечает все inbox message, которые сейчас есть в NotificationCenter, как доставленные
+    /// Помечает все inbox message, которые сейчас есть в NotificationCenter, как доставленные (чтобы бэк не присылал их повторно)
     func markAllMessagesAsDelivered() {
         userNotificationCenter.getDeliveredNotifications { [weak self] notifications in
             let messageIds: [String] = notifications.compactMap { notification in
@@ -79,7 +79,7 @@ class PushNotificationService {
         }
     }
 
-    /// Помечает inbox message с заданными messageId как доставленные
+    /// Помечает inbox message с заданными messageId как доставленные (чтобы бэк не присылал их повторно)
     func markMessagesAsDelivered(messageIds: [String]) {
         // MARK: сейчас я не совсем представляю, как мне гарантировать отправку маркера на сервер
         // Сколько раз ретраить запрос и т.д.
@@ -103,22 +103,14 @@ class PushNotificationService {
             .disposed(by: disposeBag)
     }
     
-    /// Удаляет все inbox message из NotificationCenter и сбрасывает Badge
-    func markAllMessagesAsRead() {
-        UIApplication.shared.applicationIconBadgeNumber = 0
-        
-        NotificationCenter.default.post(
-            name: .badgeNumberUpdated,
-            object: nil,
-            userInfo: [NotificationKeys.badgeNumberKey: 0]
-        )
-        
+    /// Удаляет все уведомления с заданным типом действия из Notification Center
+    func deleteAllDeliveredNotifications(withActionType neededAction: MessageType) {
         userNotificationCenter.getDeliveredNotifications { [weak self] notifications in
             let notificationIds: [String] = notifications.compactMap { notification in
-                guard let rawMessageType = notification.request.content.userInfo["messageType"] as? String,
-                    let messageType = MessageType(rawValue: rawMessageType),
-                    messageType == .inbox else {
-                        return nil
+                guard let rawAction = notification.request.content.userInfo["action"] as? String,
+                    let action = MessageType(rawValue: rawAction),
+                    action == neededAction else {
+                    return nil
                 }
                 
                 return notification.request.identifier
@@ -129,18 +121,23 @@ class PushNotificationService {
     }
     
     /// Получает с сервера количество непрочитанных сообщений и обновляет Badge
-    func getMessagesCountAndUpdateBadge() {
+    func synchronizeBadgeCount() {
         apiWrapper.unreaded()
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
                 onNext: { response in
-                    UIApplication.shared.applicationIconBadgeNumber = response.count
+                    UIApplication.shared.applicationIconBadgeNumber = response.count + response.chat
                     
                     NotificationCenter.default.post(
-                        name: .badgeNumberUpdated,
-                        object: nil,
-                        userInfo: [NotificationKeys.badgeNumberKey: response.count]
+                        // swiftlint:disable:next empty_count
+                        name: response.count == 0 ? .allInboxMessagesRead : .unreadInboxMessagesAvailable,
+                        object: nil
+                    )
+                    
+                    NotificationCenter.default.post(
+                        name: response.chat == 0 ? .allChatMessagesRead : .unreadChatMessagesAvailable,
+                        object: nil
                     )
                 }
             )

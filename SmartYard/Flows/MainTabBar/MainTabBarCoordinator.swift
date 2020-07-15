@@ -226,7 +226,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     
     private func subscribeToBadgeUpdates() {
         NotificationCenter.default.rx
-            .notification(Notification.Name.newInboxMessageReceived)
+            .notification(.unreadInboxMessagesAvailable)
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] _ in
@@ -236,7 +236,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .disposed(by: disposeBag)
         
         NotificationCenter.default.rx
-            .notification(Notification.Name.allInboxMessagesRead)
+            .notification(.allInboxMessagesRead)
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] _ in
@@ -246,7 +246,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .disposed(by: disposeBag)
         
         NotificationCenter.default.rx
-            .notification(Notification.Name.newChatMessageReceived)
+            .notification(.unreadChatMessagesAvailable)
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] _ in
@@ -256,7 +256,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .disposed(by: disposeBag)
         
         NotificationCenter.default.rx
-            .notification(Notification.Name.allChatMessageRead)
+            .notification(.allChatMessagesRead)
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] _ in

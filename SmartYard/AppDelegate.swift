@@ -141,6 +141,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         if action == .inbox {
             NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+            NotificationCenter.default.post(name: .unreadInboxMessagesAvailable, object: nil)
         }
         
         // MARK: Если пришло уведомление о новом сообщении чата - отправляем .newInboxMessageReceived
@@ -148,6 +149,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         if action == .chat {
             NotificationCenter.default.post(name: .newChatMessageReceived, object: nil)
+            NotificationCenter.default.post(name: .unreadChatMessagesAvailable, object: nil)
         }
         
         // MARK: Если пришло уведомление о добавленном адресе - отправляем .addressAdded

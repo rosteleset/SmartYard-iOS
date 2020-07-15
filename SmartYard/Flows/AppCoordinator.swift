@@ -201,7 +201,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     }
     
     func syncBadgeNumber() {
-        pushNotificationService.getMessagesCountAndUpdateBadge()
+        pushNotificationService.synchronizeBadgeCount()
     }
     
     func openNotificationsTab() {
