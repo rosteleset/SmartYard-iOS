@@ -33,6 +33,9 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var balanceWarningSwitch: UISwitch!
     @IBOutlet private weak var balanceWarningSkeleton: UIView!
     
+    @IBOutlet private weak var callkitContainerView: UIView!
+    @IBOutlet private weak var callkitSwitch: UISwitch!
+    
     @IBOutlet private var collapsedNotificationsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedNotificationsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var notificationsViewTopConstraint: NSLayoutConstraint!
@@ -44,6 +47,7 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     private let viewToScrollTo = BehaviorSubject<UIView?>(value: nil)
     
     private let textNotificationsTapGesture = UITapGestureRecognizer()
+    private let callkitTapGesture = UITapGestureRecognizer()
     private let balanceWarningTapGesture = UITapGestureRecognizer()
     
     var loader: JGProgressHUD?
@@ -114,6 +118,9 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
         textNotificationsContainerView.addGestureRecognizer(textNotificationsTapGesture)
         textNotificationsSwitch.isUserInteractionEnabled = false
         
+        callkitContainerView.addGestureRecognizer(callkitTapGesture)
+        callkitSwitch.isUserInteractionEnabled = false
+        
         balanceWarningContainerView.addGestureRecognizer(balanceWarningTapGesture)
         balanceWarningSwitch.isUserInteractionEnabled = false
     }
@@ -145,6 +152,7 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
             editNameTrigger: editNameButton.rx.tap.asDriver(),
             enableTrigger: textNotificationsTapGesture.rx.event.asDriver().mapToVoid(),
             moneyTrigger: balanceWarningTapGesture.rx.event.asDriver().mapToVoid(),
+            callkitTrigger: callkitTapGesture.rx.event.asDriver().mapToVoid(),
             logoutTrigger: logoutButton.rx.tap.asDriver()
         )
         
@@ -172,6 +180,14 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
             .drive(
                 onNext: { [weak self] state in
                     self?.balanceWarningSwitch.setOn(state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.enableCallkit
+            .drive(
+                onNext: { [weak self] state in
+                    self?.callkitSwitch.setOn(state, animated: true)
                 }
             )
             .disposed(by: disposeBag)

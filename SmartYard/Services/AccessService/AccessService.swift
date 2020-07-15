@@ -11,6 +11,7 @@ import Foundation
 private let appStateKey = "appState"
 private let accessTokenKey = "accessToken"
 private let voipTokenKey = "voipToken"
+private let prefersVoipForCallsKey = "prefersVoipForCalls"
 private let clientNameKey = "clientName"
 private let clientPhoneNumberKey = "clientPhoneNumber"
 
@@ -50,6 +51,15 @@ class AccessService {
             }
             
             UserDefaults.standard.setValue(newValue, forKey: voipTokenKey)
+        }
+    }
+    
+    var prefersVoipForCalls: Bool {
+        get {
+            return UserDefaults.standard.value(forKey: prefersVoipForCallsKey) as? Bool ?? false
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: prefersVoipForCallsKey)
         }
     }
     

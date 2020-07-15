@@ -15,7 +15,7 @@ import SwifterSwift
 enum AppRoute: Route {
     
     case main
-    case incomingCall(callPayload: CallPayload)
+    case incomingCall(callPayload: CallPayload, isCallKitUsed: Bool)
     case dismiss
     case userName(preloadedName: APIClientName?)
     case phoneNumber
@@ -80,14 +80,15 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             mainTabBarRouter = router
             return .set([router], animation: .fade)
             
-        case let .incomingCall(callPayload):
+        case let .incomingCall(callPayload, isCallKitUsed):
             let vm = IncomingCallViewModel(
                 providerProxy: providerProxy,
                 linphoneService: linphoneService,
                 permissionService: permissionService,
                 apiWrapper: apiWrapper,
                 router: weakRouter,
-                callPayload: callPayload
+                callPayload: callPayload,
+                isCallKitUsed: isCallKitUsed
             )
             
             let vc = IncomingCallViewController(viewModel: vm)
@@ -171,7 +172,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         // MARK: Здесь решил перестраховаться, хотя вроде все и работало раньше
         
         DispatchQueue.main.async { [weak self] in
-            self?.trigger(.incomingCall(callPayload: callPayload))
+            self?.trigger(.incomingCall(callPayload: callPayload, isCallKitUsed: useCallKit))
         }
     }
     

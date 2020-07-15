@@ -26,6 +26,7 @@ class IncomingCallViewModel: BaseViewModel {
     private let router: WeakRouter<AppRoute>
     
     private let callPayload: CallPayload
+    private let isCallKitUsed: Bool
     
     private let currentStateSubject = BehaviorSubject<IncomingCallStateContainer>(value: .initial)
     
@@ -46,7 +47,8 @@ class IncomingCallViewModel: BaseViewModel {
         permissionService: PermissionService,
         apiWrapper: APIWrapper,
         router: WeakRouter<AppRoute>,
-        callPayload: CallPayload
+        callPayload: CallPayload,
+        isCallKitUsed: Bool
     ) {
         self.providerProxy = providerProxy
         self.linphoneService = linphoneService
@@ -54,6 +56,7 @@ class IncomingCallViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
         self.router = router
         self.callPayload = callPayload
+        self.isCallKitUsed = isCallKitUsed
         
         super.init()
         

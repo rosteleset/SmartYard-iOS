@@ -60,6 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return .portrait
         }
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        UserDefaults.standard.synchronize()
+    }
 
 }
 
