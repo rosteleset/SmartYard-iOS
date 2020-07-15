@@ -210,17 +210,57 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .zero
     }
     
+    private func updateChatTab(shouldShowBadge: Bool) {
+        chatTabBarItem.image = UIImage(
+            named: shouldShowBadge ? "ChatTabBadgeUnselected" : "ChatTabUnselected"
+        )
+        
+        chatTabBarItem.selectedImage = UIImage(
+            named: shouldShowBadge ? "ChatTabBadgeSelected" : "ChatTabSelected"
+        )
+        
+        chatTabBarItem.imageInsets = shouldShowBadge ?
+            UIEdgeInsets(top: -2, left: 0, bottom: 2, right: 0) :
+            .zero
+    }
+    
     private func subscribeToBadgeUpdates() {
         NotificationCenter.default.rx
-            .notification(Notification.Name.badgeNumberUpdated)
+            .notification(Notification.Name.newInboxMessageReceived)
             .asDriverOnErrorJustComplete()
             .drive(
-                onNext: { [weak self] notification in
-                    guard let badgeNumber = notification.userInfo?[NotificationKeys.badgeNumberKey] as? Int else {
-                        return
-                    }
-                    
-                    self?.updateNotificationsTab(shouldShowBadge: badgeNumber > 0)
+                onNext: { [weak self] _ in
+                    self?.updateNotificationsTab(shouldShowBadge: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx
+            .notification(Notification.Name.allInboxMessagesRead)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.updateNotificationsTab(shouldShowBadge: false)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx
+            .notification(Notification.Name.newChatMessageReceived)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.updateChatTab(shouldShowBadge: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx
+            .notification(Notification.Name.allChatMessageRead)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.updateChatTab(shouldShowBadge: false)
                 }
             )
             .disposed(by: disposeBag)

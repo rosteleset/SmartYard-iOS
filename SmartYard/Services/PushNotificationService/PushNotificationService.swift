@@ -91,7 +91,7 @@ class PushNotificationService {
                 .map { (response: Void?) -> (String, Bool) in
                     (messageId, response != nil)
                 }
-        }
+            }
         
         Driver
             .concat(queries)
