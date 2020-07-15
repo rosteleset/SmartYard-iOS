@@ -49,6 +49,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(
         _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+    ) -> Bool {
+        if userActivity.activityType == "INStartVideoCallIntent" {
+            NotificationCenter.default.post(name: .videoRequestedByCallKit, object: nil)
+        }
+        
+        return true
+    }
+    
+    func application(
+        _ application: UIApplication,
         supportedInterfaceOrientationsFor window: UIWindow?
     ) -> UIInterfaceOrientationMask {
         if let topVc = window?.rootViewController?.topViewController,

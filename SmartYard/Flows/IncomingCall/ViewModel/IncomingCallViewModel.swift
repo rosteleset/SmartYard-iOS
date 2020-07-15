@@ -26,7 +26,6 @@ class IncomingCallViewModel: BaseViewModel {
     private let router: WeakRouter<AppRoute>
     
     private let callPayload: CallPayload
-    private let isCallKitUsed: Bool
     
     private let currentStateSubject = BehaviorSubject<IncomingCallStateContainer>(value: .initial)
     
@@ -35,6 +34,12 @@ class IncomingCallViewModel: BaseViewModel {
     private let incomingCallAcceptedByUser = BehaviorSubject<Bool>(value: false)
     private let doorOpeningRequestedByUser = BehaviorSubject<Bool>(value: false)
     private let isDoorBeingOpened = BehaviorSubject<Bool>(value: false)
+    
+    // MARK: По умолчанию звонок принятый через CallKit должен показываться со статичной картинкой
+    // Чтобы показалось видео - нужно, чтобы пользователь нажал на кнопку "Video" в коллките
+    // Если CallKit выключен, то всегда по умолчанию показывается видео
+    
+    private let preferredPreviewModeForActiveCall: BehaviorSubject<IncomingCallPreviewState>
     
     private let cxProviderAnswerTapTrigger = PublishSubject<Void>()
     private let cxProviderEndTapTrigger = PublishSubject<Void>()
@@ -56,7 +61,10 @@ class IncomingCallViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
         self.router = router
         self.callPayload = callPayload
-        self.isCallKitUsed = isCallKitUsed
+        
+        preferredPreviewModeForActiveCall = BehaviorSubject<IncomingCallPreviewState>(
+            value: isCallKitUsed ? .staticImage : .video
+        )
         
         super.init()
         
@@ -199,13 +207,15 @@ class IncomingCallViewModel: BaseViewModel {
             }
             .throttle(.never)
             .withLatestFrom(currentStateSubject.asDriverOnErrorJustComplete()) { ($0, $1) }
+            .withLatestFrom(preferredPreviewModeForActiveCall.asDriverOnErrorJustComplete()) { ($0, $1) }
             .drive(
                 onNext: { [weak self] args in
                     guard let self = self else {
                         return
                     }
                     
-                    let (callInfo, currentState) = args
+                    let (firstPack, previewMode) = args
+                    let (callInfo, currentState) = firstPack
                     let (call, callParams) = callInfo
                     
                     do {
@@ -224,7 +234,7 @@ class IncomingCallViewModel: BaseViewModel {
                         let newState = IncomingCallStateContainer(
                             callState: .callActive,
                             doorState: currentState.doorState,
-                            previewState: .video
+                            previewState: previewMode
                         )
                         
                         self.currentStateSubject.onNext(newState)
@@ -371,6 +381,40 @@ class IncomingCallViewModel: BaseViewModel {
                         self.providerProxy.endCall(uuid: self.callPayload.uuid)
                         
                         self.router.trigger(.dismiss)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Video" в CallKit
+        
+        NotificationCenter.default.rx
+            .notification(.videoRequestedByCallKit)
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard let self = self, currentState.doorState == .notDetermined else {
+                        return
+                    }
+                    
+                    switch currentState.callState {
+                        
+                    // MARK: Если звонок активен - то принудительно запускаем видео
+                    
+                    case .callActive:
+                        let newState = IncomingCallStateContainer(
+                            callState: currentState.callState,
+                            doorState: currentState.doorState,
+                            previewState: .video
+                        )
+                        
+                        self.currentStateSubject.onNext(newState)
+                        
+                    // MARK: Если звонок только пришел, устанавливается соединение - обновляем предпочтение
+                        
+                    default:
+                        self.preferredPreviewModeForActiveCall.onNext(.video)
                     }
                 }
             )
