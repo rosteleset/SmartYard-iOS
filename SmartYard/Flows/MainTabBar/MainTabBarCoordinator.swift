@@ -44,6 +44,10 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let paymentsTabBarItem: UITabBarItem
     private let settingsTabBarItem: UITabBarItem
     
+    var selectedPresentable: Presentable? {
+        return children[safe: rootViewController.selectedIndex]
+    }
+    
     // swiftlint:disable:next function_body_length
     init(
         accessService: AccessService,

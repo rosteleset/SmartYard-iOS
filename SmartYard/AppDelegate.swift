@@ -150,6 +150,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if action == .chat {
             NotificationCenter.default.post(name: .newChatMessageReceived, object: nil)
             NotificationCenter.default.post(name: .unreadChatMessagesAvailable, object: nil)
+            
+            // MARK: Если уже находимся на вкладке "Чат", то не показываем пуш
+            
+            if appCoordinator.selectedTabPresentable?.router(for: ChatRoute.main) != nil {
+                completionHandler([])
+                return
+            }
         }
         
         // MARK: Если пришло уведомление о добавленном адресе - отправляем .addressAdded
