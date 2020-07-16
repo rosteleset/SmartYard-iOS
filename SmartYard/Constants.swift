@@ -17,4 +17,10 @@ enum Constants {
     static let tambovCoordinates = CLLocationCoordinate2D(latitude: 52.675463000000001, longitude: 41.465411000000003)
     static let merchant = "merchant.ru.lanta-net.pays"
     
+    enum Chat {
+        static let token = "13mrbxqw81g06nvrhyegwnph0waw0b9dt1wga7kgtx1j35blhhek4t9oyod69l2i"
+        static let id = "3beb2614f4573475b18bd25deb77f6e9"
+        static let domain = "lanta-net.ru"
+    }
+    
 }

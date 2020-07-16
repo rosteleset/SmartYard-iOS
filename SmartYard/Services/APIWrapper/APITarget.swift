@@ -35,6 +35,7 @@ enum APITarget {
     case inbox(request: InboxRequest)
     case unreaded(request: UnreadedRequest)
     case delivered(request: DeliveredRequest)
+    case chatReaded(request: ChatReadedRequest)
     
     case getListConnect(request: GetListConnectRequest)
     case createIssue(request: CreateIssueRequest)
@@ -98,6 +99,7 @@ extension APITarget: TargetType {
         case .inbox: return "inbox/inbox"
         case .unreaded: return "inbox/unreaded"
         case .delivered: return "inbox/delivered"
+        case .chatReaded: return "inbox/chatReaded"
             
         case .getListConnect: return "issues/listConnect"
         case .createIssue: return "issues/create"
@@ -158,6 +160,7 @@ extension APITarget: TargetType {
             case .inbox(let request): return request.accessToken
             case .unreaded(let request): return request.accessToken
             case .delivered(let request): return request.accessToken
+            case .chatReaded(let request): return request.accessToken
                 
             case .getListConnect(let request): return request.accessToken
             case .createIssue(let request): return request.accessToken
@@ -219,6 +222,7 @@ extension APITarget: TargetType {
         case .inbox(let request): return request.requestParameters
         case .unreaded(let request): return request.requestParameters
         case .delivered(let request): return request.requestParameters
+        case .chatReaded(let request): return request.requestParameters
 
         case .getListConnect(let request): return request.requestParameters
         case .createIssue(let request): return request.requestParameters

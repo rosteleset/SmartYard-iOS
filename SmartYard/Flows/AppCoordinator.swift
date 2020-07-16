@@ -41,9 +41,13 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let alertService = AlertService()
     private let logoutHelper: LogoutHelper
     
-    private var mainTabBarRouter: StrongRouter<MainTabBarRoute>?
+    private var mainTabBarCoordinator: MainTabBarCoordinator?
     
     private var currentCallPreviewData: Data?
+    
+    var selectedTabPresentable: Presentable? {
+        return mainTabBarCoordinator?.selectedPresentable
+    }
     
     init() {
         apiWrapper = APIWrapper(accessService: accessService)
@@ -67,7 +71,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let router = MainTabBarCoordinator(
+            let coordinator = MainTabBarCoordinator(
                 accessService: accessService,
                 pushNotificationService: pushNotificationService,
                 apiWrapper: apiWrapper,
@@ -75,10 +79,11 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 permissionService: permissionService,
                 alertService: alertService,
                 logoutHelper: logoutHelper
-            ).strongRouter
+            )
+        
+            mainTabBarCoordinator = coordinator
             
-            mainTabBarRouter = router
-            return .set([router], animation: .fade)
+            return .set([coordinator], animation: .fade)
             
         case let .incomingCall(callPayload, isCallKitUsed):
             let vm = IncomingCallViewModel(
@@ -201,14 +206,14 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     }
     
     func syncBadgeNumber() {
-        pushNotificationService.getMessagesCountAndUpdateBadge()
+        pushNotificationService.synchronizeBadgeCount()
     }
     
     func openNotificationsTab() {
         // MARK: DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            self?.mainTabBarRouter?.trigger(.notifications)
+            self?.mainTabBarCoordinator?.trigger(.notifications)
         }
     }
     
@@ -216,7 +221,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         // MARK: DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            self?.mainTabBarRouter?.trigger(.chat)
+            self?.mainTabBarCoordinator?.trigger(.chat)
         }
     }
     
@@ -224,9 +229,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         NotificationCenter.default.rx.notification(.init("UserLoggedOut"))
             .subscribe(
                 onNext: { [weak self] _ in
-                    if let mainTabBarRouter = self?.mainTabBarRouter {
-                        self?.removeChild(mainTabBarRouter)
-                        self?.mainTabBarRouter = nil
+                    if let mainTabBarCoordinator = self?.mainTabBarCoordinator {
+                        self?.removeChild(mainTabBarCoordinator)
+                        self?.mainTabBarCoordinator = nil
                     }
                     
                     self?.trigger(.phoneNumber)
@@ -236,4 +241,3 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     }
     
 }
-

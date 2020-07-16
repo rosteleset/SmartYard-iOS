@@ -44,6 +44,10 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let paymentsTabBarItem: UITabBarItem
     private let settingsTabBarItem: UITabBarItem
     
+    var selectedPresentable: Presentable? {
+        return children[safe: rootViewController.selectedIndex]
+    }
+    
     // swiftlint:disable:next function_body_length
     init(
         accessService: AccessService,
@@ -101,7 +105,13 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.notificationsTabBarItem = notificationsTabBarItem
         
         // MARK: Chat Tab
-        let chatCoordinator = ChatCoordinator(apiWrapper: apiWrapper, accessService: accessService)
+        let chatCoordinator = ChatCoordinator(
+            apiWrapper: apiWrapper,
+            accessService: accessService,
+            pushNotificationService: pushNotificationService,
+            logoutHelper: logoutHelper,
+            alertService: alertService
+        )
         
         let chatTabBarItem = UITabBarItem(
             title: "Чат",
@@ -210,17 +220,57 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .zero
     }
     
+    private func updateChatTab(shouldShowBadge: Bool) {
+        chatTabBarItem.image = UIImage(
+            named: shouldShowBadge ? "ChatTabBadgeUnselected" : "ChatTabUnselected"
+        )
+        
+        chatTabBarItem.selectedImage = UIImage(
+            named: shouldShowBadge ? "ChatTabBadgeSelected" : "ChatTabSelected"
+        )
+        
+        chatTabBarItem.imageInsets = shouldShowBadge ?
+            UIEdgeInsets(top: -2, left: 0, bottom: 2, right: 0) :
+            .zero
+    }
+    
     private func subscribeToBadgeUpdates() {
         NotificationCenter.default.rx
-            .notification(Notification.Name.badgeNumberUpdated)
+            .notification(.unreadInboxMessagesAvailable)
             .asDriverOnErrorJustComplete()
             .drive(
-                onNext: { [weak self] notification in
-                    guard let badgeNumber = notification.userInfo?[NotificationKeys.badgeNumberKey] as? Int else {
-                        return
-                    }
-                    
-                    self?.updateNotificationsTab(shouldShowBadge: badgeNumber > 0)
+                onNext: { [weak self] _ in
+                    self?.updateNotificationsTab(shouldShowBadge: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx
+            .notification(.allInboxMessagesRead)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.updateNotificationsTab(shouldShowBadge: false)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx
+            .notification(.unreadChatMessagesAvailable)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.updateChatTab(shouldShowBadge: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx
+            .notification(.allChatMessagesRead)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.updateChatTab(shouldShowBadge: false)
                 }
             )
             .disposed(by: disposeBag)

@@ -112,22 +112,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
         let userInfo = notification.request.content.userInfo
         
-        if let messageID = userInfo["gcm.message_id"] {
-            print("DEBUG / PUSH NOTIFICATIONS / Message ID: \(messageID)")
-        }
-        
         print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
-        
-        // MARK: Если в пуше пришел Badge - посылаем локальное уведомление, чтобы обновить Badge в таббаре
-        
-        if let aps = userInfo["aps"] as? [AnyHashable: Any],
-            let badge = aps["badge"] as? Int {
-            NotificationCenter.default.post(
-                name: .badgeNumberUpdated,
-                object: nil,
-                userInfo: [NotificationKeys.badgeNumberKey: badge]
-            )
-        }
         
         // MARK: Если пришел входящий звонок - переходим на экран входящего звонка, но не показываем пуш
         
@@ -137,27 +122,55 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             return
         }
         
-        // MARK: Если есть действие - обрабатываем его
+        // MARK: Если есть messageId - помечаем сообщение как доставленное
         
-        if let rawMessageType = userInfo["action"] as? String,
-            let messageType = MessageType(rawValue: rawMessageType) {
-            // MARK: Если есть messageId - помечаем сообщение как доставленное и обновляем таб "Уведомления"
+        if let messageId = userInfo["messageId"] as? String {
+            appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
+        }
+        
+        // MARK: Проверяем, есть ли у уведомления тип действия. Если нет - то в принципе ничего не делаем
+        
+        guard let rawAction = userInfo["action"] as? String,
+            let action = MessageType(rawValue: rawAction) else {
+            completionHandler([.alert, .badge, .sound])
+            return
+        }
+        
+        // MARK: Если пришло уведомление о новом уведомлении в списке - отправляем .newInboxMessageReceived
+        // Это вызовет показ баджа в табе "Уведомления" и обновление списка уведомлений
+        
+        if action == .inbox {
+            NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+            NotificationCenter.default.post(name: .unreadInboxMessagesAvailable, object: nil)
+        }
+        
+        // MARK: Если пришло уведомление о новом сообщении чата - отправляем .newInboxMessageReceived
+        // Это вызовет показ баджа в табе "Чат" и обновление сообщений чата
+        
+        if action == .chat {
+            NotificationCenter.default.post(name: .newChatMessageReceived, object: nil)
+            NotificationCenter.default.post(name: .unreadChatMessagesAvailable, object: nil)
             
-            if let messageId = userInfo["messageId"] as? String {
-                appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
-                NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+            // MARK: Если уже находимся на вкладке "Чат", то не показываем пуш
+            
+            if appCoordinator.selectedTabPresentable?.router(for: ChatRoute.main) != nil {
+                completionHandler([])
+                return
             }
-            
-            // MARK: Если пришло уведомление о добавленном адресе - отправляем .addressAdded
-            // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
-            
-            if messageType == .newAddress {
-                NotificationCenter.default.post(name: .addressAdded, object: nil)
-            }
-            
-            if messageType == .paySuccess {
-                NotificationCenter.default.post(name: .paymentCompleted, object: nil)
-            }
+        }
+        
+        // MARK: Если пришло уведомление о добавленном адресе - отправляем .addressAdded
+        // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
+        
+        if action == .newAddress {
+            NotificationCenter.default.post(name: .addressAdded, object: nil)
+        }
+        
+        // MARK: Если пришло уведомление об успешном платеже - отправляем .paymentCompleted
+        // Это вызовет обновление данных в табе "Оплатить"
+        
+        if action == .paySuccess {
+            NotificationCenter.default.post(name: .paymentCompleted, object: nil)
         }
         
         completionHandler([.alert, .badge, .sound])
@@ -176,25 +189,27 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             pushNotificationPayload: response.notification.request.content.userInfo
         ) {
             appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: false)
-        }
-        
-        // MARK: Если в уведомлении нет никакого действия, то ничего не делаем
-        
-        guard let rawMessageType = response.notification.request.content.userInfo["action"] as? String,
-            let messageType = MessageType(rawValue: rawMessageType) else {
             completionHandler()
             return
         }
         
-        // MARK: Если есть messageId - помечаем сообщение как доставленное
+        // MARK: Если есть messageId - помечаем сообщение как доставленное. Лучше два раза, чем ни разу
         
         if let messageId = response.notification.request.content.userInfo["messageId"] as? String {
             appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
         }
         
+        // MARK: Если в уведомлении нет никакого действия, то ничего не делаем
+        
+        guard let rawAction = response.notification.request.content.userInfo["action"] as? String,
+            let action = MessageType(rawValue: rawAction) else {
+            completionHandler()
+            return
+        }
+        
         // MARK: Переход в конкретный таб при нажатии на уведомление
         
-        switch messageType {
+        switch action {
         case .inbox, .newAddress, .paySuccess, .payError, .videoReady:
             appCoordinator.openNotificationsTab()
         case .chat:
@@ -205,15 +220,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
         // Сделано это вроде для того, чтобы если приложение ушло в бекграунд, данные обновились при нажатии
         
-        if messageType == .newAddress {
+        if action == .newAddress {
             NotificationCenter.default.post(name: .addressAdded, object: nil)
         }
         
-        if messageType == .paySuccess {
+        // MARK: Для платежей - аналогично
+        
+        if action == .paySuccess {
             NotificationCenter.default.post(name: .paymentCompleted, object: nil)
         }
-        
-        // MARK: Завершение работы
         
         completionHandler()
     }

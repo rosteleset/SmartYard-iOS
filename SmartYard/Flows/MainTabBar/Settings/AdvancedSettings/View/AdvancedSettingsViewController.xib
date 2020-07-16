@@ -170,13 +170,6 @@
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vLJ-iK-YQF">
                                                                     <rect key="frame" x="0.0" y="55" width="382" height="55"/>
                                                                     <subviews>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j5x-av-RNE" userLabel="Separator ">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="1"/>
-                                                                            <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="height" constant="1" id="7V1-tb-fSa"/>
-                                                                            </constraints>
-                                                                        </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Использовать CallKit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJh-mm-I5E">
                                                                             <rect key="frame" x="24" y="18.5" width="261" height="18"/>
                                                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
@@ -208,15 +201,12 @@
                                                                     <constraints>
                                                                         <constraint firstItem="gJh-mm-I5E" firstAttribute="leading" secondItem="vLJ-iK-YQF" secondAttribute="leading" constant="24" id="22F-Yn-JDE"/>
                                                                         <constraint firstItem="IbB-pp-2xm" firstAttribute="leading" secondItem="vLJ-iK-YQF" secondAttribute="leading" id="3a5-Rx-L7n"/>
-                                                                        <constraint firstItem="j5x-av-RNE" firstAttribute="leading" secondItem="vLJ-iK-YQF" secondAttribute="leading" id="5l4-Iu-i0H"/>
-                                                                        <constraint firstItem="j5x-av-RNE" firstAttribute="top" secondItem="vLJ-iK-YQF" secondAttribute="top" id="7bg-rb-8Wq"/>
                                                                         <constraint firstItem="cD6-78-FNg" firstAttribute="centerY" secondItem="vLJ-iK-YQF" secondAttribute="centerY" id="KFi-Ad-mvA"/>
                                                                         <constraint firstAttribute="height" constant="55" id="KcK-hp-X9k"/>
                                                                         <constraint firstItem="cD6-78-FNg" firstAttribute="bottom" secondItem="TCc-e8-2F7" secondAttribute="bottom" id="Ogb-5Y-Gw1"/>
                                                                         <constraint firstAttribute="bottom" secondItem="IbB-pp-2xm" secondAttribute="bottom" id="PQR-xa-CL3"/>
                                                                         <constraint firstAttribute="trailing" secondItem="cD6-78-FNg" secondAttribute="trailing" constant="24" id="UKl-Wu-zKR"/>
                                                                         <constraint firstItem="gJh-mm-I5E" firstAttribute="centerY" secondItem="vLJ-iK-YQF" secondAttribute="centerY" id="XnA-fI-plt"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="j5x-av-RNE" secondAttribute="trailing" id="aUX-BF-Te2"/>
                                                                         <constraint firstItem="cD6-78-FNg" firstAttribute="leading" secondItem="gJh-mm-I5E" secondAttribute="trailing" constant="24" id="heA-q1-SU6"/>
                                                                         <constraint firstItem="cD6-78-FNg" firstAttribute="trailing" secondItem="TCc-e8-2F7" secondAttribute="trailing" id="iBs-Kr-P6D"/>
                                                                         <constraint firstAttribute="trailing" secondItem="IbB-pp-2xm" secondAttribute="trailing" id="orb-Hz-iKR"/>

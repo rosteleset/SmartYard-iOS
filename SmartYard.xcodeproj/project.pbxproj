@@ -28,6 +28,7 @@
 		843C38E9242A6E490035BF80 /* QRCodeScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38E6242A6E490035BF80 /* QRCodeScanViewController.swift */; };
 		843C38EA242A6E490035BF80 /* QRCodeScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843C38E7242A6E490035BF80 /* QRCodeScanViewController.xib */; };
 		843C38ED242B5A830035BF80 /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38EC242B5A830035BF80 /* PermissionService.swift */; };
+		843FB12024BF3BC20060ACEC /* ChatReadedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FB11F24BF3BC20060ACEC /* ChatReadedRequest.swift */; };
 		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
 		844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallViewController.swift */; };
 		844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39F23E987400066006D /* IncomingCallViewModel.swift */; };
@@ -492,6 +493,7 @@
 		843C38E6242A6E490035BF80 /* QRCodeScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScanViewController.swift; sourceTree = "<group>"; };
 		843C38E7242A6E490035BF80 /* QRCodeScanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRCodeScanViewController.xib; sourceTree = "<group>"; };
 		843C38EC242B5A830035BF80 /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
+		843FB11F24BF3BC20060ACEC /* ChatReadedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatReadedRequest.swift; sourceTree = "<group>"; };
 		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
 		844AC39B23E987360066006D /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
 		844AC39F23E987400066006D /* IncomingCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewModel.swift; sourceTree = "<group>"; };
@@ -951,10 +953,11 @@
 		843C38C4242A577B0035BF80 /* Inbox */ = {
 			isa = PBXGroup;
 			children = (
+				843C38CB242A577B0035BF80 /* APIWrapper+Inbox.swift */,
 				843C38C5242A577B0035BF80 /* Inbox */,
 				843C38C8242A577B0035BF80 /* Unreaded */,
-				843C38CB242A577B0035BF80 /* APIWrapper+Inbox.swift */,
 				843C38CC242A577B0035BF80 /* Delivered */,
+				843FB11E24BF3BA80060ACEC /* ChatReaded */,
 			);
 			path = Inbox;
 			sourceTree = "<group>";
@@ -1052,6 +1055,14 @@
 				843C38EC242B5A830035BF80 /* PermissionService.swift */,
 			);
 			path = PermissionService;
+			sourceTree = "<group>";
+		};
+		843FB11E24BF3BA80060ACEC /* ChatReaded */ = {
+			isa = PBXGroup;
+			children = (
+				843FB11F24BF3BC20060ACEC /* ChatReadedRequest.swift */,
+			);
+			path = ChatReaded;
 			sourceTree = "<group>";
 		};
 		844AC39323E9776F0066006D /* AccessService */ = {
@@ -3663,6 +3674,7 @@
 				846DC6E724B33E1C00A11914 /* PickerDismissAnimator.swift in Sources */,
 				E92EFBE3242A22F2003AF7FE /* BaseRequestRetrier.swift in Sources */,
 				E94B6C8D2407F8E200FD9F65 /* IssueTypes.swift in Sources */,
+				843FB12024BF3BC20060ACEC /* ChatReadedRequest.swift in Sources */,
 				E92EFBA9242A22F2003AF7FE /* APIIssueConnect.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E92EFBDA242A22F2003AF7FE /* APIWrapper+Address.swift in Sources */,
