@@ -8,8 +8,8 @@
 
 struct ChatConfiguration: Equatable {
     
-    let id = "3beb2614f4573475b18bd25deb77f6e9"
-    let domain = "lanta-net.ru"
+    let id = Constants.Chat.id
+    let domain = Constants.Chat.domain
     
     let language: String?
     let clientId: String?

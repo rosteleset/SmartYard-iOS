@@ -19,10 +19,22 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
     private let disposeBag = DisposeBag()
     private let apiWrapper: APIWrapper
     private let accessService: AccessService
+    private let pushNotificationService: PushNotificationService
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     
-    init(apiWrapper: APIWrapper, accessService: AccessService) {
+    init(
+        apiWrapper: APIWrapper,
+        accessService: AccessService,
+        pushNotificationService: PushNotificationService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
+    ) {
         self.apiWrapper = apiWrapper
         self.accessService = accessService
+        self.pushNotificationService = pushNotificationService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         
         super.init(initialRoute: .main)
         
@@ -32,7 +44,14 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
     override func prepareTransition(for route: ChatRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = ChatViewModel(apiWrapper: apiWrapper, accessService: accessService)
+            let vm = ChatViewModel(
+                apiWrapper: apiWrapper,
+                accessService: accessService,
+                pushNotificationService: pushNotificationService,
+                logoutHelper: logoutHelper,
+                alertService: alertService
+            )
+            
             let vc = ChatViewController(viewModel: vm)
             
             // MARK: Загружаю сразу, чтобы иметь возможность нормально отправлять сообщения с "тарелочек"
