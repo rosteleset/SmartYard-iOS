@@ -30,6 +30,7 @@
 		843C38ED242B5A830035BF80 /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38EC242B5A830035BF80 /* PermissionService.swift */; };
 		843FB12024BF3BC20060ACEC /* ChatReadedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FB11F24BF3BC20060ACEC /* ChatReadedRequest.swift */; };
 		843FB12224C1AE850060ACEC /* AddressesHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FB12124C1AE850060ACEC /* AddressesHeaderCell.swift */; };
+		843FB12424C1C58E0060ACEC /* PaymentsAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FB12324C1C58E0060ACEC /* PaymentsAddressCell.swift */; };
 		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
 		844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallViewController.swift */; };
 		844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39F23E987400066006D /* IncomingCallViewModel.swift */; };
@@ -75,8 +76,6 @@
 		846DC6C224B33DC600A11914 /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DC6AF24B33DC600A11914 /* PaymentsViewModel.swift */; };
 		846DC6C324B33DC600A11914 /* PaymentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DC6B124B33DC600A11914 /* PaymentsViewController.swift */; };
 		846DC6C424B33DC600A11914 /* PaymentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846DC6B224B33DC600A11914 /* PaymentsViewController.xib */; };
-		846DC6C524B33DC600A11914 /* PaymentAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846DC6B424B33DC600A11914 /* PaymentAddressCell.xib */; };
-		846DC6C624B33DC600A11914 /* PaymentAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DC6B524B33DC600A11914 /* PaymentAddressCell.swift */; };
 		846DC6C724B33DC600A11914 /* PayContractViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DC6B824B33DC600A11914 /* PayContractViewModel.swift */; };
 		846DC6C824B33DC600A11914 /* ContractCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846DC6BB24B33DC600A11914 /* ContractCell.swift */; };
 		846DC6C924B33DC600A11914 /* ContractCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846DC6BC24B33DC600A11914 /* ContractCell.xib */; };
@@ -494,6 +493,7 @@
 		843C38EC242B5A830035BF80 /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
 		843FB11F24BF3BC20060ACEC /* ChatReadedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatReadedRequest.swift; sourceTree = "<group>"; };
 		843FB12124C1AE850060ACEC /* AddressesHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesHeaderCell.swift; sourceTree = "<group>"; };
+		843FB12324C1C58E0060ACEC /* PaymentsAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsAddressCell.swift; sourceTree = "<group>"; };
 		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
 		844AC39B23E987360066006D /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
 		844AC39F23E987400066006D /* IncomingCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewModel.swift; sourceTree = "<group>"; };
@@ -536,8 +536,6 @@
 		846DC6AF24B33DC600A11914 /* PaymentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
 		846DC6B124B33DC600A11914 /* PaymentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsViewController.swift; sourceTree = "<group>"; };
 		846DC6B224B33DC600A11914 /* PaymentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentsViewController.xib; sourceTree = "<group>"; };
-		846DC6B424B33DC600A11914 /* PaymentAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentAddressCell.xib; sourceTree = "<group>"; };
-		846DC6B524B33DC600A11914 /* PaymentAddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentAddressCell.swift; sourceTree = "<group>"; };
 		846DC6B824B33DC600A11914 /* PayContractViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayContractViewModel.swift; sourceTree = "<group>"; };
 		846DC6BB24B33DC600A11914 /* ContractCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractCell.swift; sourceTree = "<group>"; };
 		846DC6BC24B33DC600A11914 /* ContractCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContractCell.xib; sourceTree = "<group>"; };
@@ -1381,8 +1379,7 @@
 		846DC6B324B33DC600A11914 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				846DC6B424B33DC600A11914 /* PaymentAddressCell.xib */,
-				846DC6B524B33DC600A11914 /* PaymentAddressCell.swift */,
+				843FB12324C1C58E0060ACEC /* PaymentsAddressCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -3388,7 +3385,6 @@
 				84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */,
 				E98C383623F192600010BBC1 /* InputAddressViewController.xib in Resources */,
 				E9A4D48C23EC28760070A591 /* PinNumberField.xib in Resources */,
-				846DC6C524B33DC600A11914 /* PaymentAddressCell.xib in Resources */,
 				84F64935247402DC000C0028 /* SelectCameraContainerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3566,7 +3562,6 @@
 				846DC6E124B33DEA00A11914 /* PayProcessResponseData.swift in Sources */,
 				843C38E9242A6E490035BF80 /* QRCodeScanViewController.swift in Sources */,
 				84AADD262431FAA80056994A /* NotificationResponseData.swift in Sources */,
-				846DC6C624B33DC600A11914 /* PaymentAddressCell.swift in Sources */,
 				84F64953247410F9000C0028 /* CameraNumberCell.swift in Sources */,
 				843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */,
 				E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */,
@@ -3723,6 +3718,7 @@
 				842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */,
 				E9A4D48A23EC27E20070A591 /* PinNumberField.swift in Sources */,
 				E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */,
+				843FB12424C1C58E0060ACEC /* PaymentsAddressCell.swift in Sources */,
 				E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */,
 				8496396024851B660086B6E9 /* ApiWrapper+CCTV.swift in Sources */,
 				E9C2568124224DF200BE32E0 /* RestoreMethod.swift in Sources */,
