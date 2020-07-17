@@ -111,7 +111,8 @@ class PaymentsViewController: BaseViewController, LoaderPresentable {
     private func configureTableView() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(nibWithCellClass: PaymentAddressCell.self)
+        
+        collectionView.register(cellWithClass: PaymentsAddressCell.self)
         
         collectionView.refreshControl = refreshControl
     }
@@ -125,7 +126,16 @@ extension PaymentsViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: collectionView.width - 32, height: 72)
+        guard let address = (try? itemsProxy.value())?[safe: indexPath.row] else {
+            return .zero
+        }
+        
+        let height = PaymentsAddressCell.preferredHeight(
+            for: UIScreen.main.bounds.width - 32,
+            title: address.address
+        ).totalHeight
+        
+        return CGSize(width: UIScreen.main.bounds.width - 32, height: height)
     }
     
     func collectionView(
@@ -163,11 +173,10 @@ extension PaymentsViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        let cell = collectionView.dequeueReusableCell(withClass: PaymentAddressCell.self, for: indexPath)
-        cell.configure(address: data[indexPath.row].address)
+        let cell = collectionView.dequeueReusableCell(withClass: PaymentsAddressCell.self, for: indexPath)
+        cell.configure(address: data[safe: indexPath.row]?.address)
         
         return cell
     }
     
 }
-
