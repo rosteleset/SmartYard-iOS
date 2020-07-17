@@ -29,6 +29,7 @@
 		843C38EA242A6E490035BF80 /* QRCodeScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843C38E7242A6E490035BF80 /* QRCodeScanViewController.xib */; };
 		843C38ED242B5A830035BF80 /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38EC242B5A830035BF80 /* PermissionService.swift */; };
 		843FB12024BF3BC20060ACEC /* ChatReadedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FB11F24BF3BC20060ACEC /* ChatReadedRequest.swift */; };
+		843FB12224C1AE850060ACEC /* AddressesHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FB12124C1AE850060ACEC /* AddressesHeaderCell.swift */; };
 		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
 		844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallViewController.swift */; };
 		844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39F23E987400066006D /* IncomingCallViewModel.swift */; };
@@ -191,13 +192,11 @@
 		84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */ = {isa = PBXBuildFile; fileRef = 84B9EC9123E0884400979C39 /* linphonerc_factory */; };
 		84B9EC9723E0884400979C39 /* linphonerc_default in Resources */ = {isa = PBXBuildFile; fileRef = 84B9EC9223E0884400979C39 /* linphonerc_default */; };
 		84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B9EC9923E0888B00979C39 /* SipConfig.swift */; };
-		84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15C123EC321C00A1CB95 /* AddressesListHeaderCell.xib */; };
 		84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15C823EC345800A1CB95 /* AddressesListDataItem.swift */; };
 		84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15CA23EC350100A1CB95 /* AddressesListDataItemIdentity.swift */; };
 		84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15CC23EC35D400A1CB95 /* AddressesListSectionModel.swift */; };
 		84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15CF23EC409500A1CB95 /* AddressesListObjectCell.swift */; };
 		84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15D023EC409500A1CB95 /* AddressesListObjectCell.xib */; };
-		84CC15D423EC40EE00A1CB95 /* AddressesListHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D323EC40EE00A1CB95 /* AddressesListHeaderCell.swift */; };
 		84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D723EC42E600A1CB95 /* DomophoneObjectType.swift */; };
 		84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15DA23EC6AA800A1CB95 /* AddressesListCameraCell.swift */; };
 		84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15DB23EC6AA800A1CB95 /* AddressesListCameraCell.xib */; };
@@ -494,6 +493,7 @@
 		843C38E7242A6E490035BF80 /* QRCodeScanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRCodeScanViewController.xib; sourceTree = "<group>"; };
 		843C38EC242B5A830035BF80 /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
 		843FB11F24BF3BC20060ACEC /* ChatReadedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatReadedRequest.swift; sourceTree = "<group>"; };
+		843FB12124C1AE850060ACEC /* AddressesHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesHeaderCell.swift; sourceTree = "<group>"; };
 		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
 		844AC39B23E987360066006D /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
 		844AC39F23E987400066006D /* IncomingCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewModel.swift; sourceTree = "<group>"; };
@@ -662,13 +662,11 @@
 		84B9EC9923E0888B00979C39 /* SipConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SipConfig.swift; sourceTree = "<group>"; };
 		84B9EC9B23E089C500979C39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84B9EC9D23E08BB100979C39 /* SmartYard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmartYard.entitlements; sourceTree = "<group>"; };
-		84CC15C123EC321C00A1CB95 /* AddressesListHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListHeaderCell.xib; sourceTree = "<group>"; };
 		84CC15C823EC345800A1CB95 /* AddressesListDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListDataItem.swift; sourceTree = "<group>"; };
 		84CC15CA23EC350100A1CB95 /* AddressesListDataItemIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListDataItemIdentity.swift; sourceTree = "<group>"; };
 		84CC15CC23EC35D400A1CB95 /* AddressesListSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListSectionModel.swift; sourceTree = "<group>"; };
 		84CC15CF23EC409500A1CB95 /* AddressesListObjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListObjectCell.swift; sourceTree = "<group>"; };
 		84CC15D023EC409500A1CB95 /* AddressesListObjectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListObjectCell.xib; sourceTree = "<group>"; };
-		84CC15D323EC40EE00A1CB95 /* AddressesListHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesListHeaderCell.swift; sourceTree = "<group>"; };
 		84CC15D523EC412A00A1CB95 /* AddressesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesListViewController.swift; sourceTree = "<group>"; };
 		84CC15D723EC42E600A1CB95 /* DomophoneObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomophoneObjectType.swift; sourceTree = "<group>"; };
 		84CC15DA23EC6AA800A1CB95 /* AddressesListCameraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListCameraCell.swift; sourceTree = "<group>"; };
@@ -2056,8 +2054,7 @@
 		84CC15BF23EC31FD00A1CB95 /* HeaderCell */ = {
 			isa = PBXGroup;
 			children = (
-				84CC15D323EC40EE00A1CB95 /* AddressesListHeaderCell.swift */,
-				84CC15C123EC321C00A1CB95 /* AddressesListHeaderCell.xib */,
+				843FB12124C1AE850060ACEC /* AddressesHeaderCell.swift */,
 			);
 			path = HeaderCell;
 			sourceTree = "<group>";
@@ -3356,7 +3353,6 @@
 				84B89A9123F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib in Resources */,
 				844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */,
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
-				84CC15C323EC321C00A1CB95 /* AddressesListHeaderCell.xib in Resources */,
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
 				E9E4271723F40E0B00F5D593 /* SmartYardCheckBoxView.xib in Resources */,
 				84D29BA324B865EF00CFBE6B /* LoaderAnimation.json in Resources */,
@@ -3832,6 +3828,7 @@
 				846DC6E024B33DEA00A11914 /* PayProcessRequest.swift in Sources */,
 				84D29BA124B79E6300CFBE6B /* CXProviderProxy.swift in Sources */,
 				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
+				843FB12224C1AE850060ACEC /* AddressesHeaderCell.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
@@ -3860,7 +3857,6 @@
 				84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */,
 				E92EFBCB242A22F2003AF7FE /* RequestCodeRequest.swift in Sources */,
 				E940581123F682EA00623746 /* AllowedPersonCell.swift in Sources */,
-				84CC15D423EC40EE00A1CB95 /* AddressesListHeaderCell.swift in Sources */,
 				84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

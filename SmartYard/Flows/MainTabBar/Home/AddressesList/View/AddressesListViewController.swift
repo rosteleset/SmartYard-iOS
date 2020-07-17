@@ -237,7 +237,6 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         refreshControl.tintColor = UIColor.SmartYard.gray
         
         [
-            AddressesListHeaderCell.self,
             AddressesListObjectCell.self,
             AddressesListCameraCell.self,
             AddressesListEmptyStateCell.self,
@@ -245,6 +244,8 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         ].forEach {
             collectionView.register(nibWithCellClass: $0)
         }
+        
+        collectionView.register(cellWithClass: AddressesHeaderCell.self)
         
         let dataSource = RxCollectionViewSectionedAnimatedDataSource<AddressesListSectionModel>(
             configureCell: { [weak self] _, collectionView, indexPath, item in
@@ -255,7 +256,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
                     // Типа нельзя использовать ячейки без ReuseIdentifier в таком датасорсе
                     // Поэтому возвращаю рандомную ячейку. Все равно контроллер уже мертв, нам пофиг
                     
-                    return collectionView.dequeueReusableCell(withClass: AddressesListHeaderCell.self, for: indexPath)
+                    return collectionView.dequeueReusableCell(withClass: AddressesHeaderCell.self, for: indexPath)
                 }
                 
                 return self.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
@@ -282,7 +283,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         let customizableCell: CustomBorderCollectionViewCell = {
             switch item {
             case let .header(_, address, isExpanded):
-                let cell = collectionView.dequeueReusableCell(withClass: AddressesListHeaderCell.self, for: indexPath)
+                let cell = collectionView.dequeueReusableCell(withClass: AddressesHeaderCell.self, for: indexPath)
                 cell.configure(address: address, isExpanded: isExpanded)
                 return cell
                 
@@ -350,9 +351,18 @@ extension AddressesListViewController: UICollectionViewDelegateFlowLayout {
             return .zero
         }
         
-        switch item.identity {
+        switch item {
         case .emptyState:
             return CGSize(width: collectionView.width - 32, height: collectionView.bounds.height - 36)
+            
+        case let .header(_, address, _):
+            let height = AddressesHeaderCell.preferredHeight(
+                for: UIScreen.main.bounds.width - 32,
+                title: address
+            ).totalHeight
+            
+            return CGSize(width: UIScreen.main.bounds.width - 32, height: height)
+            
         default:
             return CGSize(width: collectionView.width - 32, height: 72)
         }
