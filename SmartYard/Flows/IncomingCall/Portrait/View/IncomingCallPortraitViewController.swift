@@ -12,7 +12,7 @@ import RxCocoa
 import JGProgressHUD
 import AVKit
 
-class IncomingCallPortraitViewController: BaseViewController, LoaderPresentable {
+class IncomingCallPortraitViewController: BaseViewController {
     
     @IBOutlet private weak var previewButton: UIButton!
     @IBOutlet private weak var callButton: UIButton!
@@ -35,8 +35,6 @@ class IncomingCallPortraitViewController: BaseViewController, LoaderPresentable 
     @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
     
     private let viewModel: IncomingCallViewModel
-    
-    var loader: JGProgressHUD?
     
     init(viewModel: IncomingCallViewModel) {
         self.viewModel = viewModel

@@ -96,7 +96,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 isCallKitUsed: isCallKitUsed
             )
             
-            let vc = IncomingCallPortraitViewController(viewModel: vm)
+//            let vc = IncomingCallPortraitViewController(viewModel: vm)
+            let vc = IncomingCallLandscapeViewController(viewModel: vm)
             
             vc.loadViewIfNeeded()
             
