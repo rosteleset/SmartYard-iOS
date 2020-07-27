@@ -12,7 +12,7 @@ import RxCocoa
 import JGProgressHUD
 import AVKit
 
-class IncomingCallViewController: BaseViewController, LoaderPresentable {
+class IncomingCallPortraitViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var previewButton: UIButton!
     @IBOutlet private weak var callButton: UIButton!

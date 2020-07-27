@@ -16,7 +16,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IncomingCallViewController" customModule="SmartYard" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IncomingCallPortraitViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="alreadyOpenedButtonContainer" destination="HE0-qo-dCf" id="q9a-xy-Dmf"/>
                 <outlet property="callButton" destination="CB9-LO-tIG" id="dbF-J2-ZLa"/>
@@ -55,7 +55,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="Тамбов, ул. Советская 20, кв. 52" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rh6-Xt-7AB">
-                    <rect key="frame" x="50" y="90.5" width="220" height="20.5"/>
+                    <rect key="frame" x="50.5" y="90.5" width="219.5" height="20.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -192,7 +192,7 @@
                                     <state key="normal" image="LockIcon"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Игнорировать" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jj8-ob-kSL">
-                                    <rect key="frame" x="-27" y="56" width="102" height="20"/>
+                                    <rect key="frame" x="-26.5" y="56" width="101.5" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="EKs-lu-zuC"/>
                                     </constraints>
@@ -222,7 +222,7 @@
                                     <state key="normal" image="UnlockIcon"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Открыто" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qoh-Fa-xYP">
-                                    <rect key="frame" x="-7" y="56" width="62" height="20"/>
+                                    <rect key="frame" x="-6.5" y="56" width="61.5" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="Mh7-Cl-ZXA"/>
                                     </constraints>
