@@ -20,7 +20,7 @@ class IncomingCallLandscapeViewController: BaseViewController {
     @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
     
     @IBOutlet private weak var videoPreview: UIView!
-    @IBOutlet private weak var videoBackgroundBlur: UIView!
+    @IBOutlet private weak var gradientContainer: UIView!
     
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
@@ -46,6 +46,7 @@ class IncomingCallLandscapeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureButtons()
+        configureGradient()
         bind()
     }
     
@@ -53,6 +54,22 @@ class IncomingCallLandscapeViewController: BaseViewController {
         super.viewDidAppear(animated)
         
         UIViewController.attemptRotationToDeviceOrientation()
+    }
+    
+    private func configureGradient() {
+        let linearGradientView = LinearGradientView(frame: gradientContainer.bounds)
+        linearGradientView.startPoint = CGPoint(x: 0.0, y: 0.0)
+        linearGradientView.endPoint = CGPoint(x: 0.0, y: 1.0)
+        linearGradientView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        linearGradientView.colors = [
+            UIColor.black.withAlphaComponent(0.8),
+            UIColor.black.withAlphaComponent(0.12),
+            UIColor.black.withAlphaComponent(0.12),
+            UIColor.black.withAlphaComponent(0.8)
+        ]
+        
+        gradientContainer.addSubview(linearGradientView)
     }
     
     private func configureButtons() {
@@ -135,7 +152,6 @@ class IncomingCallLandscapeViewController: BaseViewController {
         
         let shouldShowVideo = state.callState == .callActive && state.previewState == .video
         
-        videoBackgroundBlur.isHidden = !shouldShowVideo
         videoPreview.isHidden = !shouldShowVideo
         
         imageView.isHidden = shouldShowVideo

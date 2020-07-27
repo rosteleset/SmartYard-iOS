@@ -164,6 +164,7 @@
 		849F2AD82448687C005693B3 /* AddressesListEmptyStateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849F2AD62448687C005693B3 /* AddressesListEmptyStateCell.xib */; };
 		849FF08B24CEBFD900C234BC /* IncomingCallLandscapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FF08924CEBFD900C234BC /* IncomingCallLandscapeViewController.swift */; };
 		849FF08C24CEBFD900C234BC /* IncomingCallLandscapeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849FF08A24CEBFD900C234BC /* IncomingCallLandscapeViewController.xib */; };
+		849FF08E24CEE3C900C234BC /* LinearGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FF08D24CEE3C900C234BC /* LinearGradientView.swift */; };
 		84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A6705F241FB6CC00BBA12B /* AddressAccessSkeletonView.swift */; };
 		84A67062241FB6E100BBA12B /* AddressAccessSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A67061241FB6E100BBA12B /* AddressAccessSkeletonView.xib */; };
 		84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D6123E2E860001B3B43 /* NSError+Extensions.swift */; };
@@ -629,6 +630,7 @@
 		849F2AD62448687C005693B3 /* AddressesListEmptyStateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListEmptyStateCell.xib; sourceTree = "<group>"; };
 		849FF08924CEBFD900C234BC /* IncomingCallLandscapeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallLandscapeViewController.swift; sourceTree = "<group>"; };
 		849FF08A24CEBFD900C234BC /* IncomingCallLandscapeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncomingCallLandscapeViewController.xib; sourceTree = "<group>"; };
+		849FF08D24CEE3C900C234BC /* LinearGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientView.swift; sourceTree = "<group>"; };
 		84A6705F241FB6CC00BBA12B /* AddressAccessSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessSkeletonView.swift; sourceTree = "<group>"; };
 		84A67061241FB6E100BBA12B /* AddressAccessSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessSkeletonView.xib; sourceTree = "<group>"; };
 		84AA8D6123E2E860001B3B43 /* NSError+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Extensions.swift"; sourceTree = "<group>"; };
@@ -1103,6 +1105,7 @@
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
+				849FF08D24CEE3C900C234BC /* LinearGradientView.swift */,
 				84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */,
 				84854B5B23FC38F3001B44F2 /* LoadingButton.swift */,
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
@@ -3886,6 +3889,7 @@
 				E92EFBCB242A22F2003AF7FE /* RequestCodeRequest.swift in Sources */,
 				E940581123F682EA00623746 /* AllowedPersonCell.swift in Sources */,
 				84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */,
+				849FF08E24CEE3C900C234BC /* LinearGradientView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
