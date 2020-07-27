@@ -28,6 +28,9 @@ extension Notification.Name {
     static let allChatMessagesRead = Notification.Name("AllChatMessagesRead")
     static let unreadChatMessagesAvailable = Notification.Name("UnreadChatMessagesAvailable")
     
+    static let incomingCallFullscreenRequested = Notification.Name("IncomingCallFullscreenRequested")
+    static let incomingCallRegularRequested = Notification.Name("IncomingCallRegularRequested")
+    
 }
 
 enum NotificationKeys {

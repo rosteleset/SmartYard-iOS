@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TouchAreaInsets
 
 class IncomingCallLandscapeViewController: BaseViewController {
     
@@ -89,9 +90,10 @@ class IncomingCallLandscapeViewController: BaseViewController {
             .withRoundedCorners(radius: 50)
         
         openButton.setImage(imageForDisabled, for: .disabled)
+        
+        exitFullscreenButton.touchAreaInsets = UIEdgeInsets(inset: 20)
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
         let callTrigger = callButton.rx.tap
             .do(
@@ -138,6 +140,14 @@ class IncomingCallLandscapeViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] isLoading in
                     isLoading ? self?.openButton.showLoading() : self?.openButton.hideLoading()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        exitFullscreenButton.rx.tap
+            .subscribe(
+                onNext: {
+                    NotificationCenter.default.post(name: .incomingCallRegularRequested, object: nil)
                 }
             )
             .disposed(by: disposeBag)

@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import JGProgressHUD
 import AVKit
+import TouchAreaInsets
 
 class IncomingCallPortraitViewController: BaseViewController {
     
@@ -33,6 +34,8 @@ class IncomingCallPortraitViewController: BaseViewController {
     
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet private weak var fullscreenButton: UIButton!
     
     private let viewModel: IncomingCallViewModel
     
@@ -90,9 +93,10 @@ class IncomingCallPortraitViewController: BaseViewController {
             .withRoundedCorners(radius: 50)
         
         openButton.setImage(imageForDisabled, for: .disabled)
+        
+        fullscreenButton.touchAreaInsets = UIEdgeInsets(inset: 20)
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
         let callTrigger = callButton.rx.tap
             .do(
@@ -139,6 +143,14 @@ class IncomingCallPortraitViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] isLoading in
                     isLoading ? self?.openButton.showLoading() : self?.openButton.hideLoading()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        fullscreenButton.rx.tap
+            .subscribe(
+                onNext: {
+                    NotificationCenter.default.post(name: .incomingCallFullscreenRequested, object: nil)
                 }
             )
             .disposed(by: disposeBag)
