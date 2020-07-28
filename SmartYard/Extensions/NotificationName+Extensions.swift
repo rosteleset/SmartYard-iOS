@@ -29,7 +29,7 @@ extension Notification.Name {
     static let unreadChatMessagesAvailable = Notification.Name("UnreadChatMessagesAvailable")
     
     static let incomingCallFullscreenRequested = Notification.Name("IncomingCallFullscreenRequested")
-    static let incomingCallRegularRequested = Notification.Name("IncomingCallRegularRequested")
+    static let incomingCallPortraitRequested = Notification.Name("IncomingCallPortraitRequested")
     
 }
 

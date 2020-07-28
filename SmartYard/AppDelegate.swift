@@ -14,9 +14,15 @@ import PushKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private lazy var mainWindow = UIWindow()
+    private let mainWindow: UIWindow
+    private let appCoordinator: AppCoordinator
     
-    private let appCoordinator = AppCoordinator()
+    override init() {
+        mainWindow = UIWindow()
+        appCoordinator = AppCoordinator(mainWindow: mainWindow)
+        
+        super.init()
+    }
 
     func application(
         _ application: UIApplication,

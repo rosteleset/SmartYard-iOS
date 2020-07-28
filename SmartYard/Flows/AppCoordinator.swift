@@ -15,7 +15,6 @@ import SwifterSwift
 enum AppRoute: Route {
     
     case main
-    case incomingCall(callPayload: CallPayload, isCallKitUsed: Bool)
     case dismiss
     case userName(preloadedName: APIClientName?)
     case phoneNumber
@@ -23,6 +22,9 @@ enum AppRoute: Route {
     case alert(title: String, message: String?)
     case onboarding
     case appSettings(title: String, message: String?)
+    
+    case incomingCall(callPayload: CallPayload, isCallKitUsed: Bool)
+    case closeIncomingCall
     
 }
 
@@ -45,11 +47,17 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     private var currentCallPreviewData: Data?
     
+    private let mainWindow: UIWindow
+    
+    private var incomingCallWindow: UIWindow?
+    private var incomingCallLandscapeVC: IncomingCallLandscapeViewController?
+    private var incomingCallPortraitVC: IncomingCallPortraitViewController?
+    
     var selectedTabPresentable: Presentable? {
         return mainTabBarCoordinator?.selectedPresentable
     }
     
-    init() {
+    init(mainWindow: UIWindow) {
         apiWrapper = APIWrapper(accessService: accessService)
         issueService = IssueService(apiWrapper: apiWrapper, accessService: accessService)
         pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
@@ -60,11 +68,14 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             alertService: alertService
         )
         
+        self.mainWindow = mainWindow
+        
         super.init(initialRoute: accessService.routeForCurrentState)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
         
         observeLogout()
+        observeOrientationChanges()
     }
     
     // swiftlint:disable:next function_body_length
@@ -84,28 +95,6 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             mainTabBarCoordinator = coordinator
             
             return .set([coordinator], animation: .fade)
-            
-        case let .incomingCall(callPayload, isCallKitUsed):
-            let vm = IncomingCallViewModel(
-                providerProxy: providerProxy,
-                linphoneService: linphoneService,
-                permissionService: permissionService,
-                apiWrapper: apiWrapper,
-                router: weakRouter,
-                callPayload: callPayload,
-                isCallKitUsed: isCallKitUsed
-            )
-            
-//            let vc = IncomingCallPortraitViewController(viewModel: vm)
-            let vc = IncomingCallLandscapeViewController(viewModel: vm)
-            
-            vc.loadViewIfNeeded()
-            
-            vc.modalPresentationStyle = .overFullScreen
-            vc.modalPresentationCapturesStatusBarAppearance = true
-            vc.modalTransitionStyle = .crossDissolve
-            
-            return .present(vc)
             
         case .dismiss:
             return .dismiss()
@@ -153,6 +142,40 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             
         case let .appSettings(title, message):
             return .appSettingsTransition(title: title, message: message)
+            
+        case let .incomingCall(callPayload, isCallKitUsed):
+            let vm = IncomingCallViewModel(
+                providerProxy: providerProxy,
+                linphoneService: linphoneService,
+                permissionService: permissionService,
+                apiWrapper: apiWrapper,
+                router: weakRouter,
+                callPayload: callPayload,
+                isCallKitUsed: isCallKitUsed
+            )
+            
+            let landscapeVC = IncomingCallLandscapeViewController(viewModel: vm)
+            landscapeVC.loadViewIfNeeded()
+            self.incomingCallLandscapeVC = landscapeVC
+            
+            let portraitVC = IncomingCallPortraitViewController(viewModel: vm)
+            portraitVC.loadViewIfNeeded()
+            self.incomingCallPortraitVC = portraitVC
+            
+            incomingCallWindow = UIWindow()
+            incomingCallWindow?.rootViewController = portraitVC
+            incomingCallWindow?.makeKeyAndVisible()
+            
+            return .none()
+         
+        case .closeIncomingCall:
+            incomingCallWindow = nil
+            incomingCallPortraitVC = nil
+            incomingCallLandscapeVC = nil
+            
+            mainWindow.makeKeyAndVisible()
+            
+            return .none()
         }
     }
     
@@ -236,6 +259,69 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                     }
                     
                     self?.trigger(.phoneNumber)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func observeOrientationChanges() {
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        
+        NotificationCenter.default.rx
+            .notification(UIDevice.orientationDidChangeNotification)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    guard let self = self,
+                        let incomingCallWindow = self.incomingCallWindow,
+                        let landscapeVC = self.incomingCallLandscapeVC,
+                        let portraitVC = self.incomingCallPortraitVC else {
+                        return
+                    }
+                    
+                    if UIDevice.current.orientation == .portrait,
+                        incomingCallWindow.rootViewController === landscapeVC {
+                        incomingCallWindow.switchRootViewController(to: portraitVC, animated: false)
+                        return
+                    }
+                    
+                    if [.landscapeLeft, .landscapeRight].contains(UIDevice.current.orientation),
+                        incomingCallWindow.rootViewController === portraitVC {
+                        incomingCallWindow.switchRootViewController(to: landscapeVC, animated: false)
+                        return
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx
+            .notification(.incomingCallFullscreenRequested)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    guard let self = self,
+                        let incomingCallWindow = self.incomingCallWindow,
+                        let landscapeVC = self.incomingCallLandscapeVC else {
+                        return
+                    }
+                    
+                    incomingCallWindow.switchRootViewController(to: landscapeVC, animated: false)
+                }
+            )
+            .disposed(by: disposeBag)
+
+        NotificationCenter.default.rx
+            .notification(.incomingCallPortraitRequested)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    guard let self = self,
+                        let incomingCallWindow = self.incomingCallWindow,
+                        let portraitVC = self.incomingCallPortraitVC else {
+                        return
+                    }
+                    
+                    incomingCallWindow.switchRootViewController(to: portraitVC, animated: false)
                 }
             )
             .disposed(by: disposeBag)

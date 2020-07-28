@@ -224,7 +224,7 @@ class IncomingCallViewModel: BaseViewModel {
                     } catch {
                         self.providerProxy.endCall(uuid: self.callPayload.uuid)
                         
-                        self.router.trigger(.dismiss)
+                        self.router.trigger(.closeIncomingCall)
                     }
                 }
             )
@@ -268,7 +268,7 @@ class IncomingCallViewModel: BaseViewModel {
                     
                     self.providerProxy.endCall(uuid: self.callPayload.uuid)
                     
-                    self.router.trigger(.dismiss)
+                    self.router.trigger(.closeIncomingCall)
                 }
             )
             .disposed(by: disposeBag)
@@ -508,7 +508,7 @@ class IncomingCallViewModel: BaseViewModel {
                         (currentCall.state == .Connected || currentCall.state == .StreamsRunning) else {
                         self.providerProxy.endCall(uuid: self.callPayload.uuid)
                             
-                        self.router.trigger(.dismiss)
+                        self.router.trigger(.closeIncomingCall)
                         
                         return
                     }
@@ -518,7 +518,7 @@ class IncomingCallViewModel: BaseViewModel {
                     } catch {
                         self.providerProxy.endCall(uuid: self.callPayload.uuid)
                         
-                        self.router.trigger(.dismiss)
+                        self.router.trigger(.closeIncomingCall)
                     }
                 }
             )
@@ -666,7 +666,7 @@ class IncomingCallViewModel: BaseViewModel {
                             
                             self.providerProxy.endCall(uuid: self.callPayload.uuid)
                             
-                            self.router.trigger(.dismiss)
+                            self.router.trigger(.closeIncomingCall)
                         }
                     }
                 }
@@ -718,7 +718,7 @@ extension IncomingCallViewModel: LinphoneDelegate {
             providerProxy.endCall(uuid: callPayload.uuid)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                self?.router.trigger(.dismiss)
+                self?.router.trigger(.closeIncomingCall)
             }
         }
     }
