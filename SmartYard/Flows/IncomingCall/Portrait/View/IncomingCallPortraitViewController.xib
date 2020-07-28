@@ -102,7 +102,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0rq-fX-JWl">
-                            <rect key="frame" x="248" y="126.5" width="20" height="20"/>
+                            <rect key="frame" x="248" y="124.5" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="FjL-JM-bAU"/>
                                 <constraint firstAttribute="width" constant="20" id="dxy-o8-aJN"/>
@@ -115,10 +115,9 @@
                     <constraints>
                         <constraint firstItem="4Wg-Q1-NS9" firstAttribute="bottom" secondItem="ws9-YM-GBC" secondAttribute="bottom" id="IpC-Mc-xIA"/>
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="o7y-sM-LFP" secondAttribute="top" id="KMz-Gh-K0p"/>
-                        <constraint firstAttribute="trailing" secondItem="0rq-fX-JWl" secondAttribute="trailing" constant="20" id="LML-td-m6A"/>
                         <constraint firstItem="HGl-tO-Nut" firstAttribute="centerX" secondItem="ws9-YM-GBC" secondAttribute="centerX" id="MgF-uY-1ei"/>
+                        <constraint firstItem="ws9-YM-GBC" firstAttribute="trailing" secondItem="0rq-fX-JWl" secondAttribute="trailing" constant="20" id="PKs-HN-Ssx"/>
                         <constraint firstItem="HGl-tO-Nut" firstAttribute="centerY" secondItem="ws9-YM-GBC" secondAttribute="centerY" id="Qrd-vU-6uW"/>
-                        <constraint firstAttribute="bottom" secondItem="0rq-fX-JWl" secondAttribute="bottom" constant="20" id="RU5-us-UEd"/>
                         <constraint firstItem="4Wg-Q1-NS9" firstAttribute="leading" secondItem="ws9-YM-GBC" secondAttribute="leading" id="Sj2-ws-Di1"/>
                         <constraint firstItem="4Wg-Q1-NS9" firstAttribute="trailing" secondItem="ws9-YM-GBC" secondAttribute="trailing" id="XBf-AM-rU0"/>
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="centerX" secondItem="o7y-sM-LFP" secondAttribute="centerX" id="XDY-iC-MOS"/>
@@ -128,6 +127,7 @@
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="centerY" secondItem="o7y-sM-LFP" secondAttribute="centerY" id="dY5-x5-eAd"/>
                         <constraint firstItem="qZy-mX-wC7" firstAttribute="centerX" secondItem="ws9-YM-GBC" secondAttribute="centerX" id="n6N-hY-uUy"/>
                         <constraint firstItem="4Wg-Q1-NS9" firstAttribute="top" secondItem="ws9-YM-GBC" secondAttribute="top" id="qpA-lh-qs2"/>
+                        <constraint firstItem="ws9-YM-GBC" firstAttribute="bottom" secondItem="0rq-fX-JWl" secondAttribute="bottom" constant="20" id="rWe-t1-ysY"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kK5-Z2-k0l" userLabel="Button Container">
