@@ -169,6 +169,10 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .none()
          
         case .closeIncomingCall:
+            if let portraitVC = incomingCallPortraitVC {
+                incomingCallWindow?.switchRootViewController(to: portraitVC)
+            }
+            
             incomingCallWindow = nil
             incomingCallPortraitVC = nil
             incomingCallLandscapeVC = nil
