@@ -80,9 +80,8 @@ class IncomingCallLandscapeViewController: BaseViewController {
         linearGradientView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         linearGradientView.colors = [
-            UIColor.black.withAlphaComponent(0.8),
-            UIColor.black.withAlphaComponent(0.12),
-            UIColor.black.withAlphaComponent(0.12),
+            UIColor.black.withAlphaComponent(0.5),
+            .clear,
             UIColor.black.withAlphaComponent(0.8)
         ]
         
