@@ -14,9 +14,15 @@ import PushKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private lazy var mainWindow = UIWindow()
+    private let mainWindow: UIWindow
+    private let appCoordinator: AppCoordinator
     
-    private let appCoordinator = AppCoordinator()
+    override init() {
+        mainWindow = UIWindow()
+        appCoordinator = AppCoordinator(mainWindow: mainWindow)
+        
+        super.init()
+    }
 
     func application(
         _ application: UIApplication,
@@ -63,11 +69,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         supportedInterfaceOrientationsFor window: UIWindow?
     ) -> UIInterfaceOrientationMask {
-        if let topVc = window?.rootViewController?.topViewController,
-            topVc is FullscreenPlayerViewController,
+        guard let topVc = window?.rootViewController?.topViewController else {
+            return .portrait
+        }
+        
+        if topVc is FullscreenPlayerViewController,
             !topVc.isBeingDismissed,
             !topVc.isBeingPresented {
             return .allButUpsideDown
+        } else if topVc is IncomingCallLandscapeViewController,
+            !topVc.isBeingDismissed {
+            return .landscape
         } else {
             return .portrait
         }

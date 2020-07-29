@@ -32,7 +32,7 @@
 		843FB12224C1AE850060ACEC /* AddressesHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FB12124C1AE850060ACEC /* AddressesHeaderCell.swift */; };
 		843FB12424C1C58E0060ACEC /* PaymentsAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FB12324C1C58E0060ACEC /* PaymentsAddressCell.swift */; };
 		844AC39523E977810066006D /* AccessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39423E977810066006D /* AccessService.swift */; };
-		844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallViewController.swift */; };
+		844AC39D23E987360066006D /* IncomingCallPortraitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39B23E987360066006D /* IncomingCallPortraitViewController.swift */; };
 		844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC39F23E987400066006D /* IncomingCallViewModel.swift */; };
 		844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */; };
 		844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3B023EAD0930066006D /* IncomingCallState.swift */; };
@@ -54,7 +54,7 @@
 		844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3F323EBFF900066006D /* SettingsViewController.swift */; };
 		844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3F423EBFF900066006D /* SettingsViewController.xib */; };
 		844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */; };
-		844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */; };
+		844AC3FC23EC08E50066006D /* IncomingCallPortraitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D47923EC04EF0070A591 /* IncomingCallPortraitViewController.xib */; };
 		844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C123EAA72800BECEE6 /* SourceSansPro-Bold.ttf */; };
 		844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C023EAA71C00BECEE6 /* SourceSansPro-SemiBold.ttf */; };
 		844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6BF23EAA70900BECEE6 /* SourceSansPro-Regular.ttf */; };
@@ -162,6 +162,9 @@
 		849653232472C96F000E1375 /* WidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496531C2472C96F000E1375 /* WidgetViewController.swift */; };
 		849F2AD72448687C005693B3 /* AddressesListEmptyStateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F2AD52448687C005693B3 /* AddressesListEmptyStateCell.swift */; };
 		849F2AD82448687C005693B3 /* AddressesListEmptyStateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849F2AD62448687C005693B3 /* AddressesListEmptyStateCell.xib */; };
+		849FF08B24CEBFD900C234BC /* IncomingCallLandscapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FF08924CEBFD900C234BC /* IncomingCallLandscapeViewController.swift */; };
+		849FF08C24CEBFD900C234BC /* IncomingCallLandscapeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849FF08A24CEBFD900C234BC /* IncomingCallLandscapeViewController.xib */; };
+		849FF08E24CEE3C900C234BC /* LinearGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FF08D24CEE3C900C234BC /* LinearGradientView.swift */; };
 		84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A6705F241FB6CC00BBA12B /* AddressAccessSkeletonView.swift */; };
 		84A67062241FB6E100BBA12B /* AddressAccessSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A67061241FB6E100BBA12B /* AddressAccessSkeletonView.xib */; };
 		84AA8D6223E2E860001B3B43 /* NSError+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA8D6123E2E860001B3B43 /* NSError+Extensions.swift */; };
@@ -495,7 +498,7 @@
 		843FB12124C1AE850060ACEC /* AddressesHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesHeaderCell.swift; sourceTree = "<group>"; };
 		843FB12324C1C58E0060ACEC /* PaymentsAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsAddressCell.swift; sourceTree = "<group>"; };
 		844AC39423E977810066006D /* AccessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessService.swift; sourceTree = "<group>"; };
-		844AC39B23E987360066006D /* IncomingCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewController.swift; sourceTree = "<group>"; };
+		844AC39B23E987360066006D /* IncomingCallPortraitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallPortraitViewController.swift; sourceTree = "<group>"; };
 		844AC39F23E987400066006D /* IncomingCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallViewModel.swift; sourceTree = "<group>"; };
 		844AC3AC23E9BBA50066006D /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		844AC3B023EAD0930066006D /* IncomingCallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallState.swift; sourceTree = "<group>"; };
@@ -625,6 +628,9 @@
 		849653272472CAF0000E1375 /* SmartYardWidget.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = SmartYardWidget.entitlements; sourceTree = "<group>"; };
 		849F2AD52448687C005693B3 /* AddressesListEmptyStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListEmptyStateCell.swift; sourceTree = "<group>"; };
 		849F2AD62448687C005693B3 /* AddressesListEmptyStateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressesListEmptyStateCell.xib; sourceTree = "<group>"; };
+		849FF08924CEBFD900C234BC /* IncomingCallLandscapeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallLandscapeViewController.swift; sourceTree = "<group>"; };
+		849FF08A24CEBFD900C234BC /* IncomingCallLandscapeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncomingCallLandscapeViewController.xib; sourceTree = "<group>"; };
+		849FF08D24CEE3C900C234BC /* LinearGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientView.swift; sourceTree = "<group>"; };
 		84A6705F241FB6CC00BBA12B /* AddressAccessSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAccessSkeletonView.swift; sourceTree = "<group>"; };
 		84A67061241FB6E100BBA12B /* AddressAccessSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressAccessSkeletonView.xib; sourceTree = "<group>"; };
 		84AA8D6123E2E860001B3B43 /* NSError+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Extensions.swift"; sourceTree = "<group>"; };
@@ -842,7 +848,7 @@
 		E9A1D78123F27AE500234B2A /* AddressConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressConfirmationViewController.swift; sourceTree = "<group>"; };
 		E9A1D78223F27AE500234B2A /* AddressConfirmationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressConfirmationViewController.xib; sourceTree = "<group>"; };
 		E9A1D78523F27B9A00234B2A /* AddressConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressConfirmationViewModel.swift; sourceTree = "<group>"; };
-		E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncomingCallViewController.xib; sourceTree = "<group>"; };
+		E9A4D47923EC04EF0070A591 /* IncomingCallPortraitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncomingCallPortraitViewController.xib; sourceTree = "<group>"; };
 		E9A4D47B23EC19110070A591 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E9A4D48223EC229F0070A591 /* PinCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeViewModel.swift; sourceTree = "<group>"; };
 		E9A4D48923EC27E20070A591 /* PinNumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinNumberField.swift; sourceTree = "<group>"; };
@@ -1073,7 +1079,8 @@
 		844AC39A23E9871F0066006D /* IncomingCall */ = {
 			isa = PBXGroup;
 			children = (
-				844AC40223EC220C0066006D /* View */,
+				849FF08624CEBFA900C234BC /* Portrait */,
+				849FF08724CEBFB300C234BC /* Landscape */,
 				844AC40323EC22100066006D /* ViewModel */,
 				844AC40423EC22140066006D /* Entries */,
 			);
@@ -1098,6 +1105,7 @@
 				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
 				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
 				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
+				849FF08D24CEE3C900C234BC /* LinearGradientView.swift */,
 				84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */,
 				84854B5B23FC38F3001B44F2 /* LoadingButton.swift */,
 				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
@@ -1274,8 +1282,8 @@
 		844AC40223EC220C0066006D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				844AC39B23E987360066006D /* IncomingCallViewController.swift */,
-				E9A4D47923EC04EF0070A591 /* IncomingCallViewController.xib */,
+				844AC39B23E987360066006D /* IncomingCallPortraitViewController.swift */,
+				E9A4D47923EC04EF0070A591 /* IncomingCallPortraitViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1766,6 +1774,31 @@
 				849F2AD62448687C005693B3 /* AddressesListEmptyStateCell.xib */,
 			);
 			path = EmptyStateCell;
+			sourceTree = "<group>";
+		};
+		849FF08624CEBFA900C234BC /* Portrait */ = {
+			isa = PBXGroup;
+			children = (
+				844AC40223EC220C0066006D /* View */,
+			);
+			path = Portrait;
+			sourceTree = "<group>";
+		};
+		849FF08724CEBFB300C234BC /* Landscape */ = {
+			isa = PBXGroup;
+			children = (
+				849FF08824CEBFC200C234BC /* View */,
+			);
+			path = Landscape;
+			sourceTree = "<group>";
+		};
+		849FF08824CEBFC200C234BC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				849FF08924CEBFD900C234BC /* IncomingCallLandscapeViewController.swift */,
+				849FF08A24CEBFD900C234BC /* IncomingCallLandscapeViewController.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		84A6705E241FB6B200BBA12B /* AddressAccessSkeletonView */ = {
@@ -3353,6 +3386,7 @@
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
 				E9E4271723F40E0B00F5D593 /* SmartYardCheckBoxView.xib in Resources */,
 				84D29BA324B865EF00CFBE6B /* LoaderAnimation.json in Resources */,
+				849FF08C24CEBFD900C234BC /* IncomingCallLandscapeViewController.xib in Resources */,
 				E9A1D78423F27AE500234B2A /* AddressConfirmationViewController.xib in Resources */,
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
 				E940581223F682EA00623746 /* AllowedPersonCell.xib in Resources */,
@@ -3374,7 +3408,7 @@
 				E9E4273B23F5609E00F5D593 /* ServiceSoonAvailableViewController.xib in Resources */,
 				E94B6C1923FAC5B600FD9F65 /* NewAllowedPersonViewController.xib in Resources */,
 				E940581823F6831A00623746 /* NewPersonCell.xib in Resources */,
-				844AC3FC23EC08E50066006D /* IncomingCallViewController.xib in Resources */,
+				844AC3FC23EC08E50066006D /* IncomingCallPortraitViewController.xib in Resources */,
 				84B89A9923F2FA97009692B4 /* ServiceIsActivatedViewController.xib in Resources */,
 				848D1B8A23F29D6100D6E368 /* AddressSettingsViewController.xib in Resources */,
 				843C38EA242A6E490035BF80 /* QRCodeScanViewController.xib in Resources */,
@@ -3724,6 +3758,7 @@
 				E9C2568124224DF200BE32E0 /* RestoreMethod.swift in Sources */,
 				843C38DE242A57C40035BF80 /* NotificationsCoordinator.swift in Sources */,
 				E92EFBDF242A22F2003AF7FE /* CreateIssueResponseData.swift in Sources */,
+				849FF08B24CEBFD900C234BC /* IncomingCallLandscapeViewController.swift in Sources */,
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
 				E92EFBEA242A24EB003AF7FE /* APIRestoreData.swift in Sources */,
 				E92EFBC0242A22F2003AF7FE /* GetServicesResponseData.swift in Sources */,
@@ -3799,7 +3834,7 @@
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				E92EFBC5242A22F2003AF7FE /* GeoCoderResponseData.swift in Sources */,
 				84D6445923F68AB200AD87EF /* AdvancedSettingsViewModel.swift in Sources */,
-				844AC39D23E987360066006D /* IncomingCallViewController.swift in Sources */,
+				844AC39D23E987360066006D /* IncomingCallPortraitViewController.swift in Sources */,
 				84B89A9523F2FA8A009692B4 /* ServiceIsActivatedViewModel.swift in Sources */,
 				84AADD242431FA9E0056994A /* NotificationRequest.swift in Sources */,
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
@@ -3854,6 +3889,7 @@
 				E92EFBCB242A22F2003AF7FE /* RequestCodeRequest.swift in Sources */,
 				E940581123F682EA00623746 /* AllowedPersonCell.swift in Sources */,
 				84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */,
+				849FF08E24CEE3C900C234BC /* LinearGradientView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

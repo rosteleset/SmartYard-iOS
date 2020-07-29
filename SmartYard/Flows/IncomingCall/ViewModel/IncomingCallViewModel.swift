@@ -29,6 +29,8 @@ class IncomingCallViewModel: BaseViewModel {
     
     private let currentStateSubject = BehaviorSubject<IncomingCallStateContainer>(value: .initial)
     
+    private let errorTracker = ErrorTracker()
+    
     private let registrationFinished = BehaviorSubject<Bool>(value: false)
     private let incomingCall = BehaviorSubject<(Call, CallParams)?>(value: nil)
     private let incomingCallAcceptedByUser = BehaviorSubject<Bool>(value: false)
@@ -40,11 +42,11 @@ class IncomingCallViewModel: BaseViewModel {
     // Если CallKit выключен, то всегда по умолчанию показывается видео
     
     private let preferredPreviewModeForActiveCall: BehaviorSubject<IncomingCallPreviewState>
+    private let subtitleSubject: BehaviorSubject<String?>
+    private let imageSubject = BehaviorSubject<UIImage?>(value: nil)
     
-    private let cxProviderAnswerTapTrigger = PublishSubject<Void>()
-    private let cxProviderEndTapTrigger = PublishSubject<Void>()
-    
-    private let videoViews = BehaviorSubject<(UIView, UIView)?>(value: nil)
+    private let answerCallProxySubject = PublishSubject<Void>()
+    private let endCallProxySubject = PublishSubject<Void>()
     
     init(
         providerProxy: CXProviderProxy,
@@ -66,12 +68,16 @@ class IncomingCallViewModel: BaseViewModel {
             value: isCallKitUsed ? .staticImage : .video
         )
         
+        subtitleSubject = BehaviorSubject<String?>(value: callPayload.callerId)
+        
         super.init()
         
         linphoneService.delegate = self
         linphoneService.connect(config: callPayload.sipConfig)
         
         providerProxy.delegate = self
+        
+        createCommonBindings()
     }
     
     deinit {
@@ -79,11 +85,12 @@ class IncomingCallViewModel: BaseViewModel {
         linphoneService.hasEnqueuedCalls = false
     }
     
+    /// Все, что не зависит от Input, а привязано к локальным сабжектам
     // swiftlint:disable:next function_body_length cyclomatic_complexity
-    func transform(input: Input) -> Output {
-        // MARK: Обработка ошибок
+    private func createCommonBindings() {
+        let currentState = currentStateSubject.asDriverOnErrorJustComplete()
         
-        let errorTracker = ErrorTracker()
+        // MARK: Обработка ошибок
         
         let micMsg = "Исходящего звука в этом звонке не будет. " +
         "Чтобы он появился в следующих звонках, предоставьте доступ к микрофону в настройках"
@@ -97,32 +104,6 @@ class IncomingCallViewModel: BaseViewModel {
                     }
                     
                     self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        // MARK: Общий стейт экрана
-        
-        let currentState = currentStateSubject.asDriverOnErrorJustComplete()
-        
-        // MARK: проксируем нажатие кнопки "Открыть" в локальный сабжект
-        // Заодно обновляем стейт на "Соединение...", если до этого был стейт "Входящий звонок"
-        
-        input.openTrigger
-            .withLatestFrom(currentState)
-            .drive(
-                onNext: { [weak self] currentState in
-                    if currentState.callState == .callReceived {
-                        let newState = IncomingCallStateContainer(
-                            callState: .establishingConnection,
-                            doorState: currentState.doorState,
-                            previewState: currentState.previewState
-                        )
-                        
-                        self?.currentStateSubject.onNext(newState)
-                    }
-                    
-                    self?.doorOpeningRequestedByUser.onNext(true)
                 }
             )
             .disposed(by: disposeBag)
@@ -172,7 +153,7 @@ class IncomingCallViewModel: BaseViewModel {
                 }
                 
                 return self.permissionService.requestAccessToMic()
-                    .trackError(errorTracker)
+                    .trackError(self.errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
             .drive()
@@ -241,7 +222,7 @@ class IncomingCallViewModel: BaseViewModel {
                     } catch {
                         self.providerProxy.endCall(uuid: self.callPayload.uuid)
                         
-                        self.router.trigger(.dismiss)
+                        self.router.trigger(.closeIncomingCall)
                     }
                 }
             )
@@ -285,103 +266,7 @@ class IncomingCallViewModel: BaseViewModel {
                     
                     self.providerProxy.endCall(uuid: self.callPayload.uuid)
                     
-                    self.router.trigger(.dismiss)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        // MARK: Сохраняем вьюхи для показа видео
-        
-        input.videoViewsTrigger
-            .drive(
-                onNext: { [weak self] args in
-                    self?.videoViews.onNext(args)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        // MARK: Обработка нажатия на кнопку "Звонок" во вьюхе приложения либо в CallKit
-        
-        Driver
-            .merge(input.callTrigger, cxProviderAnswerTapTrigger.asDriverOnErrorJustComplete())
-            .withLatestFrom(videoViews.asDriver(onErrorJustReturn: nil))
-            .withLatestFrom(currentState) { ($0, $1) }
-            .drive(
-                onNext: { [weak self] args in
-                    let (views, currentState) = args
-                    
-                    guard let self = self,
-                        currentState.callState == .callReceived,
-                        currentState.doorState == .notDetermined else {
-                        return
-                    }
-                    
-                    let newState = IncomingCallStateContainer(
-                        callState: .establishingConnection,
-                        doorState: currentState.doorState,
-                        previewState: currentState.previewState
-                    )
-                    
-                    self.currentStateSubject.onNext(newState)
-                    
-                    self.incomingCallAcceptedByUser.onNext(true)
-                    
-                    if let uViews = views {
-                        let (videoView, cameraView) = uViews
-                        self.linphoneService.setViews(videoView: videoView, cameraView: cameraView)
-                    }
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        // MARK: Обработка нажатия на кнопку "Игнорировать / Отклонить"
-        // Если мы еще не приняли звонок, то просто закрываем окно (человек у домофона думает, что нас нет дома)
-        // Если мы уже приняли звонок и жмем "Отклонить", то завершаем звонок и закрываем окно
-        // UPD: Сюда же и нажатие на кнопку сброса в нативной вьюхе CallKit
-        
-        Driver
-            .merge(input.ignoreTrigger, cxProviderEndTapTrigger.asDriverOnErrorJustComplete())
-            .withLatestFrom(currentState)
-            .do(
-                onNext: { [weak self] currentState in
-                    guard let self = self,
-                        currentState.callState != .callFinished,
-                        currentState.doorState == .notDetermined else {
-                        return
-                    }
-                    
-                    let newState = IncomingCallStateContainer(
-                        callState: .callFinished,
-                        doorState: .notDetermined,
-                        previewState: .staticImage
-                    )
-                    
-                    self.currentStateSubject.onNext(newState)
-                }
-            )
-            .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
-            .drive(
-                onNext: { [weak self] callInfo in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    guard let currentCall = callInfo?.0,
-                        (currentCall.state == .Connected || currentCall.state == .StreamsRunning) else {
-                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                            
-                        self.router.trigger(.dismiss)
-                        
-                        return
-                    }
-
-                    do {
-                        try currentCall.terminate()
-                    } catch {
-                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                        
-                        self.router.trigger(.dismiss)
-                    }
+                    self.router.trigger(.closeIncomingCall)
                 }
             )
             .disposed(by: disposeBag)
@@ -416,27 +301,6 @@ class IncomingCallViewModel: BaseViewModel {
                     default:
                         self.preferredPreviewModeForActiveCall.onNext(.video)
                     }
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        // MARK: Обработка нажатия на кнопку "Глазок"
-        
-        input.previewTrigger
-            .withLatestFrom(currentState)
-            .drive(
-                onNext: { [weak self] currentState in
-                    guard let self = self, currentState.doorState == .notDetermined else {
-                        return
-                    }
-                    
-                    let newState = IncomingCallStateContainer(
-                        callState: currentState.callState,
-                        doorState: currentState.doorState,
-                        previewState: currentState.previewState == .staticImage ? .video : .staticImage
-                    )
-                    
-                    self.currentStateSubject.onNext(newState)
                 }
             )
             .disposed(by: disposeBag)
@@ -520,8 +384,9 @@ class IncomingCallViewModel: BaseViewModel {
             }
             .distinctUntilChanged()
         
-        let subtitleSubject = BehaviorSubject<String?>(value: callPayload.callerId)
-        let subtitle = subtitleSubject.asDriver(onErrorJustReturn: nil)
+        image
+            .drive(imageSubject)
+            .disposed(by: disposeBag)
         
         // MARK: Событие начала звонка
         
@@ -557,8 +422,8 @@ class IncomingCallViewModel: BaseViewModel {
         
         let counterDisposable = callTimeCounter
             .subscribe(
-                onNext: { text in
-                    subtitleSubject.onNext(text)
+                onNext: { [weak self] text in
+                    self?.subtitleSubject.onNext(text)
                 }
             )
         
@@ -571,10 +436,170 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Обработка нажатия на кнопку "Звонок" во вьюхе приложения либо в CallKit
+        
+        answerCallProxySubject
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard let self = self,
+                        currentState.callState == .callReceived,
+                        currentState.doorState == .notDetermined else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: .establishingConnection,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState
+                    )
+                    
+                    self.currentStateSubject.onNext(newState)
+                    
+                    self.incomingCallAcceptedByUser.onNext(true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Игнорировать / Отклонить"
+        // Если мы еще не приняли звонок, то просто закрываем окно (человек у домофона думает, что нас нет дома)
+        // Если мы уже приняли звонок и жмем "Отклонить", то завершаем звонок и закрываем окно
+        // UPD: Сюда же и нажатие на кнопку сброса в нативной вьюхе CallKit
+        
+        endCallProxySubject
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(currentState)
+            .do(
+                onNext: { [weak self] currentState in
+                    guard let self = self,
+                        currentState.callState != .callFinished,
+                        currentState.doorState == .notDetermined else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: .callFinished,
+                        doorState: .notDetermined,
+                        previewState: .staticImage
+                    )
+                    
+                    self.currentStateSubject.onNext(newState)
+                }
+            )
+            .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
+            .drive(
+                onNext: { [weak self] callInfo in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    guard let currentCall = callInfo?.0,
+                        (currentCall.state == .Connected || currentCall.state == .StreamsRunning) else {
+                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                            
+                        self.router.trigger(.closeIncomingCall)
+                        
+                        return
+                    }
+
+                    do {
+                        try currentCall.terminate()
+                    } catch {
+                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                        
+                        self.router.trigger(.closeIncomingCall)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    // swiftlint:disable:next function_body_length
+    func transform(input: Input) -> Output {
+        // MARK: Общий стейт экрана
+        
+        let currentState = currentStateSubject.asDriverOnErrorJustComplete()
+        
+        // MARK: проксируем нажатие кнопки "Открыть" в локальный сабжект
+        // Заодно обновляем стейт на "Соединение...", если до этого был стейт "Входящий звонок"
+        
+        input.openTrigger
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    if currentState.callState == .callReceived {
+                        let newState = IncomingCallStateContainer(
+                            callState: .establishingConnection,
+                            doorState: currentState.doorState,
+                            previewState: currentState.previewState
+                        )
+                        
+                        self?.currentStateSubject.onNext(newState)
+                    }
+                    
+                    self?.doorOpeningRequestedByUser.onNext(true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Выставляем вьюхи для отображения видео
+        
+        input.videoViewsTrigger
+            .drive(
+                onNext: { [weak self] args in
+                    let (videoView, cameraView) = args
+                    
+                    self?.linphoneService.setViews(videoView: videoView, cameraView: cameraView)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Звонок" во вьюхе приложения
+        
+        input.callTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.answerCallProxySubject.onNext(())
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Игнорировать / Отклонить"
+        
+        input.ignoreTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.endCallProxySubject.onNext(())
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Глазок"
+        
+        input.previewTrigger
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard let self = self, currentState.doorState == .notDetermined else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState == .staticImage ? .video : .staticImage
+                    )
+                    
+                    self.currentStateSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             state: currentState,
-            subtitle: subtitle,
-            image: image,
+            subtitle: subtitleSubject.asDriverOnErrorJustComplete(),
+            image: imageSubject.asDriverOnErrorJustComplete(),
             isDoorBeingOpened: isDoorBeingOpened.asDriver(onErrorJustReturn: false)
         )
     }
@@ -633,7 +658,7 @@ class IncomingCallViewModel: BaseViewModel {
                             
                             self.providerProxy.endCall(uuid: self.callPayload.uuid)
                             
-                            self.router.trigger(.dismiss)
+                            self.router.trigger(.closeIncomingCall)
                         }
                     }
                 }
@@ -685,7 +710,7 @@ extension IncomingCallViewModel: LinphoneDelegate {
             providerProxy.endCall(uuid: callPayload.uuid)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                self?.router.trigger(.dismiss)
+                self?.router.trigger(.closeIncomingCall)
             }
         }
     }
@@ -695,11 +720,11 @@ extension IncomingCallViewModel: LinphoneDelegate {
 extension IncomingCallViewModel: CXProviderProxyDelegate {
     
     func providerDidEndCall(_ provider: CXProvider) {
-        cxProviderEndTapTrigger.onNext(())
+        endCallProxySubject.onNext(())
     }
     
     func providerDidAnswerCall(_ provider: CXProvider) {
-        cxProviderAnswerTapTrigger.onNext(())
+        answerCallProxySubject.onNext(())
     }
     
     func provider(_ provider: CXProvider, didActivateAudioSession audioSession: AVAudioSession) {

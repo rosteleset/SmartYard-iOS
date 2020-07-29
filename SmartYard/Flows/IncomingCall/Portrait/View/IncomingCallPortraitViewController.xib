@@ -16,10 +16,11 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IncomingCallViewController" customModule="SmartYard" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IncomingCallPortraitViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="alreadyOpenedButtonContainer" destination="HE0-qo-dCf" id="q9a-xy-Dmf"/>
                 <outlet property="callButton" destination="CB9-LO-tIG" id="dbF-J2-ZLa"/>
+                <outlet property="fullscreenButton" destination="0rq-fX-JWl" id="Qup-3E-zcb"/>
                 <outlet property="ignoreButton" destination="fcw-Zy-IEg" id="qeU-hG-6MP"/>
                 <outlet property="ignoreButtonContainer" destination="j0j-Hn-fUG" id="wz0-Ro-Mnf"/>
                 <outlet property="ignoreButtonLabel" destination="jj8-ob-kSL" id="mHR-xi-Wwf"/>
@@ -55,7 +56,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="Тамбов, ул. Советская 20, кв. 52" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rh6-Xt-7AB">
-                    <rect key="frame" x="50" y="90.5" width="220" height="20.5"/>
+                    <rect key="frame" x="50.5" y="90.5" width="219.5" height="20.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -100,12 +101,22 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0rq-fX-JWl">
+                            <rect key="frame" x="248" y="124.5" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="FjL-JM-bAU"/>
+                                <constraint firstAttribute="width" constant="20" id="dxy-o8-aJN"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="FullscreenCorner"/>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="4Wg-Q1-NS9" firstAttribute="bottom" secondItem="ws9-YM-GBC" secondAttribute="bottom" id="IpC-Mc-xIA"/>
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="o7y-sM-LFP" secondAttribute="top" id="KMz-Gh-K0p"/>
                         <constraint firstItem="HGl-tO-Nut" firstAttribute="centerX" secondItem="ws9-YM-GBC" secondAttribute="centerX" id="MgF-uY-1ei"/>
+                        <constraint firstItem="ws9-YM-GBC" firstAttribute="trailing" secondItem="0rq-fX-JWl" secondAttribute="trailing" constant="20" id="PKs-HN-Ssx"/>
                         <constraint firstItem="HGl-tO-Nut" firstAttribute="centerY" secondItem="ws9-YM-GBC" secondAttribute="centerY" id="Qrd-vU-6uW"/>
                         <constraint firstItem="4Wg-Q1-NS9" firstAttribute="leading" secondItem="ws9-YM-GBC" secondAttribute="leading" id="Sj2-ws-Di1"/>
                         <constraint firstItem="4Wg-Q1-NS9" firstAttribute="trailing" secondItem="ws9-YM-GBC" secondAttribute="trailing" id="XBf-AM-rU0"/>
@@ -116,6 +127,7 @@
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="centerY" secondItem="o7y-sM-LFP" secondAttribute="centerY" id="dY5-x5-eAd"/>
                         <constraint firstItem="qZy-mX-wC7" firstAttribute="centerX" secondItem="ws9-YM-GBC" secondAttribute="centerX" id="n6N-hY-uUy"/>
                         <constraint firstItem="4Wg-Q1-NS9" firstAttribute="top" secondItem="ws9-YM-GBC" secondAttribute="top" id="qpA-lh-qs2"/>
+                        <constraint firstItem="ws9-YM-GBC" firstAttribute="bottom" secondItem="0rq-fX-JWl" secondAttribute="bottom" constant="20" id="rWe-t1-ysY"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kK5-Z2-k0l" userLabel="Button Container">
@@ -192,7 +204,7 @@
                                     <state key="normal" image="LockIcon"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Игнорировать" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jj8-ob-kSL">
-                                    <rect key="frame" x="-27" y="56" width="102" height="20"/>
+                                    <rect key="frame" x="-26.5" y="56" width="101.5" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="EKs-lu-zuC"/>
                                     </constraints>
@@ -222,7 +234,7 @@
                                     <state key="normal" image="UnlockIcon"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Открыто" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qoh-Fa-xYP">
-                                    <rect key="frame" x="-7" y="56" width="62" height="20"/>
+                                    <rect key="frame" x="-6.5" y="56" width="61.5" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="Mh7-Cl-ZXA"/>
                                     </constraints>
@@ -326,6 +338,7 @@
     </objects>
     <resources>
         <image name="CallUnselectedIcon" width="76" height="76"/>
+        <image name="FullscreenCorner" width="20" height="20"/>
         <image name="LockIcon" width="76" height="76"/>
         <image name="MainBackground" width="375" height="812"/>
         <image name="PreviewUnselectedIcon" width="76" height="76"/>

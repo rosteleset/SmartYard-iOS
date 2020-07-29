@@ -9,10 +9,9 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import JGProgressHUD
-import AVKit
+import TouchAreaInsets
 
-class IncomingCallViewController: BaseViewController, LoaderPresentable {
+class IncomingCallPortraitViewController: BaseViewController {
     
     @IBOutlet private weak var previewButton: UIButton!
     @IBOutlet private weak var callButton: UIButton!
@@ -34,9 +33,9 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
     
-    private let viewModel: IncomingCallViewModel
+    @IBOutlet private weak var fullscreenButton: UIButton!
     
-    var loader: JGProgressHUD?
+    private let viewModel: IncomingCallViewModel
     
     init(viewModel: IncomingCallViewModel) {
         self.viewModel = viewModel
@@ -52,17 +51,6 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
         super.viewDidLoad()
         configureButtons()
         bind()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        // MARK: После ухода с экрана, меняем категорию AVAudioSession с разговора на просмотр видео
-        // Не знаю, нужно ли, но по идее если мы зайдем на экран видео, а потом нам придет звонок - пропадет звук видео
-        // Из-за того, что тип сессии поменялся с просмотра видео на разговор
-        // Потом чекнем, нужно или нет
-        
-        try? AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
     override func viewDidLayoutSubviews() {
@@ -92,9 +80,10 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
             .withRoundedCorners(radius: 50)
         
         openButton.setImage(imageForDisabled, for: .disabled)
+        
+        fullscreenButton.touchAreaInsets = UIEdgeInsets(inset: 20)
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
         let callTrigger = callButton.rx.tap
             .do(
@@ -103,10 +92,19 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
                 }
             )
         
+        let actualVideoViews: Driver<(UIView, UIView)> = rx.viewWillAppear.asDriver()
+            .flatMap { [weak self] _ in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return .just((self.videoPreview, UIView()))
+            }
+        
         let input = IncomingCallViewModel.Input(
             previewTrigger: previewButton.rx.tap.asDriver(),
             callTrigger: callTrigger.asDriverOnErrorJustComplete(),
-            videoViewsTrigger: .just((videoPreview, UIView())),
+            videoViewsTrigger: .merge(actualVideoViews, .just((videoPreview, UIView()))),
             ignoreTrigger: ignoreButton.rx.tap.asDriver(),
             openTrigger: openButton.rx.tap.asDriver()
         )
@@ -129,9 +127,10 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.state
+            .withLatestFrom(output.image) { ($0, $1) }
             .drive(
-                onNext: { [weak self] state in
-                    self?.applyState(state)
+                onNext: { [weak self] state, image in
+                    self?.applyState(state, hasImage: image != nil)
                 }
             )
             .disposed(by: disposeBag)
@@ -144,9 +143,17 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+        
+        fullscreenButton.rx.tap
+            .subscribe(
+                onNext: {
+                    NotificationCenter.default.post(name: .incomingCallForceLandscape, object: nil)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
-    private func applyState(_ state: IncomingCallStateContainer) {
+    private func applyState(_ state: IncomingCallStateContainer, hasImage: Bool) {
         view.isUserInteractionEnabled = state.callState != .callFinished
         
         previewButton.isSelected = state.previewState == .video && state.doorState == .notDetermined
@@ -159,7 +166,7 @@ class IncomingCallViewController: BaseViewController, LoaderPresentable {
         videoPreview.isHidden = !shouldShowVideo
         
         imageView.isHidden = shouldShowVideo
-        imageViewActivityIndicator.isHidden = shouldShowVideo
+        imageViewActivityIndicator.isHidden = shouldShowVideo || hasImage
         
         alreadyOpenedButtonContainer.isHidden = state.doorState != .opened
         openButtonContainer.isHidden = state.doorState == .opened
