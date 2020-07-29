@@ -53,6 +53,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private var incomingCallLandscapeVC: IncomingCallLandscapeViewController?
     private var incomingCallPortraitVC: IncomingCallPortraitViewController?
     
+    private var temporarilyIgnoredOrientation: UIDeviceOrientation?
+    
     var selectedTabPresentable: Presentable? {
         return mainTabBarCoordinator?.selectedPresentable
     }
@@ -277,11 +279,14 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             .drive(
                 onNext: { [weak self] _ in
                     guard let self = self,
+                        UIDevice.current.orientation != self.temporarilyIgnoredOrientation,
                         let incomingCallWindow = self.incomingCallWindow,
                         let landscapeVC = self.incomingCallLandscapeVC,
                         let portraitVC = self.incomingCallPortraitVC else {
                         return
                     }
+                    
+                    self.temporarilyIgnoredOrientation = nil
                     
                     if UIDevice.current.orientation == .portrait,
                         incomingCallWindow.rootViewController === landscapeVC {
@@ -299,7 +304,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             .disposed(by: disposeBag)
         
         NotificationCenter.default.rx
-            .notification(.incomingCallFullscreenRequested)
+            .notification(.incomingCallForceLandscape)
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] _ in
@@ -309,13 +314,15 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                         return
                     }
                     
+                    self.temporarilyIgnoredOrientation = UIDevice.current.orientation
+                    
                     incomingCallWindow.switchRootViewController(to: landscapeVC, animated: false)
                 }
             )
             .disposed(by: disposeBag)
 
         NotificationCenter.default.rx
-            .notification(.incomingCallPortraitRequested)
+            .notification(.incomingCallForcePortrait)
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] _ in
@@ -324,6 +331,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                         let portraitVC = self.incomingCallPortraitVC else {
                         return
                     }
+                    
+                    self.temporarilyIgnoredOrientation = UIDevice.current.orientation
                     
                     incomingCallWindow.switchRootViewController(to: portraitVC, animated: false)
                 }

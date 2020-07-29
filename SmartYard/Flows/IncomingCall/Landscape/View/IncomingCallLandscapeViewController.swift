@@ -147,7 +147,7 @@ class IncomingCallLandscapeViewController: BaseViewController {
         exitFullscreenButton.rx.tap
             .subscribe(
                 onNext: {
-                    NotificationCenter.default.post(name: .incomingCallPortraitRequested, object: nil)
+                    NotificationCenter.default.post(name: .incomingCallForcePortrait, object: nil)
                 }
             )
             .disposed(by: disposeBag)
