@@ -127,9 +127,10 @@ class IncomingCallPortraitViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.state
+            .withLatestFrom(output.image) { ($0, $1) }
             .drive(
-                onNext: { [weak self] state in
-                    self?.applyState(state)
+                onNext: { [weak self] state, image in
+                    self?.applyState(state, hasImage: image != nil)
                 }
             )
             .disposed(by: disposeBag)
@@ -152,7 +153,7 @@ class IncomingCallPortraitViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func applyState(_ state: IncomingCallStateContainer) {
+    private func applyState(_ state: IncomingCallStateContainer, hasImage: Bool) {
         view.isUserInteractionEnabled = state.callState != .callFinished
         
         previewButton.isSelected = state.previewState == .video && state.doorState == .notDetermined
@@ -165,7 +166,7 @@ class IncomingCallPortraitViewController: BaseViewController {
         videoPreview.isHidden = !shouldShowVideo
         
         imageView.isHidden = shouldShowVideo
-        imageViewActivityIndicator.isHidden = shouldShowVideo
+        imageViewActivityIndicator.isHidden = shouldShowVideo || hasImage
         
         alreadyOpenedButtonContainer.isHidden = state.doorState != .opened
         openButtonContainer.isHidden = state.doorState == .opened

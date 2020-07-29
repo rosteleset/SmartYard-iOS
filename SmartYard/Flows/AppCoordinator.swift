@@ -11,6 +11,7 @@ import XCoordinator
 import RxSwift
 import RxCocoa
 import SwifterSwift
+import AVKit
 
 enum AppRoute: Route {
     
@@ -182,6 +183,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             DispatchQueue.main.async { [weak self] in
                 self?.mainWindow.makeKeyAndVisible()
             }
+            
+            try? AVAudioSession.sharedInstance().setCategory(.playback)
             
             return .none()
         }
