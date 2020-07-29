@@ -59,6 +59,20 @@ class IncomingCallLandscapeViewController: BaseViewController {
         UIViewController.attemptRotationToDeviceOrientation()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        let videoWidth: CGFloat = 1280
+        let videoHeight: CGFloat = 720
+
+        let widthScale = UIScreen.main.bounds.width / videoWidth + 0.001
+        let heightScale = UIScreen.main.bounds.height / videoHeight + 0.001
+
+        let maxScaleForAspectFill = max(widthScale, heightScale)
+
+        videoPreview.transform = CGAffineTransform(scaleX: maxScaleForAspectFill, y: maxScaleForAspectFill)
+    }
+    
     private func configureGradient() {
         let linearGradientView = LinearGradientView(frame: gradientContainer.bounds)
         linearGradientView.startPoint = CGPoint(x: 0.0, y: 0.0)

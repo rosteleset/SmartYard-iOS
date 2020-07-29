@@ -48,8 +48,6 @@ class IncomingCallViewModel: BaseViewModel {
     private let answerCallProxySubject = PublishSubject<Void>()
     private let endCallProxySubject = PublishSubject<Void>()
     
-    private let videoViews = BehaviorSubject<(UIView, UIView)?>(value: nil)
-    
     init(
         providerProxy: CXProviderProxy,
         linphoneService: LinphoneService,
@@ -442,12 +440,9 @@ class IncomingCallViewModel: BaseViewModel {
         
         answerCallProxySubject
             .asDriverOnErrorJustComplete()
-            .withLatestFrom(videoViews.asDriver(onErrorJustReturn: nil))
-            .withLatestFrom(currentState) { ($0, $1) }
+            .withLatestFrom(currentState)
             .drive(
-                onNext: { [weak self] args in
-                    let (views, currentState) = args
-                    
+                onNext: { [weak self] currentState in
                     guard let self = self,
                         currentState.callState == .callReceived,
                         currentState.doorState == .notDetermined else {
@@ -463,11 +458,6 @@ class IncomingCallViewModel: BaseViewModel {
                     self.currentStateSubject.onNext(newState)
                     
                     self.incomingCallAcceptedByUser.onNext(true)
-                    
-                    if let uViews = views {
-                        let (videoView, cameraView) = uViews
-                        self.linphoneService.setViews(videoView: videoView, cameraView: cameraView)
-                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -553,12 +543,14 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        // MARK: Сохраняем вьюхи для показа видео
+        // MARK: Выставляем вьюхи для отображения видео
         
         input.videoViewsTrigger
             .drive(
                 onNext: { [weak self] args in
-                    self?.videoViews.onNext(args)
+                    let (videoView, cameraView) = args
+                    
+                    self?.linphoneService.setViews(videoView: videoView, cameraView: cameraView)
                 }
             )
             .disposed(by: disposeBag)
