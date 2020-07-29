@@ -179,7 +179,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             incomingCallPortraitVC = nil
             incomingCallLandscapeVC = nil
             
-            mainWindow.makeKeyAndVisible()
+            DispatchQueue.main.async { [weak self] in
+                self?.mainWindow.makeKeyAndVisible()
+            }
             
             return .none()
         }
