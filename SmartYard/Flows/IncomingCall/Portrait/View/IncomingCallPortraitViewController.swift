@@ -9,8 +9,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import JGProgressHUD
-import AVKit
 import TouchAreaInsets
 
 class IncomingCallPortraitViewController: BaseViewController {
@@ -55,17 +53,6 @@ class IncomingCallPortraitViewController: BaseViewController {
         bind()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        // MARK: После ухода с экрана, меняем категорию AVAudioSession с разговора на просмотр видео
-        // Не знаю, нужно ли, но по идее если мы зайдем на экран видео, а потом нам придет звонок - пропадет звук видео
-        // Из-за того, что тип сессии поменялся с просмотра видео на разговор
-        // Потом чекнем, нужно или нет
-        
-        try? AVAudioSession.sharedInstance().setCategory(.playback)
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -105,10 +92,19 @@ class IncomingCallPortraitViewController: BaseViewController {
                 }
             )
         
+        let actualVideoViews: Driver<(UIView, UIView)> = rx.viewWillAppear.asDriver()
+            .flatMap { [weak self] _ in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return .just((self.videoPreview, UIView()))
+            }
+        
         let input = IncomingCallViewModel.Input(
             previewTrigger: previewButton.rx.tap.asDriver(),
             callTrigger: callTrigger.asDriverOnErrorJustComplete(),
-            videoViewsTrigger: .just((videoPreview, UIView())),
+            videoViewsTrigger: .merge(actualVideoViews, .just((videoPreview, UIView()))),
             ignoreTrigger: ignoreButton.rx.tap.asDriver(),
             openTrigger: openButton.rx.tap.asDriver()
         )

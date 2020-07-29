@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import TouchAreaInsets
 
 class IncomingCallLandscapeViewController: BaseViewController {
@@ -101,11 +103,20 @@ class IncomingCallLandscapeViewController: BaseViewController {
                     self?.imageViewActivityIndicator.stopAnimating()
                 }
             )
+        
+        let actualVideoViews: Driver<(UIView, UIView)> = rx.viewWillAppear.asDriver()
+            .flatMap { [weak self] _ in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return .just((self.videoPreview, UIView()))
+            }
 
         let input = IncomingCallViewModel.Input(
             previewTrigger: previewButton.rx.tap.asDriver(),
             callTrigger: callTrigger.asDriverOnErrorJustComplete(),
-            videoViewsTrigger: .just((videoPreview, UIView())),
+            videoViewsTrigger: .merge(actualVideoViews, .just((videoPreview, UIView()))),
             ignoreTrigger: ignoreButton.rx.tap.asDriver(),
             openTrigger: openButton.rx.tap.asDriver()
         )
