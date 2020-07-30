@@ -672,8 +672,6 @@ class IncomingCallViewModel: BaseViewModel {
     }
     
     private func setSpeakerEnabled(_ enabled: Bool) {
-        
-        
         do {
             try AVAudioSession.sharedInstance().overrideOutputAudioPort(enabled ? .speaker : .none)
         } catch {
