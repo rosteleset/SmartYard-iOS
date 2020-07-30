@@ -114,7 +114,8 @@ class IncomingCallPortraitViewController: BaseViewController {
             callTrigger: callTrigger.asDriverOnErrorJustComplete(),
             videoViewsTrigger: .merge(actualVideoViews, .just((videoPreview, UIView()))),
             ignoreTrigger: ignoreButton.rx.tap.asDriver(),
-            openTrigger: openButton.rx.tap.asDriver()
+            openTrigger: openButton.rx.tap.asDriver(),
+            speakerTrigger: speakerButton.rx.tap.asDriver()
         )
         
         let output = viewModel.transform(input: input)

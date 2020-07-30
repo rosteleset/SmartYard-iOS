@@ -208,14 +208,11 @@ class IncomingCallViewModel: BaseViewModel {
                             hasVideo: true
                         )
                         
-                        if !call.speakerMuted {
-                            self.enableLoudSpeaker()
-                        }
-                        
                         let newState = IncomingCallStateContainer(
                             callState: .callActive,
                             doorState: currentState.doorState,
-                            previewState: previewMode
+                            previewState: previewMode,
+                            soundOutputState: call.speakerMuted ? .disabled : .speaker
                         )
                         
                         self.currentStateSubject.onNext(newState)
@@ -248,7 +245,8 @@ class IncomingCallViewModel: BaseViewModel {
                     let newState = IncomingCallStateContainer(
                         callState: .callFinished,
                         doorState: currentState.doorState,
-                        previewState: .staticImage
+                        previewState: .staticImage,
+                        soundOutputState: .disabled
                     )
                     
                     self.currentStateSubject.onNext(newState)
@@ -291,7 +289,8 @@ class IncomingCallViewModel: BaseViewModel {
                         let newState = IncomingCallStateContainer(
                             callState: currentState.callState,
                             doorState: currentState.doorState,
-                            previewState: .video
+                            previewState: .video,
+                            soundOutputState: currentState.soundOutputState
                         )
                         
                         self.currentStateSubject.onNext(newState)
@@ -452,7 +451,8 @@ class IncomingCallViewModel: BaseViewModel {
                     let newState = IncomingCallStateContainer(
                         callState: .establishingConnection,
                         doorState: currentState.doorState,
-                        previewState: currentState.previewState
+                        previewState: currentState.previewState,
+                        soundOutputState: currentState.soundOutputState
                     )
                     
                     self.currentStateSubject.onNext(newState)
@@ -481,7 +481,8 @@ class IncomingCallViewModel: BaseViewModel {
                     let newState = IncomingCallStateContainer(
                         callState: .callFinished,
                         doorState: .notDetermined,
-                        previewState: .staticImage
+                        previewState: .staticImage,
+                        soundOutputState: .disabled
                     )
                     
                     self.currentStateSubject.onNext(newState)
@@ -513,6 +514,15 @@ class IncomingCallViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        
+        currentState
+            .map { $0.soundOutputState }
+            .drive(
+                onNext: { [weak self] state in
+                    self?.setSpeakerEnabled(state == .speaker)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     // swiftlint:disable:next function_body_length
@@ -532,7 +542,8 @@ class IncomingCallViewModel: BaseViewModel {
                         let newState = IncomingCallStateContainer(
                             callState: .establishingConnection,
                             doorState: currentState.doorState,
-                            previewState: currentState.previewState
+                            previewState: currentState.previewState,
+                            soundOutputState: currentState.soundOutputState
                         )
                         
                         self?.currentStateSubject.onNext(newState)
@@ -588,7 +599,8 @@ class IncomingCallViewModel: BaseViewModel {
                     let newState = IncomingCallStateContainer(
                         callState: currentState.callState,
                         doorState: currentState.doorState,
-                        previewState: currentState.previewState == .staticImage ? .video : .staticImage
+                        previewState: currentState.previewState == .staticImage ? .video : .staticImage,
+                        soundOutputState: currentState.soundOutputState
                     )
                     
                     self.currentStateSubject.onNext(newState)
@@ -643,7 +655,8 @@ class IncomingCallViewModel: BaseViewModel {
                     let newState = IncomingCallStateContainer(
                         callState: .callFinished,
                         doorState: .opened,
-                        previewState: .staticImage
+                        previewState: .staticImage,
+                        soundOutputState: .disabled
                     )
                     
                     self?.currentStateSubject.onNext(newState)
@@ -666,9 +679,9 @@ class IncomingCallViewModel: BaseViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func enableLoudSpeaker() {
+    private func setSpeakerEnabled(_ enabled: Bool) {
         do {
-            try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+            try AVAudioSession.sharedInstance().overrideOutputAudioPort(enabled ? .speaker : .none)
         } catch {
             print("Couldn't switch output port")
         }
@@ -701,7 +714,8 @@ extension IncomingCallViewModel: LinphoneDelegate {
                 let newState = IncomingCallStateContainer(
                     callState: .callFinished,
                     doorState: currentState.doorState,
-                    previewState: .staticImage
+                    previewState: .staticImage,
+                    soundOutputState: .disabled
                 )
                 
                 currentStateSubject.onNext(newState)

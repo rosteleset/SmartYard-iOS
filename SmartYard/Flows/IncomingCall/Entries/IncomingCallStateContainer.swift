@@ -11,9 +11,15 @@ struct IncomingCallStateContainer {
     let callState: IncomingCallState
     let doorState: IncomingCallDoorState
     let previewState: IncomingCallPreviewState
+    let soundOutputState: IncomingCallSoundOutputState
     
     static var initial: IncomingCallStateContainer {
-        return .init(callState: .callReceived, doorState: .notDetermined, previewState: .staticImage)
+        return .init(
+            callState: .callReceived,
+            doorState: .notDetermined,
+            previewState: .staticImage,
+            soundOutputState: .regular
+        )
     }
     
 }
