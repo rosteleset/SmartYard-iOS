@@ -90,18 +90,18 @@ class IncomingCallLandscapeViewController: BaseViewController {
     }
     
     private func configureButtons() {
-        previewButton.setImage(UIImage(named: "PreviewUnselectedIcon"), for: .normal)
-        previewButton.setImage(UIImage(named: "PreviewUnselectedIcon")?.darkened(), for: [.normal, .highlighted])
+        previewButton.setImage(UIImage(named: "PreviewUnselectedIconL"), for: .normal)
+        previewButton.setImage(UIImage(named: "PreviewUnselectedIconL")?.darkened(), for: [.normal, .highlighted])
         previewButton.setImage(UIImage(named: "PreviewSelectedIcon"), for: .selected)
         previewButton.setImage(UIImage(named: "PreviewSelectedIcon")?.darkened(), for: [.selected, .highlighted])
         
-        callButton.setImage(UIImage(named: "CallUnselectedIcon"), for: .normal)
-        callButton.setImage(UIImage(named: "CallUnselectedIcon")?.darkened(), for: [.normal, .highlighted])
+        callButton.setImage(UIImage(named: "CallUnselectedIconL"), for: .normal)
+        callButton.setImage(UIImage(named: "CallUnselectedIconL")?.darkened(), for: [.normal, .highlighted])
         callButton.setImage(UIImage(named: "CallSelectedIcon"), for: .selected)
         callButton.setImage(UIImage(named: "CallSelectedIcon")?.darkened(), for: [.selected, .highlighted])
         
-        speakerButton.setImage(UIImage(named: "SpeakerUnselectedIcon"), for: .normal)
-        speakerButton.setImage(UIImage(named: "SpeakerUnselectedIcon")?.darkened(), for: [.normal, .highlighted])
+        speakerButton.setImage(UIImage(named: "SpeakerUnselectedIconL"), for: .normal)
+        speakerButton.setImage(UIImage(named: "SpeakerUnselectedIconL")?.darkened(), for: [.normal, .highlighted])
         speakerButton.setImage(UIImage(named: "SpeakerSelectedIcon"), for: .selected)
         speakerButton.setImage(UIImage(named: "SpeakerSelectedIcon")?.darkened(), for: [.selected, .highlighted])
         
