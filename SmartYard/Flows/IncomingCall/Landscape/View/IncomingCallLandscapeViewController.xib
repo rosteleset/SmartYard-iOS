@@ -27,6 +27,7 @@
                 <outlet property="imageViewActivityIndicator" destination="6e5-xr-23n" id="E1e-6G-hjX"/>
                 <outlet property="openButton" destination="Z5B-sy-vf8" id="o22-Kt-6YP"/>
                 <outlet property="previewButton" destination="R3Y-6F-XSG" id="vZf-1j-ogl"/>
+                <outlet property="speakerButton" destination="Vew-EI-wre" id="T2D-af-O7g"/>
                 <outlet property="subtitleLabel" destination="7UD-nI-WPM" id="12r-Lj-z2U"/>
                 <outlet property="titleLabel" destination="oXh-dz-cZ2" id="7gd-pY-njf"/>
                 <outlet property="videoPreview" destination="5QR-r3-utk" id="ZPq-1p-MbS"/>
@@ -79,7 +80,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OXk-Ct-iC8" userLabel="Buttons Container">
                     <rect key="frame" x="72" y="216" width="424" height="76"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3Y-6F-XSG">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3Y-6F-XSG" userLabel="Preview">
                             <rect key="frame" x="0.0" y="0.0" width="76" height="76"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="76" id="34K-gD-6Rs"/>
@@ -87,7 +88,7 @@
                             </constraints>
                             <state key="normal" image="PreviewUnselectedIcon"/>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tRW-3Q-kU7">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tRW-3Q-kU7" userLabel="Ignore">
                             <rect key="frame" x="116" y="0.0" width="76" height="76"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="76" id="kfi-78-4AF"/>
@@ -95,7 +96,7 @@
                             </constraints>
                             <state key="normal" image="LockIcon"/>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z5B-sy-vf8" customClass="LoadingButton" customModule="SmartYard" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z5B-sy-vf8" userLabel="Open" customClass="LoadingButton" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="232" y="0.0" width="76" height="76"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="76" id="Ajn-Py-ChU"/>
@@ -103,7 +104,7 @@
                             </constraints>
                             <state key="normal" image="UnlockIcon"/>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fvR-Zf-0MY">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fvR-Zf-0MY" userLabel="Answer">
                             <rect key="frame" x="348" y="0.0" width="76" height="76"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="76" id="PsI-lF-RP8"/>
@@ -111,7 +112,15 @@
                             </constraints>
                             <state key="normal" image="CallUnselectedIcon"/>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sP2-0w-vBO">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vew-EI-wre" userLabel="Speaker">
+                            <rect key="frame" x="348" y="0.0" width="76" height="76"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="76" id="DRa-fl-bSb"/>
+                                <constraint firstAttribute="width" constant="76" id="Tiz-rl-GR6"/>
+                            </constraints>
+                            <state key="normal" image="CallUnselectedIcon"/>
+                        </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sP2-0w-vBO" userLabel="AlreadyOpen">
                             <rect key="frame" x="174" y="0.0" width="76" height="76"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="76" id="DE3-Yd-PCW"/>
@@ -125,6 +134,7 @@
                         <constraint firstItem="Z5B-sy-vf8" firstAttribute="leading" secondItem="tRW-3Q-kU7" secondAttribute="trailing" constant="40" id="3Ca-ji-TVX"/>
                         <constraint firstAttribute="bottom" secondItem="R3Y-6F-XSG" secondAttribute="bottom" id="7GE-jd-vhZ"/>
                         <constraint firstItem="fvR-Zf-0MY" firstAttribute="top" secondItem="OXk-Ct-iC8" secondAttribute="top" id="Cc1-St-huA"/>
+                        <constraint firstAttribute="bottom" secondItem="Vew-EI-wre" secondAttribute="bottom" id="EEv-uX-A6q"/>
                         <constraint firstItem="sP2-0w-vBO" firstAttribute="centerX" secondItem="OXk-Ct-iC8" secondAttribute="centerX" id="JAm-Zs-QaL"/>
                         <constraint firstItem="R3Y-6F-XSG" firstAttribute="top" secondItem="OXk-Ct-iC8" secondAttribute="top" id="OAo-jt-Hgb"/>
                         <constraint firstAttribute="bottom" secondItem="sP2-0w-vBO" secondAttribute="bottom" id="Vf3-1c-qoT"/>
@@ -132,9 +142,11 @@
                         <constraint firstAttribute="bottom" secondItem="Z5B-sy-vf8" secondAttribute="bottom" id="cHK-1i-wA6"/>
                         <constraint firstItem="R3Y-6F-XSG" firstAttribute="leading" secondItem="OXk-Ct-iC8" secondAttribute="leading" id="fMF-ex-V7N"/>
                         <constraint firstItem="fvR-Zf-0MY" firstAttribute="leading" secondItem="Z5B-sy-vf8" secondAttribute="trailing" constant="40" id="iAz-ob-VDM"/>
+                        <constraint firstAttribute="trailing" secondItem="Vew-EI-wre" secondAttribute="trailing" id="iy9-T6-LIB"/>
                         <constraint firstAttribute="bottom" secondItem="fvR-Zf-0MY" secondAttribute="bottom" id="jfS-IN-M8s"/>
                         <constraint firstAttribute="trailing" secondItem="fvR-Zf-0MY" secondAttribute="trailing" id="k3t-Xt-WeJ"/>
                         <constraint firstItem="Z5B-sy-vf8" firstAttribute="top" secondItem="OXk-Ct-iC8" secondAttribute="top" id="osR-He-2B2"/>
+                        <constraint firstItem="Vew-EI-wre" firstAttribute="top" secondItem="OXk-Ct-iC8" secondAttribute="top" id="oyY-FZ-2PW"/>
                         <constraint firstItem="sP2-0w-vBO" firstAttribute="top" secondItem="OXk-Ct-iC8" secondAttribute="top" id="sYK-za-0df"/>
                         <constraint firstItem="tRW-3Q-kU7" firstAttribute="leading" secondItem="R3Y-6F-XSG" secondAttribute="trailing" constant="40" id="ykq-o5-zTp"/>
                         <constraint firstItem="tRW-3Q-kU7" firstAttribute="top" secondItem="OXk-Ct-iC8" secondAttribute="top" id="yrx-xY-TuU"/>

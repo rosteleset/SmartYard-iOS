@@ -17,10 +17,13 @@ class IncomingCallPortraitViewController: BaseViewController {
     @IBOutlet private weak var callButton: UIButton!
     @IBOutlet private weak var ignoreButton: UIButton!
     @IBOutlet private weak var openButton: LoadingButton!
+    @IBOutlet private weak var speakerButton: UIButton!
     
     @IBOutlet private weak var alreadyOpenedButtonContainer: UIView!
     @IBOutlet private weak var openButtonContainer: UIView!
     @IBOutlet private weak var ignoreButtonContainer: UIView!
+    @IBOutlet private weak var speakerButtonContainer: UIView!
+    @IBOutlet private weak var callButtonContainer: UIView!
     
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
@@ -73,6 +76,11 @@ class IncomingCallPortraitViewController: BaseViewController {
         callButton.setImage(UIImage(named: "CallUnselectedIcon")?.darkened(), for: [.normal, .highlighted])
         callButton.setImage(UIImage(named: "CallSelectedIcon"), for: .selected)
         callButton.setImage(UIImage(named: "CallSelectedIcon")?.darkened(), for: [.selected, .highlighted])
+        
+        speakerButton.setImage(UIImage(named: "SpeakerUnselectedIcon"), for: .normal)
+        speakerButton.setImage(UIImage(named: "SpeakerUnselectedIcon")?.darkened(), for: [.normal, .highlighted])
+        speakerButton.setImage(UIImage(named: "SpeakerSelectedIcon"), for: .selected)
+        speakerButton.setImage(UIImage(named: "SpeakerSelectedIcon")?.darkened(), for: [.selected, .highlighted])
         
         openButton.setImage(UIImage(named: "UnlockIcon"), for: .normal)
         
@@ -167,6 +175,9 @@ class IncomingCallPortraitViewController: BaseViewController {
         
         imageView.isHidden = shouldShowVideo
         imageViewActivityIndicator.isHidden = shouldShowVideo || hasImage
+        
+        callButtonContainer.isHidden = [.callActive, .callFinished].contains(state.callState)
+        speakerButtonContainer.isHidden = [.callReceived, .establishingConnection].contains(state.callState)
         
         alreadyOpenedButtonContainer.isHidden = state.doorState != .opened
         openButtonContainer.isHidden = state.doorState == .opened
