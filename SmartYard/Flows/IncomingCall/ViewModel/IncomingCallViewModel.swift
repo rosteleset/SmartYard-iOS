@@ -81,6 +81,11 @@ class IncomingCallViewModel: BaseViewModel {
     }
     
     deinit {
+        UIDevice.current.isProximityMonitoringEnabled = false
+        
+        try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
+        
         linphoneService.stop()
         linphoneService.hasEnqueuedCalls = false
     }
@@ -208,11 +213,21 @@ class IncomingCallViewModel: BaseViewModel {
                             hasVideo: true
                         )
                         
+                        UIDevice.current.isProximityMonitoringEnabled = true
+                        
+                        let soundOutputState: IncomingCallSoundOutputState = {
+                            if call.speakerMuted {
+                                return .disabled
+                            }
+                            
+                            return UIDevice.current.proximityState ? .regular : .speaker
+                        }()
+                        
                         let newState = IncomingCallStateContainer(
                             callState: .callActive,
                             doorState: currentState.doorState,
                             previewState: previewMode,
-                            soundOutputState: call.speakerMuted ? .disabled : .speaker
+                            soundOutputState: soundOutputState
                         )
                         
                         self.currentStateSubject.onNext(newState)
@@ -555,6 +570,33 @@ class IncomingCallViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        
+        // MARK: При поднесении девайса к уху надо выключать громкоговоритель
+        
+        NotificationCenter.default.rx
+            .notification(UIDevice.proximityStateDidChangeNotification)
+            .asDriverOnErrorJustComplete()
+            .map { _ in UIDevice.current.proximityState }
+            .isTrue()
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard currentState.doorState == .notDetermined,
+                        currentState.soundOutputState != .disabled else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: .regular
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     // swiftlint:disable:next function_body_length
@@ -664,6 +706,7 @@ class IncomingCallViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         // MARK: При переходе в альбомный режим автоматически включается громкоговоритель
+        // Если пользователь держит девайс близко к уху - НЕ включаем громкоговоритель
         
         input.viewWillAppear
             .filter { $0 == .landscape }
@@ -671,7 +714,8 @@ class IncomingCallViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] currentState in
                     guard currentState.doorState == .notDetermined,
-                        currentState.soundOutputState != .disabled else {
+                        currentState.soundOutputState != .disabled,
+                        !UIDevice.current.proximityState else {
                         return
                     }
                     
