@@ -663,6 +663,30 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: При переходе в альбомный режим автоматически включается громкоговоритель
+        
+        input.viewWillAppear
+            .filter { $0 == .landscape }
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard currentState.doorState == .notDetermined,
+                        currentState.soundOutputState != .disabled else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: .speaker
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             state: currentState,
             subtitle: subtitleSubject.asDriverOnErrorJustComplete(),
