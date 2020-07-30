@@ -608,12 +608,39 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Обработка нажатия на кнопку "Динамик"
+        
+        input.speakerTrigger
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    self?.speakerButtonTapped(currentState: currentState)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             state: currentState,
             subtitle: subtitleSubject.asDriverOnErrorJustComplete(),
             image: imageSubject.asDriverOnErrorJustComplete(),
             isDoorBeingOpened: isDoorBeingOpened.asDriver(onErrorJustReturn: false)
         )
+    }
+    
+    private func speakerButtonTapped(currentState: IncomingCallStateContainer) {
+        guard currentState.doorState == .notDetermined,
+            currentState.soundOutputState != .disabled else {
+            return
+        }
+        
+        let newState = IncomingCallStateContainer(
+            callState: currentState.callState,
+            doorState: currentState.doorState,
+            previewState: currentState.previewState,
+            soundOutputState: currentState.soundOutputState == .regular ? .speaker : .regular
+        )
+        
+        currentStateSubject.onNext(newState)
     }
     
     private func openTheDoor(call: Call) {

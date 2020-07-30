@@ -191,6 +191,7 @@ class IncomingCallLandscapeViewController: BaseViewController {
         previewButton.isSelected = state.previewState == .video && state.doorState == .notDetermined
         callButton.isSelected = (state.callState == .establishingConnection || state.callState == .callActive)
             && state.doorState == .notDetermined
+        speakerButton.isSelected = state.soundOutputState == .speaker
         
         let shouldShowVideo = state.callState == .callActive && state.previewState == .video
         
