@@ -18,6 +18,7 @@ class IncomingCallLandscapeViewController: BaseViewController {
     @IBOutlet private weak var ignoreButton: UIButton!
     @IBOutlet private weak var openButton: LoadingButton!
     @IBOutlet private weak var alreadyOpenedButton: UIButton!
+    @IBOutlet private weak var speakerButton: UIButton!
     
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
@@ -89,15 +90,20 @@ class IncomingCallLandscapeViewController: BaseViewController {
     }
     
     private func configureButtons() {
-        previewButton.setImage(UIImage(named: "PreviewUnselectedIcon"), for: .normal)
-        previewButton.setImage(UIImage(named: "PreviewUnselectedIcon")?.darkened(), for: [.normal, .highlighted])
+        previewButton.setImage(UIImage(named: "PreviewUnselectedIconL"), for: .normal)
+        previewButton.setImage(UIImage(named: "PreviewUnselectedIconL")?.darkened(), for: [.normal, .highlighted])
         previewButton.setImage(UIImage(named: "PreviewSelectedIcon"), for: .selected)
         previewButton.setImage(UIImage(named: "PreviewSelectedIcon")?.darkened(), for: [.selected, .highlighted])
         
-        callButton.setImage(UIImage(named: "CallUnselectedIcon"), for: .normal)
-        callButton.setImage(UIImage(named: "CallUnselectedIcon")?.darkened(), for: [.normal, .highlighted])
+        callButton.setImage(UIImage(named: "CallUnselectedIconL"), for: .normal)
+        callButton.setImage(UIImage(named: "CallUnselectedIconL")?.darkened(), for: [.normal, .highlighted])
         callButton.setImage(UIImage(named: "CallSelectedIcon"), for: .selected)
         callButton.setImage(UIImage(named: "CallSelectedIcon")?.darkened(), for: [.selected, .highlighted])
+        
+        speakerButton.setImage(UIImage(named: "SpeakerUnselectedIconL"), for: .normal)
+        speakerButton.setImage(UIImage(named: "SpeakerUnselectedIconL")?.darkened(), for: [.normal, .highlighted])
+        speakerButton.setImage(UIImage(named: "SpeakerSelectedIcon"), for: .selected)
+        speakerButton.setImage(UIImage(named: "SpeakerSelectedIcon")?.darkened(), for: [.selected, .highlighted])
         
         openButton.setImage(UIImage(named: "UnlockIcon"), for: .normal)
         
@@ -131,7 +137,9 @@ class IncomingCallLandscapeViewController: BaseViewController {
             callTrigger: callTrigger.asDriverOnErrorJustComplete(),
             videoViewsTrigger: .merge(actualVideoViews, .just((videoPreview, UIView()))),
             ignoreTrigger: ignoreButton.rx.tap.asDriver(),
-            openTrigger: openButton.rx.tap.asDriver()
+            openTrigger: openButton.rx.tap.asDriver(),
+            speakerTrigger: speakerButton.rx.tap.asDriver(),
+            viewWillAppear: rx.viewWillAppear.asDriver().map { _ in .landscape }
         )
 
         let output = viewModel.transform(input: input)
@@ -184,6 +192,7 @@ class IncomingCallLandscapeViewController: BaseViewController {
         previewButton.isSelected = state.previewState == .video && state.doorState == .notDetermined
         callButton.isSelected = (state.callState == .establishingConnection || state.callState == .callActive)
             && state.doorState == .notDetermined
+        speakerButton.isSelected = state.soundOutputState == .speaker
         
         let shouldShowVideo = state.callState == .callActive && state.previewState == .video
         
@@ -191,6 +200,9 @@ class IncomingCallLandscapeViewController: BaseViewController {
         
         imageView.isHidden = shouldShowVideo
         imageViewActivityIndicator.isHidden = shouldShowVideo || hasImage
+        
+        callButton.isHidden = [.callActive, .callFinished].contains(state.callState)
+        speakerButton.isHidden = [.callReceived, .establishingConnection].contains(state.callState)
         
         alreadyOpenedButton.isHidden = state.doorState != .opened
         openButton.isHidden = state.doorState == .opened

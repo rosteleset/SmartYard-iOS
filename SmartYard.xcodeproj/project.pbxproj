@@ -208,6 +208,8 @@
 		84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */; };
 		84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */; };
 		84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */; };
+		84CD304524D2CFDE00CC079E /* IncomingCallSoundOutputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD304424D2CFDE00CC079E /* IncomingCallSoundOutputState.swift */; };
+		84CD304724D305F500CC079E /* IncomingCallScreenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CD304624D305F500CC079E /* IncomingCallScreenType.swift */; };
 		84D29B9024B7999A00CFBE6B /* APIArchiveRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B8E24B7999A00CFBE6B /* APIArchiveRange.swift */; };
 		84D29B9124B7999A00CFBE6B /* APIArchiveStreamInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B8F24B7999A00CFBE6B /* APIArchiveStreamInfo.swift */; };
 		84D29B9524B799B100CFBE6B /* StreamInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29B9324B799B100CFBE6B /* StreamInfoRequest.swift */; };
@@ -681,6 +683,8 @@
 		84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CACornerMask+Extensions.swift"; sourceTree = "<group>"; };
 		84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTabBarController.xib; sourceTree = "<group>"; };
 		84CC15EE23ED75B100A1CB95 /* TabBarTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTransitions.swift; sourceTree = "<group>"; };
+		84CD304424D2CFDE00CC079E /* IncomingCallSoundOutputState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallSoundOutputState.swift; sourceTree = "<group>"; };
+		84CD304624D305F500CC079E /* IncomingCallScreenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallScreenType.swift; sourceTree = "<group>"; };
 		84D29B8E24B7999A00CFBE6B /* APIArchiveRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIArchiveRange.swift; sourceTree = "<group>"; };
 		84D29B8F24B7999A00CFBE6B /* APIArchiveStreamInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIArchiveStreamInfo.swift; sourceTree = "<group>"; };
 		84D29B9324B799B100CFBE6B /* StreamInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamInfoRequest.swift; sourceTree = "<group>"; };
@@ -1304,6 +1308,8 @@
 				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
 				84D29BAA24BDCB6900CFBE6B /* IncomingCallPreviewState.swift */,
 				84D29BAC24BDCBC300CFBE6B /* IncomingCallStateContainer.swift */,
+				84CD304424D2CFDE00CC079E /* IncomingCallSoundOutputState.swift */,
+				84CD304624D305F500CC079E /* IncomingCallScreenType.swift */,
 			);
 			path = Entries;
 			sourceTree = "<group>";
@@ -3613,12 +3619,14 @@
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
 				E92EFBE8242A24D2003AF7FE /* RestoreRequest.swift in Sources */,
 				E9B9EAC72421FCB8000A92B3 /* RestorePasswordViewController.swift in Sources */,
+				84CD304724D305F500CC079E /* IncomingCallScreenType.swift in Sources */,
 				E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */,
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				E92EFBAD242A22F2003AF7FE /* APIStreet.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
 				E92EFBAB242A22F2003AF7FE /* APILocation.swift in Sources */,
 				E99A837E2434CBF1001CEE95 /* CommentIssueRequest.swift in Sources */,
+				84CD304524D2CFDE00CC079E /* IncomingCallSoundOutputState.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
 				E92EFBC2242A22F2003AF7FE /* GetHousesResponseData.swift in Sources */,
 				E96CC0D72423FAEA008DF44B /* RestoreMethodCellModel.swift in Sources */,

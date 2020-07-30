@@ -179,12 +179,11 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             incomingCallWindow = nil
             incomingCallPortraitVC = nil
             incomingCallLandscapeVC = nil
+            temporarilyIgnoredOrientation = nil
             
             DispatchQueue.main.async { [weak self] in
                 self?.mainWindow.makeKeyAndVisible()
             }
-            
-            try? AVAudioSession.sharedInstance().setCategory(.playback)
             
             return .none()
         }

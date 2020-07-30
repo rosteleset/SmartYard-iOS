@@ -17,10 +17,13 @@ class IncomingCallPortraitViewController: BaseViewController {
     @IBOutlet private weak var callButton: UIButton!
     @IBOutlet private weak var ignoreButton: UIButton!
     @IBOutlet private weak var openButton: LoadingButton!
+    @IBOutlet private weak var speakerButton: UIButton!
     
     @IBOutlet private weak var alreadyOpenedButtonContainer: UIView!
     @IBOutlet private weak var openButtonContainer: UIView!
     @IBOutlet private weak var ignoreButtonContainer: UIView!
+    @IBOutlet private weak var speakerButtonContainer: UIView!
+    @IBOutlet private weak var callButtonContainer: UIView!
     
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
@@ -74,6 +77,11 @@ class IncomingCallPortraitViewController: BaseViewController {
         callButton.setImage(UIImage(named: "CallSelectedIcon"), for: .selected)
         callButton.setImage(UIImage(named: "CallSelectedIcon")?.darkened(), for: [.selected, .highlighted])
         
+        speakerButton.setImage(UIImage(named: "SpeakerUnselectedIcon"), for: .normal)
+        speakerButton.setImage(UIImage(named: "SpeakerUnselectedIcon")?.darkened(), for: [.normal, .highlighted])
+        speakerButton.setImage(UIImage(named: "SpeakerSelectedIcon"), for: .selected)
+        speakerButton.setImage(UIImage(named: "SpeakerSelectedIcon")?.darkened(), for: [.selected, .highlighted])
+        
         openButton.setImage(UIImage(named: "UnlockIcon"), for: .normal)
         
         let imageForDisabled = UIImage(color: UIColor(hex: 0x4CD964)!, size: CGSize(width: 100, height: 100))
@@ -106,7 +114,9 @@ class IncomingCallPortraitViewController: BaseViewController {
             callTrigger: callTrigger.asDriverOnErrorJustComplete(),
             videoViewsTrigger: .merge(actualVideoViews, .just((videoPreview, UIView()))),
             ignoreTrigger: ignoreButton.rx.tap.asDriver(),
-            openTrigger: openButton.rx.tap.asDriver()
+            openTrigger: openButton.rx.tap.asDriver(),
+            speakerTrigger: speakerButton.rx.tap.asDriver(),
+            viewWillAppear: rx.viewWillAppear.asDriver().map { _ in .portrait }
         )
         
         let output = viewModel.transform(input: input)
@@ -159,6 +169,7 @@ class IncomingCallPortraitViewController: BaseViewController {
         previewButton.isSelected = state.previewState == .video && state.doorState == .notDetermined
         callButton.isSelected = (state.callState == .establishingConnection || state.callState == .callActive)
             && state.doorState == .notDetermined
+        speakerButton.isSelected = state.soundOutputState == .speaker
         
         let shouldShowVideo = state.callState == .callActive && state.previewState == .video
         
@@ -167,6 +178,9 @@ class IncomingCallPortraitViewController: BaseViewController {
         
         imageView.isHidden = shouldShowVideo
         imageViewActivityIndicator.isHidden = shouldShowVideo || hasImage
+        
+        callButtonContainer.isHidden = [.callActive, .callFinished].contains(state.callState)
+        speakerButtonContainer.isHidden = [.callReceived, .establishingConnection].contains(state.callState)
         
         alreadyOpenedButtonContainer.isHidden = state.doorState != .opened
         openButtonContainer.isHidden = state.doorState == .opened

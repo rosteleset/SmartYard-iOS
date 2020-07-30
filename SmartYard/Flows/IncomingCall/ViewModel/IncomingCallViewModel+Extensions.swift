@@ -21,6 +21,8 @@ extension IncomingCallViewModel {
         let videoViewsTrigger: Driver<(UIView, UIView)>
         let ignoreTrigger: Driver<Void>
         let openTrigger: Driver<Void>
+        let speakerTrigger: Driver<Void>
+        let viewWillAppear: Driver<IncomingCallScreenType>
     }
     
     struct Output {

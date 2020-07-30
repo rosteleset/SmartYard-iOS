@@ -81,6 +81,11 @@ class IncomingCallViewModel: BaseViewModel {
     }
     
     deinit {
+        UIDevice.current.isProximityMonitoringEnabled = false
+        
+        try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
+        
         linphoneService.stop()
         linphoneService.hasEnqueuedCalls = false
     }
@@ -208,14 +213,21 @@ class IncomingCallViewModel: BaseViewModel {
                             hasVideo: true
                         )
                         
-                        if !call.speakerMuted {
-                            self.enableLoudSpeaker()
-                        }
+                        UIDevice.current.isProximityMonitoringEnabled = true
+                        
+                        let soundOutputState: IncomingCallSoundOutputState = {
+                            if call.speakerMuted {
+                                return .disabled
+                            }
+                            
+                            return UIDevice.current.proximityState ? .regular : .speaker
+                        }()
                         
                         let newState = IncomingCallStateContainer(
                             callState: .callActive,
                             doorState: currentState.doorState,
-                            previewState: previewMode
+                            previewState: previewMode,
+                            soundOutputState: soundOutputState
                         )
                         
                         self.currentStateSubject.onNext(newState)
@@ -248,7 +260,8 @@ class IncomingCallViewModel: BaseViewModel {
                     let newState = IncomingCallStateContainer(
                         callState: .callFinished,
                         doorState: currentState.doorState,
-                        previewState: .staticImage
+                        previewState: .staticImage,
+                        soundOutputState: .disabled
                     )
                     
                     self.currentStateSubject.onNext(newState)
@@ -291,7 +304,8 @@ class IncomingCallViewModel: BaseViewModel {
                         let newState = IncomingCallStateContainer(
                             callState: currentState.callState,
                             doorState: currentState.doorState,
-                            previewState: .video
+                            previewState: .video,
+                            soundOutputState: currentState.soundOutputState
                         )
                         
                         self.currentStateSubject.onNext(newState)
@@ -452,7 +466,8 @@ class IncomingCallViewModel: BaseViewModel {
                     let newState = IncomingCallStateContainer(
                         callState: .establishingConnection,
                         doorState: currentState.doorState,
-                        previewState: currentState.previewState
+                        previewState: currentState.previewState,
+                        soundOutputState: currentState.soundOutputState
                     )
                     
                     self.currentStateSubject.onNext(newState)
@@ -481,7 +496,8 @@ class IncomingCallViewModel: BaseViewModel {
                     let newState = IncomingCallStateContainer(
                         callState: .callFinished,
                         doorState: .notDetermined,
-                        previewState: .staticImage
+                        previewState: .staticImage,
+                        soundOutputState: .disabled
                     )
                     
                     self.currentStateSubject.onNext(newState)
@@ -513,6 +529,74 @@ class IncomingCallViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        
+        // MARK: При изменении стейта sound output - включаем или выключаем громкоговоритель
+        
+        currentState
+            .map { $0.soundOutputState }
+            .distinctUntilChanged()
+            .drive(
+                onNext: { [weak self] state in
+                    self?.setSpeakerEnabled(state == .speaker)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Отслеживание текущего output для звука
+        // Нужно для того, чтобы при включении / выключении громкоговорителя с CallKit здесь обновлялся стейт
+        
+        NotificationCenter.default.rx
+            .notification(AVAudioSession.routeChangeNotification)
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard currentState.doorState == .notDetermined,
+                        currentState.soundOutputState != .disabled else {
+                        return
+                    }
+                    
+                    let outputs = AVAudioSession.sharedInstance().currentRoute.outputs
+                    let isSpeakerEnabled = outputs.contains { output in output.portType == .builtInSpeaker }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: isSpeakerEnabled ? .speaker : .regular
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: При поднесении девайса к уху надо выключать громкоговоритель
+        
+        NotificationCenter.default.rx
+            .notification(UIDevice.proximityStateDidChangeNotification)
+            .asDriverOnErrorJustComplete()
+            .map { _ in UIDevice.current.proximityState }
+            .isTrue()
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard currentState.doorState == .notDetermined,
+                        currentState.soundOutputState != .disabled else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: .regular
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     // swiftlint:disable:next function_body_length
@@ -532,7 +616,8 @@ class IncomingCallViewModel: BaseViewModel {
                         let newState = IncomingCallStateContainer(
                             callState: .establishingConnection,
                             doorState: currentState.doorState,
-                            previewState: currentState.previewState
+                            previewState: currentState.previewState,
+                            soundOutputState: currentState.soundOutputState
                         )
                         
                         self?.currentStateSubject.onNext(newState)
@@ -588,10 +673,60 @@ class IncomingCallViewModel: BaseViewModel {
                     let newState = IncomingCallStateContainer(
                         callState: currentState.callState,
                         doorState: currentState.doorState,
-                        previewState: currentState.previewState == .staticImage ? .video : .staticImage
+                        previewState: currentState.previewState == .staticImage ? .video : .staticImage,
+                        soundOutputState: currentState.soundOutputState
                     )
                     
                     self.currentStateSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Динамик"
+        
+        input.speakerTrigger
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard currentState.doorState == .notDetermined,
+                        currentState.soundOutputState != .disabled else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: currentState.soundOutputState == .regular ? .speaker : .regular
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: При переходе в альбомный режим автоматически включается громкоговоритель
+        // Если пользователь держит девайс близко к уху - НЕ включаем громкоговоритель
+        
+        input.viewWillAppear
+            .filter { $0 == .landscape }
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard currentState.doorState == .notDetermined,
+                        currentState.soundOutputState != .disabled,
+                        !UIDevice.current.proximityState else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: .speaker
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
                 }
             )
             .disposed(by: disposeBag)
@@ -602,6 +737,14 @@ class IncomingCallViewModel: BaseViewModel {
             image: imageSubject.asDriverOnErrorJustComplete(),
             isDoorBeingOpened: isDoorBeingOpened.asDriver(onErrorJustReturn: false)
         )
+    }
+    
+    private func setSpeakerEnabled(_ enabled: Bool) {
+        do {
+            try AVAudioSession.sharedInstance().overrideOutputAudioPort(enabled ? .speaker : .none)
+        } catch {
+            print("Couldn't switch output port")
+        }
     }
     
     private func openTheDoor(call: Call) {
@@ -643,7 +786,8 @@ class IncomingCallViewModel: BaseViewModel {
                     let newState = IncomingCallStateContainer(
                         callState: .callFinished,
                         doorState: .opened,
-                        previewState: .staticImage
+                        previewState: .staticImage,
+                        soundOutputState: .disabled
                     )
                     
                     self?.currentStateSubject.onNext(newState)
@@ -664,14 +808,6 @@ class IncomingCallViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-    }
-    
-    private func enableLoudSpeaker() {
-        do {
-            try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
-        } catch {
-            print("Couldn't switch output port")
-        }
     }
     
 }
@@ -701,7 +837,8 @@ extension IncomingCallViewModel: LinphoneDelegate {
                 let newState = IncomingCallStateContainer(
                     callState: .callFinished,
                     doorState: currentState.doorState,
-                    previewState: .staticImage
+                    previewState: .staticImage,
+                    soundOutputState: .disabled
                 )
                 
                 currentStateSubject.onNext(newState)
