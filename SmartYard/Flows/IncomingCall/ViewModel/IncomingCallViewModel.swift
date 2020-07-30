@@ -515,11 +515,43 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: При изменении стейта sound output - включаем или выключаем громкоговоритель
+        
         currentState
             .map { $0.soundOutputState }
+            .distinctUntilChanged()
             .drive(
                 onNext: { [weak self] state in
                     self?.setSpeakerEnabled(state == .speaker)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Отслеживание текущего output для звука
+        // Нужно для того, чтобы при включении / выключении громкоговорителя с CallKit здесь обновлялся стейт
+        
+        NotificationCenter.default.rx
+            .notification(AVAudioSession.routeChangeNotification)
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard currentState.doorState == .notDetermined,
+                        currentState.soundOutputState != .disabled else {
+                        return
+                    }
+                    
+                    let outputs = AVAudioSession.sharedInstance().currentRoute.outputs
+                    let isSpeakerEnabled = outputs.contains { output in output.portType == .builtInSpeaker }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: isSpeakerEnabled ? .speaker : .regular
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
                 }
             )
             .disposed(by: disposeBag)
@@ -614,7 +646,19 @@ class IncomingCallViewModel: BaseViewModel {
             .withLatestFrom(currentState)
             .drive(
                 onNext: { [weak self] currentState in
-                    self?.speakerButtonTapped(currentState: currentState)
+                    guard currentState.doorState == .notDetermined,
+                        currentState.soundOutputState != .disabled else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: currentState.soundOutputState == .regular ? .speaker : .regular
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
                 }
             )
             .disposed(by: disposeBag)
@@ -627,20 +671,14 @@ class IncomingCallViewModel: BaseViewModel {
         )
     }
     
-    private func speakerButtonTapped(currentState: IncomingCallStateContainer) {
-        guard currentState.doorState == .notDetermined,
-            currentState.soundOutputState != .disabled else {
-            return
+    private func setSpeakerEnabled(_ enabled: Bool) {
+        
+        
+        do {
+            try AVAudioSession.sharedInstance().overrideOutputAudioPort(enabled ? .speaker : .none)
+        } catch {
+            print("Couldn't switch output port")
         }
-        
-        let newState = IncomingCallStateContainer(
-            callState: currentState.callState,
-            doorState: currentState.doorState,
-            previewState: currentState.previewState,
-            soundOutputState: currentState.soundOutputState == .regular ? .speaker : .regular
-        )
-        
-        currentStateSubject.onNext(newState)
     }
     
     private func openTheDoor(call: Call) {
@@ -704,14 +742,6 @@ class IncomingCallViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-    }
-    
-    private func setSpeakerEnabled(_ enabled: Bool) {
-        do {
-            try AVAudioSession.sharedInstance().overrideOutputAudioPort(enabled ? .speaker : .none)
-        } catch {
-            print("Couldn't switch output port")
-        }
     }
     
 }
