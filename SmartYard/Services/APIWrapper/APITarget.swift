@@ -42,6 +42,7 @@ enum APITarget {
     case actionIssue(request: ActionIssueRequest)
     case commentIssue(request: CommentIssueRequest)
     
+    case appVersion(request: AppVersionRequest)
     case addMyPhone(request: AddMyPhoneRequest)
     case requestCode(request: RequestCodeRequest)
     case registerPushToken(request: RegisterPushTokenRequest)
@@ -106,6 +107,7 @@ extension APITarget: TargetType {
         case .actionIssue: return "issues/action"
         case .commentIssue: return "issues/comment"
             
+        case .appVersion: return "user/appVersion"
         case .addMyPhone: return "user/addMyPhone"
         case .requestCode: return "user/requestCode"
         case .registerPushToken: return "user/registerPushToken"
@@ -167,6 +169,7 @@ extension APITarget: TargetType {
             case .actionIssue(let request): return request.accessToken
             case .commentIssue(let request): return request.accessToken
                 
+            case .appVersion(let request): return request.accessToken
             case .addMyPhone(let request): return request.accessToken
             case .registerPushToken(let request): return request.accessToken
             case .getPaymentsList(let request): return request.accessToken
@@ -229,6 +232,7 @@ extension APITarget: TargetType {
         case .actionIssue(let request): return request.requestParameters
         case .commentIssue(let request): return request.requestParameters
             
+        case .appVersion(let request): return request.requestParameters
         case .addMyPhone(let request): return request.requestParameters
         case .requestCode(let request): return request.requestParameters
         case .registerPushToken(let request): return request.requestParameters
