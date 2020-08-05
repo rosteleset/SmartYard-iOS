@@ -53,6 +53,10 @@ class OnlinePageViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        player?.replaceCurrentItem(with: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -113,6 +117,50 @@ class OnlinePageViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] isVideoValid in
                     self?.fullscreenButton.isHidden = !isVideoValid
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // При уходе с окна или при сворачивании приложения - паузим плеер
+        
+        Driver
+            .merge(
+                NotificationCenter.default.rx
+                    .notification(UIApplication.didEnterBackgroundNotification)
+                    .asDriverOnErrorJustComplete()
+                    .mapToVoid(),
+                rx.viewDidDisappear
+                    .asDriver()
+                    .mapToVoid()
+            )
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.player?.pause()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // При заходе на окно - запускаем плеер
+        
+        rx.viewDidAppear
+            .asDriver()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.player?.play()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // При разворачивании приложения (если окно открыто) - запускаем плеер
+        
+        NotificationCenter.default.rx
+            .notification(UIApplication.willEnterForegroundNotification)
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(rx.isVisible.asDriverOnErrorJustComplete())
+            .isTrue()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.player?.play()
                 }
             )
             .disposed(by: disposeBag)
@@ -318,7 +366,10 @@ class OnlinePageViewController: BaseViewController {
                 let playerItem = AVPlayerItem(asset: asset)
                 
                 self?.player?.replaceCurrentItem(with: playerItem)
-                self?.player?.play()
+                
+                if self?.isVisible == true {
+                    self?.player?.play()
+                }
             }
         }
     }
