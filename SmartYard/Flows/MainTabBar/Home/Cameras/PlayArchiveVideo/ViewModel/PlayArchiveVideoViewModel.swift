@@ -21,7 +21,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
     private let camera: CameraObject
     
     private let selectedStartEnd = BehaviorSubject<(Date, Date)?>(value: nil)
-    private let selectedPeriod = BehaviorSubject<ArchiveVideoHourPeriod?>(value: nil)
+    private let selectedPeriod = BehaviorSubject<ArchiveVideoPreviewPeriod?>(value: nil)
     
     init(
         apiWrapper: APIWrapper,
@@ -209,7 +209,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 return URL(string: resultingString)
             }
         
-        var periods = [ArchiveVideoHourPeriod]()
+        var periods = [ArchiveVideoPreviewPeriod]()
         
         let startOfDay = Calendar.moscowCalendar.startOfDay(for: date)
         
@@ -217,14 +217,16 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             let startHours = mult * 3
             let endHours = mult * 3 + 3
             
+            let startDate = startOfDay.adding(.hour, value: startHours)
             let endDate = startOfDay.adding(.hour, value: endHours)
+            let currentDate = Date()
             
-            guard Date() > endDate else {
-                periods.append(ArchiveVideoHourPeriod(baseDate: date, startHours: startHours, endHours: endHours))
+            guard currentDate > endDate else {
+                periods.append(ArchiveVideoPreviewPeriod(startDate: startDate, endDate: currentDate))
                 break
             }
             
-            periods.append(ArchiveVideoHourPeriod(baseDate: date, startHours: startHours, endHours: endHours))
+            periods.append(ArchiveVideoPreviewPeriod(startDate: startDate, endDate: endDate))
         }
         
         let rangeBounds: (lower: Date, upper: Date)? = {
@@ -253,14 +255,14 @@ extension PlayArchiveVideoViewModel {
     struct Input {
         let backTrigger: Driver<Void>
         let downloadTrigger: Driver<Void>
-        let periodSelectedTrigger: Driver<ArchiveVideoHourPeriod?>
+        let periodSelectedTrigger: Driver<ArchiveVideoPreviewPeriod?>
         let startEndSelectedTrigger: Driver<(Date, Date)>
         let screenshotTrigger: Driver<Date>
     }
     
     struct Output {
         let date: Driver<Date?>
-        let periodConfiguration: Driver<[ArchiveVideoHourPeriod]>
+        let periodConfiguration: Driver<[ArchiveVideoPreviewPeriod]>
         let rangeBounds: Driver<(lower: Date, upper: Date)?>
         let videoData: Driver<(URL, VideoThumbnailConfiguration)?>
         let screenshotURL: Driver<URL?>
