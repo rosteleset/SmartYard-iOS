@@ -209,21 +209,23 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 return URL(string: resultingString)
             }
         
-        let periods: [ArchiveVideoHourPeriod] = (0...7)
-            .map {
-                ArchiveVideoHourPeriod(baseDate: date, startHours: $0 * 3, endHours: $0 * 3 + 3)
+        var periods = [ArchiveVideoHourPeriod]()
+        
+        let startOfDay = Calendar.moscowCalendar.startOfDay(for: date)
+        
+        for mult in 0...7 {
+            let startHours = mult * 3
+            let endHours = mult * 3 + 3
+            
+            let endDate = startOfDay.adding(.hour, value: endHours)
+            
+            guard Date() > endDate else {
+                periods.append(ArchiveVideoHourPeriod(baseDate: date, startHours: startHours, endHours: endHours))
+                break
             }
-            .filter { period in
-                let startDate = period.baseDate.adding(.hour, value: period.startHours)
-                let endDate = period.baseDate.adding(.hour, value: period.endHours)
-                
-                let match = ranges.first { range in
-                    startDate.isBetween(range.startDate, range.endDate) &&
-                        endDate.isBetween(range.startDate, range.endDate)
-                }
-                
-                return match != nil
-            }
+            
+            periods.append(ArchiveVideoHourPeriod(baseDate: date, startHours: startHours, endHours: endHours))
+        }
         
         let rangeBounds: (lower: Date, upper: Date)? = {
             guard let lower = (ranges.map { $0.startDate }.min()),
