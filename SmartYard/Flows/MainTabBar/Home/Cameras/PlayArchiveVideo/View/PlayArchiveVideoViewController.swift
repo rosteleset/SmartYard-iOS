@@ -87,8 +87,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     private let viewModel: PlayArchiveVideoViewModel
     
-    private let periodsProxy = BehaviorSubject<[ArchiveVideoHourPeriod]>(value: [])
-    private let periodSelectedTrigger = PublishSubject<ArchiveVideoHourPeriod?>()
+    private let periodsProxy = BehaviorSubject<[ArchiveVideoPreviewPeriod]>(value: [])
+    private let periodSelectedTrigger = PublishSubject<ArchiveVideoPreviewPeriod?>()
     private let startEndSelectedTrigger = PublishSubject<(Date, Date)>()
     private let screenshotTrigger = PublishSubject<Date>()
     
@@ -454,7 +454,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                             return nil
                         }
                         
-                        return period.baseDate.adding(.hour, value: period.startHours)
+                        return period.startDate
                     }()
                     
                     self?.progressSlider.setRelativeStartDate(startDate)
@@ -561,8 +561,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-                    let visibleTimelineEndDate = uPeriod.baseDate
-                        .adding(.hour, value: uPeriod.startHours)
+                    let visibleTimelineEndDate = uPeriod.startDate
                         .addingTimeInterval(playbackTime)
                         .adding(.minute, value: 30)
                     

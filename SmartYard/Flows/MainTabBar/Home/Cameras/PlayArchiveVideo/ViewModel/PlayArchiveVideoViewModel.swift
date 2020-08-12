@@ -21,7 +21,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
     private let camera: CameraObject
     
     private let selectedStartEnd = BehaviorSubject<(Date, Date)?>(value: nil)
-    private let selectedPeriod = BehaviorSubject<ArchiveVideoHourPeriod?>(value: nil)
+    private let selectedPeriod = BehaviorSubject<ArchiveVideoPreviewPeriod?>(value: nil)
     
     init(
         apiWrapper: APIWrapper,
@@ -209,21 +209,25 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 return URL(string: resultingString)
             }
         
-        let periods: [ArchiveVideoHourPeriod] = (0...7)
-            .map {
-                ArchiveVideoHourPeriod(baseDate: date, startHours: $0 * 3, endHours: $0 * 3 + 3)
+        var periods = [ArchiveVideoPreviewPeriod]()
+        
+        let startOfDay = Calendar.moscowCalendar.startOfDay(for: date)
+        
+        for mult in 0...7 {
+            let startHours = mult * 3
+            let endHours = mult * 3 + 3
+            
+            let startDate = startOfDay.adding(.hour, value: startHours)
+            let endDate = startOfDay.adding(.hour, value: endHours)
+            let currentDate = Date()
+            
+            guard currentDate > endDate else {
+                periods.append(ArchiveVideoPreviewPeriod(startDate: startDate, endDate: currentDate))
+                break
             }
-            .filter { period in
-                let startDate = period.baseDate.adding(.hour, value: period.startHours)
-                let endDate = period.baseDate.adding(.hour, value: period.endHours)
-                
-                let match = ranges.first { range in
-                    startDate.isBetween(range.startDate, range.endDate) &&
-                        endDate.isBetween(range.startDate, range.endDate)
-                }
-                
-                return match != nil
-            }
+            
+            periods.append(ArchiveVideoPreviewPeriod(startDate: startDate, endDate: endDate))
+        }
         
         let rangeBounds: (lower: Date, upper: Date)? = {
             guard let lower = (ranges.map { $0.startDate }.min()),
@@ -251,14 +255,14 @@ extension PlayArchiveVideoViewModel {
     struct Input {
         let backTrigger: Driver<Void>
         let downloadTrigger: Driver<Void>
-        let periodSelectedTrigger: Driver<ArchiveVideoHourPeriod?>
+        let periodSelectedTrigger: Driver<ArchiveVideoPreviewPeriod?>
         let startEndSelectedTrigger: Driver<(Date, Date)>
         let screenshotTrigger: Driver<Date>
     }
     
     struct Output {
         let date: Driver<Date?>
-        let periodConfiguration: Driver<[ArchiveVideoHourPeriod]>
+        let periodConfiguration: Driver<[ArchiveVideoPreviewPeriod]>
         let rangeBounds: Driver<(lower: Date, upper: Date)?>
         let videoData: Driver<(URL, VideoThumbnailConfiguration)?>
         let screenshotURL: Driver<URL?>

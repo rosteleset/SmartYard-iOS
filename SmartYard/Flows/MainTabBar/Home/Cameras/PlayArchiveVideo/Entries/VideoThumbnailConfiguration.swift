@@ -11,11 +11,11 @@ import Foundation
 struct VideoThumbnailConfiguration {
     
     let camera: CameraObject
-    let period: ArchiveVideoHourPeriod
+    let period: ArchiveVideoPreviewPeriod
     let fallbackUrl: URL
     
     var identifier: String {
-        return period.baseDate.adding(.hour, value: period.startHours).apiString
+        return period.startDate.apiString
     }
     
     func thumbnailUrls(thumbnailsCount: Int, actualDuration: TimeInterval) -> [URL] {

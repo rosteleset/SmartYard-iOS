@@ -73,21 +73,8 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
             return
         }
         
-        let lowerDateLimit = ranges
-            .compactMap {
-                $0.lowerDateLimitForCalendar
-            }
-            .min()
-        
-        self.lowerDateLimit = lowerDateLimit
-        
-        let upperDateLimit = ranges
-            .compactMap {
-                $0.upperDateLimitForCalendar
-            }
-            .max()
-        
-        self.upperDateLimit = upperDateLimit
+        lowerDateLimit = ranges.compactMap { $0.startDate }.min()
+        upperDateLimit = ranges.compactMap { $0.endDate }.max()
     }
     
     init(apiWrapper: APIWrapper) {
@@ -181,8 +168,11 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
             return
         }
         
+        let startOfDay = Calendar.moscowCalendar.startOfDay(for: cellState.date)
+        let endOfDay = startOfDay.adding(.hour, value: 24)
+        
         let matchingRange = availableRanges?.first { range in
-            !range.validPeriodsForDate(cellState.date).isEmpty
+            (startOfDay <= range.endDate) && (range.startDate <= endOfDay)
         }
         
         myCustomCell.configure(
@@ -349,8 +339,11 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
             return false
         }
         
+        let startOfDay = Calendar.moscowCalendar.startOfDay(for: cellState.date)
+        let endOfDay = startOfDay.adding(.hour, value: 24)
+        
         let matchingRange = availableRanges.first { range in
-            !range.validPeriodsForDate(date).isEmpty
+            (startOfDay <= range.endDate) && (range.startDate <= endOfDay)
         }
         
         return matchingRange != nil

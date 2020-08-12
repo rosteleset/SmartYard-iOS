@@ -8,29 +8,24 @@
 
 import Foundation
 
-struct ArchiveVideoHourPeriod: Equatable {
+struct ArchiveVideoPreviewPeriod: Equatable {
     
-    /// Дата по МСК, 00:00
-    let baseDate: Date
-    
-    /// Начало периода (в часах)
-    let startHours: Int
-    
-    /// Конец периода (в часах)
-    let endHours: Int
+    let startDate: Date
+    let endDate: Date
     
     var title: String {
-        return String(format: "%02d", startHours) + ".00 - " + String(format: "%02d", endHours) + ".00"
+        let formatter = DateFormatter()
+        
+        formatter.timeZone = Calendar.moscowCalendar.timeZone
+        formatter.locale = Calendar.moscowCalendar.locale
+        formatter.dateFormat = "HH:mm"
+        
+        return formatter.string(from: startDate) + " - " + formatter.string(from: endDate)
     }
     
-    /// Компоненты URL для трехчасового видео
+    /// Компоненты URL для видео
     
     var videoUrlComponents: String? {
-        let startOfDay = Calendar.moscowCalendar.startOfDay(for: baseDate)
-
-        let startDate = startOfDay.adding(.hour, value: startHours)
-        let endDate = startOfDay.adding(.hour, value: endHours)
-        
         let startTimestamp = startDate.unixTimestamp.int
         let duration = endDate.timeIntervalSince(startDate).int
         
@@ -45,16 +40,12 @@ struct ArchiveVideoHourPeriod: Equatable {
             return []
         }
         
-        let startOfDay = Calendar.moscowCalendar.startOfDay(for: baseDate)
-        
         let intervalForOneThumbnail = actualDuration / Double(thumbnailsCount)
         
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        let startDate = startOfDay.adding(.hour, value: startHours)
         
         return (0 ..< thumbnailsCount).map {
             let date = startDate.addingTimeInterval(Double($0) * intervalForOneThumbnail)
