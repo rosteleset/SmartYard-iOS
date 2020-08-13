@@ -107,6 +107,22 @@ class SelectCameraContainerViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.rangesForCurrentCamera
+            .drive(
+                onNext: { [weak self] ranges in
+                    self?.archivePage.setAvailableRanges(ranges)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.areRangesBeingLoaded
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.archivePage.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

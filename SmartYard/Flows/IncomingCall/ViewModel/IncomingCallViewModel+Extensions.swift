@@ -17,13 +17,16 @@ extension IncomingCallViewModel {
         
         // MARK: Ну я хз, придется либо прокидывать вьюхи сюда, либо UnsafeRawPointer. И то, и то - говно
         
-        let callTrigger: Driver<(UIView, UIView)>
+        let callTrigger: Driver<Void>
+        let videoViewsTrigger: Driver<(UIView, UIView)>
         let ignoreTrigger: Driver<Void>
         let openTrigger: Driver<Void>
+        let speakerTrigger: Driver<Void>
+        let viewWillAppear: Driver<IncomingCallScreenType>
     }
     
     struct Output {
-        let state: Driver<(IncomingCallState, IncomingCallDoorState)>
+        let state: Driver<IncomingCallStateContainer>
         let subtitle: Driver<String?>
         let image: Driver<UIImage?>
         let isDoorBeingOpened: Driver<Bool>

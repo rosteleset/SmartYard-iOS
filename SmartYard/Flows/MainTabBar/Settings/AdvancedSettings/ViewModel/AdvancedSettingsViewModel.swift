@@ -70,6 +70,7 @@ class AdvancedSettingsViewModel: BaseViewModel {
         
         let enableNotificationsSubject = BehaviorSubject<Bool>(value: false)
         let enableAccountBalanceWarningSubject = BehaviorSubject<Bool>(value: false)
+        let enableCallkitSubject = BehaviorSubject<Bool>(value: accessService.prefersVoipForCalls)
         
         apiWrapper
             .getCurrentNotificationState()
@@ -127,6 +128,36 @@ class AdvancedSettingsViewModel: BaseViewModel {
             .drive(
                 onNext: { state in
                     enableAccountBalanceWarningSubject.onNext(state.money)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Нажатие на "Использовать CallKit"
+        
+        input.callkitTrigger
+            .withLatestFrom(enableCallkitSubject.asDriver(onErrorJustReturn: false))
+            .flatMapLatest { [weak self] isActive -> Driver<Bool?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                let newState = !isActive
+                
+                return self.pushNotificationService
+                    .registerForPushNotifications(
+                        voipToken: newState ? self.accessService.voipToken : nil
+                    )
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .map { _ in newState }
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] newState in
+                    self?.accessService.prefersVoipForCalls = newState
+                    
+                    enableCallkitSubject.onNext(newState)
                 }
             )
             .disposed(by: disposeBag)
@@ -209,6 +240,7 @@ class AdvancedSettingsViewModel: BaseViewModel {
             name: nameAsString,
             enableNotifications: enableNotificationsSubject.asDriverOnErrorJustComplete(),
             enableAccountBalanceWarning: enableAccountBalanceWarningSubject.asDriverOnErrorJustComplete(),
+            enableCallkit: enableCallkitSubject.asDriverOnErrorJustComplete(),
             isLoading: activityTracker.asDriver(),
             shouldShowInitialLoading: initialLoadingTracker.asDriver()
         )
@@ -223,6 +255,7 @@ extension AdvancedSettingsViewModel {
         let editNameTrigger: Driver<Void>
         let enableTrigger: Driver<Void>
         let moneyTrigger: Driver<Void>
+        let callkitTrigger: Driver<Void>
         let logoutTrigger: Driver<Void>
     }
     
@@ -230,6 +263,7 @@ extension AdvancedSettingsViewModel {
         let name: Driver<String>
         let enableNotifications: Driver<Bool>
         let enableAccountBalanceWarning: Driver<Bool>
+        let enableCallkit: Driver<Bool>
         let isLoading: Driver<Bool>
         let shouldShowInitialLoading: Driver<Bool>
     }

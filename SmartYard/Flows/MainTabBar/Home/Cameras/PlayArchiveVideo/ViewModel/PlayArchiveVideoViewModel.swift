@@ -17,17 +17,25 @@ class PlayArchiveVideoViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     
     private let date: Date
+    private let ranges: [APIArchiveRange]
     private let camera: CameraObject
     
     private let selectedStartEnd = BehaviorSubject<(Date, Date)?>(value: nil)
-    private let selectedPeriod = BehaviorSubject<ArchiveVideoHourPeriod?>(value: nil)
+    private let selectedPeriod = BehaviorSubject<ArchiveVideoPreviewPeriod?>(value: nil)
     
-    init(apiWrapper: APIWrapper, camera: CameraObject, date: Date, router: WeakRouter<HomeRoute>) {
+    init(
+        apiWrapper: APIWrapper,
+        camera: CameraObject,
+        date: Date,
+        availableRanges: [APIArchiveRange],
+        router: WeakRouter<HomeRoute>
+    ) {
         self.apiWrapper = apiWrapper
         self.router = router
         
         self.camera = camera
         self.date = date
+        self.ranges = availableRanges
     }
     
     // swiftlint:disable:next function_body_length
@@ -81,7 +89,14 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                return .just((from: start.apiString, to: end.apiString))
+                let formatter = DateFormatter()
+                
+                // MARK: А тут сервак жрет строки не в GMT, а в MSK
+                
+                formatter.timeZone = Calendar.moscowCalendar.timeZone
+                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                
+                return .just((from: formatter.string(from: start), to: formatter.string(from: end)))
             }
             .flatMapLatest { [weak self] range -> Driver<Int?> in
                 guard let self = self else {
@@ -178,33 +193,55 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     return nil
                 }
                 
-                // MARK: Здесь нам нужно получить дату скриншота
-                // Поскольку используется строковый формат, нам не нужно переводить время из МСК в локальное
-                // Но сервер для этого запроса почему-то ожидает время по UTC
-                // Поэтому нам нужно отнять разницу между МСК и UTC, чтобы получить правильный скриншот
-                
-                let utcDate = date.adding(.hour, value: -Date.moscowOffsetFromGMT)
+                // MARK: А здесь сервак жрет дату в GMT. Р - разнообразие
                 
                 let dateFormatter = DateFormatter()
                 
+                dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
                 dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
                 
                 let resultingString = self.camera.video +
                     "/" +
-                    dateFormatter.string(from: utcDate) +
+                    dateFormatter.string(from: date) +
                     "-preview.mp4" +
                     "?token=\(self.camera.token)"
                 
                 return URL(string: resultingString)
             }
         
-        let periods: [ArchiveVideoHourPeriod] = (0...7).map {
-            ArchiveVideoHourPeriod(baseDate: date, startHours: $0 * 3, endHours: $0 * 3 + 3)
+        var periods = [ArchiveVideoPreviewPeriod]()
+        
+        let startOfDay = Calendar.moscowCalendar.startOfDay(for: date)
+        
+        for mult in 0...7 {
+            let startHours = mult * 3
+            let endHours = mult * 3 + 3
+            
+            let startDate = startOfDay.adding(.hour, value: startHours)
+            let endDate = startOfDay.adding(.hour, value: endHours)
+            let currentDate = Date()
+            
+            guard currentDate > endDate else {
+                periods.append(ArchiveVideoPreviewPeriod(startDate: startDate, endDate: currentDate))
+                break
+            }
+            
+            periods.append(ArchiveVideoPreviewPeriod(startDate: startDate, endDate: endDate))
         }
+        
+        let rangeBounds: (lower: Date, upper: Date)? = {
+            guard let lower = (ranges.map { $0.startDate }.min()),
+                let upper = (ranges.map { $0.endDate }.max()) else {
+                return nil
+            }
+                
+            return (lower, upper)
+        }()
         
         return Output(
             date: .just(date),
             periodConfiguration: .just(periods),
+            rangeBounds: .just(rangeBounds),
             videoData: videoData,
             screenshotURL: screenshotURL,
             isLoading: activityTracker.asDriver()
@@ -218,14 +255,15 @@ extension PlayArchiveVideoViewModel {
     struct Input {
         let backTrigger: Driver<Void>
         let downloadTrigger: Driver<Void>
-        let periodSelectedTrigger: Driver<ArchiveVideoHourPeriod?>
+        let periodSelectedTrigger: Driver<ArchiveVideoPreviewPeriod?>
         let startEndSelectedTrigger: Driver<(Date, Date)>
         let screenshotTrigger: Driver<Date>
     }
     
     struct Output {
         let date: Driver<Date?>
-        let periodConfiguration: Driver<[ArchiveVideoHourPeriod]>
+        let periodConfiguration: Driver<[ArchiveVideoPreviewPeriod]>
+        let rangeBounds: Driver<(lower: Date, upper: Date)?>
         let videoData: Driver<(URL, VideoThumbnailConfiguration)?>
         let screenshotURL: Driver<URL?>
         let isLoading: Driver<Bool>

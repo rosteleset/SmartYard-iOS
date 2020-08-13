@@ -15,6 +15,7 @@
                 <outlet property="collectionViewHeightConstraint" destination="oSU-TK-D9Z" id="ajc-Xp-GIS"/>
                 <outlet property="fullscreenButton" destination="2iH-Th-533" id="Euh-ru-yCS"/>
                 <outlet property="scrollView" destination="BCu-Kg-FKQ" id="TyJ-Po-4DJ"/>
+                <outlet property="videoLoadingAnimationView" destination="RhJ-w5-BqI" id="00f-U8-dn6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -41,12 +42,22 @@
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <state key="normal" image="Fullscreen"/>
                                         </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RhJ-w5-BqI" customClass="AnimationView" customModule="Lottie">
+                                            <rect key="frame" x="151" y="89" width="80" height="80"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="80" id="9bc-cB-Rd2"/>
+                                                <constraint firstAttribute="width" constant="80" id="Ihc-Wa-wjj"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
+                                        <constraint firstItem="RhJ-w5-BqI" firstAttribute="centerX" secondItem="JPd-UE-6AD" secondAttribute="centerX" id="9jG-Wv-o3x"/>
                                         <constraint firstAttribute="width" secondItem="JPd-UE-6AD" secondAttribute="height" multiplier="343:232" id="DNG-x6-Bgs"/>
                                         <constraint firstItem="2iH-Th-533" firstAttribute="top" secondItem="JPd-UE-6AD" secondAttribute="top" constant="12" id="G1L-Jz-1oi"/>
                                         <constraint firstAttribute="trailing" secondItem="2iH-Th-533" secondAttribute="trailing" constant="12" id="Kk8-Ai-IAa"/>
+                                        <constraint firstItem="RhJ-w5-BqI" firstAttribute="centerY" secondItem="JPd-UE-6AD" secondAttribute="centerY" id="Lfr-Ku-3gg"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

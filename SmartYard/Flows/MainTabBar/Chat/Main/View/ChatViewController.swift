@@ -10,11 +10,14 @@ import UIKit
 import RxSwift
 import RxCocoa
 import OnlineChatSdk
+import JGProgressHUD
 
-class ChatViewController: ChatController {
+class ChatViewController: ChatController, LoaderPresentable {
     
     private let disposeBag = DisposeBag()
     private let viewModel: ChatViewModel
+    
+    var loader: JGProgressHUD?
     
     init(viewModel: ChatViewModel) {
         self.viewModel = viewModel
@@ -33,7 +36,10 @@ class ChatViewController: ChatController {
     }
     
     private func bind() {
-        let input = ChatViewModel.Input()
+        let input = ChatViewModel.Input(
+            viewWillAppearTrigger: rx.viewWillAppear.asDriver(),
+            isViewVisible: rx.isVisible.asDriver(onErrorJustReturn: false)
+        )
         
         let output = viewModel.transform(input)
         
@@ -77,6 +83,15 @@ class ChatViewController: ChatController {
                     let finalString = "{" + params.joined(separator: ", ") + "}"
                     
                     self?.callJsSetClientInfo(finalString)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoggingOut
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
                 }
             )
             .disposed(by: disposeBag)

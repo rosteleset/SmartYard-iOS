@@ -9,17 +9,30 @@
 import RxSwift
 import RxCocoa
 import WebKit
+import OnlineChatSdk
 
 class ChatViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let accessService: AccessService
+    private let pushNotificationService: PushNotificationService
+    private let logoutHelper: LogoutHelper
+    private let alertService: AlertService
     
     private let automaticMessage = PublishSubject<String>()
     
-    init(apiWrapper: APIWrapper, accessService: AccessService) {
+    init(
+        apiWrapper: APIWrapper,
+        accessService: AccessService,
+        pushNotificationService: PushNotificationService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
+    ) {
         self.apiWrapper = apiWrapper
         self.accessService = accessService
+        self.pushNotificationService = pushNotificationService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
         
         super.init()
         
@@ -28,6 +41,29 @@ class ChatViewModel: BaseViewModel {
     }
     
     func transform(_ input: Input) -> Output {
+        let errorTracker = ErrorTracker()
+        let activityTracker = ActivityTracker()
+        
+        errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: activityTracker,
+                    errorTracker: errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] error in
+                    print(error.localizedDescription)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let phone: String? = {
             guard let clientPhoneNumber = accessService.clientPhoneNumber else {
                 return nil
@@ -68,11 +104,68 @@ class ChatViewModel: BaseViewModel {
                 ChatConfiguration(language: nil, clientId: phone?.md5)
             }
         
+        // MARK: Если пришло новое сообщение в тот момент, когда мы на этом экране
+        
+        let newChatMessageReceivedOnScreen = NotificationCenter.default.rx.notification(.newChatMessageReceived)
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(input.isViewVisible)
+            .isTrue()
+            .mapToVoid()
+        
+        // MARK: Или если мы просто зашли на этот экран - делаем синк
+        
+        Driver
+            .merge(input.viewWillAppearTrigger.mapToVoid(), newChatMessageReceivedOnScreen)
+            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+
+                return self.apiWrapper
+                    .markChatAsReaded()
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] in
+                    self?.pushNotificationService.deleteAllDeliveredNotifications(withActionType: .chat)
+                    self?.pushNotificationService.synchronizeBadgeCount()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Если мы не находимся на экране, то новые сообщения не помечаются как доставленные
+        // Чтобы пометить их как доставленные, нужно дернуть метод getNewMessages
+        
+        NotificationCenter.default.rx.notification(.newChatMessageReceived)
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(input.isViewVisible)
+            .filterFalse()
+            .mapToVoid()
+            .drive(
+                onNext: {
+                    guard let md5 = phone?.md5 else {
+                        return
+                    }
+                    
+                    ChatApi.getNewMessages(Constants.Chat.token, md5) { result in
+                        if result?["error"] != nil {
+                            print("error : \(String(describing: result?["error"]))")
+                        } else {
+                            print("result : \(result.debugDescription)")
+                        }
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             phone: .just(phone),
             name: nameAsString,
             chatConfiguration: chatConfiguration,
-            automaticMessage: automaticMessage.asDriverOnErrorJustComplete()
+            automaticMessage: automaticMessage.asDriverOnErrorJustComplete(),
+            isLoggingOut: activityTracker.asDriver()
         )
     }
     
@@ -113,6 +206,8 @@ class ChatViewModel: BaseViewModel {
 extension ChatViewModel {
     
     struct Input {
+        let viewWillAppearTrigger: Driver<Bool>
+        let isViewVisible: Driver<Bool>
     }
     
     struct Output {
@@ -120,6 +215,7 @@ extension ChatViewModel {
         let name: Driver<String?>
         let chatConfiguration: Driver<ChatConfiguration>
         let automaticMessage: Driver<String>
+        let isLoggingOut: Driver<Bool>
     }
     
 }

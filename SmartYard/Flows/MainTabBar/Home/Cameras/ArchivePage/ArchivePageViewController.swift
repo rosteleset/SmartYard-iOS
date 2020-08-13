@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import JTAppleCalendar
+import JGProgressHUD
 
 protocol ArchivePageViewControllerDelegate: AnyObject {
     
@@ -17,36 +18,68 @@ protocol ArchivePageViewControllerDelegate: AnyObject {
     
 }
 
-class ArchivePageViewController: BaseViewController {
+class ArchivePageViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var calendarView: JTACMonthView!
     @IBOutlet private weak var monthLabel: UILabel!
     @IBOutlet private weak var leftArrowButton: UIButton!
     @IBOutlet private weak var rightArrowButton: UIButton!
     
-    private let formatter = DateFormatter()
-    private let currentCalendar = Calendar.current
+    private let apiWrapper: APIWrapper
     
-    // MARK: Максимальная дата, которую можно выбрать в календаре. Равняется текущей дате по МСК
-    // Если у нас 00:00, то в Москве еще 23:00. Соответственно, у них не наступил новый день и выбрать его нельзя
-    // Поэтому вычитаем разницу между локальной таймзоной и МСК из текущего времени
+    private let activityTracker = ActivityTracker()
+    private let errorTracker = ErrorTracker()
     
-    private let endDate: Date = {
-        let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
-        
-        return Date().adding(.hour, value: -diffWithMoscow)
-    }()
+    private var archiveRangesDisposeBag = DisposeBag()
     
-    // MARK: Минимальная дата, которую можно выбрать в календаре
-    // Равняется текущей минус семь дней (можно выбирать последнюю неделю)
-    
-    private var startDate: Date {
-        return endDate.adding(.day, value: -7)
-    }
+    var loader: JGProgressHUD?
     
     weak var delegate: ArchivePageViewControllerDelegate?
     
-    init() {
+    // Если вызывать reloadData в то время, когда календаря нет на экране - все идет по 3.14зде
+    // Почему? Потому что разработчики библиотеки - кайфовые ребята
+    // Что делать? Добавляем флаг
+    
+    private var shouldReloadOnAppear = false
+    
+    // MARK: Доступные периоды для просмотра архивных видео
+    // Если календарь видно - обновляемся. Если не видно - выставляем флаг
+    
+    private var availableRanges: [APIArchiveRange]? {
+        didSet {
+            calculateDateLimits(for: availableRanges)
+            
+            guard isVisible else {
+                shouldReloadOnAppear = true
+                return
+            }
+            
+            calendarView.reloadData()
+        }
+    }
+    
+    // MARK: Максимальная доступная дата среди всех интервалов. Нужна для конфигурации календаря
+    
+    private var upperDateLimit: Date?
+    
+    // MARK: Минимальная доступная дата среди всех интервалов. Нужна для конфигурации календаря
+    
+    private var lowerDateLimit: Date?
+    
+    private func calculateDateLimits(for ranges: [APIArchiveRange]?) {
+        guard let ranges = ranges else {
+            lowerDateLimit = nil
+            upperDateLimit = nil
+            return
+        }
+        
+        lowerDateLimit = ranges.compactMap { $0.startDate }.min()
+        upperDateLimit = ranges.compactMap { $0.endDate }.max()
+    }
+    
+    init(apiWrapper: APIWrapper) {
+        self.apiWrapper = apiWrapper
+        
         super.init(nibName: nil, bundle: nil)
         
         title = "Архив"
@@ -60,24 +93,74 @@ class ArchivePageViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // MARK: Именно пробел. Если оставить nil или "", календарь скакать будет при первой загрузке
+        
+        monthLabel.text = " "
+        leftArrowButton.isHidden = true
+        rightArrowButton.isHidden = true
+        
         configureCalendarView()
-        setupCalendar()
+        
+        bind()
     }
+    
+    // MARK: Костыль, чтобы не моргал хэдер (иначе он будет пустой до viewDidAppear)
+    // А обновить данные прямо здесь мы не можем, только во viewDidAppear
+    // Поэтому тут обновляем хэдер
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard shouldReloadOnAppear else {
+            return
+        }
+        
+        setupCalendarHeader(from: upperDateLimit)
+    }
+    
+    // А тут обновляем данные, а потом еще и хэдер на всякий случай
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        setupCalendar()
+        guard shouldReloadOnAppear else {
+            return
+        }
+        
+        shouldReloadOnAppear = false
+        
+        calendarView.reloadData(withAnchor: upperDateLimit) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            self.setupCalendarHeader(from: self.calendarView.visibleDates().monthDates.first?.date)
+        }
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        let visibleDates = calendarView.visibleDates()
-        calendarView.viewWillTransition(to: size, with: coordinator, anchorDate: visibleDates.monthDates.first?.date)
-        setupCalendar()
+    func setAvailableRanges(_ ranges: [APIArchiveRange]?) {
+        availableRanges = ranges
     }
     
-    func setupCalendar() {
-        setupCalendarHeader(from: calendarView.visibleDates())
+    private func bind() {
+        activityTracker
+            .asDriver()
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        errorTracker
+            .asDriver()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.availableRanges = nil
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureCell(view: JTACDayCell?, cellState: CellState) {
@@ -85,30 +168,48 @@ class ArchivePageViewController: BaseViewController {
             return
         }
         
+        let startOfDay = Calendar.moscowCalendar.startOfDay(for: cellState.date)
+        let endOfDay = startOfDay.adding(.hour, value: 24)
+        
+        let matchingRange = availableRanges?.first { range in
+            (startOfDay <= range.endDate) && (range.startDate <= endOfDay)
+        }
+        
         myCustomCell.configure(
             with: cellState,
-            isValidDate: cellState.date.isBetween(startDate, endDate, includeBounds: true)
+            isValidDate: matchingRange != nil
         )
     }
     
-    private func setupCalendarHeader(from visibleDates: DateSegmentInfo) {
-        guard let visibleDate = visibleDates.monthDates.first?.date else {
+    private func setupCalendarHeader(from visibleDate: Date?) {
+        guard let visibleDate = visibleDate else {
             return
         }
         
         // MARK: Заголовок
         
+        let formatter = DateFormatter()
+        
+        formatter.timeZone = Calendar.moscowCalendar.timeZone
+        formatter.locale = Calendar.moscowCalendar.locale
         formatter.dateFormat = "LLLL"
         
         let nameOfMonth = formatter.string(from: visibleDate).capitalized
-        let year = currentCalendar.component(.year, from: visibleDate)
+        let year = Calendar.moscowCalendar.component(.year, from: visibleDate)
         
         monthLabel.text = nameOfMonth + " " + String(year)
         
         // MARK: Показ и скрытие стрелочек
         
-        let startDateMonth = startDate.month
-        let endDateMonth = endDate.month
+        guard let lowerBound = lowerDateLimit, let upperBound = upperDateLimit else {
+            leftArrowButton.isHidden = true
+            rightArrowButton.isHidden = true
+            
+            return
+        }
+        
+        let startDateMonth = lowerBound.month
+        let endDateMonth = upperBound.month
         let visibleDateMonth = visibleDate.month
         
         leftArrowButton.isHidden = visibleDateMonth <= startDateMonth
@@ -132,7 +233,7 @@ class ArchivePageViewController: BaseViewController {
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
         
-        calendarView.scrollToDate(endDate)
+        calendarView.reloadData(withAnchor: Date())
         
         leftArrowButton.rx
             .tap
@@ -203,15 +304,21 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
     }
 
     func configureCalendar(_ calendar: JTACMonthView) -> ConfigurationParameters {
-        formatter.dateFormat = "yyyy MM dd"
-        formatter.timeZone = currentCalendar.timeZone
-        formatter.locale = .init(identifier: "RU")
+        let (startDate, endDate): (Date, Date) = {
+            guard let lowerBound = lowerDateLimit, let upperBound = upperDateLimit else {
+                let date = Date()
+                
+                return (date, date)
+            }
+            
+            return (lowerBound, upperBound)
+        }()
 
         let parameters = ConfigurationParameters(
             startDate: startDate,
             endDate: endDate,
             numberOfRows: 6,
-            calendar: currentCalendar,
+            calendar: Calendar.moscowCalendar,
             generateInDates: .forAllMonths,
             generateOutDates: .tillEndOfGrid,
             firstDayOfWeek: .monday,
@@ -228,7 +335,18 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
         cellState: CellState,
         indexPath: IndexPath
     ) -> Bool {
-        return date.isBetween(startDate, endDate, includeBounds: true)
+        guard let availableRanges = availableRanges, !availableRanges.isEmpty else {
+            return false
+        }
+        
+        let startOfDay = Calendar.moscowCalendar.startOfDay(for: cellState.date)
+        let endOfDay = startOfDay.adding(.hour, value: 24)
+        
+        let matchingRange = availableRanges.first { range in
+            (startOfDay <= range.endDate) && (range.startDate <= endOfDay)
+        }
+        
+        return matchingRange != nil
     }
 
     func calendar(
@@ -254,7 +372,7 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
     }
 
     func calendar(_ calendar: JTACMonthView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
-        setupCalendarHeader(from: visibleDates)
+        setupCalendarHeader(from: visibleDates.monthDates.first?.date)
     }
 
 }

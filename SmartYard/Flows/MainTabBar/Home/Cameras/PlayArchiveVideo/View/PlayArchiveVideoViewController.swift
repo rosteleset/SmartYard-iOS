@@ -12,6 +12,7 @@ import RxCocoa
 import AVKit
 import JGProgressHUD
 import TouchAreaInsets
+import Lottie
 
 // swiftlint:disable:next type_body_length
 class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
@@ -44,6 +45,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var realVideoContainer: UIView!
     @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
     @IBOutlet private weak var fullscreenButton: UIButton!
+    @IBOutlet private weak var videoLoadingAnimationView: AnimationView!
     
     private var realVideoPlayerViewController: AVPlayerViewController?
     private var realVideoPlayer: AVPlayer?
@@ -85,13 +87,14 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     private let viewModel: PlayArchiveVideoViewModel
     
-    private let periodsProxy = BehaviorSubject<[ArchiveVideoHourPeriod]>(value: [])
-    private let periodSelectedTrigger = PublishSubject<ArchiveVideoHourPeriod?>()
+    private let periodsProxy = BehaviorSubject<[ArchiveVideoPreviewPeriod]>(value: [])
+    private let periodSelectedTrigger = PublishSubject<ArchiveVideoPreviewPeriod?>()
     private let startEndSelectedTrigger = PublishSubject<(Date, Date)>()
     private let screenshotTrigger = PublishSubject<Date>()
     
     private let currentMode = BehaviorSubject<Mode>(value: .preview)
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
+    private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: false)
     private let currentPlaybackTime = BehaviorSubject<CMTime>(value: .zero)
     
     private var latestThumbnailConfig: VideoThumbnailConfiguration?
@@ -284,6 +287,14 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         realVideoContainer.insertSubview(playerViewController.view, at: 0)
         playerViewController.didMove(toParent: self)
         
+        // MARK: Настройка лоадера
+        
+        let animation = Animation.named("LoaderAnimation")
+        
+        videoLoadingAnimationView.animation = animation
+        videoLoadingAnimationView.loopMode = .loop
+        videoLoadingAnimationView.backgroundBehavior = .pauseAndRestore
+        
         // MARK: Когда полноэкранное видео будет закрыто, нужно добавить child controller заново
         
         NotificationCenter.default.rx
@@ -400,7 +411,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureSliders() {
+        progressSlider.setReferenceCalendar(.moscowCalendar)
         progressSlider.delegate = self
+        
+        rangeSlider.setReferenceCalendar(.moscowCalendar)
         rangeSlider.delegate = self
     }
     
@@ -431,13 +445,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        let currentPlaybackTimeDistinctSeconds = currentPlaybackTime
-            .asDriverOnErrorJustComplete()
-            .map { $0.seconds }
-            .distinctUntilChanged { lhs, rhs in
-                abs(lhs - rhs) < 0.001
-            }
-        
         periodSelectedTrigger
             .asDriverOnErrorJustComplete()
             .drive(
@@ -447,7 +454,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                             return nil
                         }
                         
-                        return period.baseDate.adding(.hour, value: period.startHours)
+                        return period.startDate
                     }()
                     
                     self?.progressSlider.setRelativeStartDate(startDate)
@@ -455,42 +462,14 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        Driver
-            .combineLatest(
-                periodSelectedTrigger.asDriverOnErrorJustComplete(),
-                currentPlaybackTimeDistinctSeconds
-            )
+        isVideoBeingLoaded
+            .asDriver(onErrorJustReturn: false)
+            .debounce(.milliseconds(25))
             .drive(
-                onNext: { [weak self] args in
-                    guard let self = self else {
-                        return
-                    }
+                onNext: { [weak self] isLoading in
+                    self?.videoLoadingAnimationView.isHidden = !isLoading
                     
-                    let (period, playbackTime) = args
-                    
-                    guard let uPeriod = period else {
-                        return
-                    }
-                    
-                    // MARK: Максимальная дата, которую можно выбрать. Равняется текущей дате по МСК
-                    // Если у нас 00:00, то в Москве еще 23:00. Соответственно, максимум можно выбрать 23:00
-                    // Поэтому вычитаем разницу между локальной таймзоной и МСК из текущего времени
-                    
-                    let diffWithMoscow = TimeZone.current.secondsFromGMT() / 3600 - Date.moscowOffsetFromGMT
-                    
-                    let upperBound = Date().adding(.hour, value: -diffWithMoscow)
-                    let lowerBound = upperBound.adding(.day, value: -7)
-                    
-                    let visibleTimelineEndDate = uPeriod.baseDate
-                        .adding(.hour, value: uPeriod.startHours)
-                        .addingTimeInterval(playbackTime)
-                        .adding(.minute, value: 30)
-                    
-                    self.rangeSlider.setTimelineConfiguration(
-                        visibleTimelineEndDate: visibleTimelineEndDate,
-                        lowerBound: lowerBound,
-                        upperBound: upperBound
-                    )
+                    isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
                 }
             )
             .disposed(by: disposeBag)
@@ -557,6 +536,44 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .drive(previewDateLabel.rx.text)
             .disposed(by: disposeBag)
         
+        let currentPlaybackTimeDistinctSeconds = currentPlaybackTime
+            .asDriverOnErrorJustComplete()
+            .map { $0.seconds }
+            .distinctUntilChanged { lhs, rhs in
+                abs(lhs - rhs) < 0.001
+            }
+        
+        Driver
+            .combineLatest(
+                output.rangeBounds,
+                periodSelectedTrigger.asDriverOnErrorJustComplete(),
+                currentPlaybackTimeDistinctSeconds
+            )
+            .drive(
+                onNext: { [weak self] args in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let (rangeBounds, period, playbackTime) = args
+                    
+                    guard let uPeriod = period else {
+                        return
+                    }
+                    
+                    let visibleTimelineEndDate = uPeriod.startDate
+                        .addingTimeInterval(playbackTime)
+                        .adding(.minute, value: 30)
+                    
+                    self.rangeSlider.setTimelineConfiguration(
+                        visibleTimelineEndDate: visibleTimelineEndDate,
+                        lowerBound: rangeBounds?.lower,
+                        upperBound: rangeBounds?.upper
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+        
         output.videoData
             .do(
                 onNext: { [weak self] _ in
@@ -582,6 +599,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     self?.loadingAsset = asset
                     
                     // MARK: Грузим ключи tracks и duration, т.к. только они сработают для m3u8 потока
+                    
+                    self?.isVideoBeingLoaded.onNext(true)
 
                     asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { [weak asset] in
                         guard let asset = asset else {
@@ -594,37 +613,45 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         let tracksStatus = asset.statusOfValue(forKey: "tracks", error: &tracksError)
                         let durationStatus = asset.statusOfValue(forKey: "duration", error: &durationError)
                         
-                        switch (tracksStatus, durationStatus) {
-                        case (.loaded, .loaded):
-                            DispatchQueue.main.async {
-                                // MARK: Ассет загружен, больше хранить его не нужно
-                                
-                                self?.loadingAsset = nil
-
-                                // MARK: Видео готово к просмотру, засовываем его в плеер
-                                
-                                let playerItem = AVPlayerItem(asset: asset)
-
-                                self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
-                                self?.progressSlider.setVideoDuration(CMTimeGetSeconds(asset.duration))
-                                
-                                // MARK: Грузим thumbnails
-                                
-                                self?.progressSlider.resetThumbnailImages()
-                                self?.progressSlider.setActivityIndicatorsHidden(false)
-
-                                self?.rangeSlider.resetThumbnailImages()
-                                self?.rangeSlider.setActivityIndicatorsHidden(false)
-
-                                self?.loadThumbnails(
-                                    config: thumbnailsConfig,
-                                    count: 5,
-                                    videoDuration: CMTimeGetSeconds(asset.duration)
-                                )
-                            }
+                        if tracksStatus == .cancelled ||
+                            tracksStatus == .failed ||
+                            durationStatus == .cancelled ||
+                            durationStatus == .failed {
+                            self?.isVideoBeingLoaded.onNext(false)
+                            return
+                        }
+                        
+                        guard tracksStatus == .loaded, durationStatus == .loaded else {
+                            return
+                        }
+                        
+                        self?.isVideoBeingLoaded.onNext(false)
+                        
+                        DispatchQueue.main.async {
+                            // MARK: Ассет загружен, больше хранить его не нужно
                             
-                        default:
-                            break
+                            self?.loadingAsset = nil
+
+                            // MARK: Видео готово к просмотру, засовываем его в плеер
+                            
+                            let playerItem = AVPlayerItem(asset: asset)
+
+                            self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
+                            self?.progressSlider.setVideoDuration(CMTimeGetSeconds(asset.duration))
+                            
+                            // MARK: Грузим thumbnails
+                            
+                            self?.progressSlider.resetThumbnailImages()
+                            self?.progressSlider.setActivityIndicatorsHidden(false)
+
+                            self?.rangeSlider.resetThumbnailImages()
+                            self?.rangeSlider.setActivityIndicatorsHidden(false)
+
+                            self?.loadThumbnails(
+                                config: thumbnailsConfig,
+                                count: 5,
+                                videoDuration: CMTimeGetSeconds(asset.duration)
+                            )
                         }
                     }
                 }
@@ -886,6 +913,8 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         shiftTimelineForwardButton.isEnabled = !isUpperBoundReached
         
         let dateFormatter = DateFormatter()
+        
+        dateFormatter.timeZone = Calendar.moscowCalendar.timeZone
         dateFormatter.dateFormat = "dd.MM.yy"
         
         editDateLabel.text = "Видео от \(dateFormatter.string(from: startDate))"

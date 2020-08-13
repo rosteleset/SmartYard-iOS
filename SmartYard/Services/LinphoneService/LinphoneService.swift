@@ -9,6 +9,7 @@
 import Foundation
 import linphonesw
 import UIKit
+import CallKit
 
 // swiftlint:disable all
 class LinphoneService: CoreDelegate {

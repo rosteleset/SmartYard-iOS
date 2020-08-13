@@ -44,6 +44,7 @@
                 <outlet property="selectFragmentButton" destination="wkd-4A-ePf" id="g5B-Zw-XrB"/>
                 <outlet property="shiftTimelineBackwardButton" destination="CPg-RE-9lw" id="ruA-dh-Lhu"/>
                 <outlet property="shiftTimelineForwardButton" destination="eey-Hz-Pq4" id="JQa-tR-LNq"/>
+                <outlet property="videoLoadingAnimationView" destination="lT9-Mp-zMH" id="32Z-8S-g9p"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -105,9 +106,19 @@
                                                 <constraint firstAttribute="height" constant="37" id="QQg-ft-Cm3"/>
                                             </constraints>
                                         </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lT9-Mp-zMH" customClass="AnimationView" customModule="Lottie">
+                                            <rect key="frame" x="151" y="89" width="80" height="80"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="5CH-zc-sdT"/>
+                                                <constraint firstAttribute="height" constant="80" id="NlL-Bt-wkz"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <constraints>
+                                        <constraint firstItem="lT9-Mp-zMH" firstAttribute="centerY" secondItem="gbA-7j-j0f" secondAttribute="centerY" id="HC6-OG-DP2"/>
+                                        <constraint firstItem="lT9-Mp-zMH" firstAttribute="centerX" secondItem="gbA-7j-j0f" secondAttribute="centerX" id="ccR-su-Jdt"/>
                                         <constraint firstAttribute="trailing" secondItem="sTb-NK-D3v" secondAttribute="trailing" constant="12" id="fee-1l-zlX"/>
                                         <constraint firstItem="sTb-NK-D3v" firstAttribute="top" secondItem="gbA-7j-j0f" secondAttribute="top" constant="12" id="gLN-uh-jpR"/>
                                         <constraint firstItem="gTL-Y7-3LT" firstAttribute="leading" secondItem="gbA-7j-j0f" secondAttribute="leading" constant="12" id="lwW-yC-7QN"/>

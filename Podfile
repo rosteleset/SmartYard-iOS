@@ -34,6 +34,7 @@ target 'SmartYard' do
   pod 'SearchTextField'
   pod 'SHSPhoneComponent'
   pod 'Parchment'
+  pod 'lottie-ios'
 
   # Calendar
   pod 'JTAppleCalendar'

@@ -9,5 +9,6 @@
 struct UnreadedResponseData: Decodable {
     
     let count: Int
+    let chat: Int
     
 }

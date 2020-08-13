@@ -23,6 +23,7 @@ enum APITarget {
     case allCCTV(request: AllCCTVRequest)
     case recPrepare(request: RecPrepareRequest)
     case recDownload(request: RecDownloadRequest)
+    case streamInfo(request: StreamInfoRequest)
     
     case getAddress(request: GetAddressRequest)
     case getGeoCoder(request: GeoCoderRequest)
@@ -34,12 +35,14 @@ enum APITarget {
     case inbox(request: InboxRequest)
     case unreaded(request: UnreadedRequest)
     case delivered(request: DeliveredRequest)
+    case chatReaded(request: ChatReadedRequest)
     
     case getListConnect(request: GetListConnectRequest)
     case createIssue(request: CreateIssueRequest)
     case actionIssue(request: ActionIssueRequest)
     case commentIssue(request: CommentIssueRequest)
     
+    case appVersion(request: AppVersionRequest)
     case addMyPhone(request: AddMyPhoneRequest)
     case requestCode(request: RequestCodeRequest)
     case registerPushToken(request: RegisterPushTokenRequest)
@@ -61,6 +64,10 @@ extension APITarget: TargetType {
         switch self {
         case .sberbankPayProcess:
             return URL(string: "https://securepayments.sberbank.ru/payment/applepay")!
+            
+        case .streamInfo(let request):
+            return URL(string: request.cameraUrl)!
+            
         default:
             return URL(string: "https://dm.lanta.me/api")!
         }
@@ -81,6 +88,7 @@ extension APITarget: TargetType {
         case .allCCTV: return "cctv/all"
         case .recPrepare: return "cctv/recPrepare"
         case .recDownload: return "cctv/recDownload"
+        case .streamInfo: return "recording_status.json"
             
         case .getAddress: return "geo/address"
         case .getGeoCoder: return "geo/coder"
@@ -92,12 +100,14 @@ extension APITarget: TargetType {
         case .inbox: return "inbox/inbox"
         case .unreaded: return "inbox/unreaded"
         case .delivered: return "inbox/delivered"
+        case .chatReaded: return "inbox/chatReaded"
             
         case .getListConnect: return "issues/listConnect"
         case .createIssue: return "issues/create"
         case .actionIssue: return "issues/action"
         case .commentIssue: return "issues/comment"
             
+        case .appVersion: return "user/appVersion"
         case .addMyPhone: return "user/addMyPhone"
         case .requestCode: return "user/requestCode"
         case .registerPushToken: return "user/registerPushToken"
@@ -114,7 +124,10 @@ extension APITarget: TargetType {
     }
     
     var method: Moya.Method {
-        return .post
+        switch self {
+        case .streamInfo: return .get
+        default: return .post
+        }
     }
     
     var headers: [String: String]? {
@@ -149,12 +162,14 @@ extension APITarget: TargetType {
             case .inbox(let request): return request.accessToken
             case .unreaded(let request): return request.accessToken
             case .delivered(let request): return request.accessToken
+            case .chatReaded(let request): return request.accessToken
                 
             case .getListConnect(let request): return request.accessToken
             case .createIssue(let request): return request.accessToken
             case .actionIssue(let request): return request.accessToken
             case .commentIssue(let request): return request.accessToken
                 
+            case .appVersion(let request): return request.accessToken
             case .addMyPhone(let request): return request.accessToken
             case .registerPushToken(let request): return request.accessToken
             case .getPaymentsList(let request): return request.accessToken
@@ -177,7 +192,10 @@ extension APITarget: TargetType {
     }
     
     var task: Task {
-        return .requestParameters(parameters: requestParameters, encoding: JSONEncoding.default)
+        switch self {
+        case .streamInfo: return .requestParameters(parameters: requestParameters, encoding: URLEncoding.default)
+        default: return .requestParameters(parameters: requestParameters, encoding: JSONEncoding.default)
+        }
     }
     
     var requestParameters: [String: Any] {
@@ -195,6 +213,7 @@ extension APITarget: TargetType {
         case .allCCTV(let request): return request.requestParameters
         case .recPrepare(let request): return request.requestParameters
         case .recDownload(let request): return request.requestParameters
+        case .streamInfo(let request): return request.requestParameters
             
         case .getAddress(let request): return request.requestParameters
         case .getGeoCoder(let request): return request.requestParameters
@@ -206,12 +225,14 @@ extension APITarget: TargetType {
         case .inbox(let request): return request.requestParameters
         case .unreaded(let request): return request.requestParameters
         case .delivered(let request): return request.requestParameters
+        case .chatReaded(let request): return request.requestParameters
 
         case .getListConnect(let request): return request.requestParameters
         case .createIssue(let request): return request.requestParameters
         case .actionIssue(let request): return request.requestParameters
         case .commentIssue(let request): return request.requestParameters
             
+        case .appVersion(let request): return request.requestParameters
         case .addMyPhone(let request): return request.requestParameters
         case .requestCode(let request): return request.requestParameters
         case .registerPushToken(let request): return request.requestParameters

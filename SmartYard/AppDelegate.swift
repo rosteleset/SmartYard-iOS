@@ -9,19 +9,28 @@
 import UIKit
 import Firebase
 import YandexMobileMetrica
+import PushKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private lazy var mainWindow = UIWindow()
+    private let mainWindow: UIWindow
+    private let appCoordinator: AppCoordinator
     
-    private let appCoordinator = AppCoordinator()
+    override init() {
+        mainWindow = UIWindow()
+        appCoordinator = AppCoordinator(mainWindow: mainWindow)
+        
+        super.init()
+    }
 
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         configureFirebase(for: application)
+        
+        configureVoIPNotifications()
         
         if let yandexConfig = YMMYandexMetricaConfiguration(apiKey: "686bcc1e-69e5-4412-8d54-3e11e362624a") {
             YMMYandexMetrica.activate(with: yandexConfig)
@@ -46,16 +55,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(
         _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+    ) -> Bool {
+        if userActivity.activityType == "INStartVideoCallIntent" {
+            NotificationCenter.default.post(name: .videoRequestedByCallKit, object: nil)
+        }
+        
+        return true
+    }
+    
+    func application(
+        _ application: UIApplication,
         supportedInterfaceOrientationsFor window: UIWindow?
     ) -> UIInterfaceOrientationMask {
-        if let topVc = window?.rootViewController?.topViewController,
-            topVc is FullscreenPlayerViewController,
+        guard let topVc = window?.rootViewController?.topViewController else {
+            return .portrait
+        }
+        
+        if topVc is FullscreenPlayerViewController,
             !topVc.isBeingDismissed,
             !topVc.isBeingPresented {
             return .allButUpsideDown
+        } else if topVc is IncomingCallLandscapeViewController,
+            !topVc.isBeingDismissed {
+            return .landscape
         } else {
             return .portrait
         }
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        UserDefaults.standard.synchronize()
     }
 
 }
@@ -93,52 +124,65 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
         let userInfo = notification.request.content.userInfo
         
-        if let messageID = userInfo["gcm.message_id"] {
-            print("DEBUG / PUSH NOTIFICATIONS / Message ID: \(messageID)")
-        }
-        
         print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
-        
-        // MARK: Если в пуше пришел Badge - посылаем локальное уведомление, чтобы обновить Badge в таббаре
-        
-        if let aps = userInfo["aps"] as? [AnyHashable: Any],
-            let badge = aps["badge"] as? Int {
-            NotificationCenter.default.post(
-                name: .badgeNumberUpdated,
-                object: nil,
-                userInfo: [NotificationKeys.badgeNumberKey: badge]
-            )
-        }
         
         // MARK: Если пришел входящий звонок - переходим на экран входящего звонка, но не показываем пуш
         
         if let callPayload = CallPayload(pushNotificationPayload: userInfo) {
-            appCoordinator.processIncomingCallRequest(callPayload: callPayload)
+            appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: false)
             completionHandler([])
             return
         }
         
-        // MARK: Если есть действие - обрабатываем его
+        // MARK: Если есть messageId - помечаем сообщение как доставленное
         
-        if let rawMessageType = userInfo["action"] as? String,
-            let messageType = MessageType(rawValue: rawMessageType) {
-            // MARK: Если есть messageId - помечаем сообщение как доставленное и обновляем таб "Уведомления"
+        if let messageId = userInfo["messageId"] as? String {
+            appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
+        }
+        
+        // MARK: Проверяем, есть ли у уведомления тип действия. Если нет - то в принципе ничего не делаем
+        
+        guard let rawAction = userInfo["action"] as? String,
+            let action = MessageType(rawValue: rawAction) else {
+            completionHandler([.alert, .badge, .sound])
+            return
+        }
+        
+        // MARK: Если пришло уведомление о новом уведомлении в списке - отправляем .newInboxMessageReceived
+        // Это вызовет показ баджа в табе "Уведомления" и обновление списка уведомлений
+        
+        if action == .inbox {
+            NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+            NotificationCenter.default.post(name: .unreadInboxMessagesAvailable, object: nil)
+        }
+        
+        // MARK: Если пришло уведомление о новом сообщении чата - отправляем .newInboxMessageReceived
+        // Это вызовет показ баджа в табе "Чат" и обновление сообщений чата
+        
+        if action == .chat {
+            NotificationCenter.default.post(name: .newChatMessageReceived, object: nil)
+            NotificationCenter.default.post(name: .unreadChatMessagesAvailable, object: nil)
             
-            if let messageId = userInfo["messageId"] as? String {
-                appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
-                NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+            // MARK: Если уже находимся на вкладке "Чат", то не показываем пуш
+            
+            if appCoordinator.selectedTabPresentable?.router(for: ChatRoute.main) != nil {
+                completionHandler([])
+                return
             }
-            
-            // MARK: Если пришло уведомление о добавленном адресе - отправляем .addressAdded
-            // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
-            
-            if messageType == .newAddress {
-                NotificationCenter.default.post(name: .addressAdded, object: nil)
-            }
-            
-            if messageType == .paySuccess {
-                NotificationCenter.default.post(name: .paymentCompleted, object: nil)
-            }
+        }
+        
+        // MARK: Если пришло уведомление о добавленном адресе - отправляем .addressAdded
+        // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
+        
+        if action == .newAddress {
+            NotificationCenter.default.post(name: .addressAdded, object: nil)
+        }
+        
+        // MARK: Если пришло уведомление об успешном платеже - отправляем .paymentCompleted
+        // Это вызовет обновление данных в табе "Оплатить"
+        
+        if action == .paySuccess {
+            NotificationCenter.default.post(name: .paymentCompleted, object: nil)
         }
         
         completionHandler([.alert, .badge, .sound])
@@ -156,26 +200,28 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if let callPayload = CallPayload(
             pushNotificationPayload: response.notification.request.content.userInfo
         ) {
-            appCoordinator.processIncomingCallRequest(callPayload: callPayload)
-        }
-        
-        // MARK: Если в уведомлении нет никакого действия, то ничего не делаем
-        
-        guard let rawMessageType = response.notification.request.content.userInfo["action"] as? String,
-            let messageType = MessageType(rawValue: rawMessageType) else {
+            appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: false)
             completionHandler()
             return
         }
         
-        // MARK: Если есть messageId - помечаем сообщение как доставленное
+        // MARK: Если есть messageId - помечаем сообщение как доставленное. Лучше два раза, чем ни разу
         
         if let messageId = response.notification.request.content.userInfo["messageId"] as? String {
             appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
         }
         
+        // MARK: Если в уведомлении нет никакого действия, то ничего не делаем
+        
+        guard let rawAction = response.notification.request.content.userInfo["action"] as? String,
+            let action = MessageType(rawValue: rawAction) else {
+            completionHandler()
+            return
+        }
+        
         // MARK: Переход в конкретный таб при нажатии на уведомление
         
-        switch messageType {
+        switch action {
         case .inbox, .newAddress, .paySuccess, .payError, .videoReady:
             appCoordinator.openNotificationsTab()
         case .chat:
@@ -186,17 +232,61 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
         // Сделано это вроде для того, чтобы если приложение ушло в бекграунд, данные обновились при нажатии
         
-        if messageType == .newAddress {
+        if action == .newAddress {
             NotificationCenter.default.post(name: .addressAdded, object: nil)
         }
         
-        if messageType == .paySuccess {
+        // MARK: Для платежей - аналогично
+        
+        if action == .paySuccess {
             NotificationCenter.default.post(name: .paymentCompleted, object: nil)
         }
         
-        // MARK: Завершение работы
-        
         completionHandler()
+    }
+    
+}
+
+// MARK: VoIP Notifications
+
+extension AppDelegate: PKPushRegistryDelegate {
+    
+    func pushRegistry(
+        _ registry: PKPushRegistry,
+        didUpdate pushCredentials: PKPushCredentials,
+        for type: PKPushType
+    ) {
+        let token = pushCredentials.token
+            .map { String(format: "%02.2hhx", $0) }
+            .joined()
+        
+        print("DEBUG / GOT NEW TOKEN \(token)")
+        
+        appCoordinator.setVoipToken(token)
+    }
+    
+    func pushRegistry(
+        _ registry: PKPushRegistry,
+        didReceiveIncomingPushWith payload: PKPushPayload,
+        for type: PKPushType,
+        completion: @escaping () -> Void
+    ) {
+        print("DEBUG / VOIP NOTIFICATIONS / Payload: \(payload.dictionaryPayload)")
+        
+        guard let data = payload.dictionaryPayload["data"] as? [AnyHashable: Any],
+            let callPayload = CallPayload(pushNotificationPayload: data) else {
+            appCoordinator.reportInvalidCall()
+            completion()
+            return
+        }
+        
+        appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: true)
+    }
+    
+    private func configureVoIPNotifications() {
+        let registry = PKPushRegistry(queue: DispatchQueue.main)
+        registry.delegate = self
+        registry.desiredPushTypes = [.voIP]
     }
     
 }

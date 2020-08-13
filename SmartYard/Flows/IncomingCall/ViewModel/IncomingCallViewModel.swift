@@ -13,10 +13,12 @@ import UIKit
 import linphonesw
 import XCoordinator
 import AVFoundation
+import CallKit
 
 // swiftlint:disable:next type_body_length
 class IncomingCallViewModel: BaseViewModel {
     
+    private let providerProxy: CXProviderProxy
     private let linphoneService: LinphoneService
     private let permissionService: PermissionService
     private let apiWrapper: APIWrapper
@@ -25,9 +27,9 @@ class IncomingCallViewModel: BaseViewModel {
     
     private let callPayload: CallPayload
     
-    private let currentStateSubject = BehaviorSubject<(IncomingCallState, IncomingCallDoorState)>(
-        value: (.callReceived, .notDetermined)
-    )
+    private let currentStateSubject = BehaviorSubject<IncomingCallStateContainer>(value: .initial)
+    
+    private let errorTracker = ErrorTracker()
     
     private let registrationFinished = BehaviorSubject<Bool>(value: false)
     private let incomingCall = BehaviorSubject<(Call, CallParams)?>(value: nil)
@@ -35,35 +37,65 @@ class IncomingCallViewModel: BaseViewModel {
     private let doorOpeningRequestedByUser = BehaviorSubject<Bool>(value: false)
     private let isDoorBeingOpened = BehaviorSubject<Bool>(value: false)
     
+    // MARK: По умолчанию звонок принятый через CallKit должен показываться со статичной картинкой
+    // Чтобы показалось видео - нужно, чтобы пользователь нажал на кнопку "Video" в коллките
+    // Если CallKit выключен, то всегда по умолчанию показывается видео
+    
+    private let preferredPreviewModeForActiveCall: BehaviorSubject<IncomingCallPreviewState>
+    private let subtitleSubject: BehaviorSubject<String?>
+    private let imageSubject = BehaviorSubject<UIImage?>(value: nil)
+    
+    private let answerCallProxySubject = PublishSubject<Void>()
+    private let endCallProxySubject = PublishSubject<Void>()
+    
     init(
+        providerProxy: CXProviderProxy,
         linphoneService: LinphoneService,
         permissionService: PermissionService,
         apiWrapper: APIWrapper,
         router: WeakRouter<AppRoute>,
-        callPayload: CallPayload
+        callPayload: CallPayload,
+        isCallKitUsed: Bool
     ) {
+        self.providerProxy = providerProxy
         self.linphoneService = linphoneService
         self.permissionService = permissionService
         self.apiWrapper = apiWrapper
         self.router = router
         self.callPayload = callPayload
         
+        preferredPreviewModeForActiveCall = BehaviorSubject<IncomingCallPreviewState>(
+            value: isCallKitUsed ? .staticImage : .video
+        )
+        
+        subtitleSubject = BehaviorSubject<String?>(value: callPayload.callerId)
+        
         super.init()
         
         linphoneService.delegate = self
         linphoneService.connect(config: callPayload.sipConfig)
+        
+        providerProxy.delegate = self
+        
+        createCommonBindings()
     }
     
     deinit {
+        UIDevice.current.isProximityMonitoringEnabled = false
+        
+        try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
+        
         linphoneService.stop()
         linphoneService.hasEnqueuedCalls = false
     }
     
+    /// Все, что не зависит от Input, а привязано к локальным сабжектам
     // swiftlint:disable:next function_body_length cyclomatic_complexity
-    func transform(input: Input) -> Output {
-        // MARK: Обработка ошибок
+    private func createCommonBindings() {
+        let currentState = currentStateSubject.asDriverOnErrorJustComplete()
         
-        let errorTracker = ErrorTracker()
+        // MARK: Обработка ошибок
         
         let micMsg = "Исходящего звука в этом звонке не будет. " +
         "Чтобы он появился в следующих звонках, предоставьте доступ к микрофону в настройках"
@@ -81,28 +113,6 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        // MARK: Общий стейт экрана
-        
-        let currentState = currentStateSubject.asDriverOnErrorJustComplete()
-        
-        // MARK: проксируем нажатие кнопки "Открыть" в локальный сабжект
-        // Заодно обновляем стейт на "Соединение...", если до этого был стейт "Входящий звонок"
-        
-        input.openTrigger
-            .withLatestFrom(currentState)
-            .drive(
-                onNext: { [weak self] currentState in
-                    let (callState, doorState) = currentState
-                    
-                    if callState == .callReceived {
-                        self?.currentStateSubject.onNext((.establishingConnection, doorState))
-                    }
-                    
-                    self?.doorOpeningRequestedByUser.onNext(true)
-                }
-            )
-            .disposed(by: disposeBag)
-        
         // MARK: мы можем нажать кнопку "Открыть" еще до того, как примем звонок.
         // Поэтому нам надо будет отложенно выполнить действие по открытию тогда, когда звонок будет принят
         // Именно для этого и используется combineLatest, чтобы выполнить первую проверку после принятия звонка
@@ -116,9 +126,10 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .filter { args in
                 let (currentState, isDoorOpeningRequested) = args
-                let (callState, doorState) = currentState
                 
-                return callState == .callAccepted && doorState == .notDetermined && isDoorOpeningRequested
+                return currentState.callState == .callActive &&
+                    currentState.doorState == .notDetermined &&
+                    isDoorOpeningRequested
             }
             .mapToVoid()
             .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
@@ -147,7 +158,7 @@ class IncomingCallViewModel: BaseViewModel {
                 }
                 
                 return self.permissionService.requestAccessToMic()
-                    .trackError(errorTracker)
+                    .trackError(self.errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
             .drive()
@@ -182,22 +193,48 @@ class IncomingCallViewModel: BaseViewModel {
             }
             .throttle(.never)
             .withLatestFrom(currentStateSubject.asDriverOnErrorJustComplete()) { ($0, $1) }
+            .withLatestFrom(preferredPreviewModeForActiveCall.asDriverOnErrorJustComplete()) { ($0, $1) }
             .drive(
                 onNext: { [weak self] args in
-                    let (callInfo, currentState) = args
-                    let (_, doorState) = currentState
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let (firstPack, previewMode) = args
+                    let (callInfo, currentState) = firstPack
                     let (call, callParams) = callInfo
                     
                     do {
                         try call.acceptWithParams(params: callParams)
                         
-                        if !call.speakerMuted {
-                            self?.enableLoudSpeaker()
-                        }
+                        self.providerProxy.updateCall(
+                            uuid: self.callPayload.uuid,
+                            handle: self.callPayload.callerId,
+                            hasVideo: true
+                        )
                         
-                        self?.currentStateSubject.onNext((.callAccepted, doorState))
+                        UIDevice.current.isProximityMonitoringEnabled = true
+                        
+                        let soundOutputState: IncomingCallSoundOutputState = {
+                            if call.speakerMuted {
+                                return .disabled
+                            }
+                            
+                            return UIDevice.current.proximityState ? .regular : .speaker
+                        }()
+                        
+                        let newState = IncomingCallStateContainer(
+                            callState: .callActive,
+                            doorState: currentState.doorState,
+                            previewState: previewMode,
+                            soundOutputState: soundOutputState
+                        )
+                        
+                        self.currentStateSubject.onNext(newState)
                     } catch {
-                        self?.router.trigger(.dismiss)
+                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                        
+                        self.router.trigger(.closeIncomingCall)
                     }
                 }
             )
@@ -214,13 +251,21 @@ class IncomingCallViewModel: BaseViewModel {
             .withLatestFrom(currentState)
             .do(
                 onNext: { [weak self] currentState in
-                    let (callState, doorState) = currentState
-                    
-                    guard let self = self, callState != .callFinished, doorState == .notDetermined else {
+                    guard let self = self,
+                        currentState.callState != .callFinished,
+                        currentState.doorState == .notDetermined else {
                         return
                     }
                     
-                    self.currentStateSubject.onNext((.callFinished, doorState))
+                    let newState = IncomingCallStateContainer(
+                        callState: .callFinished,
+                        doorState: currentState.doorState,
+                        previewState: .staticImage,
+                        soundOutputState: .disabled
+                    )
+                    
+                    self.currentStateSubject.onNext(newState)
+                    
                     self.linphoneService.stop()
                     self.linphoneService.hasEnqueuedCalls = false
                 }
@@ -228,89 +273,47 @@ class IncomingCallViewModel: BaseViewModel {
             .delay(.milliseconds(2000))
             .drive(
                 onNext: { [weak self] _ in
-                    self?.router.trigger(.dismiss)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        // MARK: Обработка нажатия на кнопку "Звонок"
-        
-        input.callTrigger
-            .withLatestFrom(currentState) { ($0, $1) }
-            .drive(
-                onNext: { [weak self] args in
-                    let (views, currentState) = args
-                    let (videoView, cameraView) = views
-                    let (callState, doorState) = currentState
-                    
-                    guard let self = self,
-                        callState == .callReceived || callState == .callPreviewed,
-                        doorState == .notDetermined else {
-                        return
-                    }
-                    
-                    self.currentStateSubject.onNext((.establishingConnection, doorState))
-                    self.linphoneService.setViews(videoView: videoView, cameraView: cameraView)
-                    self.incomingCallAcceptedByUser.onNext(true)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        // MARK: Обработка нажатия на кнопку "Игнорировать / Отклонить"
-        // Если мы еще не приняли звонок, то просто закрываем окно (человек у домофона думает, что нас нет дома)
-        // Если мы уже приняли звонок и жмем "Отклонить", то завершаем звонок и закрываем окно
-        
-        input.ignoreTrigger
-            .withLatestFrom(currentState)
-            .do(
-                onNext: { [weak self] currentState in
-                    let (callState, doorState) = currentState
-                    
-                    guard let self = self, callState != .callFinished, doorState == .notDetermined else {
-                        return
-                    }
-                    
-                    self.currentStateSubject.onNext((.callFinished, .notDetermined))
-                }
-            )
-            .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
-            .drive(
-                onNext: { [weak self] callInfo in
                     guard let self = self else {
                         return
                     }
                     
-                    guard let currentCall = callInfo?.0,
-                        (currentCall.state == .Connected || currentCall.state == .StreamsRunning) else {
-                        self.router.trigger(.dismiss)
-                        return
-                    }
-
-                    do {
-                        try currentCall.terminate()
-                    } catch {
-                        self.router.trigger(.dismiss)
-                    }
+                    self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                    
+                    self.router.trigger(.closeIncomingCall)
                 }
             )
             .disposed(by: disposeBag)
         
-        // MARK: Обработка нажатия на кнопку "Глазок"
+        // MARK: Обработка нажатия на кнопку "Video" в CallKit
         
-        input.previewTrigger
+        NotificationCenter.default.rx
+            .notification(.videoRequestedByCallKit)
+            .asDriverOnErrorJustComplete()
             .withLatestFrom(currentState)
             .drive(
                 onNext: { [weak self] currentState in
-                    let (callState, doorState) = currentState
-                    
-                    guard let self = self, doorState == .notDetermined else {
+                    guard let self = self, currentState.doorState == .notDetermined else {
                         return
                     }
                     
-                    switch callState {
-                    case .callReceived: self.currentStateSubject.onNext((.callPreviewed, doorState))
-                    case .callPreviewed: self.currentStateSubject.onNext((.callReceived, doorState))
-                    default: break
+                    switch currentState.callState {
+                        
+                    // MARK: Если звонок активен - то принудительно запускаем видео
+                    
+                    case .callActive:
+                        let newState = IncomingCallStateContainer(
+                            callState: currentState.callState,
+                            doorState: currentState.doorState,
+                            previewState: .video,
+                            soundOutputState: currentState.soundOutputState
+                        )
+                        
+                        self.currentStateSubject.onNext(newState)
+                        
+                    // MARK: Если звонок только пришел, устанавливается соединение - обновляем предпочтение
+                        
+                    default:
+                        self.preferredPreviewModeForActiveCall.onNext(.video)
                     }
                 }
             )
@@ -329,9 +332,8 @@ class IncomingCallViewModel: BaseViewModel {
                 .combineLatest(loadNextImage, currentState)
                 .filter { args in
                     let (_, currentState) = args
-                    let (callState, _) = currentState
                     
-                    return callState == .callPreviewed || callState == .callAccepted
+                    return currentState.callState == .callReceived && currentState.previewState == .video
                 }
                 .mapToVoid()
                 .drive(
@@ -388,24 +390,23 @@ class IncomingCallViewModel: BaseViewModel {
             .combineLatest(initialImage, liveImage, currentState)
             .map { args in
                 let (initialImage, liveImage, currentState) = args
-                let (callState, _) = currentState
                 
-                switch callState {
-                case .callReceived: return initialImage
-                default: return liveImage
+                switch currentState.previewState {
+                case .staticImage: return initialImage
+                case .video: return liveImage
                 }
             }
             .distinctUntilChanged()
         
-        let subtitleSubject = BehaviorSubject<String?>(value: callPayload.callerId)
-        let subtitle = subtitleSubject.asDriver(onErrorJustReturn: nil)
+        image
+            .drive(imageSubject)
+            .disposed(by: disposeBag)
         
         // MARK: Событие начала звонка
         
         let callStartedEvent = currentStateSubject
             .filter { currentState in
-                let (callState, _) = currentState
-                return callState == .callAccepted
+                currentState.callState == .callActive
             }
             .take(1)
         
@@ -413,8 +414,7 @@ class IncomingCallViewModel: BaseViewModel {
         
         let callFinishedEvent = currentStateSubject
             .filter { currentState in
-                let (callState, _) = currentState
-                return callState == .callFinished
+                currentState.callState == .callFinished
             }
             .take(1)
         
@@ -436,8 +436,8 @@ class IncomingCallViewModel: BaseViewModel {
         
         let counterDisposable = callTimeCounter
             .subscribe(
-                onNext: { text in
-                    subtitleSubject.onNext(text)
+                onNext: { [weak self] text in
+                    self?.subtitleSubject.onNext(text)
                 }
             )
         
@@ -450,12 +450,301 @@ class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Обработка нажатия на кнопку "Звонок" во вьюхе приложения либо в CallKit
+        
+        answerCallProxySubject
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard let self = self,
+                        currentState.callState == .callReceived,
+                        currentState.doorState == .notDetermined else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: .establishingConnection,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: currentState.soundOutputState
+                    )
+                    
+                    self.currentStateSubject.onNext(newState)
+                    
+                    self.incomingCallAcceptedByUser.onNext(true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Игнорировать / Отклонить"
+        // Если мы еще не приняли звонок, то просто закрываем окно (человек у домофона думает, что нас нет дома)
+        // Если мы уже приняли звонок и жмем "Отклонить", то завершаем звонок и закрываем окно
+        // UPD: Сюда же и нажатие на кнопку сброса в нативной вьюхе CallKit
+        
+        endCallProxySubject
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(currentState)
+            .do(
+                onNext: { [weak self] currentState in
+                    guard let self = self,
+                        currentState.callState != .callFinished,
+                        currentState.doorState == .notDetermined else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: .callFinished,
+                        doorState: .notDetermined,
+                        previewState: .staticImage,
+                        soundOutputState: .disabled
+                    )
+                    
+                    self.currentStateSubject.onNext(newState)
+                }
+            )
+            .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
+            .drive(
+                onNext: { [weak self] callInfo in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    guard let currentCall = callInfo?.0,
+                        (currentCall.state == .Connected || currentCall.state == .StreamsRunning) else {
+                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                            
+                        self.router.trigger(.closeIncomingCall)
+                        
+                        return
+                    }
+
+                    do {
+                        try currentCall.terminate()
+                    } catch {
+                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                        
+                        self.router.trigger(.closeIncomingCall)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: При изменении стейта sound output - включаем или выключаем громкоговоритель
+        
+        currentState
+            .map { $0.soundOutputState }
+            .distinctUntilChanged()
+            .drive(
+                onNext: { [weak self] state in
+                    self?.setSpeakerEnabled(state == .speaker)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Отслеживание текущего output для звука
+        // Нужно для того, чтобы при включении / выключении громкоговорителя с CallKit здесь обновлялся стейт
+        
+        NotificationCenter.default.rx
+            .notification(AVAudioSession.routeChangeNotification)
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard currentState.doorState == .notDetermined,
+                        currentState.soundOutputState != .disabled else {
+                        return
+                    }
+                    
+                    let outputs = AVAudioSession.sharedInstance().currentRoute.outputs
+                    let isSpeakerEnabled = outputs.contains { output in output.portType == .builtInSpeaker }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: isSpeakerEnabled ? .speaker : .regular
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: При поднесении девайса к уху надо выключать громкоговоритель
+        
+        NotificationCenter.default.rx
+            .notification(UIDevice.proximityStateDidChangeNotification)
+            .asDriverOnErrorJustComplete()
+            .map { _ in UIDevice.current.proximityState }
+            .isTrue()
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard currentState.doorState == .notDetermined,
+                        currentState.soundOutputState != .disabled else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: .regular
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    // swiftlint:disable:next function_body_length
+    func transform(input: Input) -> Output {
+        // MARK: Общий стейт экрана
+        
+        let currentState = currentStateSubject.asDriverOnErrorJustComplete()
+        
+        // MARK: проксируем нажатие кнопки "Открыть" в локальный сабжект
+        // Заодно обновляем стейт на "Соединение...", если до этого был стейт "Входящий звонок"
+        
+        input.openTrigger
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    if currentState.callState == .callReceived {
+                        let newState = IncomingCallStateContainer(
+                            callState: .establishingConnection,
+                            doorState: currentState.doorState,
+                            previewState: currentState.previewState,
+                            soundOutputState: currentState.soundOutputState
+                        )
+                        
+                        self?.currentStateSubject.onNext(newState)
+                    }
+                    
+                    self?.doorOpeningRequestedByUser.onNext(true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Выставляем вьюхи для отображения видео
+        
+        input.videoViewsTrigger
+            .drive(
+                onNext: { [weak self] args in
+                    let (videoView, cameraView) = args
+                    
+                    self?.linphoneService.setViews(videoView: videoView, cameraView: cameraView)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Звонок" во вьюхе приложения
+        
+        input.callTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.answerCallProxySubject.onNext(())
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Игнорировать / Отклонить"
+        
+        input.ignoreTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.endCallProxySubject.onNext(())
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Глазок"
+        
+        input.previewTrigger
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard let self = self, currentState.doorState == .notDetermined else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState == .staticImage ? .video : .staticImage,
+                        soundOutputState: currentState.soundOutputState
+                    )
+                    
+                    self.currentStateSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Обработка нажатия на кнопку "Динамик"
+        
+        input.speakerTrigger
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard currentState.doorState == .notDetermined,
+                        currentState.soundOutputState != .disabled else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: currentState.soundOutputState == .regular ? .speaker : .regular
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: При переходе в альбомный режим автоматически включается громкоговоритель
+        // Если пользователь держит девайс близко к уху - НЕ включаем громкоговоритель
+        
+        input.viewWillAppear
+            .filter { $0 == .landscape }
+            .withLatestFrom(currentState)
+            .drive(
+                onNext: { [weak self] currentState in
+                    guard currentState.doorState == .notDetermined,
+                        currentState.soundOutputState != .disabled,
+                        !UIDevice.current.proximityState else {
+                        return
+                    }
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: currentState.callState,
+                        doorState: currentState.doorState,
+                        previewState: currentState.previewState,
+                        soundOutputState: .speaker
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             state: currentState,
-            subtitle: subtitle,
-            image: image,
+            subtitle: subtitleSubject.asDriverOnErrorJustComplete(),
+            image: imageSubject.asDriverOnErrorJustComplete(),
             isDoorBeingOpened: isDoorBeingOpened.asDriver(onErrorJustReturn: false)
         )
+    }
+    
+    private func setSpeakerEnabled(_ enabled: Bool) {
+        do {
+            try AVAudioSession.sharedInstance().overrideOutputAudioPort(enabled ? .speaker : .none)
+        } catch {
+            print("Couldn't switch output port")
+        }
     }
     
     private func openTheDoor(call: Call) {
@@ -493,26 +782,32 @@ class IncomingCallViewModel: BaseViewModel {
                     print("DTMF code was sent. Delivery is not guaranteed tho")
                     
                     self?.isDoorBeingOpened.onNext(false)
-                    self?.currentStateSubject.onNext((.callFinished, .opened))
+                    
+                    let newState = IncomingCallStateContainer(
+                        callState: .callFinished,
+                        doorState: .opened,
+                        previewState: .staticImage,
+                        soundOutputState: .disabled
+                    )
+                    
+                    self?.currentStateSubject.onNext(newState)
                     
                     do {
                         try call.terminate()
                     } catch {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                            self?.router.trigger(.dismiss)
+                            guard let self = self else {
+                                return
+                            }
+                            
+                            self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                            
+                            self.router.trigger(.closeIncomingCall)
                         }
                     }
                 }
             )
             .disposed(by: disposeBag)
-    }
-    
-    private func enableLoudSpeaker() {
-        do {
-            try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
-        } catch {
-            print("Couldn't switch output port")
-        }
     }
     
 }
@@ -538,15 +833,44 @@ extension IncomingCallViewModel: LinphoneDelegate {
         }
         
         if cstate == .End {
-            if let (_, doorState) = try? currentStateSubject.value() {
-                currentStateSubject.onNext((.callFinished, doorState))
+            if let currentState = try? currentStateSubject.value() {
+                let newState = IncomingCallStateContainer(
+                    callState: .callFinished,
+                    doorState: currentState.doorState,
+                    previewState: .staticImage,
+                    soundOutputState: .disabled
+                )
+                
+                currentStateSubject.onNext(newState)
             }
             
+            providerProxy.endCall(uuid: callPayload.uuid)
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                self?.router.trigger(.dismiss)
+                self?.router.trigger(.closeIncomingCall)
             }
         }
     }
+    
+}
 
-// swiftlint:disable:next file_length
+extension IncomingCallViewModel: CXProviderProxyDelegate {
+    
+    func providerDidEndCall(_ provider: CXProvider) {
+        endCallProxySubject.onNext(())
+    }
+    
+    func providerDidAnswerCall(_ provider: CXProvider) {
+        answerCallProxySubject.onNext(())
+    }
+    
+    func provider(_ provider: CXProvider, didActivateAudioSession audioSession: AVAudioSession) {
+        linphoneService.core?.activateAudioSession(actived: true)
+    }
+    
+    func provider(_ provider: CXProvider, didDeactivateAudioSession audioSession: AVAudioSession) {
+        linphoneService.core?.activateAudioSession(actived: false)
+    }
+    
+    // swiftlint:disable:next file_length
 }
