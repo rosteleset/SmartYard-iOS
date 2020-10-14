@@ -104,7 +104,6 @@ class AccessService {
     func logout() {
         appState = .phoneNumber
         accessToken = nil
-        voipToken = nil
         clientName = nil
         clientPhoneNumber = nil
         
