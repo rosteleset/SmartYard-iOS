@@ -22,6 +22,7 @@ class IncomingCallViewModel: BaseViewModel {
     private let linphoneService: LinphoneService
     private let permissionService: PermissionService
     private let apiWrapper: APIWrapper
+    private let pushNotificationService: PushNotificationService
     
     private let router: WeakRouter<AppRoute>
     
@@ -53,6 +54,7 @@ class IncomingCallViewModel: BaseViewModel {
         linphoneService: LinphoneService,
         permissionService: PermissionService,
         apiWrapper: APIWrapper,
+        pushNotificationService: PushNotificationService,
         router: WeakRouter<AppRoute>,
         callPayload: CallPayload,
         isCallKitUsed: Bool
@@ -61,6 +63,7 @@ class IncomingCallViewModel: BaseViewModel {
         self.linphoneService = linphoneService
         self.permissionService = permissionService
         self.apiWrapper = apiWrapper
+        self.pushNotificationService = pushNotificationService
         self.router = router
         self.callPayload = callPayload
         
@@ -509,6 +512,8 @@ class IncomingCallViewModel: BaseViewModel {
                     guard let self = self else {
                         return
                     }
+                    
+                    self.pushNotificationService.ignoreIncomingCall(withId: self.callPayload.uniqueIdentifier)
                     
                     guard let currentCall = callInfo?.0,
                         (currentCall.state == .Connected || currentCall.state == .StreamsRunning) else {

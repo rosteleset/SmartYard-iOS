@@ -45,6 +45,10 @@ struct CallPayload {
         )
     }
     
+    var uniqueIdentifier: String {
+        return username + password + server + port
+    }
+    
     init?(pushNotificationPayload data: [AnyHashable: Any]) {
         guard let username = data["extension"] as? String,
             let password = data["pass"] as? String,
