@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 import Firebase
 
+private let ignoredCallIdsKey = "ignoredCallIds"
+
 class PushNotificationService {
     
     private let apiWrapper: APIWrapper
@@ -17,8 +19,27 @@ class PushNotificationService {
     
     private let userNotificationCenter = UNUserNotificationCenter.current()
     
+    var ignoredCallIds: Set<String> {
+        get {
+            return UserDefaults.standard.object(Set<String>.self, with: ignoredCallIdsKey) ?? []
+        }
+        set {
+            UserDefaults.standard.set(object: newValue, forKey: ignoredCallIdsKey)
+        }
+    }
+    
     init(apiWrapper: APIWrapper) {
         self.apiWrapper = apiWrapper
+    }
+    
+    func ignoreIncomingCall(withId callId: String) {
+        var currentIgnoredCallIds = ignoredCallIds
+        currentIgnoredCallIds.insert(callId)
+        ignoredCallIds = currentIgnoredCallIds
+    }
+    
+    func isCallIgnored(callId: String) -> Bool {
+        return ignoredCallIds.contains(callId)
     }
     
     /// Сбрасывает InstanceId. Этакий способ гарантированно отписаться от уведомлений при разлогине

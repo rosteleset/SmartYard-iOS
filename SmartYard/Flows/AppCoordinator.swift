@@ -152,6 +152,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 linphoneService: linphoneService,
                 permissionService: permissionService,
                 apiWrapper: apiWrapper,
+                pushNotificationService: pushNotificationService,
                 router: weakRouter,
                 callPayload: callPayload,
                 isCallKitUsed: isCallKitUsed
@@ -203,6 +204,11 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         guard !linphoneService.hasEnqueuedCalls else {
             print("Can only process one call at a time")
+            return
+        }
+        
+        guard !pushNotificationService.isCallIgnored(callId: callPayload.uniqueIdentifier) else {
+            print("Call was ignored")
             return
         }
         
