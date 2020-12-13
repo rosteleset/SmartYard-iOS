@@ -21,4 +21,12 @@ struct APIArchiveRange: Decodable {
         return startDate.addingTimeInterval(duration.double)
     }
     
+    func intersects(start: Date, end: Date) -> Bool {
+        if  ((startDate > start) && (startDate < end)) ||
+            ((endDate > start) && (endDate < end)) ||
+            ((startDate < start) && (endDate > end)) {
+            return true
+        }
+        return false
+    }
 }

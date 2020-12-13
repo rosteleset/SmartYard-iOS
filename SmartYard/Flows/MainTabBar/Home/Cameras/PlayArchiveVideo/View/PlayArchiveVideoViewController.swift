@@ -318,6 +318,17 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
+        ///Событие - завершение воспроизведения трека в плеере - возможно, что оно и не пригодится
+        NotificationCenter.default.rx
+            .notification(.AVPlayerItemDidPlayToEndTime)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] notification in
+                   print("AVPlayerItemDidPlayToEndTime!")
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Проверка, валидно ли текущее видео
         
         Driver
@@ -338,6 +349,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     return false
                 }
                 
+                print("Asset.duration: \(self.realVideoPlayer?.currentItem?.asset.duration.seconds)")
                 return true
             }
             .drive(
@@ -370,7 +382,12 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             forInterval: CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
             queue: .main
         ) { [weak self] time in
-            self?.currentPlaybackTime.onNext(time)
+            
+            //делаем поправку на время пропусков в архиве
+            let gaps: CMTime = self?.progressSlider.amountGaps(time) ?? CMTime()
+            
+            self?.currentPlaybackTime.onNext(time + gaps)
+            print("time: \(time.seconds) + gaps: \(gaps.seconds)")
         }
     }
     
@@ -440,6 +457,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] time in
+                    // тут необходимо преобразовать время от плеера без учёта пропусков в архиве на реальное время с учётом имеющейся разметки пропусков.
                     self?.progressSlider.setCurrentTime(time)
                 }
             )
@@ -451,8 +469,13 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 onNext: { [weak self] period in
                     let startDate: Date? = {
                         guard let period = period else {
+                            self?.progressSlider.setVideoDuration(0)
+                            self?.progressSlider.setVideoRanges([])
                             return nil
                         }
+                        
+                        self?.progressSlider.setVideoDuration(period.dirtyDuration)
+                        self?.progressSlider.setVideoRanges(period.ranges)
                         
                         return period.startDate
                     }()
@@ -586,7 +609,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     // MARK: Сбрасываем видео. У нас возможность пройти дальше привязана к isValid. Нужно инвалидировать
                     
                     self?.realVideoPlayer?.replaceCurrentItem(with: nil)
-                    self?.progressSlider.setVideoDuration(0)
+                    //self?.progressSlider.setVideoDuration(0)
                     
                     guard let (url, thumbnailsConfig) = args else {
                         return
@@ -637,7 +660,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                             let playerItem = AVPlayerItem(asset: asset)
 
                             self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
-                            self?.progressSlider.setVideoDuration(CMTimeGetSeconds(asset.duration))
+                            //self?.progressSlider.setVideoDuration(CMTimeGetSeconds(asset.duration))
                             
                             // MARK: Грузим thumbnails
                             
@@ -887,8 +910,11 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
             return
         }
         
+        //тут надо исправить время, удалив из него всё время пропусков
+        let gaps = self.progressSlider.amountGaps(position)
+        
         realVideoPlayer?.seek(
-            to: CMTime(seconds: position, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
+            to: CMTime(seconds: position - gaps, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
             toleranceBefore: .zero,
             toleranceAfter: .zero
         )
@@ -940,5 +966,5 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
             break
         }
     }
-    
+    // swiftlint:disable:next file_length
 }

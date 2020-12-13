@@ -52,7 +52,7 @@ public enum SmartYardSharedDataUtilities {
     
     static var sharedDataFileURL: URL {
         #if DEBUG
-        let appGroupIdentifier = "group.com.madbrains.smartyard.widget"
+        let appGroupIdentifier = "group.ru.lanta-net.smartyard.widget"
         #elseif RELEASE
         let appGroupIdentifier = "group.ru.lanta-net.smartyard.widget"
         #endif

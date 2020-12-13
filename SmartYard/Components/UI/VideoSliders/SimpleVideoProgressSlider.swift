@@ -35,6 +35,8 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     private var thumbnailViews = [(UIImageView, UIActivityIndicatorView)]()
     
     private var duration: Float64 = 0
+    private var ranges: [(startDate: Date, endDate: Date)] = []    //Доступные периоды
+    
     private var progressPercentage: CGFloat = 0         // Represented in percentage
     private var isReceivingGesture: Bool = false
     
@@ -124,6 +126,55 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         self.layoutSubviews()
     }
     
+    func setVideoRanges(_ ranges: [(startDate: Date, endDate: Date)]) {
+        self.ranges = ranges
+    }
+    
+    /// считает время пропусков в архиве до текущего момента
+    func amountGaps(_ time: Double) -> Double {
+        return amountGaps(CMTime(seconds: time, preferredTimescale: CMTimeScale(NSEC_PER_SEC))).seconds
+    }
+    
+    /// считает время пропусков в архиве до текущего момента
+    func amountGaps(_ time: CMTime) -> CMTime {
+        
+        var value = 0.0
+        
+        var lastEnd: TimeInterval = self.ranges.first?.startDate.timeIntervalSince1970 ?? 0.0
+        var gapsSum = 0.0
+        
+        //вспомогательная функция для получения длины куска
+        func duration(_ period: (startDate: Date, endDate: Date)) -> TimeInterval {
+            return period.endDate.timeIntervalSince1970 - period.startDate.timeIntervalSince1970
+        }
+        //print("Total duration:", ranges.map({ duration($0)}).reduce(0.0, +))
+        //print("Number of gaps:", ranges.count-1)
+        
+        //ищем период в котором мы находимся
+        for range in self.ranges {
+            
+            value += duration(range)
+            gapsSum += range.startDate.timeIntervalSince1970 - lastEnd
+            
+            guard value >= time.seconds  else {
+                lastEnd = range.endDate.timeIntervalSince1970
+                continue
+            }
+            
+            // если мы тут, то в range - период в котором мы находимся, либо тот, который был перед разрывом в котором мы сейчас
+            // а в gapsSum - суммарное время предшествующих пропусков,
+            
+            value = time.seconds + gapsSum //добавляем к входному параметру поправку на пропуски и валим отсюда.
+            //print("time: \(time.seconds)    gapsSum: \(gapsSum)     value: \(value)")
+            break
+            
+        }
+        
+        return CMTime(seconds: gapsSum, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+    }
+    
+    
+        
     func setThumbnailImage(_ image: UIImage?, atIndex index: Int) {
         guard let (imageView, activityIndicator) = thumbnailViews[safe: index] else {
             return

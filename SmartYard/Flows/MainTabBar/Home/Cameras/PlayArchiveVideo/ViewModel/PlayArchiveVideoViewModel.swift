@@ -170,7 +170,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             .ignoreNil()
             .map { [weak self] period -> (URL, VideoThumbnailConfiguration)? in
                 guard let self = self,
-                    let videoUrlComps = period.videoUrlComponents,
+                    let videoUrlComps = period.videoUrlComponents(0), //играем только первый фрагмент из доступных
                     let videoUrl = URL(string: self.camera.video + videoUrlComps + "?token=\(self.camera.token)"),
                     let fallbackUrl = URL(string: self.camera.video + "/preview.mp4?token=\(self.camera.token)") else {
                     return nil
@@ -209,6 +209,17 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 return URL(string: resultingString)
             }
         
+        //определяем границы архива на сервере
+        let rangeBounds: (lower: Date, upper: Date)? = {
+            guard let lower = (ranges.map { $0.startDate }.min()),
+                let upper = (ranges.map { $0.endDate }.max()) else {
+                return nil
+            }
+                
+            return (lower, upper)
+        }()
+        
+        //определяем периоды, для которых есть архив на сервере
         var periods = [ArchiveVideoPreviewPeriod]()
         
         let startOfDay = Calendar.moscowCalendar.startOfDay(for: date)
@@ -219,24 +230,37 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             
             let startDate = startOfDay.adding(.hour, value: startHours)
             let endDate = startOfDay.adding(.hour, value: endHours)
-            let currentDate = Date()
             
-            guard currentDate > endDate else {
-                periods.append(ArchiveVideoPreviewPeriod(startDate: startDate, endDate: currentDate))
-                break
+            //отбрасываем период, если он целиком заканчивается до времени начала архива
+            guard rangeBounds != nil,
+                  endDate > rangeBounds!.lower else {
+                continue
             }
             
-            periods.append(ArchiveVideoPreviewPeriod(startDate: startDate, endDate: endDate))
+            //filter - отбираем границы всех доступных фрагментов архива на сервере, с которыми пересекается наш период
+            //map - подрезаем границы интервалов, выходящих за границы текущего периода
+            //      и преобразуем в кортеж (startDate: Date, endDate:end)
+            let intersections = ranges
+                .filter({ $0.intersects(start: startDate, end: endDate) })
+                .map({ (startDate: max($0.startDate, startDate), endDate: min($0.endDate, endDate)) })
+            
+            guard
+                  //получаем границы самого раннего доступного фрагмента на сервере, с которым пересекается наш период
+                  let currentRangeFirst = intersections.first,
+                  //получаем границы самого позднего доступного фрагмента на сервере, с которым пересекается наш период
+                  let currentRangeLast = intersections.last else {
+                continue
+            }
+            
+            //добавляем период, при необходимости подрезая концы периода под фактически имеющийся на сервере архив.
+            periods.append(
+                ArchiveVideoPreviewPeriod(
+                    startDate: currentRangeFirst.startDate,
+                    endDate: currentRangeLast.endDate,
+                    ranges: intersections
+                )
+            )
         }
-        
-        let rangeBounds: (lower: Date, upper: Date)? = {
-            guard let lower = (ranges.map { $0.startDate }.min()),
-                let upper = (ranges.map { $0.endDate }.max()) else {
-                return nil
-            }
-                
-            return (lower, upper)
-        }()
         
         return Output(
             date: .just(date),
