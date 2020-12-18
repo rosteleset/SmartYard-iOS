@@ -44,6 +44,21 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
         
         return "/index-\(startTimestamp)-\(duration).m3u8"
     }
+    
+    ///Массив компонентов URL для всех фрагментов
+    var videoUrlComponentsArray: [String] {
+        
+        return ranges.map { (arg0) -> String in
+            
+            let (startDate, endDate) = arg0
+            
+            let startTimestamp = startDate.unixTimestamp.int
+            let duration = endDate.timeIntervalSince(startDate).int
+            
+            return "/index-\(startTimestamp)-\(duration).m3u8"
+        }
+    }
+
 
     // MARK: Сервер жрет время по GMT, поэтому переводим в GMT
     /// Компоненты URL для получения thumbnails

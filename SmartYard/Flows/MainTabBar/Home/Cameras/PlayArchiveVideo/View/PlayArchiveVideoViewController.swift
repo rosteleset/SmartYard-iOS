@@ -48,9 +48,14 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var videoLoadingAnimationView: AnimationView!
     
     private var realVideoPlayerViewController: AVPlayerViewController?
-    private var realVideoPlayer: AVPlayer?
+    private var realVideoPlayer: AVQueuePlayer?
     
-    private var loadingAsset: AVAsset?
+    private var loadingAsset: [AVAsset?] = []
+    private var assetArray: [AVAsset] = []
+    private var ranges: [(startDate: Date, endDate: Date)] = []    //Доступные периоды
+
+    private var periodicTimeObserver: Any?
+    
     
     private var preferredPlaybackSpeedConfig: ArchiveVideoPlaybackSpeed = .normal {
         didSet {
@@ -273,12 +278,44 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
     
+    private func configurePeriodicTimeObserver(_ player: AVQueuePlayer) {
+        self.periodicTimeObserver = player.addPeriodicTimeObserver(
+            forInterval: CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
+            queue: .main
+        ) { [weak self] time in
+
+            guard let asset = player.currentItem?.asset else {
+                return
+             }
+
+            guard let index = self?.assetArray.firstIndex(of: asset) else {
+                return
+            }
+            
+            //преобразовываем время полученное от текущего элемента во время от начала выбранного периода
+            //ох уж, эти долбаные пропуски в архиве
+            let delta = ((self?.ranges[index].startDate.timeIntervalSince1970)!) - (self?.ranges.first!.startDate.timeIntervalSince1970)!
+
+            self?.currentPlaybackTime.onNext(CMTime(seconds: delta, preferredTimescale: CMTimeScale(NSEC_PER_SEC)) + time)
+            
+        }
+    }
+    
+    private func destroyPeriodicTimeObserver(_ player: AVQueuePlayer) {
+        guard let observer = self.periodicTimeObserver else {
+            return
+        }
+        
+        player.removeTimeObserver(observer)
+        self.periodicTimeObserver = nil
+    }
+    
     private func configureRealVideoPlayer() {
         let playerViewController = AVPlayerViewController()
         playerViewController.videoGravity = .resizeAspect
         self.realVideoPlayerViewController = playerViewController
         
-        let player = AVPlayer()
+        let player = AVQueuePlayer()
         playerViewController.player = player
         playerViewController.showsPlaybackControls = false
         self.realVideoPlayer = player
@@ -334,7 +371,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         Driver
             .combineLatest(
                 player.rx
-                    .observe(AVPlayer.Status.self, "status", options: [.new])
+                    .observe(AVQueuePlayer.Status.self, "status", options: [.new])
                     .asDriver(onErrorJustReturn: nil),
                 player.rx
                     .observe(AVPlayerItem.self, "currentItem", options: [.new])
@@ -349,7 +386,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     return false
                 }
                 
-                print("Asset.duration: \(self.realVideoPlayer?.currentItem?.asset.duration.seconds)")
                 return true
             }
             .drive(
@@ -378,17 +414,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         
         // MARK: Привязка к обновлению текущего времени проигрываемого видео
         
-        player.addPeriodicTimeObserver(
-            forInterval: CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
-            queue: .main
-        ) { [weak self] time in
-            
-            //делаем поправку на время пропусков в архиве
-            let gaps: CMTime = self?.progressSlider.amountGaps(time) ?? CMTime()
-            
-            self?.currentPlaybackTime.onNext(time + gaps)
-            print("time: \(time.seconds) + gaps: \(gaps.seconds)")
-        }
+        configurePeriodicTimeObserver(player)
     }
     
     private func configureFullscreenButton() {
@@ -457,7 +483,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] time in
-                    // тут необходимо преобразовать время от плеера без учёта пропусков в архиве на реальное время с учётом имеющейся разметки пропусков.
                     self?.progressSlider.setCurrentTime(time)
                 }
             )
@@ -470,12 +495,12 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     let startDate: Date? = {
                         guard let period = period else {
                             self?.progressSlider.setVideoDuration(0)
-                            self?.progressSlider.setVideoRanges([])
+                            self?.ranges = []
                             return nil
                         }
                         
                         self?.progressSlider.setVideoDuration(period.dirtyDuration)
-                        self?.progressSlider.setVideoRanges(period.ranges)
+                        self?.ranges = period.ranges
                         
                         return period.startDate
                     }()
@@ -493,6 +518,28 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     self?.videoLoadingAnimationView.isHidden = !isLoading
                     
                     isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
+                    
+                    guard !isLoading else {
+                        return
+                    }
+                    
+                    //Все видео загрузились
+                    
+                    DispatchQueue.main.async {
+                        //надо по фактической длине видеофрагментов задать точные ranges в слайдер
+                        //и уточнить общую продолжительность видео
+                        if let exactDurations = self?.assetArray.map({ $0.duration.seconds }) {
+                           self?.fixDurations(exactDurations)
+                        }
+                        
+                        // MARK: Видео готово к просмотру, засовываем его в плеер
+                        
+                        for asset in self!.assetArray {
+                            let playerItem = AVPlayerItem(asset: asset)
+                            self?.realVideoPlayer?.insert(playerItem, after: nil)
+                            //self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
+                        }
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -600,81 +647,84 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         output.videoData
             .do(
                 onNext: { [weak self] _ in
-                    self?.loadingAsset?.cancelLoading()
-                    self?.loadingAsset = nil
+                    self?.loadingAsset.map({ $0?.cancelLoading() })
+                    self?.loadingAsset = []
+                    self?.assetArray = []
                 }
             )
             .drive(
                 onNext: { [weak self] args in
                     // MARK: Сбрасываем видео. У нас возможность пройти дальше привязана к isValid. Нужно инвалидировать
                     
-                    self?.realVideoPlayer?.replaceCurrentItem(with: nil)
+                    self?.realVideoPlayer?.removeAllItems()
                     //self?.progressSlider.setVideoDuration(0)
                     
-                    guard let (url, thumbnailsConfig) = args else {
+                    guard let (urls, thumbnailsConfig) = args else {
                         return
                     }
                     
-                    // MARK: Грузим ассет асинхронно
-
-                    let asset = AVAsset(url: url)
-
-                    self?.loadingAsset = asset
-                    
-                    // MARK: Грузим ключи tracks и duration, т.к. только они сработают для m3u8 потока
-                    
                     self?.isVideoBeingLoaded.onNext(true)
 
-                    asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { [weak asset] in
-                        guard let asset = asset else {
-                            return
-                        }
+                    // MARK: Грузим ассеты асинхронно
 
-                        var tracksError: NSError?
-                        var durationError: NSError?
+                    for asset in urls.map({ AVAsset(url: $0) }) {
+                    
+                        self?.loadingAsset.append(asset) //массив для отслеживания хода загрузки ассетов
+                        self?.assetArray.append(asset) //массив для опредения позиций загружаемых ассетов
                         
-                        let tracksStatus = asset.statusOfValue(forKey: "tracks", error: &tracksError)
-                        let durationStatus = asset.statusOfValue(forKey: "duration", error: &durationError)
-                        
-                        if tracksStatus == .cancelled ||
-                            tracksStatus == .failed ||
-                            durationStatus == .cancelled ||
-                            durationStatus == .failed {
-                            self?.isVideoBeingLoaded.onNext(false)
-                            return
-                        }
-                        
-                        guard tracksStatus == .loaded, durationStatus == .loaded else {
-                            return
-                        }
-                        
-                        self?.isVideoBeingLoaded.onNext(false)
-                        
-                        DispatchQueue.main.async {
-                            // MARK: Ассет загружен, больше хранить его не нужно
+                        // MARK: Грузим ключи tracks и duration, т.к. только они сработают для m3u8 потока
+
+                        asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { [weak asset] in
+                            guard let asset = asset else {
+                                return
+                            }
+
+                            var tracksError: NSError?
+                            var durationError: NSError?
                             
-                            self?.loadingAsset = nil
-
-                            // MARK: Видео готово к просмотру, засовываем его в плеер
+                            let tracksStatus = asset.statusOfValue(forKey: "tracks", error: &tracksError)
+                            let durationStatus = asset.statusOfValue(forKey: "duration", error: &durationError)
                             
-                            let playerItem = AVPlayerItem(asset: asset)
-
-                            self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
-                            //self?.progressSlider.setVideoDuration(CMTimeGetSeconds(asset.duration))
+                            if tracksStatus == .cancelled ||
+                                tracksStatus == .failed ||
+                                durationStatus == .cancelled ||
+                                durationStatus == .failed {
+                                    self?.loadingAsset.removeAll(asset) //удаляем asset из списка загружаемых
+                                    guard self != nil else {
+                                        return
+                                    }
+                                    if self!.loadingAsset.isEmpty {
+                                        self?.isVideoBeingLoaded.onNext(false)
+                                    }
+                                    return
+                            }
                             
-                            // MARK: Грузим thumbnails
+                            guard tracksStatus == .loaded, durationStatus == .loaded else {
+                                return
+                            }
                             
-                            self?.progressSlider.resetThumbnailImages()
-                            self?.progressSlider.setActivityIndicatorsHidden(false)
+                            self?.loadingAsset.removeAll(asset) //удаляем asset из списка загружаемых
+                            
+                            if self!.loadingAsset.isEmpty {
+                                self?.isVideoBeingLoaded.onNext(false)
+                                
+                                DispatchQueue.main.async {
+                                
+                                    // MARK: Грузим thumbnails
+                                    
+                                    self?.progressSlider.resetThumbnailImages()
+                                    self?.progressSlider.setActivityIndicatorsHidden(false)
 
-                            self?.rangeSlider.resetThumbnailImages()
-                            self?.rangeSlider.setActivityIndicatorsHidden(false)
+                                    self?.rangeSlider.resetThumbnailImages()
+                                    self?.rangeSlider.setActivityIndicatorsHidden(false)
 
-                            self?.loadThumbnails(
-                                config: thumbnailsConfig,
-                                count: 5,
-                                videoDuration: CMTimeGetSeconds(asset.duration)
-                            )
+                                    self?.loadThumbnails(
+                                        config: thumbnailsConfig,
+                                        count: 5,
+                                        videoDuration: CMTimeGetSeconds(asset.duration)
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -829,7 +879,18 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             }
         }
     }
-
+    
+    func fixDurations(_ exactDurations: [Float64]) {
+        self.ranges = zip(exactDurations, self.ranges).map({ (duration, old) -> (startDate: Date, endDate: Date) in
+            return (startDate: old.startDate, endDate: old.startDate.addingTimeInterval(duration))
+        })
+        
+        let duration = (self.ranges.last?.endDate.timeIntervalSince1970 ?? 0) -
+                        (self.ranges.first?.startDate.timeIntervalSince1970 ?? 0)
+        
+        self.progressSlider.setVideoDuration(duration)
+        
+    }
 }
 
 extension PlayArchiveVideoViewController: UICollectionViewDataSource {
@@ -909,14 +970,62 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
         guard !isReceivingGesture else {
             return
         }
+        guard realVideoPlayer != nil else {
+            return
+        }
         
-        //тут надо исправить время, удалив из него всё время пропусков
-        let gaps = self.progressSlider.amountGaps(position)
+        destroyPeriodicTimeObserver(realVideoPlayer!)
+        
+        /// шаманство с плейлистом
+        //получаем объект ассета воспроизведения
+        guard let asset = self.realVideoPlayer?.currentItem?.asset else {
+            return
+         }
+
+        //Получаем номер текущего элемента, какой мы сейчас играем
+        guard let currentIndex = self.assetArray.firstIndex(of: asset) else {
+            return
+        }
+        //получим абсолютное время на какое надо спозиционироваться
+        let absPosition = self.ranges.first!.startDate.timeIntervalSince1970 + position
+        
+        //получим номер фрагмента на какой надо спозиционироваться, пропуская все клочки, которые завершились до этой точки
+        let destIndex = self.ranges.firstIndex { (arg0) -> Bool in
+            
+            let (startDate, endDate) = arg0
+            if absPosition > endDate.timeIntervalSince1970  {
+                return false
+            } else {
+                return true
+            }
+        }
+        
+        //получим позицию на какую надо перейти внутри элемента плейлиста
+        var setPosition = absPosition - self.ranges[destIndex!].startDate.timeIntervalSince1970
+        //если попали на дырку в архиве перед элементом, то сдвигаемся на начало элемента следующего за дырой
+        setPosition = (setPosition < 0) ? 0 : setPosition
+        
+        //если мы покидаем текущий элемент, то перезагружаем playlist элементами, начиная с
+        if currentIndex != destIndex {
+            self.realVideoPlayer?.removeAllItems()
+            for asset in self.assetArray.dropFirst(destIndex ?? 0) {
+                let playerItem = AVPlayerItem(asset: asset)
+                self.realVideoPlayer?.insert(playerItem, after: nil)
+            }
+            
+        }
+            
+        
+        //-переобразовать time с тайм-лайна в позицию относительно начала текущего кусочка
+        //-спозиционировать плеер на эту позицию
         
         realVideoPlayer?.seek(
-            to: CMTime(seconds: position - gaps, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
+            to: CMTime(seconds: setPosition, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
             toleranceBefore: .zero,
-            toleranceAfter: .zero
+            toleranceAfter: .zero,
+            completionHandler: { finished in
+                true ? self.configurePeriodicTimeObserver(self.realVideoPlayer!) : nil
+            }
         )
     }
     

@@ -168,13 +168,17 @@ class PlayArchiveVideoViewModel: BaseViewModel {
         let videoData = selectedPeriod
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
-            .map { [weak self] period -> (URL, VideoThumbnailConfiguration)? in
+            .map { [weak self] period -> ([URL], VideoThumbnailConfiguration)? in
                 guard let self = self,
-                    let videoUrlComps = period.videoUrlComponents(0), //играем только первый фрагмент из доступных
-                    let videoUrl = URL(string: self.camera.video + videoUrlComps + "?token=\(self.camera.token)"),
                     let fallbackUrl = URL(string: self.camera.video + "/preview.mp4?token=\(self.camera.token)") else {
                     return nil
                 }
+                
+                //передаём массив компонетов URL для всех фрагментов
+                let videoUrl = period.videoUrlComponentsArray.map({ (videoUrlComps) -> URL in
+                    let url = URL(string: self.camera.video + videoUrlComps + "?token=\(self.camera.token)")
+                    return url!
+                })
                 
                 let thumbnailConfig = VideoThumbnailConfiguration(
                     camera: self.camera,
@@ -288,7 +292,7 @@ extension PlayArchiveVideoViewModel {
         let date: Driver<Date?>
         let periodConfiguration: Driver<[ArchiveVideoPreviewPeriod]>
         let rangeBounds: Driver<(lower: Date, upper: Date)?>
-        let videoData: Driver<(URL, VideoThumbnailConfiguration)?>
+        let videoData: Driver<([URL], VideoThumbnailConfiguration)?>
         let screenshotURL: Driver<URL?>
         let isLoading: Driver<Bool>
     }
