@@ -32,6 +32,8 @@ class WdgObjectCell: UITableViewCell {
         iconImageView.image = UIImage(named: object.logoImageName)
         objectNameLabel.text = object.objectName
         objectAddressLabel.text = object.objectAddress
+        objectAddressLabel.textColor = UIColor(named: "CustomGreyColor")
+        iconImageView.tintColor = UIColor(named: "CustomGreyColor")
         
         lockButton.isUserInteractionEnabled = !isOpened
         
