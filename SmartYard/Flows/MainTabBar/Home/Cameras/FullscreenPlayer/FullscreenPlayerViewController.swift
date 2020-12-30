@@ -22,6 +22,7 @@ class FullscreenPlayerViewController: UIViewController {
     private let preferredPlaybackRate: Float
 
     private var playerViewController: AVPlayerViewController?
+    private var scrollView: UIScrollView!
     
     private var disposeBag = DisposeBag()
     
