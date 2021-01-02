@@ -22,7 +22,8 @@ class FullscreenPlayerViewController: UIViewController {
     private let preferredPlaybackRate: Float
 
     private var playerViewController: AVPlayerViewController?
-    private var scrollView: UIScrollView!
+    @IBOutlet private weak var contentView: UIView!
+    @IBOutlet private weak var scrollView: UIScrollView!
     
     private var disposeBag = DisposeBag()
     
@@ -38,12 +39,19 @@ class FullscreenPlayerViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @IBAction private func tapCloseButton() {
+        self.playerViewController?.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         guard isBeingDismissed else {
             return
         }
+        playerViewController!.view!.removeConstraints(playerViewController!.view!.constraints)
+        playerViewController!.view!.translatesAutoresizingMaskIntoConstraints = true
+        
         
         switch playedVideoType {
         case .online: NotificationCenter.default.post(name: .onlineFullscreenModeClosed, object: nil)
@@ -57,20 +65,40 @@ class FullscreenPlayerViewController: UIViewController {
         UIViewController.attemptRotationToDeviceOrientation()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        //self.scrollView.zoomScale = 1.0
+        playerViewController?.view.frame = UIScreen.main.bounds
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        playerViewController?.view.frame = UIScreen.main.bounds
+        addChild(playerViewController!)
+        contentView.removeSubviews()
+        contentView.insertSubview(playerViewController!.view!, at: 0)
+        playerViewController!.didMove(toParent: self)
+        playerViewController?.view.translatesAutoresizingMaskIntoConstraints = false
+        playerViewController!.view!.removeConstraints(playerViewController!.view!.constraints)
+        playerViewController?.view.fillToSuperview()
+    }
+    
+    @IBAction private func  debug() {
+        self.playerViewController?.view.frame = UIScreen.main.bounds
     }
     
     func setPlayerViewController(_ playerViewController: AVPlayerViewController) {
-        view.removeSubviews()
         
         self.playerViewController = playerViewController
-        
-        addChild(playerViewController)
-        view.insertSubview(playerViewController.view, at: 0)
-        playerViewController.didMove(toParent: self)
+        playerViewController.showsPlaybackControls = false
         
         disposeBag = DisposeBag()
         
@@ -101,4 +129,9 @@ class FullscreenPlayerViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
+}
+extension FullscreenPlayerViewController: UIScrollViewDelegate {
+    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self.contentView
+    }
 }

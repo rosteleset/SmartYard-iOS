@@ -351,6 +351,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     self.addChild(playerVc)
                     self.realVideoContainer.insertSubview(playerVc.view, at: 0)
                     playerVc.didMove(toParent: self)
+                    self.realVideoPlayerViewController?.view.frame = self.realVideoContainer.bounds
                 }
             )
             .disposed(by: disposeBag)

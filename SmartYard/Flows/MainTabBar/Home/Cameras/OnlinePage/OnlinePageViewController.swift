@@ -207,6 +207,8 @@ class OnlinePageViewController: BaseViewController {
                     self.addChild(playerVc)
                     self.cameraContainer.insertSubview(playerVc.view, at: 0)
                     playerVc.didMove(toParent: self)
+                    self.playerViewController?.view.frame = self.cameraContainer.bounds
+                    
                     playerVc.player?.play()
                 }
             )
