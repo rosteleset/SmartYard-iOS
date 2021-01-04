@@ -4,12 +4,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FullscreenPlayerViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="eZo-zX-GVn" id="eAK-58-4nI"/>
+                <outlet property="playPauseButton" destination="WpW-eU-D7d" id="aQw-A6-Y7i"/>
                 <outlet property="scrollView" destination="LQe-fM-AoA" id="XkY-1s-XAE"/>
                 <outlet property="view" destination="3P2-35-kG3" id="oN8-By-vOt"/>
             </connections>
@@ -34,27 +36,60 @@
                     <viewLayoutGuide key="frameLayoutGuide" id="mpT-Yz-Zo5"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="8ga-zs-hoa"/>
+                        <outletCollection property="gestureRecognizers" destination="vTN-Yq-tZE" appends="YES" id="hyU-gC-iV0"/>
                     </connections>
                 </scrollView>
-                <button opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="Tlq-8g-sRa">
-                    <rect key="frame" x="325" y="26" width="28" height="28"/>
+                <button opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Tlq-8g-sRa">
+                    <rect key="frame" x="327" y="28" width="26" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" backgroundImage="CloseIcon"/>
+                    <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" image="CloseButtonIcon"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="13"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="tapCloseButton" destination="-1" eventType="touchUpInside" id="xeP-GJ-0yF"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WpW-eU-D7d">
-                    <rect key="frame" x="153" y="299" width="68" height="68"/>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WpW-eU-D7d">
+                    <rect key="frame" x="155" y="301" width="64" height="64"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="Play"/>
+                    <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                    <color key="tintColor" systemColor="systemGray5Color"/>
+                    <state key="normal" image="pauseButton"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="32"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="image" keyPath="imageForNormal" value="playButton"/>
+                        <userDefinedRuntimeAttribute type="image" keyPath="imageForSelected" value="pauseButton"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="tapPlayPauseButton" destination="-1" eventType="touchUpInside" id="MIL-nY-QAg"/>
+                    </connections>
                 </button>
             </subviews>
+            <gestureRecognizers/>
             <point key="canvasLocation" x="-706.39999999999998" y="66.11694152923539"/>
         </view>
+        <tapGestureRecognizer cancelsTouchesInView="NO" id="vTN-Yq-tZE">
+            <connections>
+                <action selector="tapView:" destination="-1" id="Z9W-jr-PF9"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
-        <image name="CloseIcon" width="28" height="28"/>
-        <image name="Play" width="68" height="68"/>
+        <image name="CloseButtonIcon" width="24" height="24"/>
+        <image name="pauseButton" width="256" height="256"/>
+        <image name="playButton" width="256" height="256"/>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

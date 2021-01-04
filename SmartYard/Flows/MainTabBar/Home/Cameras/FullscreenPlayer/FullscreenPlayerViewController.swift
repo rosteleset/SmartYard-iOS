@@ -27,8 +27,10 @@ class FullscreenPlayerViewController: UIViewController {
     
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var scrollView: UIScrollView!
-
+    @IBOutlet weak var playPauseButton: UIButton!
+    
     private var controls: [UIView] = []
+    private var timer: Timer?
     
     private var disposeBag = DisposeBag()
     
@@ -46,6 +48,45 @@ class FullscreenPlayerViewController: UIViewController {
     
     @IBAction private func tapCloseButton() {
         self.playerViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func tapPlayPauseButton() {
+        guard let player = self.playerViewController?.player else {
+            return
+        }
+        
+        let newState = !self.playPauseButton.isSelected
+        self.playPauseButton.isSelected = newState
+        
+        player.rate = newState ? self.preferredPlaybackRate : 0
+    }
+    
+    func onTimer(_ : Timer) {
+        guard let progressSlider = self.progressSlider else {
+            return
+        }
+        
+        self.timer = nil
+        
+        guard progressSlider.isReceivingGesture else {
+            self.hideControls()
+            return
+        }
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: onTimer)
+    }
+    
+    @IBAction func tapView(_ sender: UITapGestureRecognizer) {
+        
+        guard self.timer != nil else {
+            self.showControls()
+            self.timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: onTimer)
+            return
+        }
+        
+        self.timer?.invalidate()
+        self.timer = nil
+        self.hideControls()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,6 +125,7 @@ class FullscreenPlayerViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
         
         self.scrollView.zoomScale = 1.0
+        self.scrollView.contentSize = size
     }
     
     override func viewDidLoad() {
@@ -106,19 +148,22 @@ class FullscreenPlayerViewController: UIViewController {
         guard let progressSlider = self.progressSlider else {
             return
         }
-        
-        controls = []
-        controls.append(progressSlider)
-        view.addSubviews(controls)
-        
+        view.addSubview(progressSlider)
         sliderConstraints = []
         sliderConstraints.append(progressSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12))
         sliderConstraints.append(progressSlider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12))
         sliderConstraints.append(progressSlider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16))
-            
         for constraint in sliderConstraints {
             constraint.isActive = true
         }
+        
+        playPauseButton.isSelected = ((playerViewController?.player!.rate)! > 0)
+        
+        controls = []
+        controls.append(progressSlider)
+        controls.append(playPauseButton)
+        
+        hideControls()
     }
     
     @IBAction private func  debug() {
@@ -167,5 +212,14 @@ class FullscreenPlayerViewController: UIViewController {
 extension FullscreenPlayerViewController: UIScrollViewDelegate {
     public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.contentView
+    }
+}
+extension FullscreenPlayerViewController {
+    private func showControls () {
+        controls.map({ $0.isHidden = false })
+    }
+    
+    private func hideControls () {
+        controls.map({ $0.isHidden = true })
     }
 }
