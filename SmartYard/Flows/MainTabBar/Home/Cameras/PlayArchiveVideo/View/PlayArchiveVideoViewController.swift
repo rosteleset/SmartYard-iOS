@@ -279,6 +279,11 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configurePeriodicTimeObserver(_ player: AVQueuePlayer) {
+        //проверяем, что periodicTimeObserver не был уже создан
+        guard self.periodicTimeObserver == nil else {
+            return
+        }
+        
         self.periodicTimeObserver = player.addPeriodicTimeObserver(
             forInterval: CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
             queue: .main
