@@ -46,6 +46,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
     @IBOutlet private weak var fullscreenButton: UIButton!
     @IBOutlet private weak var videoLoadingAnimationView: AnimationView!
+    @IBOutlet private var sliderConstraints: [NSLayoutConstraint]!
     
     private var realVideoPlayerViewController: AVPlayerViewController?
     private var realVideoPlayer: AVQueuePlayer?
@@ -350,19 +351,14 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     
                     self.addChild(playerVc)
                     self.realVideoContainer.insertSubview(playerVc.view, at: 0)
+                    self.realVideoContainer.insertSubview(self.progressSlider, at: 2)
                     playerVc.didMove(toParent: self)
+                    //восстановим размеры контейнера с плеером
                     self.realVideoPlayerViewController?.view.frame = self.realVideoContainer.bounds
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        ///Событие - завершение воспроизведения трека в плеере - возможно, что оно и не пригодится
-        NotificationCenter.default.rx
-            .notification(.AVPlayerItemDidPlayToEndTime)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] notification in
-                   print("AVPlayerItemDidPlayToEndTime!")
+                    //восстановим отключенные привязки размеров вью слайдера к нашему вью
+                    for constraint in self.sliderConstraints {
+                        constraint.isActive = true
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -430,7 +426,9 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .asDriver()
             .drive(
                 onNext: { [weak self] in
-                    guard let self = self, let playerVc = self.realVideoPlayerViewController else {
+                    guard let self = self,
+                          let playerVc = self.realVideoPlayerViewController,
+                          let progressSlider = self.progressSlider else {
                         return
                     }
                     
@@ -447,7 +445,11 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     fullscreenVc.modalPresentationStyle = .overFullScreen
                     fullscreenVc.modalTransitionStyle = .crossDissolve
                     fullscreenVc.setPlayerViewController(playerVc)
-
+                    //передаём в полноэкранный контроллер вью слайдера и отключаем его привязки от текущего вью
+                    fullscreenVc.setProgressSlider(progressSlider)
+                    for constraint in self.sliderConstraints {
+                        constraint.isActive = false
+                    }
                     self.present(fullscreenVc, animated: true)
                 }
             )
@@ -990,11 +992,13 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
         //получим абсолютное время на какое надо спозиционироваться
         let absPosition = self.ranges.first!.startDate.timeIntervalSince1970 + position
         
-        //получим номер фрагмента на какой надо спозиционироваться, пропуская все клочки, которые завершились до этой точки
-        let destIndex = self.ranges.firstIndex { (arg0) -> Bool in
+        //получим номер фрагмента на какой надо спозиционироваться,
+        //пропуская все клочки, которые завершились до этой точки
+        
+        let destIndex = self.ranges.firstIndex { arg0 -> Bool in
             
-            let (startDate, endDate) = arg0
-            if absPosition > endDate.timeIntervalSince1970  {
+            let (_ /*startDate*/, endDate) = arg0
+            if absPosition > endDate.timeIntervalSince1970 {
                 return false
             } else {
                 return true
@@ -1015,17 +1019,13 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
             }
             
         }
-            
-        
-        //-переобразовать time с тайм-лайна в позицию относительно начала текущего кусочка
-        //-спозиционировать плеер на эту позицию
         
         realVideoPlayer?.seek(
             to: CMTime(seconds: setPosition, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
             toleranceBefore: .zero,
             toleranceAfter: .zero,
-            completionHandler: { finished in
-                true ? self.configurePeriodicTimeObserver(self.realVideoPlayer!) : nil
+            completionHandler: { _ in
+                self.configurePeriodicTimeObserver(self.realVideoPlayer!)
             }
         )
     }

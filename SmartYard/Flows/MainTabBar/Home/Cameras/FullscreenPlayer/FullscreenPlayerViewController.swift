@@ -22,8 +22,13 @@ class FullscreenPlayerViewController: UIViewController {
     private let preferredPlaybackRate: Float
 
     private var playerViewController: AVPlayerViewController?
+    private var progressSlider: SimpleVideoProgressSlider?
+    private var sliderConstraints: [NSLayoutConstraint] = []
+    
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var scrollView: UIScrollView!
+
+    private var controls: [UIView] = []
     
     private var disposeBag = DisposeBag()
     
@@ -49,9 +54,13 @@ class FullscreenPlayerViewController: UIViewController {
         guard isBeingDismissed else {
             return
         }
+        //возвращаем обратно AutoresizingMask и удаляем лишние Constraints, чтобы последующее возвращение контроллера на место прошло гладко
         playerViewController!.view!.removeConstraints(playerViewController!.view!.constraints)
         playerViewController!.view!.translatesAutoresizingMaskIntoConstraints = true
         
+        if playedVideoType == .archive {
+            progressSlider?.removeConstraints(sliderConstraints)
+        }
         
         switch playedVideoType {
         case .online: NotificationCenter.default.post(name: .onlineFullscreenModeClosed, object: nil)
@@ -67,21 +76,20 @@ class FullscreenPlayerViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        //self.scrollView.zoomScale = 1.0
-        playerViewController?.view.frame = UIScreen.main.bounds
+        
+        playerViewController?.view.frame = contentView.bounds
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+        
+        self.scrollView.zoomScale = 1.0
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //добавляем в контейнер дочерний контроллер плеера, добавляем во вью плеер и настраиваем его отображение
         addChild(playerViewController!)
         contentView.removeSubviews()
         contentView.insertSubview(playerViewController!.view!, at: 0)
@@ -89,6 +97,28 @@ class FullscreenPlayerViewController: UIViewController {
         playerViewController?.view.translatesAutoresizingMaskIntoConstraints = false
         playerViewController!.view!.removeConstraints(playerViewController!.view!.constraints)
         playerViewController?.view.fillToSuperview()
+        
+        guard playedVideoType == .archive else {
+            return
+        }
+        
+        //добавляем во вью progressSlider и настраиваем его отображение
+        guard let progressSlider = self.progressSlider else {
+            return
+        }
+        
+        controls = []
+        controls.append(progressSlider)
+        view.addSubviews(controls)
+        
+        sliderConstraints = []
+        sliderConstraints.append(progressSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12))
+        sliderConstraints.append(progressSlider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12))
+        sliderConstraints.append(progressSlider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16))
+            
+        for constraint in sliderConstraints {
+            constraint.isActive = true
+        }
     }
     
     @IBAction private func  debug() {
@@ -127,6 +157,10 @@ class FullscreenPlayerViewController: UIViewController {
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    func setProgressSlider(_ progressSlider: SimpleVideoProgressSlider) {
+        self.progressSlider = progressSlider
     }
 
 }

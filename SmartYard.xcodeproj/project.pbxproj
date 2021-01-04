@@ -3297,7 +3297,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1030;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Mad Brains";
 				TargetAttributes = {
 					849653062472C93A000E1375 = {

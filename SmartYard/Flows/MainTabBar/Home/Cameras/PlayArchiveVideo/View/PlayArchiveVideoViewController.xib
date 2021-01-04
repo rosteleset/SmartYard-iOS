@@ -47,6 +47,9 @@
                 <outlet property="shiftTimelineForwardButton" destination="eey-Hz-Pq4" id="JQa-tR-LNq"/>
                 <outlet property="videoLoadingAnimationView" destination="lT9-Mp-zMH" id="32Z-8S-g9p"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outletCollection property="sliderConstraints" destination="lwW-yC-7QN" collectionClass="NSMutableArray" id="Mxd-cx-pzm"/>
+                <outletCollection property="sliderConstraints" destination="oo0-8N-jyU" collectionClass="NSMutableArray" id="5Zq-aT-De2"/>
+                <outletCollection property="sliderConstraints" destination="qxt-Od-ra8" collectionClass="NSMutableArray" id="VLb-9G-Gs5"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -122,9 +125,9 @@
                                         <constraint firstItem="lT9-Mp-zMH" firstAttribute="centerX" secondItem="gbA-7j-j0f" secondAttribute="centerX" id="ccR-su-Jdt"/>
                                         <constraint firstAttribute="trailing" secondItem="sTb-NK-D3v" secondAttribute="trailing" constant="12" id="fee-1l-zlX"/>
                                         <constraint firstItem="sTb-NK-D3v" firstAttribute="top" secondItem="gbA-7j-j0f" secondAttribute="top" constant="12" id="gLN-uh-jpR"/>
-                                        <constraint firstItem="gTL-Y7-3LT" firstAttribute="leading" secondItem="gbA-7j-j0f" secondAttribute="leading" constant="12" id="lwW-yC-7QN"/>
-                                        <constraint firstAttribute="bottom" secondItem="gTL-Y7-3LT" secondAttribute="bottom" constant="16" id="oo0-8N-jyU"/>
-                                        <constraint firstAttribute="trailing" secondItem="gTL-Y7-3LT" secondAttribute="trailing" constant="12" id="qxt-Od-ra8"/>
+                                        <constraint firstAttribute="leading" secondItem="gTL-Y7-3LT" secondAttribute="leading" constant="-12" identifier="progressSliderLeading" id="lwW-yC-7QN"/>
+                                        <constraint firstAttribute="bottom" secondItem="gTL-Y7-3LT" secondAttribute="bottom" constant="16" identifier="progressSliderBottom" id="oo0-8N-jyU"/>
+                                        <constraint firstAttribute="trailing" secondItem="gTL-Y7-3LT" secondAttribute="trailing" constant="12" identifier="progressSliderTrailing" id="qxt-Od-ra8"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iCv-cW-g6T" userLabel="ScreenshotVideoContainer">

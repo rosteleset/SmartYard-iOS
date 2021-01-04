@@ -14,7 +14,7 @@ struct SipConfig {
     let username: String
     let password: String
     let transport: TransportType
-    
+    /*
     static func udp() -> SipConfig {
         return SipConfig(domain: "dm.lanta.me:54673", username: "1001", password: "ieNg8oof", transport: .Udp)
     }
@@ -26,5 +26,5 @@ struct SipConfig {
     static func tls() -> SipConfig {
         return SipConfig(domain: "dm.lanta.me:54674", username: "1002", password: "ieNg8oof", transport: .Tls)
     }
-    
+    */
 }
