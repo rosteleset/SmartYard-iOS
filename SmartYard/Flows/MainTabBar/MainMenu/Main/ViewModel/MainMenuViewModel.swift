@@ -34,7 +34,17 @@ class MainMenuViewModel: BaseViewModel {
     }
     
     func transform(_ input: Input) -> Output {
-    
+        
+        input.itemSelected
+            .withLatestFrom(items.asDriver(onErrorJustReturn: [MenuItemsList]())) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (indexPath, items) = args
+                    self?.router.trigger(.settings)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             items: items.asDriverOnErrorJustComplete()
         )
@@ -44,6 +54,7 @@ class MainMenuViewModel: BaseViewModel {
 extension MainMenuViewModel {
     
     struct Input {
+        let itemSelected: Driver<IndexPath>
         /*
         let backTrigger: Driver<Void>
         let downloadTrigger: Driver<Void>

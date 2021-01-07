@@ -40,6 +40,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     private let alertService: AlertService
     
     init(
+        rootViewController: RootViewController,
         accessService: AccessService,
         pushNotificationService: PushNotificationService,
         apiWrapper: APIWrapper,
@@ -56,7 +57,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
         self.logoutHelper = logoutHelper
         self.alertService = alertService
         
-        super.init(initialRoute: .main)
+        super.init(rootViewController: rootViewController, initialRoute: nil)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
@@ -74,7 +75,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             )
             
             let vc = SettingsViewController(viewModel: vm)
-            return .set([vc])
+            return .push(vc)//.set([vc])
             
         case let .addressSettings(flatId, clientId, address, isContractOwner, hasDomophone):
             let vm = AddressSettingsViewModel(

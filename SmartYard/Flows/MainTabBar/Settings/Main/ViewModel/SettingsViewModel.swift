@@ -123,7 +123,16 @@ class SettingsViewModel: BaseViewModel {
                 }
             )
             .disposed(by: self.disposeBag)
-        
+
+        // MARK: Обработчик кнопки Назад
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+
         // MARK: Обработка нажатия на иконку настроек
         input.advancedSettingsTrigger
             .drive(
@@ -522,6 +531,7 @@ class SettingsViewModel: BaseViewModel {
 extension SettingsViewModel {
     
     struct Input {
+        let backTrigger: Driver<Void>
         let itemSelected: Driver<SettingsDataItemIdentity>
         let serviceSelected: Driver<(SettingsDataItemIdentity, SettingsServiceType)>
         let advancedSettingsTrigger: Driver<Void>

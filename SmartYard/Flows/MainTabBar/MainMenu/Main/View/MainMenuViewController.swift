@@ -27,6 +27,10 @@ class MainMenuViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,7 +41,7 @@ class MainMenuViewController: BaseViewController {
     private func bind() {
         
         let input = MainMenuViewModel.Input(
-            
+            itemSelected: collectionView.rx.itemSelected.asDriver()
         )
         
         let output = viewModel.transform(input)

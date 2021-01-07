@@ -14,6 +14,7 @@ import JGProgressHUD
 
 class SettingsViewController: BaseViewController, LoaderPresentable {
     
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var phoneNumberLabel: UILabel!
     @IBOutlet private weak var mainContainerView: UIView!
@@ -75,6 +76,7 @@ class SettingsViewController: BaseViewController, LoaderPresentable {
             .ignoreNil()
         
         let input = SettingsViewModel.Input(
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
             serviceSelected: serviceButtonTapTrigger.asDriverOnErrorJustComplete(),
             advancedSettingsTrigger: settingsButton.rx.tap.asDriver(),
