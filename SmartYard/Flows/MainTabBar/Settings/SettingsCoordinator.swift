@@ -18,7 +18,7 @@ enum SettingsRoute: Route {
     case serviceIsActivated(service: SettingsServiceType, contractName: String?, address: String)
     case serviceIsNotActivated(service: SettingsServiceType, contractName: String?, address: String)
     case serviceUnavailable(service: SettingsServiceType, address: String, contractName: String?)
-    case advancedSettings(name: String)
+    case advancedSettings
     case addressDeletion(delegate: AddressDeletionViewModelDelegate)
     case alert(title: String, message: String?)
     case dialog(title: String, message: String?, actions: [UIAlertAction])
@@ -145,7 +145,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case let .advancedSettings(name):
+        case let .advancedSettings:
             let vm = AdvancedSettingsViewModel(
                 apiWrapper: apiWrapper,
                 accessService: accessService,

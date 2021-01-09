@@ -11,8 +11,9 @@ import RxSwift
 import RxCocoa
 
 struct MenuItemsList: Decodable {
-    let label: String?
-    let iconName: String?
+    let label: String
+    let iconName: String
+    let triger: String
 }
 
 class MainMenuViewModel: BaseViewModel {
@@ -21,9 +22,9 @@ class MainMenuViewModel: BaseViewModel {
     
     private let items = BehaviorSubject<[MenuItemsList]>(
         value: [
-            MenuItemsList(label: "Городские камеры", iconName: "PublicCamsMenuIcon"),
-            MenuItemsList(label: "Настройки профиля", iconName: "ProfileMenuIcon"),
-            MenuItemsList(label: "Общие настройки", iconName: "SettingsMenuIcon")
+            MenuItemsList(label: "Городские камеры", iconName: "PublicCamsMenuIcon", triger: "publicCams"),
+            MenuItemsList(label: "Настройки профиля", iconName: "ProfileMenuIcon", triger: "profile"),
+            MenuItemsList(label: "Общие настройки", iconName: "SettingsMenuIcon", triger: "settings")
         ]
     )
     
@@ -42,7 +43,25 @@ class MainMenuViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] args in
                     let (indexPath, items) = args
-                    self?.router.trigger(.settings)
+                    print(indexPath.row)
+                    switch items[indexPath.row].triger  {
+                        case "settings": self?.router.trigger(.settings); break;
+                        case "profile": self?.router.trigger(.profile); break;
+                        case "publicCams": self?.router.trigger(.safariPage(url: URL(string: "https://cam.lanta.me")!)); break;
+                        
+                        default: self?.router.trigger(.settings)
+                    }
+                    //self?.router.trigger(.settings)
+                    
+                    
+                    /*
+                     value: [
+                         MenuItemsList(label: "Городские камеры", iconName: "PublicCamsMenuIcon", triger: .safariPage(url: URL(string: "https://cam.lanta.me")!)),
+                         MenuItemsList(label: "Настройки профиля", iconName: "ProfileMenuIcon", triger: .settings),
+                         MenuItemsList(label: "Общие настройки", iconName: "SettingsMenuIcon", triger: .profile)
+                     ]
+                     */
+                    
                 }
             )
             .disposed(by: disposeBag)

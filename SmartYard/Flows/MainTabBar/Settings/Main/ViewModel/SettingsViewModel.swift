@@ -137,7 +137,7 @@ class SettingsViewModel: BaseViewModel {
         input.advancedSettingsTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.advancedSettings(name: "Алексеев В.Б."))
+                    self?.router.trigger(.advancedSettings)
                 }
             )
             .disposed(by: disposeBag)

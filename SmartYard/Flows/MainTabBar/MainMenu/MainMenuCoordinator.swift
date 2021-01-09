@@ -15,6 +15,7 @@ enum MainMenuRoute: Route {
     
     case main
     case settings
+    case profile
     case alert(title: String, message: String)
     case back
     case safariPage(url: URL)
@@ -79,6 +80,9 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             
         case .settings:
             return .trigger(SettingsRoute.main, on: settingsRouter)
+        
+        case .profile:
+            return .trigger(SettingsRoute.advancedSettings, on: settingsRouter)
             
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
