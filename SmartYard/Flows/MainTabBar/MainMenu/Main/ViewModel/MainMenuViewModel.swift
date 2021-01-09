@@ -10,9 +10,9 @@ import XCoordinator
 import RxSwift
 import RxCocoa
 
-
 struct MenuItemsList: Decodable {
     let label: String?
+    let iconName: String?
 }
 
 class MainMenuViewModel: BaseViewModel {
@@ -20,9 +20,11 @@ class MainMenuViewModel: BaseViewModel {
     private let router: WeakRouter<MainMenuRoute>
     
     private let items = BehaviorSubject<[MenuItemsList]>(
-        value: [MenuItemsList(label: "Городские камеры"),
-                MenuItemsList(label: "Настройки профиля"),
-                MenuItemsList(label: "Общие настройки")]
+        value: [
+            MenuItemsList(label: "Городские камеры", iconName: "PublicCamsMenuIcon"),
+            MenuItemsList(label: "Настройки профиля", iconName: "ProfileMenuIcon"),
+            MenuItemsList(label: "Общие настройки", iconName: "SettingsMenuIcon")
+        ]
     )
     
     init(

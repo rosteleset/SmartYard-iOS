@@ -63,7 +63,7 @@ class MainMenuViewController: BaseViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        collectionView.register(cellWithClass: PaymentsAddressCell.self)
+        collectionView.register(cellWithClass: MainMenuItem.self)
         
     }
 }
@@ -79,7 +79,7 @@ extension MainMenuViewController: UICollectionViewDelegateFlowLayout {
             return .zero
         }
         
-        let height = PaymentsAddressCell.preferredHeight(
+        let height = MainMenuItem.preferredHeight(
             for: UIScreen.main.bounds.width - 32,
             title: item.label
         ).totalHeight
@@ -121,9 +121,8 @@ extension MainMenuViewController: UICollectionViewDataSource {
         guard let data = try? itemsProxy.value() else {
             return UICollectionViewCell()
         }
-        //TODO: поменять на свой класс ячейки меню
-        let cell = collectionView.dequeueReusableCell(withClass: PaymentsAddressCell.self, for: indexPath)
-        cell.configure(address: data[safe: indexPath.row]?.label)
+        let cell = collectionView.dequeueReusableCell(withClass: MainMenuItem.self, for: indexPath)
+        cell.configure(address: data[safe: indexPath.row]?.label, iconName: data[safe: indexPath.row]?.iconName)
         
         return cell
     }

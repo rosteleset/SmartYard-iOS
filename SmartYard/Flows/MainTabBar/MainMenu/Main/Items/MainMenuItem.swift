@@ -30,6 +30,7 @@ class MainMenuItem: UICollectionViewCell {
     }()
     
     private let arrowImageView = UIImageView()
+    private let iconImageView = UIImageView()
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -49,10 +50,16 @@ class MainMenuItem: UICollectionViewCell {
             .right()
             .vCenter()
         
+        iconImageView.pin
+            .height(24)
+            .width(24)
+            .left()
+            .vCenter()
+        
         arrowImageView.tintColor = UIColor(hex: 0x6D7A8A)?.withAlphaComponent(0.5)
         
         if dimensions.titleLabelHeight != 0 {
-            titleLabel.pin.top().left().bottom().width(dimensions.titleLabelWidth)
+            titleLabel.pin.top().right(of: iconImageView).marginLeft(16).bottom().width(dimensions.titleLabelWidth)
         }
         
         layer.cornerRadius = 12
@@ -60,7 +67,7 @@ class MainMenuItem: UICollectionViewCell {
         layer.borderColor = UIColor.SmartYard.grayBorder.cgColor
     }
     
-    func configure(address: String?) {
+    func configure(address: String?, iconName: String?) {
         contentView.removeSubviews()
         mainContainer.removeSubviews()
         
@@ -73,7 +80,10 @@ class MainMenuItem: UICollectionViewCell {
         }
         
         arrowImageView.image = UIImage(named: "RightArrowIcon")
+        iconImageView.image = UIImage(named: iconName ?? "PublicCamsMenuIcon")
+        iconImageView.contentMode = .center
         
+        mainContainer.addSubview(iconImageView)
         mainContainer.addSubview(arrowImageView)
     }
     
