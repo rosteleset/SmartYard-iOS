@@ -84,7 +84,6 @@ class FullscreenPlayerViewController: UIViewController {
         }
         
         self.timer?.invalidate()
-        self.timer = nil
         self.hideControls()
         
     }
@@ -101,6 +100,9 @@ class FullscreenPlayerViewController: UIViewController {
         
         if playedVideoType == .archive {
             progressSlider?.removeConstraints(sliderConstraints)
+            self.timer?.invalidate()
+            progressSlider?.isHidden = false
+            
         }
         
         switch playedVideoType {
