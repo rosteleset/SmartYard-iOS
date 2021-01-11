@@ -22,9 +22,7 @@ struct APIArchiveRange: Decodable {
     }
     
     func intersects(start: Date, end: Date) -> Bool {
-        if  ((startDate > start) && (startDate < end)) ||
-            ((endDate > start) && (endDate < end)) ||
-            ((startDate < start) && (endDate > end)) {
+        if  (startDate < end) && (endDate > start) {
             return true
         }
         return false
