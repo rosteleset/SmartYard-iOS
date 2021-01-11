@@ -115,6 +115,11 @@ class FullscreenPlayerViewController: UIViewController {
         super.viewDidAppear(animated)
         
         UIViewController.attemptRotationToDeviceOrientation()
+        
+        if self.timer == nil {
+            self.showControls()
+            self.timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: onTimer)
+        }
     }
     
     override func viewWillLayoutSubviews() {
