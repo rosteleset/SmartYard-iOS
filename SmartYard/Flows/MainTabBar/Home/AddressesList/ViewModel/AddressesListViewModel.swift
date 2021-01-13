@@ -227,10 +227,14 @@ class AddressesListViewModel: BaseViewModel {
             .ignoreNil()
             .map { args -> (GetAddressListResponseData, GetListConnectResponseData) in
                 var (approvedAddresses, uSecondResponse) = args
+                
                 //перемещаем наверх позиции в которых есть домофон
-                if let moveOnTopIndices = approvedAddresses.indices(where: { !($0.doors.isEmpty) }) {
-                    approvedAddresses.move(fromOffsets: IndexSet(moveOnTopIndices), toOffset: 0)
+                var movingElements: GetAddressListResponseData = []
+                for item in approvedAddresses where item.doors.isEmpty == false {
+                        movingElements.append(item)
                 }
+                approvedAddresses = movingElements + approvedAddresses.filtered({ $0.doors.isEmpty }, map: { $0 })
+                
                 return (approvedAddresses, uSecondResponse)
             }
             .withLatestFrom(areSectionsExpanded.asDriver(onErrorJustReturn: [:])) { ($0, $1) }
