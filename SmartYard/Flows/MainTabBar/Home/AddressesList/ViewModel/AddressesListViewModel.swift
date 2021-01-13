@@ -225,6 +225,14 @@ class AddressesListViewModel: BaseViewModel {
         Driver
             .merge(blockingRefresh, nonBlockingRefresh)
             .ignoreNil()
+            .map { args -> (GetAddressListResponseData, GetListConnectResponseData) in
+                var (approvedAddresses, uSecondResponse) = args
+                //перемещаем наверх позиции в которых есть домофон
+                if let moveOnTopIndices = approvedAddresses.indices(where: { !($0.doors.isEmpty) }) {
+                    approvedAddresses.move(fromOffsets: IndexSet(moveOnTopIndices), toOffset: 0)
+                }
+                return (approvedAddresses, uSecondResponse)
+            }
             .withLatestFrom(areSectionsExpanded.asDriver(onErrorJustReturn: [:])) { ($0, $1) }
             .do(
                 onNext: { [weak self] args in
