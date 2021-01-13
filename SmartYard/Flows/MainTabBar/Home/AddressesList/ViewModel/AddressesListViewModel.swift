@@ -225,16 +225,20 @@ class AddressesListViewModel: BaseViewModel {
         Driver
             .merge(blockingRefresh, nonBlockingRefresh)
             .ignoreNil()
+            .map { args -> (GetAddressListResponseData, GetListConnectResponseData) in
+                var (approvedAddresses, uSecondResponse) = args
+                //перемещаем наверх позиции в которых есть домофон
+                if let moveOnTopIndices = approvedAddresses.indices(where: { !($0.doors.isEmpty) }) {
+                    approvedAddresses.move(fromOffsets: IndexSet(moveOnTopIndices), toOffset: 0)
+                }
+                return (approvedAddresses, uSecondResponse)
+            }
             .withLatestFrom(areSectionsExpanded.asDriver(onErrorJustReturn: [:])) { ($0, $1) }
             .do(
                 onNext: { [weak self] args in
                     let (newData, expansionStateDict) = args
                     let (approvedAddresses, _) = newData
-                    /* (Васильев) TODO: надо найти подходящее место где поменять в поступающих от API данных позиции элементов с домофонами.
-                    //перемещаем наверх позиции в которых есть домофон
-                    if let moveOnTopIndices = approvedAddressesData.indices(where: { !($0.doors.isEmpty) }) {
-                        sectionModels.move(fromOffsets: IndexSet(moveOnTopIndices), toOffset: 0)
-                    */
+                    
                     self?.updateSectionExpansionStates(
                         expansionStateDict: expansionStateDict,
                         newData: approvedAddresses
