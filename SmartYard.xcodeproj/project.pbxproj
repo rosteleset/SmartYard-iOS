@@ -3973,7 +3973,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/Debug/SmartYardWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 105;
-				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
+				DEVELOPER_ACCOUNT = "sbca68@gmail.com";
 				DEVELOPMENT_TEAM = CDVQN43CHN;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4000,7 +4000,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 105;
-				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
+				DEVELOPER_ACCOUNT = "sbca68@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4027,7 +4027,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 105;
-				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
+				DEVELOPER_ACCOUNT = "sbca68@gmail.com";
 				DEVELOPMENT_TEAM = CDVQN43CHN;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4052,7 +4052,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 105;
-				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
+				DEVELOPER_ACCOUNT = "sbca68@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4199,7 +4199,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
+				DEVELOPER_ACCOUNT = "sbca68@gmail.com";
 				DEVELOPMENT_TEAM = CDVQN43CHN;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
@@ -4225,7 +4225,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
+				DEVELOPER_ACCOUNT = "sbca68@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
