@@ -35,8 +35,10 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     private var thumbnailViews = [(UIImageView, UIActivityIndicatorView)]()
     
     private var duration: Float64 = 0
+    
     private var progressPercentage: CGFloat = 0         // Represented in percentage
-    private var isReceivingGesture: Bool = false
+    
+    public var isReceivingGesture: Bool = false
     
     private var relativeStartDate: Date?
     private var referenceCalendar = Calendar.current
@@ -123,7 +125,7 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         
         self.layoutSubviews()
     }
-    
+        
     func setThumbnailImage(_ image: UIImage?, atIndex index: Int) {
         guard let (imageView, activityIndicator) = thumbnailViews[safe: index] else {
             return

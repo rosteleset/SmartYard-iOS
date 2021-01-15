@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.madbrains.smartyard.widget</string>
+		<string>group.ru.lanta-net.smartyard.widget</string>
 	</array>
 </dict>
 </plist>

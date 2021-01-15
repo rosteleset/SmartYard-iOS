@@ -33,7 +33,7 @@ target 'SmartYard' do
   pod 'SkeletonView', '1.7'
   pod 'SearchTextField'
   pod 'SHSPhoneComponent'
-  pod 'Parchment'
+  pod 'Parchment', '2.2.0'
   pod 'lottie-ios'
 
   # Calendar

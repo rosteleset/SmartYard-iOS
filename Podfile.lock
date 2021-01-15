@@ -123,7 +123,7 @@ PODS:
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - OnlineChatSdk (0.0.2)
-  - Parchment (2.3.0)
+  - Parchment (2.2.0)
   - PinLayout (1.8.13)
   - PMNibLinkableView (0.3.0)
   - PromisesObjC (1.2.8)
@@ -193,7 +193,7 @@ DEPENDENCIES:
   - Mapbox-iOS-SDK
   - Moya/RxSwift
   - OnlineChatSdk (from `https://github.com/MadBrains/OnlineChatSdk-Swift.git`, branch `feature/build-fix`)
-  - Parchment
+  - Parchment (= 2.2.0)
   - PinLayout
   - PMNibLinkableView
   - RxCocoa
@@ -213,7 +213,7 @@ DEPENDENCIES:
   - YandexMobileMetrica
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - Cartography
     - Differentiator
@@ -305,7 +305,7 @@ SPEC CHECKSUMS:
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   OnlineChatSdk: 421b17a804f22c193f81f02a891e7d91128c525b
-  Parchment: 72a7eb8072454a9500a53dd84776e04fba24e740
+  Parchment: 6036c141be0db50d0f08bf6992d9f66f401b1a64
   PinLayout: e41a50260a76508b7a7fcee8955c76639adc69bc
   PMNibLinkableView: 06ebf6128feb70c3ba589d6be232748c1b7b1767
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
@@ -326,6 +326,6 @@ SPEC CHECKSUMS:
   XCoordinator: 67772bf463acec002a920ab5eb04f46835dcf123
   YandexMobileMetrica: 1030df2959c886a7be3bc3d274eb54c8e86afd6f
 
-PODFILE CHECKSUM: 7f56885b8ef5d8b8a0635ea3d68cb252bcb0143f
+PODFILE CHECKSUM: 6e9ebde6aae5f966c299f4aa887a4daa13d82c60
 
 COCOAPODS: 1.8.4

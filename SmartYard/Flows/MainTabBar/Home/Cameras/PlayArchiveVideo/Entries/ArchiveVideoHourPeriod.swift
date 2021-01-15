@@ -8,10 +8,14 @@
 
 import Foundation
 
-struct ArchiveVideoPreviewPeriod: Equatable {
+struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
     
     let startDate: Date
     let endDate: Date
+    
+    /// Массив из доступных отрезков видео на сервере для этого периода
+    
+    let ranges: [(startDate: Date, endDate: Date)]
     
     var title: String {
         let formatter = DateFormatter()
@@ -31,7 +35,31 @@ struct ArchiveVideoPreviewPeriod: Equatable {
         
         return "/index-\(startTimestamp)-\(duration).m3u8"
     }
+
+    /// Компоненты URL для видео для фрагмента с номером
     
+    func videoUrlComponents( _ index: Int) -> String? {
+        let startTimestamp = ranges[index].startDate.unixTimestamp.int
+        let duration = ranges[index].endDate.timeIntervalSince(startDate).int
+        
+        return "/index-\(startTimestamp)-\(duration).m3u8"
+    }
+    
+    ///Массив компонентов URL для всех фрагментов
+    var videoUrlComponentsArray: [String] {
+        
+        return ranges.map { (arg0) -> String in
+            
+            let (startDate, endDate) = arg0
+            
+            let startTimestamp = startDate.unixTimestamp.int
+            let duration = endDate.timeIntervalSince(startDate).int
+            
+            return "/index-\(startTimestamp)-\(duration).m3u8"
+        }
+    }
+
+
     // MARK: Сервер жрет время по GMT, поэтому переводим в GMT
     /// Компоненты URL для получения thumbnails
     
@@ -54,4 +82,23 @@ struct ArchiveVideoPreviewPeriod: Equatable {
         }
     }
     
+    /// Длительность периода по временным меткам начала и конца без учёта пропусков на сервере
+    
+    var dirtyDuration: Double {
+        
+        guard ranges.last != nil,
+              ranges.first != nil
+               else {
+            return 0.0
+        }
+        return ranges.last!.endDate.timeIntervalSince1970 - ranges.first!.startDate.timeIntervalSince1970
+    }
+
+    /// Чистая длительность периода с учётом пропусков на сервере
+    
+    var cleanDuration: Double {
+        return self.ranges.map( {$0.endDate.timeIntervalSince1970 - $0.startDate.timeIntervalSince1970 } )
+            .reduce(0.0, +)
+    }
+
 }

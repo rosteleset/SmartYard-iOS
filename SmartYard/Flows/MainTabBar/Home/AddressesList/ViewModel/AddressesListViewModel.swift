@@ -225,6 +225,18 @@ class AddressesListViewModel: BaseViewModel {
         Driver
             .merge(blockingRefresh, nonBlockingRefresh)
             .ignoreNil()
+            .map { args -> (GetAddressListResponseData, GetListConnectResponseData) in
+                var (approvedAddresses, uSecondResponse) = args
+                
+                //перемещаем наверх позиции в которых есть домофон
+                var movingElements: GetAddressListResponseData = []
+                for item in approvedAddresses where item.doors.isEmpty == false {
+                        movingElements.append(item)
+                }
+                approvedAddresses = movingElements + approvedAddresses.filtered({ $0.doors.isEmpty }, map: { $0 })
+                
+                return (approvedAddresses, uSecondResponse)
+            }
             .withLatestFrom(areSectionsExpanded.asDriver(onErrorJustReturn: [:])) { ($0, $1) }
             .do(
                 onNext: { [weak self] args in
