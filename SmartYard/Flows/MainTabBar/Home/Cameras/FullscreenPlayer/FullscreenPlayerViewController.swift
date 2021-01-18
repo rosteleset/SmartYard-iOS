@@ -27,7 +27,7 @@ class FullscreenPlayerViewController: UIViewController {
     
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet weak var playPauseButton: UIButton!
+    @IBOutlet private weak var playPauseButton: UIButton!
     
     private var controls: [UIView] = []
     private var timer: Timer?
@@ -50,7 +50,7 @@ class FullscreenPlayerViewController: UIViewController {
         self.playerViewController?.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func tapPlayPauseButton() {
+    @IBAction private func tapPlayPauseButton() {
         guard let player = self.playerViewController?.player else {
             return
         }
@@ -66,8 +66,6 @@ class FullscreenPlayerViewController: UIViewController {
             return
         }
         
-        self.timer = nil
-        
         guard progressSlider.isReceivingGesture else {
             self.hideControls()
             return
@@ -75,15 +73,17 @@ class FullscreenPlayerViewController: UIViewController {
         self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: onTimer)
     }
     
-    @IBAction func tapView(_ sender: UITapGestureRecognizer) {
+    @IBAction private func tapView(_ sender: UITapGestureRecognizer) {
         
-        guard self.timer != nil else {
+        guard let timer = self.timer,
+              timer.isValid else {
             self.showControls()
             self.timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: onTimer)
             return
         }
         
-        self.timer?.invalidate()
+        timer.invalidate()
+        self.timer = nil
         self.hideControls()
         
     }
@@ -101,6 +101,7 @@ class FullscreenPlayerViewController: UIViewController {
         if playedVideoType == .archive {
             progressSlider?.removeConstraints(sliderConstraints)
             self.timer?.invalidate()
+            self.timer = nil
             progressSlider?.isHidden = false
             
         }
