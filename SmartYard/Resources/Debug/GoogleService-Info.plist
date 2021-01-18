@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>978817004542-qmli1k2vuhrg2qnrdjibgomej6m3h7f5.apps.googleusercontent.com</string>
+	<string>978817004542-ihqact99n0ptmcnj4k0ant2rk6h6pr0j.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.978817004542-qmli1k2vuhrg2qnrdjibgomej6m3h7f5</string>
+	<string>com.googleusercontent.apps.978817004542-ihqact99n0ptmcnj4k0ant2rk6h6pr0j</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDRX8J1bN2zE_5TCXdH9qCJeVMSyrnuOpo</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>ru.madbrains.smartyard</string>
+	<string>ru.lanta-net.smartyard</string>
 	<key>PROJECT_ID</key>
 	<string>smart-yard</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:978817004542:ios:4da48f7a70a8a0f8e986af</string>
+	<string>1:978817004542:ios:e57f3368196f4d6ce986af</string>
 	<key>DATABASE_URL</key>
 	<string>https://smart-yard.firebaseio.com</string>
 </dict>

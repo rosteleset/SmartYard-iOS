@@ -62,6 +62,16 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
                         return
                     }
                     
+                    //Васильев: иногда случается странный баг, что performBatchUpdates падает в Exception.
+                    //связано это с тем, что currentVisibleCellCount при инициализации может вернуть тут 2 ячейки, а уже внутри updateBlock - 3 ячейки
+                    // поэтому проверку приходится делать ещё раз - да, это костыль.
+                    let currentVisibleCellCount = self.tableView.visibleCells.count
+                    let cellCountDifference = updatedVisibleCellCount - currentVisibleCellCount
+                    
+                    guard cellCountDifference != 0 else {
+                        return
+                    }
+                    
                     let range = (1...abs(cellCountDifference))
                     let indexPaths = range.map { IndexPath(row: $0, section: 0) }
                     
