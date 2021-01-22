@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A61E56125A07F4F00A368FA /* FullscreenPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */; };
+		3AB41D4D25B9B8E400AEC8C3 /* FullscreenPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB41D4C25B9B8E400AEC8C3 /* FullscreenPlayerViewController.xib */; };
 		3ACFD1CB25B3938200B8AD5D /* apple-app-site-association in Resources */ = {isa = PBXBuildFile; fileRef = 3ACFD1CA25B3938200B8AD5D /* apple-app-site-association */; };
 		842DBD00243750ED00A1D346 /* SettingsServiceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */; };
 		842FECB6242B89DF007CA0F3 /* OfficesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */; };
@@ -479,6 +479,7 @@
 /* Begin PBXFileReference section */
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FullscreenPlayerViewController.xib; sourceTree = "<group>"; };
+		3AB41D4C25B9B8E400AEC8C3 /* FullscreenPlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FullscreenPlayerViewController.xib; sourceTree = "<group>"; };
 		3ACFD1CA25B3938200B8AD5D /* apple-app-site-association */ = {isa = PBXFileReference; lastKnownFileType = text; path = "apple-app-site-association"; sourceTree = "<group>"; };
 		6EF1D05FE4E504C4581F0162 /* Pods-SmartYardWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.release.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.release.xcconfig"; sourceTree = "<group>"; };
 		842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceAction.swift; sourceTree = "<group>"; };
@@ -946,6 +947,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3AB41D4825B87CA100AEC8C3 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		842FECB3242B89DF007CA0F3 /* Offices */ = {
 			isa = PBXGroup;
 			children = (
@@ -1515,6 +1524,7 @@
 		847880E624AB3EAC008D9E33 /* FullscreenPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				3AB41D4C25B9B8E400AEC8C3 /* FullscreenPlayerViewController.xib */,
 				847880E724AB3ED4008D9E33 /* FullscreenPlayerViewController.swift */,
 			);
 			path = FullscreenPlayer;
@@ -2298,6 +2308,7 @@
 				84F840D323E07DA5008DBE50 /* Products */,
 				B0B71A96C6C8995993C06C49 /* Pods */,
 				9597597AA6C1CAECCA7D92F7 /* Frameworks */,
+				3AB41D4825B87CA100AEC8C3 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -3404,7 +3415,6 @@
 				84F6493A247402DC000C0028 /* WhiteSectionHeaderView.xib in Resources */,
 				847CF7DD240696D500070007 /* SettingsListSkeletonView.xib in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
-				3A61E56125A07F4F00A368FA /* (null) in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
 				84D6446023F6ACE600AD87EF /* AddressDeletionViewController.xib in Resources */,
 				84B89A9123F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib in Resources */,
@@ -3426,6 +3436,7 @@
 				84A67062241FB6E100BBA12B /* AddressAccessSkeletonView.xib in Resources */,
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
 				846DC6C124B33DC600A11914 /* PaymentPopupController.xib in Resources */,
+				3AB41D4D25B9B8E400AEC8C3 /* FullscreenPlayerViewController.xib in Resources */,
 				843C38E0242A57C40035BF80 /* NotificationsViewController.xib in Resources */,
 				E9004C5F23FABF2200B59976 /* IntercomTemporaryAccessView.xib in Resources */,
 				E9B9EAC82421FCB8000A92B3 /* RestorePasswordViewController.xib in Resources */,
