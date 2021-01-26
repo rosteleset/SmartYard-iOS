@@ -58,8 +58,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         continue userActivity: NSUserActivity,
         restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
     ) -> Bool {
-        if userActivity.activityType == "INStartVideoCallIntent" {
+        switch userActivity.activityType {
+        case "INStartVideoCallIntent":
             NotificationCenter.default.post(name: .videoRequestedByCallKit, object: nil)
+        case NSUserActivityTypeBrowsingWeb: //задел на будущее - по идее мы именно сюда попадём через дип-линки
+            guard let incomingURL = userActivity.webpageURL,
+                  let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
+                    return false
+                }
+            print("deeplink start: \(incomingURL.path)")
+        default: break
         }
         
         return true

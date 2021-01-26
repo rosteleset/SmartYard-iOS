@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A61E56125A07F4F00A368FA /* (null) in Resources */ = {isa = PBXBuildFile; };
+		3A3B8B9525A5CD2500BFB72E /* MainMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8B9425A5CD2500BFB72E /* MainMenuCoordinator.swift */; };
+		3A3B8BA225A5CF6F00BFB72E /* MainMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BA125A5CF6F00BFB72E /* MainMenuViewModel.swift */; };
+		3A3B8BB325A5D00C00BFB72E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */; };
+		3A3B8BB425A5D00C00BFB72E /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB225A5D00C00BFB72E /* MainMenuViewController.xib */; };
+		3A3B8BBA25A5E8DA00BFB72E /* MainMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB925A5E8DA00BFB72E /* MainMenuItem.swift */; };
+		3A61E56125A07F4F00A368FA /* FullscreenPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */; };
 		842DBD00243750ED00A1D346 /* SettingsServiceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */; };
 		842FECB6242B89DF007CA0F3 /* OfficesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */; };
 		842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */; };
@@ -477,6 +482,12 @@
 
 /* Begin PBXFileReference section */
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A3B8B9425A5CD2500BFB72E /* MainMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuCoordinator.swift; sourceTree = "<group>"; };
+		3A3B8BA125A5CF6F00BFB72E /* MainMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewModel.swift; sourceTree = "<group>"; };
+		3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
+		3A3B8BB225A5D00C00BFB72E /* MainMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenuViewController.xib; sourceTree = "<group>"; };
+		3A3B8BB925A5E8DA00BFB72E /* MainMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuItem.swift; sourceTree = "<group>"; };
+		3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FullscreenPlayerViewController.xib; sourceTree = "<group>"; };
 		6EF1D05FE4E504C4581F0162 /* Pods-SmartYardWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.release.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.release.xcconfig"; sourceTree = "<group>"; };
 		842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceAction.swift; sourceTree = "<group>"; };
 		842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesResponseData.swift; sourceTree = "<group>"; };
@@ -943,6 +954,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A3B8B9225A5CAB800BFB72E /* MainMenu */ = {
+			isa = PBXGroup;
+			children = (
+				3A3B8B9425A5CD2500BFB72E /* MainMenuCoordinator.swift */,
+				3A3B8B9325A5CB1100BFB72E /* Main */,
+			);
+			path = MainMenu;
+			sourceTree = "<group>";
+		};
+		3A3B8B9325A5CB1100BFB72E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				3A3B8BB825A5E87900BFB72E /* Items */,
+				3A3B8BA025A5CD9600BFB72E /* ViewModel */,
+				3A3B8B9F25A5CD8600BFB72E /* View */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		3A3B8B9F25A5CD8600BFB72E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */,
+				3A3B8BB225A5D00C00BFB72E /* MainMenuViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3A3B8BA025A5CD9600BFB72E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3A3B8BA125A5CF6F00BFB72E /* MainMenuViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3A3B8BB825A5E87900BFB72E /* Items */ = {
+			isa = PBXGroup;
+			children = (
+				3A3B8BB925A5E8DA00BFB72E /* MainMenuItem.swift */,
+			);
+			path = Items;
+			sourceTree = "<group>";
+		};
 		842FECB3242B89DF007CA0F3 /* Offices */ = {
 			isa = PBXGroup;
 			children = (
@@ -1144,6 +1199,7 @@
 				844AC3CA23EBFCC50066006D /* Chat */,
 				844AC3CB23EBFCCA0066006D /* Payments */,
 				844AC3CC23EBFCCF0066006D /* Settings */,
+				3A3B8B9225A5CAB800BFB72E /* MainMenu */,
 			);
 			path = MainTabBar;
 			sourceTree = "<group>";
@@ -1513,6 +1569,7 @@
 			isa = PBXGroup;
 			children = (
 				847880E724AB3ED4008D9E33 /* FullscreenPlayerViewController.swift */,
+				3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */,
 			);
 			path = FullscreenPlayer;
 			sourceTree = "<group>";
@@ -3296,7 +3353,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1220;
-				ORGANIZATIONNAME = "Mad Brains";
+				ORGANIZATIONNAME = LanTa;
 				TargetAttributes = {
 					849653062472C93A000E1375 = {
 						CreatedOnToolsVersion = 11.4;
@@ -3399,10 +3456,11 @@
 				84F6493A247402DC000C0028 /* WhiteSectionHeaderView.xib in Resources */,
 				847CF7DD240696D500070007 /* SettingsListSkeletonView.xib in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
-				3A61E56125A07F4F00A368FA /* (null) in Resources */,
+				3A61E56125A07F4F00A368FA /* FullscreenPlayerViewController.xib in Resources */,
 				E99EA6BB23EA9D4400BECEE6 /* InputPhoneNumberViewController.xib in Resources */,
 				84D6446023F6ACE600AD87EF /* AddressDeletionViewController.xib in Resources */,
 				84B89A9123F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib in Resources */,
+				3A3B8BB425A5D00C00BFB72E /* MainMenuViewController.xib in Resources */,
 				844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */,
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
@@ -3636,6 +3694,7 @@
 				E92EFBE8242A24D2003AF7FE /* RestoreRequest.swift in Sources */,
 				E9B9EAC72421FCB8000A92B3 /* RestorePasswordViewController.swift in Sources */,
 				84CD304724D305F500CC079E /* IncomingCallScreenType.swift in Sources */,
+				3A3B8B9525A5CD2500BFB72E /* MainMenuCoordinator.swift in Sources */,
 				E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */,
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				E92EFBAD242A22F2003AF7FE /* APIStreet.swift in Sources */,
@@ -3784,9 +3843,11 @@
 				E9C2568124224DF200BE32E0 /* RestoreMethod.swift in Sources */,
 				843C38DE242A57C40035BF80 /* NotificationsCoordinator.swift in Sources */,
 				E92EFBDF242A22F2003AF7FE /* CreateIssueResponseData.swift in Sources */,
+				3A3B8BB325A5D00C00BFB72E /* MainMenuViewController.swift in Sources */,
 				849FF08B24CEBFD900C234BC /* IncomingCallLandscapeViewController.swift in Sources */,
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
 				E92EFBEA242A24EB003AF7FE /* APIRestoreData.swift in Sources */,
+				3A3B8BBA25A5E8DA00BFB72E /* MainMenuItem.swift in Sources */,
 				E92EFBC0242A22F2003AF7FE /* GetServicesResponseData.swift in Sources */,
 				846DC6D924B33DEA00A11914 /* APIWrapper+Payment.swift in Sources */,
 				843C38D5242A57B70035BF80 /* MessageType.swift in Sources */,
@@ -3889,6 +3950,7 @@
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
+				3A3B8BA225A5CF6F00BFB72E /* MainMenuViewModel.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 				E92EFBCE242A22F2003AF7FE /* GetPaymentsListRequest.swift in Sources */,
@@ -3973,10 +4035,9 @@
 			baseConfigurationReference = D8DF595B63AD4846B13E6471 /* Pods-SmartYardWidget.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/Debug/SmartYardWidget.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
-				DEVELOPER_ACCOUNT = "sbca68@gmail.com";
+				CURRENT_PROJECT_VERSION = 52;
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3985,11 +4046,10 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.4.52;
 				MATCH_PROV_PROFILE_TYPES = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4003,8 +4063,8 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 58;
-				DEVELOPER_ACCOUNT = "sbca68@gmail.com";
+				CURRENT_PROJECT_VERSION = 52;
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4013,11 +4073,11 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.4.52;
 				MATCH_PROV_PROFILE_TYPES = "adhoc,appstore";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore ru.lanta-net.smartyard.widget";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc $(PRODUCT_BUNDLE_IDENTIFIER)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_VERSION = 5.0;
@@ -4029,10 +4089,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
-				DEVELOPER_ACCOUNT = "sbca68@gmail.com";
+				CURRENT_PROJECT_VERSION = 52;
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4041,11 +4100,10 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.4.52;
 				MATCH_PROV_PROFILE_TYPES = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4058,8 +4116,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 58;
-				DEVELOPER_ACCOUNT = "sbca68@gmail.com";
+				CURRENT_PROJECT_VERSION = 52;
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4068,11 +4126,11 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.4.52;
 				MATCH_PROV_PROFILE_TYPES = "adhoc,appstore";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore ru.lanta-net.smartyard.NotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc $(PRODUCT_BUNDLE_IDENTIFIER)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_VERSION = 5.0;
@@ -4205,11 +4263,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 52;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPER_ACCOUNT = "sbca68@gmail.com";
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
@@ -4218,11 +4275,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.4.52;
 				MATCH_PROV_PROFILE_TYPES = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -4237,8 +4293,8 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 58;
-				DEVELOPER_ACCOUNT = "sbca68@gmail.com";
+				CURRENT_PROJECT_VERSION = 52;
+				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
@@ -4247,11 +4303,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.4.52;
 				MATCH_PROV_PROFILE_TYPES = "adhoc,appstore";
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore ru.lanta-net.smartyard";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc $(PRODUCT_BUNDLE_IDENTIFIER)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4263,12 +4319,11 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 52;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4XDBUB87Z8;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -4280,11 +4335,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.4.52;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.shared-data";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -4299,12 +4353,11 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 52;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4XDBUB87Z8;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -4316,11 +4369,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.4.52;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.shared-data";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_VERSION = 5.0;
