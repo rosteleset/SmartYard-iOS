@@ -67,15 +67,15 @@ class MainMenuItem: UICollectionViewCell {
         layer.borderColor = UIColor.SmartYard.grayBorder.cgColor
     }
     
-    func configure(address: String?, iconName: String?) {
+    func configure(name: String?, iconName: String?) {
         contentView.removeSubviews()
         mainContainer.removeSubviews()
         
         addSubview(mainContainer)
         
-        titleLabel.text = address
+        titleLabel.text = name
         
-        if !address.isNilOrEmpty {
+        if !name.isNilOrEmpty {
             mainContainer.addSubview(titleLabel)
         }
         

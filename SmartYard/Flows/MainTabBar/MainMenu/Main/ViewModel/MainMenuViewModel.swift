@@ -24,7 +24,7 @@ class MainMenuViewModel: BaseViewModel {
         value: [
             MenuItemsList(label: "Городские камеры", iconName: "PublicCamsMenuIcon", triger: "publicCams"),
             MenuItemsList(label: "Настройки профиля", iconName: "ProfileMenuIcon", triger: "profile"),
-            MenuItemsList(label: "Общие настройки", iconName: "SettingsMenuIcon", triger: "settings")
+            MenuItemsList(label: "Настройки адресов", iconName: "SettingsMenuIcon", triger: "settings")
         ]
     )
     
@@ -43,28 +43,32 @@ class MainMenuViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] args in
                     let (indexPath, items) = args
-                    print(indexPath.row)
-                    switch items[indexPath.row].triger  {
-                        case "settings": self?.router.trigger(.settings); break;
-                        case "profile": self?.router.trigger(.profile); break;
-                        case "publicCams": self?.router.trigger(.safariPage(url: URL(string: "https://cam.lanta.me")!)); break;
-                        
-                        default: self?.router.trigger(.settings)
+                    
+                    switch items[indexPath.row].triger {
+                    case "settings": self?.router.trigger(.settings)
+                    case "profile": self?.router.trigger(.profile)
+                    case "publicCams": self?.router.trigger(.safariPage(url: URL(string: "https://www.youtube.com/embed/9bZkp7q19f0")!))
+                    
+                    default: self?.router.trigger(.settings)
                     }
-                    //self?.router.trigger(.settings)
-                    
-                    
-                    /*
-                     value: [
-                         MenuItemsList(label: "Городские камеры", iconName: "PublicCamsMenuIcon", triger: .safariPage(url: URL(string: "https://cam.lanta.me")!)),
-                         MenuItemsList(label: "Настройки профиля", iconName: "ProfileMenuIcon", triger: .settings),
-                         MenuItemsList(label: "Общие настройки", iconName: "SettingsMenuIcon", triger: .profile)
-                     ]
-                     */
-                    
                 }
             )
             .disposed(by: disposeBag)
+        
+        input.bottomButton
+            .drive(
+                onNext: { [weak self] in
+                    //Делаем обычный телефонный вызов на 42-99-99
+                    if let phoneCallURL = URL(string: "tel://+7(4752)429999") {
+                        let application = UIApplication.shared
+                        if application.canOpenURL(phoneCallURL) {
+                            application.open(phoneCallURL, options: [:], completionHandler: nil)
+                        }
+                      }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         
         return Output(
             items: items.asDriverOnErrorJustComplete()
@@ -76,6 +80,7 @@ extension MainMenuViewModel {
     
     struct Input {
         let itemSelected: Driver<IndexPath>
+        let bottomButton: Driver<Void>
         /*
         let backTrigger: Driver<Void>
         let downloadTrigger: Driver<Void>

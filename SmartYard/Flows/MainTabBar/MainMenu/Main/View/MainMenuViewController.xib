@@ -25,10 +25,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdD-ER-KhT" userLabel="SubView">
-                    <rect key="frame" x="0.0" y="124" width="414" height="738"/>
+                    <rect key="frame" x="0.0" y="140" width="414" height="722"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="3xa-Mz-Zyd">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="738"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="722"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="D5i-SN-HTc">
                                 <size key="itemSize" width="50" height="50"/>
@@ -48,7 +48,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Меню" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oGM-tc-KqL">
-                    <rect key="frame" x="16" y="84" width="84.5" height="22"/>
+                    <rect key="frame" x="16" y="100" width="84.5" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="rKd-By-AdO"/>
                     </constraints>
@@ -65,7 +65,7 @@
                 <constraint firstItem="bdD-ER-KhT" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="puz-WZ-MCn"/>
                 <constraint firstItem="oGM-tc-KqL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="tJX-84-QaU"/>
                 <constraint firstItem="bdD-ER-KhT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="wmt-o9-F5L"/>
-                <constraint firstItem="oGM-tc-KqL" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="x9U-aj-vmx"/>
+                <constraint firstItem="oGM-tc-KqL" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="56" id="x9U-aj-vmx"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="81.696428571428569"/>
         </view>
