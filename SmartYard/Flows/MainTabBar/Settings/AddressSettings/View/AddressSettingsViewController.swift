@@ -31,6 +31,10 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var voipContainerView: UIView!
     @IBOutlet private weak var voipSwitch: UISwitch!
     
+    @IBOutlet private weak var paperContainerView: UIView!
+    @IBOutlet private weak var paperSwitch: UISwitch!
+    
+    
     @IBOutlet private var collapsedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var deleteButtonTopToNotificationsConstraint: NSLayoutConstraint!
