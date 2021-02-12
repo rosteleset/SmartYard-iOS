@@ -36,6 +36,7 @@
                 <outlet property="notificationsContainerView" destination="isu-7K-afz" id="lNm-XQ-64c"/>
                 <outlet property="notificationsHeader" destination="oou-k0-7st" id="2l2-a5-aJM"/>
                 <outlet property="notificationsViewTopConstraint" destination="qCL-Ll-c3k" id="4P6-xl-avc"/>
+                <outlet property="paperBillsHeight" destination="zMt-R5-6hb" id="oey-6S-81U"/>
                 <outlet property="paperContainerView" destination="NSt-af-Niu" id="2nN-Vp-Obz"/>
                 <outlet property="paperSwitch" destination="Oc1-5u-GP9" id="Ojr-PT-rko"/>
                 <outlet property="skeletonView" destination="52q-3H-mZa" id="N9W-DG-lSY"/>

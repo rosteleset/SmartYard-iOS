@@ -122,6 +122,7 @@ extension APIWrapper {
         }
         
         let request = IntercomRequest(accessToken: accessToken, flatId: flatId, settings: settings)
+        print("request data: \(request)")
         
         return provider.rx
             .request(.intercom(request: request))

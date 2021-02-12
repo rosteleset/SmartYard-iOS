@@ -16,7 +16,7 @@ struct IntercomResponseData: Decodable {
     let voip: Bool
     let autoOpen: Date
     let whiteRabbit: String
-    let paperBill: Bool
+    let paperBill: Bool?
     
     
     private enum CodingKeys: String, CodingKey {
@@ -63,13 +63,15 @@ struct IntercomResponseData: Decodable {
         
         whiteRabbit = try container.decode(String.self, forKey: .whiteRabbit)
         
-        let paperBillRawValue = try container.decode(String.self, forKey: .paperBill)
+        let paperBillRawValue = try? container.decode(String.self, forKey: .paperBill)
         
         switch paperBillRawValue {
         case "t": paperBill = true
         case "f": paperBill = false
-        default: throw NSError.APIWrapperError.noDataError
+        default: paperBill = nil
         }
+        
+        //paperBill = nil
     }
     
 }

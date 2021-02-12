@@ -96,6 +96,43 @@ class LinphoneService: CoreDelegate {
         
         let cfg = try! accountCreator.createProxyConfig()
         
+        if let stun = config.stun {
+            
+            print("stunServer = \(stun)")
+            print("natPolicy = \(core.natPolicy.debugDescription)")
+            
+            let params = stun.split(separator: ":", maxSplits: 1)
+            
+            let typeString = String(params[0])
+            let serverString = String(params[1])
+      
+            try! core.natPolicy = core.createNatPolicy()
+            
+            core.natPolicy?.stunServer = serverString
+            
+            switch typeString {
+            case "stun":
+                core.natPolicy?.stunEnabled = true
+            case "turn":
+                core.natPolicy?.turnEnabled = true
+                
+                switch config.transport {
+                case .Udp:
+                    core.natPolicy?.udpTurnTransportEnabled = true
+                case .Tcp:
+                    core.natPolicy?.tcpTurnTransportEnabled = true
+                case .Tls:
+                    core.natPolicy?.tlsTurnTransportEnabled = true
+                default: break
+                }
+            default: break
+            }
+            core.natPolicy?.resolveStunServer()
+            
+            core.stunServer = serverString
+        }
+
+        
         try! core.addProxyConfig(config: cfg)
         
         core.useInfoForDtmf = false
