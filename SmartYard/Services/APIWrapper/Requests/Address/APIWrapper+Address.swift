@@ -66,7 +66,8 @@ extension APIWrapper {
             cms: nil,
             voip: nil,
             autoOpen: Date().dateHourAfter,
-            whiteRabbit: nil
+            whiteRabbit: nil,
+            paperBill: nil
         )
         
         return intercom(flatId: flatId, settings: settings)
@@ -78,7 +79,8 @@ extension APIWrapper {
             cms: isEnabled,
             voip: nil,
             autoOpen: nil,
-            whiteRabbit: nil
+            whiteRabbit: nil,
+            paperBill: nil
         )
         
         return intercom(flatId: flatId, settings: settings)
@@ -90,7 +92,21 @@ extension APIWrapper {
             cms: nil,
             voip: isEnabled,
             autoOpen: nil,
-            whiteRabbit: nil
+            whiteRabbit: nil,
+            paperBill: nil
+        )
+        
+        return intercom(flatId: flatId, settings: settings)
+    }
+    
+    func setIntercomPaperBillState(flatId: String, isEnabled: Bool) -> Single<IntercomResponseData?> {
+        let settings = APIIntercomSettings(
+            enableDoorCode: nil,
+            cms: nil,
+            voip: nil,
+            autoOpen: nil,
+            whiteRabbit: nil,
+            paperBill: isEnabled
         )
         
         return intercom(flatId: flatId, settings: settings)
@@ -106,6 +122,7 @@ extension APIWrapper {
         }
         
         let request = IntercomRequest(accessToken: accessToken, flatId: flatId, settings: settings)
+        print("request data: \(request)")
         
         return provider.rx
             .request(.intercom(request: request))

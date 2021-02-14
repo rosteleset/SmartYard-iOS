@@ -248,7 +248,7 @@ class IncomingCallViewModel: BaseViewModel {
         registrationFinished
             .asDriver(onErrorJustReturn: false)
             .isTrue()
-            .delay(.milliseconds(3000))
+            .delay(.milliseconds(5000))
             .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
             .filter { $0 == nil }
             .withLatestFrom(currentState)
