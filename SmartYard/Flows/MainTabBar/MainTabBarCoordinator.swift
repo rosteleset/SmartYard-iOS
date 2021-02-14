@@ -206,6 +206,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             springDampingRatio: 0.65,
             initialSpringVelocity: 0
         )
+        customTabBarController.delegate = customTabBarController
         
         super.init(
             rootViewController: customTabBarController,
@@ -217,6 +218,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         rootViewController.tabBar.isTranslucent = false
         
+        
         subscribeToBadgeUpdates()
         subscribeToAddAddressNotifications()
         subscribeToChatNotifications()
@@ -224,17 +226,28 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
         switch route {
-        case .home: return .selectAndCallDelegate(homeRouter)
-        case .notifications: return .selectAndCallDelegate(notificationsRouter)
-        case .chat: return .selectAndCallDelegate(chatRouter)
-        case .payments: return .selectAndCallDelegate(paymentsRouter)
+        case .home:
+            print("home")
+            return .selectAndCallDelegate(homeRouter)
+        case .notifications:
+            print("notifications")
+            return .selectAndCallDelegate(notificationsRouter)
+        case .chat:
+            print("chat")
+            return .selectAndCallDelegate(chatRouter)
+        case .payments:
+            print("payments")
+            return .selectAndCallDelegate(paymentsRouter)
         case .settings:
-            print("TODO: проверить переадресацию в настройки");
+            print("TODO: проверить переадресацию в настройки")
             return .trigger(MainMenuRoute.settings, on: menuRouter)
             //selectAndCallDelegate(settingsRouter)
-        case .menu: return .selectAndCallDelegate(menuRouter)
+        case .menu:
+            print("menu")
+            return .selectAndCallDelegate(menuRouter)
         }
     }
+    
     
     private func updateNotificationsTab(shouldShowBadge: Bool) {
         notificationsTabBarItem.image = UIImage(
@@ -333,4 +346,15 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .disposed(by: disposeBag)
     }
     
+}
+
+extension SSCustomTabBarViewController : UITabBarControllerDelegate {
+    public func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        //делаем так, чтобы при нажатии на пункт "меню" мы всегда переходили на экран с меню, для этого очищаем Navigation stack
+        if tabBarController.selectedIndex == 4,
+            let vc = viewController as? UINavigationController {
+            vc.popToRootViewController(animated: false)
+        }
+        
+    }
 }

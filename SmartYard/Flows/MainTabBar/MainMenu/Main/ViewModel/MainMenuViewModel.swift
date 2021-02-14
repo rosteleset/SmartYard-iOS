@@ -23,8 +23,8 @@ class MainMenuViewModel: BaseViewModel {
     private let items = BehaviorSubject<[MenuItemsList]>(
         value: [
             MenuItemsList(label: "Городские камеры", iconName: "PublicCamsMenuIcon", triger: "publicCams"),
-            MenuItemsList(label: "Настройки профиля", iconName: "ProfileMenuIcon", triger: "profile"),
-            MenuItemsList(label: "Настройки адресов", iconName: "SettingsMenuIcon", triger: "settings")
+            MenuItemsList(label: "Настройки адресов", iconName: "ProfileMenuIcon", triger: "settings"),
+            MenuItemsList(label: "Общие настройки", iconName: "SettingsMenuIcon", triger: "profile")
         ]
     )
     
@@ -47,7 +47,7 @@ class MainMenuViewModel: BaseViewModel {
                     switch items[indexPath.row].triger {
                     case "settings": self?.router.trigger(.settings)
                     case "profile": self?.router.trigger(.profile)
-                    case "publicCams": self?.router.trigger(.safariPage(url: URL(string: "https://www.youtube.com/embed/9bZkp7q19f0")!))
+                    case "publicCams": self?.router.trigger(.cityCams)
                     
                     default: self?.router.trigger(.settings)
                     }

@@ -82,4 +82,21 @@ extension APIWrapper {
             .mapToOptional()
     }
     
+    func getOverviewCCTV() -> Single<OverviewCCTVResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = OverviewCCTVRequest(accessToken: accessToken)
+        
+        return provider.rx
+            .request(.overviewCCTV(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
 }

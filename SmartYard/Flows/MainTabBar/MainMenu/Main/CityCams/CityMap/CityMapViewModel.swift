@@ -15,11 +15,11 @@ import CoreLocation
 class CityMapViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
-    private let router: WeakRouter<HomeRoute>
+    private let router: WeakRouter<CityCamsRoute>
     
-    private let cameras = BehaviorSubject<[CameraObject]>(value: [])
+    private let cameras = BehaviorSubject<[CityCameraObject]>(value: [])
     
-    init(apiWrapper: APIWrapper, router: WeakRouter<HomeRoute>) {
+    init(apiWrapper: APIWrapper, router: WeakRouter<CityCamsRoute>) {
         self.apiWrapper = apiWrapper
         self.router = router
     }
@@ -43,15 +43,12 @@ class CityMapViewModel: BaseViewModel {
                     let (cameraNum, cameras) = args
                     
                     guard let self = self,
-                        let selectedCamera = (cameras.first { $0.cameraNumber == cameraNum }),
-                        let uAddress = selectedCamera else {
+                        let selectedCamera = (cameras.first { $0.cameraNumber == cameraNum })
+                    else {
                         return
                     }
-                    
                     self.router.trigger(
                         .cameraContainer(
-                            address: uAddress,
-                            cameras: cameras,
                             selectedCamera: selectedCamera
                         )
                     )
@@ -67,14 +64,14 @@ class CityMapViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        apiWrapper.getAllCCTV(houseId: houseId)
+        apiWrapper.getOverviewCCTV()
             .trackError(errorTracker)
             .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .map { response in
                 response.enumerated().map { offset, element in
-                    CameraObject(
+                    CityCameraObject(
                         id: element.id,
                         position: element.coordinate,
                         cameraNumber: offset + 1,
@@ -91,16 +88,16 @@ class CityMapViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        
         return Output(
             cameras: cameras.asDriver(onErrorJustReturn: []),
-            address: address.asDriverOnErrorJustComplete(),
             isLoading: activityTracker.asDriver()
         )
     }
     
 }
 
-extension YardMapViewModel {
+extension CityMapViewModel {
     
     struct Input {
         let cameraSelected: Driver<Int>
@@ -108,8 +105,7 @@ extension YardMapViewModel {
     }
     
     struct Output {
-        let cameras: Driver<[CameraObject]>
-        let address: Driver<String?>
+        let cameras: Driver<[CityCameraObject]>
         let isLoading: Driver<Bool>
     }
     

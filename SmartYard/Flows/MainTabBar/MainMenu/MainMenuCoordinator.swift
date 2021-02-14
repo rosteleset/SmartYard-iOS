@@ -14,6 +14,7 @@ import RxCocoa
 enum MainMenuRoute: Route {
     
     case main
+    case cityCams
     case settings
     case profile
     case alert(title: String, message: String)
@@ -34,7 +35,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
     private let logoutHelper: LogoutHelper
     
     private var settingsRouter: StrongRouter<SettingsRoute>!
-    
+    private var cityCamsRouter: StrongRouter<CityCamsRoute>!
     
     init(
         accessService: AccessService,
@@ -54,7 +55,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         self.logoutHelper = logoutHelper
         
         super.init(initialRoute: .main)
-        // MARK: Settings View
+        
         let settingsCoordinator = SettingsCoordinator(
             rootViewController: rootViewController,
             accessService: accessService,
@@ -66,7 +67,19 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             alertService: alertService
         )
         
+        let cityCamsCoordinator = CityCamsCoordinator(
+            rootViewController: rootViewController,
+            apiWrapper: apiWrapper,
+            pushNotificationService: pushNotificationService,
+            accessService: accessService,
+            issueService: issueService,
+            permissionService: permissionService,
+            alertService: alertService,
+            logoutHelper: logoutHelper
+        )
+        
         self.settingsRouter = settingsCoordinator.strongRouter
+        self.cityCamsRouter = cityCamsCoordinator.strongRouter
         
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
@@ -77,6 +90,9 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             let vm = MainMenuViewModel(apiWrapper: apiWrapper, router: weakRouter)
             let vc = MainMenuViewController(viewModel: vm)
             return .set([vc])
+        
+        case .cityCams:
+            return .trigger(CityCamsRoute.main, on: cityCamsRouter)
             
         case .settings:
             return .trigger(SettingsRoute.main, on: settingsRouter)

@@ -1,0 +1,53 @@
+//
+//  CityCamerasMapPointView.swift
+//  SmartYard
+//
+//  Created by Mad Brains on 27.04.2020.
+//  Copyright © 2020 Mad Brains. All rights reserved.
+//
+
+import Foundation
+import Mapbox
+import PinLayout
+
+class CityCamerasMapPointView: MGLAnnotationView {
+    
+    private(set) var cameraNumber: Int?
+    
+    private let cameraImageView: UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "CityCam")?.withRenderingMode(.alwaysOriginal)
+        
+        return imageView
+    }()
+    
+    convenience init() {
+        self.init(reuseIdentifier: "CamerasMapPointView")
+        
+        scalesWithViewingDistance = false
+        isEnabled = true
+        
+        backgroundColor = .white
+        
+        addSubview(cameraImageView)
+        
+        clipsToBounds = true
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        cornerRadius = width / 2
+        
+        cameraImageView.pin.width(40).height(40).vCenter().hCenter()
+        
+    }
+    
+    func configure(cameraNumber: Int) {
+        self.cameraNumber = cameraNumber
+        
+    }
+    
+}
