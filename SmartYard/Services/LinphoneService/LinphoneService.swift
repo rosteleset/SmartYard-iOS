@@ -29,9 +29,8 @@ class LinphoneService: CoreDelegate {
         delegate?.onCallStateChanged(lc: lc, call: call, cstate: cstate, message: message)
     }
     
-    func start() {
+    func start(_ config: SipConfig) {
         stop()
-        
         do {
             let configName = "linphonerc_default"
             let factoryName = "linphonerc_factory"
@@ -57,16 +56,59 @@ class LinphoneService: CoreDelegate {
                 factoryConfigPath: Bundle.main.path(forResource: factoryName, ofType: "") ?? "",
                 systemContext: nil
             )
+
+            /*let log = LoggingService.Instance /*enable liblinphone logs.*/
+            log.logLevelMask = 63
+            let logManager = LinphoneLoggingServiceManager()
+            log.addDelegate(delegate: logManager)
+            Factory.Instance.enableLogCollection(state: .Enabled)*/
             
-            try core?.start()
+            if let core = core {
+                let stun = config.stun ?? "none:"
+                let params = stun.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: false)
+                let typeString = String(params[0])
+                let serverString = String(params[1])
             
-            core?.clearAllAuthInfo()
-            core?.clearProxyConfig()
+                let nat = try? core.natPolicy ?? core.createNatPolicy()
+                if let natPolicy = nat {
+                    natPolicy.stunServer = serverString
+                    switch typeString {
+                    case "stun":
+                        natPolicy.iceEnabled = true
+                        natPolicy.stunEnabled = true
+                        natPolicy.turnEnabled = false
+                    case "turn":
+                        natPolicy.iceEnabled = true
+                        natPolicy.stunEnabled = false
+                        natPolicy.turnEnabled = true
+                        
+                        switch config.transport {
+                        case .Udp:
+                            natPolicy.udpTurnTransportEnabled = true
+                        case .Tcp:
+                            natPolicy.tcpTurnTransportEnabled = true
+                        case .Tls:
+                            natPolicy.tlsTurnTransportEnabled = true
+                        default: break
+                        }
+                    default:
+                        natPolicy.iceEnabled = false
+                        natPolicy.stunEnabled = false
+                        natPolicy.turnEnabled = false
+                    }
+                    core.natPolicy = natPolicy
+                }
             
-            core?.addDelegate(delegate: self)
-            
-            timer = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { timer in
-                self.core?.iterate()
+                try core.start()
+                
+                core.clearAllAuthInfo()
+                core.clearProxyConfig()
+                
+                core.addDelegate(delegate: self)
+                
+                timer = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { timer in
+                    self.core?.iterate()
+                }
             }
         } catch {
             print("Error: \(error)")
@@ -85,7 +127,7 @@ class LinphoneService: CoreDelegate {
     }
     
     func connect(config: SipConfig) {
-        start()
+        start(config)
         
         guard let core = core else {
             return
@@ -95,7 +137,6 @@ class LinphoneService: CoreDelegate {
         accountCreator.setAccountConfiguration(config)
         
         let cfg = try! accountCreator.createProxyConfig()
-        
         try! core.addProxyConfig(config: cfg)
         
         core.useInfoForDtmf = false
@@ -129,4 +170,10 @@ class LinphoneService: CoreDelegate {
         return UnsafeRawPointer(pointer)
     }
     
+}
+
+class LinphoneLoggingServiceManager: LoggingServiceDelegate {
+    override func onLogMessageWritten(logService: LoggingService, domain: String, lev: LogLevel, message: String) {
+        print("Logging service log: \(message)s\n")
+    }
 }

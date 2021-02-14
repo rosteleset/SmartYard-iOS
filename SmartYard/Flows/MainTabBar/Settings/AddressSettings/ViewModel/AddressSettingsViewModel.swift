@@ -74,6 +74,7 @@ class AddressSettingsViewModel: BaseViewModel {
         
         let isCmsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let areCallsEnabledSubject = BehaviorSubject<Bool>(value: false)
+        let arePaperBillsEnabledSubject = BehaviorSubject<Bool?>(value: nil)
         
         let interactionBlockingRequestTracker = ActivityTracker()
         
@@ -88,6 +89,7 @@ class AddressSettingsViewModel: BaseViewModel {
                     onNext: { state in
                         isCmsEnabledSubject.onNext(state.cms)
                         areCallsEnabledSubject.onNext(state.voip)
+                        arePaperBillsEnabledSubject.onNext(state.paperBill)
                     }
                 )
                 .disposed(by: disposeBag)
@@ -135,6 +137,29 @@ class AddressSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.paperBillTrigger
+            .withLatestFrom(arePaperBillsEnabledSubject.asDriver(onErrorJustReturn: false))
+            .flatMapLatest { [weak self] isEnabled -> Driver<IntercomResponseData?> in
+                guard let self = self, self.hasDomophone else {
+                    return .empty()
+                }
+                
+                let isEnabled = isEnabled ?? true
+                
+                return self.apiWrapper
+                    .setIntercomPaperBillState(flatId: self.flatId, isEnabled: !isEnabled)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    arePaperBillsEnabledSubject.onNext(state.paperBill)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
@@ -155,6 +180,7 @@ class AddressSettingsViewModel: BaseViewModel {
             address: .just(address),
             isCmsEnabled: isCmsEnabledSubject.asDriver(onErrorJustReturn: false),
             areCallsEnabled: areCallsEnabledSubject.asDriver(onErrorJustReturn: false),
+            arePaperBillsEnabled: arePaperBillsEnabledSubject.asDriver(onErrorJustReturn: false),
             ringtone: .just("Нота"),
             hasDomophone: .just(hasDomophone),
             isLoading: activityTracker.asDriver(),
@@ -203,12 +229,14 @@ extension AddressSettingsViewModel {
         let deleteTrigger: Driver<Void>
         let cmsTrigger: Driver<Void>
         let voipTrigger: Driver<Void>
+        let paperBillTrigger: Driver<Void>
     }
     
     struct Output {
         let address: Driver<String>
         let isCmsEnabled: Driver<Bool>
         let areCallsEnabled: Driver<Bool>
+        let arePaperBillsEnabled: Driver<Bool?>
         let ringtone: Driver<String>
         let hasDomophone: Driver<Bool>
         let isLoading: Driver<Bool>

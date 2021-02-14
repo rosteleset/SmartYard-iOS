@@ -31,6 +31,11 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var voipContainerView: UIView!
     @IBOutlet private weak var voipSwitch: UISwitch!
     
+    @IBOutlet weak var paperBillsHeight: NSLayoutConstraint!
+    @IBOutlet private weak var paperContainerView: UIView!
+    @IBOutlet private weak var paperSwitch: UISwitch!
+    
+    
     @IBOutlet private var collapsedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var deleteButtonTopToNotificationsConstraint: NSLayoutConstraint!
@@ -42,6 +47,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     
     private let cmsTapGesture = UITapGestureRecognizer()
     private let voipTapGesture = UITapGestureRecognizer()
+    private let paperBillTapGesture = UITapGestureRecognizer()
     
     var loader: JGProgressHUD?
     
@@ -106,6 +112,9 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         voipContainerView.addGestureRecognizer(voipTapGesture)
         voipSwitch.isUserInteractionEnabled = false
         
+        paperContainerView.addGestureRecognizer(paperBillTapGesture)
+        paperSwitch.isUserInteractionEnabled = false
+        
         skeletonView.isHidden = true
     }
     
@@ -133,7 +142,8 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             deleteTrigger: deleteAddressButton.rx.tap.asDriver(),
             cmsTrigger: cmsTapGesture.rx.event.asDriver().mapToVoid(),
-            voipTrigger: voipTapGesture.rx.event.asDriver().mapToVoid()
+            voipTrigger: voipTapGesture.rx.event.asDriver().mapToVoid(),
+            paperBillTrigger: paperBillTapGesture.rx.event.asDriver().mapToVoid()
         )
         
         let output = viewModel.transform(input)
@@ -158,6 +168,22 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
             .drive(
                 onNext: { [weak self] state in
                     self?.voipSwitch.setOn(state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.arePaperBillsEnabled
+            .drive(
+                onNext: { [weak self] state in
+                    
+                    guard let state = state else {
+                        self?.paperBillsHeight.constant = 0
+                        self?.paperContainerView.subviews.map { $0.isHidden = true }
+                        return
+                    }
+                    self?.paperBillsHeight.constant = 55
+                    self?.paperContainerView.subviews.map { $0.isHidden = false }
+                    self?.paperSwitch.setOn(state, animated: true)
                 }
             )
             .disposed(by: disposeBag)
