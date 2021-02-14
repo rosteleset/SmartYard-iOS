@@ -15,6 +15,7 @@ struct APIIntercomSettings {
     let voip: Bool?
     let autoOpen: Date?
     let whiteRabbit: String?
+    let paperBill: Bool?
     
 }
 
@@ -41,6 +42,10 @@ extension APIIntercomSettings {
         
         if let whiteRabbit = whiteRabbit {
             params["whiteRabbit"] = whiteRabbit
+        }
+        
+        if let paperBill = paperBill {
+            params["paperBill"] = paperBill ? "t" : "f"
         }
         
         return params

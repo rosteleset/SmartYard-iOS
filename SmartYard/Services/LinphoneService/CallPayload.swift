@@ -20,10 +20,11 @@ struct CallPayload {
     let image: String
     let liveImage: String
     let dtmf: String
+    let stun: String?
     let callerId: String
     
     var asPushNotificationPayload: [AnyHashable: Any] {
-        return [
+        var params = [
             "extension": username,
             "pass": password,
             "server": server,
@@ -34,6 +35,12 @@ struct CallPayload {
             "dtmf": dtmf,
             "callerId": callerId
         ]
+        
+        if let stun = stun {
+            params["stun"] = stun
+        }
+        
+        return params
     }
     
     var sipConfig: SipConfig {
@@ -41,7 +48,8 @@ struct CallPayload {
             domain: "\(server):\(port)",
             username: username,
             password: password,
-            transport: transport
+            transport: transport,
+            stun: stun
         )
     }
     
@@ -72,6 +80,14 @@ struct CallPayload {
         self.image = image
         self.dtmf = dtmf
         self.callerId = callerId
+        
+        if let stun = data["stun"] as? String {
+            self.stun = stun
+        } else
+        {
+            self.stun = nil
+        }
+        
     }
     
 }

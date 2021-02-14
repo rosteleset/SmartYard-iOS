@@ -96,6 +96,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         UserDefaults.standard.synchronize()
     }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        NotificationCenter.default.post(name: .applicationDidEnterBackground , object: nil)
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        NotificationCenter.default.post(name: .applicationDidEnterForeground, object: nil)
+    }
 
 }
 
@@ -103,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: MessagingDelegate {
     
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("DEBUG / PUSH NOTIFICATIONS / Firebase registration token: \(fcmToken)")
     }
     

@@ -6,10 +6,6 @@ sip_port=-1
 sip_tcp_port=-1
 sip_tls_port=-1
 
-[app]
-tunnel=disabled
-push_notification=1
-
 [misc]
 max_calls=10
 history_max_size=100
