@@ -60,7 +60,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Настройки профиля" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fyv-Y1-rkc">
-                    <rect key="frame" x="40" y="100" width="334" height="40.5"/>
+                    <rect key="frame" x="16" y="100" width="382" height="40.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -405,10 +405,10 @@
             <constraints>
                 <constraint firstItem="5nb-DY-DIs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="54A-yg-Qah"/>
                 <constraint firstAttribute="trailing" secondItem="0aH-ke-d7M" secondAttribute="trailing" id="APs-Wc-khC"/>
-                <constraint firstItem="Fyv-Y1-rkc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="DZE-a3-i6f"/>
+                <constraint firstItem="Fyv-Y1-rkc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="DZE-a3-i6f"/>
                 <constraint firstItem="8MI-1O-eYe" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="JHP-LH-ERm"/>
                 <constraint firstItem="H0v-1I-nbB" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="LSA-wD-Nk9"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Fyv-Y1-rkc" secondAttribute="trailing" constant="40" id="P5y-CI-ljP"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Fyv-Y1-rkc" secondAttribute="trailing" constant="16" id="P5y-CI-ljP"/>
                 <constraint firstItem="0aH-ke-d7M" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="SrD-bU-VQE"/>
                 <constraint firstItem="Fyv-Y1-rkc" firstAttribute="top" secondItem="H0v-1I-nbB" secondAttribute="bottom" constant="12" id="Sz0-Hz-jTS"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5nb-DY-DIs" secondAttribute="trailing" constant="16" id="cFX-k4-QkN"/>

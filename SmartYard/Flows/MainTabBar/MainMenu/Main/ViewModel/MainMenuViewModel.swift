@@ -23,10 +23,11 @@ class MainMenuViewModel: BaseViewModel {
     private let items = BehaviorSubject<[MenuItemsList]>(
         value: [
             MenuItemsList(label: "Городские камеры", iconName: "PublicCamsMenuIcon", triger: "publicCams"),
-            MenuItemsList(label: "Настройки адресов", iconName: "ProfileMenuIcon", triger: "settings"),
+            MenuItemsList(label: "Настройки адресов", iconName: "HomeIcon", triger: "settings"),
             MenuItemsList(label: "Общие настройки", iconName: "SettingsMenuIcon", triger: "profile")
         ]
     )
+    private let bottomItemTrigger = MainMenuRoute.callSupport
     
     init(
         apiWrapper: APIWrapper,
@@ -58,13 +59,11 @@ class MainMenuViewModel: BaseViewModel {
         input.bottomButton
             .drive(
                 onNext: { [weak self] in
-                    //Делаем обычный телефонный вызов на 42-99-99
-                    if let phoneCallURL = URL(string: "tel://+7(4752)429999") {
-                        let application = UIApplication.shared
-                        if application.canOpenURL(phoneCallURL) {
-                            application.open(phoneCallURL, options: [:], completionHandler: nil)
-                        }
-                      }
+                    guard let _ = self else {
+                        return
+                    }
+                    
+                    self!.router.trigger(self!.bottomItemTrigger)
                 }
             )
             .disposed(by: disposeBag)

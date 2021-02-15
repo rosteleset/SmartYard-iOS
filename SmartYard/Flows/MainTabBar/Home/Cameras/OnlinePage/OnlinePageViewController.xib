@@ -35,13 +35,13 @@
                                     <rect key="frame" x="16" y="28" width="382" height="258.5"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2iH-Th-533">
-                                            <rect key="frame" x="354" y="12" width="16" height="11"/>
+                                            <rect key="frame" x="342" y="218.5" width="20" height="20"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="11" id="0OU-Xb-grg"/>
-                                                <constraint firstAttribute="width" constant="16" id="eYx-cM-GfS"/>
+                                                <constraint firstAttribute="height" constant="20" id="0OU-Xb-grg"/>
+                                                <constraint firstAttribute="width" constant="20" id="eYx-cM-GfS"/>
                                             </constraints>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <state key="normal" image="Fullscreen"/>
+                                            <state key="normal" image="FullScreen20"/>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RhJ-w5-BqI" customClass="AnimationView" customModule="Lottie">
                                             <rect key="frame" x="151" y="89" width="80" height="80"/>
@@ -56,8 +56,8 @@
                                     <constraints>
                                         <constraint firstItem="RhJ-w5-BqI" firstAttribute="centerX" secondItem="JPd-UE-6AD" secondAttribute="centerX" id="9jG-Wv-o3x"/>
                                         <constraint firstAttribute="width" secondItem="JPd-UE-6AD" secondAttribute="height" multiplier="343:232" id="DNG-x6-Bgs"/>
-                                        <constraint firstItem="2iH-Th-533" firstAttribute="top" secondItem="JPd-UE-6AD" secondAttribute="top" constant="12" id="G1L-Jz-1oi"/>
-                                        <constraint firstAttribute="trailing" secondItem="2iH-Th-533" secondAttribute="trailing" constant="12" id="Kk8-Ai-IAa"/>
+                                        <constraint firstAttribute="bottom" secondItem="2iH-Th-533" secondAttribute="bottom" constant="20" id="G1L-Jz-1oi"/>
+                                        <constraint firstAttribute="trailing" secondItem="2iH-Th-533" secondAttribute="trailing" constant="20" id="Kk8-Ai-IAa"/>
                                         <constraint firstItem="RhJ-w5-BqI" firstAttribute="centerY" secondItem="JPd-UE-6AD" secondAttribute="centerY" id="Lfr-Ku-3gg"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
@@ -117,7 +117,7 @@
         <designable name="RhJ-w5-BqI"/>
     </designables>
     <resources>
-        <image name="Fullscreen" width="16" height="11"/>
+        <image name="FullScreen20" width="20" height="20"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

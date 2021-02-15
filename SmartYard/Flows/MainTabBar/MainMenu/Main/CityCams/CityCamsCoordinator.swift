@@ -96,10 +96,16 @@ class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute> {
                 archivePage: archiveVc,
                 viewModel: vm
             )
-        
-            return .push(vc)
             */
-            return .none()
+            let vm = CityCameraViewModel(
+                camera: selectedCamera,
+                apiWrapper: apiWrapper,
+                router: weakRouter
+            )
+            
+            let vc = CityCameraViewController(viewModel: vm)
+            
+            return .push(vc)
         }
     }
     

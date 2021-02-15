@@ -54,7 +54,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Настройки адреса" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Eq-Xo-T29">
-                    <rect key="frame" x="40" y="100" width="334" height="40.5"/>
+                    <rect key="frame" x="16" y="100" width="382" height="40.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -354,8 +354,8 @@
                 <constraint firstItem="52q-3H-mZa" firstAttribute="top" secondItem="orr-Vl-FJW" secondAttribute="bottom" constant="8" id="89Q-5V-v4a"/>
                 <constraint firstItem="Bd0-0c-fKV" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="8Et-SQ-bfL"/>
                 <constraint firstItem="2ga-7I-bag" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="8qo-wo-60d"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8Eq-Xo-T29" secondAttribute="trailing" constant="40" id="BYb-Kh-COd"/>
-                <constraint firstItem="8Eq-Xo-T29" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="CKJ-h3-rlu"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8Eq-Xo-T29" secondAttribute="trailing" constant="16" id="BYb-Kh-COd"/>
+                <constraint firstItem="8Eq-Xo-T29" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="CKJ-h3-rlu"/>
                 <constraint firstItem="Bd0-0c-fKV" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="G2Y-vd-aP0"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2ga-7I-bag" secondAttribute="trailing" id="IRW-ct-0xc"/>
                 <constraint firstItem="Bd0-0c-fKV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Nod-aj-Xij"/>

@@ -12,6 +12,9 @@ import JGProgressHUD
 import RxSwift
 import RxCocoa
 
+class CameraAnnotation: MGLPointAnnotation {
+    var cameraNumber: Int?
+}
 class CityMapViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var mapView: MGLMapView!
@@ -63,9 +66,10 @@ class CityMapViewController: BaseViewController, LoaderPresentable {
                     self.camerasProxy.onNext(cameras)
                     self.removeAllAnnotations()
                     
-                    let pointAnnotations = cameras.map { camera -> MGLPointAnnotation in
-                        let point = MGLPointAnnotation()
+                    let pointAnnotations = cameras.map { camera -> CameraAnnotation in
+                        let point = CameraAnnotation()
                         point.coordinate = camera.position
+                        point.cameraNumber = camera.cameraNumber
                         return point
                     }
                     
@@ -118,7 +122,8 @@ extension CityMapViewController: MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
         guard let cameras = try? self.camerasProxy.value(),
-            let camera = (cameras.first { $0.position == annotation.coordinate }) else {
+              let annotation = annotation as? CameraAnnotation,
+              let camera = (cameras.first { $0.cameraNumber == annotation.cameraNumber }) else {
             return nil
         }
 
@@ -143,3 +148,5 @@ extension CityMapViewController: MGLMapViewDelegate {
     }
     
 }
+
+

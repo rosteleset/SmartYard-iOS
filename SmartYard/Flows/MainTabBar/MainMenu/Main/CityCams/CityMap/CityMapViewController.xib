@@ -14,7 +14,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YardMapViewController" customModule="SmartYard" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CityMapViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="fakeNavBar" destination="3Mx-NN-sqX" id="YWH-nP-YgY"/>
                 <outlet property="mapView" destination="kHw-DC-UDR" id="YfB-mm-b5V"/>
@@ -37,7 +37,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Городские камеры" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44I-US-rjd">
-                    <rect key="frame" x="40" y="100" width="334" height="41"/>
+                    <rect key="frame" x="16" y="100" width="382" height="41"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="Ajc-L5-ZrI"/>
                     </constraints>
@@ -73,11 +73,11 @@
                 <constraint firstItem="3Mx-NN-sqX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Azo-g8-sO4"/>
                 <constraint firstItem="44I-US-rjd" firstAttribute="top" secondItem="3Mx-NN-sqX" secondAttribute="bottom" constant="12" id="PcE-kC-xiB"/>
                 <constraint firstItem="Diy-Ub-FSF" firstAttribute="top" secondItem="44I-US-rjd" secondAttribute="bottom" constant="32" id="QJX-Kq-MNj"/>
-                <constraint firstItem="44I-US-rjd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="R6E-EH-AFy"/>
+                <constraint firstItem="44I-US-rjd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="R6E-EH-AFy"/>
                 <constraint firstItem="3Mx-NN-sqX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="eK5-0i-dUR"/>
                 <constraint firstItem="qRP-po-8iN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="g3u-Bi-uLI"/>
                 <constraint firstItem="qRP-po-8iN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gfH-8g-MOk"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="44I-US-rjd" secondAttribute="trailing" constant="40" id="mhN-GO-tNJ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="44I-US-rjd" secondAttribute="trailing" constant="16" id="mhN-GO-tNJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Diy-Ub-FSF" secondAttribute="bottom" id="pjP-ue-v24"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Diy-Ub-FSF" secondAttribute="trailing" id="qY1-Lg-u2K"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qRP-po-8iN" secondAttribute="trailing" id="tCi-kJ-zxF"/>

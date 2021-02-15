@@ -17,6 +17,7 @@ enum MainMenuRoute: Route {
     case cityCams
     case settings
     case profile
+    case callSupport
     case alert(title: String, message: String)
     case back
     case safariPage(url: URL)
@@ -99,6 +100,29 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         
         case .profile:
             return .trigger(SettingsRoute.advancedSettings, on: settingsRouter)
+            
+        case .callSupport:
+            let handler = { (action: UIAlertAction) -> Void in
+               if let phoneCallURL = URL(string: "tel://+7(4752)429999") {
+                    let application = UIApplication.shared
+                    if application.canOpenURL(phoneCallURL) {
+                        application.open(phoneCallURL, options: [:], completionHandler: nil)
+                    }
+                  }
+            }
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Заказать обратный звонок", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Позвонить по телефону", style: .default, handler: handler))
+            alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+            
+            /*
+            return .dialogTransition(title: "Звонок в техподдержку", message: nil, actions:[
+                                        UIAlertAction(title: "Заказать обратный звонок", style: .default, handler: nil),
+                                        UIAlertAction(title: "Позвонить по телефону", style: .default, handler: handler)
+             ])
+             */
+            self.viewController.present(alert, animated: true, completion: nil)
+            return.none()
             
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)

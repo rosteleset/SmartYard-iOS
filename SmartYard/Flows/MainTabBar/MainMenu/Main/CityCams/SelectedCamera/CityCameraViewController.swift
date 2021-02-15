@@ -1,51 +1,41 @@
 //
-//  OnlinePageViewController.swift
+//  CityMapViewController.swift
 //  SmartYard
 //
-//  Created by admin on 15.06.2020.
-//  Copyright © 2020 Mad Brains. All rights reserved.
-//
+//  Created by Александр Васильев on 14.02.2021.
+//  Copyright © 2021 LanTa. All rights reserved.
 
 import UIKit
+import JGProgressHUD
 import RxSwift
 import RxCocoa
 import AVKit
-import TouchAreaInsets
 import Lottie
 
-protocol OnlinePageViewControllerDelegate: AnyObject {
+class CityCameraViewController: BaseViewController, LoaderPresentable {
     
-    func onlinePageViewController(_ vc: OnlinePageViewController, didSelectCamera camera: CameraObject)
-    
-}
-
-class OnlinePageViewController: BaseViewController {
-    
-    @IBOutlet private weak var collectionView: UICollectionView!
-    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var cameraName: UILabel!
+    @IBOutlet private weak var cameraAddress: UILabel!
     @IBOutlet private weak var cameraContainer: UIView!
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var fullscreenButton: UIButton!
     @IBOutlet private weak var videoLoadingAnimationView: AnimationView!
     
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
     
-    @IBOutlet private var collectionViewHeightConstraint: NSLayoutConstraint!
-    
-    private var cameras = [CameraObject]()
-    private var selectedCameraNumber: Int?
-    
     private var loadingAsset: AVAsset?
     
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
     private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: false)
     
-    weak var delegate: OnlinePageViewControllerDelegate?
+    var loader: JGProgressHUD?
     
-    init() {
+    private let viewModel: CityCameraViewModel
+    
+    init(viewModel: CityCameraViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
-        title = "Онлайн"
     }
     
     @available(*, unavailable)
@@ -53,53 +43,38 @@ class OnlinePageViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        player?.replaceCurrentItem(with: nil)
+    fileprivate func configureView() {
+        fakeNavBar.setText("Карта")
+        
+        //Устанавливаем название камеры и её адрес
+        let cameraStrings = viewModel.camera.name.split(separator: "/", maxSplits: 1, omittingEmptySubsequences: true)
+        
+        var cameraNameString = ""
+        var cameraAddressString = ""
+        
+        if cameraStrings.count == 2 {
+            cameraNameString = String(cameraStrings[0])
+            cameraAddressString = String(cameraStrings[1])
+        } else {
+            cameraNameString = viewModel.camera.name
+        }
+        
+        cameraName.text = cameraNameString
+        cameraAddress.text = cameraAddressString
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configureView()
         configurePlayer()
+        loadVideo()
         configureFullscreenButton()
-        configureCollectionView()
+        
         bind()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        try? AVAudioSession.sharedInstance().setCategory(.playback)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        playerViewController?.view.frame = cameraContainer.bounds
-    }
-    
-    func setCameras(_ cameras: [CameraObject], selectedCamera: CameraObject?) {
-        self.cameras = cameras
-        
-        collectionView.reloadData { [weak self] in
-            guard let selectedCamera = selectedCamera,
-                let index = cameras.firstIndex(of: selectedCamera) else {
-                return
-            }
-
-            let indexPath = IndexPath(row: index, section: 0)
-
-            self?.collectionView.selectItem(
-                at: indexPath,
-                animated: false,
-                scrollPosition: .top
-            )
-
-            self?.reloadCameraIfNeeded(selectedIndexPath: indexPath)
-        }
-    }
-    
-    private func bind() {
+    func bind() {
         isVideoBeingLoaded
             .asDriver(onErrorJustReturn: false)
             .debounce(.milliseconds(25))
@@ -164,6 +139,38 @@ class OnlinePageViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        let input = CityCameraViewModel.Input(
+            //cameraSelected: cameraSelectedTrigger.asDriverOnErrorJustComplete(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
+        )
+        
+        let output = viewModel.transform(input)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    deinit {
+        player?.replaceCurrentItem(with: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        playerViewController?.view.frame = cameraContainer.bounds
     }
     
     private func configurePlayer() {
@@ -282,46 +289,14 @@ class OnlinePageViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func configureCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        collectionView.register(nibWithCellClass: CameraNumberCell.self)
-        
-        collectionView.rx
-            .observeWeakly(CGSize.self, "contentSize")
-            .subscribe(
-                onNext: { [weak self] size in
-                    guard let self = self, let uSize = size else {
-                        return
-                    }
-                    
-                    self.collectionViewHeightConstraint.constant = uSize.height
-                    self.view.setNeedsLayout()
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-    private func reloadCameraIfNeeded(selectedIndexPath: IndexPath) {
-        let camera = cameras[selectedIndexPath.row]
-        
-        print("Selected Camera #\(camera.cameraNumber)")
-        
-        guard camera.cameraNumber != selectedCameraNumber else {
-            return
-        }
-        
-        selectedCameraNumber = camera.cameraNumber
-        
-        delegate?.onlinePageViewController(self, didSelectCamera: camera)
+    private func loadVideo() {
         
         player?.replaceCurrentItem(with: nil)
         
         loadingAsset?.cancelLoading()
         loadingAsset = nil
         
-        let resultingString = camera.video + "/index.m3u8" + "?token=\(camera.token)"
+        let resultingString = viewModel.camera.video + "/index.m3u8" + "?token=\(viewModel.camera.token)"
         
         guard let url = URL(string: resultingString) else {
             return
@@ -374,69 +349,6 @@ class OnlinePageViewController: BaseViewController {
                 }
             }
         }
-    }
-    
-}
-
-extension OnlinePageViewController: UICollectionViewDataSource {
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cameras.count
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withClass: CameraNumberCell.self, for: indexPath)
-
-        cell.configure(curCamera: cameras[indexPath.row])
-
-        return cell
-    }
-
-}
-
-extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        return CGSize(width: 36, height: 36)
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        minimumInteritemSpacingForSectionAt section: Int
-    ) -> CGFloat {
-        return 28
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        minimumLineSpacingForSectionAt section: Int
-    ) -> CGFloat {
-        return 24
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        insetForSectionAt section: Int
-    ) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        reloadCameraIfNeeded(selectedIndexPath: indexPath)
     }
     
 }

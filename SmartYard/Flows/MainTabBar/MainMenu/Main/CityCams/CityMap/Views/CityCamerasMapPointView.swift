@@ -29,20 +29,16 @@ class CityCamerasMapPointView: MGLAnnotationView {
         scalesWithViewingDistance = false
         isEnabled = true
         
-        backgroundColor = .white
-        
+        backgroundColor = .none
         addSubview(cameraImageView)
-        
-        clipsToBounds = true
+        //clipsToBounds = true
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        cornerRadius = width / 2
-        
-        cameraImageView.pin.width(40).height(40).vCenter().hCenter()
-        
+        //cornerRadius = width / 2
+        cameraImageView.pin.width(66).height(66).vCenter(4).hCenter()
     }
     
     func configure(cameraNumber: Int) {

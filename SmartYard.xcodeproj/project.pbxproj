@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A18347025D9AD8600139385 /* CityCameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18346D25D9AD8600139385 /* CityCameraViewModel.swift */; };
+		3A18347125D9AD8600139385 /* CityCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18346E25D9AD8600139385 /* CityCameraViewController.swift */; };
+		3A18347225D9AD8600139385 /* CityCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A18346F25D9AD8600139385 /* CityCameraViewController.xib */; };
 		3A3B8B9525A5CD2500BFB72E /* MainMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8B9425A5CD2500BFB72E /* MainMenuCoordinator.swift */; };
 		3A3B8BA225A5CF6F00BFB72E /* MainMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BA125A5CF6F00BFB72E /* MainMenuViewModel.swift */; };
 		3A3B8BB325A5D00C00BFB72E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */; };
@@ -492,6 +495,9 @@
 
 /* Begin PBXFileReference section */
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A18346D25D9AD8600139385 /* CityCameraViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraViewModel.swift; sourceTree = "<group>"; };
+		3A18346E25D9AD8600139385 /* CityCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraViewController.swift; sourceTree = "<group>"; };
+		3A18346F25D9AD8600139385 /* CityCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityCameraViewController.xib; sourceTree = "<group>"; };
 		3A3B8B9425A5CD2500BFB72E /* MainMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuCoordinator.swift; sourceTree = "<group>"; };
 		3A3B8BA125A5CF6F00BFB72E /* MainMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewModel.swift; sourceTree = "<group>"; };
 		3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
@@ -974,6 +980,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A18346C25D9ACE700139385 /* SelectedCamera */ = {
+			isa = PBXGroup;
+			children = (
+				3A18346E25D9AD8600139385 /* CityCameraViewController.swift */,
+				3A18346F25D9AD8600139385 /* CityCameraViewController.xib */,
+				3A18346D25D9AD8600139385 /* CityCameraViewModel.swift */,
+			);
+			path = SelectedCamera;
+			sourceTree = "<group>";
+		};
 		3A3B8B9225A5CAB800BFB72E /* MainMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -1065,7 +1081,9 @@
 		3AB41E0725C2006B00AEC8C3 /* CityCams */ = {
 			isa = PBXGroup;
 			children = (
+				3A8B952925D9336D007CDD3C /* CityCamsCoordinator.swift */,
 				3AB41E0825C2008800AEC8C3 /* CityMap */,
+				3A18346C25D9ACE700139385 /* SelectedCamera */,
 			);
 			path = CityCams;
 			sourceTree = "<group>";
@@ -1073,7 +1091,6 @@
 		3AB41E0825C2008800AEC8C3 /* CityMap */ = {
 			isa = PBXGroup;
 			children = (
-				3A8B952925D9336D007CDD3C /* CityCamsCoordinator.swift */,
 				3A8B951A25D93132007CDD3C /* Entries */,
 				3A8B952225D9314B007CDD3C /* Views */,
 				3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */,
@@ -3509,6 +3526,7 @@
 			files = (
 				847721772497C31D003FCC24 /* ArchivePageViewController.xib in Resources */,
 				E9004C6223FABF6800B59976 /* AccessView.xib in Resources */,
+				3A18347225D9AD8600139385 /* CityCameraViewController.xib in Resources */,
 				E9E4273623F55C5E00F5D593 /* ServiceUnavailableViewController.xib in Resources */,
 				E9C0E815247282DE001CE018 /* OnboardingBaseView.xib in Resources */,
 				E9E4273123F55B7800F5D593 /* ServicesActivationRequestViewController.xib in Resources */,
@@ -3848,6 +3866,7 @@
 				E92EFBD3242A22F2003AF7FE /* AccessRequest.swift in Sources */,
 				8477217A2497C329003FCC24 /* OnlinePageViewController.swift in Sources */,
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
+				3A18347125D9AD8600139385 /* CityCameraViewController.swift in Sources */,
 				E92EFBB7242A22F2003AF7FE /* APIClientName.swift in Sources */,
 				E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */,
 				845E9EF72497741B000CBBC6 /* RecDownloadResponseData.swift in Sources */,
@@ -4064,6 +4083,7 @@
 				846DC6CB24B33DC600A11914 /* PayContractViewController.swift in Sources */,
 				843C38CF242A577C0035BF80 /* InboxRequest.swift in Sources */,
 				E99A837724349705001CEE95 /* ActionIssueRequest.swift in Sources */,
+				3A18347025D9AD8600139385 /* CityCameraViewModel.swift in Sources */,
 				84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */,
 				843C38D0242A577C0035BF80 /* UnreadedRequest.swift in Sources */,
 				E92EFBC1242A22F2003AF7FE /* APIWrapper+Geo.swift in Sources */,
