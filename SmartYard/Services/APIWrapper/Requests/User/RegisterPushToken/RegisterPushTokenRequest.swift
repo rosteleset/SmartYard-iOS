@@ -21,6 +21,7 @@ struct RegisterPushTokenRequest {
     let pushToken: String
     let voipToken: String?
     let clientId: String?
+    let production: Bool?
     let type: TokenType
     
 }
@@ -44,6 +45,10 @@ extension RegisterPushTokenRequest {
         
         if let voipToken = voipToken {
             params["voipToken"] = voipToken
+        }
+        
+        if let production = production {
+            params["production"] = production ? "t" : "f"
         }
         
         return params

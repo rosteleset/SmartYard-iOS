@@ -15,11 +15,11 @@ import JGProgressHUD
 class SettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    @IBOutlet private weak var nameLabel: UILabel!
-    @IBOutlet private weak var phoneNumberLabel: UILabel!
+    //@IBOutlet private weak var nameLabel: UILabel!
+    //@IBOutlet private weak var phoneNumberLabel: UILabel!
     @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var collectionView: UICollectionView!
-    @IBOutlet private weak var settingsButton: UIButton!
+    //@IBOutlet private weak var settingsButton: UIButton!
     @IBOutlet private weak var skeletonContainer: UIView!
     
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<SettingsSectionModel>?
@@ -79,7 +79,7 @@ class SettingsViewController: BaseViewController, LoaderPresentable {
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
             serviceSelected: serviceButtonTapTrigger.asDriverOnErrorJustComplete(),
-            advancedSettingsTrigger: settingsButton.rx.tap.asDriver(),
+            //advancedSettingsTrigger: settingsButton.rx.tap.asDriver(),
             updateDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriverOnErrorJustComplete(),
             addAddressTrigger: addAddressTrigger.asDriverOnErrorJustComplete()
         )
@@ -184,7 +184,7 @@ class SettingsViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
-        
+        /*
         output.clientName
             .drive(
                 onNext: { [weak self] name in
@@ -200,6 +200,7 @@ class SettingsViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+        */
         
         output.isLoading
             .debounce(.milliseconds(25))
@@ -249,8 +250,8 @@ class SettingsViewController: BaseViewController, LoaderPresentable {
         mainContainerView.cornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
         
-        settingsButton.setImage(UIImage(named: "SettingsIcon"), for: .normal)
-        settingsButton.setImage(UIImage(named: "SettingsIcon")?.darkened(), for: .highlighted)
+        //settingsButton.setImage(UIImage(named: "SettingsIcon"), for: .normal)
+        //settingsButton.setImage(UIImage(named: "SettingsIcon")?.darkened(), for: .highlighted)
     }
     
     private func configureCollectionView() {

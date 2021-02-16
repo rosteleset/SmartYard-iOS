@@ -82,11 +82,18 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
+        #if DEBUG
+        let production = false
+        #elseif RELEASE
+        let production = true
+        #endif
+        
         let request = RegisterPushTokenRequest(
             accessToken: accessToken,
             pushToken: pushToken,
             voipToken: voipToken,
             clientId: clientId,
+            production: production,
             type: type
         )
         

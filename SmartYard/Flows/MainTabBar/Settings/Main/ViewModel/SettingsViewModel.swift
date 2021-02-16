@@ -132,7 +132,7 @@ class SettingsViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-
+        /*
         // MARK: Обработка нажатия на иконку настроек
         input.advancedSettingsTrigger
             .drive(
@@ -141,6 +141,7 @@ class SettingsViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        */
         
         // MARK: Обработка нажатия на кнопку сервиса
         
@@ -534,7 +535,7 @@ extension SettingsViewModel {
         let backTrigger: Driver<Void>
         let itemSelected: Driver<SettingsDataItemIdentity>
         let serviceSelected: Driver<(SettingsDataItemIdentity, SettingsServiceType)>
-        let advancedSettingsTrigger: Driver<Void>
+        //let advancedSettingsTrigger: Driver<Void>
         let updateDataTrigger: Driver<Void>
         let addAddressTrigger: Driver<Void>
     }
