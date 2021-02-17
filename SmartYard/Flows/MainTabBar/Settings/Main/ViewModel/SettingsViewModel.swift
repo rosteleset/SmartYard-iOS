@@ -404,28 +404,7 @@ class SettingsViewModel: BaseViewModel {
                 return self?.createSections(data: data, expansionStateDict: expansionStateDict) ?? []
             }
         
-        // MARK: Отображение имени. Актуализируем при каждом обновлении имени в настройках
-        
-        let currentName = Driver<APIClientName?>.merge(
-            .just(accessService.clientName),
-            NotificationCenter.default.rx.notification(.userNameUpdated)
-                .map { [weak self] _ in self?.accessService.clientName }
-                .asDriver(onErrorJustReturn: nil)
-        )
-        
-        let nameAsString = currentName
-            .asDriver(onErrorJustReturn: nil)
-            .map { clientName -> String? in
-                [clientName?.name, clientName?.patronymic]
-                    .compactMap { $0 }
-                    .joined(separator: " ")
-            }
-        
-        let phone = accessService.clientPhoneNumber?.formattedNumberFromRawNumber
-        
         return Output(
-            clientName: nameAsString,
-            clientPhone: .just(phone),
             sectionModels: sectionModels,
             updateKind: updateKind,
             reloadingFinished: reloadingFinished,
@@ -541,8 +520,6 @@ extension SettingsViewModel {
     }
     
     struct Output {
-        let clientName: Driver<String?>
-        let clientPhone: Driver<String?>
         let sectionModels: Driver<[SettingsSectionModel]>
         let updateKind: Driver<SettingsSectionUpdateKind>
         let reloadingFinished: Driver<Void>

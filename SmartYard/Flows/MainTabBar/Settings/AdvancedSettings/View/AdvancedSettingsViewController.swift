@@ -18,7 +18,9 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var mainContainerView: UIView!
     
     @IBOutlet private weak var nameContainerView: UIView!
-    @IBOutlet private weak var nameTextField: UITextField!
+    @IBOutlet private weak var nameTextLabel: UILabel!
+    @IBOutlet private weak var phoneTextLabel: UILabel!
+    
     @IBOutlet private weak var editNameButton: UIButton!
     
     @IBOutlet private weak var notificationsContainerView: UIView!
@@ -38,7 +40,6 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private var collapsedNotificationsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedNotificationsBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private var notificationsViewTopConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var logoutButton: UIButton!
     
@@ -80,22 +81,12 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        // MARK: 24 px = это то, насколько addressContainerView выступает над scrollView
-        // 8 px - это отступ между addressContainerView и следующей за ней вьюхой
-        let neededInset = nameContainerView.bounds.height - 24 + 8
-        
-        notificationsViewTopConstraint.constant = neededInset
-    }
-    
     private func configureView() {
         nameContainerView.borderWidth = 1
         nameContainerView.borderColor = UIColor.SmartYard.grayBorder
         
-        editNameButton.setImage(UIImage(named: "EditIcon"), for: .normal)
-        editNameButton.setImage(UIImage(named: "EditIcon")?.darkened(), for: .highlighted)
+        editNameButton.setImage(UIImage(named: "pencil"), for: .normal)
+        editNameButton.setImage(UIImage(named: "pencil")?.darkened(), for: .highlighted)
         editNameButton.touchAreaInsets = UIEdgeInsets(inset: 24)
         
         notificationsContainerView.borderWidth = 1
@@ -161,9 +152,15 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
         output.name
             .drive(
                 onNext: { [weak self] name in
-                    self?.view.endEditing(true)
-                    self?.nameTextField.text = name
-                    self?.nameTextField.isEnabled = false
+                    self?.nameTextLabel.text = name
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.phone
+            .drive(
+                onNext: { [weak self] phone in
+                    self?.phoneTextLabel.text = phone
                 }
             )
             .disposed(by: disposeBag)
