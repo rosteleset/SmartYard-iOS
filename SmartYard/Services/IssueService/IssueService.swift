@@ -21,6 +21,11 @@ class IssueService {
         self.apiWrapper = apiWrapper
         self.accessService = accessService
     }
+    // экран 35 - Меню
+    func sendCallbackIssue() -> Single<CreateIssueResponseData?> {
+        let issue = Issue(issueType: .orderCallback)
+        return apiWrapper.sendIssue(issue: issue)
+    }
     
     // экран 19 и 34.00
     func sendNothingRememberIssue() -> Single<CreateIssueResponseData?> {

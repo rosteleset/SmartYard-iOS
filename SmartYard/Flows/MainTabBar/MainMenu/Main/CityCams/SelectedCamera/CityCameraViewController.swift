@@ -9,25 +9,38 @@ import UIKit
 import JGProgressHUD
 import RxSwift
 import RxCocoa
+import RxDataSources
 import AVKit
 import Lottie
 
+
 class CityCameraViewController: BaseViewController, LoaderPresentable {
     
+    
     @IBOutlet private weak var cameraName: UILabel!
+    @IBOutlet var cameraNameConstraints: [NSLayoutConstraint]!
+    @IBOutlet var cameraNameConstraintsMini: [NSLayoutConstraint]!
+    
     @IBOutlet private weak var cameraAddress: UILabel!
     @IBOutlet private weak var cameraContainer: UIView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var fullscreenButton: UIButton!
     @IBOutlet private weak var videoLoadingAnimationView: AnimationView!
+    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var skeletonContainer: UIView!
+    @IBOutlet private weak var button: UIButton!
     
+    private var camera: CityCameraObject?
+    private var videos: [YouTubeVideo]?
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
     
+    private var isMiniView = false
     private var loadingAsset: AVAsset?
     
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
     private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: false)
+    private let videoTrigger = PublishSubject<String>()
     
     var loader: JGProgressHUD?
     
@@ -43,11 +56,22 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        /*
+        if skeletonContainer.isSkeletonActive {
+            skeletonContainer.showSkeletonAsynchronously()
+        }
+        */
+    }
     fileprivate func configureView() {
         fakeNavBar.setText("Карта")
         
+        guard let camera = camera else { return }
+        
         //Устанавливаем название камеры и её адрес
-        let cameraStrings = viewModel.camera.name.split(separator: "/", maxSplits: 1, omittingEmptySubsequences: true)
+        let cameraStrings = camera.name.split(separator: "/", maxSplits: 1, omittingEmptySubsequences: true)
         
         var cameraNameString = ""
         var cameraAddressString = ""
@@ -56,7 +80,7 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
             cameraNameString = String(cameraStrings[0])
             cameraAddressString = String(cameraStrings[1])
         } else {
-            cameraNameString = viewModel.camera.name
+            cameraNameString = camera.name
         }
         
         cameraName.text = cameraNameString
@@ -66,12 +90,31 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
-        configurePlayer()
-        loadVideo()
-        configureFullscreenButton()
-        
+        configureCollectionView()
         bind()
+    }
+    
+    fileprivate func toggleView() {
+        if isMiniView {
+            //
+            
+        } else {
+            UIView.animate(withDuration: 0.5, animations: {
+                    self.cameraNameConstraints.map { $0.isActive = false }
+                    self.cameraNameConstraintsMini.map { $0.isActive = true }
+                    self.cameraAddress.isHidden = true
+                    self.cameraName.font = self.cameraName.font.withSize(24)
+                    self.cameraName.textAlignment = .center
+                    
+                    self.button.setTitle("Запросить запись", for: .normal)
+                    self.button.backgroundColor = UIColor.SmartYard.blue
+                    self.button.titleColorForNormal = UIColor.white
+                    
+                    self.view.layoutIfNeeded()
+                }
+            )
+            isMiniView = true
+        }
     }
     
     func bind() {
@@ -141,8 +184,8 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         let input = CityCameraViewModel.Input(
-            //cameraSelected: cameraSelectedTrigger.asDriverOnErrorJustComplete(),
-            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
+            videoTrigger: videoTrigger.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
@@ -155,6 +198,61 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+        
+        /* надо заменить  скелетон для табличной части
+         output.isLoading
+            .debounce(.milliseconds(2500))
+            .drive(
+                onNext: { [weak self] shouldBlockInteraction in
+                    self?.collectionView.isHidden = shouldBlockInteraction
+                    
+                    self?.skeletonContainer.isHidden = !shouldBlockInteraction
+                    
+                    shouldBlockInteraction ?
+                        self?.skeletonContainer.showSkeletonAsynchronously() :
+                        self?.skeletonContainer.hideSkeleton()
+                    
+                }
+            )
+            .disposed(by: disposeBag)
+        */
+        output.videos
+            .drive(
+                onNext: { [weak self] videos in
+                    self?.videos = videos
+                    if videos.isEmpty {
+                        self?.button.setTitle("Запросить запись", for: .normal)
+                        self?.button.backgroundColor = UIColor.SmartYard.blue
+                        self?.button.titleColorForNormal = UIColor.white
+                    } else {
+                        self?.button.setTitle("Проишествия ("+String(self?.videos?.count ?? 0)+")", for: .normal)
+                        self?.button.backgroundColor = UIColor.white
+                        self?.button.titleColorForNormal = UIColor.SmartYard.blue
+                    }
+                    
+                    
+                }
+            ).disposed(by: disposeBag)
+        
+        button.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    self?.collectionView.isHidden = false
+                    self?.collectionView.reloadData()
+                    self?.toggleView()
+                }
+            
+            )
+            .disposed(by: disposeBag)
+        
+        //Загружаем камеру и инициализируем воспроизведение
+        self.camera = output.camera
+        configureView()
+        configurePlayer()
+        configureFullscreenButton()
+        loadVideo()
+        
     }
     
     deinit {
@@ -172,6 +270,93 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
         
         playerViewController?.view.frame = cameraContainer.bounds
     }
+    
+    private func configureCollectionView() {
+   
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(nibWithCellClass: YTCollectionViewCell.self)
+        //collectionView.register(YTCollectionViewCell.self, forCellWithReuseIdentifier: "YTCollectionViewCell")
+    }
+    /*
+    private func configureCell(
+        collectionView: UICollectionView,
+        indexPath: IndexPath,
+        item: SettingsDataItem
+    ) -> UICollectionViewCell {
+        // swiftlint:disable:next closure_body_length
+        let cell: UICollectionViewCell = { [weak self] in
+            guard let self = self else {
+                return UICollectionViewCell()
+            }
+            
+            switch item {
+            case let .header(_, title, subtitle, isExpanded):
+                let cell = collectionView.dequeueReusableCell(withClass: SettingsHeaderCell.self, for: indexPath)
+                cell.configure(title: title, subtitle: subtitle, isExpanded: isExpanded)
+                return cell
+                
+            case let .controlPanel(identity, configuration):
+                let cell = collectionView.dequeueReusableCell(withClass: SettingsControlPanelCell.self, for: indexPath)
+                cell.configure(with: configuration)
+                
+                let subject = PublishSubject<SettingsServiceType>()
+                
+                subject
+                    .map { input -> (SettingsDataItemIdentity, SettingsServiceType) in
+                        (identity, input)
+                    }
+                    .bind(to: self.serviceButtonTapTrigger)
+                    .disposed(by: cell.disposeBag)
+                
+                cell.bind(with: subject)
+                
+                return cell
+                
+            case let .action(identity):
+                let cell = collectionView.dequeueReusableCell(withClass: SettingsActionCell.self, for: indexPath)
+                
+                if case let .action(_, type) = identity {
+                    cell.configure(title: type.localizedTitle)
+                }
+                
+                return cell
+                
+            case .addAddress:
+                let cell = collectionView.dequeueReusableCell(withClass: SettingsAddAddressCell.self, for: indexPath)
+                
+                let subject = PublishSubject<Void>()
+                
+                subject
+                    .bind(to: addAddressTrigger)
+                    .disposed(by: cell.disposeBag)
+                
+                cell.bind(with: subject)
+                
+                return cell
+            }
+        }()
+        
+        guard let itemsCountDict = try? itemsCountProxy.value(),
+            let totalItemsInSection = itemsCountDict[indexPath.section] else {
+            return cell
+        }
+        
+        let isFirstInSection = indexPath.row == 0
+        let isLastInSection = indexPath.row == totalItemsInSection - 1
+        
+        (cell as? CustomBorderCollectionViewCell)?.addCustomBorder(
+            isFirstInSection: isFirstInSection,
+            isLastInSection: isLastInSection,
+            customBorderWidth: 1,
+            customBorderColor: UIColor.SmartYard.grayBorder,
+            customCornerRadius: 12,
+            separatorInset: 24
+        )
+        
+        return cell
+    }
+*/
     
     private func configurePlayer() {
         let playerViewController = AVPlayerViewController()
@@ -295,8 +480,9 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
         
         loadingAsset?.cancelLoading()
         loadingAsset = nil
+        guard let camera = camera else { return }
         
-        let resultingString = viewModel.camera.video + "/index.m3u8" + "?token=\(viewModel.camera.token)"
+        let resultingString = camera.video + "/index.m3u8" + "?token=\(camera.token)"
         
         guard let url = URL(string: resultingString) else {
             return
@@ -351,4 +537,57 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
         }
     }
     
+}
+
+extension CityCameraViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return videos?.count ?? 0
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withClass: YTCollectionViewCell.self, for: indexPath)
+        
+        cell.configureCell(
+            label: self.videos?[indexPath.item].title ?? "",
+            isLast: collectionView.numberOfItems(inSection: 0) - 1 == indexPath.item
+        )
+        return cell
+    }
+}
+
+extension CityCameraViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.view.width - 10 , height: 53)
+    }
+    
+    func  collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 0
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let video = self.videos?[indexPath.item] else {
+            return
+        }
+        self.videoTrigger.onNext(video.url)
+        
+    }
 }

@@ -102,7 +102,8 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             return .trigger(SettingsRoute.advancedSettings, on: settingsRouter)
             
         case .callSupport:
-            let handler = { (action: UIAlertAction) -> Void in
+            
+            let callHandler = { (action: UIAlertAction) -> Void in
                if let phoneCallURL = URL(string: "tel://+7(4752)429999") {
                     let application = UIApplication.shared
                     if application.canOpenURL(phoneCallURL) {
@@ -110,9 +111,41 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
                     }
                   }
             }
+            
+            let callbackHandler = { (action: UIAlertAction) -> Void in
+                let activityTracker = ActivityTracker()
+                let errorTracker = ErrorTracker()
+                let callbackDataSubject = PublishSubject<Void>()
+                
+                errorTracker.asDriver()
+                    .drive(
+                        onNext: { [weak self] error in
+                            self?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                        }
+                    )
+                    .disposed(by: self.disposeBag)
+                
+                callbackDataSubject
+                    .asDriverOnErrorJustComplete()
+                    .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
+                        guard let self = self else {
+                            return .empty()
+                        }
+
+                        return self.issueService.sendCallbackIssue()
+                            .trackError(errorTracker)
+                            .trackActivity(activityTracker)
+                            .asDriver(onErrorJustReturn: nil)
+                    }
+                    .drive()
+                    .disposed(by: self.disposeBag)
+                
+                callbackDataSubject.onNext(())
+                
+            }
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Заказать обратный звонок", style: .default, handler: nil))
-            alert.addAction(UIAlertAction(title: "Позвонить по телефону", style: .default, handler: handler))
+            alert.addAction(UIAlertAction(title: "Заказать обратный звонок", style: .default, handler: callbackHandler))
+            alert.addAction(UIAlertAction(title: "Позвонить по телефону", style: .default, handler: callHandler))
             alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
             
             /*

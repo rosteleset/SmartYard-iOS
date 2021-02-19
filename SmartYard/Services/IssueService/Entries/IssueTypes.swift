@@ -51,6 +51,9 @@ enum IssueType {
     // когда нет общедомовых услуг, но есть другие услуги для выбора
     case connectOnlyNonHousesServices(userInfo: MainUserInfo, lat: String, lon: String, serviceNames: [String])
     
+    // экран 35 (Меню)
+    case orderCallback
+    
     var summary: String {
         let webIssueDescription = "Авто: Заявка с сайта"
         let appCallIssue = "Авто: Звонок с приложения"
@@ -60,14 +63,15 @@ enum IssueType {
              .comeInOfficeMyselfIssue, .connectOnlyNonHousesServices, .deleteAddressIssue:
             return webIssueDescription
             
-        case .dontRememberAnythingIssue:
+        case .dontRememberAnythingIssue, .orderCallback:
             return appCallIssue
         }
     }
     
     var description: String {
         switch self {
-            
+        
+        
         case .dontRememberAnythingIssue:
             return "Выполнить звонок клиенту для напоминания номера договора и пароля от личного кабинета"
         
@@ -93,6 +97,9 @@ enum IssueType {
             let servicesStr = serviceNames.joined(separator: ", ")
             let hint = "\nПодключение услуг(и): \(servicesStr).\nВыполнить звонок клиенту и осуществить консультацию"
             return userInfo.convertToString() + hint
+            
+        case .orderCallback:
+            return "Выполнить звонок клиенту по запросу из приложения"
         }
     }
 
@@ -102,7 +109,7 @@ enum IssueType {
              .deleteAddressIssue, .connectOnlyNonHousesServices, .servicesUnavailableIssue:
             return "-1"
             
-        case .dontRememberAnythingIssue:
+        case .dontRememberAnythingIssue, .orderCallback:
             return "-3"
         }
     }
@@ -118,7 +125,7 @@ enum IssueType {
             
         case .dontRememberAnythingIssue, .servicesUnavailableIssue,
              .connectOnlyNonHousesServices, .deleteAddressIssue,
-             .comeInOfficeMyselfIssue:
+             .comeInOfficeMyselfIssue, .orderCallback:
             return [startWorkAction, callAction]
         }
     }
@@ -129,6 +136,12 @@ enum IssueType {
             return [
                 "10011": clientCode,
                 "11841": userInfo.phoneNumber,
+                "12440": "Приложение"
+            ]
+            
+        case .orderCallback:
+            return [
+                "10011": clientCode,
                 "12440": "Приложение"
             ]
             

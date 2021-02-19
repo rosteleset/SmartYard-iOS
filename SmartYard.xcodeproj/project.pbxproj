@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A003C7025DEF2B7002F193B /* YouTubeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003C6F25DEF2B7002F193B /* YouTubeRequest.swift */; };
+		3A003C7525DEF2D6002F193B /* YouTubeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003C7425DEF2D6002F193B /* YouTubeResponseData.swift */; };
+		3A003C7A25DEF39B002F193B /* YouTubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003C7925DEF39B002F193B /* YouTubeVideo.swift */; };
+		3A03FCF925DD5AA500B8488A /* YTVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A03FCF825DD5AA500B8488A /* YTVideoModel.swift */; };
+		3A03FD0125DD5D5700B8488A /* YTCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A03FCFF25DD5D5700B8488A /* YTCollectionViewCell.swift */; };
+		3A03FD0225DD5D5700B8488A /* YTCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A03FD0025DD5D5700B8488A /* YTCollectionViewCell.xib */; };
 		3A18347025D9AD8600139385 /* CityCameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18346D25D9AD8600139385 /* CityCameraViewModel.swift */; };
 		3A18347125D9AD8600139385 /* CityCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18346E25D9AD8600139385 /* CityCameraViewController.swift */; };
 		3A18347225D9AD8600139385 /* CityCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A18346F25D9AD8600139385 /* CityCameraViewController.xib */; };
@@ -495,6 +501,12 @@
 
 /* Begin PBXFileReference section */
 		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A003C6F25DEF2B7002F193B /* YouTubeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeRequest.swift; sourceTree = "<group>"; };
+		3A003C7425DEF2D6002F193B /* YouTubeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeResponseData.swift; sourceTree = "<group>"; };
+		3A003C7925DEF39B002F193B /* YouTubeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeVideo.swift; sourceTree = "<group>"; };
+		3A03FCF825DD5AA500B8488A /* YTVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTVideoModel.swift; sourceTree = "<group>"; };
+		3A03FCFF25DD5D5700B8488A /* YTCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTCollectionViewCell.swift; sourceTree = "<group>"; };
+		3A03FD0025DD5D5700B8488A /* YTCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YTCollectionViewCell.xib; sourceTree = "<group>"; };
 		3A18346D25D9AD8600139385 /* CityCameraViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraViewModel.swift; sourceTree = "<group>"; };
 		3A18346E25D9AD8600139385 /* CityCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraViewController.swift; sourceTree = "<group>"; };
 		3A18346F25D9AD8600139385 /* CityCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityCameraViewController.xib; sourceTree = "<group>"; };
@@ -980,9 +992,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A03FCFD25DD5CF200B8488A /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				3A03FCF825DD5AA500B8488A /* YTVideoModel.swift */,
+			);
+			path = Entries;
+			sourceTree = "<group>";
+		};
+		3A03FCFE25DD5D0A00B8488A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3A03FCFF25DD5D5700B8488A /* YTCollectionViewCell.swift */,
+				3A03FD0025DD5D5700B8488A /* YTCollectionViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		3A18346C25D9ACE700139385 /* SelectedCamera */ = {
 			isa = PBXGroup;
 			children = (
+				3A03FCFE25DD5D0A00B8488A /* Views */,
+				3A03FCFD25DD5CF200B8488A /* Entries */,
 				3A18346E25D9AD8600139385 /* CityCameraViewController.swift */,
 				3A18346F25D9AD8600139385 /* CityCameraViewController.xib */,
 				3A18346D25D9AD8600139385 /* CityCameraViewModel.swift */,
@@ -1057,6 +1088,8 @@
 			children = (
 				3A8B952F25D96933007CDD3C /* OverviewCCTVRequest.swift */,
 				3A8B953725D96946007CDD3C /* OverviewCCTVResponseData.swift */,
+				3A003C6F25DEF2B7002F193B /* YouTubeRequest.swift */,
+				3A003C7425DEF2D6002F193B /* YouTubeResponseData.swift */,
 			);
 			path = Overview;
 			sourceTree = "<group>";
@@ -2569,6 +2602,7 @@
 				E92EFBE9242A24EB003AF7FE /* APIRestoreData.swift */,
 				E92EFB5F242A22F2003AF7FE /* APIClientName.swift */,
 				E92EFB60242A22F2003AF7FE /* APIPaymentsListAccount.swift */,
+				3A003C7925DEF39B002F193B /* YouTubeVideo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3553,6 +3587,7 @@
 				844AC3F623EBFF900066006D /* SettingsViewController.xib in Resources */,
 				849F2AD82448687C005693B3 /* AddressesListEmptyStateCell.xib in Resources */,
 				84963974248680C10086B6E9 /* VideoPeriodPickerCell.xib in Resources */,
+				3A03FD0225DD5D5700B8488A /* YTCollectionViewCell.xib in Resources */,
 				84F64954247410F9000C0028 /* CameraNumberCell.xib in Resources */,
 				84B9EC9623E0884400979C39 /* linphonerc_factory in Resources */,
 				845842D724223D7D0019635E /* AddressSettingsSkeletonView.xib in Resources */,
@@ -3790,7 +3825,9 @@
 				E92EFBCD242A22F2003AF7FE /* GetPaymentsListResponseData.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
+				3A03FCF925DD5AA500B8488A /* YTVideoModel.swift in Sources */,
 				E92EFBB0242A22F2003AF7FE /* APISettingsAddress.swift in Sources */,
+				3A003C7525DEF2D6002F193B /* YouTubeResponseData.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
 				845E9EEF248E8903000CBBC6 /* SimpleVideoProgressSlider.swift in Sources */,
 				847721762497C31D003FCC24 /* ArchivePageViewController.swift in Sources */,
@@ -4026,12 +4063,14 @@
 				843C38D1242A577C0035BF80 /* UnreadedResponseData.swift in Sources */,
 				E92EFBEC242A2507003AF7FE /* NotificationName+Extensions.swift in Sources */,
 				847880E024A4BB3B008D9E33 /* ScreenshotHelper.swift in Sources */,
+				3A003C7025DEF2B7002F193B /* YouTubeRequest.swift in Sources */,
 				844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */,
 				E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */,
 				E92EFB4524287F4C003AF7FE /* PassConfirmationPinViewController.swift in Sources */,
 				E98C382923F173480010BBC1 /* ClearButtonWithDashedUnderline.swift in Sources */,
 				84B89A9823F2FA97009692B4 /* ServiceIsActivatedViewController.swift in Sources */,
 				84D29BAD24BDCBC300CFBE6B /* IncomingCallStateContainer.swift in Sources */,
+				3A03FD0125DD5D5700B8488A /* YTCollectionViewCell.swift in Sources */,
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				3AB41E0A25C200B900AEC8C3 /* CityMapViewModel.swift in Sources */,
 				E92EFBC5242A22F2003AF7FE /* GeoCoderResponseData.swift in Sources */,
@@ -4067,6 +4106,7 @@
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
 				3A3B8BA225A5CF6F00BFB72E /* MainMenuViewModel.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
+				3A003C7A25DEF39B002F193B /* YouTubeVideo.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 				E92EFBCE242A22F2003AF7FE /* GetPaymentsListRequest.swift in Sources */,
 				E92EFBD8242A22F2003AF7FE /* GetSettingsListRequest.swift in Sources */,

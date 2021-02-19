@@ -9,6 +9,7 @@
 import XCoordinator
 import RxSwift
 import RxCocoa
+import SafariServices
 
 enum CityCamsRoute: Route {
     
@@ -17,6 +18,8 @@ enum CityCamsRoute: Route {
     case dialog(title: String, message: String?, actions: [UIAlertAction])
     case back
     case cameraContainer(selectedCamera: CityCameraObject)
+    case safariPage(url: URL)
+    case youTubeSafari(url: URL)
 }
 
 class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute> {
@@ -106,7 +109,19 @@ class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute> {
             let vc = CityCameraViewController(viewModel: vm)
             
             return .push(vc)
+            
+        case let .safariPage(url):
+            let vc = SFSafariViewController(url: url)
+            return .present(vc)
+        
+        case let .youTubeSafari(url):
+            UIApplication.shared.open(url)
+        return .none()
+        
         }
+        
+        
+        
     }
     
     private func subscribeToNewAddressNotifications() {
