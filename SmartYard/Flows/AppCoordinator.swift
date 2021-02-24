@@ -189,7 +189,16 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             }
             
             return .none()
+            
         case .registerQRCode(code: let code):
+            
+            switch accessService.appState {
+            case .main:
+                break
+            default:
+                self.trigger(.alert(title: "Сначала авторизуйтесь в приложении, а затем повторите попытку добавить адрес", message: nil))
+                return .none()
+            }
             
             let activityTracker = ActivityTracker()
             let errorTracker = ErrorTracker()
@@ -198,16 +207,18 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 .registerQR(qr: code)
                 .trackActivity(activityTracker)
                 .trackError(errorTracker)
-                .asDriver(onErrorJustReturn: nil)
-                .ignoreNil()
-                .drive(
-                    onNext: { [weak self] _ in
-                        NotificationCenter.default.post(name: .addressAdded, object: nil)
-                    }
-                )
+                .asDriverOnErrorJustComplete()
+                .drive()
                 .disposed(by: disposeBag)
             
-            mainTabBarCoordinator?.trigger(.home)
+            errorTracker
+                .asDriver()
+                .drive { [weak self] error in
+                    self?.trigger(.alert(title: error.localizedDescription, message: nil))
+                    NotificationCenter.default.post(name: .addressAdded, object: nil)
+                }
+                .disposed(by: disposeBag)
+
             return .none()
         }
     }

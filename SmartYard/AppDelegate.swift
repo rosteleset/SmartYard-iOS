@@ -62,13 +62,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case "INStartVideoCallIntent":
             NotificationCenter.default.post(name: .videoRequestedByCallKit, object: nil)
         case NSUserActivityTypeBrowsingWeb:
+            //Обработка deeplinks
             guard
                 let incomingURL = userActivity.webpageURL,
                 let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
                 return false
             }
-          
-            appCoordinator.trigger(.registerQRCode(code: incomingURL.absoluteString))
+            
+            //обрабатываем только url вида https://demo.lanta.me/0123456789 для подтверждения адреса
+            if components.host == "demo.lanta.me",
+               components.scheme == "https",
+               let path = components.path,
+               path.matches(pattern: "/[0-9]{10}") {
+                    appCoordinator.trigger(.registerQRCode(code: incomingURL.absoluteString))
+            } else
+            //в противном случае даём OS обработать это событие самостоятельно
+            {
+                return false
+            }
+            
         default:
             break
         }
