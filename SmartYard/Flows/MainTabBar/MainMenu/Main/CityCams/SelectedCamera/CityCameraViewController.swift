@@ -13,10 +13,13 @@ import RxDataSources
 import AVKit
 import Lottie
 
-
 class CityCameraViewController: BaseViewController, LoaderPresentable {
-    
-    
+    enum ButtonState {
+        case incidents, requestRec
+    }
+    enum ViewState {
+        case normal, compact
+    }
     @IBOutlet private weak var cameraName: UILabel!
     @IBOutlet var cameraNameConstraints: [NSLayoutConstraint]!
     @IBOutlet var cameraNameConstraintsMini: [NSLayoutConstraint]!
@@ -35,12 +38,14 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
     private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
     
-    private var isMiniView = false
+    private var viewState: ViewState = .normal
+    private var buttonState: ButtonState = .incidents
     private var loadingAsset: AVAsset?
     
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
     private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: false)
     private let videoTrigger = PublishSubject<String>()
+    private let requestRecordTrigger = PublishSubject<Void>()
     
     var loader: JGProgressHUD?
     
@@ -95,29 +100,29 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
     }
     
     fileprivate func toggleView() {
-        if isMiniView {
-            //
-            
-        } else {
+        if viewState == .normal {
             UIView.animate(withDuration: 0.5, animations: {
                     self.cameraNameConstraints.map { $0.isActive = false }
                     self.cameraNameConstraintsMini.map { $0.isActive = true }
                     self.cameraAddress.isHidden = true
                     self.cameraName.font = self.cameraName.font.withSize(24)
                     self.cameraName.textAlignment = .center
-                    
-                    self.button.setTitle("Запросить запись", for: .normal)
-                    self.button.backgroundColor = UIColor.SmartYard.blue
-                    self.button.titleColorForNormal = UIColor.white
-                    
                     self.view.layoutIfNeeded()
                 }
             )
-            isMiniView = true
+            viewState = .compact
         }
     }
     
     func bind() {
+        let input = CityCameraViewModel.Input(
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
+            videoTrigger: videoTrigger.asDriverOnErrorJustComplete(),
+            requestRecordTrigger: requestRecordTrigger.asDriverOnErrorJustComplete()
+        )
+        
+        let output = viewModel.transform(input)
+        
         isVideoBeingLoaded
             .asDriver(onErrorJustReturn: false)
             .debounce(.milliseconds(25))
@@ -138,9 +143,39 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+       
+        //по нажатию на кнопку переключаем вид (у кнопки по мере переключений будет 2 разных действия)
+        button.rx.tap
+            .asDriver()
+            .debounce(.milliseconds(250))
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    switch self.buttonState {
+                    case .incidents:
+                        self.toggleView()
+                        
+                        self.button.setTitle("Запросить запись", for: .normal)
+                        self.button.backgroundColor = UIColor.SmartYard.blue
+                        self.button.titleColorForNormal = UIColor.white
+                        
+                        self.buttonState = .requestRec
+                        
+                        self.collectionView.isHidden = false
+                        self.collectionView.reloadData()
+                        
+                    case .requestRec:
+                        self.requestRecordTrigger.onNext(())
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         
         // При уходе с окна или при сворачивании приложения - паузим плеер
-        
         Driver
             .merge(
                 NotificationCenter.default.rx
@@ -183,13 +218,6 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        let input = CityCameraViewModel.Input(
-            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
-            videoTrigger: videoTrigger.asDriverOnErrorJustComplete()
-        )
-        
-        let output = viewModel.transform(input)
-        
         output.isLoading
             .debounce(.milliseconds(25))
             .drive(
@@ -219,32 +247,25 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
         output.videos
             .drive(
                 onNext: { [weak self] videos in
-                    self?.videos = videos
-                    if videos.isEmpty {
-                        self?.button.setTitle("Запросить запись", for: .normal)
-                        self?.button.backgroundColor = UIColor.SmartYard.blue
-                        self?.button.titleColorForNormal = UIColor.white
-                    } else {
-                        self?.button.setTitle("Проишествия ("+String(self?.videos?.count ?? 0)+")", for: .normal)
-                        self?.button.backgroundColor = UIColor.white
-                        self?.button.titleColorForNormal = UIColor.SmartYard.blue
+                    guard let self = self else {
+                        return
                     }
                     
-                    
+                    self.videos = videos
+                    if videos.isEmpty {
+                        self.button.setTitle("Запросить запись", for: .normal)
+                        self.button.backgroundColor = UIColor.SmartYard.blue
+                        self.button.titleColorForNormal = UIColor.white
+                        self.buttonState = .requestRec
+                        
+                    } else {
+                        self.button.setTitle("Проишествия ("+String(self.videos?.count ?? 0)+")", for: .normal)
+                        self.button.backgroundColor = UIColor.white
+                        self.button.titleColorForNormal = UIColor.SmartYard.blue
+                        self.buttonState = .incidents
+                    }
                 }
             ).disposed(by: disposeBag)
-        
-        button.rx.tap
-            .asDriver()
-            .drive(
-                onNext: { [weak self] in
-                    self?.collectionView.isHidden = false
-                    self?.collectionView.reloadData()
-                    self?.toggleView()
-                }
-            
-            )
-            .disposed(by: disposeBag)
         
         //Загружаем камеру и инициализируем воспроизведение
         self.camera = output.camera
@@ -276,87 +297,7 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(nibWithCellClass: YTCollectionViewCell.self)
-        //collectionView.register(YTCollectionViewCell.self, forCellWithReuseIdentifier: "YTCollectionViewCell")
     }
-    /*
-    private func configureCell(
-        collectionView: UICollectionView,
-        indexPath: IndexPath,
-        item: SettingsDataItem
-    ) -> UICollectionViewCell {
-        // swiftlint:disable:next closure_body_length
-        let cell: UICollectionViewCell = { [weak self] in
-            guard let self = self else {
-                return UICollectionViewCell()
-            }
-            
-            switch item {
-            case let .header(_, title, subtitle, isExpanded):
-                let cell = collectionView.dequeueReusableCell(withClass: SettingsHeaderCell.self, for: indexPath)
-                cell.configure(title: title, subtitle: subtitle, isExpanded: isExpanded)
-                return cell
-                
-            case let .controlPanel(identity, configuration):
-                let cell = collectionView.dequeueReusableCell(withClass: SettingsControlPanelCell.self, for: indexPath)
-                cell.configure(with: configuration)
-                
-                let subject = PublishSubject<SettingsServiceType>()
-                
-                subject
-                    .map { input -> (SettingsDataItemIdentity, SettingsServiceType) in
-                        (identity, input)
-                    }
-                    .bind(to: self.serviceButtonTapTrigger)
-                    .disposed(by: cell.disposeBag)
-                
-                cell.bind(with: subject)
-                
-                return cell
-                
-            case let .action(identity):
-                let cell = collectionView.dequeueReusableCell(withClass: SettingsActionCell.self, for: indexPath)
-                
-                if case let .action(_, type) = identity {
-                    cell.configure(title: type.localizedTitle)
-                }
-                
-                return cell
-                
-            case .addAddress:
-                let cell = collectionView.dequeueReusableCell(withClass: SettingsAddAddressCell.self, for: indexPath)
-                
-                let subject = PublishSubject<Void>()
-                
-                subject
-                    .bind(to: addAddressTrigger)
-                    .disposed(by: cell.disposeBag)
-                
-                cell.bind(with: subject)
-                
-                return cell
-            }
-        }()
-        
-        guard let itemsCountDict = try? itemsCountProxy.value(),
-            let totalItemsInSection = itemsCountDict[indexPath.section] else {
-            return cell
-        }
-        
-        let isFirstInSection = indexPath.row == 0
-        let isLastInSection = indexPath.row == totalItemsInSection - 1
-        
-        (cell as? CustomBorderCollectionViewCell)?.addCustomBorder(
-            isFirstInSection: isFirstInSection,
-            isLastInSection: isLastInSection,
-            customBorderWidth: 1,
-            customBorderColor: UIColor.SmartYard.grayBorder,
-            customCornerRadius: 12,
-            separatorInset: 24
-        )
-        
-        return cell
-    }
-*/
     
     private func configurePlayer() {
         let playerViewController = AVPlayerViewController()

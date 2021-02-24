@@ -137,7 +137,14 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
                             .trackActivity(activityTracker)
                             .asDriver(onErrorJustReturn: nil)
                     }
-                    .drive()
+                    .drive (
+                        onNext: { response in
+                            guard response != nil else {
+                                return
+                            }
+                            self.trigger(.alert(title: "Заявка отправлена", message: "Мы позвоним Вам в ближайшее время"))
+                        }
+                    )
                     .disposed(by: self.disposeBag)
                 
                 callbackDataSubject.onNext(())

@@ -1,8 +1,8 @@
 //
-//  CityMapViewModel.swift
+//  RequestRecordModel.swift
 //  SmartYard
 //
-//  Created by Александр Васильев on 27.01.2021.
+//  Created by Александр Васильев on 19.02.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
 
@@ -12,16 +12,15 @@ import RxSwift
 import RxCocoa
 import CoreLocation
 
-class CityCameraViewModel: BaseViewModel {
+class RequestRecordViewModel: BaseViewModel {
     
-    private let apiWrapper: APIWrapper
+    private let issueService: IssueService
     private let router: WeakRouter<CityCamsRoute>
     private let camera: CityCameraObject
-    private let youTubeVideos = BehaviorSubject<[YouTubeVideo]>(value: [])
     
-    init(camera: CityCameraObject, apiWrapper: APIWrapper, router: WeakRouter<CityCamsRoute>) {
+    init(camera: CityCameraObject, issueService: IssueService, router: WeakRouter<CityCamsRoute>) {
         self.camera = camera
-        self.apiWrapper = apiWrapper
+        self.issueService = issueService
         self.router = router
     }
     
@@ -45,30 +44,32 @@ class CityCameraViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        input.videoTrigger
+        input.sendRequestTrigger
+            .withLatestFrom(Driver.combineLatest(input.date, input.duration, input.notes))
+            .flatMapLatest { [weak self] date, duration, notes -> Driver<CreateIssueResponseData?> in
+                guard let self = self
+                    else {
+                    return .empty()
+                }
+                
+                return self.issueService.sendRequestRecIssue(camera: self.camera, date: date, duration: duration, notes: notes ?? "")
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
             .drive(
-                onNext: { [weak self] urlString in
-                    guard let self = self,
-                          let url = URL(string: urlString) else {
+                onNext: { response in
+                    guard response != nil else {
                         return
                     }
-                    self.router.trigger(.youTubeSafari(url: url))
+                    
+                    self.router.trigger(.back)
+                    self.router.trigger(.alert(title: "Заявка отправлена", message: "Мы свяжемся с Вами в течение суток"))
                 }
             )
             .disposed(by: disposeBag)
         
-        input.requestRecordTrigger
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    self.router.trigger(.requestRecord(selectedCamera: self.camera))
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        apiWrapper.getYouTubeVideo(cameraId: camera.id)
+        /*apiWrapper.getYouTubeVideo(cameraId: camera.id)
             .trackError(errorTracker)
             .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
@@ -79,31 +80,28 @@ class CityCameraViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-        
+        */
         
         return Output(
-            //cameras: cameras.asDriver(onErrorJustReturn: []),
-            isLoading: activityTracker.asDriver(),
-            camera: self.camera,
-            videos: youTubeVideos.asDriver(onErrorJustReturn: [])
+            camera: self.camera
         )
     }
     
 }
 
-extension CityCameraViewModel {
+extension RequestRecordViewModel {
     
     struct Input {
         let backTrigger: Driver<Void>
-        let videoTrigger: Driver<String>
-        let requestRecordTrigger: Driver<Void>
+        let sendRequestTrigger: Driver<Void>
+        let date: Driver<Date>
+        let duration: Driver<(Int)>
+        let notes: Driver<String?>
     }
     
     struct Output {
-        let isLoading: Driver<Bool>
         let camera: CityCameraObject
-        let videos: Driver<[YouTubeVideo]>
+        
     }
     
 }
-

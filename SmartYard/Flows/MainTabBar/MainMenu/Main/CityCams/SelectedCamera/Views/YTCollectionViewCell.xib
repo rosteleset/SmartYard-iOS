@@ -27,7 +27,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="277" height="53"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Test Test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S70-Ip-QVX">
-                                <rect key="frame" x="16" y="17.5" width="205" height="18"/>
+                                <rect key="frame" x="16" y="18.5" width="205" height="16.5"/>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                 <color key="textColor" name="semiBlack"/>
                                 <nil key="highlightedColor"/>

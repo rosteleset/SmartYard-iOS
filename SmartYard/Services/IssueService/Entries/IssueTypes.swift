@@ -54,6 +54,9 @@ enum IssueType {
     // экран 35 (Меню)
     case orderCallback
     
+    // экран 37 Запрос записи
+    case requestRec(camera: CityCameraObject, date: Date, duration: Int, notes: String)
+    
     var summary: String {
         let webIssueDescription = "Авто: Заявка с сайта"
         let appCallIssue = "Авто: Звонок с приложения"
@@ -65,6 +68,8 @@ enum IssueType {
             
         case .dontRememberAnythingIssue, .orderCallback:
             return appCallIssue
+        case .requestRec:
+            return "Авто: Запрос на получение видеофрагмента с архива"
         }
     }
     
@@ -100,6 +105,19 @@ enum IssueType {
             
         case .orderCallback:
             return "Выполнить звонок клиенту по запросу из приложения"
+            
+        case let .requestRec(camera, date, duration, notes):
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd.MM.yyyy HH:mm"
+            formatter.timeZone = Calendar.moscowCalendar.timeZone
+            formatter.locale = Calendar.moscowCalendar.locale
+            let result = """
+Обработать запрос на добавление видеофрагмента из архива видовой видеокамеры \(camera.name) (id=\(camera.id)) по парамертам:
+время: \(formatter.string(from: date)),
+продолжительность фрагмента: \(duration) мин.
+комментарии пользователя: \(notes).
+"""
+            return result
         }
     }
 
@@ -111,6 +129,8 @@ enum IssueType {
             
         case .dontRememberAnythingIssue, .orderCallback:
             return "-3"
+        case .requestRec:
+            return "-5"
         }
     }
     
@@ -118,6 +138,7 @@ enum IssueType {
         let startWorkAction = "Начать работу"
         let callAction = "Позвонить"
         let sendToOfficeAction = "Передать в офис"
+        let sendToManagerCCTV = "Менеджеру ВН"
         
         switch self {
         case .confirmAddressByCourierIssue, .confirmAddressInOfficeIssue:
@@ -127,28 +148,38 @@ enum IssueType {
              .connectOnlyNonHousesServices, .deleteAddressIssue,
              .comeInOfficeMyselfIssue, .orderCallback:
             return [startWorkAction, callAction]
+        case .requestRec:
+            return [startWorkAction, sendToManagerCCTV]
         }
     }
     
     var customFields: [String: String] {
+        let formatter = DateFormatter()
+        formatter.timeZone = Calendar.moscowCalendar.timeZone
+        formatter.locale = Calendar.moscowCalendar.locale
+        formatter.dateFormat = "dd.MM.yyyy HH:mm"
+        
+        let now = formatter.string(from: Date())
+        
         switch self {
         case let .dontRememberAnythingIssue(userInfo):
             return [
                 "10011": clientCode,
-                "11841": userInfo.phoneNumber,
+                "11840": now,
                 "12440": "Приложение"
             ]
             
-        case .orderCallback:
+        case .orderCallback, .requestRec:
             return [
                 "10011": clientCode,
+                "11840": now,
                 "12440": "Приложение"
             ]
             
         case let .confirmAddressByCourierIssue(userInfo, lat, lon):
             return [
                 "10011": clientCode,
-                "11841": userInfo.phoneNumber,
+                "11840": now,
                 "12440": "Приложение",
                 "10743": lat,
                 "10744": lon,
@@ -158,7 +189,7 @@ enum IssueType {
         case let .confirmAddressInOfficeIssue(userInfo, lat, lon):
             return [
                 "10011": clientCode,
-                "11841": userInfo.phoneNumber,
+                "11840": now,
                 "12440": "Приложение",
                 "10743": lat,
                 "10744": lon,
@@ -168,7 +199,7 @@ enum IssueType {
         case let .deleteAddressIssue(userInfo, lat, lon, _):
             return [
                 "10011": clientCode,
-                "11841": userInfo.phoneNumber,
+                "11840": now,
                 "12440": "Приложение",
                 "10743": lat,
                 "10744": lon
@@ -177,7 +208,7 @@ enum IssueType {
         case let .servicesUnavailableIssue(userInfo, _, lat, lon):
             return [
                 "10011": clientCode,
-                "11841": userInfo.phoneNumber,
+                "11840": now,
                 "12440": "Приложение",
                 "10743": lat,
                 "10744": lon
@@ -186,7 +217,7 @@ enum IssueType {
         case let .comeInOfficeMyselfIssue(userInfo, lat, lon, _):
             return [
                 "10011": clientCode,
-                "11841": userInfo.phoneNumber,
+                "11840": now,
                 "12440": "Приложение",
                 "10743": lat,
                 "10744": lon,
@@ -196,7 +227,7 @@ enum IssueType {
         case let .connectOnlyNonHousesServices(userInfo, lat, lon, _):
             return [
                 "10011": clientCode,
-                "11841": userInfo.phoneNumber,
+                "11840": now,
                 "12440": "Приложение",
                 "10743": lat,
                 "10744": lon

@@ -18,6 +18,7 @@ enum CityCamsRoute: Route {
     case dialog(title: String, message: String?, actions: [UIAlertAction])
     case back
     case cameraContainer(selectedCamera: CityCameraObject)
+    case requestRecord(selectedCamera: CityCameraObject)
     case safariPage(url: URL)
     case youTubeSafari(url: URL)
 }
@@ -79,27 +80,6 @@ class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute> {
             return .pop(animation: .default)
             
         case let .cameraContainer(selectedCamera):
-            /*
-            let vm = SelectCameraContainerViewModel(
-                apiWrapper: apiWrapper,
-                address: address,
-                cameras: cameras,
-                selectedCamera: selectedCamera,
-                router: weakRouter
-            )
-            
-            let onlineVc = OnlinePageViewController()
-            onlineVc.loadViewIfNeeded()
-            
-            let archiveVc = ArchivePageViewController(apiWrapper: apiWrapper)
-            archiveVc.loadViewIfNeeded()
-            
-            let vc = SelectCameraContainerViewController(
-                onlinePage: onlineVc,
-                archivePage: archiveVc,
-                viewModel: vm
-            )
-            */
             let vm = CityCameraViewModel(
                 camera: selectedCamera,
                 apiWrapper: apiWrapper,
@@ -118,10 +98,17 @@ class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute> {
             UIApplication.shared.open(url)
         return .none()
         
+        case .requestRecord(selectedCamera: let selectedCamera):
+            let vm = RequestRecordViewModel(
+                camera: selectedCamera,
+                issueService: issueService,
+                router: weakRouter
+            )
+            
+            let vc = RequestRecordViewController(viewModel: vm)
+            
+            return .push(vc)
         }
-        
-        
-        
     }
     
     private func subscribeToNewAddressNotifications() {

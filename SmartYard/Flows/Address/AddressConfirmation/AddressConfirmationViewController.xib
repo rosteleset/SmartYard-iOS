@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,23 +27,23 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="NbX-aL-bqo">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4bS-gB-f4A">
-                    <rect key="frame" x="0.0" y="88" width="414" height="120"/>
+                    <rect key="frame" x="0.0" y="44" width="320" height="120"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Как вам будет удобнее это сделать?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kwu-21-IKd">
-                            <rect key="frame" x="40" y="84.5" width="219" height="18"/>
+                            <rect key="frame" x="16" y="84.5" width="219" height="18"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подтверждение адреса" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVn-3T-ISU">
-                            <rect key="frame" x="40" y="0.0" width="334" height="80.5"/>
+                            <rect key="frame" x="16" y="0.0" width="288" height="80.5"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -54,29 +52,29 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="kwu-21-IKd" firstAttribute="top" secondItem="UVn-3T-ISU" secondAttribute="bottom" constant="4" id="8KT-pz-67c"/>
-                        <constraint firstItem="kwu-21-IKd" firstAttribute="leading" secondItem="4bS-gB-f4A" secondAttribute="leading" constant="40" id="PuX-2C-4GD"/>
-                        <constraint firstItem="UVn-3T-ISU" firstAttribute="leading" secondItem="4bS-gB-f4A" secondAttribute="leading" constant="40" id="SVu-cw-BYh"/>
+                        <constraint firstItem="kwu-21-IKd" firstAttribute="leading" secondItem="4bS-gB-f4A" secondAttribute="leading" constant="16" id="PuX-2C-4GD"/>
+                        <constraint firstItem="UVn-3T-ISU" firstAttribute="leading" secondItem="4bS-gB-f4A" secondAttribute="leading" constant="16" id="SVu-cw-BYh"/>
                         <constraint firstAttribute="height" constant="120" id="bsA-RN-H4f"/>
-                        <constraint firstAttribute="trailing" secondItem="UVn-3T-ISU" secondAttribute="trailing" constant="40" id="yGn-oK-J6C"/>
+                        <constraint firstAttribute="trailing" secondItem="UVn-3T-ISU" secondAttribute="trailing" constant="16" id="yGn-oK-J6C"/>
                         <constraint firstItem="UVn-3T-ISU" firstAttribute="top" secondItem="4bS-gB-f4A" secondAttribute="top" id="zXe-XS-0s3"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jvI-aM-Z2y" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="208" width="414" height="654"/>
+                    <rect key="frame" x="0.0" y="164" width="320" height="404"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tbm-7a-VCj" customClass="SmartYardSegmentedControl" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="57"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="57" id="QKU-53-5qW"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BRa-A7-Ebr" customClass="ServiceFromOfficeView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="57" width="414" height="597"/>
+                            <rect key="frame" x="0.0" y="57" width="320" height="347"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mow-Yx-2Q3" customClass="ServiceFromCourierView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="57" width="414" height="597"/>
+                            <rect key="frame" x="0.0" y="57" width="320" height="347"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                     </subviews>
@@ -96,13 +94,14 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yMA-ak-ijO" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Y9C-af-Ew1"/>
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="yMA-ak-ijO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="59a-Ze-GRd"/>
@@ -120,7 +119,6 @@
                 <constraint firstItem="yMA-ak-ijO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="whg-oL-qXP"/>
                 <constraint firstAttribute="trailing" secondItem="jvI-aM-Z2y" secondAttribute="trailing" id="xGC-fM-OZF"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="112.5"/>
         </view>
     </objects>

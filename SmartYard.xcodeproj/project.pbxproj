@@ -10,6 +10,9 @@
 		3A003C7025DEF2B7002F193B /* YouTubeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003C6F25DEF2B7002F193B /* YouTubeRequest.swift */; };
 		3A003C7525DEF2D6002F193B /* YouTubeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003C7425DEF2D6002F193B /* YouTubeResponseData.swift */; };
 		3A003C7A25DEF39B002F193B /* YouTubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003C7925DEF39B002F193B /* YouTubeVideo.swift */; };
+		3A003CE625E0466D002F193B /* RequestRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003CE525E0466C002F193B /* RequestRecordViewModel.swift */; };
+		3A003CF225E04EE3002F193B /* RequestRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003CF025E04EE3002F193B /* RequestRecordViewController.swift */; };
+		3A003CF325E04EE3002F193B /* RequestRecordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A003CF125E04EE3002F193B /* RequestRecordViewController.xib */; };
 		3A03FCF925DD5AA500B8488A /* YTVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A03FCF825DD5AA500B8488A /* YTVideoModel.swift */; };
 		3A03FD0125DD5D5700B8488A /* YTCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A03FCFF25DD5D5700B8488A /* YTCollectionViewCell.swift */; };
 		3A03FD0225DD5D5700B8488A /* YTCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A03FD0025DD5D5700B8488A /* YTCollectionViewCell.xib */; };
@@ -504,6 +507,9 @@
 		3A003C6F25DEF2B7002F193B /* YouTubeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeRequest.swift; sourceTree = "<group>"; };
 		3A003C7425DEF2D6002F193B /* YouTubeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeResponseData.swift; sourceTree = "<group>"; };
 		3A003C7925DEF39B002F193B /* YouTubeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeVideo.swift; sourceTree = "<group>"; };
+		3A003CE525E0466C002F193B /* RequestRecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestRecordViewModel.swift; sourceTree = "<group>"; };
+		3A003CF025E04EE3002F193B /* RequestRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestRecordViewController.swift; sourceTree = "<group>"; };
+		3A003CF125E04EE3002F193B /* RequestRecordViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RequestRecordViewController.xib; sourceTree = "<group>"; };
 		3A03FCF825DD5AA500B8488A /* YTVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTVideoModel.swift; sourceTree = "<group>"; };
 		3A03FCFF25DD5D5700B8488A /* YTCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTCollectionViewCell.swift; sourceTree = "<group>"; };
 		3A03FD0025DD5D5700B8488A /* YTCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YTCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -992,6 +998,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A003CE425E045FD002F193B /* RequestRecord */ = {
+			isa = PBXGroup;
+			children = (
+				3A003CE525E0466C002F193B /* RequestRecordViewModel.swift */,
+				3A003CF025E04EE3002F193B /* RequestRecordViewController.swift */,
+				3A003CF125E04EE3002F193B /* RequestRecordViewController.xib */,
+			);
+			path = RequestRecord;
+			sourceTree = "<group>";
+		};
 		3A03FCFD25DD5CF200B8488A /* Entries */ = {
 			isa = PBXGroup;
 			children = (
@@ -1114,6 +1130,7 @@
 		3AB41E0725C2006B00AEC8C3 /* CityCams */ = {
 			isa = PBXGroup;
 			children = (
+				3A003CE425E045FD002F193B /* RequestRecord */,
 				3A8B952925D9336D007CDD3C /* CityCamsCoordinator.swift */,
 				3AB41E0825C2008800AEC8C3 /* CityMap */,
 				3A18346C25D9ACE700139385 /* SelectedCamera */,
@@ -3593,6 +3610,7 @@
 				845842D724223D7D0019635E /* AddressSettingsSkeletonView.xib in Resources */,
 				E9E4271223F40D2500F5D593 /* AvailableServicesViewController.xib in Resources */,
 				84F6493A247402DC000C0028 /* WhiteSectionHeaderView.xib in Resources */,
+				3A003CF325E04EE3002F193B /* RequestRecordViewController.xib in Resources */,
 				847CF7DD240696D500070007 /* SettingsListSkeletonView.xib in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
 				3A61E56125A07F4F00A368FA /* FullscreenPlayerViewController.xib in Resources */,
@@ -3935,6 +3953,7 @@
 				3A8B953025D96933007CDD3C /* OverviewCCTVRequest.swift in Sources */,
 				E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */,
 				84D29B9524B799B100CFBE6B /* StreamInfoRequest.swift in Sources */,
+				3A003CE625E0466D002F193B /* RequestRecordViewModel.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				E92EFBBF242A22F2003AF7FE /* GetServicesRequest.swift in Sources */,
 				84F6494B24740E90000C0028 /* YardMapViewModel.swift in Sources */,
@@ -4116,6 +4135,7 @@
 				E92EFBBC242A22F2003AF7FE /* GetAddressResponseData.swift in Sources */,
 				E92EFBA8242A22F2003AF7FE /* APIPaymentsListAddress.swift in Sources */,
 				843C38ED242B5A830035BF80 /* PermissionService.swift in Sources */,
+				3A003CF225E04EE3002F193B /* RequestRecordViewController.swift in Sources */,
 				E92EFBB4242A22F2003AF7FE /* APICCTV.swift in Sources */,
 				84CC15E523EC999700A1CB95 /* AddressesListSectionUpdateKind.swift in Sources */,
 				84854B6523FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift in Sources */,
