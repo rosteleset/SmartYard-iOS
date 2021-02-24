@@ -23,7 +23,8 @@ enum AppRoute: Route {
     case alert(title: String, message: String?)
     case onboarding
     case appSettings(title: String, message: String?)
-    
+    case registerQRCode(code: String)
+        
     case incomingCall(callPayload: CallPayload, isCallKitUsed: Bool)
     case closeIncomingCall
     
@@ -187,6 +188,26 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 self?.mainWindow.makeKeyAndVisible()
             }
             
+            return .none()
+        case .registerQRCode(code: let code):
+            
+            let activityTracker = ActivityTracker()
+            let errorTracker = ErrorTracker()
+            
+            self.apiWrapper
+                .registerQR(qr: code)
+                .trackActivity(activityTracker)
+                .trackError(errorTracker)
+                .asDriver(onErrorJustReturn: nil)
+                .ignoreNil()
+                .drive(
+                    onNext: { [weak self] _ in
+                        NotificationCenter.default.post(name: .addressAdded, object: nil)
+                    }
+                )
+                .disposed(by: disposeBag)
+            
+            mainTabBarCoordinator?.trigger(.home)
             return .none()
         }
     }

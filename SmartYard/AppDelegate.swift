@@ -67,15 +67,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
                 return false
             }
-            print("DEBUG deeplink:")
-            // Check for specific URL components that you need.
-            guard let path = components.path,
-                  let host = components.host else {
-                return false
-            }
-            NSLog("DEBUG DeepLink: host =%s path = %s", host, path)
-            //print("host = \(host) path = \(path)")
-
+          
+            appCoordinator.trigger(.registerQRCode(code: incomingURL.absoluteString))
         default:
             break
         }
