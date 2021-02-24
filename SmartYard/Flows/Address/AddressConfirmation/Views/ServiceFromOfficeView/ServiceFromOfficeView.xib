@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,8 +28,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RAz-Li-Zn5">
                             <rect key="frame" x="0.0" y="0.0" width="487" height="74"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydR-2y-k4D">
-                                    <rect key="frame" x="24" y="10" width="439" height="54"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ydR-2y-k4D">
+                                    <rect key="frame" x="16" y="10" width="455" height="54"/>
                                     <string key="text">Посетите ближайший офис Lanta с квитанцией ЖКХ за эту квартиру и мы сразу же активируем функцию умного домофона и видеонаблюдения.</string>
                                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                     <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -40,8 +38,8 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="ydR-2y-k4D" firstAttribute="leading" secondItem="RAz-Li-Zn5" secondAttribute="leading" constant="24" id="0HZ-QH-hNM"/>
-                                <constraint firstAttribute="trailing" secondItem="ydR-2y-k4D" secondAttribute="trailing" constant="24" id="7d2-Gi-K9I"/>
+                                <constraint firstItem="ydR-2y-k4D" firstAttribute="leading" secondItem="RAz-Li-Zn5" secondAttribute="leading" constant="16" id="0HZ-QH-hNM"/>
+                                <constraint firstAttribute="trailing" secondItem="ydR-2y-k4D" secondAttribute="trailing" constant="16" id="7d2-Gi-K9I"/>
                                 <constraint firstItem="ydR-2y-k4D" firstAttribute="top" secondItem="RAz-Li-Zn5" secondAttribute="top" constant="10" id="Gq7-Uy-teA"/>
                                 <constraint firstAttribute="height" constant="74" id="OPi-DF-5Vg"/>
                                 <constraint firstAttribute="bottom" secondItem="ydR-2y-k4D" secondAttribute="bottom" constant="10" id="hmA-Xq-LQB"/>
@@ -57,8 +55,8 @@
                                         <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQy-0w-33M" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="40" y="303" width="407" height="60"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQy-0w-33M" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="16" y="303" width="455" height="60"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="60" id="8pR-Ac-3vY"/>
                                     </constraints>
@@ -68,10 +66,10 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="bQy-0w-33M" secondAttribute="trailing" constant="40" id="3Np-S0-bzI"/>
+                                <constraint firstAttribute="trailing" secondItem="bQy-0w-33M" secondAttribute="trailing" constant="16" id="3Np-S0-bzI"/>
                                 <constraint firstAttribute="bottom" secondItem="3rj-8j-KuM" secondAttribute="bottom" id="AA3-8i-ebT"/>
                                 <constraint firstAttribute="bottom" secondItem="bQy-0w-33M" secondAttribute="bottom" constant="15" id="BFN-x4-Pc4"/>
-                                <constraint firstItem="bQy-0w-33M" firstAttribute="leading" secondItem="59B-VS-YVQ" secondAttribute="leading" constant="40" id="ORE-xG-O54"/>
+                                <constraint firstItem="bQy-0w-33M" firstAttribute="leading" secondItem="59B-VS-YVQ" secondAttribute="leading" constant="16" id="ORE-xG-O54"/>
                                 <constraint firstItem="3rj-8j-KuM" firstAttribute="top" secondItem="59B-VS-YVQ" secondAttribute="top" id="SUb-ST-9fa"/>
                                 <constraint firstAttribute="trailing" secondItem="3rj-8j-KuM" secondAttribute="trailing" id="atw-tK-qlx"/>
                                 <constraint firstItem="3rj-8j-KuM" firstAttribute="leading" secondItem="59B-VS-YVQ" secondAttribute="leading" id="wMH-Ij-22W"/>
@@ -90,6 +88,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="cGs-JD-k45" secondAttribute="trailing" id="4LX-Jc-JU8"/>
@@ -98,7 +97,6 @@
                 <constraint firstItem="cGs-JD-k45" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uRV-Uv-y9u"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="doSoButton" destination="bQy-0w-33M" id="14r-cL-qL7"/>
                 <outlet property="mapView" destination="3rj-8j-KuM" id="Pma-k5-SY0"/>

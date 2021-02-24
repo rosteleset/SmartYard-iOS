@@ -171,6 +171,7 @@ PODS:
   - YandexMobileMetrica/Static/Core (3.14.1)
   - YandexMobileMetrica/Static/Crashes (3.14.1):
     - YandexMobileMetrica/Static/Core
+  - youtube-ios-player-helper-swift (1.1)
 
 DEPENDENCIES:
   - Cartography
@@ -203,6 +204,7 @@ DEPENDENCIES:
   - XCoordinator
   - XCoordinator/RxSwift
   - YandexMobileMetrica
+  - youtube-ios-player-helper-swift
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -246,6 +248,7 @@ SPEC REPOS:
     - TPKeyboardAvoiding
     - XCoordinator
     - YandexMobileMetrica
+    - youtube-ios-player-helper-swift
   https://gitlab.linphone.org/BC/public/podspec.git:
     - linphone-sdk
 
@@ -309,7 +312,8 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
   XCoordinator: 9ee654fedef1ffede33d5c11677708a555c00542
   YandexMobileMetrica: 072fc59d216c8824d83d1d54bdc6e96d9cfcc59c
+  youtube-ios-player-helper-swift: 51a3c5325317c8271d0c7985c1bbe5a252ffb2fd
 
-PODFILE CHECKSUM: a44859f23f17c71f8222e11fdda3b023893f7c22
+PODFILE CHECKSUM: 5a53b3c8a21971d58347e983b47f7c2f337baa3c
 
 COCOAPODS: 1.10.1

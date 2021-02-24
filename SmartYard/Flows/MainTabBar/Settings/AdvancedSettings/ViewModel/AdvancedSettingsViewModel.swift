@@ -173,12 +173,14 @@ class AdvancedSettingsViewModel: BaseViewModel {
         
         let nameAsString = currentName
             .asDriver(onErrorJustReturn: nil)
-            .map { clientName in
+            .map { clientName -> String? in
                 [clientName?.name, clientName?.patronymic]
                     .compactMap { $0 }
                     .joined(separator: " ")
             }
         
+        let phone = accessService.clientPhoneNumber?.formattedNumberFromRawNumber
+            
         // MARK: Переход назад
         
         input.backTrigger
@@ -238,6 +240,7 @@ class AdvancedSettingsViewModel: BaseViewModel {
         
         return Output(
             name: nameAsString,
+            phone: .just(phone),
             enableNotifications: enableNotificationsSubject.asDriverOnErrorJustComplete(),
             enableAccountBalanceWarning: enableAccountBalanceWarningSubject.asDriverOnErrorJustComplete(),
             enableCallkit: enableCallkitSubject.asDriverOnErrorJustComplete(),
@@ -260,7 +263,8 @@ extension AdvancedSettingsViewModel {
     }
     
     struct Output {
-        let name: Driver<String>
+        let name: Driver<String?>
+        let phone: Driver<String?>
         let enableNotifications: Driver<Bool>
         let enableAccountBalanceWarning: Driver<Bool>
         let enableCallkit: Driver<Bool>

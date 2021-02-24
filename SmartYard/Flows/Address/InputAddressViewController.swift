@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SearchTextField
+import TPKeyboardAvoiding
 
 class InputAddressViewController: BaseViewController {
 
@@ -19,7 +20,7 @@ class InputAddressViewController: BaseViewController {
     @IBOutlet private weak var streetTextField: SmartYardSearchTextField!
     @IBOutlet private weak var buildingTextField: SmartYardSearchTextField!
     @IBOutlet private weak var flatTextField: SmartYardSearchTextField!
-    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
     
     @IBOutlet private weak var checkAvailableServicesButton: BlueButton!
     @IBOutlet private weak var qrCodeButton: ClearButtonWithDashedUnderline!

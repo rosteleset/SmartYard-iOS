@@ -21,6 +21,8 @@ enum APITarget {
     case offices(request: OfficesRequest)
     
     case allCCTV(request: AllCCTVRequest)
+    case overviewCCTV(request: OverviewCCTVRequest)
+    case youtube(request: YouTubeRequest)
     case recPrepare(request: RecPrepareRequest)
     case recDownload(request: RecDownloadRequest)
     case streamInfo(request: StreamInfoRequest)
@@ -86,6 +88,8 @@ extension APITarget: TargetType {
         case .offices: return "address/offices"
             
         case .allCCTV: return "cctv/all"
+        case .overviewCCTV: return "cctv/overview"
+        case .youtube: return "cctv/youtube"
         case .recPrepare: return "cctv/recPrepare"
         case .recDownload: return "cctv/recDownload"
         case .streamInfo: return "recording_status.json"
@@ -149,6 +153,8 @@ extension APITarget: TargetType {
             case .offices(let request): return request.accessToken
                 
             case .allCCTV(let request): return request.accessToken
+            case .overviewCCTV(let request): return request.accessToken
+            case .youtube(let request): return request.accessToken
             case .recPrepare(let request): return request.accessToken
             case .recDownload(let request): return request.accessToken
                 
@@ -211,6 +217,8 @@ extension APITarget: TargetType {
         case .offices(let request): return request.requestParameters
             
         case .allCCTV(let request): return request.requestParameters
+        case .overviewCCTV(let request): return request.requestParameters
+        case .youtube(let request): return request.requestParameters
         case .recPrepare(let request): return request.requestParameters
         case .recDownload(let request): return request.requestParameters
         case .streamInfo(let request): return request.requestParameters

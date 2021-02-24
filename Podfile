@@ -57,6 +57,9 @@ target 'SmartYard' do
   # Chat
   pod 'OnlineChatSdk', :git => 'https://github.com/MadBrains/OnlineChatSdk-Swift.git', :branch => 'feature/build-fix'
   
+  # YouTube
+  pod "youtube-ios-player-helper-swift"
+  
 end
 
 target 'SmartYardWidget' do

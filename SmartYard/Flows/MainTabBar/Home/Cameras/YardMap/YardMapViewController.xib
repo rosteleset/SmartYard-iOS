@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -40,7 +41,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Выберите камеру" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44I-US-rjd">
-                    <rect key="frame" x="40" y="100" width="334" height="41"/>
+                    <rect key="frame" x="16" y="100" width="382" height="41"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="Ajc-L5-ZrI"/>
                     </constraints>
@@ -49,7 +50,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Советская, 16" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UPE-Nc-jsD">
-                    <rect key="frame" x="40" y="145" width="334" height="24"/>
+                    <rect key="frame" x="16" y="145" width="382" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="ERc-fU-gVh"/>
                     </constraints>
@@ -62,13 +63,13 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kHw-DC-UDR" customClass="MGLMapView">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="665"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
                             </userDefinedRuntimeAttributes>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="kHw-DC-UDR" firstAttribute="leading" secondItem="Diy-Ub-FSF" secondAttribute="leading" id="8jr-AW-Nle"/>
                         <constraint firstAttribute="bottom" secondItem="kHw-DC-UDR" secondAttribute="bottom" id="Zy2-bU-yuh"/>
@@ -77,31 +78,34 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Diy-Ub-FSF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4sh-tK-kUa"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="UPE-Nc-jsD" secondAttribute="trailing" constant="40" id="56k-Nx-YlL"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="UPE-Nc-jsD" secondAttribute="trailing" constant="16" id="56k-Nx-YlL"/>
                 <constraint firstAttribute="bottom" secondItem="qRP-po-8iN" secondAttribute="bottom" id="5w8-EC-BXq"/>
                 <constraint firstItem="3Mx-NN-sqX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Azo-g8-sO4"/>
-                <constraint firstItem="UPE-Nc-jsD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="OnP-Ej-5Q8"/>
+                <constraint firstItem="UPE-Nc-jsD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="OnP-Ej-5Q8"/>
                 <constraint firstItem="44I-US-rjd" firstAttribute="top" secondItem="3Mx-NN-sqX" secondAttribute="bottom" constant="12" id="PcE-kC-xiB"/>
                 <constraint firstItem="Diy-Ub-FSF" firstAttribute="top" secondItem="UPE-Nc-jsD" secondAttribute="bottom" constant="28" id="QJX-Kq-MNj"/>
-                <constraint firstItem="44I-US-rjd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="R6E-EH-AFy"/>
+                <constraint firstItem="44I-US-rjd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="R6E-EH-AFy"/>
                 <constraint firstItem="UPE-Nc-jsD" firstAttribute="top" secondItem="44I-US-rjd" secondAttribute="bottom" constant="4" id="ajz-V6-MVQ"/>
                 <constraint firstItem="3Mx-NN-sqX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="eK5-0i-dUR"/>
                 <constraint firstItem="qRP-po-8iN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="g3u-Bi-uLI"/>
                 <constraint firstItem="qRP-po-8iN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gfH-8g-MOk"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="44I-US-rjd" secondAttribute="trailing" constant="40" id="mhN-GO-tNJ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="44I-US-rjd" secondAttribute="trailing" constant="16" id="mhN-GO-tNJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Diy-Ub-FSF" secondAttribute="bottom" id="pjP-ue-v24"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Diy-Ub-FSF" secondAttribute="trailing" id="qY1-Lg-u2K"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qRP-po-8iN" secondAttribute="trailing" id="tCi-kJ-zxF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3Mx-NN-sqX" secondAttribute="trailing" id="ugq-LI-oB8"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="139" y="127"/>
         </view>
     </objects>
     <resources>
         <image name="MainBackground" width="375" height="812"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

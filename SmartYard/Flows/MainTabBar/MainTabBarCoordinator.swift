@@ -18,6 +18,7 @@ enum MainTabBarRoute: Route {
     case chat
     case payments
     case settings
+    case menu
 }
 
 class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
@@ -36,13 +37,16 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let notificationsRouter: StrongRouter<NotificationsRoute>
     private let chatRouter: StrongRouter<ChatRoute>
     private let paymentsRouter: StrongRouter<PaymentsRoute>
-    private let settingsRouter: StrongRouter<SettingsRoute>
+    //private let settingsRouter: StrongRouter<SettingsRoute>
+    private let menuRouter: StrongRouter<MainMenuRoute>
     
     private let homeTabBarItem: UITabBarItem
     private let notificationsTabBarItem: UITabBarItem
     private let chatTabBarItem: UITabBarItem
     private let paymentsTabBarItem: UITabBarItem
-    private let settingsTabBarItem: UITabBarItem
+    //private let settingsTabBarItem: UITabBarItem
+    private let menuTabBarItem: UITabBarItem
+    
     
     var selectedPresentable: Presentable? {
         return children[safe: rootViewController.selectedIndex]
@@ -136,7 +140,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         paymentsCoordinator.rootViewController.tabBarItem = paymentsTabBarItem
         self.paymentsTabBarItem = paymentsTabBarItem
         
-        // MARK: Settings Tab
+        /*// MARK: Settings Tab
         let settingsCoordinator = SettingsCoordinator(
             accessService: accessService,
             pushNotificationService: pushNotificationService,
@@ -155,13 +159,35 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         settingsCoordinator.rootViewController.tabBarItem = settingsTabBarItem
         self.settingsTabBarItem = settingsTabBarItem
+        */
+        // MARK: Menu Tab
+        let menuCoordinator = MainMenuCoordinator(
+            accessService: accessService,
+            pushNotificationService: pushNotificationService,
+            apiWrapper: apiWrapper,
+            issueService: issueService,
+            permissionService: permissionService,
+            logoutHelper: logoutHelper,
+            alertService: alertService
+        )
+        
+        let menuTabBarItem = UITabBarItem(
+            title: "Меню",
+            image: UIImage(named: "MenuTabUnselected"),
+            selectedImage: UIImage(named: "MenuTabSelected")
+        )
+        
+        menuCoordinator.rootViewController.tabBarItem = menuTabBarItem
+        self.menuTabBarItem = menuTabBarItem
         
         // MARK: Initialization
         self.homeRouter = homeCoordinator.strongRouter
         self.notificationsRouter = notificationsCoordinator.strongRouter
         self.chatRouter = chatCoordinator.strongRouter
         self.paymentsRouter = paymentsCoordinator.strongRouter
-        self.settingsRouter = settingsCoordinator.strongRouter
+        //self.settingsRouter = settingsCoordinator.strongRouter
+        self.menuRouter = menuCoordinator.strongRouter
+        
         
         // MARK: Инициализация кастомного UITabBarController
         
@@ -180,16 +206,18 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             springDampingRatio: 0.65,
             initialSpringVelocity: 0
         )
+        customTabBarController.delegate = customTabBarController
         
         super.init(
             rootViewController: customTabBarController,
-            tabs: [homeRouter, notificationsRouter, chatRouter, paymentsRouter, settingsRouter],
+            tabs: [homeRouter, notificationsRouter, chatRouter, paymentsRouter/*, settingsRouter*/, menuRouter],
             select: homeRouter
         )
         
         updateNotificationsTab(shouldShowBadge: UIApplication.shared.applicationIconBadgeNumber > 0)
         
         rootViewController.tabBar.isTranslucent = false
+        
         
         subscribeToBadgeUpdates()
         subscribeToAddAddressNotifications()
@@ -198,13 +226,28 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
         switch route {
-        case .home: return .selectAndCallDelegate(homeRouter)
-        case .notifications: return .selectAndCallDelegate(notificationsRouter)
-        case .chat: return .selectAndCallDelegate(chatRouter)
-        case .payments: return .selectAndCallDelegate(paymentsRouter)
-        case .settings: return .selectAndCallDelegate(settingsRouter)
+        case .home:
+            print("home")
+            return .selectAndCallDelegate(homeRouter)
+        case .notifications:
+            print("notifications")
+            return .selectAndCallDelegate(notificationsRouter)
+        case .chat:
+            print("chat")
+            return .selectAndCallDelegate(chatRouter)
+        case .payments:
+            print("payments")
+            return .selectAndCallDelegate(paymentsRouter)
+        case .settings:
+            print("TODO: проверить переадресацию в настройки")
+            return .trigger(MainMenuRoute.settings, on: menuRouter)
+            //selectAndCallDelegate(settingsRouter)
+        case .menu:
+            print("menu")
+            return .selectAndCallDelegate(menuRouter)
         }
     }
+    
     
     private func updateNotificationsTab(shouldShowBadge: Bool) {
         notificationsTabBarItem.image = UIImage(
@@ -303,4 +346,15 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .disposed(by: disposeBag)
     }
     
+}
+
+extension SSCustomTabBarViewController : UITabBarControllerDelegate {
+    public func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        //делаем так, чтобы при нажатии на пункт "меню" мы всегда переходили на экран с меню, для этого очищаем Navigation stack
+        if tabBarController.selectedIndex == 4,
+            let vc = viewController as? UINavigationController {
+            vc.popToRootViewController(animated: false)
+        }
+        
+    }
 }

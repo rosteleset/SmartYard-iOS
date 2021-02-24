@@ -123,15 +123,25 @@ class SettingsViewModel: BaseViewModel {
                 }
             )
             .disposed(by: self.disposeBag)
-        
+
+        // MARK: Обработчик кнопки Назад
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        /*
         // MARK: Обработка нажатия на иконку настроек
         input.advancedSettingsTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.advancedSettings(name: "Алексеев В.Б."))
+                    self?.router.trigger(.advancedSettings)
                 }
             )
             .disposed(by: disposeBag)
+        */
         
         // MARK: Обработка нажатия на кнопку сервиса
         
@@ -394,28 +404,7 @@ class SettingsViewModel: BaseViewModel {
                 return self?.createSections(data: data, expansionStateDict: expansionStateDict) ?? []
             }
         
-        // MARK: Отображение имени. Актуализируем при каждом обновлении имени в настройках
-        
-        let currentName = Driver<APIClientName?>.merge(
-            .just(accessService.clientName),
-            NotificationCenter.default.rx.notification(.userNameUpdated)
-                .map { [weak self] _ in self?.accessService.clientName }
-                .asDriver(onErrorJustReturn: nil)
-        )
-        
-        let nameAsString = currentName
-            .asDriver(onErrorJustReturn: nil)
-            .map { clientName -> String? in
-                [clientName?.name, clientName?.patronymic]
-                    .compactMap { $0 }
-                    .joined(separator: " ")
-            }
-        
-        let phone = accessService.clientPhoneNumber?.formattedNumberFromRawNumber
-        
         return Output(
-            clientName: nameAsString,
-            clientPhone: .just(phone),
             sectionModels: sectionModels,
             updateKind: updateKind,
             reloadingFinished: reloadingFinished,
@@ -522,16 +511,15 @@ class SettingsViewModel: BaseViewModel {
 extension SettingsViewModel {
     
     struct Input {
+        let backTrigger: Driver<Void>
         let itemSelected: Driver<SettingsDataItemIdentity>
         let serviceSelected: Driver<(SettingsDataItemIdentity, SettingsServiceType)>
-        let advancedSettingsTrigger: Driver<Void>
+        //let advancedSettingsTrigger: Driver<Void>
         let updateDataTrigger: Driver<Void>
         let addAddressTrigger: Driver<Void>
     }
     
     struct Output {
-        let clientName: Driver<String?>
-        let clientPhone: Driver<String?>
         let sectionModels: Driver<[SettingsSectionModel]>
         let updateKind: Driver<SettingsSectionUpdateKind>
         let reloadingFinished: Driver<Void>

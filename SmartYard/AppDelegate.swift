@@ -177,7 +177,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // MARK: Если пришло уведомление о новом уведомлении в списке - отправляем .newInboxMessageReceived
         // Это вызовет показ баджа в табе "Уведомления" и обновление списка уведомлений
         
-        if action == .inbox {
+        if action == .inbox || action == .videoReady {
             NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
             NotificationCenter.default.post(name: .unreadInboxMessagesAvailable, object: nil)
         }

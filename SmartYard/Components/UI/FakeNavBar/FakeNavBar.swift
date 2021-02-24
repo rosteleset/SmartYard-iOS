@@ -24,6 +24,9 @@ class FakeNavBar: PMNibLinkableView {
         backButton.tintColor = UIColor.SmartYard.semiBlack
     }
     
+    func setText(_ newText: String) {
+        backButton.setTitle(newText, for: .normal)
+    }
 }
 
 extension Reactive where Base: FakeNavBar {

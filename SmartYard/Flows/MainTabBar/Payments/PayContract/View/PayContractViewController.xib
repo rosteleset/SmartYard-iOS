@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -40,7 +38,7 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Советская, 16, кв.4" lineBreakMode="clip" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="th5-XX-p46">
-                    <rect key="frame" x="40" y="103" width="334" height="80.5"/>
+                    <rect key="frame" x="16" y="103" width="382" height="80.5"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="80.5" id="Hlx-M2-he5"/>
                     </constraints>
@@ -56,20 +54,20 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="ux0-uJ-U1O" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="BzS-X6-BRO"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Y9v-vK-tKq" secondAttribute="bottom" constant="12" id="QO1-xc-D6M"/>
-                <constraint firstItem="th5-XX-p46" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="WuC-Bt-ygU"/>
+                <constraint firstItem="th5-XX-p46" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="WuC-Bt-ygU"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Y9v-vK-tKq" secondAttribute="trailing" id="XHs-rM-48r"/>
                 <constraint firstItem="th5-XX-p46" firstAttribute="top" secondItem="ux0-uJ-U1O" secondAttribute="bottom" constant="15" id="ZOx-3X-cAh"/>
                 <constraint firstAttribute="trailing" secondItem="ux0-uJ-U1O" secondAttribute="trailing" id="bfS-EF-5ej"/>
                 <constraint firstItem="Y9v-vK-tKq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="gWt-fi-kW6"/>
                 <constraint firstItem="ux0-uJ-U1O" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="yW7-qW-Fu0"/>
                 <constraint firstItem="Y9v-vK-tKq" firstAttribute="top" secondItem="th5-XX-p46" secondAttribute="bottom" constant="15" id="ynk-oJ-hwF"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="th5-XX-p46" secondAttribute="trailing" constant="40" id="ytO-Ea-VM3"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="th5-XX-p46" secondAttribute="trailing" constant="16" id="ytO-Ea-VM3"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="95.758928571428569"/>
         </view>
     </objects>
