@@ -21,9 +21,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" maximumZoomScale="8" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQe-fM-AoA">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" maximumZoomScale="8" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQe-fM-AoA">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="eZo-zX-GVn" userLabel="Content View">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -73,6 +72,12 @@
                 </button>
             </subviews>
             <gestureRecognizers/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="LQe-fM-AoA" secondAttribute="trailing" id="9vD-dN-JqY"/>
+                <constraint firstItem="LQe-fM-AoA" firstAttribute="top" secondItem="3P2-35-kG3" secondAttribute="top" id="KFV-xN-5Kg"/>
+                <constraint firstAttribute="bottom" secondItem="LQe-fM-AoA" secondAttribute="bottom" id="eF8-Ge-L3y"/>
+                <constraint firstItem="LQe-fM-AoA" firstAttribute="leading" secondItem="3P2-35-kG3" secondAttribute="leading" id="yMm-tE-MQz"/>
+            </constraints>
             <point key="canvasLocation" x="-706.39999999999998" y="66.11694152923539"/>
         </view>
         <tapGestureRecognizer cancelsTouchesInView="NO" id="vTN-Yq-tZE">

@@ -182,6 +182,7 @@ class FullscreenPlayerViewController: UIViewController {
         
         self.playerViewController = playerViewController
         playerViewController.showsPlaybackControls = false
+        playerViewController.view.isUserInteractionEnabled = true
         
         disposeBag = DisposeBag()
         

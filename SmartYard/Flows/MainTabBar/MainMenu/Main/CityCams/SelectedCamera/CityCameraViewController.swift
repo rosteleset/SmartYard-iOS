@@ -160,7 +160,7 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
                         
                         self.button.setTitle("Запросить запись", for: .normal)
                         self.button.backgroundColor = UIColor.SmartYard.blue
-                        self.button.titleColorForNormal = UIColor.white
+                        self.button.titleLabel?.textColor = UIColor.white
                         
                         self.buttonState = .requestRec
                         
@@ -255,13 +255,13 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
                     if videos.isEmpty {
                         self.button.setTitle("Запросить запись", for: .normal)
                         self.button.backgroundColor = UIColor.SmartYard.blue
-                        self.button.titleColorForNormal = UIColor.white
+                        self.button.titleLabel?.textColor = UIColor.white
                         self.buttonState = .requestRec
                         
                     } else {
                         self.button.setTitle("Проишествия ("+String(self.videos?.count ?? 0)+")", for: .normal)
                         self.button.backgroundColor = UIColor.white
-                        self.button.titleColorForNormal = UIColor.SmartYard.blue
+                        self.button.titleLabel?.textColor = UIColor.SmartYard.blue
                         self.buttonState = .incidents
                     }
                 }
@@ -297,6 +297,21 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(nibWithCellClass: YTCollectionViewCell.self)
+    }
+    
+    fileprivate func fixButton() {
+        if self.buttonState == .requestRec {
+            self.button.setTitle("Запросить запись", for: .normal)
+            self.button.backgroundColor = UIColor.SmartYard.blue
+            self.button.titleLabel?.textColor = UIColor.white
+            self.buttonState = .requestRec
+            
+        } else {
+            self.button.setTitle("Проишествия ("+String(self.videos?.count ?? 0)+")", for: .normal)
+            self.button.backgroundColor = UIColor.white
+            self.button.titleLabel?.textColor = UIColor.SmartYard.blue
+            self.buttonState = .incidents
+        }
     }
     
     private func configurePlayer() {
@@ -343,6 +358,8 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
                     self.playerViewController?.view.frame = self.cameraContainer.bounds
                     
                     playerVc.player?.play()
+                    
+                    self.fixButton()
                 }
             )
             .disposed(by: disposeBag)
