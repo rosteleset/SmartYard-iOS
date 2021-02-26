@@ -160,7 +160,7 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
                         
                         self.button.setTitle("Запросить запись", for: .normal)
                         self.button.backgroundColor = UIColor.SmartYard.blue
-                        self.button.titleLabel?.textColor = UIColor.white
+                        self.button.setTitleColor(UIColor.white, for: .normal)
                         
                         self.buttonState = .requestRec
                         
@@ -255,13 +255,13 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
                     if videos.isEmpty {
                         self.button.setTitle("Запросить запись", for: .normal)
                         self.button.backgroundColor = UIColor.SmartYard.blue
-                        self.button.titleLabel?.textColor = UIColor.white
+                        self.button.setTitleColor(UIColor.white, for: .normal)
                         self.buttonState = .requestRec
                         
                     } else {
                         self.button.setTitle("Проишествия ("+String(self.videos?.count ?? 0)+")", for: .normal)
                         self.button.backgroundColor = UIColor.white
-                        self.button.titleLabel?.textColor = UIColor.SmartYard.blue
+                        self.button.setTitleColor(UIColor.SmartYard.blue, for: .normal)
                         self.buttonState = .incidents
                     }
                 }
@@ -303,14 +303,22 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
         if self.buttonState == .requestRec {
             self.button.setTitle("Запросить запись", for: .normal)
             self.button.backgroundColor = UIColor.SmartYard.blue
-            self.button.titleLabel?.textColor = UIColor.white
+            self.button.setTitleColor(UIColor.white, for: .normal)
             self.buttonState = .requestRec
             
         } else {
             self.button.setTitle("Проишествия ("+String(self.videos?.count ?? 0)+")", for: .normal)
             self.button.backgroundColor = UIColor.white
-            self.button.titleLabel?.textColor = UIColor.SmartYard.blue
+            self.button.setTitleColor(UIColor.SmartYard.blue, for: .normal)
             self.buttonState = .incidents
+        }
+        if viewState == .compact {
+                self.cameraNameConstraints.map { $0.isActive = false }
+                self.cameraNameConstraintsMini.map { $0.isActive = true }
+                self.cameraAddress.isHidden = true
+                self.cameraName.font = self.cameraName.font.withSize(24)
+                self.cameraName.textAlignment = .center
+                self.view.layoutIfNeeded()
         }
     }
     
@@ -359,6 +367,9 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
                     
                     playerVc.player?.play()
                     
+                    //странный баг на iOS 12.4
+                    //если был переход в полноэкранный режим, потом поворот экрана и возврат назад, то у кнопки менялся свет текста на непойми какой.
+                    //приходится ручками при возврате из полноэкранного режима обновлять значения полей.
                     self.fixButton()
                 }
             )

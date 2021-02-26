@@ -86,7 +86,6 @@
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="14"/>
                             <state key="normal" title="Проишествия (0)">
                                 <color key="titleColor" name="blue"/>
-                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -224,9 +223,9 @@
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="8GQ-ef-7cY"/>
-                    <exclude reference="xCT-pf-zbA"/>
                     <exclude reference="NjD-3c-K8x"/>
                     <exclude reference="v4U-hc-qEe"/>
+                    <exclude reference="xCT-pf-zbA"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="137.68115942028987" y="126.5625"/>
