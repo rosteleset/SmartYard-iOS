@@ -156,7 +156,7 @@ extension MainMenuViewController: UICollectionViewDelegateFlowLayout {
         let extraSpace = collectionView.height.float - 21 - collectionView.numberOfItems(inSection: 0).float * 80 + 8 - 20 - 16 - 60 - 60
         switch section {
         case collectionView.numberOfSections - 1:
-            return UIEdgeInsets(top: 16 + (extraSpace>0 ? CGFloat(extraSpace) : 0), left: 16, bottom: 60, right: 16)
+            return UIEdgeInsets(top: 16 + (extraSpace > 0 ? CGFloat(extraSpace) : 0), left: 16, bottom: 60, right: 16)
         default:
             return UIEdgeInsets(top: 21, left: 16, bottom: 20, right: 16)
         }

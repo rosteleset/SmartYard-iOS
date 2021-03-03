@@ -28,6 +28,7 @@ class QRCodeScanViewModel: BaseViewModel {
         self.delegate = delegate
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         // MARK: Если попытаться вернуть QR-код до того, как будет завершен транзишен, может произойти глич
         // Поэтому последовательность такая:

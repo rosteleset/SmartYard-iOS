@@ -85,6 +85,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
+    // swiftlint:disable:next function_body_length
     override func prepareTransition(for route: MainMenuRoute) -> NavigationTransition {
         switch route {
         case .main:
@@ -137,7 +138,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
                             .trackActivity(activityTracker)
                             .asDriver(onErrorJustReturn: nil)
                     }
-                    .drive (
+                    .drive(
                         onNext: { response in
                             guard response != nil else {
                                 return

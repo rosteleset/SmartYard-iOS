@@ -17,12 +17,29 @@ class CityCameraViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<CityCamsRoute>
     private let camera: CityCameraObject
-    private let youTubeVideos = BehaviorSubject<[YouTubeVideo]>(value: [])
+    private let youTubeVideos = PublishSubject<[YouTubeVideo]>()
+    private let reloadingFinishedSubject = PublishSubject<Void>()
     
     init(camera: CityCameraObject, apiWrapper: APIWrapper, router: WeakRouter<CityCamsRoute>) {
         self.camera = camera
         self.apiWrapper = apiWrapper
         self.router = router
+    }
+    
+    fileprivate func loadVideos(errorTracker: ErrorTracker, activityTracker: ActivityTracker) {
+        apiWrapper.getYouTubeVideo(cameraId: camera.id)
+            .trackError(errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .delay(.seconds(3))
+            .trackActivity(activityTracker)
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] videos in
+                    self?.youTubeVideos.onNext(videos)
+                    self?.reloadingFinishedSubject.onNext(())
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     func transform(_ input: Input) -> Output {
@@ -68,22 +85,20 @@ class CityCameraViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        apiWrapper.getYouTubeVideo(cameraId: camera.id)
-            .trackError(errorTracker)
-            .trackActivity(activityTracker)
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
+        input.refreshDataTrigger
             .drive(
-                onNext: { [weak self] videos in
-                    self?.youTubeVideos.onNext(videos)
+                onNext: { [weak self] in
+                    self?.loadVideos(errorTracker: errorTracker, activityTracker: activityTracker)
                 }
             )
             .disposed(by: disposeBag)
         
+        loadVideos(errorTracker: errorTracker, activityTracker: activityTracker)
         
         return Output(
             //cameras: cameras.asDriver(onErrorJustReturn: []),
             isLoading: activityTracker.asDriver(),
+            reloadingFinished: reloadingFinishedSubject.asDriverOnErrorJustComplete(),
             camera: self.camera,
             videos: youTubeVideos.asDriver(onErrorJustReturn: [])
         )
@@ -97,10 +112,12 @@ extension CityCameraViewModel {
         let backTrigger: Driver<Void>
         let videoTrigger: Driver<String>
         let requestRecordTrigger: Driver<Void>
+        let refreshDataTrigger: Driver<Void>
     }
     
     struct Output {
         let isLoading: Driver<Bool>
+        let reloadingFinished: Driver<Void>
         let camera: CityCameraObject
         let videos: Driver<[YouTubeVideo]>
     }

@@ -225,10 +225,10 @@ extension FullscreenPlayerViewController: UIScrollViewDelegate {
 }
 extension FullscreenPlayerViewController {
     private func showControls () {
-        controls.map({ $0.isHidden = false })
+        controls.forEach({ $0.isHidden = false })
     }
     
     private func hideControls () {
-        controls.map({ $0.isHidden = true })
+        controls.forEach({ $0.isHidden = true })
     }
 }

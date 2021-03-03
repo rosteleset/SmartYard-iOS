@@ -413,6 +413,7 @@ class SettingsViewModel: BaseViewModel {
         )
     }
     
+    // swiftlint:disable:next function_body_length
     private func createSections(
         data: [APISettingsAddress],
         expansionStateDict: [String: Bool]

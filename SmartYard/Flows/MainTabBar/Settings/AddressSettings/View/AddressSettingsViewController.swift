@@ -35,7 +35,6 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var paperContainerView: UIView!
     @IBOutlet private weak var paperSwitch: UISwitch!
     
-    
     @IBOutlet private var collapsedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var deleteButtonTopToNotificationsConstraint: NSLayoutConstraint!
@@ -137,6 +136,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         }
     }
     
+    // swiftlint:disable:next function_body_length
     private func bind() {
         let input = AddressSettingsViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
@@ -178,11 +178,11 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
                     
                     guard let state = state else {
                         self?.paperBillsHeight.constant = 0
-                        self?.paperContainerView.subviews.map { $0.isHidden = true }
+                        self?.paperContainerView.subviews.forEach { $0.isHidden = true }
                         return
                     }
                     self?.paperBillsHeight.constant = 55
-                    self?.paperContainerView.subviews.map { $0.isHidden = false }
+                    self?.paperContainerView.subviews.forEach { $0.isHidden = false }
                     self?.paperSwitch.setOn(state, animated: true)
                 }
             )

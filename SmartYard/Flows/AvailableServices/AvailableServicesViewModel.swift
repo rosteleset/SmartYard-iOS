@@ -48,6 +48,7 @@ class AvailableServicesViewModel: BaseViewModel {
         serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: serviceModels)
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         let сonnectSelectedServicesTrigger = PublishSubject<(String, [ServiceModel])>()
         let сonnectOnlyNonHousesServicesTrigger = PublishSubject<(String, [ServiceModel])>()

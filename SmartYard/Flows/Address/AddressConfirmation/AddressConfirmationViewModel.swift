@@ -31,6 +31,7 @@ class AddressConfirmationViewModel: BaseViewModel {
         self.address = address
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()

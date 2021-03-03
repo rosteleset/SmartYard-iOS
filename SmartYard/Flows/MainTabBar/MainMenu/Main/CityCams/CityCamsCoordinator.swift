@@ -58,7 +58,6 @@ class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute> {
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
-    // swiftlint:disable:next function_body_length
     override func prepareTransition(for route: CityCamsRoute) -> NavigationTransition {
         switch route {
         case .main:

@@ -28,7 +28,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private var mainContainerToVideoLabelConstraint: NSLayoutConstraint!
     @IBOutlet private var mainContainerToAnotherLabelConstraint: NSLayoutConstraint!
-    @IBOutlet private var buttonsContainerToCollectionViewConstraint: NSLayoutConstraint!
+    @IBOutlet private var buttonsToCollectionViewConstraint: NSLayoutConstraint!
     
     // MARK: Preview mode
     
@@ -56,7 +56,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private var ranges: [(startDate: Date, endDate: Date)] = []    //Доступные периоды
 
     private var periodicTimeObserver: Any?
-    
     
     private var preferredPlaybackSpeedConfig: ArchiveVideoPlaybackSpeed = .normal {
         didSet {
@@ -316,6 +315,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         self.periodicTimeObserver = nil
     }
     
+    // swiftlint:disable:next function_body_length
     private func configureRealVideoPlayer() {
         let playerViewController = AVPlayerViewController()
         playerViewController.videoGravity = .resizeAspect
@@ -469,6 +469,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         rangeSlider.delegate = self
     }
     
+    // swiftlint:disable:next function_body_length
     private func configureUIBindings() {
         Driver
             .combineLatest(
@@ -581,7 +582,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         screenshotContainer.isHidden = mode == .preview
         editDateLabel.isHidden = mode == .preview
         
-        buttonsContainerToCollectionViewConstraint.isActive = mode == .preview
+        buttonsToCollectionViewConstraint.isActive = mode == .preview
         
         if mode == .edit {
             realVideoPlayer?.rate = 0
@@ -655,7 +656,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         output.videoData
             .do(
                 onNext: { [weak self] _ in
-                    self?.loadingAsset.map({ $0?.cancelLoading() })
+                    self?.loadingAsset.forEach({ $0?.cancelLoading() })
                     self?.loadingAsset = []
                     self?.assetArray = []
                 }
@@ -889,9 +890,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     }
     
     func fixDurations(_ exactDurations: [Float64]) {
-        self.ranges = zip(exactDurations, self.ranges).map({ (duration, old) -> (startDate: Date, endDate: Date) in
-            return (startDate: old.startDate, endDate: old.startDate.addingTimeInterval(duration))
-        })
+        self.ranges = zip(exactDurations, self.ranges).map { duration, old -> (startDate: Date, endDate: Date) in
+            let result = (old.startDate, old.startDate.addingTimeInterval(duration))
+            return result
+        }
         
         let duration = (self.ranges.last?.endDate.timeIntervalSince1970 ?? 0) -
                         (self.ranges.first?.startDate.timeIntervalSince1970 ?? 0)

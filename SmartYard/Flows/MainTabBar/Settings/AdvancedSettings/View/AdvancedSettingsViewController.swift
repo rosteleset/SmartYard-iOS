@@ -17,7 +17,6 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var mainContainerView: UIView!
     
-    @IBOutlet private weak var nameContainerView: UIView!
     @IBOutlet private weak var nameTextLabel: UILabel!
     @IBOutlet private weak var phoneTextLabel: UILabel!
     
@@ -82,9 +81,6 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        nameContainerView.borderWidth = 1
-        nameContainerView.borderColor = UIColor.SmartYard.grayBorder
-        
         editNameButton.setImage(UIImage(named: "pencil"), for: .normal)
         editNameButton.setImage(UIImage(named: "pencil")?.darkened(), for: .highlighted)
         editNameButton.touchAreaInsets = UIEdgeInsets(inset: 24)
@@ -137,6 +133,7 @@ class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
         }
     }
     
+    // swiftlint:disable:next function_body_length
     private func bind() {
         let input = AdvancedSettingsViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),

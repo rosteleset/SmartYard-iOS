@@ -40,6 +40,7 @@ class ChatViewModel: BaseViewModel {
         subscribeToChatNotifications()
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()
@@ -58,7 +59,7 @@ class ChatViewModel: BaseViewModel {
             }
             .ignoreNil()
             .drive(
-                onNext: { [weak self] error in
+                onNext: { error in
                     print(error.localizedDescription)
                 }
             )

@@ -32,6 +32,10 @@ extension LoaderPresentable {
     
     // MARK: Имплементация по умолчанию (юзается на нескольких экранах щас)
     func updateLoader(isEnabled: Bool, detailText: String?) {
+        updateLoader(isEnabled: isEnabled, detailText: detailText, loaderContainer: self.loaderContainer)
+    }
+    
+    func updateLoader(isEnabled: Bool, detailText: String?, loaderContainer: UIView) {
         guard isEnabled else {
             loader?.dismiss()
             return

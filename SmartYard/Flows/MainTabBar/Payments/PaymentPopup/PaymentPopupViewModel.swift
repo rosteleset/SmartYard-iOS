@@ -31,6 +31,7 @@ class PaymentPopupViewModel: BaseViewModel {
         self.contractNumber = BehaviorSubject<String?>(value: contractNumber)
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()

@@ -10,7 +10,8 @@ import UIKit
 
 class YTCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet private weak var separator: UIView!
+    @IBOutlet private weak var bottomSeparator: UIView!
+    @IBOutlet private weak var topSeparator: UIView!
     @IBOutlet private weak var playButton: UIButton!
     @IBOutlet private weak var label: UILabel!
     
@@ -19,8 +20,15 @@ class YTCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 
-    func configureCell(label: String, isLast: Bool) {
-        self.separator.isHidden = isLast
+    func configureCell(label: String, isFirst: Bool) {
+        
+        if isFirst { //ячейка первая - русуем верхний и нижний сепаратор
+            self.topSeparator.isHidden = true
+        } else { //ячейка в центре списка или последняя - рисуем только нижний сепаратор
+            self.topSeparator.isHidden = true
+        }
+        
+        self.bottomSeparator.isHidden = false
         self.label.text = label
     }
 }

@@ -59,15 +59,14 @@ class MainMenuViewModel: BaseViewModel {
         input.bottomButton
             .drive(
                 onNext: { [weak self] in
-                    guard let _ = self else {
+                    guard let self = self else {
                         return
                     }
                     
-                    self!.router.trigger(self!.bottomItemTrigger)
+                    self.router.trigger(self.bottomItemTrigger)
                 }
             )
             .disposed(by: disposeBag)
-        
         
         return Output(
             items: items.asDriverOnErrorJustComplete()

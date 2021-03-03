@@ -15,7 +15,7 @@ struct OverviewCCTVRequest {
 extension OverviewCCTVRequest {
     
     var requestParameters: [String: Any] {
-        var params = [String: Any]()
+        let params = [String: Any]()
         
         return params
     }

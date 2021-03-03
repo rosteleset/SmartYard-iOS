@@ -84,7 +84,6 @@ class SettingsViewController: BaseViewController, LoaderPresentable {
             addAddressTrigger: addAddressTrigger.asDriverOnErrorJustComplete()
         )
         
-        
         let output = viewModel.transform(input)
         
         // MARK: При получении моделей сначала проксируем словарь с количеством ячеек в секциях
@@ -287,6 +286,7 @@ class SettingsViewController: BaseViewController, LoaderPresentable {
         refreshControl.tintColor = UIColor.SmartYard.gray
     }
     
+    // swiftlint:disable:next function_body_length
     private func configureCell(
         collectionView: UICollectionView,
         indexPath: IndexPath,
