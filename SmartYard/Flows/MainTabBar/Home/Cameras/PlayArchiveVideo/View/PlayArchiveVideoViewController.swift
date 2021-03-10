@@ -545,6 +545,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         
                         for asset in self!.assetArray {
                             let playerItem = AVPlayerItem(asset: asset)
+                            
+                            //Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
+                            playerItem.preferredMaximumResolution = CGSize(width: 3840, height: 2160)
+                            
                             self?.realVideoPlayer?.insert(playerItem, after: nil)
                             //self?.realVideoPlayer?.replaceCurrentItem(with: playerItem)
                         }
@@ -1022,6 +1026,10 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
             self.realVideoPlayer?.removeAllItems()
             for asset in self.assetArray.dropFirst(destIndex ?? 0) {
                 let playerItem = AVPlayerItem(asset: asset)
+                
+                //Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
+                playerItem.preferredMaximumResolution = CGSize(width: 3840, height: 2160)
+                
                 self.realVideoPlayer?.insert(playerItem, after: nil)
             }
             

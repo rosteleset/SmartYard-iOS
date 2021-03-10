@@ -543,6 +543,9 @@ class CityCameraViewController: BaseViewController {
                 
                 let playerItem = AVPlayerItem(asset: asset)
                 
+                //Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
+                playerItem.preferredMaximumResolution = CGSize(width: 3840, height: 2160)
+                
                 self?.player?.replaceCurrentItem(with: playerItem)
                 
                 if self?.isVisible == true {
