@@ -145,7 +145,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case let .advancedSettings:
+        case .advancedSettings:
             let vm = AdvancedSettingsViewModel(
                 apiWrapper: apiWrapper,
                 accessService: accessService,

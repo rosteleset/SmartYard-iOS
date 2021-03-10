@@ -346,6 +346,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             .disposed(by: disposeBag)
     }
     
+    // swiftlint:disable:next function_body_length
     private func observeOrientationChanges() {
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         

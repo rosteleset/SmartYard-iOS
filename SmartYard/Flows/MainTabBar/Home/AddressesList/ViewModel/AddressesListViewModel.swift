@@ -551,6 +551,7 @@ extension AddressesListViewModel {
         areSectionsExpanded.onNext(mutableDict)
     }
     
+    // swiftlint:disable:next function_body_length
     private func createSections(
         approvedAddressesData: GetAddressListResponseData,
         unapprovedAddressesData: GetListConnectResponseData,

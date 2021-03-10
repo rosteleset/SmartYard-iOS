@@ -9,6 +9,7 @@
 import RxSwift
 import RxCocoa
 import Firebase
+import FirebaseMessaging
 
 private let ignoredCallIdsKey = "ignoredCallIds"
 
@@ -70,7 +71,7 @@ class PushNotificationService {
             return .error(NSError.PushNotificationServiceError.fcmTokenMissing)
         }
         
-        print("DEBUG / REGISTER WITH VOIP TOKEN \(voipToken)")
+        print("DEBUG / REGISTER WITH VOIP TOKEN \(String(describing: voipToken))")
         
         return apiWrapper.registerPushToken(
             pushToken: fcmToken,

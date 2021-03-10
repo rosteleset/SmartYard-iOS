@@ -29,6 +29,7 @@ class ServicesActivationRequestViewModel: BaseViewModel {
         self.address = address
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()

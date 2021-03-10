@@ -102,7 +102,10 @@ class CityMapViewController: BaseViewController, LoaderPresentable {
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
-                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                    guard let self = self else {
+                        return
+                    }
+                    self.updateLoader(isEnabled: isLoading, detailText: nil, loaderContainer: self.mapView)
                 }
             )
             .disposed(by: disposeBag)
@@ -148,5 +151,3 @@ extension CityMapViewController: MGLMapViewDelegate {
     }
     
 }
-
-

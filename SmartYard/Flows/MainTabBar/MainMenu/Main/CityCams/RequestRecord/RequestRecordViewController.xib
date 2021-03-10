@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
@@ -39,14 +39,14 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="42p-0G-vHT">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MXz-Le-IUg" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="KPr-fW-WRG"/>
@@ -54,7 +54,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Запросить запись" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yr0-wC-iKV">
-                    <rect key="frame" x="16" y="56" width="343" height="38"/>
+                    <rect key="frame" x="16" y="100" width="382" height="38"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="38" id="3BM-Hf-6s2"/>
                     </constraints>
@@ -63,7 +63,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="г. Тамбов, ул. Советская, 16" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGD-eH-dBA">
-                    <rect key="frame" x="16" y="98" width="343" height="24"/>
+                    <rect key="frame" x="16" y="142" width="382" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="HKu-AF-Dpg"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="vzE-hs-Lk7"/>
@@ -73,16 +73,16 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YT7-xC-EWd" customClass="TopRoundedView24" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="146" width="375" height="521"/>
+                    <rect key="frame" x="0.0" y="190" width="414" height="672"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dd-aG-0qo" customClass="TPKeyboardAvoidingScrollView">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="521"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1OE-oY-p4x">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="521"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Время: чч" adjustsFontSizeToFit="NO" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="GRD-jm-9e7" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="88" width="167" height="56"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Время: чч" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="GRD-jm-9e7" customClass="SmartYardDropDownTextField" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="16" y="88" width="186.5" height="56"/>
                                             <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="Wg0-Ta-72r"/>
@@ -101,8 +101,8 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </textField>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Время: мм" adjustsFontSizeToFit="NO" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="9kJ-lO-X07" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="192" y="88" width="167" height="56"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Время: мм" adjustsFontSizeToFit="NO" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="9kJ-lO-X07" customClass="SmartYardDropDownTextField" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="211.5" y="88" width="186.5" height="56"/>
                                             <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="4QB-q4-CpB"/>
@@ -121,8 +121,8 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </textField>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Дата записи: 5.09.2020" adjustsFontSizeToFit="NO" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="LuE-DE-5IR" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="16" width="343" height="56"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Дата записи: 5.09.2020" adjustsFontSizeToFit="NO" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="LuE-DE-5IR" customClass="SmartYardDropDownTextField" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="16" y="16" width="382" height="56"/>
                                             <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="mXi-o0-1P6"/>
@@ -141,8 +141,8 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </textField>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Продолжительность: 10 мин" adjustsFontSizeToFit="NO" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="ppf-df-Gg8" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="160" width="343" height="56"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Продолжительность: 10 мин" adjustsFontSizeToFit="NO" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="ppf-df-Gg8" customClass="SmartYardDropDownTextField" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="16" y="160" width="382" height="56"/>
                                             <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="Yaw-96-OPE"/>
@@ -162,7 +162,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Комментарий" adjustsFontSizeToFit="NO" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="h8p-pN-Ahl" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="232" width="343" height="56"/>
+                                            <rect key="frame" x="16" y="232" width="382" height="56"/>
                                             <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="XiF-dZ-RRc"/>
@@ -175,8 +175,8 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </textField>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wid-oj-Tsc">
-                                            <rect key="frame" x="16" y="300" width="343" height="41"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wid-oj-Tsc">
+                                            <rect key="frame" x="16" y="300" width="382" height="41"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="41" id="7pE-uY-WxO"/>
                                             </constraints>
@@ -192,8 +192,8 @@
                                             </attributedString>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Продолжительность обработки запроса может составлять до 1 рабочего дня." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="51d-1h-aop">
-                                            <rect key="frame" x="16" y="353" width="343" height="13"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Продолжительность обработки запроса может составлять до 1 рабочего дня." textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="51d-1h-aop">
+                                            <rect key="frame" x="16" y="353" width="382" height="13"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="13" id="rSf-id-Vm4"/>
                                             </constraints>
@@ -202,7 +202,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4j-9z-B66" userLabel="Кнопка">
-                                            <rect key="frame" x="16" y="430" width="343" height="48"/>
+                                            <rect key="frame" x="16" y="581" width="382" height="48"/>
                                             <color key="backgroundColor" name="blue"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="48" id="flL-N2-EtF"/>
@@ -228,7 +228,6 @@
                                     <viewLayoutGuide key="safeArea" id="YlI-b7-3Ol"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" priority="900" constant="500" id="0M9-kG-Btw"/>
                                         <constraint firstAttribute="trailing" secondItem="ppf-df-Gg8" secondAttribute="trailing" constant="16" id="2Si-Hd-W9o"/>
                                         <constraint firstAttribute="trailing" secondItem="9kJ-lO-X07" secondAttribute="trailing" constant="16" id="8mi-Dq-naA"/>
                                         <constraint firstItem="9kJ-lO-X07" firstAttribute="top" secondItem="LuE-DE-5IR" secondAttribute="bottom" constant="16" id="9eT-OZ-jhv"/>
@@ -239,9 +238,8 @@
                                         <constraint firstAttribute="trailing" secondItem="h8p-pN-Ahl" secondAttribute="trailing" constant="16" id="PJn-mm-cY3"/>
                                         <constraint firstItem="YlI-b7-3Ol" firstAttribute="trailing" secondItem="L4j-9z-B66" secondAttribute="trailing" constant="16" id="RcW-1g-bco"/>
                                         <constraint firstItem="ppf-df-Gg8" firstAttribute="leading" secondItem="1OE-oY-p4x" secondAttribute="leading" constant="16" id="Str-ba-WhJ"/>
-                                        <constraint firstItem="L4j-9z-B66" firstAttribute="top" relation="greaterThanOrEqual" secondItem="51d-1h-aop" secondAttribute="bottom" priority="600" constant="69" id="U39-dL-zhe"/>
                                         <constraint firstAttribute="trailing" secondItem="51d-1h-aop" secondAttribute="trailing" constant="16" id="Y9b-86-JPs"/>
-                                        <constraint firstItem="L4j-9z-B66" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="1OE-oY-p4x" secondAttribute="bottom" constant="16" id="a6i-Er-8gq"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="L4j-9z-B66" secondAttribute="bottom" constant="16" id="a6i-Er-8gq"/>
                                         <constraint firstItem="51d-1h-aop" firstAttribute="top" secondItem="wid-oj-Tsc" secondAttribute="bottom" constant="12" id="brP-AQ-Sd0"/>
                                         <constraint firstItem="9kJ-lO-X07" firstAttribute="width" secondItem="GRD-jm-9e7" secondAttribute="width" id="caO-2m-8bZ"/>
                                         <constraint firstItem="wid-oj-Tsc" firstAttribute="leading" secondItem="1OE-oY-p4x" secondAttribute="leading" constant="16" id="eyJ-yS-Ee4"/>
@@ -257,20 +255,16 @@
                                         <constraint firstAttribute="bottom" secondItem="L4j-9z-B66" secondAttribute="bottom" priority="700" constant="43" id="uWN-KF-XOY"/>
                                         <constraint firstItem="GRD-jm-9e7" firstAttribute="leading" secondItem="1OE-oY-p4x" secondAttribute="leading" constant="16" id="yBf-jq-qve"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="0M9-kG-Btw"/>
-                                        </mask>
-                                    </variation>
                                 </view>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="1OE-oY-p4x" firstAttribute="top" secondItem="5dZ-hg-q8d" secondAttribute="top" id="LPU-Vx-CgV"/>
-                                <constraint firstItem="1OE-oY-p4x" firstAttribute="trailing" secondItem="5dZ-hg-q8d" secondAttribute="trailing" id="M3y-kx-C9O"/>
-                                <constraint firstItem="1OE-oY-p4x" firstAttribute="width" secondItem="l8S-b5-EKM" secondAttribute="width" id="Z2F-e6-mmd"/>
-                                <constraint firstItem="5dZ-hg-q8d" firstAttribute="bottom" secondItem="1OE-oY-p4x" secondAttribute="bottom" id="bbd-d4-OQI"/>
-                                <constraint firstItem="1OE-oY-p4x" firstAttribute="leading" secondItem="5dZ-hg-q8d" secondAttribute="leading" id="cOP-R1-vFH"/>
-                                <constraint firstItem="l8S-b5-EKM" firstAttribute="height" secondItem="1OE-oY-p4x" secondAttribute="height" priority="900" id="skz-cl-OgJ"/>
+                                <constraint firstItem="1OE-oY-p4x" firstAttribute="top" secondItem="5dZ-hg-q8d" secondAttribute="top" id="2Ma-oQ-Mxr"/>
+                                <constraint firstItem="1OE-oY-p4x" firstAttribute="bottom" secondItem="5dZ-hg-q8d" secondAttribute="bottom" id="H0j-bG-rm6"/>
+                                <constraint firstItem="1OE-oY-p4x" firstAttribute="leading" secondItem="l8S-b5-EKM" secondAttribute="leading" id="KMM-OC-BxN"/>
+                                <constraint firstItem="1OE-oY-p4x" firstAttribute="height" secondItem="l8S-b5-EKM" secondAttribute="height" priority="800" id="KzM-u9-AiT"/>
+                                <constraint firstItem="1OE-oY-p4x" firstAttribute="leading" secondItem="5dZ-hg-q8d" secondAttribute="leading" id="Ng3-bb-IU4"/>
+                                <constraint firstItem="1OE-oY-p4x" firstAttribute="trailing" secondItem="l8S-b5-EKM" secondAttribute="trailing" id="ThH-Of-Yab"/>
+                                <constraint firstItem="1OE-oY-p4x" firstAttribute="trailing" secondItem="5dZ-hg-q8d" secondAttribute="trailing" id="cRN-79-Q1W"/>
                             </constraints>
                             <viewLayoutGuide key="contentLayoutGuide" id="5dZ-hg-q8d"/>
                             <viewLayoutGuide key="frameLayoutGuide" id="l8S-b5-EKM"/>
@@ -309,7 +303,7 @@
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
-            <point key="canvasLocation" x="56.521739130434788" y="91.071428571428569"/>
+            <point key="canvasLocation" x="55.200000000000003" y="90.404797601199405"/>
         </view>
     </objects>
     <resources>

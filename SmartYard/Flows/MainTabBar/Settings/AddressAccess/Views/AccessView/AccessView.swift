@@ -53,6 +53,7 @@ class AccessView: PMNibLinkableView {
             .disposed(by: disposeBag)
     }
     
+    // swiftlint:disable:next function_body_length
     private func configureTableView() {
         tableView.register(nibWithCellClass: AllowedPersonCell.self)
         tableView.register(nibWithCellClass: NewPersonCell.self)

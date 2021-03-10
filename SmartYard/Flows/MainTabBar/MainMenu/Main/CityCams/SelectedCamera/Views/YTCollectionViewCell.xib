@@ -39,6 +39,13 @@
                                     <constraint firstAttribute="height" constant="1" id="WZf-Hs-hhA"/>
                                 </constraints>
                             </view>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R1E-7N-UKY" userLabel="Separator">
+                                <rect key="frame" x="16" y="0.0" width="245" height="1"/>
+                                <color key="backgroundColor" red="0.42745098040000001" green="0.47843137250000001" blue="0.54117647059999996" alpha="0.1001177226" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="bUf-p2-ytV"/>
+                                </constraints>
+                            </view>
                             <button userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRb-r7-Ubj">
                                 <rect key="frame" x="237" y="14.5" width="24" height="24"/>
                                 <constraints>
@@ -51,10 +58,13 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="53" id="4nf-uI-ka6"/>
                             <constraint firstItem="S70-Ip-QVX" firstAttribute="centerY" secondItem="w9f-Vl-CEc" secondAttribute="centerY" id="6Ut-dE-dhj"/>
+                            <constraint firstItem="R1E-7N-UKY" firstAttribute="leading" secondItem="w9f-Vl-CEc" secondAttribute="leading" constant="16" id="FZ2-7z-Xbv"/>
                             <constraint firstAttribute="trailing" secondItem="vTF-nv-ixy" secondAttribute="trailing" constant="16" id="Otx-yC-qma"/>
                             <constraint firstAttribute="trailing" secondItem="VRb-r7-Ubj" secondAttribute="trailing" constant="16" id="SGE-kA-Put"/>
+                            <constraint firstItem="R1E-7N-UKY" firstAttribute="top" secondItem="w9f-Vl-CEc" secondAttribute="top" id="TKc-hJ-qoe"/>
                             <constraint firstItem="vTF-nv-ixy" firstAttribute="leading" secondItem="w9f-Vl-CEc" secondAttribute="leading" constant="16" id="TW4-ay-QXD"/>
                             <constraint firstItem="S70-Ip-QVX" firstAttribute="leading" secondItem="w9f-Vl-CEc" secondAttribute="leading" constant="16" id="V9H-au-Oak"/>
+                            <constraint firstAttribute="trailing" secondItem="R1E-7N-UKY" secondAttribute="trailing" constant="16" id="cZ6-ij-dch"/>
                             <constraint firstItem="VRb-r7-Ubj" firstAttribute="leading" secondItem="S70-Ip-QVX" secondAttribute="trailing" constant="16" id="eyd-aA-vrj"/>
                             <constraint firstAttribute="bottom" secondItem="vTF-nv-ixy" secondAttribute="bottom" id="mZ2-Vp-aB5"/>
                             <constraint firstItem="VRb-r7-Ubj" firstAttribute="centerY" secondItem="w9f-Vl-CEc" secondAttribute="centerY" id="nxH-wK-L0M"/>
@@ -71,9 +81,10 @@
             </constraints>
             <size key="customSize" width="277" height="50"/>
             <connections>
+                <outlet property="bottomSeparator" destination="vTF-nv-ixy" id="lLS-Pq-Hd2"/>
                 <outlet property="label" destination="S70-Ip-QVX" id="sGc-ft-Ou8"/>
                 <outlet property="playButton" destination="VRb-r7-Ubj" id="O8k-yO-GlC"/>
-                <outlet property="separator" destination="vTF-nv-ixy" id="lLS-Pq-Hd2"/>
+                <outlet property="topSeparator" destination="R1E-7N-UKY" id="nnr-wY-TLy"/>
             </connections>
             <point key="canvasLocation" x="238.40579710144928" y="91.741071428571431"/>
         </collectionViewCell>

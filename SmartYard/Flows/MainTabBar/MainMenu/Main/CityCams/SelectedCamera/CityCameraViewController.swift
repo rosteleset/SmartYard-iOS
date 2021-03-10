@@ -13,17 +13,19 @@ import RxDataSources
 import AVKit
 import Lottie
 
-class CityCameraViewController: BaseViewController, LoaderPresentable {
+class CityCameraViewController: BaseViewController {
     enum ButtonState {
-        case incidents, requestRec
+        case initial, incidents, requestRec
     }
     enum ViewState {
         case normal, compact
     }
-    @IBOutlet private weak var cameraName: UILabel!
-    @IBOutlet var cameraNameConstraints: [NSLayoutConstraint]!
-    @IBOutlet var cameraNameConstraintsMini: [NSLayoutConstraint]!
+    //
+    @IBOutlet private var cameraNameConstraints: [NSLayoutConstraint]!
+    //
+    @IBOutlet private var cameraNameConstraintsMini: [NSLayoutConstraint]!
     
+    @IBOutlet private weak var cameraName: UILabel!
     @IBOutlet private weak var cameraAddress: UILabel!
     @IBOutlet private weak var cameraContainer: UIView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
@@ -32,6 +34,8 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var skeletonContainer: UIView!
     @IBOutlet private weak var button: UIButton!
+    @IBOutlet private weak var gradientView: UIView!
+    @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
     
     private var camera: CityCameraObject?
     private var videos: [YouTubeVideo]?
@@ -39,7 +43,7 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
     private var player: AVPlayer?
     
     private var viewState: ViewState = .normal
-    private var buttonState: ButtonState = .incidents
+    private var buttonState: ButtonState = .initial
     private var loadingAsset: AVAsset?
     
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
@@ -47,7 +51,7 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
     private let videoTrigger = PublishSubject<String>()
     private let requestRecordTrigger = PublishSubject<Void>()
     
-    var loader: JGProgressHUD?
+    private var refreshControl = UIRefreshControl()
     
     private let viewModel: CityCameraViewModel
     
@@ -73,7 +77,9 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
     fileprivate func configureView() {
         fakeNavBar.setText("Карта")
         
-        guard let camera = camera else { return }
+        guard let camera = camera else {
+            return
+        }
         
         //Устанавливаем название камеры и её адрес
         let cameraStrings = camera.name.split(separator: "/", maxSplits: 1, omittingEmptySubsequences: true)
@@ -91,6 +97,17 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
         cameraName.text = cameraNameString
         cameraAddress.text = cameraAddressString
         
+        //настраиваем градиент между кнопкой и CollectionView
+        let gradientBackgroundColors = [UIColor.white.cgColor, UIColor.white.withAlphaComponent(0).cgColor]
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = gradientBackgroundColors
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradientLayer.locations = [0.0, 1.0]
+
+        gradientLayer.frame = gradientView.bounds
+        gradientView.layer.addSublayer(gradientLayer)
     }
     
     override func viewDidLoad() {
@@ -102,8 +119,8 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
     fileprivate func toggleView() {
         if viewState == .normal {
             UIView.animate(withDuration: 0.5, animations: {
-                    self.cameraNameConstraints.map { $0.isActive = false }
-                    self.cameraNameConstraintsMini.map { $0.isActive = true }
+                    self.cameraNameConstraints.forEach { $0.isActive = false }
+                    self.cameraNameConstraintsMini.forEach { $0.isActive = true }
                     self.cameraAddress.isHidden = true
                     self.cameraName.font = self.cameraName.font.withSize(24)
                     self.cameraName.textAlignment = .center
@@ -114,11 +131,13 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
         }
     }
     
+    // swiftlint:disable:next function_body_length
     func bind() {
         let input = CityCameraViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             videoTrigger: videoTrigger.asDriverOnErrorJustComplete(),
-            requestRecordTrigger: requestRecordTrigger.asDriverOnErrorJustComplete()
+            requestRecordTrigger: requestRecordTrigger.asDriverOnErrorJustComplete(),
+            refreshDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriver()
         )
         
         let output = viewModel.transform(input)
@@ -165,15 +184,23 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
                         self.buttonState = .requestRec
                         
                         self.collectionView.isHidden = false
-                        self.collectionView.reloadData()
-                        
                     case .requestRec:
                         self.requestRecordTrigger.onNext(())
+                    case .initial:
+                        break
                     }
                 }
             )
             .disposed(by: disposeBag)
         
+        output.reloadingFinished
+            .drive(
+                onNext: { [weak self] in
+                    self?.refreshControl.endRefreshing()
+                    self?.collectionView.reloadData()
+                }
+            )
+            .disposed(by: disposeBag)
         
         // При уходе с окна или при сворачивании приложения - паузим плеер
         Driver
@@ -222,7 +249,16 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
-                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                    guard let self = self,
+                          self.buttonState == .initial else {
+                        return
+                    }
+                    
+                    if isLoading {
+                        self.activityIndicatorView.startAnimating()
+                    } else {
+                        self.activityIndicatorView.stopAnimating()
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -250,20 +286,26 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
                     guard let self = self else {
                         return
                     }
+                    self.activityIndicatorView.isHidden = true
+                    self.activityIndicatorView.stopAnimating()
                     
                     self.videos = videos
-                    if videos.isEmpty {
-                        self.button.setTitle("Запросить запись", for: .normal)
-                        self.button.backgroundColor = UIColor.SmartYard.blue
-                        self.button.setTitleColor(UIColor.white, for: .normal)
-                        self.buttonState = .requestRec
-                        
-                    } else {
-                        self.button.setTitle("Проишествия ("+String(self.videos?.count ?? 0)+")", for: .normal)
-                        self.button.backgroundColor = UIColor.white
-                        self.button.setTitleColor(UIColor.SmartYard.blue, for: .normal)
-                        self.buttonState = .incidents
-                    }
+                    self.collectionView.reloadData()
+                    
+                    if self.viewState == .normal {
+                        if videos.isEmpty {
+                            self.button.setTitle("Запросить запись", for: .normal)
+                            self.button.backgroundColor = UIColor.SmartYard.blue
+                            self.button.setTitleColor(UIColor.white, for: .normal)
+                            self.buttonState = .requestRec
+                            
+                        } else {
+                            self.button.setTitle("Проишествия ("+String(self.videos?.count ?? 0)+")", for: .normal)
+                            self.button.backgroundColor = UIColor.white
+                            self.button.setTitleColor(UIColor.SmartYard.blue, for: .normal)
+                            self.buttonState = .incidents
+                        }
+                    } 
                 }
             ).disposed(by: disposeBag)
         
@@ -297,6 +339,8 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(nibWithCellClass: YTCollectionViewCell.self)
+        collectionView.refreshControl = refreshControl
+        collectionView.isHidden = true //по умолчанию не показываем список до нажатия на кнопку Проишествия
     }
     
     fileprivate func fixButton() {
@@ -313,8 +357,8 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
             self.buttonState = .incidents
         }
         if viewState == .compact {
-                self.cameraNameConstraints.map { $0.isActive = false }
-                self.cameraNameConstraintsMini.map { $0.isActive = true }
+                self.cameraNameConstraints.forEach { $0.isActive = false }
+                self.cameraNameConstraintsMini.forEach { $0.isActive = true }
                 self.cameraAddress.isHidden = true
                 self.cameraName.font = self.cameraName.font.withSize(24)
                 self.cameraName.textAlignment = .center
@@ -449,7 +493,9 @@ class CityCameraViewController: BaseViewController, LoaderPresentable {
         
         loadingAsset?.cancelLoading()
         loadingAsset = nil
-        guard let camera = camera else { return }
+        guard let camera = camera else {
+            return
+        }
         
         let resultingString = camera.video + "/index.m3u8" + "?token=\(camera.token)"
         
@@ -522,7 +568,7 @@ extension CityCameraViewController: UICollectionViewDataSource {
         
         cell.configureCell(
             label: self.videos?[indexPath.item].title ?? "",
-            isLast: collectionView.numberOfItems(inSection: 0) - 1 == indexPath.item
+            isFirst: indexPath.item == 0
         )
         return cell
     }
@@ -531,10 +577,10 @@ extension CityCameraViewController: UICollectionViewDataSource {
 extension CityCameraViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.view.width - 10 , height: 53)
+        return CGSize(width: collectionView.view.width - 10, height: 53)
     }
     
-    func  collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func  collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     func collectionView(

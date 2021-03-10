@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -23,7 +21,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayArchiveVideoViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="backToPreviewButton" destination="Pcc-3N-WGv" id="un8-42-IMe"/>
-                <outlet property="buttonsContainerToCollectionViewConstraint" destination="BRh-4i-kTy" id="OEu-Jj-dNc"/>
+                <outlet property="buttonsToCollectionViewConstraint" destination="BRh-4i-kTy" id="OEu-Jj-dNc"/>
                 <outlet property="downloadButton" destination="JBH-Xw-Dmj" id="GUQ-cf-DGn"/>
                 <outlet property="editButtonsContainer" destination="I2I-wA-dkd" id="eUx-Tv-Rlq"/>
                 <outlet property="editDateLabel" destination="0x5-ZA-ub8" id="20C-EX-v4r"/>
@@ -61,14 +59,14 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOo-JF-vkg" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Q1A-uw-tf3"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dqz-l5-6XG">
-                    <rect key="frame" x="16" y="100" width="382" height="41"/>
+                    <rect key="frame" x="16" y="56" width="382" height="41"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="2f7-hX-NGA"/>
                     </constraints>
@@ -77,7 +75,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0x5-ZA-ub8">
-                    <rect key="frame" x="16" y="100" width="382" height="41"/>
+                    <rect key="frame" x="16" y="56" width="382" height="41"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="DTh-B0-A8g"/>
                     </constraints>
@@ -86,7 +84,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Nk-mk-3jm" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="181" width="414" height="681"/>
+                    <rect key="frame" x="0.0" y="137" width="414" height="759"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oe3-0L-wZ8">
                             <rect key="frame" x="16" y="16" width="382" height="258.5"/>
@@ -189,13 +187,13 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwK-tW-GMy" userLabel="ButtonsCentering">
-                            <rect key="frame" x="0.0" y="338.5" width="414" height="230.5"/>
+                            <rect key="frame" x="0.0" y="338.5" width="414" height="308.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="25D-Cj-lb4" userLabel="PreviewButtonsContainer">
-                                    <rect key="frame" x="40" y="81" width="334" height="68"/>
+                                    <rect key="frame" x="40" y="120" width="334" height="68"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UDc-4s-ZnY">
-                                            <rect key="frame" x="20" y="15" width="34" height="38"/>
+                                            <rect key="frame" x="20" y="16" width="39" height="36"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="20"/>
                                             <state key="normal" title="0.5x"/>
                                         </button>
@@ -207,7 +205,7 @@
                                             </constraints>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fr5-Hf-wxY">
-                                            <rect key="frame" x="280" y="15" width="34" height="38"/>
+                                            <rect key="frame" x="275" y="16" width="39" height="36"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="20"/>
                                             <state key="normal" title="1.5x"/>
                                         </button>
@@ -227,7 +225,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I2I-wA-dkd" userLabel="EditButtonsContainer">
-                                    <rect key="frame" x="40" y="81" width="334" height="68"/>
+                                    <rect key="frame" x="40" y="120" width="334" height="68"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CPg-RE-9lw">
                                             <rect key="frame" x="0.0" y="10.5" width="47" height="47"/>
@@ -283,7 +281,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JBH-Xw-Dmj" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="40" y="589" width="334" height="60"/>
+                            <rect key="frame" x="40" y="667" width="334" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" priority="999" constant="60" id="T7m-MH-yug"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="zO7-GK-WKz"/>
@@ -293,7 +291,7 @@
                             <state key="normal" title="Загрузить и получить ссылку"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkd-4A-ePf" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="40" y="589" width="334" height="60"/>
+                            <rect key="frame" x="40" y="667" width="334" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" priority="999" constant="60" id="0Wl-IZ-B7H"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="xab-LC-QE7"/>
@@ -353,9 +351,6 @@
             <point key="canvasLocation" x="137.68115942028987" y="128.57142857142856"/>
         </view>
     </objects>
-    <designables>
-        <designable name="lT9-Mp-zMH"/>
-    </designables>
     <resources>
         <image name="CameraIcon" width="30" height="26"/>
         <image name="FastBackward" width="47" height="47"/>

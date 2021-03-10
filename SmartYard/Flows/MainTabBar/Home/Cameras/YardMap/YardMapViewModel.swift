@@ -29,6 +29,7 @@ class YardMapViewModel: BaseViewModel {
         self.address = BehaviorSubject<String?>(value: address)
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()

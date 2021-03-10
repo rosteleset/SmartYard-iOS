@@ -57,6 +57,7 @@ class PaymentPopupController: BaseViewController {
         swipeDismissInteractor?.animatedViewBottomOffset = animatedViewBottomOffset.constant
     }
     
+    // swiftlint:disable:next function_body_length
     private func bind() {
         payButton.rx
             .tap

@@ -32,7 +32,6 @@
                 <outlet property="fakeNavBar" destination="H0v-1I-nbB" id="KdR-28-bqg"/>
                 <outlet property="logoutButton" destination="lGe-ZA-fd6" id="r1c-3i-xPP"/>
                 <outlet property="mainContainerView" destination="OuL-ZB-YLW" id="3Vp-Qw-pVe"/>
-                <outlet property="nameContainerView" destination="5nb-DY-DIs" id="kxe-2T-I27"/>
                 <outlet property="nameTextLabel" destination="xe0-3V-fgv" id="zxb-YJ-C6e"/>
                 <outlet property="notificationsContainerView" destination="Rja-ay-B0n" id="nnz-SJ-ubo"/>
                 <outlet property="notificationsHeader" destination="YXf-zN-Lm3" id="P2E-Ef-369"/>
@@ -433,44 +432,10 @@
                         <constraint firstItem="gga-je-1mc" firstAttribute="leading" secondItem="8MI-1O-eYe" secondAttribute="leading" id="Jpk-Do-C1D"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5nb-DY-DIs" userLabel="Name Edit View">
-                    <rect key="frame" x="16" y="170.5" width="382" height="70"/>
-                    <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Empty" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xr3-8R-5w7">
-                            <rect key="frame" x="24" y="23" width="298" height="24.5"/>
-                            <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5O2-1l-OZC">
-                            <rect key="frame" x="346" y="29" width="12" height="12"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="12" id="aD6-J6-zdT"/>
-                                <constraint firstAttribute="height" constant="12" id="d1Z-IH-fv5"/>
-                            </constraints>
-                            <state key="normal" image="EditIcon"/>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="trailing" secondItem="5O2-1l-OZC" secondAttribute="trailing" constant="24" id="1Ew-E2-hvj"/>
-                        <constraint firstAttribute="height" constant="70" id="Fqm-iA-mDd"/>
-                        <constraint firstItem="5O2-1l-OZC" firstAttribute="leading" secondItem="Xr3-8R-5w7" secondAttribute="trailing" constant="24" id="XDV-LY-ndf"/>
-                        <constraint firstItem="Xr3-8R-5w7" firstAttribute="centerY" secondItem="5nb-DY-DIs" secondAttribute="centerY" id="kLu-pB-d4l"/>
-                        <constraint firstItem="Xr3-8R-5w7" firstAttribute="leading" secondItem="5nb-DY-DIs" secondAttribute="leading" constant="24" id="lyh-g3-6B0"/>
-                        <constraint firstItem="5O2-1l-OZC" firstAttribute="centerY" secondItem="5nb-DY-DIs" secondAttribute="centerY" id="toQ-vy-pWQ"/>
-                    </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="12"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="5nb-DY-DIs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="54A-yg-Qah"/>
                 <constraint firstAttribute="trailing" secondItem="0aH-ke-d7M" secondAttribute="trailing" id="APs-Wc-khC"/>
                 <constraint firstItem="Fyv-Y1-rkc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="DZE-a3-i6f"/>
                 <constraint firstItem="8MI-1O-eYe" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="JHP-LH-ERm"/>
@@ -478,8 +443,6 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Fyv-Y1-rkc" secondAttribute="trailing" constant="16" id="P5y-CI-ljP"/>
                 <constraint firstItem="0aH-ke-d7M" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="SrD-bU-VQE"/>
                 <constraint firstItem="Fyv-Y1-rkc" firstAttribute="top" secondItem="H0v-1I-nbB" secondAttribute="bottom" constant="12" id="Sz0-Hz-jTS"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5nb-DY-DIs" secondAttribute="trailing" constant="16" id="cFX-k4-QkN"/>
-                <constraint firstItem="5nb-DY-DIs" firstAttribute="top" secondItem="8MI-1O-eYe" secondAttribute="top" constant="-24" id="eyK-xx-Shb"/>
                 <constraint firstItem="H0v-1I-nbB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fGv-p5-M6c"/>
                 <constraint firstItem="0aH-ke-d7M" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="hnn-VV-JMH"/>
                 <constraint firstItem="8MI-1O-eYe" firstAttribute="top" secondItem="Fyv-Y1-rkc" secondAttribute="bottom" constant="54" id="lQc-QK-kXf"/>
@@ -488,16 +451,10 @@
                 <constraint firstAttribute="bottom" secondItem="0aH-ke-d7M" secondAttribute="bottom" id="ybc-Ra-vSM"/>
                 <constraint firstItem="H0v-1I-nbB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="yrt-WU-nnj"/>
             </constraints>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="5nb-DY-DIs"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="47.826086956521742" y="66.964285714285708"/>
         </view>
     </objects>
     <resources>
-        <image name="EditIcon" width="12" height="12"/>
         <image name="MainBackground" width="375" height="812"/>
         <image name="UpArrowIcon" width="13" height="8"/>
         <image name="pencil" width="12" height="12"/>

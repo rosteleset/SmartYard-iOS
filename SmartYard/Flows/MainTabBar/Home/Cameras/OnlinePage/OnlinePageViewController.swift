@@ -99,6 +99,7 @@ class OnlinePageViewController: BaseViewController {
         }
     }
     
+    // swiftlint:disable:next function_body_length
     private func bind() {
         isVideoBeingLoaded
             .asDriver(onErrorJustReturn: false)
@@ -166,6 +167,7 @@ class OnlinePageViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    // swiftlint:disable:next function_body_length
     private func configurePlayer() {
         let playerViewController = AVPlayerViewController()
         playerViewController.videoGravity = .resizeAspect

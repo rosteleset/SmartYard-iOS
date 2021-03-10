@@ -88,7 +88,6 @@ class CityMapViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        
         return Output(
             cameras: cameras.asDriver(onErrorJustReturn: []),
             isLoading: activityTracker.asDriver()

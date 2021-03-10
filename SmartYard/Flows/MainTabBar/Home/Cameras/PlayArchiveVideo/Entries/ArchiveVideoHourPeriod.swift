@@ -48,7 +48,7 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
     ///Массив компонентов URL для всех фрагментов
     var videoUrlComponentsArray: [String] {
         
-        return ranges.map { (arg0) -> String in
+        return ranges.map { arg0 -> String in
             
             let (startDate, endDate) = arg0
             
@@ -58,7 +58,6 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
             return "/index-\(startTimestamp)-\(duration).m3u8"
         }
     }
-
 
     // MARK: Сервер жрет время по GMT, поэтому переводим в GMT
     /// Компоненты URL для получения thumbnails
@@ -97,7 +96,7 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
     /// Чистая длительность периода с учётом пропусков на сервере
     
     var cleanDuration: Double {
-        return self.ranges.map( {$0.endDate.timeIntervalSince1970 - $0.startDate.timeIntervalSince1970 } )
+        return self.ranges.map {$0.endDate.timeIntervalSince1970 - $0.startDate.timeIntervalSince1970 }
             .reduce(0.0, +)
     }
 

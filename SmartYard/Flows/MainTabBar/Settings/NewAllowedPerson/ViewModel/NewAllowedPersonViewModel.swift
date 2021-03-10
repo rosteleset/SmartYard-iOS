@@ -45,6 +45,7 @@ class NewAllowedPersonViewModel: BaseViewModel {
         self.delegate = delegate
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         input.closeTrigger
             .drive(

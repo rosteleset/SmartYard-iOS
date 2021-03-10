@@ -8,6 +8,15 @@
 
 import Foundation
 
+enum NotificationKeys {
+    
+    static let badgeNumberKey = "badgeNumberKey"
+    static let contractNameKey = "contractNameKey"
+    static let serviceTypeKey = "serviceTypeKey"
+    static let serviceActionKey = "serviceActionKey"
+    
+}
+
 extension Notification.Name {
     
     static let addressDeleted = Notification.Name("AddressDeleted")
@@ -33,15 +42,4 @@ extension Notification.Name {
     
     static let applicationDidEnterBackground = Notification.Name("ApplicationDidEnterBackground")
     static let applicationDidEnterForeground = Notification.Name("ApplicationDidEnterForeground")
-    
-    
-}
-
-enum NotificationKeys {
-    
-    static let badgeNumberKey = "badgeNumberKey"
-    static let contractNameKey = "contractNameKey"
-    static let serviceTypeKey = "serviceTypeKey"
-    static let serviceActionKey = "serviceActionKey"
-    
 }

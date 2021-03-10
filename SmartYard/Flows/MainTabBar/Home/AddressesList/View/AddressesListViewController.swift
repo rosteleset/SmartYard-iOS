@@ -270,6 +270,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         self.dataSource = dataSource
     }
     
+    // swiftlint:disable:next function_body_length
     private func configureCell(
         collectionView: UICollectionView,
         indexPath: IndexPath,

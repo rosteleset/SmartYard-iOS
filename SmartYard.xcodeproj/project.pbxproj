@@ -35,6 +35,7 @@
 		3AB41E0225C0879200AEC8C3 /* BottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0025C0879200AEC8C3 /* BottomCell.swift */; };
 		3AB41E0325C0879200AEC8C3 /* BottomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB41E0125C0879200AEC8C3 /* BottomCell.xib */; };
 		3AB41E0A25C200B900AEC8C3 /* CityMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */; };
+		3AD968DC25E976C5000EEB4E /* SmartYardDropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */; };
 		842DBD00243750ED00A1D346 /* SettingsServiceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */; };
 		842FECB6242B89DF007CA0F3 /* OfficesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */; };
 		842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */; };
@@ -532,6 +533,7 @@
 		3AB41E0025C0879200AEC8C3 /* BottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCell.swift; sourceTree = "<group>"; };
 		3AB41E0125C0879200AEC8C3 /* BottomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BottomCell.xib; sourceTree = "<group>"; };
 		3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityMapViewModel.swift; sourceTree = "<group>"; };
+		3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardDropDownTextField.swift; sourceTree = "<group>"; };
 		6EF1D05FE4E504C4581F0162 /* Pods-SmartYardWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.release.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.release.xcconfig"; sourceTree = "<group>"; };
 		842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceAction.swift; sourceTree = "<group>"; };
 		842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesResponseData.swift; sourceTree = "<group>"; };
@@ -3220,6 +3222,7 @@
 			children = (
 				E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */,
 				8477218724A0B345003FCC24 /* SmartYardPasswordTextField.swift */,
+				3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */,
 			);
 			path = SmartYardTextField;
 			sourceTree = "<group>";
@@ -3907,6 +3910,7 @@
 				84963952247C25C50086B6E9 /* LogoutHelper.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
 				846DC6C024B33DC600A11914 /* PaymentPopupViewModel.swift in Sources */,
+				3AD968DC25E976C5000EEB4E /* SmartYardDropDownTextField.swift in Sources */,
 				E92EFBE1242A22F2003AF7FE /* APITarget.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				845E9EE024895AE4000CBBC6 /* SimpleVideoEndIndicator.swift in Sources */,

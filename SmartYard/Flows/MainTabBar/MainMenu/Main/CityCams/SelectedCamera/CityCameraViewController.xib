@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -23,6 +22,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CityCameraViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicatorView" destination="Sg8-gG-Ju8" id="F7K-HP-63e"/>
                 <outlet property="button" destination="nRB-o1-8HF" id="enp-sv-2oY"/>
                 <outlet property="cameraAddress" destination="LE9-Oc-7Oq" id="aUd-j7-aDc"/>
                 <outlet property="cameraContainer" destination="qGs-Gq-B4s" id="Uef-Mx-3Jv"/>
@@ -30,6 +30,7 @@
                 <outlet property="collectionView" destination="rbW-Mj-NN7" id="HkW-Mb-XG0"/>
                 <outlet property="fakeNavBar" destination="3Mx-NN-sqX" id="g8L-FA-ggd"/>
                 <outlet property="fullscreenButton" destination="osh-mh-yHh" id="bg2-eJ-x1O"/>
+                <outlet property="gradientView" destination="fq9-SO-WI9" id="lf6-iA-fUD"/>
                 <outlet property="skeletonContainer" destination="WGt-Q3-Sqg" id="wwf-T8-AdL"/>
                 <outlet property="videoLoadingAnimationView" destination="h2I-vF-0Vn" id="n4m-ga-I48"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="FFQ-Jh-oTH"/>
@@ -78,13 +79,65 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Diy-Ub-FSF" customClass="TopRoundedView24" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="190" width="414" height="672"/>
                     <subviews>
+                        <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="rbW-Mj-NN7">
+                            <rect key="frame" x="0.0" y="315" width="414" height="357"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="BUo-qA-5zW">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WGt-Q3-Sqg" userLabel="Skeleton Container">
+                            <rect key="frame" x="16" y="343" width="382" height="128"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="Ibc-QF-Vmg" customClass="AddressesListSkeletonView" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="128"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="12"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" red="0.94117647059999998" green="0.94117647059999998" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="Ibc-QF-Vmg" firstAttribute="leading" secondItem="WGt-Q3-Sqg" secondAttribute="leading" id="0dP-mi-SxI"/>
+                                <constraint firstAttribute="trailing" secondItem="Ibc-QF-Vmg" secondAttribute="trailing" id="5fn-1K-aBx"/>
+                                <constraint firstAttribute="bottom" secondItem="Ibc-QF-Vmg" secondAttribute="bottom" id="bRa-Zo-KT4"/>
+                                <constraint firstItem="Ibc-QF-Vmg" firstAttribute="top" secondItem="WGt-Q3-Sqg" secondAttribute="top" id="dP0-F6-fIl"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gJD-On-a2a" userLabel="BackgroundView">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="312"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fq9-SO-WI9" userLabel="GradientView">
+                            <rect key="frame" x="0.0" y="312" width="414" height="20"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="2SB-Eg-Liz"/>
+                            </constraints>
+                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nRB-o1-8HF" userLabel="Проишествия">
                             <rect key="frame" x="16" y="255" width="382" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="Sjy-8Z-ReW"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="14"/>
-                            <state key="normal" title="Проишествия (0)">
+                            <state key="normal">
                                 <color key="titleColor" name="blue"/>
                             </state>
                             <userDefinedRuntimeAttributes>
@@ -135,63 +188,34 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="rbW-Mj-NN7">
-                            <rect key="frame" x="0.0" y="327" width="414" height="345"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="BUo-qA-5zW">
-                                <size key="itemSize" width="128" height="128"/>
-                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            </collectionViewFlowLayout>
-                        </collectionView>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WGt-Q3-Sqg" userLabel="Skeleton Container">
-                            <rect key="frame" x="16" y="343" width="382" height="128"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="Ibc-QF-Vmg" customClass="AddressesListSkeletonView" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="382" height="128"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                            <real key="value" value="12"/>
-                                        </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                            <color key="value" red="0.94117647059999998" green="0.94117647059999998" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                            <real key="value" value="1"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
-                                </view>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstItem="Ibc-QF-Vmg" firstAttribute="leading" secondItem="WGt-Q3-Sqg" secondAttribute="leading" id="0dP-mi-SxI"/>
-                                <constraint firstAttribute="trailing" secondItem="Ibc-QF-Vmg" secondAttribute="trailing" id="5fn-1K-aBx"/>
-                                <constraint firstAttribute="bottom" secondItem="Ibc-QF-Vmg" secondAttribute="bottom" id="bRa-Zo-KT4"/>
-                                <constraint firstItem="Ibc-QF-Vmg" firstAttribute="top" secondItem="WGt-Q3-Sqg" secondAttribute="top" id="dP0-F6-fIl"/>
-                            </constraints>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
-                            </userDefinedRuntimeAttributes>
-                        </view>
+                        <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Sg8-gG-Ju8">
+                            <rect key="frame" x="197" y="269" width="20" height="20"/>
+                        </activityIndicatorView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="nRB-o1-8HF" firstAttribute="leading" secondItem="Diy-Ub-FSF" secondAttribute="leading" constant="16" id="2U7-GM-E3D"/>
                         <constraint firstItem="qGs-Gq-B4s" firstAttribute="top" secondItem="Diy-Ub-FSF" secondAttribute="top" constant="16" id="2UY-a4-x4B"/>
+                        <constraint firstAttribute="trailing" secondItem="fq9-SO-WI9" secondAttribute="trailing" id="3In-tL-eJI"/>
                         <constraint firstItem="nRB-o1-8HF" firstAttribute="top" secondItem="qGs-Gq-B4s" secondAttribute="bottom" constant="24" id="5ea-Xo-pss"/>
                         <constraint firstAttribute="trailing" secondItem="WGt-Q3-Sqg" secondAttribute="trailing" constant="16" id="6Hj-mX-VZ0"/>
+                        <constraint firstItem="Sg8-gG-Ju8" firstAttribute="centerX" secondItem="nRB-o1-8HF" secondAttribute="centerX" id="BRp-pF-8DB"/>
+                        <constraint firstItem="Sg8-gG-Ju8" firstAttribute="centerY" secondItem="nRB-o1-8HF" secondAttribute="centerY" id="NuR-Jg-GBE"/>
                         <constraint firstAttribute="bottom" secondItem="rbW-Mj-NN7" secondAttribute="bottom" id="R1o-2E-Wlb"/>
+                        <constraint firstAttribute="trailing" secondItem="gJD-On-a2a" secondAttribute="trailing" id="V59-dv-D8W"/>
                         <constraint firstItem="WGt-Q3-Sqg" firstAttribute="top" secondItem="nRB-o1-8HF" secondAttribute="bottom" constant="40" id="XqN-0r-4ti"/>
                         <constraint firstItem="WGt-Q3-Sqg" firstAttribute="leading" secondItem="Diy-Ub-FSF" secondAttribute="leading" constant="16" id="d8C-L7-5BQ"/>
                         <constraint firstAttribute="trailing" secondItem="nRB-o1-8HF" secondAttribute="trailing" constant="16" id="fbq-mO-BdP"/>
+                        <constraint firstItem="gJD-On-a2a" firstAttribute="leading" secondItem="Diy-Ub-FSF" secondAttribute="leading" id="hzd-eV-P14"/>
                         <constraint firstAttribute="trailing" secondItem="qGs-Gq-B4s" secondAttribute="trailing" constant="16" id="kR7-z3-7oI"/>
-                        <constraint firstItem="rbW-Mj-NN7" firstAttribute="top" secondItem="nRB-o1-8HF" secondAttribute="bottom" constant="24" id="pNg-L2-rsw"/>
+                        <constraint firstItem="gJD-On-a2a" firstAttribute="top" secondItem="Diy-Ub-FSF" secondAttribute="top" id="n3D-II-Ped"/>
+                        <constraint firstItem="rbW-Mj-NN7" firstAttribute="top" secondItem="nRB-o1-8HF" secondAttribute="bottom" constant="12" id="pNg-L2-rsw"/>
                         <constraint firstAttribute="trailing" secondItem="rbW-Mj-NN7" secondAttribute="trailing" id="s0n-qe-gOK"/>
                         <constraint firstItem="qGs-Gq-B4s" firstAttribute="leading" secondItem="Diy-Ub-FSF" secondAttribute="leading" constant="16" id="sch-oF-bi9"/>
+                        <constraint firstItem="fq9-SO-WI9" firstAttribute="top" secondItem="gJD-On-a2a" secondAttribute="bottom" id="u1Y-E3-eQs"/>
                         <constraint firstItem="rbW-Mj-NN7" firstAttribute="leading" secondItem="Diy-Ub-FSF" secondAttribute="leading" id="uMh-K3-3n9"/>
+                        <constraint firstItem="fq9-SO-WI9" firstAttribute="leading" secondItem="Diy-Ub-FSF" secondAttribute="leading" id="vXs-Hn-aYV"/>
+                        <constraint firstItem="rbW-Mj-NN7" firstAttribute="top" secondItem="fq9-SO-WI9" secondAttribute="bottom" constant="-17" id="vbH-pw-GSb"/>
                     </constraints>
                 </view>
             </subviews>
@@ -240,8 +264,5 @@
         <namedColor name="blue">
             <color red="0.16078431372549021" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

@@ -51,6 +51,7 @@ class AddressSettingsViewModel: BaseViewModel {
         self.router = router
     }
     
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         errorTracker.asDriver()
             .catchAuthorizationError { [weak self] in

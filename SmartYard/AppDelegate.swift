@@ -8,8 +8,10 @@
 
 import UIKit
 import Firebase
+import FirebaseMessaging
 import YandexMobileMetrica
 import PushKit
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -113,7 +115,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        NotificationCenter.default.post(name: .applicationDidEnterBackground , object: nil)
+        NotificationCenter.default.post(name: .applicationDidEnterBackground, object: nil)
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -127,7 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("DEBUG / PUSH NOTIFICATIONS / Firebase registration token: \(fcmToken)")
+        print("DEBUG / PUSH NOTIFICATIONS / Firebase registration token: \(String(describing: fcmToken))")
     }
     
     private func configureFirebase(for application: UIApplication) {

@@ -162,7 +162,7 @@ enum IssueType {
         let now = formatter.string(from: Date())
         
         switch self {
-        case let .dontRememberAnythingIssue(userInfo):
+        case .dontRememberAnythingIssue:
             return [
                 "10011": clientCode,
                 "11840": now,
@@ -176,7 +176,7 @@ enum IssueType {
                 "12440": "Приложение"
             ]
             
-        case let .confirmAddressByCourierIssue(userInfo, lat, lon):
+        case let .confirmAddressByCourierIssue(_, lat, lon):
             return [
                 "10011": clientCode,
                 "11840": now,
@@ -186,7 +186,7 @@ enum IssueType {
                 "10941": "10581"
             ]
             
-        case let .confirmAddressInOfficeIssue(userInfo, lat, lon):
+        case let .confirmAddressInOfficeIssue(_, lat, lon):
             return [
                 "10011": clientCode,
                 "11840": now,
@@ -196,7 +196,7 @@ enum IssueType {
                 "10941": "10580"
             ]
             
-        case let .deleteAddressIssue(userInfo, lat, lon, _):
+        case let .deleteAddressIssue(_, lat, lon, _):
             return [
                 "10011": clientCode,
                 "11840": now,
@@ -205,7 +205,7 @@ enum IssueType {
                 "10744": lon
             ]
             
-        case let .servicesUnavailableIssue(userInfo, _, lat, lon):
+        case let .servicesUnavailableIssue(_, _, lat, lon):
             return [
                 "10011": clientCode,
                 "11840": now,
@@ -214,7 +214,7 @@ enum IssueType {
                 "10744": lon
             ]
             
-        case let .comeInOfficeMyselfIssue(userInfo, lat, lon, _):
+        case let .comeInOfficeMyselfIssue(_, lat, lon, _):
             return [
                 "10011": clientCode,
                 "11840": now,
@@ -224,7 +224,7 @@ enum IssueType {
                 "10941": "10581"
             ]
             
-        case let .connectOnlyNonHousesServices(userInfo, lat, lon, _):
+        case let .connectOnlyNonHousesServices(_, lat, lon, _):
             return [
                 "10011": clientCode,
                 "11840": now,
