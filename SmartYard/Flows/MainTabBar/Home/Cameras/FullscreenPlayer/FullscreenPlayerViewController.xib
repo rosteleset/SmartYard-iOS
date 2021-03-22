@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,10 +39,13 @@
                         <outletCollection property="gestureRecognizers" destination="vTN-Yq-tZE" appends="YES" id="hyU-gC-iV0"/>
                     </connections>
                 </scrollView>
-                <button opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Tlq-8g-sRa">
+                <button opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tlq-8g-sRa">
                     <rect key="frame" x="327" y="28" width="26" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="26" id="kEL-Mm-Zpa"/>
+                        <constraint firstAttribute="height" constant="26" id="zTb-xx-p9P"/>
+                    </constraints>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" image="CloseButtonIcon"/>
                     <userDefinedRuntimeAttributes>
@@ -71,12 +75,15 @@
                     </connections>
                 </button>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="eWg-9w-Um7"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="LQe-fM-AoA" secondAttribute="trailing" id="9vD-dN-JqY"/>
-                <constraint firstItem="LQe-fM-AoA" firstAttribute="top" secondItem="3P2-35-kG3" secondAttribute="top" id="KFV-xN-5Kg"/>
-                <constraint firstAttribute="bottom" secondItem="LQe-fM-AoA" secondAttribute="bottom" id="eF8-Ge-L3y"/>
-                <constraint firstItem="LQe-fM-AoA" firstAttribute="leading" secondItem="3P2-35-kG3" secondAttribute="leading" id="yMm-tE-MQz"/>
+                <constraint firstAttribute="trailing" secondItem="LQe-fM-AoA" secondAttribute="trailing" id="4QL-uf-1Vd"/>
+                <constraint firstItem="LQe-fM-AoA" firstAttribute="top" secondItem="3P2-35-kG3" secondAttribute="top" id="MEU-7l-TN6"/>
+                <constraint firstItem="Tlq-8g-sRa" firstAttribute="top" secondItem="eWg-9w-Um7" secondAttribute="top" constant="28" id="dLs-xa-cnz"/>
+                <constraint firstItem="LQe-fM-AoA" firstAttribute="leading" secondItem="3P2-35-kG3" secondAttribute="leading" id="jn8-l1-by2"/>
+                <constraint firstAttribute="bottom" secondItem="LQe-fM-AoA" secondAttribute="bottom" id="kdM-05-jIo"/>
+                <constraint firstItem="eWg-9w-Um7" firstAttribute="trailing" secondItem="Tlq-8g-sRa" secondAttribute="trailing" constant="22" id="w2n-bl-oIJ"/>
             </constraints>
             <point key="canvasLocation" x="-706.39999999999998" y="66.11694152923539"/>
         </view>

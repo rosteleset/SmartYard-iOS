@@ -125,7 +125,6 @@ class FullscreenPlayerViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
         playerViewController?.view.frame = contentView.bounds
     }
 
@@ -172,10 +171,6 @@ class FullscreenPlayerViewController: UIViewController {
         controls.append(playPauseButton)
         
         hideControls()
-    }
-    
-    @IBAction private func  debug() {
-        self.playerViewController?.view.frame = UIScreen.main.bounds
     }
     
     func setPlayerViewController(_ playerViewController: AVPlayerViewController) {
