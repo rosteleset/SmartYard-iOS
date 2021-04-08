@@ -65,7 +65,12 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         return flatMap { response in
             
             // MARK: Если вернулся успешный код - пытаемся замапить реквест
-            print("response data: \(try response.mapString())")
+            if let debugString = try? response.mapString(), !(debugString.isEmpty) {
+                print("response data: \(debugString.truncated(toLength: 1000))")
+            } else {
+                print("response data: <empty>")
+            }
+            
             if 200...299 ~= response.statusCode {
                 do {
                     let mappedResponse = try response.map(BaseAPIResponse<T>.self)

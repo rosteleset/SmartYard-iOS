@@ -130,6 +130,42 @@ extension APIWrapper {
             .mapAsDefaultResponse()
     }
     
+    func plogDays(flatId: String) -> Single<PlogDaysResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = PlogDaysRequest(accessToken: accessToken, flatId: flatId)
+        print("request data: \(request)")
+        
+        return provider.rx
+            .request(.plogDays(request: request))
+            .convertNoConnectionError()
+            .mapAsDefaultResponse()
+    }
+    
+    func plog(flatId: String, fromDate: Date) -> Single<PlogResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = PlogRequest(accessToken: accessToken, flatId: flatId, fromDate: fromDate)
+        print("request data: \(request)")
+        
+        return provider.rx
+            .request(.plog(request: request))
+            .convertNoConnectionError()
+            .mapAsDefaultResponse()
+    }
+    
     func openDoor(domophoneId: String, doorId: Int?, blockReason: String?) -> Single<Void?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)

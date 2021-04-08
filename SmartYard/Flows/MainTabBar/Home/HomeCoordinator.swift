@@ -30,6 +30,7 @@ enum HomeRoute: Route {
     case cameraContainer(address: String, cameras: [CameraObject], selectedCamera: CameraObject)
     case yardCamerasMap(houseId: String, address: String)
     case playArchiveVideo(camera: CameraObject, date: Date, availableRanges: [APIArchiveRange])
+    case history(houseId: String, address: String)
     
 }
 
@@ -69,7 +70,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         subscribeToNewAddressNotifications()
     }
     
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     override func prepareTransition(for route: HomeRoute) -> NavigationTransition {
         switch route {
         case .main:
@@ -264,6 +265,12 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             )
             
             let vc = PlayArchiveVideoViewController(viewModel: vm)
+            
+            return .push(vc)
+            
+        case let .history(houseId, address):
+            let vm = HistoryViewModel(apiWrapper: apiWrapper, houseId: houseId, address: address, router: weakRouter)
+            let vc = HistoryViewController(viewModel: vm)
             
             return .push(vc)
         }

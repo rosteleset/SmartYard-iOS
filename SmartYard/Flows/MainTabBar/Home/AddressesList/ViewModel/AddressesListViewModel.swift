@@ -58,7 +58,7 @@ class AddressesListViewModel: BaseViewModel {
     
     private let appVersionCheckResult = BehaviorSubject<APIAppVersionCheckResult?>(value: nil)
     
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: Input) -> Output {
         let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
             .asDriver(onErrorJustReturn: false)
@@ -382,9 +382,7 @@ class AddressesListViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
-        // Это приведет к обновлению секций
-        
+        //Нажатие на кнопку "Видеонаблюдение"
         input.itemSelected
             .flatMap { identity -> Driver<String> in
                 guard case let .cameras(addressId) = identity else {
@@ -407,6 +405,33 @@ class AddressesListViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        
+        //Нажатие на кнопку "истории"
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .history(addressId) = identity else {
+                    return .empty()
+                }
+                
+                return .just(addressId)
+            }
+            .withLatestFrom(loadedApprovedAddressesData.asDriverOnErrorJustComplete()) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (addressId, loadedAddresses) = args
+                    let matchingAddress = loadedAddresses?.first { $0.houseId == addressId }
+                    
+                    guard let uHouseId = matchingAddress?.houseId, let uAddress = matchingAddress?.address else {
+                        return
+                    }
+                    
+                    self?.router.trigger(.history(houseId: uHouseId, address: uAddress))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
+        // Это приведет к обновлению секций
         
         input.itemSelected
             .flatMap { identity -> Driver<String> in
@@ -598,7 +623,14 @@ extension AddressesListViewModel {
                     return .cameras(identity: .cameras(addressId: addressId), numberOfCameras: address.cctv)
                 }()
                 
-                return doors + [cameras].compactMap { $0 }
+                let history: AddressesListDataItem? = {
+                    if doors.isEmpty {
+                        return nil
+                    }
+                    return .history(identity: .history(addressId: addressId), numberOfEvents: 99)
+                }()
+                
+                return doors + [cameras].compactMap { $0 } + [history].compactMap { $0 }
             }()
             
             let section = AddressesListSectionModel(

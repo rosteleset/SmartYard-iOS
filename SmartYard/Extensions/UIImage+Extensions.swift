@@ -39,4 +39,21 @@ extension UIImage {
         return UIImage(cgImage: newImage)
     }
     
+    public convenience init?(base64URLString: String) {
+        let previewURL = base64URLString.replacingOccurrences(of: "\\/", with: "/")
+        
+        if previewURL.hasPrefix("data:image/jpeg;base64,") {
+            let base64Data = previewURL.removingPrefix("data:image/jpeg;base64,")
+            
+            guard let data = Data(base64Encoded: base64Data, options: .ignoreUnknownCharacters) else {
+                return nil//"preview":"data:image\/jpeg;base64,\/9j\/4AAQSkZJRgABAQAAAQABAAD\/\/gAQT
+            }
+            
+            self.init(data: data)
+            
+        } else {
+            return nil
+        }
+    }
+    
 }

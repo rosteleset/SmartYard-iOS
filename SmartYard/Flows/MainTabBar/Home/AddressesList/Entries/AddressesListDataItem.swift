@@ -13,6 +13,7 @@ enum AddressesListDataItem: IdentifiableType, Equatable {
     case header(identity: AddressesListDataItemIdentity, address: String, isExpanded: Bool)
     case object(identity: AddressesListDataItemIdentity, type: DomophoneObjectType, name: String, isOpened: Bool)
     case cameras(identity: AddressesListDataItemIdentity, numberOfCameras: Int)
+    case history(identity: AddressesListDataItemIdentity, numberOfEvents: Int)
     case unapprovedAddresses(identity: AddressesListDataItemIdentity, address: String)
     case emptyState
     
@@ -27,6 +28,8 @@ extension AddressesListDataItem {
         case .object(let identity, _, _, _):
             return identity
         case .cameras(let identity, _):
+            return identity
+        case .history(let identity, _):
             return identity
         case .unapprovedAddresses(let identity, _):
             return identity

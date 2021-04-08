@@ -20,9 +20,8 @@ class LinphoneService: CoreDelegate {
     weak var delegate: LinphoneDelegate?
     
     var hasEnqueuedCalls = false
-    
-    override func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: RegistrationState, message: String) {
-        delegate?.onRegistrationStateChanged(lc: lc, cfg: cfg, cstate: cstate, message: message)
+    override func onRegistrationStateChanged(core: Core, proxyConfig: ProxyConfig, state: RegistrationState, message: String) {
+        delegate?.onRegistrationStateChanged(lc: core, cfg: proxyConfig, cstate: state, message: message)
     }
     
     override func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
