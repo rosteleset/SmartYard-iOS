@@ -12,16 +12,14 @@ import JGProgressHUD
 import RxSwift
 import RxCocoa
 import RxDataSources
-import TOInsetGroupedTableView
 
 class HistoryViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    @IBOutlet private weak var tableView: InsetGroupedTableView!
+    @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var toolbar: UIToolbar!
     @IBOutlet private weak var topToolbarPositon: NSLayoutConstraint!
-    
     
     private var dataSource: RxTableViewSectionedReloadDataSource<HistorySectionModel>?
     
@@ -31,7 +29,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
     
     private let itemSelectedTrigger = PublishSubject<Int>()
     private let itemsProxy = BehaviorSubject<[APIPlog]>(value: [])
-    private var availableDays: [APIPlogDays] = []
+    private var availableDays: [APIPlogDay] = []
     
     init(viewModel: HistoryViewModel) {
         self.viewModel = viewModel
@@ -43,20 +41,51 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLayoutSubviews() {
+        
+        super.viewDidLayoutSubviews()
+        
+        
+    }
+    
+    fileprivate func configureCell(_ indexPath: IndexPath, _ cell: HistoryTableViewCell, _ dataSource: TableViewSectionedDataSource<HistorySectionModel>) {
+        //cell.isLoading = true
+        
+        
+        /*let cell = tableView.dequeueReusableCell(withIdentifier: "CELL")!
+         
+         cell.textLabel?.text = String(dataSource.sectionModels[indexPath.section].items[indexPath.row].identity)
+         */
+        switch indexPath.row {
+        case 0:
+            cell.configureCell(cellOrder: .first, from: dataSource.sectionModels[indexPath.section].items[indexPath.row].value)
+        case dataSource.sectionModels[indexPath.section].items.count - 1 :
+            cell.configureCell(cellOrder: .last, from: dataSource.sectionModels[indexPath.section].items[indexPath.row].value)
+        default:
+            cell.configureCell(cellOrder: .regular ,from: dataSource.sectionModels[indexPath.section].items[indexPath.row].value)
+        }
+    }
+    
     fileprivate func setupTableView() {
         tableView.delegate = self
         //tableView.dataSource = self
         tableView.register(nibWithCellClass: HistoryTableViewCell.self)
         tableView.register(nibWithCellClass: HistoryLoadingTableViewCell.self)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CELL")
         
+        //tableView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
         dataSource = RxTableViewSectionedReloadDataSource<HistorySectionModel>(
-            configureCell: { dataSource, tableView, indexPath, item in
-                let cell: HistoryLoadingTableViewCell = tableView.dequeueReusableCell(withClass: HistoryLoadingTableViewCell.self, for: indexPath)
-                cell.isLoading = true
+            configureCell: { [weak self] dataSource, tableView, indexPath, item in
+                let cell: HistoryTableViewCell = tableView.dequeueReusableCell(withClass: HistoryTableViewCell.self, for: indexPath)
+                
+                guard let self = self else {
+                    return cell
+                }
+                
+                self.configureCell(indexPath, cell, dataSource)
+                
                 return cell
-            },
-            titleForHeaderInSection: { dataSource, index in
-                return dataSource.sectionModels[index].day.apiString
             }
         )
         
@@ -143,6 +172,28 @@ extension HistoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 6.0
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude // это "ноль"
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+                
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 6))
+        
+        headerView.backgroundColor = .clear
+        return headerView
+    }
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+                
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 0))
+        
+        headerView.backgroundColor = .clear
+        return headerView
+    }
+    
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         

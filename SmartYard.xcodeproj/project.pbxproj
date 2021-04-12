@@ -49,7 +49,7 @@
 		3AC5C625260A3249008D74DE /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AC5C623260A3248008D74DE /* HistoryTableViewCell.xib */; };
 		3AC5C6EF2612652F008D74DE /* PlogDaysResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC5C6EE2612652E008D74DE /* PlogDaysResponseData.swift */; };
 		3AC5C6F42612654E008D74DE /* PlogDaysRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC5C6F32612654E008D74DE /* PlogDaysRequest.swift */; };
-		3AC5C6FA2612661F008D74DE /* APIPlogDays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC5C6F92612661F008D74DE /* APIPlogDays.swift */; };
+		3AC5C6FA2612661F008D74DE /* APIPlogDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC5C6F92612661F008D74DE /* APIPlogDay.swift */; };
 		3AC5C71126131D3D008D74DE /* HistoryLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AC5C71026131D3D008D74DE /* HistoryLoadingTableViewCell.xib */; };
 		3AC5C71626131D4A008D74DE /* HistoryLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC5C71526131D4A008D74DE /* HistoryLoadingTableViewCell.swift */; };
 		3AD968DC25E976C5000EEB4E /* SmartYardDropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */; };
@@ -564,7 +564,7 @@
 		3AC5C623260A3248008D74DE /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
 		3AC5C6EE2612652E008D74DE /* PlogDaysResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlogDaysResponseData.swift; sourceTree = "<group>"; };
 		3AC5C6F32612654E008D74DE /* PlogDaysRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlogDaysRequest.swift; sourceTree = "<group>"; };
-		3AC5C6F92612661F008D74DE /* APIPlogDays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIPlogDays.swift; sourceTree = "<group>"; };
+		3AC5C6F92612661F008D74DE /* APIPlogDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIPlogDay.swift; sourceTree = "<group>"; };
 		3AC5C71026131D3D008D74DE /* HistoryLoadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryLoadingTableViewCell.xib; sourceTree = "<group>"; };
 		3AC5C71526131D4A008D74DE /* HistoryLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardDropDownTextField.swift; sourceTree = "<group>"; };
@@ -2734,7 +2734,7 @@
 				E92EFB60242A22F2003AF7FE /* APIPaymentsListAccount.swift */,
 				3A003C7925DEF39B002F193B /* YouTubeVideo.swift */,
 				3AC5C60526089682008D74DE /* APIPlog.swift */,
-				3AC5C6F92612661F008D74DE /* APIPlogDays.swift */,
+				3AC5C6F92612661F008D74DE /* APIPlogDay.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4149,7 +4149,7 @@
 				846DC6D924B33DEA00A11914 /* APIWrapper+Payment.swift in Sources */,
 				843C38D5242A57B70035BF80 /* MessageType.swift in Sources */,
 				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
-				3AC5C6FA2612661F008D74DE /* APIPlogDays.swift in Sources */,
+				3AC5C6FA2612661F008D74DE /* APIPlogDay.swift in Sources */,
 				847880E824AB3ED4008D9E33 /* FullscreenPlayerViewController.swift in Sources */,
 				E94B6C4323FFF2A800FD9F65 /* Date+Helper.swift in Sources */,
 				E92EFBD6242A22F2003AF7FE /* OpenDoorRequest.swift in Sources */,

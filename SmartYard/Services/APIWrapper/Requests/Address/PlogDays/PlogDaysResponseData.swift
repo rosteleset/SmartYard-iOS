@@ -6,4 +6,4 @@
 //  Copyright © 2021 LanTa. All rights reserved.
 //
 
-typealias PlogDaysResponseData = [APIPlogDays]
+typealias PlogDaysResponseData = [APIPlogDay]

@@ -9,13 +9,17 @@
 import RxDataSources
 
 struct HistoryDataItem: IdentifiableType, Equatable {
+    static func == (lhs: HistoryDataItem, rhs: HistoryDataItem) -> Bool {
+        return lhs.value.uuid == rhs.value.uuid
+    }
     
+    let value: APIPlog
 }
 
 extension HistoryDataItem {
     
-    var identity: Int {
-        return 0
+    var identity: String {
+        return value.uuid
     }
     
 }

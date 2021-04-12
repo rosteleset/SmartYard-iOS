@@ -19,7 +19,7 @@ class HistoryViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     
     private let address: BehaviorSubject<String?>
-    private let availableDays = PublishSubject<[APIPlogDays]>()
+    private let availableDays = PublishSubject<[APIPlogDay]>()
     private let logs = PublishSubject<(forDate: Date, data: [APIPlog])>()
     
     init(apiWrapper: APIWrapper, houseId: String, address: String, router: WeakRouter<HomeRoute>) {
@@ -98,7 +98,7 @@ extension HistoryViewModel {
     }
     
     struct Output {
-        let availableDays: Driver<[APIPlogDays]>
+        let availableDays: Driver<[APIPlogDay]>
         let address: Driver<String?>
         let isLoading: Driver<Bool>
         let plog: Driver<(forDate: Date, data: [APIPlog])>
