@@ -13,6 +13,8 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
+typealias DataSection = (day: Date, items: [APIPlog], flatId: Int)
+
 class HistoryViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var addressLabel: UILabel!
@@ -21,15 +23,19 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var toolbar: UIToolbar!
     @IBOutlet private weak var topToolbarPositon: NSLayoutConstraint!
     
-    private var dataSource: RxTableViewSectionedReloadDataSource<HistorySectionModel>?
+    //private var dataSource: RxTableViewSectionedReloadDataSource<HistorySectionModel>?
+    private var dataSource: RxTableViewSectionedAnimatedDataSource<HistorySectionModel>?
+    
     
     var loader: JGProgressHUD?
     
     private let viewModel: HistoryViewModel
     
     private let itemSelectedTrigger = PublishSubject<Int>()
-    private let itemsProxy = BehaviorSubject<[APIPlog]>(value: [])
+    private let loadDayTriger = PublishSubject<Date>()
+    private let dataCache = BehaviorRelay<[DataSection]>(value: [])
     private var availableDays: [APIPlogDay] = []
+    private let sectionProxy = PublishSubject<[HistorySectionModel]>()
     
     init(viewModel: HistoryViewModel) {
         self.viewModel = viewModel
@@ -48,24 +54,6 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
         
     }
     
-    fileprivate func configureCell(_ indexPath: IndexPath, _ cell: HistoryTableViewCell, _ dataSource: TableViewSectionedDataSource<HistorySectionModel>) {
-        //cell.isLoading = true
-        
-        
-        /*let cell = tableView.dequeueReusableCell(withIdentifier: "CELL")!
-         
-         cell.textLabel?.text = String(dataSource.sectionModels[indexPath.section].items[indexPath.row].identity)
-         */
-        switch indexPath.row {
-        case 0:
-            cell.configureCell(cellOrder: .first, from: dataSource.sectionModels[indexPath.section].items[indexPath.row].value)
-        case dataSource.sectionModels[indexPath.section].items.count - 1 :
-            cell.configureCell(cellOrder: .last, from: dataSource.sectionModels[indexPath.section].items[indexPath.row].value)
-        default:
-            cell.configureCell(cellOrder: .regular ,from: dataSource.sectionModels[indexPath.section].items[indexPath.row].value)
-        }
-    }
-    
     fileprivate func setupTableView() {
         tableView.delegate = self
         //tableView.dataSource = self
@@ -75,11 +63,12 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
         
         //tableView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
-        dataSource = RxTableViewSectionedReloadDataSource<HistorySectionModel>(
+        dataSource = RxTableViewSectionedAnimatedDataSource<HistorySectionModel>(
             configureCell: { [weak self] dataSource, tableView, indexPath, item in
                 let cell: HistoryTableViewCell = tableView.dequeueReusableCell(withClass: HistoryTableViewCell.self, for: indexPath)
                 
                 guard let self = self else {
+                    print("HistoryViewController == nil")
                     return cell
                 }
                 
@@ -105,10 +94,16 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
     func bind() {
         let input = HistoryViewModel.Input(
             itemSelected: itemSelectedTrigger.asDriverOnErrorJustComplete(),
-            backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
+            loadDay: loadDayTriger.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
+        
+        sectionProxy
+            .debug()
+            .bind(to: tableView.rx.items(dataSource: dataSource!))
+            .disposed(by: disposeBag)
         
         output.isLoading
             .debounce(.milliseconds(25))
@@ -119,30 +114,90 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
+        output.plog //отсюда прилетает список событий журнала за день для квартиры
+            .drive(
+                onNext: { [weak self] data in
+                    guard let self = self,
+                          let dataSource = self.dataSource else {
+                        return
+                    }
+                    self.dataCache.accept(self.dataCache.value + [data])
+                    
+                    let sections = dataSource.sectionModels
+                    var new = sections
+                    
+                    guard let sectionIndex = sections.firstIndex(where: {$0.day == data.day}) else {
+                        return
+                    }
+                    let item = sections[sectionIndex]
+                    let historyItems = data.items.enumerated().map { HistoryDataItem(identity: "\(sectionIndex)-\($0.offset)", value: $0.element) }
+                    //print(historyItems)
+                    
+                    new[sectionIndex] = HistorySectionModel(identity: item.identity, itemsCount: item.itemsCount, state: .loaded, items: historyItems )
+                    
+                    //print("old=\(sections[index])")
+                    //print("new=\(new[index])")
+                    
+                    self.sectionProxy.onNext(new)
+                    
+                }
+            )
+        
         output.address
             .drive(addressLabel.rx.text)
             .disposed(by: disposeBag)
         
-        output.availableDays
-            .drive(
-                onNext: { [weak self] data in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    let sections =  data.map { day -> HistorySectionModel in
-                        return HistorySectionModel(identity: day.day, itemsCount: day.itemsCount, items: [HistoryDataItem(), HistoryDataItem()])
-                    }
-                    
-                    Observable.just(sections)
-                        .bind(to: self.tableView.rx.items(dataSource: self.dataSource!))
-                        .disposed(by: self.disposeBag)
-                    
+        output.availableDays //отсюда прилетает список доступных в журнале дней для каждой квартиры
+            .drive { [weak self] (logs, flatId) in
+                guard let self = self else {
+                    return
                 }
-            )
+                
+                let sections = logs.map { day -> HistorySectionModel in
+                   
+                    let section = Array(0...day.itemsCount-1).map( { HistoryDataItem(identity: "\(day)-\($0)", value: APIPlog()) } )
+                    
+                    return HistorySectionModel(identity: day.day, itemsCount: day.itemsCount, state: .waiting, items: section)
+                }
+                
+                self.sectionProxy.onNext(sections)
+            }
             .disposed(by: disposeBag)
+        
+        dataCache
+            .asDriver()
+            .drive { [weak self] dataSection in
+                //
+                
+            }
     }
     
+    fileprivate func configureCell(_ indexPath: IndexPath, _ cell: HistoryTableViewCell, _ dataSource: TableViewSectionedDataSource<HistorySectionModel>) {
+        
+        
+        let cellOrder: HistoryCellOrder = {
+            switch indexPath.row {
+            case 0:
+                return dataSource.sectionModels[indexPath.section].items.count == 1 ? .single : .first
+            case dataSource.sectionModels[indexPath.section].items.count - 1 :
+                return .last
+            default:
+                return .regular
+            }
+        }()
+        
+        let value = dataSource.sectionModels[indexPath.section].items[indexPath.row].value
+       
+        if value.uuid == "" {
+            cell.configureEmptyCell(cellOrder: cellOrder, day: dataSource.sectionModels[indexPath.section].day)
+            return
+        }
+        
+        cell.configureCell(cellOrder: cellOrder, from: value)
+        
+    }
+    
+
 }
 
 extension HistoryViewController: UITableViewDelegate {
@@ -168,7 +223,16 @@ extension HistoryViewController: UITableViewDelegate {
         return cell
     }
     */
-    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let dataSource = dataSource else {
+            return
+        }
+        let section = dataSource.sectionModels[indexPath.section]
+        
+        if section.state == .waiting {
+            loadDayTriger.onNext(section.day)
+        }
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -193,7 +257,6 @@ extension HistoryViewController: UITableViewDelegate {
         headerView.backgroundColor = .clear
         return headerView
     }
-    
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         

@@ -30,7 +30,7 @@ target 'SmartYard' do
   pod 'SSCustomTabbar', :git => 'https://git.lanta.me/LanTa/SSCustomTabbar.git', :branch => 'feature/add-animation-options'
   pod 'TPKeyboardAvoiding'
   pod 'JGProgressHUD'
-  pod 'SkeletonView', '1.7'
+  pod 'SkeletonView' #, '1.7'
   pod 'SearchTextField'
   pod 'SHSPhoneComponent'
   pod 'Parchment', '2.2.0'

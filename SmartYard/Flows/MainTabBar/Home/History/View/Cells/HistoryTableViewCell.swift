@@ -7,19 +7,21 @@
 //
 
 import UIKit
+import SkeletonView
 
 enum HistoryCellOrder {
     case first
     case last
     case regular
+    case single
 }
 
 class HistoryTableViewCell: UITableViewCell {
     //@IBOutlet private weak var previewImage: UIImageView!
-    @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private var dateLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var iconImage: UIImageView!
-    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private var descriptionLabel: UILabel!
     @IBOutlet private weak var timeLabel: UILabel!
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var separatorView: UIView!
@@ -31,6 +33,7 @@ class HistoryTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        containerView.showAnimatedSkeleton()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -40,11 +43,19 @@ class HistoryTableViewCell: UITableViewCell {
     }
     
     func configureCell(cellOrder: HistoryCellOrder, from value: APIPlog) {
+        
         switch cellOrder {
         //настраиваем отображение скруглений и вывод даты для первого элемента
-        case .first:
-            separatorView.isHidden = false
-            containerView.layer.maskedCorners = [.topCorners]
+        case .first, .single:
+            if cellOrder == .single {
+                containerView.layer.maskedCorners = [.topCorners, .bottomCorners]
+                separatorView.isHidden = true
+                
+            } else {
+                containerView.layer.maskedCorners = [.topCorners]
+                separatorView.isHidden = false
+            }
+            
             if !containerView.subviews.contains(dateLabel) {
                 containerView.addSubview(dateLabel)
                 dateLabelConstraints.forEach { $0.isActive = true }
@@ -122,6 +133,63 @@ class HistoryTableViewCell: UITableViewCell {
             iconImage.image = UIImage(named: "LogsFace")
         }
         
+        descriptionLabel.text = value.detail
+        
+        let df = DateFormatter()
+        df.dateFormat = "HH:mm"
+        timeLabel.text = df.string(from: value.date)
+        
+        containerView.hideSkeleton()
+        
+    }
+    
+    func configureEmptyCell(cellOrder: HistoryCellOrder, day: Date) {
+        
+        switch cellOrder {
+        //настраиваем отображение скруглений и вывод даты для первого элемента
+        case .first, .single:
+            if cellOrder == .single {
+                containerView.layer.maskedCorners = [.topCorners, .bottomCorners]
+                separatorView.isHidden = true
+                
+            } else {
+                containerView.layer.maskedCorners = [.topCorners]
+                separatorView.isHidden = false
+            }
+            if !containerView.subviews.contains(dateLabel) {
+                containerView.addSubview(dateLabel)
+                dateLabelConstraints.forEach { $0.isActive = true }
+            }
+            
+            let df = DateFormatter()
+            df.dateFormat = "EEEE, d MMMM"
+            dateLabel.text = df.string(from: day)
+            
+        case .regular:
+            separatorView.isHidden = false
+            containerView.layer.maskedCorners = []
+            if containerView.subviews.contains(dateLabel) {
+                dateLabel.removeFromSuperview()
+            }
+            
+        case .last:
+            separatorView.isHidden = true
+            containerView.layer.maskedCorners = [.bottomCorners]
+            if containerView.subviews.contains(dateLabel) {
+                dateLabel.removeFromSuperview()
+            }
+        }
+        
+        //настраиваем отображение поля с описанием
+        if containerView.subviews.contains(descriptionLabel) {
+            descriptionLabel.removeFromSuperview()
+        }
+        
+        //общие операции для всех ячеек, вне зависимости от их места в секции
+        //настраиваем отображение иконки и заголовка
+        //titleLabel.text = "Загружаем данные"
+        //titleLabel.textColor = UIColor(named: "incorrectDataRed")
+        //iconImage.image = UIImage(named: "LogsFace")
         
     }
 }

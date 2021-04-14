@@ -19,7 +19,7 @@ extension PlogRequest {
     var requestParameters: [String: Any] {
         let params: [String: Any] = [
             "flatId": flatId,
-            "fromDate": fromDate.apiString
+            "day": fromDate.apiShortString
         ]
         
         return params

@@ -7,6 +7,11 @@
 //
 
 import RxDataSources
+enum LoadingState : Int{
+    case waiting = 0
+    case loading = 1
+    case loaded = 2
+}
 
 struct HistorySectionModel: AnimatableSectionModelType {
     
@@ -17,7 +22,7 @@ struct HistorySectionModel: AnimatableSectionModelType {
         }
     }
     let itemsCount: Int //количество событий
-    
+    var state : LoadingState = .waiting
     var items: [HistoryDataItem]
     
 }
@@ -28,6 +33,7 @@ extension HistorySectionModel: SectionModelType {
         self = original
         self.items = items
     }
+    
     
 }
 

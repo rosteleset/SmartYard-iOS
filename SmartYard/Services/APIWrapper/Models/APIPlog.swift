@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct APIPlog: Decodable {
+struct APIPlog: Decodable, Equatable, Hashable {
     
     let date: Date //дата. Допустимые значения: "Y-m-d H:i:s"
     let uuid: String
@@ -25,10 +25,10 @@ struct APIPlog: Decodable {
     private enum CodingKeys: String, CodingKey {
         case date
         case uuid
-        case objectId = "object_id"
-        case objectType = "object_type"
-        case objectMechanizma = "object_mechanizma"
-        case mechanizmaDescription = "mechanizma_description"
+        case objectId
+        case objectType
+        case objectMechanizma
+        case mechanizmaDescription
         case event
         case detail
         case preview
@@ -68,4 +68,16 @@ struct APIPlog: Decodable {
         }
     }
     
+    init() {
+        date = Date()
+        uuid = ""
+        objectId = -1
+        objectType = -1
+        objectMechanizma = -1
+        mechanizmaDescription = ""
+        event = .unknown
+        detail = ""
+        previewURL = nil
+        previewImage = nil
+    }
 }
