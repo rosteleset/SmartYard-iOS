@@ -19,6 +19,10 @@
 		3A18347025D9AD8600139385 /* CityCameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18346D25D9AD8600139385 /* CityCameraViewModel.swift */; };
 		3A18347125D9AD8600139385 /* CityCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18346E25D9AD8600139385 /* CityCameraViewController.swift */; };
 		3A18347225D9AD8600139385 /* CityCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A18346F25D9AD8600139385 /* CityCameraViewController.xib */; };
+		3A1BDEC626285DB60075410B /* HistoryHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BDEC526285DB60075410B /* HistoryHelpers.swift */; };
+		3A1BDED326287E690075410B /* HistoryViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BDED226287E690075410B /* HistoryViewController+Extension.swift */; };
+		3A1BDF1D2629F2740075410B /* HistoryItemCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BDF1B2629F2740075410B /* HistoryItemCollectionViewController.swift */; };
+		3A1BDF1E2629F2740075410B /* HistoryItemCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1BDF1C2629F2740075410B /* HistoryItemCollectionViewController.xib */; };
 		3A3B8B9525A5CD2500BFB72E /* MainMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8B9425A5CD2500BFB72E /* MainMenuCoordinator.swift */; };
 		3A3B8BA225A5CF6F00BFB72E /* MainMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BA125A5CF6F00BFB72E /* MainMenuViewModel.swift */; };
 		3A3B8BB325A5D00C00BFB72E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */; };
@@ -534,6 +538,10 @@
 		3A18346D25D9AD8600139385 /* CityCameraViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraViewModel.swift; sourceTree = "<group>"; };
 		3A18346E25D9AD8600139385 /* CityCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraViewController.swift; sourceTree = "<group>"; };
 		3A18346F25D9AD8600139385 /* CityCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityCameraViewController.xib; sourceTree = "<group>"; };
+		3A1BDEC526285DB60075410B /* HistoryHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHelpers.swift; sourceTree = "<group>"; };
+		3A1BDED226287E690075410B /* HistoryViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryViewController+Extension.swift"; sourceTree = "<group>"; };
+		3A1BDF1B2629F2740075410B /* HistoryItemCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItemCollectionViewController.swift; sourceTree = "<group>"; };
+		3A1BDF1C2629F2740075410B /* HistoryItemCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryItemCollectionViewController.xib; sourceTree = "<group>"; };
 		3A3B8B9425A5CD2500BFB72E /* MainMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuCoordinator.swift; sourceTree = "<group>"; };
 		3A3B8BA125A5CF6F00BFB72E /* MainMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewModel.swift; sourceTree = "<group>"; };
 		3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
@@ -1219,6 +1227,7 @@
 				3A9C5E26261B7835004FB962 /* Entries */,
 				3AC5C70C26131CE6008D74DE /* ViewModel */,
 				3AC5C70B26131CDF008D74DE /* View */,
+				3A1BDEC526285DB60075410B /* HistoryHelpers.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -1248,7 +1257,10 @@
 			children = (
 				3AC5C70A26131CBC008D74DE /* Cells */,
 				3AC5C6162608F0F2008D74DE /* HistoryViewController.swift */,
+				3A1BDED226287E690075410B /* HistoryViewController+Extension.swift */,
 				3AC5C6172608F0F2008D74DE /* HistoryViewController.xib */,
+				3A1BDF1B2629F2740075410B /* HistoryItemCollectionViewController.swift */,
+				3A1BDF1C2629F2740075410B /* HistoryItemCollectionViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3780,6 +3792,7 @@
 				84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */,
 				E98C383623F192600010BBC1 /* InputAddressViewController.xib in Resources */,
 				E9A4D48C23EC28760070A591 /* PinNumberField.xib in Resources */,
+				3A1BDF1E2629F2740075410B /* HistoryItemCollectionViewController.xib in Resources */,
 				84F64935247402DC000C0028 /* SelectCameraContainerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4081,6 +4094,7 @@
 				E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */,
 				84D29B9524B799B100CFBE6B /* StreamInfoRequest.swift in Sources */,
 				3A003CE625E0466D002F193B /* RequestRecordViewModel.swift in Sources */,
+				3A1BDEC626285DB60075410B /* HistoryHelpers.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				E92EFBBF242A22F2003AF7FE /* GetServicesRequest.swift in Sources */,
 				84F6494B24740E90000C0028 /* YardMapViewModel.swift in Sources */,
@@ -4173,6 +4187,7 @@
 				84AADD29243349630056994A /* ChatViewModel.swift in Sources */,
 				84898A9223F1554D00E6B78E /* SettingsDataItem.swift in Sources */,
 				3AB41E0225C0879200AEC8C3 /* BottomCell.swift in Sources */,
+				3A1BDED326287E690075410B /* HistoryViewController+Extension.swift in Sources */,
 				3A8B951625D9312D007CDD3C /* CityCameraObject.swift in Sources */,
 				E940580723F680F000623746 /* AccessView.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
@@ -4219,6 +4234,7 @@
 				E92EFB4524287F4C003AF7FE /* PassConfirmationPinViewController.swift in Sources */,
 				E98C382923F173480010BBC1 /* ClearButtonWithDashedUnderline.swift in Sources */,
 				84B89A9823F2FA97009692B4 /* ServiceIsActivatedViewController.swift in Sources */,
+				3A1BDF1D2629F2740075410B /* HistoryItemCollectionViewController.swift in Sources */,
 				84D29BAD24BDCBC300CFBE6B /* IncomingCallStateContainer.swift in Sources */,
 				3A03FD0125DD5D5700B8488A /* YTCollectionViewCell.swift in Sources */,
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,

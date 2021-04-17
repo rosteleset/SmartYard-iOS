@@ -38,6 +38,7 @@ target 'SmartYard' do
   
   # Calendar
   pod 'JTAppleCalendar'
+  pod 'PopOverDatePicker'
   
   # Map
   pod 'Mapbox-iOS-SDK'

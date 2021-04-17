@@ -121,6 +121,7 @@ PODS:
   - Parchment (2.2.0)
   - PinLayout (1.9.3)
   - PMNibLinkableView (0.3.0)
+  - PopOverDatePicker (1.1.0)
   - PromisesObjC (1.2.12)
   - RxCocoa (5.1.1):
     - RxRelay (~> 5)
@@ -191,6 +192,7 @@ DEPENDENCIES:
   - Parchment (= 2.2.0)
   - PinLayout
   - PMNibLinkableView
+  - PopOverDatePicker
   - RxCocoa
   - RxDataSources
   - RxSwift
@@ -235,6 +237,7 @@ SPEC REPOS:
     - Parchment
     - PinLayout
     - PMNibLinkableView
+    - PopOverDatePicker
     - PromisesObjC
     - RxCocoa
     - RxDataSources
@@ -298,6 +301,7 @@ SPEC CHECKSUMS:
   Parchment: 6036c141be0db50d0f08bf6992d9f66f401b1a64
   PinLayout: 4d8733121f8687edcc8f00c19bf1379d12808767
   PMNibLinkableView: 06ebf6128feb70c3ba589d6be232748c1b7b1767
+  PopOverDatePicker: 352207019f4dd717f1fef6d9bb42997a252f243f
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
@@ -316,6 +320,6 @@ SPEC CHECKSUMS:
   YandexMobileMetrica: bf9b2bceb40811ab29c3d0f660ef13d381d8dd93
   youtube-ios-player-helper-swift: 51a3c5325317c8271d0c7985c1bbe5a252ffb2fd
 
-PODFILE CHECKSUM: 34ec3bbec5630fe92816c72b97ad0e1729f541d2
+PODFILE CHECKSUM: 76d9503162ce5a2c7f030e36c84edbf496c160b2
 
 COCOAPODS: 1.10.1

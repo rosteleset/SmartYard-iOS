@@ -12,10 +12,10 @@ import JGProgressHUD
 import RxSwift
 import RxCocoa
 import RxDataSources
+import PopOverDatePicker
 
-typealias DataSection = (day: Date, items: [APIPlog], flatId: Int)
 
-class HistoryViewController: BaseViewController, LoaderPresentable {
+class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePresentationControllerDelegate {
     
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
@@ -23,19 +23,27 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var toolbar: UIToolbar!
     @IBOutlet private weak var topToolbarPositon: NSLayoutConstraint!
     
+    @IBOutlet private weak var eventsFilterButton: UIButton!
+    @IBOutlet private weak var calendarButton: UIButton!
+    @IBOutlet private weak var appartmentFilterButton: UIButton!
+    @IBOutlet private weak var eventsFilterBarButton: UIBarButtonItem!
+    @IBOutlet private weak var calendarBarButton: UIBarButtonItem!
+    
     //private var dataSource: RxTableViewSectionedReloadDataSource<HistorySectionModel>?
     private var dataSource: RxTableViewSectionedAnimatedDataSource<HistorySectionModel>?
-    
     
     var loader: JGProgressHUD?
     
     private let viewModel: HistoryViewModel
+    public var eventsFilter: EventsFilter = .all
+    public var apptsFilter: [String] = []
     
     private let itemSelectedTrigger = PublishSubject<Int>()
     private let loadDayTriger = PublishSubject<Date>()
-    private let dataCache = BehaviorRelay<[DataSection]>(value: [])
+    private let dataCache = BehaviorRelay<[DataSection]>(value: []) // здесь
     private var availableDays: [APIPlogDay] = []
     private let sectionProxy = PublishSubject<[HistorySectionModel]>()
+    
     
     init(viewModel: HistoryViewModel) {
         self.viewModel = viewModel
@@ -63,12 +71,12 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
         
         //tableView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
+       
         dataSource = RxTableViewSectionedAnimatedDataSource<HistorySectionModel>(
             configureCell: { [weak self] dataSource, tableView, indexPath, item in
                 let cell: HistoryTableViewCell = tableView.dequeueReusableCell(withClass: HistoryTableViewCell.self, for: indexPath)
                 
                 guard let self = self else {
-                    print("HistoryViewController == nil")
                     return cell
                 }
                 
@@ -80,11 +88,21 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
         
     }
     
+    fileprivate func setupShadows() {
+        toolbar.view.layer.shadowPath = UIBezierPath(rect: toolbar.view.bounds).cgPath
+        toolbar.view.layer.shadowRadius = 32
+        toolbar.view.layer.shadowOffset = CGSize(width: 0, height: 4)
+        toolbar.view.layer.shadowOpacity = 1
+        toolbar.view.layer.shadowColor = UIColor(red: 0.268, green: 0.338, blue: 0.421, alpha: 0.18).cgColor
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupShadows()
         setupTableView()
         bind()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -100,12 +118,11 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
         
         let output = viewModel.transform(input)
         
-        sectionProxy
-            .debug()
+        sectionProxy //отсюда притетает свежий dataSource для таблицы
             .bind(to: tableView.rx.items(dataSource: dataSource!))
             .disposed(by: disposeBag)
         
-        output.isLoading
+        output.isLoading 
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
@@ -131,12 +148,8 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
                     }
                     let item = sections[sectionIndex]
                     let historyItems = data.items.enumerated().map { HistoryDataItem(identity: "\(sectionIndex)-\($0.offset)", value: $0.element) }
-                    //print(historyItems)
                     
                     new[sectionIndex] = HistorySectionModel(identity: item.identity, itemsCount: item.itemsCount, state: .loaded, items: historyItems )
-                    
-                    //print("old=\(sections[index])")
-                    //print("new=\(new[index])")
                     
                     self.sectionProxy.onNext(new)
                     
@@ -148,11 +161,11 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.availableDays //отсюда прилетает список доступных в журнале дней для каждой квартиры
-            .drive { [weak self] (logs, flatId) in
+            .drive { [weak self] logs, flatId in
                 guard let self = self else {
                     return
                 }
-                
+                self.availableDays = logs
                 let sections = logs.map { day -> HistorySectionModel in
                    
                     let section = Array(0...day.itemsCount-1).map( { HistoryDataItem(identity: "\(day)-\($0)", value: APIPlog()) } )
@@ -197,7 +210,41 @@ class HistoryViewController: BaseViewController, LoaderPresentable {
         
     }
     
-
+    
+    
+    @IBAction private func tapEvents(_ sender: UIView) {
+        
+        showEventsFilterPopover(from: eventsFilterButton.imageView!) { name, selectedRow in
+            self.eventsFilterButton.setTitle(name, for: .normal)
+            self.eventsFilterButton.sizeToFit()
+            
+            self.eventsFilter = EventsFilter(rawValue: selectedRow) ?? .all
+        }
+    }
+    
+    @IBAction private func tapAppartments(_ sender: UIView) {
+    }
+    
+    @IBAction private func tapCalendar(_ sender: Any) {
+        let date = Date()
+        
+        let popOverDatePickerViewController = PopOverDatePickerViewController.instantiate()
+        popOverDatePickerViewController.set(date: date)
+        popOverDatePickerViewController.set(minimumDate: availableDays.last?.day ?? date)
+        popOverDatePickerViewController.set(maximumDate: date)
+        popOverDatePickerViewController.set(datePickerMode: .date)
+        popOverDatePickerViewController.set(locale: Locale(identifier: "ru-RU"))
+        popOverDatePickerViewController.popoverPresentationController?.barButtonItem = calendarBarButton
+        popOverDatePickerViewController.presentationController?.delegate = self
+        popOverDatePickerViewController.changeHandler = { date in
+            self.tableView.scrollToRow(at: IndexPath(row: 0, section: self.availableDays.firstIndex(where: { $0.day <= date }) ?? 0),
+                                       at: .top,
+                                       animated: true)
+        }
+        
+        showPopup(popOverDatePickerViewController, sourceView: calendarButton.imageView!)
+       
+    }
 }
 
 extension HistoryViewController: UITableViewDelegate {
@@ -223,6 +270,7 @@ extension HistoryViewController: UITableViewDelegate {
         return cell
     }
     */
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let dataSource = dataSource else {
             return
@@ -301,3 +349,4 @@ extension HistoryViewController: UITableViewDelegate {
     }
 }
 */
+

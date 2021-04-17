@@ -21,6 +21,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HistoryViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="addressLabel" destination="UPE-Nc-jsD" id="Ees-LV-eUs"/>
+                <outlet property="appartmentFilterButton" destination="QPa-0r-0rp" id="LZs-7q-sZ0"/>
+                <outlet property="calendarBarButton" destination="oTP-pV-nAC" id="ocO-mI-yX1"/>
+                <outlet property="calendarButton" destination="rbP-8e-a35" id="zHC-AD-7nV"/>
+                <outlet property="eventsFilterBarButton" destination="Zik-K1-oUl" id="H0g-Ev-FEE"/>
+                <outlet property="eventsFilterButton" destination="n17-MI-9sr" id="zeD-EH-KxQ"/>
                 <outlet property="fakeNavBar" destination="3Mx-NN-sqX" id="JRw-hq-Koo"/>
                 <outlet property="tableView" destination="znB-hB-uvQ" id="pOM-Ou-YSY"/>
                 <outlet property="toolbar" destination="r6b-X1-Ta6" id="sO5-ks-S40"/>
@@ -72,13 +77,63 @@
                         </tableView>
                         <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r6b-X1-Ta6">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                            <color key="backgroundColor" systemColor="systemGreenColor"/>
+                            <color key="backgroundColor" name="backgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="3nh-Z1-T8f"/>
                             </constraints>
                             <items>
-                                <barButtonItem title="Item" id="Ugh-e9-YQo"/>
+                                <barButtonItem width="16" systemItem="fixedSpace" id="lub-Ia-UYb"/>
+                                <barButtonItem style="plain" id="Zik-K1-oUl" userLabel="Event ">
+                                    <button key="customView" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n17-MI-9sr">
+                                        <rect key="frame" x="16" y="11" width="41" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <inset key="imageEdgeInsets" minX="4" minY="3" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Все" image="ArrowDown">
+                                            <color key="titleColor" name="blue"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="17"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tapEvents:" destination="-1" eventType="touchUpInside" id="fgu-JH-5Ie"/>
+                                        </connections>
+                                    </button>
+                                </barButtonItem>
+                                <barButtonItem systemItem="flexibleSpace" id="1DN-ly-fHA"/>
+                                <barButtonItem style="plain" id="WEy-ew-G3s" userLabel="Appartment">
+                                    <button key="customView" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" id="QPa-0r-0rp">
+                                        <rect key="frame" x="142" y="11" width="130" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <inset key="imageEdgeInsets" minX="4" minY="3" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Квартира, все" image="ArrowDown">
+                                            <color key="titleColor" name="blue"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tapAppartments:" destination="-1" eventType="touchUpInside" id="0At-1s-4hv"/>
+                                        </connections>
+                                    </button>
+                                </barButtonItem>
+                                <barButtonItem systemItem="flexibleSpace" id="KR2-cZ-IZC"/>
+                                <barButtonItem image="calendar" width="20" style="plain" id="oTP-pV-nAC" userLabel="Calendar">
+                                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rbP-8e-a35">
+                                        <rect key="frame" x="370" y="11" width="20" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="calendar"/>
+                                        <connections>
+                                            <action selector="tapCalendar:" destination="-1" eventType="touchUpInside" id="5Rc-V5-YMB"/>
+                                        </connections>
+                                    </button>
+                                </barButtonItem>
+                                <barButtonItem width="24" systemItem="fixedSpace" id="8mf-9W-tgb"/>
                             </items>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" name="grayBorder"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                         </toolbar>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -118,15 +173,20 @@
         </view>
     </objects>
     <resources>
+        <image name="ArrowDown" width="12" height="6"/>
         <image name="MainBackground" width="375" height="812"/>
+        <image name="calendar" width="20" height="20"/>
         <namedColor name="backgroundColor">
             <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="blue">
+            <color red="0.16078431372549021" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="grayBorder">
+            <color red="0.94117647058823528" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
