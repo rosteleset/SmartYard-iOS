@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct APIPlogDay: Decodable {
+struct APIPlogDay: Decodable, Hashable {
     
     let day: Date //дата. Допустимые значения: "Y-m-d"
     let itemsCount: Int //количество событий

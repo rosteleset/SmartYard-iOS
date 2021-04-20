@@ -9,7 +9,7 @@
 import UIKit
 import SkeletonView
 
-enum HistoryCellOrder {
+enum HistoryCellOrder: Equatable {
     case first
     case last
     case regular
@@ -28,7 +28,7 @@ class HistoryTableViewCell: UITableViewCell {
     @IBOutlet private var dateLabelConstraints: [NSLayoutConstraint]!
     @IBOutlet private var desсriptionLabelConstraints: [NSLayoutConstraint]!
     
-    var cellOrder: HistoryCellOrder = .regular
+    //var cellOrder: HistoryCellOrder = .regular
     
     override func awakeFromNib() {
         super.awakeFromNib()

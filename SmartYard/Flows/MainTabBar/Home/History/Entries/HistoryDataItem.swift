@@ -10,5 +10,6 @@ import RxDataSources
 
 struct HistoryDataItem: IdentifiableType, Equatable {
     let identity: String
+    let order: HistoryCellOrder
     let value: APIPlog
 }

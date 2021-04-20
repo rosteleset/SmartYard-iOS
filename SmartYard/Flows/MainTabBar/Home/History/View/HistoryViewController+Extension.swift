@@ -8,9 +8,10 @@
 
 import Foundation
 import UIKit
+import PopOverDatePicker
 
 extension HistoryViewController {
-    public func showPopup(_ controller: UIViewController, sourceView: UIView) {
+    private func showPopup(_ controller: UIViewController, sourceView: UIView) {
         guard let presentationController = AlwaysPresentAsPopover.configurePresentation(forController: controller) else {
             return
         }
@@ -20,15 +21,33 @@ extension HistoryViewController {
         self.present(controller, animated: true)
     }
     
-    public func showEventsFilterPopover(from sourceView: UIView, _ onSelect: @escaping (String, Int) -> Void ) {
+    public func showEventsFilterPopover(from sourceView: UIView, onSelect: @escaping (String, Int) -> Void ) {
         //let controller = EventsPopup()
         
         let items = EventsFilter.allCasesString
         
-        let controller = ArrayChoiceTableViewController(items, selectedRow: eventsFilter.rawValue,
-                                                        onSelect: onSelect)
+        let controller = ArrayChoiceTableViewController(
+            items,
+            selectedRow: eventsFilter.value.rawValue,
+            onSelect: onSelect
+        )
         
         controller.preferredContentSize = CGSize(width: Int(self.view.width) - 32, height: EventsFilter.allCases.count * 45)
         showPopup(controller, sourceView: sourceView)
+    }
+    
+    public func showCalendarPopover(from sourceView: UIView, minDate: Date, maxDate: Date, onSelect: @escaping (Date) -> Void ) {
+        let date = Date()
+        
+        let popOverDatePickerViewController = PopOverDatePickerViewController.instantiate()
+        popOverDatePickerViewController.set(date: date)
+        popOverDatePickerViewController.set(minimumDate: minDate)
+        popOverDatePickerViewController.set(maximumDate: maxDate)
+        popOverDatePickerViewController.set(datePickerMode: .date)
+        popOverDatePickerViewController.set(locale: Locale(identifier: "ru-RU"))
+        popOverDatePickerViewController.presentationController?.delegate = self
+        popOverDatePickerViewController.changeHandler = onSelect
+        
+        showPopup(popOverDatePickerViewController, sourceView: sourceView)
     }
 }
