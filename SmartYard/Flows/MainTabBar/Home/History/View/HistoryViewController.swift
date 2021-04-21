@@ -178,6 +178,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                 self.eventsFilterButton.sizeToFit()
                 self.eventsFilter.accept(EventsFilter(rawValue: selectedRow) ?? .all)
                 self.topToolbarPositon.constant = 0
+                //self.tableView.reloadData()
             }
         )
     }
@@ -255,7 +256,7 @@ extension HistoryViewController: UITableViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("contentOffset.y = \(scrollView.contentOffset.y)")
+        //print("contentOffset.y = \(scrollView.contentOffset.y)")
         
         //не скрывать тулбар, если контент умещается без скрола
         if scrollView.contentSize.height <= scrollView.frame.size.height {

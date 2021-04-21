@@ -241,15 +241,6 @@ class HistoryViewModel: BaseViewModel {
                             state: .loaded,
                             items: items
                                 //сами элементы в секциях фильтруем в соответствии с фильтром отображаемых событий
-                                .enumerated()
-                                //поскольку RxDataSource определяет небходимость обновлять ячейки по изменению их содержимого,
-                                //то приходится в элементах хранить атрибут позиции внутри секции, чтобы TableView правильно перерисовывал
-                                //закругления и управлял отображением заголовка секции в каждой первой ячейке.
-                                .map { HistoryDataItem(
-                                    identity: $0.element.uuid,
-                                    order: self.orderOf(row: $0.offset, count: items.count),
-                                    value: $0.element
-                                )}
                                 .filter {
                                     //если выбраны "все" события в фильтре, то не фильтруем совсем
                                     if events == .all {
@@ -257,7 +248,7 @@ class HistoryViewModel: BaseViewModel {
                                     }
                                     var eventType: EventsFilter
                                     //иначе: мапим тип события с фильтром
-                                    switch $0.value.event {
+                                    switch $0.event {
                                     case .unanswered, .answered:
                                         eventType = .domophones
                                     case .rfid:
@@ -276,6 +267,15 @@ class HistoryViewModel: BaseViewModel {
                                     //и фильтруем, только те типы, которые совпадают с фильтром
                                     return eventType == events
                                 }
+                                .enumerated()
+                                //поскольку RxDataSource определяет небходимость обновлять ячейки по изменению их содержимого,
+                                //то приходится в элементах хранить атрибут позиции внутри секции, чтобы TableView правильно перерисовывал
+                                //закругления и управлял отображением заголовка секции в каждой первой ячейке.
+                                .map { HistoryDataItem(
+                                    identity: $0.element.uuid,
+                                    order: self.orderOf(row: $0.offset, count: items.count),
+                                    value: $0.element
+                                )}
                         )
                     }
                     //удаляем секции тех дней, для которых из-за фильтра по типу событий не оказалось ни одной записи

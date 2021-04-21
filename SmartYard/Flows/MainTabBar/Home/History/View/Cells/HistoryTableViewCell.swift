@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SkeletonView
 
 enum HistoryCellOrder: Equatable {
     case first
@@ -33,7 +32,6 @@ class HistoryTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        containerView.showAnimatedSkeleton()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -138,8 +136,6 @@ class HistoryTableViewCell: UITableViewCell {
         let df = DateFormatter()
         df.dateFormat = "HH:mm"
         timeLabel.text = df.string(from: value.date)
-        
-        containerView.hideSkeleton()
         
     }
     
