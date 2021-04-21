@@ -32,7 +32,22 @@ extension HistoryViewController {
             onSelect: onSelect
         )
         
-        controller.preferredContentSize = CGSize(width: Int(self.view.width) - 32, height: EventsFilter.allCases.count * 45)
+        controller.preferredContentSize = CGSize(width: Int(self.view.width) - 32, height: items.count * 45)
+        showPopup(controller, sourceView: sourceView)
+    }
+    
+    public func showAppartmentsFilterPopover(from sourceView: UIView, items: [String], selectedRow: Int, onSelect: @escaping (String, Int) -> Void ) {
+        //let controller = EventsPopup()
+        
+        let items = items
+        
+        let controller = ArrayChoiceTableViewController(
+            items,
+            selectedRow: selectedRow,
+            onSelect: onSelect
+        )
+        
+        controller.preferredContentSize = CGSize(width: Int(self.view.width) - 32, height: items.count * 45)
         showPopup(controller, sourceView: sourceView)
     }
     

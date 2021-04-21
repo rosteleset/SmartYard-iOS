@@ -22,7 +22,8 @@ class HistoryViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     private let houseId: String // идентификатор дома для какого смотрим логи
     private let address: BehaviorSubject<String?> //Адрес этого дома
-    private var flatIds: [Int] = [] //список доступных квартир по адресу
+    public var flatIds: [Int] = [] //список доступных квартир по адресу
+    public var flatNumbers: [Int] = [] //список доступных квартир по адресу
     
     /// массив из квартир с массивом дат, доступных для каждой.
     private let availableDays = BehaviorRelay<AvailableDays>(value: [:])
@@ -145,15 +146,26 @@ class HistoryViewModel: BaseViewModel {
             .drive(eventsFilter)
             .disposed(by: disposeBag)
         
-        eventsFilter
-            .asDriverOnErrorJustComplete()
-            .drive { [weak self] eventsFilter in
+        input.apptsFilter
+            .map { [weak self] flatString -> [Int] in
                 guard let self = self else {
-                    return
+                    return []
                 }
                 
-                updateSections.onNext((eventsFilter, self.apptsFilter.value))
+                let flatInt: Int = Int(flatString) ?? 0
+                if flatInt > 0 {
+                    return [flatInt]
+                } else {
+                    return self.flatIds
+                }
             }
+            .drive(apptsFilter)
+            .disposed(by: disposeBag)
+        
+        //при изменении фильтров обновляем секции
+        Observable.combineLatest(eventsFilter, apptsFilter)
+            .asDriverOnErrorJustComplete()
+            .drive(updateSections)
             .disposed(by: disposeBag)
         
         //отсюда прилетает свежая порция событий журнала за день для квартиры от API
@@ -300,8 +312,12 @@ class HistoryViewModel: BaseViewModel {
                     return .just(nil)
                 }
                 
-                //получаем список квартир по выбранному адресу и преобразуем тип к Int
+                //получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
                 self.flatIds = args.filtered ( { $0.houseId == self.houseId },  map: { (Int($0.flatId!) ?? -1) } )
+                
+                //получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
+                self.flatNumbers = args.filtered ( { $0.houseId == self.houseId },  map: { (Int($0.flatNumber!) ?? -1) } )
+                
                 
                 let results = PublishSubject<AvailableDays?>()
                 
@@ -349,6 +365,8 @@ extension HistoryViewModel {
         let backTrigger: Driver<Void>
         let loadDay: Driver<Date>
         let eventsFilter: Driver<EventsFilter>
+        let apptsFilter: Driver<String>
+        
     }
     
     struct Output {

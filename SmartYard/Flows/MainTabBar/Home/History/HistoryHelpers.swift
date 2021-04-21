@@ -11,6 +11,8 @@ import UIKit
 
 typealias DataSection = (day: Date, items: [APIPlog], flatId: Int)
 
+typealias ApptsFilter = Int
+
 enum EventsFilter: Int, CaseIterable {
     case all = 0
     case domophones = 1

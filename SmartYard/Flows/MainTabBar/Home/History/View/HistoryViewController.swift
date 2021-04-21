@@ -37,7 +37,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     
     fileprivate let viewModel: HistoryViewModel
     public var eventsFilter = BehaviorRelay<EventsFilter>(value: .all)
-    public var apptsFilter = BehaviorRelay<[String]>(value: [])
+    public var apptsFilter = BehaviorRelay<String>(value: "все") 
     
     private let itemSelectedTrigger = PublishSubject<Int>()
     private let loadDayTriger = PublishSubject<Date>()
@@ -119,7 +119,8 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
             itemSelected: itemSelectedTrigger.asDriverOnErrorJustComplete(),
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             loadDay: loadDayTriger.asDriverOnErrorJustComplete(),
-            eventsFilter: eventsFilter.asDriver()
+            eventsFilter: eventsFilter.asDriver(),
+            apptsFilter: apptsFilter.asDriver()
         )
         
         let output = viewModel.transform(input)
@@ -145,9 +146,15 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
             .drive(availableDays)
             .disposed(by: disposeBag)
         
-        //TODO: временный костыль, надо заменить на днамическую загрузку
         availableDays.asDriverOnErrorJustComplete()
             .drive {
+                if $0.keys.count > 1 {
+                    self.appartmentFilterButton.isHidden = false
+                } else {
+                    self.appartmentFilterButton.isHidden = true
+                }
+                
+                //TODO: временный костыль, надо заменить на днамическую загрузку
                 $0.forEach { (key: FlatId, value: PlogDaysResponseData) in
                     value.forEach { item in
                         self.loadDayTriger.onNext(item.day)
@@ -177,29 +184,55 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                 self.eventsFilterButton.setTitle(name, for: .normal)
                 self.eventsFilterButton.sizeToFit()
                 self.eventsFilter.accept(EventsFilter(rawValue: selectedRow) ?? .all)
+                
                 self.topToolbarPositon.constant = 0
-                //self.tableView.reloadData()
+                
             }
         )
     }
     
     @IBAction private func tapAppartments(_ sender: UIView) {
+        let flatLabels = ["Все квартиры"] + viewModel.flatNumbers.map { "Квартира " + String($0) }
+        let itemsId = [""] + viewModel.flatIds.map { String($0) }
+        
+        let selectedRow = { () -> Int in
+            if viewModel.apptsFilter.value.count == 1 {
+                return itemsId.firstIndex(of: String(viewModel.apptsFilter.value[0])) ?? 0
+            } else {
+                return 0
+            }
+        }()
+        showAppartmentsFilterPopover(
+            from: appartmentFilterButton.imageView!,
+            items: flatLabels,
+            selectedRow: selectedRow,
+            onSelect: { _ , selectedRow in
+                if selectedRow == 0 {
+                    self.appartmentFilterButton.setTitle("Квартира, все", for: .normal)
+                } else {
+                    self.appartmentFilterButton.setTitle("Квартира, \(self.viewModel.flatNumbers[selectedRow-1])", for: .normal)
+                }
+                self.appartmentFilterButton.sizeToFit()
+                self.apptsFilter.accept(itemsId[selectedRow])
+                self.topToolbarPositon.constant = 0
+                
+            }
+        )
     }
  
     @IBAction private func tapCalendar(_ sender: Any) {
         
-        //TODO: убрать костыль - принудительно беру дни первой попавшийся квартиры
-        guard let flatDays = availableDays.value.values.first else {
+        guard let days = viewModel.dataSource?.sectionModels else {
             return
         }
         
         showCalendarPopover(
             from: calendarButton.imageView!,
-            minDate: flatDays.last?.day ?? Date(),
+            minDate: days.last?.day ?? Date(),
             maxDate: Date(),
             onSelect: { date in
                 self.tableView.scrollToRow(
-                    at: IndexPath(row: 0, section: flatDays.firstIndex(where: { $0.day <= date }) ?? 0),
+                    at: IndexPath(row: 0, section: days.firstIndex(where: { $0.day <= date }) ?? 0),
                     at: .top,
                     animated: true
                 )

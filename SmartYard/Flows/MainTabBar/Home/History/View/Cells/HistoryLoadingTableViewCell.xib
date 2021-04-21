@@ -16,7 +16,7 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XKe-sV-k1K" translatesAutoresizingMaskIntoConstraints="NO" id="dDE-zf-XwI">
                 <rect key="frame" x="0.0" y="0.0" width="410" height="100"/>
                 <subviews>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" preservesSuperviewLayoutMargins="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="2ro-fq-kfc">
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" preservesSuperviewLayoutMargins="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="2ro-fq-kfc">
                         <rect key="frame" x="175" y="40" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="I1M-Ly-YFj"/>
