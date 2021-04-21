@@ -37,7 +37,7 @@ class HistoryViewModel: BaseViewModel {
     private var loadingQueue: [(flatId: Int, day: Date)] = []
     
     /// Очередь ожидающих запросов на загрузку (FlatId, Date) - запросы по которым мы пока не запрашивали данные
-    private var waitingQueue: [(flatId: Int, day: Date)] = []
+    private var waitingQueue: [FlatId: [Date]] = [:]
     
     /// все загруженные данные от API
     private let dataCache = BehaviorRelay<[DataSection]>(value: [])
@@ -101,9 +101,11 @@ class HistoryViewModel: BaseViewModel {
                 self.flatIds.forEach { flatId in
                     //проверяем, что для этой квартиры есть записи в этот день
                     guard let days = self.availableDays.value[flatId],
-                          days.contains(where: { value -> Bool in
-                            return value.day == day
-                          })
+                          days.contains(
+                            where: { value -> Bool in
+                                value.day == day
+                            }
+                          )
                     //иначе переходим к следующей квартире.
                     else {
                         return
@@ -177,6 +179,9 @@ class HistoryViewModel: BaseViewModel {
                 //добавляем новую порцию данных, объединяя массивы данных для одинаковых flatId
                 let newValue = self.availableDays.value.merging(data, uniquingKeysWith: +)
                 
+                //наполняем очередь ожидания загрузки
+                self.waitingQueue.merge(data.mapValues { $0.map { $0.day } }, uniquingKeysWith: +)
+                
                 self.availableDays.accept(newValue)
             }
             .disposed(by: disposeBag)
@@ -198,7 +203,7 @@ class HistoryViewModel: BaseViewModel {
             
         //выдаёт в sections готовые секции для dataModel в учётом всех фильтров
         updateSections.asDriverOnErrorJustComplete()
-            .debounce(.milliseconds(1000))
+            .debounce(.milliseconds(100))
             .drive { [weak self] (events, flats) in
                 guard let self = self else {
                     return
@@ -237,6 +242,9 @@ class HistoryViewModel: BaseViewModel {
                             items: items
                                 //сами элементы в секциях фильтруем в соответствии с фильтром отображаемых событий
                                 .enumerated()
+                                //поскольку RxDataSource определяет небходимость обновлять ячейки по изменению их содержимого,
+                                //то приходится в элементах хранить атрибут позиции внутри секции, чтобы TableView правильно перерисовывал
+                                //закругления и управлял отображением заголовка секции в каждой первой ячейке.
                                 .map { HistoryDataItem(
                                     identity: $0.element.uuid,
                                     order: self.orderOf(row: $0.offset, count: items.count),
@@ -292,10 +300,16 @@ class HistoryViewModel: BaseViewModel {
                     return .just(nil)
                 }
                 
+                //получаем список квартир по выбранному адресу и преобразуем тип к Int
                 self.flatIds = args.filtered ( { $0.houseId == self.houseId },  map: { (Int($0.flatId!) ?? -1) } )
-                //TODO: добавить запросы для всех квартир
                 
                 let results = PublishSubject<AvailableDays?>()
+                
+                //на всякий случай сбрасываем все данные от предыдущих запросов.
+                self.loadingQueue = []
+                self.waitingQueue = [:]
+                self.dataCache.accept([])
+                self.uniqueDays = []
                 
                 //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
                 //как отдельный элемент в текущую последовательность

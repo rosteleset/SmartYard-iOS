@@ -27,6 +27,11 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     @IBOutlet private weak var appartmentFilterButton: UIButton!
     @IBOutlet private weak var eventsFilterBarButton: UIBarButtonItem!
     @IBOutlet private weak var calendarBarButton: UIBarButtonItem!
+    @IBOutlet private weak var heightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var scrollUpButton: UIButton!
+
+    var lastContentOffset: CGFloat = 0.0
+    let maxHeaderHeight: CGFloat = 44.0
     
     var loader: JGProgressHUD?
     
@@ -62,9 +67,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
         //tableView.dataSource = self
         tableView.register(nibWithCellClass: HistoryTableViewCell.self)
         tableView.register(nibWithCellClass: HistoryLoadingTableViewCell.self)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CELL")
         
-        //tableView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
        
         viewModel.dataSource = RxTableViewSectionedAnimatedDataSource<HistorySectionModel>(
@@ -89,6 +92,13 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
         toolbar.view.layer.shadowOffset = CGSize(width: 0, height: 4)
         toolbar.view.layer.shadowOpacity = 1
         toolbar.view.layer.shadowColor = UIColor(red: 0.268, green: 0.338, blue: 0.421, alpha: 0.18).cgColor
+        
+        scrollUpButton.view.layer.shadowPath = UIBezierPath(roundedRect: scrollUpButton.view.bounds, cornerRadius: 24).cgPath
+        scrollUpButton.view.layer.shadowRadius = 24
+        scrollUpButton.view.layer.shadowOffset = CGSize(width: 0, height: 4)
+        scrollUpButton.view.layer.shadowOpacity = 1
+        scrollUpButton.view.layer.shadowColor = UIColor(red: 0.268, green: 0.338, blue: 0.421, alpha: 0.18).cgColor
+        scrollUpButton.view.clipsToBounds = false
     }
     
     override func viewDidLoad() {
@@ -151,31 +161,14 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     }
     
     fileprivate func configureCell(_ indexPath: IndexPath, _ cell: HistoryTableViewCell, _ dataSource: TableViewSectionedDataSource<HistorySectionModel>) {
-        
-        
-        let cellOrder: HistoryCellOrder = {
-            switch indexPath.row {
-            case 0:
-                return dataSource.sectionModels[indexPath.section].items.count == 1 ? .single : .first
-            case dataSource.sectionModels[indexPath.section].items.count - 1 :
-                return .last
-            default:
-                return .regular
-            }
-        }()
-        
+        let cellOrder = dataSource.sectionModels[indexPath.section].items[indexPath.row].order
         let value = dataSource.sectionModels[indexPath.section].items[indexPath.row].value
-       
-        if value.uuid.isEmpty {
-            cell.configureEmptyCell(cellOrder: cellOrder, day: dataSource.sectionModels[indexPath.section].day)
-            return
-        }
-        
         cell.configureCell(cellOrder: cellOrder, from: value)
-        
     }
     
-    
+    @IBAction private func tapScrollUp(_ sender: Any) {
+        tableView.scrollToTop()
+    }
     
     @IBAction private func tapEvents(_ sender: UIView) {
         showEventsFilterPopover(
@@ -184,6 +177,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                 self.eventsFilterButton.setTitle(name, for: .normal)
                 self.eventsFilterButton.sizeToFit()
                 self.eventsFilter.accept(EventsFilter(rawValue: selectedRow) ?? .all)
+                self.topToolbarPositon.constant = 0
             }
         )
     }
@@ -214,28 +208,6 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
 }
 
 extension HistoryViewController: UITableViewDelegate {
-    /*func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return availableDays[section].day.apiString
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return .zero
-    }*/
-    
-    /*func numberOfSections(in tableView: UITableView) -> Int {
-        return availableDays.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return availableDays[section].itemsCount
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: HistoryLoadingTableViewCell = tableView.dequeueReusableCell(withClass: HistoryLoadingTableViewCell.self, for: indexPath)
-        cell.isLoading = true
-        return cell
-    }
-    */
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let dataSource = viewModel.dataSource else {
@@ -273,46 +245,66 @@ extension HistoryViewController: UITableViewDelegate {
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
+        /*
         topToolbarPositon.constant = velocity.y > 0 ? -44 : 0
         
         UIView.animate(withDuration: 0.5, delay: 0, options: [UIView.AnimationOptions.allowUserInteraction], animations: {
             self.view.layoutIfNeeded()
         })
+        */
     }
-}
-
-/* наработки для убираемого тулбара
- {
-    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
-
-    var lastContentOffset: CGFloat = 0.0
-    let maxHeaderHeight: CGFloat = 115.0
-
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("contentOffset.y = \(scrollView.contentOffset.y)")
+        
+        //не скрывать тулбар, если контент умещается без скрола
+        if scrollView.contentSize.height <= scrollView.frame.size.height {
+            topToolbarPositon.constant = 0
+            return
+        }
+        //если скрол-вью отползает в нормальное положение после отскока, то игнорируем это движение
+        if scrollView.contentOffset.y <= 0 && (scrollView.contentOffset.y > self.lastContentOffset) {
+            return
+        }
+        
+        
+        //ниже - магия работы с тулбаром "туда-сюда" при скроле
         if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
             //Scrolled to bottom
-            UIView.animate(withDuration: 0.3) {
-                self.heightConstraint.constant = 0.0
+            topToolbarPositon.constant = -44
+            
+            UIView.animate(withDuration: 0.5, delay: 0, options: [UIView.AnimationOptions.allowUserInteraction], animations: {
                 self.view.layoutIfNeeded()
-            }
+            })
         }
-        else if (scrollView.contentOffset.y < self.lastContentOffset || scrollView.contentOffset.y <= 0) && (self.heightConstraint.constant != self.maxHeaderHeight)  {
+        else if (scrollView.contentOffset.y < self.lastContentOffset || scrollView.contentOffset.y <= 0) && (topToolbarPositon.constant < 0)  {
             //Scrolling up, scrolled to top
-            UIView.animate(withDuration: 0.3) {
-                self.heightConstraint.constant = self.maxHeaderHeight
+            topToolbarPositon.constant = 0
+            
+            UIView.animate(withDuration: 0.5, delay: 0, options: [UIView.AnimationOptions.allowUserInteraction], animations: {
                 self.view.layoutIfNeeded()
-            }
+            })
         }
-        else if (scrollView.contentOffset.y > self.lastContentOffset) && self.heightConstraint.constant != 0.0 {
+        else if (scrollView.contentOffset.y > self.lastContentOffset) && topToolbarPositon.constant != -44.0 {
             //Scrolling down
-            UIView.animate(withDuration: 0.3) {
-                self.heightConstraint.constant = 0.0
+            topToolbarPositon.constant = -44
+            
+            UIView.animate(withDuration: 0.5, delay: 0, options: [UIView.AnimationOptions.allowUserInteraction], animations: {
                 self.view.layoutIfNeeded()
-            }
+            })
         }
+        
         self.lastContentOffset = scrollView.contentOffset.y
+        //конец "магии" тулбара
+        
+        //управление скрытием кнопки scrollUp
+        if scrollView.contentOffset.y > 0 && scrollUpButton.alpha == 0 {
+            scrollUpButton.view.fadeIn(duration: 0.5, completion: { _ in self.scrollUpButton.isHidden = false })
+        }
+        if scrollView.contentOffset.y <= 0 && scrollUpButton.alpha == 1 {
+            scrollUpButton.view.fadeOut(duration: 0.5, completion: { _ in self.scrollUpButton.isHidden = true })
+        }
+            
     }
 }
-*/
 

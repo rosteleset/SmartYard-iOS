@@ -27,6 +27,8 @@
                 <outlet property="eventsFilterBarButton" destination="Zik-K1-oUl" id="H0g-Ev-FEE"/>
                 <outlet property="eventsFilterButton" destination="n17-MI-9sr" id="zeD-EH-KxQ"/>
                 <outlet property="fakeNavBar" destination="3Mx-NN-sqX" id="JRw-hq-Koo"/>
+                <outlet property="heightConstraint" destination="3nh-Z1-T8f" id="R5z-tP-xTJ"/>
+                <outlet property="scrollUpButton" destination="MJm-xB-jU9" id="nyZ-aQ-8Ni"/>
                 <outlet property="tableView" destination="znB-hB-uvQ" id="pOM-Ou-YSY"/>
                 <outlet property="toolbar" destination="r6b-X1-Ta6" id="sO5-ks-S40"/>
                 <outlet property="topToolbarPositon" destination="SMC-ib-hrH" id="upS-dX-lWa"/>
@@ -135,6 +137,23 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </toolbar>
+                        <button hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJm-xB-jU9" userLabel="ScrollUpButton">
+                            <rect key="frame" x="183" y="589" width="48" height="48"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="Mjx-EA-VLS"/>
+                                <constraint firstAttribute="width" constant="48" id="gzK-1V-UOg"/>
+                            </constraints>
+                            <state key="normal" image="ScrollUpButton"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="24"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="tapScrollUp:" destination="-1" eventType="touchUpInside" id="4EA-UZ-3FG"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
@@ -144,6 +163,8 @@
                         <constraint firstItem="znB-hB-uvQ" firstAttribute="leading" secondItem="Diy-Ub-FSF" secondAttribute="leading" id="RFM-oQ-0l4"/>
                         <constraint firstItem="r6b-X1-Ta6" firstAttribute="top" secondItem="Diy-Ub-FSF" secondAttribute="top" id="SMC-ib-hrH"/>
                         <constraint firstAttribute="bottom" secondItem="znB-hB-uvQ" secondAttribute="bottom" id="WFc-rP-pst"/>
+                        <constraint firstAttribute="bottom" secondItem="MJm-xB-jU9" secondAttribute="bottom" constant="28" id="qU2-RE-0u5"/>
+                        <constraint firstItem="MJm-xB-jU9" firstAttribute="centerX" secondItem="Diy-Ub-FSF" secondAttribute="centerX" id="quv-S1-R93"/>
                         <constraint firstAttribute="trailing" secondItem="znB-hB-uvQ" secondAttribute="trailing" id="w9k-bU-dXJ"/>
                     </constraints>
                 </view>
@@ -175,6 +196,7 @@
     <resources>
         <image name="ArrowDown" width="12" height="6"/>
         <image name="MainBackground" width="375" height="812"/>
+        <image name="ScrollUpButton" width="26" height="20"/>
         <image name="calendar" width="20" height="20"/>
         <namedColor name="backgroundColor">
             <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

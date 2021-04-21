@@ -98,11 +98,11 @@ class HistoryTableViewCell: UITableViewCell {
         case .answered:
             titleLabel.text = "Звонок в домофон"
             titleLabel.textColor = UIColor(named: "semiBlack")
-            iconImage.image = UIImage(named: "LogsCall")
+            iconImage.image = UIImage(named: "LogsDomophone")
         case .unanswered:
             titleLabel.text = "Звонок в домофон"
             titleLabel.textColor = UIColor(named: "incorrectDataRed")
-            iconImage.image = UIImage(named: "LogsCall")
+            iconImage.image = UIImage(named: "LogsDomophone")
         case .rfid:
             titleLabel.text = "Открывание ключом"
             titleLabel.textColor = UIColor(named: "semiBlack")
@@ -118,11 +118,11 @@ class HistoryTableViewCell: UITableViewCell {
         case .passcode:
             titleLabel.text = "Открытие по коду"
             titleLabel.textColor = UIColor(named: "semiBlack")
-            iconImage.image = UIImage(named: "LogsKey")
+            iconImage.image = UIImage(named: "LogsCode")
         case .call:
             titleLabel.text = "Открытие ворот по звонку"
             titleLabel.textColor = UIColor(named: "semiBlack")
-            iconImage.image = UIImage(named: "LogsWicket")
+            iconImage.image = UIImage(named: "LogsCall")
         case .plate:
             titleLabel.text = "Открытие ворот по номеру"
             titleLabel.textColor = UIColor(named: "semiBlack")
@@ -130,7 +130,7 @@ class HistoryTableViewCell: UITableViewCell {
         case .unknown:
             titleLabel.text = "Неизвестное событие"
             titleLabel.textColor = UIColor(named: "incorrectDataRed")
-            iconImage.image = UIImage(named: "LogsFace")
+            iconImage.image = UIImage(named: "LogsApp")
         }
         
         descriptionLabel.text = value.detail
@@ -143,53 +143,4 @@ class HistoryTableViewCell: UITableViewCell {
         
     }
     
-    func configureEmptyCell(cellOrder: HistoryCellOrder, day: Date) {
-        
-        switch cellOrder {
-        //настраиваем отображение скруглений и вывод даты для первого элемента
-        case .first, .single:
-            if cellOrder == .single {
-                containerView.layer.maskedCorners = [.topCorners, .bottomCorners]
-                separatorView.isHidden = true
-                
-            } else {
-                containerView.layer.maskedCorners = [.topCorners]
-                separatorView.isHidden = false
-            }
-            if !containerView.subviews.contains(dateLabel) {
-                containerView.addSubview(dateLabel)
-                dateLabelConstraints.forEach { $0.isActive = true }
-            }
-            
-            let df = DateFormatter()
-            df.dateFormat = "EEEE, d MMMM"
-            dateLabel.text = df.string(from: day)
-            
-        case .regular:
-            separatorView.isHidden = false
-            containerView.layer.maskedCorners = []
-            if containerView.subviews.contains(dateLabel) {
-                dateLabel.removeFromSuperview()
-            }
-            
-        case .last:
-            separatorView.isHidden = true
-            containerView.layer.maskedCorners = [.bottomCorners]
-            if containerView.subviews.contains(dateLabel) {
-                dateLabel.removeFromSuperview()
-            }
-        }
-        
-        //настраиваем отображение поля с описанием
-        if containerView.subviews.contains(descriptionLabel) {
-            descriptionLabel.removeFromSuperview()
-        }
-        
-        //общие операции для всех ячеек, вне зависимости от их места в секции
-        //настраиваем отображение иконки и заголовка
-        //titleLabel.text = "Загружаем данные"
-        //titleLabel.textColor = UIColor(named: "incorrectDataRed")
-        //iconImage.image = UIImage(named: "LogsFace")
-        
-    }
 }
