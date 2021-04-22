@@ -18,7 +18,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableViewWithHandler!
     @IBOutlet private weak var toolbar: UIToolbar!
     @IBOutlet private weak var topToolbarPositon: NSLayoutConstraint!
     
@@ -32,6 +32,9 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
 
     var lastContentOffset: CGFloat = 0.0
     let maxHeaderHeight: CGFloat = 44.0
+    var lockToolbar = false
+    var scrollOnDateIfLoads: Date? = nil
+    var stopDynamicLoading: Bool = false
     
     var loader: JGProgressHUD?
     
@@ -43,7 +46,13 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     private let loadDayTriger = PublishSubject<Date>()
     private let dataCache = BehaviorRelay<[DataSection]>(value: [])
     private var availableDays = BehaviorRelay<AvailableDays>(value: [:])
-    //private let sectionProxy = PublishSubject<[HistorySectionModel]>()
+    private var allAvailableDates: [Date] = []
+    
+    //облегчённая версия allAvailableDates
+    private var days: [Date] = []
+    
+    //очередь дней для загрузки данных из модели
+    private var daysQueue: [Date] = []
     
     init(viewModel: HistoryViewModel) {
         self.viewModel = viewModel
@@ -126,6 +135,9 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
         let output = viewModel.transform(input)
         
         output.sections //отсюда притетает свежий [HistorySectionModels] для DataSource таблицы
+            .do(onNext: { sectionModels in
+                self.days = sectionModels.map( { $0.day } )
+            })
             .bind(to: tableView.rx.items(dataSource: viewModel.dataSource!))
             .disposed(by: disposeBag)
         
@@ -154,16 +166,37 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                     self.appartmentFilterButton.isHidden = true
                 }
                 
-                //TODO: временный костыль, надо заменить на днамическую загрузку
-                $0.forEach { (key: FlatId, value: PlogDaysResponseData) in
-                    value.forEach { item in
-                        self.loadDayTriger.onNext(item.day)
-                    }
+                //Если ещё не пришли все ответы со списками дней, то ждём
+                if $0.keys.count < self.viewModel.flatIds.count {
+                    return
                 }
+
+                //со всех квартир собираем все дни, убираем дубли, сортируем от поздних к ранним
+                self.daysQueue = $0.flatMap { $0.value }
+                    .map { $0.day }
+                    .duplicatesRemoved()
+                    .sorted(by: >)
                 
+                //сохраняем список всех имеющихся дат на будущее - пригодятся.
+                self.allAvailableDates = self.daysQueue
+                
+                //загружаем самый первый день
+                guard let firstDay = self.daysQueue.first else {
+                    return
+                }
+                self.daysQueue.remove(at: 0)
+                self.loadDayTriger.onNext(firstDay)
                 
             }
             .disposed(by: disposeBag)
+        
+            NotificationCenter.default.rx.notification(.popupDimissed)
+                .asDriverOnErrorJustComplete()
+                .mapToVoid()
+                .drive(onNext: {
+                    self.onPopUpDismiss()
+                })
+                .disposed(by: disposeBag)
         
     }
     
@@ -174,7 +207,16 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     }
     
     @IBAction private func tapScrollUp(_ sender: Any) {
-        tableView.scrollToTop()
+        stopDynamicLoading = true
+        self.topToolbarPositon.constant = 0
+        self.view.layoutIfNeeded()
+        lockToolbar = true
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.stopDynamicLoading = false
+            self?.lockToolbar = false
+        }
     }
     
     @IBAction private func tapEvents(_ sender: UIView) {
@@ -221,38 +263,108 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     }
  
     @IBAction private func tapCalendar(_ sender: Any) {
-        
-        guard let days = viewModel.dataSource?.sectionModels else {
-            return
-        }
+        self.lockToolbar = true
+        //self.stopDynamicLoading = true
         
         showCalendarPopover(
             from: calendarButton.imageView!,
-            minDate: days.last?.day ?? Date(),
+            minDate: allAvailableDates.last ?? Date(),
             maxDate: Date(),
             onSelect: { date in
-                self.tableView.scrollToRow(
-                    at: IndexPath(row: 0, section: days.firstIndex(where: { $0.day <= date }) ?? 0),
-                    at: .top,
-                    animated: true
-                )
+                // предварительно нам надо понять: вообще на какой день мы собираемся отматывать,
+                // даже если предположить, что у нас вообще были бы загружены все данные
+                guard let scrollOnDay = self.allAvailableDates.first(where: { $0 <= date } ) else {
+                    //по идее тут мы вообще не должны ну никак оказаться
+                    return
+                }
+                
+                // а далее есть варианты:
+                // 1) пользователь выберет день, котрый у нас есть в days - тут мы просто на него отматываем
+                // 2) пользователь выберет день, которого у нас нет в days, но он есть в daysQueue - его надо подгрузить и потом на него отмотать
+                
+                if let scrollOnSection = self.days.firstIndex(of: scrollOnDay) {
+                    //1) пользователь выберет день, котрый у нас есть в days - тут мы просто на него отматываем
+                    self.tableView.scrollToRow(
+                        at: IndexPath(row: 0, section: scrollOnSection),
+                        at: .top,
+                        animated: true
+                    )
+                    return
+                }
+                
+                // тут мы оказались, если нужной даты у нас в таблицы пока нет
+                // сохраняем дату, на какую мы хотим, чтобы TableView отмотал табличку, когда получит обновления данных
+                self.scrollOnDateIfLoads = scrollOnDay
+                //запрашиваем с сервера данные для этой даты
+                self.loadDayTriger.onNext(scrollOnDay)
+                //настраиваем обработчик, который сработает, когда таблица получит свежие данные
+                self.tableView.afterUpdateHandler = {
+                    print(self.days)
+                    //проверяем, что нам надо будет скролить таблицу
+                    guard let scrollOnDay = self.scrollOnDateIfLoads,
+                          //проверяем, что обновлённая таблица содержит дату, на которую мы хотим скролить
+                          let scrollOnSection = self.days.firstIndex(of: scrollOnDay) else {
+                        return
+                    }
+                    //как можно скорее сбрасываем признак, что нам надо скролить.
+                    //self.scrollOnDateIfLoads = nil
+                    //скролим на нужную дату
+                    self.tableView.scrollToRow(
+                        at: IndexPath(row: 0, section: scrollOnSection),
+                        at: .top,
+                        animated: false
+                    )
+                }
             }
         )
+    }
+}
+extension HistoryViewController {
+    func onPopUpDismiss() {
+        stopDynamicLoading = false
+        lockToolbar = false
+        scrollOnDateIfLoads = nil
+        tableView.afterUpdateHandler = nil
     }
 }
 
 extension HistoryViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if stopDynamicLoading {
+            return
+        }
+        
+        //тут мы будем динамически подгружать данные 
         guard let dataSource = viewModel.dataSource else {
             return
         }
         let section = dataSource.sectionModels[indexPath.section]
         
-        if section.state == .waiting {
-            loadDayTriger.onNext(section.day)
+        //получаем время секции
+        let day = section.day
+        
+        //ищем день, который будет отображаться
+        guard let willDisplayDayIndex = allAvailableDates.firstIndex(of: day) else {
+            return
+        }
+        
+        //если предыдущий не загружен - загружаем
+        if let nextDay = allAvailableDates.item(at: willDisplayDayIndex+1) {
+            if daysQueue.contains(nextDay) {
+                daysQueue.removeAll(nextDay)
+                loadDayTriger.onNext(nextDay)
+            }
+        }
+        //если следующий не загружен - загружаем
+        if let previousDay = allAvailableDates.item(at: willDisplayDayIndex-1) {
+            if daysQueue.contains(previousDay) {
+                daysQueue.removeAll(previousDay)
+                loadDayTriger.onNext(previousDay)
+            }
         }
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -278,22 +390,21 @@ extension HistoryViewController: UITableViewDelegate {
         return headerView
     }
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        /*
-        topToolbarPositon.constant = velocity.y > 0 ? -44 : 0
-        
-        UIView.animate(withDuration: 0.5, delay: 0, options: [UIView.AnimationOptions.allowUserInteraction], animations: {
-            self.view.layoutIfNeeded()
-        })
-        */
-    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         //print("contentOffset.y = \(scrollView.contentOffset.y)")
+        //управление скрытием кнопки scrollUp
+        
+        if scrollView.contentOffset.y > 0 && scrollUpButton.alpha == 0 {
+            scrollUpButton.view.fadeIn(duration: 0.5, completion: { _ in self.scrollUpButton.isHidden = false })
+        }
+        if scrollView.contentOffset.y <= 0 && scrollUpButton.alpha == 1 {
+            scrollUpButton.view.fadeOut(duration: 0.5, completion: { _ in self.scrollUpButton.isHidden = true })
+        }
         
         //не скрывать тулбар, если контент умещается без скрола
-        if scrollView.contentSize.height <= scrollView.frame.size.height {
+        if scrollView.contentSize.height <= scrollView.frame.size.height || lockToolbar {
             topToolbarPositon.constant = 0
+            self.view.layoutIfNeeded()
             return
         }
         //если скрол-вью отползает в нормальное положение после отскока, то игнорируем это движение
@@ -330,15 +441,36 @@ extension HistoryViewController: UITableViewDelegate {
         
         self.lastContentOffset = scrollView.contentOffset.y
         //конец "магии" тулбара
-        
-        //управление скрытием кнопки scrollUp
-        if scrollView.contentOffset.y > 0 && scrollUpButton.alpha == 0 {
-            scrollUpButton.view.fadeIn(duration: 0.5, completion: { _ in self.scrollUpButton.isHidden = false })
-        }
-        if scrollView.contentOffset.y <= 0 && scrollUpButton.alpha == 1 {
-            scrollUpButton.view.fadeOut(duration: 0.5, completion: { _ in self.scrollUpButton.isHidden = true })
-        }
-            
     }
 }
 
+class UITableViewWithHandler: UITableView {
+    //чтобы была возможность скролить табличку, после того, как в неё попали новые данные, пришлось немного модифицировать штатный класс, т.к.
+    //RxDataSource штатно из коробки такой возможности не предоставлял
+    public var afterUpdateHandler: (() -> Void)? = nil
+        
+    override func performBatchUpdates(_ updates: (() -> Void)?,
+                                      completion: ((Bool) -> Void)? = nil) {
+        let modifiedCompletition: ((Bool) -> Void)? = { finished in
+            completion?(finished)
+            /*DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+                        self?.afterUpdateHandler?()
+                        self?.afterUpdateHandler = nil
+                    }
+            */
+            self.afterUpdateHandler?()
+            //self.afterUpdateHandler = nil
+            /***/
+        }
+        print("performBatchUpdates")
+        super.performBatchUpdates(updates, completion: modifiedCompletition)
+    }
+}
+
+extension PopOverDatePickerViewController {
+  
+    override open func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.post(.init(name: .popupDimissed, object: nil))
+    }
+}

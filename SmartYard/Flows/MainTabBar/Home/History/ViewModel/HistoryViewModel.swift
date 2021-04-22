@@ -210,6 +210,7 @@ class HistoryViewModel: BaseViewModel {
                     .flatMap { $0 }
                     .map { $0.day }
                     .duplicatesRemoved()
+                    .sorted(by: >)
             }
             .disposed(by: disposeBag)
             

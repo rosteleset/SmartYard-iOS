@@ -42,4 +42,7 @@ extension Notification.Name {
     
     static let applicationDidEnterBackground = Notification.Name("ApplicationDidEnterBackground")
     static let applicationDidEnterForeground = Notification.Name("ApplicationDidEnterForeground")
+    
+    static let popupDimissed = Notification.Name("PopUpDimissed")
+    
 }
