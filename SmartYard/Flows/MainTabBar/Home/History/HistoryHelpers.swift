@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import PopOverDatePicker
+
 
 typealias DataSection = (day: Date, items: [APIPlog], flatId: Int)
 
@@ -125,4 +127,27 @@ class ArrayChoiceTableViewController<Element> : UITableViewController {
         onSelect?(values[indexPath.row], selectedRow)
     }
     
+}
+
+class UITableViewWithHandler: UITableView {
+    //чтобы была возможность скролить табличку, после того, как в неё попали новые данные, пришлось немного модифицировать штатный класс, т.к.
+    //RxDataSource штатно из коробки такой возможности не предоставлял
+    public var afterUpdateHandler: (() -> Void)? = nil
+        
+    override func performBatchUpdates(_ updates: (() -> Void)?,
+                                      completion: ((Bool) -> Void)? = nil) {
+        let modifiedCompletition: ((Bool) -> Void)? = { finished in
+            completion?(finished)
+            self.afterUpdateHandler?()
+        }
+        super.performBatchUpdates(updates, completion: modifiedCompletition)
+    }
+}
+
+extension PopOverDatePickerViewController {
+  
+    override open func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.post(.init(name: .popupDimissed, object: nil))
+    }
 }

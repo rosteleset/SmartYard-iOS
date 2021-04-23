@@ -11,6 +11,7 @@ struct PlogDaysRequest {
     
     let accessToken: String
     let flatId: String
+    let events: EventsFilter?
 }
 
 extension PlogDaysRequest {
@@ -19,7 +20,26 @@ extension PlogDaysRequest {
         var params: [String: Any] = [
             "flatId": flatId
         ]
+        guard let events = events else {
+            return params
+        }
         
+        switch events {
+        case .all:
+            break
+        case .domophones:
+            params["events"] = "1,2"
+        case .keys:
+            params["events"] = "3"
+        case .faces:
+            params["events"] = "5"
+        case .wickets:
+            params["events"] = "7,8"
+        case .application:
+            params["events"] = "4"
+        case .code:
+            params["events"] = "6"
+        }
         return params
     }
     

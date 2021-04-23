@@ -24,6 +24,7 @@ class HistoryViewModel: BaseViewModel {
     private let address: BehaviorSubject<String?> //Адрес этого дома
     public var flatIds: [Int] = [] //список доступных квартир по адресу
     public var flatNumbers: [Int] = [] //список доступных квартир по адресу
+    public var flatIdsFilter: [Int] = [] //список квартир для отображения
     
     /// массив из квартир с массивом дат, доступных для каждой.
     private let availableDays = BehaviorRelay<AvailableDays>(value: [:])
@@ -36,9 +37,6 @@ class HistoryViewModel: BaseViewModel {
     
     /// Очередь активных запросов на загрузку (FlatId, Date) - запросы по которым мы ожидаем данные и повторно их не запрашиваем
     private var loadingQueue: [(flatId: Int, day: Date)] = []
-    
-    /// Очередь ожидающих запросов на загрузку (FlatId, Date) - запросы по которым мы пока не запрашивали данные
-    private var waitingQueue: [FlatId: [Date]] = [:]
     
     /// все загруженные данные от API
     private let dataCache = BehaviorRelay<[DataSection]>(value: [])
@@ -67,7 +65,8 @@ class HistoryViewModel: BaseViewModel {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()
         let availableDaysForFlat = PublishSubject<AvailableDays>()
-        let updateSections = PublishSubject<(EventsFilter, [FlatId])>()
+        let updateSections = PublishSubject<Void>()
+        let updateAvailableDays = PublishSubject<Void>()
         
         errorTracker.asDriver()
             .drive(
@@ -114,9 +113,10 @@ class HistoryViewModel: BaseViewModel {
                     
                     lock.lock()
                     let isInQueue = self.loadingQueue.first { $0.flatId == flatId && $0.day == day }
+                    let isInCache = self.dataCache.value.first { $0.flatId == flatId && $0.day == day }
                     
-                    //если мы уже запрашиваем этот элемент, то не запрашиваем его повторно
-                    if isInQueue != nil {
+                    //если мы уже запрашиваем или имеем в кеше этот элемент, то не запрашиваем его повторно
+                    guard isInQueue == nil, isInCache == nil else {
                         lock.unlock()
                         return
                     }
@@ -164,7 +164,15 @@ class HistoryViewModel: BaseViewModel {
         
         //при изменении фильтров обновляем секции
         Observable.combineLatest(eventsFilter, apptsFilter)
+            .map({ ( _, _ ) -> Void in
+                return
+            })
             .asDriverOnErrorJustComplete()
+            .do(
+                onNext: { _ in
+                    updateAvailableDays.onNext(())
+                }
+            )
             .drive(updateSections)
             .disposed(by: disposeBag)
         
@@ -177,7 +185,14 @@ class HistoryViewModel: BaseViewModel {
                 
                 //дополняем кэш полученной порцией данных
                 self.dataCache.accept(self.dataCache.value + [data])
-                updateSections.onNext((self.eventsFilter.value, self.apptsFilter.value))
+                
+                self.loadingQueue.removeAll { $0.flatId == data.flatId && $0.day == data.day }
+                
+                //чтобы лишний раз не дёргать контроллер, обновляем данные, только когда вся очередь загрузки будет пустой.
+                if self.loadingQueue.isEmpty {
+                    updateSections.onNext(())
+                }
+                //updateSections.onNext((self.eventsFilter.value, self.apptsFilter.value))
             }
             .disposed(by: disposeBag)
 
@@ -190,9 +205,6 @@ class HistoryViewModel: BaseViewModel {
                 
                 //добавляем новую порцию данных, объединяя массивы данных для одинаковых flatId
                 let newValue = self.availableDays.value.merging(data, uniquingKeysWith: +)
-                
-                //наполняем очередь ожидания загрузки
-                self.waitingQueue.merge(data.mapValues { $0.map { $0.day } }, uniquingKeysWith: +)
                 
                 self.availableDays.accept(newValue)
             }
@@ -211,93 +223,127 @@ class HistoryViewModel: BaseViewModel {
                     .map { $0.day }
                     .duplicatesRemoved()
                     .sorted(by: >)
+                updateSections.onNext(())
             }
             .disposed(by: disposeBag)
             
         //выдаёт в sections готовые секции для dataModel в учётом всех фильтров
-        updateSections.asDriverOnErrorJustComplete()
+        updateSections
+            //.debug()
+            .asDriverOnErrorJustComplete()
             .debounce(.milliseconds(100))
-            .drive { [weak self] (events, flats) in
+            .drive(
+                onNext: { [weak self] _ in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    let result = self.uniqueDays
+                        //делаем заготовку будущей секции из массива дат, вообще доступных на сервере
+                        .map { sectionDay -> (day: Date, items: [APIPlog]) in
+                        return (
+                            day: sectionDay,
+                            items: self.dataCache.value
+                                //для каждой даты делаем выборку всех доступных данных в кэше,
+                                //заодно сразу отфильтровываем данные по квартирам, которые не попадают в фильтр
+                                .filter { $0.day == sectionDay && self.flatIdsFilter.contains($0.flatId) }
+                                //отрезаем нам не нужные лишние поля даты и квартиры и объединяем массивы данных от разных квартир в один общий
+                                .flatMap { $0.items }
+                                //удаляем записи с одинаковым uuid, которые одновременно могли присутствовать в разных квартирах
+                                .duplicatesRemoved()
+                            )
+                        }
+                        //удаляеем даты в которых нет ни одной записи
+                        .filter { !$0.items.isEmpty }
+                        //превращаем получившийся массив в секции: одна дата – одна секция
+                        .map { (day: Date, items: [APIPlog]) -> HistorySectionModel in
+                            return HistorySectionModel(
+                                identity: day,
+                                itemsCount: items.count,
+                                state: .loaded,
+                                items: items
+                                    //сами элементы в секциях фильтруем в соответствии с фильтром отображаемых событий
+                                    .filter {
+                                        //если выбраны "все" события в фильтре, то не фильтруем совсем
+                                        if self.eventsFilter.value == .all {
+                                            return true
+                                        }
+                                        var eventType: EventsFilter
+                                        //иначе: мапим тип события с фильтром
+                                        switch $0.event {
+                                        case .unanswered, .answered:
+                                            eventType = .domophones
+                                        case .rfid:
+                                            eventType = .keys
+                                        case .app:
+                                            eventType = .application
+                                        case .face:
+                                            eventType = .faces
+                                        case .passcode:
+                                            eventType = .code
+                                        case .call, .plate:
+                                            eventType = .wickets
+                                        case .unknown:
+                                            eventType = .all
+                                        }
+                                        //и фильтруем, только те типы, которые совпадают с фильтром
+                                        return eventType == self.eventsFilter.value
+                                    }
+                                    .enumerated()
+                                    //поскольку RxDataSource определяет небходимость обновлять ячейки по изменению их содержимого,
+                                    //то приходится в элементах хранить атрибут позиции внутри секции, чтобы TableView правильно перерисовывал
+                                    //закругления и управлял отображением заголовка секции в каждой первой ячейке.
+                                    .map {
+                                        HistoryDataItem(
+                                            identity: $0.element.uuid,
+                                            order: self.orderOf(row: $0.offset, count: items.count),
+                                            value: $0.element
+                                        )
+                                    }
+                            )
+                        }
+                        //удаляем секции тех дней, для которых из-за фильтра по типу событий не оказалось ни одной записи
+                        .filter { $0.items.isEmpty == false }
+                        
+                    self.sections.onNext(result)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        updateAvailableDays
+            .asDriverOnErrorJustComplete()
+            .flatMap { [weak self] _ -> Driver<AvailableDays?> in
                 guard let self = self else {
-                    return
+                    return .just(nil)
                 }
                 
-                //если фильтр пустой, то значит отображаем все квартиры, иначе заполняем фильтр квартирами согласно выбора пользователя.
-                let flatIdsFilter = self.apptsFilter.value.isEmpty ? self.flatIds : self.apptsFilter.value
+                //сбрасываем данные от предыдущих запросов, но кэш не трогаем.
+                self.uniqueDays = []
+                self.availableDays.accept([:])
                 
-                let result = self.uniqueDays
-                    //делаем заготовку будущей секции из массива дат, вообще доступных на сервере
-                    .map { sectionDay -> (day: Date, items: [APIPlog]) in
-                    return (
-                        day: sectionDay,
-                        items: self.dataCache.value
-                            //для каждой даты делаем выборку всех доступных данных в кэше,
-                            //заодно сразу отфильтровываем данные по квартирам, которые не попадают в фильтр
-                            .filter { (day: Date, items: [APIPlog], flatId: Int) in
-                                return day == sectionDay && flatIdsFilter.contains(flatId)
-                            }
-                            //отрезаем нам не нужные лишние поля даты и квартиры и объединяем массивы данных от разных квартир в один общий
-                            .flatMap { (day: Date, items: [APIPlog], flatId: Int) -> [APIPlog] in
-                                return items
-                            }
-                            //удаляем записи с одинаковым uuid, которые одновременно могли присутствовать в разных квартирах
-                            .duplicatesRemoved()
-                        )
-                    }
-                    //удаляеем даты в которых нет ни одной записи
-                    .filter { !$0.items.isEmpty }
-                    //превращаем получившийся массив в секции: одна дата – одна секция
-                    .map { (day: Date, items: [APIPlog]) -> HistorySectionModel in
-                        return HistorySectionModel(
-                            identity: day,
-                            itemsCount: items.count,
-                            state: .loaded,
-                            items: items
-                                //сами элементы в секциях фильтруем в соответствии с фильтром отображаемых событий
-                                .filter {
-                                    //если выбраны "все" события в фильтре, то не фильтруем совсем
-                                    if events == .all {
-                                        return true
-                                    }
-                                    var eventType: EventsFilter
-                                    //иначе: мапим тип события с фильтром
-                                    switch $0.event {
-                                    case .unanswered, .answered:
-                                        eventType = .domophones
-                                    case .rfid:
-                                        eventType = .keys
-                                    case .app:
-                                        eventType = .application
-                                    case .face:
-                                        eventType = .faces
-                                    case .passcode:
-                                        eventType = .code
-                                    case .call, .plate:
-                                        eventType = .wickets
-                                    case .unknown:
-                                        eventType = .all
-                                    }
-                                    //и фильтруем, только те типы, которые совпадают с фильтром
-                                    return eventType == events
-                                }
-                                .enumerated()
-                                //поскольку RxDataSource определяет небходимость обновлять ячейки по изменению их содержимого,
-                                //то приходится в элементах хранить атрибут позиции внутри секции, чтобы TableView правильно перерисовывал
-                                //закругления и управлял отображением заголовка секции в каждой первой ячейке.
-                                .map { HistoryDataItem(
-                                    identity: $0.element.uuid,
-                                    order: self.orderOf(row: $0.offset, count: items.count),
-                                    value: $0.element
-                                )}
-                        )
-                    }
-                    //удаляем секции тех дней, для которых из-за фильтра по типу событий не оказалось ни одной записи
-                    .filter { section -> Bool in
-                        return !section.items.isEmpty
-                    }
-
-                self.sections.onNext(result)
+                //если фильтр пустой, то значит отображаем все квартиры, иначе заполняем фильтр квартирами согласно выбора пользователя.
+                self.flatIdsFilter = self.apptsFilter.value.isEmpty ? self.flatIds : self.apptsFilter.value
+                
+                let results = PublishSubject<AvailableDays?>()
+                
+                //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
+                //как отдельный элемент в текущую последовательность
+                self.flatIdsFilter.forEach { flatId in
+                    self.apiWrapper.plogDays(flatId: flatId, events: self.eventsFilter.value)
+                        .trackError(errorTracker)
+                        .map { $0 == nil ?  nil : [flatId: $0!] } //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
+                        .asDriver(onErrorJustReturn: nil)
+                        .drive { result in
+                            results.onNext(result)
+                        }
+                        .disposed(by: self.disposeBag)
+                }
+                
+                return results.asDriver(onErrorJustReturn: nil)
             }
+            .trackError(errorTracker)
+            .ignoreNil()
+            .bind(to: availableDaysForFlat)
             .disposed(by: disposeBag)
         
         // мы знаем только id дома, а логи запрашиваются для id квартиры,
@@ -316,6 +362,9 @@ class HistoryViewModel: BaseViewModel {
                 //получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
                 self.flatIds = args.filtered ( { $0.houseId == self.houseId },  map: { (Int($0.flatId!) ?? -1) } )
                 
+                //если фильтр пустой, то значит отображаем все квартиры, иначе заполняем фильтр квартирами согласно выбора пользователя.
+                self.flatIdsFilter = self.apptsFilter.value.isEmpty ? self.flatIds : self.apptsFilter.value
+                
                 //получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
                 self.flatNumbers = args.filtered ( { $0.houseId == self.houseId },  map: { (Int($0.flatNumber!) ?? -1) } )
                 
@@ -324,13 +373,12 @@ class HistoryViewModel: BaseViewModel {
                 
                 //на всякий случай сбрасываем все данные от предыдущих запросов.
                 self.loadingQueue = []
-                self.waitingQueue = [:]
                 self.dataCache.accept([])
                 self.uniqueDays = []
                 
                 //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
                 //как отдельный элемент в текущую последовательность
-                self.flatIds.forEach { flatId in
+                self.flatIdsFilter.forEach { flatId in
                     self.apiWrapper.plogDays(flatId: flatId)
                         .trackError(errorTracker)
                         .map { $0 == nil ?  nil : [flatId: $0!] } //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса

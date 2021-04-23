@@ -129,11 +129,11 @@ extension APIWrapper {
             .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
-    func plogDays(flatId: Int) -> Single<PlogDaysResponseData?> {
-        return plogDays(flatId: String(flatId))
+    func plogDays(flatId: Int, events: EventsFilter? = .all) -> Single<PlogDaysResponseData?> {
+        return plogDays(flatId: String(flatId), events: events)
     }
     
-    func plogDays(flatId: String) -> Single<PlogDaysResponseData?> {
+    func plogDays(flatId: String, events: EventsFilter? = .all) -> Single<PlogDaysResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -142,7 +142,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = PlogDaysRequest(accessToken: accessToken, flatId: flatId)
+        let request = PlogDaysRequest(accessToken: accessToken, flatId: flatId, events: events)
         print("request data: \(request)")
         
         return provider.rx

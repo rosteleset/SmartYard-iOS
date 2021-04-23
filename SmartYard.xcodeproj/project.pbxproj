@@ -23,6 +23,8 @@
 		3A1BDED326287E690075410B /* HistoryViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BDED226287E690075410B /* HistoryViewController+Extension.swift */; };
 		3A1BDF1D2629F2740075410B /* HistoryItemCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BDF1B2629F2740075410B /* HistoryItemCollectionViewController.swift */; };
 		3A1BDF1E2629F2740075410B /* HistoryItemCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1BDF1C2629F2740075410B /* HistoryItemCollectionViewController.xib */; };
+		3A1BDF2C2632A2C20075410B /* HistoryDetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BDF2A2632A2C10075410B /* HistoryDetailCollectionViewController.swift */; };
+		3A1BDF2D2632A2C20075410B /* HistoryDetailCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1BDF2B2632A2C10075410B /* HistoryDetailCollectionViewController.xib */; };
 		3A3B8B9525A5CD2500BFB72E /* MainMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8B9425A5CD2500BFB72E /* MainMenuCoordinator.swift */; };
 		3A3B8BA225A5CF6F00BFB72E /* MainMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BA125A5CF6F00BFB72E /* MainMenuViewModel.swift */; };
 		3A3B8BB325A5D00C00BFB72E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */; };
@@ -542,6 +544,8 @@
 		3A1BDED226287E690075410B /* HistoryViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryViewController+Extension.swift"; sourceTree = "<group>"; };
 		3A1BDF1B2629F2740075410B /* HistoryItemCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryItemCollectionViewController.swift; sourceTree = "<group>"; };
 		3A1BDF1C2629F2740075410B /* HistoryItemCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryItemCollectionViewController.xib; sourceTree = "<group>"; };
+		3A1BDF2A2632A2C10075410B /* HistoryDetailCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDetailCollectionViewController.swift; sourceTree = "<group>"; };
+		3A1BDF2B2632A2C10075410B /* HistoryDetailCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryDetailCollectionViewController.xib; sourceTree = "<group>"; };
 		3A3B8B9425A5CD2500BFB72E /* MainMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuCoordinator.swift; sourceTree = "<group>"; };
 		3A3B8BA125A5CF6F00BFB72E /* MainMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewModel.swift; sourceTree = "<group>"; };
 		3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
@@ -1261,6 +1265,8 @@
 				3AC5C6172608F0F2008D74DE /* HistoryViewController.xib */,
 				3A1BDF1B2629F2740075410B /* HistoryItemCollectionViewController.swift */,
 				3A1BDF1C2629F2740075410B /* HistoryItemCollectionViewController.xib */,
+				3A1BDF2A2632A2C10075410B /* HistoryDetailCollectionViewController.swift */,
+				3A1BDF2B2632A2C10075410B /* HistoryDetailCollectionViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3769,6 +3775,7 @@
 				84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */,
 				84A67062241FB6E100BBA12B /* AddressAccessSkeletonView.xib in Resources */,
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
+				3A1BDF2D2632A2C20075410B /* HistoryDetailCollectionViewController.xib in Resources */,
 				846DC6C124B33DC600A11914 /* PaymentPopupController.xib in Resources */,
 				843C38E0242A57C40035BF80 /* NotificationsViewController.xib in Resources */,
 				E9004C5F23FABF2200B59976 /* IntercomTemporaryAccessView.xib in Resources */,
@@ -4115,6 +4122,7 @@
 				84854B4123FA9A99001B44F2 /* ActivityTracker.swift in Sources */,
 				846DC64D24B3143B00A11914 /* ArchiveVideoPlaybackSpeed.swift in Sources */,
 				84CD304A24D4053C00CC079E /* AppVersionRequest.swift in Sources */,
+				3A1BDF2C2632A2C20075410B /* HistoryDetailCollectionViewController.swift in Sources */,
 				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
 				E92EFBBA242A22F2003AF7FE /* GetStreetsRequest.swift in Sources */,
 				8496396B248667040086B6E9 /* PlayArchiveVideoViewModel.swift in Sources */,
