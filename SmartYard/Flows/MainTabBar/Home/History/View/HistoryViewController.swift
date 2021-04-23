@@ -164,7 +164,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                 }
                 
                 //Если ещё не пришли все ответы со списками дней, то ждём
-                if $0.keys.count < self.viewModel.flatIds.count {
+                if $0.keys.count < self.viewModel.flatIdsFilter.count {
                     return
                 }
 
@@ -272,9 +272,6 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     @IBAction private func tapCalendar(_ sender: Any) {
         self.lockToolbar = true
         
-        //TODO: если включен фильтр по типу событий или квартире, то переход на секцию в которой нет событий из-за фильтров "обломается"
-        //проблема заключается в том, что мы заранее не знаем, когда грузим секцию, будет ли она в итоге пустой после фильтров или нет. пока оставим так.
-        
         showCalendarPopover(
             from: calendarButton.imageView!,
             minDate: allAvailableDates.last ?? Date(),
@@ -335,12 +332,6 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
 extension HistoryViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // TODO: если включены фильтры, то может так случиться,
-        // что по запрошенному дню прилетит пустая секция,
-        // соответственно вся магия динамической загрузки дальше не отработает.
-        // надо придумать, какую и где добавить проверку,
-        // чтобы в таких случаях продолжать грузить следующие секции
-        
         if stopDynamicLoading {
             return
         }
