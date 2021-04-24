@@ -171,14 +171,8 @@ class HistoryViewModel: BaseViewModel {
         //при изменении фильтров обновляем список дней
         Observable.combineLatest(eventsFilter, apptsFilter)
             .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: {(_, appts) in
-                    if appts.isEmpty == false {
-                        updateAvailableDays.onNext(())
-                    }
-                }
-                
-            )
+            .mapToVoid()
+            .drive(updateAvailableDays)
             .disposed(by: disposeBag)
         
         //отсюда прилетает свежая порция событий журнала за день для квартиры от API
@@ -329,12 +323,6 @@ class HistoryViewModel: BaseViewModel {
                 self.uniqueDays = []
                 self.availableDays.accept([:])
                 
-                //если фильтр пустой, то значит отображаем все квартиры
-                if self.apptsFilter.value.isEmpty {
-                    self.apptsFilter.accept(self.flatIds)
-                    
-                }
-                
                 let results = PublishSubject<AvailableDays?>()
                 
                 //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
@@ -343,7 +331,7 @@ class HistoryViewModel: BaseViewModel {
                     self.apiWrapper.plogDays(flatId: flatId, events: self.eventsFilter.value)
                         .trackError(errorTracker)
                         .map { $0 == nil ?  nil : [flatId: $0!] } //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
-                        .asDriver(onErrorJustReturn: nil)
+                        .asDriver(onErrorJustReturn: [flatId: []])
                         .drive { result in
                             results.onNext(result)
                         }
