@@ -43,14 +43,16 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     
     private let itemSelectedTrigger = PublishSubject<Int>()
     private let loadDayTriger = PublishSubject<Date>()
-    private let dataCache = BehaviorRelay<[DataSection]>(value: [])
+    
     private var availableDays = BehaviorRelay<AvailableDays>(value: [:])
+    
+    ///все дни какие есть на сервере для данной комбинации фильтров
     private var allAvailableDates: [Date] = []
     
-    //облегчённая версия sectionModels - дни, которые есть в sectionModels
+    ///дни, которые есть в sectionModels, т.е. в таблице
     private var days: [Date] = []
     
-    //очередь дней для загрузки данных из модели
+    ///дни, которые есть на сервере, но их нет в sectionModels - чтобы они оказались в sectionModels, их надо запросить
     private var daysQueue: [Date] = []
     
     init(viewModel: HistoryViewModel) {
@@ -72,7 +74,6 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     
     fileprivate func setupTableView() {
         tableView.delegate = self
-        //tableView.dataSource = self
         tableView.register(nibWithCellClass: HistoryTableViewCell.self)
         tableView.register(nibWithCellClass: HistoryLoadingTableViewCell.self)
         
@@ -87,7 +88,6 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                 }
                 
                 self.configureCell(indexPath, cell, dataSource)
-                
                 return cell
             }
         )
@@ -126,7 +126,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             loadDay: loadDayTriger.asDriverOnErrorJustComplete(),
             eventsFilter: eventsFilter.asDriver(),
-            apptsFilter: apptsFilter.asDriver()
+            apptsFilterString: apptsFilter.asDriver()
         )
         
         let output = viewModel.transform(input)
@@ -163,11 +163,6 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                     self.appartmentFilterButton.isHidden = true
                 }
                 
-                //Если ещё не пришли все ответы со списками дней, то ждём
-                if $0.keys.count < self.viewModel.flatIdsFilter.count {
-                    return
-                }
-
                 //со всех квартир собираем все дни, убираем дубли, сортируем от поздних к ранним
                 self.daysQueue = $0.flatMap { $0.value }
                     .map { $0.day }
@@ -310,7 +305,6 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                     return
                 }
                 self.tableView.afterUpdateHandler = {
-                    print(self.days)
                     //проверяем, что нам надо будет скролить таблицу
                     guard let scrollOnDay = self.scrollOnDateIfLoads,
                           //ищем наиболее близкую дату к той, какую хочет найти пользователь

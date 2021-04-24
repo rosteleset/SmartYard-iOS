@@ -20,28 +20,38 @@ class HistoryViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<HomeRoute>
-    private let houseId: String // идентификатор дома для какого смотрим логи
-    private let address: BehaviorSubject<String?> //Адрес этого дома
-    public var flatIds: [Int] = [] //список доступных квартир по адресу
-    public var flatNumbers: [Int] = [] //список доступных квартир по адресу
-    public var flatIdsFilter: [Int] = [] //список квартир для отображения
     
-    /// массив из квартир с массивом дат, доступных для каждой.
+    /// идентификатор дома для какого смотрим логи
+    private let houseId: String
+    
+    ///Адрес этого дома
+    private let address: BehaviorSubject<String?>
+    
+    ///список доступных квартир по адресу на сервере
+    public var flatIds: [Int] = []
+    
+    ///список номеров доступных квартир по адресу на сервере
+    public var flatNumbers: [Int] = [] //список номеров доступных квартир по адресу на сервере
+    
+    ///список id квартир для отображения с учётом фильтра
+    //public var flatIdsFilter: [Int] = []
+    
+    /// массив из квартир с массивом дат, доступных для каждой с учётом текущих фильтров
     private let availableDays = BehaviorRelay<AvailableDays>(value: [:])
     
-    /// облегчённая версия availableDays - массив из доступных на сервере дат для всех квартир
+    /// облегчённая версия availableDays - массив из доступных дат с учётом текущих фильтров
     private var uniqueDays: [Date] = []
+    
+    /// Очередь активных запросов на загрузку (FlatId, Date) - запросы по которым мы уже ожидаем данные и повторно их не запрашиваем
+    private var loadingQueue: [(flatId: Int, day: Date)] = []
     
     /// сюда прилетают результаты запросов с API: один элемент - один день для одной квартиры
     private let logs = PublishSubject<DataSection>()
     
-    /// Очередь активных запросов на загрузку (FlatId, Date) - запросы по которым мы ожидаем данные и повторно их не запрашиваем
-    private var loadingQueue: [(flatId: Int, day: Date)] = []
-    
     /// все загруженные данные от API
     private let dataCache = BehaviorRelay<[DataSection]>(value: [])
     
-    /// данные для отображения в виде готовых секций для dataSource
+    /// данные для отображения в виде готовых секций для dataSource с учётом текущих фильтров
     private let sections = PublishSubject<[HistorySectionModel]>()
     
     /// датасорс для таблицы
@@ -60,7 +70,7 @@ class HistoryViewModel: BaseViewModel {
         self.address = BehaviorSubject<String?>(value: address)
     }
     
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()
@@ -98,14 +108,10 @@ class HistoryViewModel: BaseViewModel {
                 
                 //запрашиваем логи за день для каждой квартиры и результат каждого запроса отправляем,
                 //как отдельный элемент в текущую последовательность
-                self.flatIds.forEach { flatId in
+                self.apptsFilter.value.forEach { flatId in
                     //проверяем, что для этой квартиры есть записи в этот день
                     guard let days = self.availableDays.value[flatId],
-                          days.contains(
-                            where: { value -> Bool in
-                                value.day == day
-                            }
-                          )
+                          days.contains( where: { $0.day == day  })
                     //иначе переходим к следующей квартире.
                     else {
                         return
@@ -146,7 +152,7 @@ class HistoryViewModel: BaseViewModel {
             .drive(eventsFilter)
             .disposed(by: disposeBag)
         
-        input.apptsFilter
+        input.apptsFilterString
             .map { [weak self] flatString -> [Int] in
                 guard let self = self else {
                     return []
@@ -162,18 +168,17 @@ class HistoryViewModel: BaseViewModel {
             .drive(apptsFilter)
             .disposed(by: disposeBag)
         
-        //при изменении фильтров обновляем секции
+        //при изменении фильтров обновляем список дней
         Observable.combineLatest(eventsFilter, apptsFilter)
-            .map({ ( _, _ ) -> Void in
-                return
-            })
             .asDriverOnErrorJustComplete()
-            .do(
-                onNext: { _ in
-                    updateAvailableDays.onNext(())
+            .drive(
+                onNext: {(_, appts) in
+                    if appts.isEmpty == false {
+                        updateAvailableDays.onNext(())
+                    }
                 }
+                
             )
-            .drive(updateSections)
             .disposed(by: disposeBag)
         
         //отсюда прилетает свежая порция событий журнала за день для квартиры от API
@@ -192,7 +197,6 @@ class HistoryViewModel: BaseViewModel {
                 if self.loadingQueue.isEmpty {
                     updateSections.onNext(())
                 }
-                //updateSections.onNext((self.eventsFilter.value, self.apptsFilter.value))
             }
             .disposed(by: disposeBag)
 
@@ -205,7 +209,6 @@ class HistoryViewModel: BaseViewModel {
                 
                 //добавляем новую порцию данных, объединяя массивы данных для одинаковых flatId
                 let newValue = self.availableDays.value.merging(data, uniquingKeysWith: +)
-                
                 self.availableDays.accept(newValue)
             }
             .disposed(by: disposeBag)
@@ -218,12 +221,17 @@ class HistoryViewModel: BaseViewModel {
                     return
                 }
                 
+                //собираем со всех квартир доступные даты, агрегируем
                 self.uniqueDays = Array(data.values)
                     .flatMap { $0 }
                     .map { $0.day }
                     .duplicatesRemoved()
                     .sorted(by: >)
-                updateSections.onNext(())
+                
+                //Если мы обладаем данными для всех квартир из фильтра, то обновляем секции для таблицы
+                if data.count == self.apptsFilter.value.count {
+                    updateSections.onNext(())
+                }
             }
             .disposed(by: disposeBag)
             
@@ -246,7 +254,7 @@ class HistoryViewModel: BaseViewModel {
                             items: self.dataCache.value
                                 //для каждой даты делаем выборку всех доступных данных в кэше,
                                 //заодно сразу отфильтровываем данные по квартирам, которые не попадают в фильтр
-                                .filter { $0.day == sectionDay && self.flatIdsFilter.contains($0.flatId) }
+                                .filter { $0.day == sectionDay && self.apptsFilter.value.contains($0.flatId) }
                                 //отрезаем нам не нужные лишние поля даты и квартиры и объединяем массивы данных от разных квартир в один общий
                                 .flatMap { $0.items }
                                 //удаляем записи с одинаковым uuid, которые одновременно могли присутствовать в разных квартирах
@@ -321,14 +329,17 @@ class HistoryViewModel: BaseViewModel {
                 self.uniqueDays = []
                 self.availableDays.accept([:])
                 
-                //если фильтр пустой, то значит отображаем все квартиры, иначе заполняем фильтр квартирами согласно выбора пользователя.
-                self.flatIdsFilter = self.apptsFilter.value.isEmpty ? self.flatIds : self.apptsFilter.value
+                //если фильтр пустой, то значит отображаем все квартиры
+                if self.apptsFilter.value.isEmpty {
+                    self.apptsFilter.accept(self.flatIds)
+                    
+                }
                 
                 let results = PublishSubject<AvailableDays?>()
                 
                 //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
                 //как отдельный элемент в текущую последовательность
-                self.flatIdsFilter.forEach { flatId in
+                self.apptsFilter.value.forEach { flatId in
                     self.apiWrapper.plogDays(flatId: flatId, events: self.eventsFilter.value)
                         .trackError(errorTracker)
                         .map { $0 == nil ?  nil : [flatId: $0!] } //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
@@ -354,46 +365,22 @@ class HistoryViewModel: BaseViewModel {
             .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
-            .flatMap { [weak self] args -> Driver<AvailableDays?> in
+            .drive { [weak self] args in
                 guard let self = self else {
-                    return .just(nil)
+                    return
                 }
                 
                 //получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
                 self.flatIds = args.filtered ( { $0.houseId == self.houseId },  map: { (Int($0.flatId!) ?? -1) } )
                 
-                //если фильтр пустой, то значит отображаем все квартиры, иначе заполняем фильтр квартирами согласно выбора пользователя.
-                self.flatIdsFilter = self.apptsFilter.value.isEmpty ? self.flatIds : self.apptsFilter.value
-                
                 //получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
                 self.flatNumbers = args.filtered ( { $0.houseId == self.houseId },  map: { (Int($0.flatNumber!) ?? -1) } )
                 
+                //по умолчанию фильтр содержит все доступные квартиры
+                self.apptsFilter.accept(self.flatIds)
                 
-                let results = PublishSubject<AvailableDays?>()
-                
-                //на всякий случай сбрасываем все данные от предыдущих запросов.
-                self.loadingQueue = []
-                self.dataCache.accept([])
-                self.uniqueDays = []
-                
-                //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
-                //как отдельный элемент в текущую последовательность
-                self.flatIdsFilter.forEach { flatId in
-                    self.apiWrapper.plogDays(flatId: flatId)
-                        .trackError(errorTracker)
-                        .map { $0 == nil ?  nil : [flatId: $0!] } //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
-                        .asDriver(onErrorJustReturn: nil)
-                        .drive { result in
-                            results.onNext(result)
-                        }
-                        .disposed(by: self.disposeBag)
-                }
-                
-                return results.asDriver(onErrorJustReturn: nil)
+                //изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
             }
-            .trackError(errorTracker)
-            .ignoreNil()
-            .bind(to: availableDaysForFlat)
             .disposed(by: disposeBag)
         
         return Output(
@@ -414,7 +401,7 @@ extension HistoryViewModel {
         let backTrigger: Driver<Void>
         let loadDay: Driver<Date>
         let eventsFilter: Driver<EventsFilter>
-        let apptsFilter: Driver<String>
+        let apptsFilterString: Driver<String>
         
     }
     
