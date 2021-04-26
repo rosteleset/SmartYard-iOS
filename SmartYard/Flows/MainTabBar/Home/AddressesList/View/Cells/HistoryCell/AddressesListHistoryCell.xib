@@ -80,6 +80,7 @@
             <connections>
                 <outlet property="arrowImageView" destination="cUS-jh-sG1" id="t4h-OS-AEk"/>
                 <outlet property="historyCountLabel" destination="mPJ-dN-ej9" id="rM6-yj-0Vh"/>
+                <outlet property="labelContainer" destination="VqD-it-4ni" id="Kg4-jm-2f2"/>
             </connections>
             <point key="canvasLocation" x="-25.362318840579711" y="113.50446428571428"/>
         </collectionViewCell>

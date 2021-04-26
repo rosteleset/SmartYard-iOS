@@ -47,33 +47,6 @@ class MainMenuViewController: BaseViewController {
             bottomButton: callSupportTrigger.asDriverOnErrorJustComplete()
         )
         
-        /*
-        collectionView.rx.itemSelected.asDriver()
-            .filter { indexPath -> Bool in
-                guard indexPath.section == 0 else {
-                    return false
-                }
-                
-                return true
-            }
-            .drive(itemSelected)
-            .disposed(by: disposeBag)
-        
-        collectionView.rx.itemSelected.asDriver()
-            .filter { indexPath -> Bool in
-                guard indexPath.section == 1 else {
-                    return false
-                }
-                return true
-            }
-            .drive(
-                onNext: { [weak self] indexPath in
-                    self?.callSupportTrigger.onNext(Void())
-                }
-            )
-            .disposed(by: disposeBag)
-        */
-        
         collectionView.rx.itemSelected.asDriver()
             .drive(
                 onNext: { [weak self] indexPath in

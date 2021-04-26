@@ -10,16 +10,22 @@ import UIKit
 
 class AddressesListHistoryCell: CustomBorderCollectionViewCell {
     
+    @IBOutlet private weak var labelContainer: UIView!
     @IBOutlet private weak var historyCountLabel: UILabel!
     @IBOutlet private weak var arrowImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configure(count: 0)
+        configure(itemsCount: 0)
     }
     
-    func configure(count: Int) {
-        historyCountLabel.text = String(count)
+    func configure(itemsCount: Int) {
+        if itemsCount > 0 {
+            labelContainer.isHidden = false
+            historyCountLabel.text = String(itemsCount)
+        } else {
+            labelContainer.isHidden = true
+        }
     }
 
 }

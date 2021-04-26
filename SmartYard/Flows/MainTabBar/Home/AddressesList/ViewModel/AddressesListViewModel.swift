@@ -627,7 +627,7 @@ extension AddressesListViewModel {
                     if doors.isEmpty {
                         return nil
                     }
-                    return .history(identity: .history(addressId: addressId), numberOfEvents: 99)
+                    return .history(identity: .history(addressId: addressId), numberOfEvents: 0)
                 }()
                 
                 return doors + [cameras].compactMap { $0 } + [history].compactMap { $0 }

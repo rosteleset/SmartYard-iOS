@@ -311,7 +311,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             
             case let .history(_, eventsCount):
                 let cell = collectionView.dequeueReusableCell(withClass: AddressesListHistoryCell.self, for: indexPath)
-                cell.configure(count: eventsCount)
+                cell.configure(itemsCount: eventsCount)
                 return cell
                 
             case let .unapprovedAddresses(_, address):

@@ -31,6 +31,7 @@ enum HomeRoute: Route {
     case yardCamerasMap(houseId: String, address: String)
     case playArchiveVideo(camera: CameraObject, date: Date, availableRanges: [APIArchiveRange])
     case history(houseId: String, address: String)
+    case historyDetail(viewModel: HistoryViewModel, item: HistoryDataItem)
     
 }
 
@@ -272,6 +273,11 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let vm = HistoryViewModel(apiWrapper: apiWrapper, houseId: houseId, address: address, router: weakRouter)
             let vc = HistoryViewController(viewModel: vm)
             
+            return .push(vc)
+            
+        case let .historyDetail(vm, item):
+            let vc = HistoryDetailViewController(viewModel: vm, focusedOn: item)
+   
             return .push(vc)
         }
     }

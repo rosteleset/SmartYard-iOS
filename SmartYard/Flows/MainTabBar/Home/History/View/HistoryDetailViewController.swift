@@ -1,0 +1,189 @@
+//
+//  HistoryDetailViewController.swift
+//  SmartYard
+//
+//  Created by Александр Васильев on 24.04.2021.
+//  Copyright © 2021 LanTa. All rights reserved.
+//
+
+import UIKit
+import JGProgressHUD
+import RxSwift
+import RxCocoa
+import RxDataSources
+
+class HistoryDetailViewController: BaseViewController, LoaderPresentable {
+    var loader: JGProgressHUD?
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
+    
+    @IBOutlet private weak var collectionView: UICollectionView!
+    
+    fileprivate let viewModel: HistoryViewModel
+    
+    fileprivate var dataSource: RxCollectionViewSectionedAnimatedDataSource<HistorySectionModel>?
+    
+    private let loadDayTriger = PublishSubject<Date>()
+    private var availableDays = BehaviorRelay<AvailableDays>(value: [:])
+    
+    ///дни, которые есть в sectionModels, т.е. в таблице
+    private var days: [Date] = []
+    
+    ///все дни какие есть на сервере для данной комбинации фильтров
+    private var allAvailableDates: [Date] = []
+    
+    ///дни, которые есть на сервере, но их нет в sectionModels - чтобы они оказались в sectionModels, их надо запросить
+    private var daysQueue: [Date] = []
+    
+    var stopDynamicLoading: Bool = false
+    
+    private let imagesCache = NSCache<NSString,UIImage>()
+    
+    init(viewModel: HistoryViewModel, focusedOn: HistoryDataItem) {
+        self.viewModel = viewModel
+        print(focusedOn)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        fakeNavBar.configueDarkNavBar()
+        fakeNavBar.setText("События")
+        setupCollectionView()
+        bind()
+    }
+    
+    fileprivate func setupCollectionView() {
+        collectionView.register(nibWithCellClass: HistoryCollectionViewCell.self)
+        
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 11, bottom: 0, right: 11)
+        collectionView.decelerationRate = .fast
+        
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .horizontal
+        }
+        
+        self.dataSource = RxCollectionViewSectionedAnimatedDataSource<HistorySectionModel>(
+            configureCell: { _, collectionView, indexPath, item in
+                let cell: HistoryCollectionViewCell = collectionView.dequeueReusableCell(withClass: HistoryCollectionViewCell.self, for: indexPath)
+                
+                cell.configure(value: item.value, using: self.imagesCache)
+                return cell
+            }
+        )
+    }
+    
+    func bind() {
+        let trigger = PublishSubject<Void>()
+        
+        let input = HistoryViewModel.InputDetail(
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
+            updateSections: trigger.asDriver(onErrorJustReturn: ()),
+            loadDay: loadDayTriger.asDriverOnErrorJustComplete()
+        )
+        
+        let output = viewModel.transform(input)
+        
+        output.sections //отсюда притетает свежий [HistorySectionModels] для DataSource таблицы
+            .do(
+                onNext: { sectionModels in
+                    self.days = sectionModels.map { $0.day }
+            
+                }
+            )
+            .drive(collectionView.rx.items(dataSource: dataSource!))
+            .disposed(by: disposeBag)
+        
+        output.availableDays
+            .drive(availableDays)
+            .disposed(by: disposeBag)
+        
+        availableDays.asDriverOnErrorJustComplete()
+            .drive {
+                //со всех квартир собираем все дни, убираем дубли, сортируем от поздних к ранним
+                self.daysQueue = $0.flatMap { $0.value }
+                    .map { $0.day }
+                    .duplicatesRemoved()
+                    .sorted(by: >)
+                
+                //сохраняем список всех имеющихся дат на будущее - пригодятся.
+                self.allAvailableDates = self.daysQueue
+            }
+            .disposed(by: disposeBag)
+        
+    }
+}
+
+extension HistoryDetailViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        
+        return CGSize(width: collectionView.width - 32, height: collectionView.height)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+    
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if stopDynamicLoading {
+            return
+        }
+        
+        //тут мы будем динамически подгружать данные
+        guard let dataSource = dataSource else {
+            return
+        }
+        let section = dataSource.sectionModels[indexPath.section]
+        
+        //получаем время секции
+        let day = section.day
+        
+        //ищем день, который будет отображаться
+        guard let willDisplayDayIndex = allAvailableDates.firstIndex(of: day) else {
+            return
+        }
+        
+        //если предыдущий не загружен - загружаем
+        if let nextDay = allAvailableDates.item(at: willDisplayDayIndex + 1) {
+            if daysQueue.contains(nextDay) {
+                daysQueue.removeAll(nextDay)
+                loadDayTriger.onNext(nextDay)
+            }
+        }
+        //если следующий не загружен - загружаем
+        if let previousDay = allAvailableDates.item(at: willDisplayDayIndex - 1) {
+            if daysQueue.contains(previousDay) {
+                daysQueue.removeAll(previousDay)
+                loadDayTriger.onNext(previousDay)
+            }
+        }
+    }
+}

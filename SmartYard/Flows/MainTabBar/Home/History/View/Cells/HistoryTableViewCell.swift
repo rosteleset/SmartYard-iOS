@@ -26,6 +26,8 @@ class HistoryTableViewCell: UITableViewCell {
     @IBOutlet private weak var separatorView: UIView!
     @IBOutlet private var dateLabelConstraints: [NSLayoutConstraint]!
     @IBOutlet private var desсriptionLabelConstraints: [NSLayoutConstraint]!
+    private var descriptionLabelHidden: UILabel?
+    private var dateLabelHidden: UILabel?
     
     //var cellOrder: HistoryCellOrder = .regular
     
@@ -57,6 +59,7 @@ class HistoryTableViewCell: UITableViewCell {
             if !containerView.subviews.contains(dateLabel) {
                 containerView.addSubview(dateLabel)
                 dateLabelConstraints.forEach { $0.isActive = true }
+                dateLabelHidden = nil
             }
             
             let df = DateFormatter()
@@ -66,6 +69,7 @@ class HistoryTableViewCell: UITableViewCell {
         case .regular:
             separatorView.isHidden = false
             containerView.layer.maskedCorners = []
+            dateLabelHidden = dateLabel
             if containerView.subviews.contains(dateLabel) {
                 dateLabel.removeFromSuperview()
             }
@@ -73,6 +77,7 @@ class HistoryTableViewCell: UITableViewCell {
         case .last:
             separatorView.isHidden = true
             containerView.layer.maskedCorners = [.bottomCorners]
+            dateLabelHidden = dateLabel
             if containerView.subviews.contains(dateLabel) {
                 dateLabel.removeFromSuperview()
             }
@@ -80,6 +85,7 @@ class HistoryTableViewCell: UITableViewCell {
         
         //настраиваем отображение поля с описанием
         if value.detail.isEmpty {
+            descriptionLabelHidden = descriptionLabel
             if containerView.subviews.contains(descriptionLabel) {
                 descriptionLabel.removeFromSuperview()
             }
@@ -88,6 +94,7 @@ class HistoryTableViewCell: UITableViewCell {
                 containerView.addSubview(descriptionLabel)
                 desсriptionLabelConstraints.forEach { $0.isActive = true }
             }
+            descriptionLabelHidden = nil
         }
         
         //общие операции для всех ячеек, вне зависимости от их места в секции

@@ -38,13 +38,16 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     var loader: JGProgressHUD?
     
     fileprivate let viewModel: HistoryViewModel
-    public var eventsFilter = BehaviorRelay<EventsFilter>(value: .all)
-    public var apptsFilter = BehaviorRelay<String>(value: "все") 
+    internal var eventsFilter = BehaviorRelay<EventsFilter>(value: .all)
+    private var apptsFilterString = BehaviorRelay<String>(value: "все") 
+    private let apptsFilter = BehaviorRelay<[Int]>(value: [])
     
-    private let itemSelectedTrigger = PublishSubject<Int>()
     private let loadDayTriger = PublishSubject<Date>()
     
     private var availableDays = BehaviorRelay<AvailableDays>(value: [:])
+    
+    /// датасорс для таблицы
+    private var dataSource: RxTableViewSectionedAnimatedDataSource<HistorySectionModel>?
     
     ///все дни какие есть на сервере для данной комбинации фильтров
     private var allAvailableDates: [Date] = []
@@ -79,7 +82,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
         
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
        
-        viewModel.dataSource = RxTableViewSectionedAnimatedDataSource<HistorySectionModel>(
+        dataSource = RxTableViewSectionedAnimatedDataSource<HistorySectionModel>(
             configureCell: { [weak self] dataSource, tableView, indexPath, item in
                 let cell: HistoryTableViewCell = tableView.dequeueReusableCell(withClass: HistoryTableViewCell.self, for: indexPath)
                 
@@ -111,6 +114,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fakeNavBar.setText("Адреса")
         setupShadows()
         setupTableView()
         bind()
@@ -121,21 +125,30 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     }
     
     func bind() {
+        let itemSelected = tableView.rx.itemSelected
+            .map { [weak self] indexPath -> HistoryDataItem? in
+                self?.dataSource?.sectionModels[indexPath.section].items[indexPath.row]
+            }
+            .ignoreNil()
+        
         let input = HistoryViewModel.Input(
-            itemSelected: itemSelectedTrigger.asDriverOnErrorJustComplete(),
+            itemSelected: itemSelected.asDriverOnErrorJustComplete(),
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             loadDay: loadDayTriger.asDriverOnErrorJustComplete(),
             eventsFilter: eventsFilter.asDriver(),
-            apptsFilterString: apptsFilter.asDriver()
+            apptsFilter: apptsFilter.asDriver()
         )
         
         let output = viewModel.transform(input)
         
+        
         output.sections //отсюда притетает свежий [HistorySectionModels] для DataSource таблицы
-            .do(onNext: { sectionModels in
-                self.days = sectionModels.map( { $0.day } )
-            })
-            .bind(to: tableView.rx.items(dataSource: viewModel.dataSource!))
+            .do(
+                onNext: { sectionModels in
+                    self.days = sectionModels.map({ $0.day })
+                }
+            )
+            .drive(tableView.rx.items(dataSource: dataSource!))
             .disposed(by: disposeBag)
         
         output.isLoading 
@@ -153,6 +166,22 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
         
         output.availableDays
             .drive(availableDays)
+            .disposed(by: disposeBag)
+        
+        apptsFilterString
+            .map { [weak self] flatString -> [Int] in
+                guard let self = self else {
+                    return []
+                }
+                
+                let flatInt: Int = Int(flatString) ?? 0
+                if flatInt > 0 {
+                    return [flatInt]
+                } else {
+                    return Array(self.viewModel.flatIds)
+                }
+            }
+            .bind(to: apptsFilter)
             .disposed(by: disposeBag)
         
         availableDays.asDriverOnErrorJustComplete()
@@ -182,16 +211,16 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
             }
             .disposed(by: disposeBag)
             
-            //это событие прилетает при закрытии pop-up окошка с календарём
-            NotificationCenter.default.rx.notification(.popupDimissed)
-                .asDriverOnErrorJustComplete()
-                .mapToVoid()
-                .drive(
-                    onNext: {
-                        self.onPopUpDismiss()
-                    }
-                )
-                .disposed(by: disposeBag)
+        //это событие прилетает при закрытии pop-up окошка с календарём
+        NotificationCenter.default.rx.notification(.popupDimissed)
+            .asDriverOnErrorJustComplete()
+            .mapToVoid()
+            .drive(
+                onNext: {
+                    self.onPopUpDismiss()
+                }
+            )
+            .disposed(by: disposeBag)
         
     }
     
@@ -233,8 +262,8 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
         let itemsId = [""] + viewModel.flatIds.map { String($0) }
         
         let selectedRow = { () -> Int in
-            if viewModel.apptsFilter.value.count == 1 {
-                return itemsId.firstIndex(of: String(viewModel.apptsFilter.value[0])) ?? 0
+            if apptsFilter.value.count == 1 {
+                return itemsId.firstIndex(of: String(apptsFilter.value[0])) ?? 0
             } else {
                 return 0
             }
@@ -250,7 +279,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                     self.appartmentFilterButton.setTitle("Квартира, \(self.viewModel.flatNumbers[selectedRow - 1])", for: .normal)
                 }
                 self.appartmentFilterButton.sizeToFit()
-                self.apptsFilter.accept(itemsId[selectedRow])
+                self.apptsFilterString.accept(itemsId[selectedRow])
                 self.topToolbarPositon.constant = 0
                 
             }
@@ -331,7 +360,7 @@ extension HistoryViewController: UITableViewDelegate {
         }
         
         //тут мы будем динамически подгружать данные 
-        guard let dataSource = viewModel.dataSource else {
+        guard let dataSource = dataSource else {
             return
         }
         let section = dataSource.sectionModels[indexPath.section]
