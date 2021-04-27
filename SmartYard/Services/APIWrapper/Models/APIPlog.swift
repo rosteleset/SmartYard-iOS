@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct APIPlog: Decodable, Equatable, Hashable {
+struct APIPlog: Decodable, Equatable, Hashable, EmptyDataInitializable {
     
     let date: Date //дата. Допустимые значения: "Y-m-d H:i:s"
     let uuid: String

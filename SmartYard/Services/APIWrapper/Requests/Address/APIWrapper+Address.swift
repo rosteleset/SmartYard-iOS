@@ -148,7 +148,8 @@ extension APIWrapper {
         return provider.rx
             .request(.plogDays(request: request))
             .convertNoConnectionError()
-            .mapAsDefaultResponse()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
     }
     
     func plog(flatId: Int, fromDate: Date) -> Single<PlogResponseData?> {
@@ -170,7 +171,8 @@ extension APIWrapper {
         return provider.rx
             .request(.plog(request: request))
             .convertNoConnectionError()
-            .mapAsDefaultResponse()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
     }
     
     func openDoor(domophoneId: String, doorId: Int?, blockReason: String?) -> Single<Void?> {
