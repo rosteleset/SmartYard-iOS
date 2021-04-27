@@ -19,8 +19,9 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var collectionView: UICollectionView!
     
     fileprivate let viewModel: HistoryViewModel
-    
     fileprivate var dataSource: RxCollectionViewSectionedAnimatedDataSource<HistorySectionModel>?
+    fileprivate let selectItemOnLoad: HistoryDataItem
+    fileprivate var itemWasPointed =  false
     
     private let loadDayTriger = PublishSubject<Date>()
     private var availableDays = BehaviorRelay<AvailableDays>(value: [:])
@@ -34,13 +35,18 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     ///дни, которые есть на сервере, но их нет в sectionModels - чтобы они оказались в sectionModels, их надо запросить
     private var daysQueue: [Date] = []
     
+    ///таблица соответствия objectId <-> url flussonic
+    private var camMap: [APICamMap] = []
+    
     var stopDynamicLoading: Bool = false
+    
+    var focusedCellIndexPath: IndexPath?
     
     private let imagesCache = NSCache<NSString,UIImage>()
     
     init(viewModel: HistoryViewModel, focusedOn: HistoryDataItem) {
         self.viewModel = viewModel
-        print(focusedOn)
+        self.selectItemOnLoad = focusedOn
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -59,6 +65,42 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         fakeNavBar.setText("События")
         setupCollectionView()
         bind()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if !itemWasPointed {
+            DispatchQueue.main.async {
+                self.pointViewToSelectedItem()
+                self.itemWasPointed = true
+            }
+        }
+    }
+    
+    fileprivate func pointViewToSelectedItem() {
+        guard let indexPath = { () -> IndexPath? in
+            
+            guard let dataSource = dataSource else {
+                return nil
+            }
+            
+            for (sectionIndex, section) in dataSource.sectionModels.enumerated() {
+                for (row, item) in section.items.enumerated() where item == self.selectItemOnLoad {
+                    return IndexPath(item: row, section: sectionIndex)
+                }
+            }
+            return nil
+        }() else {
+            return
+        }
+        
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+        focusedCellIndexPath = indexPath
+        if let focusedCellIndexPath = focusedCellIndexPath {
+            onItemFocused(indexPath: focusedCellIndexPath)
+        }
     }
     
     fileprivate func setupCollectionView() {
@@ -75,12 +117,42 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
             configureCell: { _, collectionView, indexPath, item in
                 let cell: HistoryCollectionViewCell = collectionView.dequeueReusableCell(withClass: HistoryCollectionViewCell.self, for: indexPath)
                 
-                cell.configure(value: item.value, using: self.imagesCache)
+                
+                let startDate = item.value.date
+                let endDate = startDate.adding(.second, value: 60)
+                
+                let range = ArchiveVideoPreviewPeriod(startDate: startDate, endDate: endDate, ranges: [(startDate, endDate)])
+                if let camera = self.camMap.first(where: {$0.id == item.value.objectId}),
+                   let videoUrlComps = range.videoUrlComponents  {
+                    
+                    let videoBaseUrl = camera.url
+                    let videoUrl = videoBaseUrl + videoUrlComps + "?token=\(camera.token)"
+                    
+                    cell.configure(value: item.value, using: self.imagesCache, videoUrl: videoUrl)
+                } else {
+                    cell.configure(value: item.value, using: self.imagesCache)
+                }
+                
                 return cell
             }
         )
     }
-    
+    func onItemFocused(indexPath: IndexPath) {
+        //let item = dataSource?.sectionModels[indexPath.section].items[indexPath.row]
+        collectionView.layoutIfNeeded()
+        let cell = collectionView.cellForItem(at: indexPath) as? HistoryCollectionViewCell
+        
+        //cell?.videoPlayerViewContainer.backgroundColor = .red
+        cell?.playVideo()
+    }
+    func onItemLostFocus(indexPath: IndexPath) {
+        //let item = dataSource?.sectionModels[indexPath.section].items[indexPath.row]
+        collectionView.layoutIfNeeded()
+        let cell = collectionView.cellForItem(at: indexPath) as? HistoryCollectionViewCell
+        
+        //cell?.videoPlayerViewContainer.backgroundColor = .clear
+        cell?.stopVideo()
+    }
     func bind() {
         let trigger = PublishSubject<Void>()
         
@@ -104,6 +176,16 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         
         output.availableDays
             .drive(availableDays)
+            .disposed(by: disposeBag)
+        
+        output.camMap
+            .drive { [weak self] data in
+                guard let self = self else {
+                    return
+                }
+                
+                self.camMap = data
+            }
             .disposed(by: disposeBag)
         
         availableDays.asDriverOnErrorJustComplete()
@@ -185,5 +267,21 @@ extension HistoryDetailViewController: UICollectionViewDelegateFlowLayout {
                 loadDayTriger.onNext(previousDay)
             }
         }
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let center = self.view.convert(self.collectionView.center, to: self.collectionView)
+        
+        guard let indexPath = collectionView!.indexPathForItem(at: center) else {
+            return
+        }
+        
+        if indexPath != focusedCellIndexPath {
+            if let focusedCellIndexPath = focusedCellIndexPath {
+                onItemLostFocus(indexPath: focusedCellIndexPath)
+            }
+            focusedCellIndexPath = indexPath
+            onItemFocused(indexPath: indexPath)
+        }
+        
     }
 }

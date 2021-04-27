@@ -66,6 +66,9 @@ class HistoryViewModel: BaseViewModel {
     ///фильтр по квартирам
     private let apptsFilter = BehaviorRelay<[Int]>(value: [])
     
+    ///таблица соответствия objectId <-> url flussonic
+    private let camMap = BehaviorRelay<[APICamMap]>(value: [])
+    
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     init(apiWrapper: APIWrapper, houseId: String, address: String, router: WeakRouter<HomeRoute>) {
         self.apiWrapper = apiWrapper
@@ -288,6 +291,14 @@ class HistoryViewModel: BaseViewModel {
                 //изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
             }
             .disposed(by: disposeBag)
+        
+        apiWrapper.getCamMap()
+            .trackError(errorTracker)
+            .trackActivity(activityTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(camMap)
+            .disposed(by: disposeBag)
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
@@ -477,7 +488,8 @@ class HistoryViewModel: BaseViewModel {
         return OutputDetail(
             availableDays: availableDays.asDriver(onErrorJustReturn: [:]),
             isLoading: activityTracker.asDriver(),
-            sections: sections.asDriverOnErrorJustComplete()
+            sections: sections.asDriverOnErrorJustComplete(),
+            camMap: camMap.asDriverOnErrorJustComplete()
         )
     }
 }
@@ -511,6 +523,7 @@ extension HistoryViewModel {
         let availableDays: Driver<AvailableDays>
         let isLoading: Driver<Bool>
         let sections: Driver<[HistorySectionModel]>
+        let camMap: Driver<[APICamMap]>
     }
     
     private func orderOf(row: Int, count: Int) -> HistoryCellOrder

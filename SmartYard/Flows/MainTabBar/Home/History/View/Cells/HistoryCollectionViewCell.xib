@@ -121,19 +121,34 @@
                                                     <constraint firstAttribute="height" constant="8" id="6KH-vt-I3T"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="bsQ-eJ-6Bp" userLabel="ImageContainer">
+                                            <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="bsQ-eJ-6Bp" userLabel="ImageContainer">
                                                 <rect key="frame" x="0.0" y="207" width="315" height="177"/>
                                                 <subviews>
+                                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="xmB-2b-pG1">
+                                                        <rect key="frame" x="147.5" y="78.5" width="20" height="20"/>
+                                                        <color key="color" name="gray"/>
+                                                    </activityIndicatorView>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="0z6-lI-UZP" customClass="SafeCachedImageView" customModule="SmartYard" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="315" height="177"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </imageView>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QlS-pw-rkX">
+                                                        <rect key="frame" x="0.0" y="0.0" width="315" height="177"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </view>
                                                 </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="0z6-lI-UZP" firstAttribute="top" secondItem="bsQ-eJ-6Bp" secondAttribute="top" id="30Z-2j-bd5"/>
+                                                    <constraint firstAttribute="bottom" secondItem="QlS-pw-rkX" secondAttribute="bottom" id="5oI-IP-72Z"/>
+                                                    <constraint firstItem="xmB-2b-pG1" firstAttribute="centerX" secondItem="bsQ-eJ-6Bp" secondAttribute="centerX" id="FM9-aB-amq"/>
+                                                    <constraint firstItem="xmB-2b-pG1" firstAttribute="centerY" secondItem="bsQ-eJ-6Bp" secondAttribute="centerY" id="IRw-fc-wGS"/>
+                                                    <constraint firstItem="QlS-pw-rkX" firstAttribute="top" secondItem="bsQ-eJ-6Bp" secondAttribute="top" id="L7j-Kd-c1M"/>
                                                     <constraint firstAttribute="trailing" secondItem="0z6-lI-UZP" secondAttribute="trailing" id="NVO-ge-Jgf"/>
+                                                    <constraint firstItem="QlS-pw-rkX" firstAttribute="leading" secondItem="bsQ-eJ-6Bp" secondAttribute="leading" id="ejU-pw-4Yf"/>
                                                     <constraint firstAttribute="width" secondItem="bsQ-eJ-6Bp" secondAttribute="height" multiplier="16:9" id="ftP-H3-vRl"/>
                                                     <constraint firstItem="0z6-lI-UZP" firstAttribute="leading" secondItem="bsQ-eJ-6Bp" secondAttribute="leading" id="jph-6B-eBS"/>
+                                                    <constraint firstAttribute="trailing" secondItem="QlS-pw-rkX" secondAttribute="trailing" id="veL-2g-ydi"/>
                                                     <constraint firstAttribute="bottom" secondItem="0z6-lI-UZP" secondAttribute="bottom" id="wpC-zk-xgU"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
@@ -253,9 +268,11 @@
                 <outlet property="denyAccessButton" destination="BS2-tR-Z76" id="4m9-AS-VW0"/>
                 <outlet property="descriptionLabel" destination="JPV-1h-Qtf" id="46a-Zi-TN4"/>
                 <outlet property="image" destination="0z6-lI-UZP" id="IeU-zQ-7NR"/>
+                <outlet property="loadingImageIndicator" destination="xmB-2b-pG1" id="SoE-2m-Nxe"/>
                 <outlet property="openAccessButton" destination="vBO-uS-mK9" id="lCQ-UK-Q3v"/>
                 <outlet property="scrollView" destination="rdg-vf-upe" id="tu4-bi-RUt"/>
                 <outlet property="titleLabel" destination="UTx-sj-H9R" id="Re0-6f-IEq"/>
+                <outlet property="videoPlayerViewContainer" destination="QlS-pw-rkX" id="8qG-hG-0oI"/>
             </connections>
             <point key="canvasLocation" x="-451.44927536231887" y="92.410714285714278"/>
         </collectionViewCell>

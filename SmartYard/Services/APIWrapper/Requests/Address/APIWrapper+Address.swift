@@ -230,6 +230,24 @@ extension APIWrapper {
             .mapToOptional()
     }
     
+    func getCamMap() -> Single<CamMapCCTVResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = CamMapCCTVRequest(accessToken: accessToken)
+        
+        return provider.rx
+            .request(.getCamMap(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
+    
     func getAddressList() -> Single<GetAddressListResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)

@@ -28,6 +28,7 @@ enum APITarget {
     case recPrepare(request: RecPrepareRequest)
     case recDownload(request: RecDownloadRequest)
     case streamInfo(request: StreamInfoRequest)
+    case getCamMap(request: CamMapCCTVRequest)
     
     case getAddress(request: GetAddressRequest)
     case getGeoCoder(request: GeoCoderRequest)
@@ -96,6 +97,7 @@ extension APITarget: TargetType {
         case .youtube: return "cctv/youtube"
         case .recPrepare: return "cctv/recPrepare"
         case .recDownload: return "cctv/recDownload"
+        case .getCamMap: return "cctv/camMap"
         case .streamInfo: return "recording_status.json"
             
         case .getAddress: return "geo/address"
@@ -163,6 +165,7 @@ extension APITarget: TargetType {
             case .youtube(let request): return request.accessToken
             case .recPrepare(let request): return request.accessToken
             case .recDownload(let request): return request.accessToken
+            case .getCamMap(let request): return request.accessToken
                 
             case .getAddress(let request): return request.accessToken
             case .getGeoCoder(let request): return request.accessToken
@@ -229,6 +232,7 @@ extension APITarget: TargetType {
         case .youtube(let request): return request.requestParameters
         case .recPrepare(let request): return request.requestParameters
         case .recDownload(let request): return request.requestParameters
+        case .getCamMap(let request): return request.requestParameters
         case .streamInfo(let request): return request.requestParameters
             
         case .getAddress(let request): return request.requestParameters

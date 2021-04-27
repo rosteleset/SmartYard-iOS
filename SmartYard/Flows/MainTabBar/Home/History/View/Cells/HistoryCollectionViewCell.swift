@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import AVFoundation
 
 class HistoryCollectionViewCell: UICollectionViewCell {
+    private var videoURL: String?
 
+    private var player: AVPlayer?
+    private var playerLayer: AVPlayerLayer?
+    
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var actionsContainer: UIView!
@@ -20,13 +25,49 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var image: SafeCachedImageView!
     @IBOutlet private weak var openAccessButton: UIButton!
     @IBOutlet private weak var denyAccessButton: UIButton!
+    @IBOutlet private weak var loadingImageIndicator: UIActivityIndicatorView!
+    @IBOutlet public weak var videoPlayerViewContainer: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
     
-    func configure(value: APIPlog, using cache: NSCache<NSString, UIImage>) {
+    func playVideo() {
+        guard let videoURL = videoURL,
+            let url = URL(string: videoURL) else {
+            return
+            
+        }
+        
+        player = AVPlayer(url: url)
+        
+        if playerLayer != nil {
+            playerLayer?.removeFromSuperlayer()
+        }
+        
+        playerLayer = AVPlayerLayer(player: player)
+        videoPlayerViewContainer.layer.addSublayer(playerLayer!)
+        playerLayer?.frame = videoPlayerViewContainer.frame
+        playerLayer?.backgroundColor = UIColor.clear.cgColor
+        
+        player?.play()
+        
+    }
+    
+    func stopVideo() {
+        player?.pause()
+        if playerLayer != nil {
+            playerLayer?.removeFromSuperlayer()
+        }
+        player = nil
+    }
+    
+    func configure(value: APIPlog, using cache: NSCache<NSString, UIImage>, videoUrl: String? = nil) {
+        
+        self.videoURL = videoUrl
+        
         scrollView.contentOffset = .zero
         
         let df = DateFormatter()
@@ -74,6 +115,8 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         } else {
             image.image = value.previewImage
         }
+        
+        //print(value.previewURL)
         
         actionsContainer.isHidden = true
         
