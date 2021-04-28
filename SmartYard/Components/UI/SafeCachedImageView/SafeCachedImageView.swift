@@ -10,7 +10,9 @@ import UIKit
 
 class SafeCachedImageView: UIImageView {
 
-    var imageUrlString: String?
+    private var imageUrlString: String?
+    private var loadingImageIndicator: UIActivityIndicatorView?
+    
     
     func loadImageUsingUrlString(urlString: String, cache: NSCache<NSString, UIImage>) {
         
@@ -27,9 +29,24 @@ class SafeCachedImageView: UIImageView {
             return
         }
         
+        if loadingImageIndicator == nil {
+            loadingImageIndicator = UIActivityIndicatorView(style: .gray)
+        }
+        
+        loadingImageIndicator!.center = view.center
+        view.addSubview(loadingImageIndicator!)
+        loadingImageIndicator!.startAnimating()
+        self.backgroundColor = UIColor(named: "backgroundColor")
+        
         URLSession.shared.dataTask(
             with: url,
             completionHandler: { (data, response, error) in
+                DispatchQueue.main.async {
+                    self.loadingImageIndicator!.stopAnimating()
+                    self.loadingImageIndicator!.removeFromSuperview()
+                    self.backgroundColor = .clear
+                }
+                
                 guard
                     let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
                     let mimeType = response?.mimeType, mimeType.hasPrefix("image"),

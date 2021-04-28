@@ -118,17 +118,8 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                 let cell: HistoryCollectionViewCell = collectionView.dequeueReusableCell(withClass: HistoryCollectionViewCell.self, for: indexPath)
                 
                 
-                let startDate = item.value.date
-                let endDate = startDate.adding(.second, value: 60)
-                
-                let range = ArchiveVideoPreviewPeriod(startDate: startDate, endDate: endDate, ranges: [(startDate, endDate)])
-                if let camera = self.camMap.first(where: {$0.id == item.value.objectId}),
-                   let videoUrlComps = range.videoUrlComponents  {
-                    
-                    let videoBaseUrl = camera.url
-                    let videoUrl = videoBaseUrl + videoUrlComps + "?token=\(camera.token)"
-                    
-                    cell.configure(value: item.value, using: self.imagesCache, videoUrl: videoUrl)
+                if let camera = self.camMap.first(where: {$0.id == item.value.objectId}) {
+                    cell.configure(value: item.value, using: self.imagesCache, videoBaseUrl: camera.url, token: camera.token)
                 } else {
                     cell.configure(value: item.value, using: self.imagesCache)
                 }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct APIPlog: Decodable, Equatable, Hashable, EmptyDataInitializable {
+struct APIPlog: Decodable, Equatable, Hashable {
     
     let date: Date //дата. Допустимые значения: "Y-m-d H:i:s"
     let uuid: String
@@ -66,18 +66,5 @@ struct APIPlog: Decodable, Equatable, Hashable, EmptyDataInitializable {
         } else {
             previewImage = nil
         }
-    }
-    
-    init() {
-        date = Date()
-        uuid = ""
-        objectId = -1
-        objectType = -1
-        objectMechanizma = -1
-        mechanizmaDescription = ""
-        event = .unknown
-        detail = ""
-        previewURL = nil
-        previewImage = nil
     }
 }

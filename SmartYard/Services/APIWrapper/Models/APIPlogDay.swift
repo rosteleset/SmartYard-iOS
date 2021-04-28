@@ -9,18 +9,13 @@
 import Foundation
 import UIKit
 
-struct APIPlogDay: Decodable, Hashable, EmptyDataInitializable {
+struct APIPlogDay: Decodable, Hashable {
     let day: Date //дата. Допустимые значения: "Y-m-d"
     let itemsCount: Int //количество событий
     
     private enum CodingKeys: String, CodingKey {
         case day
         case events
-    }
-    
-    init() {
-        day = Date()
-        itemsCount = 0
     }
     
     init(from decoder: Decoder) throws {
