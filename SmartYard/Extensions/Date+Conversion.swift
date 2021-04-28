@@ -15,7 +15,11 @@ extension Date {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return dateFormatter.string(from: self)
     }
-    
+    var apiShortString: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: self)
+    }
 }
 
 extension String {
@@ -23,7 +27,12 @@ extension String {
     var dateFromAPIString: Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        return dateFormatter.date(from: self)
+        let result = dateFormatter.date(from: self)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let resultShort = dateFormatter.date(from: self)
+        
+        
+        return (result != nil) ? result : resultShort
     }
     
 }

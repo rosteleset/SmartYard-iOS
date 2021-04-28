@@ -21,12 +21,12 @@ class LinphoneService: CoreDelegate {
     
     var hasEnqueuedCalls = false
     
-    override func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: RegistrationState, message: String) {
-        delegate?.onRegistrationStateChanged(lc: lc, cfg: cfg, cstate: cstate, message: message)
+    func onRegistrationStateChanged(core: Core, proxyConfig: ProxyConfig, state: RegistrationState, message: String) {
+        delegate?.onRegistrationStateChanged(lc: core, cfg: proxyConfig, cstate: state, message: message)
     }
     
-    override func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
-        delegate?.onCallStateChanged(lc: lc, call: call, cstate: cstate, message: message)
+    func onCallStateChanged(core: Core, call: Call, state: Call.State, message: String) {
+        delegate?.onCallStateChanged(lc: core, call: call, cstate: state, message: message)
     }
     
     func start(_ config: SipConfig) {
@@ -173,7 +173,10 @@ class LinphoneService: CoreDelegate {
 }
 
 class LinphoneLoggingServiceManager: LoggingServiceDelegate {
-    override func onLogMessageWritten(logService: LoggingService, domain: String, lev: LogLevel, message: String) {
+    
+    func onLogMessageWritten(logService: LoggingService, domain: String, lev: LogLevel, message: String) {
         print("Logging service log: \(message)s\n")
     }
+    
+    
 }

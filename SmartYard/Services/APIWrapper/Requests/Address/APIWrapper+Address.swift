@@ -129,6 +129,51 @@ extension APIWrapper {
             .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
+    func plogDays(flatId: Int, events: EventsFilter? = .all) -> Single<PlogDaysResponseData?> {
+        return plogDays(flatId: String(flatId), events: events)
+    }
+    
+    func plogDays(flatId: String, events: EventsFilter? = .all) -> Single<PlogDaysResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = PlogDaysRequest(accessToken: accessToken, flatId: flatId, events: events)
+        print("request data: \(request)")
+        
+        return provider.rx
+            .request(.plogDays(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
+    
+    func plog(flatId: Int, fromDate: Date) -> Single<PlogResponseData?> {
+        return plog(flatId: String(flatId), fromDate: fromDate)
+    }
+    
+    func plog(flatId: String, fromDate: Date) -> Single<PlogResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = PlogRequest(accessToken: accessToken, flatId: flatId, fromDate: fromDate)
+        print("request data: \(request.requestParameters)")
+        
+        return provider.rx
+            .request(.plog(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
     
     func openDoor(domophoneId: String, doorId: Int?, blockReason: String?) -> Single<Void?> {
         guard isReachable else {
@@ -182,6 +227,24 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getSettingsList(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
+    
+    func getCamMap() -> Single<CamMapCCTVResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = CamMapCCTVRequest(accessToken: accessToken)
+        
+        return provider.rx
+            .request(.getCamMap(request: request))
             .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()

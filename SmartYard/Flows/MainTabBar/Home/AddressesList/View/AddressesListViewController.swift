@@ -239,6 +239,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         [
             AddressesListObjectCell.self,
             AddressesListCameraCell.self,
+            AddressesListHistoryCell.self,
             AddressesListEmptyStateCell.self,
             UnapprovedObjectCell.self
         ].forEach {
@@ -306,6 +307,11 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             case let .cameras(_, numberOfCameras):
                 let cell = collectionView.dequeueReusableCell(withClass: AddressesListCameraCell.self, for: indexPath)
                 cell.configure(availableCameras: numberOfCameras)
+                return cell
+            
+            case let .history(_, eventsCount):
+                let cell = collectionView.dequeueReusableCell(withClass: AddressesListHistoryCell.self, for: indexPath)
+                cell.configure(itemsCount: eventsCount)
                 return cell
                 
             case let .unapprovedAddresses(_, address):

@@ -19,6 +19,8 @@ enum APITarget {
     case access(request: AccessRequest)
     case resend(request: ResendRequest)
     case offices(request: OfficesRequest)
+    case plog(request: PlogRequest)
+    case plogDays(request: PlogDaysRequest)
     
     case allCCTV(request: AllCCTVRequest)
     case overviewCCTV(request: OverviewCCTVRequest)
@@ -26,6 +28,7 @@ enum APITarget {
     case recPrepare(request: RecPrepareRequest)
     case recDownload(request: RecDownloadRequest)
     case streamInfo(request: StreamInfoRequest)
+    case getCamMap(request: CamMapCCTVRequest)
     
     case getAddress(request: GetAddressRequest)
     case getGeoCoder(request: GeoCoderRequest)
@@ -86,12 +89,15 @@ extension APITarget: TargetType {
         case .access: return "address/access"
         case .resend: return "address/resend"
         case .offices: return "address/offices"
-            
+        case .plog: return "address/plog"
+        case .plogDays: return "address/plogDays"
+        
         case .allCCTV: return "cctv/all"
         case .overviewCCTV: return "cctv/overview"
         case .youtube: return "cctv/youtube"
         case .recPrepare: return "cctv/recPrepare"
         case .recDownload: return "cctv/recDownload"
+        case .getCamMap: return "cctv/camMap"
         case .streamInfo: return "recording_status.json"
             
         case .getAddress: return "geo/address"
@@ -151,12 +157,15 @@ extension APITarget: TargetType {
             case .access(let request): return request.accessToken
             case .resend(let request): return request.accessToken
             case .offices(let request): return request.accessToken
-                
+            case .plog(let request): return request.accessToken
+            case .plogDays(let request): return request.accessToken
+            
             case .allCCTV(let request): return request.accessToken
             case .overviewCCTV(let request): return request.accessToken
             case .youtube(let request): return request.accessToken
             case .recPrepare(let request): return request.accessToken
             case .recDownload(let request): return request.accessToken
+            case .getCamMap(let request): return request.accessToken
                 
             case .getAddress(let request): return request.accessToken
             case .getGeoCoder(let request): return request.accessToken
@@ -215,12 +224,15 @@ extension APITarget: TargetType {
         case .access(let request): return request.requestParameters
         case .resend(let request): return request.requestParameters
         case .offices(let request): return request.requestParameters
-            
+        case .plog(let request): return request.requestParameters
+        case .plogDays(let request): return request.requestParameters
+        
         case .allCCTV(let request): return request.requestParameters
         case .overviewCCTV(let request): return request.requestParameters
         case .youtube(let request): return request.requestParameters
         case .recPrepare(let request): return request.requestParameters
         case .recDownload(let request): return request.requestParameters
+        case .getCamMap(let request): return request.requestParameters
         case .streamInfo(let request): return request.requestParameters
             
         case .getAddress(let request): return request.requestParameters

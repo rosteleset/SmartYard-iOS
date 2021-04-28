@@ -10,7 +10,7 @@ target 'SmartYard' do
   # Networking
   pod 'Moya/RxSwift'
   pod 'Kingfisher'
-  pod 'linphone-sdk' , '4.4.28'
+  pod 'linphone-sdk' #, '4.4.28'
   
   # Reactive
   pod 'RxSwift'
@@ -27,17 +27,18 @@ target 'SmartYard' do
   pod 'PMNibLinkableView'
   pod 'TouchAreaInsets'
   pod 'PinLayout'
-  pod 'SSCustomTabbar', :git => 'https://github.com/MadBrains/SSCustomTabbar.git', :branch => 'feature/add-animation-options'
+  pod 'SSCustomTabbar', :git => 'https://git.lanta.me/LanTa/SSCustomTabbar.git', :branch => 'feature/add-animation-options'
   pod 'TPKeyboardAvoiding'
   pod 'JGProgressHUD'
-  pod 'SkeletonView', '1.7'
+  pod 'SkeletonView' #, '1.7'
   pod 'SearchTextField'
   pod 'SHSPhoneComponent'
   pod 'Parchment', '2.2.0'
   pod 'lottie-ios'
-
+  
   # Calendar
   pod 'JTAppleCalendar'
+  pod 'PopOverDatePicker'
   
   # Map
   pod 'Mapbox-iOS-SDK'
@@ -55,8 +56,7 @@ target 'SmartYard' do
   pod 'XCoordinator/RxSwift'
   
   # Chat
-  pod 'OnlineChatSdk', :git => 'https://github.com/MadBrains/OnlineChatSdk-Swift.git', :branch => 'feature/build-fix'
-  
+  pod 'OnlineChatSdk', :git => 'https://git.lanta.me/LanTa/OnlineChatSdk-Swift.git', :branch => 'feature/build-fix'
   # YouTube
   pod "youtube-ios-player-helper-swift"
   
