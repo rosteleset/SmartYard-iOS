@@ -58,7 +58,7 @@ class HistoryViewModel: BaseViewModel {
     private let dataCache = BehaviorRelay<[DataSection]>(value: [])
     
     /// данные для отображения в виде готовых секций для dataSource с учётом текущих фильтров
-    private let sections = BehaviorSubject<[HistorySectionModel]>(value: [])
+    private let sections = BehaviorRelay<[HistorySectionModel]>(value: [])
     
     ///фильтр по типам событий
     private let eventsFilter = BehaviorRelay<EventsFilter>(value: .all)
@@ -158,7 +158,7 @@ class HistoryViewModel: BaseViewModel {
                         return
                     }
                     
-                    var result = self.uniqueDays
+                    let result = self.uniqueDays
                         //делаем заготовку будущей секции из массива дат, вообще доступных на сервере
                         .map { sectionDay -> (day: Date, items: [APIPlog]) in
                         return (
@@ -228,7 +228,7 @@ class HistoryViewModel: BaseViewModel {
                         //удаляем секции тех дней, для которых из-за фильтра по типу событий не оказалось ни одной записи
                         .filter { $0.items.isEmpty == false }
                         
-                    self.sections.onNext(result)
+                    self.sections.accept(result)
                 }
             )
             .disposed(by: disposeBag)
@@ -280,10 +280,10 @@ class HistoryViewModel: BaseViewModel {
                 }
                 
                 //получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
-                self.flatIds = args.filtered ( { $0.houseId == self.houseId },  map: { (Int($0.flatId!) ?? -1) } )
+                self.flatIds = args.filtered({$0.houseId == self.houseId}, map: {(Int($0.flatId!) ?? -1)}).duplicatesRemoved()
                 
                 //получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
-                self.flatNumbers = args.filtered ( { $0.houseId == self.houseId },  map: { (Int($0.flatNumber!) ?? -1) } )
+                self.flatNumbers = args.filtered({$0.houseId == self.houseId}, map: {(Int($0.flatNumber!) ?? -1)}).duplicatesRemoved()
                 
                 //по умолчанию фильтр содержит все доступные квартиры
                 self.apptsFilter.accept(self.flatIds)

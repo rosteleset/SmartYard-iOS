@@ -63,27 +63,21 @@
                                                 <rect key="frame" x="0.0" y="107" width="315" height="92"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2an-wc-hUH">
-                                                        <rect key="frame" x="0.0" y="6.5" width="315" height="79"/>
+                                                        <rect key="frame" x="0.0" y="7.5" width="315" height="77"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="г. Тамбов, ул. Советская, 16, кв. 4" lineBreakMode="headTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="c7q-sO-8fW">
-                                                                <rect key="frame" x="20" y="0.0" width="275" height="42"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="г. Тамбов, ул. Советская, 16, кв. 4" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="c7q-sO-8fW">
+                                                                <rect key="frame" x="20" y="0.0" width="275" height="21"/>
                                                                 <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                                                                 <color key="textColor" name="semiBlack"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ds9-MV-Qss">
-                                                                <rect key="frame" x="20" y="42" width="275" height="23"/>
+                                                                <rect key="frame" x="20" y="21" width="275" height="23"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" text="08.02.2021, 10:30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wfz-84-L1N">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="97" height="23"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="275" height="23"/>
                                                                         <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="12"/>
                                                                         <color key="textColor" name="gray"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zon-BZ-FXt">
-                                                                        <rect key="frame" x="103" y="0.0" width="172" height="23"/>
-                                                                        <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="12"/>
-                                                                        <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
@@ -91,19 +85,38 @@
                                                                     <constraint firstAttribute="height" constant="23" id="GBD-aV-Nlr"/>
                                                                 </constraints>
                                                             </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="p9X-PG-myM">
+                                                                <rect key="frame" x="20" y="44" width="275" height="19"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" image="MissedCall" translatesAutoresizingMaskIntoConstraints="NO" id="aUo-vq-eca">
+                                                                        <rect key="frame" x="0.0" y="4" width="15" height="15"/>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" text="Неотвеченный вызов" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mUv-Hk-yJw">
+                                                                        <rect key="frame" x="21" y="2.5" width="254" height="14"/>
+                                                                        <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="12"/>
+                                                                        <color key="textColor" name="incorrectDataRed"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="19" id="IPh-w3-rwt"/>
+                                                                </constraints>
+                                                            </stackView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Дополнительный текст" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JPV-1h-Qtf">
-                                                                <rect key="frame" x="20" y="65" width="275" height="14"/>
+                                                                <rect key="frame" x="20" y="63" width="275" height="14"/>
                                                                 <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="12"/>
                                                                 <color key="textColor" name="semiBlack"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
                                                         <constraints>
+                                                            <constraint firstItem="p9X-PG-myM" firstAttribute="leading" secondItem="2an-wc-hUH" secondAttribute="leading" constant="20" id="3B0-eV-O8s"/>
                                                             <constraint firstAttribute="trailing" secondItem="c7q-sO-8fW" secondAttribute="trailing" constant="20" id="Ft8-Yr-bEw"/>
                                                             <constraint firstAttribute="trailing" secondItem="ds9-MV-Qss" secondAttribute="trailing" constant="20" id="HEb-IL-B95"/>
                                                             <constraint firstAttribute="trailing" secondItem="JPV-1h-Qtf" secondAttribute="trailing" constant="20" id="IlO-1r-p5V"/>
                                                             <constraint firstItem="ds9-MV-Qss" firstAttribute="leading" secondItem="2an-wc-hUH" secondAttribute="leading" constant="20" id="JAd-Bt-Y1r"/>
                                                             <constraint firstItem="JPV-1h-Qtf" firstAttribute="leading" secondItem="2an-wc-hUH" secondAttribute="leading" constant="20" id="NWL-WD-Iji"/>
+                                                            <constraint firstAttribute="trailing" secondItem="p9X-PG-myM" secondAttribute="trailing" constant="20" id="TVC-C8-e0o"/>
                                                             <constraint firstItem="c7q-sO-8fW" firstAttribute="leading" secondItem="2an-wc-hUH" secondAttribute="leading" constant="20" id="dGY-Lq-dR7"/>
                                                         </constraints>
                                                     </stackView>
@@ -281,6 +294,9 @@
             <connections>
                 <outlet property="actionsContainer" destination="Nsw-xM-f0E" id="5XY-DT-Os9"/>
                 <outlet property="addressLabel" destination="c7q-sO-8fW" id="T3M-ml-Ukp"/>
+                <outlet property="callStatusIcon" destination="aUo-vq-eca" id="OHg-96-Yij"/>
+                <outlet property="callStatusLabel" destination="mUv-Hk-yJw" id="PST-11-q6N"/>
+                <outlet property="callStatusView" destination="p9X-PG-myM" id="eTT-nj-j7H"/>
                 <outlet property="containerView" destination="e69-Tq-V4s" id="mHA-8j-C4Q"/>
                 <outlet property="dateLabel" destination="Wfz-84-L1N" id="z2A-lO-8Nw"/>
                 <outlet property="denyAccessButton" destination="BS2-tR-Z76" id="4m9-AS-VW0"/>
@@ -288,7 +304,6 @@
                 <outlet property="image" destination="0z6-lI-UZP" id="IeU-zQ-7NR"/>
                 <outlet property="openAccessButton" destination="vBO-uS-mK9" id="lCQ-UK-Q3v"/>
                 <outlet property="scrollView" destination="rdg-vf-upe" id="tu4-bi-RUt"/>
-                <outlet property="statusLabel" destination="zon-BZ-FXt" id="4ze-Vu-9Ve"/>
                 <outlet property="titleLabel" destination="UTx-sj-H9R" id="Re0-6f-IEq"/>
                 <outlet property="underImageLabel" destination="RNZ-gk-Xes" id="Adu-nq-B1l"/>
                 <outlet property="videoPlayerViewContainer" destination="QlS-pw-rkX" id="8qG-hG-0oI"/>
@@ -297,6 +312,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="MissedCall" width="15" height="15"/>
         <image name="confirm" width="14" height="14"/>
         <image name="deny" width="20" height="20"/>
         <namedColor name="darkGreen">

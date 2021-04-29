@@ -27,7 +27,6 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var actionsContainer: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var addressLabel: UILabel!
-    @IBOutlet private weak var statusLabel: UILabel!
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var image: SafeCachedImageView!
@@ -35,6 +34,9 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var openAccessButton: UIButton!
     @IBOutlet private weak var denyAccessButton: UIButton!
     @IBOutlet private weak var videoPlayerViewContainer: UIView!
+    @IBOutlet private weak var callStatusView: UIStackView!
+    @IBOutlet private weak var callStatusIcon: UIImageView!
+    @IBOutlet private weak var callStatusLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,6 +47,10 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func doubleTapOnVideo(_ sender: UITapGestureRecognizer) {
+        
+        guard self.player?.currentItem?.status == .readyToPlay else {
+            return
+        }
         
         var offset = 0
         
@@ -169,17 +175,27 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         descriptionLabel.isHidden = (descriptionLabel.text ?? "").isEmpty
         
         addressLabel.text = value.mechanizmaDescription
-        statusLabel.text = ""
-    
+        callStatusView.isHidden = true
+        descriptionLabel.isHidden = false
+        descriptionLabel.text = ""
+        
         switch value.event {
         case .answered:
             titleLabel.text = "Звонок в домофон"
             titleLabel.textColor = UIColor(named: "semiBlack")
-            descriptionLabel.text = "Отвеченный вызов"
+            callStatusView.isHidden = false
+            descriptionLabel.isHidden = true
+            callStatusLabel.text = "Отвеченный вызов"
+            callStatusLabel.textColor = UIColor(named: "darkGreen")
+            callStatusIcon.image = UIImage(named: "AnsweredCall")
         case .unanswered:
             titleLabel.text = "Звонок в домофон"
             titleLabel.textColor = UIColor(named: "semiBlack")
-            descriptionLabel.text = "Неотвеченный вызов"
+            callStatusView.isHidden = false
+            descriptionLabel.isHidden = true
+            callStatusLabel.text = "Неотвеченный вызов"
+            callStatusLabel.textColor = UIColor(named: "incorrectDataRed")
+            callStatusIcon.image = UIImage(named: "MissedCall")
         case .rfid:
             titleLabel.text = "Открывание ключом"
             titleLabel.textColor = UIColor(named: "semiBlack")
