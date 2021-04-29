@@ -88,6 +88,50 @@ class FullscreenPlayerViewController: UIViewController {
         
     }
     
+    @IBAction func doubleTap(_ sender: UITapGestureRecognizer) {
+        
+        guard playedVideoType == .archive,
+              let player = self.playerViewController?.player else {
+            return
+        }
+        
+        var offset = 0
+        
+        if sender.location(in: view).x < view.width / 2 - 10 {
+            offset = -15
+        }
+        
+        if sender.location(in: view).x > view.width / 2 + 10 {
+            offset = 15
+        }
+        
+        if offset == 0 {
+            return
+        }
+        
+        player.seek(offset)
+        
+        let label = (offset > 0) ? UILabel(text: "+\(abs(offset)) сек") : UILabel(text: "-\(abs(offset)) сек")
+        label.font = UIFont(name: "System", size: 16)
+        label.font = label.font.bold
+        label.textAlignment = .center
+        label.frame = CGRect(x: 0, y: 0, width: 100, height: 21)
+        label.center = CGPoint(x: view.width * ((offset > 0) ? 3 : 1) / 4, y: view.height / 2)
+        label.textColor = .white
+        label.backgroundColor = .clear
+        view.addSubview(label)
+        
+        UIView.animate(
+            withDuration: 1.5,
+            animations: {
+                label.alpha = 0
+            },
+            completion: { _ in
+                label.removeFromSuperview()
+            }
+        )
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         

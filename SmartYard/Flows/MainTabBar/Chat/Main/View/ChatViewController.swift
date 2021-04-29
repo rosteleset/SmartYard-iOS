@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import OnlineChatSdk
 import JGProgressHUD
+import WebKit
 
 class ChatViewController: ChatController, LoaderPresentable {
     
@@ -95,6 +96,26 @@ class ChatViewController: ChatController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+}
+extension ChatViewController {
+    
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
+    ) {
+        guard navigationAction.navigationType == .linkActivated else {
+            decisionHandler(WKNavigationActionPolicy.allow)
+            return
+        }
+        
+        if let url = navigationAction.request.url {
+                UIApplication.shared.open(url)
+        }
+        
+        decisionHandler(WKNavigationActionPolicy.cancel)
     }
     
 }
