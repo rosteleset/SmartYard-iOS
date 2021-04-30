@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -22,9 +22,7 @@
             <connections>
                 <outlet property="addressLabel" destination="UPE-Nc-jsD" id="Ees-LV-eUs"/>
                 <outlet property="appartmentFilterButton" destination="QPa-0r-0rp" id="LZs-7q-sZ0"/>
-                <outlet property="calendarBarButton" destination="oTP-pV-nAC" id="ocO-mI-yX1"/>
                 <outlet property="calendarButton" destination="rbP-8e-a35" id="zHC-AD-7nV"/>
-                <outlet property="eventsFilterBarButton" destination="Zik-K1-oUl" id="H0g-Ev-FEE"/>
                 <outlet property="eventsFilterButton" destination="n17-MI-9sr" id="zeD-EH-KxQ"/>
                 <outlet property="fakeNavBar" destination="3Mx-NN-sqX" id="JRw-hq-Koo"/>
                 <outlet property="heightConstraint" destination="3nh-Z1-T8f" id="R5z-tP-xTJ"/>
@@ -37,21 +35,21 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="qRP-po-8iN">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Mx-NN-sqX" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="W6K-WY-NuY"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Журнал событий" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44I-US-rjd">
-                    <rect key="frame" x="16" y="100" width="382" height="41"/>
+                    <rect key="frame" x="16" y="56" width="288" height="41"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="Ajc-L5-ZrI"/>
                     </constraints>
@@ -60,7 +58,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Советская, 16" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UPE-Nc-jsD">
-                    <rect key="frame" x="16" y="145" width="382" height="24"/>
+                    <rect key="frame" x="16" y="101" width="288" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="ERc-fU-gVh"/>
                     </constraints>
@@ -69,31 +67,32 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Diy-Ub-FSF" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="197" width="414" height="665"/>
+                    <rect key="frame" x="0.0" y="153" width="320" height="415"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znB-hB-uvQ" customClass="UITableViewWithHandler" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="44" width="414" height="621"/>
+                            <rect key="frame" x="0.0" y="44" width="320" height="371"/>
                             <color key="backgroundColor" name="backgroundColor"/>
                             <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </tableView>
-                        <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r6b-X1-Ta6">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="left" translatesAutoresizingMaskIntoConstraints="NO" id="r6b-X1-Ta6">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <color key="backgroundColor" name="backgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="3nh-Z1-T8f"/>
                             </constraints>
                             <items>
-                                <barButtonItem width="16" systemItem="fixedSpace" id="lub-Ia-UYb"/>
+                                <barButtonItem width="16" id="lub-Ia-UYb"/>
                                 <barButtonItem style="plain" id="Zik-K1-oUl" userLabel="Event ">
                                     <button key="customView" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n17-MI-9sr">
-                                        <rect key="frame" x="16" y="11" width="41" height="22"/>
+                                        <rect key="frame" x="16" y="11" width="49" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <inset key="imageEdgeInsets" minX="4" minY="3" maxX="0.0" maxY="0.0"/>
+                                        <inset key="contentEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                        <inset key="titleEdgeInsets" minX="-2" minY="0.0" maxX="-2" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="2" minY="3" maxX="-2" maxY="0.0"/>
                                         <state key="normal" title="Все" image="ArrowDown">
                                             <color key="titleColor" name="blue"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="17"/>
                                         </state>
                                         <connections>
                                             <action selector="tapEvents:" destination="-1" eventType="touchUpInside" id="fgu-JH-5Ie"/>
@@ -102,11 +101,13 @@
                                 </barButtonItem>
                                 <barButtonItem systemItem="flexibleSpace" id="1DN-ly-fHA"/>
                                 <barButtonItem style="plain" id="WEy-ew-G3s" userLabel="Appartment">
-                                    <button key="customView" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" id="QPa-0r-0rp">
-                                        <rect key="frame" x="142" y="11" width="130" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button key="customView" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="headTruncation" id="QPa-0r-0rp">
+                                        <rect key="frame" x="96.5" y="11" width="127" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <inset key="imageEdgeInsets" minX="4" minY="3" maxX="0.0" maxY="0.0"/>
+                                        <inset key="contentEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                        <inset key="titleEdgeInsets" minX="-2" minY="0.0" maxX="2" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="2" minY="3" maxX="-2" maxY="0.0"/>
                                         <state key="normal" title="Квартира, все" image="ArrowDown">
                                             <color key="titleColor" name="blue"/>
                                         </state>
@@ -118,15 +119,15 @@
                                 <barButtonItem systemItem="flexibleSpace" id="KR2-cZ-IZC"/>
                                 <barButtonItem image="calendar" width="20" style="plain" id="oTP-pV-nAC" userLabel="Calendar">
                                     <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rbP-8e-a35">
-                                        <rect key="frame" x="370" y="11" width="20" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <rect key="frame" x="276" y="11" width="20" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <state key="normal" image="calendar"/>
                                         <connections>
                                             <action selector="tapCalendar:" destination="-1" eventType="touchUpInside" id="5Rc-V5-YMB"/>
                                         </connections>
                                     </button>
                                 </barButtonItem>
-                                <barButtonItem width="24" systemItem="fixedSpace" id="8mf-9W-tgb"/>
+                                <barButtonItem width="24" id="8mf-9W-tgb"/>
                             </items>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -138,7 +139,7 @@
                             </userDefinedRuntimeAttributes>
                         </toolbar>
                         <button hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJm-xB-jU9" userLabel="ScrollUpButton">
-                            <rect key="frame" x="183" y="589" width="48" height="48"/>
+                            <rect key="frame" x="136" y="339" width="48" height="48"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="Mjx-EA-VLS"/>

@@ -22,13 +22,11 @@ extension HistoryViewController {
     }
     
     public func showEventsFilterPopover(from sourceView: UIView, onSelect: @escaping (String, Int) -> Void ) {
-        //let controller = EventsPopup()
-        
-        let items = EventsFilter.allCasesString
+        let items = EventsFilter.withoutFRSCasesString
         
         let controller = ArrayChoiceTableViewController(
             items,
-            selectedRow: eventsFilter.value.rawValue,
+            selectedRow: items.firstIndex(of: eventsFilter.value.name) ?? 0,
             onSelect: onSelect
         )
         

@@ -24,7 +24,7 @@ enum EventsFilter: Int, CaseIterable {
     case application = 5
     case code = 6
     
-    private var name: String {
+    public var name: String {
         switch self {
         
         case .all:

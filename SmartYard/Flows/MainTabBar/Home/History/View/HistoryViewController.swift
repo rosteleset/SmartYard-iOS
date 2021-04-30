@@ -24,8 +24,6 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     @IBOutlet private weak var eventsFilterButton: UIButton!
     @IBOutlet private weak var calendarButton: UIButton!
     @IBOutlet private weak var appartmentFilterButton: UIButton!
-    @IBOutlet private weak var eventsFilterBarButton: UIBarButtonItem!
-    @IBOutlet private weak var calendarBarButton: UIBarButtonItem!
     @IBOutlet private weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var scrollUpButton: UIButton!
 
@@ -246,10 +244,10 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     @IBAction private func tapEvents(_ sender: UIView) {
         showEventsFilterPopover(
             from: eventsFilterButton.imageView!,
-            onSelect: { name, selectedRow in
+            onSelect: { name, _ in
                 self.eventsFilterButton.setTitle(name, for: .normal)
                 self.eventsFilterButton.sizeToFit()
-                self.eventsFilter.accept(EventsFilter(rawValue: selectedRow) ?? .all)
+                self.eventsFilter.accept(EventsFilter.allCases.first(where: { $0.name == name }) ?? .all)
                 
                 self.topToolbarPositon.constant = 0
                 
