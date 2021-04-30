@@ -24,7 +24,7 @@ enum EventsFilter: Int, CaseIterable {
     case application = 5
     case code = 6
     
-    var name: String {
+    private var name: String {
         switch self {
         
         case .all:
@@ -47,6 +47,11 @@ enum EventsFilter: Int, CaseIterable {
     static var allCasesString : [String] {
         let all = EventsFilter.allCases
         return all.map { $0.name }
+    }
+    
+    static var withoutFRSCasesString : [String] {
+        let all = EventsFilter.allCases
+        return all.filtered({ $0 != .faces }, map: { $0.name }) 
     }
     
 }

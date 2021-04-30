@@ -157,7 +157,10 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         self.videoBaseUrl = videoBaseUrl
         self.token = token
         self.eventDate = value.date
-
+        callStatusView.isHidden = true
+        descriptionLabel.isHidden = false
+        descriptionLabel.text = ""
+        
         if playerLayer != nil {
             playerLayer?.removeFromSuperlayer()
             playerLayer = nil
@@ -175,9 +178,6 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         descriptionLabel.isHidden = (descriptionLabel.text ?? "").isEmpty
         
         addressLabel.text = value.mechanizmaDescription
-        callStatusView.isHidden = true
-        descriptionLabel.isHidden = false
-        descriptionLabel.text = ""
         
         switch value.event {
         case .answered:

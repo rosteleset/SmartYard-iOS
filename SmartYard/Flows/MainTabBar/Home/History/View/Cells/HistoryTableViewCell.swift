@@ -18,16 +18,17 @@ enum HistoryCellOrder: Equatable {
 class HistoryTableViewCell: UITableViewCell {
     //@IBOutlet private weak var previewImage: UIImageView!
     @IBOutlet private var dateLabel: UILabel!
+    @IBOutlet weak var dateView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var iconImage: UIImageView!
     @IBOutlet private var descriptionLabel: UILabel!
+    @IBOutlet weak var descriptionView: UIView!
     @IBOutlet private weak var timeLabel: UILabel!
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var separatorView: UIView!
-    @IBOutlet private var dateLabelConstraints: [NSLayoutConstraint]!
-    @IBOutlet private var desсriptionLabelConstraints: [NSLayoutConstraint]!
+    @IBOutlet private weak var bottomSpaceForLastCell: UIView!
+    @IBOutlet private weak var topSpaceForFirst: UIView!
     private var descriptionLabelHidden: UILabel?
-    private var dateLabelHidden: UILabel?
     
     //var cellOrder: HistoryCellOrder = .regular
     
@@ -43,59 +44,48 @@ class HistoryTableViewCell: UITableViewCell {
     }
     
     func configureCell(cellOrder: HistoryCellOrder, from value: APIPlog) {
+        dateLabel.text = ""
+        dateView.isHidden = true
         
         switch cellOrder {
         //настраиваем отображение скруглений и вывод даты для первого элемента
         case .first, .single:
+            
             if cellOrder == .single {
                 containerView.layer.maskedCorners = [.topCorners, .bottomCorners]
                 separatorView.isHidden = true
-                
+                topSpaceForFirst.isHidden = false
+                bottomSpaceForLastCell.isHidden = false
             } else {
                 containerView.layer.maskedCorners = [.topCorners]
                 separatorView.isHidden = false
-            }
-            
-            if !containerView.subviews.contains(dateLabel) {
-                containerView.addSubview(dateLabel)
-                dateLabelConstraints.forEach { $0.isActive = true }
-                dateLabelHidden = nil
+                topSpaceForFirst.isHidden = false
+                bottomSpaceForLastCell.isHidden = true
             }
             
             let df = DateFormatter()
             df.dateFormat = "EEEE, d MMMM"
             dateLabel.text = df.string(from: value.date)
+            dateView.isHidden = false
             
         case .regular:
             separatorView.isHidden = false
             containerView.layer.maskedCorners = []
-            dateLabelHidden = dateLabel
-            if containerView.subviews.contains(dateLabel) {
-                dateLabel.removeFromSuperview()
-            }
+            dateLabel.text = ""
+            dateView.isHidden = true
+            topSpaceForFirst.isHidden = true
+            bottomSpaceForLastCell.isHidden = true
             
         case .last:
             separatorView.isHidden = true
             containerView.layer.maskedCorners = [.bottomCorners]
-            dateLabelHidden = dateLabel
-            if containerView.subviews.contains(dateLabel) {
-                dateLabel.removeFromSuperview()
-            }
+            dateLabel.text = ""
+            dateView.isHidden = true
+            topSpaceForFirst.isHidden = true
+            bottomSpaceForLastCell.isHidden = false
         }
         
-        //настраиваем отображение поля с описанием
-        if value.detail.isEmpty {
-            descriptionLabelHidden = descriptionLabel
-            if containerView.subviews.contains(descriptionLabel) {
-                descriptionLabel.removeFromSuperview()
-            }
-        } else {
-            if !containerView.subviews.contains(descriptionLabel) {
-                containerView.addSubview(descriptionLabel)
-                desсriptionLabelConstraints.forEach { $0.isActive = true }
-            }
-            descriptionLabelHidden = nil
-        }
+        var description = value.detail
         
         //общие операции для всех ячеек, вне зависимости от их места в секции
         //настраиваем отображение иконки и заголовка
@@ -104,41 +94,52 @@ class HistoryTableViewCell: UITableViewCell {
             titleLabel.text = "Звонок в домофон"
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsDomophone")
+            description = ""
         case .unanswered:
             titleLabel.text = "Звонок в домофон"
             titleLabel.textColor = UIColor(named: "incorrectDataRed")
             iconImage.image = UIImage(named: "LogsDomophone")
+            description = ""
         case .rfid:
             titleLabel.text = "Открывание ключом"
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsKey")
+            description = ""
         case .app:
             titleLabel.text = "Открытие из приложения"
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsApp")
+            description = ""
         case .face:
             titleLabel.text = "Открывание по лицу"
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsFace")
+            description = ""
         case .passcode:
             titleLabel.text = "Открытие по коду"
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsCode")
+            description = ""
         case .call:
             titleLabel.text = "Открытие ворот по звонку"
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsCall")
+            description = ""
         case .plate:
             titleLabel.text = "Открытие ворот по номеру"
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsWicket")
+            description = ""
         case .unknown:
             titleLabel.text = "Неизвестное событие"
             titleLabel.textColor = UIColor(named: "incorrectDataRed")
             iconImage.image = UIImage(named: "LogsApp")
+            description = ""
         }
         
-        descriptionLabel.text = value.detail
+        //настраиваем отображение поля с описанием
+        descriptionView.isHidden = description.isEmpty
+        descriptionLabel.text = description
         
         let df = DateFormatter()
         df.dateFormat = "HH:mm"
