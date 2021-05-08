@@ -52,10 +52,10 @@ class HistoryViewModel: BaseViewModel {
     private var loadingQueue: [(flatId: Int, day: Date)] = []
     
     /// сюда прилетают результаты запросов с API: один элемент - один день для одной квартиры
-    private let logs = PublishSubject<DataSection>()
+    private let logs = PublishSubject<DayFlatItemsData>()
     
     /// все загруженные данные от API
-    private let dataCache = BehaviorRelay<[DataSection]>(value: [])
+    private let dataCache = BehaviorRelay<[DayFlatItemsData]>(value: [])
     
     /// данные для отображения в виде готовых секций для dataSource с учётом текущих фильтров
     private let sections = BehaviorRelay<[HistorySectionModel]>(value: [])
@@ -171,6 +171,8 @@ class HistoryViewModel: BaseViewModel {
                                 .flatMap { $0.items }
                                 //удаляем записи с одинаковым uuid, которые одновременно могли присутствовать в разных квартирах
                                 .duplicatesRemoved()
+                                //сортируем события внутри даты от самой ранней к более поздней
+                                .sorted(by: { $0.date > $1.date })
                             )
                         }
                         //удаляеем даты в которых нет ни одной записи
@@ -314,7 +316,7 @@ class HistoryViewModel: BaseViewModel {
         
         input.loadDay
             .distinctUntilChanged()
-            .flatMap { [weak self] day -> Driver<DataSection?> in
+            .flatMap { [weak self] day -> Driver<DayFlatItemsData?> in
                     
                 guard let self = self else {
                     return .just(nil)
@@ -322,7 +324,7 @@ class HistoryViewModel: BaseViewModel {
                 
                 let lock = NSLock()
                 
-                let results = PublishSubject<DataSection?>()
+                let results = PublishSubject<DayFlatItemsData?>()
                 
                 //запрашиваем логи за день для каждой квартиры и результат каждого запроса отправляем,
                 //как отдельный элемент в текущую последовательность
@@ -415,7 +417,7 @@ class HistoryViewModel: BaseViewModel {
         
         input.loadDay
             .distinctUntilChanged()
-            .flatMap { [weak self] day -> Driver<DataSection?> in
+            .flatMap { [weak self] day -> Driver<DayFlatItemsData?> in
                     
                 guard let self = self else {
                     return .just(nil)
@@ -423,7 +425,7 @@ class HistoryViewModel: BaseViewModel {
                 
                 let lock = NSLock()
                 
-                let results = PublishSubject<DataSection?>()
+                let results = PublishSubject<DayFlatItemsData?>()
                 
                 //запрашиваем логи за день для каждой квартиры и результат каждого запроса отправляем,
                 //как отдельный элемент в текущую последовательность

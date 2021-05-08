@@ -11,7 +11,7 @@ import UIKit
 import PopOverDatePicker
 
 
-typealias DataSection = (day: Date, items: [APIPlog], flatId: Int)
+typealias DayFlatItemsData = (day: Date, items: [APIPlog], flatId: Int)
 
 typealias ApptsFilter = Int
 
