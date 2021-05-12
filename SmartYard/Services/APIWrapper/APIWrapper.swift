@@ -106,9 +106,15 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     func mapAsEmptyDataInitializableResponse<T: Decodable & EmptyDataInitializable>() -> Single<T> {
         return flatMap { response in
             // MARK: Если вернулся код 204 (пустой контент), то просто возвращаем пустой контент
-            print("\(String(decoding: response.data, as: UTF8.self))")
             if response.statusCode == 204 {
+                print("response data: <empty>")
                 return .just(T())
+            }
+            
+            if let debugString = try? response.mapString(), !(debugString.isEmpty) {
+                print("response data: \(debugString.truncated(toLength: 1000))")
+            } else {
+                print("response data: <empty>")
             }
             
             // MARK: Если вернулся успешный код - пытаемся замапить реквест

@@ -61,6 +61,7 @@ enum APITarget {
     case payProcess(request: PayProcessRequest)
     case sberbankPayProcess(request: SberbankPayProcessRequest)
     
+    case getPersonFaces(request: GetPersonFacesRequest)
 }
 
 extension APITarget: TargetType {
@@ -130,6 +131,9 @@ extension APITarget: TargetType {
         case .payPrepare: return "pay/prepare"
         case .payProcess: return "pay/process"
         case .sberbankPayProcess: return "payment.do"
+            
+        case .getPersonFaces: return "frs/getPersonFaces"
+            
         }
     }
     
@@ -194,6 +198,8 @@ extension APITarget: TargetType {
                 
             case .payPrepare(let request): return request.accessToken
             case .payProcess(let request): return request.accessToken
+                
+            case .getPersonFaces(let request): return request.accessToken
                 
             default: return nil
             }
@@ -265,6 +271,9 @@ extension APITarget: TargetType {
         case .payPrepare(let request): return request.requestParameters
         case .payProcess(let request): return request.requestParameters
         case .sberbankPayProcess(let request): return request.requestParameters
+        
+        case .getPersonFaces(let request): return request.requestParameters
+            
         }
     }
     

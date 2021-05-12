@@ -26,6 +26,7 @@ enum SettingsRoute: Route {
     case newAllowedPerson(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
     case safariPage(url: URL)
     case editName
+    case facesSettings
     
 }
 
@@ -221,6 +222,17 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             vc.modalTransitionStyle = .crossDissolve
             
             return .present(vc)
+            
+        case .facesSettings:
+            let vm = FacesSettingsViewModel(
+                apiWrapper: apiWrapper,
+                accessService: accessService,
+                alertService: alertService,
+                router: weakRouter
+            )
+            
+            let vc = FacesSettingsViewController(viewModel: vm)
+            return .push(vc)
         }
     }
     

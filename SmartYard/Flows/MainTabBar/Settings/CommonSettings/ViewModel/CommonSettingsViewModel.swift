@@ -190,6 +190,7 @@ class CommonSettingsViewModel: BaseViewModel {
                     guard let self = self else {
                             return
                         }
+                    self.router.trigger(.facesSettings)
                 }
             )
             .disposed(by: disposeBag)
