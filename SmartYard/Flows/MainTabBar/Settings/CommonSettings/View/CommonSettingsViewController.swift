@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import JGProgressHUD
 
-class AdvancedSettingsViewController: BaseViewController, LoaderPresentable {
+class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var mainContainerView: UIView!

@@ -146,7 +146,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             return .present(vc)
             
         case .advancedSettings:
-            let vm = AdvancedSettingsViewModel(
+            let vm = CommonSettingsViewModel(
                 apiWrapper: apiWrapper,
                 accessService: accessService,
                 pushNotificationService: pushNotificationService,
@@ -155,7 +155,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
                 router: weakRouter
             )
             
-            let vc = AdvancedSettingsViewController(viewModel: vm)
+            let vc = CommonSettingsViewController(viewModel: vm)
             return .push(vc)
             
         case let .addressDeletion(delegate):

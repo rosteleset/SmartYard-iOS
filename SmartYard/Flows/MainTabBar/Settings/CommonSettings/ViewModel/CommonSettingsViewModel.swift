@@ -11,7 +11,7 @@ import RxSwift
 import XCoordinator
 import SmartYardSharedDataFramework
 
-class AdvancedSettingsViewModel: BaseViewModel {
+class CommonSettingsViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let accessService: AccessService
@@ -284,7 +284,7 @@ class AdvancedSettingsViewModel: BaseViewModel {
     
 }
 
-extension AdvancedSettingsViewModel {
+extension CommonSettingsViewModel {
     
     struct Input {
         let backTrigger: Driver<Void>

@@ -279,9 +279,9 @@
 		84D29BA324B865EF00CFBE6B /* LoaderAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 84D29BA224B865EF00CFBE6B /* LoaderAnimation.json */; };
 		84D29BAB24BDCB6900CFBE6B /* IncomingCallPreviewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29BAA24BDCB6900CFBE6B /* IncomingCallPreviewState.swift */; };
 		84D29BAD24BDCBC300CFBE6B /* IncomingCallStateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D29BAC24BDCBC300CFBE6B /* IncomingCallStateContainer.swift */; };
-		84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */; };
-		84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */; };
-		84D6445923F68AB200AD87EF /* AdvancedSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */; };
+		84D6445623F68AA600AD87EF /* CommonSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445423F68AA600AD87EF /* CommonSettingsViewController.swift */; };
+		84D6445723F68AA600AD87EF /* CommonSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D6445523F68AA600AD87EF /* CommonSettingsViewController.xib */; };
+		84D6445923F68AB200AD87EF /* CommonSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445823F68AB200AD87EF /* CommonSettingsViewModel.swift */; };
 		84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6445D23F6ACE600AD87EF /* AddressDeletionViewController.swift */; };
 		84D6446023F6ACE600AD87EF /* AddressDeletionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D6445E23F6ACE600AD87EF /* AddressDeletionViewController.xib */; };
 		84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6446323F6AD3F00AD87EF /* AddressDeletionViewModel.swift */; };
@@ -813,9 +813,9 @@
 		84D29BA224B865EF00CFBE6B /* LoaderAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LoaderAnimation.json; sourceTree = "<group>"; };
 		84D29BAA24BDCB6900CFBE6B /* IncomingCallPreviewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallPreviewState.swift; sourceTree = "<group>"; };
 		84D29BAC24BDCBC300CFBE6B /* IncomingCallStateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallStateContainer.swift; sourceTree = "<group>"; };
-		84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewController.swift; sourceTree = "<group>"; };
-		84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvancedSettingsViewController.xib; sourceTree = "<group>"; };
-		84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsViewModel.swift; sourceTree = "<group>"; };
+		84D6445423F68AA600AD87EF /* CommonSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSettingsViewController.swift; sourceTree = "<group>"; };
+		84D6445523F68AA600AD87EF /* CommonSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommonSettingsViewController.xib; sourceTree = "<group>"; };
+		84D6445823F68AB200AD87EF /* CommonSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSettingsViewModel.swift; sourceTree = "<group>"; };
 		84D6445D23F6ACE600AD87EF /* AddressDeletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDeletionViewController.swift; sourceTree = "<group>"; };
 		84D6445E23F6ACE600AD87EF /* AddressDeletionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressDeletionViewController.xib; sourceTree = "<group>"; };
 		84D6446323F6AD3F00AD87EF /* AddressDeletionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDeletionViewModel.swift; sourceTree = "<group>"; };
@@ -2521,8 +2521,8 @@
 		84D6445223F68A8E00AD87EF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				84D6445423F68AA600AD87EF /* AdvancedSettingsViewController.swift */,
-				84D6445523F68AA600AD87EF /* AdvancedSettingsViewController.xib */,
+				84D6445423F68AA600AD87EF /* CommonSettingsViewController.swift */,
+				84D6445523F68AA600AD87EF /* CommonSettingsViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2530,7 +2530,7 @@
 		84D6445323F68A9200AD87EF /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				84D6445823F68AB200AD87EF /* AdvancedSettingsViewModel.swift */,
+				84D6445823F68AB200AD87EF /* CommonSettingsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -3807,7 +3807,7 @@
 				3AB41E0325C0879200AEC8C3 /* BottomCell.xib in Resources */,
 				84F6493B247402DC000C0028 /* CustomDayCell.xib in Resources */,
 				84898A9D23F17EF100E6B78E /* SettingsAddAddressCell.xib in Resources */,
-				84D6445723F68AA600AD87EF /* AdvancedSettingsViewController.xib in Resources */,
+				84D6445723F68AA600AD87EF /* CommonSettingsViewController.xib in Resources */,
 				84A67062241FB6E100BBA12B /* AddressAccessSkeletonView.xib in Resources */,
 				84898A7D23F13E5A00E6B78E /* AddressesListViewController.xib in Resources */,
 				846DC6C124B33DC600A11914 /* PaymentPopupController.xib in Resources */,
@@ -4228,7 +4228,7 @@
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
 				E92EFBCC242A22F2003AF7FE /* RegisterPushTokenRequest.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
-				84D6445623F68AA600AD87EF /* AdvancedSettingsViewController.swift in Sources */,
+				84D6445623F68AA600AD87EF /* CommonSettingsViewController.swift in Sources */,
 				84AADD29243349630056994A /* ChatViewModel.swift in Sources */,
 				84898A9223F1554D00E6B78E /* SettingsDataItem.swift in Sources */,
 				3AB41E0225C0879200AEC8C3 /* BottomCell.swift in Sources */,
@@ -4285,7 +4285,7 @@
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				3AB41E0A25C200B900AEC8C3 /* CityMapViewModel.swift in Sources */,
 				E92EFBC5242A22F2003AF7FE /* GeoCoderResponseData.swift in Sources */,
-				84D6445923F68AB200AD87EF /* AdvancedSettingsViewModel.swift in Sources */,
+				84D6445923F68AB200AD87EF /* CommonSettingsViewModel.swift in Sources */,
 				844AC39D23E987360066006D /* IncomingCallPortraitViewController.swift in Sources */,
 				3AC5C624260A3249008D74DE /* HistoryTableViewCell.swift in Sources */,
 				84B89A9523F2FA8A009692B4 /* ServiceIsActivatedViewModel.swift in Sources */,
