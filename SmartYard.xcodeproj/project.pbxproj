@@ -1554,7 +1554,7 @@
 				E94057F623F671F200623746 /* AddressAccess */,
 				84D6445A23F6ACA200AD87EF /* AddressDeletion */,
 				848D1B8423F29D3F00D6E368 /* AddressSettings */,
-				84D6445123F68A8200AD87EF /* AdvancedSettings */,
+				84D6445123F68A8200AD87EF /* CommonSettings */,
 				84AADD19242E22330056994A /* EditName */,
 				844AC3F023EBFF790066006D /* Main */,
 				E94B6C1523FAC53D00FD9F65 /* NewAllowedPerson */,
@@ -2509,13 +2509,13 @@
 			path = StreamInfo;
 			sourceTree = "<group>";
 		};
-		84D6445123F68A8200AD87EF /* AdvancedSettings */ = {
+		84D6445123F68A8200AD87EF /* CommonSettings */ = {
 			isa = PBXGroup;
 			children = (
 				84D6445223F68A8E00AD87EF /* View */,
 				84D6445323F68A9200AD87EF /* ViewModel */,
 			);
-			path = AdvancedSettings;
+			path = CommonSettings;
 			sourceTree = "<group>";
 		};
 		84D6445223F68A8E00AD87EF /* View */ = {

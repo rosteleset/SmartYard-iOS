@@ -72,6 +72,9 @@ class AdvancedSettingsViewModel: BaseViewModel {
         let enableAccountBalanceWarningSubject = BehaviorSubject<Bool>(value: false)
         let enableCallkitSubject = BehaviorSubject<Bool>(value: accessService.prefersVoipForCalls)
         
+        let acceptFaceAgreementSubject = BehaviorSubject<Bool>(value: accessService.clientFaceAgreement)
+        
+        
         apiWrapper
             .getCurrentNotificationState()
             .trackError(errorTracker)
@@ -162,6 +165,35 @@ class AdvancedSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Нажатие на Принять соглашение
+        
+        input.acceptFaceAgrementTrigger
+            .drive(
+                onNext: { [weak self] in
+                    
+                    
+                    guard let self = self else {
+                        return
+                    }
+                    let newState = !self.accessService.clientFaceAgreement
+                    
+                    self.accessService.clientFaceAgreement = newState
+                    acceptFaceAgreementSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // MARK: Переход на управление фотографиями
+        input.manageFacesTrigger
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                            return
+                        }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Отображение имени. Актуализируем при каждом обновлении имени в настройках
         
         let currentName = Driver<APIClientName?>.merge(
@@ -244,6 +276,7 @@ class AdvancedSettingsViewModel: BaseViewModel {
             enableNotifications: enableNotificationsSubject.asDriverOnErrorJustComplete(),
             enableAccountBalanceWarning: enableAccountBalanceWarningSubject.asDriverOnErrorJustComplete(),
             enableCallkit: enableCallkitSubject.asDriverOnErrorJustComplete(),
+            acceptFaceAgreement: acceptFaceAgreementSubject.asDriverOnErrorJustComplete(),
             isLoading: activityTracker.asDriver(),
             shouldShowInitialLoading: initialLoadingTracker.asDriver()
         )
@@ -259,6 +292,8 @@ extension AdvancedSettingsViewModel {
         let enableTrigger: Driver<Void>
         let moneyTrigger: Driver<Void>
         let callkitTrigger: Driver<Void>
+        let acceptFaceAgrementTrigger: Driver<Void>
+        let manageFacesTrigger: Driver<Void>
         let logoutTrigger: Driver<Void>
     }
     
@@ -268,6 +303,7 @@ extension AdvancedSettingsViewModel {
         let enableNotifications: Driver<Bool>
         let enableAccountBalanceWarning: Driver<Bool>
         let enableCallkit: Driver<Bool>
+        let acceptFaceAgreement: Driver<Bool>
         let isLoading: Driver<Bool>
         let shouldShowInitialLoading: Driver<Bool>
     }
