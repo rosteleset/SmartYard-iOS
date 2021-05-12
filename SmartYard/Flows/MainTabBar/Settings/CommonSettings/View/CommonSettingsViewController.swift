@@ -53,7 +53,7 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var logoutButton: UIButton!
     
-    private let viewModel: AdvancedSettingsViewModel
+    private let viewModel: CommonSettingsViewModel
     
     private let viewToScrollTo = BehaviorSubject<UIView?>(value: nil)
     
@@ -66,7 +66,7 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     
     var loader: JGProgressHUD?
     
-    init(viewModel: AdvancedSettingsViewModel) {
+    init(viewModel: CommonSettingsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -192,7 +192,7 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     
     // swiftlint:disable:next function_body_length
     private func bind() {
-        let input = AdvancedSettingsViewModel.Input(
+        let input = CommonSettingsViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             editNameTrigger: editNameButton.rx.tap.asDriver(),
             enableTrigger: textNotificationsTapGesture.rx.event.asDriver().mapToVoid(),
