@@ -26,7 +26,10 @@ enum SettingsRoute: Route {
     case newAllowedPerson(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
     case safariPage(url: URL)
     case editName
-    case facesSettings
+    case facesSettings(flatId: Int)
+    case showFace(image: UIImage?)
+    case deleteFace(image: UIImage?, flatId: Int, faceId: Int)
+    case addFace(flatId: Int)
     
 }
 
@@ -223,15 +226,36 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case .facesSettings:
+        case let .facesSettings(flatId):
             let vm = FacesSettingsViewModel(
                 apiWrapper: apiWrapper,
                 accessService: accessService,
                 alertService: alertService,
-                router: weakRouter
+                router: weakRouter,
+                flatId: flatId
             )
             
             let vc = FacesSettingsViewController(viewModel: vm)
+            return .push(vc)
+            
+        case let .showFace(image):
+            let vc = FaceViewController(router: weakRouter, image: image)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            
+            return .present(vc)
+        
+        case let .deleteFace(image, flatId, faceId):
+            let vc = DeleteFaceViewController(router: weakRouter, apiWrapper: apiWrapper, image: image, flatId: flatId, faceId: faceId)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            
+            return .present(vc)
+        
+        case let .addFace(flatId):
+            let vm = HistoryViewModel(apiWrapper: apiWrapper, flatId: flatId, address: "", router: weakRouter)
+            let vc = HistoryDetailViewController(viewModel: vm)
+            
             return .push(vc)
         }
     }

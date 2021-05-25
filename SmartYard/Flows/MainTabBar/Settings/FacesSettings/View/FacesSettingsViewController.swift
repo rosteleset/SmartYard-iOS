@@ -18,12 +18,13 @@ class FacesSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var facesCollectionView: UICollectionView!
     
     private let viewModel: FacesSettingsViewModel
+    private let imagesCache = NSCache<NSString,UIImage>()
     
     var loader: JGProgressHUD?
     
     private var addFaceTrigger = PublishSubject<Void>()
-    private var deleteFaceTrigger = PublishSubject<Int>()
-    private var selectFaceTrigger = PublishSubject<Int>()
+    private var deleteFaceTrigger = PublishSubject<(Int, UIImage?)>()
+    private var selectFaceTrigger = PublishSubject<(Int, UIImage?)>()
     
     private var registeredFaces: [APIFace] = []
     
@@ -107,6 +108,7 @@ class FacesSettingsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func showInitialLoading() {
+        // TODO: сделать отображение скелетонов
     }
     
     private func finishInitialLoading() {
@@ -173,14 +175,14 @@ extension FacesSettingsViewController: UICollectionViewDataSource {
             guard let face = registeredFaces.item(at: indexPath.row - 1) else {
                 return cell
             }
-            cell.imageButton.setImage(face.faceImage, for: .normal)
+            cell.imageButton.loadImageUsingUrlString(urlString: face.image, cache: imagesCache)
             cell.imageButton.contentMode = .scaleAspectFit
             cell.faceId = face.faceId
             
             cell.deleteButtonTrigger
                 .drive(
                     onNext: { [weak self] faceId in
-                        self?.deleteFaceTrigger.onNext(faceId)
+                        self?.deleteFaceTrigger.onNext((faceId, cell.imageButton.image(for: .normal)))
                     }
                 )
                 .disposed(by: cell.disposeBag)
@@ -188,7 +190,7 @@ extension FacesSettingsViewController: UICollectionViewDataSource {
             cell.imageButtonTrigger
                 .drive(
                     onNext: { [weak self] faceId in
-                        self?.selectFaceTrigger.onNext(faceId)
+                        self?.selectFaceTrigger.onNext((faceId, cell.imageButton.image(for: .normal)))
                     }
                 )
                 .disposed(by: cell.disposeBag)

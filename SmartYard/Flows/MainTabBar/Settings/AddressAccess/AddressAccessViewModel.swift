@@ -23,6 +23,7 @@ class AddressAccessViewModel: BaseViewModel {
     private let permanentAccessContactsSubject = BehaviorSubject<[AllowedPerson]>(value: [])
     private let intercomAccessCode = BehaviorSubject<String?>(value: nil)
     private let isGrantedIntercomGuestAccess = BehaviorSubject<Bool>(value: false)
+    private let isFrsAvailable = BehaviorSubject<Bool?>(value: nil)
     
     private let address: String
     private let flatId: String
@@ -109,6 +110,12 @@ class AddressAccessViewModel: BaseViewModel {
                     let isAccessGranted = response.autoOpen > Date()
                     
                     self?.isGrantedIntercomGuestAccess.onNext(isAccessGranted)
+                    
+                    if let isFrsNotAvailable = response.frsDisabled {
+                        self?.isFrsAvailable.onNext(!isFrsNotAvailable)
+                    } else {
+                        self?.isFrsAvailable.onNext(nil)
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -251,6 +258,19 @@ class AddressAccessViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] in
                     self?.openGuestAccess()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.configureFaces
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self,
+                          let flatId = Int(self.flatId) else {
+                        return
+                    }
+                    
+                    self.router.trigger(.facesSettings(flatId: flatId))
                 }
             )
             .disposed(by: disposeBag)
@@ -402,6 +422,7 @@ class AddressAccessViewModel: BaseViewModel {
             temporaryIntercomCode: intercomAccessCode.asDriver(onErrorJustReturn: nil),
             isGrantedIntercomAccess: isGrantedIntercomGuestAccess.asDriver(onErrorJustReturn: false),
             isLoading: activityTracker.asDriver(),
+            isFRSEnabled: isFrsAvailable.asDriver(onErrorJustReturn: nil),
             hasGates: hasGatesSubject.asDriver(onErrorJustReturn: false),
             isOwner: isOwnerSubject.asDriver(onErrorJustReturn: false),
             isInitialLoadingFinished: isInitialLoadingFinished
@@ -531,6 +552,7 @@ extension AddressAccessViewModel {
         let viewDidAppearTrigger: Driver<Bool>
         let refreshIntercomTempCodeTrigger: Driver<Void>
         let openGuestAccessTrigger: Driver<Void>
+        let configureFaces: Driver<Void>
         let smsToTempContactTrigger: Driver<Int?>
         let smsToPermanentContactTrigger: Driver<Int?>
         let deleteTempContactTrigger: Driver<Int?>
@@ -547,6 +569,7 @@ extension AddressAccessViewModel {
         let temporaryIntercomCode: Driver<String?>
         let isGrantedIntercomAccess: Driver<Bool>
         let isLoading: Driver<Bool>
+        let isFRSEnabled: Driver<Bool?>
         let hasGates: Driver<Bool>
         let isOwner: Driver<Bool>
         let isInitialLoadingFinished: Driver<Bool>

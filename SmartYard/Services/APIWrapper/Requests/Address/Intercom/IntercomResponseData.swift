@@ -17,6 +17,9 @@ struct IntercomResponseData: Decodable {
     let autoOpen: Date
     let whiteRabbit: String
     let paperBill: Bool?
+    let disablePlog: Bool?
+    let hiddenPlog: Bool?
+    let frsDisabled: Bool?
     
     
     private enum CodingKeys: String, CodingKey {
@@ -27,8 +30,12 @@ struct IntercomResponseData: Decodable {
         case autoOpen
         case whiteRabbit
         case paperBill
+        case disablePlog
+        case hiddenPlog
+        case frsDisabled = "FRSDisabled"
     }
     
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -71,7 +78,29 @@ struct IntercomResponseData: Decodable {
         default: paperBill = nil
         }
         
-        //paperBill = nil
+        let disablePlogRawValue = try? container.decode(String.self, forKey: .disablePlog)
+        
+        switch disablePlogRawValue {
+        case "t": disablePlog = true
+        case "f": disablePlog = false
+        default: disablePlog = nil
+        }
+        
+        let hiddenPlogRawValue = try? container.decode(String.self, forKey: .hiddenPlog)
+        
+        switch hiddenPlogRawValue {
+        case "t": hiddenPlog = true
+        case "f": hiddenPlog = false
+        default: hiddenPlog = nil
+        }
+        
+        let frsDisabledRawValue = try? container.decode(String.self, forKey: .frsDisabled)
+        
+        switch frsDisabledRawValue {
+        case "t": frsDisabled = true
+        case "f": frsDisabled = false
+        default: frsDisabled = nil
+        }
     }
     
 }

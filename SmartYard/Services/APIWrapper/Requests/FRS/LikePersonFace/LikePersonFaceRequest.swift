@@ -1,5 +1,5 @@
 //
-//  GetPersonFacesRequest.swift
+//  LikePersonFacesRequest.swift
 //  SmartYard
 //
 //  Created by Александр Васильев on 12.05.2021.
@@ -8,17 +8,17 @@
 
 import Foundation
 
-struct GetPersonFacesRequest {
+struct LikePersonFaceRequest {
     
     let accessToken: String
-    let flatId: Int
+    let event: String
     
 }
 
-extension GetPersonFacesRequest {
+extension LikePersonFaceRequest {
     
     var requestParameters: [String: Any] {
-        return ["flatId": flatId]
+        return ["event": "\(event)"]
     }
     
 }

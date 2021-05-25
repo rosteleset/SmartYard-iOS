@@ -8,20 +8,21 @@
 
 import UIKit
 
-class SafeCachedImageView: UIImageView {
+class SafeCachedButton: UIButton {
 
     private var imageUrlString: String?
     private var loadingImageIndicator: UIActivityIndicatorView?
     
     
-    func loadImageUsingUrlString(urlString: String, cache: NSCache<NSString, UIImage>) {
+    func loadImageUsingUrlString(urlString: String, cache: NSCache<NSString, UIImage>, label: UILabel? = nil, errorMessage: String = "") {
         
         imageUrlString = urlString
         
-        self.image = nil
+        self.setImage(nil, for: .normal)
         
         if let imageFromCache = cache.object(forKey: NSString(string: urlString)) {
-            self.image = imageFromCache
+            self.setImage(imageFromCache, for: .normal)
+            label?.text = ""
             return
         }
         
@@ -52,13 +53,19 @@ class SafeCachedImageView: UIImageView {
                     let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
                     let data = data,
                     let loadedImage = UIImage(data: data)
-                    else {
-                        return
+                else {
+                    DispatchQueue.main.async {
+                        if self.imageUrlString == urlString {
+                            label?.text = errorMessage
+                        }
+                    }
+                    return
                 }
                 
                 DispatchQueue.main.async {
                     if self.imageUrlString == urlString {
-                        self.image = loadedImage
+                        self.setImage(loadedImage, for: .normal)
+                        label?.text = ""
                     }
                     cache.setObject(loadedImage, forKey: NSString(string: urlString))
                 }

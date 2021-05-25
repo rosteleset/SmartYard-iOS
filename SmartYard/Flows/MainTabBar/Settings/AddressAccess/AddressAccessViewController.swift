@@ -17,6 +17,7 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var addressView: FullRoundedView!
     @IBOutlet private weak var intercomAccessView: IntercomTemporaryAccessView!
+    @IBOutlet private weak var faceIdAccessView: FaceIdAccessView!
     
     @IBOutlet private weak var temporaryAccessContainer: UIView!
     @IBOutlet private weak var temporaryAccessView: AccessView!
@@ -93,6 +94,7 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
             viewDidAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete(),
             refreshIntercomTempCodeTrigger: intercomAccessView.rx.refreshButtonTapped.asDriverOnErrorJustComplete(),
             openGuestAccessTrigger: intercomAccessView.rx.openButtonTapped.asDriverOnErrorJustComplete(),
+            configureFaces: faceIdAccessView.rx.configureButtonTapped.asDriverOnErrorJustComplete(),
             smsToTempContactTrigger: temporaryAccessView.sendSmsSubject.asDriverOnErrorJustComplete(),
             smsToPermanentContactTrigger: permanentAccessView.sendSmsSubject.asDriverOnErrorJustComplete(),
             deleteTempContactTrigger: temporaryAccessView.deletePressedSubject.asDriverOnErrorJustComplete(),
@@ -199,6 +201,19 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
                     UIView.animate(withDuration: 0.25) {
                         self?.view.layoutIfNeeded()
                     }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isFRSEnabled
+            .drive(
+                onNext: { [weak self] state in
+                    guard let state = state  else {
+                        self?.faceIdAccessView.isHidden = true
+                        return
+                    }
+                    self?.faceIdAccessView.isAvailable = state
+                    self?.faceIdAccessView.isHidden = false
                 }
             )
             .disposed(by: disposeBag)

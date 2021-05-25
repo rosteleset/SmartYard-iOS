@@ -17,10 +17,11 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
     @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var emptyStateView: UIView!
     
     fileprivate let viewModel: HistoryViewModel
     fileprivate var dataSource: RxCollectionViewSectionedAnimatedDataSource<HistorySectionModel>?
-    fileprivate let selectItemOnLoad: HistoryDataItem
+    fileprivate let selectItemOnLoad: HistoryDataItem?
     fileprivate var itemWasPointed =  false
     
     private let loadDayTriger = PublishSubject<Date>()
@@ -44,7 +45,11 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     
     private let imagesCache = NSCache<NSString,UIImage>()
     
-    init(viewModel: HistoryViewModel, focusedOn: HistoryDataItem) {
+    private let addFaceTrigger = PublishSubject<String>()
+    private let deleteFaceTrigger = PublishSubject<String>()
+    
+    
+    init(viewModel: HistoryViewModel, focusedOn: HistoryDataItem? = nil) {
         self.viewModel = viewModel
         self.selectItemOnLoad = focusedOn
         super.init(nibName: nil, bundle: nil)
@@ -86,6 +91,13 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                 return nil
             }
             
+            //Если мы попали в этот контроллер без указания элемнта на какой надо спозиционироваться, то позиционируемся на самый первый.
+            if self.selectItemOnLoad == nil,
+               !dataSource.sectionModels.isEmpty,
+               !dataSource.sectionModels.first!.items.isEmpty {
+                return IndexPath(item: 0, section: 0)
+            }
+            
             for (sectionIndex, section) in dataSource.sectionModels.enumerated() {
                 for (row, item) in section.items.enumerated() where item == self.selectItemOnLoad {
                     return IndexPath(item: row, section: sectionIndex)
@@ -117,12 +129,28 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
             configureCell: { _, collectionView, indexPath, item in
                 let cell: HistoryCollectionViewCell = collectionView.dequeueReusableCell(withClass: HistoryCollectionViewCell.self, for: indexPath)
                 
-                
-                if let camera = self.camMap.first(where: {$0.id == item.value.objectId}) {
-                    cell.configure(value: item.value, using: self.imagesCache, videoBaseUrl: camera.url, token: camera.token)
+                //если у домофона есть камера, то конфигурируем ячейку с параметрами для отображения видео
+                if let camera = self.camMap.first(where: { $0.id == item.value.objectId }) {
+                    cell.configure(
+                        value: item.value,
+                        using: self.imagesCache,
+                        videoBaseUrl: camera.url,
+                        token: camera.token
+                    )
                 } else {
-                    cell.configure(value: item.value, using: self.imagesCache)
+                    cell.configure(
+                        value: item.value,
+                        using: self.imagesCache
+                    )
                 }
+                
+                cell.itsMeTrigger
+                    .drive(self.addFaceTrigger)
+                    .disposed(by: cell.disposeBag)
+                
+                cell.itsNotMeTrigger
+                    .drive(self.deleteFaceTrigger)
+                    .disposed(by: cell.disposeBag)
                 
                 return cell
             }
@@ -150,7 +178,9 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         let input = HistoryViewModel.InputDetail(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             updateSections: trigger.asDriver(onErrorJustReturn: ()),
-            loadDay: loadDayTriger.asDriverOnErrorJustComplete()
+            loadDay: loadDayTriger.asDriverOnErrorJustComplete(),
+            addFaceTrigger: addFaceTrigger.asDriverOnErrorJustComplete(),
+            deleteFaceTrigger: deleteFaceTrigger.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
@@ -159,7 +189,7 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
             .do(
                 onNext: { sectionModels in
                     self.days = sectionModels.map { $0.day }
-            
+                    self.emptyStateView.isHidden = !sectionModels.isEmpty
                 }
             )
             .drive(collectionView.rx.items(dataSource: dataSource!))

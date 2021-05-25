@@ -9,6 +9,59 @@
 import Foundation
 import UIKit
 
+struct Rectangle: Decodable, Equatable, Hashable {
+    let left: Int
+    let top: Int
+    let width: Int
+    let height: Int
+    
+    private enum CodingKeys: String, CodingKey {
+        case left
+        case top
+        case width
+        case height
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        guard let left = Int(try container.decode(String.self, forKey: .left)),
+              let top = Int(try container.decode(String.self, forKey: .top)),
+              let width = Int(try container.decode(String.self, forKey: .width)),
+              let height = Int(try container.decode(String.self, forKey: .height)) else {
+            throw NSError.APIWrapperError.noDataError
+        }
+        self.left = left
+        self.top = top
+        self.width = width
+        self.height = height
+     }
+}
+
+struct DetailX: Decodable, Equatable, Hashable {
+    let key: String?
+    let face: Rectangle?
+    let flags: [String]?
+    let phone: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case key
+        case face
+        case flags
+        case phone
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        key = try? container.decode(String.self, forKey: .key)
+        face = try? container.decode(Rectangle.self, forKey: .face)
+        flags = try? container.decode([String].self, forKey: .flags)
+        phone = try? container.decode(String.self, forKey: .phone)
+        
+     }
+}
+
 struct APIPlog: Decodable, Equatable, Hashable {
     
     let date: Date //дата. Допустимые значения: "Y-m-d H:i:s"
@@ -19,6 +72,7 @@ struct APIPlog: Decodable, Equatable, Hashable {
     let mechanizmaDescription: String //описание нагрузки (двери)
     let event: EventType
     let detail: String
+    let detailX: DetailX?
     let previewURL: String?
     let previewImage: UIImage?
     
@@ -31,6 +85,7 @@ struct APIPlog: Decodable, Equatable, Hashable {
         case mechanizmaDescription
         case event
         case detail
+        case detailX
         case preview
     }
     
@@ -59,6 +114,8 @@ struct APIPlog: Decodable, Equatable, Hashable {
         mechanizmaDescription = try container.decode(String.self, forKey: .mechanizmaDescription)
         event = APIPlog.EventType(rawValue: try container.decode(String.self, forKey: .event).int ?? -1) ?? .unknown
         detail = try container.decode(String.self, forKey: .detail)
+        detailX = try? container.decode(DetailX.self, forKey: .detailX)
+        
         previewURL = try? container.decode(String.self, forKey: .preview)
         
         if let previewURL = previewURL {

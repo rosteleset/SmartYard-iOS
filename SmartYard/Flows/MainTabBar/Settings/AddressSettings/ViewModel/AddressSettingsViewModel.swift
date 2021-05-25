@@ -76,6 +76,9 @@ class AddressSettingsViewModel: BaseViewModel {
         let isCmsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let areCallsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let arePaperBillsEnabledSubject = BehaviorSubject<Bool?>(value: nil)
+        let areLogsEnabledSubject = BehaviorSubject<Bool?>(value: nil)
+        let areLogsVisibleOnlyForOwnerSubject = BehaviorSubject<Bool?>(value: nil)
+        let isFRSEnabledSubject = BehaviorSubject<Bool?>(value: nil)
         
         let interactionBlockingRequestTracker = ActivityTracker()
         
@@ -91,6 +94,20 @@ class AddressSettingsViewModel: BaseViewModel {
                         isCmsEnabledSubject.onNext(state.cms)
                         areCallsEnabledSubject.onNext(state.voip)
                         arePaperBillsEnabledSubject.onNext(state.paperBill)
+                        
+                        switch state.disablePlog {
+                            case true: areLogsEnabledSubject.onNext(false)
+                            case false: areLogsEnabledSubject.onNext(true)
+                            default: areLogsEnabledSubject.onNext(nil)
+                        }
+                        
+                        areLogsVisibleOnlyForOwnerSubject.onNext(state.hiddenPlog)
+                        
+                        switch state.frsDisabled {
+                            case true: isFRSEnabledSubject.onNext(false)
+                            case false: isFRSEnabledSubject.onNext(true)
+                            default: isFRSEnabledSubject.onNext(nil)
+                        }
                     }
                 )
                 .disposed(by: disposeBag)
@@ -161,6 +178,83 @@ class AddressSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.logsTrigger
+            .withLatestFrom(areLogsEnabledSubject.asDriver(onErrorJustReturn: nil))
+            .flatMapLatest { [weak self] isEnabled -> Driver<IntercomResponseData?> in
+                guard let self = self, self.hasDomophone else {
+                    return .empty()
+                }
+                
+                let isEnabled = isEnabled ?? true
+                
+                return self.apiWrapper
+                    .setIntercomDisablePlogState(flatId: self.flatId, isDisabled: isEnabled)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    switch state.disablePlog {
+                        case true: areLogsEnabledSubject.onNext(false)
+                        case false: areLogsEnabledSubject.onNext(true)
+                        default: areLogsEnabledSubject.onNext(nil)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.hiddenTrigger
+            .withLatestFrom(areLogsVisibleOnlyForOwnerSubject.asDriver(onErrorJustReturn: nil))
+            .flatMapLatest { [weak self] isEnabled -> Driver<IntercomResponseData?> in
+                guard let self = self, self.hasDomophone else {
+                    return .empty()
+                }
+                
+                let isEnabled = isEnabled ?? true
+                
+                return self.apiWrapper
+                    .setIntercomHiddenPlogState(flatId: self.flatId, isHidden: !isEnabled)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    areLogsVisibleOnlyForOwnerSubject.onNext(state.hiddenPlog)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.frsTrigger
+            .withLatestFrom(isFRSEnabledSubject.asDriver(onErrorJustReturn: nil))
+            .flatMapLatest { [weak self] isEnabled -> Driver<IntercomResponseData?> in
+                guard let self = self, self.hasDomophone else {
+                    return .empty()
+                }
+                
+                let isEnabled = isEnabled ?? true
+                
+                return self.apiWrapper
+                    .setIntercomFRSDisabledState(flatId: self.flatId, isDisabled: isEnabled)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    switch state.frsDisabled {
+                        case true: isFRSEnabledSubject.onNext(false)
+                        case false: isFRSEnabledSubject.onNext(true)
+                        default: isFRSEnabledSubject.onNext(nil)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
@@ -181,7 +275,10 @@ class AddressSettingsViewModel: BaseViewModel {
             address: .just(address),
             isCmsEnabled: isCmsEnabledSubject.asDriver(onErrorJustReturn: false),
             areCallsEnabled: areCallsEnabledSubject.asDriver(onErrorJustReturn: false),
-            arePaperBillsEnabled: arePaperBillsEnabledSubject.asDriver(onErrorJustReturn: false),
+            arePaperBillsEnabled: arePaperBillsEnabledSubject.asDriver(onErrorJustReturn: nil),
+            areLogsEnabled: areLogsEnabledSubject.asDriver(onErrorJustReturn: nil),
+            areLogsVisibleOnlyForOwner: areLogsVisibleOnlyForOwnerSubject.asDriver(onErrorJustReturn: nil),
+            isFRSEnabled: isFRSEnabledSubject.asDriver(onErrorJustReturn: nil),
             ringtone: .just("Нота"),
             hasDomophone: .just(hasDomophone),
             isLoading: activityTracker.asDriver(),
@@ -231,6 +328,9 @@ extension AddressSettingsViewModel {
         let cmsTrigger: Driver<Void>
         let voipTrigger: Driver<Void>
         let paperBillTrigger: Driver<Void>
+        let logsTrigger: Driver<Void>
+        let hiddenTrigger: Driver<Void>
+        let frsTrigger: Driver<Void>
     }
     
     struct Output {
@@ -238,6 +338,9 @@ extension AddressSettingsViewModel {
         let isCmsEnabled: Driver<Bool>
         let areCallsEnabled: Driver<Bool>
         let arePaperBillsEnabled: Driver<Bool?>
+        let areLogsEnabled: Driver<Bool?>
+        let areLogsVisibleOnlyForOwner: Driver<Bool?>
+        let isFRSEnabled: Driver<Bool?>
         let ringtone: Driver<String>
         let hasDomophone: Driver<Bool>
         let isLoading: Driver<Bool>

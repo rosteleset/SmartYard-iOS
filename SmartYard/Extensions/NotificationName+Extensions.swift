@@ -45,4 +45,5 @@ extension Notification.Name {
     
     static let popupDimissed = Notification.Name("PopUpDimissed")
     
+    static let faceDeleted = Notification.Name("FaceDeleted")
 }

@@ -67,7 +67,10 @@ extension APIWrapper {
             voip: nil,
             autoOpen: Date().dateHourAfter,
             whiteRabbit: nil,
-            paperBill: nil
+            paperBill: nil,
+            disablePlog: nil,
+            hiddenPlog: nil,
+            frsDisabled: nil
         )
         
         return intercom(flatId: flatId, settings: settings)
@@ -80,7 +83,10 @@ extension APIWrapper {
             voip: nil,
             autoOpen: nil,
             whiteRabbit: nil,
-            paperBill: nil
+            paperBill: nil,
+            disablePlog: nil,
+            hiddenPlog: nil,
+            frsDisabled: nil
         )
         
         return intercom(flatId: flatId, settings: settings)
@@ -93,7 +99,10 @@ extension APIWrapper {
             voip: isEnabled,
             autoOpen: nil,
             whiteRabbit: nil,
-            paperBill: nil
+            paperBill: nil,
+            disablePlog: nil,
+            hiddenPlog: nil,
+            frsDisabled: nil
         )
         
         return intercom(flatId: flatId, settings: settings)
@@ -106,7 +115,58 @@ extension APIWrapper {
             voip: nil,
             autoOpen: nil,
             whiteRabbit: nil,
-            paperBill: isEnabled
+            paperBill: isEnabled,
+            disablePlog: nil,
+            hiddenPlog: nil,
+            frsDisabled: nil
+        )
+        
+        return intercom(flatId: flatId, settings: settings)
+    }
+    
+    func setIntercomDisablePlogState(flatId: String, isDisabled: Bool) -> Single<IntercomResponseData?> {
+        let settings = APIIntercomSettings(
+            enableDoorCode: nil,
+            cms: nil,
+            voip: nil,
+            autoOpen: nil,
+            whiteRabbit: nil,
+            paperBill: nil,
+            disablePlog: isDisabled,
+            hiddenPlog: nil,
+            frsDisabled: nil
+        )
+        
+        return intercom(flatId: flatId, settings: settings)
+    }
+    
+    func setIntercomHiddenPlogState(flatId: String, isHidden: Bool) -> Single<IntercomResponseData?> {
+        let settings = APIIntercomSettings(
+            enableDoorCode: nil,
+            cms: nil,
+            voip: nil,
+            autoOpen: nil,
+            whiteRabbit: nil,
+            paperBill: nil,
+            disablePlog: nil,
+            hiddenPlog: isHidden,
+            frsDisabled: nil
+        )
+        
+        return intercom(flatId: flatId, settings: settings)
+    }
+    
+    func setIntercomFRSDisabledState(flatId: String, isDisabled: Bool) -> Single<IntercomResponseData?> {
+        let settings = APIIntercomSettings(
+            enableDoorCode: nil,
+            cms: nil,
+            voip: nil,
+            autoOpen: nil,
+            whiteRabbit: nil,
+            paperBill: nil,
+            disablePlog: nil,
+            hiddenPlog: nil,
+            frsDisabled: isDisabled
         )
         
         return intercom(flatId: flatId, settings: settings)

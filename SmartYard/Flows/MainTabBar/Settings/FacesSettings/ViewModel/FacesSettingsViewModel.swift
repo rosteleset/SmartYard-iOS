@@ -17,17 +17,22 @@ class FacesSettingsViewModel: BaseViewModel {
     private let accessService: AccessService
     private let alertService: AlertService
     private let router: WeakRouter<SettingsRoute>
+    private let flatId: Int
+    
+    private let registeredFaces = PublishSubject<[APIFace]>()
     
     init(
         apiWrapper: APIWrapper,
         accessService: AccessService,
         alertService: AlertService,
-        router: WeakRouter<SettingsRoute>
+        router: WeakRouter<SettingsRoute>,
+        flatId: Int
     ) {
         self.apiWrapper = apiWrapper
         self.accessService = accessService
         self.alertService = alertService
         self.router = router
+        self.flatId = flatId
     }
     
     // swiftlint:disable:next function_body_length
@@ -49,12 +54,17 @@ class FacesSettingsViewModel: BaseViewModel {
         
         // MARK: Загрузка лиц
         
-        let registeredFaces = apiWrapper
-            .getPersonFaces()
+        apiWrapper.getPersonFaces(flatId: flatId)
             .trackError(errorTracker)
             .trackActivity(initialLoadingTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
+            .drive(
+                onNext: { [weak self] faces in
+                    self?.registeredFaces.onNext(faces)
+                }
+            )
+            .disposed(by: disposeBag)
             
             
         // MARK: Переход назад
@@ -70,23 +80,51 @@ class FacesSettingsViewModel: BaseViewModel {
         input.addFaceTrigger
             .drive(
                 onNext: { [weak self] in
-                    print("AddFace pressed!!!")
+                    guard let self = self else {
+                        return
+                    }
+                    self.router.trigger(.addFace(flatId: self.flatId))
                 }
             )
             .disposed(by: disposeBag)
         
         input.deleteFaceTrigger
             .drive(
-                onNext: { [weak self] faceId in
-                    print("Delete faceId=\(faceId) pressed!!!")
+                onNext: { [weak self] (faceId, image) in
+                    guard let self = self else {
+                        return
+                    }
+                    self.router.trigger(.deleteFace(image: image, flatId: self.flatId, faceId: faceId))
                 }
             )
             .disposed(by: disposeBag)
         
         input.selectFaceTrigger
             .drive(
-                onNext: { [weak self] faceId in
-                    print("Select faceId=\(faceId) pressed!!!")
+                onNext: { [weak self] (faceId, image) in
+                    self?.router.trigger(.showFace(image: image))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        //это событие прилетает, когда пользователь удалил лицо и надо обновить список лиц
+        NotificationCenter.default.rx.notification(.faceDeleted)
+            .asDriverOnErrorJustComplete()
+            .mapToVoid()
+            .flatMapLatest { [weak self] _ -> Driver<GetPersonFacesResponseData> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper.getPersonFaces(flatId: self.flatId)
+                    .trackError(errorTracker)
+                    .trackActivity(initialLoadingTracker)
+                    .asDriver(onErrorJustReturn: nil)
+                    .ignoreNil()
+            }
+            .drive(
+                onNext: { [weak self] faces in
+                    self?.registeredFaces.onNext(faces)
                 }
             )
             .disposed(by: disposeBag)
@@ -94,7 +132,7 @@ class FacesSettingsViewModel: BaseViewModel {
         return Output(
             isLoading: activityTracker.asDriver(),
             shouldShowInitialLoading: initialLoadingTracker.asDriver(),
-            registeredFaces: registeredFaces
+            registeredFaces: self.registeredFaces.asDriver(onErrorJustReturn: [])
         )
     }
     
@@ -105,8 +143,8 @@ extension FacesSettingsViewModel {
     struct Input {
         let backTrigger: Driver<Void>
         let addFaceTrigger: Driver<Void>
-        let deleteFaceTrigger: Driver<Int>
-        let selectFaceTrigger: Driver<Int>
+        let deleteFaceTrigger: Driver<(Int, UIImage?)>
+        let selectFaceTrigger: Driver<(Int, UIImage?)>
         
     }
     

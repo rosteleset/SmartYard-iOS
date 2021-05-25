@@ -8,15 +8,15 @@
 
 import UIKit
 import AVFoundation
+import RxSwift
+import RxCocoa
 
 class HistoryCollectionViewCell: UICollectionViewCell {
-    private var videoURL: String? {
-        return self.getVideoUrl(from: eventDate)
-    }
-    
     private var eventDate = Date()
     private var videoBaseUrl: String?
     private var token: String?
+    private var itIsMe: Bool?
+    private var uuid: String = ""
     
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
@@ -37,6 +37,27 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var callStatusView: UIStackView!
     @IBOutlet private weak var callStatusIcon: UIImageView!
     @IBOutlet private weak var callStatusLabel: UILabel!
+    @IBOutlet private weak var actionsDescriptionLabel: UILabel!
+    
+    private var videoURL: String? {
+        return self.getVideoUrl(from: eventDate)
+    }
+    
+    private(set) var disposeBag = DisposeBag()
+    
+    var itsMeTrigger: Driver<String> {
+        return openAccessButton.rx.tap
+            .map { [weak self] in self?.uuid }
+            .ignoreNil()
+            .asDriverOnErrorJustComplete()
+    }
+    
+    var itsNotMeTrigger: Driver<String> {
+        return denyAccessButton.rx.tap
+            .map { [weak self] in self?.uuid }
+            .ignoreNil()
+            .asDriverOnErrorJustComplete()
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,6 +65,11 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapOnVideo))
         doubleTap.numberOfTapsRequired = 2
         videoPlayerViewContainer.addGestureRecognizer(doubleTap)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
     
     @objc func doubleTapOnVideo(_ sender: UITapGestureRecognizer) {
@@ -90,14 +116,14 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     
     func playVideo() {
         //по умолчанию грузим 10 минутный интервал по 5 минут туда-сюда от события
-        guard let videoURL = self.getVideoUrl(from: eventDate.adding(.minute, value: -5), duration: 10*60),
+        guard let videoURL = self.getVideoUrl(from: eventDate.adding(.minute, value: -5), duration: 10 * 60),
             let url = URL(string: videoURL) else {
             return
             
         }
         
         player = AVPlayer(url: url)
-        player?.seek(to: CMTime(seconds: 5*60, preferredTimescale: 1))
+        player?.seek(to: CMTime(seconds: 5 * 60, preferredTimescale: 1))
         
         if playerLayer != nil {
             playerLayer?.removeFromSuperlayer()
@@ -126,9 +152,9 @@ class HistoryCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        let seekTo = player.currentTime()+CMTime(seconds: Double(offsetSeconds), preferredTimescale: 1)
+        let seekTo = player.currentTime() + CMTime(seconds: Double(offsetSeconds), preferredTimescale: 1)
         
-        if seekTo > CMTime.zero && seekTo < CMTime(seconds: 10*60, preferredTimescale: 1) {
+        if seekTo > CMTime.zero && seekTo < CMTime(seconds: 10 * 60, preferredTimescale: 1) {
             player.seek(to: seekTo)
             player.play()
         }
@@ -154,6 +180,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     
     func configure(value: APIPlog, using cache: NSCache<NSString, UIImage>, videoBaseUrl: String? = nil, token: String? = nil) {
         
+        self.uuid = value.uuid
         self.videoBaseUrl = videoBaseUrl
         self.token = token
         self.eventDate = value.date
@@ -221,15 +248,33 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         image.image = nil
     
         if value.previewImage == nil {
-            image.loadImageUsingUrlString(urlString: value.previewURL ?? "", cache: cache)
+            image.loadImageUsingUrlString(urlString: value.previewURL ?? "", cache: cache, label: underImageLabel, errorMessage: "Изображение отсутствует")
         } else {
             image.image = value.previewImage
         }
         
-        //print(value.previewURL)
-        
-        actionsContainer.isHidden = true
-        
+        if let flags = value.detailX?.flags,
+           ( flags.contains("liked") || flags.contains("canLike") ){
+            actionsContainer.isHidden = false
+            actionsDescriptionLabel.text = ""
+            denyAccessButton.isHidden = true
+            openAccessButton.isHidden = true
+            
+            if flags.contains("liked") {
+                denyAccessButton.isHidden = false
+                // swiftlint:disable:next line_length
+                actionsDescriptionLabel.text = "При выборе «‎Чужой»‎ мы удалим ваше зарегистрированное лицо, на какое произошло ложное срабатывание наших алгоритмов.\n Все лица, зарегистрированные в системе, можно найти в разделе Настройки адресов -> Управление доступом -> Вход по лицу без ключа."
+            } else {
+                openAccessButton.isHidden = false
+                // swiftlint:disable:next line_length
+                actionsDescriptionLabel.text = "При выборе «‎Свой»‎ мы добавим фотографию из этого события, для дальнейшего распознавания пользователя по лицу.\n Все лица, зарегистрированные в системе, можно найти в разделе Настройки адресов -> Управление доступом -> Вход по лицу без ключа."
+                
+            }
+            
+        } else {
+            //нет выбора лайк-дизлайк
+            actionsContainer.isHidden = true
+        }
     }
 
 }

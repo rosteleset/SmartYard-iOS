@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,6 +23,7 @@
             <connections>
                 <outlet property="addressLabel" destination="Vjf-7h-gEU" id="yDC-2E-tU1"/>
                 <outlet property="addressView" destination="Tua-bR-e0p" id="wOT-ZN-iqi"/>
+                <outlet property="faceIdAccessView" destination="mQC-Ho-gGk" id="osD-hu-8Fj"/>
                 <outlet property="fakeNavBar" destination="Gcv-sW-Tql" id="vBN-VJ-Jdb"/>
                 <outlet property="intercomAccessView" destination="bbs-2j-kxV" id="d58-nk-3F8"/>
                 <outlet property="permanentAccessContainer" destination="DRY-d9-nmH" id="MxS-vY-TYE"/>
@@ -57,17 +58,21 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="667.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blb-rf-Jf9" userLabel="Content View">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="484.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="659.5"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="8xp-di-yrO">
-                                            <rect key="frame" x="0.0" y="63" width="414" height="391.5"/>
+                                            <rect key="frame" x="0.0" y="63" width="414" height="566.5"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="151" translatesAutoresizingMaskIntoConstraints="NO" id="bbs-2j-kxV" customClass="IntercomTemporaryAccessView" customModule="SmartYard" customModuleProvider="target">
                                                     <rect key="frame" x="16" y="0.0" width="382" height="151"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
+                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="151" translatesAutoresizingMaskIntoConstraints="NO" id="mQC-Ho-gGk" customClass="FaceIdAccessView" customModule="SmartYard" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="175" width="382" height="151"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SS0-6Z-ZcB" userLabel="Temp">
-                                                    <rect key="frame" x="0.0" y="175" width="414" height="97"/>
+                                                    <rect key="frame" x="0.0" y="350" width="414" height="97"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Временный доступ к шлагбауму/воротам" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SFF-xT-WW6">
                                                             <rect key="frame" x="16" y="0.0" width="382" height="22"/>
@@ -95,7 +100,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRY-d9-nmH" userLabel="Permanent">
-                                                    <rect key="frame" x="0.0" y="296" width="414" height="95.5"/>
+                                                    <rect key="frame" x="0.0" y="471" width="414" height="95.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Постоянный доступ к адресу" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4eY-cI-gDO">
                                                             <rect key="frame" x="16" y="0.0" width="382" height="20.5"/>
@@ -124,10 +129,12 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="DRY-d9-nmH" secondAttribute="trailing" id="15P-2r-Rgb"/>
                                                 <constraint firstAttribute="trailing" secondItem="SS0-6Z-ZcB" secondAttribute="trailing" id="890-Oe-y2v"/>
+                                                <constraint firstAttribute="trailing" secondItem="mQC-Ho-gGk" secondAttribute="trailing" constant="16" id="bPO-lX-uBu"/>
                                                 <constraint firstItem="DRY-d9-nmH" firstAttribute="leading" secondItem="8xp-di-yrO" secondAttribute="leading" id="bqW-ia-oCr"/>
                                                 <constraint firstItem="SS0-6Z-ZcB" firstAttribute="leading" secondItem="8xp-di-yrO" secondAttribute="leading" id="ca0-PT-Lkd"/>
                                                 <constraint firstItem="bbs-2j-kxV" firstAttribute="leading" secondItem="8xp-di-yrO" secondAttribute="leading" constant="16" id="nI8-y1-WsV"/>
                                                 <constraint firstAttribute="trailing" secondItem="bbs-2j-kxV" secondAttribute="trailing" constant="16" id="vIx-qW-1WV"/>
+                                                <constraint firstItem="mQC-Ho-gGk" firstAttribute="leading" secondItem="8xp-di-yrO" secondAttribute="leading" constant="16" id="yXu-Kv-Egd"/>
                                             </constraints>
                                         </stackView>
                                     </subviews>

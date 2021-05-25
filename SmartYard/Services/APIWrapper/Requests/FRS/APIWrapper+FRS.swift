@@ -12,7 +12,7 @@ import RxSwift
 
 extension APIWrapper {
     
-    func getPersonFaces() -> Single<GetPersonFacesResponseData?> {
+    func getPersonFaces(flatId: Int) -> Single<GetPersonFacesResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -21,7 +21,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = GetPersonFacesRequest(accessToken: accessToken)
+        let request = GetPersonFacesRequest(accessToken: accessToken, flatId: flatId)
         
         return provider.rx
             .request(.getPersonFaces(request: request))
@@ -31,5 +31,67 @@ extension APIWrapper {
     }
     
     
+    func disLikePersonFace(event uuid: String) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = DisLikePersonFaceRequest(
+            accessToken: accessToken,
+            event: uuid
+        )
+        
+        return provider.rx
+            .request(.disLikePersonFace(request: request))
+            .convertNoConnectionError()
+            .mapAsVoidResponse()
+            .mapToOptional()
+    }
     
+    func disLikePersonFace(flatId: Int, faceId: Int) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = RemovePersonFaceRequest(
+            accessToken: accessToken,
+            flatId: flatId,
+            faceId: faceId
+        )
+        
+        return provider.rx
+            .request(.removePersonFace(request: request))
+            .convertNoConnectionError()
+            .mapAsVoidResponse()
+            .mapToOptional()
+    }
+    
+    func likePersonFace(event uuid: String) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = LikePersonFaceRequest(
+            accessToken: accessToken,
+            event: uuid
+        )
+        
+        return provider.rx
+            .request(.likePersonFace(request: request))
+            .convertNoConnectionError()
+            .mapAsVoidResponse()
+            .mapToOptional()
+    }
 }

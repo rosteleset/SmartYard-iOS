@@ -11,19 +11,33 @@ import UIKit
 
 struct APIFace: Decodable, Hashable {
     let faceId: Int
-    let faceUrl: String
-    let faceImage: UIImage?
+    let image: String
+    let canDisLike: Bool
     
     private enum CodingKeys: String, CodingKey {
         case faceId
-        case faceImage
+        case image
+        case canDisLike
+        
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        faceId = try container.decode(Int.self, forKey: .faceId)
-        faceUrl = try container.decode(String.self, forKey: .faceImage)
         
-        faceImage = UIImage(base64URLString: faceUrl)
+        guard let faceId = Int(try container.decode(String.self, forKey: .faceId)) else {
+            throw NSError.APIWrapperError.noDataError
+        }
+        self.faceId = faceId
+        
+        image = try container.decode(String.self, forKey: .image)
+        
+        let canDisLikeRawValue = try? container.decode(String.self, forKey: .canDisLike)
+        
+        switch canDisLikeRawValue {
+        case "t": canDisLike = true
+        case "f": canDisLike = false
+        default: canDisLike = false
+        }
+        
     }
 }

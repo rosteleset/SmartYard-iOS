@@ -165,36 +165,6 @@ class CommonSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        // MARK: Нажатие на Принять соглашение
-        
-        input.acceptFaceAgrementTrigger
-            .drive(
-                onNext: { [weak self] in
-                    
-                    
-                    guard let self = self else {
-                        return
-                    }
-                    let newState = !self.accessService.clientFaceAgreement
-                    
-                    self.accessService.clientFaceAgreement = newState
-                    acceptFaceAgreementSubject.onNext(newState)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        // MARK: Переход на управление фотографиями
-        input.manageFacesTrigger
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                            return
-                        }
-                    self.router.trigger(.facesSettings)
-                }
-            )
-            .disposed(by: disposeBag)
-        
         // MARK: Отображение имени. Актуализируем при каждом обновлении имени в настройках
         
         let currentName = Driver<APIClientName?>.merge(
@@ -277,7 +247,6 @@ class CommonSettingsViewModel: BaseViewModel {
             enableNotifications: enableNotificationsSubject.asDriverOnErrorJustComplete(),
             enableAccountBalanceWarning: enableAccountBalanceWarningSubject.asDriverOnErrorJustComplete(),
             enableCallkit: enableCallkitSubject.asDriverOnErrorJustComplete(),
-            acceptFaceAgreement: acceptFaceAgreementSubject.asDriverOnErrorJustComplete(),
             isLoading: activityTracker.asDriver(),
             shouldShowInitialLoading: initialLoadingTracker.asDriver()
         )
@@ -293,8 +262,6 @@ extension CommonSettingsViewModel {
         let enableTrigger: Driver<Void>
         let moneyTrigger: Driver<Void>
         let callkitTrigger: Driver<Void>
-        let acceptFaceAgrementTrigger: Driver<Void>
-        let manageFacesTrigger: Driver<Void>
         let logoutTrigger: Driver<Void>
     }
     
@@ -304,7 +271,6 @@ extension CommonSettingsViewModel {
         let enableNotifications: Driver<Bool>
         let enableAccountBalanceWarning: Driver<Bool>
         let enableCallkit: Driver<Bool>
-        let acceptFaceAgreement: Driver<Bool>
         let isLoading: Driver<Bool>
         let shouldShowInitialLoading: Driver<Bool>
     }

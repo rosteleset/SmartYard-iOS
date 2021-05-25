@@ -26,11 +26,6 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var notificationsHeader: UIView!
     @IBOutlet private weak var notificationsHeaderArrowImageView: UIImageView!
     
-    @IBOutlet private weak var videoanalyticsContainerView: UIView!
-    @IBOutlet private weak var videoanalyticsHeader: UIView!
-    @IBOutlet private weak var videoanalyticsHeaderArrowImageView: UIImageView!
-    @IBOutlet private weak var videoanalyticsStackView: UIStackView!
-    
     @IBOutlet private weak var textNotificationsContainerView: UIView!
     @IBOutlet private weak var textNotificationsSwitch: UISwitch!
     @IBOutlet private weak var textNotificationsSkeleton: UIView!
@@ -42,14 +37,8 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var callkitContainerView: UIView!
     @IBOutlet private weak var callkitSwitch: UISwitch!
     
-    @IBOutlet private weak var acceptAgreementSwitch: UISwitch!
-    @IBOutlet private weak var acceptAgreementContainer: UIView!
-    
-    @IBOutlet private weak var manageFacesButton: UIButton!
-    
     @IBOutlet private var collapsedNotificationsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedNotificationsBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private var collapsedVideoanalyticsConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var logoutButton: UIButton!
     
@@ -60,7 +49,6 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     private let textNotificationsTapGesture = UITapGestureRecognizer()
     private let callkitTapGesture = UITapGestureRecognizer()
     private let balanceWarningTapGesture = UITapGestureRecognizer()
-    private let acceptFaceAgreementTapGesture = UITapGestureRecognizer()
     
     
     
@@ -125,24 +113,8 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
         callkitContainerView.addGestureRecognizer(callkitTapGesture)
         callkitSwitch.isUserInteractionEnabled = false
         
-        
-        acceptAgreementContainer.addGestureRecognizer(acceptFaceAgreementTapGesture)
-        acceptAgreementSwitch.isUserInteractionEnabled = false
-        
-        
         balanceWarningContainerView.addGestureRecognizer(balanceWarningTapGesture)
         balanceWarningSwitch.isUserInteractionEnabled = false
-        
-        let videoanalyticsTapGesture = UITapGestureRecognizer()
-        videoanalyticsHeader.addGestureRecognizer(videoanalyticsTapGesture)
-        
-        videoanalyticsTapGesture.rx.event
-            .subscribe(
-                onNext: { [weak self] _ in
-                    self?.toggleVideoanalyticsSection()
-                }
-            )
-            .disposed(by: disposeBag)
     }
     
     private func toggleNotificationsSection() {
@@ -166,30 +138,6 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
         }
     }
     
-    private func toggleVideoanalyticsSection() {
-        
-        let isCollapsed = collapsedVideoanalyticsConstraint.isActive
-        
-        if isCollapsed {
-            collapsedVideoanalyticsConstraint.isActive = false
-            videoanalyticsHeaderArrowImageView.image = UIImage(named: "UpArrowIcon")
-            viewToScrollTo.onNext(videoanalyticsContainerView)
-        } else {
-            collapsedVideoanalyticsConstraint.isActive = true
-            videoanalyticsHeaderArrowImageView.image = UIImage(named: "DownArrowIcon")
-            viewToScrollTo.onNext(nil)
-        }
-        UIView.animate(
-            withDuration: 0.35,
-            animations: { [weak self] in
-                self?.view.setNeedsLayout()
-                self?.view.layoutIfNeeded()
-            },
-            completion: nil
-        )
-        
-    }
-    
     // swiftlint:disable:next function_body_length
     private func bind() {
         let input = CommonSettingsViewModel.Input(
@@ -198,8 +146,6 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             enableTrigger: textNotificationsTapGesture.rx.event.asDriver().mapToVoid(),
             moneyTrigger: balanceWarningTapGesture.rx.event.asDriver().mapToVoid(),
             callkitTrigger: callkitTapGesture.rx.event.asDriver().mapToVoid(),
-            acceptFaceAgrementTrigger: acceptFaceAgreementTapGesture.rx.event.asDriver().mapToVoid(),
-            manageFacesTrigger: manageFacesButton.rx.tap.asDriver(),
             logoutTrigger: logoutButton.rx.tap.asDriver()
         )
         
@@ -241,15 +187,6 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             .drive(
                 onNext: { [weak self] state in
                     self?.callkitSwitch.setOn(state, animated: true)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        output.acceptFaceAgreement
-            .drive(
-                onNext: { [weak self] state in
-                    self?.acceptAgreementSwitch.setOn(state, animated: true)
-                    self?.manageFacesButton.isEnabled = state
                 }
             )
             .disposed(by: disposeBag)

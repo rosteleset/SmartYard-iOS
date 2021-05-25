@@ -16,6 +16,9 @@ struct APIIntercomSettings {
     let autoOpen: Date?
     let whiteRabbit: String?
     let paperBill: Bool?
+    let disablePlog: Bool?
+    let hiddenPlog: Bool?
+    let frsDisabled: Bool?
     
 }
 
@@ -46,6 +49,18 @@ extension APIIntercomSettings {
         
         if let paperBill = paperBill {
             params["paperBill"] = paperBill ? "t" : "f"
+        }
+        
+        if let disablePlog = disablePlog {
+            params["disablePlog"] = disablePlog ? "t" : "f"
+        }
+        
+        if let hiddenPlog = hiddenPlog {
+            params["hiddenPlog"] = hiddenPlog ? "t" : "f"
+        }
+        
+        if let frsDisabled = frsDisabled {
+            params["FRSDisabled"] = frsDisabled ? "t" : "f"
         }
         
         return params

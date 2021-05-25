@@ -14,7 +14,7 @@ class FaceCell: UICollectionViewCell {
 
     private(set) var disposeBag = DisposeBag()
     @IBOutlet weak public var deleteButton: UIButton!
-    @IBOutlet weak public var imageButton: UIButton!
+    @IBOutlet weak public var imageButton: SafeCachedButton!
     
     var faceId: Int = 0
     

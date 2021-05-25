@@ -151,8 +151,8 @@
                                             <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="bsQ-eJ-6Bp" userLabel="ImageContainer">
                                                 <rect key="frame" x="0.0" y="207" width="315" height="177"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Изображение отсутствует" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNZ-gk-Xes">
-                                                        <rect key="frame" x="53" y="78.5" width="209" height="20.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNZ-gk-Xes">
+                                                        <rect key="frame" x="157.5" y="88.5" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" name="semiBlack"/>
@@ -199,7 +199,7 @@
                                                 <rect key="frame" x="0.0" y="404" width="315" height="162"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBO-uS-mK9">
-                                                        <rect key="frame" x="0.0" y="0.0" width="147.5" height="36"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="315" height="36"/>
                                                         <color key="backgroundColor" name="darkGreen"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="36" id="E8I-E4-Mru"/>
@@ -208,7 +208,7 @@
                                                         <inset key="contentEdgeInsets" minX="9" minY="0.0" maxX="9" maxY="0.0"/>
                                                         <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="6" maxY="0.0"/>
-                                                        <state key="normal" title="Открыть доступ" image="confirm">
+                                                        <state key="normal" title="Свой" image="confirm">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
@@ -218,7 +218,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BS2-tR-Z76">
-                                                        <rect key="frame" x="167.5" y="0.0" width="147.5" height="36"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="315" height="36"/>
                                                         <color key="backgroundColor" name="incorrectDataRed"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="36" id="irL-ij-kIj"/>
@@ -226,7 +226,7 @@
                                                         <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="14"/>
                                                         <inset key="contentEdgeInsets" minX="9" minY="0.0" maxX="9" maxY="0.0"/>
                                                         <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                        <state key="normal" title="Закрыть доступ" image="deny">
+                                                        <state key="normal" title="Чужой" image="deny">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
@@ -245,15 +245,15 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="BS2-tR-Z76" firstAttribute="width" secondItem="vBO-uS-mK9" secondAttribute="width" id="2V0-1l-XSn"/>
+                                                    <constraint firstAttribute="trailing" secondItem="vBO-uS-mK9" secondAttribute="trailing" id="8de-Ou-BpX"/>
                                                     <constraint firstItem="9Kd-nO-TfY" firstAttribute="leading" secondItem="Nsw-xM-f0E" secondAttribute="leading" id="Esw-hW-Zea"/>
-                                                    <constraint firstItem="BS2-tR-Z76" firstAttribute="leading" secondItem="vBO-uS-mK9" secondAttribute="trailing" constant="20" id="FFI-qw-Kja"/>
                                                     <constraint firstItem="BS2-tR-Z76" firstAttribute="top" secondItem="Nsw-xM-f0E" secondAttribute="top" id="L5y-8G-Mtn"/>
                                                     <constraint firstAttribute="trailing" secondItem="9Kd-nO-TfY" secondAttribute="trailing" id="aqm-43-nnE"/>
                                                     <constraint firstItem="vBO-uS-mK9" firstAttribute="leading" secondItem="Nsw-xM-f0E" secondAttribute="leading" id="h5L-iF-tS5"/>
                                                     <constraint firstItem="9Kd-nO-TfY" firstAttribute="top" secondItem="vBO-uS-mK9" secondAttribute="bottom" constant="20" id="kYD-ca-NXz"/>
                                                     <constraint firstItem="vBO-uS-mK9" firstAttribute="top" secondItem="Nsw-xM-f0E" secondAttribute="top" id="nt3-c8-6ut"/>
                                                     <constraint firstAttribute="trailing" secondItem="BS2-tR-Z76" secondAttribute="trailing" id="s6o-Ga-OoE"/>
+                                                    <constraint firstItem="BS2-tR-Z76" firstAttribute="leading" secondItem="Nsw-xM-f0E" secondAttribute="leading" id="u2U-4o-Iyi"/>
                                                     <constraint firstAttribute="bottom" secondItem="9Kd-nO-TfY" secondAttribute="bottom" id="uDm-cN-ms2"/>
                                                 </constraints>
                                             </view>
@@ -293,6 +293,7 @@
             <size key="customSize" width="309" height="507"/>
             <connections>
                 <outlet property="actionsContainer" destination="Nsw-xM-f0E" id="5XY-DT-Os9"/>
+                <outlet property="actionsDescriptionLabel" destination="9Kd-nO-TfY" id="HRj-Jg-xjS"/>
                 <outlet property="addressLabel" destination="c7q-sO-8fW" id="T3M-ml-Ukp"/>
                 <outlet property="callStatusIcon" destination="aUo-vq-eca" id="OHg-96-Yij"/>
                 <outlet property="callStatusLabel" destination="mUv-Hk-yJw" id="PST-11-q6N"/>

@@ -19,7 +19,8 @@ typealias AvailableDays = [FlatId: PlogDaysResponseData] //[FlatId: [APIPlogDay]
 class HistoryViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
-    private let router: WeakRouter<HomeRoute>
+    private let homeRouter: WeakRouter<HomeRoute>?
+    private let settingsRouter: WeakRouter<SettingsRoute>?
     
     private let errorTracker = ErrorTracker()
     private let activityTracker = ActivityTracker()
@@ -28,7 +29,8 @@ class HistoryViewModel: BaseViewModel {
     private let updateAvailableDays = PublishSubject<Void>()
     
     /// идентификатор дома для какого смотрим логи
-    private let houseId: String
+    private let houseId: String?
+    private let flatId: Int?
     
     ///Адрес этого дома
     private let address: BehaviorSubject<String?>
@@ -69,11 +71,21 @@ class HistoryViewModel: BaseViewModel {
     ///таблица соответствия objectId <-> url flussonic
     private let camMap = BehaviorRelay<[APICamMap]>(value: [])
     
+    convenience init(apiWrapper: APIWrapper, houseId: String, address: String, router: WeakRouter<HomeRoute>) {
+        self.init(apiWrapper: apiWrapper, houseId: houseId, address: address, homeRouter: router)
+    }
+    
+    convenience init(apiWrapper: APIWrapper, flatId: Int, address: String, router: WeakRouter<SettingsRoute>) {
+        self.init(apiWrapper: apiWrapper, flatId: flatId, address: address, settingsRouter: router)
+    }
+    
     // swiftlint:disable:next function_body_length cyclomatic_complexity
-    init(apiWrapper: APIWrapper, houseId: String, address: String, router: WeakRouter<HomeRoute>) {
+    private init(apiWrapper: APIWrapper, houseId: String? = nil, flatId: Int? = nil, address: String, homeRouter: WeakRouter<HomeRoute>? = nil, settingsRouter: WeakRouter<SettingsRoute>? = nil) {
         self.apiWrapper = apiWrapper
         self.houseId = houseId
-        self.router = router
+        self.flatId = flatId
+        self.homeRouter = homeRouter
+        self.settingsRouter = settingsRouter
         self.address = BehaviorSubject<String?>(value: address)
         
         super.init()
@@ -81,7 +93,8 @@ class HistoryViewModel: BaseViewModel {
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.homeRouter?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.settingsRouter?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -271,36 +284,56 @@ class HistoryViewModel: BaseViewModel {
         // мы знаем только id дома, а логи запрашиваются для id квартиры,
         //поэтому получаем список настроек чтобы понять по id дома идентификатор первой доступной квартиры в данном доме
         //на будущее надо заменить на запросы логов для каждой квартиры.
-        apiWrapper.getSettingsAddresses()
+        let getSettingsAddresses = apiWrapper.getSettingsAddresses()
             .trackError(errorTracker)
             .trackActivity(activityTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
-            .drive { [weak self] args in
-                guard let self = self else {
-                    return
-                }
-                
-                //получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
-                self.flatIds = args.filtered({$0.houseId == self.houseId}, map: {(Int($0.flatId!) ?? -1)}).duplicatesRemoved()
-                
-                //получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
-                self.flatNumbers = args.filtered({$0.houseId == self.houseId}, map: {(Int($0.flatNumber!) ?? -1)}).duplicatesRemoved()
-                
-                //по умолчанию фильтр содержит все доступные квартиры
-                self.apptsFilter.accept(self.flatIds)
-                
-                //изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
-            }
-            .disposed(by: disposeBag)
+            
+        let getCamMap = apiWrapper.getCamMap()
+            .trackError(errorTracker)
+            .trackActivity(activityTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
         
-        apiWrapper.getCamMap()
-            .trackError(errorTracker)
-            .trackActivity(activityTracker)
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
-            .drive(camMap)
-            .disposed(by: disposeBag)
+        if self.houseId == nil,
+           let flatId = self.flatId {
+            getCamMap
+                .drive { [weak self] camMap in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.camMap.accept(camMap)
+                    
+                    self.flatIds = [flatId]
+                    self.flatNumbers = [0]
+                    self.apptsFilter.accept(self.flatIds)
+                    //изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
+                }
+                .disposed(by: disposeBag)
+        } else {
+            Driver.combineLatest(getSettingsAddresses, getCamMap)
+                .drive { [weak self] args, camMap in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.camMap.accept(camMap)
+                    
+                   //получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
+                    self.flatIds = args.filtered({ $0.houseId == self.houseId }, map: { (Int($0.flatId!) ?? -1) }).duplicatesRemoved()
+                    
+                    //получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
+                    self.flatNumbers = args.filtered({ $0.houseId == self.houseId }, map: { (Int($0.flatNumber!) ?? -1) }).duplicatesRemoved()
+                    
+                    //по умолчанию фильтр содержит все доступные квартиры
+                    self.apptsFilter.accept(self.flatIds)
+                    
+                    //изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
+                }
+                .disposed(by: disposeBag)
+        }
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
@@ -309,13 +342,12 @@ class HistoryViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.back)
+                    self?.homeRouter?.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
         
         input.loadDay
-            .distinctUntilChanged()
             .flatMap { [weak self] day -> Driver<DayFlatItemsData?> in
                     
                 guard let self = self else {
@@ -375,7 +407,7 @@ class HistoryViewModel: BaseViewModel {
                         return
                     }
                     
-                    self!.router.trigger(
+                    self!.homeRouter?.trigger(
                         .historyDetail(
                             viewModel: viewModel,
                             item: item
@@ -406,7 +438,8 @@ class HistoryViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.back)
+                    self?.homeRouter?.trigger(.back)
+                    self?.settingsRouter?.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -469,6 +502,44 @@ class HistoryViewModel: BaseViewModel {
             .bind(to: self.logs)
             .disposed(by: disposeBag)
         
+        input.addFaceTrigger
+            .flatMapLatest { [weak self] uuid -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper.likePersonFace(event: uuid)
+                    .trackError(self.errorTracker)
+                    .trackActivity(self.activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: {
+                    print("Face added")
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.deleteFaceTrigger
+            .flatMapLatest { [weak self] uuid -> Driver<Void?> in
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper.disLikePersonFace(event: uuid)
+                    .trackError(self.errorTracker)
+                    .trackActivity(self.activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: {
+                    print("Face deleted")
+                }
+            )
+            .disposed(by: disposeBag)
+        
         /*
         input.itemSelected
             .drive(
@@ -519,6 +590,8 @@ extension HistoryViewModel {
         let backTrigger: Driver<Void>
         let updateSections: Driver<Void>
         let loadDay: Driver<Date>
+        let addFaceTrigger: Driver<String>
+        let deleteFaceTrigger: Driver<String>
     }
     
     struct OutputDetail {

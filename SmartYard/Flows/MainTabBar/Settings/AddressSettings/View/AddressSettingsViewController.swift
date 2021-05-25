@@ -31,9 +31,17 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var voipContainerView: UIView!
     @IBOutlet private weak var voipSwitch: UISwitch!
     
-    @IBOutlet weak var paperBillsHeight: NSLayoutConstraint!
     @IBOutlet private weak var paperContainerView: UIView!
     @IBOutlet private weak var paperSwitch: UISwitch!
+    
+    @IBOutlet private weak var logsContainerView: UIView!
+    @IBOutlet private weak var logsSwitch: UISwitch!
+    
+    @IBOutlet private weak var hiddenContainerView: UIView!
+    @IBOutlet private weak var hiddenSwitch: UISwitch!
+    
+    @IBOutlet private weak var frsContainerView: UIView!
+    @IBOutlet private weak var frsSwitch: UISwitch!
     
     @IBOutlet private var collapsedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedBottomConstraint: NSLayoutConstraint!
@@ -47,6 +55,9 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     private let cmsTapGesture = UITapGestureRecognizer()
     private let voipTapGesture = UITapGestureRecognizer()
     private let paperBillTapGesture = UITapGestureRecognizer()
+    private let logsTapGesture = UITapGestureRecognizer()
+    private let hiddenTapGesture = UITapGestureRecognizer()
+    private let frsTapGesture = UITapGestureRecognizer()
     
     var loader: JGProgressHUD?
     
@@ -114,6 +125,16 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         paperContainerView.addGestureRecognizer(paperBillTapGesture)
         paperSwitch.isUserInteractionEnabled = false
         
+        logsContainerView.addGestureRecognizer(logsTapGesture)
+        logsSwitch.isUserInteractionEnabled = false
+        
+        hiddenContainerView.addGestureRecognizer(hiddenTapGesture)
+        hiddenSwitch.isUserInteractionEnabled = false
+        
+        frsContainerView.addGestureRecognizer(frsTapGesture)
+        frsSwitch.isUserInteractionEnabled = false
+        
+        
         skeletonView.isHidden = true
     }
     
@@ -143,7 +164,10 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
             deleteTrigger: deleteAddressButton.rx.tap.asDriver(),
             cmsTrigger: cmsTapGesture.rx.event.asDriver().mapToVoid(),
             voipTrigger: voipTapGesture.rx.event.asDriver().mapToVoid(),
-            paperBillTrigger: paperBillTapGesture.rx.event.asDriver().mapToVoid()
+            paperBillTrigger: paperBillTapGesture.rx.event.asDriver().mapToVoid(),
+            logsTrigger: logsTapGesture.rx.event.asDriver().mapToVoid(),
+            hiddenTrigger: hiddenTapGesture.rx.event.asDriver().mapToVoid(),
+            frsTrigger: frsTapGesture.rx.event.asDriver().mapToVoid()
         )
         
         let output = viewModel.transform(input)
@@ -177,13 +201,53 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
                 onNext: { [weak self] state in
                     
                     guard let state = state else {
-                        self?.paperBillsHeight.constant = 0
-                        self?.paperContainerView.subviews.forEach { $0.isHidden = true }
+                        self?.paperContainerView.isHidden = true
                         return
                     }
-                    self?.paperBillsHeight.constant = 55
-                    self?.paperContainerView.subviews.forEach { $0.isHidden = false }
+                    self?.paperContainerView.isHidden = false
                     self?.paperSwitch.setOn(state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.areLogsEnabled
+            .drive(
+                onNext: { [weak self] state in
+                    
+                    guard let state = state else {
+                        self?.logsContainerView.isHidden = true
+                        return
+                    }
+                    self?.logsContainerView.isHidden = false
+                    self?.logsSwitch.setOn(state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.areLogsVisibleOnlyForOwner
+            .drive(
+                onNext: { [weak self] state in
+                    
+                    guard let state = state else {
+                        self?.hiddenContainerView.isHidden = true
+                        return
+                    }
+                    self?.hiddenContainerView.isHidden = false
+                    self?.hiddenSwitch.setOn(state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isFRSEnabled
+            .drive(
+                onNext: { [weak self] state in
+                    
+                    guard let state = state else {
+                        self?.frsContainerView.isHidden = true
+                        return
+                    }
+                    self?.frsContainerView.isHidden = false
+                    self?.frsSwitch.setOn(state, animated: true)
                 }
             )
             .disposed(by: disposeBag)

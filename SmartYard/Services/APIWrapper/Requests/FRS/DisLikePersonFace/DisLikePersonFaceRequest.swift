@@ -1,5 +1,5 @@
 //
-//  GetPersonFacesRequest.swift
+//  DisLikePersonFacesRequest.swift
 //  SmartYard
 //
 //  Created by Александр Васильев on 12.05.2021.
@@ -8,17 +8,13 @@
 
 import Foundation
 
-struct GetPersonFacesRequest {
-    
+struct DisLikePersonFaceRequest {
     let accessToken: String
-    let flatId: Int
-    
+    let event: String
 }
 
-extension GetPersonFacesRequest {
-    
+extension DisLikePersonFaceRequest {
     var requestParameters: [String: Any] {
-        return ["flatId": flatId]
+        return ["event": "\(event)"]
     }
-    
 }

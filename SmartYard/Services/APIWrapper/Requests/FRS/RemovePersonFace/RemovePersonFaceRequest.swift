@@ -1,5 +1,5 @@
 //
-//  GetPersonFacesRequest.swift
+//  RemovePersonFacesRequest.swift
 //  SmartYard
 //
 //  Created by Александр Васильев on 12.05.2021.
@@ -8,17 +8,14 @@
 
 import Foundation
 
-struct GetPersonFacesRequest {
-    
+struct RemovePersonFaceRequest {
     let accessToken: String
     let flatId: Int
-    
+    let faceId: Int
 }
 
-extension GetPersonFacesRequest {
-    
+extension RemovePersonFaceRequest {
     var requestParameters: [String: Any] {
-        return ["flatId": flatId]
+        return ["flatId": "\(flatId)", "faceId": "\(faceId)"]
     }
-    
 }

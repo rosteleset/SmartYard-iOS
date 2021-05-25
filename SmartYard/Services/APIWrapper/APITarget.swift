@@ -62,6 +62,9 @@ enum APITarget {
     case sberbankPayProcess(request: SberbankPayProcessRequest)
     
     case getPersonFaces(request: GetPersonFacesRequest)
+    case removePersonFace(request: RemovePersonFaceRequest)
+    case likePersonFace(request: LikePersonFaceRequest)
+    case disLikePersonFace(request: DisLikePersonFaceRequest)
 }
 
 extension APITarget: TargetType {
@@ -132,7 +135,10 @@ extension APITarget: TargetType {
         case .payProcess: return "pay/process"
         case .sberbankPayProcess: return "payment.do"
             
-        case .getPersonFaces: return "frs/getPersonFaces"
+        case .getPersonFaces: return "frs/listFaces"
+        case .disLikePersonFace: return "frs/disLike"
+        case .likePersonFace: return "frs/like"
+        case .removePersonFace: return "frs/disLike"
             
         }
     }
@@ -200,7 +206,10 @@ extension APITarget: TargetType {
             case .payProcess(let request): return request.accessToken
                 
             case .getPersonFaces(let request): return request.accessToken
-                
+            case .removePersonFace(let request): return request.accessToken
+            case .likePersonFace(let request): return request.accessToken
+            case .disLikePersonFace(let request): return request.accessToken
+            
             default: return nil
             }
         }()
@@ -273,7 +282,11 @@ extension APITarget: TargetType {
         case .sberbankPayProcess(let request): return request.requestParameters
         
         case .getPersonFaces(let request): return request.requestParameters
-            
+        case .removePersonFace(let request): return request.requestParameters
+        case .likePersonFace(let request): return request.requestParameters
+        case .disLikePersonFace(let request): return request.requestParameters
+        
+        
         }
     }
     
