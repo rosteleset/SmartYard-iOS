@@ -43,12 +43,14 @@ struct DetailX: Decodable, Equatable, Hashable {
     let face: Rectangle?
     let flags: [String]?
     let phone: String?
+    let code: String?
     
     private enum CodingKeys: String, CodingKey {
         case key
         case face
         case flags
         case phone
+        case code
     }
     
     init(from decoder: Decoder) throws {
@@ -58,7 +60,7 @@ struct DetailX: Decodable, Equatable, Hashable {
         face = try? container.decode(Rectangle.self, forKey: .face)
         flags = try? container.decode([String].self, forKey: .flags)
         phone = try? container.decode(String.self, forKey: .phone)
-        
+        code = try? container.decode(String.self, forKey: .code)
      }
 }
 
@@ -101,6 +103,10 @@ struct APIPlog: Decodable, Equatable, Hashable {
         case unknown = -1
     }
     
+    static func == (lhs: APIPlog, rhs: APIPlog) -> Bool {
+        return lhs.uuid == rhs.uuid
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -113,7 +119,7 @@ struct APIPlog: Decodable, Equatable, Hashable {
         objectMechanizma = try container.decode(String.self, forKey: .objectMechanizma).int ?? -1
         mechanizmaDescription = try container.decode(String.self, forKey: .mechanizmaDescription)
         event = APIPlog.EventType(rawValue: try container.decode(String.self, forKey: .event).int ?? -1) ?? .unknown
-        detail = try container.decode(String.self, forKey: .detail)
+        detail = (try? container.decode(String.self, forKey: .detail)) ?? ""
         detailX = try? container.decode(DetailX.self, forKey: .detailX)
         
         previewURL = try? container.decode(String.self, forKey: .preview)

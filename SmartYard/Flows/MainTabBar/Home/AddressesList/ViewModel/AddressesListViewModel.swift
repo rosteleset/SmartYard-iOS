@@ -163,18 +163,18 @@ class AddressesListViewModel: BaseViewModel {
         
         let blockingRefresh = Driver
             .merge(
-                NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToVoid(),
-                NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToVoid(),
-                hasNetworkBecomeReachable,
-                .just(())
+                NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToTrue(),
+                NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToTrue(),
+                hasNetworkBecomeReachable.mapToFalse(),
+                .just(false)
             )
-            .flatMapLatest { [weak self] _ -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in
+            .flatMapLatest { [weak self] forceRefresh -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in
                 guard let self = self else {
                     return .empty()
                 }
                 
                 return Single
-                    .zip(self.apiWrapper.getAddressList(), self.apiWrapper.getListConnect())
+                    .zip(self.apiWrapper.getAddressList(forceRefresh: forceRefresh), self.apiWrapper.getListConnect(forceRefresh: forceRefresh))
                     .trackActivity(interactionBlockingRequestTracker)
                     .trackError(self.errorTracker)
                     .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
@@ -203,7 +203,7 @@ class AddressesListViewModel: BaseViewModel {
                 }
 
                 return Single
-                    .zip(self.apiWrapper.getAddressList(), self.apiWrapper.getListConnect())
+                    .zip(self.apiWrapper.getAddressList(forceRefresh: true), self.apiWrapper.getListConnect(forceRefresh: true))
                     .trackError(self.errorTracker)
                     .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
                         let (firstResponse, secondResponse) = args

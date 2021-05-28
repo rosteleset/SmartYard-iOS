@@ -20,7 +20,7 @@ enum EventsFilter: Int, CaseIterable {
     case domophones = 1
     case keys = 2
     case faces = 3
-    case wickets = 4
+    case phoneCall = 4
     case application = 5
     case code = 6
     
@@ -35,8 +35,8 @@ enum EventsFilter: Int, CaseIterable {
             return "Ключом"
         case .faces:
             return "По лицу"
-        case .wickets:
-            return "Ворота"
+        case .phoneCall:
+            return "По номеру телефона"
         case .application:
             return "Приложение"
         case .code:

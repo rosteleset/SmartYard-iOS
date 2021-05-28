@@ -26,8 +26,8 @@ class CityCameraViewModel: BaseViewModel {
         self.router = router
     }
     
-    fileprivate func loadVideos(errorTracker: ErrorTracker, activityTracker: ActivityTracker) {
-        apiWrapper.getYouTubeVideo(cameraId: camera.id)
+    fileprivate func loadVideos(errorTracker: ErrorTracker, activityTracker: ActivityTracker, forceRefresh: Bool = false) {
+        apiWrapper.getYouTubeVideo(cameraId: camera.id, forceRefresh: forceRefresh)
             .trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
             .delay(.seconds(3))
@@ -88,7 +88,7 @@ class CityCameraViewModel: BaseViewModel {
         input.refreshDataTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.loadVideos(errorTracker: errorTracker, activityTracker: activityTracker)
+                    self?.loadVideos(errorTracker: errorTracker, activityTracker: activityTracker, forceRefresh: true)
                 }
             )
             .disposed(by: disposeBag)

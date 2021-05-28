@@ -38,6 +38,13 @@ extension SharedSequenceConvertibleType {
         return map { _ in }
     }
     
+    func mapToTrue() -> SharedSequence<SharingStrategy, Bool> {
+        return map { _ in true}
+    }
+    
+    func mapToFalse() -> SharedSequence<SharingStrategy, Bool> {
+        return map { _ in false}
+    }
 }
 
 extension SharedSequenceConvertibleType where Element == Bool {
@@ -83,6 +90,14 @@ extension ObservableType {
     
     func mapToVoid() -> Observable<Void> {
         return map { _ in }
+    }
+    
+    func mapToTrue() -> Observable<Bool> {
+        return map { _ in true}
+    }
+    
+    func mapToFalse() -> Observable<Bool> {
+        return map { _ in false}
     }
     
 }

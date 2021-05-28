@@ -68,6 +68,8 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         
         fakeNavBar.configueDarkNavBar()
         fakeNavBar.setText("События")
+        emptyStateView.isHidden = true
+        
         setupCollectionView()
         bind()
         
@@ -185,18 +187,32 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         
         let output = viewModel.transform(input)
         
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                    if isLoading { self?.emptyStateView.isHidden = true }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         output.sections //отсюда притетает свежий [HistorySectionModels] для DataSource таблицы
             .do(
                 onNext: { sectionModels in
                     self.days = sectionModels.map { $0.day }
-                    self.emptyStateView.isHidden = !sectionModels.isEmpty
                 }
             )
             .drive(collectionView.rx.items(dataSource: dataSource!))
             .disposed(by: disposeBag)
         
         output.availableDays
-            .drive(availableDays)
+            .drive(
+                onNext: { [weak self] arg in
+                    self?.availableDays.accept(arg)
+                    self?.emptyStateView.isHidden = !arg.isEmpty
+                }
+            )
             .disposed(by: disposeBag)
         
         output.camMap
@@ -219,6 +235,14 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                 
                 //сохраняем список всех имеющихся дат на будущее - пригодятся.
                 self.allAvailableDates = self.daysQueue
+                
+                //загружаем самый первый день
+                guard let firstDay = self.daysQueue.first else {
+                    return
+                }
+                self.daysQueue.remove(at: 0)
+                self.loadDayTriger.onNext(firstDay)
+                
             }
             .disposed(by: disposeBag)
         

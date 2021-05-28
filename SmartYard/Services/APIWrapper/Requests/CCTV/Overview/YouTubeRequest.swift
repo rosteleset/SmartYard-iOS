@@ -10,6 +10,7 @@ import Foundation
 
 struct YouTubeRequest {
     let accessToken: String
+    let forceRefresh: Bool
     let id: Int?
 }
 

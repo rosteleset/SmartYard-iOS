@@ -9,7 +9,7 @@
 struct GetPaymentsListRequest {
     
     let accessToken: String
-    
+    let forceRefresh: Bool
 }
 
 extension GetPaymentsListRequest {

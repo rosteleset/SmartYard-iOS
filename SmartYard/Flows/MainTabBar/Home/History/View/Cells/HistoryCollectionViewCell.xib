@@ -34,10 +34,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="e69-Tq-V4s" userLabel="ContainerView">
-                                <rect key="frame" x="6" y="0.0" width="315" height="566"/>
+                                <rect key="frame" x="6" y="0.0" width="315" height="586"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="thh-lH-5Wj">
-                                        <rect key="frame" x="0.0" y="0.0" width="315" height="566"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="315" height="586"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q2u-nO-ahc" userLabel="Space">
                                                 <rect key="frame" x="0.0" y="0.0" width="315" height="12"/>
@@ -257,6 +257,13 @@
                                                     <constraint firstAttribute="bottom" secondItem="9Kd-nO-TfY" secondAttribute="bottom" id="uDm-cN-ms2"/>
                                                 </constraints>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dtw-0O-OAK" userLabel="Space">
+                                                <rect key="frame" x="0.0" y="566" width="315" height="20"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="gGH-si-efL"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -267,11 +274,6 @@
                                     <constraint firstAttribute="bottom" secondItem="thh-lH-5Wj" secondAttribute="bottom" id="MuT-qe-t8N"/>
                                     <constraint firstItem="thh-lH-5Wj" firstAttribute="leading" secondItem="e69-Tq-V4s" secondAttribute="leading" id="h88-7y-8s6"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="12"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="loO-c9-vLQ"/>

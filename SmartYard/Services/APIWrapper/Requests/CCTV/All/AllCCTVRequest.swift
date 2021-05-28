@@ -11,6 +11,7 @@ import Foundation
 struct AllCCTVRequest {
     
     let accessToken: String
+    let forceRefresh: Bool
     let houseId: String?
     
 }

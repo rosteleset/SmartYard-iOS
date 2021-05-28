@@ -10,6 +10,7 @@ import Foundation
 
 struct OverviewCCTVRequest {
     let accessToken: String
+    let forceRefresh: Bool
 }
 
 extension OverviewCCTVRequest {

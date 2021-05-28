@@ -11,6 +11,7 @@ import Foundation
 struct IntercomRequest {
     
     let accessToken: String
+    let forceRefresh: Bool
     let flatId: String
     let settings: APIIntercomSettings?
     

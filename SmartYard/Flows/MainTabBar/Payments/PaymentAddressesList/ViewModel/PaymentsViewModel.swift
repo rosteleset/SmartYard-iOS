@@ -81,7 +81,7 @@ class PaymentsViewModel: BaseViewModel {
                 }
                 
                 return
-                    self.apiWrapper.getPaymentsList()
+                    self.apiWrapper.getPaymentsList(forceRefresh: true)
                         .trackError(errorTracker)
                         .asDriver(onErrorJustReturn: nil)
             }

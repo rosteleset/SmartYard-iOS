@@ -26,6 +26,8 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     @IBOutlet private weak var appartmentFilterButton: UIButton!
     @IBOutlet private weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var scrollUpButton: UIButton!
+    
+    private var refreshControl = UIRefreshControl()
 
     var lastContentOffset: CGFloat = 0.0
     let maxHeaderHeight: CGFloat = 44.0
@@ -75,6 +77,9 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     
     fileprivate func setupTableView() {
         tableView.delegate = self
+        tableView.refreshControl = refreshControl
+        refreshControl.tintColor = UIColor.SmartYard.gray
+        
         tableView.register(nibWithCellClass: HistoryTableViewCell.self)
         tableView.register(nibWithCellClass: HistoryLoadingTableViewCell.self)
         
@@ -133,6 +138,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
             loadDay: loadDayTriger.asDriverOnErrorJustComplete(),
+            refreshDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriver(),
             eventsFilter: eventsFilter.asDriver(),
             apptsFilter: apptsFilter.asDriver()
         )
@@ -144,6 +150,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
             .do(
                 onNext: { sectionModels in
                     self.days = sectionModels.map({ $0.day })
+                    self.refreshControl.endRefreshing()
                 }
             )
             .drive(tableView.rx.items(dataSource: dataSource!))
@@ -242,8 +249,9 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     }
     
     @IBAction private func tapEvents(_ sender: UIView) {
+        
         showEventsFilterPopover(
-            from: eventsFilterButton.imageView!,
+            from: eventsFilterButton.imageView!, items: EventsFilter.allCasesString,
             onSelect: { name, _ in
                 self.eventsFilterButton.setTitle(name, for: .normal)
                 self.eventsFilterButton.sizeToFit()

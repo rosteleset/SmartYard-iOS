@@ -10,6 +10,7 @@ import Foundation
 struct PlogDaysRequest {
     
     let accessToken: String
+    let forceRefresh: Bool
     let flatId: String
     let events: EventsFilter?
 }
@@ -33,7 +34,7 @@ extension PlogDaysRequest {
             params["events"] = "3"
         case .faces:
             params["events"] = "5"
-        case .wickets:
+        case .phoneCall:
             params["events"] = "7,8"
         case .application:
             params["events"] = "4"

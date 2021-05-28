@@ -75,17 +75,17 @@ class SettingsViewModel: BaseViewModel {
         
         let blockingRefresh = Driver
             .merge(
-                NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToVoid(),
-                NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToVoid(),
-                hasNetworkBecomeReachable,
-                .just(())
+                NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToTrue(),
+                NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToTrue(),
+                hasNetworkBecomeReachable.mapToFalse(),
+                .just(false)
             )
-            .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
+            .flatMapLatest { [weak self] forceRefresh -> Driver<GetSettingsListResponseData?> in
                 guard let self = self else {
                     return .empty()
                 }
                 
-                return self.apiWrapper.getSettingsAddresses()
+                return self.apiWrapper.getSettingsAddresses(forceRefresh: forceRefresh)
                     .trackError(errorTracker)
                     .trackActivity(interactionBlockingRequestTracker)
                     .asDriver(onErrorJustReturn: nil)
@@ -104,7 +104,7 @@ class SettingsViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                return self.apiWrapper.getSettingsAddresses()
+                return self.apiWrapper.getSettingsAddresses(forceRefresh: true)
                     .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }

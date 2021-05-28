@@ -108,7 +108,7 @@ class FacesSettingsViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         //это событие прилетает, когда пользователь удалил лицо и надо обновить список лиц
-        NotificationCenter.default.rx.notification(.faceDeleted)
+        NotificationCenter.default.rx.notification(.updateFaces)
             .asDriverOnErrorJustComplete()
             .mapToVoid()
             .flatMapLatest { [weak self] _ -> Driver<GetPersonFacesResponseData> in
@@ -116,7 +116,7 @@ class FacesSettingsViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                return self.apiWrapper.getPersonFaces(flatId: self.flatId)
+                return self.apiWrapper.getPersonFaces(flatId: self.flatId, forceRefresh: true)
                     .trackError(errorTracker)
                     .trackActivity(initialLoadingTracker)
                     .asDriver(onErrorJustReturn: nil)

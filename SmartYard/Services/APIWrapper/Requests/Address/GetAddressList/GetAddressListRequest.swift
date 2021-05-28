@@ -9,7 +9,7 @@
 struct GetAddressListRequest {
     
     let accessToken: String
-    
+    let forceRefresh: Bool
 }
 
 extension GetAddressListRequest {

@@ -29,7 +29,7 @@ extension APIWrapper {
             .mapAsDefaultResponse()
     }
     
-    func getListConnect() -> Single<GetListConnectResponseData?> {
+    func getListConnect(forceRefresh: Bool = false) -> Single<GetListConnectResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -38,7 +38,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = GetListConnectRequest(accessToken: accessToken)
+        let request = GetListConnectRequest(accessToken: accessToken, forceRefresh: forceRefresh)
         
         return provider.rx
             .request(.getListConnect(request: request))

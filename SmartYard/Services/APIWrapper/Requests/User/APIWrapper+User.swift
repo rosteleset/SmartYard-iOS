@@ -121,7 +121,7 @@ extension APIWrapper {
             .mapAsDefaultResponse()
     }
     
-    func getPaymentsList() -> Single<GetPaymentsListResponseData?> {
+    func getPaymentsList(forceRefresh: Bool = false) -> Single<GetPaymentsListResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -130,7 +130,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = GetPaymentsListRequest(accessToken: accessToken)
+        let request = GetPaymentsListRequest(accessToken: accessToken, forceRefresh: forceRefresh)
         
         return provider.rx
             .request(.getPaymentsList(request: request))

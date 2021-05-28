@@ -11,7 +11,7 @@ import Foundation
 struct GetListConnectRequest {
     
     let accessToken: String
-    
+    let forceRefresh: Bool
 }
 
 extension GetListConnectRequest {

@@ -12,7 +12,7 @@ import RxSwift
 
 extension APIWrapper {
     
-    func getPersonFaces(flatId: Int) -> Single<GetPersonFacesResponseData?> {
+    func getPersonFaces(flatId: Int, forceRefresh: Bool = false) -> Single<GetPersonFacesResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -21,7 +21,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = GetPersonFacesRequest(accessToken: accessToken, flatId: flatId)
+        let request = GetPersonFacesRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId)
         
         return provider.rx
             .request(.getPersonFaces(request: request))

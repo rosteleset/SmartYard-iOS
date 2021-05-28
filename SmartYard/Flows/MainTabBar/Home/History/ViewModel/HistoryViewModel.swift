@@ -26,7 +26,7 @@ class HistoryViewModel: BaseViewModel {
     private let activityTracker = ActivityTracker()
     private let availableDaysForFlat = PublishSubject<AvailableDays>()
     private let updateSections = PublishSubject<Void>()
-    private let updateAvailableDays = PublishSubject<Void>()
+    private let updateAvailableDays = PublishSubject<Bool>()
     
     /// идентификатор дома для какого смотрим логи
     private let houseId: String?
@@ -41,11 +41,14 @@ class HistoryViewModel: BaseViewModel {
     ///список номеров доступных квартир по адресу на сервере
     public var flatNumbers: [Int] = [] //список номеров доступных квартир по адресу на сервере
     
-    ///список id квартир для отображения с учётом фильтра
-    //public var flatIdsFilter: [Int] = []
+    ///признак того, надо ли отключать получение ответов из кеша сервера.
+    private var forceRefresh: Bool = false
     
     /// массив из квартир с массивом дат, доступных для каждой с учётом текущих фильтров
-    private let availableDays = BehaviorRelay<AvailableDays>(value: [:])
+    private var availableDays: AvailableDays = [:]
+    
+    /// массив из квартир с массивом дат, доступных для каждой с учётом текущих фильтров
+    private let availableDaysSubject = BehaviorSubject<AvailableDays>(value: [:])
     
     /// облегчённая версия availableDays - массив из доступных дат с учётом текущих фильтров
     private var uniqueDays: [Date] = []
@@ -57,7 +60,7 @@ class HistoryViewModel: BaseViewModel {
     private let logs = PublishSubject<DayFlatItemsData>()
     
     /// все загруженные данные от API
-    private let dataCache = BehaviorRelay<[DayFlatItemsData]>(value: [])
+    private var dataCache: [DayFlatItemsData] = []
     
     /// данные для отображения в виде готовых секций для dataSource с учётом текущих фильтров
     private let sections = BehaviorRelay<[HistorySectionModel]>(value: [])
@@ -75,18 +78,25 @@ class HistoryViewModel: BaseViewModel {
         self.init(apiWrapper: apiWrapper, houseId: houseId, address: address, homeRouter: router)
     }
     
-    convenience init(apiWrapper: APIWrapper, flatId: Int, address: String, router: WeakRouter<SettingsRoute>) {
-        self.init(apiWrapper: apiWrapper, flatId: flatId, address: address, settingsRouter: router)
+    convenience init(apiWrapper: APIWrapper, flatId: Int, eventsFilter: EventsFilter = .all, address: String, router: WeakRouter<SettingsRoute>) {
+        self.init(apiWrapper: apiWrapper, flatId: flatId, eventsFilter: eventsFilter, address: address, settingsRouter: router)
     }
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
-    private init(apiWrapper: APIWrapper, houseId: String? = nil, flatId: Int? = nil, address: String, homeRouter: WeakRouter<HomeRoute>? = nil, settingsRouter: WeakRouter<SettingsRoute>? = nil) {
+    // swiftlint:disable:next function_body_length cyclomatic_complexity line_length
+    private init(apiWrapper: APIWrapper,
+                 houseId: String? = nil,
+                 flatId: Int? = nil,
+                 eventsFilter: EventsFilter = .all,
+                 address: String,
+                 homeRouter: WeakRouter<HomeRoute>? = nil,
+                 settingsRouter: WeakRouter<SettingsRoute>? = nil) {
         self.apiWrapper = apiWrapper
         self.houseId = houseId
         self.flatId = flatId
         self.homeRouter = homeRouter
         self.settingsRouter = settingsRouter
         self.address = BehaviorSubject<String?>(value: address)
+        self.eventsFilter.accept(eventsFilter)
         
         super.init()
         
@@ -100,9 +110,10 @@ class HistoryViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         //при изменении фильтров обновляем список дней
-        Observable.combineLatest(eventsFilter, apptsFilter)
+        Observable.combineLatest(self.eventsFilter, self.apptsFilter)
             .asDriverOnErrorJustComplete()
             .mapToVoid()
+            .map { self.forceRefresh }
             .drive(updateAvailableDays)
             .disposed(by: disposeBag)
         
@@ -114,7 +125,11 @@ class HistoryViewModel: BaseViewModel {
                 }
                 
                 //дополняем кэш полученной порцией данных
-                self.dataCache.accept(self.dataCache.value + [data])
+                if let index = self.dataCache.firstIndex(where: { ($0.day == data.day) && ($0.flatId == data.flatId) }) {
+                    self.dataCache[index].items = data.items
+                } else {
+                    self.dataCache += [data]
+                }
                 
                 self.loadingQueue.removeAll { $0.flatId == data.flatId && $0.day == data.day }
                 
@@ -133,13 +148,13 @@ class HistoryViewModel: BaseViewModel {
                 }
                 
                 //добавляем новую порцию данных, объединяя массивы данных для одинаковых flatId
-                let newValue = self.availableDays.value.merging(data, uniquingKeysWith: +)
-                self.availableDays.accept(newValue)
+                 self.availableDays.merge(data, uniquingKeysWith: +)
+                self.availableDaysSubject.onNext(self.availableDays)
             }
             .disposed(by: disposeBag)
         
         //отсюда прилетает суммарный список всех доступных в журнале логов дат с количеством – по элементу на каждую квартиру
-        availableDays
+        availableDaysSubject
             .asDriver(onErrorJustReturn: [:])
             .drive { [weak self] data in
                 guard let self = self else {
@@ -176,7 +191,7 @@ class HistoryViewModel: BaseViewModel {
                         .map { sectionDay -> (day: Date, items: [APIPlog]) in
                         return (
                             day: sectionDay,
-                            items: self.dataCache.value
+                            items: self.dataCache
                                 //для каждой даты делаем выборку всех доступных данных в кэше,
                                 //заодно сразу отфильтровываем данные по квартирам, которые не попадают в фильтр
                                 .filter { $0.day == sectionDay && self.apptsFilter.value.contains($0.flatId) }
@@ -211,7 +226,7 @@ class HistoryViewModel: BaseViewModel {
                                 case .passcode:
                                     eventType = .code
                                 case .call, .plate:
-                                    eventType = .wickets
+                                    eventType = .phoneCall
                                 case .unknown:
                                     eventType = .all
                                 }
@@ -248,23 +263,24 @@ class HistoryViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        updateAvailableDays
+        updateAvailableDays //аргумент - forceRefresh
             .asDriverOnErrorJustComplete()
-            .flatMap { [weak self] _ -> Driver<AvailableDays?> in
+            .flatMap { [weak self] forceRefresh -> Driver<AvailableDays?> in
                 guard let self = self else {
                     return .just(nil)
                 }
                 
                 //сбрасываем данные от предыдущих запросов, но кэш не трогаем.
                 self.uniqueDays = []
-                self.availableDays.accept([:])
+                self.availableDays = [:]
+                self.forceRefresh = forceRefresh
                 
                 let results = PublishSubject<AvailableDays?>()
                 
                 //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
                 //как отдельный элемент в текущую последовательность
                 self.apptsFilter.value.forEach { flatId in
-                    self.apiWrapper.plogDays(flatId: flatId, events: self.eventsFilter.value)
+                    self.apiWrapper.plogDays(flatId: flatId, events: self.eventsFilter.value, forceRefresh: forceRefresh)
                         .trackError(self.errorTracker)
                         .map { $0 == nil ?  nil : [flatId: $0!] } //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
                         .asDriver(onErrorJustReturn: [flatId: []])
@@ -313,7 +329,7 @@ class HistoryViewModel: BaseViewModel {
                 }
                 .disposed(by: disposeBag)
         } else {
-            Driver.combineLatest(getSettingsAddresses, getCamMap)
+            Driver.zip(getSettingsAddresses, getCamMap)
                 .drive { [weak self] args, camMap in
                     guard let self = self else {
                         return
@@ -347,6 +363,12 @@ class HistoryViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.refreshDataTrigger
+            .do( onNext: { self.dataCache = [] } )
+            .mapToTrue()
+            .drive(updateAvailableDays)
+            .disposed(by: disposeBag)
+        
         input.loadDay
             .flatMap { [weak self] day -> Driver<DayFlatItemsData?> in
                     
@@ -362,7 +384,7 @@ class HistoryViewModel: BaseViewModel {
                 //как отдельный элемент в текущую последовательность
                 self.apptsFilter.value.forEach { flatId in
                     //проверяем, что для этой квартиры есть записи в этот день
-                    guard let days = self.availableDays.value[flatId],
+                    guard let days = self.availableDays[flatId],
                           days.contains( where: { $0.day == day  })
                     //иначе переходим к следующей квартире.
                     else {
@@ -371,7 +393,7 @@ class HistoryViewModel: BaseViewModel {
                     
                     lock.lock()
                     let isInQueue = self.loadingQueue.first { $0.flatId == flatId && $0.day == day }
-                    let isInCache = self.dataCache.value.first { $0.flatId == flatId && $0.day == day }
+                    let isInCache = self.dataCache.first { $0.flatId == flatId && $0.day == day }
                     
                     //если мы уже запрашиваем или имеем в кеше этот элемент, то не запрашиваем его повторно
                     guard isInQueue == nil, isInCache == nil else {
@@ -382,7 +404,7 @@ class HistoryViewModel: BaseViewModel {
                     self.loadingQueue.append((flatId: flatId, day: day))
                     lock.unlock()
                     
-                    self.apiWrapper.plog(flatId: flatId, fromDate: day)
+                    self.apiWrapper.plog(flatId: flatId, fromDate: day, forceRefresh: self.forceRefresh)
                         .trackError(self.errorTracker)
                         .map { $0 == nil ?  nil : (day: day, items: $0!, flatId: Int(flatId) ) }
                         .asDriver(onErrorJustReturn: nil)
@@ -425,11 +447,39 @@ class HistoryViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            availableDays: availableDays.asDriver(onErrorJustReturn: [:]),
+            availableDays: availableDaysSubject.asDriver(onErrorJustReturn: [:]),
             address: address.asDriverOnErrorJustComplete(),
             isLoading: activityTracker.asDriver(),
             sections: sections.asDriverOnErrorJustComplete()
         )
+    }
+    
+    func addFace(uuid: String) {
+        self.apiWrapper.likePersonFace(event: uuid)
+            .trackError(self.errorTracker)
+            .trackActivity(self.activityTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: {
+                    NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    func deleteFace(uuid: String) {
+        self.apiWrapper.disLikePersonFace(event: uuid)
+            .trackError(self.errorTracker)
+            .trackActivity(self.activityTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: {
+                    NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
@@ -464,7 +514,7 @@ class HistoryViewModel: BaseViewModel {
                 //как отдельный элемент в текущую последовательность
                 self.apptsFilter.value.forEach { flatId in
                     //проверяем, что для этой квартиры есть записи в этот день
-                    guard let days = self.availableDays.value[flatId],
+                    guard let days = self.availableDays[flatId],
                           days.contains( where: { $0.day == day  })
                     //иначе переходим к следующей квартире.
                     else {
@@ -473,7 +523,7 @@ class HistoryViewModel: BaseViewModel {
                     
                     lock.lock()
                     let isInQueue = self.loadingQueue.first { $0.flatId == flatId && $0.day == day }
-                    let isInCache = self.dataCache.value.first { $0.flatId == flatId && $0.day == day }
+                    let isInCache = self.dataCache.first { $0.flatId == flatId && $0.day == day }
                     
                     //если мы уже запрашиваем или имеем в кеше этот элемент, то не запрашиваем его повторно
                     guard isInQueue == nil, isInCache == nil else {
@@ -484,7 +534,7 @@ class HistoryViewModel: BaseViewModel {
                     self.loadingQueue.append((flatId: flatId, day: day))
                     lock.unlock()
                     
-                    self.apiWrapper.plog(flatId: flatId, fromDate: day)
+                    self.apiWrapper.plog(flatId: flatId, fromDate: day, forceRefresh: self.forceRefresh)
                         .trackError(self.errorTracker)
                         .map { $0 == nil ?  nil : (day: day, items: $0!, flatId: Int(flatId) ) }
                         .asDriver(onErrorJustReturn: nil)
@@ -503,41 +553,35 @@ class HistoryViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.addFaceTrigger
-            .flatMapLatest { [weak self] uuid -> Driver<Void?> in
+            .drive { [weak self] uuid in
                 guard let self = self else {
-                    return .empty()
+                    return
+                }
+                let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+                
+                let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
+                    self?.addFace(uuid: uuid)
                 }
                 
-                return self.apiWrapper.likePersonFace(event: uuid)
-                    .trackError(self.errorTracker)
-                    .trackActivity(self.activityTracker)
-                    .asDriver(onErrorJustReturn: nil)
+                self.homeRouter?.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
+                self.settingsRouter?.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
             }
-            .ignoreNil()
-            .drive(
-                onNext: {
-                    print("Face added")
-                }
-            )
             .disposed(by: disposeBag)
         
         input.deleteFaceTrigger
-            .flatMapLatest { [weak self] uuid -> Driver<Void?> in
+            .drive { [weak self] uuid in
                 guard let self = self else {
-                    return .empty()
+                    return
+                }
+                let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+                
+                let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
+                    self?.deleteFace(uuid: uuid)
                 }
                 
-                return self.apiWrapper.disLikePersonFace(event: uuid)
-                    .trackError(self.errorTracker)
-                    .trackActivity(self.activityTracker)
-                    .asDriver(onErrorJustReturn: nil)
+                self.homeRouter?.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
+                self.settingsRouter?.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
             }
-            .ignoreNil()
-            .drive(
-                onNext: {
-                    print("Face deleted")
-                }
-            )
             .disposed(by: disposeBag)
         
         /*
@@ -559,7 +603,7 @@ class HistoryViewModel: BaseViewModel {
         */
         
         return OutputDetail(
-            availableDays: availableDays.asDriver(onErrorJustReturn: [:]),
+            availableDays: availableDaysSubject.asDriver(onErrorJustReturn: [:]),
             isLoading: activityTracker.asDriver(),
             sections: sections.asDriverOnErrorJustComplete(),
             camMap: camMap.asDriverOnErrorJustComplete()
@@ -573,6 +617,7 @@ extension HistoryViewModel {
         let itemSelected: Driver<HistoryDataItem>
         let backTrigger: Driver<Void>
         let loadDay: Driver<Date>
+        let refreshDataTrigger: Driver<Void>
         let eventsFilter: Driver<EventsFilter>
         let apptsFilter: Driver<[Int]>
         

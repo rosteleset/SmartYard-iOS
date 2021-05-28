@@ -11,7 +11,7 @@ import Foundation
 struct GetSettingsListRequest {
     
     let accessToken: String
-    
+    let forceRefresh: Bool
 }
 
 extension GetSettingsListRequest {

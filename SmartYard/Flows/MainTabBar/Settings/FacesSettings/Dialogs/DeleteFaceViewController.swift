@@ -69,7 +69,7 @@ class DeleteFaceViewController: BaseViewController {
             .ignoreNil()
             .drive(
                 onNext: {
-                    NotificationCenter.default.post(.init(name: .faceDeleted, object: nil))
+                    NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
                     router.trigger(.dismiss)
                 }
             )

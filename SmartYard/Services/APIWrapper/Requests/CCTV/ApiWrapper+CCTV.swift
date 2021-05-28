@@ -12,7 +12,7 @@ import RxCocoa
 
 extension APIWrapper {
     
-    func getAllCCTV(houseId: String?) -> Single<AllCCTVResponseData?> {
+    func getAllCCTV(houseId: String?, forceRefresh: Bool = false) -> Single<AllCCTVResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -21,7 +21,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = AllCCTVRequest(accessToken: accessToken, houseId: houseId)
+        let request = AllCCTVRequest(accessToken: accessToken, forceRefresh: forceRefresh, houseId: houseId)
         
         return provider.rx
             .request(.allCCTV(request: request))
@@ -82,7 +82,7 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-    func getOverviewCCTV() -> Single<OverviewCCTVResponseData?> {
+    func getOverviewCCTV(forceRefresh: Bool = false) -> Single<OverviewCCTVResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -91,7 +91,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = OverviewCCTVRequest(accessToken: accessToken)
+        let request = OverviewCCTVRequest(accessToken: accessToken, forceRefresh: forceRefresh)
         
         return provider.rx
             .request(.overviewCCTV(request: request))
@@ -100,7 +100,7 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-    func getYouTubeVideo(cameraId: Int?) -> Single<YouTubeResponseData?> {
+    func getYouTubeVideo(cameraId: Int?, forceRefresh: Bool = false) -> Single<YouTubeResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -109,7 +109,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = YouTubeRequest(accessToken: accessToken, id: cameraId)
+        let request = YouTubeRequest(accessToken: accessToken, forceRefresh: forceRefresh, id: cameraId)
         
         return provider.rx
             .request(.youtube(request: request))

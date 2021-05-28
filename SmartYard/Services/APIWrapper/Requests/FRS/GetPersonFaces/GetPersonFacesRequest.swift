@@ -11,6 +11,7 @@ import Foundation
 struct GetPersonFacesRequest {
     
     let accessToken: String
+    let forceRefresh: Bool
     let flatId: Int
     
 }

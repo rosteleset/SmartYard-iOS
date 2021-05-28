@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import Moya
 
 extension APIWrapper {
     
@@ -57,7 +58,7 @@ extension APIWrapper {
     }
     
     func getCurrentIntercomState(flatId: String) -> Single<IntercomResponseData?> {
-        return intercom(flatId: flatId, settings: nil)
+        return intercom(flatId: flatId, forceRefresh: false, settings: nil)
     }
     
     func grantHourGuestAccess(flatId: String) -> Single<IntercomResponseData?> {
@@ -73,7 +74,7 @@ extension APIWrapper {
             frsDisabled: nil
         )
         
-        return intercom(flatId: flatId, settings: settings)
+        return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomCMSState(flatId: String, isEnabled: Bool) -> Single<IntercomResponseData?> {
@@ -89,7 +90,7 @@ extension APIWrapper {
             frsDisabled: nil
         )
         
-        return intercom(flatId: flatId, settings: settings)
+        return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomVoIPState(flatId: String, isEnabled: Bool) -> Single<IntercomResponseData?> {
@@ -105,7 +106,7 @@ extension APIWrapper {
             frsDisabled: nil
         )
         
-        return intercom(flatId: flatId, settings: settings)
+        return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomPaperBillState(flatId: String, isEnabled: Bool) -> Single<IntercomResponseData?> {
@@ -121,7 +122,7 @@ extension APIWrapper {
             frsDisabled: nil
         )
         
-        return intercom(flatId: flatId, settings: settings)
+        return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomDisablePlogState(flatId: String, isDisabled: Bool) -> Single<IntercomResponseData?> {
@@ -137,7 +138,7 @@ extension APIWrapper {
             frsDisabled: nil
         )
         
-        return intercom(flatId: flatId, settings: settings)
+        return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomHiddenPlogState(flatId: String, isHidden: Bool) -> Single<IntercomResponseData?> {
@@ -153,7 +154,7 @@ extension APIWrapper {
             frsDisabled: nil
         )
         
-        return intercom(flatId: flatId, settings: settings)
+        return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomFRSDisabledState(flatId: String, isDisabled: Bool) -> Single<IntercomResponseData?> {
@@ -169,10 +170,10 @@ extension APIWrapper {
             frsDisabled: isDisabled
         )
         
-        return intercom(flatId: flatId, settings: settings)
+        return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
-    func intercom(flatId: String, settings: APIIntercomSettings?) -> Single<IntercomResponseData?> {
+    func intercom(flatId: String, forceRefresh: Bool = false, settings: APIIntercomSettings?) -> Single<IntercomResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -181,7 +182,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = IntercomRequest(accessToken: accessToken, flatId: flatId, settings: settings)
+        let request = IntercomRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId, settings: settings)
         print("request data: \(request)")
         
         return provider.rx
@@ -189,11 +190,11 @@ extension APIWrapper {
             .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
-    func plogDays(flatId: Int, events: EventsFilter? = .all) -> Single<PlogDaysResponseData?> {
-        return plogDays(flatId: String(flatId), events: events)
+    func plogDays(flatId: Int, events: EventsFilter? = .all, forceRefresh: Bool = false) -> Single<PlogDaysResponseData?> {
+        return plogDays(flatId: String(flatId), events: events,forceRefresh: forceRefresh)
     }
     
-    func plogDays(flatId: String, events: EventsFilter? = .all) -> Single<PlogDaysResponseData?> {
+    func plogDays(flatId: String, events: EventsFilter? = .all, forceRefresh: Bool = false) -> Single<PlogDaysResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -202,7 +203,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = PlogDaysRequest(accessToken: accessToken, flatId: flatId, events: events)
+        let request = PlogDaysRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId, events: events)
         print("request data: \(request)")
         
         return provider.rx
@@ -212,11 +213,11 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-    func plog(flatId: Int, fromDate: Date) -> Single<PlogResponseData?> {
-        return plog(flatId: String(flatId), fromDate: fromDate)
+    func plog(flatId: Int, fromDate: Date, forceRefresh: Bool = false) -> Single<PlogResponseData?> {
+        return plog(flatId: String(flatId), fromDate: fromDate, forceRefresh: forceRefresh)
     }
     
-    func plog(flatId: String, fromDate: Date) -> Single<PlogResponseData?> {
+    func plog(flatId: String, fromDate: Date, forceRefresh: Bool = false) -> Single<PlogResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -225,8 +226,8 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = PlogRequest(accessToken: accessToken, flatId: flatId, fromDate: fromDate)
-        print("request data: \(request.requestParameters)")
+        let request = PlogRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId, fromDate: fromDate)
+        print("request data: \(request)")
         
         return provider.rx
             .request(.plog(request: request))
@@ -274,7 +275,7 @@ extension APIWrapper {
             .mapAsDefaultResponse()
     }
     
-    func getSettingsAddresses() -> Single<GetSettingsListResponseData?> {
+    func getSettingsAddresses(forceRefresh: Bool = false) -> Single<GetSettingsListResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -283,7 +284,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = GetSettingsListRequest(accessToken: accessToken)
+        let request = GetSettingsListRequest(accessToken: accessToken, forceRefresh: forceRefresh)
         
         return provider.rx
             .request(.getSettingsList(request: request))
@@ -310,7 +311,7 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-    func getAddressList() -> Single<GetAddressListResponseData?> {
+    func getAddressList(forceRefresh: Bool = false) -> Single<GetAddressListResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -319,7 +320,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = GetAddressListRequest(accessToken: accessToken)
+        let request = GetAddressListRequest(accessToken: accessToken, forceRefresh: forceRefresh)
         
         return provider.rx
             .request(.getAddressList(request: request))

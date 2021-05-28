@@ -10,6 +10,7 @@ import Foundation
 struct PlogRequest {
     
     let accessToken: String
+    let forceRefresh: Bool
     let flatId: String
     let fromDate: Date
 }

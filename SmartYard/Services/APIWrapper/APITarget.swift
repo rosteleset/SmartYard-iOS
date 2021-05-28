@@ -156,69 +156,75 @@ extension APITarget: TargetType {
         ]
         
         // swiftlint:disable:next closure_body_length
-        let authorization: String? = {
+        let (authorization, forceRefresh): (String?, Bool) = {
             switch self {
-            case .registerQR(let request): return request.accessToken
-            case .intercom(let request): return request.accessToken
-            case .openDoor(let request): return request.accessToken
-            case .resetCode(let request): return request.accessToken
-            case .getSettingsList(let request): return request.accessToken
-            case .getAddressList(let request): return request.accessToken
-            case .access(let request): return request.accessToken
-            case .resend(let request): return request.accessToken
-            case .offices(let request): return request.accessToken
-            case .plog(let request): return request.accessToken
-            case .plogDays(let request): return request.accessToken
+            case .registerQR(let request): return (request.accessToken, false)
+            case .intercom(let request): return (request.accessToken, request.forceRefresh)
+            case .openDoor(let request): return (request.accessToken, false)
+            case .resetCode(let request): return (request.accessToken, false)
+            case .getSettingsList(let request): return (request.accessToken, request.forceRefresh)
+            case .getAddressList(let request): return (request.accessToken, request.forceRefresh)
+            case .access(let request): return (request.accessToken, false)
+            case .resend(let request): return (request.accessToken, false)
+            case .offices(let request): return (request.accessToken, false)
+            case .plog(let request): return (request.accessToken, request.forceRefresh)
+            case .plogDays(let request): return (request.accessToken, request.forceRefresh)
             
-            case .allCCTV(let request): return request.accessToken
-            case .overviewCCTV(let request): return request.accessToken
-            case .youtube(let request): return request.accessToken
-            case .recPrepare(let request): return request.accessToken
-            case .recDownload(let request): return request.accessToken
-            case .getCamMap(let request): return request.accessToken
+            case .allCCTV(let request): return (request.accessToken, request.forceRefresh)
+            case .overviewCCTV(let request): return (request.accessToken, request.forceRefresh)
+            case .youtube(let request): return (request.accessToken, request.forceRefresh)
+            case .recPrepare(let request): return (request.accessToken, false)
+            case .recDownload(let request): return (request.accessToken, false)
+            case .getCamMap(let request): return (request.accessToken, false)
                 
-            case .getAddress(let request): return request.accessToken
-            case .getGeoCoder(let request): return request.accessToken
-            case .getHouses(let request): return request.accessToken
-            case .getServices(let request): return request.accessToken
-            case .getAllLocations(let request): return request.accessToken
-            case .getStreets(let request): return request.accessToken
+            case .getAddress(let request): return (request.accessToken, false)
+            case .getGeoCoder(let request): return (request.accessToken, false)
+            case .getHouses(let request): return (request.accessToken, false)
+            case .getServices(let request): return (request.accessToken, false)
+            case .getAllLocations(let request): return (request.accessToken, false)
+            case .getStreets(let request): return (request.accessToken, false)
                 
-            case .inbox(let request): return request.accessToken
-            case .unreaded(let request): return request.accessToken
-            case .delivered(let request): return request.accessToken
-            case .chatReaded(let request): return request.accessToken
+            case .inbox(let request): return (request.accessToken, false)
+            case .unreaded(let request): return (request.accessToken, false)
+            case .delivered(let request): return (request.accessToken, false)
+            case .chatReaded(let request): return (request.accessToken, false)
                 
-            case .getListConnect(let request): return request.accessToken
-            case .createIssue(let request): return request.accessToken
-            case .actionIssue(let request): return request.accessToken
-            case .commentIssue(let request): return request.accessToken
+            case .getListConnect(let request): return (request.accessToken, request.forceRefresh)
+            case .createIssue(let request): return (request.accessToken, false)
+            case .actionIssue(let request): return (request.accessToken, false)
+            case .commentIssue(let request): return (request.accessToken, false)
                 
-            case .appVersion(let request): return request.accessToken
-            case .addMyPhone(let request): return request.accessToken
-            case .registerPushToken(let request): return request.accessToken
-            case .getPaymentsList(let request): return request.accessToken
-            case .sendName(let request): return request.accessToken
-            case .restore(let request): return request.accessToken
-            case .notification(let request): return request.accessToken
+            case .appVersion(let request): return (request.accessToken, false)
+            case .addMyPhone(let request): return (request.accessToken, false)
+            case .registerPushToken(let request): return (request.accessToken, false)
+            case .getPaymentsList(let request): return (request.accessToken, request.forceRefresh)
+            case .sendName(let request): return (request.accessToken, false)
+            case .restore(let request): return (request.accessToken, false)
+            case .notification(let request): return (request.accessToken, false)
                 
-            case .payPrepare(let request): return request.accessToken
-            case .payProcess(let request): return request.accessToken
+            case .payPrepare(let request): return (request.accessToken, false)
+            case .payProcess(let request): return (request.accessToken, false)
                 
-            case .getPersonFaces(let request): return request.accessToken
-            case .removePersonFace(let request): return request.accessToken
-            case .likePersonFace(let request): return request.accessToken
-            case .disLikePersonFace(let request): return request.accessToken
+            case .getPersonFaces(let request): return (request.accessToken, request.forceRefresh)
+            case .removePersonFace(let request): return (request.accessToken, false)
+            case .likePersonFace(let request): return (request.accessToken, false)
+            case .disLikePersonFace(let request): return (request.accessToken, false)
             
-            default: return nil
+            default: return (nil, false)
             }
         }()
         
-        guard let token = authorization else {
-            return defaultHeaders
+        var additionalHeaders: [String: String] = [:]
+        
+        if let token = authorization {
+            additionalHeaders.merge(["Authorization": "Bearer " + token]) { _, new in new }
         }
         
-        return defaultHeaders.merging(["Authorization": "Bearer " + token]) { _, new in new }
+        if forceRefresh {
+            additionalHeaders.merge(["X-Dm-Api-Refresh": " "]) { _, new in new }
+        }
+        
+        return defaultHeaders.merging(additionalHeaders) { _, new in new }
     }
     
     var task: Task {
@@ -285,7 +291,6 @@ extension APITarget: TargetType {
         case .removePersonFace(let request): return request.requestParameters
         case .likePersonFace(let request): return request.requestParameters
         case .disLikePersonFace(let request): return request.requestParameters
-        
         
         }
     }
