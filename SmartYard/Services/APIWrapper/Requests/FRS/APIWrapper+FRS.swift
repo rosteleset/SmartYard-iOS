@@ -22,6 +22,7 @@ extension APIWrapper {
         }
         
         let request = GetPersonFacesRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId)
+        print("request data: \(request)")
         
         return provider.rx
             .request(.getPersonFaces(request: request))
@@ -44,6 +45,7 @@ extension APIWrapper {
             accessToken: accessToken,
             event: uuid
         )
+        print("request data: \(request)")
         
         return provider.rx
             .request(.disLikePersonFace(request: request))
@@ -66,6 +68,7 @@ extension APIWrapper {
             flatId: flatId,
             faceId: faceId
         )
+        print("request data: \(request)")
         
         return provider.rx
             .request(.removePersonFace(request: request))
@@ -87,6 +90,7 @@ extension APIWrapper {
             accessToken: accessToken,
             event: uuid
         )
+        print("request data: \(request)")
         
         return provider.rx
             .request(.likePersonFace(request: request))

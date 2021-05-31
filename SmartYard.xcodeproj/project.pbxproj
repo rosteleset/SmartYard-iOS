@@ -29,6 +29,8 @@
 		3A2881532657EE7100F42097 /* FaceIdAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2881512657EE7100F42097 /* FaceIdAccessView.swift */; };
 		3A2881542657EE7100F42097 /* FaceIdAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A2881522657EE7100F42097 /* FaceIdAccessView.xib */; };
 		3A288199265D42AC00F42097 /* SafeCachedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A288198265D42AA00F42097 /* SafeCachedButton.swift */; };
+		3A2881B12665093200F42097 /* AddFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2881B02665093100F42097 /* AddFaceViewController.swift */; };
+		3A2881B82665098B00F42097 /* AddFaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A2881AF2665093100F42097 /* AddFaceViewController.xib */; };
 		3A3B8B9525A5CD2500BFB72E /* MainMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8B9425A5CD2500BFB72E /* MainMenuCoordinator.swift */; };
 		3A3B8BA225A5CF6F00BFB72E /* MainMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BA125A5CF6F00BFB72E /* MainMenuViewModel.swift */; };
 		3A3B8BB325A5D00C00BFB72E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */; };
@@ -578,6 +580,8 @@
 		3A2881512657EE7100F42097 /* FaceIdAccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceIdAccessView.swift; sourceTree = "<group>"; };
 		3A2881522657EE7100F42097 /* FaceIdAccessView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FaceIdAccessView.xib; sourceTree = "<group>"; };
 		3A288198265D42AA00F42097 /* SafeCachedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeCachedButton.swift; sourceTree = "<group>"; };
+		3A2881AF2665093100F42097 /* AddFaceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddFaceViewController.xib; sourceTree = "<group>"; };
+		3A2881B02665093100F42097 /* AddFaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFaceViewController.swift; sourceTree = "<group>"; };
 		3A3B8B9425A5CD2500BFB72E /* MainMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuCoordinator.swift; sourceTree = "<group>"; };
 		3A3B8BA125A5CF6F00BFB72E /* MainMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewModel.swift; sourceTree = "<group>"; };
 		3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
@@ -1431,6 +1435,8 @@
 		3AEFB480264D1A73000F37D0 /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
+				3A2881B02665093100F42097 /* AddFaceViewController.swift */,
+				3A2881AF2665093100F42097 /* AddFaceViewController.xib */,
 				3AE65A3A264DA3EB0093284C /* DeleteFaceViewController.swift */,
 				3AE65A3B264DA3EB0093284C /* DeleteFaceViewController.xib */,
 				3AEFB481264D1ADE000F37D0 /* FaceViewController.swift */,
@@ -3983,6 +3989,7 @@
 				E940581823F6831A00623746 /* NewPersonCell.xib in Resources */,
 				3AE65A43264DA4130093284C /* DeleteFaceViewController.xib in Resources */,
 				844AC3FC23EC08E50066006D /* IncomingCallPortraitViewController.xib in Resources */,
+				3A2881B82665098B00F42097 /* AddFaceViewController.xib in Resources */,
 				84B89A9923F2FA97009692B4 /* ServiceIsActivatedViewController.xib in Resources */,
 				848D1B8A23F29D6100D6E368 /* AddressSettingsViewController.xib in Resources */,
 				843C38EA242A6E490035BF80 /* QRCodeScanViewController.xib in Resources */,
@@ -4445,6 +4452,7 @@
 				E92EFBE0242A22F2003AF7FE /* CreateIssueRequest.swift in Sources */,
 				843C38D1242A577C0035BF80 /* UnreadedResponseData.swift in Sources */,
 				E92EFBEC242A2507003AF7FE /* NotificationName+Extensions.swift in Sources */,
+				3A2881B12665093200F42097 /* AddFaceViewController.swift in Sources */,
 				847880E024A4BB3B008D9E33 /* ScreenshotHelper.swift in Sources */,
 				3A003C7025DEF2B7002F193B /* YouTubeRequest.swift in Sources */,
 				844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */,
@@ -4588,7 +4596,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/Debug/SmartYardWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
@@ -4615,7 +4623,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
@@ -4642,7 +4650,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
@@ -4668,7 +4676,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
@@ -4816,7 +4824,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
@@ -4845,7 +4853,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
@@ -4873,7 +4881,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -4907,7 +4915,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;

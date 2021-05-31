@@ -18,7 +18,7 @@ class FacesSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var facesCollectionView: UICollectionView!
     
     private let viewModel: FacesSettingsViewModel
-    private let imagesCache = NSCache<NSString,UIImage>()
+    //private let imagesCache = NSCache<NSString,UIImage>()
     
     var loader: JGProgressHUD?
     
@@ -105,6 +105,7 @@ class FacesSettingsViewController: BaseViewController, LoaderPresentable {
                     self?.facesCollectionView.reloadData()
                 }
             )
+            .disposed(by: disposeBag)
     }
     
     private func showInitialLoading() {

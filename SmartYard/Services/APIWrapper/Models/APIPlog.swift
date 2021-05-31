@@ -36,6 +36,10 @@ struct Rectangle: Decodable, Equatable, Hashable {
         self.width = width
         self.height = height
      }
+    
+    var asCGRect: CGRect {
+        return CGRect(x: left, y: top, width: width, height: height)
+    }
 }
 
 struct DetailX: Decodable, Equatable, Hashable {
@@ -44,6 +48,7 @@ struct DetailX: Decodable, Equatable, Hashable {
     let flags: [String]?
     let phone: String?
     let code: String?
+    let faceId: String?
     
     private enum CodingKeys: String, CodingKey {
         case key
@@ -51,6 +56,7 @@ struct DetailX: Decodable, Equatable, Hashable {
         case flags
         case phone
         case code
+        case faceId
     }
     
     init(from decoder: Decoder) throws {
@@ -61,6 +67,7 @@ struct DetailX: Decodable, Equatable, Hashable {
         flags = try? container.decode([String].self, forKey: .flags)
         phone = try? container.decode(String.self, forKey: .phone)
         code = try? container.decode(String.self, forKey: .code)
+        faceId = try? container.decode(String.self, forKey: .faceId)
      }
 }
 
@@ -68,6 +75,7 @@ struct APIPlog: Decodable, Equatable, Hashable {
     
     let date: Date //дата. Допустимые значения: "Y-m-d H:i:s"
     let uuid: String
+    let imageUuid: String?
     let objectId: Int // идентификатор объекта (домофона)
     let objectType: Int // тип объекта (0 - домофон)
     let objectMechanizma: Int //идентификатор нагрузки (двери). Допустимые значения: "0", "1", "2"
@@ -81,6 +89,7 @@ struct APIPlog: Decodable, Equatable, Hashable {
     private enum CodingKeys: String, CodingKey {
         case date
         case uuid
+        case image
         case objectId
         case objectType
         case objectMechanizma
@@ -104,7 +113,12 @@ struct APIPlog: Decodable, Equatable, Hashable {
     }
     
     static func == (lhs: APIPlog, rhs: APIPlog) -> Bool {
-        return lhs.uuid == rhs.uuid
+        guard let left = lhs.imageUuid,
+              let right = rhs.imageUuid else {
+            return lhs.uuid == rhs.uuid
+        }
+        
+        return left == right
     }
     
     init(from decoder: Decoder) throws {
@@ -114,6 +128,7 @@ struct APIPlog: Decodable, Equatable, Hashable {
         
         date = try dateRawValue.dateFromAPIString.unwrapped(or: NSError.APIWrapperError.noDataError)
         uuid = try container.decode(String.self, forKey: .uuid)
+        imageUuid = try? container.decode(String.self, forKey: .image)
         objectId = try container.decode(String.self, forKey: .objectId).int ?? -1
         objectType = try container.decode(String.self, forKey: .objectType).int ?? -1
         objectMechanizma = try container.decode(String.self, forKey: .objectMechanizma).int ?? -1

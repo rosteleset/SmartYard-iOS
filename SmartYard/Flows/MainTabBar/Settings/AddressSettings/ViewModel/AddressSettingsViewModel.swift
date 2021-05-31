@@ -51,7 +51,7 @@ class AddressSettingsViewModel: BaseViewModel {
         self.router = router
     }
     
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: Input) -> Output {
         errorTracker.asDriver()
             .catchAuthorizationError { [weak self] in
@@ -75,6 +75,7 @@ class AddressSettingsViewModel: BaseViewModel {
         
         let isCmsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let areCallsEnabledSubject = BehaviorSubject<Bool>(value: false)
+        let isWhiteRabbitEnabledSubject = BehaviorSubject<Bool>(value: false)
         let arePaperBillsEnabledSubject = BehaviorSubject<Bool?>(value: nil)
         let areLogsEnabledSubject = BehaviorSubject<Bool?>(value: nil)
         let areLogsVisibleOnlyForOwnerSubject = BehaviorSubject<Bool?>(value: nil)
@@ -96,17 +97,17 @@ class AddressSettingsViewModel: BaseViewModel {
                         arePaperBillsEnabledSubject.onNext(state.paperBill)
                         
                         switch state.disablePlog {
-                            case true: areLogsEnabledSubject.onNext(false)
-                            case false: areLogsEnabledSubject.onNext(true)
-                            default: areLogsEnabledSubject.onNext(nil)
+                        case true: areLogsEnabledSubject.onNext(false)
+                        case false: areLogsEnabledSubject.onNext(true)
+                        default: areLogsEnabledSubject.onNext(nil)
                         }
                         
                         areLogsVisibleOnlyForOwnerSubject.onNext(state.hiddenPlog)
                         
                         switch state.frsDisabled {
-                            case true: isFRSEnabledSubject.onNext(false)
-                            case false: isFRSEnabledSubject.onNext(true)
-                            default: isFRSEnabledSubject.onNext(nil)
+                        case true: isFRSEnabledSubject.onNext(false)
+                        case false: isFRSEnabledSubject.onNext(true)
+                        default: isFRSEnabledSubject.onNext(nil)
                         }
                     }
                 )
@@ -151,6 +152,27 @@ class AddressSettingsViewModel: BaseViewModel {
             .drive(
                 onNext: { state in
                     areCallsEnabledSubject.onNext(state.voip)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.whiteRabbitTrigger
+            .withLatestFrom(isWhiteRabbitEnabledSubject.asDriver(onErrorJustReturn: false))
+            .flatMapLatest { [weak self] isEnabled -> Driver<IntercomResponseData?> in
+                guard let self = self, self.hasDomophone else {
+                    return .empty()
+                }
+                
+                return self.apiWrapper
+                    .setIntercomWhiteRabbitState(flatId: self.flatId, isEnabled: !isEnabled)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    isWhiteRabbitEnabledSubject.onNext(state.whiteRabbit)
                 }
             )
             .disposed(by: disposeBag)
@@ -275,6 +297,7 @@ class AddressSettingsViewModel: BaseViewModel {
             address: .just(address),
             isCmsEnabled: isCmsEnabledSubject.asDriver(onErrorJustReturn: false),
             areCallsEnabled: areCallsEnabledSubject.asDriver(onErrorJustReturn: false),
+            isWhiteRabbitEnabled: isWhiteRabbitEnabledSubject.asDriver(onErrorJustReturn: false),
             arePaperBillsEnabled: arePaperBillsEnabledSubject.asDriver(onErrorJustReturn: nil),
             areLogsEnabled: areLogsEnabledSubject.asDriver(onErrorJustReturn: nil),
             areLogsVisibleOnlyForOwner: areLogsVisibleOnlyForOwnerSubject.asDriver(onErrorJustReturn: nil),
@@ -327,6 +350,7 @@ extension AddressSettingsViewModel {
         let deleteTrigger: Driver<Void>
         let cmsTrigger: Driver<Void>
         let voipTrigger: Driver<Void>
+        let whiteRabbitTrigger: Driver<Void>
         let paperBillTrigger: Driver<Void>
         let logsTrigger: Driver<Void>
         let hiddenTrigger: Driver<Void>
@@ -337,6 +361,7 @@ extension AddressSettingsViewModel {
         let address: Driver<String>
         let isCmsEnabled: Driver<Bool>
         let areCallsEnabled: Driver<Bool>
+        let isWhiteRabbitEnabled: Driver<Bool>
         let arePaperBillsEnabled: Driver<Bool?>
         let areLogsEnabled: Driver<Bool?>
         let areLogsVisibleOnlyForOwner: Driver<Bool?>

@@ -17,10 +17,13 @@ class DeleteFaceViewController: BaseViewController {
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var deleteButton: UIButton!
     
-    private let router: WeakRouter<SettingsRoute>
+    private let homeRouter: WeakRouter<HomeRoute>?
+    private let settingsRouter: WeakRouter<SettingsRoute>?
     private let image: UIImage?
-    private let faceId: Int
-    private let flatId: Int
+    private let imageURL: String?
+    private let faceId: Int?
+    private let flatId: Int?
+    private let event: APIPlog?
     private let apiWrapper: APIWrapper
     
     @available(*, unavailable)
@@ -28,11 +31,24 @@ class DeleteFaceViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(router: WeakRouter<SettingsRoute>, apiWrapper: APIWrapper, image: UIImage?, flatId: Int, faceId: Int) {
-        self.router = router
+    // swiftlint:disable:next function_body_length
+    init(
+        homeRouter: WeakRouter<HomeRoute>? = nil,
+        settingsRouter: WeakRouter<SettingsRoute>? = nil,
+        apiWrapper: APIWrapper,
+        image: UIImage? = nil,
+        imageURL: String? = nil,
+        flatId: Int? = nil,
+        faceId: Int? = nil,
+        event: APIPlog? = nil
+    ) {
+        self.homeRouter = homeRouter
+        self.settingsRouter = settingsRouter
         self.image = image
+        self.imageURL = imageURL
         self.faceId = faceId
         self.flatId = flatId
+        self.event = event
         self.apiWrapper = apiWrapper
         
         super.init(nibName: nil, bundle: nil)
@@ -50,7 +66,8 @@ class DeleteFaceViewController: BaseViewController {
         )
         .drive(
             onNext: {
-                router.trigger(.dismiss)
+                settingsRouter?.trigger(.dismiss)
+                homeRouter?.trigger(.dismiss)
             }
         )
         .disposed(by: disposeBag)
@@ -60,17 +77,27 @@ class DeleteFaceViewController: BaseViewController {
                 guard let self = self else {
                     return .empty()
                 }
-                
-                return apiWrapper.disLikePersonFace(flatId: self.flatId, faceId: self.faceId)
-                    .trackError(errorTracker)
-                    .trackActivity(activityTracker)
-                    .asDriver(onErrorJustReturn: nil)
+                if let flatId = self.flatId,
+                   let faceId = self.faceId {
+                    return apiWrapper.disLikePersonFace(flatId: flatId, faceId: faceId)
+                        .trackError(errorTracker)
+                        .trackActivity(activityTracker)
+                        .asDriver(onErrorJustReturn: nil)
+                }
+                if let uuid = self.event?.uuid {
+                    return apiWrapper.disLikePersonFace(event: uuid)
+                        .trackError(errorTracker)
+                        .trackActivity(activityTracker)
+                        .asDriver(onErrorJustReturn: nil)
+                }
+                return .empty()
             }
             .ignoreNil()
             .drive(
                 onNext: {
                     NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
-                    router.trigger(.dismiss)
+                    settingsRouter?.trigger(.dismiss)
+                    homeRouter?.trigger(.dismiss)
                 }
             )
             .disposed(by: disposeBag)
@@ -79,8 +106,20 @@ class DeleteFaceViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        imageView.image = image
+        if self.image != nil {
+            imageView.image = image
+        } else {
+            guard let url = self.imageURL else {
+                return
+            }
+            
+            imageView.loadImageUsingUrlString(urlString: url, cache: imagesCache)
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        imageView.sizeToFit()
     }
 
 }

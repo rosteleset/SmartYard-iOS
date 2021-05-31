@@ -16,6 +16,7 @@ import RxDataSources
 typealias FlatId = Int
 typealias AvailableDays = [FlatId: PlogDaysResponseData] //[FlatId: [APIPlogDay]]
 
+// swiftlint:disable:next type_body_length
 class HistoryViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
@@ -73,6 +74,9 @@ class HistoryViewModel: BaseViewModel {
     
     ///таблица соответствия objectId <-> url flussonic
     private let camMap = BehaviorRelay<[APICamMap]>(value: [])
+    
+    ///таблица лиц по квартирам
+    private var listFaces: [FlatId: GetPersonFacesResponseData] = [:]
     
     convenience init(apiWrapper: APIWrapper, houseId: String, address: String, router: WeakRouter<HomeRoute>) {
         self.init(apiWrapper: apiWrapper, houseId: houseId, address: address, homeRouter: router)
@@ -297,6 +301,45 @@ class HistoryViewModel: BaseViewModel {
             .bind(to: availableDaysForFlat)
             .disposed(by: disposeBag)
         
+        updateAvailableDays //аргумент - forceRefresh
+            .asDriverOnErrorJustComplete()
+            .flatMap { [weak self] forceRefresh -> Driver<[FlatId:GetPersonFacesResponseData]?> in
+                guard let self = self else {
+                    return .just(nil)
+                }
+                
+                let results = PublishSubject<[FlatId:GetPersonFacesResponseData]?>()
+                
+                //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
+                //как отдельный элемент в текущую последовательность
+                self.apptsFilter.value.forEach { flatId in
+                    self.apiWrapper.getPersonFaces(flatId: flatId)
+                        .trackError(self.errorTracker)
+                        .map { $0 == nil ?  nil : [flatId: $0!] } //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
+                        .asDriver(onErrorJustReturn: [flatId: []])
+                        .drive { result in
+                            results.onNext(result)
+                        }
+                        .disposed(by: self.disposeBag)
+                }
+                
+                return results.asDriver(onErrorJustReturn: nil)
+            }
+            .trackError(errorTracker)
+            .ignoreNil()
+            .asDriver(onErrorJustReturn: [:])
+            .drive(
+                onNext: { [weak self] result in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.listFaces = result
+                }
+            )
+            .disposed(by: disposeBag)
+            
+        
         // мы знаем только id дома, а логи запрашиваются для id квартиры,
         //поэтому получаем список настроек чтобы понять по id дома идентификатор первой доступной квартиры в данном доме
         //на будущее надо заменить на запросы логов для каждой квартиры.
@@ -454,20 +497,6 @@ class HistoryViewModel: BaseViewModel {
         )
     }
     
-    func addFace(uuid: String) {
-        self.apiWrapper.likePersonFace(event: uuid)
-            .trackError(self.errorTracker)
-            .trackActivity(self.activityTracker)
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
-            .drive(
-                onNext: {
-                    NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
     func deleteFace(uuid: String) {
         self.apiWrapper.disLikePersonFace(event: uuid)
             .trackError(self.errorTracker)
@@ -482,6 +511,15 @@ class HistoryViewModel: BaseViewModel {
             .disposed(by: disposeBag)
     }
     
+    func extractFaceImage(uuid: String) -> UIImage? {
+        for data in dataCache {
+            if let item = data.items.first(where: {$0.uuid == uuid }) {
+                return item.previewImage
+            }
+        }
+        
+        return nil
+    }
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: InputDetail) -> OutputDetail {
         
@@ -553,30 +591,36 @@ class HistoryViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.addFaceTrigger
-            .drive { [weak self] uuid in
+            .drive { [weak self] event in
                 guard let self = self else {
                     return
                 }
-                let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
                 
-                let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
-                    self?.addFace(uuid: uuid)
-                }
-                
-                self.homeRouter?.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
-                self.settingsRouter?.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
+                self.homeRouter?.trigger(.addFaceFromEvent(event: event))
+                self.settingsRouter?.trigger(.addFaceFromEvent(event: event))
             }
             .disposed(by: disposeBag)
         
         input.deleteFaceTrigger
-            .drive { [weak self] uuid in
+            .drive { [weak self] event in
                 guard let self = self else {
                     return
                 }
+                
+                var face: APIFace? = nil
+                for faces in self.listFaces.values {
+                    face = faces.first(where: { $0.faceId == Int(event.detailX?.faceId ?? "") })
+                    if face != nil { break }
+                }
+                
+                self.homeRouter?.trigger(.deleteFaceFromEvent(event: event, imageURL: face?.image))
+                self.settingsRouter?.trigger(.deleteFaceFromEvent(event: event, imageURL: face?.image))
+                
+                return
                 let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
                 
                 let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
-                    self?.deleteFace(uuid: uuid)
+                    self?.deleteFace(uuid: event.uuid)
                 }
                 
                 self.homeRouter?.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
@@ -635,8 +679,8 @@ extension HistoryViewModel {
         let backTrigger: Driver<Void>
         let updateSections: Driver<Void>
         let loadDay: Driver<Date>
-        let addFaceTrigger: Driver<String>
-        let deleteFaceTrigger: Driver<String>
+        let addFaceTrigger: Driver<APIPlog>
+        let deleteFaceTrigger: Driver<APIPlog>
     }
     
     struct OutputDetail {

@@ -323,3 +323,5 @@ extension AppDelegate: PKPushRegistryDelegate {
     }
     
 }
+
+public let imagesCache = NSCache<NSString,UIImage>()

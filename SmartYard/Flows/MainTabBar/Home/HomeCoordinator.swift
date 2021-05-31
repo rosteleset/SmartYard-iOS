@@ -23,6 +23,7 @@ enum HomeRoute: Route {
     case unavailableServices(address: String)
     case confirmAddress(address: String)
     case back
+    case dismiss
     case restorePassword(contractNum: String?)
     case pinCode(contractNum: String, selectedRestoreMethod: RestoreMethod)
     case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
@@ -32,7 +33,8 @@ enum HomeRoute: Route {
     case playArchiveVideo(camera: CameraObject, date: Date, availableRanges: [APIArchiveRange])
     case history(houseId: String, address: String)
     case historyDetail(viewModel: HistoryViewModel, item: HistoryDataItem)
-    
+    case addFaceFromEvent(event: APIPlog)
+    case deleteFaceFromEvent(event: APIPlog, imageURL: String?)
 }
 
 class HomeCoordinator: NavigationCoordinator<HomeRoute> {
@@ -178,6 +180,9 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         case .back:
             return .pop(animation: .default)
             
+        case .dismiss:
+            return .dismiss()
+            
         case let .restorePassword(contractNum):
             let vm = RestorePasswordViewModel(
                 apiWrapper: apiWrapper,
@@ -279,6 +284,20 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             let vc = HistoryDetailViewController(viewModel: vm, focusedOn: item)
    
             return .push(vc)
+            
+        case let .addFaceFromEvent(event):
+            let vc = AddFaceViewController(homeRouter: weakRouter, apiWrapper: apiWrapper, event: event)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            
+            return .present(vc)
+       
+        case let .deleteFaceFromEvent(event, imageURL):
+            let vc = DeleteFaceViewController(homeRouter: weakRouter, apiWrapper: apiWrapper, imageURL: imageURL, event: event)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            
+            return .present(vc)
         }
     }
     

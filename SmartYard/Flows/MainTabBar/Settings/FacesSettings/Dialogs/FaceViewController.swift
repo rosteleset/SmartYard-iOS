@@ -48,8 +48,12 @@ class FaceViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         imageView.image = image
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        imageView.sizeToFit()
     }
 
 }

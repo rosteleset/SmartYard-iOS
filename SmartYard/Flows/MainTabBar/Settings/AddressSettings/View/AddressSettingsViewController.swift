@@ -31,6 +31,9 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var voipContainerView: UIView!
     @IBOutlet private weak var voipSwitch: UISwitch!
     
+    @IBOutlet private weak var whiteRabbitContainerView: UIView!
+    @IBOutlet private weak var whiteRabbitSwitch: UISwitch!
+    
     @IBOutlet private weak var paperContainerView: UIView!
     @IBOutlet private weak var paperSwitch: UISwitch!
     
@@ -54,6 +57,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     
     private let cmsTapGesture = UITapGestureRecognizer()
     private let voipTapGesture = UITapGestureRecognizer()
+    private let whiteRabbitTapGesture = UITapGestureRecognizer()
     private let paperBillTapGesture = UITapGestureRecognizer()
     private let logsTapGesture = UITapGestureRecognizer()
     private let hiddenTapGesture = UITapGestureRecognizer()
@@ -122,6 +126,9 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         voipContainerView.addGestureRecognizer(voipTapGesture)
         voipSwitch.isUserInteractionEnabled = false
         
+        whiteRabbitContainerView.addGestureRecognizer(whiteRabbitTapGesture)
+        whiteRabbitSwitch.isUserInteractionEnabled = false
+        
         paperContainerView.addGestureRecognizer(paperBillTapGesture)
         paperSwitch.isUserInteractionEnabled = false
         
@@ -164,6 +171,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
             deleteTrigger: deleteAddressButton.rx.tap.asDriver(),
             cmsTrigger: cmsTapGesture.rx.event.asDriver().mapToVoid(),
             voipTrigger: voipTapGesture.rx.event.asDriver().mapToVoid(),
+            whiteRabbitTrigger: whiteRabbitTapGesture.rx.event.asDriver().mapToVoid(),
             paperBillTrigger: paperBillTapGesture.rx.event.asDriver().mapToVoid(),
             logsTrigger: logsTapGesture.rx.event.asDriver().mapToVoid(),
             hiddenTrigger: hiddenTapGesture.rx.event.asDriver().mapToVoid(),
@@ -192,6 +200,14 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
             .drive(
                 onNext: { [weak self] state in
                     self?.voipSwitch.setOn(state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isWhiteRabbitEnabled
+            .drive(
+                onNext: { [weak self] state in
+                    self?.whiteRabbitSwitch.setOn(state, animated: true)
                 }
             )
             .disposed(by: disposeBag)

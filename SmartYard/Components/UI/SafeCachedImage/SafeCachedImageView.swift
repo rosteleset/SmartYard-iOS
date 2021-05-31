@@ -13,8 +13,12 @@ class SafeCachedImageView: UIImageView {
     private var imageUrlString: String?
     private var loadingImageIndicator: UIActivityIndicatorView?
     
-    
-    func loadImageUsingUrlString(urlString: String, cache: NSCache<NSString, UIImage>, label: UILabel? = nil, errorMessage: String = "") {
+    func loadImageUsingUrlString(urlString: String,
+                                 cache: NSCache<NSString, UIImage>,
+                                 label: UILabel? = nil,
+                                 errorMessage: String = "",
+                                 rect: CGRect? = nil,
+                                 rectColor: UIColor = .clear) {
         
         imageUrlString = urlString
         
@@ -22,7 +26,11 @@ class SafeCachedImageView: UIImageView {
         
         if let imageFromCache = cache.object(forKey: NSString(string: urlString)) {
             self.image = imageFromCache
+            
             label?.text = ""
+            if let rect = rect {
+                self.drawRectangle(rect: rect, rectColor: rectColor)
+            }
             return
         }
         
@@ -41,7 +49,7 @@ class SafeCachedImageView: UIImageView {
         
         URLSession.shared.dataTask(
             with: url,
-            completionHandler: { (data, response, error) in
+            completionHandler: { data, response, error in
                 DispatchQueue.main.async {
                     self.loadingImageIndicator!.stopAnimating()
                     self.loadingImageIndicator!.removeFromSuperview()
@@ -66,6 +74,9 @@ class SafeCachedImageView: UIImageView {
                     if self.imageUrlString == urlString {
                         self.image = loadedImage
                         label?.text = ""
+                        if let rect = rect {
+                            self.drawRectangle(rect: rect, rectColor: rectColor)
+                        }
                     }
                     cache.setObject(loadedImage, forKey: NSString(string: urlString))
                 }
@@ -74,5 +85,30 @@ class SafeCachedImageView: UIImageView {
             .resume()
         
     }
+    
+    func drawRectangle(rect: CGRect, rectColor: UIColor) {
+        guard let image = self.image else {
+            return
+        }
+        
+        let imageSize = image.size
+        let scale: CGFloat = self.contentScaleFactor
+        UIGraphicsBeginImageContextWithOptions(imageSize, false, scale)
+        let context = UIGraphicsGetCurrentContext()
+        context?.setLineWidth(3.0)
+        
+        image.draw(at: CGPoint.zero)
 
+        rectColor.setStroke()
+        let transform = CGAffineTransform(scaleX: 1 / scale, y: 1 / scale)
+        UIRectFrame(rect.applying(transform))
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        if newImage != nil {
+            self.image = newImage
+        }
+    }
+    
 }

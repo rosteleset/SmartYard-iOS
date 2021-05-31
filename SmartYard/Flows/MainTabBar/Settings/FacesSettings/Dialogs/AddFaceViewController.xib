@@ -14,10 +14,10 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DeleteFaceViewController" customModule="SmartYard" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddFaceViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="addButton" destination="TiH-DQ-nUy" id="C3d-lL-lZB"/>
                 <outlet property="cancelButton" destination="6Yr-fY-VGD" id="Mzj-SE-JIm"/>
-                <outlet property="deleteButton" destination="TiH-DQ-nUy" id="kvq-OD-kOh"/>
                 <outlet property="imageView" destination="GN8-QH-DUd" id="r84-SF-rPJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -41,7 +41,7 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Удалить это лицо?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TXq-h2-f5D">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Добавить это лицо?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TXq-h2-f5D">
                             <rect key="frame" x="24" y="28" width="300" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="24" id="yy5-Q5-kcG"/>
@@ -52,13 +52,13 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TiH-DQ-nUy">
                             <rect key="frame" x="24" y="492" width="300" height="48"/>
-                            <color key="backgroundColor" name="incorrectDataRed"/>
+                            <color key="backgroundColor" name="darkGreen"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="nLS-7t-jKr"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                             <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
-                            <state key="normal" title="Удалить">
+                            <state key="normal" title="Добавить">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <userDefinedRuntimeAttributes>
@@ -118,11 +118,11 @@
         </view>
     </objects>
     <resources>
+        <namedColor name="darkGreen">
+            <color red="0.12156862745098039" green="0.73725490196078436" blue="0.3843137254901961" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="gray">
             <color red="0.42745098039215684" green="0.47843137254901963" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="incorrectDataRed">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="semiBlack">
             <color red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

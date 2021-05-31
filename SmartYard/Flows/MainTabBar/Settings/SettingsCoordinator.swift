@@ -30,6 +30,8 @@ enum SettingsRoute: Route {
     case showFace(image: UIImage?)
     case deleteFace(image: UIImage?, flatId: Int, faceId: Int)
     case addFace(flatId: Int)
+    case addFaceFromEvent(event: APIPlog)
+    case deleteFaceFromEvent(event: APIPlog, imageURL: String?)
     
 }
 
@@ -246,7 +248,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             return .present(vc)
         
         case let .deleteFace(image, flatId, faceId):
-            let vc = DeleteFaceViewController(router: weakRouter, apiWrapper: apiWrapper, image: image, flatId: flatId, faceId: faceId)
+            let vc = DeleteFaceViewController(settingsRouter: weakRouter, apiWrapper: apiWrapper, image: image, flatId: flatId, faceId: faceId)
             vc.modalPresentationStyle = .overFullScreen
             vc.modalTransitionStyle = .crossDissolve
             
@@ -257,6 +259,19 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             let vc = HistoryDetailViewController(viewModel: vm)
             
             return .push(vc)
+        case let .addFaceFromEvent(event):
+            let vc = AddFaceViewController(settingsRouter: weakRouter, apiWrapper: apiWrapper, event: event)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            
+            return .present(vc)
+            
+        case let .deleteFaceFromEvent(event, imageURL):
+            let vc = DeleteFaceViewController(settingsRouter: weakRouter, apiWrapper: apiWrapper, imageURL: imageURL, event: event)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            
+            return .present(vc)
         }
     }
     

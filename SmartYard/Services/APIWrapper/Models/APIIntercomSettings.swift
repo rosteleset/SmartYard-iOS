@@ -14,7 +14,7 @@ struct APIIntercomSettings {
     let cms: Bool?
     let voip: Bool?
     let autoOpen: Date?
-    let whiteRabbit: String?
+    let whiteRabbit: Bool?
     let paperBill: Bool?
     let disablePlog: Bool?
     let hiddenPlog: Bool?
@@ -44,7 +44,7 @@ extension APIIntercomSettings {
         }
         
         if let whiteRabbit = whiteRabbit {
-            params["whiteRabbit"] = whiteRabbit
+            params["whiteRabbit"] = whiteRabbit ? "5" : "0"
         }
         
         if let paperBill = paperBill {

@@ -20,11 +20,15 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5eE-xc-JHm">
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5eE-xc-JHm">
                     <rect key="frame" x="33" y="224" width="348" height="448"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GN8-QH-DUd" customClass="ScaledHeightImageView" customModule="SmartYard" customModuleProvider="target">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="400" translatesAutoresizingMaskIntoConstraints="NO" id="GN8-QH-DUd" customClass="ScaledHeightImageView" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="24" y="24" width="300" height="400"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="lessThanOrEqual" priority="900" constant="400" id="8CD-WZ-hqC"/>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" priority="900" constant="300" id="8Nv-if-CHG"/>
+                            </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                     <real key="value" value="12"/>
@@ -47,7 +51,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jqq-eR-xqR">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jqq-eR-xqR">
                     <rect key="frame" x="349" y="188" width="28" height="28"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="28" id="Hkz-ue-Cjl"/>
@@ -59,12 +63,14 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="5eE-xc-JHm" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="44" id="CNc-BF-Uug"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5eE-xc-JHm" secondAttribute="trailing" constant="16" id="GHJ-iO-4rM"/>
-                <constraint firstItem="5eE-xc-JHm" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="W6Y-wa-7Ha"/>
                 <constraint firstItem="5eE-xc-JHm" firstAttribute="top" secondItem="Jqq-eR-xqR" secondAttribute="bottom" constant="8" id="aB0-K1-dPW"/>
                 <constraint firstItem="5eE-xc-JHm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="dec-gA-F57"/>
-                <constraint firstItem="5eE-xc-JHm" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="exE-ob-IIB"/>
+                <constraint firstItem="5eE-xc-JHm" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="sI3-Of-HL5"/>
                 <constraint firstItem="5eE-xc-JHm" firstAttribute="trailing" secondItem="Jqq-eR-xqR" secondAttribute="trailing" constant="4" id="uVG-tk-yFA"/>
+                <constraint firstItem="5eE-xc-JHm" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="yiQ-Yc-23X"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="5eE-xc-JHm" secondAttribute="bottom" constant="16" id="znF-Ja-Ec5"/>
             </constraints>
             <point key="canvasLocation" x="139" y="90"/>
         </view>

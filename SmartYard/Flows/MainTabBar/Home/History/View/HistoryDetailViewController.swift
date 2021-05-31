@@ -43,10 +43,10 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     
     var focusedCellIndexPath: IndexPath?
     
-    private let imagesCache = NSCache<NSString,UIImage>()
+    //private let imagesCache = NSCache<NSString,UIImage>()
     
-    private let addFaceTrigger = PublishSubject<String>()
-    private let deleteFaceTrigger = PublishSubject<String>()
+    private let addFaceTrigger = PublishSubject<APIPlog>()
+    private let deleteFaceTrigger = PublishSubject<APIPlog>()
     
     
     init(viewModel: HistoryViewModel, focusedOn: HistoryDataItem? = nil) {
@@ -135,14 +135,14 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                 if let camera = self.camMap.first(where: { $0.id == item.value.objectId }) {
                     cell.configure(
                         value: item.value,
-                        using: self.imagesCache,
+                        using: imagesCache,
                         videoBaseUrl: camera.url,
                         token: camera.token
                     )
                 } else {
                     cell.configure(
                         value: item.value,
-                        using: self.imagesCache
+                        using: imagesCache
                     )
                 }
                 

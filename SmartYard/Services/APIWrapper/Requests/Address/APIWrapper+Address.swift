@@ -58,7 +58,7 @@ extension APIWrapper {
     }
     
     func getCurrentIntercomState(flatId: String) -> Single<IntercomResponseData?> {
-        return intercom(flatId: flatId, forceRefresh: false, settings: nil)
+        return intercom(flatId: flatId, forceRefresh: true, settings: nil)
     }
     
     func grantHourGuestAccess(flatId: String) -> Single<IntercomResponseData?> {
@@ -100,6 +100,22 @@ extension APIWrapper {
             voip: isEnabled,
             autoOpen: nil,
             whiteRabbit: nil,
+            paperBill: nil,
+            disablePlog: nil,
+            hiddenPlog: nil,
+            frsDisabled: nil
+        )
+        
+        return intercom(flatId: flatId, forceRefresh: true, settings: settings)
+    }
+    
+    func setIntercomWhiteRabbitState(flatId: String, isEnabled: Bool) -> Single<IntercomResponseData?> {
+        let settings = APIIntercomSettings(
+            enableDoorCode: nil,
+            cms: nil,
+            voip: nil,
+            autoOpen: nil,
+            whiteRabbit: isEnabled,
             paperBill: nil,
             disablePlog: nil,
             hiddenPlog: nil,

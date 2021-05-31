@@ -1,0 +1,91 @@
+//
+//  FaceViewController.swift
+//  SmartYard
+//
+//  Created by Александр Васильев on 13.05.2021.
+//  Copyright © 2021 LanTa. All rights reserved.
+//
+
+import UIKit
+import RxSwift
+import RxCocoa
+import XCoordinator
+
+class AddFaceViewController: BaseViewController {
+
+    @IBOutlet private weak var imageView: ScaledHeightImageView!
+    @IBOutlet private weak var cancelButton: UIButton!
+    @IBOutlet private weak var addButton: UIButton!
+    
+    private let settingsRouter: WeakRouter<SettingsRoute>?
+    private let homeRouter: WeakRouter<HomeRoute>?
+    private let event: APIPlog
+    private let apiWrapper: APIWrapper
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    init(settingsRouter: WeakRouter<SettingsRoute>? = nil, homeRouter: WeakRouter<HomeRoute>? = nil, apiWrapper: APIWrapper, event: APIPlog) {
+        self.settingsRouter = settingsRouter
+        self.homeRouter = homeRouter
+        self.event = event
+        self.apiWrapper = apiWrapper
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        let activityTracker = ActivityTracker()
+        let errorTracker = ErrorTracker()
+        
+        let dismissGesture = UITapGestureRecognizer()
+        dismissGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(dismissGesture)
+        
+        Driver.merge(
+            dismissGesture.rx.event.asDriver().mapToVoid(),
+            cancelButton.rx.tap.asDriver()
+        )
+        .drive(
+            onNext: {
+                homeRouter?.trigger(.dismiss)
+                settingsRouter?.trigger(.dismiss)
+            }
+        )
+        .disposed(by: disposeBag)
+        
+        addButton.rx.tap.asDriver()
+            .flatMapLatest { _ -> Driver<Void?> in
+                return apiWrapper.likePersonFace(event: event.uuid)
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: {
+                    NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
+                    homeRouter?.trigger(.dismiss)
+                    settingsRouter?.trigger(.dismiss)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        guard let url = self.event.previewURL,
+              let rect = self.event.detailX?.face?.asCGRect else {
+            return
+        }
+        
+        imageView.loadImageUsingUrlString(urlString: url, cache: imagesCache, rect: rect, rectColor: .red)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        imageView.sizeToFit()
+    }
+
+}
