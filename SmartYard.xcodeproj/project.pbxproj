@@ -46,6 +46,7 @@
 		3A8B954325D9743D007CDD3C /* CityMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8B954225D9743D007CDD3C /* CityMapViewController.xib */; };
 		3A9C5E28261B7896004FB962 /* HistorySectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9C5E27261B7895004FB962 /* HistorySectionModel.swift */; };
 		3A9C5E2D261B7989004FB962 /* HistoryDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9C5E2C261B7989004FB962 /* HistoryDataItem.swift */; };
+		3AA6555C2666453D001EEC79 /* GetPersonFacesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB451264C0D44000F37D0 /* GetPersonFacesResponseData.swift */; };
 		3AB41E0225C0879200AEC8C3 /* BottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0025C0879200AEC8C3 /* BottomCell.swift */; };
 		3AB41E0325C0879200AEC8C3 /* BottomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB41E0125C0879200AEC8C3 /* BottomCell.xib */; };
 		3AB41E0A25C200B900AEC8C3 /* CityMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */; };
@@ -72,7 +73,6 @@
 		3AE65A5F264DC92D0093284C /* LikePersonFaceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE65A5E264DC9180093284C /* LikePersonFaceRequest.swift */; };
 		3AEFB447264C0C07000F37D0 /* APIWrapper+FRS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB446264C0C07000F37D0 /* APIWrapper+FRS.swift */; };
 		3AEFB44D264C0D14000F37D0 /* GetPersonFacesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB44C264C0D14000F37D0 /* GetPersonFacesRequest.swift */; };
-		3AEFB452264C0D44000F37D0 /* GetPersonFacesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB451264C0D44000F37D0 /* GetPersonFacesResponseData.swift */; };
 		3AEFB457264C0DAA000F37D0 /* APIFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB456264C0DAA000F37D0 /* APIFace.swift */; };
 		3AEFB45B264C12E9000F37D0 /* FacesSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB443264C095F000F37D0 /* FacesSettingsViewController.swift */; };
 		3AEFB45F264C12F0000F37D0 /* FacesSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB444264C0964000F37D0 /* FacesSettingsViewModel.swift */; };
@@ -4404,6 +4404,7 @@
 				E92EFBCC242A22F2003AF7FE /* RegisterPushTokenRequest.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
 				84D6445623F68AA600AD87EF /* CommonSettingsViewController.swift in Sources */,
+				3AA6555C2666453D001EEC79 /* GetPersonFacesResponseData.swift in Sources */,
 				84AADD29243349630056994A /* ChatViewModel.swift in Sources */,
 				84898A9223F1554D00E6B78E /* SettingsDataItem.swift in Sources */,
 				3AB41E0225C0879200AEC8C3 /* BottomCell.swift in Sources */,
@@ -4411,7 +4412,6 @@
 				3A8B951625D9312D007CDD3C /* CityCameraObject.swift in Sources */,
 				E940580723F680F000623746 /* AccessView.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
-				3AEFB452264C0D44000F37D0 /* GetPersonFacesResponseData.swift in Sources */,
 				3AE65A59264DB1C20093284C /* RemovePersonFaceRequest.swift in Sources */,
 				845E9EF224927630000CBBC6 /* RecPrepareRequest.swift in Sources */,
 				843C38DF242A57C40035BF80 /* NotificationsViewModel.swift in Sources */,
