@@ -94,6 +94,7 @@ class AddressSettingsViewModel: BaseViewModel {
                     onNext: { state in
                         isCmsEnabledSubject.onNext(state.cms)
                         areCallsEnabledSubject.onNext(state.voip)
+                        isWhiteRabbitEnabledSubject.onNext(state.whiteRabbit)
                         arePaperBillsEnabledSubject.onNext(state.paperBill)
                         
                         switch state.disablePlog {
