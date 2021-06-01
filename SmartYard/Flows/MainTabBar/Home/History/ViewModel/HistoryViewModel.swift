@@ -615,16 +615,6 @@ class HistoryViewModel: BaseViewModel {
                 
                 self.homeRouter?.trigger(.deleteFaceFromEvent(event: event, imageURL: face?.image))
                 self.settingsRouter?.trigger(.deleteFaceFromEvent(event: event, imageURL: face?.image))
-                
-                return
-                let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
-                
-                let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
-                    self?.deleteFace(uuid: event.uuid)
-                }
-                
-                self.homeRouter?.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
-                self.settingsRouter?.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
             }
             .disposed(by: disposeBag)
         

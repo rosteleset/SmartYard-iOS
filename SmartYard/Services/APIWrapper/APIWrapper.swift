@@ -52,6 +52,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
             // MARK: Если вернулся успешный код, то просто возвращаем Void
 
             if 200...299 ~= response.statusCode {
+                print("response data: <empty>")
                 return .just(())
             }
 

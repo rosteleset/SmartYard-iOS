@@ -111,6 +111,7 @@ class FacesSettingsViewModel: BaseViewModel {
         NotificationCenter.default.rx.notification(.updateFaces)
             .asDriverOnErrorJustComplete()
             .mapToVoid()
+            .delay(.milliseconds(500))
             .flatMapLatest { [weak self] _ -> Driver<GetPersonFacesResponseData> in
                 guard let self = self else {
                     return .empty()

@@ -189,7 +189,7 @@ extension APIWrapper {
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
-    func intercom(flatId: String, forceRefresh: Bool = false, settings: APIIntercomSettings?) -> Single<IntercomResponseData?> {
+    func intercom(flatId: String, forceRefresh: Bool = true, settings: APIIntercomSettings?) -> Single<IntercomResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
