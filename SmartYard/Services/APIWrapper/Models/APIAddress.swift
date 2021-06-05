@@ -12,12 +12,14 @@ struct APIAddress: Decodable {
     let address: String
     let doors: [APIDoor]
     let cctv: Int
+    let hasPlog: Bool
     
     private enum CodingKeys: String, CodingKey {
         case houseId
         case address
         case doors
         case cctv
+        case hasPlog
     }
     
     init(from decoder: Decoder) throws {
@@ -28,6 +30,11 @@ struct APIAddress: Decodable {
         
         doors = (try? container.decode([APIDoor].self, forKey: .doors)) ?? []
         cctv = (try? container.decode(Int.self, forKey: .cctv)) ?? 0
+        let hasPlogRawValue = (try? container.decode(String.self, forKey: .hasPlog)) ?? ""
+        switch hasPlogRawValue {
+        case "t": hasPlog = true
+        default: hasPlog = false
+        }
     }
     
 }

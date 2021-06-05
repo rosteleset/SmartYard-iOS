@@ -624,7 +624,7 @@ extension AddressesListViewModel {
                 }()
                 
                 let history: AddressesListDataItem? = {
-                    if doors.isEmpty {
+                    if address.hasPlog == false {
                         return nil
                     }
                     return .history(identity: .history(addressId: addressId), numberOfEvents: 0)

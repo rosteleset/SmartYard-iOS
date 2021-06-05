@@ -307,7 +307,7 @@ class HistoryViewModel: BaseViewModel {
                 guard let self = self else {
                     return .just(nil)
                 }
-                
+                self.listFaces = [:]
                 let results = PublishSubject<[FlatId:GetPersonFacesResponseData]?>()
                 
                 //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
@@ -334,7 +334,7 @@ class HistoryViewModel: BaseViewModel {
                         return
                     }
                     
-                    self.listFaces = result
+                    self.listFaces.merge(result) { _, new in new }
                 }
             )
             .disposed(by: disposeBag)
