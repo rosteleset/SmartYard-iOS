@@ -14,6 +14,7 @@ struct APISettingsAddress: Decodable {
     let flatOwner: Bool?
     let contractOwner: Bool?
     let hasGates: Bool?
+    let hasPlog: Bool
     let houseId: String?
     let flatId: String?
     let flatNumber: String?
@@ -40,7 +41,7 @@ struct APISettingsAddress: Decodable {
     
     private enum CodingKeys: String, CodingKey {
         case clientId, clientName, contractName, flatOwner, contractOwner, hasGates, houseId, flatId, flatNumber, address
-        case services, lcab, roommates
+        case services, lcab, roommates, hasPlog
     }
     
     init(from decoder: Decoder) throws {
@@ -72,6 +73,13 @@ struct APISettingsAddress: Decodable {
         case "t": hasGates = true
         case "f": hasGates = false
         default: hasGates = nil
+        }
+        
+        let hasPlogRawValue = try? container.decode(String.self, forKey: .hasPlog)
+        
+        switch hasPlogRawValue {
+        case "t": hasPlog = true
+        default: hasPlog = false
         }
         
         houseId = try? container.decode(String.self, forKey: .houseId)

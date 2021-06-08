@@ -381,10 +381,10 @@ class HistoryViewModel: BaseViewModel {
                     self.camMap.accept(camMap)
                     
                    //получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
-                    self.flatIds = args.filtered({ $0.houseId == self.houseId }, map: { (Int($0.flatId!) ?? -1) }).duplicatesRemoved()
+                    self.flatIds = args.filtered( { $0.houseId == self.houseId && $0.hasPlog}, map: { (Int($0.flatId!) ?? -1) } ).duplicatesRemoved()
                     
                     //получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
-                    self.flatNumbers = args.filtered({ $0.houseId == self.houseId }, map: { (Int($0.flatNumber!) ?? -1) }).duplicatesRemoved()
+                    self.flatNumbers = args.filtered( { $0.houseId == self.houseId  && $0.hasPlog}, map: { (Int($0.flatNumber!) ?? -1) } ).duplicatesRemoved()
                     
                     //по умолчанию фильтр содержит все доступные квартиры
                     self.apptsFilter.accept(self.flatIds)
