@@ -85,7 +85,7 @@ class AddFaceViewController: BaseViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        imageView.sizeToFit()
+        //imageView.sizeToFit()
     }
 
 }
