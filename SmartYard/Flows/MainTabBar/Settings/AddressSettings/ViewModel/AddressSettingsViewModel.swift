@@ -224,6 +224,8 @@ class AddressSettingsViewModel: BaseViewModel {
                         case false: areLogsEnabledSubject.onNext(true)
                         default: areLogsEnabledSubject.onNext(nil)
                     }
+                    
+                    NotificationCenter.default.post(name: .addressNeedUpdate, object: nil)
                 }
             )
             .disposed(by: disposeBag)

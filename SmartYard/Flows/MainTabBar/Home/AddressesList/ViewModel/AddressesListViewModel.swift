@@ -165,6 +165,7 @@ class AddressesListViewModel: BaseViewModel {
             .merge(
                 NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToTrue(),
                 NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToTrue(),
+                NotificationCenter.default.rx.notification(.addressNeedUpdate).asDriverOnErrorJustComplete().mapToTrue(),
                 hasNetworkBecomeReachable.mapToFalse(),
                 .just(false)
             )
@@ -174,11 +175,15 @@ class AddressesListViewModel: BaseViewModel {
                 }
                 
                 return Single
-                    .zip(self.apiWrapper.getAddressList(forceRefresh: forceRefresh), self.apiWrapper.getListConnect(forceRefresh: forceRefresh))
+                    .zip(
+                        self.apiWrapper.getAddressList(forceRefresh: forceRefresh),
+                        self.apiWrapper.getListConnect(forceRefresh: forceRefresh),
+                        self.apiWrapper.getSettingsAddresses(forceRefresh: forceRefresh)
+                    )
                     .trackActivity(interactionBlockingRequestTracker)
                     .trackError(self.errorTracker)
                     .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
-                        let (firstResponse, secondResponse) = args
+                        let (firstResponse, secondResponse, _) = args
                         
                         guard let uFirstResponse = firstResponse, let uSecondResponse = secondResponse else {
                             return nil
@@ -203,10 +208,10 @@ class AddressesListViewModel: BaseViewModel {
                 }
 
                 return Single
-                    .zip(self.apiWrapper.getAddressList(forceRefresh: true), self.apiWrapper.getListConnect(forceRefresh: true))
+                    .zip(self.apiWrapper.getAddressList(forceRefresh: true), self.apiWrapper.getListConnect(forceRefresh: true), self.apiWrapper.getSettingsAddresses(forceRefresh: true))
                     .trackError(self.errorTracker)
                     .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
-                        let (firstResponse, secondResponse) = args
+                        let (firstResponse, secondResponse, _) = args
                         
                         guard let uFirstResponse = firstResponse, let uSecondResponse = secondResponse else {
                             return nil

@@ -301,6 +301,7 @@ extension APIWrapper {
         }
         
         let request = GetSettingsListRequest(accessToken: accessToken, forceRefresh: forceRefresh)
+        print(request)
         
         return provider.rx
             .request(.getSettingsList(request: request))

@@ -21,6 +21,8 @@ extension Notification.Name {
     
     static let addressDeleted = Notification.Name("AddressDeleted")
     static let addressAdded = Notification.Name("AddressAdded")
+    static let addressNeedUpdate = Notification.Name("AddressNeedUpdate")
+    
     static let addAddressFromSettings = Notification.Name("AddAddressFromSettings")
     static let userNameUpdated = Notification.Name("UserNameUpdated")
     static let chatRequested = Notification.Name("ChatRequested")
