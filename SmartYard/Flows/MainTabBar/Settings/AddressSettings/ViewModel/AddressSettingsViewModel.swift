@@ -220,9 +220,9 @@ class AddressSettingsViewModel: BaseViewModel {
             .drive(
                 onNext: { state in
                     switch state.disablePlog {
-                        case true: areLogsEnabledSubject.onNext(false)
-                        case false: areLogsEnabledSubject.onNext(true)
-                        default: areLogsEnabledSubject.onNext(nil)
+                    case true: areLogsEnabledSubject.onNext(false)
+                    case false: areLogsEnabledSubject.onNext(true)
+                    default: areLogsEnabledSubject.onNext(nil)
                     }
                     
                     NotificationCenter.default.post(name: .addressNeedUpdate, object: nil)
@@ -272,9 +272,9 @@ class AddressSettingsViewModel: BaseViewModel {
             .drive(
                 onNext: { state in
                     switch state.frsDisabled {
-                        case true: isFRSEnabledSubject.onNext(false)
-                        case false: isFRSEnabledSubject.onNext(true)
-                        default: isFRSEnabledSubject.onNext(nil)
+                    case true: isFRSEnabledSubject.onNext(false)
+                    case false: isFRSEnabledSubject.onNext(true)
+                    default: isFRSEnabledSubject.onNext(nil)
                     }
                 }
             )
