@@ -31,7 +31,6 @@ extension String {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let resultShort = dateFormatter.date(from: self)
         
-        
         return (result != nil) ? result : resultShort
     }
     

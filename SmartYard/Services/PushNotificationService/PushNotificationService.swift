@@ -46,7 +46,7 @@ class PushNotificationService {
     /// Сбрасывает InstanceId. Этакий способ гарантированно отписаться от уведомлений при разлогине
     func resetInstanceId() -> Single<Void?> {
         return Single.create { single in
-            InstanceID.instanceID().deleteID { error in
+            Messaging.messaging().deleteData { error in
                 guard let error = error else {
                     single(.success(()))
                     return
@@ -113,7 +113,7 @@ class PushNotificationService {
                 .map { (response: Void?) -> (String, Bool) in
                     (messageId, response != nil)
                 }
-            }
+        }
         
         Driver
             .concat(queries)

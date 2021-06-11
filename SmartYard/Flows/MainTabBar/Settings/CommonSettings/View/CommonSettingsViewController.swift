@@ -50,8 +50,6 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     private let callkitTapGesture = UITapGestureRecognizer()
     private let balanceWarningTapGesture = UITapGestureRecognizer()
     
-    
-    
     var loader: JGProgressHUD?
     
     init(viewModel: CommonSettingsViewModel) {

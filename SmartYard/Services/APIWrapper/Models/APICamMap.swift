@@ -14,7 +14,6 @@ struct APICamMap: Decodable {
     let url: String //базовый url потока
     let token: String //token от flussonic
     
-    
     private enum CodingKeys: String, CodingKey {
         case id
         case url

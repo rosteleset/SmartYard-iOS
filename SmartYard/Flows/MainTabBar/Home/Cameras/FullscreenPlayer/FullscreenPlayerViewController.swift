@@ -88,7 +88,7 @@ class FullscreenPlayerViewController: UIViewController {
         
     }
     
-    @IBAction func doubleTap(_ sender: UITapGestureRecognizer) {
+    @IBAction private func doubleTap(_ sender: UITapGestureRecognizer) {
         
         guard playedVideoType == .archive,
               let player = self.playerViewController?.player else {

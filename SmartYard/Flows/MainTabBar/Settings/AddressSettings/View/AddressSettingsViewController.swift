@@ -141,7 +141,6 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         frsContainerView.addGestureRecognizer(frsTapGesture)
         frsSwitch.isUserInteractionEnabled = false
         
-        
         skeletonView.isHidden = true
     }
     

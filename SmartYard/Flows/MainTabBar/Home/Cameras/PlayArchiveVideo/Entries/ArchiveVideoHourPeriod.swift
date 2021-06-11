@@ -96,7 +96,7 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
     /// Чистая длительность периода с учётом пропусков на сервере
     
     var cleanDuration: Double {
-        return self.ranges.map {$0.endDate.timeIntervalSince1970 - $0.startDate.timeIntervalSince1970 }
+        return self.ranges.map { $0.endDate.timeIntervalSince1970 - $0.startDate.timeIntervalSince1970 }
             .reduce(0.0, +)
     }
 

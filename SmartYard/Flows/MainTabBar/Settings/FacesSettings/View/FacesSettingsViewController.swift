@@ -66,7 +66,6 @@ class FacesSettingsViewController: BaseViewController, LoaderPresentable {
         
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
         let input = FacesSettingsViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),

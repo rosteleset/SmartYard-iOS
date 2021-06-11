@@ -12,7 +12,7 @@ import RxCocoa
 
 class AddFaceCell: UICollectionViewCell {
 
-    @IBOutlet weak private var button: UIButton!
+    @IBOutlet private weak var button: UIButton!
     private(set) var disposeBag = DisposeBag()
     
     var buttonTrigger: Driver<Void> {
@@ -23,10 +23,7 @@ class AddFaceCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-    
-    
-    
-    
+  
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()

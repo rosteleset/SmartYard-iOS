@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import PopOverDatePicker
 
-
 typealias DayFlatItemsData = (day: Date, items: [APIPlog], flatId: Int)
 
 typealias ApptsFilter = Int
@@ -44,24 +43,24 @@ enum EventsFilter: Int, CaseIterable {
         }
     }
     
-    static var allCasesString : [String] {
+    static var allCasesString: [String] {
         let all = EventsFilter.allCases
         return all.map { $0.name }
     }
     
-    static var withoutFRSCasesString : [String] {
+    static var withoutFRSCasesString: [String] {
         let all = EventsFilter.allCases
         return all.filtered({ $0 != .faces }, map: { $0.name }) 
     }
     
 }
 
-class AlwaysPresentAsPopover : NSObject, UIPopoverPresentationControllerDelegate {
+class AlwaysPresentAsPopover: NSObject, UIPopoverPresentationControllerDelegate {
     
     // `sharedInstance` because the delegate property is weak - the delegate instance needs to be retained.
     private static let sharedInstance = AlwaysPresentAsPopover()
     
-    private override init() {
+    override private init() {
         super.init()
     }
     
@@ -69,7 +68,7 @@ class AlwaysPresentAsPopover : NSObject, UIPopoverPresentationControllerDelegate
         return .none
     }
     
-    static func configurePresentation(forController controller : UIViewController) -> UIPopoverPresentationController? {
+    static func configurePresentation(forController controller: UIViewController) -> UIPopoverPresentationController? {
         controller.modalPresentationStyle = .popover
         guard let presentationController = controller.presentationController as? UIPopoverPresentationController else {
             return nil
@@ -80,7 +79,7 @@ class AlwaysPresentAsPopover : NSObject, UIPopoverPresentationControllerDelegate
     
 }
 
-class ArrayChoiceTableViewController<Element> : UITableViewController {
+class ArrayChoiceTableViewController<Element>: UITableViewController {
     
     typealias SelectionHandler = (Element, Int) -> Void
     typealias LabelProvider = (Element) -> String
@@ -90,7 +89,7 @@ class ArrayChoiceTableViewController<Element> : UITableViewController {
     private let onSelect: SelectionHandler?
     private var selectedRow: Int = 0
     
-    init(_ values : [Element], labels : @escaping LabelProvider = String.init(describing:), selectedRow: Int, onSelect : SelectionHandler? = nil) {
+    init(_ values: [Element], labels: @escaping LabelProvider = String.init(describing:), selectedRow: Int, onSelect: SelectionHandler? = nil) {
         self.values = values
         self.onSelect = onSelect
         self.labels = labels
@@ -116,10 +115,10 @@ class ArrayChoiceTableViewController<Element> : UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         
-        let sansFont = UIFont(descriptor: UIFontDescriptor(fontAttributes: [.family :"Source Sans Pro"]), size: 16)
+        let sansFont = UIFont(descriptor: UIFontDescriptor(fontAttributes: [.family: "Source Sans Pro"]), size: 16)
         cell.textLabel?.font = sansFont
         cell.textLabel?.text = labels(values[indexPath.row])
-        cell.imageView?.image = selectedRow == indexPath.row ? UIImage(named: "PopoverCheckBoxSelected") : UIImage(named: "PopoverCheckBoxNormal")
+        cell.imageView?.image = selectedRow == indexPath.row ? UIImage(named: "PopoverCheckBoxSelected"): UIImage(named: "PopoverCheckBoxNormal")
         cell.selectionStyle = .none
         return cell
     }

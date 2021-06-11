@@ -175,7 +175,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 }
                 
                 //передаём массив компонетов URL для всех фрагментов
-                let videoUrl = period.videoUrlComponentsArray.map { (videoUrlComps) -> URL in
+                let videoUrl = period.videoUrlComponentsArray.map { videoUrlComps -> URL in
                     let url = URL(string: self.camera.video + videoUrlComps + "?token=\(self.camera.token)")
                     return url!
                 }

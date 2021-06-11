@@ -39,11 +39,11 @@ extension SharedSequenceConvertibleType {
     }
     
     func mapToTrue() -> SharedSequence<SharingStrategy, Bool> {
-        return map { _ in true}
+        return map { _ in true }
     }
     
     func mapToFalse() -> SharedSequence<SharingStrategy, Bool> {
-        return map { _ in false}
+        return map { _ in false }
     }
 }
 
@@ -93,11 +93,11 @@ extension ObservableType {
     }
     
     func mapToTrue() -> Observable<Bool> {
-        return map { _ in true}
+        return map { _ in true }
     }
     
     func mapToFalse() -> Observable<Bool> {
-        return map { _ in false}
+        return map { _ in false }
     }
     
 }

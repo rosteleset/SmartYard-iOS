@@ -255,7 +255,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             return .present(vc)
         
         case let .addFace(flatId):
-            let vm = HistoryViewModel(apiWrapper: apiWrapper, flatId: flatId, eventsFilter: EventsFilter.keys ,address: "", router: weakRouter)
+            let vm = HistoryViewModel(apiWrapper: apiWrapper, flatId: flatId, eventsFilter: EventsFilter.keys, address: "", router: weakRouter)
             let vc = HistoryDetailViewController(viewModel: vm)
             
             return .push(vc)
