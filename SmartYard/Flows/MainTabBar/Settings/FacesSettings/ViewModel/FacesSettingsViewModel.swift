@@ -66,7 +66,6 @@ class FacesSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
             
-            
         // MARK: Переход назад
         
         input.backTrigger
@@ -90,7 +89,7 @@ class FacesSettingsViewModel: BaseViewModel {
         
         input.deleteFaceTrigger
             .drive(
-                onNext: { [weak self] (faceId, image) in
+                onNext: { [weak self] faceId, image in
                     guard let self = self else {
                         return
                     }
@@ -101,7 +100,7 @@ class FacesSettingsViewModel: BaseViewModel {
         
         input.selectFaceTrigger
             .drive(
-                onNext: { [weak self] (faceId, image) in
+                onNext: { [weak self] _, image in
                     self?.router.trigger(.showFace(image: image))
                 }
             )

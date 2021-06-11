@@ -11,7 +11,6 @@ import JGProgressHUD
 import TPKeyboardAvoiding
 import RxSwift
 
-
 class RequestRecordViewController: BaseViewController, LoaderPresentable, UIPickerViewDelegate {
     var loader: JGProgressHUD?
     private let viewModel: RequestRecordViewModel
@@ -54,14 +53,15 @@ class RequestRecordViewController: BaseViewController, LoaderPresentable, UIPick
     }
     private func bind() {
         
-        let output = viewModel.transform(RequestRecordViewModel.Input(
-                backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
-                sendRequestTrigger: button.rx.tap.asDriver(),
-                date: datePicker.rx.date.asDriver(),
-                duration: periodProxy.asDriver(onErrorJustReturn: 10),
-                notes: notesTextField.rx.text.asDriver()
+        let output = viewModel.transform(
+                RequestRecordViewModel.Input(
+                    backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
+                    sendRequestTrigger: button.rx.tap.asDriver(),
+                    date: datePicker.rx.date.asDriver(),
+                    duration: periodProxy.asDriver(onErrorJustReturn: 10),
+                    notes: notesTextField.rx.text.asDriver()
+                )
             )
-        )
         addressLabel.text = output.camera.name
     }
     fileprivate func configureView() {

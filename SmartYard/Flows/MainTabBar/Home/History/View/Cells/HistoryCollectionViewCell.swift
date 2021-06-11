@@ -49,7 +49,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     
     var itsMeTrigger: Driver<APIPlog> {
         return openAccessButton.rx.tap
-            .map { [weak self] in self?.event}
+            .map { [weak self] in self?.event }
             .ignoreNil()
             .asDriverOnErrorJustComplete()
     }
@@ -258,7 +258,8 @@ class HistoryCollectionViewCell: UICollectionViewCell {
                 label: underImageLabel,
                 errorMessage: "Изображение отсутствует",
                 rect: value.detailX?.face?.asCGRect,
-                rectColor: faceFrameColor)
+                rectColor: faceFrameColor
+            )
         } else {
             image.image = value.previewImage
         }

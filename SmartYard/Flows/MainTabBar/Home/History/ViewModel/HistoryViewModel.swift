@@ -86,7 +86,7 @@ class HistoryViewModel: BaseViewModel {
         self.init(apiWrapper: apiWrapper, flatId: flatId, eventsFilter: eventsFilter, address: address, settingsRouter: router)
     }
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity line_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity 
     private init(apiWrapper: APIWrapper,
                  houseId: String? = nil,
                  flatId: Int? = nil,
@@ -381,10 +381,10 @@ class HistoryViewModel: BaseViewModel {
                     self.camMap.accept(camMap)
                     
                    //получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
-                    self.flatIds = args.filtered( { $0.houseId == self.houseId && $0.hasPlog}, map: { (Int($0.flatId!) ?? -1) } ).duplicatesRemoved()
+                    self.flatIds = args.filtered({ $0.houseId == self.houseId && $0.hasPlog }, map: { (Int($0.flatId!) ?? -1) }).duplicatesRemoved()
                     
                     //получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
-                    self.flatNumbers = args.filtered( { $0.houseId == self.houseId  && $0.hasPlog}, map: { (Int($0.flatNumber!) ?? -1) } ).duplicatesRemoved()
+                    self.flatNumbers = args.filtered({ $0.houseId == self.houseId  && $0.hasPlog }, map: { (Int($0.flatNumber!) ?? -1) }).duplicatesRemoved()
                     
                     //по умолчанию фильтр содержит все доступные квартиры
                     self.apptsFilter.accept(self.flatIds)
@@ -407,7 +407,7 @@ class HistoryViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.refreshDataTrigger
-            .do( onNext: { self.dataCache = [] } )
+            .do( onNext: { self.dataCache = [] })
             .mapToTrue()
             .drive(updateAvailableDays)
             .disposed(by: disposeBag)

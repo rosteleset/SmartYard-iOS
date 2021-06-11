@@ -75,7 +75,6 @@ struct IntercomResponseData: Decodable {
         default: throw NSError.APIWrapperError.noDataError
         }
         
-        
         let paperBillRawValue = try? container.decode(String.self, forKey: .paperBill)
         
         switch paperBillRawValue {

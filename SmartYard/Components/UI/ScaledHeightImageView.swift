@@ -17,7 +17,7 @@ class ScaledHeightImageView: SafeCachedImageView {
             let myImageHeight = myImage.size.height
             let myViewWidth = self.frame.size.width
  
-            let ratio = myViewWidth/myImageWidth
+            let ratio = myViewWidth / myImageWidth
             let scaledHeight = myImageHeight * ratio
 
             return CGSize(width: myViewWidth, height: scaledHeight)

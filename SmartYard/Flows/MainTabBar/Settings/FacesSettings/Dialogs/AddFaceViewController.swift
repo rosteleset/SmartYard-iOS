@@ -55,8 +55,8 @@ class AddFaceViewController: BaseViewController {
         .disposed(by: disposeBag)
         
         addButton.rx.tap.asDriver()
-            .flatMapLatest { _ -> Driver<Void?> in
-                return apiWrapper.likePersonFace(event: event.uuid)
+            .flatMapLatest {
+                apiWrapper.likePersonFace(event: event.uuid)
                     .trackError(errorTracker)
                     .trackActivity(activityTracker)
                     .asDriver(onErrorJustReturn: nil)

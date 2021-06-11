@@ -76,7 +76,6 @@ enum IssueType {
     var description: String {
         switch self {
         
-        
         case .dontRememberAnythingIssue:
             return "Выполнить звонок клиенту для напоминания номера договора и пароля от личного кабинета"
         

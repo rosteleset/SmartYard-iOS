@@ -72,9 +72,6 @@ class CommonSettingsViewModel: BaseViewModel {
         let enableAccountBalanceWarningSubject = BehaviorSubject<Bool>(value: false)
         let enableCallkitSubject = BehaviorSubject<Bool>(value: accessService.prefersVoipForCalls)
         
-        let acceptFaceAgreementSubject = BehaviorSubject<Bool>(value: accessService.clientFaceAgreement)
-        
-        
         apiWrapper
             .getCurrentNotificationState()
             .trackError(errorTracker)

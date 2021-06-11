@@ -19,7 +19,6 @@ class FaceIdAccessView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var button: UIButton!
     
-    
     private let disposeBag = DisposeBag()
     
     var isAvailable: Bool = false {
@@ -34,7 +33,6 @@ class FaceIdAccessView: PMNibLinkableView {
         
         containerView.borderWidth = 1
         containerView.borderColor = UIColor.SmartYard.grayBorder
-        
         
     }
     

@@ -14,7 +14,6 @@ private let voipTokenKey = "voipToken"
 private let prefersVoipForCallsKey = "prefersVoipForCalls"
 private let clientNameKey = "clientName"
 private let clientPhoneNumberKey = "clientPhoneNumber"
-private let clientFaceAgreementPrefixKey = "agreement:"
 
 class AccessService {
     
@@ -89,22 +88,6 @@ class AccessService {
             }
             
             UserDefaults.standard.setValue(newValue, forKey: clientPhoneNumberKey)
-        }
-    }
-    
-    var clientFaceAgreement: Bool {
-        get {
-            guard let clientPhoneNumber = clientPhoneNumber else {
-                return false
-            }
-            return UserDefaults.standard.value(forKey: clientFaceAgreementPrefixKey+clientPhoneNumber) as? Bool ?? false
-        }
-        set {
-            guard let clientPhoneNumber = clientPhoneNumber else {
-                return
-            }
-            
-            UserDefaults.standard.setValue(newValue, forKey: clientFaceAgreementPrefixKey+clientPhoneNumber)
         }
     }
     

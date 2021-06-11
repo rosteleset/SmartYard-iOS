@@ -207,7 +207,7 @@ extension APIWrapper {
             .mapAsDefaultResponse()
     }
     func plogDays(flatId: Int, events: EventsFilter? = .all, forceRefresh: Bool = false) -> Single<PlogDaysResponseData?> {
-        return plogDays(flatId: String(flatId), events: events,forceRefresh: forceRefresh)
+        return plogDays(flatId: String(flatId), events: events, forceRefresh: forceRefresh)
     }
     
     func plogDays(flatId: String, events: EventsFilter? = .all, forceRefresh: Bool = false) -> Single<PlogDaysResponseData?> {

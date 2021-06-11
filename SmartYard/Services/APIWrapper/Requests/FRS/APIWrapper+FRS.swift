@@ -31,7 +31,6 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-    
     func disLikePersonFace(event uuid: String) -> Single<Void?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)

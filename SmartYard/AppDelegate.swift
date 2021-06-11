@@ -12,7 +12,6 @@ import FirebaseMessaging
 import YandexMobileMetrica
 import PushKit
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -324,4 +323,4 @@ extension AppDelegate: PKPushRegistryDelegate {
     
 }
 
-public let imagesCache = NSCache<NSString,UIImage>()
+public let imagesCache = NSCache<NSString, UIImage>()

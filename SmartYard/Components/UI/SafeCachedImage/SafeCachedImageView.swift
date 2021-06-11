@@ -83,7 +83,6 @@ class SafeCachedImageView: UIImageView {
             }
         )
             .resume()
-        
     }
     
     func drawRectangle(rect: CGRect, rectColor: UIColor) {
