@@ -38,6 +38,9 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
+        let forceRefresh = forceUpdateIssues || forceRefresh
+        forceUpdateIssues = false
+        
         let request = GetListConnectRequest(accessToken: accessToken, forceRefresh: forceRefresh)
         
         return provider.rx

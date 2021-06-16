@@ -404,6 +404,9 @@ extension InputAddressViewModel: QRCodeScanViewModelDelegate {
             .drive(
                 onNext: { [weak self] _ in
                     NotificationCenter.default.post(name: .addressAdded, object: nil)
+                    self?.apiWrapper.forceUpdateAddress = true
+                    self?.apiWrapper.forceUpdateSettings = true
+                    self?.apiWrapper.forceUpdatePayments = true
                     
                     self?.router.trigger(.main)
                 }

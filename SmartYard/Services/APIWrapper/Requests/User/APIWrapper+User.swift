@@ -130,6 +130,9 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
+        let forceRefresh = forceUpdatePayments || forceRefresh
+        forceUpdatePayments = false
+        
         let request = GetPaymentsListRequest(accessToken: accessToken, forceRefresh: forceRefresh)
         
         return provider.rx

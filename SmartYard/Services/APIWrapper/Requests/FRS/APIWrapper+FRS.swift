@@ -21,6 +21,9 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
+        let forceRefresh = forceUpdateFaces || forceRefresh
+        forceUpdateFaces = false
+        
         let request = GetPersonFacesRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId)
         print("request data: \(request)")
         

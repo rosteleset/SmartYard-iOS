@@ -218,14 +218,18 @@ class AddressSettingsViewModel: BaseViewModel {
             }
             .ignoreNil()
             .drive(
-                onNext: { state in
+                onNext: { [weak self] state in
                     switch state.disablePlog {
                     case true: areLogsEnabledSubject.onNext(false)
                     case false: areLogsEnabledSubject.onNext(true)
                     default: areLogsEnabledSubject.onNext(nil)
                     }
                     
+                    self?.apiWrapper.forceUpdateAddress = true
+                    self?.apiWrapper.forceUpdateSettings = true
+                    
                     NotificationCenter.default.post(name: .addressNeedUpdate, object: nil)
+                    
                 }
             )
             .disposed(by: disposeBag)
@@ -333,6 +337,10 @@ class AddressSettingsViewModel: BaseViewModel {
                 .ignoreNil()
                 .drive(
                     onNext: { [weak self] in
+                        self?.apiWrapper.forceUpdateAddress = true
+                        self?.apiWrapper.forceUpdateSettings = true
+                        self?.apiWrapper.forceUpdatePayments = true
+                        
                         NotificationCenter.default.post(.init(name: .addressDeleted, object: nil))
                         
                         self?.router.trigger(.back)
@@ -397,6 +405,8 @@ extension AddressSettingsViewModel: AddressDeletionViewModelDelegate {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] _ in
+                    self?.apiWrapper.forceUpdateIssues = true
+                    
                     NotificationCenter.default.post(.init(name: .addressDeleted, object: nil))
                     
                     self?.router.trigger(.back)

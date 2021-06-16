@@ -23,6 +23,13 @@ class APIWrapper {
         return MoyaProvider<APITarget>(session: session)
     }()
     
+    var forceUpdateFaces: Bool = false
+    var forceUpdateSettings: Bool = false
+    var forceUpdateAddress: Bool = false
+    var forceUpdatePayments: Bool = false
+    var forceUpdateIssues: Bool = false
+    
+    
     var isReachable: Bool {
         return reachability.isReachable
     }

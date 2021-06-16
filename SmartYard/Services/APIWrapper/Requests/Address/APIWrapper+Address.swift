@@ -300,6 +300,9 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
+        let forceRefresh = forceUpdateSettings || forceRefresh
+        forceUpdateSettings = false
+        
         let request = GetSettingsListRequest(accessToken: accessToken, forceRefresh: forceRefresh)
         print(request)
         
@@ -336,6 +339,9 @@ extension APIWrapper {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
+        
+        let forceRefresh = forceUpdateAddress || forceRefresh
+        forceUpdateAddress = false
         
         let request = GetAddressListRequest(accessToken: accessToken, forceRefresh: forceRefresh)
         

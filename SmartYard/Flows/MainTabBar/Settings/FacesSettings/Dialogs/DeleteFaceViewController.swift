@@ -94,7 +94,9 @@ class DeleteFaceViewController: BaseViewController {
             }
             .ignoreNil()
             .drive(
-                onNext: {
+                onNext: { [weak self] in
+                    self?.apiWrapper.forceUpdateFaces = true
+                    
                     NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
                     settingsRouter?.trigger(.dismiss)
                     homeRouter?.trigger(.dismiss)

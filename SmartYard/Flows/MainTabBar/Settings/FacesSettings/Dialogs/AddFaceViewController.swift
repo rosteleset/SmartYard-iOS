@@ -63,7 +63,9 @@ class AddFaceViewController: BaseViewController {
             }
             .ignoreNil()
             .drive(
-                onNext: {
+                onNext: { [weak self] in
+                    self?.apiWrapper.forceUpdateFaces = true
+                    
                     NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
                     homeRouter?.trigger(.dismiss)
                     settingsRouter?.trigger(.dismiss)

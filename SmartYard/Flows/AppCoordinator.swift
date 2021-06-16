@@ -215,6 +215,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 .asDriver()
                 .drive { [weak self] error in
                     self?.trigger(.alert(title: error.localizedDescription, message: nil))
+                    self?.apiWrapper.forceUpdateAddress = true
+                    self?.apiWrapper.forceUpdateSettings = true
+                    self?.apiWrapper.forceUpdatePayments = true
                     NotificationCenter.default.post(name: .addressAdded, object: nil)
                 }
                 .disposed(by: disposeBag)
