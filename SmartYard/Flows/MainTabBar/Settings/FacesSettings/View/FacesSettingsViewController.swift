@@ -179,6 +179,8 @@ extension FacesSettingsViewController: UICollectionViewDataSource {
             cell.imageButton.contentMode = .scaleAspectFit
             cell.faceId = face.faceId
             
+            cell.deleteButton.isHidden = !face.canDisLike
+            
             cell.deleteButtonTrigger
                 .drive(
                     onNext: { [weak self] faceId in
