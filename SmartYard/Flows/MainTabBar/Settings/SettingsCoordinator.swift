@@ -31,6 +31,7 @@ enum SettingsRoute: Route {
     case deleteFace(image: UIImage?, flatId: Int, faceId: Int)
     case addFace(flatId: Int)
     case addFaceFromEvent(event: APIPlog)
+    case modal
     case deleteFaceFromEvent(event: APIPlog, imageURL: String?)
     
 }
@@ -261,6 +262,13 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             return .push(vc)
         case let .addFaceFromEvent(event):
             let vc = AddFaceViewController(settingsRouter: weakRouter, apiWrapper: apiWrapper, event: event)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            
+            return .present(vc)
+            
+        case .modal:
+            let vc = ModalViewController(settingsRouter: weakRouter)
             vc.modalPresentationStyle = .overFullScreen
             vc.modalTransitionStyle = .crossDissolve
             
