@@ -12,13 +12,10 @@ import UIKit
 struct APIFace: Decodable, Hashable {
     let faceId: Int
     let image: String
-    let canDisLike: Bool
     
     private enum CodingKeys: String, CodingKey {
         case faceId
         case image
-        case canDisLike
-        
     }
     
     init(from decoder: Decoder) throws {
@@ -30,14 +27,5 @@ struct APIFace: Decodable, Hashable {
         self.faceId = faceId
         
         image = try container.decode(String.self, forKey: .image)
-        
-        let canDisLikeRawValue = try? container.decode(String.self, forKey: .canDisLike)
-        
-        switch canDisLikeRawValue {
-        case "t": canDisLike = true
-        case "f": canDisLike = false
-        default: canDisLike = false
-        }
-        
     }
 }

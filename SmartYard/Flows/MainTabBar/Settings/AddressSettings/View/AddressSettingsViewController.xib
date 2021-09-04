@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -49,6 +49,7 @@
                 <outlet property="voipContainerView" destination="saN-cp-T40" id="d2s-PI-kY0"/>
                 <outlet property="voipSwitch" destination="88V-jW-eOT" id="sQ8-kk-ac3"/>
                 <outlet property="whiteRabbitContainerView" destination="pa4-GN-boo" id="UJ6-Db-Ypg"/>
+                <outlet property="whiteRabbitQuestionMark" destination="dvv-PF-VJi" id="V9K-iZ-u9t"/>
                 <outlet property="whiteRabbitSwitch" destination="F7L-aq-SPt" id="tJt-g5-S0W"/>
             </connections>
         </placeholder>
@@ -201,7 +202,7 @@
                                                                             <rect key="frame" x="0.0" y="110" width="382" height="55"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Режим &quot;Белый кролик&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfP-r1-vq0">
-                                                                                    <rect key="frame" x="24" y="18.5" width="261" height="18"/>
+                                                                                    <rect key="frame" x="24" y="18.5" width="143" height="18"/>
                                                                                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                                                                     <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -216,11 +217,19 @@
                                                                                         <constraint firstAttribute="height" constant="1" id="FrC-Ft-62E"/>
                                                                                     </constraints>
                                                                                 </view>
+                                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvv-PF-VJi">
+                                                                                    <rect key="frame" x="185" y="15" width="25" height="25"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="width" constant="25" id="6Y8-Qf-HLB"/>
+                                                                                        <constraint firstAttribute="height" constant="25" id="NBb-Tq-fYR"/>
+                                                                                    </constraints>
+                                                                                    <state key="normal" title="Button" image="QuestionMark"/>
+                                                                                </button>
                                                                             </subviews>
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <constraints>
-                                                                                <constraint firstItem="F7L-aq-SPt" firstAttribute="leading" secondItem="cfP-r1-vq0" secondAttribute="trailing" constant="24" id="2i8-bT-vLm"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="F7L-aq-SPt" secondAttribute="trailing" constant="24" id="6VA-vz-V9I"/>
+                                                                                <constraint firstItem="dvv-PF-VJi" firstAttribute="leading" secondItem="cfP-r1-vq0" secondAttribute="trailing" constant="18" id="6ZM-9D-DwG"/>
                                                                                 <constraint firstItem="F7L-aq-SPt" firstAttribute="centerY" secondItem="pa4-GN-boo" secondAttribute="centerY" id="7a0-7f-9Y6"/>
                                                                                 <constraint firstAttribute="bottom" secondItem="aG4-Hq-44m" secondAttribute="bottom" id="PAt-nV-iFs"/>
                                                                                 <constraint firstItem="cfP-r1-vq0" firstAttribute="leading" secondItem="pa4-GN-boo" secondAttribute="leading" constant="24" id="bpb-qz-hqo"/>
@@ -228,6 +237,7 @@
                                                                                 <constraint firstItem="cfP-r1-vq0" firstAttribute="centerY" secondItem="pa4-GN-boo" secondAttribute="centerY" id="i7D-te-l9J"/>
                                                                                 <constraint firstItem="aG4-Hq-44m" firstAttribute="leading" secondItem="pa4-GN-boo" secondAttribute="leading" id="peI-4a-7yu"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="aG4-Hq-44m" secondAttribute="trailing" id="sB4-1Y-uip"/>
+                                                                                <constraint firstItem="dvv-PF-VJi" firstAttribute="centerY" secondItem="pa4-GN-boo" secondAttribute="centerY" id="x3D-4w-9pe"/>
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSt-af-Niu" userLabel="View4">
@@ -513,6 +523,7 @@
     </objects>
     <resources>
         <image name="MainBackground" width="375" height="812"/>
+        <image name="QuestionMark" width="25" height="25"/>
         <image name="UpArrowIcon" width="13" height="8"/>
     </resources>
 </document>

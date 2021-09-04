@@ -300,6 +300,14 @@ class AddressSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.whiteRabbitHintTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.showModal(withContent: .aboutWhiteRabbit))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             address: .just(address),
             isCmsEnabled: isCmsEnabledSubject.asDriver(onErrorJustReturn: false),
@@ -366,6 +374,7 @@ extension AddressSettingsViewModel {
         let logsTrigger: Driver<Void>
         let hiddenTrigger: Driver<Void>
         let frsTrigger: Driver<Void>
+        let whiteRabbitHintTrigger: Driver<Void>
     }
     
     struct Output {

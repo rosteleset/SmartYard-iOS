@@ -179,7 +179,7 @@ extension FacesSettingsViewController: UICollectionViewDataSource {
             cell.imageButton.contentMode = .scaleAspectFit
             cell.faceId = face.faceId
             
-            cell.deleteButton.isHidden = !face.canDisLike
+            cell.deleteButton.isHidden = false
             
             cell.deleteButtonTrigger
                 .drive(

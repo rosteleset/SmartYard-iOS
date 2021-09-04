@@ -94,6 +94,7 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
             viewDidAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete(),
             refreshIntercomTempCodeTrigger: intercomAccessView.rx.refreshButtonTapped.asDriverOnErrorJustComplete(),
             openGuestAccessTrigger: intercomAccessView.rx.openButtonTapped.asDriverOnErrorJustComplete(),
+            waitingGuestsHintTrigger: intercomAccessView.rx.waitingGuestsQuestionMarkTapped.asDriverOnErrorJustComplete(),
             configureFaces: faceIdAccessView.rx.configureButtonTapped.asDriverOnErrorJustComplete(),
             smsToTempContactTrigger: temporaryAccessView.sendSmsSubject.asDriverOnErrorJustComplete(),
             smsToPermanentContactTrigger: permanentAccessView.sendSmsSubject.asDriverOnErrorJustComplete(),

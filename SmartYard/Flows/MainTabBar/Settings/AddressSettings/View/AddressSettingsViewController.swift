@@ -33,6 +33,7 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var whiteRabbitContainerView: UIView!
     @IBOutlet private weak var whiteRabbitSwitch: UISwitch!
+    @IBOutlet private weak var whiteRabbitQuestionMark: UIButton!
     
     @IBOutlet private weak var paperContainerView: UIView!
     @IBOutlet private weak var paperSwitch: UISwitch!
@@ -174,7 +175,8 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
             paperBillTrigger: paperBillTapGesture.rx.event.asDriver().mapToVoid(),
             logsTrigger: logsTapGesture.rx.event.asDriver().mapToVoid(),
             hiddenTrigger: hiddenTapGesture.rx.event.asDriver().mapToVoid(),
-            frsTrigger: frsTapGesture.rx.event.asDriver().mapToVoid()
+            frsTrigger: frsTapGesture.rx.event.asDriver().mapToVoid(),
+            whiteRabbitHintTrigger: whiteRabbitQuestionMark.rx.tap.asDriver()
         )
         
         let output = viewModel.transform(input)
