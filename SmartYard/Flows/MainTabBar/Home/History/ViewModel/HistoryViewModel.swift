@@ -618,24 +618,15 @@ class HistoryViewModel: BaseViewModel {
                 self.settingsRouter?.trigger(.deleteFaceFromEvent(event: event, imageURL: face?.image))
             }
             .disposed(by: disposeBag)
-        
-        /*
-        input.itemSelected
+       
+        input.displayHintTrigger
             .drive(
-                onNext: { [weak self] item in
-                    guard let viewModel = self else {
-                        return
-                    }
-                    
-                    self!.router.trigger(
-                        .historyDetail(
-                            viewModel: viewModel,
-                            item: item
-                        )
-                    )
+                onNext: { [weak self] in
+                    self?.homeRouter?.trigger(.showModal(withContent: .aboutVideoEvent))
+                    self?.settingsRouter?.trigger(.showModal(withContent: .aboutVideoEvent))
                 }
-            ).disposed(by: disposeBag)
-        */
+            )
+            .disposed(by: disposeBag)
         
         return OutputDetail(
             availableDays: availableDaysSubject.asDriver(onErrorJustReturn: [:]),
@@ -672,6 +663,7 @@ extension HistoryViewModel {
         let loadDay: Driver<Date>
         let addFaceTrigger: Driver<APIPlog>
         let deleteFaceTrigger: Driver<APIPlog>
+        let displayHintTrigger: Driver<Void>
     }
     
     struct OutputDetail {

@@ -43,10 +43,10 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     
     var focusedCellIndexPath: IndexPath?
     
-    //private let imagesCache = NSCache<NSString,UIImage>()
-    
     private let addFaceTrigger = PublishSubject<APIPlog>()
     private let deleteFaceTrigger = PublishSubject<APIPlog>()
+    private let displayHintTrigger = PublishSubject<Void>()
+    
     
     
     init(viewModel: HistoryViewModel, focusedOn: HistoryDataItem? = nil) {
@@ -154,6 +154,10 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                     .drive(self.deleteFaceTrigger)
                     .disposed(by: cell.disposeBag)
                 
+                cell.displayHintTrigger
+                    .drive(self.displayHintTrigger)
+                    .disposed(by: cell.disposeBag)
+                
                 return cell
             }
         )
@@ -182,7 +186,8 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
             updateSections: trigger.asDriver(onErrorJustReturn: ()),
             loadDay: loadDayTriger.asDriverOnErrorJustComplete(),
             addFaceTrigger: addFaceTrigger.asDriverOnErrorJustComplete(),
-            deleteFaceTrigger: deleteFaceTrigger.asDriverOnErrorJustComplete()
+            deleteFaceTrigger: deleteFaceTrigger.asDriverOnErrorJustComplete(),
+            displayHintTrigger: displayHintTrigger.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)

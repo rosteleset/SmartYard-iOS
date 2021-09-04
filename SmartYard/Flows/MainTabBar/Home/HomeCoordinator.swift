@@ -35,6 +35,7 @@ enum HomeRoute: Route {
     case historyDetail(viewModel: HistoryViewModel, item: HistoryDataItem)
     case addFaceFromEvent(event: APIPlog)
     case deleteFaceFromEvent(event: APIPlog, imageURL: String?)
+    case showModal(withContent: ModalContent)
 }
 
 class HomeCoordinator: NavigationCoordinator<HomeRoute> {
@@ -294,6 +295,13 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
        
         case let .deleteFaceFromEvent(event, imageURL):
             let vc = DeleteFaceViewController(homeRouter: weakRouter, apiWrapper: apiWrapper, imageURL: imageURL, event: event)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            
+            return .present(vc)
+            
+        case let .showModal(content):
+            let vc = ModalViewController(dismissCallback: { self.trigger(.dismiss) }, content: content)
             vc.modalPresentationStyle = .overFullScreen
             vc.modalTransitionStyle = .crossDissolve
             

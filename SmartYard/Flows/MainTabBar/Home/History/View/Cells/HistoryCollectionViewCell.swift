@@ -37,6 +37,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var callStatusIcon: UIImageView!
     @IBOutlet private weak var callStatusLabel: UILabel!
     @IBOutlet private weak var actionsDescriptionLabel: UILabel!
+    @IBOutlet private weak var questionMark: UIButton!
     
     private var videoURL: String? {
         guard let eventDate = event?.date else {
@@ -61,6 +62,9 @@ class HistoryCollectionViewCell: UICollectionViewCell {
             .asDriverOnErrorJustComplete()
     }
     
+    var displayHintTrigger: Driver<Void> {
+        return questionMark.rx.tap.asDriver()
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
