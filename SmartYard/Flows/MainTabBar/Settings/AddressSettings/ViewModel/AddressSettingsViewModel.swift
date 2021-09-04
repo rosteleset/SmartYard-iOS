@@ -303,7 +303,7 @@ class AddressSettingsViewModel: BaseViewModel {
         input.whiteRabbitHintTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.modal)
+                    self?.router.trigger(.showModal(withContent: .aboutWhiteRabbit))
                 }
             )
             .disposed(by: disposeBag)

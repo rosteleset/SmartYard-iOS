@@ -3,7 +3,7 @@ import AVKit
 
 // swiftlint:disable all
 
-protocol SimpleVideoRangeSliderDelegate: class {
+protocol SimpleVideoRangeSliderDelegate: AnyObject {
     
     func didChangeDate(
         videoRangeSlider: SimpleVideoRangeSlider,

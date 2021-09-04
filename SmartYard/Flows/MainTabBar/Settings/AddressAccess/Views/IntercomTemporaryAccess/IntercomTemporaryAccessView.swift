@@ -15,6 +15,7 @@ class IntercomTemporaryAccessView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var refreshButton: UIButton!
     @IBOutlet fileprivate weak var openButton: ObjectLockButton!
+    @IBOutlet fileprivate weak var waitingGuestsQuestionMark: UIButton!
     
     @IBOutlet private weak var codeLabel: UILabel!
     @IBOutlet private weak var containerView: FullRoundedView!
@@ -54,5 +55,11 @@ extension Reactive where Base: IntercomTemporaryAccessView {
     var openButtonTapped: ControlEvent<Void> {
         return base.openButton.rx.tap
     }
+    
+    var waitingGuestsQuestionMarkTapped: ControlEvent<Void> {
+        return base.waitingGuestsQuestionMark.rx.tap
+    }
+    
+    
     
 }

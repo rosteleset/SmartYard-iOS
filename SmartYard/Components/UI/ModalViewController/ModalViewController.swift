@@ -11,31 +11,39 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 
+/// перечень xib файлов, с содержимым модальных окон
+enum ModalContent: String {
+    case aboutWhiteRabbit = "WhiteRabbitModalViewContent"
+    case aboutWaitingGuests = "WaitingGuestModalViewContent"
+    case aboutVideoEvent = "VideoEventModalViewContent"
+}
+
+/// чтобы не делать 100500 классов для очень похожих модальных окошек с крестиком в правом верхнем углу,
+/// я решил сделать один общай класс,
+/// который в инициализаторе принимает название файла с содержимым
 class ModalViewController: BaseViewController {
     
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var containerView: UIView!
-    private var containerViewController: UIViewController
     
-    private let settingsRouter: WeakRouter<SettingsRoute>
+    private let contentView: UIView
     
-    init (settingsRouter: WeakRouter<SettingsRoute>) {
-        self.settingsRouter = settingsRouter
-        self.containerViewController = WhiteRabbitModalViewContent()
+    init (dismissCallback: (@escaping () -> Void), content: ModalContent) {
         
+        let nib = Bundle.main.loadNibNamed(content.rawValue, owner: nil, options: nil)
+        self.contentView = nib?.first as? UIView ?? UIView()
         let dismissGesture = UITapGestureRecognizer()
         super.init(nibName: nil, bundle: nil)
         
         dismissGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(dismissGesture)
+        
         Driver.merge(
             dismissGesture.rx.event.asDriver().mapToVoid(),
             cancelButton.rx.tap.asDriver()
         )
         .drive(
-            onNext: {
-                settingsRouter.trigger(.dismiss)
-            }
+            onNext: { dismissCallback() }
         )
         .disposed(by: disposeBag)
     }
@@ -47,18 +55,15 @@ class ModalViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addChild(self.containerViewController)
-        self.containerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        self.containerView.addSubview(self.contentView)
         
-        self.containerView.addSubview(self.containerViewController.view)
-        
-        NSLayoutConstraint.activate([
-                self.containerViewController.view.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 0),
-                self.containerViewController.view.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: 0),
-                self.containerViewController.view.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: 0),
-                self.containerViewController.view.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor, constant: 0)
-            ])
-        
-        self.containerViewController.didMove(toParent: self)
+        NSLayoutConstraint.activate(
+            [
+                self.contentView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 0),
+                self.contentView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: 0),
+                self.contentView.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: 0),
+                self.contentView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor, constant: 0)
+            ]
+        )
     }
 }

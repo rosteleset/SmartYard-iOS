@@ -27,7 +27,6 @@
 		3A1BDF4A2634459C0075410B /* HistoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1BDF482634459C0075410B /* HistoryCollectionViewCell.xib */; };
 		3A1F213826DF8F4F005FDB82 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1F213626DF8F4F005FDB82 /* ModalViewController.swift */; };
 		3A1F213926DF8F4F005FDB82 /* ModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1F213726DF8F4F005FDB82 /* ModalViewController.xib */; };
-		3A1F214026E09AF7005FDB82 /* WhiteRabbitModalViewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1F213E26E09AF7005FDB82 /* WhiteRabbitModalViewContent.swift */; };
 		3A1F214126E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1F213F26E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib */; };
 		3A28814C2653F11900F42097 /* DisLikePersonFaceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2881482653EEB000F42097 /* DisLikePersonFaceRequest.swift */; };
 		3A2881532657EE7100F42097 /* FaceIdAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2881512657EE7100F42097 /* FaceIdAccessView.swift */; };
@@ -51,6 +50,7 @@
 		3A9C5E28261B7896004FB962 /* HistorySectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9C5E27261B7895004FB962 /* HistorySectionModel.swift */; };
 		3A9C5E2D261B7989004FB962 /* HistoryDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9C5E2C261B7989004FB962 /* HistoryDataItem.swift */; };
 		3AA6555C2666453D001EEC79 /* GetPersonFacesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB451264C0D44000F37D0 /* GetPersonFacesResponseData.swift */; };
+		3AAB0D3726E243D700A5AD75 /* WaitingGuestModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AAB0D3626E2439E00A5AD75 /* WaitingGuestModalViewContent.xib */; };
 		3AB41E0225C0879200AEC8C3 /* BottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0025C0879200AEC8C3 /* BottomCell.swift */; };
 		3AB41E0325C0879200AEC8C3 /* BottomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB41E0125C0879200AEC8C3 /* BottomCell.xib */; };
 		3AB41E0A25C200B900AEC8C3 /* CityMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */; };
@@ -582,7 +582,6 @@
 		3A1BDF482634459C0075410B /* HistoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryCollectionViewCell.xib; sourceTree = "<group>"; };
 		3A1F213626DF8F4F005FDB82 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		3A1F213726DF8F4F005FDB82 /* ModalViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ModalViewController.xib; sourceTree = "<group>"; };
-		3A1F213E26E09AF7005FDB82 /* WhiteRabbitModalViewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteRabbitModalViewContent.swift; sourceTree = "<group>"; };
 		3A1F213F26E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WhiteRabbitModalViewContent.xib; sourceTree = "<group>"; };
 		3A2881482653EEB000F42097 /* DisLikePersonFaceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisLikePersonFaceRequest.swift; sourceTree = "<group>"; };
 		3A2881512657EE7100F42097 /* FaceIdAccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceIdAccessView.swift; sourceTree = "<group>"; };
@@ -605,6 +604,8 @@
 		3A8B954225D9743D007CDD3C /* CityMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityMapViewController.xib; sourceTree = "<group>"; };
 		3A9C5E27261B7895004FB962 /* HistorySectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySectionModel.swift; sourceTree = "<group>"; };
 		3A9C5E2C261B7989004FB962 /* HistoryDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDataItem.swift; sourceTree = "<group>"; };
+		3AAB0D3626E2439E00A5AD75 /* WaitingGuestModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaitingGuestModalViewContent.xib; sourceTree = "<group>"; };
+		3AAB0D3826E27CCD00A5AD75 /* VideoEventModalViewContent copy.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "VideoEventModalViewContent copy.xib"; sourceTree = "<group>"; };
 		3AB41E0025C0879200AEC8C3 /* BottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCell.swift; sourceTree = "<group>"; };
 		3AB41E0125C0879200AEC8C3 /* BottomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BottomCell.xib; sourceTree = "<group>"; };
 		3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityMapViewModel.swift; sourceTree = "<group>"; };
@@ -1166,7 +1167,8 @@
 		3A1F213D26E09A96005FDB82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3A1F213E26E09AF7005FDB82 /* WhiteRabbitModalViewContent.swift */,
+				3AAB0D3626E2439E00A5AD75 /* WaitingGuestModalViewContent.xib */,
+				3AAB0D3826E27CCD00A5AD75 /* VideoEventModalViewContent copy.xib */,
 				3A1F213F26E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib */,
 			);
 			path = Views;
@@ -4025,6 +4027,7 @@
 				E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */,
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
+				3AAB0D3726E243D700A5AD75 /* WaitingGuestModalViewContent.xib in Resources */,
 				84F6494924740E90000C0028 /* YardMapViewController.xib in Resources */,
 				3A1F213926DF8F4F005FDB82 /* ModalViewController.xib in Resources */,
 				3AC5C71126131D3D008D74DE /* HistoryLoadingTableViewCell.xib in Resources */,
@@ -4512,7 +4515,6 @@
 				84878DE52420DB3B004C11B2 /* AddressAccessViewModel+ContactParsing.swift in Sources */,
 				846DC6DF24B33DEA00A11914 /* PayPrepareResponseData.swift in Sources */,
 				E9E426FE23F2B2DD00F5D593 /* SmartYardSegmentedControlView.swift in Sources */,
-				3A1F214026E09AF7005FDB82 /* WhiteRabbitModalViewContent.swift in Sources */,
 				3A9C5E28261B7896004FB962 /* HistorySectionModel.swift in Sources */,
 				846DC6C824B33DC600A11914 /* ContractCell.swift in Sources */,
 				847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */,

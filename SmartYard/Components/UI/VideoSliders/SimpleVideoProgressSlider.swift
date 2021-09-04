@@ -11,7 +11,7 @@ import AVKit
 
 // swiftlint:disable all
 
-@objc protocol SimpleVideoProgressSliderDelegate: class {
+@objc protocol SimpleVideoProgressSliderDelegate: AnyObject {
     
     func indicatorDidChangePosition(
         videoRangeSlider: SimpleVideoProgressSlider,

@@ -262,6 +262,14 @@ class AddressAccessViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.waitingGuestsHintTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.showModal(withContent: .aboutWaitingGuests))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         input.configureFaces
             .drive(
                 onNext: { [weak self] in
@@ -552,6 +560,7 @@ extension AddressAccessViewModel {
         let viewDidAppearTrigger: Driver<Bool>
         let refreshIntercomTempCodeTrigger: Driver<Void>
         let openGuestAccessTrigger: Driver<Void>
+        let waitingGuestsHintTrigger: Driver<Void>
         let configureFaces: Driver<Void>
         let smsToTempContactTrigger: Driver<Int?>
         let smsToPermanentContactTrigger: Driver<Int?>
