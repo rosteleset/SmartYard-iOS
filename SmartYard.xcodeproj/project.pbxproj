@@ -51,7 +51,7 @@
 		3A9C5E2D261B7989004FB962 /* HistoryDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9C5E2C261B7989004FB962 /* HistoryDataItem.swift */; };
 		3AA6555C2666453D001EEC79 /* GetPersonFacesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB451264C0D44000F37D0 /* GetPersonFacesResponseData.swift */; };
 		3AAB0D3726E243D700A5AD75 /* WaitingGuestModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AAB0D3626E2439E00A5AD75 /* WaitingGuestModalViewContent.xib */; };
-		3AAB0D3A26E3AFA900A5AD75 /* VideoEventModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AAB0D3926E3ADA700A5AD75 /* VideoEventModalViewContent.xib */; };
+		3AAB0D3B26E3B19100A5AD75 /* VideoEventModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AAB0D3926E3ADA700A5AD75 /* VideoEventModalViewContent.xib */; };
 		3AB41E0225C0879200AEC8C3 /* BottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0025C0879200AEC8C3 /* BottomCell.swift */; };
 		3AB41E0325C0879200AEC8C3 /* BottomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB41E0125C0879200AEC8C3 /* BottomCell.xib */; };
 		3AB41E0A25C200B900AEC8C3 /* CityMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */; };
@@ -4032,7 +4032,7 @@
 				84F6494924740E90000C0028 /* YardMapViewController.xib in Resources */,
 				3A1F213926DF8F4F005FDB82 /* ModalViewController.xib in Resources */,
 				3AC5C71126131D3D008D74DE /* HistoryLoadingTableViewCell.xib in Resources */,
-				3AAB0D3A26E3AFA900A5AD75 /* VideoEventModalViewContent.xib in Resources */,
+				3AAB0D3B26E3B19100A5AD75 /* VideoEventModalViewContent.xib in Resources */,
 				84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */,
 				E98C383623F192600010BBC1 /* InputAddressViewController.xib in Resources */,
 				E9A4D48C23EC28760070A591 /* PinNumberField.xib in Resources */,
