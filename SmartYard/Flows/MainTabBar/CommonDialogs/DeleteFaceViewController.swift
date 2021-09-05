@@ -17,8 +17,6 @@ class DeleteFaceViewController: BaseViewController {
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var deleteButton: UIButton!
     
-    private let homeRouter: WeakRouter<HomeRoute>?
-    private let settingsRouter: WeakRouter<SettingsRoute>?
     private let image: UIImage?
     private let imageURL: String?
     private let faceId: Int?
@@ -33,8 +31,6 @@ class DeleteFaceViewController: BaseViewController {
     
     // swiftlint:disable:next function_body_length
     init(
-        homeRouter: WeakRouter<HomeRoute>? = nil,
-        settingsRouter: WeakRouter<SettingsRoute>? = nil,
         apiWrapper: APIWrapper,
         image: UIImage? = nil,
         imageURL: String? = nil,
@@ -42,8 +38,6 @@ class DeleteFaceViewController: BaseViewController {
         faceId: Int? = nil,
         event: APIPlog? = nil
     ) {
-        self.homeRouter = homeRouter
-        self.settingsRouter = settingsRouter
         self.image = image
         self.imageURL = imageURL
         self.faceId = faceId
@@ -65,9 +59,8 @@ class DeleteFaceViewController: BaseViewController {
             cancelButton.rx.tap.asDriver()
         )
         .drive(
-            onNext: {
-                settingsRouter?.trigger(.dismiss)
-                homeRouter?.trigger(.dismiss)
+            onNext: { [weak self] in
+                self?.dismiss(animated: true, completion: nil)
             }
         )
         .disposed(by: disposeBag)
@@ -98,8 +91,7 @@ class DeleteFaceViewController: BaseViewController {
                     self?.apiWrapper.forceUpdateFaces = true
                     
                     NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
-                    settingsRouter?.trigger(.dismiss)
-                    homeRouter?.trigger(.dismiss)
+                    self?.dismiss(animated: true, completion: nil)
                 }
             )
             .disposed(by: disposeBag)

@@ -17,8 +17,6 @@ class AddFaceViewController: BaseViewController {
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var addButton: UIButton!
     
-    private let settingsRouter: WeakRouter<SettingsRoute>?
-    private let homeRouter: WeakRouter<HomeRoute>?
     private let event: APIPlog
     private let apiWrapper: APIWrapper
     
@@ -27,9 +25,7 @@ class AddFaceViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(settingsRouter: WeakRouter<SettingsRoute>? = nil, homeRouter: WeakRouter<HomeRoute>? = nil, apiWrapper: APIWrapper, event: APIPlog) {
-        self.settingsRouter = settingsRouter
-        self.homeRouter = homeRouter
+    init(apiWrapper: APIWrapper, event: APIPlog) {
         self.event = event
         self.apiWrapper = apiWrapper
         
@@ -47,9 +43,8 @@ class AddFaceViewController: BaseViewController {
             cancelButton.rx.tap.asDriver()
         )
         .drive(
-            onNext: {
-                homeRouter?.trigger(.dismiss)
-                settingsRouter?.trigger(.dismiss)
+            onNext: { [weak self] in
+                self?.dismiss(animated: true, completion: nil)
             }
         )
         .disposed(by: disposeBag)
@@ -67,8 +62,7 @@ class AddFaceViewController: BaseViewController {
                     self?.apiWrapper.forceUpdateFaces = true
                     
                     NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
-                    homeRouter?.trigger(.dismiss)
-                    settingsRouter?.trigger(.dismiss)
+                    self?.dismiss(animated: true, completion: nil)
                 }
             )
             .disposed(by: disposeBag)

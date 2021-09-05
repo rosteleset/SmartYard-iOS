@@ -32,10 +32,6 @@ enum HomeRoute: Route {
     case yardCamerasMap(houseId: String, address: String)
     case playArchiveVideo(camera: CameraObject, date: Date, availableRanges: [APIArchiveRange])
     case history(houseId: String, address: String)
-    case historyDetail(viewModel: HistoryViewModel, item: HistoryDataItem)
-    case addFaceFromEvent(event: APIPlog)
-    case deleteFaceFromEvent(event: APIPlog, imageURL: String?)
-    case showModal(withContent: ModalContent)
 }
 
 class HomeCoordinator: NavigationCoordinator<HomeRoute> {
@@ -276,36 +272,22 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             return .push(vc)
             
         case let .history(houseId, address):
-            let vm = HistoryViewModel(apiWrapper: apiWrapper, houseId: houseId, address: address, router: weakRouter)
-            let vc = HistoryViewController(viewModel: vm)
             
-            return .push(vc)
+            let coordinator = HistoryCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                pushNotificationService: pushNotificationService,
+                accessService: accessService,
+                issueService: issueService,
+                permissionService: permissionService,
+                alertService: alertService,
+                logoutHelper: logoutHelper,
+                houseId: houseId,
+                address: address
+            )
             
-        case let .historyDetail(vm, item):
-            let vc = HistoryDetailViewController(viewModel: vm, focusedOn: item)
-   
-            return .push(vc)
-            
-        case let .addFaceFromEvent(event):
-            let vc = AddFaceViewController(homeRouter: weakRouter, apiWrapper: apiWrapper, event: event)
-            vc.modalPresentationStyle = .overFullScreen
-            vc.modalTransitionStyle = .crossDissolve
-            
-            return .present(vc)
-       
-        case let .deleteFaceFromEvent(event, imageURL):
-            let vc = DeleteFaceViewController(homeRouter: weakRouter, apiWrapper: apiWrapper, imageURL: imageURL, event: event)
-            vc.modalPresentationStyle = .overFullScreen
-            vc.modalTransitionStyle = .crossDissolve
-            
-            return .present(vc)
-            
-        case let .showModal(content):
-            let vc = ModalViewController(dismissCallback: { self.trigger(.dismiss) }, content: content)
-            vc.modalPresentationStyle = .overFullScreen
-            vc.modalTransitionStyle = .crossDissolve
-            
-            return .present(vc)
+            addChild(coordinator)
+            return .none()
         }
     }
     

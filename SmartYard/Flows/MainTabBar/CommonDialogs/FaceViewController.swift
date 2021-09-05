@@ -16,7 +16,6 @@ class FaceViewController: BaseViewController {
     @IBOutlet private weak var imageView: ScaledHeightImageView!
     @IBOutlet private weak var closeButton: UIButton!
     
-    private let router: WeakRouter<SettingsRoute>
     private let image: UIImage?
     
     @available(*, unavailable)
@@ -24,8 +23,7 @@ class FaceViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(router: WeakRouter<SettingsRoute>, image: UIImage?) {
-        self.router = router
+    init(image: UIImage?) {
         self.image = image
         
         super.init(nibName: nil, bundle: nil)
@@ -39,8 +37,8 @@ class FaceViewController: BaseViewController {
             closeButton.rx.tap.asDriver()
         )
         .drive(
-            onNext: {
-                router.trigger(.dismiss)
+            onNext: { [weak self] in
+                self?.dismiss(animated: true, completion: nil)
             }
         )
         .disposed(by: disposeBag)

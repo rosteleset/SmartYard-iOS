@@ -242,26 +242,39 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             return .push(vc)
             
         case let .showFace(image):
-            let vc = FaceViewController(router: weakRouter, image: image)
+            let vc = FaceViewController(image: image)
             vc.modalPresentationStyle = .overFullScreen
             vc.modalTransitionStyle = .crossDissolve
             
             return .present(vc)
         
         case let .deleteFace(image, flatId, faceId):
-            let vc = DeleteFaceViewController(settingsRouter: weakRouter, apiWrapper: apiWrapper, image: image, flatId: flatId, faceId: faceId)
+            let vc = DeleteFaceViewController(apiWrapper: apiWrapper, image: image, flatId: flatId, faceId: faceId)
             vc.modalPresentationStyle = .overFullScreen
             vc.modalTransitionStyle = .crossDissolve
             
             return .present(vc)
         
         case let .addFace(flatId):
-            let vm = HistoryViewModel(apiWrapper: apiWrapper, flatId: flatId, eventsFilter: EventsFilter.keys, address: "", router: weakRouter)
-            let vc = HistoryDetailViewController(viewModel: vm)
+            let coordinator = HistoryCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                pushNotificationService: pushNotificationService,
+                accessService: accessService,
+                issueService: issueService,
+                permissionService: permissionService,
+                alertService: alertService,
+                logoutHelper: logoutHelper,
+                flatId: flatId,
+                eventsFilter: EventsFilter.keys,
+                address: ""
+            )
             
-            return .push(vc)
+            addChild(coordinator)
+            return .none()
+            
         case let .addFaceFromEvent(event):
-            let vc = AddFaceViewController(settingsRouter: weakRouter, apiWrapper: apiWrapper, event: event)
+            let vc = AddFaceViewController(apiWrapper: apiWrapper, event: event)
             vc.modalPresentationStyle = .overFullScreen
             vc.modalTransitionStyle = .crossDissolve
             
@@ -275,10 +288,10 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             return .present(vc)
             
         case let .deleteFaceFromEvent(event, imageURL):
-            let vc = DeleteFaceViewController(settingsRouter: weakRouter, apiWrapper: apiWrapper, imageURL: imageURL, event: event)
+            let vc = DeleteFaceViewController(apiWrapper: apiWrapper, imageURL: imageURL, event: event)
             vc.modalPresentationStyle = .overFullScreen
             vc.modalTransitionStyle = .crossDissolve
-            
+
             return .present(vc)
         }
     }

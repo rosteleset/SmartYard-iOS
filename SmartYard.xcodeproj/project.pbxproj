@@ -52,6 +52,7 @@
 		3AA6555C2666453D001EEC79 /* GetPersonFacesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB451264C0D44000F37D0 /* GetPersonFacesResponseData.swift */; };
 		3AAB0D3726E243D700A5AD75 /* WaitingGuestModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AAB0D3626E2439E00A5AD75 /* WaitingGuestModalViewContent.xib */; };
 		3AAB0D3B26E3B19100A5AD75 /* VideoEventModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AAB0D3926E3ADA700A5AD75 /* VideoEventModalViewContent.xib */; };
+		3AAB0D3D26E4035300A5AD75 /* HistoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAB0D3C26E4035200A5AD75 /* HistoryCoordinator.swift */; };
 		3AB41E0225C0879200AEC8C3 /* BottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0025C0879200AEC8C3 /* BottomCell.swift */; };
 		3AB41E0325C0879200AEC8C3 /* BottomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB41E0125C0879200AEC8C3 /* BottomCell.xib */; };
 		3AB41E0A25C200B900AEC8C3 /* CityMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */; };
@@ -607,6 +608,7 @@
 		3A9C5E2C261B7989004FB962 /* HistoryDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDataItem.swift; sourceTree = "<group>"; };
 		3AAB0D3626E2439E00A5AD75 /* WaitingGuestModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaitingGuestModalViewContent.xib; sourceTree = "<group>"; };
 		3AAB0D3926E3ADA700A5AD75 /* VideoEventModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoEventModalViewContent.xib; sourceTree = "<group>"; };
+		3AAB0D3C26E4035200A5AD75 /* HistoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCoordinator.swift; sourceTree = "<group>"; };
 		3AB41E0025C0879200AEC8C3 /* BottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCell.swift; sourceTree = "<group>"; };
 		3AB41E0125C0879200AEC8C3 /* BottomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BottomCell.xib; sourceTree = "<group>"; };
 		3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityMapViewModel.swift; sourceTree = "<group>"; };
@@ -1335,6 +1337,7 @@
 		3AC5C6152608F0D3008D74DE /* History */ = {
 			isa = PBXGroup;
 			children = (
+				3AAB0D3C26E4035200A5AD75 /* HistoryCoordinator.swift */,
 				3A9C5E26261B7835004FB962 /* Entries */,
 				3AC5C70C26131CE6008D74DE /* ViewModel */,
 				3AC5C70B26131CDF008D74DE /* View */,
@@ -1405,7 +1408,6 @@
 		3AEFB43C264C0845000F37D0 /* FacesSettings */ = {
 			isa = PBXGroup;
 			children = (
-				3AEFB480264D1A73000F37D0 /* Dialogs */,
 				3AEFB467264C2C4D000F37D0 /* Cells */,
 				3AEFB43D264C086D000F37D0 /* View */,
 				3AEFB43E264C0884000F37D0 /* ViewModel */,
@@ -1462,7 +1464,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		3AEFB480264D1A73000F37D0 /* Dialogs */ = {
+		3AEFB480264D1A73000F37D0 /* CommonDialogs */ = {
 			isa = PBXGroup;
 			children = (
 				3A2881B02665093100F42097 /* AddFaceViewController.swift */,
@@ -1472,7 +1474,7 @@
 				3AEFB481264D1ADE000F37D0 /* FaceViewController.swift */,
 				3AEFB482264D1ADE000F37D0 /* FaceViewController.xib */,
 			);
-			path = Dialogs;
+			path = CommonDialogs;
 			sourceTree = "<group>";
 		};
 		3AFBA7312637523900C7DEB6 /* SafeCachedImage */ = {
@@ -1693,6 +1695,7 @@
 			isa = PBXGroup;
 			children = (
 				844AC3C723EBFC4B0066006D /* MainTabBarCoordinator.swift */,
+				3AEFB480264D1A73000F37D0 /* CommonDialogs */,
 				844AC3C923EBFCC00066006D /* Home */,
 				843C38D6242A57C40035BF80 /* Notifications */,
 				844AC3CA23EBFCC50066006D /* Chat */,
@@ -4500,6 +4503,7 @@
 				3A03FD0125DD5D5700B8488A /* YTCollectionViewCell.swift in Sources */,
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				3AB41E0A25C200B900AEC8C3 /* CityMapViewModel.swift in Sources */,
+				3AAB0D3D26E4035300A5AD75 /* HistoryCoordinator.swift in Sources */,
 				E92EFBC5242A22F2003AF7FE /* GeoCoderResponseData.swift in Sources */,
 				3A288199265D42AC00F42097 /* SafeCachedButton.swift in Sources */,
 				84D6445923F68AB200AD87EF /* CommonSettingsViewModel.swift in Sources */,

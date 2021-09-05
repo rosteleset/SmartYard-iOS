@@ -20,8 +20,7 @@ typealias AvailableDays = [FlatId: PlogDaysResponseData] //[FlatId: [APIPlogDay]
 class HistoryViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
-    private let homeRouter: WeakRouter<HomeRoute>?
-    private let settingsRouter: WeakRouter<SettingsRoute>?
+    private let router: WeakRouter<HistoryRoute>
     
     private let errorTracker = ErrorTracker()
     private let activityTracker = ActivityTracker()
@@ -37,10 +36,10 @@ class HistoryViewModel: BaseViewModel {
     private let address: BehaviorSubject<String?>
     
     ///список доступных квартир по адресу на сервере
-    public var flatIds: [Int] = []
+    var flatIds: [Int] = []
     
     ///список номеров доступных квартир по адресу на сервере
-    public var flatNumbers: [Int] = [] //список номеров доступных квартир по адресу на сервере
+    var flatNumbers: [Int] = [] //список номеров доступных квартир по адресу на сервере
     
     ///признак того, надо ли отключать получение ответов из кеша сервера.
     private var forceRefresh: Bool = false
@@ -54,7 +53,8 @@ class HistoryViewModel: BaseViewModel {
     /// облегчённая версия availableDays - массив из доступных дат с учётом текущих фильтров
     private var uniqueDays: [Date] = []
     
-    /// Очередь активных запросов на загрузку (FlatId, Date) - запросы по которым мы уже ожидаем данные и повторно их не запрашиваем
+    /// Очередь активных запросов на загрузку (FlatId, Date)
+    /// - запросы по которым мы уже ожидаем данные и повторно их не запрашиваем
     private var loadingQueue: [(flatId: Int, day: Date)] = []
     
     /// сюда прилетают результаты запросов с API: один элемент - один день для одной квартиры
@@ -78,27 +78,19 @@ class HistoryViewModel: BaseViewModel {
     ///таблица лиц по квартирам
     private var listFaces: [FlatId: GetPersonFacesResponseData] = [:]
     
-    convenience init(apiWrapper: APIWrapper, houseId: String, address: String, router: WeakRouter<HomeRoute>) {
-        self.init(apiWrapper: apiWrapper, houseId: houseId, address: address, homeRouter: router)
-    }
-    
-    convenience init(apiWrapper: APIWrapper, flatId: Int, eventsFilter: EventsFilter = .all, address: String, router: WeakRouter<SettingsRoute>) {
-        self.init(apiWrapper: apiWrapper, flatId: flatId, eventsFilter: eventsFilter, address: address, settingsRouter: router)
-    }
-    
     // swiftlint:disable:next function_body_length cyclomatic_complexity 
-    private init(apiWrapper: APIWrapper,
-                 houseId: String? = nil,
-                 flatId: Int? = nil,
-                 eventsFilter: EventsFilter = .all,
-                 address: String,
-                 homeRouter: WeakRouter<HomeRoute>? = nil,
-                 settingsRouter: WeakRouter<SettingsRoute>? = nil) {
+    init(
+        apiWrapper: APIWrapper,
+        houseId: String? = nil,
+        flatId: Int? = nil,
+        eventsFilter: EventsFilter = .all,
+        address: String,
+        router: WeakRouter<HistoryRoute>
+    ) {
         self.apiWrapper = apiWrapper
         self.houseId = houseId
         self.flatId = flatId
-        self.homeRouter = homeRouter
-        self.settingsRouter = settingsRouter
+        self.router = router
         self.address = BehaviorSubject<String?>(value: address)
         self.eventsFilter.accept(eventsFilter)
         
@@ -107,8 +99,7 @@ class HistoryViewModel: BaseViewModel {
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
-                    self?.homeRouter?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
-                    self?.settingsRouter?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -129,7 +120,9 @@ class HistoryViewModel: BaseViewModel {
                 }
                 
                 //дополняем кэш полученной порцией данных
-                if let index = self.dataCache.firstIndex(where: { ($0.day == data.day) && ($0.flatId == data.flatId) }) {
+                if let index = self.dataCache.firstIndex(
+                    where: { ($0.day == data.day) && ($0.flatId == data.flatId) }
+                ) {
                     self.dataCache[index].items = data.items
                 } else {
                     self.dataCache += [data]
@@ -137,7 +130,8 @@ class HistoryViewModel: BaseViewModel {
                 
                 self.loadingQueue.removeAll { $0.flatId == data.flatId && $0.day == data.day }
                 
-                //чтобы лишний раз не дёргать контроллер, обновляем данные, только когда вся очередь загрузки будет пустой.
+                //чтобы лишний раз не дёргать контроллер, обновляем данные,
+                //только когда вся очередь загрузки будет пустой.
                 if self.loadingQueue.isEmpty {
                     self.updateSections.onNext(())
                 }
@@ -157,7 +151,8 @@ class HistoryViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
-        //отсюда прилетает суммарный список всех доступных в журнале логов дат с количеством – по элементу на каждую квартиру
+        //отсюда прилетает суммарный список всех доступных в журнале логов дат с количеством
+        // – по элементу на каждую квартиру
         availableDaysSubject
             .asDriver(onErrorJustReturn: [:])
             .drive { [weak self] data in
@@ -185,6 +180,7 @@ class HistoryViewModel: BaseViewModel {
             .asDriverOnErrorJustComplete()
             .debounce(.milliseconds(100))
             .drive(
+                // swiftlint:disable:next closure_body_length
                 onNext: { [weak self] _ in
                     guard let self = self else {
                         return
@@ -199,9 +195,11 @@ class HistoryViewModel: BaseViewModel {
                                 //для каждой даты делаем выборку всех доступных данных в кэше,
                                 //заодно сразу отфильтровываем данные по квартирам, которые не попадают в фильтр
                                 .filter { $0.day == sectionDay && self.apptsFilter.value.contains($0.flatId) }
-                                //отрезаем нам не нужные лишние поля даты и квартиры и объединяем массивы данных от разных квартир в один общий
+                                //отрезаем нам не нужные лишние поля даты и квартиры
+                                //и объединяем массивы данных от разных квартир в один общий
                                 .flatMap { $0.items }
-                                //удаляем записи с одинаковым uuid, которые одновременно могли присутствовать в разных квартирах
+                                //удаляем записи с одинаковым uuid, которые одновременно могли присутствовать
+                                //в разных квартирах
                                 .duplicatesRemoved()
                                 //сортируем события внутри даты от самой ранней к более поздней
                                 .sorted(by: { $0.date > $1.date })
@@ -210,6 +208,7 @@ class HistoryViewModel: BaseViewModel {
                         //удаляеем даты в которых нет ни одной записи
                         .filter { !$0.items.isEmpty }
                         //сами элементы в секциях фильтруем в соответствии с фильтром отображаемых событий
+                        // swiftlint:disable:next closure_body_length
                         .map { (day: Date, items: [APIPlog]) -> (day: Date, items: [APIPlog]) in
                             let itemsFiltered = items.filter {
                                 //если выбраны "все" события в фильтре, то не фильтруем совсем
@@ -284,9 +283,14 @@ class HistoryViewModel: BaseViewModel {
                 //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
                 //как отдельный элемент в текущую последовательность
                 self.apptsFilter.value.forEach { flatId in
-                    self.apiWrapper.plogDays(flatId: flatId, events: self.eventsFilter.value, forceRefresh: forceRefresh)
+                    self.apiWrapper.plogDays(
+                        flatId: flatId,
+                        events: self.eventsFilter.value,
+                        forceRefresh: forceRefresh
+                    )
                         .trackError(self.errorTracker)
-                        .map { $0 == nil ?  nil : [flatId: $0!] } //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
+                        //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
+                        .map { $0 == nil ?  nil : [flatId: $0!] }
                         .asDriver(onErrorJustReturn: [flatId: []])
                         .drive { result in
                             results.onNext(result)
@@ -303,19 +307,20 @@ class HistoryViewModel: BaseViewModel {
         
         updateAvailableDays //аргумент - forceRefresh
             .asDriverOnErrorJustComplete()
-            .flatMap { [weak self] forceRefresh -> Driver<[FlatId:GetPersonFacesResponseData]?> in
+            .flatMap { [weak self] forceRefresh -> Driver<[FlatId: GetPersonFacesResponseData]?> in
                 guard let self = self else {
                     return .just(nil)
                 }
                 self.listFaces = [:]
-                let results = PublishSubject<[FlatId:GetPersonFacesResponseData]?>()
+                let results = PublishSubject<[FlatId: GetPersonFacesResponseData]?>()
                 
                 //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
                 //как отдельный элемент в текущую последовательность
                 self.apptsFilter.value.forEach { flatId in
                     self.apiWrapper.getPersonFaces(flatId: flatId)
                         .trackError(self.errorTracker)
-                        .map { $0 == nil ?  nil : [flatId: $0!] } //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
+                        //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
+                        .map { $0 == nil ?  nil : [flatId: $0!] }
                         .asDriver(onErrorJustReturn: [flatId: []])
                         .drive { result in
                             results.onNext(result)
@@ -339,7 +344,6 @@ class HistoryViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
             
-        
         // мы знаем только id дома, а логи запрашиваются для id квартиры,
         //поэтому получаем список настроек чтобы понять по id дома идентификатор первой доступной квартиры в данном доме
         //на будущее надо заменить на запросы логов для каждой квартиры.
@@ -381,7 +385,15 @@ class HistoryViewModel: BaseViewModel {
                     self.camMap.accept(camMap)
                     
                    //получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
-                    self.flatIds = args.filtered({ $0.houseId == self.houseId && $0.hasPlog }, map: { (Int($0.flatId!) ?? -1) }).duplicatesRemoved()
+                    self.flatIds = args.filtered(
+                        { address in // swiftlint:disable:this opening_brace
+                            return address.houseId == self.houseId && address.hasPlog
+                        },
+                        map: { address in
+                            return Int(address.flatId!) ?? -1
+                        }
+                    )
+                    .duplicatesRemoved()
                     
                     //получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
                     self.flatNumbers = args.filtered({ $0.houseId == self.houseId  && $0.hasPlog }, map: { (Int($0.flatNumber!) ?? -1) }).duplicatesRemoved()
@@ -401,7 +413,7 @@ class HistoryViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.homeRouter?.trigger(.back)
+                    self?.router.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -472,14 +484,15 @@ class HistoryViewModel: BaseViewModel {
                         return
                     }
                     
-                    self!.homeRouter?.trigger(
-                        .historyDetail(
+                    self!.router.trigger(
+                        .detail(
                             viewModel: viewModel,
                             item: item
                         )
                     )
                 }
-            ).disposed(by: disposeBag)
+            )
+            .disposed(by: disposeBag)
         
         input.eventsFilter
             .drive(eventsFilter)
@@ -514,21 +527,20 @@ class HistoryViewModel: BaseViewModel {
     
     func extractFaceImage(uuid: String) -> UIImage? {
         for data in dataCache {
-            if let item = data.items.first(where: {$0.uuid == uuid }) {
+            if let item = data.items.first(where: { $0.uuid == uuid }) {
                 return item.previewImage
             }
         }
         
         return nil
     }
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    // swiftlint:disable:next function_body_length
     func transform(_ input: InputDetail) -> OutputDetail {
         
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.homeRouter?.trigger(.back)
-                    self?.settingsRouter?.trigger(.back)
+                    self?.router.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -539,6 +551,7 @@ class HistoryViewModel: BaseViewModel {
         
         input.loadDay
             .distinctUntilChanged()
+            // swiftlint:disable:next closure_body_length
             .flatMap { [weak self] day -> Driver<DayFlatItemsData?> in
                     
                 guard let self = self else {
@@ -554,7 +567,7 @@ class HistoryViewModel: BaseViewModel {
                 self.apptsFilter.value.forEach { flatId in
                     //проверяем, что для этой квартиры есть записи в этот день
                     guard let days = self.availableDays[flatId],
-                          days.contains( where: { $0.day == day  })
+                          days.contains(where: { $0.day == day })
                     //иначе переходим к следующей квартире.
                     else {
                         return
@@ -596,9 +609,7 @@ class HistoryViewModel: BaseViewModel {
                 guard let self = self else {
                     return
                 }
-                
-                self.homeRouter?.trigger(.addFaceFromEvent(event: event))
-                self.settingsRouter?.trigger(.addFaceFromEvent(event: event))
+                self.router.trigger(.addFaceFromEvent(event: event))
             }
             .disposed(by: disposeBag)
         
@@ -608,22 +619,20 @@ class HistoryViewModel: BaseViewModel {
                     return
                 }
                 
-                var face: APIFace? = nil
+                var face: APIFace?
                 for faces in self.listFaces.values {
                     face = faces.first(where: { $0.faceId == Int(event.detailX?.faceId ?? "") })
                     if face != nil { break }
                 }
                 
-                self.homeRouter?.trigger(.deleteFaceFromEvent(event: event, imageURL: face?.image))
-                self.settingsRouter?.trigger(.deleteFaceFromEvent(event: event, imageURL: face?.image))
+                self.router.trigger(.deleteFaceFromEvent(event: event, imageURL: face?.image))
             }
             .disposed(by: disposeBag)
        
         input.displayHintTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.homeRouter?.trigger(.showModal(withContent: .aboutVideoEvent))
-                    self?.settingsRouter?.trigger(.showModal(withContent: .aboutVideoEvent))
+                    self?.router.trigger(.showModal(withContent: .aboutVideoEvent))
                 }
             )
             .disposed(by: disposeBag)
@@ -673,8 +682,7 @@ extension HistoryViewModel {
         let camMap: Driver<[APICamMap]>
     }
     
-    private func orderOf(row: Int, count: Int) -> HistoryCellOrder
-    {
+    private func orderOf(row: Int, count: Int) -> HistoryCellOrder {
         return {
             switch row {
             case 0:
