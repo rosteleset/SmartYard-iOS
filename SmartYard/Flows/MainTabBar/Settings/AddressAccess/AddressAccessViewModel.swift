@@ -278,7 +278,7 @@ class AddressAccessViewModel: BaseViewModel {
                         return
                     }
                     
-                    self.router.trigger(.facesSettings(flatId: flatId))
+                    self.router.trigger(.facesSettings(flatId: flatId, address: self.address))
                 }
             )
             .disposed(by: disposeBag)

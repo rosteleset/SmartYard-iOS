@@ -18,6 +18,7 @@ class FacesSettingsViewModel: BaseViewModel {
     private let alertService: AlertService
     private let router: WeakRouter<SettingsRoute>
     private let flatId: Int
+    private let address: String
     
     private let registeredFaces = PublishSubject<[APIFace]>()
     
@@ -26,13 +27,15 @@ class FacesSettingsViewModel: BaseViewModel {
         accessService: AccessService,
         alertService: AlertService,
         router: WeakRouter<SettingsRoute>,
-        flatId: Int
+        flatId: Int,
+        address: String
     ) {
         self.apiWrapper = apiWrapper
         self.accessService = accessService
         self.alertService = alertService
         self.router = router
         self.flatId = flatId
+        self.address = address
     }
     
     // swiftlint:disable:next function_body_length
@@ -82,7 +85,7 @@ class FacesSettingsViewModel: BaseViewModel {
                     guard let self = self else {
                         return
                     }
-                    self.router.trigger(.addFace(flatId: self.flatId))
+                    self.router.trigger(.addFace(flatId: self.flatId, address: self.address))
                 }
             )
             .disposed(by: disposeBag)

@@ -26,10 +26,10 @@ enum SettingsRoute: Route {
     case newAllowedPerson(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
     case safariPage(url: URL)
     case editName
-    case facesSettings(flatId: Int)
+    case facesSettings(flatId: Int, address: String)
     case showFace(image: UIImage?)
     case deleteFace(image: UIImage?, flatId: Int, faceId: Int)
-    case addFace(flatId: Int)
+    case addFace(flatId: Int, address: String)
     case addFaceFromEvent(event: APIPlog)
     case showModal(withContent: ModalContent)
     case deleteFaceFromEvent(event: APIPlog, imageURL: String?)
@@ -229,13 +229,14 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case let .facesSettings(flatId):
+        case let .facesSettings(flatId, address):
             let vm = FacesSettingsViewModel(
                 apiWrapper: apiWrapper,
                 accessService: accessService,
                 alertService: alertService,
                 router: weakRouter,
-                flatId: flatId
+                flatId: flatId,
+                address: address
             )
             
             let vc = FacesSettingsViewController(viewModel: vm)
@@ -255,7 +256,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
         
-        case let .addFace(flatId):
+        case let .addFace(flatId, address):
             let coordinator = HistoryCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
@@ -267,7 +268,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
                 logoutHelper: logoutHelper,
                 flatId: flatId,
                 eventsFilter: EventsFilter.keys,
-                address: ""
+                address: address
             )
             
             addChild(coordinator)

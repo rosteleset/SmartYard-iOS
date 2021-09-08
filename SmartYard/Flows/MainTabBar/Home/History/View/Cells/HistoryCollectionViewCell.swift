@@ -269,13 +269,13 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         }
         
         if let flags = value.detailX?.flags,
-           ( flags.contains("liked") || flags.contains("canLike") ) {
+           ( flags.contains("canDislike") || flags.contains("canDisLike") || flags.contains("canLike") ) {
             actionsContainer.isHidden = false
             actionsDescriptionLabel.text = ""
             denyAccessButton.isHidden = true
             openAccessButton.isHidden = true
             
-            if flags.contains("liked") {
+            if flags.contains("canDislike") || flags.contains("canDisLike") {
                 denyAccessButton.isHidden = false
                 // swiftlint:disable:next line_length
                 actionsDescriptionLabel.text = "При выборе «‎Чужой»‎ мы удалим ваше зарегистрированное лицо, на какое произошло ложное срабатывание наших алгоритмов.\nВсе лица, зарегистрированные в системе, можно найти в разделе Настройки адресов -> Управление доступом -> Вход по лицу без ключа."
