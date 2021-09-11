@@ -235,7 +235,7 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                 //со всех квартир собираем все дни, убираем дубли, сортируем от поздних к ранним
                 self.daysQueue = $0.flatMap { $0.value }
                     .map { $0.day }
-                    .duplicatesRemoved()
+                    .withoutDuplicates()
                     .sorted(by: >)
                 
                 //сохраняем список всех имеющихся дат на будущее - пригодятся.
@@ -304,14 +304,16 @@ extension HistoryDetailViewController: UICollectionViewDelegateFlowLayout {
         }
         
         //если предыдущий не загружен - загружаем
-        if let nextDay = allAvailableDates.item(at: willDisplayDayIndex + 1) {
+        if  willDisplayDayIndex + 1 < allAvailableDates.count {
+            let nextDay = allAvailableDates[willDisplayDayIndex + 1]
             if daysQueue.contains(nextDay) {
                 daysQueue.removeAll(nextDay)
                 loadDayTriger.onNext(nextDay)
             }
         }
         //если следующий не загружен - загружаем
-        if let previousDay = allAvailableDates.item(at: willDisplayDayIndex - 1) {
+        if willDisplayDayIndex - 1 >= 0 {
+            let previousDay = allAvailableDates[willDisplayDayIndex - 1]
             if daysQueue.contains(previousDay) {
                 daysQueue.removeAll(previousDay)
                 loadDayTriger.onNext(previousDay)

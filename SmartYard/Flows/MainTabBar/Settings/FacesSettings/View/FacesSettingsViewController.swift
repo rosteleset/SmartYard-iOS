@@ -172,9 +172,11 @@ extension FacesSettingsViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withClass: FaceCell.self, for: indexPath)
             cell.imageButton.setImage(nil, for: .normal)
             
-            guard let face = registeredFaces.item(at: indexPath.row - 1) else {
+            guard 0...registeredFaces.count ~= indexPath.row - 1 else {
                 return cell
             }
+            let face = registeredFaces[indexPath.row - 1]
+            
             cell.imageButton.loadImageUsingUrlString(urlString: face.image, cache: imagesCache)
             cell.imageButton.contentMode = .scaleAspectFit
             cell.faceId = face.faceId

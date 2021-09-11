@@ -8,7 +8,7 @@ target 'SmartYard' do
   use_frameworks!
 
   # Networking
-  pod 'Moya/RxSwift'
+  pod 'Moya/RxSwift' 
   pod 'Kingfisher'
   pod 'linphone-sdk' #, '4.4.28'
   
@@ -19,8 +19,8 @@ target 'SmartYard' do
   pod 'RxDataSources'
 
   # Utilities
-  pod 'SwiftLint', '0.35'
-  pod 'SwifterSwift', '4.6'
+  pod 'SwiftLint'#, '0.35'
+  pod 'SwifterSwift'#, '4.6'
   
   # UI
   pod 'Cartography'
@@ -33,7 +33,7 @@ target 'SmartYard' do
   pod 'SkeletonView' #, '1.7'
   pod 'SearchTextField'
   pod 'SHSPhoneComponent'
-  pod 'Parchment', '2.2.0'
+  pod 'Parchment'#, '2.2.0'
   pod 'lottie-ios'
   
   # Calendar

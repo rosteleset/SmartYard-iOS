@@ -166,7 +166,7 @@ class HistoryViewModel: BaseViewModel {
                     self.uniqueDays = Array(data.values)
                         .flatMap { $0 }
                         .map { $0.day }
-                        .duplicatesRemoved()
+                        .withoutDuplicates()
                         .sorted(by: >)
                     
                     self.updateSections.onNext(())
@@ -200,7 +200,7 @@ class HistoryViewModel: BaseViewModel {
                                 .flatMap { $0.items }
                                 //удаляем записи с одинаковым uuid, которые одновременно могли присутствовать
                                 //в разных квартирах
-                                .duplicatesRemoved()
+                                .withoutDuplicates()
                                 //сортируем события внутри даты от самой ранней к более поздней
                                 .sorted(by: { $0.date > $1.date })
                             )
@@ -393,10 +393,10 @@ class HistoryViewModel: BaseViewModel {
                             return Int(address.flatId!) ?? -1
                         }
                     )
-                    .duplicatesRemoved()
+                    .withoutDuplicates()
                     
                     //получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
-                    self.flatNumbers = args.filtered({ $0.houseId == self.houseId  && $0.hasPlog }, map: { (Int($0.flatNumber!) ?? -1) }).duplicatesRemoved()
+                    self.flatNumbers = args.filtered({ $0.houseId == self.houseId  && $0.hasPlog }, map: { (Int($0.flatNumber!) ?? -1) }).withoutDuplicates()
                     
                     //по умолчанию фильтр содержит все доступные квартиры
                     self.apptsFilter.accept(self.flatIds)

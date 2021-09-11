@@ -56,7 +56,7 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if skeletonView.isSkeletonActive {
+        if skeletonView.sk.isSkeletonActive {
             skeletonView.showSkeletonAsynchronously()
         }
     }

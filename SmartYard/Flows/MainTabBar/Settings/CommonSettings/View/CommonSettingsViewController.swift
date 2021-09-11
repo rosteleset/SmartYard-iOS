@@ -71,11 +71,11 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if textNotificationsSkeleton.isSkeletonActive {
+        if textNotificationsSkeleton.sk.isSkeletonActive {
             textNotificationsSkeleton.showSkeletonAsynchronously()
         }
         
-        if balanceWarningSkeleton.isSkeletonActive {
+        if balanceWarningSkeleton.sk.isSkeletonActive {
             balanceWarningSkeleton.showSkeletonAsynchronously()
         }
     }

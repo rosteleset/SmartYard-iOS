@@ -59,7 +59,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if skeletonContainer.isSkeletonActive {
+        if skeletonContainer.sk.isSkeletonActive {
             skeletonContainer.showSkeletonAsynchronously()
         }
     }
