@@ -219,7 +219,7 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
         let json: [String: Any] = ["doorId": doorId, "domophoneId": domophoneId]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
-        guard let url = URL(string: "https://dm.lanta.me/api/address/openDoor") else {
+        guard let url = URL(string: "https://dm.lanta.me:543/api/address/openDoor") else {
             return
         }
         
