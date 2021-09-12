@@ -11,10 +11,12 @@ import Foundation
 public struct SmartYardSharedData: Codable {
     
     public var accessToken: String
+    public var backendURL: String
     public var sharedObjects: [SmartYardSharedObject]
     
-    public init(accessToken: String, sharedObjects: [SmartYardSharedObject]) {
+    public init(accessToken: String, backendURL: String, sharedObjects: [SmartYardSharedObject]) {
         self.accessToken = accessToken
+        self.backendURL = backendURL
         self.sharedObjects = sharedObjects
     }
 
@@ -46,7 +48,7 @@ public enum SmartYardSharedDataUtilities {
     }
     
     public static func clearSharedData() {
-        let emptyData = SmartYardSharedData(accessToken: "", sharedObjects: [])
+        let emptyData = SmartYardSharedData(accessToken: "", backendURL: "", sharedObjects: [])
         saveSharedData(data: emptyData)
     }
     

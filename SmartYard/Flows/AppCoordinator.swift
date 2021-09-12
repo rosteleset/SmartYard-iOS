@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import SwifterSwift
 import AVKit
+import SmartYardSharedDataFramework
 
 enum AppRoute: Route {
     
@@ -58,7 +59,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private var temporarilyIgnoredOrientation: UIDeviceOrientation?
     
     var selectedTabPresentable: Presentable? {
-        return mainTabBarCoordinator?.selectedPresentable
+        mainTabBarCoordinator?.selectedPresentable
     }
     
     init(mainWindow: UIWindow) {
@@ -283,6 +284,22 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     func syncBadgeNumber() {
         pushNotificationService.synchronizeBadgeCount()
+    }
+    
+    /// обновляет URL для обращения к серверу с API
+    func updateBackendURL(_ newBackendURL: String) {
+        // если он не поменялся, то ничего не делаем
+        if accessService.backendURL == newBackendURL {
+            return
+        }
+        
+        // иначе меняем URL на новый в приложении
+        accessService.backendURL = newBackendURL
+        
+        // и меняем URL на новый в общем файле - чтобы и виджет работал с новым URL
+        var sharedData = SmartYardSharedDataUtilities.loadSharedData()
+        sharedData.backendURL = newBackendURL
+        SmartYardSharedDataUtilities.saveSharedData(data: sharedData)
     }
     
     func openNotificationsTab() {

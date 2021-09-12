@@ -14,12 +14,13 @@ private let voipTokenKey = "voipToken"
 private let prefersVoipForCallsKey = "prefersVoipForCalls"
 private let clientNameKey = "clientName"
 private let clientPhoneNumberKey = "clientPhoneNumber"
+private let backendURLKey = "backendURL"
 
 class AccessService {
     
     var appState: AppState {
         get {
-            return UserDefaults.standard.object(AppState.self, with: appStateKey) ?? .onboarding
+            UserDefaults.standard.object(AppState.self, with: appStateKey) ?? .onboarding
         }
         set {
             UserDefaults.standard.set(object: newValue, forKey: appStateKey)
@@ -28,7 +29,7 @@ class AccessService {
     
     var accessToken: String? {
         get {
-            return UserDefaults.standard.string(forKey: accessTokenKey)
+            UserDefaults.standard.string(forKey: accessTokenKey)
         }
         set {
             guard let newValue = newValue else {
@@ -42,7 +43,7 @@ class AccessService {
     
     var voipToken: String? {
         get {
-            return UserDefaults.standard.string(forKey: voipTokenKey)
+            UserDefaults.standard.string(forKey: voipTokenKey)
         }
         set {
             guard let newValue = newValue else {
@@ -56,7 +57,7 @@ class AccessService {
     
     var prefersVoipForCalls: Bool {
         get {
-            return UserDefaults.standard.value(forKey: prefersVoipForCallsKey) as? Bool ?? false
+            UserDefaults.standard.value(forKey: prefersVoipForCallsKey) as? Bool ?? false
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: prefersVoipForCallsKey)
@@ -65,7 +66,7 @@ class AccessService {
     
     var clientName: APIClientName? {
         get {
-            return UserDefaults.standard.object(APIClientName.self, with: clientNameKey)
+            UserDefaults.standard.object(APIClientName.self, with: clientNameKey)
         }
         set {
             guard let newValue = newValue else {
@@ -79,7 +80,7 @@ class AccessService {
     
     var clientPhoneNumber: String? {
         get {
-            return UserDefaults.standard.string(forKey: clientPhoneNumberKey)
+            UserDefaults.standard.string(forKey: clientPhoneNumberKey)
         }
         set {
             guard let newValue = newValue else {
@@ -98,6 +99,15 @@ class AccessService {
         case .smsCode(let phoneNumber): return .pinCode(phoneNumber: phoneNumber, isInitial: false)
         case .userName: return .userName(preloadedName: clientName)
         case .main: return .main
+        }
+    }
+    
+    var backendURL: String {
+        get {
+            UserDefaults.standard.string(forKey: backendURLKey) ?? "https://dm.lanta.me"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: backendURLKey)
         }
     }
     

@@ -65,21 +65,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case "INStartVideoCallIntent":
             NotificationCenter.default.post(name: .videoRequestedByCallKit, object: nil)
         case NSUserActivityTypeBrowsingWeb:
-            //Обработка deeplinks
+            // Обработка deeplinks
             guard
                 let incomingURL = userActivity.webpageURL,
                 let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
                 return false
             }
             
-            //обрабатываем только url вида https://demo.lanta.me/0123456789 для подтверждения адреса
+            // обрабатываем только url вида https://demo.lanta.me/0123456789 для подтверждения адреса
             if components.host == "demo.lanta.me",
                components.scheme == "https",
                let path = components.path,
                path.matches(pattern: "/[0-9]{10}") {
                     appCoordinator.trigger(.registerQRCode(code: incomingURL.absoluteString))
             } else
-            //в противном случае даём OS обработать это событие самостоятельно
+            // в противном случае даём OS обработать это событие самостоятельно
             {
                 return false
             }
@@ -160,6 +160,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
         
+        // MARK: если в push-сообщении есть адрес backend-сервера, то обновляем его.
+        if let backendURL = userInfo["baseUrl"] as? String {
+            appCoordinator.updateBackendURL(backendURL)
+        }
+        
         // MARK: Если пришел входящий звонок - переходим на экран входящего звонка, но не показываем пуш
         
         if let callPayload = CallPayload(pushNotificationPayload: userInfo) {
@@ -223,16 +228,24 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     // MARK: Чтобы при нажатии на пуш происходило какое-то действие
+    // (в т.ч. обработка  push, когда приложение в background)
     
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
+        let userInfo = response.notification.request.content.userInfo
+        
+        // MARK: если в push-сообщении есть адрес backend-сервера, то обновляем его.
+        if let backendURL = userInfo["baseUrl"] as? String {
+            appCoordinator.updateBackendURL(backendURL)
+        }
+        
         // MARK: Если нажали на уведомление о входящем звонке - процессим запрос
         
         if let callPayload = CallPayload(
-            pushNotificationPayload: response.notification.request.content.userInfo
+            pushNotificationPayload: userInfo
         ) {
             appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: false)
             completionHandler()
@@ -241,13 +254,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         // MARK: Если есть messageId - помечаем сообщение как доставленное. Лучше два раза, чем ни разу
         
-        if let messageId = response.notification.request.content.userInfo["messageId"] as? String {
+        if let messageId = userInfo["messageId"] as? String {
             appCoordinator.markMessagesAsDelivered(messageIds: [messageId])
         }
         
         // MARK: Если в уведомлении нет никакого действия, то ничего не делаем
         
-        guard let rawAction = response.notification.request.content.userInfo["action"] as? String,
+        guard let rawAction = userInfo["action"] as? String,
             let action = MessageType(rawValue: rawAction) else {
             completionHandler()
             return
@@ -312,6 +325,11 @@ extension AppDelegate: PKPushRegistryDelegate {
             appCoordinator.reportInvalidCall()
             completion()
             return
+        }
+        
+        // если в push-сообщении есть адрес backend-сервера, то обновляем его.
+        if let backendURL = data["baseUrl"] as? String {
+            appCoordinator.updateBackendURL(backendURL)
         }
         
         appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: true)

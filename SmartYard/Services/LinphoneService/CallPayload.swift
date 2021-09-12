@@ -44,7 +44,7 @@ struct CallPayload {
     }
     
     var sipConfig: SipConfig {
-        return SipConfig(
+        SipConfig(
             domain: "\(server):\(port)",
             username: username,
             password: password,
@@ -54,7 +54,7 @@ struct CallPayload {
     }
     
     var uniqueIdentifier: String {
-        return username + password + server + port
+        username + password + server + port
     }
     
     init?(pushNotificationPayload data: [AnyHashable: Any]) {
@@ -80,14 +80,7 @@ struct CallPayload {
         self.image = image
         self.dtmf = dtmf
         self.callerId = callerId
-        
-        if let stun = data["stun"] as? String {
-            self.stun = stun
-        } else
-        {
-            self.stun = nil
-        }
-        
+        self.stun = data["stun"] as? String
     }
     
 }

@@ -62,8 +62,9 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
                         return
                     }
                     
-                    //Васильев: иногда случается странный баг, что performBatchUpdates падает в Exception.
-                    //связано это с тем, что currentVisibleCellCount при инициализации может вернуть тут 2 ячейки, а уже внутри updateBlock - 3 ячейки
+                    // Васильев: иногда случается странный баг, что performBatchUpdates падает в Exception.
+                    // связано это с тем, что currentVisibleCellCount при инициализации
+                    // может вернуть тут 2 ячейки, а уже внутри updateBlock - 3 ячейки
                     // поэтому проверку приходится делать ещё раз - да, это костыль.
                     let currentVisibleCellCount = self.tableView.visibleCells.count
                     let cellCountDifference = updatedVisibleCellCount - currentVisibleCellCount
@@ -207,6 +208,7 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
                     
                     self?.sendOpenDoorRequest(
                         accessToken: uObject.accessToken,
+                        backendURL: uObject.accessToken,
                         doorId: curObject.doorId,
                         domophoneId: curObject.domophoneId
                     )
@@ -215,11 +217,11 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
             .disposed(by: disposeBag)
     }
     
-    private func sendOpenDoorRequest(accessToken: String, doorId: Int, domophoneId: String) {
+    private func sendOpenDoorRequest(accessToken: String, backendURL: String, doorId: Int, domophoneId: String) {
         let json: [String: Any] = ["doorId": doorId, "domophoneId": domophoneId]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
-        guard let url = URL(string: "https://dm.lanta.me:543/api/address/openDoor") else {
+        guard let url = URL(string: backendURL + "/api/address/openDoor") else {
             return
         }
         
@@ -239,7 +241,7 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
 extension WidgetViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return WdgObjectCell.defaultHeight
+        WdgObjectCell.defaultHeight
     }
     
 }
@@ -247,7 +249,7 @@ extension WidgetViewController: UITableViewDelegate {
 extension WidgetViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return numberOfTableRowsToDisplay()
+        numberOfTableRowsToDisplay()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

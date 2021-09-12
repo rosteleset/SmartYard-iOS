@@ -233,7 +233,7 @@ class AddressesListViewModel: BaseViewModel {
             .map { args -> (GetAddressListResponseData, GetListConnectResponseData) in
                 var (approvedAddresses, uSecondResponse) = args
                 
-                //перемещаем наверх позиции в которых есть домофон
+                // перемещаем наверх позиции в которых есть домофон
                 var movingElements: GetAddressListResponseData = []
                 for item in approvedAddresses where item.doors.isEmpty == false {
                         movingElements.append(item)
@@ -278,7 +278,8 @@ class AddressesListViewModel: BaseViewModel {
                     self?.loadedApprovedAddressesData.onNext(approvedAddresses)
                     self?.loadedUnapprovedAddressesData.onNext(unapprovedAddresses)
                     
-                    guard let accessToken = self?.accessService.accessToken else {
+                    guard let accessToken = self?.accessService.accessToken,
+                          let backendURL = self?.accessService.backendURL else {
                         return
                     }
                     
@@ -297,7 +298,11 @@ class AddressesListViewModel: BaseViewModel {
                         }
                     }
                     
-                    let sharedData = SmartYardSharedData(accessToken: accessToken, sharedObjects: sharedObjects)
+                    let sharedData = SmartYardSharedData(
+                        accessToken: accessToken,
+                        backendURL: backendURL,
+                        sharedObjects: sharedObjects
+                    )
                     
                     SmartYardSharedDataUtilities.saveSharedData(data: sharedData)
                 }
@@ -387,7 +392,7 @@ class AddressesListViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        //Нажатие на кнопку "Видеонаблюдение"
+        // Нажатие на кнопку "Видеонаблюдение"
         input.itemSelected
             .flatMap { identity -> Driver<String> in
                 guard case let .cameras(addressId) = identity else {
@@ -411,7 +416,7 @@ class AddressesListViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        //Нажатие на кнопку "истории"
+        // Нажатие на кнопку "истории"
         input.itemSelected
             .flatMap { identity -> Driver<String> in
                 guard case let .history(addressId) = identity else {

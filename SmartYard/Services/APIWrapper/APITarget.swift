@@ -78,7 +78,7 @@ extension APITarget: TargetType {
             return URL(string: request.cameraUrl)!
             
         default:
-            return URL(string: "https://dm.lanta.me:543/api")!
+            return URL(string: AccessService().backendURL + "/api")!
         }
     }
     
