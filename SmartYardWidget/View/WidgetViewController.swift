@@ -208,7 +208,7 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
                     
                     self?.sendOpenDoorRequest(
                         accessToken: uObject.accessToken,
-                        backendURL: uObject.accessToken,
+                        backendURL: uObject.backendURL,
                         doorId: curObject.doorId,
                         domophoneId: curObject.domophoneId
                     )
