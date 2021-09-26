@@ -30,7 +30,7 @@
 			<key>INIntentEligibleForWidgets</key>
 			<true/>
 			<key>INIntentLastParameterTag</key>
-			<integer>7</integer>
+			<integer>8</integer>
 			<key>INIntentManagedParameterCombinations</key>
 			<dict>
 				<key>address</key>
@@ -85,15 +85,12 @@
 					<string>ryTv95</string>
 					<key>INIntentParameterDisplayPriority</key>
 					<integer>1</integer>
-					<key>INIntentParameterMetadata</key>
-					<dict>
-						<key>INIntentParameterMetadataCapitalization</key>
-						<string>Sentences</string>
-						<key>INIntentParameterMetadataDefaultValueID</key>
-						<string>XXNSVJ</string>
-					</dict>
 					<key>INIntentParameterName</key>
 					<string>address</string>
+					<key>INIntentParameterObjectType</key>
+					<string>HouseAddress</string>
+					<key>INIntentParameterObjectTypeNamespace</key>
+					<string>c1uBGC</string>
 					<key>INIntentParameterPromptDialogs</key>
 					<array>
 						<dict>
@@ -134,9 +131,9 @@
 					<key>INIntentParameterSupportsResolution</key>
 					<true/>
 					<key>INIntentParameterTag</key>
-					<integer>7</integer>
+					<integer>8</integer>
 					<key>INIntentParameterType</key>
-					<string>String</string>
+					<string>Object</string>
 				</dict>
 				<dict>
 					<key>INIntentParameterConfigurable</key>
@@ -243,6 +240,72 @@
 		</dict>
 	</array>
 	<key>INTypes</key>
-	<array/>
+	<array>
+		<dict>
+			<key>INTypeClassName</key>
+			<string>HouseAddress</string>
+			<key>INTypeDisplayName</key>
+			<string>House Address</string>
+			<key>INTypeDisplayNameID</key>
+			<string>mNEDvp</string>
+			<key>INTypeLastPropertyTag</key>
+			<integer>100</integer>
+			<key>INTypeName</key>
+			<string>HouseAddress</string>
+			<key>INTypeProperties</key>
+			<array>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>1</integer>
+					<key>INTypePropertyName</key>
+					<string>identifier</string>
+					<key>INTypePropertyTag</key>
+					<integer>1</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>2</integer>
+					<key>INTypePropertyName</key>
+					<string>displayString</string>
+					<key>INTypePropertyTag</key>
+					<integer>2</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>3</integer>
+					<key>INTypePropertyName</key>
+					<string>pronunciationHint</string>
+					<key>INTypePropertyTag</key>
+					<integer>3</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>4</integer>
+					<key>INTypePropertyName</key>
+					<string>alternativeSpeakableMatches</string>
+					<key>INTypePropertySupportsMultipleValues</key>
+					<true/>
+					<key>INTypePropertyTag</key>
+					<integer>4</integer>
+					<key>INTypePropertyType</key>
+					<string>SpeakableString</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

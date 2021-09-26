@@ -13,6 +13,39 @@ import Intents
 @available(iOSApplicationExtension 14.0, *)
 class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
     
+    func resolveAddress(for intent: SYOpenDoorIntent, with completion: @escaping (HouseAddressResolutionResult) -> Void) {
+        guard let address = intent.address else {
+            completion(.needsValue())
+            return
+        }
+        
+        let matchedItems = addresses()
+            .filter { $0 == address.displayString }
+            .map {HouseAddress(identifier: $0, display: $0)}
+        
+        print("resolveAddress: \(address)")
+        print("matchedAdresses: \(matchedItems)")
+        
+        switch matchedItems.count {
+        case 0:
+            completion(.unsupported())
+        case 1:
+            completion(.success(with: address))
+        default:
+            completion(.disambiguation(with: matchedItems))
+        }
+    }
+    
+    func provideAddressOptionsCollection(for intent: SYOpenDoorIntent, with completion: @escaping (INObjectCollection<HouseAddress>?, Error?) -> Void) {
+        print("provideAddress - ")
+        
+        let allItems = addresses().map { HouseAddress(identifier: $0, display: $0) }
+        
+        print(allItems)
+        completion(INObjectCollection(items: allItems), nil)
+    }
+    
+    
     var objects: [SmartYardSharedObject] {
         let sharedData = SmartYardSharedDataUtilities.loadSharedData()
         return sharedData.sharedObjects
@@ -43,7 +76,7 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
                 }
             }
     }
-    
+    /*
     func resolveAddress(for intent: SYOpenDoorIntent, with completion: @escaping (INStringResolutionResult) -> Void) {
         guard let address = intent.address else {
             completion(INStringResolutionResult.needsValue())
@@ -51,7 +84,7 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
         }
         
         let matchedItems = addresses()
-            .filter { $0 == intent.address }
+            .filter { $0.description == intent.address }
         
         print("resolveAddress: \(address)")
         print("matchedAdresses: \(matchedItems)")
@@ -74,7 +107,7 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
         print(allItems)
         completion(INObjectCollection(items: allItems), nil)
     }
-    
+    */
     func resolveDoor(for intent: SYOpenDoorIntent, with completion: @escaping (INStringResolutionResult) -> Void) {
         
         guard let door = intent.door else {
@@ -82,10 +115,10 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
             return
         }
         
-        let matchedItems = doors(for: intent.address)
+        let matchedItems = doors(for: intent.address?.displayString)
             .filter { $0 == intent.door }
         
-        print("resolveDoor: \(door) for \(intent.address ?? "")")
+        print("resolveDoor: \(door) for \(intent.address?.displayString ?? "")")
         print("matchedDoors: \(matchedItems)")
         
         switch matchedItems.count {
@@ -99,9 +132,9 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
     }
     
     func provideDoorOptionsCollection(for intent: SYOpenDoorIntent, with completion: @escaping (INObjectCollection<NSString>?, Error?) -> Void) {
-        print("provideDoor for \(intent.address ?? "<неизвестно>")")
+        print("provideDoor for \(intent.address?.displayString ?? "<неизвестно>")")
         
-        let allItems = doors(for: intent.address).map { NSString(string: $0) }
+        let allItems = doors(for: intent.address?.displayString).map { NSString(string: $0) }
         
         print(allItems)
         
@@ -111,6 +144,10 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
         } else {
             completion(INObjectCollection(items: allItems), nil)
         }
+    }
+    
+    func defaultDoor(for intent: SYOpenDoorIntent) -> String? {
+        return("test")
     }
     
 }
