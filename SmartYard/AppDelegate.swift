@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         configureVoIPNotifications()
         
-        if let yandexConfig = YMMYandexMetricaConfiguration(apiKey: "686bcc1e-69e5-4412-8d54-3e11e362624a") {
+        if let yandexConfig = YMMYandexMetricaConfiguration(apiKey: Constants.yandexApiKey) {
             YMMYandexMetrica.activate(with: yandexConfig)
         } else {
             print("Couldn't activate YMM")
