@@ -30,7 +30,7 @@
 			<key>INIntentEligibleForWidgets</key>
 			<true/>
 			<key>INIntentLastParameterTag</key>
-			<integer>8</integer>
+			<integer>9</integer>
 			<key>INIntentManagedParameterCombinations</key>
 			<dict>
 				<key>address</key>
@@ -60,6 +60,8 @@
 			<dict>
 				<key>door,address</key>
 				<dict>
+					<key>INIntentParameterCombinationIsPrimary</key>
+					<true/>
 					<key>INIntentParameterCombinationSubtitle</key>
 					<string>${address}</string>
 					<key>INIntentParameterCombinationSubtitleID</key>
@@ -146,15 +148,12 @@
 					<string>Lab1IV</string>
 					<key>INIntentParameterDisplayPriority</key>
 					<integer>2</integer>
-					<key>INIntentParameterMetadata</key>
-					<dict>
-						<key>INIntentParameterMetadataCapitalization</key>
-						<string>Sentences</string>
-						<key>INIntentParameterMetadataDefaultValueID</key>
-						<string>AWfenU</string>
-					</dict>
 					<key>INIntentParameterName</key>
 					<string>door</string>
+					<key>INIntentParameterObjectType</key>
+					<string>Door</string>
+					<key>INIntentParameterObjectTypeNamespace</key>
+					<string>c1uBGC</string>
 					<key>INIntentParameterPromptDialogs</key>
 					<array>
 						<dict>
@@ -206,9 +205,9 @@
 					<key>INIntentParameterSupportsResolution</key>
 					<true/>
 					<key>INIntentParameterTag</key>
-					<integer>6</integer>
+					<integer>9</integer>
 					<key>INIntentParameterType</key>
-					<string>String</string>
+					<string>Object</string>
 				</dict>
 			</array>
 			<key>INIntentResponse</key>
@@ -303,6 +302,99 @@
 					<integer>4</integer>
 					<key>INTypePropertyType</key>
 					<string>SpeakableString</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>INTypeClassName</key>
+			<string>Door</string>
+			<key>INTypeDisplayName</key>
+			<string>Door</string>
+			<key>INTypeDisplayNameID</key>
+			<string>7pPNLK</string>
+			<key>INTypeLastPropertyTag</key>
+			<integer>103</integer>
+			<key>INTypeName</key>
+			<string>Door</string>
+			<key>INTypeProperties</key>
+			<array>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>1</integer>
+					<key>INTypePropertyName</key>
+					<string>identifier</string>
+					<key>INTypePropertyTag</key>
+					<integer>1</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>2</integer>
+					<key>INTypePropertyName</key>
+					<string>displayString</string>
+					<key>INTypePropertyTag</key>
+					<integer>2</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>3</integer>
+					<key>INTypePropertyName</key>
+					<string>pronunciationHint</string>
+					<key>INTypePropertyTag</key>
+					<integer>3</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>4</integer>
+					<key>INTypePropertyName</key>
+					<string>alternativeSpeakableMatches</string>
+					<key>INTypePropertySupportsMultipleValues</key>
+					<true/>
+					<key>INTypePropertyTag</key>
+					<integer>4</integer>
+					<key>INTypePropertyType</key>
+					<string>SpeakableString</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Domophone Id</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>mav2aR</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>5</integer>
+					<key>INTypePropertyName</key>
+					<string>domophoneId</string>
+					<key>INTypePropertyTag</key>
+					<integer>101</integer>
+					<key>INTypePropertyType</key>
+					<string>Integer</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Door Id</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>oi81HC</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>6</integer>
+					<key>INTypePropertyName</key>
+					<string>doorId</string>
+					<key>INTypePropertyTag</key>
+					<integer>103</integer>
+					<key>INTypePropertyType</key>
+					<string>Integer</string>
 				</dict>
 			</array>
 		</dict>

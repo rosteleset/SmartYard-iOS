@@ -52,6 +52,25 @@ public enum SmartYardSharedDataUtilities {
         saveSharedData(data: emptyData)
     }
     
+    public static func sendOpenDoorRequest(accessToken: String, backendURL: String, doorId: Int, domophoneId: String) {
+        let json: [String: Any] = ["doorId": doorId, "domophoneId": domophoneId]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        guard let url = URL(string: backendURL + "/api/address/openDoor") else {
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = jsonData
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-type")
+        request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request)
+        task.resume()
+    }
+    
     static var sharedDataFileURL: URL {
         #if DEBUG
         let appGroupIdentifier = "group.ru.lanta-net.smartyard.widget"

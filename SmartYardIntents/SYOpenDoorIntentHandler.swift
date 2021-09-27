@@ -59,26 +59,49 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
             .withoutDuplicates()
     }
     
-    func doors(for address: String?) -> [String] {
+    func doors(for address: String?) -> [Door] {
         guard address != nil else {
             return []
         }
         
         return objects
             .filter { $0.logoImageName == "HouseIcon" && $0.objectAddress == address }
-            .map { $0.objectName }
+            .map { object -> Door in
+                let door = Door(identifier: object.objectName, display: object.objectName)
+                door.domophoneId = NSNumber(value: Int(object.domophoneId) ?? 0)
+                door.doorId = NSNumber(value: object.doorId)
+                return door
+            }
             .withoutDuplicates()
     }
     
-    func resolveDoor(for intent: SYOpenDoorIntent, with completion: @escaping (INStringResolutionResult) -> Void) {
+    func provideDoorOptionsCollection(for intent: SYOpenDoorIntent, with completion: @escaping (INObjectCollection<Door>?, Error?) -> Void) {
+        print("provideDoor for \(intent.address?.displayString ?? "<неизвестно>")")
+        
+        let allItems: [Door] = doors(for: intent.address?.displayString)
+        
+        print(allItems)
+        
+        if allItems.isEmpty {
+            //     completion(nil, INIntentError.init(_nsError: NSError(domain: "com.Domain.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Error Message"])))
+            completion(nil, nil)
+        } else {
+            completion(INObjectCollection(items: allItems), nil)
+        }
+    }
+    
+    func resolveDoor(for intent: SYOpenDoorIntent, with completion: @escaping (DoorResolutionResult) -> Void) {
         
         guard let door = intent.door else {
-            completion(INStringResolutionResult.needsValue())
+            completion(DoorResolutionResult.needsValue())
             return
         }
         
         let matchedItems = doors(for: intent.address?.displayString)
-            .filter { $0 == intent.door }
+            .filter {
+                $0.domophoneId == intent.door?.domophoneId &&
+                $0.doorId == intent.door?.doorId
+            }
         
         print("resolveDoor: \(door) for \(intent.address?.displayString ?? "")")
         print("matchedDoors: \(matchedItems)")
@@ -93,27 +116,29 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
         }
     }
     
-    func provideDoorOptionsCollection(for intent: SYOpenDoorIntent, with completion: @escaping (INObjectCollection<NSString>?, Error?) -> Void) {
-        print("provideDoor for \(intent.address?.displayString ?? "<неизвестно>")")
-        
-        let allItems = doors(for: intent.address?.displayString).map { NSString(string: $0) }
-        
-        print(allItems)
-        
-        if allItems.isEmpty {
-            //     completion(nil, INIntentError.init(_nsError: NSError(domain: "com.Domain.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Error Message"])))
-            completion(nil, nil)
-        } else {
-            completion(INObjectCollection(items: allItems), nil)
-        }
-    }
-    
-    func defaultDoor(for intent: SYOpenDoorIntent) -> String? {
-        return("test")
-    }
-    
     func confirm(intent: SYOpenDoorIntent, completion: @escaping (SYOpenDoorIntentResponse) -> Void) {
-        completion(SYOpenDoorIntentResponse.init(code: .success, userActivity: nil))
+        completion(SYOpenDoorIntentResponse(code: .success, userActivity: nil))
+    }
+    
+    func handle(intent: SYOpenDoorIntent, completion: @escaping (SYOpenDoorIntentResponse) -> Void) {
+        
+        let uObject = SmartYardSharedDataUtilities.loadSharedData()
+        
+        guard
+            let doorIdNS = intent.door?.doorId,
+            let domophoneIdNS = intent.door?.domophoneId
+        else {
+            completion(SYOpenDoorIntentResponse(code: .failure, userActivity: nil))
+            return
+        }
+        
+        SmartYardSharedDataUtilities.sendOpenDoorRequest(
+            accessToken: uObject.accessToken,
+            backendURL: uObject.backendURL,
+            doorId: Int(truncating: doorIdNS),
+            domophoneId: String(Int(truncating: domophoneIdNS))
+        )
+        completion(SYOpenDoorIntentResponse(code: .success, userActivity: nil))
     }
     
 }
