@@ -22,7 +22,7 @@
 			<key>INIntentConfigurable</key>
 			<true/>
 			<key>INIntentDefaultImageName</key>
-			<string>WicketIcon</string>
+			<string>HouseIcon</string>
 			<key>INIntentDescription</key>
 			<string>Открывает любые двери</string>
 			<key>INIntentDescriptionID</key>
