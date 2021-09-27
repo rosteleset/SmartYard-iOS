@@ -619,6 +619,7 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
             .drive(
                 onNext: { [weak self] in
                     self?.tempAccessContactsSubject.onNext($0)
+                    self?.apiWrapper.forceUpdateSettings = true
                 }
             )
             .disposed(by: disposeBag)
@@ -650,6 +651,7 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
             .drive(
                 onNext: { [weak self] in
                     self?.permanentAccessContactsSubject.onNext($0)
+                    self?.apiWrapper.forceUpdateSettings = true
                 }
             )
             .disposed(by: disposeBag)
