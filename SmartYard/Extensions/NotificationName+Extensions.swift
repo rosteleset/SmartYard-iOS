@@ -48,4 +48,5 @@ extension Notification.Name {
     static let popupDimissed = Notification.Name("PopUpDimissed")
     
     static let updateFaces = Notification.Name("UpdateFaces")
+    static let updateEvent = Notification.Name("UpdateEvent")
 }
