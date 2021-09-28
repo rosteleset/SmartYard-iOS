@@ -47,7 +47,6 @@
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
-      intentQueryString = "&#x41e;&#x442;&#x43a;&#x440;&#x43e;&#x439; &#x43f;&#x43e;&#x434;&#x44a;&#x435;&#x437;&#x434;"
       selectedDebuggerIdentifier = ""
       selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"
@@ -70,7 +69,6 @@
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
-      intentQueryString = "&#x41e;&#x442;&#x43a;&#x440;&#x43e;&#x439; &#x43f;&#x43e;&#x434;&#x44a;&#x435;&#x437;&#x434;"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"

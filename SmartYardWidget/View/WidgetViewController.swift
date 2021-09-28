@@ -11,6 +11,7 @@ import NotificationCenter
 import SmartYardSharedDataFramework
 import RxSwift
 import RxCocoa
+import Intents
 
 class WidgetViewController: UIViewController, NCWidgetProviding {
     
@@ -212,6 +213,8 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
                         doorId: curObject.doorId,
                         domophoneId: curObject.domophoneId
                     )
+                    
+                    SmartYardSharedFunctions.donateInteraction(curObject)
                 }
             )
             .disposed(by: disposeBag)

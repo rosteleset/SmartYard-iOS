@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Intents
 
 public struct SmartYardSharedData: Codable {
     
@@ -86,4 +87,24 @@ public enum SmartYardSharedDataUtilities {
         return url.appendingPathComponent("Data.plist")
     }
     
+}
+
+public enum SmartYardSharedFunctions {
+    public static func donateInteraction(_ object: SmartYardSharedObject) {
+            
+        if #available(iOSApplicationExtension 14.0, *) {
+            let intent = SYOpenDoorIntent()
+        
+            intent.doorType = .any
+            intent.address = HouseAddress(identifier: object.objectAddress, display: object.objectAddress)
+            intent.door = Door(identifier: object.objectName, display: object.objectName)
+            
+            let interaction = INInteraction(
+                intent: intent,
+                response: SYOpenDoorIntentResponse(code: .success, userActivity: nil)
+            )
+                
+            interaction.donate()
+        }
+    }
 }

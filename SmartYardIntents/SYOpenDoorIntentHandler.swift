@@ -20,10 +20,9 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
             return
         }
         
-        let matchedItems = addresses()
-            .filter { $0 == address.displayString }
-            .map {HouseAddress(identifier: $0, display: $0)}
-        
+        let matchedItems = addresses(of: intent.doorType)
+            .filter { $0.identifier == address.identifier }
+            
         print("resolveAddress: \(address)")
         print("matchedAdresses: \(matchedItems)")
         
@@ -37,67 +36,14 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
         }
     }
     
-    func provideAddressOptionsCollection(for intent: SYOpenDoorIntent, with completion: @escaping (INObjectCollection<HouseAddress>?, Error?) -> Void) {
-        print("provideAddress - ")
-        
-        let allItems = addresses().map { HouseAddress(identifier: $0, display: $0) }
-        
-        print(allItems)
-        completion(INObjectCollection(items: allItems), nil)
-    }
-    
-    
-    var objects: [SmartYardSharedObject] {
-        let sharedData = SmartYardSharedDataUtilities.loadSharedData()
-        return sharedData.sharedObjects
-    }
-    
-    func addresses() -> [String] {
-        objects
-            .filter { $0.logoImageName == "HouseIcon"}
-            .map { $0.objectAddress }
-            .withoutDuplicates()
-    }
-    
-    func doors(for address: String?) -> [Door] {
-        guard address != nil else {
-            return []
-        }
-        
-        return objects
-            .filter { $0.logoImageName == "HouseIcon" && $0.objectAddress == address }
-            .map { object -> Door in
-                let door = Door(identifier: object.objectName, display: object.objectName)
-                door.domophoneId = NSNumber(value: Int(object.domophoneId) ?? 0)
-                door.doorId = NSNumber(value: object.doorId)
-                return door
-            }
-            .withoutDuplicates()
-    }
-    
-    func provideDoorOptionsCollection(for intent: SYOpenDoorIntent, with completion: @escaping (INObjectCollection<Door>?, Error?) -> Void) {
-        print("provideDoor for \(intent.address?.displayString ?? "<неизвестно>")")
-        
-        let allItems: [Door] = doors(for: intent.address?.displayString)
-        
-        print(allItems)
-        
-        if allItems.isEmpty {
-            //     completion(nil, INIntentError.init(_nsError: NSError(domain: "com.Domain.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Error Message"])))
-            completion(nil, nil)
-        } else {
-            completion(INObjectCollection(items: allItems), nil)
-        }
-    }
-    
     func resolveDoor(for intent: SYOpenDoorIntent, with completion: @escaping (DoorResolutionResult) -> Void) {
         
         guard let door = intent.door else {
-            completion(DoorResolutionResult.needsValue())
+            completion(.needsValue())
             return
         }
         
-        let matchedItems = doors(for: intent.address?.displayString)
+        let matchedItems = doors(for: intent.address?.identifier, of: intent.doorType)
             .filter {
                 $0.domophoneId == intent.door?.domophoneId &&
                 $0.doorId == intent.door?.doorId
@@ -114,6 +60,75 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
         default:
             completion(.disambiguation(with: matchedItems))
         }
+    }
+    
+    func provideAddressOptionsCollection(for intent: SYOpenDoorIntent, with completion: @escaping (INObjectCollection<HouseAddress>?, Error?) -> Void) {
+        print("provideAddress - ")
+        
+        let allItems = addresses(of: intent.doorType)
+        
+        print(allItems)
+        completion(INObjectCollection(items: allItems), nil)
+    }
+    
+    func provideDoorOptionsCollection(for intent: SYOpenDoorIntent, with completion: @escaping (INObjectCollection<Door>?, Error?) -> Void) {
+        print("provideDoor for \(intent.address?.displayString ?? "<неизвестно>")")
+        
+        let allItems: [Door] = doors(for: intent.address?.displayString, of: intent.doorType)
+        
+        print(allItems)
+        
+        if allItems.isEmpty {
+            //     completion(nil, INIntentError.init(_nsError: NSError(domain: "com.Domain.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Error Message"])))
+            completion(nil, nil)
+        } else {
+            completion(INObjectCollection(items: allItems), nil)
+        }
+    }
+    
+    var objects: [SmartYardSharedObject] {
+        let sharedData = SmartYardSharedDataUtilities.loadSharedData()
+        return sharedData.sharedObjects
+    }
+    
+    func objects(of type: DoorType) -> [SmartYardSharedObject] {
+        var allAddresses = objects
+            
+        switch type {
+        case .entrance:
+            allAddresses = allAddresses.filter { $0.logoImageName == "HouseIcon" }
+        case .gate:
+            allAddresses = allAddresses.filter { $0.logoImageName == "BarrierIcon" || $0.logoImageName == "GateIcon" }
+        case .wicket:
+            allAddresses = allAddresses.filter { $0.logoImageName == "WicketIcon" }
+        default:
+            ()
+        }
+        
+        return allAddresses
+    }
+    func addresses(of type: DoorType) -> [HouseAddress] {
+        objects(of: type)
+            .map { $0.objectAddress }
+            .withoutDuplicates()
+            .map { adddress -> HouseAddress in
+                HouseAddress(identifier: adddress, display: adddress)
+            }
+    }
+    
+    func doors(for address: String?, of type: DoorType) -> [Door] {
+        guard address != nil else {
+            return []
+        }
+        
+        return objects(of: type)
+            .filter { $0.objectAddress == address }
+            .map { object -> Door in
+                let door = Door(identifier: object.objectName, display: object.objectName)
+                door.domophoneId = NSNumber(value: Int(object.domophoneId) ?? 0)
+                door.doorId = NSNumber(value: object.doorId)
+                return door
+            }
     }
     
     func confirm(intent: SYOpenDoorIntent, completion: @escaping (SYOpenDoorIntentResponse) -> Void) {
