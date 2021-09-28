@@ -61,7 +61,42 @@ class AddFaceViewController: BaseViewController {
                 onNext: { [weak self] in
                     self?.apiWrapper.forceUpdateFaces = true
                     
+                    // создаю копию события, в котором меняю доступные для пользователя действия
+                    if let newDetailX = self?.event.detailX,
+                          var newFlags = newDetailX.flags {
+                        newFlags.removeAll(where: { $0 == "canDislike" || $0 == "canDisLike" || $0 == "canLike" })
+                        newFlags.append("canDislike")
+                        
+                        let newDetailX = DetailX(
+                            key: newDetailX.key,
+                            face: newDetailX.face,
+                            flags: newFlags, //заменяем только вот это поле
+                            phone: newDetailX.phone,
+                            code: newDetailX.code,
+                            faceId: newDetailX.faceId
+                        )
+                        
+                        let updatedEvent = APIPlog(
+                            date: event.date,
+                            uuid: event.uuid,
+                            imageUuid: event.imageUuid,
+                            objectId: event.objectId,
+                            objectType: event.objectType,
+                            objectMechanizma: event.objectMechanizma,
+                            mechanizmaDescription: event.mechanizmaDescription,
+                            event: event.event,
+                            detail: event.detail,
+                            detailX: newDetailX, // заменяем только вот это поле
+                            previewURL: event.previewURL,
+                            previewImage: event.previewImage
+                        )
+                        // передаю обновлённое состояние карточки через NotificationCenter для обработки контроллером
+                        NotificationCenter.default.post(.init(name: .updateEvent, object: updatedEvent))
+                    }
+                    
+                    //уведомляю контроллеры, зависимые от списка лиц, что он требует обновление
                     NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
+                    
                     self?.dismiss(animated: true, completion: nil)
                 }
             )

@@ -249,9 +249,10 @@ class HistoryViewModel: BaseViewModel {
                                     //поскольку RxDataSource определяет небходимость обновлять ячейки по изменению их содержимого,
                                     //то приходится в элементах хранить атрибут позиции внутри секции, чтобы TableView правильно перерисовывал
                                     //закругления и управлял отображением заголовка секции в каждой первой ячейке.
-                                    .map {
+                                    .map { //RxDataSource отслеживает изменения данных по identity, поэтому,
+                                            //чтобы при изменении flags данные обновлялись, пришлось замиксовать uuid и flags в идентификатор
                                         HistoryDataItem(
-                                            identity: $0.element.uuid,
+                                            identity: $0.element.uuid + String(($0.element.detailX?.flags ?? []).joined(separator: ":")).md5,
                                             order: self.orderOf(row: $0.offset, count: items.count),
                                             value: $0.element
                                         )
@@ -305,6 +306,7 @@ class HistoryViewModel: BaseViewModel {
             .bind(to: availableDaysForFlat)
             .disposed(by: disposeBag)
         
+        //обновляем список лиц по тому же самому событию
         updateAvailableDays //аргумент - forceRefresh
             .asDriverOnErrorJustComplete()
             .flatMap { [weak self] forceRefresh -> Driver<[FlatId: GetPersonFacesResponseData]?> in
@@ -317,7 +319,7 @@ class HistoryViewModel: BaseViewModel {
                 //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
                 //как отдельный элемент в текущую последовательность
                 self.apptsFilter.value.forEach { flatId in
-                    self.apiWrapper.getPersonFaces(flatId: flatId)
+                    self.apiWrapper.getPersonFaces(flatId: flatId, forceRefresh: forceRefresh)
                         .trackError(self.errorTracker)
                         //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
                         .map { $0 == nil ?  nil : [flatId: $0!] }
@@ -405,6 +407,31 @@ class HistoryViewModel: BaseViewModel {
                 }
                 .disposed(by: disposeBag)
         }
+        
+        //если события изменились, то обновляем данные (dataCache не обнуляется при этом, а вот список лиц при этом обновится с сервера)
+        NotificationCenter.default.rx.notification(.updateEvent)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] notification in
+                    guard let self = self,
+                          let updatedEvent = notification.object as? APIPlog else {
+                        return
+                    }
+                    
+                    self.dataCache = self.dataCache.map { (day: Date, items: [APIPlog], flatId: Int) in
+                        let newItems = items.map { item -> APIPlog in
+                            item.uuid == updatedEvent.uuid ? updatedEvent : item
+                        }
+                        
+                        return (day, newItems, flatId)
+                    }
+                    
+                    self.updateAvailableDays.onNext(true)
+                    
+                }
+            )
+            .disposed(by: disposeBag)
+        
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
@@ -510,21 +537,6 @@ class HistoryViewModel: BaseViewModel {
         )
     }
     
-    func deleteFace(uuid: String) {
-        self.apiWrapper.disLikePersonFace(event: uuid)
-            .trackError(self.errorTracker)
-            .trackActivity(self.activityTracker)
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
-            .drive(
-                onNext: { [weak self] in
-                    self?.apiWrapper.forceUpdateFaces = true
-                    NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
     func extractFaceImage(uuid: String) -> UIImage? {
         for data in dataCache {
             if let item = data.items.first(where: { $0.uuid == uuid }) {
@@ -625,7 +637,15 @@ class HistoryViewModel: BaseViewModel {
                     if face != nil { break }
                 }
                 
-                self.router.trigger(.deleteFaceFromEvent(event: event, imageURL: face?.image))
+                // тут не очень хорошо получается...
+                // когда мы сами лезем в dataCache и меняем flags,
+                // то потом у нас нет faceId в событиях по какому мы можем связать лица.
+                // а пользователю надо показать лицо, какое мы будем удалять,
+                // поэтому берём картинку из события за неимением ничего лучшего.
+                
+                let imageURL = face != nil ? face?.image : event.previewURL
+                
+                self.router.trigger(.deleteFaceFromEvent(event: event, imageURL: imageURL))
             }
             .disposed(by: disposeBag)
        

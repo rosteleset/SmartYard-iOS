@@ -69,6 +69,23 @@ struct DetailX: Decodable, Equatable, Hashable {
         code = try? container.decode(String.self, forKey: .code)
         faceId = try? container.decode(String.self, forKey: .faceId)
      }
+    
+    //пришлось добавить инициализатор для ручного создания объектов
+    init(
+        key: String?,
+        face: Rectangle?,
+        flags: [String]?,
+        phone: String?,
+        code: String?,
+        faceId: String?
+    ) {
+        self.key = key
+        self.face = face
+        self.flags = flags
+        self.phone = phone
+        self.code = code
+        self.faceId = faceId
+    }
 }
 
 struct APIPlog: Decodable, Equatable, Hashable {
@@ -144,5 +161,34 @@ struct APIPlog: Decodable, Equatable, Hashable {
         } else {
             previewImage = nil
         }
+    }
+    
+    //пришлось добавить инициализатор для ручного создания объектов
+    init(
+        date: Date, //дата. Допустимые значения: "Y-m-d H:i:s"
+        uuid: String,
+        imageUuid: String?,
+        objectId: Int, // идентификатор объекта (домофона)
+        objectType: Int, // тип объекта (0 - домофон)
+        objectMechanizma: Int, //идентификатор нагрузки (двери). Допустимые значения: "0", "1", "2"
+        mechanizmaDescription: String, //описание нагрузки (двери)
+        event: EventType,
+        detail: String,
+        detailX: DetailX?,
+        previewURL: String?,
+        previewImage: UIImage?
+        ) {
+        self.date = date
+        self.uuid = uuid
+        self.imageUuid = imageUuid
+        self.objectId = objectId
+        self.objectType = objectType
+        self.objectMechanizma = objectMechanizma
+        self.mechanizmaDescription = mechanizmaDescription
+        self.event = event
+        self.detail = detail
+        self.detailX = detailX
+        self.previewURL = previewURL
+        self.previewImage = previewImage
     }
 }
