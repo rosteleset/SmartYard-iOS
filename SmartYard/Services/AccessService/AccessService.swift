@@ -20,7 +20,8 @@ class AccessService {
     
     var appState: AppState {
         get {
-            UserDefaults.standard.object(AppState.self, with: appStateKey) ?? .onboarding
+            .main
+            //UserDefaults.standard.object(AppState.self, with: appStateKey) ?? .onboarding
         }
         set {
             UserDefaults.standard.set(object: newValue, forKey: appStateKey)
@@ -29,7 +30,8 @@ class AccessService {
     
     var accessToken: String? {
         get {
-            UserDefaults.standard.string(forKey: accessTokenKey)
+            "0f57a092-b65c-4168-8589-301ff0c33235"
+            //UserDefaults.standard.string(forKey: accessTokenKey)
         }
         set {
             guard let newValue = newValue else {
