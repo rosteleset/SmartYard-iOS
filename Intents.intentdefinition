@@ -383,7 +383,7 @@
 				<integer>1</integer>
 			</dict>
 			<key>INIntentTitle</key>
-			<string>Открой подъезд</string>
+			<string>Открыть ...</string>
 			<key>INIntentTitleID</key>
 			<string>H8fR3T</string>
 			<key>INIntentType</key>
