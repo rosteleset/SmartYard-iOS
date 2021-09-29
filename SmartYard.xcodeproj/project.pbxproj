@@ -40,7 +40,9 @@
 		3A3B8BB325A5D00C00BFB72E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */; };
 		3A3B8BB425A5D00C00BFB72E /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB225A5D00C00BFB72E /* MainMenuViewController.xib */; };
 		3A3B8BBA25A5E8DA00BFB72E /* MainMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB925A5E8DA00BFB72E /* MainMenuItem.swift */; };
-		3A4A4A6F2703B02700C5B609 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A555B0726FFB73C00E70CB9 /* Intents.intentdefinition */; };
+		3A4A4A782704826600C5B609 /* SharedFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4A4A772704826600C5B609 /* SharedFunctions.swift */; };
+		3A4A4A79270482C700C5B609 /* SharedFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4A4A772704826600C5B609 /* SharedFunctions.swift */; };
+		3A4A4A7A270482D100C5B609 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A555B0726FFB73C00E70CB9 /* Intents.intentdefinition */; };
 		3A555B102700573400E70CB9 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A555B0F2700573400E70CB9 /* Intents.framework */; };
 		3A555B132700573400E70CB9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A555B122700573400E70CB9 /* IntentHandler.swift */; };
 		3A555B172700573400E70CB9 /* SmartYardIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3A555B0E2700573400E70CB9 /* SmartYardIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -614,6 +616,7 @@
 		3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		3A3B8BB225A5D00C00BFB72E /* MainMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenuViewController.xib; sourceTree = "<group>"; };
 		3A3B8BB925A5E8DA00BFB72E /* MainMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuItem.swift; sourceTree = "<group>"; };
+		3A4A4A772704826600C5B609 /* SharedFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFunctions.swift; sourceTree = "<group>"; };
 		3A555B0726FFB73C00E70CB9 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		3A555B0E2700573400E70CB9 /* SmartYardIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SmartYardIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A555B0F2700573400E70CB9 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
@@ -2622,6 +2625,7 @@
 				84854B3C23FA9918001B44F2 /* ErrorTracker.swift */,
 				84854B4B23FADD94001B44F2 /* CustomRxKeyboard.swift */,
 				847880DF24A4BB3B008D9E33 /* ScreenshotHelper.swift */,
+				3A4A4A772704826600C5B609 /* SharedFunctions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -4298,6 +4302,8 @@
 			files = (
 				849653232472C96F000E1375 /* WidgetViewController.swift in Sources */,
 				849653202472C96F000E1375 /* WdgObjectCell.swift in Sources */,
+				3A4A4A7A270482D100C5B609 /* Intents.intentdefinition in Sources */,
+				3A4A4A79270482C700C5B609 /* SharedFunctions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4401,6 +4407,7 @@
 				E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */,
 				84AF095D24ADF9AF005CEECE /* AlertService.swift in Sources */,
 				84898A9823F1556B00E6B78E /* SettingsSectionModel.swift in Sources */,
+				3A4A4A782704826600C5B609 /* SharedFunctions.swift in Sources */,
 				E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */,
 				849F2AD72448687C005693B3 /* AddressesListEmptyStateCell.swift in Sources */,
 				E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */,
@@ -4707,7 +4714,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A4A4A6F2703B02700C5B609 /* Intents.intentdefinition in Sources */,
 				849652CC2472AF44000E1375 /* SmartYardSharedData.swift in Sources */,
 				849652CE2472AF4A000E1375 /* SmartYardSharedObject.swift in Sources */,
 			);
