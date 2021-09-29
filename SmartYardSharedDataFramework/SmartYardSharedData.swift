@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Intents
 
 public struct SmartYardSharedData: Codable {
     
@@ -52,6 +53,25 @@ public enum SmartYardSharedDataUtilities {
         saveSharedData(data: emptyData)
     }
     
+    public static func sendOpenDoorRequest(accessToken: String, backendURL: String, doorId: Int, domophoneId: String) {
+        let json: [String: Any] = ["doorId": doorId, "domophoneId": domophoneId]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        guard let url = URL(string: backendURL + "/api/address/openDoor") else {
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = jsonData
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-type")
+        request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request)
+        task.resume()
+    }
+    
     static var sharedDataFileURL: URL {
         #if DEBUG
         let appGroupIdentifier = "group.ru.lanta-net.smartyard.widget"
@@ -67,4 +87,24 @@ public enum SmartYardSharedDataUtilities {
         return url.appendingPathComponent("Data.plist")
     }
     
+}
+
+public enum SmartYardSharedFunctions {
+    public static func donateInteraction(_ object: SmartYardSharedObject) {
+            
+        if #available(iOSApplicationExtension 14.0, *) {
+            let intent = SYOpenDoorIntent()
+        
+            intent.doorType = .any
+            intent.address = HouseAddress(identifier: object.objectAddress, display: object.objectAddress)
+            intent.door = Door(identifier: object.objectName, display: object.objectName)
+            
+            let interaction = INInteraction(
+                intent: intent,
+                response: SYOpenDoorIntentResponse(code: .success, userActivity: nil)
+            )
+                
+            interaction.donate()
+        }
+    }
 }

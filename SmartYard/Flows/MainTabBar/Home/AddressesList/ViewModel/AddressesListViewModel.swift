@@ -318,7 +318,8 @@ class AddressesListViewModel: BaseViewModel {
                 
                 guard let self = self,
                     let unwrappedData = loadedData,
-                    case let .object(addressId, domophoneId, doorId, _) = identity,
+                    case let .object(addressId, domophoneId, doorId, entrance) = identity,
+                    let entrance = entrance,
                     let matchingAddress = (
                         unwrappedData.first { address in
                             address.houseId == addressId
@@ -331,6 +332,18 @@ class AddressesListViewModel: BaseViewModel {
                     ) else {
                     return .empty()
                 }
+                
+                //Донейтим системе сведения об откывании дверей.
+                let object = SmartYardSharedObject(
+                    objectName: entrance,
+                    objectAddress: matchingAddress.address,
+                    domophoneId: domophoneId,
+                    doorId: doorId,
+                    blockReason: matchingDoor.blocked,
+                    logoImageName: matchingDoor.type.iconImageName
+                )
+                
+                SmartYardSharedFunctions.donateInteraction(object)
                 
                 return self.apiWrapper
                     .openDoor(domophoneId: domophoneId, doorId: doorId, blockReason: matchingDoor.blocked)
