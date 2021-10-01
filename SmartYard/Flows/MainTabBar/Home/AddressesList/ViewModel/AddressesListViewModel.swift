@@ -117,7 +117,9 @@ class AddressesListViewModel: BaseViewModel {
             .registerForPushNotifications(
                 voipToken: accessService.prefersVoipForCalls ? accessService.voipToken : nil
             )
-            .trackError(errorTracker)
+            // приложение иногда запрашивает токен, когда он ещё неизвестен и показывает пользователю ошибку "Отсутствует FCM-токен"
+            // дабы не портить пользователю настроение я решил убрать отображение этой ошибки в интерфейсе.
+            //.trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(

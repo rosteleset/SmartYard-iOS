@@ -209,7 +209,7 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
                     
                     SmartYardSharedDataUtilities.sendOpenDoorRequest(
                         accessToken: uObject.accessToken,
-                        backendURL: uObject.backendURL,
+                        backendURL: uObject.backendURL ?? Constants.defaultBackendURL,
                         doorId: curObject.doorId,
                         domophoneId: curObject.domophoneId
                     )

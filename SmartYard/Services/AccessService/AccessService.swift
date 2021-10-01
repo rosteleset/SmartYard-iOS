@@ -104,7 +104,7 @@ class AccessService {
     
     var backendURL: String {
         get {
-            UserDefaults.standard.string(forKey: backendURLKey) ?? "https://dm.lanta.me"
+            UserDefaults.standard.string(forKey: backendURLKey) ?? Constants.defaultBackendURL
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: backendURLKey)

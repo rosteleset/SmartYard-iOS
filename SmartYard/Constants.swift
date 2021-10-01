@@ -18,6 +18,7 @@ enum Constants {
     static let merchant = "merchant.ru.lanta-net.pays"
     static let appstoreUrl = "itms-apps://itunes.apple.com/app/id1507944475"
     static let yandexApiKey = "686bcc1e-69e5-4412-8d54-3e11e362624a"
+    static let defaultBackendURL = "https://dm.lanta.me"
     
     enum Chat {
         static let token = "13mrbxqw81g06nvrhyegwnph0waw0b9dt1wga7kgtx1j35blhhek4t9oyod69l2i"

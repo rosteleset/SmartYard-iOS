@@ -13,6 +13,7 @@ import RxCocoa
 import SwifterSwift
 import AVKit
 import SmartYardSharedDataFramework
+import FirebaseCrashlytics
 
 enum AppRoute: Route {
     
@@ -63,6 +64,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     }
     
     init(mainWindow: UIWindow) {
+        Crashlytics.crashlytics().setUserID(accessService.clientPhoneNumber ?? "unknown")
         apiWrapper = APIWrapper(accessService: accessService)
         issueService = IssueService(apiWrapper: apiWrapper, accessService: accessService)
         pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
@@ -297,7 +299,9 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         accessService.backendURL = newBackendURL
         
         // и меняем URL на новый в общем файле - чтобы и виджет работал с новым URL
-        var sharedData = SmartYardSharedDataUtilities.loadSharedData()
+        guard var sharedData = SmartYardSharedDataUtilities.loadSharedData() else {
+            return
+        }
         sharedData.backendURL = newBackendURL
         SmartYardSharedDataUtilities.saveSharedData(data: sharedData)
     }

@@ -88,7 +88,7 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
     
     var objects: [SmartYardSharedObject] {
         let sharedData = SmartYardSharedDataUtilities.loadSharedData()
-        return sharedData.sharedObjects
+        return sharedData?.sharedObjects ?? []
     }
     
     func objects(of type: DoorType) -> [SmartYardSharedObject] {
@@ -136,10 +136,8 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
     }
     
     func handle(intent: SYOpenDoorIntent, completion: @escaping (SYOpenDoorIntentResponse) -> Void) {
-        
-        let uObject = SmartYardSharedDataUtilities.loadSharedData()
-        
         guard
+            let uObject = SmartYardSharedDataUtilities.loadSharedData(),
             let doorIdNS = intent.door?.doorId,
             let domophoneIdNS = intent.door?.domophoneId
         else {
@@ -149,7 +147,7 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
         
         SmartYardSharedDataUtilities.sendOpenDoorRequest(
             accessToken: uObject.accessToken,
-            backendURL: uObject.backendURL,
+            backendURL: uObject.backendURL ?? Constants.defaultBackendURL ,
             doorId: Int(truncating: doorIdNS),
             domophoneId: String(Int(truncating: domophoneIdNS))
         )

@@ -11,7 +11,7 @@ import Foundation
 public struct SmartYardSharedData: Codable {
     
     public var accessToken: String
-    public var backendURL: String
+    public var backendURL: String?
     public var sharedObjects: [SmartYardSharedObject]
     
     public init(accessToken: String, backendURL: String, sharedObjects: [SmartYardSharedObject]) {
@@ -24,15 +24,14 @@ public struct SmartYardSharedData: Codable {
 
 public enum SmartYardSharedDataUtilities {
     
-    public static func loadSharedData() -> SmartYardSharedData {
+    public static func loadSharedData() -> SmartYardSharedData? {
         let decoder = PropertyListDecoder()
         
-        do {
-            let data = try Data(contentsOf: sharedDataFileURL)
-            return try decoder.decode(SmartYardSharedData.self, from: data)
-        } catch {
-            fatalError(error.localizedDescription)
+        guard let data = try? Data(contentsOf: sharedDataFileURL) else {
+            return nil
         }
+         
+        return try? decoder.decode(SmartYardSharedData.self, from: data)
     }
     
     public static func saveSharedData(data: SmartYardSharedData) {
