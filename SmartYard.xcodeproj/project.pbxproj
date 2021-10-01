@@ -44,14 +44,14 @@
 		3A3B8BBA25A5E8DA00BFB72E /* MainMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB925A5E8DA00BFB72E /* MainMenuItem.swift */; };
 		3A4A4A782704826600C5B609 /* SharedFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4A4A772704826600C5B609 /* SharedFunctions.swift */; };
 		3A4A4A79270482C700C5B609 /* SharedFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4A4A772704826600C5B609 /* SharedFunctions.swift */; };
-		3A4A4A7A270482D100C5B609 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A555B0726FFB73C00E70CB9 /* Intents.intentdefinition */; };
 		3A555B102700573400E70CB9 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A555B0F2700573400E70CB9 /* Intents.framework */; };
 		3A555B132700573400E70CB9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A555B122700573400E70CB9 /* IntentHandler.swift */; };
 		3A555B172700573400E70CB9 /* SmartYardIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3A555B0E2700573400E70CB9 /* SmartYardIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3A555B1C270058E700E70CB9 /* SYOpenDoorIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A555B1B270058E700E70CB9 /* SYOpenDoorIntentHandler.swift */; };
-		3A555B2827007CCD00E70CB9 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A555B0726FFB73C00E70CB9 /* Intents.intentdefinition */; };
-		3A555B2927007CF000E70CB9 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A555B0726FFB73C00E70CB9 /* Intents.intentdefinition */; };
 		3A61E56125A07F4F00A368FA /* FullscreenPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */; };
+		3A6D0F9C27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
+		3A6D0F9D27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
+		3A6D0F9E27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
 		3A8B94FA25D92E6F007CDD3C /* CityMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */; };
 		3A8B950B25D93098007CDD3C /* CityCamerasMapPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B950A25D93097007CDD3C /* CityCamerasMapPointView.swift */; };
 		3A8B951625D9312D007CDD3C /* CityCameraObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B951525D9312D007CDD3C /* CityCameraObject.swift */; };
@@ -619,7 +619,6 @@
 		3A3B8BB225A5D00C00BFB72E /* MainMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenuViewController.xib; sourceTree = "<group>"; };
 		3A3B8BB925A5E8DA00BFB72E /* MainMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuItem.swift; sourceTree = "<group>"; };
 		3A4A4A772704826600C5B609 /* SharedFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFunctions.swift; sourceTree = "<group>"; };
-		3A555B0726FFB73C00E70CB9 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		3A555B0E2700573400E70CB9 /* SmartYardIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SmartYardIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A555B0F2700573400E70CB9 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		3A555B122700573400E70CB9 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
@@ -628,6 +627,8 @@
 		3A555B2727007A7500E70CB9 /* SmartYardIntentsRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmartYardIntentsRelease.entitlements; sourceTree = "<group>"; };
 		3A555B2A27007DE400E70CB9 /* SmartYardIntentsDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmartYardIntentsDebug.entitlements; sourceTree = "<group>"; };
 		3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FullscreenPlayerViewController.xib; sourceTree = "<group>"; };
+		3A6D0F9F27072DB9007A9F66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/Intents.intentdefinition; sourceTree = "<group>"; };
+		3A6D0FA227072DD9007A9F66 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Intents.strings; sourceTree = "<group>"; };
 		3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityMapViewController.swift; sourceTree = "<group>"; };
 		3A8B950A25D93097007CDD3C /* CityCamerasMapPointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCamerasMapPointView.swift; sourceTree = "<group>"; };
 		3A8B951525D9312D007CDD3C /* CityCameraObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraObject.swift; sourceTree = "<group>"; };
@@ -2908,7 +2909,7 @@
 		84F840C923E07DA5008DBE50 = {
 			isa = PBXGroup;
 			children = (
-				3A555B0726FFB73C00E70CB9 /* Intents.intentdefinition */,
+				3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */,
 				84F840D423E07DA5008DBE50 /* SmartYard */,
 				849652BE2472AF3B000E1375 /* SmartYardSharedDataFramework */,
 				84EEBC9E23F55A9B00C9557F /* NotificationServiceExtension */,
@@ -4292,7 +4293,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A555B2927007CF000E70CB9 /* Intents.intentdefinition in Sources */,
+				3A6D0F9E27072DB9007A9F66 /* Intents.intentdefinition in Sources */,
 				3A555B1C270058E700E70CB9 /* SYOpenDoorIntentHandler.swift in Sources */,
 				3A555B132700573400E70CB9 /* IntentHandler.swift in Sources */,
 				3A0275672707000F00FD7854 /* Constants.swift in Sources */,
@@ -4306,7 +4307,7 @@
 				3A0275662707000B00FD7854 /* Constants.swift in Sources */,
 				849653232472C96F000E1375 /* WidgetViewController.swift in Sources */,
 				849653202472C96F000E1375 /* WdgObjectCell.swift in Sources */,
-				3A4A4A7A270482D100C5B609 /* Intents.intentdefinition in Sources */,
+				3A6D0F9D27072DB9007A9F66 /* Intents.intentdefinition in Sources */,
 				3A4A4A79270482C700C5B609 /* SharedFunctions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4453,7 +4454,7 @@
 				84F6494824740E90000C0028 /* YardMapViewController.swift in Sources */,
 				E92EFBAA242A22F2003AF7FE /* APIAddress.swift in Sources */,
 				E9A1D78323F27AE500234B2A /* AddressConfirmationViewController.swift in Sources */,
-				3A555B2827007CCD00E70CB9 /* Intents.intentdefinition in Sources */,
+				3A6D0F9C27072DB9007A9F66 /* Intents.intentdefinition in Sources */,
 				84854B3B23FA8C38001B44F2 /* LoaderPresentable.swift in Sources */,
 				E94B6C4523FFFF5D00FD9F65 /* Date+Conversion.swift in Sources */,
 				84854B4323FAA266001B44F2 /* NavigationTransitions.swift in Sources */,
@@ -4749,6 +4750,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3A6D0F9F27072DB9007A9F66 /* Base */,
+				3A6D0FA227072DD9007A9F66 /* ru */,
+			);
+			name = Intents.intentdefinition;
+			sourceTree = "<group>";
+		};
 		8496531A2472C96F000E1375 /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -4775,7 +4785,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntentsDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -4801,7 +4811,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntentsRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -4826,7 +4836,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/Debug/SmartYardWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
@@ -4853,7 +4863,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
@@ -4880,7 +4890,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
@@ -4906,7 +4916,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
@@ -5055,7 +5065,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
@@ -5246,7 +5256,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPER_ACCOUNT = "deploy.madbrains@gmail.com";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
@@ -5435,7 +5445,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -5469,7 +5479,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 87;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				DYLIB_COMPATIBILITY_VERSION = 1;
