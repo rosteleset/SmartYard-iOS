@@ -69,7 +69,11 @@ class PaymentPopupController: BaseViewController {
                     }
  
                     self.sumTextField.resignFirstResponder()
-                    let paymentNetworks: [PKPaymentNetwork] = [.masterCard, .visa]
+                    var paymentNetworks: [PKPaymentNetwork] = [.masterCard, .visa]
+                    
+                    if #available(iOS 14.5, *) {
+                        paymentNetworks.append(.mir)
+                    }
                     
                     guard PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks) else {
                         return
