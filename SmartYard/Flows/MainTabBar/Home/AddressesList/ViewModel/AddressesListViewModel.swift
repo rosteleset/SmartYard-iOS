@@ -321,7 +321,6 @@ class AddressesListViewModel: BaseViewModel {
                 guard let self = self,
                     let unwrappedData = loadedData,
                     case let .object(addressId, domophoneId, doorId, entrance) = identity,
-                    let entrance = entrance,
                     let matchingAddress = (
                         unwrappedData.first { address in
                             address.houseId == addressId
@@ -337,7 +336,7 @@ class AddressesListViewModel: BaseViewModel {
                 
                 //Донейтим системе сведения об откывании дверей.
                 let object = SmartYardSharedObject(
-                    objectName: entrance,
+                    objectName: matchingDoor.name,
                     objectAddress: matchingAddress.address,
                     domophoneId: domophoneId,
                     doorId: doorId,
