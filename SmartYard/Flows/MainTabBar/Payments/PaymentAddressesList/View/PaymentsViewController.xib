@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Bold.ttf">
+            <string>SourceSansPro-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PaymentsViewController" customModule="SmartYard" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="816-NR-sjE" id="7Ck-8A-pV2"/>
+                <outlet property="skeletonContainer" destination="kS9-T1-r7s" id="UEU-cw-yOX"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Выберите адрес" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nis-Xa-l5N">
+                    <rect key="frame" x="16" y="84" width="382" height="40.5"/>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
+                    <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tza-JB-CqP">
+                    <rect key="frame" x="0.0" y="139.5" width="414" height="722.5"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="816-NR-sjE">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="722.5"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="p01-3w-Wzm">
+                                <size key="itemSize" width="50" height="50"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kS9-T1-r7s" userLabel="Skeleton Container">
+                            <rect key="frame" x="16" y="16" width="382" height="128"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="5ey-FI-W6j" customClass="AddressesListSkeletonView" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="128"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="12"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" red="0.94117647059999998" green="0.94117647059999998" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="5ey-FI-W6j" firstAttribute="top" secondItem="kS9-T1-r7s" secondAttribute="top" id="7QH-3J-HJO"/>
+                                <constraint firstAttribute="bottom" secondItem="5ey-FI-W6j" secondAttribute="bottom" id="G1U-Ko-wBN"/>
+                                <constraint firstItem="5ey-FI-W6j" firstAttribute="leading" secondItem="kS9-T1-r7s" secondAttribute="leading" id="USk-rc-fNq"/>
+                                <constraint firstAttribute="trailing" secondItem="5ey-FI-W6j" secondAttribute="trailing" id="nCu-L0-2wg"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="816-NR-sjE" firstAttribute="top" secondItem="tza-JB-CqP" secondAttribute="top" id="60X-6d-mdK"/>
+                        <constraint firstAttribute="bottom" secondItem="816-NR-sjE" secondAttribute="bottom" id="BTX-Z8-vDZ"/>
+                        <constraint firstAttribute="trailing" secondItem="816-NR-sjE" secondAttribute="trailing" id="D0W-wW-Os1"/>
+                        <constraint firstItem="kS9-T1-r7s" firstAttribute="leading" secondItem="tza-JB-CqP" secondAttribute="leading" constant="16" id="J3i-o9-Chc"/>
+                        <constraint firstItem="kS9-T1-r7s" firstAttribute="top" secondItem="tza-JB-CqP" secondAttribute="top" constant="16" id="Wz7-Ph-MsZ"/>
+                        <constraint firstAttribute="trailing" secondItem="kS9-T1-r7s" secondAttribute="trailing" constant="16" id="l9x-JX-wxn"/>
+                        <constraint firstItem="816-NR-sjE" firstAttribute="leading" secondItem="tza-JB-CqP" secondAttribute="leading" id="sZz-Gt-lgR"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="tza-JB-CqP" firstAttribute="top" secondItem="nis-Xa-l5N" secondAttribute="bottom" constant="15" id="5hr-nT-0dW"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="tza-JB-CqP" secondAttribute="bottom" id="O7q-xg-jFU"/>
+                <constraint firstItem="tza-JB-CqP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Pcf-wc-2Tr"/>
+                <constraint firstAttribute="trailing" secondItem="tza-JB-CqP" secondAttribute="trailing" id="R5d-Rr-ARu"/>
+                <constraint firstItem="nis-Xa-l5N" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="c1l-Bx-nJq"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="nis-Xa-l5N" secondAttribute="trailing" constant="16" id="dEr-eD-xxy"/>
+                <constraint firstItem="nis-Xa-l5N" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="mxc-f8-Z4N"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="107.8125"/>
+        </view>
+    </objects>
+</document>

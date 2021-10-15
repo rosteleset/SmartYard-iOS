@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ModalViewController" customModule="SmartYard" customModuleProvider="target">
+            <connections>
+                <outlet property="cancelButton" destination="Fj2-SJ-y5p" id="mlN-Mc-Lkg"/>
+                <outlet property="containerView" destination="gc7-nj-dVr" id="cBd-B1-sYc"/>
+                <outlet property="view" destination="eGs-Vh-ouJ" id="POD-Rh-Qes"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="eGs-Vh-ouJ">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="200" translatesAutoresizingMaskIntoConstraints="NO" id="gc7-nj-dVr">
+                    <rect key="frame" x="57" y="353" width="300" height="200"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="ST0-Uf-yDL"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="kgo-Ub-Tl5"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fj2-SJ-y5p">
+                    <rect key="frame" x="325" y="317" width="28" height="28"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="28" id="7rj-hz-jb2"/>
+                        <constraint firstAttribute="width" constant="28" id="O1b-P8-lQH"/>
+                    </constraints>
+                    <state key="normal" image="CloseIcon"/>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Mmh-do-YCQ"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Mmh-do-YCQ" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gc7-nj-dVr" secondAttribute="trailing" constant="16" id="9px-Ca-g9b"/>
+                <constraint firstItem="gc7-nj-dVr" firstAttribute="centerX" secondItem="eGs-Vh-ouJ" secondAttribute="centerX" id="Ka3-86-i1I"/>
+                <constraint firstItem="gc7-nj-dVr" firstAttribute="top" secondItem="Fj2-SJ-y5p" secondAttribute="bottom" constant="8" id="LNg-Oe-Rla"/>
+                <constraint firstItem="gc7-nj-dVr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Mmh-do-YCQ" secondAttribute="top" constant="44" id="SCz-is-8Mi"/>
+                <constraint firstItem="gc7-nj-dVr" firstAttribute="centerY" secondItem="eGs-Vh-ouJ" secondAttribute="centerY" constant="5" id="a5h-Ld-0oW"/>
+                <constraint firstItem="gc7-nj-dVr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Mmh-do-YCQ" secondAttribute="leading" constant="16" id="bXO-2i-kek"/>
+                <constraint firstItem="gc7-nj-dVr" firstAttribute="trailing" secondItem="Fj2-SJ-y5p" secondAttribute="trailing" constant="4" id="daI-Ga-Wvw"/>
+                <constraint firstItem="Mmh-do-YCQ" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gc7-nj-dVr" secondAttribute="bottom" constant="16" id="oey-ai-PoH"/>
+            </constraints>
+            <point key="canvasLocation" x="138.75" y="90"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="CloseIcon" width="28" height="28"/>
+    </resources>
+</document>

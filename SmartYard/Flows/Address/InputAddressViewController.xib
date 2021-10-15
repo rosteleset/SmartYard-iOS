@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Bold.ttf">
+            <string>SourceSansPro-Bold</string>
+        </array>
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputAddressViewController" customModule="SmartYard" customModuleProvider="target">
+            <connections>
+                <outlet property="buildingTextField" destination="N8p-X9-uGr" id="JNm-8T-k6G"/>
+                <outlet property="checkAvailableServicesButton" destination="P3p-cv-8sH" id="jCb-sd-mTF"/>
+                <outlet property="cityTextField" destination="VY4-bh-98W" id="ZPB-pn-dE0"/>
+                <outlet property="containerView" destination="DMJ-9p-DBh" id="ufS-jd-h3l"/>
+                <outlet property="fakeNavBar" destination="EcW-C1-LK6" id="gts-6X-ny5"/>
+                <outlet property="flatTextField" destination="WJV-KH-rtf" id="EBc-sN-RcV"/>
+                <outlet property="qrCodeButton" destination="t7w-za-uue" id="k7E-S4-oc4"/>
+                <outlet property="scrollView" destination="95v-tL-giU" id="dgq-jX-uQG"/>
+                <outlet property="streetTextField" destination="cmm-LE-hpZ" id="Jpf-KA-dYa"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="3vL-YD-f4m">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EcW-C1-LK6" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="hJx-JY-SeP"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Введите адрес" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEB-Xo-NYK">
+                    <rect key="frame" x="16" y="130" width="382" height="40.5"/>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHl-m0-xSg" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="210.5" width="414" height="651.5"/>
+                    <subviews>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="95v-tL-giU" customClass="TPKeyboardAvoidingScrollView">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="651.5"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DMJ-9p-DBh" userLabel="Container View">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="651.5"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VY4-bh-98W" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="16" y="40" width="382" height="56"/>
+                                            <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="vXh-cE-YlD"/>
+                                            </constraints>
+                                            <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="address-level2"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </textField>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cmm-LE-hpZ" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="16" y="112" width="382" height="56"/>
+                                            <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="qRK-xK-9C1"/>
+                                            </constraints>
+                                            <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="address-line1"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </textField>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qK5-R0-4tJ">
+                                            <rect key="frame" x="206.5" y="184" width="1" height="56"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="1mA-KN-su0"/>
+                                                <constraint firstAttribute="width" constant="1" id="SFw-g8-AGY"/>
+                                            </constraints>
+                                        </view>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N8p-X9-uGr" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="16" y="184" width="183.5" height="56"/>
+                                            <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="qiB-aS-AmO"/>
+                                            </constraints>
+                                            <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </textField>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WJV-KH-rtf" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="214.5" y="184" width="183.5" height="56"/>
+                                            <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="fSZ-DS-y90"/>
+                                            </constraints>
+                                            <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3p-cv-8sH" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="16" y="280" width="382" height="60"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="60" id="UIU-Bb-ndi"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                                            <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                            <state key="normal" title="Проверить доступные услуги"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="titleLabel.adjustsFontSizeToFitWidth" value="YES"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="titleLabel.minimumScaleFactor" value="0.5"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOU-TA-YoR" userLabel="Centering View">
+                                            <rect key="frame" x="30" y="370" width="354" height="251.5"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7xT-5V-6z5">
+                                                    <rect key="frame" x="102" y="114" width="150" height="24"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QrCodeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="52F-f9-FuX">
+                                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="24" id="5wx-M2-Qza"/>
+                                                                <constraint firstAttribute="width" constant="24" id="ugK-0h-qAi"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t7w-za-uue" customClass="ClearButtonWithDashedUnderline" customModule="SmartYard" customModuleProvider="target">
+                                                            <rect key="frame" x="34" y="0.0" width="116" height="24"/>
+                                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                                                            <state key="normal" title="У меня есть QR-код"/>
+                                                        </button>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="t7w-za-uue" secondAttribute="trailing" id="Gik-UW-e9v"/>
+                                                        <constraint firstItem="52F-f9-FuX" firstAttribute="leading" secondItem="7xT-5V-6z5" secondAttribute="leading" id="I1q-h0-dog"/>
+                                                        <constraint firstItem="t7w-za-uue" firstAttribute="leading" secondItem="52F-f9-FuX" secondAttribute="trailing" constant="10" id="LpW-K9-w8m"/>
+                                                        <constraint firstItem="t7w-za-uue" firstAttribute="top" secondItem="7xT-5V-6z5" secondAttribute="top" id="bxd-w6-22D"/>
+                                                        <constraint firstAttribute="bottom" secondItem="52F-f9-FuX" secondAttribute="bottom" id="fZf-A6-nSW"/>
+                                                        <constraint firstAttribute="bottom" secondItem="t7w-za-uue" secondAttribute="bottom" id="ftc-RG-y5p"/>
+                                                        <constraint firstItem="52F-f9-FuX" firstAttribute="top" secondItem="7xT-5V-6z5" secondAttribute="top" id="w4m-Af-pY0"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="7xT-5V-6z5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="LOU-TA-YoR" secondAttribute="top" id="8WC-LN-c6v"/>
+                                                <constraint firstItem="7xT-5V-6z5" firstAttribute="centerX" secondItem="LOU-TA-YoR" secondAttribute="centerX" id="NG0-0i-hyP"/>
+                                                <constraint firstItem="7xT-5V-6z5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LOU-TA-YoR" secondAttribute="leading" id="lAt-Vf-Oa4"/>
+                                                <constraint firstItem="7xT-5V-6z5" firstAttribute="centerY" secondItem="LOU-TA-YoR" secondAttribute="centerY" id="lGX-Jj-2YC"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="qK5-R0-4tJ" firstAttribute="centerX" secondItem="DMJ-9p-DBh" secondAttribute="centerX" id="2Gw-dE-MeV"/>
+                                        <constraint firstItem="P3p-cv-8sH" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="16" id="2Pj-gj-t9H"/>
+                                        <constraint firstItem="LOU-TA-YoR" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="30" id="3Qx-jU-AV8"/>
+                                        <constraint firstAttribute="trailing" secondItem="WJV-KH-rtf" secondAttribute="trailing" constant="16" id="8MP-mO-CIa"/>
+                                        <constraint firstItem="P3p-cv-8sH" firstAttribute="top" secondItem="WJV-KH-rtf" secondAttribute="bottom" constant="40" id="9fD-tJ-5y6"/>
+                                        <constraint firstAttribute="trailing" secondItem="LOU-TA-YoR" secondAttribute="trailing" constant="30" id="BL5-yx-e3k"/>
+                                        <constraint firstItem="N8p-X9-uGr" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="BXZ-v5-Kxi"/>
+                                        <constraint firstItem="VY4-bh-98W" firstAttribute="top" secondItem="DMJ-9p-DBh" secondAttribute="top" constant="40" id="Bae-Gc-g4T"/>
+                                        <constraint firstItem="VY4-bh-98W" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="16" id="EhR-sC-okg"/>
+                                        <constraint firstItem="WJV-KH-rtf" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="Fsj-ZL-1hE"/>
+                                        <constraint firstAttribute="trailing" secondItem="cmm-LE-hpZ" secondAttribute="trailing" constant="16" id="GTJ-M6-3NG"/>
+                                        <constraint firstItem="qK5-R0-4tJ" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="MI8-MI-fmf"/>
+                                        <constraint firstItem="WJV-KH-rtf" firstAttribute="leading" secondItem="qK5-R0-4tJ" secondAttribute="trailing" constant="7" id="NsM-OK-AK5"/>
+                                        <constraint firstAttribute="bottom" secondItem="LOU-TA-YoR" secondAttribute="bottom" constant="30" id="TBt-bp-KfR"/>
+                                        <constraint firstItem="LOU-TA-YoR" firstAttribute="top" secondItem="P3p-cv-8sH" secondAttribute="bottom" constant="30" id="YJT-gs-tQ0"/>
+                                        <constraint firstItem="cmm-LE-hpZ" firstAttribute="top" secondItem="VY4-bh-98W" secondAttribute="bottom" constant="16" id="YR0-2L-W2z"/>
+                                        <constraint firstAttribute="trailing" secondItem="VY4-bh-98W" secondAttribute="trailing" constant="16" id="Ylj-V2-VeC"/>
+                                        <constraint firstItem="qK5-R0-4tJ" firstAttribute="leading" secondItem="N8p-X9-uGr" secondAttribute="trailing" constant="7" id="czk-44-sxB"/>
+                                        <constraint firstItem="P3p-cv-8sH" firstAttribute="top" secondItem="N8p-X9-uGr" secondAttribute="bottom" constant="40" id="rug-eY-sJl"/>
+                                        <constraint firstAttribute="trailing" secondItem="P3p-cv-8sH" secondAttribute="trailing" constant="16" id="w1k-D1-aXi"/>
+                                        <constraint firstItem="N8p-X9-uGr" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="16" id="w21-mK-Icr"/>
+                                        <constraint firstItem="cmm-LE-hpZ" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="16" id="xJ0-zM-Mom"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="DMJ-9p-DBh" secondAttribute="bottom" id="AvU-Tz-aD9"/>
+                                <constraint firstItem="DMJ-9p-DBh" firstAttribute="top" secondItem="95v-tL-giU" secondAttribute="top" id="Ev6-GS-Y4d"/>
+                                <constraint firstItem="DMJ-9p-DBh" firstAttribute="width" secondItem="95v-tL-giU" secondAttribute="width" id="LXp-TR-OrV"/>
+                                <constraint firstItem="DMJ-9p-DBh" firstAttribute="leading" secondItem="95v-tL-giU" secondAttribute="leading" id="Q2O-E4-G1g"/>
+                                <constraint firstAttribute="trailing" secondItem="DMJ-9p-DBh" secondAttribute="trailing" id="ZNl-rh-Xu4"/>
+                                <constraint firstItem="DMJ-9p-DBh" firstAttribute="height" secondItem="95v-tL-giU" secondAttribute="height" priority="999" id="tdk-gr-2fk"/>
+                            </constraints>
+                        </scrollView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="95v-tL-giU" firstAttribute="top" secondItem="hHl-m0-xSg" secondAttribute="top" id="D1r-cQ-a3F"/>
+                        <constraint firstItem="95v-tL-giU" firstAttribute="leading" secondItem="hHl-m0-xSg" secondAttribute="leading" id="jxy-zS-wca"/>
+                        <constraint firstAttribute="bottom" secondItem="95v-tL-giU" secondAttribute="bottom" id="rbn-QT-arA"/>
+                        <constraint firstAttribute="trailing" secondItem="95v-tL-giU" secondAttribute="trailing" id="tyX-PR-1S0"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="hHl-m0-xSg" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="03j-IG-O2M"/>
+                <constraint firstAttribute="trailing" secondItem="EcW-C1-LK6" secondAttribute="trailing" id="0MK-oi-T9q"/>
+                <constraint firstItem="EcW-C1-LK6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5X7-hm-C6S"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bEB-Xo-NYK" secondAttribute="trailing" constant="16" id="6As-NM-oIe"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="EcW-C1-LK6" secondAttribute="top" id="Smb-4a-Odb"/>
+                <constraint firstItem="bEB-Xo-NYK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="UeN-Wx-HfI"/>
+                <constraint firstItem="3vL-YD-f4m" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Un1-Vg-Itd"/>
+                <constraint firstItem="hHl-m0-xSg" firstAttribute="top" secondItem="bEB-Xo-NYK" secondAttribute="bottom" constant="40" id="iGi-8P-Aik"/>
+                <constraint firstItem="bEB-Xo-NYK" firstAttribute="top" secondItem="EcW-C1-LK6" secondAttribute="bottom" constant="42" id="nc9-x6-OPo"/>
+                <constraint firstItem="3vL-YD-f4m" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qGm-vQ-x6r"/>
+                <constraint firstItem="hHl-m0-xSg" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="vps-sV-Py5"/>
+                <constraint firstAttribute="bottom" secondItem="3vL-YD-f4m" secondAttribute="bottom" id="wLf-4i-bw3"/>
+                <constraint firstAttribute="trailing" secondItem="3vL-YD-f4m" secondAttribute="trailing" id="yOM-0u-peX"/>
+                <constraint firstItem="hHl-m0-xSg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="zZ3-8f-1M1"/>
+            </constraints>
+            <point key="canvasLocation" x="73.913043478260875" y="35.491071428571423"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="MainBackground" width="375" height="812"/>
+        <image name="QrCodeIcon" width="24" height="24"/>
+    </resources>
+</document>

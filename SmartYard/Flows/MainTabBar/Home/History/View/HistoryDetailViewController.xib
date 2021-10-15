@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HistoryDetailViewController" customModule="SmartYard" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="n0H-ZY-xSx" id="6mh-Hp-Vxg"/>
+                <outlet property="emptyStateView" destination="er8-BG-sa1" id="cih-5C-cmH"/>
+                <outlet property="fakeNavBar" destination="JXc-hx-DfM" id="aVs-JN-mO7"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JXc-hx-DfM" userLabel="FakeNavBar" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <viewLayoutGuide key="safeArea" id="gy9-ff-X6V"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="XLy-js-h1r"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="g7E-kq-Vm4"/>
+                    </constraints>
+                </view>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="n0H-ZY-xSx">
+                    <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                    <color key="backgroundColor" name="backgroundColor"/>
+                    <collectionViewLayout key="collectionViewLayout" id="vaW-Qi-2Sb" customClass="BetterSnappingLayout" customModule="SmartYard" customModuleProvider="target"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="Cgy-57-flp"/>
+                    </connections>
+                </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="er8-BG-sa1">
+                    <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHh-uL-LfI">
+                            <rect key="frame" x="20" y="197.5" width="335" height="228.5"/>
+                            <string key="text">Похоже, что в журнале пока нет подходящих событий.
+
+Убедитесь, что владелец квартиры включил ведение журнала событий.
+Затем, попробуйте открыть подъезд своим ключом и подождите 1 минуту, чтобы в системе появилось хотя бы одно событие с Вашим фото.  
+После чего повторите попытку открыть этот раздел заново.
+
+PS: Напоминаем, что мы всегда готовы помочь в чате или по телефону техподдержки через меню данного приложения.</string>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                            <color key="textColor" name="semiBlack"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" name="backgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="RHh-uL-LfI" firstAttribute="centerY" secondItem="er8-BG-sa1" secondAttribute="centerY" id="GGB-G3-SZj"/>
+                        <constraint firstAttribute="trailing" secondItem="RHh-uL-LfI" secondAttribute="trailing" constant="20" id="Nb6-7J-WuY"/>
+                        <constraint firstItem="RHh-uL-LfI" firstAttribute="leading" secondItem="er8-BG-sa1" secondAttribute="leading" constant="20" id="aDK-R3-fRr"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" name="backgroundColor"/>
+            <constraints>
+                <constraint firstItem="JXc-hx-DfM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="2b4-wa-c1Z"/>
+                <constraint firstItem="n0H-ZY-xSx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4o3-iy-70S"/>
+                <constraint firstItem="er8-BG-sa1" firstAttribute="top" secondItem="JXc-hx-DfM" secondAttribute="bottom" id="6bu-Xc-IPu"/>
+                <constraint firstItem="JXc-hx-DfM" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="8vB-mu-wPs"/>
+                <constraint firstItem="JXc-hx-DfM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ISG-Ey-GIF"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="n0H-ZY-xSx" secondAttribute="bottom" id="TPy-4V-xEN"/>
+                <constraint firstItem="er8-BG-sa1" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="c31-5Z-fsO"/>
+                <constraint firstItem="n0H-ZY-xSx" firstAttribute="top" secondItem="JXc-hx-DfM" secondAttribute="bottom" id="d2b-Ud-wSB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="er8-BG-sa1" secondAttribute="bottom" id="qdC-5W-EWM"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="er8-BG-sa1" secondAttribute="trailing" id="z6R-Vf-A5h"/>
+                <constraint firstAttribute="trailing" secondItem="n0H-ZY-xSx" secondAttribute="trailing" id="zzD-xJ-OLu"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="55.580357142857139"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="backgroundColor">
+            <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="semiBlack">
+            <color red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

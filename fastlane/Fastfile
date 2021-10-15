@@ -1,0 +1,26 @@
+fastlane_version "2.128.0"
+import_from_git(url: 'git@gitlab.com:madbrains/util/fastlane-scripts.git', branch: 'feature/allow-full-cert-sync', path: 'Fastfile')
+default_platform :ios
+
+platform :ios do
+
+   lane :firebase_release do
+    firebase(
+      firebase_app_id: '1:978817004542:ios:e57f3368196f4d6ce986af',
+      scheme: 'SmartYard',
+      test_groups: 'madbrains,customertesters',
+      force_full_cert_sync: true,
+      export_options: { compileBitcode: false, uploadBitcode: false }
+    )
+  end
+
+  lane :tf_release do
+    tf(
+      scheme: 'SmartYard',
+      app_store_connect_team_id: '118338248',
+      force_full_cert_sync: true,
+      export_options: { compileBitcode: false, uploadBitcode: false }
+    )
+  end
+
+end

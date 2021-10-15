@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingViewController" customModule="SmartYard" customModuleProvider="target">
+            <connections>
+                <outlet property="letsStartButton" destination="9px-IB-3Uc" id="7Fu-qb-npu"/>
+                <outlet property="nextButton" destination="gWk-WM-mDC" id="zxi-0b-sXA"/>
+                <outlet property="pageControl" destination="bcd-oJ-Tyo" id="2ev-wQ-P1O"/>
+                <outlet property="scrollView" destination="Agb-R0-2l1" id="gEo-71-pHg"/>
+                <outlet property="skipButton" destination="4Ru-dw-B3a" id="cLi-9n-zBt"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="iU2-yd-VtN">
+                    <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ru-dw-B3a">
+                    <rect key="frame" x="280" y="70" width="94" height="33"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="Пропустить">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                </button>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppNameLogo" translatesAutoresizingMaskIntoConstraints="NO" id="51a-hg-BG2">
+                    <rect key="frame" x="117" y="128" width="156" height="56"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j85-Mo-g0D" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="224" width="390" height="620"/>
+                    <subviews>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Agb-R0-2l1">
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="400"/>
+                            <subviews>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vWO-8N-NQs">
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="400"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="250" id="Zve-tR-wfe"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="vWO-8N-NQs" firstAttribute="centerX" secondItem="Agb-R0-2l1" secondAttribute="centerX" id="18E-QV-phf"/>
+                                <constraint firstItem="vWO-8N-NQs" firstAttribute="centerY" secondItem="Agb-R0-2l1" secondAttribute="centerY" id="7Gn-YV-Por"/>
+                                <constraint firstAttribute="trailing" secondItem="vWO-8N-NQs" secondAttribute="trailing" id="UpA-Ug-oEB"/>
+                                <constraint firstItem="vWO-8N-NQs" firstAttribute="top" secondItem="Agb-R0-2l1" secondAttribute="top" id="gWJ-Vp-myZ"/>
+                                <constraint firstItem="vWO-8N-NQs" firstAttribute="leading" secondItem="Agb-R0-2l1" secondAttribute="leading" id="lxT-Wh-RHr"/>
+                                <constraint firstAttribute="bottom" secondItem="vWO-8N-NQs" secondAttribute="bottom" id="xa1-dg-hZz"/>
+                            </constraints>
+                            <viewLayoutGuide key="contentLayoutGuide" id="LdM-rN-kUb"/>
+                            <viewLayoutGuide key="frameLayoutGuide" id="UrW-vq-4ty"/>
+                        </scrollView>
+                        <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="bcd-oJ-Tyo">
+                            <rect key="frame" x="134.33333333333334" y="538.66666666666663" width="121.33333333333334" height="27.333333333333371"/>
+                        </pageControl>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gWk-WM-mDC" customClass="WhiteButtonWithBorder" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="40" y="438.66666666666663" width="310" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="PD9-tI-96j"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                            <state key="normal" title="Далее"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9px-IB-3Uc" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="40" y="438.66666666666663" width="310" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="mRo-ej-Kvx"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                            <state key="normal" title="Класс, давайте начнём!"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Agb-R0-2l1" secondAttribute="trailing" id="6sE-hn-7hc"/>
+                        <constraint firstAttribute="trailing" secondItem="gWk-WM-mDC" secondAttribute="trailing" constant="40" id="8MY-il-4XE"/>
+                        <constraint firstItem="9px-IB-3Uc" firstAttribute="leading" secondItem="j85-Mo-g0D" secondAttribute="leading" constant="40" id="EeC-EC-u9a"/>
+                        <constraint firstAttribute="trailing" secondItem="9px-IB-3Uc" secondAttribute="trailing" constant="40" id="P7b-Cd-0Gx"/>
+                        <constraint firstItem="bcd-oJ-Tyo" firstAttribute="centerX" secondItem="j85-Mo-g0D" secondAttribute="centerX" id="cu9-HQ-RrD"/>
+                        <constraint firstItem="gWk-WM-mDC" firstAttribute="leading" secondItem="j85-Mo-g0D" secondAttribute="leading" constant="40" id="cxC-VO-TMA"/>
+                        <constraint firstItem="gWk-WM-mDC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Agb-R0-2l1" secondAttribute="bottom" constant="16" id="l0b-3U-y9b"/>
+                        <constraint firstItem="bcd-oJ-Tyo" firstAttribute="top" secondItem="9px-IB-3Uc" secondAttribute="bottom" constant="40" id="lxt-3i-QZz"/>
+                        <constraint firstItem="Agb-R0-2l1" firstAttribute="leading" secondItem="j85-Mo-g0D" secondAttribute="leading" id="rZ5-P6-Nsp"/>
+                        <constraint firstItem="Agb-R0-2l1" firstAttribute="top" secondItem="j85-Mo-g0D" secondAttribute="top" id="tWo-fB-XrM"/>
+                        <constraint firstAttribute="bottom" secondItem="Agb-R0-2l1" secondAttribute="bottom" priority="900" constant="220" id="uW0-7P-6ZV"/>
+                        <constraint firstItem="bcd-oJ-Tyo" firstAttribute="top" secondItem="gWk-WM-mDC" secondAttribute="bottom" constant="40" id="vGv-7R-HIO"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Vzb-hM-7pq"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="51a-hg-BG2" secondAttribute="trailing" constant="117" id="0hH-PS-qkZ"/>
+                <constraint firstItem="iU2-yd-VtN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="1W4-Sl-7S7"/>
+                <constraint firstItem="j85-Mo-g0D" firstAttribute="top" secondItem="Vzb-hM-7pq" secondAttribute="top" constant="180" id="1uc-xS-vqp"/>
+                <constraint firstItem="51a-hg-BG2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="117" id="3jm-Ug-Wi9"/>
+                <constraint firstAttribute="trailing" secondItem="j85-Mo-g0D" secondAttribute="trailing" id="6F1-xN-ifR"/>
+                <constraint firstItem="j85-Mo-g0D" firstAttribute="top" secondItem="51a-hg-BG2" secondAttribute="bottom" constant="40" id="CjV-XQ-MFW"/>
+                <constraint firstAttribute="trailing" secondItem="iU2-yd-VtN" secondAttribute="trailing" id="EhE-Hc-LbN"/>
+                <constraint firstAttribute="bottom" secondItem="j85-Mo-g0D" secondAttribute="bottom" id="Gby-ud-cC9"/>
+                <constraint firstItem="51a-hg-BG2" firstAttribute="top" secondItem="Vzb-hM-7pq" secondAttribute="top" constant="84" id="KtK-EH-wAa"/>
+                <constraint firstItem="iU2-yd-VtN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fPj-a8-h9r"/>
+                <constraint firstItem="bcd-oJ-Tyo" firstAttribute="bottom" secondItem="Vzb-hM-7pq" secondAttribute="bottom" constant="-20" id="fyc-IO-UX7"/>
+                <constraint firstAttribute="bottom" secondItem="iU2-yd-VtN" secondAttribute="bottom" id="hJA-v8-U3q"/>
+                <constraint firstAttribute="trailing" secondItem="4Ru-dw-B3a" secondAttribute="trailing" constant="16" id="opK-fz-ki5"/>
+                <constraint firstItem="4Ru-dw-B3a" firstAttribute="top" secondItem="Vzb-hM-7pq" secondAttribute="top" constant="26" id="p6f-Sx-ciZ"/>
+                <constraint firstItem="j85-Mo-g0D" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vgK-hZ-0gQ"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="121.875"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="AppNameLogo" width="187" height="74"/>
+        <image name="MainBackground" width="375" height="812"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
