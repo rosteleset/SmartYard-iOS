@@ -42,9 +42,6 @@ extension Notification.Name {
     static let incomingCallForceLandscape = Notification.Name("IncomingCallForceLandscape")
     static let incomingCallForcePortrait = Notification.Name("IncomingCallForcePortrait")
     
-    static let applicationDidEnterBackground = Notification.Name("ApplicationDidEnterBackground")
-    static let applicationDidEnterForeground = Notification.Name("ApplicationDidEnterForeground")
-    
     static let popupDimissed = Notification.Name("PopUpDimissed")
     
     static let updateFaces = Notification.Name("UpdateFaces")

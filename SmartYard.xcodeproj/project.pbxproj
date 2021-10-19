@@ -42,6 +42,7 @@
 		3A3B8BB325A5D00C00BFB72E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */; };
 		3A3B8BB425A5D00C00BFB72E /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB225A5D00C00BFB72E /* MainMenuViewController.xib */; };
 		3A3B8BBA25A5E8DA00BFB72E /* MainMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB925A5E8DA00BFB72E /* MainMenuItem.swift */; };
+		3A3EF204271DFA9600B73B36 /* Swift+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EF203271DFA9600B73B36 /* Swift+Helper.swift */; };
 		3A4A4A782704826600C5B609 /* SharedFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4A4A772704826600C5B609 /* SharedFunctions.swift */; };
 		3A4A4A79270482C700C5B609 /* SharedFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4A4A772704826600C5B609 /* SharedFunctions.swift */; };
 		3A555B102700573400E70CB9 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A555B0F2700573400E70CB9 /* Intents.framework */; };
@@ -83,6 +84,7 @@
 		3AC5C6FA2612661F008D74DE /* APIPlogDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC5C6F92612661F008D74DE /* APIPlogDay.swift */; };
 		3AC5C71126131D3D008D74DE /* HistoryLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AC5C71026131D3D008D74DE /* HistoryLoadingTableViewCell.xib */; };
 		3AC5C71626131D4A008D74DE /* HistoryLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC5C71526131D4A008D74DE /* HistoryLoadingTableViewCell.swift */; };
+		3AC7CA7D271D7048007F35C7 /* AccountParams+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */; };
 		3AD968DC25E976C5000EEB4E /* SmartYardDropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */; };
 		3AE65A3C264DA3EB0093284C /* DeleteFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE65A3A264DA3EB0093284C /* DeleteFaceViewController.swift */; };
 		3AE65A43264DA4130093284C /* DeleteFaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AE65A3B264DA3EB0093284C /* DeleteFaceViewController.xib */; };
@@ -238,7 +240,6 @@
 		848D1B8A23F29D6100D6E368 /* AddressSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848D1B8823F29D6100D6E368 /* AddressSettingsViewController.xib */; };
 		848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D1B8B23F29D9B00D6E368 /* AddressSettingsViewModel.swift */; };
 		848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */; };
-		84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */; };
 		84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84950CF923E431CB00F3C550 /* Animation+Fade.swift */; };
 		84963950247BFAE20086B6E9 /* UIViewController+Top.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496394F247BFAE20086B6E9 /* UIViewController+Top.swift */; };
 		84963952247C25C50086B6E9 /* LogoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84963951247C25C50086B6E9 /* LogoutHelper.swift */; };
@@ -618,6 +619,7 @@
 		3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		3A3B8BB225A5D00C00BFB72E /* MainMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenuViewController.xib; sourceTree = "<group>"; };
 		3A3B8BB925A5E8DA00BFB72E /* MainMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuItem.swift; sourceTree = "<group>"; };
+		3A3EF203271DFA9600B73B36 /* Swift+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Swift+Helper.swift"; sourceTree = "<group>"; };
 		3A4A4A772704826600C5B609 /* SharedFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFunctions.swift; sourceTree = "<group>"; };
 		3A555B0E2700573400E70CB9 /* SmartYardIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SmartYardIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A555B0F2700573400E70CB9 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
@@ -658,6 +660,7 @@
 		3AC5C6F92612661F008D74DE /* APIPlogDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIPlogDay.swift; sourceTree = "<group>"; };
 		3AC5C71026131D3D008D74DE /* HistoryLoadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryLoadingTableViewCell.xib; sourceTree = "<group>"; };
 		3AC5C71526131D4A008D74DE /* HistoryLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryLoadingTableViewCell.swift; sourceTree = "<group>"; };
+		3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountParams+Extensions.swift"; sourceTree = "<group>"; };
 		3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardDropDownTextField.swift; sourceTree = "<group>"; };
 		3AE65A3A264DA3EB0093284C /* DeleteFaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFaceViewController.swift; sourceTree = "<group>"; };
 		3AE65A3B264DA3EB0093284C /* DeleteFaceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeleteFaceViewController.xib; sourceTree = "<group>"; };
@@ -813,7 +816,6 @@
 		848D1B8823F29D6100D6E368 /* AddressSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressSettingsViewController.xib; sourceTree = "<group>"; };
 		848D1B8B23F29D9B00D6E368 /* AddressSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSettingsViewModel.swift; sourceTree = "<group>"; };
 		848D1B8D23F2A26C00D6E368 /* SettingsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAction.swift; sourceTree = "<group>"; };
-		84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountCreator+Extensions.swift"; sourceTree = "<group>"; };
 		84950CF923E431CB00F3C550 /* Animation+Fade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+Fade.swift"; sourceTree = "<group>"; };
 		8496394F247BFAE20086B6E9 /* UIViewController+Top.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Top.swift"; sourceTree = "<group>"; };
 		84963951247C25C50086B6E9 /* LogoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutHelper.swift; sourceTree = "<group>"; };
@@ -2585,7 +2587,7 @@
 			isa = PBXGroup;
 			children = (
 				84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */,
-				84950CF523E41FD800F3C550 /* AccountCreator+Extensions.swift */,
+				3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */,
 				84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */,
 				84F6494C24740F33000C0028 /* CLLocationCoordinate2D+Extensions.swift */,
 				844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */,
@@ -2604,6 +2606,7 @@
 				E94B6C4423FFFF5D00FD9F65 /* Date+Conversion.swift */,
 				8496394F247BFAE20086B6E9 /* UIViewController+Top.swift */,
 				3AFBA7B8263984E000C7DEB6 /* AVPlayer+Extensions.swift */,
+				3A3EF203271DFA9600B73B36 /* Swift+Helper.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -4443,6 +4446,7 @@
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				845E9EE024895AE4000CBBC6 /* SimpleVideoEndIndicator.swift in Sources */,
 				84D29BAB24BDCB6900CFBE6B /* IncomingCallPreviewState.swift in Sources */,
+				3A3EF204271DFA9600B73B36 /* Swift+Helper.swift in Sources */,
 				843C38D3242A577C0035BF80 /* DeliveredRequest.swift in Sources */,
 				845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
@@ -4498,7 +4502,6 @@
 				845E9EE524895AE4000CBBC6 /* SimpleVideoTimeView.swift in Sources */,
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
 				8496396524851B8B0086B6E9 /* AllCCTVResponseData.swift in Sources */,
-				84950CF623E41FD800F3C550 /* AccountCreator+Extensions.swift in Sources */,
 				84F6494F247410DE000C0028 /* CameraObject.swift in Sources */,
 				84F64936247402DC000C0028 /* SelectCameraContainerViewModel.swift in Sources */,
 				3A8B952A25D9336D007CDD3C /* CityCamsCoordinator.swift in Sources */,
@@ -4669,6 +4672,7 @@
 				3AE65A48264DA4A00093284C /* ScaledHeightImageView.swift in Sources */,
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
+				3AC7CA7D271D7048007F35C7 /* AccountParams+Extensions.swift in Sources */,
 				3AFBA74326383B0500C7DEB6 /* CamMapCCTVResponseData.swift in Sources */,
 				3AEFB447264C0C07000F37D0 /* APIWrapper+FRS.swift in Sources */,
 				E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */,
@@ -4792,7 +4796,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntents.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 93;
+				CURRENT_PROJECT_VERSION = 96;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -4818,7 +4822,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntents.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 93;
+				CURRENT_PROJECT_VERSION = 96;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -4843,7 +4847,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 93;
+				CURRENT_PROJECT_VERSION = 96;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4868,7 +4872,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 93;
+				CURRENT_PROJECT_VERSION = 96;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4893,7 +4897,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 93;
+				CURRENT_PROJECT_VERSION = 96;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4917,7 +4921,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 93;
+				CURRENT_PROJECT_VERSION = 96;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -5064,7 +5068,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 93;
+				CURRENT_PROJECT_VERSION = 96;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
@@ -5251,7 +5255,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 93;
+				CURRENT_PROJECT_VERSION = 96;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
@@ -5436,7 +5440,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 93;
+				CURRENT_PROJECT_VERSION = 96;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -5471,7 +5475,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 93;
+				CURRENT_PROJECT_VERSION = 96;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				DYLIB_COMPATIBILITY_VERSION = 1;

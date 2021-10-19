@@ -64,7 +64,6 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     }
     
     init(mainWindow: UIWindow) {
-        Crashlytics.crashlytics().setUserID(accessService.clientPhoneNumber ?? "unknown")
         apiWrapper = APIWrapper(accessService: accessService)
         issueService = IssueService(apiWrapper: apiWrapper, accessService: accessService)
         pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
@@ -83,7 +82,6 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         observeLogout()
         observeOrientationChanges()
-        observeApplicationChangeState()
     }
     
     // swiftlint:disable:next function_body_length
@@ -276,6 +274,10 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         accessService.voipToken = token
     }
     
+    func setCrashlyticsUserID() {
+        Crashlytics.crashlytics().setUserID(accessService.clientPhoneNumber ?? "unknown")
+    }
+    
     func markAllMessagesAsDelivered() {
         pushNotificationService.markAllMessagesAsDelivered()
     }
@@ -335,39 +337,6 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             self?.mainTabBarCoordinator?.trigger(.chat)
         }
-    }
-    
-    // MARK: добавил обработку отслеживания состояния приложения, чтобы Linphone знал, когда он в фоне, а когда нет (Васильев)
-    private func observeApplicationChangeState() {
-        NotificationCenter.default.rx
-            .notification(.applicationDidEnterBackground)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] _ in
-                    print("applicationDidEnterBackground")
-                    
-                    guard let core = self?.linphoneService.core else {
-                        return
-                    }
-                    core.enterBackground()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        NotificationCenter.default.rx
-            .notification(.applicationDidEnterForeground)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] _ in
-                    print("applicationDidEnterForeground")
-                    
-                    guard let core = self?.linphoneService.core else {
-                        return
-                    }
-                    core.enterForeground()
-                }
-            )
-            .disposed(by: disposeBag)
     }
     
     private func observeLogout() {

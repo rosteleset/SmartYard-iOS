@@ -189,7 +189,9 @@ class IncomingCallViewModel: BaseViewModel {
                 let (call, callParams) = unwrappedIncomingCall
                 
                 if isDoorOpeningRequested {
-                    Crashlytics.crashlytics().log("IncomingCallViewModel:192 call.state = \(call.state)")
+                    Crashlytics
+                        .crashlytics()
+                        .log("\(#file):\(#function):\(#line)) call.state = \(call.state)")
                     
                     call.speakerMuted = true
                     call.microphoneMuted = true
@@ -773,9 +775,19 @@ class IncomingCallViewModel: BaseViewModel {
                     }
                     
                     do {
-                        Crashlytics.crashlytics().log("IncomingCallViewModel:774 call.state = \(call.state) self.callPayload.dtmf = \(self.callPayload.dtmf)")
+                        Crashlytics
+                            .crashlytics()
+                            .log(
+                                 "\(#file):\(#function):\(#line)) call.state = \(call.state) self.callPayload.dtmf = \(self.callPayload.dtmf)"
+                            )
                         try call.sendDtmfs(dtmfs: self.callPayload.dtmf)
                     } catch {
+                        Crashlytics
+                            .crashlytics()
+                            .log("\(#file):\(#function):\(#line)) call = \(call)")
+                        Crashlytics
+                            .crashlytics()
+                            .record(error: error)
                         self.isDoorBeingOpened.onNext(false)
                         return
                     }
@@ -822,11 +834,10 @@ class IncomingCallViewModel: BaseViewModel {
 }
 
 extension IncomingCallViewModel: LinphoneDelegate {
-    
-    func onRegistrationStateChanged(lc: Core, cfg: ProxyConfig, cstate: RegistrationState, message: String) {
-        print("DEBUG / REGISTRATION STATE: \(cstate)")
+    func onAccountRegistrationStateChanged(lc core: Core, account: Account, state: RegistrationState, message: String) {
+        print("DEBUG / REGISTRATION STATE: \(state)")
         
-        if cstate == .Ok {
+        if state == .Ok {
             registrationFinished.onNext(true)
         }
     }

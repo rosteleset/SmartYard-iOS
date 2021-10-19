@@ -112,15 +112,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         UserDefaults.standard.synchronize()
     }
-    
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        NotificationCenter.default.post(name: .applicationDidEnterBackground, object: nil)
-    }
-    
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        NotificationCenter.default.post(name: .applicationDidEnterForeground, object: nil)
-    }
-
 }
 
 // MARK: Push Notifications
@@ -135,6 +126,7 @@ extension AppDelegate: MessagingDelegate {
     
     private func configureFirebase(for application: UIApplication) {
         FirebaseApp.configure()
+        appCoordinator.setCrashlyticsUserID()
         
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self

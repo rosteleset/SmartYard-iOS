@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import FirebaseCrashlytics
 
 final class ErrorTracker: SharedSequenceConvertibleType {
     
@@ -33,6 +34,7 @@ final class ErrorTracker: SharedSequenceConvertibleType {
     }
     
     func onError(_ error: Error) {
+        Crashlytics.crashlytics().record(error: error)
         _subject.onNext(error)
     }
     

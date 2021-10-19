@@ -554,7 +554,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                             // Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
                             playerItem.preferredMaximumResolution = CGSize(width: 3840, height: 2160)
                             
-                            self.realVideoPlayer?.insert(playerItem, after: nil)
+                            if let realVideoPlayer = self.realVideoPlayer,
+                               realVideoPlayer.canInsert(playerItem, after: nil) {
+                                realVideoPlayer.insert(playerItem, after: nil)
+                            }
                         }
                     }
                 }
@@ -1031,7 +1034,10 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
                 //Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
                 playerItem.preferredMaximumResolution = CGSize(width: 3840, height: 2160)
                 
-                self.realVideoPlayer?.insert(playerItem, after: nil)
+                if let realVideoPlayer = self.realVideoPlayer,
+                   realVideoPlayer.canInsert(playerItem, after: nil) {
+                    realVideoPlayer.insert(playerItem, after: nil)
+                }
             }
             
         }

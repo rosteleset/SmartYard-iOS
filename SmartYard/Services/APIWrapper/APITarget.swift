@@ -7,6 +7,7 @@
 //
 
 import Moya
+import FirebaseCrashlytics
 
 enum APITarget {
     
