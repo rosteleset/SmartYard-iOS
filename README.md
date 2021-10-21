@@ -11,7 +11,7 @@
 Код back-end, реализующий это API на текущий момент неотделим от нашей архитектуры и наших всех остальных систем, поэтому на текущем этапе мы не можем вам предложить ничего лучше, как реализовать у себя этот API своими силами.
 
 ## Используемые фреймворки и компоненты (основные)
-* [CocoaPods] (https://cocoapods.org/) для управления используемыми фреймворками
+* [CocoaPods](https://cocoapods.org/) для управления используемыми фреймворками
 * [linphone-sdk](https://github.com/BelledonneCommunications/linphone-iphone) для реализации SIP части
 * [Flussonic](https://flussonic.ru/) для работы с архивом видеокамер 
 * [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging) для работы с Push-уведомлениями
