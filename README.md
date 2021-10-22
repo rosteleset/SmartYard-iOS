@@ -15,7 +15,7 @@
 * [linphone-sdk](https://github.com/BelledonneCommunications/linphone-iphone) для реализации SIP части
 * [Flussonic](https://flussonic.ru/) для работы с архивом видеокамер 
 * [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging) для работы с Push-уведомлениями
-* [MapBox](https://www.mapbox.com/) для работы с картами (обязательно нужно на их сайте зарегистрироваться чтобы получить токен для работы с API и установки)
+* [MapBox](https://www.mapbox.com/) для работы с картами [(обязательно нужно на их сайте зарегистрироваться, чтобы получить токен для работы с API и для установки)](https://docs.mapbox.com/ios/maps/guides/install/)
 * [Crashlytics](https://firebase.google.com/docs/crashlytics) для сбора информации о сбоях 
 * [Yandex AppMetrika](https://appmetrica.yandex.ru/) для сбора пользовательской аналитики
 * Реактивный фреймворк [RxSwift](https://github.com/ReactiveX/RxSwift) и
