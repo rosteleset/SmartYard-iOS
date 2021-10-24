@@ -35,5 +35,6 @@ public func print(_ items: Any..., separator: String = " ", terminator: String =
             .truncated(toLength: 1000)
             
         }
-            .joined(separator: separator) + terminator)
+            .joined(separator: separator) + terminator
+    )
 }

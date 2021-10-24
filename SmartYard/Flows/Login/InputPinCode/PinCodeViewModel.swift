@@ -10,6 +10,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 import XCoordinator
+import FirebaseCrashlytics
 
 class PinCodeViewModel: BaseViewModel {
     
@@ -79,6 +80,9 @@ class PinCodeViewModel: BaseViewModel {
                     self?.accessService.clientName = data.name
                     self?.accessService.clientPhoneNumber = self?.phoneNumber
                     self?.accessService.appState = .userName
+                    
+                    //когда пользователь авторизовался уже после инициализации Crashlytics, то надо обновить  UserId
+                    Crashlytics.crashlytics().setUserID(self?.accessService.clientPhoneNumber ?? "unknown")
                     
                     prepareTransitionTrigger.onNext(())
                 }

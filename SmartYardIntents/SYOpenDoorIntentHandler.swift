@@ -65,7 +65,10 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
         }
     }
     
-    func provideAddressOptionsCollection(for intent: SYOpenDoorIntent, with completion: @escaping (INObjectCollection<HouseAddress>?, Error?) -> Void) {
+    func provideAddressOptionsCollection(
+        for intent: SYOpenDoorIntent,
+        with completion: @escaping (INObjectCollection<HouseAddress>?, Error?) -> Void
+    ) {
         print("provideAddress - ")
         
         let allItems = addresses(of: intent.doorType)
@@ -74,7 +77,10 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
         completion(INObjectCollection(items: allItems), nil)
     }
     
-    func provideDoorOptionsCollection(for intent: SYOpenDoorIntent, with completion: @escaping (INObjectCollection<Door>?, Error?) -> Void) {
+    func provideDoorOptionsCollection(
+        for intent: SYOpenDoorIntent,
+        with completion: @escaping (INObjectCollection<Door>?, Error?) -> Void
+    ) {
         print("provideDoor for \(intent.address?.displayString ?? "<неизвестно>")")
         
         let allItems: [Door] = doors(for: intent.address?.displayString, of: intent.doorType)
@@ -82,7 +88,6 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
         print(allItems)
         
         if allItems.isEmpty {
-            //     completion(nil, INIntentError.init(_nsError: NSError(domain: "com.Domain.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Error Message"])))
             completion(nil, nil)
         } else {
             completion(INObjectCollection(items: allItems), nil)

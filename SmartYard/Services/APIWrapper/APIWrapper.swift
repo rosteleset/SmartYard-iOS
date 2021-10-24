@@ -56,12 +56,8 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     
     func mapAsVoidResponse() -> Single<Void> {
         return flatMap { response in
-            
-            printDebugInfo(response)
-            
             // MARK: Если вернулся успешный код, то просто возвращаем Void
             if 200...299 ~= response.statusCode {
-                print("response data: <empty>")
                 return .just(())
             }
 
@@ -73,9 +69,6 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     
     func mapAsDefaultResponse<T: Decodable>() -> Single<T> {
         return flatMap { response in
-            
-            printDebugInfo(response)
-            
             // MARK: Если вернулся успешный код - пытаемся замапить реквест
             if 200...299 ~= response.statusCode {
                 do {
@@ -97,9 +90,6 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     
     func mapAsSberbankResponse() -> Single<SberbankPayProcessResponseData?> {
         return flatMap { response in
-            
-            printDebugInfo(response)
-            
             do {
                 let mappedResponse = try response.map(SberbankPayProcessResponseData.self)
                 return .just(mappedResponse)
@@ -111,9 +101,6 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     
     func mapAsEmptyDataInitializableResponse<T: Decodable & EmptyDataInitializable>() -> Single<T> {
         return flatMap { response in
-            
-            printDebugInfo(response)
-            
             // MARK: Если вернулся код 204 (пустой контент), то просто возвращаем пустой контент
             if response.statusCode == 204 {
                 return .just(T())
@@ -140,48 +127,47 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     }
     
     func convertNoConnectionError() -> PrimitiveSequence<Trait, Element> {
-        return
-            flatMap { response in
-                
-                printDebugInfo(response)
-               
-                return .just(response)
-        }
-            .catchError { error in
-                let nsError = error as NSError
-                
-                guard nsError.domain == "Moya.MoyaError",
-                    nsError.code == 6,
-                    let afError = nsError.userInfo["NSUnderlyingError"] as? AFError,
-                    let underlyingError = afError.underlyingError as NSError?,
-                    underlyingError.domain == "NSURLErrorDomain",
-                    underlyingError.code == -1009 else {
-                    throw error
-                }
-
-                throw NSError.APIWrapperError.noConnectionError
+        catchError { error in
+            let nsError = error as NSError
+            
+            guard nsError.domain == "Moya.MoyaError",
+                nsError.code == 6,
+                let afError = nsError.userInfo["NSUnderlyingError"] as? AFError,
+                let underlyingError = afError.underlyingError as NSError?,
+                underlyingError.domain == "NSURLErrorDomain",
+                underlyingError.code == -1009 else {
+                throw error
             }
+
+            throw NSError.APIWrapperError.noConnectionError
+        }
+        .printDebugInfo()
     }
     
-    private func printDebugInfo(_ response: Element) {
-        if let request = response.request {
-            var bodyIfPresent = ""
-            if let httpBody = request.httpBody {
-                bodyIfPresent = " body=\(httpBody)"
+    private func printDebugInfo() -> PrimitiveSequence<Trait, Element> {
+        flatMap { response in
+            if let request = response.request {
+                var bodyIfPresent = ""
+                if let httpBody = request.httpBody {
+                    bodyIfPresent = " body=\(String(decoding: httpBody, as: UTF8.self))"
+                }
+                
+                print(
+                    "request: url=\(request.description)\(bodyIfPresent) headers=\(String(describing: request.headers))"
+                )
             }
             
-            print(
-                "request: url=\(request.description)\(bodyIfPresent) headers=\(String(describing: request.headers))"
-            )
-        }
-        
-        if let debugString = try? response.mapString(), !(debugString.isEmpty) {
-            print("response: \(debugString)")
+            if let debugString = try? response.mapString(), !(debugString.isEmpty) {
+                print("response(\(response.statusCode)): \(debugString)")
+                
+            } else {
+                print("response(\(response.statusCode)): <empty>")
+            }
             
-        } else {
-            print("response: <empty>")
+            return .just(response)
         }
     }
+    
 }
 
 extension Response {

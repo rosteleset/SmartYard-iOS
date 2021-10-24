@@ -41,7 +41,7 @@ target 'SmartYard' do
   pod 'PopOverDatePicker'
   
   # Map
-  pod 'Mapbox-iOS-SDK', '5.5.0' # пришлось опускать версию, т.к. были ошибки в Crashlytics в MapboxMobileEvents
+  pod 'Mapbox-iOS-SDK', '~> 6.4.0'
   
   # Analytics
   pod 'Firebase/Crashlytics'

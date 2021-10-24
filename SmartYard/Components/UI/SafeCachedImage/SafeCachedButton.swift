@@ -13,7 +13,12 @@ class SafeCachedButton: UIButton {
     private var imageUrlString: String?
     private var loadingImageIndicator: UIActivityIndicatorView?
     
-    func loadImageUsingUrlString(urlString: String, cache: NSCache<NSString, UIImage>, label: UILabel? = nil, errorMessage: String = "") {
+    func loadImageUsingUrlString(
+        urlString: String,
+        cache: NSCache<NSString, UIImage>,
+        label: UILabel? = nil,
+        errorMessage: String = ""
+    ) {
         imageUrlString = urlString
         
         self.setImage(nil, for: .normal)

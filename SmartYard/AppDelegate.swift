@@ -150,7 +150,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
         let userInfo = notification.request.content.userInfo
         
-        print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo)")
+        print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo.jsonString() ?? "\(userInfo)")")
         
         // MARK: если в push-сообщении есть адрес backend-сервера, то обновляем его.
         if let backendURL = userInfo["baseUrl"] as? String {
@@ -175,6 +175,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         guard let rawAction = userInfo["action"] as? String,
             let action = MessageType(rawValue: rawAction) else {
+            reportDebugInfo(userInfo)
             completionHandler([.alert, .badge, .sound])
             return
         }
@@ -254,6 +255,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         guard let rawAction = userInfo["action"] as? String,
             let action = MessageType(rawValue: rawAction) else {
+            reportDebugInfo(userInfo)
             completionHandler()
             return
         }
@@ -282,6 +284,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         }
         
         completionHandler()
+    }
+    
+    fileprivate func reportDebugInfo(_ userInfo: [AnyHashable : Any]) {
+        Crashlytics.crashlytics().log("UserInfo isn't mapped into CallPayload and hasn't action.")
+        let userInfoAsString = String(describing: userInfo) // на случай, если не получится представить в виде JSON
+        Crashlytics.crashlytics().log("UserInfo=\(userInfo.jsonString() ?? userInfoAsString)")
+        Crashlytics.crashlytics().record(error: NSError.APIWrapperError.baseResponseMappingError)
     }
     
 }

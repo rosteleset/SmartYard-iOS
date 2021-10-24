@@ -770,11 +770,14 @@ class IncomingCallViewModel: BaseViewModel {
             .filter { $0 < 3 }
             .drive(
                 onNext: { [weak self] _ in
-                    guard let self = self else {
+                    guard let self = self,
+                          call.state == .StreamsRunning
+                    else {
                         return
                     }
                     
                     do {
+                        // TODO: убрать после устранения бага
                         Crashlytics
                             .crashlytics()
                             .log(
@@ -782,12 +785,6 @@ class IncomingCallViewModel: BaseViewModel {
                             )
                         try call.sendDtmfs(dtmfs: self.callPayload.dtmf)
                     } catch {
-                        Crashlytics
-                            .crashlytics()
-                            .log("\(#file):\(#function):\(#line)) call = \(call)")
-                        Crashlytics
-                            .crashlytics()
-                            .record(error: error)
                         self.isDoorBeingOpened.onNext(false)
                         return
                     }
