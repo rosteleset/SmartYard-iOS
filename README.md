@@ -21,6 +21,7 @@
 * Реактивный фреймворк [RxSwift](https://github.com/ReactiveX/RxSwift) и
 * [XCoordinator](https://github.com/quickbirdstudios/XCoordinator) для реализации архитектуры MVVM+Coordinator
 * Фреймворк [Moya Swift](https://github.com/Moya/Moya) для удобной работы с REST API
+* Онлайн чат [talk-me](https://talk-me.ru/) для чата с пользователями.
 
 ## Лицензия и условия использования
 Данный проект опубликован под стандартной общественной лицензией [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html).
