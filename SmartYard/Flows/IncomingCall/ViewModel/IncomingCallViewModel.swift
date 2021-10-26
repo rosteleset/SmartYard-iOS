@@ -879,6 +879,8 @@ extension IncomingCallViewModel: CXProviderProxyDelegate {
     
     func providerDidAnswerCall(_ provider: CXProvider) {
         answerCallProxySubject.onNext(())
+        NotificationCenter.default.post(name: .answeredByCallKit, object: nil)
+        
     }
     
     func provider(_ provider: CXProvider, didActivateAudioSession audioSession: AVAudioSession) {

@@ -150,6 +150,23 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             return .appSettingsTransition(title: title, message: message)
             
         case let .incomingCall(callPayload, isCallKitUsed):
+            // MARK: чтобы окно входящего вызова не показывалось до того, как пользователь
+            // ответит на вызов в CallKit, показываем экран входящего вызова только после ответа.
+            NotificationCenter.default.rx
+                .notification(.answeredByCallKit, object: nil)
+                .asDriverOnErrorJustComplete()
+                .drive(
+                    onNext: { [weak self] _ in
+                        guard let self = self,
+                              let vc = self.incomingCallPortraitVC else {
+                            return
+                        }
+                        self.incomingCallWindow?.rootViewController = vc
+                        self.incomingCallWindow?.makeKeyAndVisible()
+                    }
+                )
+                .disposed(by: disposeBag)
+            
             let vm = IncomingCallViewModel(
                 providerProxy: providerProxy,
                 linphoneService: linphoneService,
@@ -170,8 +187,12 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             self.incomingCallPortraitVC = portraitVC
             
             incomingCallWindow = UIWindow()
-            incomingCallWindow?.rootViewController = portraitVC
-            incomingCallWindow?.makeKeyAndVisible()
+            
+            // MARK: Если вызов пришёл обычным пуш-уведомлением, то показываем экран входящего вызова
+            if !isCallKitUsed {
+                incomingCallWindow?.rootViewController = portraitVC
+                incomingCallWindow?.makeKeyAndVisible()
+            }
             
             return .none()
          
@@ -227,12 +248,17 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         }
     }
     
-    func processIncomingCallRequest(callPayload: CallPayload, useCallKit: Bool) {
-        if useCallKit {
+    func processIncomingCallRequest(
+        callPayload: CallPayload,
+        useCallKit: Bool,
+        callKitCompletion: (() -> Void)? = nil
+    ) {
+        if useCallKit, let completion = callKitCompletion {
             providerProxy.reportIncomingCall(
                 uuid: callPayload.uuid,
                 handle: callPayload.callerId,
-                hasVideo: true
+                hasVideo: true,
+                completion: completion
             )
         }
         
@@ -258,13 +284,14 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         }
     }
     
-    func reportInvalidCall() {
+    func reportInvalidCall(callKitCompletion: @escaping () -> Void) {
         let uuid = UUID()
         
         providerProxy.reportIncomingCall(
             uuid: uuid,
             handle: "Входящий звонок",
-            hasVideo: true
+            hasVideo: true,
+            completion: callKitCompletion
         )
         
         providerProxy.endCall(uuid: uuid)

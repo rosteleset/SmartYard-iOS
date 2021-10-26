@@ -323,7 +323,7 @@ extension AppDelegate: PKPushRegistryDelegate {
         
         guard let data = payload.dictionaryPayload["data"] as? [AnyHashable: Any],
             let callPayload = CallPayload(pushNotificationPayload: data) else {
-            appCoordinator.reportInvalidCall()
+                appCoordinator.reportInvalidCall(callKitCompletion: completion)
             completion()
             return
         }
@@ -333,7 +333,12 @@ extension AppDelegate: PKPushRegistryDelegate {
             appCoordinator.updateBackendURL(backendURL)
         }
         
-        appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: true)
+        appCoordinator.processIncomingCallRequest(
+            callPayload: callPayload,
+            useCallKit: true,
+            callKitCompletion: completion
+        )
+        
     }
     
     private func configureVoIPNotifications() {

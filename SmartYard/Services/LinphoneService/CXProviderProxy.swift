@@ -51,7 +51,7 @@ class CXProviderProxy: NSObject {
         return providerConfiguration
     }()
 
-    func reportIncomingCall(uuid: UUID, handle: String, hasVideo: Bool) {
+    func reportIncomingCall(uuid: UUID, handle: String, hasVideo: Bool, completion: @escaping () -> Void) {
         let update = CXCallUpdate()
         
         update.remoteHandle = CXHandle(type: .generic, value: handle)
@@ -68,6 +68,7 @@ class CXProviderProxy: NSObject {
             } else {
                 
             }
+            completion()
         }
     }
 

@@ -30,7 +30,8 @@ extension Notification.Name {
     static let archiveFullscreenModeClosed = Notification.Name("ArchiveFullscreenModeClosed")
     static let paymentCompleted = Notification.Name("PaymentCompleted")
     static let videoRequestedByCallKit = Notification.Name("VideoRequestedByCallKit")
-    
+    static let answeredByCallKit = Notification.Name("AnsweredByCallKit")
+
     static let newInboxMessageReceived = Notification.Name("NewInboxMessageReceived")
     static let allInboxMessagesRead = Notification.Name("AllInboxMessagesRead")
     static let unreadInboxMessagesAvailable = Notification.Name("UnreadInboxMessagesAvailable")
