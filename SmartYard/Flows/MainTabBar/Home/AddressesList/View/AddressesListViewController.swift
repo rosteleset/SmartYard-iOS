@@ -225,7 +225,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        mainContainerView.cornerRadius = 24
+        mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
         
         addButton.setImage(UIImage(named: "AddButtonIcon"), for: .normal)
@@ -339,7 +339,7 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             isLastInSection: isLastInSection,
             customBorderWidth: 1,
             customBorderColor: UIColor.SmartYard.grayBorder,
-            customCornerRadius: 12
+            customlayerCornerRadius: 12
         )
         
         return customizableCell

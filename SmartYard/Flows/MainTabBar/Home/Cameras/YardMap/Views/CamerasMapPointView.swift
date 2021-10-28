@@ -51,7 +51,7 @@ class CamerasMapPointView: MGLAnnotationView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        cornerRadius = width / 2
+        layerCornerRadius = width / 2
         
         cameraImageView.pin.width(15).height(13).top(8).hCenter()
         cameraNumberLabel.pin.height(15).below(of: cameraImageView).hCenter().sizeToFit(.height)

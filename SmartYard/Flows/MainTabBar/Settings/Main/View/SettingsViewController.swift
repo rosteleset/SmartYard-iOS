@@ -242,7 +242,7 @@ class SettingsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        mainContainerView.cornerRadius = 24
+        mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
     }
     
@@ -351,7 +351,7 @@ class SettingsViewController: BaseViewController, LoaderPresentable {
             isLastInSection: isLastInSection,
             customBorderWidth: 1,
             customBorderColor: UIColor.SmartYard.grayBorder,
-            customCornerRadius: 12,
+            customlayerCornerRadius: 12,
             separatorInset: 24
         )
         

@@ -40,7 +40,7 @@ class NotificationsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        webView.cornerRadius = 24
+        webView.layerCornerRadius = 24
         webView.layer.maskedCorners = .topCorners
         
         webView.scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 17, left: 0, bottom: 5, right: 0)

@@ -22,7 +22,7 @@ class BlueButton: UIButton {
     }
     
     private func setupUI() {
-        cornerRadius = 12
+        layerCornerRadius = 12
         backgroundColor = UIColor.SmartYard.blue
         titleLabel?.textColor = .white
         tintColor = .white

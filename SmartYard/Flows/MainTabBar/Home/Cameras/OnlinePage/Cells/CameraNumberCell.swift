@@ -23,14 +23,14 @@ class CameraNumberCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        circleView.borderWidth = 1
-        circleView.borderColor = UIColor.SmartYard.blue
+        circleView.layerBorderWidth = 1
+        circleView.layerBorderColor = UIColor.SmartYard.blue
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        circleView.cornerRadius = frame.width / 2
+        circleView.layerCornerRadius = frame.width / 2
     }
     
     func configure(curCamera: CameraObject) {

@@ -14,9 +14,9 @@ class WhiteButtonWithBorder: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        cornerRadius = 12
+        layerCornerRadius = 12
         backgroundColor = .white
-        borderWidth = 1
+        layerBorderWidth = 1
         updateAppearance()
     }
     
@@ -29,10 +29,10 @@ class WhiteButtonWithBorder: UIButton {
     private func updateAppearance() {
         switch state {
         case .normal:
-            borderColor = UIColor.SmartYard.blue
+            layerBorderColor = UIColor.SmartYard.blue
             titleLabel?.textColor = UIColor.SmartYard.blue
         case .disabled:
-            borderColor = UIColor.SmartYard.gray.withAlphaComponent(0.5)
+            layerBorderColor = UIColor.SmartYard.gray.withAlphaComponent(0.5)
             titleLabel?.textColor = UIColor.SmartYard.gray.withAlphaComponent(0.5)
         default:
             break

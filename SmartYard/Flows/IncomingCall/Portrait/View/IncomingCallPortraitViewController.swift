@@ -63,7 +63,7 @@ class IncomingCallPortraitViewController: BaseViewController {
         let scaleRatio = imageView.bounds.height / targetHeight + 0.001
         
         videoPreview.transform = CGAffineTransform(scaleX: scaleRatio, y: scaleRatio)
-        videoPreview.cornerRadius = 24 / scaleRatio
+        videoPreview.layerCornerRadius = 24 / scaleRatio
     }
     
     private func configureButtons() {

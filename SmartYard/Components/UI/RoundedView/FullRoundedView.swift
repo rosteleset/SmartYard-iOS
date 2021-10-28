@@ -14,9 +14,9 @@ class FullRoundedView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
             
-        cornerRadius = 12
-        borderWidth = 1
-        borderColor = UIColor.SmartYard.grayBorder
+        layerCornerRadius = 12
+        layerBorderWidth = 1
+        layerBorderColor = UIColor.SmartYard.grayBorder
     }
     
 }

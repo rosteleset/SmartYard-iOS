@@ -33,7 +33,7 @@ class ObjectLockButton: UIButton {
     }
     
     private func prepareUI() {
-        cornerRadius = 8
+        layerCornerRadius = 8
         titleLabel?.font = UIFont.SourceSansPro.semibold(size: 14)
         
         setTitleColor(UIColor.SmartYard.blue, for: .normal)
@@ -52,18 +52,18 @@ class ObjectLockButton: UIButton {
         switch state {
         case .normal:
             backgroundColor = .white
-            borderWidth = 1
-            borderColor = UIColor.SmartYard.blue
+            layerBorderWidth = 1
+            layerBorderColor = UIColor.SmartYard.blue
             
         case .highlighted:
             backgroundColor = UIColor.white.darken(by: 0.1)
-            borderWidth = 1
-            borderColor = UIColor.SmartYard.blue.darken(by: 0.1)
+            layerBorderWidth = 1
+            layerBorderColor = UIColor.SmartYard.blue.darken(by: 0.1)
             
         case .disabled:
             backgroundColor = UIColor.SmartYard.darkGreen
-            borderWidth = 0
-            borderColor = .clear
+            layerBorderWidth = 0
+            layerBorderColor = .clear
             
         default:
             break

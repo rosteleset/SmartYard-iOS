@@ -49,7 +49,7 @@ class FacesSettingsViewController: BaseViewController, LoaderPresentable {
        }
     
     private func configureView() {
-        mainContainerView.cornerRadius = 24
+        mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
         
         facesCollectionView.delegate = self

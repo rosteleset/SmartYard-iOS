@@ -20,7 +20,7 @@ target 'SmartYard' do
 
   # Utilities
   pod 'SwiftLint'#, '0.35'
-  pod 'SwifterSwift'#, '4.6'
+  pod 'SwifterSwift', :git => 'https://github.com/SwifterSwift/SwifterSwift.git', :branch => 'master'
   
   # UI
   pod 'Cartography'
@@ -74,7 +74,7 @@ end
 target 'SmartYardIntents' do
   use_frameworks!
   
-  pod 'SwifterSwift'
+  pod 'SwifterSwift', :git => 'https://github.com/SwifterSwift/SwifterSwift.git', :branch => 'master'
 end
 
 
