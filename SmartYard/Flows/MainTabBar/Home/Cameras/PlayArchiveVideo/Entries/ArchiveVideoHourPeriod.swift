@@ -45,7 +45,7 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
         return "/index-\(startTimestamp)-\(duration).m3u8"
     }
     
-    ///Массив компонентов URL для всех фрагментов
+    /// Массив компонентов URL для всех фрагментов
     var videoUrlComponentsArray: [String] {
         
         return ranges.map { arg0 -> String in

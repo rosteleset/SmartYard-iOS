@@ -70,7 +70,7 @@ class AddFaceViewController: BaseViewController {
                         let newDetailX = DetailX(
                             key: newDetailX.key,
                             face: newDetailX.face,
-                            flags: newFlags, //заменяем только вот это поле
+                            flags: newFlags, // заменяем только вот это поле
                             phone: newDetailX.phone,
                             code: newDetailX.code,
                             faceId: newDetailX.faceId
@@ -94,7 +94,7 @@ class AddFaceViewController: BaseViewController {
                         NotificationCenter.default.post(.init(name: .updateEvent, object: updatedEvent))
                     }
                     
-                    //уведомляю контроллеры, зависимые от списка лиц, что он требует обновление
+                    // уведомляю контроллеры, зависимые от списка лиц, что он требует обновление
                     NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
                     
                     self?.dismiss(animated: true, completion: nil)
@@ -116,7 +116,7 @@ class AddFaceViewController: BaseViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        //imageView.sizeToFit()
+        // imageView.sizeToFit()
     }
 
 }

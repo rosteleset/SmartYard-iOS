@@ -33,8 +33,6 @@ extension HistoryViewController {
     }
     
     public func showAppartmentsFilterPopover(from sourceView: UIView, items: [String], selectedRow: Int, onSelect: @escaping (String, Int) -> Void ) {
-        //let controller = EventsPopup()
-        
         let items = items
         
         let controller = ArrayChoiceTableViewController(
@@ -50,7 +48,7 @@ extension HistoryViewController {
     public func showCalendarPopover(from sourceView: UIView, minDate: Date, maxDate: Date, onSelect: @escaping (Date) -> Void ) {
         let date = Date()
         
-        let popOverDatePickerViewController = PopOverDatePickerViewController.instantiate()
+        let popOverDatePickerViewController = SYPopOverDatePickerViewController.instantiate()
         popOverDatePickerViewController.set(date: date)
         popOverDatePickerViewController.set(minimumDate: minDate)
         popOverDatePickerViewController.set(maximumDate: maxDate)

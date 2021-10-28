@@ -138,7 +138,7 @@ class FullscreenPlayerViewController: UIViewController {
         guard isBeingDismissed else {
             return
         }
-        //возвращаем обратно AutoresizingMask и удаляем лишние Constraints, чтобы последующее возвращение контроллера на место прошло гладко
+        // возвращаем обратно AutoresizingMask и удаляем лишние Constraints, чтобы последующее возвращение контроллера на место прошло гладко
         playerViewController!.view!.removeConstraints(playerViewController!.view!.constraints)
         playerViewController!.view!.translatesAutoresizingMaskIntoConstraints = true
         
@@ -182,7 +182,7 @@ class FullscreenPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //добавляем в контейнер дочерний контроллер плеера, добавляем во вью плеер и настраиваем его отображение
+        // добавляем в контейнер дочерний контроллер плеера, добавляем во вью плеер и настраиваем его отображение
         addChild(playerViewController!)
         contentView.removeSubviews()
         contentView.insertSubview(playerViewController!.view!, at: 0)
@@ -195,7 +195,7 @@ class FullscreenPlayerViewController: UIViewController {
             return
         }
         
-        //добавляем во вью progressSlider и настраиваем его отображение
+        // добавляем во вью progressSlider и настраиваем его отображение
         guard let progressSlider = self.progressSlider else {
             return
         }

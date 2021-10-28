@@ -286,7 +286,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler()
     }
     
-    fileprivate func reportDebugInfo(_ userInfo: [AnyHashable : Any]) {
+    fileprivate func reportDebugInfo(_ userInfo: [AnyHashable: Any]) {
         Crashlytics.crashlytics().log("UserInfo isn't mapped into CallPayload and hasn't action.")
         let userInfoAsString = String(describing: userInfo) // на случай, если не получится представить в виде JSON
         Crashlytics.crashlytics().log("UserInfo=\(userInfo.jsonString() ?? userInfoAsString)")

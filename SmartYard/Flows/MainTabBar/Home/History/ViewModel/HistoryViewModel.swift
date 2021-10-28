@@ -14,7 +14,7 @@ import CoreLocation
 import RxDataSources
 
 typealias FlatId = Int
-typealias AvailableDays = [FlatId: PlogDaysResponseData] //[FlatId: [APIPlogDay]]
+typealias AvailableDays = [FlatId: PlogDaysResponseData] // [FlatId: [APIPlogDay]]
 
 // swiftlint:disable:next type_body_length
 class HistoryViewModel: BaseViewModel {
@@ -32,17 +32,17 @@ class HistoryViewModel: BaseViewModel {
     private let houseId: String?
     private let flatId: Int?
     
-    ///Адрес этого дома
+    /// Адрес этого дома
     private let address: BehaviorSubject<String?>
     
-    ///список доступных квартир по адресу на сервере
+    /// список доступных квартир по адресу на сервере
     var flatIds: [Int] = []
     
-    ///список номеров доступных квартир по адресу на сервере
-    var flatNumbers: [Int] = [] //список номеров доступных квартир по адресу на сервере
+    /// список номеров доступных квартир по адресу на сервере
+    var flatNumbers: [Int] = []
     
-    ///признак того, надо ли отключать получение ответов из кеша сервера.
-    private var forceRefresh: Bool = false
+    /// признак того, надо ли отключать получение ответов из кеша сервера.
+    private var forceRefresh = false
     
     /// массив из квартир с массивом дат, доступных для каждой с учётом текущих фильтров
     private var availableDays: AvailableDays = [:]
@@ -66,16 +66,16 @@ class HistoryViewModel: BaseViewModel {
     /// данные для отображения в виде готовых секций для dataSource с учётом текущих фильтров
     private let sections = BehaviorRelay<[HistorySectionModel]>(value: [])
     
-    ///фильтр по типам событий
+    /// фильтр по типам событий
     private let eventsFilter = BehaviorRelay<EventsFilter>(value: .all)
     
-    ///фильтр по квартирам
+    /// фильтр по квартирам
     private let apptsFilter = BehaviorRelay<[Int]>(value: [])
     
-    ///таблица соответствия objectId <-> url flussonic
+    /// таблица соответствия objectId <-> url flussonic
     private let camMap = BehaviorRelay<[APICamMap]>(value: [])
     
-    ///таблица лиц по квартирам
+    /// таблица лиц по квартирам
     private var listFaces: [FlatId: GetPersonFacesResponseData] = [:]
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity 
@@ -104,7 +104,7 @@ class HistoryViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        //при изменении фильтров обновляем список дней
+        // при изменении фильтров обновляем список дней
         Observable.combineLatest(self.eventsFilter, self.apptsFilter)
             .asDriverOnErrorJustComplete()
             .mapToVoid()
@@ -112,14 +112,14 @@ class HistoryViewModel: BaseViewModel {
             .drive(updateAvailableDays)
             .disposed(by: disposeBag)
         
-        //отсюда прилетает свежая порция событий журнала за день для квартиры от API
+        // отсюда прилетает свежая порция событий журнала за день для квартиры от API
         logs.asDriverOnErrorJustComplete()
             .drive { [weak self] data in
                 guard let self = self else {
                     return
                 }
                 
-                //дополняем кэш полученной порцией данных
+                // дополняем кэш полученной порцией данных
                 if let index = self.dataCache.firstIndex(
                     where: { ($0.day == data.day) && ($0.flatId == data.flatId) }
                 ) {
@@ -130,8 +130,8 @@ class HistoryViewModel: BaseViewModel {
                 
                 self.loadingQueue.removeAll { $0.flatId == data.flatId && $0.day == data.day }
                 
-                //чтобы лишний раз не дёргать контроллер, обновляем данные,
-                //только когда вся очередь загрузки будет пустой.
+                // чтобы лишний раз не дёргать контроллер, обновляем данные,
+                // только когда вся очередь загрузки будет пустой.
                 if self.loadingQueue.isEmpty {
                     self.updateSections.onNext(())
                 }
@@ -139,19 +139,19 @@ class HistoryViewModel: BaseViewModel {
             .disposed(by: disposeBag)
 
         availableDaysForFlat
-            .asDriver(onErrorJustReturn: [:]) //отсюда прилетает список доступных в журнале дней для каждой квартиры
+            .asDriver(onErrorJustReturn: [:]) // отсюда прилетает список доступных в журнале дней для каждой квартиры
             .drive { [weak self] data in
                 guard let self = self else {
                     return
                 }
                 
-                //добавляем новую порцию данных, объединяя массивы данных для одинаковых flatId
+                // добавляем новую порцию данных, объединяя массивы данных для одинаковых flatId
                  self.availableDays.merge(data, uniquingKeysWith: +)
                 self.availableDaysSubject.onNext(self.availableDays)
             }
             .disposed(by: disposeBag)
         
-        //отсюда прилетает суммарный список всех доступных в журнале логов дат с количеством
+        // отсюда прилетает суммарный список всех доступных в журнале логов дат с количеством
         // – по элементу на каждую квартиру
         availableDaysSubject
             .asDriver(onErrorJustReturn: [:])
@@ -160,9 +160,9 @@ class HistoryViewModel: BaseViewModel {
                     return
                 }
                 
-                //Если мы обладаем данными для всех квартир из фильтра, то обновляем секции для таблицы
+                // Если мы обладаем данными для всех квартир из фильтра, то обновляем секции для таблицы
                 if data.count == self.apptsFilter.value.count {
-                    //собираем со всех квартир доступные даты, агрегируем
+                    // собираем со всех квартир доступные даты, агрегируем
                     self.uniqueDays = Array(data.values)
                         .flatMap { $0 }
                         .map { $0.day }
@@ -174,9 +174,8 @@ class HistoryViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
             
-        //выдаёт в sections готовые секции для dataModel в учётом всех фильтров
+        // выдаёт в sections готовые секции для dataModel в учётом всех фильтров
         updateSections
-            //.debug()
             .asDriverOnErrorJustComplete()
             .debounce(.milliseconds(100))
             .drive(
@@ -187,36 +186,36 @@ class HistoryViewModel: BaseViewModel {
                     }
                     
                     let result = self.uniqueDays
-                        //делаем заготовку будущей секции из массива дат, вообще доступных на сервере
+                        // делаем заготовку будущей секции из массива дат, вообще доступных на сервере
                         .map { sectionDay -> (day: Date, items: [APIPlog]) in
                         return (
                             day: sectionDay,
                             items: self.dataCache
-                                //для каждой даты делаем выборку всех доступных данных в кэше,
-                                //заодно сразу отфильтровываем данные по квартирам, которые не попадают в фильтр
+                                // для каждой даты делаем выборку всех доступных данных в кэше,
+                                // заодно сразу отфильтровываем данные по квартирам, которые не попадают в фильтр
                                 .filter { $0.day == sectionDay && self.apptsFilter.value.contains($0.flatId) }
-                                //отрезаем нам не нужные лишние поля даты и квартиры
-                                //и объединяем массивы данных от разных квартир в один общий
+                                // отрезаем нам не нужные лишние поля даты и квартиры
+                                // и объединяем массивы данных от разных квартир в один общий
                                 .flatMap { $0.items }
-                                //удаляем записи с одинаковым uuid, которые одновременно могли присутствовать
-                                //в разных квартирах
+                                // удаляем записи с одинаковым uuid, которые одновременно могли присутствовать
+                                // в разных квартирах
                                 .withoutDuplicates()
-                                //сортируем события внутри даты от самой ранней к более поздней
+                                // сортируем события внутри даты от самой ранней к более поздней
                                 .sorted(by: { $0.date > $1.date })
                             )
                         }
-                        //удаляеем даты в которых нет ни одной записи
+                        // удаляеем даты в которых нет ни одной записи
                         .filter { !$0.items.isEmpty }
-                        //сами элементы в секциях фильтруем в соответствии с фильтром отображаемых событий
+                        // сами элементы в секциях фильтруем в соответствии с фильтром отображаемых событий
                         // swiftlint:disable:next closure_body_length
                         .map { (day: Date, items: [APIPlog]) -> (day: Date, items: [APIPlog]) in
                             let itemsFiltered = items.filter {
-                                //если выбраны "все" события в фильтре, то не фильтруем совсем
+                                // если выбраны "все" события в фильтре, то не фильтруем совсем
                                 if self.eventsFilter.value == .all {
                                     return true
                                 }
                                 var eventType: EventsFilter
-                                //иначе: мапим тип события с фильтром
+                                // иначе: мапим тип события с фильтром
                                 switch  $0.event {
                                 case .unanswered, .answered:
                                     eventType = .domophones
@@ -233,12 +232,12 @@ class HistoryViewModel: BaseViewModel {
                                 case .unknown:
                                     eventType = .all
                                 }
-                                //и фильтруем, только те типы, которые совпадают с фильтром
+                                // и фильтруем, только те типы, которые совпадают с фильтром
                                 return eventType == self.eventsFilter.value
                             }
                             return (day: day, items: itemsFiltered)
                         }
-                        //превращаем получившийся массив в секции: одна дата – одна секция
+                        // превращаем получившийся массив в секции: одна дата – одна секция
                         .map { (day: Date, items: [APIPlog]) -> HistorySectionModel in
                             return HistorySectionModel(
                                 identity: day,
@@ -246,11 +245,11 @@ class HistoryViewModel: BaseViewModel {
                                 state: .loaded,
                                 items: items
                                     .enumerated()
-                                    //поскольку RxDataSource определяет небходимость обновлять ячейки по изменению их содержимого,
-                                    //то приходится в элементах хранить атрибут позиции внутри секции, чтобы TableView правильно перерисовывал
-                                    //закругления и управлял отображением заголовка секции в каждой первой ячейке.
-                                    .map { //RxDataSource отслеживает изменения данных по identity, поэтому,
-                                            //чтобы при изменении flags данные обновлялись, пришлось замиксовать uuid и flags в идентификатор
+                                    // поскольку RxDataSource определяет небходимость обновлять ячейки по изменению их содержимого,
+                                    // то приходится в элементах хранить атрибут позиции внутри секции, чтобы TableView правильно перерисовывал
+                                    // закругления и управлял отображением заголовка секции в каждой первой ячейке.
+                                    .map { // RxDataSource отслеживает изменения данных по identity, поэтому,
+                                            // чтобы при изменении flags данные обновлялись, пришлось замиксовать uuid и flags в идентификатор
                                         HistoryDataItem(
                                             identity: $0.element.uuid + String(($0.element.detailX?.flags ?? []).joined(separator: ":")).md5,
                                             order: self.orderOf(row: $0.offset, count: items.count),
@@ -259,7 +258,7 @@ class HistoryViewModel: BaseViewModel {
                                     }
                             )
                         }
-                        //удаляем секции тех дней, для которых из-за фильтра по типу событий не оказалось ни одной записи
+                        // удаляем секции тех дней, для которых из-за фильтра по типу событий не оказалось ни одной записи
                         .filter { $0.items.isEmpty == false }
                         
                     self.sections.accept(result)
@@ -267,22 +266,22 @@ class HistoryViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        updateAvailableDays //аргумент - forceRefresh
+        updateAvailableDays // аргумент - forceRefresh
             .asDriverOnErrorJustComplete()
             .flatMap { [weak self] forceRefresh -> Driver<AvailableDays?> in
                 guard let self = self else {
                     return .just(nil)
                 }
                 
-                //сбрасываем данные от предыдущих запросов, но кэш не трогаем.
+                // сбрасываем данные от предыдущих запросов, но кэш не трогаем.
                 self.uniqueDays = []
                 self.availableDays = [:]
                 self.forceRefresh = forceRefresh
                 
                 let results = PublishSubject<AvailableDays?>()
                 
-                //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
-                //как отдельный элемент в текущую последовательность
+                // запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
+                // как отдельный элемент в текущую последовательность
                 self.apptsFilter.value.forEach { flatId in
                     self.apiWrapper.plogDays(
                         flatId: flatId,
@@ -290,7 +289,7 @@ class HistoryViewModel: BaseViewModel {
                         forceRefresh: forceRefresh
                     )
                         .trackError(self.errorTracker)
-                        //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
+                        // поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
                         .map { $0 == nil ?  nil : [flatId: $0!] }
                         .asDriver(onErrorJustReturn: [flatId: []])
                         .drive { result in
@@ -306,8 +305,8 @@ class HistoryViewModel: BaseViewModel {
             .bind(to: availableDaysForFlat)
             .disposed(by: disposeBag)
         
-        //обновляем список лиц по тому же самому событию
-        updateAvailableDays //аргумент - forceRefresh
+        // обновляем список лиц по тому же самому событию
+        updateAvailableDays // аргумент - forceRefresh
             .asDriverOnErrorJustComplete()
             .flatMap { [weak self] forceRefresh -> Driver<[FlatId: GetPersonFacesResponseData]?> in
                 guard let self = self else {
@@ -316,12 +315,12 @@ class HistoryViewModel: BaseViewModel {
                 self.listFaces = [:]
                 let results = PublishSubject<[FlatId: GetPersonFacesResponseData]?>()
                 
-                //запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
-                //как отдельный элемент в текущую последовательность
+                // запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
+                // как отдельный элемент в текущую последовательность
                 self.apptsFilter.value.forEach { flatId in
                     self.apiWrapper.getPersonFaces(flatId: flatId, forceRefresh: forceRefresh)
                         .trackError(self.errorTracker)
-                        //поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
+                        // поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
                         .map { $0 == nil ?  nil : [flatId: $0!] }
                         .asDriver(onErrorJustReturn: [flatId: []])
                         .drive { result in
@@ -347,8 +346,8 @@ class HistoryViewModel: BaseViewModel {
             .disposed(by: disposeBag)
             
         // мы знаем только id дома, а логи запрашиваются для id квартиры,
-        //поэтому получаем список настроек чтобы понять по id дома идентификатор первой доступной квартиры в данном доме
-        //на будущее надо заменить на запросы логов для каждой квартиры.
+        // поэтому получаем список настроек чтобы понять по id дома идентификатор первой доступной квартиры в данном доме
+        // на будущее надо заменить на запросы логов для каждой квартиры.
         let getSettingsAddresses = apiWrapper.getSettingsAddresses()
             .trackError(errorTracker)
             .trackActivity(activityTracker)
@@ -374,7 +373,7 @@ class HistoryViewModel: BaseViewModel {
                     self.flatIds = [flatId]
                     self.flatNumbers = [0]
                     self.apptsFilter.accept(self.flatIds)
-                    //изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
+                    // изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
                 }
                 .disposed(by: disposeBag)
         } else {
@@ -386,7 +385,7 @@ class HistoryViewModel: BaseViewModel {
                     
                     self.camMap.accept(camMap)
                     
-                   //получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
+                   // получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
                     self.flatIds = args.filtered(
                         { address in // swiftlint:disable:this opening_brace
                             return address.houseId == self.houseId && address.hasPlog
@@ -397,18 +396,18 @@ class HistoryViewModel: BaseViewModel {
                     )
                     .withoutDuplicates()
                     
-                    //получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
+                    // получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
                     self.flatNumbers = args.filtered({ $0.houseId == self.houseId  && $0.hasPlog }, map: { (Int($0.flatNumber!) ?? -1) }).withoutDuplicates()
                     
-                    //по умолчанию фильтр содержит все доступные квартиры
+                    // по умолчанию фильтр содержит все доступные квартиры
                     self.apptsFilter.accept(self.flatIds)
                     
-                    //изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
+                    // изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
                 }
                 .disposed(by: disposeBag)
         }
         
-        //если события изменились, то обновляем данные (dataCache не обнуляется при этом, а вот список лиц при этом обновится с сервера)
+        // если события изменились, то обновляем данные (dataCache не обнуляется при этом, а вот список лиц при этом обновится с сервера)
         NotificationCenter.default.rx.notification(.updateEvent)
             .asDriverOnErrorJustComplete()
             .drive(
@@ -434,7 +433,7 @@ class HistoryViewModel: BaseViewModel {
         
     }
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         
         input.backTrigger
@@ -462,13 +461,13 @@ class HistoryViewModel: BaseViewModel {
                 
                 let results = PublishSubject<DayFlatItemsData?>()
                 
-                //запрашиваем логи за день для каждой квартиры и результат каждого запроса отправляем,
-                //как отдельный элемент в текущую последовательность
+                // запрашиваем логи за день для каждой квартиры и результат каждого запроса отправляем,
+                // как отдельный элемент в текущую последовательность
                 self.apptsFilter.value.forEach { flatId in
-                    //проверяем, что для этой квартиры есть записи в этот день
+                    // проверяем, что для этой квартиры есть записи в этот день
                     guard let days = self.availableDays[flatId],
-                          days.contains( where: { $0.day == day  })
-                    //иначе переходим к следующей квартире.
+                          days.contains( where: { $0.day == day })
+                    // иначе переходим к следующей квартире.
                     else {
                         return
                     }
@@ -477,7 +476,7 @@ class HistoryViewModel: BaseViewModel {
                     let isInQueue = self.loadingQueue.first { $0.flatId == flatId && $0.day == day }
                     let isInCache = self.dataCache.first { $0.flatId == flatId && $0.day == day }
                     
-                    //если мы уже запрашиваем или имеем в кеше этот элемент, то не запрашиваем его повторно
+                    // если мы уже запрашиваем или имеем в кеше этот элемент, то не запрашиваем его повторно
                     guard isInQueue == nil, isInCache == nil else {
                         lock.unlock()
                         return
@@ -574,13 +573,13 @@ class HistoryViewModel: BaseViewModel {
                 
                 let results = PublishSubject<DayFlatItemsData?>()
                 
-                //запрашиваем логи за день для каждой квартиры и результат каждого запроса отправляем,
-                //как отдельный элемент в текущую последовательность
+                // запрашиваем логи за день для каждой квартиры и результат каждого запроса отправляем,
+                // как отдельный элемент в текущую последовательность
                 self.apptsFilter.value.forEach { flatId in
-                    //проверяем, что для этой квартиры есть записи в этот день
+                    // проверяем, что для этой квартиры есть записи в этот день
                     guard let days = self.availableDays[flatId],
                           days.contains(where: { $0.day == day })
-                    //иначе переходим к следующей квартире.
+                    // иначе переходим к следующей квартире.
                     else {
                         return
                     }
@@ -589,7 +588,7 @@ class HistoryViewModel: BaseViewModel {
                     let isInQueue = self.loadingQueue.first { $0.flatId == flatId && $0.day == day }
                     let isInCache = self.dataCache.first { $0.flatId == flatId && $0.day == day }
                     
-                    //если мы уже запрашиваем или имеем в кеше этот элемент, то не запрашиваем его повторно
+                    // если мы уже запрашиваем или имеем в кеше этот элемент, то не запрашиваем его повторно
                     guard isInQueue == nil, isInCache == nil else {
                         lock.unlock()
                         return
@@ -686,7 +685,6 @@ extension HistoryViewModel {
     }
     
     struct InputDetail {
-        //let itemSelected: Driver<HistoryDataItem>
         let backTrigger: Driver<Void>
         let updateSections: Driver<Void>
         let loadDay: Driver<Date>

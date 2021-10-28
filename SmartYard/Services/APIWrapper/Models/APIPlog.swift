@@ -89,14 +89,18 @@ struct DetailX: Decodable, Equatable, Hashable {
 }
 
 struct APIPlog: Decodable, Equatable, Hashable {
-    
-    let date: Date //дата. Допустимые значения: "Y-m-d H:i:s"
+    /// дата. Допустимые значения: "Y-m-d H:i:s"
+    let date: Date
     let uuid: String
     let imageUuid: String?
-    let objectId: Int // идентификатор объекта (домофона)
-    let objectType: Int // тип объекта (0 - домофон)
-    let objectMechanizma: Int //идентификатор нагрузки (двери). Допустимые значения: "0", "1", "2"
-    let mechanizmaDescription: String //описание нагрузки (двери)
+    /// идентификатор объекта (домофона)
+    let objectId: Int
+    /// тип объекта (0 - домофон)
+    let objectType: Int
+    /// идентификатор нагрузки (двери). Допустимые значения: "0", "1", "2"
+    let objectMechanizma: Int
+    /// описание нагрузки (двери)
+    let mechanizmaDescription: String
     let event: EventType
     let detail: String
     let detailX: DetailX?
@@ -118,14 +122,14 @@ struct APIPlog: Decodable, Equatable, Hashable {
     }
     
     enum EventType: Int {
-        case unanswered = 1 //– Неотвеченный вызов в домофон
-        case answered = 2//– Отвеченный вызовы в домофон
-        case rfid = 3 //– Открытие ключом (+id ключа)
-        case app = 4 //– Открытия из приложения  (+id пользователя)
-        case face = 5 //– Открытия по распознаванию лица  (+id дескриптора лица)
-        case passcode = 6 //– Открытие по коду квартиры
-        case call = 7 //– Открытие ворот по звонку (номер звонящего в тексте)
-        case plate = 8 //– Открытие ворот по распознаванию номера (номер машины в тексте)
+        case unanswered = 1 // – Неотвеченный вызов в домофон
+        case answered = 2// – Отвеченный вызовы в домофон
+        case rfid = 3 // – Открытие ключом (+id ключа)
+        case app = 4 // – Открытия из приложения  (+id пользователя)
+        case face = 5 // – Открытия по распознаванию лица  (+id дескриптора лица)
+        case passcode = 6 // – Открытие по коду квартиры
+        case call = 7 // – Открытие ворот по звонку (номер звонящего в тексте)
+        case plate = 8 // – Открытие ворот по распознаванию номера (номер машины в тексте)
         case unknown = -1
     }
     
@@ -163,15 +167,15 @@ struct APIPlog: Decodable, Equatable, Hashable {
         }
     }
     
-    //пришлось добавить инициализатор для ручного создания объектов
+    // пришлось добавить инициализатор для ручного создания объектов
     init(
-        date: Date, //дата. Допустимые значения: "Y-m-d H:i:s"
+        date: Date, // дата. Допустимые значения: "Y-m-d H:i:s"
         uuid: String,
         imageUuid: String?,
         objectId: Int, // идентификатор объекта (домофона)
         objectType: Int, // тип объекта (0 - домофон)
-        objectMechanizma: Int, //идентификатор нагрузки (двери). Допустимые значения: "0", "1", "2"
-        mechanizmaDescription: String, //описание нагрузки (двери)
+        objectMechanizma: Int, // идентификатор нагрузки (двери). Допустимые значения: "0", "1", "2"
+        mechanizmaDescription: String, // описание нагрузки (двери)
         event: EventType,
         detail: String,
         detailX: DetailX?,

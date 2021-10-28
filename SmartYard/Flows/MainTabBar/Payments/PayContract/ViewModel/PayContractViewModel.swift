@@ -31,7 +31,6 @@ class PayContractViewModel: BaseViewModel {
         self.router = router
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         input.backTrigger
             .drive(

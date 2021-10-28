@@ -96,7 +96,6 @@ class CityCameraViewModel: BaseViewModel {
         loadVideos(errorTracker: errorTracker, activityTracker: activityTracker)
         
         return Output(
-            //cameras: cameras.asDriver(onErrorJustReturn: []),
             isLoading: activityTracker.asDriver(),
             reloadingFinished: reloadingFinishedSubject.asDriverOnErrorJustComplete(),
             camera: self.camera,

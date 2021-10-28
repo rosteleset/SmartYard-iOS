@@ -23,7 +23,7 @@ enum EventsFilter: Int, CaseIterable {
     case application = 5
     case code = 6
     
-    public var name: String {
+    var name: String {
         switch self {
         
         case .all:
@@ -134,9 +134,10 @@ class ArrayChoiceTableViewController<Element>: UITableViewController {
 }
 
 class UITableViewWithHandler: UITableView {
-    //чтобы была возможность скролить табличку, после того, как в неё попали новые данные, пришлось немного модифицировать штатный класс, т.к.
-    //RxDataSource штатно из коробки такой возможности не предоставлял
-    public var afterUpdateHandler: (() -> Void)? = nil
+    // чтобы была возможность скролить табличку, после того, как в неё попали новые данные,
+    // пришлось немного модифицировать штатный класс,
+    // т.к. RxDataSource штатно из коробки такой возможности не предоставлял
+    var afterUpdateHandler: (() -> Void)?
         
     override func performBatchUpdates(_ updates: (() -> Void)?,
                                       completion: ((Bool) -> Void)? = nil) {
@@ -148,9 +149,8 @@ class UITableViewWithHandler: UITableView {
     }
 }
 
-extension PopOverDatePickerViewController {
-  
-    override open func viewWillDisappear(_ animated: Bool) {
+class SYPopOverDatePickerViewController: PopOverDatePickerViewController {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.post(.init(name: .popupDimissed, object: nil))
     }

@@ -81,7 +81,7 @@ class CityCameraViewController: BaseViewController {
             return
         }
         
-        //Устанавливаем название камеры и её адрес
+        // Устанавливаем название камеры и её адрес
         let cameraStrings = camera.name.split(separator: "/", maxSplits: 1, omittingEmptySubsequences: true)
         
         var cameraNameString = ""
@@ -97,7 +97,7 @@ class CityCameraViewController: BaseViewController {
         cameraName.text = cameraNameString
         cameraAddress.text = cameraAddressString
         
-        //настраиваем градиент между кнопкой и CollectionView
+        // настраиваем градиент между кнопкой и CollectionView
         let gradientBackgroundColors = [UIColor.white.cgColor, UIColor.white.withAlphaComponent(0).cgColor]
         
         let gradientLayer = CAGradientLayer()
@@ -163,7 +163,7 @@ class CityCameraViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
        
-        //по нажатию на кнопку переключаем вид (у кнопки по мере переключений будет 2 разных действия)
+        // по нажатию на кнопку переключаем вид (у кнопки по мере переключений будет 2 разных действия)
         button.rx.tap
             .asDriver()
             .debounce(.milliseconds(250))
@@ -300,16 +300,17 @@ class CityCameraViewController: BaseViewController {
                             self.buttonState = .requestRec
                             
                         } else {
-                            self.button.setTitle("Проишествия ("+String(self.videos?.count ?? 0)+")", for: .normal)
+                            self.button.setTitle("Проишествия (" + String(self.videos?.count ?? 0) + ")", for: .normal)
                             self.button.backgroundColor = UIColor.white
                             self.button.setTitleColor(UIColor.SmartYard.blue, for: .normal)
                             self.buttonState = .incidents
                         }
                     } 
                 }
-            ).disposed(by: disposeBag)
+            )
+            .disposed(by: disposeBag)
         
-        //Загружаем камеру и инициализируем воспроизведение
+        // Загружаем камеру и инициализируем воспроизведение
         self.camera = output.camera
         configureView()
         configurePlayer()
@@ -340,7 +341,7 @@ class CityCameraViewController: BaseViewController {
         collectionView.delegate = self
         collectionView.register(nibWithCellClass: YTCollectionViewCell.self)
         collectionView.refreshControl = refreshControl
-        collectionView.isHidden = true //по умолчанию не показываем список до нажатия на кнопку Проишествия
+        collectionView.isHidden = true // по умолчанию не показываем список до нажатия на кнопку Проишествия
     }
     
     fileprivate func fixButton() {
@@ -351,7 +352,7 @@ class CityCameraViewController: BaseViewController {
             self.buttonState = .requestRec
             
         } else {
-            self.button.setTitle("Проишествия ("+String(self.videos?.count ?? 0)+")", for: .normal)
+            self.button.setTitle("Проишествия (" + String(self.videos?.count ?? 0) + ")", for: .normal)
             self.button.backgroundColor = UIColor.white
             self.button.setTitleColor(UIColor.SmartYard.blue, for: .normal)
             self.buttonState = .incidents
@@ -411,9 +412,9 @@ class CityCameraViewController: BaseViewController {
                     
                     playerVc.player?.play()
                     
-                    //странный баг на iOS 12.4
-                    //если был переход в полноэкранный режим, потом поворот экрана и возврат назад, то у кнопки менялся свет текста на непойми какой.
-                    //приходится ручками при возврате из полноэкранного режима обновлять значения полей.
+                    // странный баг на iOS 12.4
+                    // если был переход в полноэкранный режим, потом поворот экрана и возврат назад, то у кнопки менялся свет текста на непойми какой.
+                    // приходится ручками при возврате из полноэкранного режима обновлять значения полей.
                     self.fixButton()
                 }
             )
@@ -543,7 +544,7 @@ class CityCameraViewController: BaseViewController {
                 
                 let playerItem = AVPlayerItem(asset: asset)
                 
-                //Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
+                // Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
                 playerItem.preferredMaximumResolution = CGSize(width: 3840, height: 2160)
                 
                 self?.player?.replaceCurrentItem(with: playerItem)
@@ -566,7 +567,10 @@ extension CityCameraViewController: UICollectionViewDataSource {
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withClass: YTCollectionViewCell.self, for: indexPath)
         
         cell.configureCell(
@@ -579,11 +583,19 @@ extension CityCameraViewController: UICollectionViewDataSource {
 
 extension CityCameraViewController: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         return CGSize(width: collectionView.view.width - 10, height: 53)
     }
     
-    func  collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func  collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     func collectionView(
@@ -606,6 +618,5 @@ extension CityCameraViewController: UICollectionViewDelegateFlowLayout {
             return
         }
         self.videoTrigger.onNext(video.url)
-        
     }
 }

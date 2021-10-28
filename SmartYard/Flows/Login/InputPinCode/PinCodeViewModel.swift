@@ -81,7 +81,7 @@ class PinCodeViewModel: BaseViewModel {
                     self?.accessService.clientPhoneNumber = self?.phoneNumber
                     self?.accessService.appState = .userName
                     
-                    //когда пользователь авторизовался уже после инициализации Crashlytics, то надо обновить  UserId
+                    // когда пользователь авторизовался уже после инициализации Crashlytics, то надо обновить  UserId
                     Crashlytics.crashlytics().setUserID(self?.accessService.clientPhoneNumber ?? "unknown")
                     
                     prepareTransitionTrigger.onNext(())

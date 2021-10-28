@@ -515,7 +515,6 @@ extension SettingsViewModel {
         let backTrigger: Driver<Void>
         let itemSelected: Driver<SettingsDataItemIdentity>
         let serviceSelected: Driver<(SettingsDataItemIdentity, SettingsServiceType)>
-        //let advancedSettingsTrigger: Driver<Void>
         let updateDataTrigger: Driver<Void>
         let addAddressTrigger: Driver<Void>
     }

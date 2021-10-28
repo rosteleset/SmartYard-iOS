@@ -12,7 +12,7 @@ class HistoryLoadingTableViewCell: UITableViewCell {
     
     @IBOutlet private var loader: UIActivityIndicatorView!
     
-    var isLoading: Bool = true {
+    var isLoading = true {
         didSet {
             if isLoading {
                 loader.startAnimating()

@@ -16,21 +16,18 @@ enum HistoryCellOrder: Equatable {
 }
 
 class HistoryTableViewCell: UITableViewCell {
-    //@IBOutlet private weak var previewImage: UIImageView!
-    @IBOutlet private var dateLabel: UILabel!
-    @IBOutlet weak var dateView: UIView!
+    @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var dateView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var iconImage: UIImageView!
-    @IBOutlet private var descriptionLabel: UILabel!
-    @IBOutlet weak var descriptionView: UIView!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var descriptionView: UIView!
     @IBOutlet private weak var timeLabel: UILabel!
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var separatorView: UIView!
     @IBOutlet private weak var bottomSpaceForLastCell: UIView!
     @IBOutlet private weak var topSpaceForFirst: UIView!
     private var descriptionLabelHidden: UILabel?
-    
-    //var cellOrder: HistoryCellOrder = .regular
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,7 +45,7 @@ class HistoryTableViewCell: UITableViewCell {
         dateView.isHidden = true
         
         switch cellOrder {
-        //настраиваем отображение скруглений и вывод даты для первого элемента
+        // настраиваем отображение скруглений и вывод даты для первого элемента
         case .first, .single:
             
             if cellOrder == .single {
@@ -87,8 +84,8 @@ class HistoryTableViewCell: UITableViewCell {
         
         var description = value.detail
         
-        //общие операции для всех ячеек, вне зависимости от их места в секции
-        //настраиваем отображение иконки и заголовка
+        // общие операции для всех ячеек, вне зависимости от их места в секции
+        // настраиваем отображение иконки и заголовка
         switch value.event {
         case .answered:
             titleLabel.text = "Звонок в домофон"
@@ -137,7 +134,7 @@ class HistoryTableViewCell: UITableViewCell {
             description = ""
         }
         
-        //настраиваем отображение поля с описанием
+        // настраиваем отображение поля с описанием
         descriptionView.isHidden = description.isEmpty
         descriptionLabel.text = description
         

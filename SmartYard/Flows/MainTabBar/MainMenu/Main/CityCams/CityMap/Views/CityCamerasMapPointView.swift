@@ -31,13 +31,10 @@ class CityCamerasMapPointView: MGLAnnotationView {
         
         backgroundColor = .none
         addSubview(cameraImageView)
-        //clipsToBounds = true
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-
-        //cornerRadius = width / 2
         cameraImageView.pin.width(66).height(66).vCenter(4).hCenter()
     }
     

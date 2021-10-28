@@ -10,8 +10,11 @@ import Foundation
 import UIKit
 
 struct APIPlogDay: Decodable, Hashable {
-    let day: Date //дата. Допустимые значения: "Y-m-d"
-    let itemsCount: Int //количество событий
+    /// дата. Допустимые значения: "Y-m-d"
+    let day: Date
+    
+    /// количество событий
+    let itemsCount: Int
     
     private enum CodingKeys: String, CodingKey {
         case day

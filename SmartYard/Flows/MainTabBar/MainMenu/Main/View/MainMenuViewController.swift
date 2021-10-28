@@ -85,10 +85,10 @@ class MainMenuViewController: BaseViewController {
 }
 
 extension MainMenuViewController: UICollectionViewDelegateFlowLayout {
-    //В первой секции элементы меню
-    //Во сторой секции всего один элемент – кнопка вызова
+    // В первой секции элементы меню
+    // Во второй секции всего один элемент – кнопка вызова
     
-    //возвращает высоту одного элемента меню
+    // возвращает высоту одного элемента меню
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -110,7 +110,7 @@ extension MainMenuViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: UIScreen.main.bounds.width - 32, height: height)
     }
     
-    //возвращает расстояние между элементами меню
+    // возвращает расстояние между элементами меню
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -119,13 +119,14 @@ extension MainMenuViewController: UICollectionViewDelegateFlowLayout {
         return 8
     }
     
-    //возвращает отступы вокруг секции
+    // возвращает отступы вокруг секции
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
-        //высчитываем сколько надо добавить пустого места между последним элементом меню и нижней кнопкой, что бы нижняя кнопка встала ровно на 60 единиц от нижнего края вьюшки.
+        // высчитываем сколько надо добавить пустого места между последним элементом меню и нижней кнопкой,
+        // что бы нижняя кнопка встала ровно на 60 единиц от нижнего края вьюшки.
         let extraSpace = collectionView.height.float - 21 - collectionView.numberOfItems(inSection: 0).float * 80 + 8 - 20 - 16 - 60 - 60
         switch section {
         case collectionView.numberOfSections - 1:

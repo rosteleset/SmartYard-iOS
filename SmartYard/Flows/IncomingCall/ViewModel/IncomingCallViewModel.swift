@@ -14,7 +14,6 @@ import linphonesw
 import XCoordinator
 import AVFoundation
 import CallKit
-import FirebaseCrashlytics
 
 // swiftlint:disable:next type_body_length
 class IncomingCallViewModel: BaseViewModel {
@@ -94,7 +93,7 @@ class IncomingCallViewModel: BaseViewModel {
         linphoneService.hasEnqueuedCalls = false
     }
     
-    /// Все, что не зависит от Input, а привязано к локальным сабжектам
+    // Все, что не зависит от Input, а привязано к локальным сабжектам
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     private func createCommonBindings() {
         let currentState = currentStateSubject.asDriverOnErrorJustComplete()
@@ -189,10 +188,6 @@ class IncomingCallViewModel: BaseViewModel {
                 let (call, callParams) = unwrappedIncomingCall
                 
                 if isDoorOpeningRequested {
-                    Crashlytics
-                        .crashlytics()
-                        .log("\(#file):\(#function):\(#line)) call.state = \(call.state)")
-                    
                     call.speakerMuted = true
                     call.microphoneMuted = true
                 }
@@ -777,12 +772,6 @@ class IncomingCallViewModel: BaseViewModel {
                     }
                     
                     do {
-                        // TODO: убрать после устранения бага
-                        Crashlytics
-                            .crashlytics()
-                            .log(
-                                 "\(#file):\(#function):\(#line)) call.state = \(call.state) self.callPayload.dtmf = \(self.callPayload.dtmf)"
-                            )
                         try call.sendDtmfs(dtmfs: self.callPayload.dtmf)
                     } catch {
                         self.isDoorBeingOpened.onNext(false)

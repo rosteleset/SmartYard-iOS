@@ -107,7 +107,7 @@ class LinphoneService: CoreDelegate {
                 
                 core.addDelegate(delegate: self)
                 
-                timer = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { timer in
+                timer = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { _ in
                     self.core?.iterate()
                 }
             }

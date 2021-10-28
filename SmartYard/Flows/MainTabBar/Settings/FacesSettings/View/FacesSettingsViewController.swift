@@ -18,7 +18,6 @@ class FacesSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var facesCollectionView: UICollectionView!
     
     private let viewModel: FacesSettingsViewModel
-    //private let imagesCache = NSCache<NSString,UIImage>()
     
     var loader: JGProgressHUD?
     
@@ -55,7 +54,6 @@ class FacesSettingsViewController: BaseViewController, LoaderPresentable {
         
         facesCollectionView.delegate = self
         facesCollectionView.dataSource = self
-        //facesCollectionView.decelerationRate = .fast
         
         if let flowLayout = facesCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal

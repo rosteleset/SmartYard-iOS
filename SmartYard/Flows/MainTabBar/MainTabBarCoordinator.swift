@@ -37,16 +37,13 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let notificationsRouter: StrongRouter<NotificationsRoute>
     private let chatRouter: StrongRouter<ChatRoute>
     private let paymentsRouter: StrongRouter<PaymentsRoute>
-    //private let settingsRouter: StrongRouter<SettingsRoute>
     private let menuRouter: StrongRouter<MainMenuRoute>
     
     private let homeTabBarItem: UITabBarItem
     private let notificationsTabBarItem: UITabBarItem
     private let chatTabBarItem: UITabBarItem
     private let paymentsTabBarItem: UITabBarItem
-    //private let settingsTabBarItem: UITabBarItem
     private let menuTabBarItem: UITabBarItem
-    
     
     var selectedPresentable: Presentable? {
         return children[safe: rootViewController.selectedIndex]
@@ -185,9 +182,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.notificationsRouter = notificationsCoordinator.strongRouter
         self.chatRouter = chatCoordinator.strongRouter
         self.paymentsRouter = paymentsCoordinator.strongRouter
-        //self.settingsRouter = settingsCoordinator.strongRouter
         self.menuRouter = menuCoordinator.strongRouter
-        
         
         // MARK: Инициализация кастомного UITabBarController
         
@@ -218,7 +213,6 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         rootViewController.tabBar.isTranslucent = false
         
-        
         subscribeToBadgeUpdates()
         subscribeToAddAddressNotifications()
         subscribeToChatNotifications()
@@ -241,13 +235,12 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         case .settings:
             print("TODO: проверить переадресацию в настройки")
             return .trigger(MainMenuRoute.settings, on: menuRouter)
-            //selectAndCallDelegate(settingsRouter)
+            // selectAndCallDelegate(settingsRouter)
         case .menu:
             print("menu")
             return .selectAndCallDelegate(menuRouter)
         }
     }
-    
     
     private func updateNotificationsTab(shouldShowBadge: Bool) {
         notificationsTabBarItem.image = UIImage(
@@ -348,9 +341,9 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     
 }
 
-extension SSCustomTabBarViewController : UITabBarControllerDelegate {
+extension SSCustomTabBarViewController: UITabBarControllerDelegate {
     public func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        //делаем так, чтобы при нажатии на пункт "меню" мы всегда переходили на экран с меню, для этого очищаем Navigation stack
+        // делаем так, чтобы при нажатии на пункт "меню" мы всегда переходили на экран с меню, для этого очищаем Navigation stack
         if tabBarController.selectedIndex == 4,
             let vc = viewController as? UINavigationController {
             vc.popToRootViewController(animated: false)

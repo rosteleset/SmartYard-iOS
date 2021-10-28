@@ -22,9 +22,9 @@ class YTCollectionViewCell: UICollectionViewCell {
 
     func configureCell(label: String, isFirst: Bool) {
         
-        if isFirst { //ячейка первая - русуем верхний и нижний сепаратор
+        if isFirst { // ячейка первая - русуем верхний и нижний сепаратор
             self.topSeparator.isHidden = true
-        } else { //ячейка в центре списка или последняя - рисуем только нижний сепаратор
+        } else { // ячейка в центре списка или последняя - рисуем только нижний сепаратор
             self.topSeparator.isHidden = true
         }
         

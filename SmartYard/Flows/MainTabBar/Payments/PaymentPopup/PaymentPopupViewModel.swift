@@ -90,30 +90,29 @@ class PaymentPopupViewModel: BaseViewModel {
                         }
                         .asDriverOnErrorJustComplete()
 
-        }
-        .flatMapLatest { [weak self] args -> Driver<PayProcessResponseData?> in
-            guard let self = self,
-                let (innerPaymentId, response) = args,
-                let sberbankOrderId = response.data?.orderId
+            }
+            .flatMapLatest { [weak self] args -> Driver<PayProcessResponseData?> in
+                guard let self = self,
+                      let (innerPaymentId, response) = args,
+                      let sberbankOrderId = response.data?.orderId
                 else {
                     isPaySuccessTrigger.onNext(false)
                     return .empty()
-            }
+                }
             
-            return
-                self.apiWrapper.payProcess(
+                return self.apiWrapper.payProcess(
                         paymentId: innerPaymentId,
                         sbId: sberbankOrderId
                     )
                     .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)
-        }
-        .drive(
-            onNext: { _ in
-                isPaySuccessTrigger.onNext(true)
             }
-        )
-        .disposed(by: disposeBag)
+            .drive(
+                onNext: { _ in
+                    isPaySuccessTrigger.onNext(true)
+                }
+            )
+            .disposed(by: disposeBag)
         
         return Output(
             isPaySuccessTrigger: isPaySuccessTrigger.asDriver(onErrorJustReturn: false),

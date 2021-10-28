@@ -89,7 +89,7 @@ class PaymentPopupController: BaseViewController {
                     let decimalSeparator = [NSLocale.Key.decimalSeparator: Locale.current.decimalSeparator]
                     let amount = NSDecimalNumber(string: self.sumTextField.text, locale: decimalSeparator)
                     
-                    //Приложение вывалится в exception если пользователь нажмёт "оплатить" с не валидным полем сумма
+                    // Приложение вывалится в exception если пользователь нажмёт "оплатить" с не валидным полем сумма
                     guard amount != NSDecimalNumber.notANumber else {
                         return
                     }

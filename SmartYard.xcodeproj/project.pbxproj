@@ -31,6 +31,9 @@
 		3A1F213826DF8F4F005FDB82 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1F213626DF8F4F005FDB82 /* ModalViewController.swift */; };
 		3A1F213926DF8F4F005FDB82 /* ModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1F213726DF8F4F005FDB82 /* ModalViewController.xib */; };
 		3A1F214126E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1F213F26E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib */; };
+		3A200B0927297B250022A0EC /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A200B0827297B240022A0EC /* SimpleButton.swift */; };
+		3A200B0B27297EAC0022A0EC /* PeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A200B0A27297EAC0022A0EC /* PeriodPicker.swift */; };
+		3A200B0D27297F950022A0EC /* SmartYardSharedDataUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A200B0C27297F950022A0EC /* SmartYardSharedDataUtilities.swift */; };
 		3A28814C2653F11900F42097 /* DisLikePersonFaceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2881482653EEB000F42097 /* DisLikePersonFaceRequest.swift */; };
 		3A2881532657EE7100F42097 /* FaceIdAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2881512657EE7100F42097 /* FaceIdAccessView.swift */; };
 		3A2881542657EE7100F42097 /* FaceIdAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A2881522657EE7100F42097 /* FaceIdAccessView.xib */; };
@@ -42,7 +45,7 @@
 		3A3B8BB325A5D00C00BFB72E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */; };
 		3A3B8BB425A5D00C00BFB72E /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB225A5D00C00BFB72E /* MainMenuViewController.xib */; };
 		3A3B8BBA25A5E8DA00BFB72E /* MainMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3B8BB925A5E8DA00BFB72E /* MainMenuItem.swift */; };
-		3A3EF204271DFA9600B73B36 /* Swift+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EF203271DFA9600B73B36 /* Swift+Helper.swift */; };
+		3A3EF204271DFA9600B73B36 /* Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3EF203271DFA9600B73B36 /* Swift.swift */; };
 		3A4A4A782704826600C5B609 /* SharedFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4A4A772704826600C5B609 /* SharedFunctions.swift */; };
 		3A4A4A79270482C700C5B609 /* SharedFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4A4A772704826600C5B609 /* SharedFunctions.swift */; };
 		3A555B102700573400E70CB9 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A555B0F2700573400E70CB9 /* Intents.framework */; };
@@ -608,6 +611,9 @@
 		3A1F213626DF8F4F005FDB82 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		3A1F213726DF8F4F005FDB82 /* ModalViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ModalViewController.xib; sourceTree = "<group>"; };
 		3A1F213F26E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WhiteRabbitModalViewContent.xib; sourceTree = "<group>"; };
+		3A200B0827297B240022A0EC /* SimpleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
+		3A200B0A27297EAC0022A0EC /* PeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPicker.swift; sourceTree = "<group>"; };
+		3A200B0C27297F950022A0EC /* SmartYardSharedDataUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSharedDataUtilities.swift; sourceTree = "<group>"; };
 		3A2881482653EEB000F42097 /* DisLikePersonFaceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisLikePersonFaceRequest.swift; sourceTree = "<group>"; };
 		3A2881512657EE7100F42097 /* FaceIdAccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceIdAccessView.swift; sourceTree = "<group>"; };
 		3A2881522657EE7100F42097 /* FaceIdAccessView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FaceIdAccessView.xib; sourceTree = "<group>"; };
@@ -619,7 +625,7 @@
 		3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		3A3B8BB225A5D00C00BFB72E /* MainMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenuViewController.xib; sourceTree = "<group>"; };
 		3A3B8BB925A5E8DA00BFB72E /* MainMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuItem.swift; sourceTree = "<group>"; };
-		3A3EF203271DFA9600B73B36 /* Swift+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Swift+Helper.swift"; sourceTree = "<group>"; };
+		3A3EF203271DFA9600B73B36 /* Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift.swift; sourceTree = "<group>"; };
 		3A4A4A772704826600C5B609 /* SharedFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFunctions.swift; sourceTree = "<group>"; };
 		3A555B0E2700573400E70CB9 /* SmartYardIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SmartYardIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A555B0F2700573400E70CB9 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
@@ -1718,13 +1724,6 @@
 				846DC6E224B33E1C00A11914 /* PickerAnimator */,
 				845E9ED624895AE3000CBBC6 /* VideoSliders */,
 				E91724492410E27D00F2B810 /* SmartYardSearchTextField */,
-				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
-				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
-				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
-				849FF08D24CEE3C900C234BC /* LinearGradientView.swift */,
-				84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */,
-				84854B5B23FC38F3001B44F2 /* LoadingButton.swift */,
-				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
 				E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */,
 				E9A4D49823EC3DD00070A591 /* BlueButton */,
 				843A7A7D23F29A0D00840E51 /* FakeNavBar */,
@@ -1739,8 +1738,17 @@
 				E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlView */,
 				847CF7D3240689C400070007 /* Skeletons */,
 				E9A4D4A623ED9BED0070A591 /* WhiteButtonWithBorder */,
+				84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */,
+				3A200B0827297B240022A0EC /* SimpleButton.swift */,
+				84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */,
+				84898AA223F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift */,
+				849FF08D24CEE3C900C234BC /* LinearGradientView.swift */,
+				84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */,
+				84854B5B23FC38F3001B44F2 /* LoadingButton.swift */,
+				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
 				3AFBA73726375B8600C7DEB6 /* BetterSnappingFlowLayout.swift */,
 				3AE65A47264DA4A00093284C /* ScaledHeightImageView.swift */,
+				3A200B0A27297EAC0022A0EC /* PeriodPicker.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -2350,8 +2358,9 @@
 			isa = PBXGroup;
 			children = (
 				849652BF2472AF3B000E1375 /* SmartYardSharedData.swift */,
-				849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */,
+				3A200B0C27297F950022A0EC /* SmartYardSharedDataUtilities.swift */,
 				849652C12472AF3B000E1375 /* SmartYardSharedObject.swift */,
+				849652C02472AF3B000E1375 /* SmartYardSharedDataFramework.h */,
 				849652C22472AF3B000E1375 /* Info.plist */,
 			);
 			path = SmartYardSharedDataFramework;
@@ -2606,7 +2615,6 @@
 				E94B6C4423FFFF5D00FD9F65 /* Date+Conversion.swift */,
 				8496394F247BFAE20086B6E9 /* UIViewController+Top.swift */,
 				3AFBA7B8263984E000C7DEB6 /* AVPlayer+Extensions.swift */,
-				3A3EF203271DFA9600B73B36 /* Swift+Helper.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2614,6 +2622,7 @@
 		84B9EC8723E0844A00979C39 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				3A3EF203271DFA9600B73B36 /* Swift.swift */,
 				84854B4023FA9A99001B44F2 /* ActivityTracker.swift */,
 				84854B3C23FA9918001B44F2 /* ErrorTracker.swift */,
 				84854B4B23FADD94001B44F2 /* CustomRxKeyboard.swift */,
@@ -4446,7 +4455,7 @@
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				845E9EE024895AE4000CBBC6 /* SimpleVideoEndIndicator.swift in Sources */,
 				84D29BAB24BDCB6900CFBE6B /* IncomingCallPreviewState.swift in Sources */,
-				3A3EF204271DFA9600B73B36 /* Swift+Helper.swift in Sources */,
+				3A3EF204271DFA9600B73B36 /* Swift.swift in Sources */,
 				843C38D3242A577C0035BF80 /* DeliveredRequest.swift in Sources */,
 				845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
@@ -4482,6 +4491,7 @@
 				846DC6E724B33E1C00A11914 /* PickerDismissAnimator.swift in Sources */,
 				E92EFBE3242A22F2003AF7FE /* BaseRequestRetrier.swift in Sources */,
 				E94B6C8D2407F8E200FD9F65 /* IssueTypes.swift in Sources */,
+				3A200B0B27297EAC0022A0EC /* PeriodPicker.swift in Sources */,
 				843FB12024BF3BC20060ACEC /* ChatReadedRequest.swift in Sources */,
 				3A1F213826DF8F4F005FDB82 /* ModalViewController.swift in Sources */,
 				E92EFBA9242A22F2003AF7FE /* APIIssueConnect.swift in Sources */,
@@ -4543,6 +4553,7 @@
 				846DC6DD24B33DEA00A11914 /* SberbankPayData.swift in Sources */,
 				E92EFB4A2428B83A003AF7FE /* PassConfirmationPinViewController+Timer.swift in Sources */,
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
+				3A200B0927297B250022A0EC /* SimpleButton.swift in Sources */,
 				3AEFB45B264C12E9000F37D0 /* FacesSettingsViewController.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
 				3AC5C6EF2612652F008D74DE /* PlogDaysResponseData.swift in Sources */,
@@ -4730,6 +4741,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A200B0D27297F950022A0EC /* SmartYardSharedDataUtilities.swift in Sources */,
 				849652CC2472AF44000E1375 /* SmartYardSharedData.swift in Sources */,
 				849652CE2472AF4A000E1375 /* SmartYardSharedObject.swift in Sources */,
 			);

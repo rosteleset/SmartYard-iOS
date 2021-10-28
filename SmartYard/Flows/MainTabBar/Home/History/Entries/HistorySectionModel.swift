@@ -14,12 +14,14 @@ enum LoadingState: Int {
 }
 
 struct HistorySectionModel: AnimatableSectionModelType {
-    
-    let identity: Date //дата. Допустимые значения: "Y-m-d"
+    /// дата. Допустимые значения: "Y-m-d"
+    let identity: Date
     var day: Date {
         return identity
     }
-    let itemsCount: Int //количество событий
+    
+    /// количество событий
+    let itemsCount: Int
     var state: LoadingState = .waiting
     var items: [HistoryDataItem]
 }

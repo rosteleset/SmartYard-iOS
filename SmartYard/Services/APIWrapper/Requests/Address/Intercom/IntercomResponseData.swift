@@ -21,7 +21,6 @@ struct IntercomResponseData: Decodable {
     let hiddenPlog: Bool?
     let frsDisabled: Bool?
     
-    
     private enum CodingKeys: String, CodingKey {
         case allowDoorCode
         case doorCode

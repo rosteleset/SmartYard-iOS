@@ -9,10 +9,14 @@
 import Foundation
 
 struct APICamMap: Decodable {
+    /// Id домофона
+    let id: Int
     
-    let id: Int //Id домофона
-    let url: String //базовый url потока
-    let token: String //token от flussonic
+    /// базовый url потока
+    let url: String
+    
+    /// token от flussonic
+    let token: String
     
     private enum CodingKeys: String, CodingKey {
         case id

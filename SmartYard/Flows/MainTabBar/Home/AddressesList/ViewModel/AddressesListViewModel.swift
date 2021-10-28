@@ -119,7 +119,7 @@ class AddressesListViewModel: BaseViewModel {
             )
             // приложение иногда запрашивает токен, когда он ещё неизвестен и показывает пользователю ошибку "Отсутствует FCM-токен"
             // дабы не портить пользователю настроение я решил убрать отображение этой ошибки в интерфейсе.
-            //.trackError(errorTracker)
+            // .trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
@@ -334,7 +334,7 @@ class AddressesListViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                //Донейтим системе сведения об откывании дверей.
+                // Донейтим системе сведения об откывании дверей.
                 let object = SmartYardSharedObject(
                     objectName: matchingDoor.name,
                     objectAddress: matchingAddress.address,

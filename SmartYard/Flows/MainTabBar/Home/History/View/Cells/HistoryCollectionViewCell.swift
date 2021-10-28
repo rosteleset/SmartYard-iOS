@@ -65,6 +65,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     var displayHintTrigger: Driver<Void> {
         return questionMark.rx.tap.asDriver()
     }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -121,7 +122,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     }
     
     func playVideo() {
-        //по умолчанию грузим 10 минутный интервал по 5 минут туда-сюда от события
+        // по умолчанию грузим 10 минутный интервал по 5 минут туда-сюда от события
         guard let eventDate = event?.date,
               let videoURL = self.getVideoUrl(from: eventDate.adding(.minute, value: -5), duration: 10 * 60),
             let url = URL(string: videoURL) else {
@@ -185,8 +186,12 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         return videoBaseUrl + videoUrlComps + "?token=\(token)"
     }
     
-    func configure(value: APIPlog, using cache: NSCache<NSString, UIImage>, videoBaseUrl: String? = nil, token: String? = nil) {
-        
+    func configure(
+        value: APIPlog,
+        using cache: NSCache<NSString, UIImage>,
+        videoBaseUrl: String? = nil,
+        token: String? = nil
+    ) {
         self.event = value
         self.videoBaseUrl = videoBaseUrl
         self.token = token
@@ -206,7 +211,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         df.dateFormat = "EEEE, d MMMM HH:mm"
         dateLabel.text = df.string(from: value.date)
         
-        //настраиваем отображение поля с описанием
+        // настраиваем отображение поля с описанием
         descriptionLabel.text = value.detail
         descriptionLabel.isHidden = (descriptionLabel.text ?? "").isEmpty
         
@@ -287,7 +292,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
             }
             
         } else {
-            //нет выбора лайк-дизлайк
+            // нет выбора лайк-дизлайк
             actionsContainer.isHidden = true
         }
     }

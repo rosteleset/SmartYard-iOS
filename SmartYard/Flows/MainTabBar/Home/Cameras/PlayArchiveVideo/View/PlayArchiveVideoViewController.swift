@@ -53,7 +53,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     private var loadingAsset: [AVAsset?] = []
     private var assetArray: [AVAsset] = []
-    private var ranges: [(startDate: Date, endDate: Date)] = []    //Доступные периоды
+    private var ranges: [(startDate: Date, endDate: Date)] = []    // Доступные периоды
 
     private var periodicTimeObserver: Any?
     
@@ -279,7 +279,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configurePeriodicTimeObserver(_ player: AVQueuePlayer) {
-        //проверяем, что periodicTimeObserver не был уже создан
+        // проверяем, что periodicTimeObserver не был уже создан
         guard self.periodicTimeObserver == nil else {
             return
         }
@@ -297,8 +297,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 return
             }
             
-            //преобразовываем время полученное от текущего элемента во время от начала выбранного периода
-            //ох уж, эти долбаные пропуски в архиве
+            // преобразовываем время полученное от текущего элемента во время от начала выбранного периода
+            // ох уж, эти долбаные пропуски в архиве
             let delta = ((self?.ranges[index].startDate.timeIntervalSince1970)!) - (self?.ranges.first!.startDate.timeIntervalSince1970)!
 
             self?.currentPlaybackTime.onNext(CMTime(seconds: delta, preferredTimescale: CMTimeScale(NSEC_PER_SEC)) + time)
@@ -358,9 +358,9 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     self.realVideoContainer.insertSubview(playerVc.view, at: 0)
                     self.realVideoContainer.insertSubview(self.progressSlider, at: 2)
                     playerVc.didMove(toParent: self)
-                    //восстановим размеры контейнера с плеером
+                    // восстановим размеры контейнера с плеером
                     self.realVideoPlayerViewController?.view.frame = self.realVideoContainer.bounds
-                    //восстановим отключенные привязки размеров вью слайдера к нашему вью
+                    // восстановим отключенные привязки размеров вью слайдера к нашему вью
                     for constraint in self.sliderConstraints {
                         constraint.isActive = true
                     }
@@ -450,7 +450,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     fullscreenVc.modalPresentationStyle = .overFullScreen
                     fullscreenVc.modalTransitionStyle = .crossDissolve
                     fullscreenVc.setPlayerViewController(playerVc)
-                    //передаём в полноэкранный контроллер вью слайдера и отключаем его привязки от текущего вью
+                    // передаём в полноэкранный контроллер вью слайдера и отключаем его привязки от текущего вью
                     fullscreenVc.setProgressSlider(progressSlider)
                     for constraint in self.sliderConstraints {
                         constraint.isActive = false
@@ -544,7 +544,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         // и уточнить общую продолжительность видео
                         let exactDurations = self.assetArray.map({ $0.duration.seconds })
                         self.fixDurations(exactDurations)
-                        
                         
                         // MARK: Видео готово к просмотру, засовываем его в плеер
                         
@@ -693,8 +692,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         
                         // MARK: Грузим ключи tracks и duration, т.к. только они сработают для m3u8 потока
 
-                        asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { [weak asset] in
-                            guard let asset = asset else {
+                        asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { [weak self] in
+                            guard let self = self else {
                                 return
                             }
 
@@ -796,7 +795,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         
         periodsProxy
             .subscribe(
-                onNext: { [weak self] periods in
+                onNext: { [weak self] _ in
                     self?.periodCollectionView.reloadData {
                         self?.selectFirstPeriod()
                     }
@@ -994,21 +993,21 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
         
         destroyPeriodicTimeObserver(realVideoPlayer!)
         
-        /// шаманство с плейлистом
-        //получаем объект ассета воспроизведения
+        // шаманство с плейлистом
+        // получаем объект ассета воспроизведения
         guard let asset = self.realVideoPlayer?.currentItem?.asset else {
             return
          }
 
-        //Получаем номер текущего элемента, какой мы сейчас играем
+        // Получаем номер текущего элемента, какой мы сейчас играем
         guard let currentIndex = self.assetArray.firstIndex(of: asset) else {
             return
         }
-        //получим абсолютное время на какое надо спозиционироваться
+        // получим абсолютное время на какое надо спозиционироваться
         let absPosition = self.ranges.first!.startDate.timeIntervalSince1970 + position
         
-        //получим номер фрагмента на какой надо спозиционироваться,
-        //пропуская все клочки, которые завершились до этой точки
+        // получим номер фрагмента на какой надо спозиционироваться,
+        // пропуская все клочки, которые завершились до этой точки
         
         let destIndex = self.ranges.firstIndex { arg0 -> Bool in
             
@@ -1020,18 +1019,18 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
             }
         }
         
-        //получим позицию на какую надо перейти внутри элемента плейлиста
+        // получим позицию на какую надо перейти внутри элемента плейлиста
         var setPosition = absPosition - self.ranges[destIndex!].startDate.timeIntervalSince1970
-        //если попали на дырку в архиве перед элементом, то сдвигаемся на начало элемента следующего за дырой
+        // если попали на дырку в архиве перед элементом, то сдвигаемся на начало элемента следующего за дырой
         setPosition = (setPosition < 0) ? 0 : setPosition
         
-        //если мы покидаем текущий элемент, то перезагружаем playlist элементами, начиная с
+        // если мы покидаем текущий элемент, то перезагружаем playlist элементами, начиная с
         if currentIndex != destIndex {
             self.realVideoPlayer?.removeAllItems()
             for asset in self.assetArray.dropFirst(destIndex ?? 0) {
                 let playerItem = AVPlayerItem(asset: asset)
                 
-                //Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
+                // Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
                 playerItem.preferredMaximumResolution = CGSize(width: 3840, height: 2160)
                 
                 if let realVideoPlayer = self.realVideoPlayer,

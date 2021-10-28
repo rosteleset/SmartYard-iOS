@@ -109,7 +109,7 @@ class FacesSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        //это событие прилетает, когда пользователь удалил лицо и надо обновить список лиц
+        // это событие прилетает, когда пользователь удалил лицо и надо обновить список лиц
         NotificationCenter.default.rx.notification(.updateFaces)
             .asDriverOnErrorJustComplete()
             .mapToVoid()

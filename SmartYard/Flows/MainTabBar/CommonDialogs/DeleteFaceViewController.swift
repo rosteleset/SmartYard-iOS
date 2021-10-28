@@ -125,7 +125,7 @@ class DeleteFaceViewController: BaseViewController {
                         NotificationCenter.default.post(.init(name: .updateEvent, object: updatedEvent))
                     }
                     
-                    //уведомляю контроллеры, зависимые от списка лиц (Список лиц в настройках доступа), что он требует обновление
+                    // уведомляю контроллеры, зависимые от списка лиц (Список лиц в настройках доступа), что он требует обновление
                     NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
                     self?.dismiss(animated: true, completion: nil)
                 }
@@ -149,7 +149,7 @@ class DeleteFaceViewController: BaseViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        //imageView.sizeToFit()
+        // imageView.sizeToFit()
     }
 
 }

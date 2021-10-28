@@ -22,32 +22,30 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     fileprivate let viewModel: HistoryViewModel
     fileprivate var dataSource: RxCollectionViewSectionedAnimatedDataSource<HistorySectionModel>?
     fileprivate let selectItemOnLoad: HistoryDataItem?
-    fileprivate var itemWasPointed =  false
+    fileprivate var itemWasPointed = false
     
     private let loadDayTriger = PublishSubject<Date>()
     private var availableDays = BehaviorRelay<AvailableDays>(value: [:])
     
-    ///дни, которые есть в sectionModels, т.е. в таблице
+    /// дни, которые есть в sectionModels, т.е. в таблице
     private var days: [Date] = []
     
-    ///все дни какие есть на сервере для данной комбинации фильтров
+    /// все дни какие есть на сервере для данной комбинации фильтров
     private var allAvailableDates: [Date] = []
     
-    ///дни, которые есть на сервере, но их нет в sectionModels - чтобы они оказались в sectionModels, их надо запросить
+    /// дни, которые есть на сервере, но их нет в sectionModels - чтобы они оказались в sectionModels, их надо запросить
     private var daysQueue: [Date] = []
     
-    ///таблица соответствия objectId <-> url flussonic
+    /// таблица соответствия objectId <-> url flussonic
     private var camMap: [APICamMap] = []
     
-    var stopDynamicLoading: Bool = false
+    var stopDynamicLoading = false
     
     var focusedCellIndexPath: IndexPath?
     
     private let addFaceTrigger = PublishSubject<APIPlog>()
     private let deleteFaceTrigger = PublishSubject<APIPlog>()
     private let displayHintTrigger = PublishSubject<Void>()
-    
-    
     
     init(viewModel: HistoryViewModel, focusedOn: HistoryDataItem? = nil) {
         self.viewModel = viewModel
@@ -93,7 +91,7 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                 return nil
             }
             
-            //Если мы попали в этот контроллер без указания элемнта на какой надо спозиционироваться, то позиционируемся на самый первый.
+            // Если мы попали в этот контроллер без указания элемнта на какой надо спозиционироваться, то позиционируемся на самый первый.
             if self.selectItemOnLoad == nil,
                !dataSource.sectionModels.isEmpty,
                !dataSource.sectionModels.first!.items.isEmpty {
@@ -131,7 +129,7 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
             configureCell: { _, collectionView, indexPath, item in
                 let cell: HistoryCollectionViewCell = collectionView.dequeueReusableCell(withClass: HistoryCollectionViewCell.self, for: indexPath)
                 
-                //если у домофона есть камера, то конфигурируем ячейку с параметрами для отображения видео
+                // если у домофона есть камера, то конфигурируем ячейку с параметрами для отображения видео
                 if let camera = self.camMap.first(where: { $0.id == item.value.objectId }) {
                     cell.configure(
                         value: item.value,
@@ -163,19 +161,15 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         )
     }
     func onItemFocused(indexPath: IndexPath) {
-        //let item = dataSource?.sectionModels[indexPath.section].items[indexPath.row]
         collectionView.layoutIfNeeded()
         let cell = collectionView.cellForItem(at: indexPath) as? HistoryCollectionViewCell
         
-        //cell?.videoPlayerViewContainer.backgroundColor = .red
         cell?.playVideo()
     }
     func onItemLostFocus(indexPath: IndexPath) {
-        //let item = dataSource?.sectionModels[indexPath.section].items[indexPath.row]
         collectionView.layoutIfNeeded()
         let cell = collectionView.cellForItem(at: indexPath) as? HistoryCollectionViewCell
         
-        //cell?.videoPlayerViewContainer.backgroundColor = .clear
         cell?.stopVideo()
     }
     func bind() {
@@ -202,7 +196,7 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        output.sections //отсюда притетает свежий [HistorySectionModels] для DataSource таблицы
+        output.sections // отсюда притетает свежий [HistorySectionModels] для DataSource таблицы
             .do(
                 onNext: { sectionModels in
                     self.days = sectionModels.map { $0.day }
@@ -232,16 +226,16 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         
         availableDays.asDriverOnErrorJustComplete()
             .drive {
-                //со всех квартир собираем все дни, убираем дубли, сортируем от поздних к ранним
+                // со всех квартир собираем все дни, убираем дубли, сортируем от поздних к ранним
                 self.daysQueue = $0.flatMap { $0.value }
                     .map { $0.day }
                     .withoutDuplicates()
                     .sorted(by: >)
                 
-                //сохраняем список всех имеющихся дат на будущее - пригодятся.
+                // сохраняем список всех имеющихся дат на будущее - пригодятся.
                 self.allAvailableDates = self.daysQueue
                 
-                //загружаем самый первый день
+                // загружаем самый первый день
                 guard let firstDay = self.daysQueue.first else {
                     return
                 }
@@ -263,10 +257,13 @@ extension HistoryDetailViewController: UICollectionViewDelegateFlowLayout {
         
         return CGSize(width: collectionView.width - 32, height: collectionView.height)
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
             return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
-    
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -289,21 +286,21 @@ extension HistoryDetailViewController: UICollectionViewDelegateFlowLayout {
             return
         }
         
-        //тут мы будем динамически подгружать данные
+        // тут мы будем динамически подгружать данные
         guard let dataSource = dataSource else {
             return
         }
         let section = dataSource.sectionModels[indexPath.section]
         
-        //получаем время секции
+        // получаем время секции
         let day = section.day
         
-        //ищем день, который будет отображаться
+        // ищем день, который будет отображаться
         guard let willDisplayDayIndex = allAvailableDates.firstIndex(of: day) else {
             return
         }
         
-        //если предыдущий не загружен - загружаем
+        // если предыдущий не загружен - загружаем
         if  willDisplayDayIndex + 1 < allAvailableDates.count {
             let nextDay = allAvailableDates[willDisplayDayIndex + 1]
             if daysQueue.contains(nextDay) {
@@ -311,7 +308,7 @@ extension HistoryDetailViewController: UICollectionViewDelegateFlowLayout {
                 loadDayTriger.onNext(nextDay)
             }
         }
-        //если следующий не загружен - загружаем
+        // если следующий не загружен - загружаем
         if willDisplayDayIndex - 1 >= 0 {
             let previousDay = allAvailableDates[willDisplayDayIndex - 1]
             if daysQueue.contains(previousDay) {
