@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -90,13 +90,13 @@
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                                     <real key="value" value="8"/>
                                                 </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
                                                     <real key="value" value="0.0"/>
                                                 </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
                                                     <color key="value" name="grayBorder"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
@@ -110,13 +110,13 @@
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                                     <real key="value" value="8"/>
                                                 </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
                                                     <real key="value" value="0.0"/>
                                                 </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
                                                     <color key="value" name="grayBorder"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
@@ -130,13 +130,13 @@
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                                     <real key="value" value="8"/>
                                                 </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
                                                     <real key="value" value="0.0"/>
                                                 </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
                                                     <color key="value" name="grayBorder"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
@@ -150,13 +150,13 @@
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                                     <real key="value" value="8"/>
                                                 </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
                                                     <real key="value" value="0.0"/>
                                                 </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
                                                     <color key="value" name="grayBorder"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
@@ -170,7 +170,7 @@
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                                     <real key="value" value="8"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
@@ -213,13 +213,13 @@
                                                 <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                                     <real key="value" value="12"/>
                                                 </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
                                                     <real key="value" value="1"/>
                                                 </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
                                                     <color key="value" name="blue"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>

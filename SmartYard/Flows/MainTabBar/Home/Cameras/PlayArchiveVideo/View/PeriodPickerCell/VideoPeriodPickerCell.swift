@@ -16,8 +16,8 @@ class VideoPeriodPickerCell: UICollectionViewCell {
         super.awakeFromNib()
         
         titleLabel.text = nil
-        borderColor = UIColor.SmartYard.gray
-        cornerRadius = 3
+        layerBorderColor = UIColor.SmartYard.gray
+        layerCornerRadius = 3
         
         updateSelectedState(false)
     }
@@ -37,7 +37,7 @@ class VideoPeriodPickerCell: UICollectionViewCell {
             UIFont.SourceSansPro.bold(size: 14) :
             UIFont.SourceSansPro.regular(size: 14)
         
-        borderWidth = newState ? 1 : 0
+        layerBorderWidth = newState ? 1 : 0
     }
 
 }

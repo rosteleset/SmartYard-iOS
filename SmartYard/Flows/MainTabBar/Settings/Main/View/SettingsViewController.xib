@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,7 +29,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="35e-2i-cvg" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                     <viewLayoutGuide key="safeArea" id="qea-d1-Ig0"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -39,16 +37,16 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Настройки адресов" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k53-fj-wtE">
-                    <rect key="frame" x="16" y="100" width="382" height="40.5"/>
+                    <rect key="frame" x="16" y="56" width="382" height="40.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BmX-GH-wtS" userLabel="MainView">
-                    <rect key="frame" x="0.0" y="182.5" width="414" height="679.5"/>
+                    <rect key="frame" x="0.0" y="138.5" width="414" height="757.5"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Uan-Tk-dtE">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="679.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="757.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ePG-aW-rAs" customClass="JumpAvoidingFlowLayout" customModule="SmartYard" customModuleProvider="target">
                                 <size key="itemSize" width="50" height="50"/>
@@ -65,13 +63,13 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                             <real key="value" value="12"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                            <color key="value" red="0.94117647058823528" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
+                                            <color key="value" red="0.94117647059999998" green="0.94117647059999998" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
                                             <real key="value" value="1"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>

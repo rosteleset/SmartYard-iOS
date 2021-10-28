@@ -64,7 +64,7 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         isLastInSection: Bool,
         customBorderWidth: CGFloat,
         customBorderColor: UIColor?,
-        customCornerRadius: CGFloat,
+        customlayerCornerRadius: CGFloat,
         separatorInset: CGFloat? = nil
     ) {
         var maskedCorners = CACornerMask()
@@ -80,7 +80,7 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         addCustomBorder(
             customBorderWidth: customBorderWidth,
             customBorderColor: customBorderColor,
-            customCornerRadius: customCornerRadius,
+            customlayerCornerRadius: customlayerCornerRadius,
             maskedCorners: maskedCorners,
             separatorInset: separatorInset
         )
@@ -89,7 +89,7 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
     private func addCustomBorder(
         customBorderWidth: CGFloat,
         customBorderColor: UIColor?,
-        customCornerRadius: CGFloat,
+        customlayerCornerRadius: CGFloat,
         maskedCorners: CACornerMask,
         separatorInset: CGFloat?
     ) {
@@ -100,10 +100,10 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         borderLayer.frame = bounds
         layer.addSublayer(borderLayer)
         
-        layer.cornerRadius = customCornerRadius
+        layer.cornerRadius = customlayerCornerRadius
         layer.maskedCorners = maskedCorners
         
-        borderLayer.cornerRadius = customCornerRadius
+        borderLayer.cornerRadius = customlayerCornerRadius
         borderLayer.maskedCorners = maskedCorners
         
         // MARK: Если ячейка не первая в секции, то маскируем верхнюю границу

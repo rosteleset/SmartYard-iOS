@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -76,7 +74,7 @@
                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="24"/>
                             <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                     <real key="value" value="8"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
@@ -92,18 +90,18 @@
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
                                     <real key="value" value="1"/>
                                 </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
                                     <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                     <real key="value" value="12"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12B-12-a60">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12B-12-a60">
                             <rect key="frame" x="127.5" y="393.5" width="159" height="30"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="14"/>
                             <state key="normal" title="Все способы пополнения">
@@ -157,10 +155,10 @@
                                 <constraint firstAttribute="height" constant="5" id="mSC-BY-JI6"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
                                     <real key="value" value="0.0"/>
                                 </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                     <real key="value" value="2"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
@@ -196,6 +194,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="K63-GP-Chi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ne5-if-Kju"/>
@@ -206,7 +205,6 @@
                 <constraint firstAttribute="bottom" secondItem="aZa-Gd-3fU" secondAttribute="bottom" id="pKU-Tx-5CB"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="aZa-Gd-3fU" secondAttribute="trailing" id="zqT-e3-ogV"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="95.758928571428569"/>
         </view>
     </objects>

@@ -29,7 +29,7 @@ class SimpleVideoTimeView: UIView {
         addSubview(backgroundView)
         
         backgroundView.backgroundColor = .white
-        backgroundView.cornerRadius = 3
+        backgroundView.layerCornerRadius = 3
         
         // Add time label
         timeLabel.textAlignment = .center

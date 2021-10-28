@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -36,7 +34,7 @@
                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="400" id="GOe-Mh-qX6"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                     <real key="value" value="12"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
@@ -62,7 +60,7 @@
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                     <real key="value" value="12"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
@@ -100,7 +98,7 @@
                         <constraint firstAttribute="trailing" secondItem="TiH-DQ-nUy" secondAttribute="trailing" constant="24" id="yx9-IK-pAI"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                             <real key="value" value="20"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>

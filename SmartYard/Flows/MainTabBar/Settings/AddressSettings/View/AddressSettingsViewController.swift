@@ -101,14 +101,14 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        addressContainerView.borderWidth = 1
-        addressContainerView.borderColor = UIColor.SmartYard.grayBorder
+        addressContainerView.layerBorderWidth = 1
+        addressContainerView.layerBorderColor = UIColor.SmartYard.grayBorder
         
-        notificationsContainerView.borderWidth = 1
-        notificationsContainerView.borderColor = UIColor.SmartYard.grayBorder
+        notificationsContainerView.layerBorderWidth = 1
+        notificationsContainerView.layerBorderColor = UIColor.SmartYard.grayBorder
         
-        deleteAddressButton.borderWidth = 1
-        deleteAddressButton.borderColor = UIColor.SmartYard.grayBorder
+        deleteAddressButton.layerBorderWidth = 1
+        deleteAddressButton.layerBorderColor = UIColor.SmartYard.grayBorder
         
         let expansionTapGesture = UITapGestureRecognizer()
         notificationsHeader.addGestureRecognizer(expansionTapGesture)

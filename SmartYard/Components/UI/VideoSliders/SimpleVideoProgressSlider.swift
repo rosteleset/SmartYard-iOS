@@ -85,7 +85,7 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         thumbnailsContainer.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         addSubview(thumbnailsContainer)
         sendSubviewToBack(thumbnailsContainer)
-        thumbnailsContainer.cornerRadius = 3
+        thumbnailsContainer.layerCornerRadius = 3
         
         let thumbnailViews = [
             (UIImageView(), UIActivityIndicatorView()),

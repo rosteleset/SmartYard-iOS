@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina3_5" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -28,21 +26,21 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5eE-xc-JHm">
-                    <rect key="frame" x="22.5" y="-16" width="275.5" height="512"/>
+                    <rect key="frame" x="29.5" y="-16" width="261" height="512"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="GN8-QH-DUd" customClass="ScaledHeightImageView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="24" y="72" width="227.5" height="300"/>
+                            <rect key="frame" x="24" y="72" width="213" height="300"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="400" id="GOe-Mh-qX6"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                     <real key="value" value="12"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Добавить это лицо?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="TXq-h2-f5D">
-                            <rect key="frame" x="24" y="28" width="227.5" height="24"/>
+                            <rect key="frame" x="24" y="28" width="213" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="24" id="yy5-Q5-kcG"/>
                             </constraints>
@@ -51,7 +49,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TiH-DQ-nUy">
-                            <rect key="frame" x="24" y="392" width="227.5" height="48"/>
+                            <rect key="frame" x="24" y="392" width="213" height="48"/>
                             <color key="backgroundColor" name="darkGreen"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="nLS-7t-jKr"/>
@@ -62,13 +60,13 @@
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                     <real key="value" value="12"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Yr-fY-VGD">
-                            <rect key="frame" x="24" y="448" width="227.5" height="48"/>
+                            <rect key="frame" x="24" y="448" width="213" height="48"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="zoH-bT-yfH"/>
@@ -100,7 +98,7 @@
                         <constraint firstAttribute="trailing" secondItem="TiH-DQ-nUy" secondAttribute="trailing" constant="24" id="yx9-IK-pAI"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                             <real key="value" value="20"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>

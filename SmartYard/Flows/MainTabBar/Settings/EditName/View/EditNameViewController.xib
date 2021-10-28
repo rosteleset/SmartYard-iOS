@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,7 +34,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Cg-I5-h1i" userLabel="AvoidingView">
-                    <rect key="frame" x="0.0" y="307" width="414" height="292"/>
+                    <rect key="frame" x="0.0" y="302" width="414" height="292"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AK2-qB-Z4e">
                             <rect key="frame" x="16" y="16" width="382" height="260"/>
@@ -53,7 +49,7 @@
                                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" textContentType="name"/>
                                     <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                             <real key="value" value="8"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
@@ -68,12 +64,12 @@
                                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" textContentType="additional-name"/>
                                     <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                             <real key="value" value="8"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </textField>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hda-Fr-LzP" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hda-Fr-LzP" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="24" y="176" width="334" height="60"/>
                                     <color key="backgroundColor" red="0.16078431369999999" green="0.5450980392" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
@@ -83,7 +79,7 @@
                                     <color key="tintColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <state key="normal" title="Сохранить"/>
                                     <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                             <real key="value" value="12"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
@@ -103,7 +99,7 @@
                                 <constraint firstItem="Hda-Fr-LzP" firstAttribute="leading" secondItem="AK2-qB-Z4e" secondAttribute="leading" constant="24" id="sUd-HB-y6z"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                     <real key="value" value="12"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
@@ -118,6 +114,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="U6j-bm-WBZ"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="U6j-bm-WBZ" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0Cg-I5-h1i" secondAttribute="bottom" constant="20" id="3i9-qh-Yls"/>
@@ -130,7 +127,6 @@
                 <constraint firstItem="0Cg-I5-h1i" firstAttribute="leading" secondItem="U6j-bm-WBZ" secondAttribute="leading" id="no1-9E-3Fg"/>
                 <constraint firstItem="sf2-cn-pZ7" firstAttribute="top" secondItem="a6h-Jh-Mat" secondAttribute="top" id="rVY-WA-40N"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="U6j-bm-WBZ"/>
         </view>
     </objects>
 </document>

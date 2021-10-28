@@ -81,18 +81,18 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        mainContainerView.cornerRadius = 24
+        mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
         
         editNameButton.setImage(UIImage(named: "pencil"), for: .normal)
         editNameButton.setImage(UIImage(named: "pencil")?.darkened(), for: .highlighted)
         editNameButton.touchAreaInsets = UIEdgeInsets(inset: 24)
         
-        notificationsContainerView.borderWidth = 1
-        notificationsContainerView.borderColor = UIColor.SmartYard.grayBorder
+        notificationsContainerView.layerBorderWidth = 1
+        notificationsContainerView.layerBorderColor = UIColor.SmartYard.grayBorder
         
-        logoutButton.borderWidth = 1
-        logoutButton.borderColor = UIColor.SmartYard.grayBorder
+        logoutButton.layerBorderWidth = 1
+        logoutButton.layerBorderColor = UIColor.SmartYard.grayBorder
         
         let notificationsTapGesture = UITapGestureRecognizer()
         notificationsHeader.addGestureRecognizer(notificationsTapGesture)

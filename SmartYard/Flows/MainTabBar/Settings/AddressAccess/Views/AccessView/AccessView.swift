@@ -67,8 +67,8 @@ class AccessView: PMNibLinkableView {
             )
         )
         
-        tableView.borderWidth = 1
-        tableView.borderColor = UIColor.SmartYard.grayBorder
+        tableView.layerBorderWidth = 1
+        tableView.layerBorderColor = UIColor.SmartYard.grayBorder
         
         let dataSource = RxTableViewSectionedAnimatedDataSource<AllowedPersonSectionModel>(
             configureCell: { [weak self] _, tableView, indexPath, item in

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -44,37 +44,37 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8MI-1O-eYe" userLabel="GrayBackground">
-                    <rect key="frame" x="0.0" y="191.5" width="414" height="670.5"/>
+                    <rect key="frame" x="0.0" y="194.5" width="414" height="667.5"/>
                     <color key="backgroundColor" name="backgroundColor"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                             <real key="value" value="0.0"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Регистрация лица" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fyv-Y1-rkc">
-                    <rect key="frame" x="16" y="100" width="382" height="37.5"/>
+                    <rect key="frame" x="16" y="100" width="382" height="40.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gga-je-1mc">
-                    <rect key="frame" x="16" y="156.5" width="382" height="694.5"/>
+                    <rect key="frame" x="16" y="159.5" width="382" height="691.5"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pc0-J4-eWa">
-                            <rect key="frame" x="0.0" y="0.0" width="382" height="408.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="382" height="425"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OuL-ZB-YLW" userLabel="Main Container">
-                                    <rect key="frame" x="16" y="16" width="350" height="376.5"/>
+                                    <rect key="frame" x="16" y="16" width="350" height="393"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Зарегистрированные лица" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDB-gW-47T">
-                                            <rect key="frame" x="24" y="20" width="227" height="21"/>
+                                            <rect key="frame" x="24" y="20" width="218.5" height="23"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                                             <color key="textColor" name="semiBlack"/>
                                             <color key="highlightedColor" name="semiBlack"/>
                                         </label>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Bva-aU-jaI">
-                                            <rect key="frame" x="24" y="53" width="302" height="92"/>
+                                            <rect key="frame" x="24" y="55" width="302" height="92"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="92" id="Q3v-w2-T3X"/>
@@ -87,7 +87,7 @@
                                             </collectionViewFlowLayout>
                                         </collectionView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6no-0a-lvC">
-                                            <rect key="frame" x="24" y="173" width="302" height="179.5"/>
+                                            <rect key="frame" x="24" y="175" width="302" height="194"/>
                                             <string key="text">Фотографии ваших гостей хранятся в разделе История событий. 
 
 Для выбора и регистрации лица перейдите в указанный раздел, кликнув на Плюс. 
@@ -131,13 +131,13 @@
                         <constraint firstAttribute="bottom" secondItem="pc0-J4-eWa" secondAttribute="bottom" id="nU1-7Z-Pf3"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                             <real key="value" value="12"/>
                         </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
                             <real key="value" value="1"/>
                         </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                        <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
                             <color key="value" name="grayBorder"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>

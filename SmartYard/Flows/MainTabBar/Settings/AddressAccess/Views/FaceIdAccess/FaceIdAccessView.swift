@@ -31,8 +31,8 @@ class FaceIdAccessView: PMNibLinkableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        containerView.borderWidth = 1
-        containerView.borderColor = UIColor.SmartYard.grayBorder
+        containerView.layerBorderWidth = 1
+        containerView.layerBorderColor = UIColor.SmartYard.grayBorder
         
     }
     
