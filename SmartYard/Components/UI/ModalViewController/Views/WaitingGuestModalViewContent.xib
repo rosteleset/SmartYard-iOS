@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Bold.ttf">
+            <string>SourceSansPro-Bold</string>
+        </array>
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WhiteRabbitModalViewContent" customModule="SmartYard" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="200" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="233"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Гостевой доступ  на час" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJJ-d5-8aF">
+                    <rect key="frame" x="24" y="24" width="327" height="70.5"/>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="28"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NwP-ob-Rnk">
+                    <rect key="frame" x="24" y="106.5" width="327" height="70.5"/>
+                    <string key="text">Данная функция позволяет вашим гостям открывать домофон без вашего участия: на вызывной панели достаточно набрать номер вашей квартиры и калитка или дверь подъезда сразу откроется.</string>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                    <color key="textColor" name="semiBlack"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahP-hS-7Ud">
+                    <rect key="frame" x="24" y="187" width="327" height="18"/>
+                    <attributedString key="attributedText">
+                        <fragment content="Время действия - ">
+                            <attributes>
+                                <font key="NSFont" size="14" name="SourceSansPro-Regular"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <color key="textColor" name="semiBlack"/>
+                            </attributes>
+                        </fragment>
+                        <fragment content="один час с момента включения.">
+                            <attributes>
+                                <font key="NSFont" size="14.1" name="SourceSansPro-Bold"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <color key="textColor" name="semiBlack"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="ahP-hS-7Ud" secondAttribute="bottom" constant="28" id="0cu-rk-uwc"/>
+                <constraint firstItem="gJJ-d5-8aF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="24" id="5SG-ai-wG0"/>
+                <constraint firstItem="NwP-ob-Rnk" firstAttribute="top" secondItem="gJJ-d5-8aF" secondAttribute="bottom" constant="12" id="ISq-yU-1ai"/>
+                <constraint firstItem="gJJ-d5-8aF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="24" id="Ihf-nU-DBL"/>
+                <constraint firstItem="ahP-hS-7Ud" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="24" id="J8y-8u-GyI"/>
+                <constraint firstItem="NwP-ob-Rnk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="24" id="adO-cf-EGk"/>
+                <constraint firstItem="ahP-hS-7Ud" firstAttribute="top" secondItem="NwP-ob-Rnk" secondAttribute="bottom" constant="10" id="ckg-KZ-Vir"/>
+                <constraint firstAttribute="trailing" secondItem="ahP-hS-7Ud" secondAttribute="trailing" constant="24" id="e1L-cf-JaG"/>
+                <constraint firstAttribute="trailing" secondItem="NwP-ob-Rnk" secondAttribute="trailing" constant="24" id="ghq-Or-mvb"/>
+                <constraint firstAttribute="trailing" secondItem="gJJ-d5-8aF" secondAttribute="trailing" constant="24" id="ljD-iw-kQT"/>
+                <constraint firstItem="gJJ-d5-8aF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="pvo-eD-fcQ"/>
+                <constraint firstItem="NwP-ob-Rnk" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="zLY-mx-83g"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="130.3125" y="27.5"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="semiBlack">
+            <color red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

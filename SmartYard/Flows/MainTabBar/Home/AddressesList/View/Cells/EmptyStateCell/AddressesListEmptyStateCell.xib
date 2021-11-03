@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Bold.ttf">
+            <string>SourceSansPro-Bold</string>
+        </array>
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="AddressesListEmptyStateCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="399" height="295"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="399" height="295"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Vm-pe-Hze">
+                        <rect key="frame" x="0.0" y="19" width="399" height="257.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Список пока пуст :(" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5D-C5-3Lf">
+                                <rect key="frame" x="25" y="50" width="349" height="35.5"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="28"/>
+                                <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZ7-hx-jin">
+                                <rect key="frame" x="50" y="101.5" width="299" height="106"/>
+                                <string key="text">Для добавления адреса нажмите на "+" в верхней части экрана.  Если добавленный адрес не отображается, пожалуйста, подождите несколько минут. Список обновится автоматически.</string>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                                <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="E5D-C5-3Lf" firstAttribute="top" secondItem="7Vm-pe-Hze" secondAttribute="top" constant="50" id="61p-OZ-Vpm"/>
+                            <constraint firstAttribute="trailing" secondItem="E5D-C5-3Lf" secondAttribute="trailing" constant="25" id="Exn-7q-0ws"/>
+                            <constraint firstItem="iZ7-hx-jin" firstAttribute="leading" secondItem="7Vm-pe-Hze" secondAttribute="leading" constant="50" id="Hvy-cp-srU"/>
+                            <constraint firstItem="E5D-C5-3Lf" firstAttribute="leading" secondItem="7Vm-pe-Hze" secondAttribute="leading" constant="25" id="Oay-ON-490"/>
+                            <constraint firstItem="iZ7-hx-jin" firstAttribute="top" secondItem="E5D-C5-3Lf" secondAttribute="bottom" constant="16" id="SKz-1c-C5Y"/>
+                            <constraint firstAttribute="trailing" secondItem="iZ7-hx-jin" secondAttribute="trailing" constant="50" id="dgT-YO-VBM"/>
+                            <constraint firstAttribute="bottom" secondItem="iZ7-hx-jin" secondAttribute="bottom" constant="50" id="erf-IL-Mbw"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="7Vm-pe-Hze" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="EUh-w2-pA7"/>
+                <constraint firstItem="7Vm-pe-Hze" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="U41-tN-HVr"/>
+                <constraint firstItem="7Vm-pe-Hze" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="top" id="i8y-aS-8xS"/>
+                <constraint firstAttribute="trailing" secondItem="7Vm-pe-Hze" secondAttribute="trailing" id="wOQ-cK-F2k"/>
+            </constraints>
+            <size key="customSize" width="399" height="295"/>
+            <point key="canvasLocation" x="32.608695652173914" y="165.06696428571428"/>
+        </collectionViewCell>
+    </objects>
+</document>

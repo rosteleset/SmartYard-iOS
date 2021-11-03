@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Bold.ttf">
+            <string>SourceSansPro-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddressesListViewController" customModule="SmartYard" customModuleProvider="target">
+            <connections>
+                <outlet property="addButton" destination="eem-hg-ddA" id="sHE-PL-rz7"/>
+                <outlet property="collectionView" destination="OvU-at-ANt" id="QJ0-LC-Cjc"/>
+                <outlet property="mainContainerView" destination="n8q-GS-Qe3" id="wIk-hW-HWI"/>
+                <outlet property="skeletonContainer" destination="hs4-G9-VzN" id="IQu-Sz-UFu"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="5Pz-Zp-1ER">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Мои адреса" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Heg-K3-tM4">
+                    <rect key="frame" x="16" y="100" width="317" height="40.5"/>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eem-hg-ddA">
+                    <rect key="frame" x="349" y="108" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="GJ5-xF-i9h"/>
+                        <constraint firstAttribute="width" constant="25" id="NWr-nO-Jda"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" image="AddButtonIcon"/>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n8q-GS-Qe3">
+                    <rect key="frame" x="0.0" y="180.5" width="414" height="681.5"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="OvU-at-ANt">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="681.5"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aeM-NL-B3v" customClass="JumpAvoidingFlowLayout" customModule="SmartYard" customModuleProvider="target">
+                                <size key="itemSize" width="50" height="50"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hs4-G9-VzN" userLabel="Skeleton Container">
+                            <rect key="frame" x="16" y="16" width="382" height="128"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="Teu-gw-w6H" customClass="AddressesListSkeletonView" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="128"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                                            <real key="value" value="12"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
+                                            <color key="value" red="0.94117647059999998" green="0.94117647059999998" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="Teu-gw-w6H" secondAttribute="trailing" id="6rB-R0-fRz"/>
+                                <constraint firstItem="Teu-gw-w6H" firstAttribute="leading" secondItem="hs4-G9-VzN" secondAttribute="leading" id="703-ED-dfn"/>
+                                <constraint firstAttribute="bottom" secondItem="Teu-gw-w6H" secondAttribute="bottom" id="R2k-rJ-EMM"/>
+                                <constraint firstItem="Teu-gw-w6H" firstAttribute="top" secondItem="hs4-G9-VzN" secondAttribute="top" id="akC-EG-uhm"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="OvU-at-ANt" firstAttribute="top" secondItem="n8q-GS-Qe3" secondAttribute="top" id="8lI-jL-Tm2"/>
+                        <constraint firstAttribute="bottom" secondItem="OvU-at-ANt" secondAttribute="bottom" id="Vuq-cP-2qf"/>
+                        <constraint firstItem="hs4-G9-VzN" firstAttribute="leading" secondItem="n8q-GS-Qe3" secondAttribute="leading" constant="16" id="WZU-de-7vE"/>
+                        <constraint firstAttribute="trailing" secondItem="hs4-G9-VzN" secondAttribute="trailing" constant="16" id="WsH-xD-851"/>
+                        <constraint firstItem="OvU-at-ANt" firstAttribute="leading" secondItem="n8q-GS-Qe3" secondAttribute="leading" id="ojz-GD-6cT"/>
+                        <constraint firstAttribute="trailing" secondItem="OvU-at-ANt" secondAttribute="trailing" id="ucU-xN-BBo"/>
+                        <constraint firstItem="hs4-G9-VzN" firstAttribute="top" secondItem="n8q-GS-Qe3" secondAttribute="top" constant="16" id="xQY-Qm-R9I"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="n8q-GS-Qe3" secondAttribute="bottom" id="0ca-u8-WLc"/>
+                <constraint firstItem="5Pz-Zp-1ER" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2qX-ta-sWd"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="n8q-GS-Qe3" secondAttribute="trailing" id="43f-MF-yKZ"/>
+                <constraint firstItem="Heg-K3-tM4" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="56" id="FB0-T3-Pnu"/>
+                <constraint firstItem="eem-hg-ddA" firstAttribute="leading" secondItem="Heg-K3-tM4" secondAttribute="trailing" constant="16" id="IZ8-bX-rSf"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="eem-hg-ddA" secondAttribute="trailing" constant="40" id="IjQ-mP-tb7"/>
+                <constraint firstItem="5Pz-Zp-1ER" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="MOh-1y-9wh"/>
+                <constraint firstItem="Heg-K3-tM4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="RGG-bE-2Tj"/>
+                <constraint firstAttribute="trailing" secondItem="5Pz-Zp-1ER" secondAttribute="trailing" id="UsM-7l-jrY"/>
+                <constraint firstAttribute="bottom" secondItem="5Pz-Zp-1ER" secondAttribute="bottom" id="VAv-AB-hwZ"/>
+                <constraint firstItem="n8q-GS-Qe3" firstAttribute="top" secondItem="Heg-K3-tM4" secondAttribute="bottom" constant="40" id="h8j-qB-TGt"/>
+                <constraint firstItem="eem-hg-ddA" firstAttribute="centerY" secondItem="Heg-K3-tM4" secondAttribute="centerY" id="p2h-bQ-IAl"/>
+                <constraint firstItem="n8q-GS-Qe3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="rz8-Ra-0dn"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="92"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="AddButtonIcon" width="25" height="25"/>
+        <image name="MainBackground" width="375" height="812"/>
+    </resources>
+</document>

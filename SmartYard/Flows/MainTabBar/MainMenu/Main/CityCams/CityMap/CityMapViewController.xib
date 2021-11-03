@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Bold.ttf">
+            <string>SourceSansPro-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CityMapViewController" customModule="SmartYard" customModuleProvider="target">
+            <connections>
+                <outlet property="fakeNavBar" destination="3Mx-NN-sqX" id="YWH-nP-YgY"/>
+                <outlet property="mapView" destination="kHw-DC-UDR" id="YfB-mm-b5V"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="ajx-6H-BFo"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="qRP-po-8iN">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Mx-NN-sqX" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="W6K-WY-NuY"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Городские камеры" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44I-US-rjd">
+                    <rect key="frame" x="16" y="100" width="382" height="41"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="Ajc-L5-ZrI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Diy-Ub-FSF" customClass="TopRoundedView24" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="173" width="414" height="689"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kHw-DC-UDR" customClass="MGLMapView">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="689"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="kHw-DC-UDR" firstAttribute="leading" secondItem="Diy-Ub-FSF" secondAttribute="leading" id="8jr-AW-Nle"/>
+                        <constraint firstAttribute="bottom" secondItem="kHw-DC-UDR" secondAttribute="bottom" id="Zy2-bU-yuh"/>
+                        <constraint firstAttribute="trailing" secondItem="kHw-DC-UDR" secondAttribute="trailing" id="a5d-47-ewB"/>
+                        <constraint firstItem="kHw-DC-UDR" firstAttribute="top" secondItem="Diy-Ub-FSF" secondAttribute="top" id="yGM-TC-anm"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Diy-Ub-FSF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4sh-tK-kUa"/>
+                <constraint firstAttribute="bottom" secondItem="qRP-po-8iN" secondAttribute="bottom" id="5w8-EC-BXq"/>
+                <constraint firstItem="3Mx-NN-sqX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Azo-g8-sO4"/>
+                <constraint firstItem="44I-US-rjd" firstAttribute="top" secondItem="3Mx-NN-sqX" secondAttribute="bottom" constant="12" id="PcE-kC-xiB"/>
+                <constraint firstItem="Diy-Ub-FSF" firstAttribute="top" secondItem="44I-US-rjd" secondAttribute="bottom" constant="32" id="QJX-Kq-MNj"/>
+                <constraint firstItem="44I-US-rjd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="R6E-EH-AFy"/>
+                <constraint firstItem="3Mx-NN-sqX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="eK5-0i-dUR"/>
+                <constraint firstItem="qRP-po-8iN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="g3u-Bi-uLI"/>
+                <constraint firstItem="qRP-po-8iN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gfH-8g-MOk"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="44I-US-rjd" secondAttribute="trailing" constant="16" id="mhN-GO-tNJ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Diy-Ub-FSF" secondAttribute="bottom" id="pjP-ue-v24"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Diy-Ub-FSF" secondAttribute="trailing" id="qY1-Lg-u2K"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qRP-po-8iN" secondAttribute="trailing" id="tCi-kJ-zxF"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3Mx-NN-sqX" secondAttribute="trailing" id="ugq-LI-oB8"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="127"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="MainBackground" width="375" height="812"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

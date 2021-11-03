@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputPhoneNumberViewController" customModule="SmartYard" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="lCk-sj-GES" id="vXt-Eh-MtL"/>
+                <outlet property="phoneTextView" destination="Soq-Bs-M2f" id="UFc-xt-xgK"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="lJK-m8-VAn">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lCk-sj-GES">
+                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EhW-0V-SYx" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="69" width="414" height="783"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Soq-Bs-M2f" customClass="PhoneTextField" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="5" y="160" width="404" height="27"/>
+                                    <color key="backgroundColor" red="0.91768509511228791" green="0.95920356479104218" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="27" id="XzS-du-5fr"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Введите номер телефона  для регистрации" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5mZ-NZ-IAo">
+                                    <rect key="frame" x="105.5" y="225" width="203" height="33"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="203" id="CAP-Cu-dgQ"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="13"/>
+                                    <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="5mZ-NZ-IAo" firstAttribute="top" secondItem="Soq-Bs-M2f" secondAttribute="bottom" constant="38" id="CLZ-t6-Hhu"/>
+                                <constraint firstItem="5mZ-NZ-IAo" firstAttribute="centerX" secondItem="Soq-Bs-M2f" secondAttribute="centerX" id="dMW-jy-zjn"/>
+                                <constraint firstItem="Soq-Bs-M2f" firstAttribute="left" secondItem="EhW-0V-SYx" secondAttribute="left" constant="5" id="pvx-iu-VvM"/>
+                                <constraint firstAttribute="right" secondItem="Soq-Bs-M2f" secondAttribute="right" constant="5" id="rsD-jB-oWE"/>
+                                <constraint firstItem="Soq-Bs-M2f" firstAttribute="top" secondItem="EhW-0V-SYx" secondAttribute="top" constant="160" id="yv9-cf-OY6"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="EhW-0V-SYx" firstAttribute="top" secondItem="lCk-sj-GES" secondAttribute="top" constant="69" id="TZT-CD-b0B"/>
+                        <constraint firstAttribute="trailing" secondItem="EhW-0V-SYx" secondAttribute="trailing" id="Wov-dw-G4K"/>
+                        <constraint firstItem="EhW-0V-SYx" firstAttribute="left" secondItem="lCk-sj-GES" secondAttribute="left" id="YiI-M4-Zv3"/>
+                        <constraint firstAttribute="bottom" secondItem="EhW-0V-SYx" secondAttribute="bottom" id="d7G-tt-iB2"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="lJK-m8-VAn" secondAttribute="bottom" id="8qy-r7-3rk"/>
+                <constraint firstAttribute="bottom" secondItem="lCk-sj-GES" secondAttribute="bottom" id="Hip-ZX-9Z1"/>
+                <constraint firstItem="lCk-sj-GES" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="JBf-FO-D5b"/>
+                <constraint firstItem="lJK-m8-VAn" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="L0V-Nr-s2Z"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="lCk-sj-GES" secondAttribute="trailing" id="Y6L-PC-ggG"/>
+                <constraint firstItem="lJK-m8-VAn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZGJ-X2-qRi"/>
+                <constraint firstItem="lCk-sj-GES" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="bWh-gE-ghd"/>
+                <constraint firstItem="lJK-m8-VAn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="hbD-lC-2Qz"/>
+            </constraints>
+            <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="47.826086956521742" y="35.491071428571423"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="MainBackground" width="375" height="812"/>
+    </resources>
+</document>

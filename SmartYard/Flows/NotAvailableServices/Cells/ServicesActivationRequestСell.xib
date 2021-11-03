@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="86" id="KGk-i7-Jjw" customClass="ServicesActivationRequestСell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="377" height="86"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="377" height="85.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wks-UN-Kyi">
+                        <rect key="frame" x="0.0" y="0.0" width="377" height="85.5"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="puf-gE-R39" customClass="SmartYardCheckBoxView" customModule="SmartYard" customModuleProvider="target">
+                                <rect key="frame" x="40" y="29" width="28" height="28"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="28" id="3GW-on-cEj"/>
+                                    <constraint firstAttribute="height" constant="28" id="QyV-lQ-fNx"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Умный домофон" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1UQ-RM-9h1">
+                                <rect key="frame" x="84" y="31.5" width="133" height="23"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                                <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="1UQ-RM-9h1" firstAttribute="centerY" secondItem="wks-UN-Kyi" secondAttribute="centerY" id="9Km-3j-3OM"/>
+                            <constraint firstItem="puf-gE-R39" firstAttribute="leading" secondItem="wks-UN-Kyi" secondAttribute="leading" constant="40" id="Mqu-a3-sxY"/>
+                            <constraint firstItem="puf-gE-R39" firstAttribute="centerY" secondItem="wks-UN-Kyi" secondAttribute="centerY" id="ShE-5j-UNZ"/>
+                            <constraint firstItem="1UQ-RM-9h1" firstAttribute="leading" secondItem="puf-gE-R39" secondAttribute="trailing" constant="16" id="zZV-U5-Ozs"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="wks-UN-Kyi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="CEA-Vn-IFL"/>
+                    <constraint firstAttribute="trailing" secondItem="wks-UN-Kyi" secondAttribute="trailing" id="Sb3-Au-YEK"/>
+                    <constraint firstAttribute="bottom" secondItem="wks-UN-Kyi" secondAttribute="bottom" id="WLJ-2R-GG7"/>
+                    <constraint firstItem="wks-UN-Kyi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="aYL-Qm-bLu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="checkBox" destination="puf-gE-R39" id="FJM-uu-nKf"/>
+                <outlet property="titleLabel" destination="1UQ-RM-9h1" id="yeF-4f-9SE"/>
+            </connections>
+            <point key="canvasLocation" x="96.376811594202906" y="135.9375"/>
+        </tableViewCell>
+    </objects>
+</document>

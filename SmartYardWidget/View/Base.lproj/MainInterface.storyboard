@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M4Y-Lb-cyx">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Widget View Controller-->
+        <scene sceneID="cwh-vc-ff4">
+            <objects>
+                <viewController id="M4Y-Lb-cyx" customClass="WidgetViewController" customModule="SmartYardWidget" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" simulatedAppContext="notificationCenter" id="S3S-Oj-5AN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aFE-S0-a8e">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7nx-4C-JXD">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Отсутствуют объекты для управления" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NUj-bY-Lr5">
+                                        <rect key="frame" x="0.0" y="316.5" width="414" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="7nx-4C-JXD" firstAttribute="top" secondItem="aFE-S0-a8e" secondAttribute="top" id="4Kj-Tw-gvZ"/>
+                                    <constraint firstItem="NUj-bY-Lr5" firstAttribute="leading" secondItem="aFE-S0-a8e" secondAttribute="leading" id="9D2-Qx-jXb"/>
+                                    <constraint firstAttribute="trailing" secondItem="7nx-4C-JXD" secondAttribute="trailing" id="F0w-22-ZyL"/>
+                                    <constraint firstAttribute="trailing" secondItem="NUj-bY-Lr5" secondAttribute="trailing" id="SZ1-Pb-7sv"/>
+                                    <constraint firstItem="7nx-4C-JXD" firstAttribute="leading" secondItem="aFE-S0-a8e" secondAttribute="leading" id="mP6-Zl-Gc6"/>
+                                    <constraint firstAttribute="bottom" secondItem="7nx-4C-JXD" secondAttribute="bottom" id="yAt-7Z-Cwi"/>
+                                    <constraint firstItem="NUj-bY-Lr5" firstAttribute="centerY" secondItem="7nx-4C-JXD" secondAttribute="centerY" multiplier="0.8" id="zvF-HL-0Ep"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="aFE-S0-a8e" firstAttribute="top" secondItem="ssy-KU-ocm" secondAttribute="top" id="4tU-p0-nC7"/>
+                            <constraint firstItem="ssy-KU-ocm" firstAttribute="bottom" secondItem="aFE-S0-a8e" secondAttribute="bottom" id="9yh-r3-bhD"/>
+                            <constraint firstItem="aFE-S0-a8e" firstAttribute="leading" secondItem="ssy-KU-ocm" secondAttribute="leading" id="mOl-MP-Jrj"/>
+                            <constraint firstItem="ssy-KU-ocm" firstAttribute="trailing" secondItem="aFE-S0-a8e" secondAttribute="trailing" id="xws-Ju-CZo"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ssy-KU-ocm"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="noObjectsLabel" destination="NUj-bY-Lr5" id="waS-8C-tsj"/>
+                        <outlet property="tableView" destination="7nx-4C-JXD" id="LtD-ro-RBT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>
