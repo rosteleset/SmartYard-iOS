@@ -29,7 +29,7 @@ class NewAllowedPersonViewController: BaseViewController {
     private let contactPicker = CNContactPickerViewController()
     
     private let rawPhoneAddedTrigger = PublishSubject<String>()
-    private let cnContactAddedTrigger = PublishSubject<CNContact>()
+    private let cnContactAddedTrigger = PublishSubject<(CNContact, Int)>()
     
     private let viewModel: NewAllowedPersonViewModel
     
@@ -190,7 +190,48 @@ extension NewAllowedPersonViewController: UITextFieldDelegate {
 extension NewAllowedPersonViewController: CNContactPickerDelegate {
     
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
-        cnContactAddedTrigger.onNext(contact)
+        
+        let mobileNumbers = contact.phoneNumbers.enumerated()
+            .filter { _, phoneNumber in
+                // если это не сотовый номер, то пропускаем и не показываем для выбора
+                guard let rawNumber = phoneNumber.value.stringValue.rawPhoneNumberFromFullNumber,
+                      rawNumber[0] == "9" else {
+                    return false
+                }
+                return true
+            }
+        
+        switch mobileNumbers.count {
+        case 0:
+            return
+        case 1:
+            self.cnContactAddedTrigger.onNext((contact, 0))
+        default:
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            mobileNumbers.forEach { phoneIndex, phoneNumber in
+                
+                let action = UIAlertAction(
+                    title: phoneNumber.value.stringValue,
+                    style: .default,
+                    handler: { [weak self] _ in
+                        guard let self = self else {
+                            return
+                        }
+                        
+                        self.cnContactAddedTrigger.onNext((contact, phoneIndex))
+                    }
+                )
+                alert.addAction(action)
+            }
+        
+            let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+            alert.addAction(cancelAction)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+                self.viewController.present(alert, animated: true, completion: nil)
+            })
+        }
     }
 
 }

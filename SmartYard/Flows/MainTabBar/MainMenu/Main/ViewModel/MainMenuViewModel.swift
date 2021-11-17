@@ -10,10 +10,10 @@ import XCoordinator
 import RxSwift
 import RxCocoa
 
-struct MenuItemsList: Decodable {
+struct MenuItemsList {
     let label: String
     let iconName: String
-    let triger: String
+    let route: MainMenuRoute
 }
 
 class MainMenuViewModel: BaseViewModel {
@@ -22,9 +22,9 @@ class MainMenuViewModel: BaseViewModel {
     
     private let items = BehaviorSubject<[MenuItemsList]>(
         value: [
-            MenuItemsList(label: "Городские камеры", iconName: "PublicCamsMenuIcon", triger: "publicCams"),
-            MenuItemsList(label: "Настройки адресов", iconName: "HomeIcon", triger: "settings"),
-            MenuItemsList(label: "Общие настройки", iconName: "SettingsMenuIcon", triger: "profile")
+            MenuItemsList(label: "Городские камеры", iconName: "PublicCamsMenuIcon", route: .cityCams),
+            MenuItemsList(label: "Настройки адресов", iconName: "HomeIcon", route: .settings),
+            MenuItemsList(label: "Общие настройки", iconName: "SettingsMenuIcon", route: .profile)
         ]
     )
     private let bottomItemTrigger = MainMenuRoute.callSupport
@@ -45,13 +45,8 @@ class MainMenuViewModel: BaseViewModel {
                 onNext: { [weak self] args in
                     let (indexPath, items) = args
                     
-                    switch items[indexPath.row].triger {
-                    case "settings": self?.router.trigger(.settings)
-                    case "profile": self?.router.trigger(.profile)
-                    case "publicCams": self?.router.trigger(.cityCams)
-                    
-                    default: self?.router.trigger(.settings)
-                    }
+                    let selectedRoute = items[indexPath.row].route
+                    self?.router.trigger(selectedRoute)
                 }
             )
             .disposed(by: disposeBag)

@@ -91,18 +91,11 @@ class NewAllowedPersonViewModel: BaseViewModel {
         let importedPerson = BehaviorSubject<AllowedPerson?>(value: nil)
         
         input.cnContactAddedTrigger
-            .map { [weak self] contact in
-                guard let self = self else {
-                    return nil
-                }
-                
-                let rawNumbers = contact.phoneNumbers.compactMap {
-                    $0.value.stringValue.rawPhoneNumberFromFullNumber
-                }
-                
-                guard let firstMatchingRawNumber = rawNumbers.first else {
-                    return nil
-                }
+            .map { [weak self] contact, phoneIndex in
+                guard let self = self,
+                      (0 ... contact.phoneNumbers.count - 1) ~= phoneIndex,
+                      let rawNumber = contact.phoneNumbers[phoneIndex].value.stringValue.rawPhoneNumberFromFullNumber
+                else { return nil }
                 
                 let nameToShow: String? = {
                     let joinedName = [contact.givenName, contact.familyName]
@@ -123,7 +116,7 @@ class NewAllowedPersonViewModel: BaseViewModel {
                 let allowedPerson = AllowedPerson(
                     roommateType: self.allowedPersonType == .temporary ? .outer : .inner,
                     displayedName: nameToShow,
-                    rawNumber: firstMatchingRawNumber,
+                    rawNumber: rawNumber,
                     logoImage: icon
                 )
 
@@ -190,7 +183,7 @@ extension NewAllowedPersonViewModel {
     struct Input {
         let closeTrigger: Driver<Void>
         let rawPhoneAddedTrigger: Driver<String>
-        let cnContactAddedTrigger: Driver<CNContact>
+        let cnContactAddedTrigger: Driver<(CNContact,Int)>
         let addAccessTrigger: Driver<Void>
     }
     
