@@ -37,7 +37,13 @@ public enum SmartYardSharedDataUtilities {
         saveSharedData(data: emptyData)
     }
     
-    public static func sendOpenDoorRequest(accessToken: String, backendURL: String, doorId: Int, domophoneId: String) {
+    public static func sendOpenDoorRequest(
+        accessToken: String,
+        backendURL: String,
+        doorId: Int,
+        domophoneId: String,
+        completionHandler: ((_ success: Bool) -> Void)? = nil
+    ) {
         let json: [String: Any] = ["doorId": doorId, "domophoneId": domophoneId]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
@@ -52,8 +58,17 @@ public enum SmartYardSharedDataUtilities {
         request.setValue("application/json", forHTTPHeaderField: "Content-type")
         request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         
-        let task = URLSession.shared.dataTask(with: request)
-        task.resume()
+        URLSession.shared.dataTask(with: request) { _, response, _ in
+            guard let completionHandler = completionHandler else {
+                return
+            }
+            guard let response = response as? HTTPURLResponse else {
+                completionHandler(false)
+                return
+            }
+            completionHandler(response.statusCode == 204)
+        }
+        .resume()
     }
     
     static var sharedDataFileURL: URL {

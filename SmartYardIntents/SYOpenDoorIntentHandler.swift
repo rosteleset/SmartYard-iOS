@@ -158,8 +158,9 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
             backendURL: uObject.backendURL ?? Constants.defaultBackendURL ,
             doorId: Int(truncating: doorIdNS),
             domophoneId: String(Int(truncating: domophoneIdNS))
-        )
-        completion(SYOpenDoorIntentResponse(code: .success, userActivity: nil))
+        ) { success in
+            completion(SYOpenDoorIntentResponse(code: success ? .success : .failure, userActivity: nil))
+        }
     }
     
 }
