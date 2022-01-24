@@ -27,7 +27,7 @@ enum AppRoute: Route {
     case appSettings(title: String, message: String?)
     case registerQRCode(code: String)
         
-    case incomingCall(callPayload: CallPayload, isCallKitUsed: Bool)
+    case incomingCall(callPayload: CallPayload, isCallKitUsed: Bool, actionIdentifier: String = "")
     case closeIncomingCall
     
 }
@@ -149,7 +149,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         case let .appSettings(title, message):
             return .appSettingsTransition(title: title, message: message)
             
-        case let .incomingCall(callPayload, isCallKitUsed):
+        case let .incomingCall(callPayload, isCallKitUsed, actionIdentifier):
             // MARK: чтобы окно входящего вызова не показывалось до того, как пользователь
             // ответит на вызов в CallKit, показываем экран входящего вызова только после ответа.
             NotificationCenter.default.rx
@@ -175,7 +175,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 pushNotificationService: pushNotificationService,
                 router: weakRouter,
                 callPayload: callPayload,
-                isCallKitUsed: isCallKitUsed
+                isCallKitUsed: isCallKitUsed,
+                actionIdentifier: actionIdentifier
             )
             
             let landscapeVC = IncomingCallLandscapeViewController(viewModel: vm)
@@ -251,7 +252,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     func processIncomingCallRequest(
         callPayload: CallPayload,
         useCallKit: Bool,
-        callKitCompletion: (() -> Void)? = nil
+        callKitCompletion: (() -> Void)? = nil,
+        actionIdentifier: String = ""
     ) {
         if useCallKit, let completion = callKitCompletion {
             providerProxy.reportIncomingCall(
@@ -280,7 +282,13 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         // MARK: Здесь решил перестраховаться, хотя вроде все и работало раньше
         
         DispatchQueue.main.async { [weak self] in
-            self?.trigger(.incomingCall(callPayload: callPayload, isCallKitUsed: useCallKit))
+            self?.trigger(
+                .incomingCall(
+                    callPayload: callPayload,
+                    isCallKitUsed: useCallKit,
+                    actionIdentifier: actionIdentifier
+                )
+            )
         }
     }
     

@@ -48,6 +48,7 @@ class IncomingCallViewModel: BaseViewModel {
     
     private let answerCallProxySubject = PublishSubject<Void>()
     private let endCallProxySubject = PublishSubject<Void>()
+    private let actionIdentifier: String
     
     init(
         providerProxy: CXProviderProxy,
@@ -57,7 +58,8 @@ class IncomingCallViewModel: BaseViewModel {
         pushNotificationService: PushNotificationService,
         router: WeakRouter<AppRoute>,
         callPayload: CallPayload,
-        isCallKitUsed: Bool
+        isCallKitUsed: Bool,
+        actionIdentifier: String = ""
     ) {
         self.providerProxy = providerProxy
         self.linphoneService = linphoneService
@@ -66,6 +68,7 @@ class IncomingCallViewModel: BaseViewModel {
         self.pushNotificationService = pushNotificationService
         self.router = router
         self.callPayload = callPayload
+        self.actionIdentifier = actionIdentifier
         
         preferredPreviewModeForActiveCall = BehaviorSubject<IncomingCallPreviewState>(
             value: isCallKitUsed ? .staticImage : .video
@@ -602,6 +605,51 @@ class IncomingCallViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+        
+        // MARK: обработка выбранного пользователем в Push-notification действия(Открыть или Игнорировать)
+        if ["OPEN_ACTION", "IGNORE_ACTION"].contains(self.actionIdentifier) {
+            incomingCall
+                .asDriverOnErrorJustComplete()
+                .filter { callObject in
+                    guard let call = callObject?.0 else {
+                        return false
+                    }
+                    return call.state == .IncomingReceived
+                }
+                .drive(
+                    onNext: { [weak self] _ in
+                        guard let self = self else {
+                            return
+                        }
+                        // Чтобы очистить уведомления о входящих вызовах, которые могли успеть прилететь,
+                        // пока мы запускали приложение и регистрировались на сервере,
+                        // хотелось сделать вот так:
+                        // UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["voip"])
+                        // Но почему-то удаление конкретных типов уведомлений по id не работает:
+                        // response.notification.request.identifier не соответствует apns-collapse-id
+                        // https://developer.apple.com/documentation/usernotifications/unnotificationrequest/1649634-identifier
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+                        }
+                        
+                        switch self.actionIdentifier {
+                        case "OPEN_ACTION":
+                            DispatchQueue.main.async {
+                                self.doorOpeningRequestedByUser.onNext(true)
+                            }
+                        case "IGNORE_ACTION":
+                            DispatchQueue.main.async {
+                                self.endCallProxySubject.onNext(())
+                            }
+                            
+                        default:
+                            break
+                        }
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
     }
     
     // swiftlint:disable:next function_body_length

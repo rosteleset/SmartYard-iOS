@@ -135,6 +135,33 @@ extension AppDelegate: MessagingDelegate {
         UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { _, _ in })
         
         application.registerForRemoteNotifications()
+        
+        // MARK: Регистрация действий для Rich Push Notification
+        
+        let openAction = UNNotificationAction(
+            identifier: "OPEN_ACTION",
+            title: "Открыть",
+            options: []
+        )
+        
+        let ignoreAction = UNNotificationAction(
+            identifier: "IGNORE_ACTION",
+            title: "Игнорировать",
+            options: []
+        )
+        
+        // Define the notification type
+        let incomingDoorCallCategory = UNNotificationCategory(
+            identifier: "INCOMING_DOOR_CALL",
+            actions: [openAction, ignoreAction],
+            intentIdentifiers: [],
+            hiddenPreviewsBodyPlaceholder: "",
+            options: .customDismissAction
+          )
+        
+        // Register the notification type.
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.setNotificationCategories([incomingDoorCallCategory])
     }
     
 }
@@ -240,7 +267,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if let callPayload = CallPayload(
             pushNotificationPayload: userInfo
         ) {
-            appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: false)
+            appCoordinator.processIncomingCallRequest(
+                callPayload: callPayload,
+                useCallKit: false,
+                actionIdentifier: response.actionIdentifier
+            )
             completionHandler()
             return
         }

@@ -41,7 +41,9 @@ class NotificationService: UNNotificationServiceExtension {
         
         bestAttemptContent.title = "Звонок в домофон"
         bestAttemptContent.body = request.content.userInfo["callerId"] as? String ?? ""
+        bestAttemptContent.body += "\n\n(нажмите и удерживайте для быстрого ответа)"
         bestAttemptContent.sound = .default
+        bestAttemptContent.categoryIdentifier = "INCOMING_DOOR_CALL"
         
         self.bestAttemptContent = bestAttemptContent
         

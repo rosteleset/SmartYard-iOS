@@ -30,8 +30,8 @@ extension String {
     var rawPhoneNumberFromFullNumber: String? {
         let contactNumber = self
             .replacingOccurrences(of: " ", with: "")
-            .replacingOccurrences(of: "-", with: "") // тире
-            .replacingOccurrences(of: "‑", with: "") // дефис
+            .replacingOccurrences(of: "-", with: "") // дефис
+            .replacingOccurrences(of: "‑", with: "") // тире
             .replacingOccurrences(of: "(", with: "")
             .replacingOccurrences(of: ")", with: "")
             .replacingOccurrences(of: "^+79", with: "9", options: .regularExpression, range: nil)

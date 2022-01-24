@@ -811,6 +811,49 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+        
+        // При уходе с окна или при сворачивании приложения - паузим плеер
+        Driver
+            .merge(
+                NotificationCenter.default.rx
+                    .notification(UIApplication.didEnterBackgroundNotification)
+                    .asDriverOnErrorJustComplete()
+                    .mapToVoid(),
+                rx.viewDidDisappear
+                    .asDriver()
+                    .mapToVoid()
+            )
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.realVideoPlayer?.pause()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // При заходе на окно - запускаем плеер
+        
+        rx.viewDidAppear
+            .asDriver()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.realVideoPlayer?.play()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        // При разворачивании приложения (если окно открыто) - запускаем плеер
+        
+        NotificationCenter.default.rx
+            .notification(UIApplication.willEnterForegroundNotification)
+            .asDriverOnErrorJustComplete()
+            .withLatestFrom(rx.isVisible.asDriverOnErrorJustComplete())
+            .isTrue()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.realVideoPlayer?.play()
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func selectFirstPeriod() {
