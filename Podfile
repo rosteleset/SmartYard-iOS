@@ -27,7 +27,7 @@ target 'SmartYard' do
   pod 'PMNibLinkableView'
   pod 'TouchAreaInsets'
   pod 'PinLayout'
-  pod 'SSCustomTabbar', :git => 'https://git.lanta.me/LanTa/SSCustomTabbar.git', :branch => 'feature/add-animation-options'
+  pod 'SSCustomTabbar', :git => 'https://github.com/rosteleset/SSCustomTabbar.git', :branch => 'feature/add-animation-options'
   pod 'TPKeyboardAvoiding'
   pod 'JGProgressHUD'
   pod 'SkeletonView' #, '1.7'
@@ -56,7 +56,7 @@ target 'SmartYard' do
   pod 'XCoordinator/RxSwift'
   
   # Chat
-  pod 'OnlineChatSdk', :git => 'https://git.lanta.me/LanTa/OnlineChatSdk-Swift.git', :branch => 'feature/build-fix'
+  pod 'OnlineChatSdk', :git => 'https://github.com/rosteleset/OnlineChatSdk-Swift.git', :branch => 'feature/build-fix'
   # YouTube
   pod "youtube-ios-player-helper-swift"
   
