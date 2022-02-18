@@ -22,4 +22,24 @@ struct IncomingCallStateContainer {
         )
     }
     
+    /// Определяет режим Динамика по-умолчанию.
+    /// для CallKit он всегда выключен, а для обычного режима - зависит от настроек пользователя.
+    static func getDefaultSpeakerMode(_ isCallKitUsed: Bool, apiWrapper: APIWrapper) -> IncomingCallStateContainer {
+        
+        if isCallKitUsed {
+            return .initial
+        } else {
+            let speakerEnabledByDefault = apiWrapper.accessService.prefersSpeakerForCalls
+            
+            let configuredSoundOutputState = speakerEnabledByDefault ? IncomingCallSoundOutputState.speaker : IncomingCallSoundOutputState.regular
+            
+            return .init(
+                callState: IncomingCallStateContainer.initial.callState,
+                doorState: IncomingCallStateContainer.initial.doorState,
+                previewState: IncomingCallStateContainer.initial.previewState,
+                soundOutputState: configuredSoundOutputState
+            )
+        }
+    }
+    
 }

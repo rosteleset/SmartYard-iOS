@@ -7,17 +7,14 @@
 //
 
 import UIKit
-import Mapbox
+import MapboxMaps
 import JGProgressHUD
 import RxSwift
 import RxCocoa
 
-class CameraAnnotation: MGLPointAnnotation {
-    var cameraNumber: Int?
-}
 class CityMapViewController: BaseViewController, LoaderPresentable {
     
-    @IBOutlet private weak var mapView: MGLMapView!
+    @IBOutlet private weak var mapView: MapView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
     var loader: JGProgressHUD?
@@ -44,8 +41,25 @@ class CityMapViewController: BaseViewController, LoaderPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        mapView.delegate = self
         bind()
+    }
+    
+    fileprivate func updateAnnotations(_ annotationManager: PointAnnotationManager, _ cameras: [CityCameraObject]) {
+        annotationManager.annotations = []
+        
+        let points = cameras.map { camera -> PointAnnotation in
+            var point = PointAnnotation(coordinate: camera.position)
+            point.userInfo = ["camera": camera]
+            point.image = .init(
+                image: (UIImage(named: "CityCam")?.withRenderingMode(.alwaysOriginal))!,
+                name: "MapPoint"
+            )
+            point.iconAnchor = .center
+            return point
+        }
+        
+        annotationManager.iconAllowOverlap = true
+        annotationManager.annotations = points
     }
     
     func bind() {
@@ -64,34 +78,26 @@ class CityMapViewController: BaseViewController, LoaderPresentable {
                     }
                     
                     self.camerasProxy.onNext(cameras)
-                    self.removeAllAnnotations()
+                    let annotationManager = self.mapView.annotations.makePointAnnotationManager()
+                    annotationManager.delegate = self
                     
-                    let pointAnnotations = cameras.map { camera -> CameraAnnotation in
-                        let point = CameraAnnotation()
-                        point.coordinate = camera.position
-                        point.cameraNumber = camera.cameraNumber
-                        return point
-                    }
+                    self.updateAnnotations(annotationManager, cameras)
                     
-                    self.mapView.addAnnotations(pointAnnotations)
+                    let annotationCoordinates = cameras
+                        .map { $0.position }
                     
-                    let differentCoordinatesCount = pointAnnotations
-                        .map { $0.coordinate }
-                        .withoutDuplicates()
-                        .count
-                    
-                    switch differentCoordinatesCount {
+                    switch annotationCoordinates.withoutDuplicates().count {
                     case 1:
-                        self.mapView.setCenter(pointAnnotations[0].coordinate, zoomLevel: 17, animated: false)
-                        
+                        let camera = CameraOptions(center: annotationCoordinates.first!, zoom: 17)
+                        self.mapView.mapboxMap.setCamera(to: camera)
                     case let count where count > 1:
-                        self.mapView.showAnnotations(
-                            pointAnnotations,
-                            edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
-                            animated: false,
-                            completionHandler: nil
+                        let camera = self.mapView.mapboxMap.camera(
+                            for: annotationCoordinates,
+                            padding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
+                            bearing: .none,
+                            pitch: .none
                         )
-                        
+                        self.mapView.mapboxMap.setCamera(to: camera)
                     default: break
                     }
                 }
@@ -110,44 +116,18 @@ class CityMapViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
     }
-    
-    func removeAllAnnotations() {
-        guard let uAnnotations = mapView.annotations else {
-            return
-        }
-        
-        mapView.removeAnnotations(uAnnotations)
-    }
-    
 }
 
-extension CityMapViewController: MGLMapViewDelegate {
-    
-    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
-        guard let cameras = try? self.camerasProxy.value(),
-              let annotation = annotation as? CameraAnnotation,
-              let camera = (cameras.first { $0.cameraNumber == annotation.cameraNumber }) else {
-            return nil
-        }
-
-        let annotationView = CityCamerasMapPointView()
-
-        annotationView.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
-        annotationView.configure(cameraNumber: camera.cameraNumber)
-
-        return annotationView
-    }
-        
-    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        return false
-    }
-    
-    func mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView) {
-        guard let cameraNumber = (annotationView as? CityCamerasMapPointView)?.cameraNumber else {
+extension CityMapViewController: AnnotationInteractionDelegate {
+    func annotationManager(
+        _ manager: AnnotationManager,
+        didDetectTappedAnnotations annotations: [Annotation]
+    ) {
+        guard let annotation = annotations.first as? PointAnnotation,
+              let camera = annotation.userInfo?["camera"] as? CityCameraObject else {
             return
         }
-        
-        cameraSelectedTrigger.onNext(cameraNumber)
+        cameraSelectedTrigger.onNext(camera.cameraNumber)
     }
-    
+
 }

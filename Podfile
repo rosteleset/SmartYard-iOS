@@ -41,7 +41,7 @@ target 'SmartYard' do
   pod 'PopOverDatePicker'
   
   # Map
-  pod 'Mapbox-iOS-SDK', '~> 6.4.0'
+  pod 'MapboxMaps', '10.2.0'
   
   # Analytics
   pod 'Firebase/Crashlytics'

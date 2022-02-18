@@ -347,7 +347,6 @@
 		84F6494924740E90000C0028 /* YardMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F6494324740E8F000C0028 /* YardMapViewController.xib */; };
 		84F6494A24740E90000C0028 /* CamerasMapPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494524740E8F000C0028 /* CamerasMapPointView.swift */; };
 		84F6494B24740E90000C0028 /* YardMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494624740E8F000C0028 /* YardMapViewModel.swift */; };
-		84F6494D24740F33000C0028 /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494C24740F33000C0028 /* CLLocationCoordinate2D+Extensions.swift */; };
 		84F6494F247410DE000C0028 /* CameraObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494E247410DD000C0028 /* CameraObject.swift */; };
 		84F64953247410F9000C0028 /* CameraNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64951247410F9000C0028 /* CameraNumberCell.swift */; };
 		84F64954247410F9000C0028 /* CameraNumberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F64952247410F9000C0028 /* CameraNumberCell.xib */; };
@@ -935,7 +934,6 @@
 		84F6494324740E8F000C0028 /* YardMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YardMapViewController.xib; sourceTree = "<group>"; };
 		84F6494524740E8F000C0028 /* CamerasMapPointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CamerasMapPointView.swift; sourceTree = "<group>"; };
 		84F6494624740E8F000C0028 /* YardMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YardMapViewModel.swift; sourceTree = "<group>"; };
-		84F6494C24740F33000C0028 /* CLLocationCoordinate2D+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extensions.swift"; sourceTree = "<group>"; };
 		84F6494E247410DD000C0028 /* CameraObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraObject.swift; sourceTree = "<group>"; };
 		84F64951247410F9000C0028 /* CameraNumberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraNumberCell.swift; sourceTree = "<group>"; };
 		84F64952247410F9000C0028 /* CameraNumberCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraNumberCell.xib; sourceTree = "<group>"; };
@@ -2598,7 +2596,6 @@
 				84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */,
 				3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */,
 				84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */,
-				84F6494C24740F33000C0028 /* CLLocationCoordinate2D+Extensions.swift */,
 				844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */,
 				84AA8D6123E2E860001B3B43 /* NSError+Extensions.swift */,
 				E92EFBEB242A2507003AF7FE /* NotificationName+Extensions.swift */,
@@ -4439,7 +4436,6 @@
 				84AADD1D242E22550056994A /* EditNameViewModel.swift in Sources */,
 				E92EFBB5242A22F2003AF7FE /* BaseAPIResponse.swift in Sources */,
 				E9618A332420ABC1003FF47D /* UnapprovedObjectCell.swift in Sources */,
-				84F6494D24740F33000C0028 /* CLLocationCoordinate2D+Extensions.swift in Sources */,
 				84898A8E23F1540C00E6B78E /* SettingsActionCell.swift in Sources */,
 				E9B9EACA2421FCCB000A92B3 /* RestorePasswordViewModel.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
@@ -4808,7 +4804,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntents.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 111;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -4817,7 +4813,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.13;
+				MARKETING_VERSION = 1.8.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.intents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4834,7 +4830,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntents.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 111;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -4843,7 +4839,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.13;
+				MARKETING_VERSION = 1.8.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.intents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4859,7 +4855,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 111;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4868,7 +4864,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.13;
+				MARKETING_VERSION = 1.8.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -4884,7 +4880,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 111;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4893,7 +4889,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.13;
+				MARKETING_VERSION = 1.8.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4909,7 +4905,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 111;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4918,7 +4914,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.13;
+				MARKETING_VERSION = 1.8.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -4933,7 +4929,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 111;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -4942,7 +4938,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.13;
+				MARKETING_VERSION = 1.8.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -5080,7 +5076,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 111;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
@@ -5090,7 +5086,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.13;
+				MARKETING_VERSION = 1.8.14;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -5145,7 +5141,7 @@
 					"-framework",
 					"\"Lottie\"",
 					"-framework",
-					"\"Mapbox\"",
+					"\"MapboxMaps\"",
 					"-framework",
 					"\"Moya\"",
 					"-framework",
@@ -5267,7 +5263,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 111;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
@@ -5276,7 +5272,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.13;
+				MARKETING_VERSION = 1.8.14;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -5331,7 +5327,7 @@
 					"-framework",
 					"\"Lottie\"",
 					"-framework",
-					"\"Mapbox\"",
+					"\"MapboxMaps\"",
 					"-framework",
 					"\"Moya\"",
 					"-framework",
@@ -5452,7 +5448,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 111;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -5466,7 +5462,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.13;
+				MARKETING_VERSION = 1.8.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.shared-data";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -5487,7 +5483,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 111;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -5501,7 +5497,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.13;
+				MARKETING_VERSION = 1.8.14;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.shared-data";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

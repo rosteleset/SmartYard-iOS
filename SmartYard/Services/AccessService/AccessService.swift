@@ -12,6 +12,7 @@ private let appStateKey = "appState"
 private let accessTokenKey = "accessToken"
 private let voipTokenKey = "voipToken"
 private let prefersVoipForCallsKey = "prefersVoipForCalls"
+private let prefersSpeakerForCallsKey = "prefersSpeakerForCalls"
 private let clientNameKey = "clientName"
 private let clientPhoneNumberKey = "clientPhoneNumber"
 private let backendURLKey = "backendURL"
@@ -61,6 +62,15 @@ class AccessService {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: prefersVoipForCallsKey)
+        }
+    }
+    
+    var prefersSpeakerForCalls: Bool {
+        get {
+            UserDefaults.standard.value(forKey: prefersSpeakerForCallsKey) as? Bool ?? false
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: prefersSpeakerForCallsKey)
         }
     }
     

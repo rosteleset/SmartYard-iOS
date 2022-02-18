@@ -17,7 +17,7 @@ class CityMapViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<CityCamsRoute>
     
-    private let cameras = BehaviorSubject<[CityCameraObject]>(value: [])
+    private let cameras = PublishSubject<[CityCameraObject]>()
     
     init(apiWrapper: APIWrapper, router: WeakRouter<CityCamsRoute>) {
         self.apiWrapper = apiWrapper

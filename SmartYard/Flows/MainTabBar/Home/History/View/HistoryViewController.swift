@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Mapbox
 import JGProgressHUD
 import RxSwift
 import RxCocoa

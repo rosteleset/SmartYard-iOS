@@ -7,12 +7,13 @@
 //
 
 import Foundation
-import Mapbox
+import MapboxMaps
 import PinLayout
 
-class CamerasMapPointView: MGLAnnotationView {
+class CamerasMapPointView: UIView {
     
     private(set) var cameraNumber: Int?
+    private var tapCallback: (() -> Void)?
     
     private let cameraImageView: UIImageView = {
         let imageView = UIImageView()
@@ -34,11 +35,8 @@ class CamerasMapPointView: MGLAnnotationView {
         return label
     }()
 
-    convenience init() {
-        self.init(reuseIdentifier: "CamerasMapPointView")
-        
-        scalesWithViewingDistance = false
-        isEnabled = true
+    init() {
+        super.init(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         
         backgroundColor = .white
         
@@ -46,6 +44,18 @@ class CamerasMapPointView: MGLAnnotationView {
         addSubview(cameraNumberLabel)
     
         clipsToBounds = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
+        self.addGestureRecognizer(tapGesture)
+    }
+
+    @objc func handleTap(sender: UITapGestureRecognizer) {
+        self.tapCallback?()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func layoutSubviews() {
@@ -57,9 +67,9 @@ class CamerasMapPointView: MGLAnnotationView {
         cameraNumberLabel.pin.height(15).below(of: cameraImageView).hCenter().sizeToFit(.height)
     }
     
-    func configure(cameraNumber: Int) {
+    func configure(cameraNumber: Int, _ onTap: @escaping (() -> Void)) {
         self.cameraNumber = cameraNumber
-        
+        self.tapCallback = onTap
         cameraNumberLabel.text = "\(cameraNumber)"
     }
     

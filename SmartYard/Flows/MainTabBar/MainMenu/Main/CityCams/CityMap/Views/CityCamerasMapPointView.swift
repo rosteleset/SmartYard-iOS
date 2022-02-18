@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import Mapbox
+import MapboxMaps
 import PinLayout
 
-class CityCamerasMapPointView: MGLAnnotationView {
+class CityCamerasMapPointView: UIView {
     
     private(set) var cameraNumber: Int?
     
@@ -23,14 +23,16 @@ class CityCamerasMapPointView: MGLAnnotationView {
         return imageView
     }()
     
-    convenience init() {
-        self.init(reuseIdentifier: "CamerasMapPointView")
-        
-        scalesWithViewingDistance = false
-        isEnabled = true
+    init() {
+        super.init(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         
         backgroundColor = .none
         addSubview(cameraImageView)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func layoutSubviews() {

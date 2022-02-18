@@ -7,14 +7,14 @@
 //
 
 import UIKit
-import Mapbox
+import MapboxMaps
 import JGProgressHUD
 import RxSwift
 import RxCocoa
 
 class YardMapViewController: BaseViewController, LoaderPresentable {
     
-    @IBOutlet private weak var mapView: MGLMapView!
+    @IBOutlet private weak var mapView: MapView!
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
@@ -24,6 +24,7 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
     
     private let cameraSelectedTrigger = PublishSubject<Int>()
     private let camerasProxy = BehaviorSubject<[CameraObject]>(value: [])
+    private var annotationViews: [UIView] = []
     
     init(viewModel: YardMapViewModel) {
         self.viewModel = viewModel
@@ -37,11 +38,28 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        mapView.delegate = self
         bind()
     }
 
+    fileprivate func updateAnnotations(_ cameras: [CameraObject]) {
+        self.annotationViews = cameras.map { camera -> UIView in
+            let point = CamerasMapPointView()
+            point.configure(cameraNumber: camera.cameraNumber) { [weak self] in
+                self?.cameraSelectedTrigger.onNext(camera.cameraNumber)
+            }
+            let options = ViewAnnotationOptions(
+                geometry: Point(camera.position),
+                width: 40,
+                height: 40,
+                allowOverlap: true,
+                anchor: .center
+            )
+            try? self.mapView.viewAnnotations.add(point, options: options)
+            
+            return point
+        }
+    }
+    
     func bind() {
         let input = YardMapViewModel.Input(
             cameraSelected: cameraSelectedTrigger.asDriverOnErrorJustComplete(),
@@ -60,33 +78,26 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
                     self.camerasProxy.onNext(cameras)
                     self.removeAllAnnotations()
                     
-                    let pointAnnotations = cameras.map { camera -> MGLPointAnnotation in
-                        let point = MGLPointAnnotation()
-                        point.coordinate = camera.position
-                        return point
-                    }
+                    self.updateAnnotations(cameras)
                     
-                    self.mapView.addAnnotations(pointAnnotations)
+                    let annotationCoordinates = cameras
+                        .map { $0.position }
                     
-                    let differentCoordinatesCount = pointAnnotations
-                        .map { $0.coordinate }
-                        .withoutDuplicates()
-                        .count
-                    
-                    switch differentCoordinatesCount {
+                    switch annotationCoordinates.withoutDuplicates().count {
                     case 1:
-                        self.mapView.setCenter(pointAnnotations[0].coordinate, zoomLevel: 17, animated: false)
-                        
+                        let camera = CameraOptions(center: annotationCoordinates.first!, zoom: 17)
+                        self.mapView.mapboxMap.setCamera(to: camera)
                     case let count where count > 1:
-                        self.mapView.showAnnotations(
-                            pointAnnotations,
-                            edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
-                            animated: false,
-                            completionHandler: nil
+                        let camera = self.mapView.mapboxMap.camera(
+                            for: annotationCoordinates,
+                            padding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
+                            bearing: .none,
+                            pitch: .none
                         )
-                        
+                        self.mapView.mapboxMap.setCamera(to: camera)
                     default: break
                     }
+                    
                 }
             )
             .disposed(by: disposeBag)
@@ -106,41 +117,8 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
     }
     
     func removeAllAnnotations() {
-        guard let uAnnotations = mapView.annotations else {
-            return
+        self.annotationViews.forEach {
+            self.mapView.viewAnnotations.remove($0)
         }
-        
-        mapView.removeAnnotations(uAnnotations)
     }
-    
-}
-
-extension YardMapViewController: MGLMapViewDelegate {
-    
-    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
-        guard let cameras = try? self.camerasProxy.value(),
-            let camera = (cameras.first { $0.position == annotation.coordinate }) else {
-            return nil
-        }
-
-        let annotationView = CamerasMapPointView()
-
-        annotationView.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
-        annotationView.configure(cameraNumber: camera.cameraNumber)
-
-        return annotationView
-    }
-        
-    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        return false
-    }
-    
-    func mapView(_ mapView: MGLMapView, didSelect annotationView: MGLAnnotationView) {
-        guard let cameraNumber = (annotationView as? CamerasMapPointView)?.cameraNumber else {
-            return
-        }
-        
-        cameraSelectedTrigger.onNext(cameraNumber)
-    }
-    
 }

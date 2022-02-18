@@ -11,6 +11,7 @@ import Firebase
 import FirebaseMessaging
 import YandexMobileMetrica
 import PushKit
+import MapboxMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,6 +39,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             print("Couldn't activate YMM")
         }
+        
+        // MARK: подключаем MapBox
+        
+        ResourceOptionsManager.default.resourceOptions.accessToken = Constants.mapBoxPublicKey
         
         appCoordinator.setRoot(for: mainWindow)
         
@@ -267,12 +272,26 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if let callPayload = CallPayload(
             pushNotificationPayload: userInfo
         ) {
-            appCoordinator.processIncomingCallRequest(
-                callPayload: callPayload,
-                useCallKit: false,
-                actionIdentifier: response.actionIdentifier
-            )
-            completionHandler()
+            switch response.actionIdentifier {
+            case UNNotificationDefaultActionIdentifier: // обычное нажатие на push
+                appCoordinator.processIncomingCallRequest(
+                    callPayload: callPayload,
+                    useCallKit: false,
+                    actionIdentifier: response.actionIdentifier,
+                    completionHandler: nil
+                )
+                completionHandler()
+                
+            case UNNotificationDismissActionIdentifier: // смахивание push
+                break
+            default: // выбор действия из списка по длинному нажатию
+                appCoordinator.processIncomingCallRequest(
+                    callPayload: callPayload,
+                    useCallKit: false,
+                    actionIdentifier: response.actionIdentifier,
+                    completionHandler: completionHandler
+                )
+            }
             return
         }
         

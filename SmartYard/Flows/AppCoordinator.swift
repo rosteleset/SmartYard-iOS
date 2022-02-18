@@ -27,7 +27,12 @@ enum AppRoute: Route {
     case appSettings(title: String, message: String?)
     case registerQRCode(code: String)
         
-    case incomingCall(callPayload: CallPayload, isCallKitUsed: Bool, actionIdentifier: String = "")
+    case incomingCall(
+        callPayload: CallPayload,
+        isCallKitUsed: Bool,
+        actionIdentifier: String = "",
+        completionHandler: (() -> Void)? = nil
+    )
     case closeIncomingCall
     
 }
@@ -149,7 +154,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         case let .appSettings(title, message):
             return .appSettingsTransition(title: title, message: message)
             
-        case let .incomingCall(callPayload, isCallKitUsed, actionIdentifier):
+        case let .incomingCall(callPayload, isCallKitUsed, actionIdentifier, completionHandler):
             // MARK: чтобы окно входящего вызова не показывалось до того, как пользователь
             // ответит на вызов в CallKit, показываем экран входящего вызова только после ответа.
             NotificationCenter.default.rx
@@ -176,7 +181,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 router: weakRouter,
                 callPayload: callPayload,
                 isCallKitUsed: isCallKitUsed,
-                actionIdentifier: actionIdentifier
+                actionIdentifier: actionIdentifier,
+                completionHandler: completionHandler
             )
             
             let landscapeVC = IncomingCallLandscapeViewController(viewModel: vm)
@@ -253,7 +259,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         callPayload: CallPayload,
         useCallKit: Bool,
         callKitCompletion: (() -> Void)? = nil,
-        actionIdentifier: String = ""
+        actionIdentifier: String = "",
+        completionHandler: (() -> Void)? = nil
     ) {
         if useCallKit, let completion = callKitCompletion {
             providerProxy.reportIncomingCall(
@@ -286,7 +293,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 .incomingCall(
                     callPayload: callPayload,
                     isCallKitUsed: useCallKit,
-                    actionIdentifier: actionIdentifier
+                    actionIdentifier: actionIdentifier,
+                    completionHandler: completionHandler
                 )
             )
         }

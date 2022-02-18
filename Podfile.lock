@@ -125,9 +125,15 @@ PODS:
     - linphone-sdk/app-extension-swift
     - linphone-sdk/basic-frameworks
   - lottie-ios (3.2.3)
-  - Mapbox-iOS-SDK (6.4.0):
-    - MapboxMobileEvents (~> 0.10.11)
-  - MapboxMobileEvents (0.10.13)
+  - MapboxCommon (21.0.1)
+  - MapboxCoreMaps (10.2.0):
+    - MapboxCommon (~> 21.0)
+  - MapboxMaps (10.2.0):
+    - MapboxCommon (= 21.0.1)
+    - MapboxCoreMaps (= 10.2.0)
+    - MapboxMobileEvents (= 1.0.6)
+    - Turf (~> 2.0)
+  - MapboxMobileEvents (1.0.6)
   - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (14.0.0):
@@ -193,6 +199,7 @@ PODS:
   - SwiftLint (0.45.0)
   - TouchAreaInsets (1.1.0)
   - TPKeyboardAvoiding (1.3.5)
+  - Turf (2.2.0)
   - XCoordinator (2.0.7):
     - XCoordinator/Core (= 2.0.7)
   - XCoordinator/Core (2.0.7)
@@ -219,7 +226,7 @@ DEPENDENCIES:
   - Kingfisher
   - linphone-sdk
   - lottie-ios
-  - Mapbox-iOS-SDK (~> 6.4.0)
+  - MapboxMaps (= 10.2.0)
   - Moya/RxSwift
   - OnlineChatSdk (from `https://git.lanta.me/LanTa/OnlineChatSdk-Swift.git`, branch `feature/build-fix`)
   - Parchment
@@ -264,7 +271,9 @@ SPEC REPOS:
     - JTAppleCalendar
     - Kingfisher
     - lottie-ios
-    - Mapbox-iOS-SDK
+    - MapboxCommon
+    - MapboxCoreMaps
+    - MapboxMaps
     - MapboxMobileEvents
     - Moya
     - nanopb
@@ -284,6 +293,7 @@ SPEC REPOS:
     - SwiftLint
     - TouchAreaInsets
     - TPKeyboardAvoiding
+    - Turf
     - XCoordinator
     - YandexMobileMetrica
     - youtube-ios-player-helper-swift
@@ -329,8 +339,10 @@ SPEC CHECKSUMS:
   Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
   linphone-sdk: 1274fc73cd5684906be9f052daeda60eb55c68bb
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
-  Mapbox-iOS-SDK: 7eb24d0f44ee69adb037e5addc3f810db73d47a8
-  MapboxMobileEvents: e78db24b348f48e41e5895be7dc16e5b1bb43562
+  MapboxCommon: fdfdbd4e87a225190913f2f4b4a73ec51ed77eaa
+  MapboxCoreMaps: bdd0115bfd8bf6df402468710cb23c926938b03d
+  MapboxMaps: 1ed477cbe573a9e740801dfc9c636ef33bbc3f54
+  MapboxMobileEvents: 14d7ac3ee95b4142c4fec2205dfd48ff453e8871
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OnlineChatSdk: 421b17a804f22c193f81f02a891e7d91128c525b
@@ -352,10 +364,11 @@ SPEC CHECKSUMS:
   SwiftLint: e5c7f1fba68eccfc51509d5b2ce1699f5502e0c7
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
+  Turf: 1a6bc2d0142f84610445159565c3c93d62b83897
   XCoordinator: 9ee654fedef1ffede33d5c11677708a555c00542
   YandexMobileMetrica: 85ba4c1a6839985d58bf45ec7f915e433525b094
   youtube-ios-player-helper-swift: 51a3c5325317c8271d0c7985c1bbe5a252ffb2fd
 
-PODFILE CHECKSUM: f28bd5a3f2f325a5c2b59b005f6b5cc47d4a8e56
+PODFILE CHECKSUM: 17d6a250a904a15b92bf12a828cd6208aad79ab5
 
 COCOAPODS: 1.11.2

@@ -19,7 +19,7 @@ class YardMapViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     
     private let address: BehaviorSubject<String?>
-    private let cameras = BehaviorSubject<[CameraObject]>(value: [])
+    private let cameras = PublishSubject<[CameraObject]>()
     
     init(apiWrapper: APIWrapper, houseId: String, address: String?, router: WeakRouter<HomeRoute>) {
         self.apiWrapper = apiWrapper

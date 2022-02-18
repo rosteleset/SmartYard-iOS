@@ -34,11 +34,21 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var balanceWarningSwitch: UISwitch!
     @IBOutlet private weak var balanceWarningSkeleton: UIView!
     
+    @IBOutlet private var collapsedNotificationsBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private var expandedNotificationsBottomConstraint: NSLayoutConstraint!
+    
+    @IBOutlet private weak var callsContainerView: UIView!
+    @IBOutlet private weak var callsHeader: UIView!
+    @IBOutlet private weak var callsHeaderArrowImageView: UIImageView!
+    
+    @IBOutlet private weak var speakerContainerView: UIView!
+    @IBOutlet private weak var speakerSwitch: UISwitch!
+    
     @IBOutlet private weak var callkitContainerView: UIView!
     @IBOutlet private weak var callkitSwitch: UISwitch!
     
-    @IBOutlet private var collapsedNotificationsBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private var expandedNotificationsBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private var collapsedCallsBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private var expandedCallsBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var logoutButton: UIButton!
     
@@ -48,6 +58,7 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     
     private let textNotificationsTapGesture = UITapGestureRecognizer()
     private let callkitTapGesture = UITapGestureRecognizer()
+    private let speakerTapGesture = UITapGestureRecognizer()
     private let balanceWarningTapGesture = UITapGestureRecognizer()
     
     var loader: JGProgressHUD?
@@ -105,28 +116,48 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
+        let callsTapGesture = UITapGestureRecognizer()
+        callsHeader.addGestureRecognizer(callsTapGesture)
+        
+        callsTapGesture.rx.event
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.toggleCallsSection()
+                }
+            )
+            .disposed(by: disposeBag)
+        
         textNotificationsContainerView.addGestureRecognizer(textNotificationsTapGesture)
         textNotificationsSwitch.isUserInteractionEnabled = false
+        
+        balanceWarningContainerView.addGestureRecognizer(balanceWarningTapGesture)
+        balanceWarningSwitch.isUserInteractionEnabled = false
         
         callkitContainerView.addGestureRecognizer(callkitTapGesture)
         callkitSwitch.isUserInteractionEnabled = false
         
-        balanceWarningContainerView.addGestureRecognizer(balanceWarningTapGesture)
-        balanceWarningSwitch.isUserInteractionEnabled = false
+        speakerContainerView.addGestureRecognizer(speakerTapGesture)
+        speakerSwitch.isUserInteractionEnabled = false
+        
     }
     
-    private func toggleNotificationsSection() {
-        let isCollapsed = collapsedNotificationsBottomConstraint.isActive
+    private func toggleSection(
+        collapsedBottomConstraint: NSLayoutConstraint,
+        expandedBottomConstraint: NSLayoutConstraint,
+        headerArrowImageView: UIImageView,
+        containerView: UIView
+    ) {
+        let isCollapsed = collapsedBottomConstraint.isActive
         
         if isCollapsed {
-            collapsedNotificationsBottomConstraint.isActive = false
-            expandedNotificationsBottomConstraint.isActive = true
-            notificationsHeaderArrowImageView.image = UIImage(named: "UpArrowIcon")
-            viewToScrollTo.onNext(notificationsContainerView)
+            collapsedBottomConstraint.isActive = false
+            expandedBottomConstraint.isActive = true
+            headerArrowImageView.image = UIImage(named: "UpArrowIcon")
+            viewToScrollTo.onNext(containerView)
         } else {
-            expandedNotificationsBottomConstraint.isActive = false
-            collapsedNotificationsBottomConstraint.isActive = true
-            notificationsHeaderArrowImageView.image = UIImage(named: "DownArrowIcon")
+            expandedBottomConstraint.isActive = false
+            collapsedBottomConstraint.isActive = true
+            headerArrowImageView.image = UIImage(named: "DownArrowIcon")
             viewToScrollTo.onNext(nil)
         }
         
@@ -134,6 +165,23 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             self?.view.setNeedsLayout()
             self?.view.layoutIfNeeded()
         }
+    }
+    
+    private func toggleNotificationsSection() {
+        toggleSection(
+            collapsedBottomConstraint: collapsedNotificationsBottomConstraint,
+            expandedBottomConstraint: expandedNotificationsBottomConstraint,
+            headerArrowImageView: notificationsHeaderArrowImageView,
+            containerView: notificationsContainerView
+        )
+    }
+    
+    private func toggleCallsSection() {
+        toggleSection(
+            collapsedBottomConstraint: collapsedCallsBottomConstraint,
+            expandedBottomConstraint: expandedCallsBottomConstraint,
+            headerArrowImageView: callsHeaderArrowImageView,
+            containerView: callsContainerView)
     }
     
     // swiftlint:disable:next function_body_length
@@ -144,6 +192,7 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             enableTrigger: textNotificationsTapGesture.rx.event.asDriver().mapToVoid(),
             moneyTrigger: balanceWarningTapGesture.rx.event.asDriver().mapToVoid(),
             callkitTrigger: callkitTapGesture.rx.event.asDriver().mapToVoid(),
+            speakerTrigger: speakerTapGesture.rx.event.asDriver().mapToVoid(),
             logoutTrigger: logoutButton.rx.tap.asDriver()
         )
         
@@ -185,6 +234,14 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             .drive(
                 onNext: { [weak self] state in
                     self?.callkitSwitch.setOn(state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.enableSpeakerByDefault
+            .drive(
+                onNext: { [weak self] state in
+                    self?.speakerSwitch.setOn(state, animated: true)
                 }
             )
             .disposed(by: disposeBag)

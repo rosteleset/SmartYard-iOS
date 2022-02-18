@@ -28,7 +28,7 @@ class IncomingCallViewModel: BaseViewModel {
     
     private let callPayload: CallPayload
     
-    private let currentStateSubject = BehaviorSubject<IncomingCallStateContainer>(value: .initial)
+    private let currentStateSubject: BehaviorSubject<IncomingCallStateContainer>
     
     private let errorTracker = ErrorTracker()
     
@@ -48,7 +48,14 @@ class IncomingCallViewModel: BaseViewModel {
     
     private let answerCallProxySubject = PublishSubject<Void>()
     private let endCallProxySubject = PublishSubject<Void>()
+    
+    /// Название быстрого действия из push-уведомления, которое надо выполнить в этой модели.
     private let actionIdentifier: String
+    
+    /// Задаётся только, когда модель была вызвана из быстрого действия в push-уведомлении.
+    /// Выполняется, когда надо уведомить iOS, что мы закончили выполнять команду
+    /// и приложение можно обратно усыпить.
+    private var completionHandler: (() -> Void)?
     
     init(
         providerProxy: CXProviderProxy,
@@ -59,7 +66,8 @@ class IncomingCallViewModel: BaseViewModel {
         router: WeakRouter<AppRoute>,
         callPayload: CallPayload,
         isCallKitUsed: Bool,
-        actionIdentifier: String = ""
+        actionIdentifier: String = "",
+        completionHandler: (() -> Void)? = nil
     ) {
         self.providerProxy = providerProxy
         self.linphoneService = linphoneService
@@ -69,12 +77,17 @@ class IncomingCallViewModel: BaseViewModel {
         self.router = router
         self.callPayload = callPayload
         self.actionIdentifier = actionIdentifier
+        self.completionHandler = completionHandler
         
         preferredPreviewModeForActiveCall = BehaviorSubject<IncomingCallPreviewState>(
             value: isCallKitUsed ? .staticImage : .video
         )
         
         subtitleSubject = BehaviorSubject<String?>(value: callPayload.callerId)
+        
+        currentStateSubject = BehaviorSubject<IncomingCallStateContainer>(
+            value: .getDefaultSpeakerMode(isCallKitUsed, apiWrapper: apiWrapper)
+        )
         
         super.init()
         
@@ -226,9 +239,8 @@ class IncomingCallViewModel: BaseViewModel {
                                 return .disabled
                             }
                             
-                            return UIDevice.current.proximityState ? .regular : .speaker
+                            return currentState.soundOutputState
                         }()
-                        
                         let newState = IncomingCallStateContainer(
                             callState: .callActive,
                             doorState: currentState.doorState,
@@ -239,7 +251,8 @@ class IncomingCallViewModel: BaseViewModel {
                         self.currentStateSubject.onNext(newState)
                     } catch {
                         self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                        
+                        self.completionHandler?()
+                        self.completionHandler = nil
                         self.router.trigger(.closeIncomingCall)
                     }
                 }
@@ -269,7 +282,6 @@ class IncomingCallViewModel: BaseViewModel {
                         previewState: .staticImage,
                         soundOutputState: .disabled
                     )
-                    
                     self.currentStateSubject.onNext(newState)
                     
                     self.linphoneService.stop()
@@ -284,7 +296,8 @@ class IncomingCallViewModel: BaseViewModel {
                     }
                     
                     self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                    
+                    self.completionHandler?()
+                    self.completionHandler = nil
                     self.router.trigger(.closeIncomingCall)
                 }
             )
@@ -475,7 +488,6 @@ class IncomingCallViewModel: BaseViewModel {
                         previewState: currentState.previewState,
                         soundOutputState: currentState.soundOutputState
                     )
-                    
                     self.currentStateSubject.onNext(newState)
                     
                     self.incomingCallAcceptedByUser.onNext(true)
@@ -521,7 +533,8 @@ class IncomingCallViewModel: BaseViewModel {
                     guard let currentCall = callInfo?.0,
                         (currentCall.state == .Connected || currentCall.state == .StreamsRunning) else {
                         self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                            
+                        self.completionHandler?()
+                        self.completionHandler = nil
                         self.router.trigger(.closeIncomingCall)
                         
                         return
@@ -531,7 +544,8 @@ class IncomingCallViewModel: BaseViewModel {
                         try currentCall.terminate()
                     } catch {
                         self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                        
+                        self.completionHandler?()
+                        self.completionHandler = nil
                         self.router.trigger(.closeIncomingCall)
                     }
                 }
@@ -573,7 +587,6 @@ class IncomingCallViewModel: BaseViewModel {
                         previewState: currentState.previewState,
                         soundOutputState: isSpeakerEnabled ? .speaker : .regular
                     )
-                    
                     self?.currentStateSubject.onNext(newState)
                 }
             )
@@ -672,7 +685,6 @@ class IncomingCallViewModel: BaseViewModel {
                             previewState: currentState.previewState,
                             soundOutputState: currentState.soundOutputState
                         )
-                        
                         self?.currentStateSubject.onNext(newState)
                     }
                     
@@ -844,7 +856,6 @@ class IncomingCallViewModel: BaseViewModel {
                         previewState: .staticImage,
                         soundOutputState: .disabled
                     )
-                    
                     self?.currentStateSubject.onNext(newState)
                     
                     do {
@@ -856,7 +867,8 @@ class IncomingCallViewModel: BaseViewModel {
                             }
                             
                             self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                            
+                            self.completionHandler?()
+                            self.completionHandler = nil
                             self.router.trigger(.closeIncomingCall)
                         }
                     }
@@ -879,6 +891,12 @@ extension IncomingCallViewModel: LinphoneDelegate {
     func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
         print("DEBUG / CALL STATE: \(cstate)")
         
+        // обновляем режим вывода звука согласно текущего состояния, т.к. оно затирается при снятии трубки linphone-ом
+        if cstate == .StreamsRunning,
+            let soundOutputState = try? currentStateSubject.value().soundOutputState {
+            setSpeakerEnabled(soundOutputState == .speaker)
+        }
+        
         if cstate == .IncomingReceived, let params = try? lc.createCallParams(call: call) {
             params.videoEnabled = true
             params.audioEnabled = true
@@ -900,6 +918,8 @@ extension IncomingCallViewModel: LinphoneDelegate {
             
             providerProxy.endCall(uuid: callPayload.uuid)
             
+            self.completionHandler?()
+            self.completionHandler = nil
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 self?.router.trigger(.closeIncomingCall)
             }

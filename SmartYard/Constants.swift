@@ -19,7 +19,8 @@ enum Constants {
     static let appstoreUrl = "YOU_NEED_TO_CHANGE_THIS"
     static let yandexApiKey = "YOU_NEED_TO_CHANGE_THIS"
     static let defaultBackendURL = "YOU_NEED_TO_CHANGE_THIS"
-    
+    static let mapBoxPublicKey = "YOU_NEED_TO_CHANGE_THIS"
+
     enum Chat {
         static let token = "YOU_NEED_TO_CHANGE_THIS"
         static let id = "YOU_NEED_TO_CHANGE_THIS"

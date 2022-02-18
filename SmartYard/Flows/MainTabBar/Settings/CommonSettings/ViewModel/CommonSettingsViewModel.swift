@@ -71,6 +71,7 @@ class CommonSettingsViewModel: BaseViewModel {
         let enableNotificationsSubject = BehaviorSubject<Bool>(value: false)
         let enableAccountBalanceWarningSubject = BehaviorSubject<Bool>(value: false)
         let enableCallkitSubject = BehaviorSubject<Bool>(value: accessService.prefersVoipForCalls)
+        let enableSpeakerByDefaultSubject = BehaviorSubject<Bool>(value: accessService.prefersSpeakerForCalls)
         
         apiWrapper
             .getCurrentNotificationState()
@@ -158,6 +159,28 @@ class CommonSettingsViewModel: BaseViewModel {
                     self?.accessService.prefersVoipForCalls = newState
                     
                     enableCallkitSubject.onNext(newState)
+                    
+                    // Если включен CallKit, то динамик по-умолчанию всегда будет обычный
+                    if newState {
+                        self?.accessService.prefersSpeakerForCalls = false
+                        enableSpeakerByDefaultSubject.onNext(false)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.speakerTrigger
+            .filter { [weak self] in
+                self?.accessService.prefersVoipForCalls == false
+            }
+            .withLatestFrom(enableSpeakerByDefaultSubject.asDriver(onErrorJustReturn: false))
+            .drive(
+                onNext: { [weak self] isActive in
+                    let newState = !isActive
+                    
+                    self?.accessService.prefersSpeakerForCalls = newState
+                    
+                    enableSpeakerByDefaultSubject.onNext(newState)
                 }
             )
             .disposed(by: disposeBag)
@@ -244,6 +267,7 @@ class CommonSettingsViewModel: BaseViewModel {
             enableNotifications: enableNotificationsSubject.asDriverOnErrorJustComplete(),
             enableAccountBalanceWarning: enableAccountBalanceWarningSubject.asDriverOnErrorJustComplete(),
             enableCallkit: enableCallkitSubject.asDriverOnErrorJustComplete(),
+            enableSpeakerByDefault: enableSpeakerByDefaultSubject.asDriverOnErrorJustComplete(),
             isLoading: activityTracker.asDriver(),
             shouldShowInitialLoading: initialLoadingTracker.asDriver()
         )
@@ -259,6 +283,7 @@ extension CommonSettingsViewModel {
         let enableTrigger: Driver<Void>
         let moneyTrigger: Driver<Void>
         let callkitTrigger: Driver<Void>
+        let speakerTrigger: Driver<Void>
         let logoutTrigger: Driver<Void>
     }
     
@@ -268,6 +293,7 @@ extension CommonSettingsViewModel {
         let enableNotifications: Driver<Bool>
         let enableAccountBalanceWarning: Driver<Bool>
         let enableCallkit: Driver<Bool>
+        let enableSpeakerByDefault: Driver<Bool>
         let isLoading: Driver<Bool>
         let shouldShowInitialLoading: Driver<Bool>
     }

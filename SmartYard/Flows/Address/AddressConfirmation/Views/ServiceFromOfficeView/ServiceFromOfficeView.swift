@@ -11,56 +11,83 @@ import PMNibLinkableView
 import RxSwift
 import RxCocoa
 import CoreLocation
-import Mapbox
+import MapboxMaps
+import UIKit
 
 class ServiceFromOfficeView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var doSoButton: BlueButton!
+    @IBOutlet private weak var mapView: MapView!
+    private var shownAnnotationView: UIView?
     
-    @IBOutlet private weak var mapView: MGLMapView!
-
     override func awakeFromNib() {
         super.awakeFromNib()
-        mapView.delegate = self
+    }
+    
+    private func createSampleView(withText text: String) -> UIView {
+        let label = UILabel()
+        label.text = text
+        label.font = .systemFont(ofSize: 14)
+        label.numberOfLines = 0
+        label.textColor = .black
+        label.backgroundColor = .white
+        label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
+        return label
+    }
+    
+    private func showViewAnnotation(with text: String, at coordinate: CLLocationCoordinate2D) {
+        if let shownView = self.shownAnnotationView {
+            mapView.viewAnnotations.remove(shownView)
+            self.shownAnnotationView = nil
+        }
+        
+        let sampleView = createSampleView(withText: text)
+        
+        let options = ViewAnnotationOptions(
+            geometry: Point(coordinate),
+            width: sampleView.bounds.width + 20,
+            height: sampleView.bounds.height,
+            allowOverlap: false,
+            anchor: .top,
+            offsetY: -14
+        )
+        
+        try? mapView.viewAnnotations.add(sampleView, options: options)
+        self.shownAnnotationView = sampleView
     }
     
     func setOffices(offices: [APIOffice]) {
-        if let annotations = mapView.annotations {
-            mapView.removeAnnotations(annotations)
-        }
+        let annotationManager = self.mapView.annotations.makePointAnnotationManager()
+        annotationManager.delegate = self
+        annotationManager.annotations = []
         
-        let officesPoints = offices.map { value -> MGLPointAnnotation in
-            let point = MGLPointAnnotation()
-            point.coordinate = CLLocationCoordinate2D(latitude: value.lat, longitude: value.lon)
-            point.title = value.address
+        let officesPoints = offices.map { value -> PointAnnotation in
+            var point = PointAnnotation(coordinate: CLLocationCoordinate2D(latitude: value.lat, longitude: value.lon))
+            point.userInfo = ["LabelText": value.address]
+            point.image = .init(image: UIImage(named: "MapPoint")!, name: "MapPoint")
+            point.iconAnchor = .center
             return point
         }
         
-        mapView.addAnnotations(officesPoints)
-        
-        mapView.setCenter(Constants.tambovCoordinates, zoomLevel: 8, animated: true)
+        annotationManager.iconAllowOverlap = true
+        annotationManager.annotations = officesPoints
+        let cameraOptions = CameraOptions(center: Constants.tambovCoordinates, zoom: 8)
+        self.mapView.mapboxMap.setCamera(to: cameraOptions)
     }
-
 }
 
-extension ServiceFromOfficeView: MGLMapViewDelegate {
-    
-    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
-        return nil
-    }
-
-    func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
-        guard let mapPointIcon = UIImage(named: "MapPoint") else {
-            return nil
+extension ServiceFromOfficeView: AnnotationInteractionDelegate {
+    func annotationManager(_ manager: AnnotationManager,
+                           didDetectTappedAnnotations annotations: [Annotation]) {
+        guard let annotation = annotations.first as? PointAnnotation,
+            let labelText = annotation.userInfo?["LabelText"] as? String else {
+            return
         }
+        showViewAnnotation(with: labelText, at: annotation.point.coordinates)
+    }
 
-        return MGLAnnotationImage(image: mapPointIcon, reuseIdentifier: "MapPoint")
-    }
-    
-    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        return true
-    }
-    
 }
 
 extension Reactive where Base: ServiceFromOfficeView {
