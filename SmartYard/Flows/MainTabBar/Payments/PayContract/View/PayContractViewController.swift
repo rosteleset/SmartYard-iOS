@@ -18,16 +18,19 @@ class PayContractViewController: BaseViewController {
     @IBOutlet private weak var collectionViewFlowLayout: UICollectionViewFlowLayout!
     
     private var currentIndex = 0
+    private var itemWasPointed = false
+    private let hideNavBar: Bool
     
-    private let itemsProxy = BehaviorSubject<[APIPaymentsListAccount]>(value: [])
+    private let itemsProxy = BehaviorSubject<[PaymentsListAccount]>(value: [])
     
     private let payContractTrigger = PublishSubject<(String, Double?, String?)>()
     private let fullVersionPersonalAccountTrigger = PublishSubject<String?>()
     
     private let viewModel: PayContractViewModel
     
-    init(viewModel: PayContractViewModel) {
+    init(viewModel: PayContractViewModel, hideNavBar: Bool = false) {
         self.viewModel = viewModel
+        self.hideNavBar = hideNavBar
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -44,8 +47,35 @@ class PayContractViewController: BaseViewController {
         super.viewDidLoad()
     
         fakeNavBar.configueDarkNavBar()
+        fakeNavBar.view.isHidden = hideNavBar
         configureCollectionView()
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if !itemWasPointed {
+            DispatchQueue.main.async {
+                self.pointViewToSelectedItem()
+                self.itemWasPointed = true
+            }
+        }
+        
+        guard let data = try? self.itemsProxy.value() else {
+            return
+        }
+        
+        self.addressLabel.text = data[currentIndex].address
+    }
+    
+    fileprivate func pointViewToSelectedItem() {
+        let indexPath = IndexPath(row: currentIndex, section: 0)
+        collectionViewFlowLayout.collectionView!.scrollToItem(
+            at: indexPath,
+            at: .centeredHorizontally,
+            animated: false
+        )
     }
     
     override func viewDidLayoutSubviews() {
@@ -75,8 +105,10 @@ class PayContractViewController: BaseViewController {
             .drive(itemsProxy)
             .disposed(by: disposeBag)
         
-        output.address
-            .drive(addressLabel.rx.text)
+        output.index
+            .drive(
+                onNext: { index in self.currentIndex = index ?? 0 }
+            )
             .disposed(by: disposeBag)
     }
     
@@ -142,12 +174,15 @@ extension PayContractViewController: UICollectionViewDelegate {
                 at: .centeredHorizontally,
                 animated: true
             )
+            self.addressLabel.text = data[indexOfMajorCell].address
             
             return
         }
         
         let swipeToIndex = currentIndex + (hasEnoughVelocityForSlideToNextCell ? 1 : -1)
         let toContentOffset = collectionViewFlowLayout.itemSize.width * CGFloat(swipeToIndex)
+        
+        self.addressLabel.text = data[swipeToIndex].address
         
         UIView.animate(
             withDuration: 0.3,
@@ -185,19 +220,23 @@ extension PayContractViewController: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withClass: ContractCell.self, for: indexPath)
         
-        cell.configure(with: data[indexPath.row])
+        cell.configure(with: data[indexPath.row].account)
         
         let paymentSubject = PublishSubject<Void>()
         
         paymentSubject
-            .map { (data[indexPath.row].clientId, data[indexPath.row].payAdvice, data[indexPath.row].contractName) }
+            .map { (
+                data[indexPath.row].account.clientId,
+                data[indexPath.row].account.payAdvice,
+                data[indexPath.row].account.contractName
+            ) }
             .bind(to: payContractTrigger)
             .disposed(by: cell.disposeBag)
         
         let openLkSubject = PublishSubject<Void>()
         
         openLkSubject
-            .map { data[indexPath.row].lcab }
+            .map { data[indexPath.row].account.lcab }
             .bind(to: fullVersionPersonalAccountTrigger)
             .disposed(by: cell.disposeBag)
         

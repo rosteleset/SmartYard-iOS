@@ -8,6 +8,7 @@
 
 import XCoordinator
 import SafariServices
+import Lottie
 
 enum SettingsRoute: Route {
     
@@ -33,7 +34,6 @@ enum SettingsRoute: Route {
     case addFaceFromEvent(event: APIPlog)
     case showModal(withContent: ModalContent)
     case deleteFaceFromEvent(event: APIPlog, imageURL: String?)
-    
 }
 
 class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
@@ -294,6 +294,7 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             vc.modalTransitionStyle = .crossDissolve
 
             return .present(vc)
+
         }
     }
     

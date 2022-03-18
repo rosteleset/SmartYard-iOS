@@ -15,8 +15,8 @@ class PaymentPopupController: BaseViewController {
     
     @IBOutlet private weak var successView: UIView!
     @IBOutlet private weak var contractNumberLabel: UILabel!
-    @IBOutlet private weak var allPaymentMethodButton: UIButton!
     @IBOutlet private weak var payButton: UIButton!
+    @IBOutlet private weak var cardButton: UIButton!
     @IBOutlet private weak var recommendedSumLabel: UILabel!
     @IBOutlet private weak var sumTextField: UITextField!
     @IBOutlet private weak var backgroundView: UIView!
@@ -35,6 +35,7 @@ class PaymentPopupController: BaseViewController {
     private var payCompletion: ((PKPaymentAuthorizationResult) -> Void)?
     
     private let payTrigger = PublishSubject<(Data?, String)>()
+    private let cardTrigger = PublishSubject<NSDecimalNumber>()
 
     init(viewModel: PaymentPopupViewModel) {
         self.viewModel = viewModel
@@ -106,8 +107,33 @@ class PaymentPopupController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
+        cardButton.rx
+            .tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+ 
+                    self.sumTextField.resignFirstResponder()
+                    
+                    let decimalSeparator = [NSLocale.Key.decimalSeparator: Locale.current.decimalSeparator]
+                    let amount = NSDecimalNumber(string: self.sumTextField.text, locale: decimalSeparator)
+                    
+                    // Приложение вывалится в exception если пользователь нажмёт "оплатить" с не валидным полем сумма
+                    guard amount != NSDecimalNumber.notANumber else {
+                        return
+                    }
+                    
+                    self.cardTrigger.onNext(amount)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         let input = PaymentPopupViewModel.Input(
-            payProcess: payTrigger.asDriverOnErrorJustComplete()
+            payProcess: payTrigger.asDriverOnErrorJustComplete(),
+            cardProcess: cardTrigger.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
@@ -256,7 +282,7 @@ class PaymentPopupController: BaseViewController {
                     let textFieldOffsetToButton: CGFloat = 20
                     let buttonWithOffset: CGFloat = 65
                     
-                    let calcOffset = keyboardHeight - textFieldBottomOffset + textFieldOffsetToButton + buttonWithOffset
+                    let calcOffset = keyboardHeight - textFieldBottomOffset + 2 * textFieldOffsetToButton + 2 * buttonWithOffset
                     
                     let offset = keyboardHeight == 0 ? defaultBottomOffset : calcOffset
                     

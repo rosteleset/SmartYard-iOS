@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,10 +22,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PaymentPopupController" customModule="SmartYard" customModuleProvider="target">
             <connections>
-                <outlet property="allPaymentMethodButton" destination="12B-12-a60" id="APR-1E-tLm"/>
                 <outlet property="animatedView" destination="K63-GP-Chi" id="vx0-k0-eFh"/>
                 <outlet property="animatedViewBottomOffset" destination="Wei-5v-7aC" id="YJl-Xh-eV2"/>
                 <outlet property="backgroundView" destination="aZa-Gd-3fU" id="MMj-Uo-XT3"/>
+                <outlet property="cardButton" destination="H43-xa-rwD" id="Hv2-0f-tN0"/>
                 <outlet property="contractNumberLabel" destination="IIm-3l-khM" id="3v6-w0-5Lp"/>
                 <outlet property="payButton" destination="St8-Dw-f2Z" id="gwm-PR-KLe"/>
                 <outlet property="payResultHint" destination="0tA-bU-0fp" id="ljR-Vc-atH"/>
@@ -101,19 +104,34 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12B-12-a60">
-                            <rect key="frame" x="127.5" y="393.5" width="159" height="30"/>
-                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="14"/>
-                            <state key="normal" title="Все способы пополнения">
-                                <color key="titleColor" red="0.42745098040000001" green="0.47843137250000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Сумма:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fd5-bC-tmj">
                             <rect key="frame" x="40" y="173" width="57" height="23"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                             <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H43-xa-rwD">
+                            <rect key="frame" x="40" y="376.5" width="334" height="56"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="25B-s0-2td"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="20"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Оплата банковской картой">
+                                <color key="titleColor" name="blue"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
+                                    <color key="value" name="blue"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                                    <real key="value" value="12"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xmW-0h-krF">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="475"/>
                             <subviews>
@@ -166,23 +184,23 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="H43-xa-rwD" firstAttribute="top" secondItem="St8-Dw-f2Z" secondAttribute="bottom" constant="20" id="3dn-Pw-L8Q"/>
                         <constraint firstItem="99Y-gl-f8E" firstAttribute="top" secondItem="fd5-bC-tmj" secondAttribute="bottom" constant="1" id="659-4c-pEn"/>
                         <constraint firstAttribute="trailing" secondItem="xmW-0h-krF" secondAttribute="trailing" id="9Ap-gL-5ag"/>
                         <constraint firstItem="xmW-0h-krF" firstAttribute="top" secondItem="K63-GP-Chi" secondAttribute="top" id="C2N-o2-372"/>
                         <constraint firstItem="fd5-bC-tmj" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" constant="40" id="Ed8-hi-YsK"/>
                         <constraint firstItem="St8-Dw-f2Z" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" constant="40" id="ITk-gT-nmU"/>
-                        <constraint firstItem="12B-12-a60" firstAttribute="top" secondItem="St8-Dw-f2Z" secondAttribute="bottom" constant="37" id="KWQ-tk-whf"/>
                         <constraint firstItem="yfI-I0-XKC" firstAttribute="centerX" secondItem="K63-GP-Chi" secondAttribute="centerX" id="L2D-h2-NBK"/>
                         <constraint firstItem="BQr-46-A7T" firstAttribute="top" secondItem="K63-GP-Chi" secondAttribute="top" constant="9" id="LQL-rM-OZz"/>
                         <constraint firstItem="BQr-46-A7T" firstAttribute="centerX" secondItem="K63-GP-Chi" secondAttribute="centerX" id="Svl-tA-9AF"/>
+                        <constraint firstItem="H43-xa-rwD" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" constant="40" id="WqJ-80-9eV"/>
                         <constraint firstItem="Wwk-4I-F7O" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" constant="40" id="XYJ-oa-0sT"/>
-                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="12B-12-a60" secondAttribute="bottom" id="YRz-an-Eo9"/>
                         <constraint firstAttribute="trailing" secondItem="Wwk-4I-F7O" secondAttribute="trailing" constant="40" id="Yh8-ed-hUt"/>
-                        <constraint firstItem="12B-12-a60" firstAttribute="centerX" secondItem="St8-Dw-f2Z" secondAttribute="centerX" id="c6f-Cy-4KE"/>
                         <constraint firstItem="IIm-3l-khM" firstAttribute="centerX" secondItem="K63-GP-Chi" secondAttribute="centerX" id="eWm-4c-ZaW"/>
                         <constraint firstAttribute="trailing" secondItem="St8-Dw-f2Z" secondAttribute="trailing" constant="40" id="f4y-ZZ-tp5"/>
                         <constraint firstAttribute="trailing" secondItem="99Y-gl-f8E" secondAttribute="trailing" constant="40" id="g0y-cK-y62"/>
                         <constraint firstItem="xmW-0h-krF" firstAttribute="leading" secondItem="K63-GP-Chi" secondAttribute="leading" id="hkQ-RJ-VuZ"/>
+                        <constraint firstAttribute="trailing" secondItem="H43-xa-rwD" secondAttribute="trailing" constant="40" id="jd1-0V-esH"/>
                         <constraint firstItem="St8-Dw-f2Z" firstAttribute="top" secondItem="Wwk-4I-F7O" secondAttribute="bottom" constant="20" id="kfM-7O-VWh"/>
                         <constraint firstItem="IIm-3l-khM" firstAttribute="top" secondItem="yfI-I0-XKC" secondAttribute="bottom" constant="25" id="mDH-uM-8aI"/>
                         <constraint firstAttribute="height" constant="525" id="nNP-Fz-8Ew"/>
@@ -211,5 +229,8 @@
     <resources>
         <image name="AppleIcon" width="16" height="16"/>
         <image name="SuccessIcon" width="100" height="100"/>
+        <namedColor name="blue">
+            <color red="0.16078431372549021" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

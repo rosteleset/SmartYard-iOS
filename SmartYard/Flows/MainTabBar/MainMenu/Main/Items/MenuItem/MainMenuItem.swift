@@ -67,7 +67,7 @@ class MainMenuItem: UICollectionViewCell {
         layer.borderColor = UIColor.SmartYard.grayBorder.cgColor
     }
     
-    func configure(name: String?, iconName: String?) {
+    func configure(name: String?, iconName: String? = nil, icon: UIImage? = nil) {
         contentView.removeSubviews()
         mainContainer.removeSubviews()
         
@@ -80,8 +80,15 @@ class MainMenuItem: UICollectionViewCell {
         }
         
         arrowImageView.image = UIImage(named: "RightArrowIcon")
-        iconImageView.image = UIImage(named: iconName ?? "PublicCamsMenuIcon")
-        iconImageView.contentMode = .center
+        
+        if icon != nil {
+            iconImageView.image = icon?.withRenderingMode(.alwaysTemplate)
+        } else {
+            iconImageView.image = UIImage(named: iconName ?? "PublicCamsMenuIcon")
+        }
+        
+        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.tintColor = UIColor.SmartYard.gray
         
         mainContainer.addSubview(iconImageView)
         mainContainer.addSubview(arrowImageView)

@@ -15,9 +15,13 @@ enum PaymentsRoute: Route {
     
     case main
     case alert(title: String, message: String)
-    case contractPay(address: String, items: [APIPaymentsListAccount])
+//    case contractPay(address: String, items: [APIPaymentsListAccount])
+    case contractPay(index: Int, items: [APIPaymentsListAddress])
     case back
+    case dismiss
+    case dismissAndOpen(url: URL)
     case safariPage(url: URL)
+    case webView(url: URL)
     
     case paymentPopup(
         apiWrapper: APIWrapper,
@@ -53,26 +57,41 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
             
-        case let .contractPay(address, items):
+        case let .contractPay(index, items):
             let vm = PayContractViewModel(
-                address: address,
+                index: index,
                 items: items,
                 apiWrapper: apiWrapper,
                 router: weakRouter
             )
             
-            let vc = PayContractViewController(viewModel: vm)
-            return .push(vc)
+            if items.count == 1 { //если выбор адреса из одного элемента, то пропускаем его
+                let vc = PayContractViewController(viewModel: vm, hideNavBar: true)
+                return .set([vc])
+            } else {
+                let vc = PayContractViewController(viewModel: vm, hideNavBar: false)
+                return .push(vc)
+            }
             
         case .back:
             return .pop(animation: .default)
+            
+        case .dismiss:
+            return .dismiss(animation: .default)
+            
+        case let .dismissAndOpen(url):
+            trigger(.dismiss) { [weak self] in
+                self?.trigger(.safariPage(url: url))
+            }
+            return .none()
             
         case let .paymentPopup(apiWrapper, clientId, recommendedSum, contractNumber):
             let vm = PaymentPopupViewModel(
                 apiWrapper: apiWrapper,
                 clientId: clientId,
                 recommendedSum: recommendedSum,
-                contractNumber: contractNumber
+                contractNumber: contractNumber,
+                router: weakRouter
             )
             
             let vc = PaymentPopupController(viewModel: vm)
@@ -84,6 +103,18 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
         case let .safariPage(url):
             let vc = SFSafariViewController(url: url)
             return .present(vc)
+            
+        case let .webView(url):
+            let coordinator = WebViewCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                url: url,
+                backButtonLabel: "Назад",
+                push: true
+            )
+            
+            addChild(coordinator)
+            return .none()
         }
     }
     

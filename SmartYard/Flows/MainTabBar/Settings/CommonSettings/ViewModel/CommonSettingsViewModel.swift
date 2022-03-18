@@ -10,6 +10,7 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 import SmartYardSharedDataFramework
+import WebKit
 
 class CommonSettingsViewModel: BaseViewModel {
     

@@ -57,9 +57,13 @@ enum APITarget {
     case restore(request: RestoreRequest)
     case notification(request: NotificationRequest)
     
+    case extList(request: GetExtensionsListRequest)
+    case ext(request: GetExtensionRequest)
+    
     case payPrepare(request: PayPrepareRequest)
     case payProcess(request: PayProcessRequest)
     case sberbankPayProcess(request: SberbankPayProcessRequest)
+    case sberbankRegister(request: SberbankRegisterRequest)
     
     case getPersonFaces(request: GetPersonFacesRequest)
     case removePersonFace(request: RemovePersonFaceRequest)
@@ -73,6 +77,9 @@ extension APITarget: TargetType {
         switch self {
         case .sberbankPayProcess:
             return URL(string: "https://securepayments.sberbank.ru/payment/applepay")!
+        
+        case .sberbankRegister:
+            return URL(string: "https://securepayments.sberbank.ru/payment/rest")!
             
         case .streamInfo(let request):
             return URL(string: request.cameraUrl)!
@@ -134,12 +141,15 @@ extension APITarget: TargetType {
         case .payPrepare: return "pay/prepare"
         case .payProcess: return "pay/process"
         case .sberbankPayProcess: return "payment.do"
+        case .sberbankRegister: return "register.do"
             
         case .getPersonFaces: return "frs/listFaces"
         case .disLikePersonFace: return "frs/disLike"
         case .likePersonFace: return "frs/like"
         case .removePersonFace: return "frs/disLike"
-            
+        case .extList: return "ext/list"
+        case .ext: return "ext/ext"
+        
         }
     }
     
@@ -209,7 +219,10 @@ extension APITarget: TargetType {
             case .removePersonFace(let request): return (request.accessToken, false)
             case .likePersonFace(let request): return (request.accessToken, false)
             case .disLikePersonFace(let request): return (request.accessToken, false)
-            
+                
+            case .extList(let request): return (request.accessToken, false)
+            case .ext(let request): return (request.accessToken, false)
+                
             default: return (nil, false)
             }
         }()
@@ -224,12 +237,16 @@ extension APITarget: TargetType {
             additionalHeaders.merge(["X-Dm-Api-Refresh": " "]) { _, new in new }
         }
         
-        return defaultHeaders.merging(additionalHeaders) { _, new in new }
+        switch self {
+        case .sberbankRegister(_): return [:]
+        default: return defaultHeaders.merging(additionalHeaders) { _, new in new }
+        }
     }
     
     var task: Task {
         switch self {
         case .streamInfo: return .requestParameters(parameters: requestParameters, encoding: URLEncoding.default)
+        case .sberbankRegister: return .requestParameters(parameters: requestParameters, encoding: URLEncoding.default)
         default: return .requestParameters(parameters: requestParameters, encoding: JSONEncoding.default)
         }
     }
@@ -286,11 +303,15 @@ extension APITarget: TargetType {
         case .payPrepare(let request): return request.requestParameters
         case .payProcess(let request): return request.requestParameters
         case .sberbankPayProcess(let request): return request.requestParameters
+        case .sberbankRegister(let request): return request.requestParameters
         
         case .getPersonFaces(let request): return request.requestParameters
         case .removePersonFace(let request): return request.requestParameters
         case .likePersonFace(let request): return request.requestParameters
         case .disLikePersonFace(let request): return request.requestParameters
+        
+        case .extList(let request): return request.requestParameters
+        case .ext(let request): return request.requestParameters
         
         }
     }

@@ -41,19 +41,20 @@ extension UIImage {
     
     public convenience init?(base64URLString: String) {
         let previewURL = base64URLString.replacingOccurrences(of: "\\/", with: "/")
-        
-        if previewURL.hasPrefix("data:image/jpeg;base64,") {
-            let base64Data = previewURL.removingPrefix("data:image/jpeg;base64,")
-            
-            guard let data = Data(base64Encoded: base64Data, options: .ignoreUnknownCharacters) else {
-                return nil
-            }
-            
-            self.init(data: data)
-            
-        } else {
+        let pattern = "^data:image\\/.*;base64,"
+        guard let regex = try? NSRegularExpression(
+            pattern: pattern,
+            options: []
+        ) else {
             return nil
         }
+        let range = NSRange(location: 0, length: previewURL.count)
+        let base64Data = regex.stringByReplacingMatches(in: previewURL, options: [], range: range, withTemplate: "")
+        
+        guard let data = Data(base64Encoded: base64Data, options: .ignoreUnknownCharacters) else {
+            return nil
+        }
+        self.init(data: data)
     }
     
 }

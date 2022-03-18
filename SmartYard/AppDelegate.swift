@@ -78,9 +78,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // обрабатываем только url вида https://demo.lanta.me/0123456789 для подтверждения адреса
             if components.host == "demo.lanta.me",
                components.scheme == "https",
-               let path = components.path,
-               path.matches(pattern: "/[0-9]{10}") {
-                    appCoordinator.trigger(.registerQRCode(code: incomingURL.absoluteString))
+               let path = components.path {
+               if path.matches(pattern: "/[0-9]{10}") {
+                   appCoordinator.trigger(.registerQRCode(code: incomingURL.absoluteString))
+               }
+                if path == "/open_app.html" {
+                    NotificationCenter.default.post(name: .refreshVisibleWebVC, object: nil)
+                }
             } else
             // в противном случае даём OS обработать это событие самостоятельно
             {

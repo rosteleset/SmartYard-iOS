@@ -9,14 +9,17 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import JGProgressHUD
 
-class MainMenuViewController: BaseViewController {
-    
+class MainMenuViewController: BaseViewController, LoaderPresentable {
+    var loader: JGProgressHUD?
     private let viewModel: MainMenuViewModel
-    private let itemsProxy = BehaviorSubject<[MenuItemsList]>(value: [])
+    private let itemsProxy = BehaviorSubject<[MenuListItem]>(value: [])
     private let callSupportTrigger = PublishSubject<Void>()
     private let itemSelected = PublishSubject<IndexPath>()
     
+    @IBOutlet private weak var mainContainerView: UIView!
+    @IBOutlet private weak var skeletonContainer: UIView!
     @IBOutlet private weak var collectionView: UICollectionView!
     
     init(viewModel: MainMenuViewModel) {
@@ -69,6 +72,32 @@ class MainMenuViewController: BaseViewController {
             .subscribe(
                 onNext: { [weak self] _ in
                     self?.collectionView.reloadData()
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    if isLoading {
+                        self?.view.endEditing(true)
+                    }
+                    
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.shouldBlockInteraction
+            .drive(
+                onNext: { [weak self] shouldBlockInteraction in
+                    self?.collectionView.isHidden = shouldBlockInteraction
+                    self?.skeletonContainer.isHidden = !shouldBlockInteraction
+                    
+                    shouldBlockInteraction ?
+                        self?.skeletonContainer.showSkeletonAsynchronously() :
+                        self?.skeletonContainer.hideSkeleton()
                 }
             )
             .disposed(by: disposeBag)
@@ -172,7 +201,14 @@ extension MainMenuViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withClass: MainMenuItem.self, for: indexPath)
-            cell.configure(name: data[safe: indexPath.row]?.label, iconName: data[safe: indexPath.row]?.iconName)
+            guard let item = data[safe: indexPath.row] else {
+                return cell
+            }
+            if item.icon != nil {
+                cell.configure(name: item.label, icon: item.icon)
+            } else {
+                cell.configure(name: item.label, iconName: item.iconName)
+            }
             return cell
         default:
             let bottomCell = collectionView.dequeueReusableCell(withClass: BottomCell.self, for: indexPath)

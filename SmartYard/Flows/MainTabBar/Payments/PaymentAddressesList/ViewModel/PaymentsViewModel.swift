@@ -37,8 +37,8 @@ class PaymentsViewModel: BaseViewModel {
                     let (indexPath, items) = args
                     self?.router.trigger(
                         .contractPay(
-                            address: items[indexPath.row].address,
-                            items: items[indexPath.row].accounts
+                            index: indexPath.row,
+                            items: items
                         )
                     )
                 }
@@ -97,6 +97,14 @@ class PaymentsViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] data in
                     self?.items.onNext(data)
+                    if data.count == 1 {
+                        self?.router.trigger(
+                            .contractPay(
+                                index: 0,
+                                items: data
+                            )
+                        )
+                    }
                 }
             )
             .disposed(by: disposeBag)

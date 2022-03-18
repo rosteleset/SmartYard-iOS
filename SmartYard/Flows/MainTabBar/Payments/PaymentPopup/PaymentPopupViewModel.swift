@@ -10,11 +10,14 @@ import Foundation
 import RxSwift
 import RxCocoa
 import XCoordinator
+import UIKit
 
 class PaymentPopupViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let clientId: String
+    private var router: WeakRouter<PaymentsRoute>
+    
     
     private let recommendedSum: BehaviorSubject<Double?>
     private let contractNumber: BehaviorSubject<String?>
@@ -23,12 +26,14 @@ class PaymentPopupViewModel: BaseViewModel {
         apiWrapper: APIWrapper,
         clientId: String,
         recommendedSum: Double?,
-        contractNumber: String?
+        contractNumber: String?,
+        router: WeakRouter<PaymentsRoute>
     ) {
         self.apiWrapper = apiWrapper
         self.clientId = clientId
         self.recommendedSum = BehaviorSubject<Double?>(value: recommendedSum)
         self.contractNumber = BehaviorSubject<String?>(value: contractNumber)
+        self.router = router
     }
     
     // swiftlint:disable:next function_body_length
@@ -114,6 +119,69 @@ class PaymentPopupViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.cardProcess
+            .flatMapLatest { [weak self] amount -> Driver<(String, PayPrepareResponseData?)?> in
+                
+                guard let self = self else {
+                    return .empty()
+                }
+                
+                let amountString = String(format: "%.0f", amount.doubleValue * 100)
+                
+                return self.apiWrapper.payPrepare(
+                        clientId: self.clientId,
+                        amount: amountString
+                    )
+                    .trackError(errorTracker)
+                    .map {
+                        guard let response = $0 else {
+                            return nil
+                        }
+                        
+                        return (amountString, response)
+                    }
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .flatMapLatest { [weak self] args -> Driver<(String, SberbankRegisterData)?> in
+                guard let self = self,
+                      let (amount, response) = args,
+                      let orderNumber = response
+                else {
+                    return .empty()
+                }
+
+                return
+                    self.apiWrapper.sberbankRegisterProcess(orderNumber: orderNumber, amount: amount)
+                        .trackError(errorTracker)
+                        .map {
+                            guard let response = $0 else {
+                                return nil
+                            }
+                            
+                            return (orderNumber, response)
+                        }
+                        .asDriverOnErrorJustComplete()
+
+            }
+            .drive(
+                onNext: { [weak self] args in
+                    guard let self = self,
+                          let (_, data) = args,
+                          let url = URL(string: data.formUrl)
+                    else {
+                              return
+                          }
+                    print(url)
+                    
+                    UIApplication.shared.open(url)
+                    self.router.trigger(.dismiss)
+                    // self.router.trigger(.webView(url: url))
+                    // self.router.trigger(.dismissAndOpen(url: url))
+                    
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             isPaySuccessTrigger: isPaySuccessTrigger.asDriver(onErrorJustReturn: false),
             recommendedSum: recommendedSum.asDriver(onErrorJustReturn: nil),
@@ -127,6 +195,7 @@ extension PaymentPopupViewModel {
     
     struct Input {
         let payProcess: Driver<(Data?, String)>
+        let cardProcess: Driver<NSDecimalNumber>
     }
     
     struct Output {

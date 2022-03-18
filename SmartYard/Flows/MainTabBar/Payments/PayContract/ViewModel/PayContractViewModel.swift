@@ -16,18 +16,26 @@ class PayContractViewModel: BaseViewModel {
     private var apiWrapper: APIWrapper
     private var router: WeakRouter<PaymentsRoute>
     
-    private let items: BehaviorSubject<[APIPaymentsListAccount]>
-    private let address: BehaviorSubject<String>
+    private let items: BehaviorSubject<[PaymentsListAccount]>
+    private let index: BehaviorSubject<Int?>
     
     init(
-        address: String,
-        items: [APIPaymentsListAccount],
+        index: Int,
+        items: [APIPaymentsListAddress],
         apiWrapper: APIWrapper,
         router: WeakRouter<PaymentsRoute>
     ) {
         self.apiWrapper = apiWrapper
-        self.items = BehaviorSubject<[APIPaymentsListAccount]>(value: items)
-        self.address = BehaviorSubject<String>(value: address)
+        self.items = BehaviorSubject<[PaymentsListAccount]>(
+            value: items.flatMap { addressListItem in
+                addressListItem.accounts.map {
+                    PaymentsListAccount(address: addressListItem.address, account: $0)
+                }
+                
+            }
+        )
+        let absoluteIndex = items.prefix(upTo: index).flatMap { $0.accounts }.count
+        self.index = BehaviorSubject<Int?>(value: absoluteIndex)
         self.router = router
     }
     
@@ -75,7 +83,7 @@ class PayContractViewModel: BaseViewModel {
         
         return Output(
             items: items.asDriver(onErrorJustReturn: []),
-            address: address.asDriver(onErrorJustReturn: "")
+            index: index.asDriver(onErrorJustReturn: nil)
         )
     }
     
@@ -90,8 +98,8 @@ extension PayContractViewModel {
     }
     
     struct Output {
-        let items: Driver<[APIPaymentsListAccount]>
-        let address: Driver<String>
+        let items: Driver<[PaymentsListAccount]>
+        let index: Driver<Int?>
     }
     
 }

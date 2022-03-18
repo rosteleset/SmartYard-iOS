@@ -20,7 +20,8 @@ enum MainMenuRoute: Route {
     case callSupport
     case alert(title: String, message: String)
     case back
-    case safariPage(url: URL)
+    case webView(url: URL)
+    case webViewFromContent(content: String, baseURL: String)
 }
 
 class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
@@ -104,7 +105,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             
         case .callSupport:
             
-            let callHandler = { (action: UIAlertAction) -> Void in
+            let callHandler = { (_: UIAlertAction) -> Void in
                if let phoneCallURL = URL(string: "tel://+7(4752)429999") {
                     let application = UIApplication.shared
                     if application.canOpenURL(phoneCallURL) {
@@ -113,55 +114,46 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
                   }
             }
             
-            let callbackHandler = { (action: UIAlertAction) -> Void in
-                let activityTracker = ActivityTracker()
-                let errorTracker = ErrorTracker()
-                let callbackDataSubject = PublishSubject<Void>()
-                
-                errorTracker.asDriver()
-                    .drive(
-                        onNext: { [weak self] error in
-                            self?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
-                        }
-                    )
-                    .disposed(by: self.disposeBag)
-                
-                callbackDataSubject
-                    .asDriverOnErrorJustComplete()
-                    .flatMapLatest { [weak self] _ -> Driver<CreateIssueResponseData?> in
-                        guard let self = self else {
-                            return .empty()
-                        }
-
-                        return self.issueService.sendCallbackIssue()
-                            .trackError(errorTracker)
-                            .trackActivity(activityTracker)
-                            .asDriver(onErrorJustReturn: nil)
+            let activityTracker = ActivityTracker()
+            let errorTracker = ErrorTracker()
+            
+            errorTracker.asDriver()
+                .drive(
+                    onNext: { [weak self] error in
+                        self?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                     }
-                    .drive(
-                        onNext: { response in
-                            guard response != nil else {
-                                return
+                )
+                .disposed(by: self.disposeBag)
+            
+            let callbackHandler = { [weak self] (_: UIAlertAction) -> Void in
+                guard let self = self else {
+                    return
+                }
+                    self.issueService
+                        .sendCallbackIssue()
+                        .trackError(errorTracker)
+                        .trackActivity(activityTracker)
+                        .asDriver(onErrorJustReturn: nil)
+                        .drive(
+                            onNext: { response in
+                                guard response != nil else {
+                                    return
+                                }
+                                self.trigger(
+                                    .alert(
+                                        title: "Заявка отправлена",
+                                        message: "Мы позвоним Вам в ближайшее время"
+                                    )
+                                )
                             }
-                            self.trigger(.alert(title: "Заявка отправлена", message: "Мы позвоним Вам в ближайшее время"))
-                        }
-                    )
-                    .disposed(by: self.disposeBag)
-                
-                callbackDataSubject.onNext(())
-                
+                        )
+                        .disposed(by: self.disposeBag)
             }
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Заказать обратный звонок", style: .default, handler: callbackHandler))
             alert.addAction(UIAlertAction(title: "Позвонить по телефону", style: .default, handler: callHandler))
             alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
             
-            /*
-            return .dialogTransition(title: "Звонок в техподдержку", message: nil, actions:[
-                                        UIAlertAction(title: "Заказать обратный звонок", style: .default, handler: nil),
-                                        UIAlertAction(title: "Позвонить по телефону", style: .default, handler: handler)
-             ])
-             */
             self.viewController.present(alert, animated: true, completion: nil)
             return.none()
             
@@ -171,9 +163,30 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         case .back:
             return .pop(animation: .default)
             
-        case let .safariPage(url):
-            let vc = SFSafariViewController(url: url)
-            return .present(vc)
+        case let .webView(url):
+            let coordinator = WebViewCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                url: url,
+                backButtonLabel: "Меню",
+                push: true
+            )
+            
+            addChild(coordinator)
+            return .none()
+            
+        case let .webViewFromContent(content, baseURL):
+            let coordinator = WebViewCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                content: content,
+                baseURL: baseURL,
+                backButtonLabel: "Меню",
+                push: true
+            )
+            
+            addChild(coordinator)
+            return .none()
         }
     }
 }
