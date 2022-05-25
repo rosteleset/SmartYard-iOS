@@ -289,6 +289,7 @@ class HistoryViewModel: BaseViewModel {
                         forceRefresh: forceRefresh
                     )
                         .trackError(self.errorTracker)
+                        .trackActivity(self.activityTracker)
                         // поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
                         .map { $0 == nil ?  nil : [flatId: $0!] }
                         .asDriver(onErrorJustReturn: [flatId: []])

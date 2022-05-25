@@ -28,6 +28,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     
     private var refreshControl = UIRefreshControl()
 
+    let daysRadiusToLoad = 6
     var lastContentOffset: CGFloat = 0.0
     let maxHeaderHeight: CGFloat = 44.0
     var lockToolbar = false
@@ -148,6 +149,9 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                 onNext: { sectionModels in
                     self.days = sectionModels.map({ $0.day })
                     self.refreshControl.endRefreshing()
+                    if self.days.count >= min(1, self.allAvailableDates.count) {
+                        self.updateLoader(isEnabled: false, detailText: nil)
+                    }
                 }
             )
             .drive(tableView.rx.items(dataSource: dataSource!))
@@ -207,8 +211,10 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                 guard let firstDay = self.daysQueue.first else {
                     return
                 }
+                
+                self.updateLoader(isEnabled: true, detailText: nil)
                 self.daysQueue.remove(at: 0)
-                self.loadDayTriger.onNext(firstDay)
+                self.displayDaysInRadius(firstDay, self.daysRadiusToLoad)
                 
             }
             .disposed(by: disposeBag)
@@ -329,8 +335,10 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                 // тут мы оказались, если нужной даты у нас в таблицы пока нет
                 // сохраняем дату, на какую мы хотим, чтобы TableView отмотал табличку, когда получит обновления данных
                 self.scrollOnDateIfLoads = scrollOnDay
+                
                 // запрашиваем с сервера данные для этой даты
-                self.loadDayTriger.onNext(scrollOnDay)
+                self.displayDaysInRadius(scrollOnDay, self.daysRadiusToLoad)
+                
                 // если обработчика ещё нет, то настраиваем обработчик, который сработает, когда таблица получит свежие данные
                 // этот обработчик удалится, когда пользователь закроет pop-up календаря.
                 // делается это всё из метода self.onPopUpDismiss() с использованием NotificationCenter
@@ -358,6 +366,24 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
 
 extension HistoryViewController: UITableViewDelegate {
     
+    fileprivate func displayDaysInRadius(_ willDisplayDay: Date, _ radius: Int = 0) {
+        guard let willDisplayDayIndex = allAvailableDates.firstIndex(of: willDisplayDay)
+        else {
+            return
+        }
+        var i = willDisplayDayIndex - radius
+        
+        while i <= willDisplayDayIndex + radius {
+            if i >= allAvailableDates.startIndex, i <= allAvailableDates.endIndex, i != willDisplayDayIndex {
+                if daysQueue.contains(allAvailableDates[i]) {
+                    daysQueue.removeAll(allAvailableDates[i])
+                    loadDayTriger.onNext(allAvailableDates[i])
+                }
+            }
+            i += 1
+        }
+    }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if stopDynamicLoading {
             return
@@ -372,27 +398,9 @@ extension HistoryViewController: UITableViewDelegate {
         // получаем время секции
         let day = section.day
         
-        // ищем день, который будет отображаться
-        guard let willDisplayDayIndex = allAvailableDates.firstIndex(of: day) else {
-            return
-        }
+        // пробуем загрузить данные в его окрестности
+        displayDaysInRadius(day, self.daysRadiusToLoad)
         
-        // если предыдущий не загружен - загружаем
-        if  willDisplayDayIndex + 1 < allAvailableDates.count {
-            let nextDay = allAvailableDates[willDisplayDayIndex + 1]
-            if daysQueue.contains(nextDay) {
-                daysQueue.removeAll(nextDay)
-                loadDayTriger.onNext(nextDay)
-            }
-        }
-        // если следующий не загружен - загружаем
-        if  willDisplayDayIndex - 1 >= 0 {
-            let previousDay = allAvailableDates[willDisplayDayIndex - 1]
-            if daysQueue.contains(previousDay) {
-                daysQueue.removeAll(previousDay)
-                loadDayTriger.onNext(previousDay)
-            }
-        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

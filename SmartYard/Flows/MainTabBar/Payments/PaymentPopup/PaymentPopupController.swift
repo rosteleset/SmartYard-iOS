@@ -194,6 +194,16 @@ class PaymentPopupController: BaseViewController {
         configureRxKeyboard()
         view.backgroundColor = .clear
         successView.isHidden = true
+        
+        if #available(iOS 14.5, *) {
+            if !PKPaymentAuthorizationController.canMakePayments(usingNetworks: [.visa, .masterCard, .mir]) {
+                payButton.removeFromSuperview()
+            }
+        } else {
+            if !PKPaymentAuthorizationController.canMakePayments(usingNetworks: [.visa, .masterCard]) {
+                payButton.removeFromSuperview()
+            }
+        }
     }
     
     private func configureSwipeAction() {
