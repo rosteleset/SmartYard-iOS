@@ -9,7 +9,7 @@
 import Moya
 
 enum APITarget {
-    
+    case getProvidersList
     case registerQR(request: RegisterQRRequest)
     case openDoor(request: OpenDoorRequest)
     case resetCode(request: ResetCodeRequest)
@@ -52,6 +52,8 @@ enum APITarget {
     case requestCode(request: RequestCodeRequest)
     case registerPushToken(request: RegisterPushTokenRequest)
     case confirmCode(request: ConfirmCodeRequest)
+    case checkPhone(request: CheckPhoneRequest)
+    
     case getPaymentsList(request: GetPaymentsListRequest)
     case sendName(request: SendNameRequest)
     case restore(request: RestoreRequest)
@@ -59,7 +61,8 @@ enum APITarget {
     
     case extList(request: GetExtensionsListRequest)
     case ext(request: GetExtensionRequest)
-    
+    case options(request: GetOptionsRequest)
+
     case payPrepare(request: PayPrepareRequest)
     case payProcess(request: PayProcessRequest)
     case sberbankPayProcess(request: SberbankPayProcessRequest)
@@ -75,6 +78,8 @@ extension APITarget: TargetType {
     
     var baseURL: URL {
         switch self {
+        case .getProvidersList:
+            return URL(string: Constants.provListURL+"?_=\(Int.random(in: 0..<Int.max))")!
         case .sberbankPayProcess:
             return URL(string: "https://securepayments.sberbank.ru/payment/applepay")!
         
@@ -85,12 +90,13 @@ extension APITarget: TargetType {
             return URL(string: request.cameraUrl)!
             
         default:
-            return URL(string: AccessService().backendURL + "/api")!
+            return URL(string: AccessService().backendURL)!
         }
     }
     
     var path: String {
         switch self {
+        case .getProvidersList: return ""
         case .registerQR: return "address/registerQR"
         case .intercom: return "address/intercom"
         case .openDoor: return "address/openDoor"
@@ -133,6 +139,8 @@ extension APITarget: TargetType {
         case .requestCode: return "user/requestCode"
         case .registerPushToken: return "user/registerPushToken"
         case .confirmCode: return "user/confirmCode"
+        case .checkPhone: return "user/checkPhone"
+        
         case .getPaymentsList: return "user/getPaymentsList"
         case .sendName: return "user/sendName"
         case .restore: return "user/restore"
@@ -149,13 +157,14 @@ extension APITarget: TargetType {
         case .removePersonFace: return "frs/disLike"
         case .extList: return "ext/list"
         case .ext: return "ext/ext"
+        case .options: return "ext/options"
         
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .streamInfo: return .get
+        case .streamInfo, .getProvidersList: return .get
         default: return .post
         }
     }
@@ -222,7 +231,8 @@ extension APITarget: TargetType {
                 
             case .extList(let request): return (request.accessToken, false)
             case .ext(let request): return (request.accessToken, false)
-                
+            case .options(let request): return (request.accessToken, false)
+            
             default: return (nil, false)
             }
         }()
@@ -238,21 +248,23 @@ extension APITarget: TargetType {
         }
         
         switch self {
-        case .sberbankRegister(_): return [:]
+        case .sberbankRegister, .getProvidersList: return [:]
         default: return defaultHeaders.merging(additionalHeaders) { _, new in new }
         }
     }
     
     var task: Task {
         switch self {
-        case .streamInfo: return .requestParameters(parameters: requestParameters, encoding: URLEncoding.default)
-        case .sberbankRegister: return .requestParameters(parameters: requestParameters, encoding: URLEncoding.default)
-        default: return .requestParameters(parameters: requestParameters, encoding: JSONEncoding.default)
+        case .streamInfo, .sberbankRegister, .getProvidersList:
+            return .requestParameters(parameters: requestParameters, encoding: URLEncoding.default)
+        default:
+            return .requestParameters(parameters: requestParameters, encoding: JSONEncoding.default)
         }
     }
     
     var requestParameters: [String: Any] {
         switch self {
+        case .getProvidersList: return [:]
         case .registerQR(let request): return request.requestParameters
         case .intercom(let request): return request.requestParameters
         case .openDoor(let request): return request.requestParameters
@@ -295,6 +307,8 @@ extension APITarget: TargetType {
         case .requestCode(let request): return request.requestParameters
         case .registerPushToken(let request): return request.requestParameters
         case .confirmCode(let request): return request.requestParameters
+        case .checkPhone(let request): return request.requestParameters
+        
         case .getPaymentsList(let request): return request.requestParameters
         case .sendName(let request): return request.requestParameters
         case .restore(let request): return request.requestParameters
@@ -312,6 +326,7 @@ extension APITarget: TargetType {
         
         case .extList(let request): return request.requestParameters
         case .ext(let request): return request.requestParameters
+        case .options(let request): return request.requestParameters
         
         }
     }

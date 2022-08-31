@@ -6,17 +6,13 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:demo.lanta.me</string>
-	</array>
-	<key>com.apple.developer.in-app-payments</key>
-	<array>
-		<string>merchant.ru.lanta-net.pays</string>
+		<string>applinks:isdn.lanta.me</string>
 	</array>
 	<key>com.apple.developer.siri</key>
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.ru.lanta-net.smartyard.widget</string>
+		<string>group.com.sesameware.smartyard.oem.widget</string>
 	</array>
 </dict>
 </plist>

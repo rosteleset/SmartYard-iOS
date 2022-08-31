@@ -8,7 +8,6 @@
 
 import RxSwift
 import RxCocoa
-import Firebase
 import FirebaseMessaging
 
 private let ignoredCallIdsKey = "ignoredCallIds"
@@ -55,9 +54,9 @@ class PushNotificationService {
                 let nsError = error as NSError
                 
                 if nsError.domain == "NSURLErrorDomain", nsError.code == -1009 {
-                    single(.error(NSError.PushNotificationServiceError.connectionRequired))
+                    single(.failure(NSError.PushNotificationServiceError.connectionRequired))
                 } else {
-                    single(.error(error))
+                    single(.failure(error))
                 }
             }
             

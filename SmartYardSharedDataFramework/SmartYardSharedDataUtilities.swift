@@ -73,9 +73,9 @@ public enum SmartYardSharedDataUtilities {
     
     static var sharedDataFileURL: URL {
         #if DEBUG
-        let appGroupIdentifier = "group.ru.lanta-net.smartyard.widget"
+        let appGroupIdentifier = "group.com.sesameware.smartyard.oem.widget"
         #elseif RELEASE
-        let appGroupIdentifier = "group.ru.lanta-net.smartyard.widget"
+        let appGroupIdentifier = "group.com.sesameware.smartyard.oem.widget"
         #endif
         
         guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupIdentifier)

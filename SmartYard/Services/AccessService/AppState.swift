@@ -11,15 +11,20 @@ import Foundation
 enum AppState: Codable {
     
     case onboarding
+    case selectProvider
     case phoneNumber
     case smsCode(phoneNumber: String)
+    case authByOutgoingCall(phoneNumber: String, confirmPhoneNumber: String)
     case userName
     case main
     
     private enum CodingKeys: String, CodingKey {
         case onboarding
+        case selectProvider
         case phoneNumber
         case smsCode
+        case outgoingCall
+        case confirmPhoneNumber
         case userName
         case main
     }
@@ -32,8 +37,19 @@ enum AppState: Codable {
             return
         }
         
+        if (try? values.decode(Bool.self, forKey: .selectProvider)) != nil {
+            self = .selectProvider
+            return
+        }
+        
         if (try? values.decode(Bool.self, forKey: .phoneNumber)) != nil {
             self = .phoneNumber
+            return
+        }
+        
+        if let confirmPhoneNumber = try? values.decode(String.self, forKey: .confirmPhoneNumber),
+            let phoneNumber = try? values.decode(String.self, forKey: .outgoingCall) {
+            self = .authByOutgoingCall(phoneNumber: phoneNumber, confirmPhoneNumber: confirmPhoneNumber)
             return
         }
         
@@ -61,10 +77,16 @@ enum AppState: Codable {
         switch self {
         case .onboarding:
             try container.encode(true, forKey: .onboarding)
+        case .selectProvider:
+            try container.encode(true, forKey: .selectProvider)
         case .phoneNumber:
             try container.encode(true, forKey: .phoneNumber)
         case .smsCode(let phoneNumber):
             try container.encode(phoneNumber, forKey: .smsCode)
+        case .authByOutgoingCall(let phoneNumber, let confirmNumber):
+            try container.encode(phoneNumber, forKey: .outgoingCall)
+            try container.encode(confirmNumber, forKey: .confirmPhoneNumber)
+                                 
         case .userName:
             try container.encode(true, forKey: .userName)
         case .main:

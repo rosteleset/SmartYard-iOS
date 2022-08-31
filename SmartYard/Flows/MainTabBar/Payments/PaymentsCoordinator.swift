@@ -22,6 +22,7 @@ enum PaymentsRoute: Route {
     case dismissAndOpen(url: URL)
     case safariPage(url: URL)
     case webView(url: URL)
+    case webViewFromContent(content: String, baseURL: String)
     
     case paymentPopup(
         apiWrapper: APIWrapper,
@@ -37,12 +38,22 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
     private let disposeBag = DisposeBag()
     
     let apiWrapper: APIWrapper
+    var childCoordinator: WebViewCoordinator?
     
     init(
         apiWrapper: APIWrapper
     ) {
         self.apiWrapper = apiWrapper
-        super.init(initialRoute: .main)
+        
+        if self.apiWrapper.accessService.paymentsUrl.isEmpty {
+            super.init(initialRoute: .main)
+        } else {
+            if let url = URL(string: self.apiWrapper.accessService.paymentsUrl) {
+                super.init(initialRoute: .webView(url: url))
+            } else {
+                super.init(initialRoute: .alert(title: "Ошибка", message: "Не удаётся открыть страницу оплаты."))
+            }
+        }
         rootViewController.setNavigationBarHidden(true, animated: false)
         subscribeToPaymentsNotifications()
     }
@@ -105,15 +116,34 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             return .present(vc)
             
         case let .webView(url):
-            let coordinator = WebViewCoordinator(
+            childCoordinator = WebViewCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
                 url: url,
-                backButtonLabel: "Назад",
-                push: true
+                backButtonLabel: "",
+                push: false
             )
+            guard let childCoordinator = childCoordinator else {
+                return .none()
+            }
+            children.forEach { removeChild($0) }
+            addChild(childCoordinator)
+            return .none()
             
-            addChild(coordinator)
+        case let .webViewFromContent(content, baseURL):
+            childCoordinator = WebViewCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                content: content,
+                baseURL: baseURL,
+                backButtonLabel: "",
+                push: false
+            )
+            guard let childCoordinator = childCoordinator else {
+                return .none()
+            }
+            children.forEach { removeChild($0) }
+            addChild(childCoordinator)
             return .none()
         }
     }
@@ -141,5 +171,4 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             )
             .disposed(by: disposeBag)
     }
-    
 }

@@ -14,8 +14,9 @@ import RxCocoa
 
 class CityMapViewController: BaseViewController, LoaderPresentable {
     
-    @IBOutlet private weak var mapView: MapView!
+    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
+    private var mapView: MapView!
     
     var loader: JGProgressHUD?
     
@@ -38,9 +39,27 @@ class CityMapViewController: BaseViewController, LoaderPresentable {
         fakeNavBar.setText("Меню")
     }
     
+    fileprivate func configureMapBox() {
+        let cameraOptions = CameraOptions(
+            center: Constants.defaultMapCenterCoordinates,
+            zoom: 8,
+            bearing: .zero,
+            pitch: .zero
+        )
+        let options = MapInitOptions(
+            cameraOptions: cameraOptions,
+            styleURI: StyleURI(url: URL(string: "mapbox://styles/mapbox/streets-v11")!)
+        )
+        mapView = MapView(frame: containerView.bounds, mapInitOptions: options)
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(mapView)
+        mapView.alignToView(containerView)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        configureMapBox()
         bind()
     }
     

@@ -90,7 +90,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
     override func prepareTransition(for route: MainMenuRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = MainMenuViewModel(apiWrapper: apiWrapper, router: weakRouter)
+            let vm = MainMenuViewModel(apiWrapper: apiWrapper, accessService: accessService, router: weakRouter)
             let vc = MainMenuViewController(viewModel: vm)
             return .set([vc])
         
@@ -106,7 +106,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         case .callSupport:
             
             let callHandler = { (_: UIAlertAction) -> Void in
-               if let phoneCallURL = URL(string: "tel://+7(4752)429999") {
+                if let phoneCallURL = URL(string: "tel://" + self.accessService.supportPhone) {
                     let application = UIApplication.shared
                     if application.canOpenURL(phoneCallURL) {
                         application.open(phoneCallURL, options: [:], completionHandler: nil)

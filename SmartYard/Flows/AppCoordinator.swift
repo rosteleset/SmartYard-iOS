@@ -21,7 +21,9 @@ enum AppRoute: Route {
     case dismiss
     case userName(preloadedName: APIClientName?)
     case phoneNumber
+    case selectProvider
     case pinCode(phoneNumber: String, isInitial: Bool)
+    case authByOutgoingCall(phoneNumber: String, confirmPhoneNumber: String)
     case alert(title: String, message: String?)
     case onboarding
     case appSettings(title: String, message: String?)
@@ -80,6 +82,14 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         )
         
         self.mainWindow = mainWindow
+        
+        // блокируем основной поток до обновления baseUrl из списка провайдеров если провайдер был выбран.
+        switch accessService.appState {
+        case .onboarding, .selectProvider:
+            break
+        default:
+            updateBaseUrlSync(apiWrapper: apiWrapper, accessService: accessService)
+        }
         
         super.init(initialRoute: accessService.routeForCurrentState)
         
@@ -141,6 +151,18 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             )
             
             let vc = PinCodeViewController(viewModel: vm, isInitial: isInitial)
+            return .set([vc], animation: .fade)
+        
+        case let .authByOutgoingCall(phoneNumber: phoneNumber, confirmPhoneNumber: confirmPhone):
+            let vm = OutgoingCallViewModel(
+                accessService: accessService,
+                apiWrapper: apiWrapper,
+                router: weakRouter,
+                phoneNumber: phoneNumber,
+                confirmPhone: confirmPhone
+            )
+            
+            let vc = OutgoingCallViewController(viewModel: vm)
             return .set([vc], animation: .fade)
             
         case let .alert(title, message):
@@ -252,6 +274,15 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 .disposed(by: disposeBag)
 
             return .none()
+            
+        case .selectProvider:
+            let vm = SelectProviderViewModel(
+                apiWrapper: apiWrapper,
+                alertService: alertService,
+                accessService: accessService,
+                router: weakRouter)
+            let vc = SelectProviderViewController(viewModel: vm)
+            return .set([vc], animation: .fade)
         }
     }
     
@@ -391,7 +422,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                         self?.mainTabBarCoordinator = nil
                     }
                     
-                    self?.trigger(.phoneNumber)
+                    self?.trigger(.selectProvider)
                 }
             )
             .disposed(by: disposeBag)
@@ -468,4 +499,27 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             .disposed(by: disposeBag)
     }
     
+}
+
+private func updateBaseUrlSync(apiWrapper: APIWrapper, accessService: AccessService) {
+    let sem = DispatchSemaphore(value: 0)
+    let disposeBag = DisposeBag()
+    
+    apiWrapper.getProvidersList()
+        .catchAndReturn(nil)
+        .asObservable()
+        .subscribe(
+            onNext: { response in
+                guard let provList = response,
+                let prov = provList.first(where: { $0.id == accessService.providerId }) else {
+                    sem.signal()
+                    return
+                }
+                
+                accessService.backendURL = prov.baseUrl
+                sem.signal()
+            }
+        )
+        .disposed(by: disposeBag)
+    sem.wait()
 }

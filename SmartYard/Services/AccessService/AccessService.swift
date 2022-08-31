@@ -16,6 +16,16 @@ private let prefersSpeakerForCallsKey = "prefersSpeakerForCalls"
 private let clientNameKey = "clientName"
 private let clientPhoneNumberKey = "clientPhoneNumber"
 private let backendURLKey = "backendURL"
+private let providerIdKey = "providerId"
+private let providerNameKey = "providerNameKey"
+private let showPaymentsKey = "showPayments"
+private let showChatKey = "showChat"
+private let chatIdKey = "chatId"
+private let chatDomainKey = "chatDomain"
+private let chatTokenKey = "chatToken"
+private let showCityCamsKey = "showCityCams"
+private let paymentsUrlKey = "paymentsUrl"
+private let supportPhoneKey = "supportPhoneKey"
 
 class AccessService {
     
@@ -105,10 +115,16 @@ class AccessService {
     var routeForCurrentState: AppRoute {
         switch appState {
         case .onboarding: return .onboarding
+        case .selectProvider: return .selectProvider
         case .phoneNumber: return .phoneNumber
         case .smsCode(let phoneNumber): return .pinCode(phoneNumber: phoneNumber, isInitial: false)
         case .userName: return .userName(preloadedName: clientName)
         case .main: return .main
+        case .authByOutgoingCall(let phoneNumber, let confirmPhoneNumber):
+            return .authByOutgoingCall(
+                phoneNumber: phoneNumber,
+                confirmPhoneNumber: confirmPhoneNumber
+            )
         }
     }
     
@@ -121,11 +137,112 @@ class AccessService {
         }
     }
     
+    var providerId: String {
+        get {
+            UserDefaults.standard.string(forKey: providerIdKey) ?? "default"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: providerIdKey)
+        }
+    }
+    
+    var providerName: String {
+        get {
+            UserDefaults.standard.string(forKey: providerNameKey) ?? "default"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: providerNameKey)
+        }
+    }
+    
+    var showPayments: Bool {
+        get {
+            UserDefaults.standard.value(forKey: showPaymentsKey)  as? Bool ?? true
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: showPaymentsKey)
+        }
+    }
+    
+    var paymentsUrl: String {
+        get {
+            UserDefaults.standard.string(forKey: paymentsUrlKey) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: paymentsUrlKey)
+        }
+    }
+    
+    var supportPhone: String {
+        get {
+            UserDefaults.standard.string(forKey: supportPhoneKey) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: supportPhoneKey)
+        }
+    }
+    
+    var showChat: Bool {
+        get {
+            UserDefaults.standard.value(forKey: showChatKey)  as? Bool ?? false
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: showChatKey)
+        }
+    }
+    
+    var chatId: String {
+        get {
+            UserDefaults.standard.value(forKey: chatIdKey)  as? String ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: chatIdKey)
+        }
+    }
+    
+    var chatDomain: String {
+        get {
+            UserDefaults.standard.value(forKey: chatDomainKey)  as? String ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: chatDomainKey)
+        }
+    }
+    
+    var chatToken: String {
+        get {
+            UserDefaults.standard.value(forKey: chatTokenKey)  as? String ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: chatTokenKey)
+        }
+    }
+    
+    var showCityCams: Bool {
+        get {
+            UserDefaults.standard.value(forKey: showCityCamsKey)  as? Bool ?? false
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: showCityCamsKey)
+        }
+    }
+    
     func logout() {
-        appState = .phoneNumber
+        appState = .selectProvider
         accessToken = nil
         clientName = nil
         clientPhoneNumber = nil
+        backendURL = Constants.defaultBackendURL
+        providerId = "default"
+        providerName = "default"
+        showPayments = true
+        paymentsUrl = ""
+        supportPhone = ""
+        showChat = false
+        chatId = ""
+        chatDomain = ""
+        chatToken = ""
+        showCityCams = false
         
         NotificationCenter.default.post(name: .init("UserLoggedOut"), object: nil)
     }

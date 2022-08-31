@@ -14,7 +14,8 @@ import RxCocoa
 
 class YardMapViewController: BaseViewController, LoaderPresentable {
     
-    @IBOutlet private weak var mapView: MapView!
+    @IBOutlet private weak var containerView: TopRoundedView!
+    private var mapView: MapView!
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
@@ -36,9 +37,28 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    fileprivate func configureMapBox() {
+        let cameraOptions = CameraOptions(
+            center: Constants.defaultMapCenterCoordinates,
+            zoom: 8,
+            bearing: .zero,
+            pitch: .zero
+        )
+        let options = MapInitOptions(
+            cameraOptions: cameraOptions,
+            styleURI: StyleURI(url: URL(string: "mapbox://styles/mapbox/streets-v11")!)
+        )
+        mapView = MapView(frame: containerView.bounds, mapInitOptions: options)
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(mapView)
+        mapView.alignToView(containerView)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureMapBox()
         bind()
+        
     }
 
     fileprivate func updateAnnotations(_ cameras: [CameraObject]) {

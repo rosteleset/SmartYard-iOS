@@ -87,3 +87,16 @@ extension UIView {
     }
     
 }
+
+extension UIView {
+    func alignToView(_ parent: UIView) {
+        NSLayoutConstraint.activate(
+            [
+                self.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 0),
+                self.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: 0),
+                self.topAnchor.constraint(equalTo: parent.topAnchor, constant: 0),
+                self.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: 0)
+            ]
+        )
+    }
+}

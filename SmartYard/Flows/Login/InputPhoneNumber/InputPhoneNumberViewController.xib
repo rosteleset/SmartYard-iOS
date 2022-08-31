@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,8 +15,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InputPhoneNumberViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="backButton" destination="IHg-lz-EEz" id="WkF-sF-hf9"/>
                 <outlet property="containerView" destination="lCk-sj-GES" id="vXt-Eh-MtL"/>
                 <outlet property="phoneTextView" destination="Soq-Bs-M2f" id="UFc-xt-xgK"/>
+                <outlet property="selectedProviderNameLabel" destination="mFk-jt-akI" id="dkS-M4-AiV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -50,13 +52,30 @@
                                     <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IHg-lz-EEz">
+                                    <rect key="frame" x="103.5" y="60" width="207" height="28"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <state key="normal" title="Вернуться к выбору провайдера">
+                                        <color key="titleColor" red="0.42745098040000001" green="0.47843137250000001" blue="0.54117647059999996" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Назание провайдера" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFk-jt-akI">
+                                    <rect key="frame" x="131.5" y="24" width="151.5" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" red="0.42745098040000001" green="0.47843137250000001" blue="0.54117647059999996" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstItem="mFk-jt-akI" firstAttribute="centerX" secondItem="EhW-0V-SYx" secondAttribute="centerX" id="4Yh-qn-m2k"/>
+                                <constraint firstItem="mFk-jt-akI" firstAttribute="top" secondItem="EhW-0V-SYx" secondAttribute="top" constant="24" id="9WQ-TO-ViV"/>
                                 <constraint firstItem="5mZ-NZ-IAo" firstAttribute="top" secondItem="Soq-Bs-M2f" secondAttribute="bottom" constant="38" id="CLZ-t6-Hhu"/>
+                                <constraint firstItem="IHg-lz-EEz" firstAttribute="top" secondItem="mFk-jt-akI" secondAttribute="bottom" constant="18" id="boH-yU-Lbl"/>
                                 <constraint firstItem="5mZ-NZ-IAo" firstAttribute="centerX" secondItem="Soq-Bs-M2f" secondAttribute="centerX" id="dMW-jy-zjn"/>
                                 <constraint firstItem="Soq-Bs-M2f" firstAttribute="left" secondItem="EhW-0V-SYx" secondAttribute="left" constant="5" id="pvx-iu-VvM"/>
                                 <constraint firstAttribute="right" secondItem="Soq-Bs-M2f" secondAttribute="right" constant="5" id="rsD-jB-oWE"/>
+                                <constraint firstItem="IHg-lz-EEz" firstAttribute="centerX" secondItem="EhW-0V-SYx" secondAttribute="centerX" id="vBa-FO-5XH"/>
                                 <constraint firstItem="Soq-Bs-M2f" firstAttribute="top" secondItem="EhW-0V-SYx" secondAttribute="top" constant="160" id="yv9-cf-OY6"/>
                             </constraints>
                         </view>
@@ -70,6 +89,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="lJK-m8-VAn" secondAttribute="bottom" id="8qy-r7-3rk"/>
@@ -82,7 +102,6 @@
                 <constraint firstItem="lJK-m8-VAn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="hbD-lC-2Qz"/>
             </constraints>
             <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="47.826086956521742" y="35.491071428571423"/>
         </view>
     </objects>

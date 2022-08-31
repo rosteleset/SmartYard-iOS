@@ -34,6 +34,15 @@
 		3A200B0927297B250022A0EC /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A200B0827297B240022A0EC /* SimpleButton.swift */; };
 		3A200B0B27297EAC0022A0EC /* PeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A200B0A27297EAC0022A0EC /* PeriodPicker.swift */; };
 		3A200B0D27297F950022A0EC /* SmartYardSharedDataUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A200B0C27297F950022A0EC /* SmartYardSharedDataUtilities.swift */; };
+		3A25BA822891103A00D2401E /* GetOptionsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A25BA802891101C00D2401E /* GetOptionsRequest.swift */; };
+		3A25BA832891103D00D2401E /* GetOptionsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A25BA812891101C00D2401E /* GetOptionsResponseData.swift */; };
+		3A25BA852891109A00D2401E /* APIOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A25BA842891109900D2401E /* APIOptions.swift */; };
+		3A25BA9828967A6800D2401E /* OutgoingCallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A25BA9428967A6800D2401E /* OutgoingCallViewController.xib */; };
+		3A25BA9928967A6800D2401E /* OutgoingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A25BA9528967A6800D2401E /* OutgoingCallViewController.swift */; };
+		3A25BA9A28967A6800D2401E /* OutgoingCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A25BA9628967A6800D2401E /* OutgoingCallViewModel.swift */; };
+		3A25BA9F2896F89F00D2401E /* CheckPhoneRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A25BA9D2896F81900D2401E /* CheckPhoneRequest.swift */; };
+		3A25BAA02896F8A300D2401E /* CheckPhoneResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A25BA9E2896F81E00D2401E /* CheckPhoneResponseData.swift */; };
+		3A25BAA2289710E600D2401E /* RequestCodeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A25BAA1289710E600D2401E /* RequestCodeResponseData.swift */; };
 		3A28814C2653F11900F42097 /* DisLikePersonFaceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2881482653EEB000F42097 /* DisLikePersonFaceRequest.swift */; };
 		3A2881532657EE7100F42097 /* FaceIdAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2881512657EE7100F42097 /* FaceIdAccessView.swift */; };
 		3A2881542657EE7100F42097 /* FaceIdAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A2881522657EE7100F42097 /* FaceIdAccessView.xib */; };
@@ -62,6 +71,14 @@
 		3A6D0F9C27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
 		3A6D0F9D27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
 		3A6D0F9E27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
+		3A7CD5482857790B003CDDC7 /* SelectProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD5472857688E003CDDC7 /* SelectProviderViewController.swift */; };
+		3A7CD54928577911003CDDC7 /* SelectProviderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7CD5452857688E003CDDC7 /* SelectProviderViewController.xib */; };
+		3A7CD54A28577927003CDDC7 /* SelectProviderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD5462857688E003CDDC7 /* SelectProviderViewModel.swift */; };
+		3A7CD54C28577955003CDDC7 /* ProviderCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD54B28577955003CDDC7 /* ProviderCellModel.swift */; };
+		3A7CD55128577CBA003CDDC7 /* APIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD55028577CBA003CDDC7 /* APIProvider.swift */; };
+		3A7CD5552857B75A003CDDC7 /* ProviderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD5542857B75A003CDDC7 /* ProviderCell.swift */; };
+		3A7CD55728588E2A003CDDC7 /* APIProvidersListResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD55628588E2A003CDDC7 /* APIProvidersListResult.swift */; };
+		3A7CD5582864B29E003CDDC7 /* ProviderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7CD5532857B75A003CDDC7 /* ProviderCell.xib */; };
 		3A8B94FA25D92E6F007CDD3C /* CityMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */; };
 		3A8B950B25D93098007CDD3C /* CityCamerasMapPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B950A25D93097007CDD3C /* CityCamerasMapPointView.swift */; };
 		3A8B951625D9312D007CDD3C /* CityCameraObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B951525D9312D007CDD3C /* CityCameraObject.swift */; };
@@ -96,6 +113,7 @@
 		3AC5C71626131D4A008D74DE /* HistoryLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC5C71526131D4A008D74DE /* HistoryLoadingTableViewCell.swift */; };
 		3AC7CA7D271D7048007F35C7 /* AccountParams+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */; };
 		3AD968DC25E976C5000EEB4E /* SmartYardDropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */; };
+		3ADC7EB628B3CBDB00E0BD0F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3ADC7EB528B3CBDB00E0BD0F /* GoogleService-Info.plist */; };
 		3AE65A3C264DA3EB0093284C /* DeleteFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE65A3A264DA3EB0093284C /* DeleteFaceViewController.swift */; };
 		3AE65A43264DA4130093284C /* DeleteFaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AE65A3B264DA3EB0093284C /* DeleteFaceViewController.xib */; };
 		3AE65A48264DA4A00093284C /* ScaledHeightImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE65A47264DA4A00093284C /* ScaledHeightImageView.swift */; };
@@ -645,6 +663,15 @@
 		3A200B0827297B240022A0EC /* SimpleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
 		3A200B0A27297EAC0022A0EC /* PeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPicker.swift; sourceTree = "<group>"; };
 		3A200B0C27297F950022A0EC /* SmartYardSharedDataUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSharedDataUtilities.swift; sourceTree = "<group>"; };
+		3A25BA802891101C00D2401E /* GetOptionsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptionsRequest.swift; sourceTree = "<group>"; };
+		3A25BA812891101C00D2401E /* GetOptionsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOptionsResponseData.swift; sourceTree = "<group>"; };
+		3A25BA842891109900D2401E /* APIOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIOptions.swift; sourceTree = "<group>"; };
+		3A25BA9428967A6800D2401E /* OutgoingCallViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OutgoingCallViewController.xib; sourceTree = "<group>"; };
+		3A25BA9528967A6800D2401E /* OutgoingCallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingCallViewController.swift; sourceTree = "<group>"; };
+		3A25BA9628967A6800D2401E /* OutgoingCallViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingCallViewModel.swift; sourceTree = "<group>"; };
+		3A25BA9D2896F81900D2401E /* CheckPhoneRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPhoneRequest.swift; sourceTree = "<group>"; };
+		3A25BA9E2896F81E00D2401E /* CheckPhoneResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPhoneResponseData.swift; sourceTree = "<group>"; };
+		3A25BAA1289710E600D2401E /* RequestCodeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCodeResponseData.swift; sourceTree = "<group>"; };
 		3A2881482653EEB000F42097 /* DisLikePersonFaceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisLikePersonFaceRequest.swift; sourceTree = "<group>"; };
 		3A2881512657EE7100F42097 /* FaceIdAccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceIdAccessView.swift; sourceTree = "<group>"; };
 		3A2881522657EE7100F42097 /* FaceIdAccessView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FaceIdAccessView.xib; sourceTree = "<group>"; };
@@ -674,6 +701,15 @@
 		3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FullscreenPlayerViewController.xib; sourceTree = "<group>"; };
 		3A6D0F9F27072DB9007A9F66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/Intents.intentdefinition; sourceTree = "<group>"; };
 		3A6D0FA227072DD9007A9F66 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Intents.strings; sourceTree = "<group>"; };
+		3A7CD5452857688E003CDDC7 /* SelectProviderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectProviderViewController.xib; sourceTree = "<group>"; };
+		3A7CD5462857688E003CDDC7 /* SelectProviderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProviderViewModel.swift; sourceTree = "<group>"; };
+		3A7CD5472857688E003CDDC7 /* SelectProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProviderViewController.swift; sourceTree = "<group>"; };
+		3A7CD54B28577955003CDDC7 /* ProviderCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderCellModel.swift; sourceTree = "<group>"; };
+		3A7CD54E2857799D003CDDC7 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
+		3A7CD55028577CBA003CDDC7 /* APIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIProvider.swift; sourceTree = "<group>"; };
+		3A7CD5532857B75A003CDDC7 /* ProviderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProviderCell.xib; sourceTree = "<group>"; };
+		3A7CD5542857B75A003CDDC7 /* ProviderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderCell.swift; sourceTree = "<group>"; };
+		3A7CD55628588E2A003CDDC7 /* APIProvidersListResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIProvidersListResult.swift; sourceTree = "<group>"; };
 		3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityMapViewController.swift; sourceTree = "<group>"; };
 		3A8B950A25D93097007CDD3C /* CityCamerasMapPointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCamerasMapPointView.swift; sourceTree = "<group>"; };
 		3A8B951525D9312D007CDD3C /* CityCameraObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraObject.swift; sourceTree = "<group>"; };
@@ -706,6 +742,7 @@
 		3AC5C71526131D4A008D74DE /* HistoryLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountParams+Extensions.swift"; sourceTree = "<group>"; };
 		3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardDropDownTextField.swift; sourceTree = "<group>"; };
+		3ADC7EB528B3CBDB00E0BD0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3AE65A3A264DA3EB0093284C /* DeleteFaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFaceViewController.swift; sourceTree = "<group>"; };
 		3AE65A3B264DA3EB0093284C /* DeleteFaceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeleteFaceViewController.xib; sourceTree = "<group>"; };
 		3AE65A47264DA4A00093284C /* ScaledHeightImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledHeightImageView.swift; sourceTree = "<group>"; };
@@ -1096,7 +1133,6 @@
 		E964411723F1A4630045CEE7 /* InputAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputAddressViewModel.swift; sourceTree = "<group>"; };
 		E96CC0D62423FAEA008DF44B /* RestoreMethodCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreMethodCellModel.swift; sourceTree = "<group>"; };
 		E97EAFE2243EFF3800D81243 /* SmartYardSharedDataFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SmartYardSharedDataFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E98C382023F144E50010BBC1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		E98C382223F1452D0010BBC1 /* PinCodeViewController+Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PinCodeViewController+Timer.swift"; sourceTree = "<group>"; };
 		E98C382423F149F30010BBC1 /* PinCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinCodeViewController.xib; sourceTree = "<group>"; };
@@ -1274,6 +1310,34 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		3A25BA7F28910FE900D2401E /* GetOptions */ = {
+			isa = PBXGroup;
+			children = (
+				3A25BA802891101C00D2401E /* GetOptionsRequest.swift */,
+				3A25BA812891101C00D2401E /* GetOptionsResponseData.swift */,
+			);
+			path = GetOptions;
+			sourceTree = "<group>";
+		};
+		3A25BA9328967A6800D2401E /* OutgoingCall */ = {
+			isa = PBXGroup;
+			children = (
+				3A25BA9428967A6800D2401E /* OutgoingCallViewController.xib */,
+				3A25BA9528967A6800D2401E /* OutgoingCallViewController.swift */,
+				3A25BA9628967A6800D2401E /* OutgoingCallViewModel.swift */,
+			);
+			path = OutgoingCall;
+			sourceTree = "<group>";
+		};
+		3A25BA9C2896F80C00D2401E /* CheckPhone */ = {
+			isa = PBXGroup;
+			children = (
+				3A25BA9D2896F81900D2401E /* CheckPhoneRequest.swift */,
+				3A25BA9E2896F81E00D2401E /* CheckPhoneResponseData.swift */,
+			);
+			path = CheckPhone;
+			sourceTree = "<group>";
+		};
 		3A2881472653EE8F00F42097 /* DisLikePersonFace */ = {
 			isa = PBXGroup;
 			children = (
@@ -1359,6 +1423,36 @@
 				3A555B1B270058E700E70CB9 /* SYOpenDoorIntentHandler.swift */,
 			);
 			path = SmartYardIntents;
+			sourceTree = "<group>";
+		};
+		3A7CD5442857685B003CDDC7 /* SelectProvider */ = {
+			isa = PBXGroup;
+			children = (
+				3A7CD5522857B75A003CDDC7 /* Cells */,
+				3A7CD54D28577960003CDDC7 /* Entity */,
+				3A7CD5472857688E003CDDC7 /* SelectProviderViewController.swift */,
+				3A7CD5452857688E003CDDC7 /* SelectProviderViewController.xib */,
+				3A7CD5462857688E003CDDC7 /* SelectProviderViewModel.swift */,
+			);
+			path = SelectProvider;
+			sourceTree = "<group>";
+		};
+		3A7CD54D28577960003CDDC7 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				3A7CD54B28577955003CDDC7 /* ProviderCellModel.swift */,
+				3A7CD54E2857799D003CDDC7 /* Provider.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		3A7CD5522857B75A003CDDC7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				3A7CD5542857B75A003CDDC7 /* ProviderCell.swift */,
+				3A7CD5532857B75A003CDDC7 /* ProviderCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		3A8B951A25D93132007CDD3C /* Entries */ = {
@@ -1540,6 +1634,7 @@
 		3AEB886427E0CEBF00B19925 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3A25BA7F28910FE900D2401E /* GetOptions */,
 				3AEB886E27E12D4300B19925 /* GetExtension */,
 				3AEB886527E0CECE00B19925 /* GetExtensionsList */,
 				3AEB887127E12E4E00B19925 /* APIWrapper+Extensions.swift */,
@@ -2684,7 +2779,7 @@
 				84F840E123E07DA5008DBE50 /* Info.plist */,
 				84B9EC9223E0884400979C39 /* linphonerc_default */,
 				84B9EC9123E0884400979C39 /* linphonerc_factory */,
-				E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */,
+				3ADC7EB528B3CBDB00E0BD0F /* GoogleService-Info.plist */,
 				84B9EC9D23E08BB100979C39 /* SmartYard.entitlements */,
 				84B9EC9323E0884400979C39 /* SmartYard-Bridging-Header.h */,
 				84D29BA224B865EF00CFBE6B /* LoaderAnimation.json */,
@@ -3136,6 +3231,7 @@
 				E92EFB5D242A22F2003AF7FE /* BaseAPIResponse.swift */,
 				E92EFB5E242A22F2003AF7FE /* APIRoommate.swift */,
 				E92EFBE9242A24EB003AF7FE /* APIRestoreData.swift */,
+				3A7CD55028577CBA003CDDC7 /* APIProvider.swift */,
 				E92EFB5F242A22F2003AF7FE /* APIClientName.swift */,
 				E92EFB60242A22F2003AF7FE /* APIPaymentsListAccount.swift */,
 				3A003C7925DEF39B002F193B /* YouTubeVideo.swift */,
@@ -3146,7 +3242,9 @@
 				3A40A4C327672872004E53A7 /* PaymentsListAccount.swift */,
 				3AEB886A27E0D01100B19925 /* APIExtensionListItem.swift */,
 				3AEB886C27E12C6600B19925 /* APIExtension.swift */,
+				3A25BA842891109900D2401E /* APIOptions.swift */,
 				3AEB887527E1FD7F00B19925 /* MenuListItem.swift */,
+				3A7CD55628588E2A003CDDC7 /* APIProvidersListResult.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3249,6 +3347,7 @@
 		E92EFB76242A22F2003AF7FE /* User */ = {
 			isa = PBXGroup;
 			children = (
+				3A25BA9C2896F80C00D2401E /* CheckPhone */,
 				E92EFB77242A22F2003AF7FE /* APIWrapper+User.swift */,
 				E92EFB78242A22F2003AF7FE /* SendName */,
 				E92EFB7A242A22F2003AF7FE /* AddMyPhone */,
@@ -3291,6 +3390,7 @@
 		E92EFB7F242A22F2003AF7FE /* RequestCode */ = {
 			isa = PBXGroup;
 			children = (
+				3A25BAA1289710E600D2401E /* RequestCodeResponseData.swift */,
 				E92EFB80242A22F2003AF7FE /* RequestCodeRequest.swift */,
 			);
 			path = RequestCode;
@@ -3634,6 +3734,8 @@
 		E99EA6B623EA9CED00BECEE6 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				3A25BA9328967A6800D2401E /* OutgoingCall */,
+				3A7CD5442857685B003CDDC7 /* SelectProvider */,
 				E98C382E23F1812C0010BBC1 /* AuthByContractNum */,
 				E99EA6B723EA9CF200BECEE6 /* InputPhoneNumber */,
 				E9A4D48123EC22760070A591 /* InputPinCode */,
@@ -4151,6 +4253,7 @@
 				3AEFB46B264C2C81000F37D0 /* AddFaceCell.xib in Resources */,
 				3AEFB484264D1ADF000F37D0 /* FaceViewController.xib in Resources */,
 				846DC6C924B33DC600A11914 /* ContractCell.xib in Resources */,
+				3A25BA9828967A6800D2401E /* OutgoingCallViewController.xib in Resources */,
 				846DC6C424B33DC600A11914 /* PaymentsViewController.xib in Resources */,
 				E9A4D49123EC2A780070A591 /* PinTextField.xib in Resources */,
 				E99EA6CF23EAD2BB00BECEE6 /* NumberFieldView.xib in Resources */,
@@ -4160,6 +4263,7 @@
 				E9E4270523F2CD0F00F5D593 /* ServiceFromCourierView.xib in Resources */,
 				3AC5C625260A3249008D74DE /* HistoryTableViewCell.xib in Resources */,
 				E9C256862423F31D00BE32E0 /* RestoreMethodCell.xib in Resources */,
+				3A7CD5582864B29E003CDDC7 /* ProviderCell.xib in Resources */,
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */,
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
@@ -4192,6 +4296,7 @@
 				84B89A9123F2FA53009692B4 /* ServiceIsNotActivatedViewController.xib in Resources */,
 				3A3B8BB425A5D00C00BFB72E /* MainMenuViewController.xib in Resources */,
 				844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */,
+				3ADC7EB628B3CBDB00E0BD0F /* GoogleService-Info.plist in Resources */,
 				84898A8823F14CB100E6B78E /* SettingsControlPanelCell.xib in Resources */,
 				844AC3FF23EC09040066006D /* SourceSansPro-Regular.ttf in Resources */,
 				E9E4271723F40E0B00F5D593 /* SmartYardCheckBoxView.xib in Resources */,
@@ -4234,6 +4339,7 @@
 				E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */,
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
+				3A7CD54928577911003CDDC7 /* SelectProviderViewController.xib in Resources */,
 				3AAB0D3726E243D700A5AD75 /* WaitingGuestModalViewContent.xib in Resources */,
 				84F6494924740E90000C0028 /* YardMapViewController.xib in Resources */,
 				3A1F213926DF8F4F005FDB82 /* ModalViewController.xib in Resources */,
@@ -4454,6 +4560,7 @@
 				3A9C5E2D261B7989004FB962 /* HistoryDataItem.swift in Sources */,
 				E9E4273423F55C4400F5D593 /* ServiceUnavailableViewController.swift in Sources */,
 				84963973248680C10086B6E9 /* VideoPeriodPickerCell.swift in Sources */,
+				3A7CD5552857B75A003CDDC7 /* ProviderCell.swift in Sources */,
 				E9E4273523F55C4400F5D593 /* ServiceUnavailableViewModel.swift in Sources */,
 				E94B6C902408ED5900FD9F65 /* IssueService.swift in Sources */,
 				E9E4273223F55B9700F5D593 /* ServicesActivationRequestViewController.swift in Sources */,
@@ -4491,6 +4598,7 @@
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
 				3A03FCF925DD5AA500B8488A /* YTVideoModel.swift in Sources */,
+				3A25BA832891103D00D2401E /* GetOptionsResponseData.swift in Sources */,
 				E92EFBB0242A22F2003AF7FE /* APISettingsAddress.swift in Sources */,
 				3A003C7525DEF2D6002F193B /* YouTubeResponseData.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
@@ -4502,12 +4610,14 @@
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
 				E92EFBE8242A24D2003AF7FE /* RestoreRequest.swift in Sources */,
 				E9B9EAC72421FCB8000A92B3 /* RestorePasswordViewController.swift in Sources */,
+				3A7CD5482857790B003CDDC7 /* SelectProviderViewController.swift in Sources */,
 				84CD304724D305F500CC079E /* IncomingCallScreenType.swift in Sources */,
 				3A3B8B9525A5CD2500BFB72E /* MainMenuCoordinator.swift in Sources */,
 				E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */,
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				E92EFBAD242A22F2003AF7FE /* APIStreet.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
+				3A7CD54A28577927003CDDC7 /* SelectProviderViewModel.swift in Sources */,
 				E92EFBAB242A22F2003AF7FE /* APILocation.swift in Sources */,
 				E99A837E2434CBF1001CEE95 /* CommentIssueRequest.swift in Sources */,
 				84CD304524D2CFDE00CC079E /* IncomingCallSoundOutputState.swift in Sources */,
@@ -4552,11 +4662,13 @@
 				E9618A332420ABC1003FF47D /* UnapprovedObjectCell.swift in Sources */,
 				84898A8E23F1540C00E6B78E /* SettingsActionCell.swift in Sources */,
 				E9B9EACA2421FCCB000A92B3 /* RestorePasswordViewModel.swift in Sources */,
+				3A7CD55728588E2A003CDDC7 /* APIProvidersListResult.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				3AEFB46A264C2C81000F37D0 /* AddFaceCell.swift in Sources */,
 				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
+				3A25BA9928967A6800D2401E /* OutgoingCallViewController.swift in Sources */,
 				84963952247C25C50086B6E9 /* LogoutHelper.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
 				846DC6C024B33DC600A11914 /* PaymentPopupViewModel.swift in Sources */,
@@ -4578,6 +4690,7 @@
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
 				3AEB886227DF510F00B19925 /* SberbankRegisterData.swift in Sources */,
 				3A18347125D9AD8600139385 /* CityCameraViewController.swift in Sources */,
+				3A25BA852891109A00D2401E /* APIOptions.swift in Sources */,
 				E92EFBB7242A22F2003AF7FE /* APIClientName.swift in Sources */,
 				E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */,
 				845E9EF72497741B000CBBC6 /* RecDownloadResponseData.swift in Sources */,
@@ -4662,6 +4775,7 @@
 				E92EFBAC242A22F2003AF7FE /* APIServiceModel.swift in Sources */,
 				846DC6C324B33DC600A11914 /* PaymentsViewController.swift in Sources */,
 				84CD304C24D4055600CC079E /* APIAppVersionCheckResult.swift in Sources */,
+				3A25BA822891103A00D2401E /* GetOptionsRequest.swift in Sources */,
 				3A5E1BC2276B098500E2880D /* WebPopupController.swift in Sources */,
 				84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */,
 				3AEB887227E12E4E00B19925 /* APIWrapper+Extensions.swift in Sources */,
@@ -4696,6 +4810,7 @@
 				84854B5A23FC31AD001B44F2 /* IncomingCallViewModel+Extensions.swift in Sources */,
 				3AC5C6FA2612661F008D74DE /* APIPlogDay.swift in Sources */,
 				847880E824AB3ED4008D9E33 /* FullscreenPlayerViewController.swift in Sources */,
+				3A7CD55128577CBA003CDDC7 /* APIProvider.swift in Sources */,
 				3A2881532657EE7100F42097 /* FaceIdAccessView.swift in Sources */,
 				E94B6C4323FFF2A800FD9F65 /* Date+Helper.swift in Sources */,
 				E92EFBD6242A22F2003AF7FE /* OpenDoorRequest.swift in Sources */,
@@ -4710,6 +4825,7 @@
 				E92EFBE6242A2494003AF7FE /* RestoreResponseData.swift in Sources */,
 				E94B6C2423FBFEA600FD9F65 /* String+Extensions.swift in Sources */,
 				E92EFBD5242A22F2003AF7FE /* ResetCodeRequest.swift in Sources */,
+				3A25BA9A28967A6800D2401E /* OutgoingCallViewModel.swift in Sources */,
 				843C38E1242A57C40035BF80 /* NotificationsViewController.swift in Sources */,
 				E92EFBD2242A22F2003AF7FE /* IntercomResponseData.swift in Sources */,
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
@@ -4753,9 +4869,11 @@
 				84854B6723FD809E001B44F2 /* AllowedPersonSectionModel.swift in Sources */,
 				84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */,
 				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
+				3A25BAA02896F8A300D2401E /* CheckPhoneResponseData.swift in Sources */,
 				E92EFBB1242A22F2003AF7FE /* APIIssue.swift in Sources */,
 				842DBD00243750ED00A1D346 /* SettingsServiceAction.swift in Sources */,
 				E92EFBBE242A22F2003AF7FE /* GetAllLocationsResponseData.swift in Sources */,
+				3A7CD54C28577955003CDDC7 /* ProviderCellModel.swift in Sources */,
 				846DC6DA24B33DEA00A11914 /* SberbankPayProcessResponseData.swift in Sources */,
 				E92EFBCF242A22F2003AF7FE /* GetAddressListResponseData.swift in Sources */,
 				842FECB9242B8A04007CA0F3 /* APIOffice.swift in Sources */,
@@ -4804,6 +4922,7 @@
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
 				3AC7CA7D271D7048007F35C7 /* AccountParams+Extensions.swift in Sources */,
+				3A25BAA2289710E600D2401E /* RequestCodeResponseData.swift in Sources */,
 				3AFBA74326383B0500C7DEB6 /* CamMapCCTVResponseData.swift in Sources */,
 				3AEFB447264C0C07000F37D0 /* APIWrapper+FRS.swift in Sources */,
 				E94057F923F6721F00623746 /* AddressAccessViewController.swift in Sources */,
@@ -4822,6 +4941,7 @@
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
 				3A3B8BA225A5CF6F00BFB72E /* MainMenuViewModel.swift in Sources */,
+				3A25BA9F2896F89F00D2401E /* CheckPhoneRequest.swift in Sources */,
 				E99EA6C323EAA97900BECEE6 /* InputPhoneNumberViewModel.swift in Sources */,
 				3A003C7A25DEF39B002F193B /* YouTubeVideo.swift in Sources */,
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
@@ -4942,8 +5062,8 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntents.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
-				DEVELOPMENT_TEAM = 4XDBUB87Z8;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -4951,8 +5071,8 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.intents";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.intents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -4968,8 +5088,8 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntents.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
-				DEVELOPMENT_TEAM = 4XDBUB87Z8;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -4977,8 +5097,8 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.intents";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.intents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -4993,8 +5113,8 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
-				DEVELOPMENT_TEAM = 4XDBUB87Z8;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5002,8 +5122,8 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.widget";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -5018,8 +5138,8 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
-				DEVELOPMENT_TEAM = 4XDBUB87Z8;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5027,8 +5147,8 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.widget";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -5043,8 +5163,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
-				DEVELOPMENT_TEAM = 4XDBUB87Z8;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5052,8 +5172,8 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.NotificationServiceExtension";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -5067,8 +5187,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
-				DEVELOPMENT_TEAM = 4XDBUB87Z8;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5076,8 +5196,8 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.NotificationServiceExtension";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -5210,13 +5330,13 @@
 			baseConfigurationReference = E5E590E291061ACD550E2CB9 /* Pods-SmartYard.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-SmartYard";
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 4XDBUB87Z8;
+				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -5224,7 +5344,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -5374,8 +5494,6 @@
 					"\"nanopb\"",
 					"-framework",
 					"\"ortp\"",
-					"-framework",
-					"\"youtube_ios_player_helper_swift\"",
 					"-weak_framework",
 					"\"Combine\"",
 					"-weak_framework",
@@ -5384,7 +5502,7 @@
 					"\"UserNotifications\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -5397,12 +5515,12 @@
 			baseConfigurationReference = 9446924CEBF5B1B90F3DD95E /* Pods-SmartYard.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-SmartYard";
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
-				DEVELOPMENT_TEAM = 4XDBUB87Z8;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -5410,7 +5528,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -5560,8 +5678,6 @@
 					"\"nanopb\"",
 					"-framework",
 					"\"ortp\"",
-					"-framework",
-					"\"youtube_ios_player_helper_swift\"",
 					"-weak_framework",
 					"\"Combine\"",
 					"-weak_framework",
@@ -5570,7 +5686,7 @@
 					"\"UserNotifications\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
@@ -5586,9 +5702,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4XDBUB87Z8;
+				DEVELOPMENT_TEAM = MJS3C63KA9;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -5600,8 +5716,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.shared-data";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sesameware.smartyard.oem.shared-data";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -5621,9 +5737,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4XDBUB87Z8;
+				DEVELOPMENT_TEAM = MJS3C63KA9;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -5635,8 +5751,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
-				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.shared-data";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sesameware.smartyard.oem.shared-data";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;

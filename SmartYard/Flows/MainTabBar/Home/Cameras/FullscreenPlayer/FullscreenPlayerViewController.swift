@@ -231,7 +231,7 @@ class FullscreenPlayerViewController: UIViewController {
         
         player.rx
             .observe(Float.self, "rate", options: [.new])
-            .observeOn(MainScheduler.asyncInstance)
+            .observe(on: MainScheduler.asyncInstance)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(

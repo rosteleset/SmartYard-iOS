@@ -7,8 +7,9 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseCore
 import FirebaseMessaging
+import FirebaseCrashlytics
 import YandexMobileMetrica
 import PushKit
 import MapboxMaps
@@ -75,11 +76,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return false
             }
             
-            // обрабатываем только url вида https://demo.lanta.me/0123456789 для подтверждения адреса
-            if components.host == "demo.lanta.me",
+            // обрабатываем только url вида - см. regex
+            if components.host == "isdn.lanta.me",
                components.scheme == "https",
                let path = components.path {
-               if path.matches(pattern: "/[0-9]{10}") {
+               if path.matches(pattern: "/[A-Za-z0-9]{10,}") {
                    appCoordinator.trigger(.registerQRCode(code: incomingURL.absoluteString))
                }
                 if path == "/open_app.html" {

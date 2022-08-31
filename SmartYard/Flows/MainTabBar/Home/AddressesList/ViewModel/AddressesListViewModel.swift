@@ -11,6 +11,7 @@ import RxCocoa
 import XCoordinator
 import SmartYardSharedDataFramework
 
+// swiftlint:disable:next type_body_length
 class AddressesListViewModel: BaseViewModel {
     
     // MARK: Я в курсе, что это хреновая идея
@@ -179,13 +180,12 @@ class AddressesListViewModel: BaseViewModel {
                 return Single
                     .zip(
                         self.apiWrapper.getAddressList(forceRefresh: forceRefresh),
-                        self.apiWrapper.getListConnect(forceRefresh: forceRefresh),
-                        self.apiWrapper.getSettingsAddresses(forceRefresh: forceRefresh)
+                        self.apiWrapper.getListConnect(forceRefresh: forceRefresh)
                     )
                     .trackActivity(interactionBlockingRequestTracker)
                     .trackError(self.errorTracker)
                     .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
-                        let (firstResponse, secondResponse, _) = args
+                        let (firstResponse, secondResponse) = args
                         
                         guard let uFirstResponse = firstResponse, let uSecondResponse = secondResponse else {
                             return nil
@@ -210,10 +210,10 @@ class AddressesListViewModel: BaseViewModel {
                 }
 
                 return Single
-                    .zip(self.apiWrapper.getAddressList(forceRefresh: true), self.apiWrapper.getListConnect(forceRefresh: true), self.apiWrapper.getSettingsAddresses(forceRefresh: true))
+                    .zip(self.apiWrapper.getAddressList(forceRefresh: true), self.apiWrapper.getListConnect(forceRefresh: true))
                     .trackError(self.errorTracker)
                     .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
-                        let (firstResponse, secondResponse, _) = args
+                        let (firstResponse, secondResponse) = args
                         
                         guard let uFirstResponse = firstResponse, let uSecondResponse = secondResponse else {
                             return nil

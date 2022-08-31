@@ -11,10 +11,11 @@ import RxSwift
 import RxCocoa
 import WebKit
 import JGProgressHUD
+import WKCookieWebView
 
 class WebViewController: BaseViewController, LoaderPresentable {
     
-    @IBOutlet private weak var webView: WKWebView!
+    @IBOutlet private weak var webView: WKCookieWebView!
     @IBOutlet private weak var skeletonView: UIView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
@@ -122,6 +123,9 @@ class WebViewController: BaseViewController, LoaderPresentable {
     private func configureView() {
         fakeNavBar.configueDarkNavBar()
         fakeNavBar.setText(backButtonLabel)
+        if backButtonLabel.isEmpty {
+            fakeNavBar.isHidden = true
+        }
         webView.scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 17, left: 0, bottom: 5, right: 0)
         webView.navigationDelegate = self
         webView.uiDelegate = self
@@ -259,8 +263,8 @@ extension WebViewController: WKNavigationDelegate {
                 return
             }
             
-            // если это страницы, которые не хостятся у нас, то делаем обычный переход по ссылке.
-            guard let host = url.host, host.hasPrefix("dm.lanta.me") else {
+            // если это страницы, которые хостятся на внешнем хосте, то открываем в новом окне.
+            guard let host = url.host, let currentUrl = webView.url, host == currentUrl.host else {
                       decisionHandler(WKNavigationActionPolicy.allow)
                       return
                   }

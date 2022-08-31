@@ -95,7 +95,7 @@ class PaymentPopupController: BaseViewController {
                         return
                     }
                     
-                    request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Ланта", amount: amount)]
+                    request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Внести", amount: amount)]
                     
                     guard let authorizationViewController = PKPaymentAuthorizationViewController(paymentRequest: request) else {
                         return

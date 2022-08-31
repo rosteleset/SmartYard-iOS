@@ -29,8 +29,8 @@ class OnboardingViewModel: BaseViewModel {
             )
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.phoneNumber)
-                    self?.accessService.appState = .phoneNumber
+                    self?.router.trigger(.selectProvider)
+                    self?.accessService.appState = .selectProvider
                 }
         )
             .disposed(by: disposeBag)

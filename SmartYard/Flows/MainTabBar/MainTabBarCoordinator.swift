@@ -67,6 +67,9 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.alertService = alertService
         self.logoutHelper = logoutHelper
         
+        // блокируем основной поток до получения опций отображения экранов меню приложения (запрос /ext/options)
+        getOptionsSync(apiWrapper: apiWrapper, accessService: accessService)
+        
         // MARK: Home Tab
         let homeCoordinator = HomeCoordinator(
             apiWrapper: apiWrapper,
@@ -137,26 +140,6 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         paymentsCoordinator.rootViewController.tabBarItem = paymentsTabBarItem
         self.paymentsTabBarItem = paymentsTabBarItem
         
-        /*// MARK: Settings Tab
-        let settingsCoordinator = SettingsCoordinator(
-            accessService: accessService,
-            pushNotificationService: pushNotificationService,
-            apiWrapper: apiWrapper,
-            issueService: issueService,
-            permissionService: permissionService,
-            logoutHelper: logoutHelper,
-            alertService: alertService
-        )
-        
-        let settingsTabBarItem = UITabBarItem(
-            title: "Настройки",
-            image: UIImage(named: "SettingsTabUnselected"),
-            selectedImage: UIImage(named: "SettingsTabSelected")
-        )
-        
-        settingsCoordinator.rootViewController.tabBarItem = settingsTabBarItem
-        self.settingsTabBarItem = settingsTabBarItem
-        */
         // MARK: Menu Tab
         let menuCoordinator = MainMenuCoordinator(
             accessService: accessService,
@@ -203,9 +186,14 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         )
         customTabBarController.delegate = customTabBarController
         
+        let tabs = [homeRouter, notificationsRouter] +
+            (accessService.showChat ? [chatRouter] : []) +
+            (accessService.showPayments ? [paymentsRouter] : []) +
+            [menuRouter] as [Presentable]
+            
         super.init(
             rootViewController: customTabBarController,
-            tabs: [homeRouter, notificationsRouter, chatRouter, paymentsRouter/*, settingsRouter*/, menuRouter],
+            tabs: tabs,
             select: homeRouter
         )
         
@@ -338,7 +326,6 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             )
             .disposed(by: disposeBag)
     }
-    
 }
 
 extension SSCustomTabBarViewController: UITabBarControllerDelegate {
@@ -350,4 +337,51 @@ extension SSCustomTabBarViewController: UITabBarControllerDelegate {
         }
         
     }
+}
+
+private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService) {
+    let sem = DispatchSemaphore(value: 0)
+    let disposeBag = DisposeBag()
+    
+    apiWrapper.getOptions()
+        .catchAndReturn(nil)
+        .asObservable()
+        .subscribe(
+            onNext: { response in
+                guard let response = response else {
+                    sem.signal()
+                    return
+                }
+                
+                if let payments = response.payments {
+                    accessService.showPayments = payments
+                }
+                
+                if let paymentsUrl = response.paymentsUrl {
+                    accessService.paymentsUrl = paymentsUrl
+                }
+                
+                if let supportPhone = response.supportPhone {
+                    accessService.supportPhone = supportPhone
+                }
+                
+                if let chat = response.chat {
+                    accessService.showChat = chat
+                }
+                
+                if let chatOptions = response.chatOptions {
+                    accessService.chatId = chatOptions.id
+                    accessService.chatDomain = chatOptions.domain
+                    accessService.chatToken = chatOptions.token
+                }
+                
+                if let cityCams = response.cityCams {
+                    accessService.showCityCams = cityCams
+                }
+                
+                sem.signal()
+            }
+        )
+        .disposed(by: disposeBag)
+    sem.wait()
 }

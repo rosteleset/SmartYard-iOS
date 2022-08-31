@@ -14,22 +14,24 @@ import UIKit
 class MainMenuViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<MainMenuRoute>
-    
-    private let defaultItems = [
-        MenuListItem.essential(label: "Городские камеры", iconName: "PublicCamsMenuIcon", route: .cityCams, order: 100),
-        MenuListItem.essential(label: "Настройки адресов", iconName: "HomeIcon", route: .settings, order: 200),
-        MenuListItem.essential(label: "Общие настройки", iconName: "SettingsMenuIcon", route: .profile, order: 300)
-    ]
-    
+    private var defaultItems: [MenuListItem] = []
     private let items: BehaviorSubject<[MenuListItem]>
     private let bottomItemTrigger = MainMenuRoute.callSupport
     
     init(
         apiWrapper: APIWrapper,
+        accessService: AccessService,
         router: WeakRouter<MainMenuRoute>
     ) {
         self.apiWrapper = apiWrapper
         self.router = router
+        defaultItems = (
+            accessService.showCityCams ?
+            [ MenuListItem.essential(label: "Городские камеры", iconName: "PublicCamsMenuIcon", route: .cityCams, order: 100) ] : []
+        ) + [
+            MenuListItem.essential(label: "Настройки адресов", iconName: "HomeIcon", route: .settings, order: 200),
+            MenuListItem.essential(label: "Общие настройки", iconName: "SettingsMenuIcon", route: .profile, order: 300)
+        ]
         self.items = BehaviorSubject<[MenuListItem]>(value: defaultItems)
     }
     

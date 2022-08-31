@@ -24,12 +24,4 @@ enum Constants {
     static let sberbankAPIPassword = "YOU_NEED_TO_CHANGE_THIS"
     static let sberbankSuccessReturnURL = "YOU_NEED_TO_CHANGE_THIS"
     static let sberbankFailureReturnURL = "YOU_NEED_TO_CHANGE_THIS"
-
-
-    enum Chat {
-        static let token = "YOU_NEED_TO_CHANGE_THIS"
-        static let id = "YOU_NEED_TO_CHANGE_THIS"
-        static let domain = "YOU_NEED_TO_CHANGE_THIS"
-    }
-    
 }

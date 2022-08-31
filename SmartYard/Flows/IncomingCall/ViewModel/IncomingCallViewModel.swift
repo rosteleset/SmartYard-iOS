@@ -140,7 +140,7 @@ class IncomingCallViewModel: BaseViewModel {
         
         Driver
             .combineLatest(
-                currentStateSubject.observeOn(MainScheduler.asyncInstance).asDriverOnErrorJustComplete(),
+                currentStateSubject.observe(on: MainScheduler.asyncInstance).asDriverOnErrorJustComplete(),
                 doorOpeningRequestedByUser.asDriver(onErrorJustReturn: false)
             )
             .filter { args in

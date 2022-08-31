@@ -15,6 +15,8 @@ class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var phoneTextView: PhoneTextField!
+    @IBOutlet private weak var backButton: UIButton!
+    @IBOutlet private weak var selectedProviderNameLabel: UILabel!
     
     private var viewModel: InputPhoneNumberViewModel
     
@@ -52,10 +54,13 @@ class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
     private func bind() {
         let text = phoneTextView.rx.textControlProperty
             .orEmpty
-            .observeOn(MainScheduler.asyncInstance)
+            .observe(on: MainScheduler.asyncInstance)
             .asDriver(onErrorJustReturn: "")
         
-        let input = InputPhoneNumberViewModel.Input(inputPhoneText: text)
+        let input = InputPhoneNumberViewModel.Input(
+            inputPhoneText: text,
+            backButtonTapped: backButton.rx.tap.asDriverOnErrorJustComplete()
+        )
         let output = viewModel.transform(input: input)
         
         output.isLoading
@@ -76,6 +81,14 @@ class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
                 onNext: { [weak self] in
                     self?.view.endEditing(true)
                     self?.view.isUserInteractionEnabled = false
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.selectedProviderName
+            .drive(
+                onNext: { [weak self] providerName in
+                    self?.selectedProviderNameLabel.text = providerName
                 }
             )
             .disposed(by: disposeBag)
