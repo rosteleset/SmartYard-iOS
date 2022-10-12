@@ -25,10 +25,10 @@ class OnlinePageViewController: BaseViewController {
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var cameraContainer: UIView!
     @IBOutlet private weak var fullscreenButton: UIButton!
-    @IBOutlet private weak var videoLoadingAnimationView: AnimationView!
+    @IBOutlet private weak var videoLoadingAnimationView: LottieAnimationView!
     
-    private var playerViewController: AVPlayerViewController?
     private var player: AVPlayer?
+    private var playerLayer: AVPlayerLayer?
     
     @IBOutlet private var collectionViewHeightConstraint: NSLayoutConstraint!
     
@@ -70,12 +70,6 @@ class OnlinePageViewController: BaseViewController {
         super.viewDidAppear(animated)
         
         try? AVAudioSession.sharedInstance().setCategory(.playback)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        playerViewController?.view.frame = cameraContainer.bounds
     }
     
     func setCameras(_ cameras: [CameraObject], selectedCamera: CameraObject?) {
@@ -169,49 +163,44 @@ class OnlinePageViewController: BaseViewController {
     
     // swiftlint:disable:next function_body_length
     private func configurePlayer() {
-        let playerViewController = AVPlayerViewController()
-        playerViewController.videoGravity = .resizeAspect
-        playerViewController.showsPlaybackControls = false
-        self.playerViewController = playerViewController
-        
         let player = AVPlayer()
-        playerViewController.player = player
         self.player = player
         
-        addChild(playerViewController)
-        cameraContainer.insertSubview(playerViewController.view, at: 0)
-        playerViewController.didMove(toParent: self)
+        if playerLayer != nil {
+            playerLayer?.removeFromSuperlayer()
+        }
+        
+        playerLayer = AVPlayerLayer(player: player)
+        cameraContainer.layer.insertSublayer(playerLayer!, at: 0)
+        playerLayer?.frame = cameraContainer.bounds
+        playerLayer?.removeAllAnimations()
+        playerLayer?.backgroundColor = UIColor.black.cgColor
         
         // MARK: Настройка лоадера
         
-        let animation = Animation.named("LoaderAnimation")
+        let animation = LottieAnimation.named("LoaderAnimation")
         
         videoLoadingAnimationView.animation = animation
         videoLoadingAnimationView.loopMode = .loop
         videoLoadingAnimationView.backgroundBehavior = .pauseAndRestore
         
-        // MARK: Когда полноэкранное видео будет закрыто, нужно добавить child controller заново
+        // MARK: Когда полноэкранное видео будет закрыто, нужно добавить слой заново
         
         NotificationCenter.default.rx
             .notification(.onlineFullscreenModeClosed)
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] _ in
-                    guard let self = self, let playerVc = self.playerViewController else {
+                    guard let self = self, let playerLayer = self.playerLayer else {
                         return
                     }
+                    playerLayer.removeFromSuperlayer()
+                    self.cameraContainer.layer.insertSublayer(playerLayer, at: 0)
                     
-                    playerVc.showsPlaybackControls = false
-                    playerVc.willMove(toParent: nil)
-                    playerVc.view.removeFromSuperview()
-                    playerVc.removeFromParent()
+                    playerLayer.frame = self.cameraContainer.bounds
+                    playerLayer.removeAllAnimations()
                     
-                    self.addChild(playerVc)
-                    self.cameraContainer.insertSubview(playerVc.view, at: 0)
-                    playerVc.didMove(toParent: self)
-                    self.playerViewController?.view.frame = self.cameraContainer.bounds
-                    
-                    playerVc.player?.play()
+                    self.player?.play()
                 }
             )
             .disposed(by: disposeBag)
@@ -258,15 +247,12 @@ class OnlinePageViewController: BaseViewController {
             .asDriver()
             .drive(
                 onNext: { [weak self] in
-                    guard let playerVc = self?.playerViewController else {
+                    guard let playerLayer = self?.playerLayer else {
                         return
                     }
                     
-                    playerVc.showsPlaybackControls = true
-                    playerVc.willMove(toParent: nil)
-                    playerVc.view.removeFromSuperview()
-                    playerVc.removeFromParent()
-
+                    playerLayer.removeFromSuperlayer()
+                    
                     let fullscreenVc = FullscreenPlayerViewController(
                         playedVideoType: .online,
                         preferredPlaybackRate: 1
@@ -274,10 +260,10 @@ class OnlinePageViewController: BaseViewController {
                     
                     fullscreenVc.modalPresentationStyle = .overFullScreen
                     fullscreenVc.modalTransitionStyle = .crossDissolve
-                    fullscreenVc.setPlayerViewController(playerVc)
+                    fullscreenVc.setPlayerLayer(playerLayer)
 
                     self?.present(fullscreenVc, animated: true) {
-                        playerVc.player?.play()
+                        self?.player?.play()
                     }
                 }
             )

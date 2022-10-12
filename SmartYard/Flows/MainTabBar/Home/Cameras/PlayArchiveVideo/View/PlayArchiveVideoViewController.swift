@@ -45,10 +45,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var realVideoContainer: UIView!
     @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
     @IBOutlet private weak var fullscreenButton: UIButton!
-    @IBOutlet private weak var videoLoadingAnimationView: AnimationView!
+    @IBOutlet private weak var videoLoadingAnimationView: LottieAnimationView!
     @IBOutlet private var sliderConstraints: [NSLayoutConstraint]!
     
-    private var realVideoPlayerViewController: AVPlayerViewController?
+    private var realVideoPlayerLayer: AVPlayerLayer?
     private var realVideoPlayer: AVQueuePlayer?
     
     private var loadingAsset: [AVAsset?] = []
@@ -149,12 +149,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         configureSliders()
         configureUIBindings()
         bind()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        realVideoPlayerViewController?.view.frame = realVideoContainer.bounds
     }
     
     private func configurePeriodPicker() {
@@ -317,22 +311,22 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     // swiftlint:disable:next function_body_length
     private func configureRealVideoPlayer() {
-        let playerViewController = AVPlayerViewController()
-        playerViewController.videoGravity = .resizeAspect
-        self.realVideoPlayerViewController = playerViewController
-        
         let player = AVQueuePlayer()
-        playerViewController.player = player
-        playerViewController.showsPlaybackControls = false
         self.realVideoPlayer = player
         
-        addChild(playerViewController)
-        realVideoContainer.insertSubview(playerViewController.view, at: 0)
-        playerViewController.didMove(toParent: self)
+        if realVideoPlayerLayer != nil {
+            realVideoPlayerLayer?.removeFromSuperlayer()
+        }
+        
+        realVideoPlayerLayer = AVPlayerLayer(player: player)
+        realVideoContainer.layer.insertSublayer(realVideoPlayerLayer!, at: 0)
+        realVideoPlayerLayer?.frame = realVideoContainer.bounds
+        realVideoPlayerLayer?.removeAllAnimations()
+         realVideoPlayerLayer?.backgroundColor = UIColor.black.cgColor
         
         // MARK: Настройка лоадера
         
-        let animation = Animation.named("LoaderAnimation")
+        let animation = LottieAnimation.named("LoaderAnimation")
         
         videoLoadingAnimationView.animation = animation
         videoLoadingAnimationView.loopMode = .loop
@@ -345,21 +339,17 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] _ in
-                    guard let self = self, let playerVc = self.realVideoPlayerViewController else {
+                    guard let self = self,
+                        let playerLayer = self.realVideoPlayerLayer else {
                         return
                     }
+                    playerLayer.removeFromSuperlayer()
+                    self.realVideoContainer.layer.insertSublayer(playerLayer, at: 0)
+                    playerLayer.frame = self.realVideoContainer.bounds
+                    playerLayer.removeAllAnimations()
                     
-                    playerVc.showsPlaybackControls = false
-                    playerVc.willMove(toParent: nil)
-                    playerVc.view.removeFromSuperview()
-                    playerVc.removeFromParent()
-                    
-                    self.addChild(playerVc)
-                    self.realVideoContainer.insertSubview(playerVc.view, at: 0)
                     self.realVideoContainer.insertSubview(self.progressSlider, at: 2)
-                    playerVc.didMove(toParent: self)
-                    // восстановим размеры контейнера с плеером
-                    self.realVideoPlayerViewController?.view.frame = self.realVideoContainer.bounds
+
                     // восстановим отключенные привязки размеров вью слайдера к нашему вью
                     for constraint in self.sliderConstraints {
                         constraint.isActive = true
@@ -432,16 +422,13 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .drive(
                 onNext: { [weak self] in
                     guard let self = self,
-                          let playerVc = self.realVideoPlayerViewController,
+                          let playerLayer = self.realVideoPlayerLayer,
                           let progressSlider = self.progressSlider else {
                         return
                     }
                     
-                    playerVc.showsPlaybackControls = true
-                    playerVc.willMove(toParent: nil)
-                    playerVc.view.removeFromSuperview()
-                    playerVc.removeFromParent()
-
+                    playerLayer.removeFromSuperlayer()
+                    
                     let fullscreenVc = FullscreenPlayerViewController(
                         playedVideoType: .archive,
                         preferredPlaybackRate: self.preferredPlaybackSpeedConfig.value
@@ -449,7 +436,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     
                     fullscreenVc.modalPresentationStyle = .overFullScreen
                     fullscreenVc.modalTransitionStyle = .crossDissolve
-                    fullscreenVc.setPlayerViewController(playerVc)
+                    fullscreenVc.setPlayerLayer(playerLayer)
                     // передаём в полноэкранный контроллер вью слайдера и отключаем его привязки от текущего вью
                     fullscreenVc.setProgressSlider(progressSlider)
                     for constraint in self.sliderConstraints {
