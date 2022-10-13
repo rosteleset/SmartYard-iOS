@@ -5334,17 +5334,18 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -5446,10 +5447,6 @@
 					"\"WebKit\"",
 					"-framework",
 					"\"XCoordinator\"",
-					"-framework",
-					"\"YandexMobileMetrica\"",
-					"-framework",
-					"\"YandexMobileMetricaCrashes\"",
 					"-framework",
 					"\"bctoolbox\"",
 					"-framework",
@@ -5515,16 +5512,17 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -5626,10 +5624,6 @@
 					"\"WebKit\"",
 					"-framework",
 					"\"XCoordinator\"",
-					"-framework",
-					"\"YandexMobileMetrica\"",
-					"-framework",
-					"\"YandexMobileMetricaCrashes\"",
 					"-framework",
 					"\"bctoolbox\"",
 					"-framework",

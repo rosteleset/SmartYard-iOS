@@ -355,6 +355,7 @@ private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService
                 
                 if let payments = response.payments {
                     accessService.showPayments = payments
+                    accessService.paymentsUrl = ""
                 }
                 
                 if let paymentsUrl = response.paymentsUrl {

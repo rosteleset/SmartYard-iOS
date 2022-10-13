@@ -193,14 +193,6 @@ PODS:
   - XCoordinator/RxSwift (2.2.0):
     - RxSwift (~> 6.1)
     - XCoordinator/Core
-  - YandexMobileMetrica (4.4.0):
-    - YandexMobileMetrica/Static (= 4.4.0)
-  - YandexMobileMetrica/Static (4.4.0):
-    - YandexMobileMetrica/Static/Core (= 4.4.0)
-    - YandexMobileMetrica/Static/Crashes (= 4.4.0)
-  - YandexMobileMetrica/Static/Core (4.4.0)
-  - YandexMobileMetrica/Static/Crashes (4.4.0):
-    - YandexMobileMetrica/Static/Core
 
 DEPENDENCIES:
   - Cartography
@@ -234,7 +226,6 @@ DEPENDENCIES:
   - WKCookieWebView (~> 2.0)
   - XCoordinator
   - XCoordinator/RxSwift
-  - YandexMobileMetrica
 
 SPEC REPOS:
   https://gitlab.linphone.org/BC/public/podspec.git:
@@ -281,7 +272,6 @@ SPEC REPOS:
     - Turf
     - WKCookieWebView
     - XCoordinator
-    - YandexMobileMetrica
 
 EXTERNAL SOURCES:
   OnlineChatSdk:
@@ -351,8 +341,7 @@ SPEC CHECKSUMS:
   Turf: 8adf034c2963a0e587b979c51b5c12c396e29c44
   WKCookieWebView: 528260c9cf7d89d312d61639cfca75c5618326a2
   XCoordinator: a5f91e43ee944f508529763921165697d3211629
-  YandexMobileMetrica: baf7cea47cb87fc9af963c4f747ce8dd7df3d7c0
 
-PODFILE CHECKSUM: 405f485a6fd5c7568ec8a3242d46b499ca864cc7
+PODFILE CHECKSUM: e24bdb5b132686cde5541943df4084c7eff7964a
 
 COCOAPODS: 1.11.2

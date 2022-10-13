@@ -10,7 +10,6 @@ import UIKit
 import FirebaseCore
 import FirebaseMessaging
 import FirebaseCrashlytics
-import YandexMobileMetrica
 import PushKit
 import MapboxMaps
 
@@ -34,12 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureFirebase(for: application)
         
         configureVoIPNotifications()
-        
-        if let yandexConfig = YMMYandexMetricaConfiguration(apiKey: Constants.yandexApiKey) {
-            YMMYandexMetrica.activate(with: yandexConfig)
-        } else {
-            print("Couldn't activate YMM")
-        }
         
         // MARK: подключаем MapBox
         
@@ -80,12 +73,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if components.host == "isdn.lanta.me",
                components.scheme == "https",
                let path = components.path {
-               if path.matches(pattern: "/[A-Za-z0-9]{10,}") {
-                   appCoordinator.trigger(.registerQRCode(code: incomingURL.absoluteString))
-               }
-                if path == "/open_app.html" {
-                    NotificationCenter.default.post(name: .refreshVisibleWebVC, object: nil)
-                }
+                    if path.matches(pattern: "/[A-Za-z0-9]{10,}") {
+                        appCoordinator.trigger(.registerQRCode(code: incomingURL.absoluteString))
+                        return true
+                    }
+                    if path == "/open_app.html" {
+                        NotificationCenter.default.post(name: .refreshVisibleWebVC, object: nil)
+                        return true
+                    }
+                    return false
             } else
             // в противном случае даём OS обработать это событие самостоятельно
             {

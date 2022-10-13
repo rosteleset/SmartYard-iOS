@@ -47,7 +47,6 @@ target 'SmartYard' do
   # Analytics
   pod 'FirebaseCrashlytics'
   pod 'FirebaseAnalytics'
-  pod 'YandexMobileMetrica'
   
   # Push Notifications
   pod 'FirebaseMessaging'
