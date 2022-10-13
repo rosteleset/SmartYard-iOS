@@ -160,7 +160,7 @@ class HistoryViewModel: BaseViewModel {
                     return
                 }
                 
-                // Если мы обладаем данными для всех квартир из фильтра, то обновляем секции для таблицы
+                // Если мы обладаем данными для всех квартир из фильтра, то обновляем данные для таблицы
                 if data.count == self.apptsFilter.value.count {
                     // собираем со всех квартир доступные даты, агрегируем
                     self.uniqueDays = Array(data.values)
@@ -168,8 +168,6 @@ class HistoryViewModel: BaseViewModel {
                         .map { $0.day }
                         .withoutDuplicates()
                         .sorted(by: >)
-                    
-                    self.updateSections.onNext(())
                 }
             }
             .disposed(by: disposeBag)

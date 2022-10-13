@@ -52,7 +52,7 @@ class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
     private func bind() {
         let text = phoneTextView.rx.textControlProperty
             .orEmpty
-            .observeOn(MainScheduler.asyncInstance)
+            .observe(on: MainScheduler.asyncInstance)
             .asDriver(onErrorJustReturn: "")
         
         let input = InputPhoneNumberViewModel.Input(inputPhoneText: text)

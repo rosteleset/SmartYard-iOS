@@ -62,6 +62,11 @@
 		3A6D0F9C27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
 		3A6D0F9D27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
 		3A6D0F9E27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
+		3A7CD55F28670113003CDDC7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */; };
+		3A7CD56028670113003CDDC7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */; };
+		3A7CD56128670115003CDDC7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */; };
+		3A7CD56228670115003CDDC7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */; };
+		3A7CD56328670116003CDDC7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E988DABA2444AAAD00C66371 /* GoogleService-Info.plist */; };
 		3A8B94FA25D92E6F007CDD3C /* CityMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */; };
 		3A8B950B25D93098007CDD3C /* CityCamerasMapPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B950A25D93097007CDD3C /* CityCamerasMapPointView.swift */; };
 		3A8B951625D9312D007CDD3C /* CityCameraObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B951525D9312D007CDD3C /* CityCameraObject.swift */; };
@@ -69,6 +74,16 @@
 		3A8B953025D96933007CDD3C /* OverviewCCTVRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B952F25D96933007CDD3C /* OverviewCCTVRequest.swift */; };
 		3A8B953825D96946007CDD3C /* OverviewCCTVResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B953725D96946007CDD3C /* OverviewCCTVResponseData.swift */; };
 		3A8B954325D9743D007CDD3C /* CityMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8B954225D9743D007CDD3C /* CityMapViewController.xib */; };
+		3A99E25128AED3D300DA6BDA /* OutgoingCallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A99E24E28AED3D300DA6BDA /* OutgoingCallViewController.xib */; };
+		3A99E25228AED3D300DA6BDA /* OutgoingCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A99E24F28AED3D300DA6BDA /* OutgoingCallViewController.swift */; };
+		3A99E25328AED3D300DA6BDA /* OutgoingCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A99E25028AED3D300DA6BDA /* OutgoingCallViewModel.swift */; };
+		3A99E25528AED3F700DA6BDA /* APIOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A99E25428AED3F700DA6BDA /* APIOptions.swift */; };
+		3A99E25928AED41B00DA6BDA /* GetOptionsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A99E25728AED41B00DA6BDA /* GetOptionsRequest.swift */; };
+		3A99E25A28AED41B00DA6BDA /* GetOptionsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A99E25828AED41B00DA6BDA /* GetOptionsResponseData.swift */; };
+		3A99E26128AED43A00DA6BDA /* CheckPhoneResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A99E25C28AED43A00DA6BDA /* CheckPhoneResponseData.swift */; };
+		3A99E26228AED43A00DA6BDA /* CheckPhoneRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A99E25D28AED43A00DA6BDA /* CheckPhoneRequest.swift */; };
+		3A99E26328AED43A00DA6BDA /* RequestCodeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A99E25F28AED43A00DA6BDA /* RequestCodeResponseData.swift */; };
+		3A99E26428AED43A00DA6BDA /* RequestCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A99E26028AED43A00DA6BDA /* RequestCodeRequest.swift */; };
 		3A9C5E28261B7896004FB962 /* HistorySectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9C5E27261B7895004FB962 /* HistorySectionModel.swift */; };
 		3A9C5E2D261B7989004FB962 /* HistoryDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9C5E2C261B7989004FB962 /* HistoryDataItem.swift */; };
 		3AA6555C2666453D001EEC79 /* GetPersonFacesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB451264C0D44000F37D0 /* GetPersonFacesResponseData.swift */; };
@@ -681,6 +696,16 @@
 		3A8B952F25D96933007CDD3C /* OverviewCCTVRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCCTVRequest.swift; sourceTree = "<group>"; };
 		3A8B953725D96946007CDD3C /* OverviewCCTVResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCCTVResponseData.swift; sourceTree = "<group>"; };
 		3A8B954225D9743D007CDD3C /* CityMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityMapViewController.xib; sourceTree = "<group>"; };
+		3A99E24E28AED3D300DA6BDA /* OutgoingCallViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OutgoingCallViewController.xib; sourceTree = "<group>"; };
+		3A99E24F28AED3D300DA6BDA /* OutgoingCallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingCallViewController.swift; sourceTree = "<group>"; };
+		3A99E25028AED3D300DA6BDA /* OutgoingCallViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingCallViewModel.swift; sourceTree = "<group>"; };
+		3A99E25428AED3F700DA6BDA /* APIOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIOptions.swift; sourceTree = "<group>"; };
+		3A99E25728AED41B00DA6BDA /* GetOptionsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetOptionsRequest.swift; sourceTree = "<group>"; };
+		3A99E25828AED41B00DA6BDA /* GetOptionsResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetOptionsResponseData.swift; sourceTree = "<group>"; };
+		3A99E25C28AED43A00DA6BDA /* CheckPhoneResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckPhoneResponseData.swift; sourceTree = "<group>"; };
+		3A99E25D28AED43A00DA6BDA /* CheckPhoneRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckPhoneRequest.swift; sourceTree = "<group>"; };
+		3A99E25F28AED43A00DA6BDA /* RequestCodeResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCodeResponseData.swift; sourceTree = "<group>"; };
+		3A99E26028AED43A00DA6BDA /* RequestCodeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCodeRequest.swift; sourceTree = "<group>"; };
 		3A9C5E27261B7895004FB962 /* HistorySectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySectionModel.swift; sourceTree = "<group>"; };
 		3A9C5E2C261B7989004FB962 /* HistoryDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDataItem.swift; sourceTree = "<group>"; };
 		3AAB0D3626E2439E00A5AD75 /* WaitingGuestModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaitingGuestModalViewContent.xib; sourceTree = "<group>"; };
@@ -1388,6 +1413,43 @@
 			path = Overview;
 			sourceTree = "<group>";
 		};
+		3A99E24D28AED3D300DA6BDA /* OutgoingCall */ = {
+			isa = PBXGroup;
+			children = (
+				3A99E24E28AED3D300DA6BDA /* OutgoingCallViewController.xib */,
+				3A99E24F28AED3D300DA6BDA /* OutgoingCallViewController.swift */,
+				3A99E25028AED3D300DA6BDA /* OutgoingCallViewModel.swift */,
+			);
+			path = OutgoingCall;
+			sourceTree = "<group>";
+		};
+		3A99E25628AED41B00DA6BDA /* GetOptions */ = {
+			isa = PBXGroup;
+			children = (
+				3A99E25728AED41B00DA6BDA /* GetOptionsRequest.swift */,
+				3A99E25828AED41B00DA6BDA /* GetOptionsResponseData.swift */,
+			);
+			path = GetOptions;
+			sourceTree = "<group>";
+		};
+		3A99E25B28AED43A00DA6BDA /* CheckPhone */ = {
+			isa = PBXGroup;
+			children = (
+				3A99E25C28AED43A00DA6BDA /* CheckPhoneResponseData.swift */,
+				3A99E25D28AED43A00DA6BDA /* CheckPhoneRequest.swift */,
+			);
+			path = CheckPhone;
+			sourceTree = "<group>";
+		};
+		3A99E25E28AED43A00DA6BDA /* RequestCode */ = {
+			isa = PBXGroup;
+			children = (
+				3A99E25F28AED43A00DA6BDA /* RequestCodeResponseData.swift */,
+				3A99E26028AED43A00DA6BDA /* RequestCodeRequest.swift */,
+			);
+			path = RequestCode;
+			sourceTree = "<group>";
+		};
 		3A9C5E26261B7835004FB962 /* Entries */ = {
 			isa = PBXGroup;
 			children = (
@@ -1540,6 +1602,7 @@
 		3AEB886427E0CEBF00B19925 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3A99E25628AED41B00DA6BDA /* GetOptions */,
 				3AEB886E27E12D4300B19925 /* GetExtension */,
 				3AEB886527E0CECE00B19925 /* GetExtensionsList */,
 				3AEB887127E12E4E00B19925 /* APIWrapper+Extensions.swift */,
@@ -3120,6 +3183,7 @@
 		E92EFB4E242A22F2003AF7FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3A99E25428AED3F700DA6BDA /* APIOptions.swift */,
 				84CD304B24D4055600CC079E /* APIAppVersionCheckResult.swift */,
 				84D29B8E24B7999A00CFBE6B /* APIArchiveRange.swift */,
 				84D29B8F24B7999A00CFBE6B /* APIArchiveStreamInfo.swift */,
@@ -3249,6 +3313,8 @@
 		E92EFB76242A22F2003AF7FE /* User */ = {
 			isa = PBXGroup;
 			children = (
+				3A99E25B28AED43A00DA6BDA /* CheckPhone */,
+				3A99E25E28AED43A00DA6BDA /* RequestCode */,
 				E92EFB77242A22F2003AF7FE /* APIWrapper+User.swift */,
 				E92EFB78242A22F2003AF7FE /* SendName */,
 				E92EFB7A242A22F2003AF7FE /* AddMyPhone */,
@@ -3634,6 +3700,7 @@
 		E99EA6B623EA9CED00BECEE6 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				3A99E24D28AED3D300DA6BDA /* OutgoingCall */,
 				E98C382E23F1812C0010BBC1 /* AuthByContractNum */,
 				E99EA6B723EA9CF200BECEE6 /* InputPhoneNumber */,
 				E9A4D48123EC22760070A591 /* InputPinCode */,
@@ -4116,6 +4183,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A7CD56328670116003CDDC7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4124,6 +4192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				849653212472C96F000E1375 /* WdgObjectCell.xib in Resources */,
+				3A7CD56228670115003CDDC7 /* GoogleService-Info.plist in Resources */,
 				84E5AAC12472D3DE0034080A /* Assets.xcassets in Resources */,
 				849653222472C96F000E1375 /* MainInterface.storyboard in Resources */,
 			);
@@ -4133,6 +4202,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A7CD56028670113003CDDC7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4205,6 +4275,7 @@
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
 				84CC15DD23EC6AA800A1CB95 /* AddressesListCameraCell.xib in Resources */,
 				3A40A4C72768CBE0004E53A7 /* NotificationsViewController.xib in Resources */,
+				3A7CD55F28670113003CDDC7 /* GoogleService-Info.plist in Resources */,
 				E9E4270B23F2CD3900F5D593 /* ServiceFromOfficeView.xib in Resources */,
 				3AB41E0325C0879200AEC8C3 /* BottomCell.xib in Resources */,
 				84F6493B247402DC000C0028 /* CustomDayCell.xib in Resources */,
@@ -4222,6 +4293,7 @@
 				3AC5C6112608CBF9008D74DE /* AddressesListHistoryCell.xib in Resources */,
 				843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */,
 				E9E4273B23F5609E00F5D593 /* ServiceSoonAvailableViewController.xib in Resources */,
+				3A99E25128AED3D300DA6BDA /* OutgoingCallViewController.xib in Resources */,
 				E94B6C1923FAC5B600FD9F65 /* NewAllowedPersonViewController.xib in Resources */,
 				3A1BDF4A2634459C0075410B /* HistoryCollectionViewCell.xib in Resources */,
 				E940581823F6831A00623746 /* NewPersonCell.xib in Resources */,
@@ -4250,6 +4322,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A7CD56128670115003CDDC7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4492,6 +4565,7 @@
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
 				3A03FCF925DD5AA500B8488A /* YTVideoModel.swift in Sources */,
 				E92EFBB0242A22F2003AF7FE /* APISettingsAddress.swift in Sources */,
+				3A99E26228AED43A00DA6BDA /* CheckPhoneRequest.swift in Sources */,
 				3A003C7525DEF2D6002F193B /* YouTubeResponseData.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
 				3AC5C6102608CBF9008D74DE /* AddressesListHistoryCell.swift in Sources */,
@@ -4523,6 +4597,7 @@
 				84B89A9023F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift in Sources */,
 				84D29B9124B7999A00CFBE6B /* APIArchiveStreamInfo.swift in Sources */,
 				E9BB83CF23F69FE80071F91E /* AllowedPerson.swift in Sources */,
+				3A99E25A28AED41B00DA6BDA /* GetOptionsResponseData.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
 				E92EFBB8242A22F2003AF7FE /* APIPaymentsListAccount.swift in Sources */,
 				E92EFBC9242A22F2003AF7FE /* ConfirmCodeRequest.swift in Sources */,
@@ -4532,6 +4607,7 @@
 				84EEBC9423F3F44300C9557F /* SettingsServiceType.swift in Sources */,
 				E92EFBB6242A22F2003AF7FE /* APIRoommate.swift in Sources */,
 				3AC5C6F42612654E008D74DE /* PlogDaysRequest.swift in Sources */,
+				3A99E25328AED3D300DA6BDA /* OutgoingCallViewModel.swift in Sources */,
 				E94B6C922408EF6B00FD9F65 /* MainUserInfo.swift in Sources */,
 				844AC3ED23EBFF0E0066006D /* PaymentsCoordinator.swift in Sources */,
 				E92EFBD9242A22F2003AF7FE /* RegisterQRRequest.swift in Sources */,
@@ -4617,6 +4693,7 @@
 				84D29B9524B799B100CFBE6B /* StreamInfoRequest.swift in Sources */,
 				3A003CE625E0466D002F193B /* RequestRecordViewModel.swift in Sources */,
 				3A1BDEC626285DB60075410B /* HistoryHelpers.swift in Sources */,
+				3A99E25928AED41B00DA6BDA /* GetOptionsRequest.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				3AFBA73E26383A2F00C7DEB6 /* CamMapCCTVRequest.swift in Sources */,
 				E92EFBBF242A22F2003AF7FE /* GetServicesRequest.swift in Sources */,
@@ -4639,10 +4716,12 @@
 				3AFBA73826375B8600C7DEB6 /* BetterSnappingFlowLayout.swift in Sources */,
 				846DC64D24B3143B00A11914 /* ArchiveVideoPlaybackSpeed.swift in Sources */,
 				84CD304A24D4053C00CC079E /* AppVersionRequest.swift in Sources */,
+				3A99E26428AED43A00DA6BDA /* RequestCodeRequest.swift in Sources */,
 				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
 				E92EFBBA242A22F2003AF7FE /* GetStreetsRequest.swift in Sources */,
 				8496396B248667040086B6E9 /* PlayArchiveVideoViewModel.swift in Sources */,
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
+				3A99E26328AED43A00DA6BDA /* RequestCodeResponseData.swift in Sources */,
 				E92EFBC8242A22F2003AF7FE /* AddMyPhoneRequest.swift in Sources */,
 				3AC5C61A2608F18B008D74DE /* HistoryViewModel.swift in Sources */,
 				3A8B950B25D93098007CDD3C /* CityCamerasMapPointView.swift in Sources */,
@@ -4673,6 +4752,7 @@
 				3A200B0927297B250022A0EC /* SimpleButton.swift in Sources */,
 				3AEFB45B264C12E9000F37D0 /* FacesSettingsViewController.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
+				3A99E25528AED3F700DA6BDA /* APIOptions.swift in Sources */,
 				3AC5C6EF2612652F008D74DE /* PlogDaysResponseData.swift in Sources */,
 				842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */,
 				E9A4D48A23EC27E20070A591 /* PinNumberField.swift in Sources */,
@@ -4751,6 +4831,7 @@
 				E92EFB4824287F72003AF7FE /* PassConfirmationPinViewModel.swift in Sources */,
 				84898A8A23F1510600E6B78E /* UIButton+Extensions.swift in Sources */,
 				84854B6723FD809E001B44F2 /* AllowedPersonSectionModel.swift in Sources */,
+				3A99E25228AED3D300DA6BDA /* OutgoingCallViewController.swift in Sources */,
 				84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */,
 				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
 				E92EFBB1242A22F2003AF7FE /* APIIssue.swift in Sources */,
@@ -4783,6 +4864,7 @@
 				3A288199265D42AC00F42097 /* SafeCachedButton.swift in Sources */,
 				84D6445923F68AB200AD87EF /* CommonSettingsViewModel.swift in Sources */,
 				844AC39D23E987360066006D /* IncomingCallPortraitViewController.swift in Sources */,
+				3A99E26128AED43A00DA6BDA /* CheckPhoneResponseData.swift in Sources */,
 				3AC5C624260A3249008D74DE /* HistoryTableViewCell.swift in Sources */,
 				84B89A9523F2FA8A009692B4 /* ServiceIsActivatedViewModel.swift in Sources */,
 				84AADD242431FA9E0056994A /* NotificationRequest.swift in Sources */,
@@ -4942,7 +5024,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntents.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -4951,7 +5033,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.intents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4968,7 +5050,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntents.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -4977,7 +5059,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.intents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4993,7 +5075,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -5002,7 +5084,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -5018,7 +5100,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -5027,7 +5109,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -5043,7 +5125,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -5052,7 +5134,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -5067,7 +5149,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -5076,7 +5158,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -5214,7 +5296,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 124;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
@@ -5224,7 +5306,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
+				MARKETING_VERSION = 1.8.18;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -5255,8 +5337,6 @@
 					"-framework",
 					"\"FirebaseCore\"",
 					"-framework",
-					"\"FirebaseCoreDiagnostics\"",
-					"-framework",
 					"\"FirebaseCrashlytics\"",
 					"-framework",
 					"\"FirebaseInstallations\"",
@@ -5276,8 +5356,6 @@
 					"\"JTAppleCalendar\"",
 					"-framework",
 					"\"Kingfisher\"",
-					"-framework",
-					"\"Lottie\"",
 					"-framework",
 					"\"MapboxMaps\"",
 					"-framework",
@@ -5374,8 +5452,6 @@
 					"\"nanopb\"",
 					"-framework",
 					"\"ortp\"",
-					"-framework",
-					"\"youtube_ios_player_helper_swift\"",
 					"-weak_framework",
 					"\"Combine\"",
 					"-weak_framework",
@@ -5401,7 +5477,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 124;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
@@ -5410,7 +5486,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
+				MARKETING_VERSION = 1.8.18;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -5441,8 +5517,6 @@
 					"-framework",
 					"\"FirebaseCore\"",
 					"-framework",
-					"\"FirebaseCoreDiagnostics\"",
-					"-framework",
 					"\"FirebaseCrashlytics\"",
 					"-framework",
 					"\"FirebaseInstallations\"",
@@ -5462,8 +5536,6 @@
 					"\"JTAppleCalendar\"",
 					"-framework",
 					"\"Kingfisher\"",
-					"-framework",
-					"\"Lottie\"",
 					"-framework",
 					"\"MapboxMaps\"",
 					"-framework",
@@ -5560,8 +5632,6 @@
 					"\"nanopb\"",
 					"-framework",
 					"\"ortp\"",
-					"-framework",
-					"\"youtube_ios_player_helper_swift\"",
 					"-weak_framework",
 					"\"Combine\"",
 					"-weak_framework",
@@ -5586,7 +5656,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -5600,7 +5670,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.shared-data";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -5621,7 +5691,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 117;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -5635,7 +5705,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.16;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ru.lanta-net.smartyard.shared-data";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

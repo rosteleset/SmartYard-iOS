@@ -11,6 +11,7 @@ target 'SmartYard' do
   pod 'Moya/RxSwift' 
   pod 'Kingfisher'
   pod 'linphone-sdk' #, '4.4.28'
+  pod 'WKCookieWebView', '~> 2.0'
   
   # Reactive
   pod 'RxSwift'
@@ -44,12 +45,12 @@ target 'SmartYard' do
   pod 'MapboxMaps', '10.2.0'
   
   # Analytics
-  pod 'Firebase/Crashlytics'
-  pod 'Firebase/Analytics'
+  pod 'FirebaseCrashlytics'
+  pod 'FirebaseAnalytics'
   pod 'YandexMobileMetrica'
   
   # Push Notifications
-  pod 'Firebase/Messaging'
+  pod 'FirebaseMessaging'
   
   # Routing
   pod 'XCoordinator'

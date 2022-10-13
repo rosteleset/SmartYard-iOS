@@ -16,6 +16,9 @@ private let prefersSpeakerForCallsKey = "prefersSpeakerForCalls"
 private let clientNameKey = "clientName"
 private let clientPhoneNumberKey = "clientPhoneNumber"
 private let backendURLKey = "backendURL"
+private let showPaymentsKey = "showPayments"
+private let paymentsUrlKey = "paymentsUrl"
+private let supportPhoneKey = "supportPhoneKey"
 
 class AccessService {
     
@@ -109,6 +112,11 @@ class AccessService {
         case .smsCode(let phoneNumber): return .pinCode(phoneNumber: phoneNumber, isInitial: false)
         case .userName: return .userName(preloadedName: clientName)
         case .main: return .main
+        case .authByOutgoingCall(let phoneNumber, let confirmPhoneNumber):
+            return .authByOutgoingCall(
+                phoneNumber: phoneNumber,
+                confirmPhoneNumber: confirmPhoneNumber
+            )
         }
     }
     
@@ -121,11 +129,42 @@ class AccessService {
         }
     }
     
+    var showPayments: Bool {
+        get {
+            UserDefaults.standard.value(forKey: showPaymentsKey)  as? Bool ?? true
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: showPaymentsKey)
+        }
+    }
+    
+    var paymentsUrl: String {
+        get {
+            UserDefaults.standard.string(forKey: paymentsUrlKey) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: paymentsUrlKey)
+        }
+    }
+    
+    var supportPhone: String {
+        get {
+            UserDefaults.standard.string(forKey: supportPhoneKey) ?? "+7(4752)429999"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: supportPhoneKey)
+        }
+    }
+    
     func logout() {
         appState = .phoneNumber
         accessToken = nil
         clientName = nil
         clientPhoneNumber = nil
+        backendURL = Constants.defaultBackendURL
+        showPayments = true
+        paymentsUrl = ""
+        supportPhone = "+7(4752)429999"
         
         NotificationCenter.default.post(name: .init("UserLoggedOut"), object: nil)
     }

@@ -22,6 +22,7 @@ enum PaymentsRoute: Route {
     case dismissAndOpen(url: URL)
     case safariPage(url: URL)
     case webView(url: URL)
+    case webViewFromContent(content: String, baseURL: String)
     
     case paymentPopup(
         apiWrapper: APIWrapper,
@@ -42,9 +43,19 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
         apiWrapper: APIWrapper
     ) {
         self.apiWrapper = apiWrapper
-        super.init(initialRoute: .main)
+        
+        if self.apiWrapper.accessService.paymentsUrl.isEmpty {
+            super.init(initialRoute: .main)
+        } else {
+            if let url = URL(string: self.apiWrapper.accessService.paymentsUrl) {
+                super.init(initialRoute: .webView(url: url))
+            } else {
+                super.init(initialRoute: .alert(title: "Ошибка", message: "Не удаётся открыть страницу оплаты."))
+            }
+        }
         rootViewController.setNavigationBarHidden(true, animated: false)
         subscribeToPaymentsNotifications()
+        subscribeToOptionsNotifications()
     }
     
     override func prepareTransition(for route: PaymentsRoute) -> NavigationTransition {
@@ -109,10 +120,23 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
                 url: url,
-                backButtonLabel: "Назад",
-                push: true
+                backButtonLabel: "",
+                push: false
             )
+            children.forEach { removeChild($0) }
+            addChild(coordinator)
+            return .none()
             
+        case let .webViewFromContent(content, baseURL):
+            let coordinator = WebViewCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                content: content,
+                baseURL: baseURL,
+                backButtonLabel: "",
+                push: false
+            )
+            children.forEach { removeChild($0) }
             addChild(coordinator)
             return .none()
         }
@@ -137,6 +161,34 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
                     
                     // MARK: Если его нет в стеке - принудительно возвращаем юзера на главный экран
                     self.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeToOptionsNotifications() {
+        // Управляет обновлением url точки входа в платежи
+        // TODO: протестировать
+        NotificationCenter.default.rx
+            .notification(Notification.Name.updateOptions)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] notification in
+                    guard let self = self,
+                       let userInfo = notification.userInfo else {
+                        return
+                    }
+                    
+                    if let urlString = userInfo["paymentsUrl"] as? String,
+                       let url = URL(string: urlString) {
+                        guard self.apiWrapper.accessService.paymentsUrl != urlString else { return }
+                        
+                        self.apiWrapper.accessService.paymentsUrl = urlString
+                        self.trigger(.webView(url: url))
+                    } else {
+                        self.apiWrapper.accessService.paymentsUrl = ""
+                        self.trigger(.main)
+                    }
                 }
             )
             .disposed(by: disposeBag)

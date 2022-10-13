@@ -108,7 +108,7 @@ class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
         
         let text = pinTextField.rx.textControlProperty
             .orEmpty
-            .observeOn(MainScheduler.asyncInstance)
+            .observe(on: MainScheduler.asyncInstance)
             .asDriver(onErrorJustReturn: "")
         
         let input = PassConfirmationPinViewModel.Input(

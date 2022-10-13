@@ -10,6 +10,7 @@ import WebKit
 import RxSwift
 import RxCocoa
 import JGProgressHUD
+import WKCookieWebView
 
 enum TransitionType {
     case popup
@@ -27,7 +28,7 @@ class WebPopupController: BaseViewController, LoaderPresentable {
     
     private var swipeDismissInteractor: SwipeInteractionController?
     
-    @IBOutlet private weak var webView: WKWebView!
+    @IBOutlet private weak var webView: WKCookieWebView!
     @IBOutlet private weak var skeletonView: UIView!
     
     var loader: JGProgressHUD?
@@ -113,6 +114,7 @@ class WebPopupController: BaseViewController, LoaderPresentable {
     
     private func configureView() {
         configureSwipeAction()
+        configureRxKeyboard()
         view.backgroundColor = .clear
         webView.scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 17, left: 0, bottom: 5, right: 0)
         webView.navigationDelegate = self
@@ -133,7 +135,39 @@ class WebPopupController: BaseViewController, LoaderPresentable {
         
         transitioningDelegate = self
     }
+    
+    private func configureRxKeyboard() {
+        RxKeyboard.instance.visibleHeight
+            .drive(
+                onNext: { [weak self] keyboardHeight in
+                    guard let self = self else {
+                        return
+                    }
 
+                    self.configureGestures(with: keyboardHeight)
+                    
+                    let defaultBottomOffset: CGFloat = -50
+                    
+                    let calcOffset = keyboardHeight + defaultBottomOffset
+                    let offset = keyboardHeight == 0 ? defaultBottomOffset : calcOffset
+                    
+                    UIView.animate(
+                        withDuration: 0.05,
+                        animations: { [weak self] in
+                            self?.animatedViewBottomOffset.constant = offset
+                            self?.view.layoutIfNeeded()
+                            
+                            if keyboardHeight == 0 {
+                                self?.webView.scrollView.contentOffset = .zero
+                            }
+                            
+                        }
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
     private func addDismissViewGesture() {
         let dismissViewTapGesture = UITapGestureRecognizer()
         backgroundView.addGestureRecognizer(dismissViewTapGesture)

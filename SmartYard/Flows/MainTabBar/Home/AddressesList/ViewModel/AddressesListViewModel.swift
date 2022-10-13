@@ -11,6 +11,7 @@ import RxCocoa
 import XCoordinator
 import SmartYardSharedDataFramework
 
+// swiftlint:disable:next type_body_length
 class AddressesListViewModel: BaseViewModel {
     
     // MARK: Я в курсе, что это хреновая идея
@@ -171,7 +172,7 @@ class AddressesListViewModel: BaseViewModel {
                 hasNetworkBecomeReachable.mapToFalse(),
                 .just(false)
             )
-            .flatMapLatest { [weak self] forceRefresh -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in
+            .flatMapLatest { [weak self] forceRefresh -> Driver<(GetAddressListResponseData, GetListConnectResponseData, GetOptionsResponseData?)?> in
                 guard let self = self else {
                     return .empty()
                 }
@@ -180,18 +181,19 @@ class AddressesListViewModel: BaseViewModel {
                     .zip(
                         self.apiWrapper.getAddressList(forceRefresh: forceRefresh),
                         self.apiWrapper.getListConnect(forceRefresh: forceRefresh),
-                        self.apiWrapper.getSettingsAddresses(forceRefresh: forceRefresh)
+                        self.apiWrapper.getOptions().catchAndReturn(nil)
+                        
                     )
                     .trackActivity(interactionBlockingRequestTracker)
                     .trackError(self.errorTracker)
-                    .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
-                        let (firstResponse, secondResponse, _) = args
+                    .map { args -> (GetAddressListResponseData, GetListConnectResponseData, GetOptionsResponseData?)? in
+                        let (firstResponse, secondResponse, thirdResponse) = args
                         
                         guard let uFirstResponse = firstResponse, let uSecondResponse = secondResponse else {
                             return nil
                         }
                         
-                        return (uFirstResponse, uSecondResponse)
+                        return (uFirstResponse, uSecondResponse, thirdResponse)
                     }
                     .asDriver(onErrorJustReturn: nil)
             }
@@ -204,22 +206,26 @@ class AddressesListViewModel: BaseViewModel {
         let nonBlockingRefresh = input.refreshDataTrigger
             .asDriver()
             .delay(.milliseconds(1000))
-            .flatMapLatest { [weak self] _ -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in
+            .flatMapLatest { [weak self] _ -> Driver<(GetAddressListResponseData, GetListConnectResponseData, GetOptionsResponseData?)?> in
                 guard let self = self else {
                     return .empty()
                 }
 
                 return Single
-                    .zip(self.apiWrapper.getAddressList(forceRefresh: true), self.apiWrapper.getListConnect(forceRefresh: true), self.apiWrapper.getSettingsAddresses(forceRefresh: true))
+                    .zip(
+                        self.apiWrapper.getAddressList(forceRefresh: true),
+                        self.apiWrapper.getListConnect(forceRefresh: true),
+                        self.apiWrapper.getOptions().catchAndReturn(nil)
+                    )
                     .trackError(self.errorTracker)
-                    .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
-                        let (firstResponse, secondResponse, _) = args
+                    .map { args -> (GetAddressListResponseData, GetListConnectResponseData, GetOptionsResponseData?)? in
+                        let (firstResponse, secondResponse, thirdResponse) = args
                         
                         guard let uFirstResponse = firstResponse, let uSecondResponse = secondResponse else {
                             return nil
                         }
                         
-                        return (uFirstResponse, uSecondResponse)
+                        return (uFirstResponse, uSecondResponse, thirdResponse)
                     }
                     .asDriver(onErrorJustReturn: nil)
             }
@@ -233,7 +239,16 @@ class AddressesListViewModel: BaseViewModel {
             .merge(blockingRefresh, nonBlockingRefresh)
             .ignoreNil()
             .map { args -> (GetAddressListResponseData, GetListConnectResponseData) in
-                var (approvedAddresses, uSecondResponse) = args
+                var (approvedAddresses, uSecondResponse, uThirdResponse) = args
+                
+                // отсылаем уведомление о полученных опциях внешнего вида приложения
+                if let uThirdResponse = uThirdResponse {
+                    NotificationCenter.default.post(
+                        name: .updateOptions,
+                        object: nil,
+                        userInfo: uThirdResponse.dictionary
+                    )
+                }
                 
                 // перемещаем наверх позиции в которых есть домофон
                 var movingElements: GetAddressListResponseData = []

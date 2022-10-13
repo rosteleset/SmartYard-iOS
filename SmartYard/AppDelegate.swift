@@ -7,8 +7,9 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseCore
 import FirebaseMessaging
+import FirebaseCrashlytics
 import YandexMobileMetrica
 import PushKit
 import MapboxMaps

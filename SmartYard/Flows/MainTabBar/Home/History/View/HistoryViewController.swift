@@ -214,6 +214,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                 
                 self.updateLoader(isEnabled: true, detailText: nil)
                 self.daysQueue.remove(at: 0)
+                self.loadDayTriger.onNext(firstDay)
                 self.displayDaysInRadius(firstDay, self.daysRadiusToLoad)
                 
             }
@@ -374,7 +375,7 @@ extension HistoryViewController: UITableViewDelegate {
         var i = willDisplayDayIndex - radius
         
         while i <= willDisplayDayIndex + radius {
-            if i >= allAvailableDates.startIndex, i <= allAvailableDates.endIndex, i != willDisplayDayIndex {
+            if i >= allAvailableDates.startIndex, i < allAvailableDates.endIndex, i != willDisplayDayIndex {
                 if daysQueue.contains(allAvailableDates[i]) {
                     daysQueue.removeAll(allAvailableDates[i])
                     loadDayTriger.onNext(allAvailableDates[i])

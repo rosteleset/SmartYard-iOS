@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OutgoingCallViewController" customModule="SmartYard" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="fyG-BD-Iur" id="ptC-XZ-jGd"/>
+                <outlet property="fixPhoneNumberButton" destination="c8f-g0-jL7" id="jes-j9-JSY"/>
+                <outlet property="hintInputPhoneLabel" destination="eDz-2O-KUv" id="FKe-SE-3LB"/>
+                <outlet property="makeCallButton" destination="8gN-95-GzJ" id="Fxu-BP-gEo"/>
+                <outlet property="messageLabel" destination="0yQ-Gl-18c" id="cle-gc-XMC"/>
+                <outlet property="sendCodeAgainGroupButtonConstraint" destination="zNY-39-FIO" id="zTP-ff-RxY"/>
+                <outlet property="sendCodeAgainGroupView" destination="8mg-56-oeR" id="O80-9X-MXi"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="jxW-Bf-8Xa">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fyG-BD-Iur" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="113" width="414" height="783"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDz-2O-KUv">
+                            <rect key="frame" x="59" y="36" width="296" height="31.5"/>
+                            <string key="text">Нам необходимо убедиться, 
+что номер +79025308094 действительно ваш.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8f-g0-jL7">
+                            <rect key="frame" x="107" y="96" width="200" height="30"/>
+                            <state key="normal" title="Исправить номер телефона">
+                                <color key="titleColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8mg-56-oeR">
+                            <rect key="frame" x="0.0" y="661" width="414" height="60"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8gN-95-GzJ" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="40" y="0.0" width="334" height="60"/>
+                                    <color key="backgroundColor" name="blue"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="60" id="XU3-Ig-IIC"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                                    <state key="normal" title="Подтвердить">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="8gN-95-GzJ" firstAttribute="leading" secondItem="8mg-56-oeR" secondAttribute="leading" constant="40" id="FFM-aO-e6I"/>
+                                <constraint firstItem="8gN-95-GzJ" firstAttribute="centerX" secondItem="8mg-56-oeR" secondAttribute="centerX" id="FtR-Uo-Zn2"/>
+                                <constraint firstAttribute="height" constant="60" id="hSQ-Zp-vYE"/>
+                                <constraint firstItem="8gN-95-GzJ" firstAttribute="centerY" secondItem="8mg-56-oeR" secondAttribute="centerY" id="vpP-rS-lOt"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Сделайте бесплатный звонок на номер" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Usv-6A-CQh">
+                            <rect key="frame" x="12" y="354.5" width="390" height="23"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                            <color key="textColor" name="CustomGreyColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0yQ-Gl-18c">
+                            <rect key="frame" x="12" y="377.5" width="390" height="28"/>
+                            <attributedString key="attributedText">
+                                <fragment content="+7 (1234) 12-34-56">
+                                    <attributes>
+                                        <color key="NSColor" name="CustomGreyColor"/>
+                                        <font key="NSFont" size="22" name="SourceSansPro-Semibold"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ROh-6b-UUP">
+                            <rect key="frame" x="12" y="405.5" width="390" height="45.5"/>
+                            <string key="text">чтобы мы могли подтвердить, 
+что это ваш номер</string>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                            <color key="textColor" name="CustomGreyColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="c8f-g0-jL7" firstAttribute="centerX" secondItem="fyG-BD-Iur" secondAttribute="centerX" id="0x2-BB-8E2"/>
+                        <constraint firstItem="ROh-6b-UUP" firstAttribute="leading" secondItem="fyG-BD-Iur" secondAttribute="leading" constant="12" id="3Cz-uO-pUY"/>
+                        <constraint firstItem="eDz-2O-KUv" firstAttribute="centerX" secondItem="fyG-BD-Iur" secondAttribute="centerX" id="6pf-y9-dOI"/>
+                        <constraint firstItem="Usv-6A-CQh" firstAttribute="leading" secondItem="fyG-BD-Iur" secondAttribute="leading" constant="12" id="C3H-kR-8e4"/>
+                        <constraint firstItem="ROh-6b-UUP" firstAttribute="top" secondItem="0yQ-Gl-18c" secondAttribute="bottom" id="CbV-6I-Cwj"/>
+                        <constraint firstItem="0yQ-Gl-18c" firstAttribute="leading" secondItem="fyG-BD-Iur" secondAttribute="leading" constant="12" id="IGp-sr-Li6"/>
+                        <constraint firstItem="c8f-g0-jL7" firstAttribute="top" secondItem="eDz-2O-KUv" secondAttribute="bottom" constant="28.5" id="JHg-vj-7Tb"/>
+                        <constraint firstItem="0yQ-Gl-18c" firstAttribute="centerY" secondItem="fyG-BD-Iur" secondAttribute="centerY" id="L3a-03-0OL"/>
+                        <constraint firstAttribute="trailing" secondItem="0yQ-Gl-18c" secondAttribute="trailing" constant="12" id="QTd-mn-ltD"/>
+                        <constraint firstItem="0yQ-Gl-18c" firstAttribute="top" secondItem="Usv-6A-CQh" secondAttribute="bottom" id="dea-Es-0GP"/>
+                        <constraint firstAttribute="trailing" secondItem="ROh-6b-UUP" secondAttribute="trailing" constant="12" id="dqb-Je-PrG"/>
+                        <constraint firstItem="eDz-2O-KUv" firstAttribute="top" secondItem="fyG-BD-Iur" secondAttribute="top" constant="36" id="kcr-3L-fY7"/>
+                        <constraint firstItem="8mg-56-oeR" firstAttribute="leading" secondItem="fyG-BD-Iur" secondAttribute="leading" id="wxS-lU-6Jo"/>
+                        <constraint firstAttribute="trailing" secondItem="8mg-56-oeR" secondAttribute="trailing" id="xrr-ci-KSR"/>
+                        <constraint firstAttribute="trailing" secondItem="Usv-6A-CQh" secondAttribute="trailing" constant="12" id="zKw-TT-pmG"/>
+                        <constraint firstAttribute="bottom" secondItem="8mg-56-oeR" secondAttribute="bottom" priority="999" id="zNY-39-FIO"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jxW-Bf-8Xa" secondAttribute="trailing" id="2Lw-vD-dKV"/>
+                <constraint firstItem="jxW-Bf-8Xa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="9Jx-Bd-Dm6"/>
+                <constraint firstItem="fyG-BD-Iur" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" priority="998" constant="69" id="C4G-6J-I0C"/>
+                <constraint firstAttribute="bottom" secondItem="fyG-BD-Iur" secondAttribute="bottom" id="QJh-UN-hSQ"/>
+                <constraint firstAttribute="bottom" secondItem="jxW-Bf-8Xa" secondAttribute="bottom" id="ce8-mf-TLp"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8mg-56-oeR" secondAttribute="bottom" constant="28" id="h7G-VH-yh8"/>
+                <constraint firstItem="jxW-Bf-8Xa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kFa-qT-JzD"/>
+                <constraint firstItem="fyG-BD-Iur" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vxg-gW-174"/>
+                <constraint firstAttribute="trailing" secondItem="fyG-BD-Iur" secondAttribute="trailing" id="wi9-BL-UBB"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="90.401785714285708"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="MainBackground" width="375" height="812"/>
+        <namedColor name="CustomGreyColor">
+            <color red="0.20784313725490197" green="0.25882352941176473" blue="0.30980392156862746" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="blue">
+            <color red="0.16078431372549021" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

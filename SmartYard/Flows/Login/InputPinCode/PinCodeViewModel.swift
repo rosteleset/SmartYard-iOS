@@ -106,7 +106,7 @@ class PinCodeViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.sendCodeAgainButtonTapped
-            .flatMapLatest { [weak self] _ -> Driver<Void?> in
+            .flatMapLatest { [weak self] _ -> Driver<RequestCodeResponseData?> in
                 guard let self = self else {
                     return .empty()
                 }

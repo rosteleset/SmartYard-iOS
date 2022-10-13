@@ -81,7 +81,7 @@ extension SharedSequenceConvertibleType where Element: OptionalType {
 extension ObservableType {
     
     func catchErrorJustComplete() -> Observable<Element> {
-        return catchError { _ in .empty() }
+        return `catch` { _ in .empty() }
     }
     
     func asDriverOnErrorJustComplete() -> Driver<Element> {

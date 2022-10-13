@@ -22,6 +22,7 @@ enum AppRoute: Route {
     case userName(preloadedName: APIClientName?)
     case phoneNumber
     case pinCode(phoneNumber: String, isInitial: Bool)
+    case authByOutgoingCall(phoneNumber: String, confirmPhoneNumber: String)
     case alert(title: String, message: String?)
     case onboarding
     case appSettings(title: String, message: String?)
@@ -141,6 +142,18 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             )
             
             let vc = PinCodeViewController(viewModel: vm, isInitial: isInitial)
+            return .set([vc], animation: .fade)
+        
+        case let .authByOutgoingCall(phoneNumber: phoneNumber, confirmPhoneNumber: confirmPhone):
+            let vm = OutgoingCallViewModel(
+                accessService: accessService,
+                apiWrapper: apiWrapper,
+                router: weakRouter,
+                phoneNumber: phoneNumber,
+                confirmPhone: confirmPhone
+            )
+            
+            let vc = OutgoingCallViewController(viewModel: vm)
             return .set([vc], animation: .fade)
             
         case let .alert(title, message):

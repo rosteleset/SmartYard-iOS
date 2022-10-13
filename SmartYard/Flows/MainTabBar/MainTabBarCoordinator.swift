@@ -137,26 +137,6 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         paymentsCoordinator.rootViewController.tabBarItem = paymentsTabBarItem
         self.paymentsTabBarItem = paymentsTabBarItem
         
-        /*// MARK: Settings Tab
-        let settingsCoordinator = SettingsCoordinator(
-            accessService: accessService,
-            pushNotificationService: pushNotificationService,
-            apiWrapper: apiWrapper,
-            issueService: issueService,
-            permissionService: permissionService,
-            logoutHelper: logoutHelper,
-            alertService: alertService
-        )
-        
-        let settingsTabBarItem = UITabBarItem(
-            title: "Настройки",
-            image: UIImage(named: "SettingsTabUnselected"),
-            selectedImage: UIImage(named: "SettingsTabSelected")
-        )
-        
-        settingsCoordinator.rootViewController.tabBarItem = settingsTabBarItem
-        self.settingsTabBarItem = settingsTabBarItem
-        */
         // MARK: Menu Tab
         let menuCoordinator = MainMenuCoordinator(
             accessService: accessService,
@@ -203,9 +183,13 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         )
         customTabBarController.delegate = customTabBarController
         
+        let tabs = accessService.showPayments ?
+            [homeRouter, notificationsRouter, chatRouter, paymentsRouter, menuRouter] as [Presentable] :
+            [homeRouter, notificationsRouter, chatRouter, menuRouter] as [Presentable]
+        
         super.init(
             rootViewController: customTabBarController,
-            tabs: [homeRouter, notificationsRouter, chatRouter, paymentsRouter/*, settingsRouter*/, menuRouter],
+            tabs: tabs,
             select: homeRouter
         )
         
@@ -216,6 +200,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         subscribeToBadgeUpdates()
         subscribeToAddAddressNotifications()
         subscribeToChatNotifications()
+        subscribeToOptionsNotifications()
     }
     
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
@@ -334,6 +319,43 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .drive(
                 onNext: { [weak self] in
                     self?.trigger(.chat)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    fileprivate func updatePaymentsVisibility(_ payments: Bool, _ self: MainTabBarCoordinator) {
+        if payments,
+           self.rootViewController.viewControllers?.contains(self.paymentsRouter.viewController) == false {
+            self.rootViewController.viewControllers?.insert(self.paymentsRouter.viewController, at: 3)
+            self.addChild(paymentsRouter)
+        } else if !payments {
+            self.rootViewController.viewControllers?.removeAll(self.paymentsRouter.viewController)
+            self.removeChild(paymentsRouter)
+        }
+        
+    }
+    
+    private func subscribeToOptionsNotifications() {
+        // Управляет скрытием пунктов в таббаре
+        NotificationCenter.default.rx
+            .notification(Notification.Name.updateOptions)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] notification in
+                    if let self = self,
+                       let userInfo = notification.userInfo,
+                       let payments = userInfo["payments"] as? Bool {
+                        self.updatePaymentsVisibility(payments, self)
+                        self.accessService.showPayments = payments
+                    }
+                    
+                    // обновляем телефон техподдержки
+                    if let self = self,
+                       let userInfo = notification.userInfo,
+                       let supportPhone = userInfo["supportPhone"] as? String {
+                        self.accessService.supportPhone = supportPhone
+                    }
                 }
             )
             .disposed(by: disposeBag)

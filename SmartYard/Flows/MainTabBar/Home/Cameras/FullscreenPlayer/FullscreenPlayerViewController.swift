@@ -21,7 +21,7 @@ class FullscreenPlayerViewController: UIViewController {
     private let playedVideoType: PlayedVideoType
     private let preferredPlaybackRate: Float
 
-    private var playerViewController: AVPlayerViewController?
+    private weak var playerLayer: AVPlayerLayer?
     private var progressSlider: SimpleVideoProgressSlider?
     private var sliderConstraints: [NSLayoutConstraint] = []
     
@@ -47,11 +47,15 @@ class FullscreenPlayerViewController: UIViewController {
     }
     
     @IBAction private func tapCloseButton() {
-        self.playerViewController?.dismiss(animated: true, completion: nil)
+        // чтобы корректно отработала анимация и не было конфликта в ходе анимации за эту переходящую вьюшку,
+        // убираем её из иерархии до запуска анимации закрытия окна.
+        progressSlider?.removeFromSuperview()
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction private func tapPlayPauseButton() {
-        guard let player = self.playerViewController?.player else {
+        guard let player = self.playerLayer?.player else {
             return
         }
         
@@ -61,7 +65,7 @@ class FullscreenPlayerViewController: UIViewController {
         player.rate = newState ? self.preferredPlaybackRate : 0
     }
     
-    func onTimer(_ : Timer) {
+    func onTimer(_: Timer) {
         guard let progressSlider = self.progressSlider else {
             return
         }
@@ -91,7 +95,7 @@ class FullscreenPlayerViewController: UIViewController {
     @IBAction private func doubleTap(_ sender: UITapGestureRecognizer) {
         
         guard playedVideoType == .archive,
-              let player = self.playerViewController?.player else {
+              let player = self.playerLayer?.player else {
             return
         }
         
@@ -138,16 +142,12 @@ class FullscreenPlayerViewController: UIViewController {
         guard isBeingDismissed else {
             return
         }
-        // возвращаем обратно AutoresizingMask и удаляем лишние Constraints, чтобы последующее возвращение контроллера на место прошло гладко
-        playerViewController!.view!.removeConstraints(playerViewController!.view!.constraints)
-        playerViewController!.view!.translatesAutoresizingMaskIntoConstraints = true
         
         if playedVideoType == .archive {
             progressSlider?.removeConstraints(sliderConstraints)
             self.timer?.invalidate()
             self.timer = nil
             progressSlider?.isHidden = false
-            
         }
         
         switch playedVideoType {
@@ -169,7 +169,7 @@ class FullscreenPlayerViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        playerViewController?.view.frame = contentView.bounds
+        playerLayer?.frame = contentView.bounds
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -181,15 +181,10 @@ class FullscreenPlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // добавляем в контейнер дочерний контроллер плеера, добавляем во вью плеер и настраиваем его отображение
-        addChild(playerViewController!)
-        contentView.removeSubviews()
-        contentView.insertSubview(playerViewController!.view!, at: 0)
-        playerViewController!.didMove(toParent: self)
-        playerViewController?.view.translatesAutoresizingMaskIntoConstraints = false
-        playerViewController!.view!.removeConstraints(playerViewController!.view!.constraints)
-        playerViewController?.view.fillToSuperview()
+      
+        if let playerLayer = playerLayer {
+           contentView.layer.insertSublayer(playerLayer, at: 0)
+        }
         
         guard playedVideoType == .archive else {
             return
@@ -208,7 +203,7 @@ class FullscreenPlayerViewController: UIViewController {
             constraint.isActive = true
         }
         
-        playPauseButton.isSelected = ((playerViewController?.player!.rate)! > 0)
+        playPauseButton.isSelected = ((playerLayer?.player!.rate)! > 0)
         
         controls = []
         controls.append(progressSlider)
@@ -217,21 +212,17 @@ class FullscreenPlayerViewController: UIViewController {
         hideControls()
     }
     
-    func setPlayerViewController(_ playerViewController: AVPlayerViewController) {
+    func setPlayerLayer(_ playerLayer: AVPlayerLayer) {
         
-        self.playerViewController = playerViewController
-        playerViewController.showsPlaybackControls = false
-        playerViewController.view.isUserInteractionEnabled = true
+        self.playerLayer = playerLayer
         
-        disposeBag = DisposeBag()
-        
-        guard let player = playerViewController.player else {
+        guard let player = playerLayer.player else {
             return
         }
         
         player.rx
             .observe(Float.self, "rate", options: [.new])
-            .observeOn(MainScheduler.asyncInstance)
+            .observe(on: MainScheduler.asyncInstance)
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
             .drive(
@@ -245,7 +236,7 @@ class FullscreenPlayerViewController: UIViewController {
                     // Поэтому отслеживаем изменения, если вдруг rate стал равен 1 - меняем его на preferred
                     
                     if rate == 1, self.preferredPlaybackRate != 1 {
-                        self.playerViewController?.player?.rate = self.preferredPlaybackRate
+                        self.playerLayer?.player?.rate = self.preferredPlaybackRate
                     }
                 }
             )

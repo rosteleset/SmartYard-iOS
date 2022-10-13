@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -48,13 +48,6 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="59B-VS-YVQ">
                             <rect key="frame" x="0.0" y="74" width="487" height="378"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3rj-8j-KuM" customClass="MapView" customModule="MapboxMaps">
-                                    <rect key="frame" x="0.0" y="0.0" width="487" height="378"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="string" keyPath="styleURI__" value="mapbox://styles/mapbox/streets-v11"/>
-                                    </userDefinedRuntimeAttributes>
-                                </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQy-0w-33M" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="16" y="303" width="455" height="60"/>
                                     <constraints>
@@ -67,12 +60,8 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="bQy-0w-33M" secondAttribute="trailing" constant="16" id="3Np-S0-bzI"/>
-                                <constraint firstAttribute="bottom" secondItem="3rj-8j-KuM" secondAttribute="bottom" id="AA3-8i-ebT"/>
                                 <constraint firstAttribute="bottom" secondItem="bQy-0w-33M" secondAttribute="bottom" constant="15" id="BFN-x4-Pc4"/>
                                 <constraint firstItem="bQy-0w-33M" firstAttribute="leading" secondItem="59B-VS-YVQ" secondAttribute="leading" constant="16" id="ORE-xG-O54"/>
-                                <constraint firstItem="3rj-8j-KuM" firstAttribute="top" secondItem="59B-VS-YVQ" secondAttribute="top" id="SUb-ST-9fa"/>
-                                <constraint firstAttribute="trailing" secondItem="3rj-8j-KuM" secondAttribute="trailing" id="atw-tK-qlx"/>
-                                <constraint firstItem="3rj-8j-KuM" firstAttribute="leading" secondItem="59B-VS-YVQ" secondAttribute="leading" id="wMH-Ij-22W"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -98,8 +87,8 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="containerView" destination="59B-VS-YVQ" id="ebo-P1-dQ5"/>
                 <outlet property="doSoButton" destination="bQy-0w-33M" id="14r-cL-qL7"/>
-                <outlet property="mapView" destination="3rj-8j-KuM" id="kNd-V7-aPb"/>
             </connections>
             <point key="canvasLocation" x="190.57971014492756" y="-50.892857142857139"/>
         </view>

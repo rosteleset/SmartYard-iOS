@@ -18,7 +18,7 @@ class PermissionService {
             subscribe: { single in
                 AVCaptureDevice.requestAccess(for: mediaType) { isPermissionGranted in
                     guard isPermissionGranted else {
-                        single(.error(NSError.PermissionError.noCameraPermission))
+                        single(.failure(NSError.PermissionError.noCameraPermission))
                         return
                     }
                     
@@ -39,7 +39,7 @@ class PermissionService {
             subscribe: { single in
                 CNContactStore().requestAccess(for: .contacts) { isPermissionGranted, error in
                     guard isPermissionGranted else {
-                        single(.error(error ?? NSError.PermissionError.noContactsPermission))
+                        single(.failure(error ?? NSError.PermissionError.noContactsPermission))
                         return
                     }
                     
@@ -56,7 +56,7 @@ class PermissionService {
             subscribe: { single in
                 AVAudioSession.sharedInstance().requestRecordPermission { isPermissionGranted in
                     guard isPermissionGranted else {
-                        single(.error(NSError.PermissionError.noMicPermission))
+                        single(.failure(NSError.PermissionError.noMicPermission))
                         return
                     }
                     

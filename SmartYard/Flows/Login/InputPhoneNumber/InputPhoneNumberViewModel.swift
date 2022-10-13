@@ -58,7 +58,7 @@ class InputPhoneNumberViewModel: BaseViewModel {
                     tempPhoneSubject.onNext(phone)
                 }
             )
-            .flatMapLatest { [weak self] phone -> Driver<Void?> in
+            .flatMapLatest { [weak self] phone -> Driver<RequestCodeResponseData?> in
                 guard let self = self else {
                     return .just(nil)
                 }
@@ -69,19 +69,44 @@ class InputPhoneNumberViewModel: BaseViewModel {
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
-            .withLatestFrom(tempPhone)
-            .ignoreNil()
+            .withLatestFrom(tempPhone.ignoreNil()) { ($0, $1) }
             .do(
-                onNext: { [weak self] phoneNumber in
-                    self?.accessService.appState = .smsCode(phoneNumber: phoneNumber)
+                onNext: { [weak self] response, phoneNumber in
+                    switch response {
+                    case .outgoingCall(let confirmNumbers):
+                        guard let confirmNumber = confirmNumbers.first else {
+                            self?.accessService.appState = .smsCode(phoneNumber: phoneNumber)
+                            return
+                        }
+                        self?.accessService.appState = .authByOutgoingCall(
+                            phoneNumber: phoneNumber,
+                            confirmPhoneNumber: confirmNumber
+                        )
+                    default:
+                        self?.accessService.appState = .smsCode(phoneNumber: phoneNumber)
+                    }
                     
                     prepareTransitionTrigger.onNext(())
                 }
             )
             .delay(.milliseconds(100))
             .drive(
-                onNext: { [weak self] phone in
-                    self?.router.trigger(.pinCode(phoneNumber: phone, isInitial: true))
+                onNext: { [weak self] response, phone in
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    switch response {
+                    case .outgoingCall(let confirmNumbers):
+                        guard let confirmNumber = confirmNumbers.first else {
+                            self.router.trigger(.alert(title: "Ошибка", message: "Отсутствует номер для подтверждения"))
+                            return
+                        }
+                        self.router.trigger(.authByOutgoingCall(phoneNumber: phone, confirmPhoneNumber: confirmNumber))
+                    default:
+                        self.router.trigger(.pinCode(phoneNumber: phone, isInitial: true))
+                    }
+                    
                 }
             )
             .disposed(by: disposeBag)

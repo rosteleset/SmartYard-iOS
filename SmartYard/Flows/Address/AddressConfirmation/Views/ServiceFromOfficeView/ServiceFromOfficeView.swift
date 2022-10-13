@@ -17,11 +17,31 @@ import UIKit
 class ServiceFromOfficeView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var doSoButton: BlueButton!
-    @IBOutlet private weak var mapView: MapView!
+    @IBOutlet private weak var containerView: UIView!
     private var shownAnnotationView: UIView?
+    private var mapView: MapView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureMapBox()
+    }
+    
+    fileprivate func configureMapBox() {
+        let cameraOptions = CameraOptions(
+            center: Constants.defaultMapCenterCoordinates,
+            zoom: 8,
+            bearing: .zero,
+            pitch: .zero
+        )
+        let options = MapInitOptions(
+            cameraOptions: cameraOptions,
+            styleURI: StyleURI(url: URL(string: "mapbox://styles/mapbox/streets-v11")!)
+        )
+        mapView = MapView(frame: containerView.bounds, mapInitOptions: options)
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(mapView)
+        containerView.sendSubviewToBack(mapView)
+        mapView.alignToView(containerView)
     }
     
     private func createSampleView(withText text: String) -> UIView {
@@ -73,7 +93,7 @@ class ServiceFromOfficeView: PMNibLinkableView {
         
         annotationManager.iconAllowOverlap = true
         annotationManager.annotations = officesPoints
-        let cameraOptions = CameraOptions(center: Constants.tambovCoordinates, zoom: 8)
+        let cameraOptions = CameraOptions(center: Constants.defaultMapCenterCoordinates, zoom: 8)
         self.mapView.mapboxMap.setCamera(to: cameraOptions)
     }
 }

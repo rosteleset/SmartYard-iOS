@@ -127,7 +127,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     }
     
     func convertNoConnectionError() -> PrimitiveSequence<Trait, Element> {
-        catchError { error in
+        `catch` { error in
             let nsError = error as NSError
             
             guard nsError.domain == "Moya.MoyaError",

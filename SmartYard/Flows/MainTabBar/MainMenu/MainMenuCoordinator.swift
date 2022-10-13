@@ -106,7 +106,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         case .callSupport:
             
             let callHandler = { (_: UIAlertAction) -> Void in
-               if let phoneCallURL = URL(string: "tel://+7(4752)429999") {
+                if let phoneCallURL = URL(string: "tel://" + self.accessService.supportPhone) {
                     let application = UIApplication.shared
                     if application.canOpenURL(phoneCallURL) {
                         application.open(phoneCallURL, options: [:], completionHandler: nil)

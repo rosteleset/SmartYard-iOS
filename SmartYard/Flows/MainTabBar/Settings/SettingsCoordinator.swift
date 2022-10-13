@@ -8,7 +8,7 @@
 
 import XCoordinator
 import SafariServices
-import Lottie
+//import Lottie
 
 enum SettingsRoute: Route {
     

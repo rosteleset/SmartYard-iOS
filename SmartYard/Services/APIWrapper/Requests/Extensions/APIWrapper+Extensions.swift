@@ -48,4 +48,23 @@ extension APIWrapper {
             .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
+    
+    func getOptions() -> Single<GetOptionsResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = GetOptionsRequest(accessToken: accessToken)
+        print("request data: \(request)")
+        
+        return provider.rx
+            .request(.options(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
 }

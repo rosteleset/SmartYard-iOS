@@ -54,7 +54,7 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-    func requestCode(userPhone: String) -> Single<Void?> {
+    func requestCode(userPhone: String) -> Single<RequestCodeResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -64,7 +64,7 @@ extension APIWrapper {
         return provider.rx
             .request(.requestCode(request: request))
             .convertNoConnectionError()
-            .mapAsVoidResponse()
+            .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
     
@@ -117,6 +117,23 @@ extension APIWrapper {
         
         return provider.rx
             .request(.confirmCode(request: request))
+            .convertNoConnectionError()
+            .mapAsDefaultResponse()
+    }
+    
+    func checkPhone(userPhone: String) -> Single<CheckPhoneResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard accessService.accessToken == nil else {
+            return .error(NSError.APIWrapperError.alreadyLoggedInError)
+        }
+        
+        let request = CheckPhoneRequest(userPhone: userPhone)
+        
+        return provider.rx
+            .request(.checkPhone(request: request))
             .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
