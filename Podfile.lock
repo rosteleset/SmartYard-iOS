@@ -93,31 +93,31 @@ PODS:
   - JGProgressHUD (2.2)
   - JTAppleCalendar (8.0.4)
   - Kingfisher (6.3.1)
-  - linphone-sdk (5.1.64):
-    - linphone-sdk/all-frameworks (= 5.1.64)
-    - linphone-sdk/app-extension (= 5.1.64)
-    - linphone-sdk/app-extension-swift (= 5.1.64)
-    - linphone-sdk/basic-frameworks (= 5.1.64)
-    - linphone-sdk/swift (= 5.1.64)
-  - linphone-sdk/all-frameworks (5.1.64)
-  - linphone-sdk/app-extension (5.1.64)
-  - linphone-sdk/app-extension-swift (5.1.64):
+  - linphone-sdk (5.1.66):
+    - linphone-sdk/all-frameworks (= 5.1.66)
+    - linphone-sdk/app-extension (= 5.1.66)
+    - linphone-sdk/app-extension-swift (= 5.1.66)
+    - linphone-sdk/basic-frameworks (= 5.1.66)
+    - linphone-sdk/swift (= 5.1.66)
+  - linphone-sdk/all-frameworks (5.1.66)
+  - linphone-sdk/app-extension (5.1.66)
+  - linphone-sdk/app-extension-swift (5.1.66):
     - linphone-sdk/app-extension
-  - linphone-sdk/basic-frameworks (5.1.64):
+  - linphone-sdk/basic-frameworks (5.1.66):
     - linphone-sdk/app-extension
-  - linphone-sdk/swift (5.1.64):
+  - linphone-sdk/swift (5.1.66):
     - linphone-sdk/app-extension-swift
     - linphone-sdk/basic-frameworks
   - lottie-ios (3.5.0)
-  - MapboxCommon (21.0.1)
-  - MapboxCoreMaps (10.2.0):
-    - MapboxCommon (~> 21.0)
-  - MapboxMaps (10.2.0):
-    - MapboxCommon (= 21.0.1)
-    - MapboxCoreMaps (= 10.2.0)
-    - MapboxMobileEvents (= 1.0.6)
+  - MapboxCommon (23.1.0)
+  - MapboxCoreMaps (10.9.0):
+    - MapboxCommon (~> 23.1)
+  - MapboxMaps (10.9.0):
+    - MapboxCommon (= 23.1.0)
+    - MapboxCoreMaps (= 10.9.0)
+    - MapboxMobileEvents (= 1.0.8)
     - Turf (~> 2.0)
-  - MapboxMobileEvents (1.0.6)
+  - MapboxMobileEvents (1.0.8)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (15.0.0):
@@ -149,7 +149,7 @@ PODS:
     - RxSwift (~> 6.0)
   - SearchTextField (1.2.4)
   - SHSPhoneComponent (2.32)
-  - SkeletonView (1.30.3)
+  - SkeletonView (1.30.4)
   - SSCustomTabbar (2.0.2)
   - SwifterSwift (5.3.0):
     - SwifterSwift/AppKit (= 5.3.0)
@@ -204,7 +204,7 @@ DEPENDENCIES:
   - Kingfisher
   - linphone-sdk
   - lottie-ios
-  - MapboxMaps (= 10.2.0)
+  - MapboxMaps
   - Moya/RxSwift
   - OnlineChatSdk (from `https://github.com/rosteleset/OnlineChatSdk-Swift.git`, branch `feature/build-fix`)
   - Parchment
@@ -311,12 +311,12 @@ SPEC CHECKSUMS:
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   JTAppleCalendar: f95b02c64f56d6f938fbf6582a04dcab9d709ebd
   Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
-  linphone-sdk: e157b1542f85418a910b2e78a653d4e94e1e5158
+  linphone-sdk: 371e3d7ad7df0d90c9f3731f1261f01cbd50754e
   lottie-ios: c55158d67d0629a260625cc2ded2052b829e3c3e
-  MapboxCommon: fdfdbd4e87a225190913f2f4b4a73ec51ed77eaa
-  MapboxCoreMaps: bdd0115bfd8bf6df402468710cb23c926938b03d
-  MapboxMaps: 1ed477cbe573a9e740801dfc9c636ef33bbc3f54
-  MapboxMobileEvents: 14d7ac3ee95b4142c4fec2205dfd48ff453e8871
+  MapboxCommon: bfffb68226f650df065cf24e307576267ebc75e8
+  MapboxCoreMaps: 34ae725a08a720e1e0cd4530c37ec78e0682abf9
+  MapboxMaps: d11d792fb181a44975dce3a356f763a407a078cc
+  MapboxMobileEvents: febdd92835daa258ca1c1faad0821c0b3394ef40
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OnlineChatSdk: 421b17a804f22c193f81f02a891e7d91128c525b
@@ -332,7 +332,7 @@ SPEC CHECKSUMS:
   RxViewController: 56486fa0afd629a1d6b5ba077f3b8cd9dc31b5d2
   SearchTextField: 40dc3cc57def5a211f263cac263622c163bbc25a
   SHSPhoneComponent: c491cf87a0d5c3fb11b8f54100d05fd2706cb401
-  SkeletonView: f5b099c708e42a278079a12bcaaf71c303be65a3
+  SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
   SSCustomTabbar: e18f8aa256bce5c8a4742e53e638f64b33fb0e10
   SwifterSwift: d6321c8c64588311be85652759d452d2855dc8b7
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
@@ -342,6 +342,10 @@ SPEC CHECKSUMS:
   WKCookieWebView: 528260c9cf7d89d312d61639cfca75c5618326a2
   XCoordinator: a5f91e43ee944f508529763921165697d3211629
 
+<<<<<<< HEAD
 PODFILE CHECKSUM: e24bdb5b132686cde5541943df4084c7eff7964a
+=======
+PODFILE CHECKSUM: f75a4637b3c97f8f0295721bee60b8dd32d1d6d4
+>>>>>>> 54f334c9 (pod update)
 
 COCOAPODS: 1.11.2

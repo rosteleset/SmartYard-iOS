@@ -36,6 +36,13 @@ class RequestRecordViewController: BaseViewController, LoaderPresentable, UIPick
         self.viewModel = viewModel
         
         datePicker = UIDatePicker()
+        
+        // по умолчанию на iOS 14+ выбирается .compact режим, который конфликтует с tabbar
+        // проще всего это фиксится принудительным выставлением стиля в "wheels"
+        if #available(iOS 13.4, *) {
+            self.datePicker.preferredDatePickerStyle = .wheels
+        }
+        
         periodPicker = PeriodPicker()
         selectedDate = Date()
         super.init(nibName: nil, bundle: nil)
