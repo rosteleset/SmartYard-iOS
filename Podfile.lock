@@ -1,9 +1,9 @@
 PODS:
-  - Alamofire (5.6.2)
+  - Alamofire (5.6.4)
   - Cartography (4.0.0)
   - Differentiator (5.0.0)
-  - FirebaseAnalytics (10.0.0):
-    - FirebaseAnalytics/AdIdSupport (= 10.0.0)
+  - FirebaseAnalytics (10.2.0):
+    - FirebaseAnalytics/AdIdSupport (= 10.2.0)
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
@@ -11,34 +11,34 @@ PODS:
     - GoogleUtilities/Network (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseAnalytics/AdIdSupport (10.0.0):
+  - FirebaseAnalytics/AdIdSupport (10.2.0):
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
-    - GoogleAppMeasurement (= 10.0.0)
+    - GoogleAppMeasurement (= 10.2.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/MethodSwizzler (~> 7.8)
     - GoogleUtilities/Network (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseCore (10.0.0):
+  - FirebaseCore (10.2.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreInternal (10.0.0):
+  - FirebaseCoreInternal (10.2.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseCrashlytics (10.0.0):
+  - FirebaseCrashlytics (10.2.0):
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
     - GoogleDataTransport (~> 9.2)
     - GoogleUtilities/Environment (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (~> 2.1)
-  - FirebaseInstallations (10.0.0):
+  - FirebaseInstallations (10.2.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
-  - FirebaseMessaging (10.0.0):
+  - FirebaseMessaging (10.2.0):
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
     - GoogleDataTransport (~> 9.2)
@@ -47,21 +47,21 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement (10.0.0):
-    - GoogleAppMeasurement/AdIdSupport (= 10.0.0)
+  - GoogleAppMeasurement (10.2.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.2.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/MethodSwizzler (~> 7.8)
     - GoogleUtilities/Network (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (10.0.0):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.0.0)
+  - GoogleAppMeasurement/AdIdSupport (10.2.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.2.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/MethodSwizzler (~> 7.8)
     - GoogleUtilities/Network (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (10.0.0):
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.2.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/MethodSwizzler (~> 7.8)
     - GoogleUtilities/Network (~> 7.8)
@@ -71,53 +71,53 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/AppDelegateSwizzler (7.8.0):
+  - GoogleUtilities/AppDelegateSwizzler (7.10.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.8.0):
+  - GoogleUtilities/Environment (7.10.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.8.0):
+  - GoogleUtilities/Logger (7.10.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.8.0):
+  - GoogleUtilities/MethodSwizzler (7.10.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.8.0):
+  - GoogleUtilities/Network (7.10.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.8.0)"
-  - GoogleUtilities/Reachability (7.8.0):
+  - "GoogleUtilities/NSData+zlib (7.10.0)"
+  - GoogleUtilities/Reachability (7.10.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.8.0):
+  - GoogleUtilities/UserDefaults (7.10.0):
     - GoogleUtilities/Logger
   - JGProgressHUD (2.2)
   - JTAppleCalendar (8.0.4)
   - Kingfisher (6.3.1)
-  - linphone-sdk (5.1.66):
-    - linphone-sdk/all-frameworks (= 5.1.66)
-    - linphone-sdk/app-extension (= 5.1.66)
-    - linphone-sdk/app-extension-swift (= 5.1.66)
-    - linphone-sdk/basic-frameworks (= 5.1.66)
-    - linphone-sdk/swift (= 5.1.66)
-  - linphone-sdk/all-frameworks (5.1.66)
-  - linphone-sdk/app-extension (5.1.66)
-  - linphone-sdk/app-extension-swift (5.1.66):
+  - linphone-sdk (5.1.71):
+    - linphone-sdk/all-frameworks (= 5.1.71)
+    - linphone-sdk/app-extension (= 5.1.71)
+    - linphone-sdk/app-extension-swift (= 5.1.71)
+    - linphone-sdk/basic-frameworks (= 5.1.71)
+    - linphone-sdk/swift (= 5.1.71)
+  - linphone-sdk/all-frameworks (5.1.71)
+  - linphone-sdk/app-extension (5.1.71)
+  - linphone-sdk/app-extension-swift (5.1.71):
     - linphone-sdk/app-extension
-  - linphone-sdk/basic-frameworks (5.1.66):
+  - linphone-sdk/basic-frameworks (5.1.71):
     - linphone-sdk/app-extension
-  - linphone-sdk/swift (5.1.66):
+  - linphone-sdk/swift (5.1.71):
     - linphone-sdk/app-extension-swift
     - linphone-sdk/basic-frameworks
   - lottie-ios (3.5.0)
-  - MapboxCommon (23.1.0)
-  - MapboxCoreMaps (10.9.0):
-    - MapboxCommon (~> 23.1)
-  - MapboxMaps (10.9.0):
-    - MapboxCommon (= 23.1.0)
-    - MapboxCoreMaps (= 10.9.0)
-    - MapboxMobileEvents (= 1.0.8)
+  - MapboxCommon (21.0.1)
+  - MapboxCoreMaps (10.2.0):
+    - MapboxCommon (~> 21.0)
+  - MapboxMaps (10.2.0):
+    - MapboxCommon (= 21.0.1)
+    - MapboxCoreMaps (= 10.2.0)
+    - MapboxMobileEvents (= 1.0.6)
     - Turf (~> 2.0)
-  - MapboxMobileEvents (1.0.8)
+  - MapboxMobileEvents (1.0.6)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (15.0.0):
@@ -182,10 +182,10 @@ PODS:
   - SwifterSwift/SwiftStdlib (5.3.0)
   - SwifterSwift/UIKit (5.3.0)
   - SwifterSwift/WebKit (5.3.0)
-  - SwiftLint (0.49.1)
+  - SwiftLint (0.50.0)
   - TouchAreaInsets (1.1.0)
   - TPKeyboardAvoiding (1.3.5)
-  - Turf (2.5.0)
+  - Turf (2.6.1)
   - WKCookieWebView (2.0.3)
   - XCoordinator (2.2.0):
     - XCoordinator/Core (= 2.2.0)
@@ -292,31 +292,31 @@ CHECKOUT OPTIONS:
     :commit: 90e83f277033d7cd2374e6fb71a926e800ce3659
     :git: https://github.com/rosteleset/SSCustomTabbar.git
   SwifterSwift:
-    :commit: 04d474ade1aa7d8e6bde9a65d5f8d1a3595dc3a0
+    :commit: 78768d73cb4c144d5ee7bdf8d68b16784fa69050
     :git: https://github.com/SwifterSwift/SwifterSwift.git
 
 SPEC CHECKSUMS:
-  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
   Cartography: c5626d29056b20f1e95c017326ee4df57cc39ad8
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
-  FirebaseAnalytics: 9921a52739f4ab66099da31b6e0243db78a3ac0a
-  FirebaseCore: 97f48a3a567a72b8d4daa0f03c3aadb78df4e995
-  FirebaseCoreInternal: 5eb3960335da5ea30115d57d39db6988c4ad06f3
-  FirebaseCrashlytics: 6b0613b548fe096221b5ba6d2f7a9732b451233b
-  FirebaseInstallations: 7f1c9ae6bd9df6abe9c74124b38fa8740aba5df4
-  FirebaseMessaging: 8916bf5edb1dbfac74665a181e4d1ab3a78a08a2
-  GoogleAppMeasurement: 7e48a3249792ac35d6f18f107f63f199a7e9d0ce
+  FirebaseAnalytics: 24a15e58e505abcedc3017b6f7c206fbfa964580
+  FirebaseCore: 813838072b797b64f529f3c2ee35e696e5641dd1
+  FirebaseCoreInternal: 091bde13e47bb1c5e9fe397634f3593dc390430f
+  FirebaseCrashlytics: df7406152189d48346deafb716806d7bd9ebb573
+  FirebaseInstallations: 004915af170935e3a583faefd5f8bc851afc220f
+  FirebaseMessaging: cc9f40f5b7494680f3844d08e517e92aa4e8d9f7
+  GoogleAppMeasurement: 3bc3a6484b7bb20dd8489242c4dd3c92a3e5107b
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
-  GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
+  GoogleUtilities: bad72cb363809015b1f7f19beb1f1cd23c589f95
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   JTAppleCalendar: f95b02c64f56d6f938fbf6582a04dcab9d709ebd
   Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
-  linphone-sdk: 371e3d7ad7df0d90c9f3731f1261f01cbd50754e
+  linphone-sdk: 198e91528d4c0f48f83cd619ea81690226864c9c
   lottie-ios: c55158d67d0629a260625cc2ded2052b829e3c3e
-  MapboxCommon: bfffb68226f650df065cf24e307576267ebc75e8
-  MapboxCoreMaps: 34ae725a08a720e1e0cd4530c37ec78e0682abf9
-  MapboxMaps: d11d792fb181a44975dce3a356f763a407a078cc
-  MapboxMobileEvents: febdd92835daa258ca1c1faad0821c0b3394ef40
+  MapboxCommon: fdfdbd4e87a225190913f2f4b4a73ec51ed77eaa
+  MapboxCoreMaps: bdd0115bfd8bf6df402468710cb23c926938b03d
+  MapboxMaps: 1ed477cbe573a9e740801dfc9c636ef33bbc3f54
+  MapboxMobileEvents: 14d7ac3ee95b4142c4fec2205dfd48ff453e8871
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OnlineChatSdk: 421b17a804f22c193f81f02a891e7d91128c525b
@@ -335,10 +335,10 @@ SPEC CHECKSUMS:
   SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
   SSCustomTabbar: e18f8aa256bce5c8a4742e53e638f64b33fb0e10
   SwifterSwift: d6321c8c64588311be85652759d452d2855dc8b7
-  SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
+  SwiftLint: 9cbf846727f3312f3ba722f2d7108a162cd050a5
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
-  Turf: 8adf034c2963a0e587b979c51b5c12c396e29c44
+  Turf: 469ce2c3d22e5e8e4818d5a3b254699a5c89efa4
   WKCookieWebView: 528260c9cf7d89d312d61639cfca75c5618326a2
   XCoordinator: a5f91e43ee944f508529763921165697d3211629
 

@@ -19,6 +19,7 @@ struct APICCTV: Decodable {
     let coordinate: CLLocationCoordinate2D
     let video: String
     let token: String
+    let serverType: DVRServerType?
     
     private enum CodingKeys: String, CodingKey {
         case houseId
@@ -28,6 +29,7 @@ struct APICCTV: Decodable {
         case lon
         case url
         case token
+        case serverType
     }
     
     init(from decoder: Decoder) throws {
@@ -49,6 +51,15 @@ struct APICCTV: Decodable {
         
         video = try container.decode(String.self, forKey: .url)
         token = try container.decode(String.self, forKey: .token)
+        serverType = try? container.decode(DVRServerType.self, forKey: .serverType)
     }
+}
+
+enum DVRServerType: String, Decodable, EmptyDataInitializable {
+    case flussonic
+    case nimble
     
+    init () {
+        self = .flussonic
+    }
 }

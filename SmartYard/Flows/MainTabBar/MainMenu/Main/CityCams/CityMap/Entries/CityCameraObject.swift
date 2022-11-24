@@ -9,13 +9,4 @@
 import Foundation
 import CoreLocation
 
-struct CityCameraObject: Equatable {
-    
-    let id: Int
-    let position: CLLocationCoordinate2D
-    let cameraNumber: Int
-    let name: String
-    let video: String
-    let token: String
-    
-}
+typealias CityCameraObject = CameraObject

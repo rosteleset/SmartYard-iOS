@@ -77,7 +77,8 @@ class CityMapViewModel: BaseViewModel {
                         cameraNumber: offset + 1,
                         name: element.name,
                         video: element.video,
-                        token: element.token
+                        token: element.token,
+                        serverType: element.serverType
                     )
                 }
             }

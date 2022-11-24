@@ -29,6 +29,7 @@ enum APITarget {
     case recDownload(request: RecDownloadRequest)
     case streamInfo(request: StreamInfoRequest)
     case getCamMap(request: CamMapCCTVRequest)
+    case ranges(request: RangesRequest)
     
     case getAddress(request: GetAddressRequest)
     case getGeoCoder(request: GeoCoderRequest)
@@ -79,7 +80,7 @@ extension APITarget: TargetType {
     var baseURL: URL {
         switch self {
         case .getProvidersList:
-            return URL(string: Constants.provListURL+"?_=\(Int.random(in: 0..<Int.max))")!
+            return URL(string: Constants.provListURL + "?_=\(Int.random(in: 0..<Int.max))")!
         case .sberbankPayProcess:
             return URL(string: "https://securepayments.sberbank.ru/payment/applepay")!
         
@@ -116,6 +117,7 @@ extension APITarget: TargetType {
         case .recDownload: return "cctv/recDownload"
         case .getCamMap: return "cctv/camMap"
         case .streamInfo: return "recording_status.json"
+        case .ranges: return "cctv/ranges"
             
         case .getAddress: return "geo/address"
         case .getGeoCoder: return "geo/coder"
@@ -195,7 +197,8 @@ extension APITarget: TargetType {
             case .recPrepare(let request): return (request.accessToken, false)
             case .recDownload(let request): return (request.accessToken, false)
             case .getCamMap(let request): return (request.accessToken, false)
-                
+            case .ranges(let request): return (request.accessToken, false)
+            
             case .getAddress(let request): return (request.accessToken, false)
             case .getGeoCoder(let request): return (request.accessToken, false)
             case .getHouses(let request): return (request.accessToken, false)
@@ -284,6 +287,7 @@ extension APITarget: TargetType {
         case .recDownload(let request): return request.requestParameters
         case .getCamMap(let request): return request.requestParameters
         case .streamInfo(let request): return request.requestParameters
+        case .ranges(let request): return request.requestParameters
             
         case .getAddress(let request): return request.requestParameters
         case .getGeoCoder(let request): return request.requestParameters

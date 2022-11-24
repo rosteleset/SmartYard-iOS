@@ -39,6 +39,7 @@ enum AppRoute: Route {
     
 }
 
+// swiftlint:disable:next type_body_length
 class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     private let disposeBag = DisposeBag()

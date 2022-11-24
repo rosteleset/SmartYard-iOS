@@ -65,21 +65,39 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-    func getArchiveRanges(cameraUrl: String, from: Int, token: String) -> Single<[APIArchiveRange]?> {
+    func getArchiveRanges(_ camera: CameraObject) -> Single<[APIArchiveRange]?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
         
-        let request = StreamInfoRequest(cameraUrl: cameraUrl, from: from, token: token)
-        
-        return provider.rx
-            .request(.streamInfo(request: request))
-            .convertNoConnectionError()
-            .map([APIArchiveStreamInfo].self)
-            .map { streamInfo in
-                streamInfo.first?.ranges ?? []
+        switch camera.serverType {
+        case .nimble:
+            guard let accessToken = accessService.accessToken else {
+                return .error(NSError.APIWrapperError.accessTokenMissingError)
             }
-            .mapToOptional()
+            
+            let request = RangesRequest(cameraId: camera.id, accessToken: accessToken)
+            
+            return provider.rx
+                .request(.ranges(request: request))
+                .convertNoConnectionError()
+                .mapAsDefaultResponse()
+                .map { (streamInfo: [APIArchiveStreamInfo]) in
+                    streamInfo.first?.ranges ?? []
+                }
+                .mapToOptional()
+        default:
+            let request = StreamInfoRequest(cameraUrl: camera.video, from: 1525186456, token: camera.token)
+            
+            return provider.rx
+                .request(.streamInfo(request: request))
+                .convertNoConnectionError()
+                .map([APIArchiveStreamInfo].self)
+                .map { streamInfo in
+                    streamInfo.first?.ranges ?? []
+                }
+                .mapToOptional()
+        }
     }
     
     func getOverviewCCTV(forceRefresh: Bool = false) -> Single<OverviewCCTVResponseData?> {

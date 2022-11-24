@@ -66,6 +66,7 @@
 		3A555B132700573400E70CB9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A555B122700573400E70CB9 /* IntentHandler.swift */; };
 		3A555B172700573400E70CB9 /* SmartYardIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3A555B0E2700573400E70CB9 /* SmartYardIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3A555B1C270058E700E70CB9 /* SYOpenDoorIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A555B1B270058E700E70CB9 /* SYOpenDoorIntentHandler.swift */; };
+		3A5C2D18292CF6CA00966E85 /* RangesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5C2D17292CF6CA00966E85 /* RangesRequest.swift */; };
 		3A5E1BC2276B098500E2880D /* WebPopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5E1BC1276B098500E2880D /* WebPopupController.swift */; };
 		3A61E56125A07F4F00A368FA /* FullscreenPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */; };
 		3A6D0F9C27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
@@ -696,6 +697,7 @@
 		3A555B142700573400E70CB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A555B1B270058E700E70CB9 /* SYOpenDoorIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYOpenDoorIntentHandler.swift; sourceTree = "<group>"; };
 		3A555B2727007A7500E70CB9 /* SmartYardIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmartYardIntents.entitlements; sourceTree = "<group>"; };
+		3A5C2D17292CF6CA00966E85 /* RangesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangesRequest.swift; sourceTree = "<group>"; };
 		3A5E1BC0276B092500E2880D /* WebPopupController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebPopupController.xib; sourceTree = "<group>"; };
 		3A5E1BC1276B098500E2880D /* WebPopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPopupController.swift; sourceTree = "<group>"; };
 		3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FullscreenPlayerViewController.xib; sourceTree = "<group>"; };
@@ -2947,6 +2949,7 @@
 			isa = PBXGroup;
 			children = (
 				84D29B9324B799B100CFBE6B /* StreamInfoRequest.swift */,
+				3A5C2D17292CF6CA00966E85 /* RangesRequest.swift */,
 				84D29B9424B799B100CFBE6B /* StreamInfoResponseData.swift */,
 			);
 			path = StreamInfo;
@@ -4656,6 +4659,7 @@
 				E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */,
 				849F2AD72448687C005693B3 /* AddressesListEmptyStateCell.swift in Sources */,
 				E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */,
+				3A5C2D18292CF6CA00966E85 /* RangesRequest.swift in Sources */,
 				848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */,
 				84AADD1D242E22550056994A /* EditNameViewModel.swift in Sources */,
 				E92EFBB5242A22F2003AF7FE /* BaseAPIResponse.swift in Sources */,
@@ -5334,7 +5338,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
@@ -5345,7 +5349,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -5512,7 +5516,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
@@ -5522,7 +5526,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",

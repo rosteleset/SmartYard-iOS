@@ -33,18 +33,9 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
         let startTimestamp = startDate.unixTimestamp.int
         let duration = endDate.timeIntervalSince(startDate).int
         
-        return "/index-\(startTimestamp)-\(duration).m3u8"
+        return "\(startTimestamp)-\(duration)"
     }
 
-    /// Компоненты URL для видео для фрагмента с номером
-    
-    func videoUrlComponents( _ index: Int) -> String? {
-        let startTimestamp = ranges[index].startDate.unixTimestamp.int
-        let duration = ranges[index].endDate.timeIntervalSince(startDate).int
-        
-        return "/index-\(startTimestamp)-\(duration).m3u8"
-    }
-    
     /// Массив компонентов URL для всех фрагментов
     var videoUrlComponentsArray: [String] {
         
@@ -55,7 +46,7 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
             let startTimestamp = startDate.unixTimestamp.int
             let duration = endDate.timeIntervalSince(startDate).int
             
-            return "/index-\(startTimestamp)-\(duration).m3u8"
+            return "\(startTimestamp)-\(duration)"
         }
     }
 

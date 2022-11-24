@@ -309,7 +309,7 @@ class OnlinePageViewController: BaseViewController {
         loadingAsset?.cancelLoading()
         loadingAsset = nil
         
-        let resultingString = camera.video + "/index.m3u8" + "?token=\(camera.token)"
+        let resultingString = camera.liveURL
         
         guard let url = URL(string: resultingString) else {
             return
