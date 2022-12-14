@@ -315,6 +315,7 @@ extension WebPopupController: WKNavigationDelegate {
         webView.allowsLinkPreview = false
         disableDragAndDropInteraction()
     }
+    // swiftlint:disable:next function_body_length
     func webView(
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,
@@ -356,7 +357,7 @@ extension WebPopupController: WKNavigationDelegate {
             }
         } else {
             // version 2
-            if [.reload, .other].contains(navigationAction.navigationType) {
+            if [.reload].contains(navigationAction.navigationType) {
                 decisionHandler(WKNavigationActionPolicy.allow)
                 return
             }
@@ -381,50 +382,70 @@ extension WebPopupController: WKNavigationDelegate {
                 }
                 
                 // #smart-yard-push
-                if url.relativeString.contains("#smart-yard-push") {
+                if url.relativeString.contains("#smart-yard-push"),
+                   let newUrl = URL(
+                    string: url.absoluteString.replacingOccurrences(
+                        ofPattern: "#smart-yard-push", withTemplate: ""
+                    )
+                   ) {
                     decisionHandler(WKNavigationActionPolicy.cancel)
                     self.dismiss(
                         animated: true,
                         completion: {
-                            trigger.onNext((url, .push))
+                            trigger.onNext((newUrl, .push))
                         }
                     )
                     return
                 }
                 
                 // #smart-yard-popup
-                if url.relativeString.contains("#smart-yard-popup") {
+                if url.relativeString.contains("#smart-yard-popup"),
+                   let newUrl = URL(
+                    string: url.absoluteString.replacingOccurrences(
+                        ofPattern: "#smart-yard-popup", withTemplate: ""
+                    )
+                   ) {
                     // открываем модально другую popup шторку
                     decisionHandler(WKNavigationActionPolicy.cancel)
                     self.dismiss(
                         animated: true,
                         completion: {
-                            trigger.onNext((url, .popup))
+                            trigger.onNext((newUrl, .popup))
                         }
                     )
                     return
                 }
                 
                 // #smart-yard-replace
-                if url.relativeString.contains("#smart-yard-replace") {
+                if url.relativeString.contains("#smart-yard-replace"),
+                   let newUrl = URL(
+                    string: url.absoluteString.replacingOccurrences(
+                        ofPattern: "#smart-yard-replace", withTemplate: ""
+                    )
+                   ) {
                     // заменяем текущий контроллер
                     decisionHandler(WKNavigationActionPolicy.cancel)
                     self.dismiss(
                         animated: true,
                         completion: {
-                            trigger.onNext((url, .replace))
+                            trigger.onNext((newUrl, .replace))
                         }
                     )
                     return
                 }
                 // #smart-yard-external
-                if url.relativeString.contains("#smart-yard-external") {
+                if url.relativeString.contains("#smart-yard-external"),
+                   let newUrl = URL(
+                    string: url.absoluteString.replacingOccurrences(
+                        ofPattern: "#smart-yard-external", withTemplate: ""
+                    )
+                   ) {
                     // открываем в новом окне через системный вызов
                     decisionHandler(WKNavigationActionPolicy.cancel)
                     self.dismiss(
                         animated: true,
                         completion: {
-                            UIApplication.shared.open(url)
+                            UIApplication.shared.open(newUrl)
                         }
                     )
                     return
@@ -441,5 +462,12 @@ extension WebPopupController: WKNavigationDelegate {
             decisionHandler(WKNavigationActionPolicy.allow)
         }
         
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel)
+        alert.addAction(okAction)
+        self.present(alert, animated: true)
     }
 }
