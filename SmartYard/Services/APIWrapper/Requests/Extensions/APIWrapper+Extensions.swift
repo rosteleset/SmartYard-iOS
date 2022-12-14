@@ -62,7 +62,7 @@ extension APIWrapper {
         print("request data: \(request)")
         
         return provider.rx
-            .request(.options(request: request))
+            .request(.options(request: request), callbackQueue: .global(qos: .background))
             .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()

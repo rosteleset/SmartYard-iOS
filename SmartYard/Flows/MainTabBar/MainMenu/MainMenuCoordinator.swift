@@ -20,8 +20,8 @@ enum MainMenuRoute: Route {
     case callSupport
     case alert(title: String, message: String)
     case back
-    case webView(url: URL)
-    case webViewFromContent(content: String, baseURL: String)
+    case webView(url: URL, version: Int)
+    case webViewFromContent(content: String, baseURL: String, version: Int)
 }
 
 class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
@@ -90,7 +90,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
     override func prepareTransition(for route: MainMenuRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = MainMenuViewModel(apiWrapper: apiWrapper, router: weakRouter)
+            let vm = MainMenuViewModel(apiWrapper: apiWrapper, accessService: accessService, router: weakRouter)
             let vc = MainMenuViewController(viewModel: vm)
             return .set([vc])
         
@@ -163,26 +163,28 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         case .back:
             return .pop(animation: .default)
             
-        case let .webView(url):
+        case let .webView(url, version):
             let coordinator = WebViewCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
                 url: url,
                 backButtonLabel: "Меню",
-                push: true
+                push: true,
+                version: version
             )
             
             addChild(coordinator)
             return .none()
             
-        case let .webViewFromContent(content, baseURL):
+        case let .webViewFromContent(content, baseURL, version):
             let coordinator = WebViewCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
                 content: content,
                 baseURL: baseURL,
                 backButtonLabel: "Меню",
-                push: true
+                push: true,
+                version: version
             )
             
             addChild(coordinator)

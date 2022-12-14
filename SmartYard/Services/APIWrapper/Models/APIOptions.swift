@@ -13,31 +13,19 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     
     let cityCams: Bool?
     let payments: Bool?
+    let chat: Bool?
+    let chatOptions: ChatOptions?
     let paymentsUrl: String?
+    let chatUrl: String?
     let supportPhone: String?
-    
-    var dictionary: [AnyHashable: Any] {
-        var result: [AnyHashable: Any] = [:]
-        
-        if let cityCams = cityCams {
-            result["cityCams"] = cityCams
-        }
-        if let payments = payments {
-            result["payments"] = payments
-        }
-        if let paymentsUrl = paymentsUrl {
-            result["paymentsUrl"] = paymentsUrl
-        }
-        if let supportPhone = supportPhone {
-            result["supportPhone"] = supportPhone
-        }
-        return result
-    }
     
     private enum CodingKeys: String, CodingKey {
         case paymentsUrl
         case cityCams
         case payments
+        case chat
+        case chatOptions
+        case chatUrl
         case supportPhone
     }
     
@@ -64,7 +52,19 @@ struct APIOptions: Decodable, EmptyDataInitializable {
             payments = nil
         }
         
+        if let chatRaw = try? container.decode(String.self, forKey: .chat) {
+            switch chatRaw {
+            case "t": chat = true
+            case "f": chat = false
+            default: chat = nil
+            }
+        } else {
+            chat = nil
+        }
+        
+        chatOptions = try? container.decode(ChatOptions.self, forKey: .chatOptions)
         paymentsUrl = try? container.decode(String.self, forKey: .paymentsUrl)
+        chatUrl = try? container.decode(String.self, forKey: .chatUrl)
         supportPhone = try? container.decode(String.self, forKey: .supportPhone)
     }
     
@@ -72,6 +72,15 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         cityCams = nil
         payments = nil
         paymentsUrl = nil
+        chatUrl = nil
         supportPhone = nil
+        chat = nil
+        chatOptions = nil
     }
+}
+
+struct ChatOptions: Decodable {
+    let id: String
+    let domain: String
+    let token: String
 }

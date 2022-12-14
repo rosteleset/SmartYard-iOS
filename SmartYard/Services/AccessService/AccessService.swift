@@ -17,7 +17,13 @@ private let clientNameKey = "clientName"
 private let clientPhoneNumberKey = "clientPhoneNumber"
 private let backendURLKey = "backendURL"
 private let showPaymentsKey = "showPayments"
+private let showChatKey = "showChat"
+private let chatIdKey = "chatId"
+private let chatDomainKey = "chatDomain"
+private let chatTokenKey = "chatToken"
+private let showCityCamsKey = "showCityCams"
 private let paymentsUrlKey = "paymentsUrl"
+private let chatUrlKey = "chatUrl"
 private let supportPhoneKey = "supportPhoneKey"
 
 class AccessService {
@@ -147,12 +153,66 @@ class AccessService {
         }
     }
     
+    var chatUrl: String {
+        get {
+            UserDefaults.standard.string(forKey: chatUrlKey) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: chatUrlKey)
+        }
+    }
+    
     var supportPhone: String {
         get {
-            UserDefaults.standard.string(forKey: supportPhoneKey) ?? "+7(4752)429999"
+            UserDefaults.standard.string(forKey: supportPhoneKey) ?? ""
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: supportPhoneKey)
+        }
+    }
+    
+    var showChat: Bool {
+        get {
+            UserDefaults.standard.value(forKey: showChatKey)  as? Bool ?? false
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: showChatKey)
+        }
+    }
+    
+    var chatId: String {
+        get {
+            UserDefaults.standard.value(forKey: chatIdKey)  as? String ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: chatIdKey)
+        }
+    }
+    
+    var chatDomain: String {
+        get {
+            UserDefaults.standard.value(forKey: chatDomainKey)  as? String ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: chatDomainKey)
+        }
+    }
+    
+    var chatToken: String {
+        get {
+            UserDefaults.standard.value(forKey: chatTokenKey)  as? String ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: chatTokenKey)
+        }
+    }
+    
+    var showCityCams: Bool {
+        get {
+            UserDefaults.standard.value(forKey: showCityCamsKey)  as? Bool ?? false
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: showCityCamsKey)
         }
     }
     
@@ -164,7 +224,12 @@ class AccessService {
         backendURL = Constants.defaultBackendURL
         showPayments = true
         paymentsUrl = ""
-        supportPhone = "+7(4752)429999"
+        supportPhone = ""
+        showChat = false
+        chatId = ""
+        chatDomain = ""
+        chatToken = ""
+        showCityCams = false
         
         NotificationCenter.default.post(name: .init("UserLoggedOut"), object: nil)
     }

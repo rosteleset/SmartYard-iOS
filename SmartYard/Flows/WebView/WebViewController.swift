@@ -26,24 +26,28 @@ class WebViewController: BaseViewController, LoaderPresentable {
     private let backButtonLabel: String
     private let shareUrlTrigger = PublishSubject<URL>()
     
-    /// (url: URL, backLabelString: String, newWindow: Bool)
-    private let openUrlTrigger = PublishSubject<(URL, String, TransitionType)>()
+    /// (url: URL, newWindow: Bool)
+    private let openUrlTrigger = PublishSubject<(URL, TransitionType)>()
     
-    private var titleString = ""
+    var documentTitle = ""
     private var webContentHeight: CGFloat?
     private let accessToken: String
     
     private var refreshDisposable: Disposable?
     private let refreshSubject = PublishSubject<Void>()
     
+    private let version: Int
+    
     init(
         viewModel: WebViewModel,
         backButtonLabel: String = "Назад",
-        accessToken: String = ""
+        accessToken: String = "",
+        version: Int
     ) {
         self.viewModel = viewModel
         self.backButtonLabel = backButtonLabel
         self.accessToken = accessToken
+        self.version = version
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -236,7 +240,7 @@ extension WebViewController: WKNavigationDelegate {
         // увы webView.title возвращает пустую строку, когда страница повторно загружается,
         // поэтому приходится костылить через JS
         webView.evaluateJavaScript("document.title", completionHandler: { title, _ in
-            self.titleString = title as? String ?? self.backButtonLabel
+            self.documentTitle = title as? String ?? self.backButtonLabel
         })
         
         webView.evaluateJavaScript("document.documentElement.offsetHeight", completionHandler: { height, _ in
@@ -249,40 +253,125 @@ extension WebViewController: WKNavigationDelegate {
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
-        guard [.linkActivated, .formSubmitted].contains(navigationAction.navigationType) else {
+        if version == 1 {
+            guard [.linkActivated, .formSubmitted, .other].contains(navigationAction.navigationType) else {
+                decisionHandler(WKNavigationActionPolicy.allow)
+                return
+            }
+            
+            if let url = navigationAction.request.url {
+                print(url)
+                // если это sberpay:, tel: или ещё какой-то кастомный дип-линк, то обрабатывыаем переход по умолчанию
+                guard url.scheme == "https" || url.scheme == "http" else {
+                    UIApplication.shared.open(url)
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    return
+                }
+                
+                // если это страницы, которые хостятся на внешнем хосте, то открываем в новом окне.
+                guard let host = url.host, let currentUrl = webView.url, host == currentUrl.host else {
+                    UIApplication.shared.open(url)
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    return
+                }
+                
+                // это редиректы не на внешние сайты.
+                if navigationAction.navigationType == .other {
+                    decisionHandler(WKNavigationActionPolicy.allow)
+                    return
+                }
+                
+                if navigationAction.targetFrame != nil {
+                    // делаем push в navigation stack если target == текущее окно
+                    self.openUrlTrigger.onNext((url, .push))
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    return
+                } else {
+                    // если target == новое окно, то открываем модально popup шторку
+                    self.openUrlTrigger.onNext((url, .popup))
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    return
+                }
+            }
+            
+            decisionHandler(WKNavigationActionPolicy.cancel)
+        } else {
+            if [.reload].contains(navigationAction.navigationType) {
+                decisionHandler(WKNavigationActionPolicy.allow)
+                return
+            }
+            
+            if let url = navigationAction.request.url {
+                print(url)
+                print(navigationAction.navigationType.rawValue)
+                // #smart-yard-push
+                if url.relativeString.contains("#smart-yard-push"),
+                   let newUrl = URL(
+                    string: url.absoluteString.replacingOccurrences(
+                        ofPattern: "#smart-yard-push", withTemplate: ""
+                    )
+                   )
+                {
+                    // делаем push в navigation stack если target == текущее окно
+                    self.openUrlTrigger.onNext((newUrl, .push))
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    return
+                }
+                // #smart-yard-popup
+                if url.relativeString.contains("#smart-yard-popup"),
+                   let newUrl = URL(
+                    string: url.absoluteString.replacingOccurrences(
+                        ofPattern: "#smart-yard-popup", withTemplate: ""
+                    )
+                   ) {
+                    // открываем модально popup шторку
+                    self.openUrlTrigger.onNext((newUrl, .popup))
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    return
+                }
+                // #smart-yard-replace
+                if url.relativeString.contains("#smart-yard-replace"),
+                   let newUrl = URL(
+                    string: url.absoluteString.replacingOccurrences(
+                        ofPattern: "#smart-yard-replace", withTemplate: ""
+                    )
+                   ) {
+                    // заменяем текущий контроллер
+                    self.openUrlTrigger.onNext((newUrl, .replace))
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    return
+                }
+                // #smart-yard-external
+                if url.relativeString.contains("#smart-yard-external"),
+                   let newUrl = URL(
+                    string: url.absoluteString.replacingOccurrences(
+                        ofPattern: "#smart-yard-external",
+                        withTemplate: ""
+                    )
+                   ) {
+                    // открываем в новом окне через системный вызов
+                    UIApplication.shared.open(newUrl)
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    return
+                }
+                
+                // если это sberpay:, tel: или ещё какой-то кастомный дип-линк, то обрабатывыаем переход по умолчанию
+                guard url.scheme == "https" || url.scheme == "http" else {
+                    UIApplication.shared.open(url)
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    return
+                }
+                
+                if navigationAction.targetFrame == nil {
+                    // если target == новое окно, то открываем в окне браузера
+                    UIApplication.shared.open(url)
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    return
+                }
+            }
+            
             decisionHandler(WKNavigationActionPolicy.allow)
-            return
         }
-        
-        if let url = navigationAction.request.url {
-            print(url)
-            // если это sberpay или ещё какой-то кастомный дип-линк, то обрабатывыаем переход по умолчанию
-            guard url.scheme == "https" || url.scheme == "http" else {
-                UIApplication.shared.open(url)
-                decisionHandler(WKNavigationActionPolicy.cancel)
-                return
-            }
-            
-            // если это страницы, которые не хостятся у нас, то делаем обычный переход по ссылке.
-            guard let host = url.host, host.hasPrefix("dm.lanta.me") else {
-                      decisionHandler(WKNavigationActionPolicy.allow)
-                      return
-                  }
-            
-            if navigationAction.targetFrame != nil {
-                // делаем push в navigation stack если target == текущее окно
-                self.openUrlTrigger.onNext((url, titleString, .push))
-                decisionHandler(WKNavigationActionPolicy.cancel)
-                return
-            } else {
-                // если target == новое окно, то открываем модально popup шторку
-                self.openUrlTrigger.onNext((url, backButtonLabel, .popup))
-                decisionHandler(WKNavigationActionPolicy.cancel)
-                return
-            }
-        }
-        
-        decisionHandler(WKNavigationActionPolicy.cancel)
     }
     
 }
@@ -356,5 +445,10 @@ extension BaseViewController: WKUIDelegate {
         alert.addAction(calcelAction)
         
         self.present(alert, animated: true)
+    }
+    
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        print("createWebView!")
+        return nil
     }
 }

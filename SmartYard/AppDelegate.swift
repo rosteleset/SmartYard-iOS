@@ -108,8 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if topVc is FullscreenPlayerViewController,
-            !topVc.isBeingDismissed,
-            !topVc.isBeingPresented {
+            !topVc.isBeingDismissed {
             return .allButUpsideDown
         } else if topVc is IncomingCallLandscapeViewController,
             !topVc.isBeingDismissed {

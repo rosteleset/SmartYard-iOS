@@ -42,7 +42,7 @@ target 'SmartYard' do
   pod 'PopOverDatePicker'
   
   # Map
-  pod 'MapboxMaps', '10.2.0'
+  pod 'MapboxMaps'#, '10.2.0'
   
   # Analytics
   pod 'FirebaseCrashlytics'

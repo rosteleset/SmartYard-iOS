@@ -671,7 +671,12 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     self.isVideoBeingLoaded.onNext(true)
 
                     // MARK: Грузим ассеты асинхронно
-
+                    
+                    // крайне редко случается ошибка при удалении элемнтов из массива self.loadingAsset,
+                    // есть подозрение на то, что к этому приводит одновременная запись в массив из разных потоков.
+                    // пробую обезопасить работу с массивом.
+                    let queue = DispatchQueue(label: "thread-safe-array")
+                    
                     for asset in urls.map({ AVAsset(url: $0) }) {
                     
                         self.loadingAsset.append(asset) // массив для отслеживания хода загрузки ассетов
@@ -694,38 +699,49 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                                 tracksStatus == .failed ||
                                 durationStatus == .cancelled ||
                                 durationStatus == .failed {
-                                    self.loadingAsset.removeAll(asset) // удаляем asset из списка загружаемых
-                                    
+                                
+                                // удаляем asset из списка загружаемых
+                                queue.async {
+                                    if let index = self.loadingAsset.firstIndex(where: { $0 == asset }) {
+                                        self.loadingAsset.remove(at: index)
+                                    }
+                                
                                     if self.loadingAsset.isEmpty {
                                         self.isVideoBeingLoaded.onNext(false)
                                     }
-                                    return
+                                }
+                                return
                             }
                             
                             guard tracksStatus == .loaded, durationStatus == .loaded else {
                                 return
                             }
                             
-                            self.loadingAsset.removeAll(asset) // удаляем asset из списка загружаемых
+                            // удаляем asset из списка загружаемых
+                            queue.async {
+                                if let index = self.loadingAsset.firstIndex(where: { $0 == asset }) {
+                                        self.loadingAsset.remove(at: index)
+                                    }
                             
-                            if self.loadingAsset.isEmpty {
-                                self.isVideoBeingLoaded.onNext(false)
-                                
-                                DispatchQueue.main.async {
-                                
-                                    // MARK: Грузим thumbnails
+                                if self.loadingAsset.isEmpty {
+                                    self.isVideoBeingLoaded.onNext(false)
                                     
-                                    self.progressSlider.resetThumbnailImages()
-                                    self.progressSlider.setActivityIndicatorsHidden(false)
+                                    DispatchQueue.main.async {
+                                    
+                                        // MARK: Грузим thumbnails
+                                        
+                                        self.progressSlider.resetThumbnailImages()
+                                        self.progressSlider.setActivityIndicatorsHidden(false)
 
-                                    self.rangeSlider.resetThumbnailImages()
-                                    self.rangeSlider.setActivityIndicatorsHidden(false)
+                                        self.rangeSlider.resetThumbnailImages()
+                                        self.rangeSlider.setActivityIndicatorsHidden(false)
 
-                                    self.loadThumbnails(
-                                        config: thumbnailsConfig,
-                                        count: 5,
-                                        videoDuration: CMTimeGetSeconds(asset.duration)
-                                    )
+                                        self.loadThumbnails(
+                                            config: thumbnailsConfig,
+                                            count: 5,
+                                            videoDuration: CMTimeGetSeconds(asset.duration)
+                                        )
+                                    }
                                 }
                             }
                         }

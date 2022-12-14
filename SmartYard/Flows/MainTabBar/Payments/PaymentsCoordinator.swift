@@ -38,6 +38,7 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
     private let disposeBag = DisposeBag()
     
     let apiWrapper: APIWrapper
+    var childCoordinator: WebViewCoordinator?
     
     init(
         apiWrapper: APIWrapper
@@ -55,7 +56,6 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
         }
         rootViewController.setNavigationBarHidden(true, animated: false)
         subscribeToPaymentsNotifications()
-        subscribeToOptionsNotifications()
     }
     
     override func prepareTransition(for route: PaymentsRoute) -> NavigationTransition {
@@ -116,28 +116,36 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             return .present(vc)
             
         case let .webView(url):
-            let coordinator = WebViewCoordinator(
+            childCoordinator = WebViewCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
                 url: url,
                 backButtonLabel: "",
-                push: false
+                push: false,
+                version: 2
             )
+            guard let childCoordinator = childCoordinator else {
+                return .none()
+            }
             children.forEach { removeChild($0) }
-            addChild(coordinator)
+            addChild(childCoordinator)
             return .none()
             
         case let .webViewFromContent(content, baseURL):
-            let coordinator = WebViewCoordinator(
+            childCoordinator = WebViewCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
                 content: content,
                 baseURL: baseURL,
                 backButtonLabel: "",
-                push: false
+                push: false,
+                version: 2
             )
+            guard let childCoordinator = childCoordinator else {
+                return .none()
+            }
             children.forEach { removeChild($0) }
-            addChild(coordinator)
+            addChild(childCoordinator)
             return .none()
         }
     }
@@ -165,33 +173,4 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             )
             .disposed(by: disposeBag)
     }
-    
-    private func subscribeToOptionsNotifications() {
-        // Управляет обновлением url точки входа в платежи
-        // TODO: протестировать
-        NotificationCenter.default.rx
-            .notification(Notification.Name.updateOptions)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] notification in
-                    guard let self = self,
-                       let userInfo = notification.userInfo else {
-                        return
-                    }
-                    
-                    if let urlString = userInfo["paymentsUrl"] as? String,
-                       let url = URL(string: urlString) {
-                        guard self.apiWrapper.accessService.paymentsUrl != urlString else { return }
-                        
-                        self.apiWrapper.accessService.paymentsUrl = urlString
-                        self.trigger(.webView(url: url))
-                    } else {
-                        self.apiWrapper.accessService.paymentsUrl = ""
-                        self.trigger(.main)
-                    }
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
 }

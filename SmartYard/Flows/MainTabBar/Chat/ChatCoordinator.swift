@@ -12,6 +12,8 @@ import XCoordinator
 
 enum ChatRoute: Route {
     case main
+    case webView(url: URL)
+    case alert(title: String, message: String)
 }
 
 class ChatCoordinator: NavigationCoordinator<ChatRoute> {
@@ -22,6 +24,8 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
     private let pushNotificationService: PushNotificationService
     private let logoutHelper: LogoutHelper
     private let alertService: AlertService
+    var childCoordinator: WebViewCoordinator?
+    
     
     init(
         apiWrapper: APIWrapper,
@@ -36,7 +40,15 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
         self.logoutHelper = logoutHelper
         self.alertService = alertService
         
-        super.init(initialRoute: .main)
+        if self.apiWrapper.accessService.chatUrl.isEmpty {
+            super.init(initialRoute: .main)
+        } else {
+            if let url = URL(string: self.apiWrapper.accessService.chatUrl) {
+                super.init(initialRoute: .webView(url: url))
+            } else {
+                super.init(initialRoute: .alert(title: "Ошибка", message: "Не удаётся открыть страницу чата."))
+            }
+        }
         
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
@@ -63,6 +75,25 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
             vc.loadViewIfNeeded()
             
             return .set([vc])
+            
+        case let .webView(url):
+            childCoordinator = WebViewCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                url: url,
+                backButtonLabel: "",
+                push: false,
+                version: 2
+            )
+            guard let childCoordinator = childCoordinator else {
+                return .none()
+            }
+            children.forEach { removeChild($0) }
+            addChild(childCoordinator)
+            return .none()
+            
+        case let .alert(title, message):
+            return .alertTransition(title: title, message: message)
         }
     }
     

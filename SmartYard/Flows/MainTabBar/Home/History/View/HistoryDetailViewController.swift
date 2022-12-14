@@ -134,8 +134,7 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                     cell.configure(
                         value: item.value,
                         using: imagesCache,
-                        videoBaseUrl: camera.url,
-                        token: camera.token
+                        camera: camera
                     )
                 } else {
                     cell.configure(

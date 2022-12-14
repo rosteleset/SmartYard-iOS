@@ -57,6 +57,7 @@
 		3A555B132700573400E70CB9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A555B122700573400E70CB9 /* IntentHandler.swift */; };
 		3A555B172700573400E70CB9 /* SmartYardIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3A555B0E2700573400E70CB9 /* SmartYardIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3A555B1C270058E700E70CB9 /* SYOpenDoorIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A555B1B270058E700E70CB9 /* SYOpenDoorIntentHandler.swift */; };
+		3A5C2D1A293E205300966E85 /* RangesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5C2D19293E205300966E85 /* RangesRequest.swift */; };
 		3A5E1BC2276B098500E2880D /* WebPopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5E1BC1276B098500E2880D /* WebPopupController.swift */; };
 		3A61E56125A07F4F00A368FA /* FullscreenPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */; };
 		3A6D0F9C27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
@@ -433,7 +434,6 @@
 		E92EFBC8242A22F2003AF7FE /* AddMyPhoneRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB7B242A22F2003AF7FE /* AddMyPhoneRequest.swift */; };
 		E92EFBC9242A22F2003AF7FE /* ConfirmCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB7D242A22F2003AF7FE /* ConfirmCodeRequest.swift */; };
 		E92EFBCA242A22F2003AF7FE /* ConfirmCodeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB7E242A22F2003AF7FE /* ConfirmCodeResponseData.swift */; };
-		E92EFBCB242A22F2003AF7FE /* RequestCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB80242A22F2003AF7FE /* RequestCodeRequest.swift */; };
 		E92EFBCC242A22F2003AF7FE /* RegisterPushTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB82242A22F2003AF7FE /* RegisterPushTokenRequest.swift */; };
 		E92EFBCD242A22F2003AF7FE /* GetPaymentsListResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB84242A22F2003AF7FE /* GetPaymentsListResponseData.swift */; };
 		E92EFBCE242A22F2003AF7FE /* GetPaymentsListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92EFB85242A22F2003AF7FE /* GetPaymentsListRequest.swift */; };
@@ -684,6 +684,7 @@
 		3A555B142700573400E70CB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A555B1B270058E700E70CB9 /* SYOpenDoorIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYOpenDoorIntentHandler.swift; sourceTree = "<group>"; };
 		3A555B2727007A7500E70CB9 /* SmartYardIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmartYardIntents.entitlements; sourceTree = "<group>"; };
+		3A5C2D19293E205300966E85 /* RangesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangesRequest.swift; sourceTree = "<group>"; };
 		3A5E1BC0276B092500E2880D /* WebPopupController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebPopupController.xib; sourceTree = "<group>"; };
 		3A5E1BC1276B098500E2880D /* WebPopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPopupController.swift; sourceTree = "<group>"; };
 		3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FullscreenPlayerViewController.xib; sourceTree = "<group>"; };
@@ -1066,7 +1067,6 @@
 		E92EFB7B242A22F2003AF7FE /* AddMyPhoneRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMyPhoneRequest.swift; sourceTree = "<group>"; };
 		E92EFB7D242A22F2003AF7FE /* ConfirmCodeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmCodeRequest.swift; sourceTree = "<group>"; };
 		E92EFB7E242A22F2003AF7FE /* ConfirmCodeResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmCodeResponseData.swift; sourceTree = "<group>"; };
-		E92EFB80242A22F2003AF7FE /* RequestCodeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestCodeRequest.swift; sourceTree = "<group>"; };
 		E92EFB82242A22F2003AF7FE /* RegisterPushTokenRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPushTokenRequest.swift; sourceTree = "<group>"; };
 		E92EFB84242A22F2003AF7FE /* GetPaymentsListResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPaymentsListResponseData.swift; sourceTree = "<group>"; };
 		E92EFB85242A22F2003AF7FE /* GetPaymentsListRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPaymentsListRequest.swift; sourceTree = "<group>"; };
@@ -2914,6 +2914,7 @@
 		84D29B9224B799B100CFBE6B /* StreamInfo */ = {
 			isa = PBXGroup;
 			children = (
+				3A5C2D19293E205300966E85 /* RangesRequest.swift */,
 				84D29B9324B799B100CFBE6B /* StreamInfoRequest.swift */,
 				84D29B9424B799B100CFBE6B /* StreamInfoResponseData.swift */,
 			);
@@ -3320,7 +3321,6 @@
 				E92EFB7A242A22F2003AF7FE /* AddMyPhone */,
 				84CD304824D4053C00CC079E /* AppVersion */,
 				E92EFB7C242A22F2003AF7FE /* ConfirmCode */,
-				E92EFB7F242A22F2003AF7FE /* RequestCode */,
 				E92EFB81242A22F2003AF7FE /* RegisterPushToken */,
 				E92EFBE4242A247F003AF7FE /* Restore */,
 				E92EFB83242A22F2003AF7FE /* GetPaymentsList */,
@@ -3352,14 +3352,6 @@
 				E92EFB7E242A22F2003AF7FE /* ConfirmCodeResponseData.swift */,
 			);
 			path = ConfirmCode;
-			sourceTree = "<group>";
-		};
-		E92EFB7F242A22F2003AF7FE /* RequestCode */ = {
-			isa = PBXGroup;
-			children = (
-				E92EFB80242A22F2003AF7FE /* RequestCodeRequest.swift */,
-			);
-			path = RequestCode;
 			sourceTree = "<group>";
 		};
 		E92EFB81242A22F2003AF7FE /* RegisterPushToken */ = {
@@ -4899,6 +4891,7 @@
 				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
 				3AC5C61B2608F18B008D74DE /* HistoryViewController.swift in Sources */,
 				843FB12224C1AE850060ACEC /* AddressesHeaderCell.swift in Sources */,
+				3A5C2D1A293E205300966E85 /* RangesRequest.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				3A1BDF492634459C0075410B /* HistoryCollectionViewCell.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
@@ -4936,7 +4929,6 @@
 				84854B5323FBFDD6001B44F2 /* PushNotificationService.swift in Sources */,
 				3AEB886927E0CF3400B19925 /* GetExtensionsListResponseData.swift in Sources */,
 				84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */,
-				E92EFBCB242A22F2003AF7FE /* RequestCodeRequest.swift in Sources */,
 				E940581123F682EA00623746 /* AllowedPersonCell.swift in Sources */,
 				84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */,
 				849FF08E24CEE3C900C234BC /* LinearGradientView.swift in Sources */,
@@ -5296,7 +5288,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 124;
+				CURRENT_PROJECT_VERSION = 130;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
@@ -5306,7 +5298,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.18;
+				MARKETING_VERSION = 1.8.19;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -5477,7 +5469,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 124;
+				CURRENT_PROJECT_VERSION = 130;
 				DEVELOPMENT_TEAM = 4XDBUB87Z8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
@@ -5486,7 +5478,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.18;
+				MARKETING_VERSION = 1.8.19;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",

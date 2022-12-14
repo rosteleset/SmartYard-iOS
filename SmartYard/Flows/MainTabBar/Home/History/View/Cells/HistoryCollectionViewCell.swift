@@ -12,8 +12,7 @@ import RxSwift
 import RxCocoa
 
 class HistoryCollectionViewCell: UICollectionViewCell {
-    private var videoBaseUrl: String?
-    private var token: String?
+    private var camera: APICamMap?
     private var itIsMe: Bool?
     private var event: APIPlog?
     
@@ -171,8 +170,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     
     fileprivate func getVideoUrl(from startDate: Date, duration: Int = 60) -> String? {
         
-        guard let videoBaseUrl = self.videoBaseUrl,
-              let token = self.token else {
+        guard let camera = self.camera else {
             return nil
         }
         
@@ -183,18 +181,17 @@ class HistoryCollectionViewCell: UICollectionViewCell {
             return nil
         }
  
-        return videoBaseUrl + videoUrlComps + "?token=\(token)"
+        return camera.archiveURL(urlComponents: videoUrlComps)
     }
     
     func configure(
         value: APIPlog,
         using cache: NSCache<NSString, UIImage>,
-        videoBaseUrl: String? = nil,
+        camera: APICamMap? = nil,
         token: String? = nil
     ) {
         self.event = value
-        self.videoBaseUrl = videoBaseUrl
-        self.token = token
+        self.camera = camera
         callStatusView.isHidden = true
         descriptionLabel.isHidden = false
         descriptionLabel.text = ""

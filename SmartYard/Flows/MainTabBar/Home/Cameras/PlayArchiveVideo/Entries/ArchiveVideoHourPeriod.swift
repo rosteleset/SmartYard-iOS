@@ -33,18 +33,9 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
         let startTimestamp = startDate.unixTimestamp.int
         let duration = endDate.timeIntervalSince(startDate).int
         
-        return "/index-\(startTimestamp)-\(duration).m3u8"
+        return "\(startTimestamp)-\(duration)"
     }
 
-    /// Компоненты URL для видео для фрагмента с номером
-    
-    func videoUrlComponents( _ index: Int) -> String? {
-        let startTimestamp = ranges[index].startDate.unixTimestamp.int
-        let duration = ranges[index].endDate.timeIntervalSince(startDate).int
-        
-        return "/index-\(startTimestamp)-\(duration).m3u8"
-    }
-    
     /// Массив компонентов URL для всех фрагментов
     var videoUrlComponentsArray: [String] {
         
@@ -55,30 +46,20 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
             let startTimestamp = startDate.unixTimestamp.int
             let duration = endDate.timeIntervalSince(startDate).int
             
-            return "/index-\(startTimestamp)-\(duration).m3u8"
+            return "\(startTimestamp)-\(duration)"
         }
     }
 
-    // MARK: Сервер жрет время по GMT, поэтому переводим в GMT
     /// Компоненты URL для получения thumbnails
     
-    func getThumbnailComponents(thumbnailsCount: Int, actualDuration: TimeInterval) -> [String] {
+    func getThumbnailComponents(thumbnailsCount: Int, actualDuration: TimeInterval) -> [Date] {
         guard thumbnailsCount > 0 else {
             return []
         }
         
         let intervalForOneThumbnail = actualDuration / Double(thumbnailsCount)
         
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        return (0 ..< thumbnailsCount).map {
-            let date = startDate.addingTimeInterval(Double($0) * intervalForOneThumbnail)
-            
-            return "/\(dateFormatter.string(from: date))-preview.mp4"
-        }
+        return (0 ..< thumbnailsCount).map { startDate.addingTimeInterval(Double($0) * intervalForOneThumbnail) }
     }
     
     /// Длительность периода по временным меткам начала и конца без учёта пропусков на сервере

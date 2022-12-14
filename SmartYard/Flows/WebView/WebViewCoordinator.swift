@@ -15,9 +15,9 @@ enum WebViewRoute: Route {
     case dialog(title: String, message: String?, actions: [UIAlertAction])
     case back
     case dismiss
-    case webView(url: URL, backButtonLabel: String, push: Bool)
-    case webViewFromContent(content: String, baseURL: String, backButtonLabel: String, push: Bool)
-    case webViewPopup(url: URL, backButtonLabel: String)
+    case webView(url: URL, push: Bool)
+    case webViewFromContent(content: String, baseURL: String, push: Bool)
+    case webViewPopup(url: URL)
 }
 
 class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
@@ -26,16 +26,23 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
     
     private let apiWrapper: APIWrapper
     
+    private let version: Int
+    
+    private let backButtonLabel: String
+    
     init(
         rootVC: UINavigationController,
         apiWrapper: APIWrapper,
         url: URL,
         backButtonLabel: String,
-        push: Bool
+        push: Bool,
+        version: Int // = 2
     ) {
         self.apiWrapper = apiWrapper
+        self.version = version
+        self.backButtonLabel = backButtonLabel
         super.init(rootViewController: rootVC, initialRoute: nil)
-        trigger(.webView(url: url, backButtonLabel: backButtonLabel, push: push))
+        trigger(.webView(url: url, push: push))
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
@@ -45,11 +52,14 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
         content: String,
         baseURL: String,
         backButtonLabel: String,
-        push: Bool
+        push: Bool,
+        version: Int // = 2
     ) {
         self.apiWrapper = apiWrapper
+        self.version = version
+        self.backButtonLabel = backButtonLabel
         super.init(rootViewController: rootVC, initialRoute: nil)
-        trigger(.webViewFromContent(content: content, baseURL: baseURL, backButtonLabel: backButtonLabel, push: push))
+        trigger(.webViewFromContent(content: content, baseURL: baseURL, push: push))
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
@@ -73,28 +83,28 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
         case .dismiss:
             return .dismiss()
             
-        case let .webView(url, backButtonLabel, push):
+        case let .webView(url, push):
             let vm = WebViewModel(
                 apiWrapper: apiWrapper,
                 router: weakRouter,
                 url: url
             )
             
+            let nc = rootViewController
+            if !push {
+                nc.popViewController(animated: false)
+            }
+            let topVc = nc.visibleViewController as? WebViewController
+        
             let vc = WebViewController(
                 viewModel: vm,
-                backButtonLabel: backButtonLabel,
-                accessToken: apiWrapper.accessService.accessToken ?? ""
+                backButtonLabel: topVc?.documentTitle ?? backButtonLabel,
+                accessToken: apiWrapper.accessService.accessToken ?? "",
+                version: version
             )
-            if push {
-                return .push(vc)
-            } else {
-                let nc = rootViewController
-                nc.popViewController(animated: false)
-                
-                return .push(vc)
-            }
             
-        case let .webViewFromContent(content, baseURL, backButtonLabel, push):
+            return .push(vc)
+        case let .webViewFromContent(content, baseURL, push):
             let vm = WebViewModel(
                 apiWrapper: apiWrapper,
                 router: weakRouter,
@@ -102,21 +112,21 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
                 baseURL: baseURL
             )
             
+            let nc = rootViewController
+            if !push {
+                nc.popViewController(animated: false)
+            }
+            let topVc = nc.visibleViewController as? WebViewController
+        
             let vc = WebViewController(
                 viewModel: vm,
-                backButtonLabel: backButtonLabel,
-                accessToken: apiWrapper.accessService.accessToken ?? ""
+                backButtonLabel: topVc?.documentTitle ?? backButtonLabel,
+                accessToken: apiWrapper.accessService.accessToken ?? "",
+                version: version
             )
-            if push {
-                return .push(vc)
-            } else {
-                let nc = rootViewController
-                nc.popViewController(animated: false)
-                
-                return .push(vc)
-            }
+            return .push(vc)
             
-        case let .webViewPopup(url, backButtonLabel):
+        case let .webViewPopup(url):
             let vm = WebViewModel(
                 apiWrapper: apiWrapper,
                 router: weakRouter,
@@ -125,8 +135,8 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
             
             let vc = WebPopupController(
                 viewModel: vm,
-                backButtonLabel: backButtonLabel,
-                accessToken: apiWrapper.accessService.accessToken ?? ""
+                accessToken: apiWrapper.accessService.accessToken ?? "",
+                version: version
             )
             vc.modalPresentationStyle = .overFullScreen
             

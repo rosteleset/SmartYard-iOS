@@ -172,7 +172,7 @@ class AddressesListViewModel: BaseViewModel {
                 hasNetworkBecomeReachable.mapToFalse(),
                 .just(false)
             )
-            .flatMapLatest { [weak self] forceRefresh -> Driver<(GetAddressListResponseData, GetListConnectResponseData, GetOptionsResponseData?)?> in
+            .flatMapLatest { [weak self] forceRefresh -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in
                 guard let self = self else {
                     return .empty()
                 }
@@ -180,20 +180,18 @@ class AddressesListViewModel: BaseViewModel {
                 return Single
                     .zip(
                         self.apiWrapper.getAddressList(forceRefresh: forceRefresh),
-                        self.apiWrapper.getListConnect(forceRefresh: forceRefresh),
-                        self.apiWrapper.getOptions().catchAndReturn(nil)
-                        
+                        self.apiWrapper.getListConnect(forceRefresh: forceRefresh)
                     )
                     .trackActivity(interactionBlockingRequestTracker)
                     .trackError(self.errorTracker)
-                    .map { args -> (GetAddressListResponseData, GetListConnectResponseData, GetOptionsResponseData?)? in
-                        let (firstResponse, secondResponse, thirdResponse) = args
+                    .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
+                        let (firstResponse, secondResponse) = args
                         
                         guard let uFirstResponse = firstResponse, let uSecondResponse = secondResponse else {
                             return nil
                         }
                         
-                        return (uFirstResponse, uSecondResponse, thirdResponse)
+                        return (uFirstResponse, uSecondResponse)
                     }
                     .asDriver(onErrorJustReturn: nil)
             }
@@ -206,26 +204,22 @@ class AddressesListViewModel: BaseViewModel {
         let nonBlockingRefresh = input.refreshDataTrigger
             .asDriver()
             .delay(.milliseconds(1000))
-            .flatMapLatest { [weak self] _ -> Driver<(GetAddressListResponseData, GetListConnectResponseData, GetOptionsResponseData?)?> in
+            .flatMapLatest { [weak self] _ -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in
                 guard let self = self else {
                     return .empty()
                 }
 
                 return Single
-                    .zip(
-                        self.apiWrapper.getAddressList(forceRefresh: true),
-                        self.apiWrapper.getListConnect(forceRefresh: true),
-                        self.apiWrapper.getOptions().catchAndReturn(nil)
-                    )
+                    .zip(self.apiWrapper.getAddressList(forceRefresh: true), self.apiWrapper.getListConnect(forceRefresh: true))
                     .trackError(self.errorTracker)
-                    .map { args -> (GetAddressListResponseData, GetListConnectResponseData, GetOptionsResponseData?)? in
-                        let (firstResponse, secondResponse, thirdResponse) = args
+                    .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
+                        let (firstResponse, secondResponse) = args
                         
                         guard let uFirstResponse = firstResponse, let uSecondResponse = secondResponse else {
                             return nil
                         }
                         
-                        return (uFirstResponse, uSecondResponse, thirdResponse)
+                        return (uFirstResponse, uSecondResponse)
                     }
                     .asDriver(onErrorJustReturn: nil)
             }
@@ -239,16 +233,7 @@ class AddressesListViewModel: BaseViewModel {
             .merge(blockingRefresh, nonBlockingRefresh)
             .ignoreNil()
             .map { args -> (GetAddressListResponseData, GetListConnectResponseData) in
-                var (approvedAddresses, uSecondResponse, uThirdResponse) = args
-                
-                // отсылаем уведомление о полученных опциях внешнего вида приложения
-                if let uThirdResponse = uThirdResponse {
-                    NotificationCenter.default.post(
-                        name: .updateOptions,
-                        object: nil,
-                        userInfo: uThirdResponse.dictionary
-                    )
-                }
+                var (approvedAddresses, uSecondResponse) = args
                 
                 // перемещаем наверх позиции в которых есть домофон
                 var movingElements: GetAddressListResponseData = []

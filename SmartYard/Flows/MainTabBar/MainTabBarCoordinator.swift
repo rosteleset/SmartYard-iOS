@@ -67,6 +67,9 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.alertService = alertService
         self.logoutHelper = logoutHelper
         
+        // блокируем основной поток до получения опций отображения экранов меню приложения (запрос /ext/options)
+        getOptionsSync(apiWrapper: apiWrapper, accessService: accessService)
+        
         // MARK: Home Tab
         let homeCoordinator = HomeCoordinator(
             apiWrapper: apiWrapper,
@@ -183,10 +186,11 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         )
         customTabBarController.delegate = customTabBarController
         
-        let tabs = accessService.showPayments ?
-            [homeRouter, notificationsRouter, chatRouter, paymentsRouter, menuRouter] as [Presentable] :
-            [homeRouter, notificationsRouter, chatRouter, menuRouter] as [Presentable]
-        
+        let tabs = [homeRouter, notificationsRouter] +
+            (accessService.showChat ? [chatRouter] : []) +
+            (accessService.showPayments ? [paymentsRouter] : []) +
+            [menuRouter] as [Presentable]
+            
         super.init(
             rootViewController: customTabBarController,
             tabs: tabs,
@@ -200,7 +204,6 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         subscribeToBadgeUpdates()
         subscribeToAddAddressNotifications()
         subscribeToChatNotifications()
-        subscribeToOptionsNotifications()
     }
     
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
@@ -323,44 +326,6 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             )
             .disposed(by: disposeBag)
     }
-    
-    fileprivate func updatePaymentsVisibility(_ payments: Bool, _ self: MainTabBarCoordinator) {
-        if payments,
-           self.rootViewController.viewControllers?.contains(self.paymentsRouter.viewController) == false {
-            self.rootViewController.viewControllers?.insert(self.paymentsRouter.viewController, at: 3)
-            self.addChild(paymentsRouter)
-        } else if !payments {
-            self.rootViewController.viewControllers?.removeAll(self.paymentsRouter.viewController)
-            self.removeChild(paymentsRouter)
-        }
-        
-    }
-    
-    private func subscribeToOptionsNotifications() {
-        // Управляет скрытием пунктов в таббаре
-        NotificationCenter.default.rx
-            .notification(Notification.Name.updateOptions)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] notification in
-                    if let self = self,
-                       let userInfo = notification.userInfo,
-                       let payments = userInfo["payments"] as? Bool {
-                        self.updatePaymentsVisibility(payments, self)
-                        self.accessService.showPayments = payments
-                    }
-                    
-                    // обновляем телефон техподдержки
-                    if let self = self,
-                       let userInfo = notification.userInfo,
-                       let supportPhone = userInfo["supportPhone"] as? String {
-                        self.accessService.supportPhone = supportPhone
-                    }
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
 }
 
 extension SSCustomTabBarViewController: UITabBarControllerDelegate {
@@ -372,4 +337,56 @@ extension SSCustomTabBarViewController: UITabBarControllerDelegate {
         }
         
     }
+}
+
+private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService) {
+    let sem = DispatchSemaphore(value: 0)
+    let disposeBag = DisposeBag()
+    
+    apiWrapper.getOptions()
+        .catchAndReturn(nil)
+        .asObservable()
+        .subscribe(
+            onNext: { response in
+                guard let response = response else {
+                    sem.signal()
+                    return
+                }
+                
+                if let payments = response.payments {
+                    accessService.showPayments = payments
+                    accessService.paymentsUrl = ""
+                }
+                
+                if let paymentsUrl = response.paymentsUrl {
+                    accessService.paymentsUrl = paymentsUrl
+                }
+                
+                if let chatUrl = response.chatUrl {
+                    accessService.chatUrl = chatUrl
+                }
+                
+                if let supportPhone = response.supportPhone {
+                    accessService.supportPhone = supportPhone
+                }
+                
+                if let chat = response.chat {
+                    accessService.showChat = chat
+                }
+                
+                if let chatOptions = response.chatOptions {
+                    accessService.chatId = chatOptions.id
+                    accessService.chatDomain = chatOptions.domain
+                    accessService.chatToken = chatOptions.token
+                }
+                
+                if let cityCams = response.cityCams {
+                    accessService.showCityCams = cityCams
+                }
+                
+                sem.signal()
+            }
+        )
+        .disposed(by: disposeBag)
+    sem.wait()
 }

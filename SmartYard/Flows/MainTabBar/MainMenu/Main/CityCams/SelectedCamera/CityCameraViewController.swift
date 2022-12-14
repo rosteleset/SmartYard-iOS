@@ -13,6 +13,7 @@ import RxDataSources
 import AVKit
 import Lottie
 
+// swiftlint:disable:next type_body_length
 class CityCameraViewController: BaseViewController {
     enum ButtonState {
         case initial, incidents, requestRec
@@ -484,7 +485,7 @@ class CityCameraViewController: BaseViewController {
             return
         }
         
-        let resultingString = camera.video + "/index.m3u8" + "?token=\(camera.token)"
+        let resultingString = camera.liveURL
         
         guard let url = URL(string: resultingString) else {
             return

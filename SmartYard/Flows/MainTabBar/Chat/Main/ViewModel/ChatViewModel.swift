@@ -145,12 +145,12 @@ class ChatViewModel: BaseViewModel {
             .filterFalse()
             .mapToVoid()
             .drive(
-                onNext: {
-                    guard let md5 = phone?.md5 else {
+                onNext: { [weak self] in
+                    guard let self = self, let md5 = phone?.md5 else {
                         return
                     }
                     
-                    ChatApi.getNewMessages(Constants.Chat.token, md5) { result in
+                    ChatApi.getNewMessages(self.accessService.chatToken, md5) { result in
                         if result?["error"] != nil {
                             print("error : \(String(describing: result?["error"]))")
                         } else {

@@ -37,13 +37,12 @@ class WebViewModel: BaseViewModel {
         
         input.openUrlTrigger
             .drive(
-                onNext: { [weak self] url, backButtonLabel, transition in
+                onNext: { [weak self] url, transition in
                     switch transition {
                     case .popup:
                         self?.router.trigger(
                             .webViewPopup(
-                                url: url,
-                                backButtonLabel: backButtonLabel
+                                url: url
                             )
                         )
                     
@@ -51,7 +50,6 @@ class WebViewModel: BaseViewModel {
                         self?.router.trigger(
                             .webView(
                                 url: url,
-                                backButtonLabel: backButtonLabel,
                                 push: false
                             ),
                             with: TransitionOptions(animated: false)
@@ -60,7 +58,6 @@ class WebViewModel: BaseViewModel {
                         self?.router.trigger(
                             .webView(
                                 url: url,
-                                backButtonLabel: backButtonLabel,
                                 push: true
                             )
                         )
@@ -127,7 +124,7 @@ extension WebViewModel {
         let isViewVisible: Driver<Bool>
         let shareUrlTrigger: Driver<URL>
         let backTrigger: Driver<Void>
-        let openUrlTrigger: Driver<(URL, String, TransitionType)>
+        let openUrlTrigger: Driver<(URL, TransitionType)>
     }
     
     struct Output {

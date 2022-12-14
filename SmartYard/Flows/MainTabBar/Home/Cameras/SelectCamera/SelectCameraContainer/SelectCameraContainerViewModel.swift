@@ -104,7 +104,7 @@ class SelectCameraContainerViewModel: BaseViewModel {
         rangesDisposeBag = DisposeBag()
         
         apiWrapper
-            .getArchiveRanges(cameraUrl: camera.video, from: 1525186456, token: camera.token)
+            .getArchiveRanges(camera)
             .trackActivity(rangesLoadingTracker)
             .trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
