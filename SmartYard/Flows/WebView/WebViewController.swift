@@ -303,15 +303,13 @@ extension WebViewController: WKNavigationDelegate {
             
             if let url = navigationAction.request.url {
                 print(url)
-                print(navigationAction.navigationType.rawValue)
                 // #smart-yard-push
                 if url.relativeString.contains("#smart-yard-push"),
                    let newUrl = URL(
                     string: url.absoluteString.replacingOccurrences(
                         ofPattern: "#smart-yard-push", withTemplate: ""
                     )
-                   )
-                {
+                   ) {
                     // делаем push в navigation stack если target == текущее окно
                     self.openUrlTrigger.onNext((newUrl, .push))
                     decisionHandler(WKNavigationActionPolicy.cancel)
@@ -374,6 +372,12 @@ extension WebViewController: WKNavigationDelegate {
         }
     }
     
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel)
+        alert.addAction(okAction)
+        self.present(alert, animated: true)
+    }
 }
 
 extension BaseViewController: WKUIDelegate {
