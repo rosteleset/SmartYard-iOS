@@ -50,26 +50,16 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
         }
     }
 
-    // MARK: Сервер жрет время по GMT, поэтому переводим в GMT
     /// Компоненты URL для получения thumbnails
     
-    func getThumbnailComponents(thumbnailsCount: Int, actualDuration: TimeInterval) -> [String] {
+    func getThumbnailComponents(thumbnailsCount: Int, actualDuration: TimeInterval) -> [Date] {
         guard thumbnailsCount > 0 else {
             return []
         }
         
         let intervalForOneThumbnail = actualDuration / Double(thumbnailsCount)
         
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        return (0 ..< thumbnailsCount).map {
-            let date = startDate.addingTimeInterval(Double($0) * intervalForOneThumbnail)
-            
-            return "/\(dateFormatter.string(from: date))-preview.mp4"
-        }
+        return (0 ..< thumbnailsCount).map { startDate.addingTimeInterval(Double($0) * intervalForOneThumbnail) }
     }
     
     /// Длительность периода по временным меткам начала и конца без учёта пропусков на сервере

@@ -170,7 +170,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             .ignoreNil()
             .map { [weak self] period -> ([URL], VideoThumbnailConfiguration)? in
                 guard let self = self,
-                    let fallbackUrl = URL(string: self.camera.video + "/preview.mp4?token=\(self.camera.token)") else {
+                      let fallbackUrl = URL(string: self.camera.previewMP4URL) else {
                     return nil
                 }
                 
@@ -196,21 +196,8 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 guard let self = self else {
                     return nil
                 }
-                
-                // MARK: А здесь сервак жрет дату в GMT. Р - разнообразие
-                
-                let dateFormatter = DateFormatter()
-                
-                dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-                dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
-                
-                let resultingString = self.camera.video +
-                    "/" +
-                    dateFormatter.string(from: date) +
-                    "-preview.mp4" +
-                    "?token=\(self.camera.token)"
-                
-                return URL(string: resultingString)
+               
+                return URL(string: self.camera.previewMP4URL(date))
             }
         
         // определяем границы архива на сервере

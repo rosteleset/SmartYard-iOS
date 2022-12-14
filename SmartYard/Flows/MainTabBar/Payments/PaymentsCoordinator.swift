@@ -121,7 +121,8 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
                 apiWrapper: apiWrapper,
                 url: url,
                 backButtonLabel: "",
-                push: false
+                push: false,
+                version: 2
             )
             guard let childCoordinator = childCoordinator else {
                 return .none()
@@ -137,7 +138,8 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
                 content: content,
                 baseURL: baseURL,
                 backButtonLabel: "",
-                push: false
+                push: false,
+                version: 2
             )
             guard let childCoordinator = childCoordinator else {
                 return .none()

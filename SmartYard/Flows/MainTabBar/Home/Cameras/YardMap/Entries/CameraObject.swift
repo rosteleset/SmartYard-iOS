@@ -28,6 +28,37 @@ struct CameraObject: Equatable {
         }
     }
     
+    var previewMP4URL: String {
+        switch self.serverType {
+        case .nimble:
+            return "\(video)/dvr_thumbnail.mp4?wmsAuthSign=\(token)"
+        default:
+            return "\(video)/preview.mp4?token=\(token)"
+        }
+    }
+    
+    func previewMP4URL(_ date: Date) -> String {
+        switch self.serverType {
+        case .nimble:
+            let resultingString = video +
+            "/dvr_thumbnail_\(date.unixTimestamp.int).mp4" +
+                "?wmsAuthSign=\(token)"
+            return resultingString
+        default:
+            let dateFormatter = DateFormatter()
+            
+            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            dateFormatter.dateFormat = "yyyy/MM/dd/HH/mm/ss"
+            
+            let resultingString = video +
+                "/" +
+                dateFormatter.string(from: date) +
+                "-preview.mp4" +
+                "?token=\(token)"
+            return resultingString
+        }
+    }
+    
     func archiveURL(urlComponents: String) -> String {
         switch self.serverType {
         case .nimble:

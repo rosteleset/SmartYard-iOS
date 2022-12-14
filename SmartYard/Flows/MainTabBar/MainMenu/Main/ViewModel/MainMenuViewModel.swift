@@ -121,7 +121,7 @@ class MainMenuViewModel: BaseViewModel {
                                         return
                                     }
                                     self.router.trigger(
-                                        .webViewFromContent(content: ext.contentHTML, baseURL: ext.basePath)
+                                        .webViewFromContent(content: ext.contentHTML, baseURL: ext.basePath, version: ext.version)
                                     )
                                 }
                             )

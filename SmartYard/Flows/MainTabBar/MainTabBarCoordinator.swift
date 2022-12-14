@@ -362,6 +362,10 @@ private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService
                     accessService.paymentsUrl = paymentsUrl
                 }
                 
+                if let chatUrl = response.chatUrl {
+                    accessService.chatUrl = chatUrl
+                }
+                
                 if let supportPhone = response.supportPhone {
                     accessService.supportPhone = supportPhone
                 }

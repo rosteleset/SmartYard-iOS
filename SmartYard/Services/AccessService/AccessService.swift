@@ -25,6 +25,7 @@ private let chatDomainKey = "chatDomain"
 private let chatTokenKey = "chatToken"
 private let showCityCamsKey = "showCityCams"
 private let paymentsUrlKey = "paymentsUrl"
+private let chatUrlKey = "chatUrl"
 private let supportPhoneKey = "supportPhoneKey"
 
 class AccessService {
@@ -170,6 +171,15 @@ class AccessService {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: paymentsUrlKey)
+        }
+    }
+    
+    var chatUrl: String {
+        get {
+            UserDefaults.standard.string(forKey: chatUrlKey) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: chatUrlKey)
         }
     }
     

@@ -35,17 +35,18 @@ class WebPopupController: BaseViewController, LoaderPresentable {
     
     private let viewModel: WebViewModel
     private let shareUrlTrigger = PublishSubject<URL>()
-    private let backButtonLabel: String
     
-    /// (url: URL, backLabelString: String, newWindow: Bool)
-    private let openUrlTrigger = PublishSubject<(URL, String, TransitionType)>()
+    /// (url: URL, newWindow: Bool)
+    private let openUrlTrigger = PublishSubject<(URL, TransitionType)>()
     private var webContentHeight: CGFloat?
     private let accessToken: String
     
-    init(viewModel: WebViewModel, backButtonLabel: String, accessToken: String = "") {
+    private let version: Int
+    
+    init(viewModel: WebViewModel, accessToken: String = "", version: Int = 1) {
         self.viewModel = viewModel
-        self.backButtonLabel = backButtonLabel
         self.accessToken = accessToken
+        self.version = version
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -319,35 +320,126 @@ extension WebPopupController: WKNavigationDelegate {
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
-        guard [.linkActivated, .formSubmitted].contains(navigationAction.navigationType) else {
-            decisionHandler(WKNavigationActionPolicy.allow)
-            return
-        }
-        
-        // TODO: добавить обработку ссылки на закрытие окна.
-        
-        if let url = navigationAction.request.url {
+        if version == 1 {
+            guard [.linkActivated, .formSubmitted].contains(navigationAction.navigationType) else {
+                decisionHandler(WKNavigationActionPolicy.allow)
+                return
+            }
             
-            let trigger = self.openUrlTrigger
-            let backButtonLabel = self.backButtonLabel
-            
-            self.dismiss(
-                animated: true,
-                completion: {
-                    if navigationAction.targetFrame != nil {
-                        // делаем замену viewcontroller в navigation stack если target == текущее окно
-                        trigger.onNext((url, backButtonLabel, .replace))
-                        decisionHandler(WKNavigationActionPolicy.cancel)
-                    } else {
-                        // если target == новое окно, то открываем модально popup шторку
-                        trigger.onNext((url, backButtonLabel, .popup))
-                        decisionHandler(WKNavigationActionPolicy.cancel)
-                    }
+            if let url = navigationAction.request.url {
+                
+                if url.relativeString.contains("#smart-yard-close") {
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    self.dismiss(animated: true)
+                    return
                 }
-            )
-            
+                
+                let trigger = self.openUrlTrigger
+                
+                self.dismiss(
+                    animated: true,
+                    completion: {
+                        if navigationAction.targetFrame != nil {
+                            // делаем замену viewcontroller в navigation stack если target == текущее окно
+                            trigger.onNext((url, .replace))
+                            decisionHandler(WKNavigationActionPolicy.cancel)
+                        } else {
+                            // если target == новое окно, то открываем модально popup шторку
+                            trigger.onNext((url, .popup))
+                            decisionHandler(WKNavigationActionPolicy.cancel)
+                        }
+                    }
+                )
+                
+            } else {
+                decisionHandler(WKNavigationActionPolicy.allow)
+            }
         } else {
+            // version 2
+            if [.reload, .other].contains(navigationAction.navigationType) {
+                decisionHandler(WKNavigationActionPolicy.allow)
+                return
+            }
+            
+            if let url = navigationAction.request.url {
+                let trigger = self.openUrlTrigger
+                
+                print(url)
+                
+                // target = '_blank'
+                if navigationAction.targetFrame == nil {
+                    UIApplication.shared.open(url)
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    return
+                }
+                
+                // #smart-yard-close
+                if url.relativeString.contains("#smart-yard-close") {
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    self.dismiss(animated: true)
+                    return
+                }
+                
+                // #smart-yard-push
+                if url.relativeString.contains("#smart-yard-push") {
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    self.dismiss(
+                        animated: true,
+                        completion: {
+                            trigger.onNext((url, .push))
+                        }
+                    )
+                    return
+                }
+                
+                // #smart-yard-popup
+                if url.relativeString.contains("#smart-yard-popup") {
+                    // открываем модально другую popup шторку
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    self.dismiss(
+                        animated: true,
+                        completion: {
+                            trigger.onNext((url, .popup))
+                        }
+                    )
+                    return
+                }
+                
+                // #smart-yard-replace
+                if url.relativeString.contains("#smart-yard-replace") {
+                    // заменяем текущий контроллер
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    self.dismiss(
+                        animated: true,
+                        completion: {
+                            trigger.onNext((url, .replace))
+                        }
+                    )
+                    return
+                }
+                // #smart-yard-external
+                if url.relativeString.contains("#smart-yard-external") {
+                    // открываем в новом окне через системный вызов
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    self.dismiss(
+                        animated: true,
+                        completion: {
+                            UIApplication.shared.open(url)
+                        }
+                    )
+                    return
+                }
+                
+                // если это sberpay:, tel: или ещё какой-то кастомный дип-линк, то обрабатывыаем переход по умолчанию
+                guard url.scheme == "https" || url.scheme == "http" else {
+                    UIApplication.shared.open(url)
+                    decisionHandler(WKNavigationActionPolicy.cancel)
+                    return
+                }
+            }
+            
             decisionHandler(WKNavigationActionPolicy.allow)
         }
+        
     }
 }

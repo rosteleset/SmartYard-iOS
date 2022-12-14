@@ -19,13 +19,13 @@ struct VideoThumbnailConfiguration {
     }
     
     func thumbnailUrls(thumbnailsCount: Int, actualDuration: TimeInterval) -> [URL] {
-        let thumbnailStrings = period.getThumbnailComponents(
+        let thumbnailDates = period.getThumbnailComponents(
             thumbnailsCount: thumbnailsCount,
             actualDuration: actualDuration
         )
         
-        return thumbnailStrings.compactMap {
-            URL(string: camera.video + $0 + "?token=\(camera.token)")
+        return thumbnailDates.compactMap {
+            URL(string: camera.previewMP4URL($0))
         }
     }
     

@@ -16,6 +16,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let chat: Bool?
     let chatOptions: ChatOptions?
     let paymentsUrl: String?
+    let chatUrl: String?
     let supportPhone: String?
     
     private enum CodingKeys: String, CodingKey {
@@ -24,6 +25,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case payments
         case chat
         case chatOptions
+        case chatUrl
         case supportPhone
     }
     
@@ -62,6 +64,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         
         chatOptions = try? container.decode(ChatOptions.self, forKey: .chatOptions)
         paymentsUrl = try? container.decode(String.self, forKey: .paymentsUrl)
+        chatUrl = try? container.decode(String.self, forKey: .chatUrl)
         supportPhone = try? container.decode(String.self, forKey: .supportPhone)
     }
     
@@ -69,6 +72,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         cityCams = nil
         payments = nil
         paymentsUrl = nil
+        chatUrl = nil
         supportPhone = nil
         chat = nil
         chatOptions = nil
