@@ -173,7 +173,7 @@ class AccessService {
     
     var showChat: Bool {
         get {
-            UserDefaults.standard.value(forKey: showChatKey)  as? Bool ?? false
+            UserDefaults.standard.value(forKey: showChatKey)  as? Bool ?? true
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: showChatKey)
@@ -182,7 +182,7 @@ class AccessService {
     
     var chatId: String {
         get {
-            UserDefaults.standard.value(forKey: chatIdKey)  as? String ?? ""
+            UserDefaults.standard.value(forKey: chatIdKey)  as? String ?? Constants.Chat.id
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: chatIdKey)
@@ -191,7 +191,7 @@ class AccessService {
     
     var chatDomain: String {
         get {
-            UserDefaults.standard.value(forKey: chatDomainKey)  as? String ?? ""
+            UserDefaults.standard.value(forKey: chatDomainKey)  as? String ?? Constants.Chat.domain
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: chatDomainKey)
@@ -200,7 +200,7 @@ class AccessService {
     
     var chatToken: String {
         get {
-            UserDefaults.standard.value(forKey: chatTokenKey)  as? String ?? ""
+            UserDefaults.standard.value(forKey: chatTokenKey)  as? String ?? Constants.Chat.token
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: chatTokenKey)
@@ -225,7 +225,7 @@ class AccessService {
         showPayments = true
         paymentsUrl = ""
         supportPhone = ""
-        showChat = false
+        showChat = true
         chatId = ""
         chatDomain = ""
         chatToken = ""
