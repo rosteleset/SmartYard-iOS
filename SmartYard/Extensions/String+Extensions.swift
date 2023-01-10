@@ -8,22 +8,18 @@
 
 import Foundation
 import CommonCrypto
+import SHSPhoneComponent
 
 extension String {
     
     private mutating func formatAsPhoneNumber() -> String {
-        guard count == Constants.phoneLengthWithPrefix else {
+        guard count == AccessService.shared.phoneLengthWithPrefix else {
             return self
         }
+        let formatter = SHSPhoneNumberFormatter()
+        formatter.setDefaultOutputPattern("+" + AccessService.shared.phonePrefix + " " + AccessService.shared.phonePattern)
         
-        insert(" ", at: index(startIndex, offsetBy: 2))
-        insert("(", at: index(startIndex, offsetBy: 3))
-        insert(")", at: index(startIndex, offsetBy: 7))
-        insert(" ", at: index(startIndex, offsetBy: 8))
-        insert("-", at: index(startIndex, offsetBy: 12))
-        insert("-", at: index(startIndex, offsetBy: 15))
-        
-        return self
+        return formatter.values(for: self)["text"] as? String ?? self
     }
     
     // Сырой номер без префикса (9271234567), 10 цифр
@@ -34,23 +30,21 @@ extension String {
             .replacingOccurrences(of: "‑", with: "") // дефис
             .replacingOccurrences(of: "(", with: "")
             .replacingOccurrences(of: ")", with: "")
-            .replacingOccurrences(of: "^+79", with: "9", options: .regularExpression, range: nil)
-            .replacingOccurrences(of: "^89", with: "9", options: .regularExpression, range: nil)
         
-        guard contactNumber.count >= Constants.phoneLengthWithoutPrefix else {
+        guard contactNumber.count >= AccessService.shared.phoneLengthWithoutPrefix else {
             return nil
         }
         
-        return String(contactNumber.suffix(Constants.phoneLengthWithoutPrefix))
+        return String(contactNumber.suffix(AccessService.shared.phoneLengthWithoutPrefix))
     }
     
     // Форматированный номер ( +7 (927) 123-45-67 )
     var formattedNumberFromRawNumber: String? {
-        guard count == Constants.phoneLengthWithoutPrefix else {
+        guard count == AccessService.shared.phoneLengthWithoutPrefix else {
             return nil
         }
         
-        var mutableString = "+7" + self
+        var mutableString = "+" + AccessService.shared.phonePrefix + self
         
         return mutableString.formatAsPhoneNumber()
     }

@@ -58,9 +58,10 @@ class NewAllowedPersonViewController: BaseViewController {
         textField.isHidden = false
         textField.delegate = self
         
-        textField.formatter.setDefaultOutputPattern(" (###) ###-##-##")
+        textField.formatter.setDefaultOutputPattern(" " + AccessService.shared.phonePattern)
         
-        textField.placeholder = "+7 (000) 000-00-00"
+        textField.placeholder = "+" + AccessService.shared.phonePrefix + " " +
+        AccessService.shared.phonePattern.replacingOccurrences(ofPattern: "#", withTemplate: "0")
     }
     
     private func setPhoneNumberPrefix(prefix: String) {
@@ -93,7 +94,7 @@ class NewAllowedPersonViewController: BaseViewController {
                         return
                     }
                     
-                    self.textField.text = String(editText.prefix(Constants.phoneLengthWithoutPrefix))
+                    self.textField.text = String(editText.prefix(AccessService.shared.phoneLengthWithoutPrefix))
                 }
             )
             .disposed(by: disposeBag)
@@ -169,11 +170,11 @@ extension NewAllowedPersonViewController: UITextFieldDelegate {
             return
         }
         
-        setPhoneNumberPrefix(prefix: "+7")
+        setPhoneNumberPrefix(prefix: "+" + AccessService.shared.phonePrefix)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        guard textField.text.isNilOrEmpty || textField.text?.trimmed == "+7" else {
+        guard textField.text.isNilOrEmpty || textField.text?.trimmed == "+" + AccessService.shared.phonePrefix else {
             return
         }
         
@@ -193,8 +194,9 @@ extension NewAllowedPersonViewController: CNContactPickerDelegate {
         
         let mobileNumbers = contact.phoneNumbers.enumerated()
             .filter { _, phoneNumber in
-                // если это не сотовый номер, то пропускаем и не показываем для выбора
-                guard let rawNumber = phoneNumber.value.stringValue.rawPhoneNumberFromFullNumber,
+                // если это Россия и не сотовый номер, то пропускаем и не показываем для выбора
+                guard AccessService.shared.phonePrefix == "7",
+                      let rawNumber = phoneNumber.value.stringValue.rawPhoneNumberFromFullNumber,
                       rawNumber[0] == "9" else {
                     return false
                 }

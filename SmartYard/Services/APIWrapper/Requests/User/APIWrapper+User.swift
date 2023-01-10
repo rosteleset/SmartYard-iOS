@@ -246,4 +246,18 @@ extension APIWrapper {
             .mapAsDefaultResponse()
     }
     
+    func getPhonePattern() -> Single<String?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        let request = PhonePrefixRequest()
+        print("request data: \(request)")
+        
+        return provider.rx
+            .request(.phonePattern(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
 }

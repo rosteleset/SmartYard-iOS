@@ -15,3 +15,7 @@ protocol EmptyDataInitializable {
 extension Array: EmptyDataInitializable {
     
 }
+
+extension String: EmptyDataInitializable {
+    
+}

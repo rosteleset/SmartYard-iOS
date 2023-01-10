@@ -121,7 +121,7 @@ extension OutgoingCallViewModel {
                         return .just(nil)
                     }
                 
-                    return self.apiWrapper.checkPhone(userPhone: "8" + self.phoneNumber)
+                    return self.apiWrapper.checkPhone(userPhone: AccessService.shared.phonePrefix + self.phoneNumber)
                         .asDriver(onErrorJustReturn: nil)
             }
             .do(

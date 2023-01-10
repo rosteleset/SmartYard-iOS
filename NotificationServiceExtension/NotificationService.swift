@@ -7,6 +7,7 @@
 //
 
 import UserNotifications
+import SmartYardSharedDataFramework
 
 class NotificationService: UNNotificationServiceExtension {
 
@@ -47,8 +48,23 @@ class NotificationService: UNNotificationServiceExtension {
         
         self.bestAttemptContent = bestAttemptContent
         
+        let sharedData = SmartYardSharedDataUtilities.loadSharedData()
+        
+        let hash = bestAttemptContent.userInfo["hash"] as? String
+        let image = bestAttemptContent.userInfo["image"] as? String
+        
+        var imageUrlString: String?
+        
+        if let sharedData = sharedData,
+           let backendURL = sharedData.backendURL,
+           let hash = hash {
+            imageUrlString = "\(backendURL)/call/camshot/\(hash)"
+        } else {
+            imageUrlString = image
+        }
+            
         // MARK: Грузится слишком долго (3+ секунды)
-        guard let image = bestAttemptContent.userInfo["live"] as? String, let imageUrl = URL(string: image) else {
+        guard let image = imageUrlString, let imageUrl = URL(string: image) else {
             // MARK: Удаление уведомлений происходит асинхронно, и иногда просто не успевает произойти до показа нового
             // Здесь, я подозреваю, нужно будет ресерчить и разруливать как-то менее костыльно. Пока не знаю как
             
@@ -74,9 +90,6 @@ class NotificationService: UNNotificationServiceExtension {
     }
     
     private func store(imageUrl: URL, completion: ((Result<URL, Error>) -> Void)?) {
-        let filename = ProcessInfo.processInfo.globallyUniqueString + imageUrl.lastPathComponent
-        let path = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(filename)
-        
         let task = URLSession.shared.dataTask(with: imageUrl) { data, _, error in
             if let error = error {
                 completion?(.failure(error))
@@ -89,6 +102,11 @@ class NotificationService: UNNotificationServiceExtension {
             }
             
             do {
+                // Если URL не содержит расширения файла, то iOS не понимает тип файла 🤦‍♂️
+                let filename = ProcessInfo.processInfo.globallyUniqueString + imageUrl.lastPathComponent
+                + ( imageUrl.pathExtension.isEmpty ? data.fileExt : "" )
+                let path = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(filename)
+                
                 try data.write(to: path)
                 completion?(.success(path))
             } catch let error {
@@ -97,5 +115,20 @@ class NotificationService: UNNotificationServiceExtension {
         }
         task.resume()
     }
+    
+}
 
+extension Data {
+    var fileExt: String {
+        switch self[0] {
+        case 0x89:
+            return ".png"
+        case 0xFF:
+            return ".jpg"
+        case 0x47:
+            return ".gif"
+        default:
+            return ""
+        }
+    }
 }

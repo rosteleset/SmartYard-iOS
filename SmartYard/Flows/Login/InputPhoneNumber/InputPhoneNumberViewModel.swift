@@ -52,7 +52,7 @@ class InputPhoneNumberViewModel: BaseViewModel {
         
         input.inputPhoneText
             .distinctUntilChanged()
-            .filter { $0.count == Constants.phoneLengthWithoutPrefix }
+            .filter { $0.count == AccessService.shared.phoneLengthWithoutPrefix }
             .do(
                 onNext: { phone in
                     tempPhoneSubject.onNext(phone)
@@ -63,7 +63,7 @@ class InputPhoneNumberViewModel: BaseViewModel {
                     return .just(nil)
                 }
 
-                return self.apiWrapper.requestCode(userPhone: "8" + phone)
+                return self.apiWrapper.requestCode(userPhone: AccessService.shared.phonePrefix + phone)
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)

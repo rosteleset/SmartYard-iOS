@@ -95,12 +95,27 @@ class SelectProviderViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] providerCell in
-                    print("selected baseUrl = \(providerCell.provider.baseUrl)")
-                    self?.accessService.backendURL = providerCell.provider.baseUrl
-                    self?.accessService.providerId = providerCell.provider.id
-                    self?.accessService.providerName = providerCell.provider.name
-                    self?.router.trigger(.phoneNumber)
-                    self?.accessService.appState = .phoneNumber
+                    guard let self = self else {
+                        return
+                    }
+                    let provider = providerCell.provider
+                    print("selected baseUrl = \(provider.baseUrl)")
+                    self.accessService.backendURL = provider.baseUrl
+                    self.accessService.providerId = provider.id
+                    self.accessService.providerName = provider.name
+                    self.accessService.appState = .phoneNumber
+                    self.apiWrapper.getPhonePattern()
+                        .trackActivity(activityTracker)
+                        .asDriver(onErrorJustReturn: nil)
+                        .drive(
+                            onNext: { [weak self] phonePattern in
+                                print("phonePattern = \(String(describing: phonePattern))")
+                                self?.accessService.setPhonePattern(phonePattern)
+                                self?.router.trigger(.phoneNumber)
+                            }
+                        )
+                        .disposed(by: self.disposeBag)
+                    
                 }
             )
             .disposed(by: disposeBag)

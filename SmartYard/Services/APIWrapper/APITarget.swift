@@ -21,6 +21,7 @@ enum APITarget {
     case offices(request: OfficesRequest)
     case plog(request: PlogRequest)
     case plogDays(request: PlogDaysRequest)
+    case phonePattern(request: PhonePrefixRequest)
     
     case allCCTV(request: AllCCTVRequest)
     case overviewCCTV(request: OverviewCCTVRequest)
@@ -91,7 +92,7 @@ extension APITarget: TargetType {
             return URL(string: request.cameraUrl)!
             
         default:
-            return URL(string: AccessService().backendURL)!
+            return URL(string: AccessService.shared.backendURL)!
         }
     }
     
@@ -147,6 +148,7 @@ extension APITarget: TargetType {
         case .sendName: return "user/sendName"
         case .restore: return "user/restore"
         case .notification: return "user/notification"
+        case .phonePattern: return "user/phonePattern"
             
         case .payPrepare: return "pay/prepare"
         case .payProcess: return "pay/process"
@@ -279,6 +281,7 @@ extension APITarget: TargetType {
         case .offices(let request): return request.requestParameters
         case .plog(let request): return request.requestParameters
         case .plogDays(let request): return request.requestParameters
+        case .phonePattern(let request): return request.requestParameters
         
         case .allCCTV(let request): return request.requestParameters
         case .overviewCCTV(let request): return request.requestParameters

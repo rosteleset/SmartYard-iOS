@@ -18,35 +18,18 @@ class PhoneTextField: PMNibLinkableView {
     
     private(set) var text = ""
     
-    @IBOutlet private weak var firstNumView: NumberFieldView!
-    @IBOutlet private weak var secondNumView: NumberFieldView!
-    @IBOutlet private weak var thirdNumView: NumberFieldView!
-    
-    @IBOutlet private weak var fourthNumView: NumberFieldView!
-    @IBOutlet private weak var fifthNumView: NumberFieldView!
-    @IBOutlet private weak var sixthNumView: NumberFieldView!
-    
-    @IBOutlet private weak var seventhNumView: NumberFieldView!
-    @IBOutlet private weak var eighthNumView: NumberFieldView!
-    @IBOutlet private weak var ninthNumView: NumberFieldView!
-    @IBOutlet private weak var tenthNumView: NumberFieldView!
-    
+    @IBOutlet private weak var phoneField: PhoneField!
     @IBOutlet fileprivate weak var fakeTextField: UITextField!
     
     private var numberViewsCollection: [NumberFieldView] {
-        return [
-            firstNumView, secondNumView, thirdNumView,
-            fourthNumView, fifthNumView, sixthNumView,
-            seventhNumView, eighthNumView, ninthNumView,
-            tenthNumView
-        ]
+        return phoneField.numberViewsCollection
     }
     
     private let disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        phoneField.sizeToFit()
         configureFakeTextField()
         addViewTapGesture()
         bind()
@@ -62,7 +45,7 @@ class PhoneTextField: PMNibLinkableView {
     }
     
     @objc private func didPressNumberField() {
-        if fakeTextField.text?.count == Constants.phoneLengthWithoutPrefix {
+        if fakeTextField.text?.count == AccessService.shared.phoneLengthWithoutPrefix {
             reset()
         }
         
@@ -132,7 +115,7 @@ extension PhoneTextField: UITextFieldDelegate {
         let substringToReplace = textFieldText[rangeOfTextToReplace]
         let count = textFieldText.count - substringToReplace.count + string.count
         
-        return count <= Constants.phoneLengthWithoutPrefix
+        return count <= AccessService.shared.phoneLengthWithoutPrefix
     }
     
 }

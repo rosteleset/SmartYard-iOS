@@ -68,7 +68,7 @@ class NewAllowedPersonViewModel: BaseViewModel {
                 
                 let cleanPhone = String(phoneCharsArray.joined(separator: "").dropFirst())
                 
-                guard cleanPhone.count == Constants.phoneLengthWithoutPrefix else {
+                guard cleanPhone.count == AccessService.shared.phoneLengthWithoutPrefix else {
                     return nil
                 }
                 
@@ -141,7 +141,7 @@ class NewAllowedPersonViewModel: BaseViewModel {
         let isAbleToProceed = latestAddedPerson
             .asDriver(onErrorJustReturn: nil)
             .map { person -> Bool in
-                person?.rawNumber.count == Constants.phoneLengthWithoutPrefix
+                person?.rawNumber.count == AccessService.shared.phoneLengthWithoutPrefix
             }
 
         input.addAccessTrigger

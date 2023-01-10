@@ -27,8 +27,11 @@ private let showCityCamsKey = "showCityCams"
 private let paymentsUrlKey = "paymentsUrl"
 private let chatUrlKey = "chatUrl"
 private let supportPhoneKey = "supportPhoneKey"
+private let phonePrefixKey = "phonePrefixKey"
+private let phonePatternKey = "phonePatternKey"
 
 class AccessService {
+    static let shared = AccessService()
     
     var appState: AppState {
         get {
@@ -237,6 +240,58 @@ class AccessService {
         }
     }
     
+    var phonePrefix: String {
+        get {
+            UserDefaults.standard.value(forKey: phonePrefixKey)  as? String ?? "7"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: phonePrefixKey)
+        }
+    }
+    
+    var phonePattern: String {
+        get {
+            UserDefaults.standard.value(forKey: phonePatternKey)  as? String ?? "(###) ###-##-##"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: phonePatternKey)
+        }
+    }
+    
+    var phoneLengthWithoutPrefix: Int {
+            phonePattern.count(of: "#")
+    }
+    
+    var phoneLengthWithPrefix: Int {
+        phoneLengthWithoutPrefix + phonePrefix.count + 1
+    }
+    
+    func setPhonePattern(_ from: String? = nil) {
+        guard let from = from else {
+            return
+        }
+        
+        let fromRange = NSRange(from.startIndex ..< from.endIndex, in: from)
+        
+        do {
+            let regex = try NSRegularExpression(pattern: #"^\+?(?<prefix>\d+)\s*(?<pattern>.*)$"#)
+            let matches = regex.matches(in: from, range: fromRange)
+            
+            guard let match = matches.first else {
+                return
+            }
+            
+            if let prefixRange = Range(match.range(withName: "prefix"), in: from) {
+                phonePrefix = String(from[prefixRange])
+            }
+            if let patternRange = Range(match.range(withName: "pattern"), in: from) {
+                phonePattern = String(from[patternRange])
+            }
+        } catch _ {
+            return
+        }
+    }
+    
     func logout() {
         appState = .selectProvider
         accessToken = nil
@@ -253,6 +308,8 @@ class AccessService {
         chatDomain = ""
         chatToken = ""
         showCityCams = false
+        phonePrefix = "7"
+        phonePattern = "(###) ###-##-##"
         
         NotificationCenter.default.post(name: .init("UserLoggedOut"), object: nil)
     }

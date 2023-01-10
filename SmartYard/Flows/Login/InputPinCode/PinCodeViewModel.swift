@@ -68,7 +68,7 @@ class PinCodeViewModel: BaseViewModel {
                     return .just(nil)
                 }
                 
-                return self.apiWrapper.confirmCode(userPhone: "8" + self.phoneNumber, smsCode: smsCode)
+                return self.apiWrapper.confirmCode(userPhone: AccessService.shared.phonePrefix + self.phoneNumber, smsCode: smsCode)
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)
@@ -111,7 +111,7 @@ class PinCodeViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                return self.apiWrapper.requestCode(userPhone: "8" + self.phoneNumber)
+                return self.apiWrapper.requestCode(userPhone: AccessService.shared.phonePrefix + self.phoneNumber)
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)

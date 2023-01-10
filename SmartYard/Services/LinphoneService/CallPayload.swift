@@ -59,7 +59,7 @@ struct CallPayload {
     }
     
     init?(pushNotificationPayload data: [AnyHashable: Any]) {
-        let accessService = AccessService()
+        let accessService = AccessService.shared
         
         let hash = data["hash"] as? String ?? ""
         

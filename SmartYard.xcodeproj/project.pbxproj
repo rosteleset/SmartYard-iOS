@@ -19,6 +19,9 @@
 		3A03FCF925DD5AA500B8488A /* YTVideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A03FCF825DD5AA500B8488A /* YTVideoModel.swift */; };
 		3A03FD0125DD5D5700B8488A /* YTCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A03FCFF25DD5D5700B8488A /* YTCollectionViewCell.swift */; };
 		3A03FD0225DD5D5700B8488A /* YTCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A03FD0025DD5D5700B8488A /* YTCollectionViewCell.xib */; };
+		3A114809295B0D8E00AAD2D6 /* PhoneField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A114808295B0D8E00AAD2D6 /* PhoneField.xib */; };
+		3A11480B295B0DA900AAD2D6 /* PhoneField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11480A295B0DA900AAD2D6 /* PhoneField.swift */; };
+		3A11480E296C13D600AAD2D6 /* PhonePrefixRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11480D296C13D600AAD2D6 /* PhonePrefixRequest.swift */; };
 		3A18347025D9AD8600139385 /* CityCameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18346D25D9AD8600139385 /* CityCameraViewModel.swift */; };
 		3A18347125D9AD8600139385 /* CityCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18346E25D9AD8600139385 /* CityCameraViewController.swift */; };
 		3A18347225D9AD8600139385 /* CityCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A18346F25D9AD8600139385 /* CityCameraViewController.xib */; };
@@ -96,6 +99,7 @@
 		3AB41E0225C0879200AEC8C3 /* BottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0025C0879200AEC8C3 /* BottomCell.swift */; };
 		3AB41E0325C0879200AEC8C3 /* BottomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB41E0125C0879200AEC8C3 /* BottomCell.xib */; };
 		3AB41E0A25C200B900AEC8C3 /* CityMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */; };
+		3ABA4B3B2954BE4C001D5BBF /* SmartYardSharedDataFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97EAFE2243EFF3800D81243 /* SmartYardSharedDataFramework.framework */; };
 		3ABD760B276B19CB00B0DF0B /* WebPopupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A5E1BC0276B092500E2880D /* WebPopupController.xib */; };
 		3AC5C5F926088D5C008D74DE /* PlogRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC5C5F826088D5C008D74DE /* PlogRequest.swift */; };
 		3AC5C6012608943E008D74DE /* PlogResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC5C6002608943E008D74DE /* PlogResponseData.swift */; };
@@ -587,6 +591,13 @@
 			remoteGlobalIDString = E97EAFE1243EFF3800D81243;
 			remoteInfo = SmartYardSharedDataFramework;
 		};
+		3ABA4B3D2954BE4C001D5BBF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84F840CA23E07DA5008DBE50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E97EAFE1243EFF3800D81243;
+			remoteInfo = SmartYardSharedDataFramework;
+		};
 		849653102472C93B000E1375 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84F840CA23E07DA5008DBE50 /* Project object */;
@@ -649,6 +660,9 @@
 		3A03FCF825DD5AA500B8488A /* YTVideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTVideoModel.swift; sourceTree = "<group>"; };
 		3A03FCFF25DD5D5700B8488A /* YTCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTCollectionViewCell.swift; sourceTree = "<group>"; };
 		3A03FD0025DD5D5700B8488A /* YTCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YTCollectionViewCell.xib; sourceTree = "<group>"; };
+		3A114808295B0D8E00AAD2D6 /* PhoneField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhoneField.xib; sourceTree = "<group>"; };
+		3A11480A295B0DA900AAD2D6 /* PhoneField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneField.swift; sourceTree = "<group>"; };
+		3A11480D296C13D600AAD2D6 /* PhonePrefixRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonePrefixRequest.swift; sourceTree = "<group>"; };
 		3A18346D25D9AD8600139385 /* CityCameraViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraViewModel.swift; sourceTree = "<group>"; };
 		3A18346E25D9AD8600139385 /* CityCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraViewController.swift; sourceTree = "<group>"; };
 		3A18346F25D9AD8600139385 /* CityCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityCameraViewController.xib; sourceTree = "<group>"; };
@@ -727,6 +741,7 @@
 		3AB41E0025C0879200AEC8C3 /* BottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCell.swift; sourceTree = "<group>"; };
 		3AB41E0125C0879200AEC8C3 /* BottomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BottomCell.xib; sourceTree = "<group>"; };
 		3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityMapViewModel.swift; sourceTree = "<group>"; };
+		3ABA4B40295582F8001D5BBF /* NotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		3AC5C5F826088D5C008D74DE /* PlogRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlogRequest.swift; sourceTree = "<group>"; };
 		3AC5C6002608943E008D74DE /* PlogResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlogResponseData.swift; sourceTree = "<group>"; };
 		3AC5C60526089682008D74DE /* APIPlog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIPlog.swift; sourceTree = "<group>"; };
@@ -1231,6 +1246,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3ABA4B3B2954BE4C001D5BBF /* SmartYardSharedDataFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1278,6 +1294,14 @@
 				3A03FD0025DD5D5700B8488A /* YTCollectionViewCell.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		3A11480C296C13A900AAD2D6 /* PhonePrefix */ = {
+			isa = PBXGroup;
+			children = (
+				3A11480D296C13D600AAD2D6 /* PhonePrefixRequest.swift */,
+			);
+			path = PhonePrefix;
 			sourceTree = "<group>";
 		};
 		3A18346C25D9ACE700139385 /* SelectedCamera */ = {
@@ -3019,6 +3043,7 @@
 		84EEBC9E23F55A9B00C9557F /* NotificationServiceExtension */ = {
 			isa = PBXGroup;
 			children = (
+				3ABA4B40295582F8001D5BBF /* NotificationServiceExtension.entitlements */,
 				84EEBC9F23F55A9B00C9557F /* NotificationService.swift */,
 				84EEBCA123F55A9B00C9557F /* Info.plist */,
 			);
@@ -3350,6 +3375,7 @@
 		E92EFB76242A22F2003AF7FE /* User */ = {
 			isa = PBXGroup;
 			children = (
+				3A11480C296C13A900AAD2D6 /* PhonePrefix */,
 				3A25BA9C2896F80C00D2401E /* CheckPhone */,
 				E92EFB77242A22F2003AF7FE /* APIWrapper+User.swift */,
 				E92EFB78242A22F2003AF7FE /* SendName */,
@@ -3772,6 +3798,8 @@
 			children = (
 				E99EA6C823EACD4B00BECEE6 /* PhoneTextField.swift */,
 				E99EA6C623EACD3900BECEE6 /* PhoneTextField.xib */,
+				3A114808295B0D8E00AAD2D6 /* PhoneField.xib */,
+				3A11480A295B0DA900AAD2D6 /* PhoneField.swift */,
 			);
 			path = PhoneTextField;
 			sourceTree = "<group>";
@@ -4105,6 +4133,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3ABA4B3E2954BE4C001D5BBF /* PBXTargetDependency */,
 			);
 			name = NotificationServiceExtension;
 			productName = NotificationServiceExtension;
@@ -4270,6 +4299,7 @@
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */,
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
+				3A114809295B0D8E00AAD2D6 /* PhoneField.xib in Resources */,
 				846DC6CA24B33DC600A11914 /* PayContractViewController.xib in Resources */,
 				8496396F248667300086B6E9 /* PlayArchiveVideoViewController.xib in Resources */,
 				3AC5C6192608F18B008D74DE /* HistoryViewController.xib in Resources */,
@@ -4672,6 +4702,7 @@
 				E9B9EACA2421FCCB000A92B3 /* RestorePasswordViewModel.swift in Sources */,
 				3A7CD55728588E2A003CDDC7 /* APIProvidersListResult.swift in Sources */,
 				E99EA6C923EACD4B00BECEE6 /* PhoneTextField.swift in Sources */,
+				3A11480E296C13D600AAD2D6 /* PhonePrefixRequest.swift in Sources */,
 				84B9EC8E23E085DF00979C39 /* AppCoordinator.swift in Sources */,
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				3AEFB46A264C2C81000F37D0 /* AddFaceCell.swift in Sources */,
@@ -4876,6 +4907,7 @@
 				84898A8A23F1510600E6B78E /* UIButton+Extensions.swift in Sources */,
 				84854B6723FD809E001B44F2 /* AllowedPersonSectionModel.swift in Sources */,
 				84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */,
+				3A11480B295B0DA900AAD2D6 /* PhoneField.swift in Sources */,
 				844AC3B123EAD0930066006D /* IncomingCallState.swift in Sources */,
 				3A25BAA02896F8A300D2401E /* CheckPhoneResponseData.swift in Sources */,
 				E92EFBB1242A22F2003AF7FE /* APIIssue.swift in Sources */,
@@ -5016,6 +5048,11 @@
 			isa = PBXTargetDependency;
 			target = E97EAFE1243EFF3800D81243 /* SmartYardSharedDataFramework */;
 			targetProxy = 3AAF7B62283E3B1900087620 /* PBXContainerItemProxy */;
+		};
+		3ABA4B3E2954BE4C001D5BBF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E97EAFE1243EFF3800D81243 /* SmartYardSharedDataFramework */;
+			targetProxy = 3ABA4B3D2954BE4C001D5BBF /* PBXContainerItemProxy */;
 		};
 		849653112472C93B000E1375 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5169,7 +5206,7 @@
 		84EEBCA523F55A9B00C9557F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
@@ -5192,11 +5229,12 @@
 		84EEBCA623F55A9B00C9557F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5342,7 +5380,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 17;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
@@ -5353,7 +5391,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -5520,7 +5558,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
@@ -5530,7 +5568,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",

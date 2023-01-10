@@ -8,8 +8,8 @@
 
 struct ChatConfiguration: Equatable {
     
-    let id = AccessService().chatId
-    let domain = AccessService().chatDomain
+    let id = AccessService.shared.chatId
+    let domain = AccessService.shared.chatDomain
     
     let language: String?
     let clientId: String?

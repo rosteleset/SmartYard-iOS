@@ -28,11 +28,11 @@ struct AllowedPerson: Hashable {
     }
     
     var apiNumber: String {
-        guard rawNumber.count == Constants.phoneLengthWithoutPrefix else {
+        guard rawNumber.count == AccessService.shared.phoneLengthWithoutPrefix else {
             fatalError("Неправильный формат номера")
         }
         
-        return "8" + rawNumber
+        return AccessService.shared.phonePrefix + rawNumber
     }
     
 }

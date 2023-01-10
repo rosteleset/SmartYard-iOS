@@ -392,7 +392,7 @@ extension APIWrapper {
         return access(
             flatId: flatId,
             clientId: clientId,
-            guestPhone: "8" + phone,
+            guestPhone: AccessService.shared.phonePrefix + phone,
             expire: Date.distantPast
         )
     }

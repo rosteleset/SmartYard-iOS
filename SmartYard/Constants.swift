@@ -11,8 +11,6 @@ import CoreLocation
 
 enum Constants {
     
-    static let phoneLengthWithoutPrefix = 10
-    static let phoneLengthWithPrefix = 12
     static let pinLength = 4
     static let merchant = "YOU_NEED_TO_CHANGE_THIS"
     static let appstoreUrl = "YOU_NEED_TO_CHANGE_THIS"

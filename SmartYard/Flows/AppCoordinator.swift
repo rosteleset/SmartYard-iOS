@@ -47,7 +47,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let linphoneService = LinphoneService()
     private let providerProxy = CXProviderProxy()
     
-    private let accessService = AccessService()
+    private let accessService = AccessService.shared
     private let permissionService = PermissionService()
     private let apiWrapper: APIWrapper
     private let issueService: IssueService

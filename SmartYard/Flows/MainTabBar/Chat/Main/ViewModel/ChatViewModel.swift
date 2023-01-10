@@ -69,8 +69,12 @@ class ChatViewModel: BaseViewModel {
             guard let clientPhoneNumber = accessService.clientPhoneNumber else {
                 return nil
             }
-            
-            return "8" + clientPhoneNumber
+            // пришлось делать костыль, чтобы в чатах бало сквозное опознание пользователеля,
+            // т.к. там исторически md5 от номера с восьмёркой (((
+            guard AccessService.shared.phonePrefix != "7" else {
+                return "8" + clientPhoneNumber
+            }
+            return AccessService.shared.phonePrefix + clientPhoneNumber
         }()
         
         let currentName = Driver<APIClientName?>.merge(
