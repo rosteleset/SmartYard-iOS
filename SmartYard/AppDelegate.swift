@@ -315,6 +315,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         switch action {
         case .inbox, .newAddress, .paySuccess, .payError, .videoReady:
             appCoordinator.openNotificationsTab()
+            NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
         case .chat:
             appCoordinator.openChatTab()
         }
