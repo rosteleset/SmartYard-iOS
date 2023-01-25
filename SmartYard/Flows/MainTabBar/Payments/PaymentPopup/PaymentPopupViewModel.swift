@@ -142,7 +142,7 @@ class PaymentPopupViewModel: BaseViewModel {
                     }
                     .asDriver(onErrorJustReturn: nil)
             }
-            .flatMapLatest { [weak self] args -> Driver<(String, SberbankRegisterData)?> in
+            .flatMapLatest { [weak self] args -> Driver<(String, PayRegisterResponseData)?> in
                 guard let self = self,
                       let (amount, response) = args,
                       let orderNumber = response
@@ -151,7 +151,7 @@ class PaymentPopupViewModel: BaseViewModel {
                 }
 
                 return
-                    self.apiWrapper.sberbankRegisterProcess(orderNumber: orderNumber, amount: amount)
+                    self.apiWrapper.payRegisterProcess(orderNumber: orderNumber, amount: amount)
                         .trackError(errorTracker)
                         .map {
                             guard let response = $0 else {

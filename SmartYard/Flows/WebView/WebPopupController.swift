@@ -315,7 +315,7 @@ extension WebPopupController: WKNavigationDelegate {
         webView.allowsLinkPreview = false
         disableDragAndDropInteraction()
     }
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func webView(
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,

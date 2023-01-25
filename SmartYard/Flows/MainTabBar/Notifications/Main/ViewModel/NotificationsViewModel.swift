@@ -83,6 +83,7 @@ class NotificationsViewModel: BaseViewModel {
             
         Driver
             .merge(input.viewWillAppearTrigger.mapToVoid(), newMessageRefresh, hasNetworkBecomeReachable)
+            .debounce(.milliseconds(500))
             .flatMapLatest { [weak self] _ -> Driver<InboxResponseData?> in
                 guard let self = self else {
                     return .empty()

@@ -65,40 +65,22 @@ extension APIWrapper {
             .mapAsSberbankResponse()
     }
     
-    func sberbankRegisterProcess(orderNumber: String, amount: String) -> Single<SberbankRegisterData?> {
+    func payRegisterProcess(orderNumber: String, amount: String) -> Single<PayRegisterResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
         
-        let request = SberbankRegisterRequest(
-            userName: Constants.sberbankAPILogin,
-            password: Constants.sberbankAPIPassword,
+        let request = PayRegisterRequest(
             orderNumber: orderNumber,
-            amount: amount,
-            returnUrl: Constants.sberbankSuccessReturnURL,
-            failUrl: Constants.sberbankFailureReturnURL
+            amount: amount
         )
 
         print(request)
         
         return provider.rx
-            .request(.sberbankRegister(request: request))
+            .request(.payRegister(request: request))
             .convertNoConnectionError()
-            .flatMap { response in
-                // MARK: Если вернулся успешный код - пытаемся замапить реквест
-                if 200...299 ~= response.statusCode {
-                    do {
-                        let data = try response.map(SberbankRegisterData.self)
-                        
-                        return .just(data)
-                    } catch {
-                        return .error(NSError.APIWrapperError.baseResponseMappingError)
-                    }
-                }
-                
-                // MARK: Если вернулся не особо успешный код, пытаемся достать информацию об ошибке
-                return .error(NSError.APIWrapperError.codeIsNotSuccessful(response.statusCode))
-            }
+            .mapAsDefaultResponse()
     }
     
 }

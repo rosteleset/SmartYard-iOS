@@ -66,7 +66,7 @@ enum APITarget {
     case payPrepare(request: PayPrepareRequest)
     case payProcess(request: PayProcessRequest)
     case sberbankPayProcess(request: SberbankPayProcessRequest)
-    case sberbankRegister(request: SberbankRegisterRequest)
+    case payRegister(request: PayRegisterRequest)
     
     case getPersonFaces(request: GetPersonFacesRequest)
     case removePersonFace(request: RemovePersonFaceRequest)
@@ -81,9 +81,6 @@ extension APITarget: TargetType {
         case .sberbankPayProcess:
             return URL(string: "https://securepayments.sberbank.ru/payment/applepay")!
         
-        case .sberbankRegister:
-            return URL(string: "https://securepayments.sberbank.ru/payment/rest")!
-            
         case .streamInfo(let request):
             return URL(string: request.cameraUrl)!
             
@@ -146,8 +143,8 @@ extension APITarget: TargetType {
             
         case .payPrepare: return "pay/prepare"
         case .payProcess: return "pay/process"
+        case .payRegister: return "pay/register"
         case .sberbankPayProcess: return "payment.do"
-        case .sberbankRegister: return "register.do"
             
         case .getPersonFaces: return "frs/listFaces"
         case .disLikePersonFace: return "frs/disLike"
@@ -247,14 +244,14 @@ extension APITarget: TargetType {
         }
         
         switch self {
-        case .sberbankRegister: return [:]
+        case .sberbankPayProcess: return [:]
         default: return defaultHeaders.merging(additionalHeaders) { _, new in new }
         }
     }
     
     var task: Task {
         switch self {
-        case .streamInfo, .sberbankRegister:
+        case .streamInfo:
             return .requestParameters(parameters: requestParameters, encoding: URLEncoding.default)
         default:
             return .requestParameters(parameters: requestParameters, encoding: JSONEncoding.default)
@@ -315,8 +312,8 @@ extension APITarget: TargetType {
             
         case .payPrepare(let request): return request.requestParameters
         case .payProcess(let request): return request.requestParameters
+        case .payRegister(let request): return request.requestParameters
         case .sberbankPayProcess(let request): return request.requestParameters
-        case .sberbankRegister(let request): return request.requestParameters
         
         case .getPersonFaces(let request): return request.requestParameters
         case .removePersonFace(let request): return request.requestParameters

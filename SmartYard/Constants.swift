@@ -19,11 +19,6 @@ enum Constants {
     static let yandexApiKey = "YOU_NEED_TO_CHANGE_THIS"
     static let defaultBackendURL = "YOU_NEED_TO_CHANGE_THIS"
     static let mapBoxPublicKey = "YOU_NEED_TO_CHANGE_THIS"
-    static let sberbankAPILogin = "YOU_NEED_TO_CHANGE_THIS"
-    static let sberbankAPIPassword = "YOU_NEED_TO_CHANGE_THIS"
-    static let sberbankSuccessReturnURL = "YOU_NEED_TO_CHANGE_THIS"
-    static let sberbankFailureReturnURL = "YOU_NEED_TO_CHANGE_THIS"
-
 
     static let defaultMapCenterCoordinates = CLLocationCoordinate2D(latitude: 52.675463000000001, longitude: 41.465411000000003)
     enum Chat {

@@ -88,3 +88,14 @@ post_install do |installer|
         end
     end
 end
+
+post_integrate do |installer|
+  # Removing duplicates in output file lists.
+  # Liblinphone-sdk since version 5.2.*  produces duplcate lines in this files.
+  # It seems like a bug in liblinphone-sdk podspec or in cocoapods itself.
+  puts "!!! Removing duplicates from output-files.xcfilelist  !!!"
+  IO.write(File.join(Dir.pwd,'Pods/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-Release-output-files.xcfilelist'),
+  IO.readlines(File.join(Dir.pwd,'Pods/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-Release-output-files.xcfilelist'), chomp: true).uniq.join("\n"))
+  IO.write(File.join(Dir.pwd,'Pods/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-Debug-output-files.xcfilelist'),
+  IO.readlines(File.join(Dir.pwd,'Pods/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-Debug-output-files.xcfilelist'), chomp: true).uniq.join("\n"))
+end

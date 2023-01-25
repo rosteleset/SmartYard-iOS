@@ -202,7 +202,7 @@ class FullscreenPlayerViewController: UIViewController {
         sliderConstraints = []
         sliderConstraints.append(progressSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12))
         sliderConstraints.append(progressSlider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12))
-        sliderConstraints.append(progressSlider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16))
+        sliderConstraints.append(progressSlider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32))
         for constraint in sliderConstraints {
             constraint.isActive = true
         }
