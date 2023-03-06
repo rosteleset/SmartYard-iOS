@@ -201,7 +201,9 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
                 onNext: { args in
                     let (index, object) = args
                     
-                    guard let uIndex = index, let uObject = object else {
+                    guard let uIndex = index,
+                        let uObject = object,
+                        let backendURL = uObject.backendURL else {
                         return
                     }
                     
@@ -209,7 +211,7 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
                     
                     SmartYardSharedDataUtilities.sendOpenDoorRequest(
                         accessToken: uObject.accessToken,
-                        backendURL: uObject.backendURL ?? Constants.defaultBackendURL,
+                        backendURL: backendURL,
                         doorId: curObject.doorId,
                         domophoneId: curObject.domophoneId
                     )

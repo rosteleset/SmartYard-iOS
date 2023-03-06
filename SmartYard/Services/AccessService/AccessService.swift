@@ -134,7 +134,7 @@ class AccessService {
     
     var backendURL: String {
         get {
-            UserDefaults.standard.string(forKey: backendURLKey) ?? Constants.defaultBackendURL
+            UserDefaults.standard.string(forKey: backendURLKey) ?? Constants.defaultBackendURL ?? ""
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: backendURLKey)
@@ -242,7 +242,7 @@ class AccessService {
     
     var phonePrefix: String {
         get {
-            UserDefaults.standard.value(forKey: phonePrefixKey)  as? String ?? "7"
+            UserDefaults.standard.value(forKey: phonePrefixKey)  as? String ?? Constants.defaultPhonePrefix
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: phonePrefixKey)
@@ -251,7 +251,7 @@ class AccessService {
     
     var phonePattern: String {
         get {
-            UserDefaults.standard.value(forKey: phonePatternKey)  as? String ?? "(###) ###-##-##"
+            UserDefaults.standard.value(forKey: phonePatternKey)  as? String ?? Constants.defaultPhonePattern
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: phonePatternKey)
@@ -293,11 +293,11 @@ class AccessService {
     }
     
     func logout() {
-        appState = .selectProvider
+        appState = Constants.defaultBackendURL.isNilOrEmpty ? .selectProvider : .phoneNumber
         accessToken = nil
         clientName = nil
         clientPhoneNumber = nil
-        backendURL = Constants.defaultBackendURL
+        backendURL = Constants.defaultBackendURL ?? ""
         providerId = "default"
         providerName = "default"
         showPayments = true

@@ -36,6 +36,10 @@ class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
         super.viewDidLoad()
         
         view.hideKeyboardWhenTapped = true
+        if !Constants.defaultBackendURL.isNilOrEmpty {
+            backButton.isHidden = true
+            selectedProviderNameLabel.isHidden = true
+        }
         bind()
     }
     

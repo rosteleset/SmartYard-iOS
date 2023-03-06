@@ -84,12 +84,14 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         self.mainWindow = mainWindow
         
-        // блокируем основной поток до обновления baseUrl из списка провайдеров если провайдер был выбран.
-        switch accessService.appState {
-        case .onboarding, .selectProvider:
-            break
-        default:
-            updateBaseUrlSync(apiWrapper: apiWrapper, accessService: accessService)
+        if Constants.defaultBackendURL.isNilOrEmpty {
+            // блокируем основной поток до обновления baseUrl из списка провайдеров если провайдер был выбран.
+            switch accessService.appState {
+            case .onboarding, .selectProvider:
+                break
+            default:
+                updateBaseUrlSync(apiWrapper: apiWrapper, accessService: accessService)
+            }
         }
         
         super.init(initialRoute: accessService.routeForCurrentState)
@@ -423,7 +425,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                         self?.mainTabBarCoordinator = nil
                     }
                     
-                    self?.trigger(.selectProvider)
+                    self?.trigger(Constants.defaultBackendURL.isNilOrEmpty ? .selectProvider : .phoneNumber)
                 }
             )
             .disposed(by: disposeBag)

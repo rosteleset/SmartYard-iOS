@@ -147,7 +147,8 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
         guard
             let uObject = SmartYardSharedDataUtilities.loadSharedData(),
             let doorIdNS = intent.door?.doorId,
-            let domophoneIdNS = intent.door?.domophoneId
+            let domophoneIdNS = intent.door?.domophoneId,
+            let backendURL = uObject.backendURL
         else {
             completion(SYOpenDoorIntentResponse(code: .failure, userActivity: nil))
             return
@@ -155,7 +156,7 @@ class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
         
         SmartYardSharedDataUtilities.sendOpenDoorRequest(
             accessToken: uObject.accessToken,
-            backendURL: uObject.backendURL ?? Constants.defaultBackendURL ,
+            backendURL: backendURL,
             doorId: Int(truncating: doorIdNS),
             domophoneId: String(Int(truncating: domophoneIdNS))
         ) { success in
