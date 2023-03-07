@@ -151,14 +151,14 @@ class LinphoneService: CoreDelegate {
         
         core.useInfoForDtmf = false
         core.useRfc2833ForDtmf = true
-
+        /*
         core.audioPayloadTypes.forEach {
             _ = $0.enable(enabled: true)
         }
-        
         core.videoPayloadTypes.forEach {
             _ = $0.enable(enabled: $0.mimeType == "H264")
         }
+        */
         
         try? core.setVideodevice(newValue: "StaticImage: Static picture")
     }

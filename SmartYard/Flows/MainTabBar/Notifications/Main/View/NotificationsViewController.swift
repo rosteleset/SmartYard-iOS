@@ -94,11 +94,7 @@ extension NotificationsViewController: WKNavigationDelegate {
         }
         
         if let url = navigationAction.request.url {
-            if url.absoluteString.starts(with: "https://cam.lanta.me/files/") {
-                shareUrlTrigger.onNext(url)
-            } else {
                 UIApplication.shared.open(url)
-            }
         }
         
         decisionHandler(WKNavigationActionPolicy.cancel)

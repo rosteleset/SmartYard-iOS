@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		20C11FF2274B7DBB09A10A16 /* Pods_SmartYardIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B4349457AC80952BCA65A5B /* Pods_SmartYardIntents.framework */; };
+		1CA51BCEE47B27884A064370 /* Pods_SmartYardIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BE16BE9E7E91B6D52365AF /* Pods_SmartYardIntents.framework */; };
+		20C63D1045CA1BD2321939AB /* Pods_SmartYardWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9965FF7664ECEE25CC7DF77 /* Pods_SmartYardWidget.framework */; };
 		3A003C7025DEF2B7002F193B /* YouTubeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003C6F25DEF2B7002F193B /* YouTubeRequest.swift */; };
 		3A003C7525DEF2D6002F193B /* YouTubeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003C7425DEF2D6002F193B /* YouTubeResponseData.swift */; };
 		3A003C7A25DEF39B002F193B /* YouTubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003C7925DEF39B002F193B /* YouTubeVideo.swift */; };
@@ -395,8 +396,7 @@
 		84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F840D523E07DA5008DBE50 /* AppDelegate.swift */; };
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
-		85E437EBD8028F17EA854687 /* Pods_SmartYard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3264A75344A37C60971E215B /* Pods_SmartYard.framework */; };
-		C673268E8E85CC222687D7E8 /* Pods_SmartYardWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B39F8B748C32EE679BAD55 /* Pods_SmartYardWidget.framework */; };
+		DEBAEE6C5E7E1BA8F3DA801D /* Pods_SmartYard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFB59600FE0499C8F660251 /* Pods_SmartYard.framework */; };
 		E9004C5F23FABF2200B59976 /* IntercomTemporaryAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9004C5D23FABF1C00B59976 /* IntercomTemporaryAccessView.xib */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
 		E9004C6223FABF6800B59976 /* AccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9004C6123FABF6800B59976 /* AccessView.xib */; };
@@ -649,8 +649,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0E8840EF36842B80A45CF746 /* Pods-SmartYardIntents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.release.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.release.xcconfig"; sourceTree = "<group>"; };
-		3264A75344A37C60971E215B /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0984C4702D194926F4CD831D /* Pods-SmartYardWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.debug.xcconfig"; sourceTree = "<group>"; };
+		2343FEF497215F509FEC19D9 /* Pods-SmartYardWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.release.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.release.xcconfig"; sourceTree = "<group>"; };
 		3A003C6F25DEF2B7002F193B /* YouTubeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeRequest.swift; sourceTree = "<group>"; };
 		3A003C7425DEF2D6002F193B /* YouTubeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeResponseData.swift; sourceTree = "<group>"; };
 		3A003C7925DEF39B002F193B /* YouTubeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeVideo.swift; sourceTree = "<group>"; };
@@ -796,9 +796,8 @@
 		3AFBA74226383B0500C7DEB6 /* CamMapCCTVResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamMapCCTVResponseData.swift; sourceTree = "<group>"; };
 		3AFBA74726383B4200C7DEB6 /* APICamMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICamMap.swift; sourceTree = "<group>"; };
 		3AFBA7B8263984E000C7DEB6 /* AVPlayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayer+Extensions.swift"; sourceTree = "<group>"; };
-		6EF1D05FE4E504C4581F0162 /* Pods-SmartYardWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.release.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.release.xcconfig"; sourceTree = "<group>"; };
-		7B4349457AC80952BCA65A5B /* Pods_SmartYardIntents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardIntents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		82E4A5D8CCE7C5B36BF359EC /* Pods-SmartYardIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.debug.xcconfig"; sourceTree = "<group>"; };
+		6EB26FF55D6522C56B0A772D /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
+		7EE9DC25E1CDD1A5A9BD1EE9 /* Pods-SmartYard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.debug.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.debug.xcconfig"; sourceTree = "<group>"; };
 		842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceAction.swift; sourceTree = "<group>"; };
 		842FECB4242B89DF007CA0F3 /* OfficesResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesResponseData.swift; sourceTree = "<group>"; };
 		842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesRequest.swift; sourceTree = "<group>"; };
@@ -1047,10 +1046,10 @@
 		84F840DC23E07DA5008DBE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84F840DF23E07DA5008DBE50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84F840E123E07DA5008DBE50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9446924CEBF5B1B90F3DD95E /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
-		97B39F8B748C32EE679BAD55 /* Pods_SmartYardWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D8DF595B63AD4846B13E6471 /* Pods-SmartYardWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.debug.xcconfig"; sourceTree = "<group>"; };
-		E5E590E291061ACD550E2CB9 /* Pods-SmartYard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.debug.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.debug.xcconfig"; sourceTree = "<group>"; };
+		8EFB59600FE0499C8F660251 /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9965FF7664ECEE25CC7DF77 /* Pods_SmartYardWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDC1D518408A4B7C7E8EF1FD /* Pods-SmartYardIntents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.release.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.release.xcconfig"; sourceTree = "<group>"; };
+		D4BE16BE9E7E91B6D52365AF /* Pods_SmartYardIntents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardIntents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9004C5D23FABF1C00B59976 /* IntercomTemporaryAccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntercomTemporaryAccessView.xib; sourceTree = "<group>"; };
 		E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntercomTemporaryAccessView.swift; sourceTree = "<group>"; };
 		E9004C6123FABF6800B59976 /* AccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccessView.xib; sourceTree = "<group>"; };
@@ -1221,6 +1220,7 @@
 		E9E4273823F5609E00F5D593 /* ServiceSoonAvailableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSoonAvailableViewController.swift; sourceTree = "<group>"; };
 		E9E4273923F5609E00F5D593 /* ServiceSoonAvailableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceSoonAvailableViewController.xib; sourceTree = "<group>"; };
 		E9E4273C23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSoonAvailableViewModel.swift; sourceTree = "<group>"; };
+		EBFF984061C4CB6B6C8AFF21 /* Pods-SmartYardIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1229,7 +1229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A555B102700573400E70CB9 /* Intents.framework in Frameworks */,
-				20C11FF2274B7DBB09A10A16 /* Pods_SmartYardIntents.framework in Frameworks */,
+				1CA51BCEE47B27884A064370 /* Pods_SmartYardIntents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1238,7 +1238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				849653082472C93B000E1375 /* NotificationCenter.framework in Frameworks */,
-				C673268E8E85CC222687D7E8 /* Pods_SmartYardWidget.framework in Frameworks */,
+				20C63D1045CA1BD2321939AB /* Pods_SmartYardWidget.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1255,7 +1255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E97EAFE9243EFF3800D81243 /* SmartYardSharedDataFramework.framework in Frameworks */,
-				85E437EBD8028F17EA854687 /* Pods_SmartYard.framework in Frameworks */,
+				DEBAEE6C5E7E1BA8F3DA801D /* Pods_SmartYard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3175,10 +3175,10 @@
 			isa = PBXGroup;
 			children = (
 				849652D82472C538000E1375 /* NotificationCenter.framework */,
-				3264A75344A37C60971E215B /* Pods_SmartYard.framework */,
-				97B39F8B748C32EE679BAD55 /* Pods_SmartYardWidget.framework */,
 				3A555B0F2700573400E70CB9 /* Intents.framework */,
-				7B4349457AC80952BCA65A5B /* Pods_SmartYardIntents.framework */,
+				8EFB59600FE0499C8F660251 /* Pods_SmartYard.framework */,
+				D4BE16BE9E7E91B6D52365AF /* Pods_SmartYardIntents.framework */,
+				B9965FF7664ECEE25CC7DF77 /* Pods_SmartYardWidget.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3186,12 +3186,12 @@
 		B0B71A96C6C8995993C06C49 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E5E590E291061ACD550E2CB9 /* Pods-SmartYard.debug.xcconfig */,
-				9446924CEBF5B1B90F3DD95E /* Pods-SmartYard.release.xcconfig */,
-				D8DF595B63AD4846B13E6471 /* Pods-SmartYardWidget.debug.xcconfig */,
-				6EF1D05FE4E504C4581F0162 /* Pods-SmartYardWidget.release.xcconfig */,
-				82E4A5D8CCE7C5B36BF359EC /* Pods-SmartYardIntents.debug.xcconfig */,
-				0E8840EF36842B80A45CF746 /* Pods-SmartYardIntents.release.xcconfig */,
+				7EE9DC25E1CDD1A5A9BD1EE9 /* Pods-SmartYard.debug.xcconfig */,
+				6EB26FF55D6522C56B0A772D /* Pods-SmartYard.release.xcconfig */,
+				EBFF984061C4CB6B6C8AFF21 /* Pods-SmartYardIntents.debug.xcconfig */,
+				BDC1D518408A4B7C7E8EF1FD /* Pods-SmartYardIntents.release.xcconfig */,
+				0984C4702D194926F4CD831D /* Pods-SmartYardWidget.debug.xcconfig */,
+				2343FEF497215F509FEC19D9 /* Pods-SmartYardWidget.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -4088,7 +4088,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A555B182700573400E70CB9 /* Build configuration list for PBXNativeTarget "SmartYardIntents" */;
 			buildPhases = (
-				85D936E2377E8C0122FD276A /* [CP] Check Pods Manifest.lock */,
+				78E115C42ABAA1790832C3CB /* [CP] Check Pods Manifest.lock */,
 				3A555B0A2700573400E70CB9 /* Sources */,
 				3A555B0B2700573400E70CB9 /* Frameworks */,
 				3A555B0C2700573400E70CB9 /* Resources */,
@@ -4107,7 +4107,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 849653132472C93B000E1375 /* Build configuration list for PBXNativeTarget "SmartYardWidget" */;
 			buildPhases = (
-				82AA1F01DA14C03A83819DAF /* [CP] Check Pods Manifest.lock */,
+				5E5FA0B99E3B42C6E943EB1D /* [CP] Check Pods Manifest.lock */,
 				849653032472C93A000E1375 /* Sources */,
 				849653042472C93A000E1375 /* Frameworks */,
 				849653052472C93A000E1375 /* Resources */,
@@ -4144,17 +4144,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84F840E423E07DA5008DBE50 /* Build configuration list for PBXNativeTarget "SmartYard" */;
 			buildPhases = (
-				79EEE7229A112A3ECB59FC9E /* [CP] Check Pods Manifest.lock */,
+				698BAC68F20826355F7B9989 /* [CP] Check Pods Manifest.lock */,
 				84F840CE23E07DA5008DBE50 /* Sources */,
 				84F840CF23E07DA5008DBE50 /* Frameworks */,
 				E988DABC2444AB1D00C66371 /* Setup GoogleService-Info.plist */,
 				84F840D023E07DA5008DBE50 /* Resources */,
-				C380D67DCFB48F949692107B /* [CP] Embed Pods Frameworks */,
 				84B9ECA023E08DAD00979C39 /* Crashlytics */,
 				84B9EC9F23E08D7500979C39 /* SwiftLint */,
 				84EEBCA823F55A9B00C9557F /* Embed App Extensions */,
 				E97EAFD9243E048900D81243 /* Embed Frameworks */,
 				3AF20E9F27102745000AA0E4 /* MapBox Access Token Injection Run Script */,
+				4DA6BFC05CFF96F33420E667 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -4416,7 +4416,46 @@
 			shellPath = /bin/sh;
 			shellScript = "# Look for a global file named 'mapbox' or '.mapbox' within the home directory\ntoken_file=~/.mapbox\ntoken_file2=~/mapbox\ntoken=\"$(cat $token_file 2>/dev/null || cat $token_file2 2>/dev/null)\"\nif [ \"$token\" ]; then\n  plutil -replace MGLMapboxAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\n  echo 'warning: Missing Mapbox access token'\n  open 'https://account.mapbox.com/access-tokens/'\n  echo \"warning: Get an access token from <https://account.mapbox.com/access-tokens/>, then create a new file at $token_file or $token_file2 that contains the access token.\"\nfi\n";
 		};
-		79EEE7229A112A3ECB59FC9E /* [CP] Check Pods Manifest.lock */ = {
+		4DA6BFC05CFF96F33420E667 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E5FA0B99E3B42C6E943EB1D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SmartYardWidget-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		698BAC68F20826355F7B9989 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4438,7 +4477,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		82AA1F01DA14C03A83819DAF /* [CP] Check Pods Manifest.lock */ = {
+		78E115C42ABAA1790832C3CB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4453,7 +4492,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SmartYardWidget-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SmartYardIntents-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4497,45 +4536,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
-		85D936E2377E8C0122FD276A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SmartYardIntents-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C380D67DCFB48F949692107B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		E988DABC2444AB1D00C66371 /* Setup GoogleService-Info.plist */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5102,7 +5102,7 @@
 /* Begin XCBuildConfiguration section */
 		3A555B192700573400E70CB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 82E4A5D8CCE7C5B36BF359EC /* Pods-SmartYardIntents.debug.xcconfig */;
+			baseConfigurationReference = EBFF984061C4CB6B6C8AFF21 /* Pods-SmartYardIntents.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntents.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -5128,7 +5128,7 @@
 		};
 		3A555B1A2700573400E70CB9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0E8840EF36842B80A45CF746 /* Pods-SmartYardIntents.release.xcconfig */;
+			baseConfigurationReference = BDC1D518408A4B7C7E8EF1FD /* Pods-SmartYardIntents.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntents.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -5154,7 +5154,7 @@
 		};
 		849653142472C93B000E1375 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D8DF595B63AD4846B13E6471 /* Pods-SmartYardWidget.debug.xcconfig */;
+			baseConfigurationReference = 0984C4702D194926F4CD831D /* Pods-SmartYardWidget.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -5178,7 +5178,7 @@
 		};
 		849653152472C93B000E1375 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6EF1D05FE4E504C4581F0162 /* Pods-SmartYardWidget.release.xcconfig */;
+			baseConfigurationReference = 2343FEF497215F509FEC19D9 /* Pods-SmartYardWidget.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -5373,7 +5373,7 @@
 		};
 		84F840E523E07DA5008DBE50 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E5E590E291061ACD550E2CB9 /* Pods-SmartYard.debug.xcconfig */;
+			baseConfigurationReference = 7EE9DC25E1CDD1A5A9BD1EE9 /* Pods-SmartYard.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-SmartYard";
@@ -5391,148 +5391,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.4;
+				MARKETING_VERSION = 1.3.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
 					"-l\"sqlite3\"",
 					"-l\"z\"",
-					"-framework",
-					"\"Accelerate\"",
-					"-framework",
-					"\"AdSupport\"",
-					"-framework",
-					"\"Alamofire\"",
-					"-framework",
-					"\"CFNetwork\"",
-					"-framework",
-					"\"Cartography\"",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"CoreLocation\"",
-					"-framework",
-					"\"CoreTelephony\"",
-					"-framework",
-					"\"Differentiator\"",
-					"-framework",
-					"\"FBLPromises\"",
-					"-framework",
-					"\"FirebaseAnalytics\"",
-					"-framework",
-					"\"FirebaseCore\"",
-					"-framework",
-					"\"FirebaseCrashlytics\"",
-					"-framework",
-					"\"FirebaseInstallations\"",
-					"-framework",
-					"\"FirebaseMessaging\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"GoogleAppMeasurement\"",
-					"-framework",
-					"\"GoogleDataTransport\"",
-					"-framework",
-					"\"GoogleUtilities\"",
-					"-framework",
-					"\"JGProgressHUD\"",
-					"-framework",
-					"\"JTAppleCalendar\"",
-					"-framework",
-					"\"Kingfisher\"",
-					"-framework",
-					"\"MapboxMaps\"",
-					"-framework",
-					"\"Moya\"",
-					"-framework",
-					"\"OnlineChatSdk\"",
-					"-framework",
-					"\"PMNibLinkableView\"",
-					"-framework",
-					"\"Parchment\"",
-					"-framework",
-					"\"PinLayout\"",
-					"-framework",
-					"\"PopOverDatePicker\"",
-					"-framework",
-					"\"QuartzCore\"",
-					"-framework",
-					"\"RxCocoa\"",
-					"-framework",
-					"\"RxDataSources\"",
-					"-framework",
-					"\"RxRelay\"",
-					"-framework",
-					"\"RxSwift\"",
-					"-framework",
-					"\"RxViewController\"",
-					"-framework",
-					"\"SHSPhoneComponent\"",
-					"-framework",
-					"\"SSCustomTabbar\"",
-					"-framework",
-					"\"SearchTextField\"",
-					"-framework",
-					"\"Security\"",
-					"-framework",
-					"\"SkeletonView\"",
-					"-framework",
-					"\"StoreKit\"",
-					"-framework",
-					"\"SwifterSwift\"",
-					"-framework",
-					"\"SystemConfiguration\"",
-					"-framework",
-					"\"TPKeyboardAvoiding\"",
-					"-framework",
-					"\"TouchAreaInsets\"",
-					"-framework",
-					"\"UIKit\"",
-					"-framework",
-					"\"WebKit\"",
-					"-framework",
-					"\"XCoordinator\"",
-					"-framework",
-					"\"bctoolbox\"",
-					"-framework",
-					"\"bctoolbox-ios\"",
-					"-framework",
-					"\"bctoolbox-tester\"",
-					"-framework",
-					"\"belcard\"",
-					"-framework",
-					"\"belle-sip\"",
-					"-framework",
-					"\"belr\"",
-					"-framework",
-					"\"lime\"",
-					"-framework",
-					"\"limetester\"",
-					"-framework",
-					"\"linphone\"",
-					"-framework",
-					"\"linphonesw\"",
-					"-framework",
-					"\"linphonetester\"",
-					"-framework",
-					"\"mediastreamer2\"",
-					"-framework",
-					"\"msamr\"",
-					"-framework",
-					"\"mscodec2\"",
-					"-framework",
-					"\"msopenh264\"",
-					"-framework",
-					"\"mssilk\"",
-					"-framework",
-					"\"mswebrtc\"",
-					"-framework",
-					"\"msx264\"",
-					"-framework",
-					"\"nanopb\"",
-					"-framework",
-					"\"ortp\"",
 					"-weak_framework",
 					"\"Combine\"",
 					"-weak_framework",
@@ -5551,7 +5415,7 @@
 		};
 		84F840E623E07DA5008DBE50 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9446924CEBF5B1B90F3DD95E /* Pods-SmartYard.release.xcconfig */;
+			baseConfigurationReference = 6EB26FF55D6522C56B0A772D /* Pods-SmartYard.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-SmartYard";
@@ -5568,148 +5432,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.4;
+				MARKETING_VERSION = 1.3.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
 					"-l\"sqlite3\"",
 					"-l\"z\"",
-					"-framework",
-					"\"Accelerate\"",
-					"-framework",
-					"\"AdSupport\"",
-					"-framework",
-					"\"Alamofire\"",
-					"-framework",
-					"\"CFNetwork\"",
-					"-framework",
-					"\"Cartography\"",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"CoreLocation\"",
-					"-framework",
-					"\"CoreTelephony\"",
-					"-framework",
-					"\"Differentiator\"",
-					"-framework",
-					"\"FBLPromises\"",
-					"-framework",
-					"\"FirebaseAnalytics\"",
-					"-framework",
-					"\"FirebaseCore\"",
-					"-framework",
-					"\"FirebaseCrashlytics\"",
-					"-framework",
-					"\"FirebaseInstallations\"",
-					"-framework",
-					"\"FirebaseMessaging\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"GoogleAppMeasurement\"",
-					"-framework",
-					"\"GoogleDataTransport\"",
-					"-framework",
-					"\"GoogleUtilities\"",
-					"-framework",
-					"\"JGProgressHUD\"",
-					"-framework",
-					"\"JTAppleCalendar\"",
-					"-framework",
-					"\"Kingfisher\"",
-					"-framework",
-					"\"MapboxMaps\"",
-					"-framework",
-					"\"Moya\"",
-					"-framework",
-					"\"OnlineChatSdk\"",
-					"-framework",
-					"\"PMNibLinkableView\"",
-					"-framework",
-					"\"Parchment\"",
-					"-framework",
-					"\"PinLayout\"",
-					"-framework",
-					"\"PopOverDatePicker\"",
-					"-framework",
-					"\"QuartzCore\"",
-					"-framework",
-					"\"RxCocoa\"",
-					"-framework",
-					"\"RxDataSources\"",
-					"-framework",
-					"\"RxRelay\"",
-					"-framework",
-					"\"RxSwift\"",
-					"-framework",
-					"\"RxViewController\"",
-					"-framework",
-					"\"SHSPhoneComponent\"",
-					"-framework",
-					"\"SSCustomTabbar\"",
-					"-framework",
-					"\"SearchTextField\"",
-					"-framework",
-					"\"Security\"",
-					"-framework",
-					"\"SkeletonView\"",
-					"-framework",
-					"\"StoreKit\"",
-					"-framework",
-					"\"SwifterSwift\"",
-					"-framework",
-					"\"SystemConfiguration\"",
-					"-framework",
-					"\"TPKeyboardAvoiding\"",
-					"-framework",
-					"\"TouchAreaInsets\"",
-					"-framework",
-					"\"UIKit\"",
-					"-framework",
-					"\"WebKit\"",
-					"-framework",
-					"\"XCoordinator\"",
-					"-framework",
-					"\"bctoolbox\"",
-					"-framework",
-					"\"bctoolbox-ios\"",
-					"-framework",
-					"\"bctoolbox-tester\"",
-					"-framework",
-					"\"belcard\"",
-					"-framework",
-					"\"belle-sip\"",
-					"-framework",
-					"\"belr\"",
-					"-framework",
-					"\"lime\"",
-					"-framework",
-					"\"limetester\"",
-					"-framework",
-					"\"linphone\"",
-					"-framework",
-					"\"linphonesw\"",
-					"-framework",
-					"\"linphonetester\"",
-					"-framework",
-					"\"mediastreamer2\"",
-					"-framework",
-					"\"msamr\"",
-					"-framework",
-					"\"mscodec2\"",
-					"-framework",
-					"\"msopenh264\"",
-					"-framework",
-					"\"mssilk\"",
-					"-framework",
-					"\"mswebrtc\"",
-					"-framework",
-					"\"msx264\"",
-					"-framework",
-					"\"nanopb\"",
-					"-framework",
-					"\"ortp\"",
 					"-weak_framework",
 					"\"Combine\"",
 					"-weak_framework",

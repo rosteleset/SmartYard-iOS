@@ -43,7 +43,7 @@ class CXProviderProxy: NSObject {
         
         providerConfiguration.supportsVideo = true
         providerConfiguration.supportedHandleTypes = [.generic]
-        providerConfiguration.iconTemplateImageData = UIImage(named: "LantaSquareLogo")?.pngData()
+        providerConfiguration.iconTemplateImageData = UIImage(named: "BackToAppIcon")?.pngData()
 
         providerConfiguration.maximumCallsPerCallGroup = 1
         providerConfiguration.maximumCallGroups = 1
