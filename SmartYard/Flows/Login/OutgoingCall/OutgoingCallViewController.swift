@@ -63,7 +63,7 @@ class OutgoingCallViewController: BaseViewController, LoaderPresentable {
         output.phoneNumber
             .drive(
                 onNext: { phoneNumber in
-                    self.hintInputPhoneLabel.text = "Нам необходимо убедиться,\n что номер +7\(phoneNumber) действительно ваш."
+                    self.hintInputPhoneLabel.text = "Нам необходимо убедиться,\n что номер +\(AccessService.shared.phonePrefix)\(phoneNumber) действительно ваш."
                 }
             )
             .disposed(by: disposeBag)

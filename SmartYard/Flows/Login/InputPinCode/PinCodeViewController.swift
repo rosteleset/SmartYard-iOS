@@ -129,7 +129,7 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
         output.phoneNumber
             .drive(
                 onNext: { phoneNumber in
-                    self.hintInputPhoneLabel.text = "Введите код из СМС,\nотправленный на номер +7\(phoneNumber)"
+                    self.hintInputPhoneLabel.text = "Введите код из СМС,\nотправленный на номер +\(AccessService.shared.phonePrefix)\(phoneNumber)"
                 }
             )
             .disposed(by: disposeBag)
