@@ -134,7 +134,7 @@ class AccessService {
     
     var backendURL: String {
         get {
-            UserDefaults.standard.string(forKey: backendURLKey) ?? Constants.defaultBackendURL ?? ""
+            UserDefaults.standard.string(forKey: backendURLKey) ?? Constants.defaultBackendURL ?? "https://127.0.0.1/mobile"
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: backendURLKey)
@@ -297,7 +297,7 @@ class AccessService {
         accessToken = nil
         clientName = nil
         clientPhoneNumber = nil
-        backendURL = Constants.defaultBackendURL ?? ""
+        backendURL = Constants.defaultBackendURL ?? "https://127.0.0.1/mobile"
         providerId = "default"
         providerName = "default"
         showPayments = true
