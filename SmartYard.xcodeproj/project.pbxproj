@@ -5865,7 +5865,7 @@
 				3A555B1A2700573400E70CB9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		849653132472C93B000E1375 /* Build configuration list for PBXNativeTarget "SmartYardWidget" */ = {
 			isa = XCConfigurationList;
@@ -5874,7 +5874,7 @@
 				849653152472C93B000E1375 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		84EEBCA723F55A9B00C9557F /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */ = {
 			isa = XCConfigurationList;
@@ -5883,7 +5883,7 @@
 				84EEBCA623F55A9B00C9557F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		84F840CD23E07DA5008DBE50 /* Build configuration list for PBXProject "SmartYard" */ = {
 			isa = XCConfigurationList;
@@ -5892,7 +5892,7 @@
 				84F840E323E07DA5008DBE50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		84F840E423E07DA5008DBE50 /* Build configuration list for PBXNativeTarget "SmartYard" */ = {
 			isa = XCConfigurationList;
@@ -5901,7 +5901,7 @@
 				84F840E623E07DA5008DBE50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		E97EAFEB243EFF3800D81243 /* Build configuration list for PBXNativeTarget "SmartYardSharedDataFramework" */ = {
 			isa = XCConfigurationList;
@@ -5910,7 +5910,7 @@
 				E97EAFED243EFF3800D81243 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
