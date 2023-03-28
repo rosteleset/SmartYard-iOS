@@ -40,7 +40,7 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
     fileprivate func configureMapBox() {
         let cameraOptions = CameraOptions(
             center: Constants.defaultMapCenterCoordinates,
-            zoom: 8,
+            zoom: 9,
             bearing: .zero,
             pitch: .zero
         )

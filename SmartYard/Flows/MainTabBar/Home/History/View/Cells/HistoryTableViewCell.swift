@@ -61,8 +61,8 @@ class HistoryTableViewCell: UITableViewCell {
             }
             
             let df = DateFormatter()
-            df.timeZone = Calendar.moscowCalendar.timeZone
-            df.locale = Calendar.moscowCalendar.locale
+            df.timeZone = Calendar.novokuznetskCalendar.timeZone
+            df.locale = Calendar.novokuznetskCalendar.locale
             df.dateFormat = "EEEE, d MMMM"
             dateLabel.text = df.string(from: value.date)
             dateView.isHidden = false
@@ -141,8 +141,8 @@ class HistoryTableViewCell: UITableViewCell {
         descriptionLabel.text = description
         
         let df = DateFormatter()
-        df.timeZone = Calendar.moscowCalendar.timeZone
-        df.locale = Calendar.moscowCalendar.locale
+        df.timeZone = Calendar.novokuznetskCalendar.timeZone
+        df.locale = Calendar.novokuznetskCalendar.locale
         df.dateFormat = "HH:mm"
         timeLabel.text = df.string(from: value.date)
         

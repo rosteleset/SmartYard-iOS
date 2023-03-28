@@ -52,7 +52,6 @@ struct APISettingsAddress: Decodable {
         contractName = try? container.decode(String.self, forKey: .contractName)
         
         let flatOwnerRawValue = try? container.decode(String.self, forKey: .flatOwner)
-        
         switch flatOwnerRawValue {
         case "t": flatOwner = true
         case "f": flatOwner = false
@@ -60,7 +59,6 @@ struct APISettingsAddress: Decodable {
         }
         
         let contractOwnerRawValue = try? container.decode(String.self, forKey: .contractOwner)
-        
         switch contractOwnerRawValue {
         case "t": contractOwner = true
         case "f": contractOwner = false
@@ -68,7 +66,6 @@ struct APISettingsAddress: Decodable {
         }
         
         let hasGatesRawValue = try? container.decode(String.self, forKey: .hasGates)
-        
         switch hasGatesRawValue {
         case "t": hasGates = true
         case "f": hasGates = false
@@ -76,20 +73,23 @@ struct APISettingsAddress: Decodable {
         }
         
         let hasPlogRawValue = try? container.decode(String.self, forKey: .hasPlog)
-        
         switch hasPlogRawValue {
         case "t": hasPlog = true
         default: hasPlog = false
         }
         
-        houseId = try? container.decode(String.self, forKey: .houseId)
+        let hid = try container.decode(Int.self, forKey: .houseId)
+        houseId = String(hid)
+        
         flatId = try? container.decode(String.self, forKey: .flatId)
         flatNumber = try? container.decode(String.self, forKey: .flatNumber)
+        
         address = try container.decode(String.self, forKey: .address)
         services = try container.decode([String].self, forKey: .services)
         lcab = try? container.decode(String.self, forKey: .lcab)
         
         roommates = (try? container.decode([APIRoommate].self, forKey: .roommates)) ?? []
+        
     }
     
 }

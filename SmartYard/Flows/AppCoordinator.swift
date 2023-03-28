@@ -291,7 +291,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             print("Can only process one call at a time")
             return
         }
-        
+        print(callPayload.uniqueIdentifier)
         guard !pushNotificationService.isCallIgnored(callId: callPayload.uniqueIdentifier) else {
             print("Call was ignored")
             return
@@ -392,6 +392,14 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             self?.mainTabBarCoordinator?.trigger(.chat)
+        }
+    }
+    
+    func openChatwootTab() {
+        // MARK: DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            self?.mainTabBarCoordinator?.trigger(.chatwoot)
         }
     }
     

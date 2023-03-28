@@ -16,6 +16,7 @@ enum MainTabBarRoute: Route {
     case home
     case notifications
     case chat
+    case chatwoot
     case payments
     case settings
     case menu
@@ -36,12 +37,14 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let homeRouter: StrongRouter<HomeRoute>
     private let notificationsRouter: StrongRouter<NotificationsRoute>
     private let chatRouter: StrongRouter<ChatRoute>
+    private let chatwootRouter: StrongRouter<ChatwootRoute>
     private let paymentsRouter: StrongRouter<PaymentsRoute>
     private let menuRouter: StrongRouter<MainMenuRoute>
     
     private let homeTabBarItem: UITabBarItem
     private let notificationsTabBarItem: UITabBarItem
     private let chatTabBarItem: UITabBarItem
+    private let chatwootTabBarItem: UITabBarItem
     private let paymentsTabBarItem: UITabBarItem
     private let menuTabBarItem: UITabBarItem
     
@@ -105,6 +108,24 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         notificationsCoordinator.rootViewController.tabBarItem = notificationsTabBarItem
         self.notificationsTabBarItem = notificationsTabBarItem
         
+        // MARK: Chatwoot in Chat Tab
+        let chatwootCoordinator = ChatwootCoordinator(
+            apiWrapper: apiWrapper,
+            accessService: accessService,
+            pushNotificationService: pushNotificationService,
+            logoutHelper: logoutHelper,
+            alertService: alertService
+        )
+
+        let chatwootTabBarItem = UITabBarItem(
+            title: "Чат",
+            image: UIImage(named: "ChatTabUnselected"),
+            selectedImage: UIImage(named: "ChatTabSelected")
+        )
+
+        chatwootCoordinator.rootViewController.tabBarItem = chatwootTabBarItem
+        self.chatwootTabBarItem = chatwootTabBarItem
+        
         // MARK: Chat Tab
         let chatCoordinator = ChatCoordinator(
             apiWrapper: apiWrapper,
@@ -113,16 +134,16 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             logoutHelper: logoutHelper,
             alertService: alertService
         )
-        
+
         let chatTabBarItem = UITabBarItem(
             title: "Чат",
             image: UIImage(named: "ChatTabUnselected"),
             selectedImage: UIImage(named: "ChatTabSelected")
         )
-        
+
         chatCoordinator.rootViewController.tabBarItem = chatTabBarItem
         self.chatTabBarItem = chatTabBarItem
-        
+
         // MARK: Payments Tab
         let paymentsCoordinator = PaymentsCoordinator(
             apiWrapper: apiWrapper
@@ -146,6 +167,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             permissionService: permissionService,
             logoutHelper: logoutHelper,
             alertService: alertService
+            
         )
         
         let menuTabBarItem = UITabBarItem(
@@ -161,6 +183,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.homeRouter = homeCoordinator.strongRouter
         self.notificationsRouter = notificationsCoordinator.strongRouter
         self.chatRouter = chatCoordinator.strongRouter
+        self.chatwootRouter = chatwootCoordinator.strongRouter
         self.paymentsRouter = paymentsCoordinator.strongRouter
         self.menuRouter = menuCoordinator.strongRouter
         
@@ -181,12 +204,15 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             springDampingRatio: 0.65,
             initialSpringVelocity: 0
         )
+        customTabBarController.tabBar.tintColor = UIColor(hex: 0xE41A4C)
         customTabBarController.delegate = customTabBarController
         
         let tabs = accessService.showPayments ?
-            [homeRouter, notificationsRouter, chatRouter, paymentsRouter, menuRouter] as [Presentable] :
-            [homeRouter, notificationsRouter, chatRouter, menuRouter] as [Presentable]
-        
+//            [homeRouter, notificationsRouter, chatwootRouter, paymentsRouter, menuRouter] as [Presentable] :
+//            [homeRouter, notificationsRouter, chatwootRouter, menuRouter] as [Presentable]
+        [homeRouter, notificationsRouter, chatRouter, paymentsRouter, menuRouter] as [Presentable] :
+        [homeRouter, notificationsRouter, chatRouter, menuRouter] as [Presentable]
+
         super.init(
             rootViewController: customTabBarController,
             tabs: tabs,
@@ -214,6 +240,9 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         case .chat:
             print("chat")
             return .selectAndCallDelegate(chatRouter)
+        case .chatwoot:
+            print("chatwoot")
+            return .selectAndCallDelegate(chatwootRouter)
         case .payments:
             print("payments")
             return .selectAndCallDelegate(paymentsRouter)
@@ -318,6 +347,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .mapToVoid()
             .drive(
                 onNext: { [weak self] in
+//                    self?.trigger(.chatwoot)
                     self?.trigger(.chat)
                 }
             )

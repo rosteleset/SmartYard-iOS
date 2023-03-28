@@ -90,7 +90,33 @@ class MainMenuViewModel: BaseViewModel {
                 }
                 
                 let compiledItems = (self.defaultItems + optionalItems).sorted { $0.order < $1.order }
-                self.items.onNext(compiledItems)
+                
+                // TODO: Удалить городские камеры при их отсутствии
+                
+                let filteredItems = compiledItems.filter () {
+                    var itemShow = true
+                    var camCount = 0
+                    let activityTracker = ActivityTracker()
+                    let isCityCams = ($0.label == "Городские камеры")
+                    if isCityCams {
+                        self.apiWrapper.getOverviewCCTV()
+                            .trackActivity(activityTracker)
+                            .asDriver(onErrorJustReturn: nil)
+                            .ignoreNil()
+                            .map { response in
+                                camCount += 1
+                            }
+                            .drive(
+                                onNext: {}
+                            )
+                            .dispose()
+                        
+                        itemShow = !(camCount == 0)
+                    }
+                    return itemShow
+                }
+                
+                self.items.onNext(filteredItems)
             }
             .disposed(by: disposeBag)
 

@@ -9,5 +9,15 @@
 struct ResetCodeResponseData: Decodable {
     
     let code: Int
+
+    private enum CodingKeys: String, CodingKey {
+        case code
+    }
     
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        code = (try? container.decode(String.self, forKey: .code).int) ?? -1
+       
+    }
 }

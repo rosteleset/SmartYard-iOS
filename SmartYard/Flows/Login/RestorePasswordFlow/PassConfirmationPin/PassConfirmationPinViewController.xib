@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -84,7 +82,7 @@
                                         <constraint firstItem="P50-Bq-deW" firstAttribute="centerX" secondItem="w5G-Uh-fIa" secondAttribute="centerX" id="xVd-VG-vxX"/>
                                     </constraints>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gGI-M9-YUZ" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gGI-M9-YUZ" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="40" y="0.0" width="334" height="60"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="60" id="OWn-2N-zu2"/>
@@ -122,6 +120,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="xcm-SV-Q6e" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="69" id="0c3-Ef-H70"/>
@@ -136,7 +135,7 @@
                 <constraint firstItem="jFE-Bu-Rrc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="uUm-7B-hgS"/>
                 <constraint firstAttribute="trailing" secondItem="jFE-Bu-Rrc" secondAttribute="trailing" id="zHW-du-Sdk"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="133" y="77"/>
         </view>
     </objects>
     <resources>

@@ -86,7 +86,7 @@ class IssueService {
     }
     
     // экран 34.02.03
-    func sendDeleteAddressIssue(address: String, reason: String) -> Single<CreateIssueResponseData?> {
+    func sendDeleteAddressIssue(address: String, cliendId: String?, reason: String) -> Single<CreateIssueResponseData?> {
         return getAddressCoordinates(address: address)
             .flatMap { [weak self] response -> Single<CreateIssueResponseData?> in
                 guard let self = self, let unwrappedResponse = response else {
@@ -98,9 +98,10 @@ class IssueService {
                 
                 let issue = Issue(
                     issueType: .deleteAddressIssue(
-                        userInfo: self.getUserInfo(address: address, clientId: nil),
+                        userInfo: self.getUserInfo(address: address, clientId: cliendId),
                         lat: latitude,
                         lon: longitude,
+                        clientId: cliendId ?? "",
                         reason: reason
                     )
                 )

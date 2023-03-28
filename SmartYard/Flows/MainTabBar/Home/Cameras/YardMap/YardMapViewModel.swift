@@ -23,7 +23,10 @@ class YardMapViewModel: BaseViewModel {
     
     init(apiWrapper: APIWrapper, houseId: String, address: String?, router: WeakRouter<HomeRoute>) {
         self.apiWrapper = apiWrapper
-        self.houseId = houseId
+        
+        let houseExplode = houseId.components(separatedBy: "_")
+        self.houseId = houseExplode[0]
+//        self.houseId = houseId
         self.router = router
         
         self.address = BehaviorSubject<String?>(value: address)

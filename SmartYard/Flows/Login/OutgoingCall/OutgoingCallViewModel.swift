@@ -43,7 +43,6 @@ class OutgoingCallViewModel: BaseViewModel {
     // swift-lint:disable:next function_body_length
     func transform(input: Input) -> Output {
         
-        
         input.makeCallButtonTapped
             .drive(
                 onNext: { [weak self] in

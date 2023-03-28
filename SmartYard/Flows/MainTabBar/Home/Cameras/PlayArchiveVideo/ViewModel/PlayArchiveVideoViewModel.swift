@@ -93,7 +93,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 
                 // MARK: А тут сервак жрет строки не в GMT, а в MSK
                 
-                formatter.timeZone = Calendar.moscowCalendar.timeZone
+                formatter.timeZone = Calendar.novokuznetskCalendar.timeZone
                 formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 
                 return .just((from: formatter.string(from: start), to: formatter.string(from: end)))
@@ -226,7 +226,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
         // определяем периоды, для которых есть архив на сервере
         var periods = [ArchiveVideoPreviewPeriod]()
         
-        let startOfDay = Calendar.moscowCalendar.startOfDay(for: date)
+        let startOfDay = Calendar.novokuznetskCalendar.startOfDay(for: date)
         
         for mult in 0...7 {
             let startHours = mult * 3

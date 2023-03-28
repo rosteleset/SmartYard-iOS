@@ -25,12 +25,18 @@ struct Rectangle: Decodable, Equatable, Hashable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        guard let left = Int(try container.decode(String.self, forKey: .left)),
-              let top = Int(try container.decode(String.self, forKey: .top)),
-              let width = Int(try container.decode(String.self, forKey: .width)),
-              let height = Int(try container.decode(String.self, forKey: .height)) else {
+        guard let left = try? container.decode(Int.self, forKey: .left),
+              let top = try? container.decode(Int.self, forKey: .top),
+              let width = try? container.decode(Int.self, forKey: .width),
+              let height = try? container.decode(Int.self, forKey: .height) else {
             throw NSError.APIWrapperError.noDataError
         }
+//        guard let left = Int(try container.decode(String.self, forKey: .left)),
+//              let top = Int(try container.decode(String.self, forKey: .top)),
+//              let width = Int(try container.decode(String.self, forKey: .width)),
+//              let height = Int(try container.decode(String.self, forKey: .height)) else {
+//            throw NSError.APIWrapperError.noDataError
+//        }
         self.left = left
         self.top = top
         self.width = width
@@ -150,7 +156,9 @@ struct APIPlog: Decodable, Equatable, Hashable {
         date = try dateRawValue.dateFromAPIString.unwrapped(or: NSError.APIWrapperError.noDataError)
         uuid = try container.decode(String.self, forKey: .uuid)
         imageUuid = try? container.decode(String.self, forKey: .image)
-        objectId = try container.decode(String.self, forKey: .objectId).int ?? -1
+        
+        objectId = try container.decode(Int.self, forKey: .objectId) ?? -1
+        
         objectType = try container.decode(String.self, forKey: .objectType).int ?? -1
         objectMechanizma = try container.decode(String.self, forKey: .objectMechanizma).int ?? -1
         mechanizmaDescription = try container.decode(String.self, forKey: .mechanizmaDescription)

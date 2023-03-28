@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -57,7 +56,7 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Совсем скоро  все заработает!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L7d-yT-XF9">
-                            <rect key="frame" x="114.5" y="140" width="185.5" height="65"/>
+                            <rect key="frame" x="110" y="140" width="194" height="65"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="65" id="18W-Yo-nqZ"/>
@@ -66,11 +65,12 @@
                             <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sY4-Hs-Ho1" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sY4-Hs-Ho1" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="20" y="550" width="374" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="1RN-Ac-GiR"/>
                             </constraints>
+                            <color key="tintColor" name="blue"/>
                             <state key="normal">
                                 <attributedString key="attributedTitle">
                                     <fragment content="Сфотографировать QR-код">
@@ -82,21 +82,25 @@
                                 </attributedString>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="YL9-kH-ngA" customClass="WhiteButtonWithBorder" customModule="SmartYard" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="YL9-kH-ngA" customClass="WhiteButtonWithBorder" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="20" y="620" width="374" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="Evk-Gk-2RY"/>
                             </constraints>
                             <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
-                            <state key="normal" title="Приду в офис самостоятельно"/>
+                            <state key="normal" title="Приду в офис самостоятельно">
+                                <color key="titleColor" name="blue"/>
+                            </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Ot2-BH-XPn" customClass="WhiteButtonWithBorder" customModule="SmartYard" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Ot2-BH-XPn" customClass="WhiteButtonWithBorder" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="20" y="690" width="374" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="hM1-Y9-fqM"/>
                             </constraints>
                             <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
-                            <state key="normal" title="Отменить заявку"/>
+                            <state key="normal" title="Отменить заявку">
+                                <color key="titleColor" name="blue"/>
+                            </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Дождитесь курьера по адресу Тамбов, Советская, 80, 16 и сфотографируйте QR-код, который он принесёт." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8F-0W-d0e">
                             <rect key="frame" x="20" y="215" width="374" height="60"/>
@@ -131,6 +135,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="1jL-Th-fpk" secondAttribute="trailing" id="1vN-kp-ZjE"/>
@@ -145,11 +150,14 @@
                 <constraint firstItem="Qeb-n0-SC1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="nXx-LW-yGR"/>
                 <constraint firstItem="6Ck-ZY-PK8" firstAttribute="top" secondItem="1jL-Th-fpk" secondAttribute="bottom" constant="8" symbolic="YES" id="nkJ-UA-tM0"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="132" y="77"/>
         </view>
     </objects>
     <resources>
         <image name="MainBackground" width="375" height="812"/>
         <image name="Man" width="100" height="100"/>
+        <namedColor name="blue">
+            <color red="0.89411764705882357" green="0.10196078431372549" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

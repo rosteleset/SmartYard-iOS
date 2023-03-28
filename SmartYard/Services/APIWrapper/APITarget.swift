@@ -40,7 +40,9 @@ enum APITarget {
     case unreaded(request: UnreadedRequest)
     case delivered(request: DeliveredRequest)
     case chatReaded(request: ChatReadedRequest)
-    
+
+//    case chatwootinbox(request: ChatwootRequest)
+
     case getListConnect(request: GetListConnectRequest)
     case createIssue(request: CreateIssueRequest)
     case actionIssue(request: ActionIssueRequest)
@@ -81,7 +83,8 @@ extension APITarget: TargetType {
             return URL(string: "https://securepayments.sberbank.ru/payment/applepay")!
         
         case .sberbankRegister:
-            return URL(string: "https://securepayments.sberbank.ru/payment/rest")!
+//            return URL(string: "https://securepayments.sberbank.ru/payment/rest")!
+            return URL(string: "https://intercom-mobile-api.mycentra.ru/api/pay")!
             
         case .streamInfo(let request):
             return URL(string: request.cameraUrl)!
@@ -125,6 +128,8 @@ extension APITarget: TargetType {
         case .delivered: return "inbox/delivered"
         case .chatReaded: return "inbox/chatReaded"
             
+//        case .chatwootinbox: return "inbox/message"
+            
         case .getListConnect: return "issues/listConnect"
         case .createIssue: return "issues/create"
         case .actionIssue: return "issues/action"
@@ -145,7 +150,8 @@ extension APITarget: TargetType {
         case .payPrepare: return "pay/prepare"
         case .payProcess: return "pay/process"
         case .sberbankPayProcess: return "payment.do"
-        case .sberbankRegister: return "register.do"
+//        case .sberbankRegister: return "register.do"
+        case .sberbankRegister: return "fakeOrder"
             
         case .getPersonFaces: return "frs/listFaces"
         case .disLikePersonFace: return "frs/disLike"
@@ -204,6 +210,8 @@ extension APITarget: TargetType {
             case .delivered(let request): return (request.accessToken, false)
             case .chatReaded(let request): return (request.accessToken, false)
                 
+//            case .chatwootinbox(let request): return (request.accessToken, false)
+                
             case .getListConnect(let request): return (request.accessToken, request.forceRefresh)
             case .createIssue(let request): return (request.accessToken, false)
             case .actionIssue(let request): return (request.accessToken, false)
@@ -219,6 +227,7 @@ extension APITarget: TargetType {
                 
             case .payPrepare(let request): return (request.accessToken, false)
             case .payProcess(let request): return (request.accessToken, false)
+            case .sberbankRegister(let request): return (request.accessToken, false) //TODO
                 
             case .getPersonFaces(let request): return (request.accessToken, request.forceRefresh)
             case .removePersonFace(let request): return (request.accessToken, false)
@@ -244,7 +253,7 @@ extension APITarget: TargetType {
         }
         
         switch self {
-        case .sberbankRegister: return [:]
+//        case .sberbankRegister: return [:] //TODO
         default: return defaultHeaders.merging(additionalHeaders) { _, new in new }
         }
     }
@@ -291,6 +300,8 @@ extension APITarget: TargetType {
         case .unreaded(let request): return request.requestParameters
         case .delivered(let request): return request.requestParameters
         case .chatReaded(let request): return request.requestParameters
+            
+//        case .chatwootinbox(let request): return request.requestParameters
 
         case .getListConnect(let request): return request.requestParameters
         case .createIssue(let request): return request.requestParameters

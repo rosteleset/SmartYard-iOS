@@ -171,11 +171,14 @@ class OnlinePageViewController: BaseViewController {
         }
         
         playerLayer = AVPlayerLayer(player: player)
+        cameraContainer.bounds = CGRect(x: 0, y: 0, width: cameraContainer.frame.width, height: cameraContainer.frame.width / 16 * 9)
         cameraContainer.layer.insertSublayer(playerLayer!, at: 0)
         playerLayer?.frame = cameraContainer.bounds
         playerLayer?.removeAllAnimations()
         playerLayer?.backgroundColor = UIColor.black.cgColor
-        
+        playerLayer?.videoGravity = .resizeAspectFill
+//        playerLayer?.player?.isMuted = true
+
         // MARK: Настройка лоадера
         
         let animation = LottieAnimation.named("LoaderAnimation")
@@ -199,7 +202,8 @@ class OnlinePageViewController: BaseViewController {
                     
                     playerLayer.frame = self.cameraContainer.bounds
                     playerLayer.removeAllAnimations()
-                    
+                    playerLayer.videoGravity = .resizeAspectFill
+
                     self.player?.play()
                 }
             )
@@ -320,7 +324,9 @@ class OnlinePageViewController: BaseViewController {
         loadingAsset = asset
         
         isVideoBeingLoaded.onNext(true)
-        
+        playerLayer?.frame = cameraContainer.bounds
+        playerLayer?.videoGravity = .resizeAspectFill
+
         asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { [weak self, weak asset] in
             guard let asset = asset else {
                 return

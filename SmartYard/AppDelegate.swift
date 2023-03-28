@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         mainWindow = UIWindow()
         appCoordinator = AppCoordinator(mainWindow: mainWindow)
         
+        mainWindow.tintColor = UIColor.SmartYard.blue
+        
         super.init()
     }
 
@@ -35,11 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         configureVoIPNotifications()
         
-        if let yandexConfig = YMMYandexMetricaConfiguration(apiKey: Constants.yandexApiKey) {
-            YMMYandexMetrica.activate(with: yandexConfig)
-        } else {
-            print("Couldn't activate YMM")
-        }
+//        if let yandexConfig = YMMYandexMetricaConfiguration(apiKey: Constants.yandexApiKey) {
+//            YMMYandexMetrica.activate(with: yandexConfig)
+//        } else {
+//            print("Couldn't activate YMM")
+//        }
         
         // MARK: подключаем MapBox
         
@@ -57,6 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appCoordinator.markAllMessagesAsDelivered()
         
+//        UIApplication.shared.isIdleTimerDisabled = false
+        
         return true
     }
     
@@ -70,6 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NotificationCenter.default.post(name: .videoRequestedByCallKit, object: nil)
         case NSUserActivityTypeBrowsingWeb:
             // Обработка deeplinks
+            
             guard
                 let incomingURL = userActivity.webpageURL,
                 let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
@@ -77,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
             // обрабатываем только url вида https://demo.lanta.me/0123456789 для подтверждения адреса
-            if components.host == "demo.lanta.me",
+            if components.host == "demo.layka.me",
                components.scheme == "https",
                let path = components.path {
                if path.matches(pattern: "/[0-9]{10}") {
@@ -186,7 +191,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         let userInfo = notification.request.content.userInfo
-        
+        print("TEST USER INFO")
+        print(userInfo)
+        // TODO
         print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo.jsonString() ?? "\(userInfo)")")
         
         // MARK: если в push-сообщении есть адрес backend-сервера, то обновляем его.
@@ -211,7 +218,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // MARK: Проверяем, есть ли у уведомления тип действия. Если нет - то в принципе ничего не делаем
         
         guard let rawAction = userInfo["action"] as? String,
-            let action = MessageType(rawValue: rawAction) else {
+            let action = PushMessageType(rawValue: rawAction) else {
             reportDebugInfo(userInfo)
             completionHandler([.alert, .badge, .sound])
             return
@@ -219,7 +226,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         // MARK: Если пришло уведомление о новом уведомлении в списке - отправляем .newInboxMessageReceived
         // Это вызовет показ баджа в табе "Уведомления" и обновление списка уведомлений
-        
         if action == .inbox || action == .videoReady {
             NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
             NotificationCenter.default.post(name: .unreadInboxMessagesAvailable, object: nil)
@@ -235,6 +241,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             // MARK: Если уже находимся на вкладке "Чат", то не показываем пуш
             
             if appCoordinator.selectedTabPresentable?.router(for: ChatRoute.main) != nil {
+                completionHandler([])
+                return
+            }
+            if appCoordinator.selectedTabPresentable?.router(for: ChatwootRoute.main) != nil {
                 completionHandler([])
                 return
             }
@@ -309,7 +319,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // MARK: Если в уведомлении нет никакого действия, то ничего не делаем
         
         guard let rawAction = userInfo["action"] as? String,
-            let action = MessageType(rawValue: rawAction) else {
+            let action = PushMessageType(rawValue: rawAction) else {
             reportDebugInfo(userInfo)
             completionHandler()
             return
@@ -321,6 +331,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         case .inbox, .newAddress, .paySuccess, .payError, .videoReady:
             appCoordinator.openNotificationsTab()
         case .chat:
+//            appCoordinator.openChatwootTab()
             appCoordinator.openChatTab()
         }
         

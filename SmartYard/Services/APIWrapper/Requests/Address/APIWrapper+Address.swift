@@ -71,7 +71,9 @@ extension APIWrapper {
             paperBill: nil,
             disablePlog: nil,
             hiddenPlog: nil,
-            frsDisabled: nil
+            frsDisabled: nil,
+            allowDoorCode: nil,
+            doorCode: nil
         )
         
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
@@ -87,7 +89,9 @@ extension APIWrapper {
             paperBill: nil,
             disablePlog: nil,
             hiddenPlog: nil,
-            frsDisabled: nil
+            frsDisabled: nil,
+            allowDoorCode: nil,
+            doorCode: nil
         )
         
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
@@ -103,7 +107,9 @@ extension APIWrapper {
             paperBill: nil,
             disablePlog: nil,
             hiddenPlog: nil,
-            frsDisabled: nil
+            frsDisabled: nil,
+            allowDoorCode: nil,
+            doorCode: nil
         )
         
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
@@ -119,7 +125,9 @@ extension APIWrapper {
             paperBill: nil,
             disablePlog: nil,
             hiddenPlog: nil,
-            frsDisabled: nil
+            frsDisabled: nil,
+            allowDoorCode: nil,
+            doorCode: nil
         )
         
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
@@ -135,7 +143,9 @@ extension APIWrapper {
             paperBill: isEnabled,
             disablePlog: nil,
             hiddenPlog: nil,
-            frsDisabled: nil
+            frsDisabled: nil,
+            allowDoorCode: nil,
+            doorCode: nil
         )
         
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
@@ -151,7 +161,9 @@ extension APIWrapper {
             paperBill: nil,
             disablePlog: isDisabled,
             hiddenPlog: nil,
-            frsDisabled: nil
+            frsDisabled: nil,
+            allowDoorCode: nil,
+            doorCode: nil
         )
         
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
@@ -167,7 +179,9 @@ extension APIWrapper {
             paperBill: nil,
             disablePlog: nil,
             hiddenPlog: isHidden,
-            frsDisabled: nil
+            frsDisabled: nil,
+            allowDoorCode: nil,
+            doorCode: nil
         )
         
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
@@ -183,7 +197,9 @@ extension APIWrapper {
             paperBill: nil,
             disablePlog: nil,
             hiddenPlog: nil,
-            frsDisabled: isDisabled
+            frsDisabled: isDisabled,
+            allowDoorCode: nil,
+            doorCode: nil
         )
         
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)

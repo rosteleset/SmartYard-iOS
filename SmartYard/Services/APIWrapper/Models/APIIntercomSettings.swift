@@ -19,6 +19,8 @@ struct APIIntercomSettings {
     let disablePlog: Bool?
     let hiddenPlog: Bool?
     let frsDisabled: Bool?
+    let allowDoorCode: Bool?
+    let doorCode: String?
     
 }
 
@@ -61,6 +63,14 @@ extension APIIntercomSettings {
         
         if let frsDisabled = frsDisabled {
             params["FRSDisabled"] = frsDisabled ? "t" : "f"
+        }
+        
+        if let allowDoorCode = allowDoorCode {
+            params["allowDoorCode"] = allowDoorCode ? "t" : "f"
+        }
+        
+        if let doorCode = doorCode {
+            params["doorCode"] = doorCode
         }
         
         return params

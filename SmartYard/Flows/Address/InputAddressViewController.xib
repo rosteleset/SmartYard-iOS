@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -40,26 +43,26 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EcW-C1-LK6" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="hJx-JY-SeP"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Введите адрес" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEB-Xo-NYK">
-                    <rect key="frame" x="16" y="86" width="382" height="40.5"/>
+                    <rect key="frame" x="16" y="130" width="382" height="37.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHl-m0-xSg" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="166.5" width="414" height="729.5"/>
+                    <rect key="frame" x="0.0" y="207.5" width="414" height="654.5"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="95v-tL-giU" customClass="TPKeyboardAvoidingScrollView">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="729.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="654.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DMJ-9p-DBh" userLabel="Container View">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="729.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="654.5"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VY4-bh-98W" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="16" y="40" width="382" height="56"/>
@@ -136,17 +139,19 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                                             <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
-                                            <state key="normal" title="Проверить доступные услуги"/>
+                                            <state key="normal" title="Проверить доступные услуги">
+                                                <color key="titleColor" name="backgroundColor"/>
+                                            </state>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="titleLabel.adjustsFontSizeToFitWidth" value="YES"/>
                                                 <userDefinedRuntimeAttribute type="string" keyPath="titleLabel.minimumScaleFactor" value="0.5"/>
                                             </userDefinedRuntimeAttributes>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOU-TA-YoR" userLabel="Centering View">
-                                            <rect key="frame" x="30" y="370" width="354" height="329.5"/>
+                                            <rect key="frame" x="30" y="370" width="354" height="254.5"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7xT-5V-6z5">
-                                                    <rect key="frame" x="102" y="153" width="150" height="24"/>
+                                                    <rect key="frame" x="94" y="115.5" width="166" height="24"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QrCodeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="52F-f9-FuX">
                                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -157,12 +162,13 @@
                                                             </constraints>
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t7w-za-uue" customClass="ClearButtonWithDashedUnderline" customModule="SmartYard" customModuleProvider="target">
-                                                            <rect key="frame" x="34" y="0.0" width="116" height="24"/>
+                                                            <rect key="frame" x="34" y="0.0" width="132" height="24"/>
                                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                                             <state key="normal" title="У меня есть QR-код"/>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" name="blue"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="t7w-za-uue" secondAttribute="trailing" id="Gik-UW-e9v"/>
                                                         <constraint firstItem="52F-f9-FuX" firstAttribute="leading" secondItem="7xT-5V-6z5" secondAttribute="leading" id="I1q-h0-dog"/>
@@ -253,5 +259,11 @@
     <resources>
         <image name="MainBackground" width="375" height="812"/>
         <image name="QrCodeIcon" width="24" height="24"/>
+        <namedColor name="backgroundColor">
+            <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="blue">
+            <color red="0.89411764705882357" green="0.10196078431372549" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

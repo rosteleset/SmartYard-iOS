@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -26,16 +26,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCu-Kg-FKQ">
-                    <rect key="frame" x="0.0" y="47" width="390" height="763"/>
+                    <rect key="frame" x="0.0" y="44" width="390" height="766"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X2h-ae-Edv">
-                            <rect key="frame" x="0.0" y="0.0" width="390" height="891.66666666666663"/>
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="851.66666666666663"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPd-UE-6AD">
-                                    <rect key="frame" x="16" y="28" width="358" height="242"/>
+                                    <rect key="frame" x="16" y="28" width="358" height="202"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2iH-Th-533">
-                                            <rect key="frame" x="318" y="202" width="20" height="20"/>
+                                            <rect key="frame" x="318" y="162" width="20" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="0OU-Xb-grg"/>
                                                 <constraint firstAttribute="width" constant="20" id="eYx-cM-GfS"/>
@@ -44,7 +44,7 @@
                                             <state key="normal" image="FullScreen20"/>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RhJ-w5-BqI" customClass="LottieAnimationView" customModule="Lottie">
-                                            <rect key="frame" x="139" y="81" width="80" height="80"/>
+                                            <rect key="frame" x="139" y="61" width="80" height="80"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="80" id="9bc-cB-Rd2"/>
@@ -55,7 +55,7 @@
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="RhJ-w5-BqI" firstAttribute="centerX" secondItem="JPd-UE-6AD" secondAttribute="centerX" id="9jG-Wv-o3x"/>
-                                        <constraint firstAttribute="width" secondItem="JPd-UE-6AD" secondAttribute="height" multiplier="343:232" id="DNG-x6-Bgs"/>
+                                        <constraint firstAttribute="width" secondItem="JPd-UE-6AD" secondAttribute="height" multiplier="358:202" id="DNG-x6-Bgs"/>
                                         <constraint firstAttribute="bottom" secondItem="2iH-Th-533" secondAttribute="bottom" constant="20" id="G1L-Jz-1oi"/>
                                         <constraint firstAttribute="trailing" secondItem="2iH-Th-533" secondAttribute="trailing" constant="20" id="Kk8-Ai-IAa"/>
                                         <constraint firstItem="RhJ-w5-BqI" firstAttribute="centerY" secondItem="JPd-UE-6AD" secondAttribute="centerY" id="Lfr-Ku-3gg"/>
@@ -67,7 +67,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="sxT-kK-WHV">
-                                    <rect key="frame" x="41" y="269.99999999999994" width="308" height="621.66666666666652"/>
+                                    <rect key="frame" x="41" y="229.99999999999994" width="308" height="621.66666666666652"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="621.5" id="oSU-TK-D9Z"/>
@@ -89,6 +89,7 @@
                                 <constraint firstAttribute="trailing" secondItem="JPd-UE-6AD" secondAttribute="trailing" constant="16" id="aqk-6S-pic"/>
                                 <constraint firstItem="JPd-UE-6AD" firstAttribute="leading" secondItem="X2h-ae-Edv" secondAttribute="leading" constant="16" id="paI-G4-PrY"/>
                                 <constraint firstItem="sxT-kK-WHV" firstAttribute="top" secondItem="JPd-UE-6AD" secondAttribute="bottom" id="soe-b3-r31"/>
+                                <constraint firstItem="sxT-kK-WHV" firstAttribute="top" secondItem="JPd-UE-6AD" secondAttribute="bottom" id="uuz-fu-YYk"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -113,6 +114,9 @@
             <point key="canvasLocation" x="139" y="129"/>
         </view>
     </objects>
+    <designables>
+        <designable name="RhJ-w5-BqI"/>
+    </designables>
     <resources>
         <image name="FullScreen20" width="20" height="20"/>
         <systemColor name="systemBackgroundColor">

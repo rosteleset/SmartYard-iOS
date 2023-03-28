@@ -56,7 +56,7 @@ class MainMenuItem: UICollectionViewCell {
             .left()
             .vCenter()
         
-        arrowImageView.tintColor = UIColor(hex: 0x6D7A8A)?.withAlphaComponent(0.5)
+        arrowImageView.tintColor = UIColor(hex: 0x8A7A6D)?.withAlphaComponent(0.5)
         
         if dimensions.titleLabelHeight != 0 {
             titleLabel.pin.top().right(of: iconImageView).marginLeft(16).bottom().width(dimensions.titleLabelWidth)

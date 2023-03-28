@@ -29,7 +29,7 @@ class ServiceFromOfficeView: PMNibLinkableView {
     fileprivate func configureMapBox() {
         let cameraOptions = CameraOptions(
             center: Constants.defaultMapCenterCoordinates,
-            zoom: 8,
+            zoom: 9,
             bearing: .zero,
             pitch: .zero
         )
@@ -93,7 +93,7 @@ class ServiceFromOfficeView: PMNibLinkableView {
         
         annotationManager.iconAllowOverlap = true
         annotationManager.annotations = officesPoints
-        let cameraOptions = CameraOptions(center: Constants.defaultMapCenterCoordinates, zoom: 8)
+        let cameraOptions = CameraOptions(center: Constants.defaultMapCenterCoordinates, zoom: 9)
         self.mapView.mapboxMap.setCamera(to: cameraOptions)
     }
 }

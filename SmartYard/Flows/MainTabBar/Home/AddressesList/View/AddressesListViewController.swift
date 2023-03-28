@@ -54,7 +54,21 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         configureView()
         configureCollectionView()
         bind()
+        
+//        refreshControl = UIRefreshControl()
+//        refreshControl.attributedTitle = NSAttributedString(string: "Обновление...")
+//        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+//        collectionView.refreshControl = refreshControl
     }
+    
+//    @objc func refresh(_ sender:AnyObject) {
+//        configureView()
+//        configureCollectionView()
+//        bind()
+//        sleep(2)
+//        
+//        refreshControl.endRefreshing()
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

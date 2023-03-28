@@ -95,8 +95,9 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
                 self?.trigger(.safariPage(url: url))
             }
             return .none()
-            
+    
         case let .paymentPopup(apiWrapper, clientId, recommendedSum, contractNumber):
+            print("CLIENTID",clientId)
             let vm = PaymentPopupViewModel(
                 apiWrapper: apiWrapper,
                 clientId: clientId,

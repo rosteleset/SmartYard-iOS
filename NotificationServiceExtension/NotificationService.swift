@@ -34,6 +34,7 @@ class NotificationService: UNNotificationServiceExtension {
         // TODO: Сделать по-человечески
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         
+//        print(request.content.mutableCopy())
         guard let bestAttemptContent = request.content.mutableCopy() as? UNMutableNotificationContent else {
             contentHandler(request.content)
             return

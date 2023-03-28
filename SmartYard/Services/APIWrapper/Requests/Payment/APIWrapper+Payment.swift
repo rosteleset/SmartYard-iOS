@@ -57,7 +57,6 @@ extension APIWrapper {
             paymentToken: paymentToken
         )
 
-        print(request)
         
         return provider.rx
             .request(.sberbankPayProcess(request: request))
@@ -70,7 +69,13 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
         
+        //TODO
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
         let request = SberbankRegisterRequest(
+            accessToken: accessToken, //TODO
             userName: Constants.sberbankAPILogin,
             password: Constants.sberbankAPIPassword,
             orderNumber: orderNumber,
@@ -79,7 +84,6 @@ extension APIWrapper {
             failUrl: Constants.sberbankFailureReturnURL
         )
 
-        print(request)
         
         return provider.rx
             .request(.sberbankRegister(request: request))

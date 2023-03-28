@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,7 +28,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="308"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s5A-wP-hVn" userLabel="View1">
-                            <rect key="frame" x="0.0" y="22" width="320" height="52.5"/>
+                            <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RequestIcon" translatesAutoresizingMaskIntoConstraints="NO" id="lY0-aM-Yr7">
                                     <rect key="frame" x="26" y="4" width="16" height="20"/>
@@ -37,7 +38,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Оставьте заявку" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mNi-2b-TlW">
-                                    <rect key="frame" x="60" y="0.0" width="130.5" height="22"/>
+                                    <rect key="frame" x="60" y="0.0" width="140.5" height="22"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="22" id="wcy-3n-Wqo"/>
                                     </constraints>
@@ -46,7 +47,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="В течение недели курьер принесёт секретный конверт" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YxH-AT-uxw">
-                                    <rect key="frame" x="60" y="22" width="244" height="30.5"/>
+                                    <rect key="frame" x="60" y="22" width="244" height="28"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="18" id="kDV-Kj-FjZ"/>
                                     </constraints>
@@ -73,7 +74,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YEc-j4-ljc" userLabel="View2">
-                            <rect key="frame" x="0.0" y="101.5" width="320" height="40"/>
+                            <rect key="frame" x="0.0" y="105" width="320" height="40"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SmallQrCodeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="DbF-1y-uBB">
                                     <rect key="frame" x="26" y="4" width="16" height="20"/>
@@ -83,7 +84,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Отсканируйте QR-код" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="paM-th-zUQ">
-                                    <rect key="frame" x="60" y="0.0" width="175.5" height="22"/>
+                                    <rect key="frame" x="60" y="0.0" width="187.5" height="22"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="22" id="uVc-CR-6ar"/>
                                     </constraints>
@@ -92,7 +93,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Он будет внутри конверта" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVA-4d-BdL">
-                                    <rect key="frame" x="60" y="22" width="138" height="18"/>
+                                    <rect key="frame" x="60" y="22" width="148.5" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="18" id="EN3-S3-Qnr"/>
                                     </constraints>
@@ -113,7 +114,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6kr-2k-p2B" userLabel="View3">
-                            <rect key="frame" x="0.0" y="168.5" width="320" height="67.5"/>
+                            <rect key="frame" x="0.0" y="172" width="320" height="64"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RoundCheckIcon" translatesAutoresizingMaskIntoConstraints="NO" id="jnF-11-Uqz">
                                     <rect key="frame" x="26" y="4" width="16" height="20"/>
@@ -123,7 +124,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Пользуйтесь!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1P-Cb-nhI">
-                                    <rect key="frame" x="60" y="0.0" width="108.5" height="22"/>
+                                    <rect key="frame" x="60" y="0.0" width="113.5" height="22"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="22" id="fx3-yI-SjD"/>
                                     </constraints>
@@ -132,7 +133,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вы сразу получите доступ ко всему  функционалу приложения «‎Умный домофон»." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5M-ID-Ktm">
-                                    <rect key="frame" x="60" y="22" width="244" height="45.5"/>
+                                    <rect key="frame" x="60" y="22" width="244" height="42"/>
                                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="12"/>
                                     <color key="textColor" red="0.42745098040000001" green="0.47843137250000001" blue="0.54117647059999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -156,14 +157,16 @@
                                 <constraint firstAttribute="height" constant="60" id="L89-Q4-jkE"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="17"/>
-                            <state key="normal" title="Супер! Оставить заявку"/>
+                            <state key="normal" title="Супер! Оставить заявку">
+                                <color key="titleColor" name="blue"/>
+                            </state>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A0Q-DH-AGJ" userLabel="Separator">
-                            <rect key="frame" x="0.0" y="74.5" width="320" height="27"/>
+                            <rect key="frame" x="0.0" y="78" width="320" height="27"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xj6-YY-9FM" userLabel="Separator">
-                            <rect key="frame" x="0.0" y="141.5" width="320" height="27"/>
+                            <rect key="frame" x="0.0" y="145" width="320" height="27"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                     </subviews>
@@ -226,6 +229,9 @@
         <image name="RequestIcon" width="16" height="20"/>
         <image name="RoundCheckIcon" width="20" height="20"/>
         <image name="SmallQrCodeIcon" width="20" height="20"/>
+        <namedColor name="blue">
+            <color red="0.89411764705882357" green="0.10196078431372549" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -5,9 +5,13 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Ланта</string>
+	<string>Centra.Дом</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIcons</key>
+	<dict/>
+	<key>CFBundleIcons~ipad</key>
+	<dict/>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -18,27 +22,48 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>me.layka.home</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>centra</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>merchant.me.layka.pays</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>centra2</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MBXAccessToken</key>
+	<string>sk.eyJ1IjoibGVoYTMwNzciLCJhIjoiY2xlb3plbDBiMDN6MzN0cnVrcGQwNHBjOCJ9.dyPywFTtJm4zGw12GHmidw</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
-		<dict>
-			<key>dm.lanta.me</key>
-			<dict>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<false/>
-			</dict>
-		</dict>
+		<dict/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Доступ к камере нужен для возможности сканирования QR-кодов</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Доступ к списку контактов нужен для отображения имен и фотографий людей, на чьи номера выделен доступ к адресу</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Доступ к местоположению позволит отобразить Вашу позицию на карте</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Доступ к местоположению позволит отобразить Вашу позицию на карте</string>
 	<key>NSMicrophoneUsageDescription</key>

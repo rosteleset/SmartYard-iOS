@@ -14,22 +14,23 @@ enum Constants {
     static let phoneLengthWithoutPrefix = 10
     static let phoneLengthWithPrefix = 12
     static let pinLength = 4
-    static let merchant = "YOU_NEED_TO_CHANGE_THIS"
+    static let merchant = "centra"
     static let appstoreUrl = "YOU_NEED_TO_CHANGE_THIS"
     static let yandexApiKey = "YOU_NEED_TO_CHANGE_THIS"
-    static let defaultBackendURL = "YOU_NEED_TO_CHANGE_THIS"
-    static let mapBoxPublicKey = "YOU_NEED_TO_CHANGE_THIS"
-    static let sberbankAPILogin = "YOU_NEED_TO_CHANGE_THIS"
-    static let sberbankAPIPassword = "YOU_NEED_TO_CHANGE_THIS"
-    static let sberbankSuccessReturnURL = "YOU_NEED_TO_CHANGE_THIS"
-    static let sberbankFailureReturnURL = "YOU_NEED_TO_CHANGE_THIS"
+    static let defaultBackendURL = "https://intercom-mobile-api.mycentra.ru"
+//    static let defaultBackendURL = "http://192.168.15.15"
+    static let mapBoxPublicKey = "sk.eyJ1IjoibGVoYTMwNzciLCJhIjoiY2xlb3plbDBiMDN6MzN0cnVrcGQwNHBjOCJ9.dyPywFTtJm4zGw12GHmidw"
+    static let sberbankAPILogin = "qwerty"
+    static let sberbankAPIPassword = "zaq12wsx"
+//    static let sberbankSuccessReturnURL = "centra://"
+    static let sberbankSuccessReturnURL = "centra://"
+    static let sberbankFailureReturnURL = "https://mycentra.ru"
 
-
-    static let defaultMapCenterCoordinates = CLLocationCoordinate2D(latitude: 52.675463000000001, longitude: 41.465411000000003)
+    static let defaultMapCenterCoordinates = CLLocationCoordinate2D(latitude: 53.757547, longitude: 87.136044)
     enum Chat {
         static let token = "YOU_NEED_TO_CHANGE_THIS"
-        static let id = "YOU_NEED_TO_CHANGE_THIS"
-        static let domain = "YOU_NEED_TO_CHANGE_THIS"
+        static let id = "7087c1e6f6d8506d95e876dbc48a85c6"
+        static let domain = "intercom-mobile-api.mycentra.ru"
     }
     
 }

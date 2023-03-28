@@ -36,6 +36,7 @@ target 'SmartYard' do
   pod 'SHSPhoneComponent'
   pod 'Parchment'#, '2.2.0'
   pod 'lottie-ios'
+  pod 'MessageKit'
   
   # Calendar
   pod 'JTAppleCalendar'

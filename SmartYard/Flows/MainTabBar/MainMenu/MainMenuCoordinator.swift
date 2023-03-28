@@ -154,6 +154,8 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             alert.addAction(UIAlertAction(title: "Позвонить по телефону", style: .default, handler: callHandler))
             alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
             
+            alert.view.tintColor = UIColor.SmartYard.blue;
+            
             self.viewController.present(alert, animated: true, completion: nil)
             return.none()
             

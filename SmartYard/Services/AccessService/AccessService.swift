@@ -149,7 +149,7 @@ class AccessService {
     
     var supportPhone: String {
         get {
-            UserDefaults.standard.string(forKey: supportPhoneKey) ?? "+7(4752)429999"
+            UserDefaults.standard.string(forKey: supportPhoneKey) ?? "+7(3843)756000"
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: supportPhoneKey)
@@ -164,7 +164,7 @@ class AccessService {
         backendURL = Constants.defaultBackendURL
         showPayments = true
         paymentsUrl = ""
-        supportPhone = "+7(4752)429999"
+        supportPhone = "+7(3843)756000"
         
         NotificationCenter.default.post(name: .init("UserLoggedOut"), object: nil)
     }

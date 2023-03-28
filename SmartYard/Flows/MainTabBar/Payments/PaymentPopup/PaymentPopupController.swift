@@ -15,24 +15,31 @@ class PaymentPopupController: BaseViewController {
     
     @IBOutlet private weak var successView: UIView!
     @IBOutlet private weak var contractNumberLabel: UILabel!
-    @IBOutlet private weak var payButton: UIButton!
-    @IBOutlet private weak var cardButton: UIButton!
+//    @IBOutlet private weak var payButton: UIButton!
+//    @IBOutlet private weak var cardButton: UIButton!
     @IBOutlet private weak var recommendedSumLabel: UILabel!
     @IBOutlet private weak var sumTextField: UITextField!
     @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var animatedView: UIView!
-    
+    @IBOutlet private weak var cardButton: BlueButton!
+
     @IBOutlet private weak var payResultImageView: UIImageView!
     @IBOutlet private weak var payResultTitle: UILabel!
     @IBOutlet private weak var payResultHint: UILabel!
     
     @IBOutlet private var animatedViewBottomOffset: NSLayoutConstraint!
     
+    @IBAction func cardButtonAction(sender: AnyObject) {
+        if let button = sender as? BlueButton {
+            button.isHidden = true
+        }
+    }
+    
     private var swipeDismissInteractor: SwipeInteractionController?
     
     private let viewModel: PaymentPopupViewModel
 
-    private var payCompletion: ((PKPaymentAuthorizationResult) -> Void)?
+//    private var payCompletion: ((PKPaymentAuthorizationResult) -> Void)?
     
     private let payTrigger = PublishSubject<(Data?, String)>()
     private let cardTrigger = PublishSubject<NSDecimalNumber>()
@@ -60,106 +67,121 @@ class PaymentPopupController: BaseViewController {
     
     // swiftlint:disable:next function_body_length
     private func bind() {
-        payButton.rx
-            .tap
-            .asDriver()
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
- 
-                    self.sumTextField.resignFirstResponder()
-                    var paymentNetworks: [PKPaymentNetwork] = [.masterCard, .visa]
-                    
-                    if #available(iOS 14.5, *) {
-                        paymentNetworks.append(.mir)
-                    }
-                    
-                    guard PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks) else {
-                        return
-                    }
-                    
-                    let request = PKPaymentRequest()
-                    request.merchantIdentifier = Constants.merchant
-                    request.countryCode = "RU"
-                    request.currencyCode = "RUB"
-                    request.supportedNetworks = paymentNetworks
-                    request.merchantCapabilities = [.capability3DS]
-                    
-                    let decimalSeparator = [NSLocale.Key.decimalSeparator: Locale.current.decimalSeparator]
-                    let amount = NSDecimalNumber(string: self.sumTextField.text, locale: decimalSeparator)
-                    
-                    // Приложение вывалится в exception если пользователь нажмёт "оплатить" с не валидным полем сумма
-                    guard amount != NSDecimalNumber.notANumber else {
-                        return
-                    }
-                    
-                    request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Внести", amount: amount)]
-                    
-                    guard let authorizationViewController = PKPaymentAuthorizationViewController(paymentRequest: request) else {
-                        return
-                    }
-                    
-                    authorizationViewController.delegate = self
-                    self.present(authorizationViewController, animated: true, completion: nil)
-                }
-            )
-            .disposed(by: disposeBag)
         
-        cardButton.rx
-            .tap
-            .asDriver()
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
- 
-                    self.sumTextField.resignFirstResponder()
-                    
-                    let decimalSeparator = [NSLocale.Key.decimalSeparator: Locale.current.decimalSeparator]
-                    let amount = NSDecimalNumber(string: self.sumTextField.text, locale: decimalSeparator)
-                    
-                    // Приложение вывалится в exception если пользователь нажмёт "оплатить" с не валидным полем сумма
-                    guard amount != NSDecimalNumber.notANumber else {
-                        return
-                    }
-                    
-                    self.cardTrigger.onNext(amount)
-                }
-            )
-            .disposed(by: disposeBag)
+        
+//        let output = viewModel.transform(input: input)
+
+//        payButton.rx
+//            .tap
+//            .asDriver()
+//            .drive(
+//                onNext: { [weak self] in
+//                    guard let self = self else {
+//                        return
+//                    }
+// 
+//                    self.sumTextField.resignFirstResponder()
+//                    var paymentNetworks: [PKPaymentNetwork] = [.masterCard, .visa]
+//                    
+//                    if #available(iOS 14.5, *) {
+//                        paymentNetworks.append(.mir)
+//                    }
+//                    
+//                    guard PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks) else {
+//                        return
+//                    }
+//                    
+//                    let request = PKPaymentRequest()
+//                    request.merchantIdentifier = Constants.merchant
+//                    request.countryCode = "RU"
+//                    request.currencyCode = "RUB"
+//                    request.supportedNetworks = paymentNetworks
+//                    request.merchantCapabilities = [.capability3DS]
+//                    let decimalSeparator = [NSLocale.Key.decimalSeparator: Locale.current.decimalSeparator]
+//                    let amount = NSDecimalNumber(string: self.sumTextField.text, locale: decimalSeparator)
+//                    
+//                    // Приложение вывалится в exception если пользователь нажмёт "оплатить" с не валидным полем сумма
+//                    guard amount != NSDecimalNumber.notANumber else {
+//                        return
+//                    }
+//                    
+//                    request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Внести", amount: amount)]
+//                    
+//                    guard let authorizationViewController = PKPaymentAuthorizationViewController(paymentRequest: request) else {
+//                        return
+//                    }
+//                    
+//                    authorizationViewController.delegate = self
+//                    self.present(authorizationViewController, animated: true, completion: nil)
+//                }
+//            )
+//            .disposed(by: disposeBag)
+        
+//        cardButton.rx
+//            .tap
+//            .asDriver()
+//            .drive(
+//                onNext: { [weak self] in
+//                    guard let self = self else {
+//                        return
+//                    }
+//
+//                    self.sumTextField.resignFirstResponder()
+//
+//                    let decimalSeparator = [NSLocale.Key.decimalSeparator: Locale.current.decimalSeparator]
+//                    let amount = NSDecimalNumber(string: self.sumTextField.text, locale: decimalSeparator)
+//
+//                    // Приложение вывалится в exception если пользователь нажмёт "оплатить" с не валидным полем сумма
+//                    guard amount != NSDecimalNumber.notANumber else {
+//                        return
+//                    }
+//
+//                    self.cardTrigger.onNext(amount)
+//                }
+//            )
+//            .disposed(by: disposeBag)
+        
+//        let input = PaymentPopupViewModel.Input(
+//            payProcess: payTrigger.asDriverOnErrorJustComplete(),
+//            cardButtonTapped: cardTrigger.asDriverOnErrorJustComplete()
+//        )
         
         let input = PaymentPopupViewModel.Input(
-            payProcess: payTrigger.asDriverOnErrorJustComplete(),
-            cardProcess: cardTrigger.asDriverOnErrorJustComplete()
+            cardButtonTapped: cardButton.rx.tap.asDriverOnErrorJustComplete(),
+            inputSumNumText: sumTextField.rx.text.asDriver(onErrorJustReturn: nil)
         )
-        
-        let output = viewModel.transform(input)
-        
-        output.isPaySuccessTrigger
+
+        let output = viewModel.transform(input: input)
+
+        output.isAbleToProceed
             .drive(
-                onNext: { [weak self] isSuccess in
-                    guard let self = self, let uPayCompletion = self.payCompletion else {
-                        return
-                    }
-                    
-                    self.sumTextField.isHidden = true
-                    self.successView.isHidden = false
-                    
-                    self.payResultTitle.text = isSuccess ? "Готово!" : "Ошибка!"
-                    self.payResultHint.text = isSuccess ? "Ваш баланс пополнен" : "Оплата не прошла"
-                    
-                    let resultImageName = isSuccess ? "SuccessIcon" : "ErrorIcon"
-                    self.payResultImageView.image = UIImage(named: resultImageName)
-                    
-                    let status: PKPaymentAuthorizationStatus = isSuccess ? .success : .failure
-                    uPayCompletion(PKPaymentAuthorizationResult(status: status, errors: []))
+                onNext: { [weak self] isAbleToProceed in
+                    self?.cardButton.isEnabled = isAbleToProceed
                 }
             )
             .disposed(by: disposeBag)
         
+//        output.isPaySuccessTrigger
+//            .drive(
+//                onNext: { [weak self] isSuccess in
+//                    guard let self = self, let uPayCompletion = self.payCompletion else {
+//                        return
+//                    }
+//            
+//                    self.sumTextField.isHidden = true
+//                    self.successView.isHidden = false
+//                    
+//                    self.payResultTitle.text = isSuccess ? "Готово!" : "Ошибка!"
+//                    self.payResultHint.text = isSuccess ? "Ожидайте, платёж обрабатывается" : "Оплата не прошла"
+//                    
+//                    let resultImageName = isSuccess ? "SuccessIcon" : "ErrorIcon"
+//                    self.payResultImageView.image = UIImage(named: resultImageName)
+//                    
+//                    let status: PKPaymentAuthorizationStatus = isSuccess ? .success : .failure
+//                    uPayCompletion(PKPaymentAuthorizationResult(status: status, errors: []))
+//                }
+//            )
+//            .disposed(by: disposeBag)
         output.recommendedSum
             .drive(
                 onNext: { [weak self] sum in
@@ -169,7 +191,7 @@ class PaymentPopupController: BaseViewController {
                     }
                     
                     self?.recommendedSumLabel.isHidden = false
-                    self?.recommendedSumLabel.text = "Рекомендуемая - " + String(uSum)
+                    self?.recommendedSumLabel.text = "Рекомендуемая - " + String(format: "%.2f", uSum)
                 }
             )
             .disposed(by: disposeBag)
@@ -195,15 +217,15 @@ class PaymentPopupController: BaseViewController {
         view.backgroundColor = .clear
         successView.isHidden = true
         
-        if #available(iOS 14.5, *) {
-            if !PKPaymentAuthorizationController.canMakePayments(usingNetworks: [.visa, .masterCard, .mir]) {
-                payButton.removeFromSuperview()
-            }
-        } else {
-            if !PKPaymentAuthorizationController.canMakePayments(usingNetworks: [.visa, .masterCard]) {
-                payButton.removeFromSuperview()
-            }
-        }
+//        if #available(iOS 14.5, *) {
+//            if !PKPaymentAuthorizationController.canMakePayments(usingNetworks: [.visa, .masterCard, .mir]) {
+//                payButton.removeFromSuperview()
+//            }
+//        } else {
+//            if !PKPaymentAuthorizationController.canMakePayments(usingNetworks: [.visa, .masterCard]) {
+//                payButton.removeFromSuperview()
+//            }
+//        }
     }
     
     private func configureSwipeAction() {
@@ -308,19 +330,19 @@ class PaymentPopupController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func processPayment(_ token: Data? = nil, completion: ((PKPaymentAuthorizationResult) -> Void)? = nil) {
-        guard let uCompletion = completion else {
-            return
-        }
-        
-        guard let amount = sumTextField.text else {
-            uCompletion(PKPaymentAuthorizationResult(status: .failure, errors: []))
-            return
-        }
-        
-        payCompletion = uCompletion
-        payTrigger.onNext((token, amount))
-    }
+//    func processPayment(_ token: Data? = nil, completion: ((PKPaymentAuthorizationResult) -> Void)? = nil) {
+//        guard let uCompletion = completion else {
+//            return
+//        }
+//        
+//        guard let amount = sumTextField.text else {
+//            uCompletion(PKPaymentAuthorizationResult(status: .failure, errors: []))
+//            return
+//        }
+//        
+//        payCompletion = uCompletion
+//        payTrigger.onNext((token, amount))
+//    }
     
 }
 
@@ -357,18 +379,18 @@ extension PaymentPopupController: UIViewControllerTransitioningDelegate {
     
 }
 
-extension PaymentPopupController: PKPaymentAuthorizationViewControllerDelegate {
-    
-    func paymentAuthorizationViewController(
-        _ controller: PKPaymentAuthorizationViewController,
-        didAuthorizePayment payment: PKPayment,
-        handler completion: @escaping (PKPaymentAuthorizationResult) -> Void
-    ) {
-        processPayment(payment.token.paymentData, completion: completion)
-    }
- 
-    func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
-        controller.dismiss(animated: true, completion: nil)
-    }
- 
-}
+//extension PaymentPopupController: PKPaymentAuthorizationViewControllerDelegate {
+//
+//    func paymentAuthorizationViewController(
+//        _ controller: PKPaymentAuthorizationViewController,
+//        didAuthorizePayment payment: PKPayment,
+//        handler completion: @escaping (PKPaymentAuthorizationResult) -> Void
+//    ) {
+//        processPayment(payment.token.paymentData, completion: completion)
+//    }
+//
+//    func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+//        controller.dismiss(animated: true, completion: nil)
+//    }
+//
+//}

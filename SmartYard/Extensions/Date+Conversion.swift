@@ -26,8 +26,8 @@ extension String {
     
     var dateFromAPIString: Date? {
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = Calendar.moscowCalendar.timeZone
-        dateFormatter.locale = Calendar.moscowCalendar.locale
+        dateFormatter.timeZone = Calendar.novokuznetskCalendar.timeZone
+        dateFormatter.locale = Calendar.novokuznetskCalendar.locale
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let result = dateFormatter.date(from: self)
         dateFormatter.dateFormat = "yyyy-MM-dd"

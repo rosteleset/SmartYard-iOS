@@ -640,7 +640,7 @@ class IncomingCallViewModel: BaseViewModel {
                         // UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["voip"])
                         // Но почему-то удаление конкретных типов уведомлений по id не работает:
                         // response.notification.request.identifier не соответствует apns-collapse-id
-                        // https://developer.apple.com/documentation/usernotifications/unnotificationrequest/1649634-identifier
+                        //                         https://developer.apple.com/documentation/usernotifications/unnotificationrequest/1649634-identifier
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             UNUserNotificationCenter.current().removeAllDeliveredNotifications()

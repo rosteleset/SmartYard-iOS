@@ -90,6 +90,9 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.8.0):
     - GoogleUtilities/Logger
+  - InputBarAccessoryView (5.1.0):
+    - InputBarAccessoryView/Core (= 5.1.0)
+  - InputBarAccessoryView/Core (5.1.0)
   - JGProgressHUD (2.2)
   - JTAppleCalendar (8.0.4)
   - Kingfisher (6.3.1)
@@ -118,6 +121,8 @@ PODS:
     - MapboxMobileEvents (= 1.0.6)
     - Turf (~> 2.0)
   - MapboxMobileEvents (1.0.6)
+  - MessageKit (3.3.0):
+    - InputBarAccessoryView (~> 5.1.0)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (15.0.0):
@@ -213,6 +218,7 @@ DEPENDENCIES:
   - linphone-sdk
   - lottie-ios
   - MapboxMaps (= 10.2.0)
+  - MessageKit
   - Moya/RxSwift
   - OnlineChatSdk (from `https://github.com/rosteleset/OnlineChatSdk-Swift.git`, branch `feature/build-fix`)
   - Parchment
@@ -252,6 +258,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
+    - InputBarAccessoryView
     - JGProgressHUD
     - JTAppleCalendar
     - Kingfisher
@@ -260,6 +267,7 @@ SPEC REPOS:
     - MapboxCoreMaps
     - MapboxMaps
     - MapboxMobileEvents
+    - MessageKit
     - Moya
     - nanopb
     - Parchment
@@ -318,6 +326,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 7e48a3249792ac35d6f18f107f63f199a7e9d0ce
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
+  InputBarAccessoryView: 19953f486a23e846e9487099f92bbe3456e46ce5
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   JTAppleCalendar: f95b02c64f56d6f938fbf6582a04dcab9d709ebd
   Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
@@ -327,6 +336,7 @@ SPEC CHECKSUMS:
   MapboxCoreMaps: bdd0115bfd8bf6df402468710cb23c926938b03d
   MapboxMaps: 1ed477cbe573a9e740801dfc9c636ef33bbc3f54
   MapboxMobileEvents: 14d7ac3ee95b4142c4fec2205dfd48ff453e8871
+  MessageKit: 1f07618183be6d92b648ba7a384aafa097362a00
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OnlineChatSdk: 421b17a804f22c193f81f02a891e7d91128c525b
@@ -353,6 +363,6 @@ SPEC CHECKSUMS:
   XCoordinator: a5f91e43ee944f508529763921165697d3211629
   YandexMobileMetrica: baf7cea47cb87fc9af963c4f747ce8dd7df3d7c0
 
-PODFILE CHECKSUM: 405f485a6fd5c7568ec8a3242d46b499ca864cc7
+PODFILE CHECKSUM: ffad2df4d2abc876081479ddfa9d375d3d8c2f04
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

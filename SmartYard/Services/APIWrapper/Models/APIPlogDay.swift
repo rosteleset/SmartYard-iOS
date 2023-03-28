@@ -26,7 +26,8 @@ struct APIPlogDay: Decodable, Hashable {
         
         let dayRawValue = try container.decode(String.self, forKey: .day)
         
-        day = try dayRawValue.dateFromAPIString.unwrapped(or: NSError.APIWrapperError.noDataError)
+//        day = (try? dayRawValue.dateFromAPIString) ?? Date()
+        day = dayRawValue.dateFromAPIString.unwrapped(or: Date())
         
         let eventsIntValue = try? container.decode(Int.self, forKey: .events)
         let eventsStringValue = try? container.decode(String.self, forKey: .events)
@@ -36,6 +37,7 @@ struct APIPlogDay: Decodable, Hashable {
         }
         
         itemsCount = eventsRawValue
+        
     }
     
 }

@@ -22,14 +22,23 @@ struct APIAddress: Decodable {
         case hasPlog
     }
     
+    var uniqueId: String {
+        return (houseId + address)
+    }
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        houseId = try container.decode(String.self, forKey: .houseId)
+//        houseId = try container.decode(String.self, forKey: .houseId)
+        let hid = try container.decode(Int.self, forKey: .houseId)
         address = try container.decode(String.self, forKey: .address)
+        
+        houseId = String(hid) + "_" + address
+
         
         doors = (try? container.decode([APIDoor].self, forKey: .doors)) ?? []
         cctv = (try? container.decode(Int.self, forKey: .cctv)) ?? 0
+        
         let hasPlogRawValue = (try? container.decode(String.self, forKey: .hasPlog)) ?? ""
         switch hasPlogRawValue {
         case "t": hasPlog = true

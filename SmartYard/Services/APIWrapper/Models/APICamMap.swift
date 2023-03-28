@@ -18,20 +18,30 @@ struct APICamMap: Decodable {
     /// token от flussonic
     let token: String
     
+    let frs: Bool
+    
     private enum CodingKeys: String, CodingKey {
         case id
         case url
         case token
+        case frs
         
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        id = Int(try container.decode(String.self, forKey: .id)) ?? 0
+        id = try container.decode(Int.self, forKey: .id)
         url = try container.decode(String.self, forKey: .url)
         token = try container.decode(String.self, forKey: .token)
         
+        let isFrsValue = try container.decode(String.self, forKey: .frs)
+        
+        switch isFrsValue {
+        case "t": frs = true
+        case "f": frs = false
+        default: frs = false
+        }
     }
     
 }

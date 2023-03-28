@@ -101,6 +101,8 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
         
         notificationsContainerView.layerBorderWidth = 1
         notificationsContainerView.layerBorderColor = UIColor.SmartYard.grayBorder
+        notificationsContainerView.frame.size = CGSize(width: 0, height: 0)
+        notificationsContainerView.isHidden = true
         
         logoutButton.layerBorderWidth = 1
         logoutButton.layerBorderColor = UIColor.SmartYard.grayBorder

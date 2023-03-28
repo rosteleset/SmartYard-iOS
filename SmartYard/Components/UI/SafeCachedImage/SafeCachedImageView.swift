@@ -49,7 +49,7 @@ class SafeCachedImageView: UIImageView {
         
         URLSession.shared.dataTask(
             with: url,
-            completionHandler: { data, response, _ in
+            completionHandler: {data, response, _ in
                 DispatchQueue.main.async {
                     self.loadingImageIndicator!.stopAnimating()
                     self.loadingImageIndicator!.removeFromSuperview()

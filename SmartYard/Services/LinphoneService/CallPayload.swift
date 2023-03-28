@@ -75,7 +75,6 @@ struct CallPayload {
             let callerId = data["callerId"] as? String else {
             return nil
         }
-        
         self.username = username
         self.password = password
         self.server = server

@@ -319,11 +319,16 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         }
         
         realVideoPlayerLayer = AVPlayerLayer(player: player)
+        realVideoContainer.bounds = CGRect(x: 0, y: 0, width: realVideoContainer.frame.width, height: realVideoContainer.frame.width / 16 * 9)
         realVideoContainer.layer.insertSublayer(realVideoPlayerLayer!, at: 0)
+
         realVideoPlayerLayer?.frame = realVideoContainer.bounds
+
         realVideoPlayerLayer?.removeAllAnimations()
-         realVideoPlayerLayer?.backgroundColor = UIColor.black.cgColor
-        
+        realVideoPlayerLayer?.backgroundColor = UIColor.black.cgColor
+        realVideoPlayerLayer?.videoGravity = .resizeAspectFill
+//        realVideoPlayerLayer?.player?.isMuted = true
+
         // MARK: Настройка лоадера
         
         let animation = LottieAnimation.named("LoaderAnimation")
@@ -347,7 +352,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     self.realVideoContainer.layer.insertSublayer(playerLayer, at: 0)
                     playerLayer.frame = self.realVideoContainer.bounds
                     playerLayer.removeAllAnimations()
-                    
+                    playerLayer.videoGravity = .resizeAspectFill
+
                     self.realVideoContainer.insertSubview(self.progressSlider, at: 2)
 
                     // восстановим отключенные привязки размеров вью слайдера к нашему вью
@@ -407,6 +413,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         // MARK: Привязка к обновлению текущего времени проигрываемого видео
         
         configurePeriodicTimeObserver(player)
+
     }
     
     private func configureFullscreenButton() {
@@ -449,10 +456,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureSliders() {
-        progressSlider.setReferenceCalendar(.moscowCalendar)
+        progressSlider.setReferenceCalendar(.novokuznetskCalendar)
         progressSlider.delegate = self
         
-        rangeSlider.setReferenceCalendar(.moscowCalendar)
+        rangeSlider.setReferenceCalendar(.novokuznetskCalendar)
         rangeSlider.delegate = self
     }
     
@@ -1101,7 +1108,7 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         
         let dateFormatter = DateFormatter()
         
-        dateFormatter.timeZone = Calendar.moscowCalendar.timeZone
+        dateFormatter.timeZone = Calendar.novokuznetskCalendar.timeZone
         dateFormatter.dateFormat = "dd.MM.yy"
         
         editDateLabel.text = "Видео от \(dateFormatter.string(from: startDate))"

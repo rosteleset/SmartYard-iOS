@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -39,9 +40,6 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                 </button>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppNameLogo" translatesAutoresizingMaskIntoConstraints="NO" id="51a-hg-BG2">
-                    <rect key="frame" x="117" y="128" width="156" height="56"/>
-                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j85-Mo-g0D" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="224" width="390" height="620"/>
                     <subviews>
@@ -68,23 +66,27 @@
                             <viewLayoutGuide key="frameLayoutGuide" id="UrW-vq-4ty"/>
                         </scrollView>
                         <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="bcd-oJ-Tyo">
-                            <rect key="frame" x="134.33333333333334" y="538.66666666666663" width="121.33333333333334" height="27.333333333333371"/>
+                            <rect key="frame" x="117.66666666666667" y="541" width="154.66666666666663" height="25"/>
                         </pageControl>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gWk-WM-mDC" customClass="WhiteButtonWithBorder" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="40" y="438.66666666666663" width="310" height="60"/>
+                            <rect key="frame" x="40" y="441" width="310" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="PD9-tI-96j"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
-                            <state key="normal" title="Далее"/>
+                            <state key="normal" title="Далее">
+                                <color key="titleColor" name="blue"/>
+                            </state>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9px-IB-3Uc" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="40" y="438.66666666666663" width="310" height="60"/>
+                            <rect key="frame" x="40" y="441" width="310" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="mRo-ej-Kvx"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
-                            <state key="normal" title="Класс, давайте начнём!"/>
+                            <state key="normal" title="Класс, давайте начнём!">
+                                <color key="titleColor" name="backgroundColor"/>
+                            </state>
                         </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -103,6 +105,9 @@
                         <constraint firstItem="bcd-oJ-Tyo" firstAttribute="top" secondItem="gWk-WM-mDC" secondAttribute="bottom" constant="40" id="vGv-7R-HIO"/>
                     </constraints>
                 </view>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="AppNameLogo" translatesAutoresizingMaskIntoConstraints="NO" id="51a-hg-BG2">
+                    <rect key="frame" x="103" y="111" width="184" height="74"/>
+                </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Vzb-hM-7pq"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -123,12 +128,18 @@
                 <constraint firstItem="4Ru-dw-B3a" firstAttribute="top" secondItem="Vzb-hM-7pq" secondAttribute="top" constant="26" id="p6f-Sx-ciZ"/>
                 <constraint firstItem="j85-Mo-g0D" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vgK-hZ-0gQ"/>
             </constraints>
-            <point key="canvasLocation" x="137.68115942028987" y="121.875"/>
+            <point key="canvasLocation" x="136.92307692307691" y="121.56398104265402"/>
         </view>
     </objects>
     <resources>
-        <image name="AppNameLogo" width="187" height="74"/>
+        <image name="AppNameLogo" width="283" height="293"/>
         <image name="MainBackground" width="375" height="812"/>
+        <namedColor name="backgroundColor">
+            <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="blue">
+            <color red="0.89411764705882357" green="0.10196078431372549" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

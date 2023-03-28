@@ -27,6 +27,7 @@ class FullscreenPlayerViewController: UIViewController {
     
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var playPauseButton: UIButton!
     
     private var controls: [UIView] = []
@@ -170,18 +171,37 @@ class FullscreenPlayerViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         playerLayer?.frame = contentView.bounds
+        playerLayer?.videoGravity = .resizeAspect
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        
-        self.scrollView.zoomScale = 1.0
-        self.scrollView.contentSize = size
+
+        DispatchQueue.main.async() {
+            self.scrollView.zoomScale = 1.0
+            self.scrollView.contentSize = size
+            self.playerLayer?.frame = self.contentView.bounds
+            self.playerLayer?.videoGravity = .resizeAspect
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
       
+        let swipeLeft = UISwipeGestureRecognizer(
+            target: self,
+            action: #selector(handleSwipeGestureRecognizer)
+        )
+        swipeLeft.direction = .left
+        contentView.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(
+            target: self,
+            action: #selector(handleSwipeGestureRecognizer)
+        )
+        swipeRight.direction = .right
+        contentView.addGestureRecognizer(swipeRight)
+        
         if let playerLayer = playerLayer {
            contentView.layer.insertSublayer(playerLayer, at: 0)
         }
@@ -212,6 +232,38 @@ class FullscreenPlayerViewController: UIViewController {
         hideControls()
     }
     
+    @objc private dynamic func handleSwipeGestureRecognizer(_ recognizer: UISwipeGestureRecognizer) {
+        progressSlider?.removeFromSuperview()
+        
+        if recognizer.direction == .left {
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0.0,
+                options: .curveEaseOut,
+                animations: {
+                    self.contentView.frame.origin.x -= self.contentView.frame.size.width
+                    self.contentView.alpha = 0.0
+                },
+                completion: { _ in
+                    self.dismiss(animated: true, completion: nil)
+                }
+            )
+        }else if recognizer.direction == .right{
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0.0,
+                options: .curveEaseOut,
+                animations: {
+                    self.contentView.frame.origin.x += self.contentView.frame.size.width
+                    self.contentView.alpha = 0.0
+                },
+                completion: { _ in
+                    self.dismiss(animated: true, completion: nil)
+                }
+            )
+        }
+    }
+
     func setPlayerLayer(_ playerLayer: AVPlayerLayer) {
         
         self.playerLayer = playerLayer

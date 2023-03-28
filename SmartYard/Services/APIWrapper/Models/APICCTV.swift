@@ -14,8 +14,8 @@ struct APICCTV: Decodable {
     let houseId: Int?
     let id: Int
     let name: String
-    let lat: String
-    let lon: String
+    let lat: Double
+    let lon: Double
     let coordinate: CLLocationCoordinate2D
     let video: String
     let token: String
@@ -32,23 +32,22 @@ struct APICCTV: Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         houseId = try? container.decode(Int.self, forKey: .houseId)
         
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         
-        lat = try container.decode(String.self, forKey: .lat)
-        lon = try container.decode(String.self, forKey: .lon)
+        lat = try container.decode(Double.self, forKey: .lat)
+        lon = try container.decode(Double.self, forKey: .lon)
         
-        guard let latDouble = Double(lat), let lonDouble = Double(lon) else {
-            throw NSError.APIWrapperError.noDataError
-        }
+//        guard let latDouble = Double(lat), let lonDouble = Double(lon) else {
+//            throw NSError.APIWrapperError.noDataError
+//        }
         
-        coordinate = CLLocationCoordinate2D(latitude: latDouble, longitude: lonDouble)
+        coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         
         video = try container.decode(String.self, forKey: .url)
         token = try container.decode(String.self, forKey: .token)
     }
-    
 }

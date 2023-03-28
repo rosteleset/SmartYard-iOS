@@ -39,7 +39,8 @@ class PushNotificationService {
     }
     
     func isCallIgnored(callId: String) -> Bool {
-        return ignoredCallIds.contains(callId)
+        return false
+//        return ignoredCallIds.contains(callId)
     }
     
     /// Сбрасывает InstanceId. Этакий способ гарантированно отписаться от уведомлений при разлогине
@@ -80,12 +81,12 @@ class PushNotificationService {
         )
     }
     
-    /// Помечает все inbox message, которые сейчас есть в NotificationCenter, как доставленные (чтобы бэк не присылал их повторно)
+/// Помечает все inbox message, которые сейчас есть в NotificationCenter, как доставленные (чтобы бэк не присылал их повторно)
     func markAllMessagesAsDelivered() {
         userNotificationCenter.getDeliveredNotifications { [weak self] notifications in
             let messageIds: [String] = notifications.compactMap { notification in
                 guard let rawMessageType = notification.request.content.userInfo["messageType"] as? String,
-                    let messageType = MessageType(rawValue: rawMessageType),
+                    let messageType = PushMessageType(rawValue: rawMessageType),
                     messageType == .inbox,
                     let messageId = notification.request.content.userInfo["messageId"] as? String else {
                     return nil
@@ -125,11 +126,11 @@ class PushNotificationService {
     }
     
     /// Удаляет все уведомления с заданным типом действия из Notification Center
-    func deleteAllDeliveredNotifications(withActionType neededAction: MessageType) {
+    func deleteAllDeliveredNotifications(withActionType neededAction: PushMessageType) {
         userNotificationCenter.getDeliveredNotifications { [weak self] notifications in
             let notificationIds: [String] = notifications.compactMap { notification in
                 guard let rawAction = notification.request.content.userInfo["action"] as? String,
-                    let action = MessageType(rawValue: rawAction),
+                    let action = PushMessageType(rawValue: rawAction),
                     action == neededAction else {
                     return nil
                 }

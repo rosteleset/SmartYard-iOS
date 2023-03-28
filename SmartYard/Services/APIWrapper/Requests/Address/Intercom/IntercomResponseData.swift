@@ -20,6 +20,7 @@ struct IntercomResponseData: Decodable {
     let disablePlog: Bool?
     let hiddenPlog: Bool?
     let frsDisabled: Bool?
+    let enableDoorCode: Bool?
     
     private enum CodingKeys: String, CodingKey {
         case allowDoorCode
@@ -32,6 +33,7 @@ struct IntercomResponseData: Decodable {
         case disablePlog
         case hiddenPlog
         case frsDisabled = "FRSDisabled"
+        case enableDoorCode
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
@@ -39,7 +41,7 @@ struct IntercomResponseData: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         let allowDoorCodeRawValue = try container.decode(String.self, forKey: .allowDoorCode)
-
+        
         switch allowDoorCodeRawValue {
         case "t": allowDoorCode = true
         case "f": allowDoorCode = false
@@ -65,13 +67,15 @@ struct IntercomResponseData: Decodable {
         }
         
         let autoOpenRawValue = try container.decode(String.self, forKey: .autoOpen)
-        autoOpen = try autoOpenRawValue.dateFromAPIString.unwrapped(or: NSError.APIWrapperError.noDataError)
-        
-        let whiteRabbitRawValue = try container.decode(String.self, forKey: .whiteRabbit)
+        autoOpen = autoOpenRawValue.dateFromAPIString.unwrapped(or: Date())
+
+//        autoOpen = try autoOpenRawValue.dateFromAPIString
+       
+        let whiteRabbitRawValue = try? container.decode(String.self, forKey: .whiteRabbit)
         switch whiteRabbitRawValue {
         case "1", "2", "3", "5", "7", "10": whiteRabbit = true
         case "0": whiteRabbit = false
-        default: throw NSError.APIWrapperError.noDataError
+        default: whiteRabbit = false
         }
         
         let paperBillRawValue = try? container.decode(String.self, forKey: .paperBill)
@@ -105,6 +109,15 @@ struct IntercomResponseData: Decodable {
         case "f": frsDisabled = false
         default: frsDisabled = nil
         }
+        
+        let enableDoorCodeRawValue = try? container.decode(String.self, forKey: .enableDoorCode)
+        
+        switch enableDoorCodeRawValue {
+        case "t": enableDoorCode = true
+        case "f": enableDoorCode = false
+        default: enableDoorCode = nil
+        }
+        
     }
     
 }

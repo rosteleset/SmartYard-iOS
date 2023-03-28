@@ -16,7 +16,7 @@ extension UIColor {
         static let darkGreen = UIColor(hex: 0x1FBC62)!
         
         /// #298BFF
-        static let blue = UIColor(hex: 0x298BFF)!
+        static let blue = UIColor(hex: 0xE41A4C)!
         
         /// #F0F0F1
         static let grayBorder = UIColor(hex: 0xF0F0F1)!

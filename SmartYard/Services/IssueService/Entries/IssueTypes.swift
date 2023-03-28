@@ -40,7 +40,7 @@ enum IssueType {
     case confirmAddressInOfficeIssue(userInfo: MainUserInfo, lat: String, lon: String)
     
     // экран 34.02.03
-    case deleteAddressIssue(userInfo: MainUserInfo, lat: String, lon: String, reason: String)
+    case deleteAddressIssue(userInfo: MainUserInfo, lat: String, lon: String, clientId: String, reason: String)
     
     // экран 21
     case servicesUnavailableIssue(userInfo: MainUserInfo, serviceNames: [String], lat: String, lon: String)
@@ -85,8 +85,8 @@ enum IssueType {
         case let .confirmAddressInOfficeIssue(userInfo, _, _):
             return userInfo.convertToString() + "\nКлиент подойдет в офис для получения подтверждения."
         
-        case let .deleteAddressIssue(userInfo, _, _, reason):
-            return userInfo.convertToString() + "\nУдаление адреса из приложения. Причина: \(reason)"
+        case let .deleteAddressIssue(userInfo, _, _, cliendId, reason):
+            return userInfo.convertToString() + "\ncontractId-" + cliendId + "-\nУдаление адреса из приложения. Причина: \(reason)"
         
         case let .servicesUnavailableIssue(userInfo, serviceNames, _, _):
             let servicesStr = serviceNames.joined(separator: ", ")
@@ -108,8 +108,8 @@ enum IssueType {
         case let .requestRec(camera, date, duration, notes):
             let formatter = DateFormatter()
             formatter.dateFormat = "dd.MM.yyyy HH:mm"
-            formatter.timeZone = Calendar.moscowCalendar.timeZone
-            formatter.locale = Calendar.moscowCalendar.locale
+            formatter.timeZone = Calendar.novokuznetskCalendar.timeZone
+            formatter.locale = Calendar.novokuznetskCalendar.locale
             let result = """
 Обработать запрос на добавление видеофрагмента из архива видовой видеокамеры \(camera.name) (id=\(camera.id)) по парамертам:
 время: \(formatter.string(from: date)),
@@ -154,8 +154,8 @@ enum IssueType {
     
     var customFields: [String: String] {
         let formatter = DateFormatter()
-        formatter.timeZone = Calendar.moscowCalendar.timeZone
-        formatter.locale = Calendar.moscowCalendar.locale
+        formatter.timeZone = Calendar.novokuznetskCalendar.timeZone
+        formatter.locale = Calendar.novokuznetskCalendar.locale
         formatter.dateFormat = "dd.MM.yyyy HH:mm"
         
         let now = formatter.string(from: Date())
@@ -195,7 +195,7 @@ enum IssueType {
                 "10941": "10580"
             ]
             
-        case let .deleteAddressIssue(_, lat, lon, _):
+        case let .deleteAddressIssue(_, lat, lon, _, _):
             return [
                 "10011": clientCode,
                 "11840": now,

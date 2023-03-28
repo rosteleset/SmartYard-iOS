@@ -6,7 +6,7 @@
 //  Copyright © 2021 LanTa. All rights reserved.
 //
 
-enum MessageType: String {
+enum PushMessageType: String {
     
     case inbox
     case chat

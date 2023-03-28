@@ -88,7 +88,8 @@ class HistoryViewModel: BaseViewModel {
         router: WeakRouter<HistoryRoute>
     ) {
         self.apiWrapper = apiWrapper
-        self.houseId = houseId
+        self.houseId = try( houseId?.components(separatedBy: "_")[0]) ?? nil
+//        self.houseId = houseId
         self.flatId = flatId
         self.router = router
         self.address = BehaviorSubject<String?>(value: address)
@@ -146,7 +147,7 @@ class HistoryViewModel: BaseViewModel {
                 }
                 
                 // добавляем новую порцию данных, объединяя массивы данных для одинаковых flatId
-                 self.availableDays.merge(data, uniquingKeysWith: +)
+                self.availableDays.merge(data, uniquingKeysWith: +)
                 self.availableDaysSubject.onNext(self.availableDays)
             }
             .disposed(by: disposeBag)
@@ -296,7 +297,6 @@ class HistoryViewModel: BaseViewModel {
                         }
                         .disposed(by: self.disposeBag)
                 }
-                
                 return results.asDriver(onErrorJustReturn: nil)
             }
             .trackError(errorTracker)
@@ -371,6 +371,8 @@ class HistoryViewModel: BaseViewModel {
                     
                     self.flatIds = [flatId]
                     self.flatNumbers = [0]
+                    print("!!!!!! DEBUG !!!!!!",self.flatIds)
+                    print("!!!!!! DEBUG !!!!!!",self.flatNumbers)
                     self.apptsFilter.accept(self.flatIds)
                     // изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
                 }
@@ -383,8 +385,8 @@ class HistoryViewModel: BaseViewModel {
                     }
                     
                     self.camMap.accept(camMap)
-                    
-                   // получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
+
+                    // получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
                     self.flatIds = args.filtered(
                         { address in // swiftlint:disable:this opening_brace
                             return address.houseId == self.houseId && address.hasPlog
@@ -398,6 +400,8 @@ class HistoryViewModel: BaseViewModel {
                     // получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
                     self.flatNumbers = args.filtered({ $0.houseId == self.houseId  && $0.hasPlog }, map: { (Int($0.flatNumber!) ?? -1) }).withoutDuplicates()
                     
+                    print("!!!!!! DEBUG !!!!!!",self.flatIds)
+                    print("!!!!!! DEBUG !!!!!!",self.flatNumbers)
                     // по умолчанию фильтр содержит все доступные квартиры
                     self.apptsFilter.accept(self.flatIds)
                     
@@ -473,10 +477,11 @@ class HistoryViewModel: BaseViewModel {
                     
                     lock.lock()
                     let isInQueue = self.loadingQueue.first { $0.flatId == flatId && $0.day == day }
-                    let isInCache = self.dataCache.first { $0.flatId == flatId && $0.day == day }
+//                    let isInCache = self.dataCache.first { $0.flatId == flatId && $0.day == day }
                     
                     // если мы уже запрашиваем или имеем в кеше этот элемент, то не запрашиваем его повторно
-                    guard isInQueue == nil, isInCache == nil else {
+//                    guard isInQueue == nil, isInCache == nil else {
+                    guard isInQueue == nil else {
                         lock.unlock()
                         return
                     }
@@ -586,7 +591,7 @@ class HistoryViewModel: BaseViewModel {
                     lock.lock()
                     let isInQueue = self.loadingQueue.first { $0.flatId == flatId && $0.day == day }
                     let isInCache = self.dataCache.first { $0.flatId == flatId && $0.day == day }
-                    
+
                     // если мы уже запрашиваем или имеем в кеше этот элемент, то не запрашиваем его повторно
                     guard isInQueue == nil, isInCache == nil else {
                         lock.unlock()

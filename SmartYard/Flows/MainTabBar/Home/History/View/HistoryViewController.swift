@@ -197,7 +197,6 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
                 } else {
                     self.appartmentFilterButton.isHidden = true
                 }
-                
                 // со всех квартир собираем все дни, убираем дубли, сортируем от поздних к ранним
                 self.daysQueue = $0.flatMap { $0.value }
                     .map { $0.day }
@@ -285,9 +284,9 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
             selectedRow: selectedRow,
             onSelect: { _, selectedRow in
                 if selectedRow == 0 {
-                    self.appartmentFilterButton.setTitle("Квартира, все", for: .normal)
+                    self.appartmentFilterButton.setTitle("Все квартиры", for: .normal)
                 } else {
-                    self.appartmentFilterButton.setTitle("Квартира, \(self.viewModel.flatNumbers[selectedRow - 1])", for: .normal)
+                    self.appartmentFilterButton.setTitle("Квартира \(self.viewModel.flatNumbers[selectedRow - 1])", for: .normal)
                 }
                 self.appartmentFilterButton.sizeToFit()
                 self.apptsFilterString.accept(itemsId[selectedRow])

@@ -43,10 +43,10 @@ class ContractCell: UICollectionViewCell {
     func configure(with item: APIPaymentsListAccount) {
         contractNumLabel.text = item.contractName
         
-        let formattedBalance = item.balance == 0 ? "0" : String(item.balance)
+        let formattedBalance = item.balance == 0 ? "0" : String(format: "%.2f", item.balance)
         balanceLabel.text = formattedBalance.replacingOccurrences(of: ".", with: ",") + " ₽"
         
-        recommendedSumLabel.text = String(item.payAdvice ?? 0).replacingOccurrences(of: ".", with: ",") + " ₽"
+        recommendedSumLabel.text = String(format: "%.2f", item.payAdvice ?? 0).replacingOccurrences(of: ".", with: ",") + " ₽"
         recommendedSumLabel.isHidden = item.payAdvice == nil
         recommendedSumHintLabel.isHidden = item.payAdvice == nil
         

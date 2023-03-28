@@ -18,7 +18,6 @@ class PaymentPopupViewModel: BaseViewModel {
     private let clientId: String
     private var router: WeakRouter<PaymentsRoute>
     
-    
     private let recommendedSum: BehaviorSubject<Double?>
     private let contractNumber: BehaviorSubject<String?>
     
@@ -37,97 +36,119 @@ class PaymentPopupViewModel: BaseViewModel {
     }
     
     // swiftlint:disable:next function_body_length
-    func transform(_ input: Input) -> Output {
-        // let activityTracker = ActivityTracker()
+    func transform(input: Input) -> Output {
+//        let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
         let isPaySuccessTrigger = PublishSubject<Bool>()
+//        input.payProcess
+//            .flatMapLatest { [weak self] args -> Driver<(Data?, PayPrepareResponseData?)?> in
+//                let (token, amount) = args
+//
+//                guard let self = self, let pennyAmount = amount.double() else {
+//                    isPaySuccessTrigger.onNext(false)
+//                    return .empty()
+//                }
+//                return self.apiWrapper.payPrepare(
+//                        clientId: self.clientId,
+//                        amount: String(pennyAmount * 100)
+//                    )
+//                    .trackError(errorTracker)
+//                    .map {
+//                        guard let response = $0 else {
+//                            isPaySuccessTrigger.onNext(false)
+//                            return nil
+//                        }
+//
+//                        return (token, response)
+//                    }
+//                    .asDriver(onErrorJustReturn: nil)
+//            }
+//            .flatMapLatest { [weak self] args -> Driver<(String, SberbankPayProcessResponseData)?> in
+//                guard let self = self,
+//                      let (token, response) = args,
+//                      let orderNumber = response,
+//                      let uToken = token?.base64EncodedString(),
+//                      !uToken.isEmpty
+//                else {
+//                    isPaySuccessTrigger.onNext(false)
+//                    return .empty()
+//                }
+//                return
+//                    self.apiWrapper.sberbankPayProcess(
+////                            merchant: "lanta", //TODO
+//                            merchant: "centra",
+//                            orderNumber: orderNumber,
+//                            paymentToken: uToken
+//                        )
+//                        .trackError(errorTracker)
+//                        .map {
+//                            guard let response = $0, response.success else {
+//                                isPaySuccessTrigger.onNext(false)
+//                                return nil
+//                            }
+//
+//                            return (orderNumber, response)
+//                        }
+//                        .asDriverOnErrorJustComplete()
+//
+//            }
+//            .flatMapLatest { [weak self] args -> Driver<PayProcessResponseData?> in
+//                guard let self = self,
+//                      let (innerPaymentId, response) = args,
+//                      let sberbankOrderId = response.data?.orderId
+//                else {
+//                    isPaySuccessTrigger.onNext(false)
+//                    return .empty()
+//                }
+//
+//                return self.apiWrapper.payProcess(
+//                        paymentId: innerPaymentId,
+//                        sbId: sberbankOrderId
+//                    )
+//                    .trackError(errorTracker)
+//                    .asDriver(onErrorJustReturn: nil)
+//            }
+//            .drive(
+//                onNext: { _ in
+//                    isPaySuccessTrigger.onNext(true)
+//                }
+//            )
+//            .disposed(by: disposeBag)
+        var routeState:Driver<Bool> = .just(true)
         
-        input.payProcess
-            .flatMapLatest { [weak self] args -> Driver<(Data?, PayPrepareResponseData?)?> in
-                let (token, amount) = args
-                
-                guard let self = self, let pennyAmount = amount.double() else {
-                    isPaySuccessTrigger.onNext(false)
-                    return .empty()
-                }
-                
-                return self.apiWrapper.payPrepare(
-                        clientId: self.clientId,
-                        amount: String(pennyAmount * 100)
-                    )
-                    .trackError(errorTracker)
-                    .map {
-                        guard let response = $0 else {
-                            isPaySuccessTrigger.onNext(false)
-                            return nil
-                        }
-                        
-                        return (token, response)
-                    }
-                    .asDriver(onErrorJustReturn: nil)
-            }
-            .flatMapLatest { [weak self] args -> Driver<(String, SberbankPayProcessResponseData)?> in
-                guard let self = self,
-                      let (token, response) = args,
-                      let orderNumber = response,
-                      let uToken = token?.base64EncodedString(),
-                      !uToken.isEmpty
-                else {
-                    isPaySuccessTrigger.onNext(false)
-                    return .empty()
-                }
-
-                return
-                    self.apiWrapper.sberbankPayProcess(
-                            merchant: "lanta",
-                            orderNumber: orderNumber,
-                            paymentToken: uToken
-                        )
-                        .trackError(errorTracker)
-                        .map {
-                            guard let response = $0, response.success else {
-                                isPaySuccessTrigger.onNext(false)
-                                return nil
-                            }
-                            
-                            return (orderNumber, response)
-                        }
-                        .asDriverOnErrorJustComplete()
-
-            }
-            .flatMapLatest { [weak self] args -> Driver<PayProcessResponseData?> in
-                guard let self = self,
-                      let (innerPaymentId, response) = args,
-                      let sberbankOrderId = response.data?.orderId
-                else {
-                    isPaySuccessTrigger.onNext(false)
-                    return .empty()
-                }
-            
-                return self.apiWrapper.payProcess(
-                        paymentId: innerPaymentId,
-                        sbId: sberbankOrderId
-                    )
-                    .trackError(errorTracker)
-                    .asDriver(onErrorJustReturn: nil)
-            }
-            .drive(
-                onNext: { _ in
-                    isPaySuccessTrigger.onNext(true)
-                }
+        let isAbleToProceed = Driver
+            .combineLatest(
+                input.inputSumNumText,
+                routeState
             )
-            .disposed(by: disposeBag)
-        
-        input.cardProcess
-            .flatMapLatest { [weak self] amount -> Driver<(String, PayPrepareResponseData?)?> in
+            .map { args -> Bool in
                 
-                guard let self = self else {
+                let (sumNumber, routeStatus) = args
+
+                guard let uSumNumber = sumNumber?.trimmed, (Double(uSumNumber.replacingOccurrences(of: ",", with: ".")) ?? 0 > 0) else {
+                    return false
+                }
+                return routeStatus
+            }
+
+//        input.cardProcess
+        input.cardButtonTapped
+            .withLatestFrom(isAbleToProceed)
+            .isTrue()
+            .withLatestFrom(input.inputSumNumText.asDriver(onErrorJustReturn: nil))
+            .flatMapLatest { [weak self] amount -> Driver<(String?, PayPrepareResponseData?)?> in
+                
+                guard let self = self, let uAmount = amount?.replacingOccurrences(of: ",", with: ".") else {
                     return .empty()
                 }
                 
-                let amountString = String(format: "%.0f", amount.doubleValue * 100)
+                let amountString = String(format: "%.0f", (Double(uAmount) ?? 0.0) * 100)
                 
+                routeState = .just(false)
+//                print(routeState.asSignal(onErrorJustReturn: false))
+//                self.router.trigger(.dismiss)
+//                print(routeState.asDriver())
                 return self.apiWrapper.payPrepare(
                         clientId: self.clientId,
                         amount: amountString
@@ -149,9 +170,9 @@ class PaymentPopupViewModel: BaseViewModel {
                 else {
                     return .empty()
                 }
-
+                
                 return
-                    self.apiWrapper.sberbankRegisterProcess(orderNumber: orderNumber, amount: amount)
+                    self.apiWrapper.sberbankRegisterProcess(orderNumber: orderNumber, amount: amount!)
                         .trackError(errorTracker)
                         .map {
                             guard let response = $0 else {
@@ -171,7 +192,6 @@ class PaymentPopupViewModel: BaseViewModel {
                     else {
                               return
                           }
-                    print(url)
                     
                     UIApplication.shared.open(url)
                     self.router.trigger(.dismiss)
@@ -185,7 +205,8 @@ class PaymentPopupViewModel: BaseViewModel {
         return Output(
             isPaySuccessTrigger: isPaySuccessTrigger.asDriver(onErrorJustReturn: false),
             recommendedSum: recommendedSum.asDriver(onErrorJustReturn: nil),
-            contractNumber: contractNumber.asDriver(onErrorJustReturn: nil)
+            contractNumber: contractNumber.asDriver(onErrorJustReturn: nil),
+            isAbleToProceed: isAbleToProceed.asDriver()
         )
     }
     
@@ -194,14 +215,18 @@ class PaymentPopupViewModel: BaseViewModel {
 extension PaymentPopupViewModel {
     
     struct Input {
-        let payProcess: Driver<(Data?, String)>
-        let cardProcess: Driver<NSDecimalNumber>
+//        let payProcess: Driver<(Data?, String)>
+//        let cardProcess: Driver<NSDecimalNumber>
+        let cardButtonTapped: Driver<Void>
+        
+        let inputSumNumText: Driver<String?>
     }
     
     struct Output {
         let isPaySuccessTrigger: Driver<Bool>
         let recommendedSum: Driver<Double?>
         let contractNumber: Driver<String?>
+        let isAbleToProceed: Driver<Bool>
     }
     
 }

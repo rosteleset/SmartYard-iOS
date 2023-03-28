@@ -406,7 +406,7 @@ extension AddressSettingsViewModel: AddressDeletionViewModelDelegate {
                 }
                 
                 return self.issueService
-                    .sendDeleteAddressIssue(address: self.address, reason: reason)
+                    .sendDeleteAddressIssue(address: self.address, cliendId: self.clientId, reason: reason)
                     .trackActivity(self.activityTracker)
                     .trackError(self.errorTracker)
                     .asDriver(onErrorJustReturn: nil)
@@ -419,6 +419,13 @@ extension AddressSettingsViewModel: AddressDeletionViewModelDelegate {
                     NotificationCenter.default.post(.init(name: .addressDeleted, object: nil))
                     
                     self?.router.trigger(.back)
+                    
+                    self?.alertService
+                        .showAlert(
+                            title: "Договор удалён",
+                            message: nil,
+                            priority: 250
+                        )
                 }
             )
             .disposed(by: disposeBag)
