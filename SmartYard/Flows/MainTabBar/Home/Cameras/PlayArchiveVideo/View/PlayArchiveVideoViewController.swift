@@ -53,9 +53,14 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     private var loadingAsset: [AVAsset?] = []
     private var assetArray: [AVAsset] = []
-    private var ranges: [(startDate: Date, endDate: Date)] = []    // Доступные периоды
+    
+    // Доступные периоды
+    private var ranges: [(startDate: Date, endDate: Date)] = []
 
     private var periodicTimeObserver: Any?
+    
+    /// Смещение от начала периода. Требуется только для потоков без разметки времени.
+    private var baseTimerShift: Double = 0;
     
     private var preferredPlaybackSpeedConfig: ArchiveVideoPlaybackSpeed = .normal {
         didSet {
@@ -65,6 +70,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             
             if player.rate != 0 {
                 player.rate = preferredPlaybackSpeedConfig.value
+                speedTrigger.onNext(preferredPlaybackSpeedConfig)
             }
             
             previousSpeedButton.isHidden = preferredPlaybackSpeedConfig.previousSpeed == nil
@@ -96,7 +102,9 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private let periodSelectedTrigger = PublishSubject<ArchiveVideoPreviewPeriod?>()
     private let startEndSelectedTrigger = PublishSubject<(Date, Date)>()
     private let screenshotTrigger = PublishSubject<Date>()
-    
+    private let seekToTrigger = PublishSubject<Date>()
+    private let speedTrigger = PublishSubject<ArchiveVideoPlaybackSpeed>()
+
     private let currentMode = BehaviorSubject<Mode>(value: .preview)
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
     private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: false)
@@ -168,13 +176,17 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .asDriver()
             .drive(
                 onNext: { [weak self] in
-                    guard let self = self else {
+                    guard let self = self,
+                          let realVideoPlayer = self.realVideoPlayer else {
                         return
                     }
                     
                     let newState = !self.playButton.isSelected
                     
-                    self.realVideoPlayer?.rate = newState ? self.preferredPlaybackSpeedConfig.value : 0
+                    realVideoPlayer.rate = newState ? self.preferredPlaybackSpeedConfig.value : 0
+                    if newState {
+                        self.speedTrigger.onNext(self.preferredPlaybackSpeedConfig)
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -282,20 +294,25 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             forInterval: CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
             queue: .main
         ) { [weak self] time in
-
             guard let asset = player.currentItem?.asset else {
                 return
              }
 
-            guard let index = self?.assetArray.firstIndex(of: asset) else {
+            guard let index = self?.assetArray.firstIndex(of: asset),
+                  let self = self,
+                  !self.ranges.isEmpty else {
                 return
             }
             
             // преобразовываем время полученное от текущего элемента во время от начала выбранного периода
             // ох уж, эти долбаные пропуски в архиве
-            let delta = ((self?.ranges[index].startDate.timeIntervalSince1970)!) - (self?.ranges.first!.startDate.timeIntervalSince1970)!
-
-            self?.currentPlaybackTime.onNext(CMTime(seconds: delta, preferredTimescale: CMTimeScale(NSEC_PER_SEC)) + time)
+            let delta = ((self.ranges[index].startDate.timeIntervalSince1970)) - (self.ranges.first!.startDate.timeIntervalSince1970)
+            self.currentPlaybackTime.onNext(
+                CMTime(
+                    seconds: delta + self.baseTimerShift,
+                    preferredTimescale: CMTimeScale(NSEC_PER_SEC)
+                ) + time
+            )
             
         }
     }
@@ -374,7 +391,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 
                 guard status == .readyToPlay,
                     let asset = currentItem?.asset,
-                    asset.duration.seconds > 0 else {
+                      asset.duration.isValid else {
                     return false
                 }
                 
@@ -407,6 +424,25 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         // MARK: Привязка к обновлению текущего времени проигрываемого видео
         
         configurePeriodicTimeObserver(player)
+        
+        // MARK: Обработка прыжков по двойному тапу из полноэкранного режима и при смене скоростей
+        NotificationCenter.default.rx
+            .notification(.videoPlayerSeek)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] arg in
+                    guard let self = self,
+                          let realVideoPlayer = self.realVideoPlayer,
+                          let offset = arg.object as? Int else {
+                          return
+                    }
+                    let newPos = self.ranges.first!.startDate.addingTimeInterval(self.baseTimerShift + Double(offset))
+                    self.seekToTrigger.onNext(newPos)
+                    self.baseTimerShift = newPos.timeIntervalSince1970 - self.ranges.first!.startDate.timeIntervalSince1970
+                    self.configurePeriodicTimeObserver(realVideoPlayer)
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func configureFullscreenButton() {
@@ -501,6 +537,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return period.startDate
                     }()
                     
+                    self?.isVideoBeingLoaded.onNext(false)
                     self?.progressSlider.setRelativeStartDate(startDate)
                 }
             )
@@ -523,7 +560,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     
                     DispatchQueue.main.async { [weak self] in
                         
-                        guard let self = self else {
+                        guard let self = self,
+                              !self.assetArray.isEmpty else {
                             return
                         }
                         
@@ -561,7 +599,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         }
         
         fullscreenButton.isHidden = mode == .edit || !isVideoValid
-        progressSlider.isHidden = mode == .edit || !isVideoValid
+        progressSlider.isHidden = mode == .edit // || !isVideoValid
         playButton.isEnabled = mode == .preview && isVideoValid
         
         previewButtonsContainer.isHidden = mode == .edit
@@ -593,7 +631,9 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             downloadTrigger: downloadButton.rx.tap.asDriver(),
             periodSelectedTrigger: periodSelectedTrigger.asDriver(onErrorJustReturn: nil),
             startEndSelectedTrigger: startEndSelectedTrigger.asDriverOnErrorJustComplete(),
-            screenshotTrigger: screenshotTrigger.asDriverOnErrorJustComplete()
+            screenshotTrigger: screenshotTrigger.asDriverOnErrorJustComplete(),
+            seekToTrigger: seekToTrigger.asDriverOnErrorJustComplete(),
+            speedTrigger: speedTrigger.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
@@ -622,9 +662,9 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         Driver
             .combineLatest(
                 output.rangeBounds,
-                periodSelectedTrigger.asDriverOnErrorJustComplete(),
-                currentPlaybackTimeDistinctSeconds
+                periodSelectedTrigger.asDriverOnErrorJustComplete()
             )
+            .withLatestFrom(currentPlaybackTimeDistinctSeconds) { ($0.0, $0.1, $1) }
             .drive(
                 onNext: { [weak self] args in
                     guard let self = self else {
@@ -650,6 +690,14 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
+        output.isVideoLoading
+            .drive(
+                onNext: { [weak self] videoLoading in
+                    self?.videoLoadingAnimationView.isHidden = !videoLoading
+                }
+            )
+            .disposed(by: disposeBag)
+        
         output.videoData
             .do(
                 onNext: { [weak self] _ in
@@ -665,11 +713,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                             let (urls, thumbnailsConfig) = args else {
                         return
                     }
+                    self.isVideoBeingLoaded.onNext(true)
                     
                     self.realVideoPlayer?.removeAllItems()
                     
-                    self.isVideoBeingLoaded.onNext(true)
-
                     // MARK: Грузим ассеты асинхронно
 
                     for asset in urls.map({ AVAsset(url: $0) }) {
@@ -714,17 +761,38 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                                 DispatchQueue.main.async {
                                 
                                     // MARK: Грузим thumbnails
+                                    guard let thumbnailsConfig = thumbnailsConfig else {
+                                        // если нет thumbnailsConfig, то значит надо было просто заменить видеопоток
+                                        return
+                                    }
+                                    self.baseTimerShift = 0;
                                     
                                     self.progressSlider.resetThumbnailImages()
                                     self.progressSlider.setActivityIndicatorsHidden(false)
 
                                     self.rangeSlider.resetThumbnailImages()
                                     self.rangeSlider.setActivityIndicatorsHidden(false)
-
+                                    
+                                    let startDate = self.ranges.first?.startDate.timeIntervalSince1970
+                                    let endDate = self.ranges.last?.endDate.timeIntervalSince1970
+                                    
+                                    var rangesDuration = 3.0 * 60.0 * 60.0;
+                                    
+                                    if let startDate = startDate, let endDate = endDate {
+                                        rangesDuration = endDate - startDate
+                                    }
+                                    
+                                    let rangesDurationTime = CMTimeMakeWithSeconds(
+                                        rangesDuration,
+                                        preferredTimescale: 1
+                                    )
+                                    
+                                    let duration = asset.duration.isIndefinite ? rangesDurationTime : asset.duration
+                                    
                                     self.loadThumbnails(
                                         config: thumbnailsConfig,
                                         count: 5,
-                                        videoDuration: CMTimeGetSeconds(asset.duration)
+                                        videoDuration: CMTimeGetSeconds(duration)
                                     )
                                 }
                             }
@@ -744,21 +812,24 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 
                 return mode == .edit
             }
-            .map { args -> URL? in
-                let (_, url) = args
+            .map { args -> (url: URL?, jpeg: Bool) in
+                let (_, (url, jpeg)) = args
                 
-                return url
+                return (url, jpeg)
             }
-            .distinctUntilChanged()
+            .distinctUntilChanged {$0.url == $1.url}
             .drive(
-                onNext: { [weak self] url in
-                    guard let screenshotUrl = url else {
+                onNext: { [weak self] args in
+                    let (screenshotUrl, jpeg) = args
+                    
+                    guard let screenshotUrl = screenshotUrl else {
                         return
                     }
                     
                     ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
                         url: screenshotUrl,
-                        forTime: .zero
+                        forTime: .zero,
+                        jpeg: jpeg
                     ) { cgImage in
                         guard let cgImage = cgImage else {
                             return
@@ -873,22 +944,24 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     index: offset,
                     preferredUrl: url,
                     fallbackUrl: config.fallbackUrl,
-                    identifier: config.identifier
+                    identifier: config.identifier,
+                    jpeg: config.camera.serverType == .macroscop
                 )
             }
     }
     
-    private func loadThumbnail(index: Int, preferredUrl: URL, fallbackUrl: URL, identifier: String) {
+    private func loadThumbnail(index: Int, preferredUrl: URL, fallbackUrl: URL, identifier: String, jpeg: Bool) {
         ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
             url: preferredUrl,
-            forTime: .zero
+            forTime: .zero,
+            jpeg: jpeg
         ) { [weak self] cgImage in
             guard identifier == self?.latestThumbnailConfig?.identifier else {
                 return
             }
             
             guard let cgImage = cgImage else {
-                self?.loadFallbackThumbnail(index: index, url: fallbackUrl, identifier: identifier)
+                self?.loadFallbackThumbnail(index: index, url: fallbackUrl, identifier: identifier, jpeg: jpeg)
                 return
             }
             
@@ -901,10 +974,11 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         }
     }
     
-    private func loadFallbackThumbnail(index: Int, url: URL, identifier: String) {
+    private func loadFallbackThumbnail(index: Int, url: URL, identifier: String, jpeg: Bool) {
         ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
             url: url,
-            forTime: .zero
+            forTime: .zero,
+            jpeg: jpeg
         ) { [weak self] cgImage in
             guard identifier == self?.latestThumbnailConfig?.identifier else {
                 return
@@ -927,8 +1001,21 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     }
     
     func fixDurations(_ exactDurations: [Float64]) {
+        // отдельно обрабатываем ситуацию, когда в массиве assets есть только один элемент и
+        // длительность его неизвестна.
+        guard exactDurations.count > 1,
+              let element = exactDurations.first,
+              !element.isNaN else {
+            
+            let duration = (self.ranges.last?.endDate.timeIntervalSince1970 ?? 0) -
+                            (self.ranges.first?.startDate.timeIntervalSince1970 ?? 0)
+            
+            self.progressSlider.setVideoDuration(duration)
+            return
+        }
+        
         self.ranges = zip(exactDurations, self.ranges).map { duration, old -> (startDate: Date, endDate: Date) in
-            let result = (old.startDate, old.startDate.addingTimeInterval(duration))
+            let result = duration.isNaN ? old : (old.startDate, old.startDate.addingTimeInterval(duration))
             return result
         }
         
@@ -1017,22 +1104,12 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
         guard !isReceivingGesture else {
             return
         }
-        guard realVideoPlayer != nil else {
+        guard let realVideoPlayer = realVideoPlayer else {
             return
         }
         
-        destroyPeriodicTimeObserver(realVideoPlayer!)
+        destroyPeriodicTimeObserver(realVideoPlayer)
         
-        // шаманство с плейлистом
-        // получаем объект ассета воспроизведения
-        guard let asset = self.realVideoPlayer?.currentItem?.asset else {
-            return
-         }
-
-        // Получаем номер текущего элемента, какой мы сейчас играем
-        guard let currentIndex = self.assetArray.firstIndex(of: asset) else {
-            return
-        }
         // получим абсолютное время на какое надо спозиционироваться
         let absPosition = self.ranges.first!.startDate.timeIntervalSince1970 + position
         
@@ -1054,6 +1131,28 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
         // если попали на дырку в архиве перед элементом, то сдвигаемся на начало элемента следующего за дырой
         setPosition = (setPosition < 0) ? 0 : setPosition
         
+        let asset = self.realVideoPlayer?.currentItem?.asset
+        
+        // для потоков, которые не умеют перематывать поток и не ориентируются во времени, приходится делать
+        // запаснй вариант для реализации перемотки через перезапуск потока с нового места.
+        if asset?.duration.isIndefinite ?? true {
+            let newPos = self.ranges[destIndex!].startDate.addingTimeInterval(setPosition)
+            self.seekToTrigger.onNext(newPos)
+            self.baseTimerShift = newPos.timeIntervalSince1970 - self.ranges.first!.startDate.timeIntervalSince1970
+            self.configurePeriodicTimeObserver(realVideoPlayer)
+            return
+        }
+        
+        // шаманство с плейлистом
+        // получаем объект ассета воспроизведения
+        guard let asset = asset else {
+            return
+         }
+
+        // Получаем номер текущего элемента, какой мы сейчас играем
+        guard let currentIndex = self.assetArray.firstIndex(of: asset) else {
+            return
+        }
         // если мы покидаем текущий элемент, то перезагружаем playlist элементами, начиная с
         if currentIndex != destIndex {
             self.realVideoPlayer?.removeAllItems()
@@ -1071,12 +1170,14 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
             
         }
         
-        realVideoPlayer?.seek(
+        realVideoPlayer.seek(
             to: CMTime(seconds: setPosition, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
             toleranceBefore: .zero,
             toleranceAfter: .zero,
-            completionHandler: { _ in
-                self.configurePeriodicTimeObserver(self.realVideoPlayer!)
+            completionHandler: { [weak self] _ in
+                guard let self = self,
+                let realVideoPlayer = self.realVideoPlayer else { return }
+                self.configurePeriodicTimeObserver(realVideoPlayer)
             }
         )
     }

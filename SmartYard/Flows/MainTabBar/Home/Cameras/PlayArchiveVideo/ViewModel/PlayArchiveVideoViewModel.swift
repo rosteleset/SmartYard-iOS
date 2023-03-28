@@ -22,6 +22,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
     
     private let selectedStartEnd = BehaviorSubject<(Date, Date)?>(value: nil)
     private let selectedPeriod = BehaviorSubject<ArchiveVideoPreviewPeriod?>(value: nil)
+    private let selectedSpeed = BehaviorSubject<ArchiveVideoPlaybackSpeed>(value: .normal)
     
     init(
         apiWrapper: APIWrapper,
@@ -51,6 +52,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         let activityTracker = ActivityTracker()
+        let activityVideoTracker = ActivityTracker()
         
         input.backTrigger
             .drive(
@@ -72,6 +74,17 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] in
                     self?.selectedStartEnd.onNext(($0))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.speedTrigger
+            .distinctUntilChanged()
+            .drive(
+                onNext: { [weak self] in
+                    self?.selectedSpeed.onNext($0)
+                    // для перезапуска потока с новой скоростью, самое лёгкое решение - вызвать перемотку на 0 секунд.
+                    NotificationCenter.default.post(name: .videoPlayerSeek, object: 0)
                 }
             )
             .disposed(by: disposeBag)
@@ -165,39 +178,62 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        let videoData = selectedPeriod
+        let videoDataFromSelectedPeriod = selectedPeriod
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
-            .map { [weak self] period -> ([URL], VideoThumbnailConfiguration)? in
-                guard let self = self,
-                      let fallbackUrl = URL(string: self.camera.previewMP4URL) else {
-                    return nil
+            .flatMap { [weak self] period -> Driver<([URL], VideoThumbnailConfiguration?)?> in
+                guard let self = self else {
+                        return .just(nil)
                 }
-                
-                // передаём массив компонетов URL для всех фрагментов
-                let videoUrl = period.videoUrlComponentsArray.map { videoUrlComps -> URL in
-                    let url = URL(string: self.camera.archiveURL(urlComponents: videoUrlComps))
-                    return url!
-                }
-                
-                let thumbnailConfig = VideoThumbnailConfiguration(
-                    camera: self.camera,
-                    period: period,
-                    fallbackUrl: fallbackUrl
-                )
-                
-                return (videoUrl, thumbnailConfig)
+                return self.camera.dataModelForArchive(period: period)
+                    .map { $0.optional }
             }
+            .trackActivity(activityVideoTracker)
+            
+        let videoDataFromSeek = input.seekToTrigger
+            .withLatestFrom(selectedPeriod.asDriverOnErrorJustComplete()) { ($0, $1) }
+            .withLatestFrom(selectedSpeed.asDriverOnErrorJustComplete()) { ($0.0, $0.1, $1) }
+            .asDriver()
+            .flatMap { [weak self] newPos, period, speed -> Driver<([URL], VideoThumbnailConfiguration?)?> in
+                guard let self = self, let period = period else {
+                        return .just(nil)
+                }
+                
+                let observable = Single<String>.create { single in
+                    self.camera.getArchiveVideo(
+                        startDate: newPos,
+                        endDate: period.endDate,
+                        speed: speed.value
+                    ) { urlString in
+                        guard let urlString = urlString else {
+                            single(.failure(NSError.APIWrapperError.noDataError))
+                            return
+                        }
+                        single(.success(urlString))
+                    }
+                    
+                    return Disposables.create { return }
+                }
+                .map { urlString -> ([URL], VideoThumbnailConfiguration?)? in
+                    guard let url = URL(string: urlString) else {
+                        return ([], nil)
+                    }
+                    return ([url], nil)
+                }
+                return observable.asDriver(onErrorJustReturn: nil)
+            }.trackActivity(activityVideoTracker)
+        
+        let videoData = Driver.merge(videoDataFromSelectedPeriod, videoDataFromSeek)
         
         let screenshotURL = input.screenshotTrigger
             .debounce(.milliseconds(250))
             .distinctUntilChanged()
-            .map { [weak self] date -> URL? in
+            .map { [weak self] date -> (url: URL?, jpeg: Bool) in
                 guard let self = self else {
-                    return nil
+                    return (nil, false)
                 }
                
-                return URL(string: self.camera.previewMP4URL(date))
+                return (url: URL(string: self.camera.previewMP4URL(date)), jpeg: self.camera.serverType == .macroscop )
             }
         
         // определяем границы архива на сервере
@@ -259,7 +295,8 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             rangeBounds: .just(rangeBounds),
             videoData: videoData,
             screenshotURL: screenshotURL,
-            isLoading: activityTracker.asDriver()
+            isLoading: activityTracker.asDriver(),
+            isVideoLoading: activityVideoTracker.asDriver()
         )
     }
     
@@ -273,15 +310,18 @@ extension PlayArchiveVideoViewModel {
         let periodSelectedTrigger: Driver<ArchiveVideoPreviewPeriod?>
         let startEndSelectedTrigger: Driver<(Date, Date)>
         let screenshotTrigger: Driver<Date>
+        let seekToTrigger: Driver<Date>
+        let speedTrigger: Driver<ArchiveVideoPlaybackSpeed>
     }
     
     struct Output {
         let date: Driver<Date?>
         let periodConfiguration: Driver<[ArchiveVideoPreviewPeriod]>
         let rangeBounds: Driver<(lower: Date, upper: Date)?>
-        let videoData: Driver<([URL], VideoThumbnailConfiguration)?>
-        let screenshotURL: Driver<URL?>
+        let videoData: Driver<([URL], VideoThumbnailConfiguration?)?>
+        let screenshotURL: Driver<(url: URL?, jpeg: Bool)>
         let isLoading: Driver<Bool>
+        let isVideoLoading: Driver<Bool>
     }
     
 }

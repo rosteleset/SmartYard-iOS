@@ -71,7 +71,7 @@ extension APIWrapper {
         }
         
         switch camera.serverType {
-        case .nimble:
+        case .nimble, .macroscop:
             guard let accessToken = accessService.accessToken else {
                 return .error(NSError.APIWrapperError.accessTokenMissingError)
             }
@@ -87,7 +87,7 @@ extension APIWrapper {
                 }
                 .mapToOptional()
         default:
-            let request = StreamInfoRequest(cameraUrl: camera.video, from: 1525186456, token: camera.token)
+            let request = StreamInfoRequest(cameraUrl: camera.baseURLString, from: 1525186456, token: camera.token)
             
             return provider.rx
                 .request(.streamInfo(request: request))

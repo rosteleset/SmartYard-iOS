@@ -49,4 +49,6 @@ extension Notification.Name {
     static let updateEvent = Notification.Name("UpdateEvent")
     
     static let refreshVisibleWebVC = Notification.Name("RefreshVisibleWebVC")
+    
+    static let videoPlayerSeek = Notification.Name("VideoPlayerSeek")
 }

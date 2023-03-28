@@ -291,35 +291,10 @@ class OnlinePageViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func reloadCameraIfNeeded(selectedIndexPath: IndexPath) {
-        let camera = cameras[selectedIndexPath.row]
-        
-        print("Selected Camera #\(camera.cameraNumber)")
-        
-        guard camera.cameraNumber != selectedCameraNumber else {
-            return
-        }
-        
-        selectedCameraNumber = camera.cameraNumber
-        
-        delegate?.onlinePageViewController(self, didSelectCamera: camera)
-        
-        player?.replaceCurrentItem(with: nil)
-        
-        loadingAsset?.cancelLoading()
-        loadingAsset = nil
-        
-        let resultingString = camera.liveURL
-        
-        guard let url = URL(string: resultingString) else {
-            return
-        }
-        
+    fileprivate func startToPlay(_ url: URL) {
         let asset = AVAsset(url: url)
         
         loadingAsset = asset
-        
-        isVideoBeingLoaded.onNext(true)
         
         asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { [weak self, weak asset] in
             guard let asset = asset else {
@@ -365,6 +340,36 @@ class OnlinePageViewController: BaseViewController {
                 }
             }
         }
+    }
+    
+    private func reloadCameraIfNeeded(selectedIndexPath: IndexPath) {
+        let camera = cameras[selectedIndexPath.row]
+        
+        print("Selected Camera #\(camera.cameraNumber)")
+        
+        guard camera.cameraNumber != selectedCameraNumber else {
+            return
+        }
+        
+        selectedCameraNumber = camera.cameraNumber
+        
+        delegate?.onlinePageViewController(self, didSelectCamera: camera)
+        
+        player?.replaceCurrentItem(with: nil)
+        
+        loadingAsset?.cancelLoading()
+        loadingAsset = nil
+        
+        isVideoBeingLoaded.onNext(true)
+        
+        camera.updateURLAndExec { [weak self] urlString in
+            guard let self = self, let url = URL(string: urlString) else {
+                self?.isVideoBeingLoaded.onNext(false)
+                return
+            }
+            self.startToPlay(url)
+        }
+        
     }
     
 }

@@ -112,8 +112,12 @@ class FullscreenPlayerViewController: UIViewController {
         if offset == 0 {
             return
         }
-        
-        player.seek(offset)
+        if let item = player.currentItem,
+           item.duration.isIndefinite {
+            NotificationCenter.default.post(name: .videoPlayerSeek, object: offset)
+        } else {
+            player.seek(offset)
+        }
         
         let label = (offset > 0) ? UILabel(text: "+\(abs(offset)) сек") : UILabel(text: "-\(abs(offset)) сек")
         label.font = UIFont(name: "System", size: 16)

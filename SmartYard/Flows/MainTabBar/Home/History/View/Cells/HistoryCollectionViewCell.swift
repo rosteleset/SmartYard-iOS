@@ -12,12 +12,13 @@ import RxSwift
 import RxCocoa
 
 class HistoryCollectionViewCell: UICollectionViewCell {
-    private var camera: APICamMap?
+    private var camera: CameraObject? // APICamMap?
     private var itIsMe: Bool?
     private var event: APIPlog?
     
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
+    private var timeShift: Double = 0.0
     
     private var doubleTap: UITapGestureRecognizer!
     @IBOutlet private weak var scrollView: UIScrollView!
@@ -38,12 +39,12 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var actionsDescriptionLabel: UILabel!
     @IBOutlet private weak var questionMark: UIButton!
     
-    private var videoURL: String? {
+    /*private var videoURL: String? {
         guard let eventDate = event?.date else {
             return nil
         }
         return self.getVideoUrl(from: eventDate)
-    }
+    }*/
     
     private(set) var disposeBag = DisposeBag()
     
@@ -99,6 +100,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         }
         
         seekVideo(offsetSeconds: offset)
+        videoPlayerViewContainer.backgroundColor = .black
         let label = (offset > 0) ? UILabel(text: "+\(abs(offset)) сек") : UILabel(text: "-\(abs(offset)) сек")
         label.font = UIFont(name: "System", size: 16)
         label.font = label.font.bold
@@ -114,35 +116,47 @@ class HistoryCollectionViewCell: UICollectionViewCell {
             animations: {
                 label.alpha = 0
             },
-            completion: { _ in
+            completion: { [weak self] _ in
                 label.removeFromSuperview()
+                self?.videoPlayerViewContainer.backgroundColor = .clear
             }
         )
     }
     
-    func playVideo() {
-        // по умолчанию грузим 10 минутный интервал по 5 минут туда-сюда от события
-        guard let eventDate = event?.date,
-              let videoURL = self.getVideoUrl(from: eventDate.adding(.minute, value: -5), duration: 10 * 60),
-            let url = URL(string: videoURL) else {
+    func playVideo(eventDate: Date? = nil) {
+        if eventDate == nil { timeShift = 0 }
+        
+        guard let eventDate = eventDate ?? event?.date, let camera = self.camera else {
             return
-            
         }
         
-        player = AVPlayer(url: url)
-        player?.seek(to: CMTime(seconds: 5 * 60, preferredTimescale: 1))
+        let startDate = camera.seekable ? eventDate.adding(.minute, value: -5) : eventDate
+        let endDate = eventDate.adding(.minute, value: 5)
         
-        if playerLayer != nil {
-            playerLayer?.removeFromSuperlayer()
+        camera.getArchiveVideo(startDate: startDate, endDate: endDate, speed: 1.0) { [weak self] videoURL in
+            // по умолчанию грузим 10 минутный интервал по 5 минут туда-сюда от события
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self,
+                      let url = URL(string: videoURL) else {
+                    return
+                }
+                self.player = AVPlayer(url: url)
+                if camera.seekable {
+                    self.player?.seek(to: CMTime(seconds: 5 * 60, preferredTimescale: 1))
+                }
+                
+                if self.playerLayer != nil {
+                    self.playerLayer?.removeFromSuperlayer()
+                }
+                
+                self.playerLayer = AVPlayerLayer(player: self.player)
+                self.videoPlayerViewContainer.layer.addSublayer(self.playerLayer!)
+                self.playerLayer?.frame = self.videoPlayerViewContainer.frame
+                self.playerLayer?.backgroundColor = UIColor.clear.cgColor
+                
+                self.player?.play()
+            }
         }
-        
-        playerLayer = AVPlayerLayer(player: player)
-        videoPlayerViewContainer.layer.addSublayer(playerLayer!)
-        playerLayer?.frame = videoPlayerViewContainer.frame
-        playerLayer?.backgroundColor = UIColor.clear.cgColor
-        
-        player?.play()
-        
     }
     
     func stopVideo() {
@@ -155,34 +169,34 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     }
     
     func seekVideo(offsetSeconds: Int) {
-        guard let player = player else {
+        guard let player = player, let camera = self.camera, let event = self.event else {
             return
         }
         
         let seekTo = player.currentTime() + CMTime(seconds: Double(offsetSeconds), preferredTimescale: 1)
-        
-        if seekTo > CMTime.zero && seekTo < CMTime(seconds: 10 * 60, preferredTimescale: 1) {
-            player.seek(to: seekTo)
-            player.play()
+        if camera.seekable {
+            if seekTo > CMTime.zero && seekTo < CMTime(seconds: 10 * 60, preferredTimescale: 1) {
+                player.seek(to: seekTo)
+                player.play()
+            }
+        } else {
+            stopVideo()
+            timeShift += seekTo.seconds
+            playVideo(eventDate: event.date.addingTimeInterval(timeShift) )
         }
         
     }
     
-    fileprivate func getVideoUrl(from startDate: Date, duration: Int = 60) -> String? {
+    /*fileprivate func getVideoUrl(from startDate: Date, duration: Int = 60) -> String? {
         
         guard let camera = self.camera else {
             return nil
         }
         
         let endDate = startDate.adding(.second, value: duration)
-        let range = ArchiveVideoPreviewPeriod(startDate: startDate, endDate: endDate, ranges: [(startDate, endDate)])
         
-        guard let videoUrlComps = range.videoUrlComponents else {
-            return nil
-        }
- 
-        return camera.archiveURL(urlComponents: videoUrlComps)
-    }
+        return camera.archiveURL(startDate: startDate, endDate: endDate)
+    }*/
     
     func configure(
         value: APIPlog,
@@ -191,7 +205,13 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         token: String? = nil
     ) {
         self.event = value
-        self.camera = camera
+        
+        if let camera = camera {
+            self.camera = CameraObject(id: camera.id, url: camera.url, token: camera.token, serverType: camera.serverType)
+        } else {
+            self.camera = nil
+        }
+        
         callStatusView.isHidden = true
         descriptionLabel.isHidden = false
         descriptionLabel.text = ""

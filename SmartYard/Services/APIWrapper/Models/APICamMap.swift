@@ -27,24 +27,6 @@ struct APICamMap: Decodable {
         case serverType
     }
     
-    var liveURL: String {
-        switch self.serverType {
-        case .nimble:
-            return "\(url)/playlist.m3u8?wmsAuthSign=\(token)"
-        default:
-            return "\(url)/index.m3u8?token=\(token)"
-        }
-    }
-    
-    func archiveURL(urlComponents: String) -> String {
-        switch self.serverType {
-        case .nimble:
-            return "\(url)/playlist_dvr_range-\(urlComponents).m3u8?wmsAuthSign=\(token)"
-        default:
-            return "\(url)/index-\(urlComponents).m3u8?token=\(token)"
-        }
-    }
-    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         

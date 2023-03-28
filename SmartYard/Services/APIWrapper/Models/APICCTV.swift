@@ -58,6 +58,7 @@ struct APICCTV: Decodable {
 enum DVRServerType: String, Decodable, EmptyDataInitializable {
     case flussonic
     case nimble
+    case macroscop
     
     init () {
         self = .flussonic

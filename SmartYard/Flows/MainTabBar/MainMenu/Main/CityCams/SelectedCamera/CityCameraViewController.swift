@@ -475,22 +475,7 @@ class CityCameraViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func loadVideo() {
-        
-        player?.replaceCurrentItem(with: nil)
-        
-        loadingAsset?.cancelLoading()
-        loadingAsset = nil
-        guard let camera = camera else {
-            return
-        }
-        
-        let resultingString = camera.liveURL
-        
-        guard let url = URL(string: resultingString) else {
-            return
-        }
-        
+    fileprivate func startToPlay(_ url : URL) {
         let asset = AVAsset(url: url)
         
         loadingAsset = asset
@@ -540,6 +525,24 @@ class CityCameraViewController: BaseViewController {
                     self?.player?.play()
                 }
             }
+        }
+    }
+    
+    private func loadVideo() {
+        
+        player?.replaceCurrentItem(with: nil)
+        
+        loadingAsset?.cancelLoading()
+        loadingAsset = nil
+        guard let camera = camera else {
+            return
+        }
+        camera.updateURLAndExec { [weak self] urlString in
+            guard let self = self, let url = URL(string: urlString) else {
+                return
+            }
+            
+            self.startToPlay(url)
         }
     }
     
