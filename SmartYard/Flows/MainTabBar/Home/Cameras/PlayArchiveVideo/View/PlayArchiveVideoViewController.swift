@@ -316,7 +316,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             
         }
     }
-    
+    override func viewDidLayoutSubviews() {
+        realVideoPlayerLayer?.frame = realVideoContainer.bounds
+        super.viewDidLayoutSubviews()
+    }
     private func destroyPeriodicTimeObserver(_ player: AVQueuePlayer) {
         guard let observer = self.periodicTimeObserver else {
             return
@@ -336,10 +339,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         }
         
         realVideoPlayerLayer = AVPlayerLayer(player: player)
-        realVideoContainer.layer.insertSublayer(realVideoPlayerLayer!, at: 0)
         realVideoPlayerLayer?.frame = realVideoContainer.bounds
         realVideoPlayerLayer?.removeAllAnimations()
-         realVideoPlayerLayer?.backgroundColor = UIColor.black.cgColor
+        realVideoPlayerLayer?.backgroundColor = UIColor.black.cgColor
+        realVideoContainer.layer.insertSublayer(realVideoPlayerLayer!, at: 0)
         
         // MARK: Настройка лоадера
         

@@ -72,6 +72,11 @@ class OnlinePageViewController: BaseViewController {
         try? AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
+    override func viewDidLayoutSubviews() {
+        playerLayer?.frame = cameraContainer.bounds
+        super.viewDidLayoutSubviews()
+    }
+    
     func setCameras(_ cameras: [CameraObject], selectedCamera: CameraObject?) {
         self.cameras = cameras
         
