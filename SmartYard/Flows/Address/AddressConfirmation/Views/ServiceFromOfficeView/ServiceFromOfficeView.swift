@@ -93,8 +93,26 @@ class ServiceFromOfficeView: PMNibLinkableView {
         
         annotationManager.iconAllowOverlap = true
         annotationManager.annotations = officesPoints
-        let cameraOptions = CameraOptions(center: Constants.defaultMapCenterCoordinates, zoom: 8)
-        self.mapView.mapboxMap.setCamera(to: cameraOptions)
+        
+        let annotationCoordinates = officesPoints
+            .map { $0.point.coordinates }
+        
+        switch annotationCoordinates.withoutDuplicates().count {
+        case 1:
+            let camera = CameraOptions(center: annotationCoordinates.first!, zoom: 17)
+            self.mapView.mapboxMap.setCamera(to: camera)
+        case let count where count > 1:
+            let camera = self.mapView.mapboxMap.camera(
+                for: annotationCoordinates,
+                padding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
+                bearing: .none,
+                pitch: .none
+            )
+            self.mapView.mapboxMap.setCamera(to: camera)
+        default:
+            let camera = CameraOptions(center: Constants.defaultMapCenterCoordinates, zoom: 17)
+            self.mapView.mapboxMap.setCamera(to: camera)
+        }
     }
 }
 

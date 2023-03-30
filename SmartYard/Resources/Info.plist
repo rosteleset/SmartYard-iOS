@@ -32,6 +32,8 @@
 	<string>Доступ к списку контактов нужен для отображения имен и фотографий людей, на чьи номера выделен доступ к адресу</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Доступ к местоположению позволит отобразить Вашу позицию на карте</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Доступ к местоположению позволит отобразить Вашу позицию на карте</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Доступ к микрофону нужен для передачи звука во время звонка</string>
 	<key>NSUserActivityTypes</key>

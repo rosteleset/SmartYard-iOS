@@ -308,8 +308,8 @@ class AccessService {
         chatDomain = ""
         chatToken = ""
         showCityCams = false
-        phonePrefix = "7"
-        phonePattern = "(###) ###-##-##"
+        phonePrefix = Constants.defaultPhonePrefix
+        phonePattern = Constants.defaultPhonePattern
         
         NotificationCenter.default.post(name: .init("UserLoggedOut"), object: nil)
     }
