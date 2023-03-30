@@ -15,12 +15,12 @@ class SmartYardSegmentedControl: UIView {
     
     fileprivate let segmentControl: UISegmentedControl = {
         let control = UISegmentedControl()
-        control.backgroundColor = .white
+        control.backgroundColor = .clear
         control.tintColor = .white
         
         if #available(iOS 13.0, *) {
-            control.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 1)
-            control.selectedSegmentTintColor = UIColor(red: 255, green: 255, blue: 255, alpha: 1)
+            control.backgroundColor = .clear
+            control.selectedSegmentTintColor = .clear
             control.layer.borderWidth = 0
         }
         
@@ -115,6 +115,7 @@ class SmartYardSegmentedControl: UIView {
         )
         
         setupSegmentItems()
+        fixBackgroundSegmentControl(segmentControl)
     }
     
     private func configureSegmentControlAnchors() {
@@ -194,6 +195,19 @@ class SmartYardSegmentedControl: UIView {
         
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.layoutIfNeeded()
+        }
+    }
+    
+    func fixBackgroundSegmentControl( _ segmentControl: UISegmentedControl){
+        if #available(iOS 13.0, *) {
+            //just to be sure it is full loaded
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                for i in 0...(segmentControl.numberOfSegments-1)  {
+                    let backgroundSegmentView = segmentControl.subviews[i]
+                    //it is not enogh changing the background color. It has some kind of shadow layer
+                    backgroundSegmentView.isHidden = true
+                }
+            }
         }
     }
     
