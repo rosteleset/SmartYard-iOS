@@ -27,3 +27,9 @@ debug=0
 
 [video]
 display_filter_auto_rotate=0
+
+[video_codec_1]
+mime=H264
+rate=90000
+enabled=1
+recv_fmtp=profile-level-id=4D801F

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -191,7 +191,7 @@
                         <constraint firstItem="A0Q-DH-AGJ" firstAttribute="top" secondItem="s5A-wP-hVn" secondAttribute="bottom" id="Zik-ug-P0o"/>
                         <constraint firstItem="s5A-wP-hVn" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Dm2-Fm-tSQ" secondAttribute="top" constant="6" id="Znp-gf-Lqm"/>
                         <constraint firstItem="xj6-YY-9FM" firstAttribute="leading" secondItem="Dm2-Fm-tSQ" secondAttribute="leading" id="bXz-MZ-0MZ"/>
-                        <constraint firstAttribute="bottom" secondItem="tO8-Xk-JaM" secondAttribute="bottom" priority="500" constant="32" id="evb-hw-kxQ"/>
+                        <constraint firstAttribute="bottom" secondItem="tO8-Xk-JaM" secondAttribute="bottom" priority="500" constant="15" id="evb-hw-kxQ"/>
                         <constraint firstAttribute="trailing" secondItem="A0Q-DH-AGJ" secondAttribute="trailing" id="gRe-xY-pCk"/>
                         <constraint firstItem="6kr-2k-p2B" firstAttribute="leading" secondItem="Dm2-Fm-tSQ" secondAttribute="leading" id="iMc-gN-AU5"/>
                         <constraint firstItem="6kr-2k-p2B" firstAttribute="top" secondItem="YEc-j4-ljc" secondAttribute="bottom" priority="600" constant="27" id="jDo-gE-aKv"/>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -40,33 +42,33 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Azq-ld-lV1" userLabel="Background View">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jXu-5h-NLz" userLabel="Dark View">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Звонок в домофон" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EaG-bR-VV0">
-                    <rect key="frame" x="25" y="40" width="270" height="40.5"/>
+                    <rect key="frame" x="60" y="99" width="273" height="40.666666666666657"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="Тамбов, ул. Советская 20, кв. 52" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rh6-Xt-7AB">
-                    <rect key="frame" x="50.5" y="90.5" width="219.5" height="20.5"/>
+                    <rect key="frame" x="86.666666666666671" y="149.66666666666666" width="219.66666666666663" height="20.333333333333343"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o7y-sM-LFP">
-                    <rect key="frame" x="16" y="143" width="288" height="166.5"/>
+                    <rect key="frame" x="16" y="201.99999999999997" width="361" height="309.33333333333326"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="640" placeholderIntrinsicHeight="480" translatesAutoresizingMaskIntoConstraints="NO" id="ws9-YM-GBC">
-                            <rect key="frame" x="0.0" y="2.5" width="288" height="162"/>
+                            <rect key="frame" x="0.0" y="53.333333333333343" width="361" height="203.00000000000003"/>
                             <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="ws9-YM-GBC" secondAttribute="height" multiplier="1280:720" id="qZi-Zw-Jqz"/>
@@ -78,10 +80,10 @@
                             </userDefinedRuntimeAttributes>
                         </imageView>
                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="HGl-tO-Nut">
-                            <rect key="frame" x="125.5" y="65" width="37" height="37"/>
+                            <rect key="frame" x="162" y="136.33333333333331" width="37" height="37"/>
                         </activityIndicatorView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Wg-Q1-NS9" userLabel="Video Background Blur">
-                            <rect key="frame" x="0.0" y="2.5" width="288" height="162"/>
+                            <rect key="frame" x="0.0" y="53.333333333333343" width="361" height="203.00000000000003"/>
                             <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
@@ -90,7 +92,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qZy-mX-wC7">
-                            <rect key="frame" x="-496" y="-276.5" width="1280" height="720"/>
+                            <rect key="frame" x="-459.66666666666669" y="-205.33333333333334" width="1280.3333333333333" height="720"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="1280" id="ZJJ-nL-hxI"/>
@@ -103,7 +105,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0rq-fX-JWl">
-                            <rect key="frame" x="248" y="124.5" width="20" height="20"/>
+                            <rect key="frame" x="321" y="216.33333333333331" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="FjL-JM-bAU"/>
                                 <constraint firstAttribute="width" constant="20" id="dxy-o8-aJN"/>
@@ -132,20 +134,20 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kK5-Z2-k0l" userLabel="Button Container">
-                    <rect key="frame" x="0.0" y="341.5" width="320" height="176.5"/>
+                    <rect key="frame" x="0.0" y="543.33333333333337" width="393" height="224.66666666666663"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ap0-Gp-quv" userLabel="PreviewButton">
-                            <rect key="frame" x="48" y="0.0" width="48" height="76.5"/>
+                            <rect key="frame" x="47.999999999999993" y="0.0" width="72.333333333333314" height="100.33333333333333"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwT-mp-rJV">
-                                    <rect key="frame" x="0.0" y="0.0" width="48" height="48.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="72.333333333333329" height="72.333333333333329"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="rwT-mp-rJV" secondAttribute="height" multiplier="1:1" id="2xu-iq-buT"/>
                                     </constraints>
                                     <state key="normal" image="PreviewUnselectedIcon"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Глазок" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nl-Pt-61e">
-                                    <rect key="frame" x="0.5" y="56.5" width="47" height="20"/>
+                                    <rect key="frame" x="12.666666666666664" y="80.333333333333258" width="47" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="QLk-sV-E1x"/>
                                     </constraints>
@@ -165,17 +167,17 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k1Q-Rl-aYF" userLabel="CallButton">
-                            <rect key="frame" x="224" y="0.0" width="48" height="76.5"/>
+                            <rect key="frame" x="272.66666666666669" y="0.0" width="72.333333333333314" height="100.33333333333333"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CB9-LO-tIG">
-                                    <rect key="frame" x="0.0" y="0.0" width="48" height="48.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="72.333333333333329" height="72.333333333333329"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="CB9-LO-tIG" secondAttribute="height" multiplier="1:1" id="mja-jY-6Fv"/>
                                     </constraints>
                                     <state key="normal" image="CallUnselectedIcon"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ответить" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OFY-ve-MGk">
-                                    <rect key="frame" x="-9" y="56.5" width="66" height="20"/>
+                                    <rect key="frame" x="3.3333333333333144" y="80.333333333333258" width="66" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="liz-lU-JZu"/>
                                     </constraints>
@@ -195,17 +197,17 @@
                             </constraints>
                         </view>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cxn-Xc-Ftz" userLabel="SpeakerButton">
-                            <rect key="frame" x="224" y="0.0" width="48" height="76.5"/>
+                            <rect key="frame" x="272.66666666666669" y="0.0" width="72.333333333333314" height="100.33333333333333"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBl-dw-xcB">
-                                    <rect key="frame" x="0.0" y="0.0" width="48" height="48.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="72.333333333333329" height="72.333333333333329"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="lBl-dw-xcB" secondAttribute="height" multiplier="1:1" id="OCP-FB-L5p"/>
                                     </constraints>
                                     <state key="normal" image="CallUnselectedIcon"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Динамик" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I5j-fH-LRs">
-                                    <rect key="frame" x="-8" y="56.5" width="64" height="20"/>
+                                    <rect key="frame" x="4.3333333333333144" y="80.333333333333258" width="64" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="Ll5-cG-F7E"/>
                                     </constraints>
@@ -225,17 +227,17 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j0j-Hn-fUG" userLabel="IgnoreButton">
-                            <rect key="frame" x="48" y="100.5" width="48" height="76"/>
+                            <rect key="frame" x="47.999999999999993" y="124.33333333333326" width="72.333333333333314" height="100.33333333333331"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fcw-Zy-IEg">
-                                    <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="72.333333333333329" height="72.333333333333329"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="fcw-Zy-IEg" secondAttribute="height" multiplier="1:1" id="kGc-hv-CJj"/>
                                     </constraints>
                                     <state key="normal" image="LockIcon"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Игнорировать" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jj8-ob-kSL">
-                                    <rect key="frame" x="-26.5" y="56" width="101.5" height="20"/>
+                                    <rect key="frame" x="-14.666666666666664" y="80.333333333333371" width="101.66666666666666" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="EKs-lu-zuC"/>
                                     </constraints>
@@ -255,17 +257,17 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HE0-qo-dCf" userLabel="AlreadyOpenedButton">
-                            <rect key="frame" x="136" y="100.5" width="48" height="76"/>
+                            <rect key="frame" x="160.33333333333334" y="124.33333333333326" width="72.333333333333343" height="100.33333333333331"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="16Z-cc-ZJa">
-                                    <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="72.333333333333329" height="72.333333333333329"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="16Z-cc-ZJa" secondAttribute="height" multiplier="1:1" id="om5-UM-Wte"/>
                                     </constraints>
-                                    <state key="normal" image="UnlockIcon"/>
+                                    <state key="normal" image="UnlockedIcon"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Открыто" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qoh-Fa-xYP">
-                                    <rect key="frame" x="-6.5" y="56" width="61.5" height="20"/>
+                                    <rect key="frame" x="5.3333333333333108" y="80.333333333333371" width="61.666666666666657" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="Mh7-Cl-ZXA"/>
                                     </constraints>
@@ -285,17 +287,17 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lPP-Rf-bcR" userLabel="OpenButton">
-                            <rect key="frame" x="224" y="100.5" width="48" height="76"/>
+                            <rect key="frame" x="272.66666666666669" y="124.33333333333326" width="72.333333333333314" height="100.33333333333331"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EmL-iG-h79" customClass="LoadingButton" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="72.333333333333329" height="72.333333333333329"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="EmL-iG-h79" secondAttribute="height" multiplier="1:1" id="LCM-Aj-qbw"/>
                                     </constraints>
                                     <state key="normal" image="UnlockIcon"/>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Открыть" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T2d-Xs-GlG">
-                                    <rect key="frame" x="-6.5" y="56" width="61" height="20"/>
+                                    <rect key="frame" x="5.6666666666666288" y="80.333333333333371" width="61" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="5tk-QN-gqY"/>
                                     </constraints>
@@ -377,5 +379,6 @@
         <image name="MainBackground" width="375" height="812"/>
         <image name="PreviewUnselectedIcon" width="76" height="76"/>
         <image name="UnlockIcon" width="76" height="76"/>
+        <image name="UnlockedIcon" width="76" height="76"/>
     </resources>
 </document>
