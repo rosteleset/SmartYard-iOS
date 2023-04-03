@@ -100,6 +100,8 @@ class LinphoneService: CoreDelegate {
                     core.natPolicy = natPolicy
                 }
             
+                core.callkitEnabled = config.useCallKit
+                
                 try core.start()
                 
                 core.clearAllAuthInfo()

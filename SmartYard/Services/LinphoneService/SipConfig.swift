@@ -15,4 +15,5 @@ struct SipConfig {
     let password: String
     let transport: TransportType
     let stun: String?
+    let useCallKit: Bool
 }

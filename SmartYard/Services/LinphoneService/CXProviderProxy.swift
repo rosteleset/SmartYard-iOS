@@ -101,9 +101,10 @@ extension CXProviderProxy: CXProviderDelegate {
     }
 
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
-        delegate?.providerDidAnswerCall(provider)
-        
-        action.fulfill()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.125) { [weak self] in
+            self?.delegate?.providerDidAnswerCall(provider)
+            action.fulfill()
+        }
     }
 
     func provider(_ provider: CXProvider, timedOutPerforming action: CXAction) {

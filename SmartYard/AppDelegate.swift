@@ -191,7 +191,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         // MARK: Если пришел входящий звонок - переходим на экран входящего звонка, но не показываем пуш
         
-        if let callPayload = CallPayload(pushNotificationPayload: userInfo) {
+        if let callPayload = CallPayload(pushNotificationPayload: userInfo, useCallKit: false) {
             appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: false)
             completionHandler([])
             return
@@ -270,7 +270,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // MARK: Если нажали на уведомление о входящем звонке - процессим запрос
         
         if let callPayload = CallPayload(
-            pushNotificationPayload: userInfo
+            pushNotificationPayload: userInfo,
+            useCallKit: false
         ) {
             switch response.actionIdentifier {
             case UNNotificationDefaultActionIdentifier: // обычное нажатие на push
@@ -373,7 +374,7 @@ extension AppDelegate: PKPushRegistryDelegate {
         print("DEBUG / VOIP NOTIFICATIONS / Payload: \(payload.dictionaryPayload)")
         
         guard let data = payload.dictionaryPayload["data"] as? [AnyHashable: Any],
-            let callPayload = CallPayload(pushNotificationPayload: data) else {
+            let callPayload = CallPayload(pushNotificationPayload: data, useCallKit: true) else {
                 appCoordinator.reportInvalidCall(callKitCompletion: completion)
             completion()
             return
