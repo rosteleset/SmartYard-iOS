@@ -23,6 +23,7 @@ struct CallPayload {
     let stun: String?
     let callerId: String
     let hash: String?
+    let useCallKit: Bool
     
     var asPushNotificationPayload: [AnyHashable: Any] {
         var params = [
@@ -50,7 +51,8 @@ struct CallPayload {
             username: username,
             password: password,
             transport: transport,
-            stun: stun
+            stun: stun,
+            useCallKit: useCallKit
         )
     }
     
@@ -87,6 +89,7 @@ struct CallPayload {
         self.callerId = callerId
         self.stun = data["stun"] as? String
         self.hash = data["hash"] as? String
+        self.useCallKit = useCallKit
     }
     
 }

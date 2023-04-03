@@ -935,6 +935,7 @@ extension IncomingCallViewModel: CXProviderProxyDelegate {
     }
     
     func providerDidAnswerCall(_ provider: CXProvider) {
+        linphoneService.core?.configureAudioSession()
         answerCallProxySubject.onNext(())
         NotificationCenter.default.post(name: .answeredByCallKit, object: nil)
         
