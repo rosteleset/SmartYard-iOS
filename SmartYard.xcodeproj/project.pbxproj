@@ -120,6 +120,7 @@
 		3AC7CA7D271D7048007F35C7 /* AccountParams+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */; };
 		3AD968DC25E976C5000EEB4E /* SmartYardDropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */; };
 		3ADC76E129E09ABA00EDE4D7 /* TrassirService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC76E029E09ABA00EDE4D7 /* TrassirService.swift */; };
+		3ADC76E329E4364D00EDE4D7 /* MacroscopService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC76E229E4364D00EDE4D7 /* MacroscopService.swift */; };
 		3ADC7EB628B3CBDB00E0BD0F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3ADC7EB528B3CBDB00E0BD0F /* GoogleService-Info.plist */; };
 		3AE65A3C264DA3EB0093284C /* DeleteFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE65A3A264DA3EB0093284C /* DeleteFaceViewController.swift */; };
 		3AE65A43264DA4130093284C /* DeleteFaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AE65A3B264DA3EB0093284C /* DeleteFaceViewController.xib */; };
@@ -761,6 +762,7 @@
 		3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountParams+Extensions.swift"; sourceTree = "<group>"; };
 		3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardDropDownTextField.swift; sourceTree = "<group>"; };
 		3ADC76E029E09ABA00EDE4D7 /* TrassirService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrassirService.swift; sourceTree = "<group>"; };
+		3ADC76E229E4364D00EDE4D7 /* MacroscopService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroscopService.swift; sourceTree = "<group>"; };
 		3ADC7EB528B3CBDB00E0BD0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3AE65A3A264DA3EB0093284C /* DeleteFaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFaceViewController.swift; sourceTree = "<group>"; };
 		3AE65A3B264DA3EB0093284C /* DeleteFaceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeleteFaceViewController.xib; sourceTree = "<group>"; };
@@ -1636,6 +1638,7 @@
 			isa = PBXGroup;
 			children = (
 				3ADC76E029E09ABA00EDE4D7 /* TrassirService.swift */,
+				3ADC76E229E4364D00EDE4D7 /* MacroscopService.swift */,
 			);
 			path = DVRServices;
 			sourceTree = "<group>";
@@ -4826,6 +4829,7 @@
 				E92EFBAC242A22F2003AF7FE /* APIServiceModel.swift in Sources */,
 				846DC6C324B33DC600A11914 /* PaymentsViewController.swift in Sources */,
 				84CD304C24D4055600CC079E /* APIAppVersionCheckResult.swift in Sources */,
+				3ADC76E329E4364D00EDE4D7 /* MacroscopService.swift in Sources */,
 				3A25BA822891103A00D2401E /* GetOptionsRequest.swift in Sources */,
 				3A5E1BC2276B098500E2880D /* WebPopupController.swift in Sources */,
 				84A67060241FB6CC00BBA12B /* AddressAccessSkeletonView.swift in Sources */,

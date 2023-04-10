@@ -37,25 +37,7 @@ struct CameraObject: Equatable {
         case .nimble:
             return "\(baseURLString)/dvr_thumbnail.mp4?wmsAuthSign=\(token)"
         case .macroscop:
-            let resultingString =
-                "&withcontenttype=true&mode=realtime" +
-                "&resolutionx=480&resolutiony=270&streamtype=mainvideo"
-            
-            if var baseURL = URLComponents(string: baseURLString) {
-                baseURL.path = "/site"
-                baseURL.query = token.isEmpty ? baseURL.query : (baseURL.query ?? "") + "&\(token)"
-                baseURL.query = (baseURL.query ?? "") + resultingString
-                
-                guard let baseURL = baseURL.url else {
-                    return ""
-                }
-                
-                let url = baseURL.absoluteString
-                print(url)
-                return url
-            }
-            
-            return ""
+            return MacroscopService.getScreenshotURL(self)
         case .flussonic:
             return "\(baseURLString)/preview.mp4?token=\(token)"
         case .trassir:
@@ -82,37 +64,7 @@ struct CameraObject: Equatable {
             print(resultingString)
             return resultingString
         case .macroscop:
-            /* http://demo.macroscop.com/site?login=root&channelid=2016897c-8be5-4a80-b1a3-7f79a9ec729c
-             &withcontenttype=true&mode=archive&starttime=29.03.2016%2002:20:01&resolutionx=500
-             &resolutiony=500&streamtype=mainvideo
-            */
-        
-            let dateFormatter = DateFormatter()
-            
-            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-            dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
-            
-            let resultingString =
-                "&withcontenttype=true&mode=archive&starttime=" +
-                dateFormatter.string(from: date) +
-                "&resolutionx=480&resolutiony=270&streamtype=mainvideo"
-            
-            if var baseURL = URLComponents(string: baseURLString) {
-                baseURL.path = "/site"
-                baseURL.query = token.isEmpty ? baseURL.query : (baseURL.query ?? "") + "&\(token)"
-                baseURL.query = (baseURL.query ?? "") + resultingString
-                
-                guard let baseURL = baseURL.url else {
-                    return ""
-                }
-                
-                let url = baseURL.absoluteString
-                print(url)
-                return url
-            }
-            
-            return ""
-            
+            return MacroscopService.getScreenshotURL(self, date: date)
         case .flussonic:
             let dateFormatter = DateFormatter()
             
@@ -139,37 +91,7 @@ struct CameraObject: Equatable {
         // Update live url if needed
         switch serverType {
         case .macroscop:
-            let url = baseURLString + (token.isEmpty ? "" : "&\(token)") + parameters
-            guard
-                let request = URLRequest(urlString: url) else {
-                    print(url)
-                    return
-            }
-            print(baseURLString + parameters)
-            URLSession.shared.dataTask(with: request) { data, _, error in
-                guard let data = data,
-                      let resourceString = NSString(data: data, encoding: NSUTF8StringEncoding) as? String,
-                      let url = URL(string: baseURLString)
-                      
-                else {
-                    print(error?.localizedDescription ?? "")
-                    task("")
-                    return
-                }
-                if var baseURL = URLComponents(string: url.deletingAllPathComponents().absoluteURL.absoluteString) {
-                    baseURL.query = nil
-                    guard let baseURL = baseURL.url else {
-                        task("")
-                        return
-                    }
-                    
-                    let streamURL = baseURL.absoluteString + "hls/" + resourceString
-                    task(streamURL)
-                    print(streamURL)
-                }
-                
-            }
-            .resume()
+            MacroscopService.generateURL(self, parameters: parameters, task)
         case .trassir:
             TrassirService.updateSid(self) {
                 print(TrassirService.getSid(self) ?? "")
@@ -188,16 +110,7 @@ struct CameraObject: Equatable {
     func getArchiveVideo(startDate: Date, endDate: Date, speed: Float, _ task: @escaping (_ urlString: String? ) -> Void ) {
         switch serverType {
         case .macroscop:
-            let dateFormatter = DateFormatter()
-            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-            dateFormatter.dateFormat = "dd.MM.yyyy'%20'HH:mm:ss"
-            
-            let starttime = dateFormatter.string(from: startDate)
-            
-            let speedStr = speed < 1 ? String(format: "%.2f", speed) : String(format: "%.0f", speed)
-            let parameters = "&starttime=" + starttime + "&mode=archive&isForward=true&speed=\(speedStr)&sound=off"
-            
-            updateURLAndExec(parameters: parameters, task)
+            MacroscopService.generateURL(self, startDate: startDate, endDate: endDate, speed: speed, task)
         case .trassir:
             TrassirService.updateSid(self) {
                 print(TrassirService.getSid(self) ?? "")
