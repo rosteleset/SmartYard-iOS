@@ -25,10 +25,10 @@ struct CameraObject: Equatable {
         switch self.serverType {
         case .nimble:
             return "\(baseURLString)/playlist.m3u8?wmsAuthSign=\(token)"
-        case  .macroscop:
-            return "empty"
-        default:
+        case .flussonic:
             return "\(baseURLString)/index.m3u8?token=\(token)"
+        default:
+            return "empty"
         }
     }
     
@@ -56,18 +56,19 @@ struct CameraObject: Equatable {
             }
             
             return ""
-        default:
+        case .flussonic:
             return "\(baseURLString)/preview.mp4?token=\(token)"
         }
     }
     
+    /// отвечает за возможность перемотки стандартными средствами плеера. иначе - перезапрос потока.
     var seekable: Bool {
-        switch self.serverType {
-        case .macroscop:
-            return false
-        default:
-            return true
-        }
+        [.flussonic, .nimble].contains(serverType)
+    }
+    
+    /// отвечает за формат скриншотов
+    var jpegScreenshots: Bool {
+        ![.flussonic, .nimble].contains(serverType)
     }
     
     func previewMP4URL(_ date: Date) -> String {
@@ -110,7 +111,7 @@ struct CameraObject: Equatable {
             
             return ""
             
-        default:
+        case .flussonic:
             let dateFormatter = DateFormatter()
             
             dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
@@ -125,24 +126,24 @@ struct CameraObject: Equatable {
         }
     }
     
-    func updateURLAndExec(parameters: String = "", _ task: @escaping (_ urlString: String ) -> Void ) {
+    func updateURLAndExec(parameters: String = "", _ task: @escaping ( _ urlString: String ) -> Void ) {
         // Update live url if needed
-        if serverType == .macroscop {
+        switch serverType {
+        case .macroscop:
             let url = baseURLString + (token.isEmpty ? "" : "&\(token)") + parameters
             guard
-                //let parameters = parameters.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
                 let request = URLRequest(urlString: url) else {
                     print(url)
                     return
             }
             print(baseURLString + parameters)
-            URLSession.shared.dataTask(with: request) { data, response, error in
+            URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data,
                       let resourceString = NSString(data: data, encoding: NSUTF8StringEncoding) as? String,
                       let url = URL(string: baseURLString)
                       
                 else {
-                    print(error?.localizedDescription)
+                    print(error?.localizedDescription ?? "")
                     task("")
                     return
                 }
@@ -160,15 +161,15 @@ struct CameraObject: Equatable {
                 
             }
             .resume()
-            
-        } else {
+        default:
             print(liveURL)
             task(liveURL)
         }
     }
     
     func getArchiveVideo(startDate: Date, endDate: Date, speed: Float, _ task: @escaping (_ urlString: String? ) -> Void ) {
-        if serverType == .macroscop {
+        switch serverType {
+        case .macroscop:
             let dateFormatter = DateFormatter()
             dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
             dateFormatter.dateFormat = "dd.MM.yyyy'%20'HH:mm:ss"
@@ -179,8 +180,7 @@ struct CameraObject: Equatable {
             let parameters = "&starttime=" + starttime + "&mode=archive&isForward=true&speed=\(speedStr)&sound=off"
             
             updateURLAndExec(parameters: parameters, task)
-            
-        } else {
+        default:
             let urlString = archiveURL(startDate: startDate, endDate: endDate)
             print(urlString)
             task(urlString)

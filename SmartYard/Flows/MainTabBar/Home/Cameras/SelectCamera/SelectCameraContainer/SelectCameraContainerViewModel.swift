@@ -79,6 +79,7 @@ class SelectCameraContainerViewModel: BaseViewModel {
         
         selectedCamera
             .asDriver(onErrorJustReturn: nil)
+            .distinctUntilChanged()
             .do(
                 onNext: { [weak self] _ in
                     self?.rangesForCamera.onNext(nil)

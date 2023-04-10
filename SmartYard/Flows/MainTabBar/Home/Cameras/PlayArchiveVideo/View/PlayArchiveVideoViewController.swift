@@ -60,7 +60,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private var periodicTimeObserver: Any?
     
     /// Смещение от начала периода. Требуется только для потоков без разметки времени.
-    private var baseTimerShift: Double = 0;
+    private var baseTimerShift: Double = 0
+    
+    private var isInFullscreen = false
+    
     
     private var preferredPlaybackSpeedConfig: ArchiveVideoPlaybackSpeed = .normal {
         didSet {
@@ -374,6 +377,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     for constraint in self.sliderConstraints {
                         constraint.isActive = true
                     }
+                    self.isInFullscreen = false
                 }
             )
             .disposed(by: disposeBag)
@@ -429,6 +433,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         configurePeriodicTimeObserver(player)
         
         // MARK: Обработка прыжков по двойному тапу из полноэкранного режима и при смене скоростей
+        // (только для seekable==false потоков)
         NotificationCenter.default.rx
             .notification(.videoPlayerSeek)
             .asDriverOnErrorJustComplete()
@@ -481,6 +486,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     for constraint in self.sliderConstraints {
                         constraint.isActive = false
                     }
+                    self.isInFullscreen = true
                     self.present(fullscreenVc, animated: true)
                 }
             )
@@ -551,10 +557,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
-                    self?.videoLoadingAnimationView.isHidden = !isLoading
-                    
-                    isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
-                    
+                    if !(self?.isInFullscreen ?? false) {
+                        self?.videoLoadingAnimationView.isHidden = !isLoading
+                        isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
+                    }
                     guard !isLoading else {
                         return
                     }
@@ -762,13 +768,12 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                                 self.isVideoBeingLoaded.onNext(false)
                                 
                                 DispatchQueue.main.async {
-                                
                                     // MARK: Грузим thumbnails
                                     guard let thumbnailsConfig = thumbnailsConfig else {
                                         // если нет thumbnailsConfig, то значит надо было просто заменить видеопоток
                                         return
                                     }
-                                    self.baseTimerShift = 0;
+                                    self.baseTimerShift = 0
                                     
                                     self.progressSlider.resetThumbnailImages()
                                     self.progressSlider.setActivityIndicatorsHidden(false)
@@ -779,7 +784,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                                     let startDate = self.ranges.first?.startDate.timeIntervalSince1970
                                     let endDate = self.ranges.last?.endDate.timeIntervalSince1970
                                     
-                                    var rangesDuration = 3.0 * 60.0 * 60.0;
+                                    var rangesDuration = 3.0 * 60.0 * 60.0
                                     
                                     if let startDate = startDate, let endDate = endDate {
                                         rangesDuration = endDate - startDate
@@ -820,7 +825,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 
                 return (url, jpeg)
             }
-            .distinctUntilChanged {$0.url == $1.url}
+            .distinctUntilChanged { $0.url == $1.url }
             .drive(
                 onNext: { [weak self] args in
                     let (screenshotUrl, jpeg) = args
@@ -948,7 +953,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     preferredUrl: url,
                     fallbackUrl: config.fallbackUrl,
                     identifier: config.identifier,
-                    jpeg: config.camera.serverType == .macroscop
+                    jpeg: config.camera.jpegScreenshots
                 )
             }
     }
