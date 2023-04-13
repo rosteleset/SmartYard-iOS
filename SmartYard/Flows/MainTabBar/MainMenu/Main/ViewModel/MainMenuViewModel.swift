@@ -69,7 +69,7 @@ class MainMenuViewModel: BaseViewModel {
                 }
                 
                 return self.apiWrapper.getExtensionsList()
-                    .trackError(errorTracker)
+                    // .trackError(errorTracker)
                     .trackActivity(interactionBlockingRequestTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
@@ -82,7 +82,7 @@ class MainMenuViewModel: BaseViewModel {
                     return
                 }
                 
-                let optionalItems = extensions.map { ext-> MenuListItem in
+                let optionalItems = extensions.map { ext -> MenuListItem in
                     return MenuListItem.optional(
                         label: ext.caption,
                         icon: ext.icon,
