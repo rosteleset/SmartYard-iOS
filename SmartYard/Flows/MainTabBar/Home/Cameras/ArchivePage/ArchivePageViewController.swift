@@ -172,7 +172,7 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         let endOfDay = startOfDay.adding(.hour, value: 24)
         
         let matchingRange = availableRanges?.first { range in
-            (startOfDay <= range.endDate) && (range.startDate <= endOfDay)
+            (startOfDay < range.endDate) && (range.startDate < endOfDay)
         }
         
         myCustomCell.configure(
@@ -343,7 +343,7 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
         let endOfDay = startOfDay.adding(.hour, value: 24)
         
         let matchingRange = availableRanges.first { range in
-            (startOfDay <= range.endDate) && (range.startDate <= endOfDay)
+            (startOfDay < range.endDate) && (range.startDate < endOfDay)
         }
         
         return matchingRange != nil

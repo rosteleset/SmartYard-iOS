@@ -175,6 +175,17 @@ struct CameraObject: Equatable {
         }
     }
     
+    func requestRanges(for day: Date, ranges: [APIArchiveRange], completion: @escaping ([APIArchiveRange]) -> Void) {
+        
+        if serverType == .trassir {
+            TrassirService.getRanges(self, date: day) { ranges in
+                completion(ranges)
+            }
+        } else {
+            completion(ranges)
+        }
+    }
+    
     private func archiveURL(startDate: Date, endDate: Date) -> String {
         let startTimestamp = startDate.unixTimestamp.int
         let duration = endDate.timeIntervalSince(startDate).int

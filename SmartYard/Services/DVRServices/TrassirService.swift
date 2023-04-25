@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 /// Сервис-обёртка для формирования правильных запросов к API Trassir
+// swiftlint:disable:next type_body_length
 enum TrassirService {
     
     /// хранилище sid для камер
@@ -233,7 +234,7 @@ enum TrassirService {
         updateSid(camera) {
             getToken(camera, suffix: "&stream=archive_main") { token in
                 seekToLastFrame(camera, token: token) { token in
-                    var attemptCount = 5
+                    var attemptCount = 20
                     func attempt() {
                         getCalendar(camera) { json in
                             guard let array = json as? [[String: Any]],
@@ -307,6 +308,63 @@ enum TrassirService {
         .resume()
     }
     
+    //    Пример запроса шкалы времени архива:
+    //
+    //    GET https://server:port/archive_status?type=timeline&sid={sid}
+    //
+    //    sid - Идентификатор сессии
+    //
+    //    Корректный ответ от сервера:
+    //    [
+    //        {
+    //            "token": {token}, // Токен видео архива
+    //            "day_start": "2014-02-24",
+    //            "timeline": [
+    //                {
+    //                    "begin": "43090",
+    //                    "end": "43094"
+    //                }
+    // Время начала и конца фрагмента архива указывается в секундах от начала дня,
+    // в диапазоне от 0 до 86400.
+    //            ]
+    //        }
+    //    ]
+    static func getTimeline(_ camera: CameraObject, _ completion: @escaping (Any?) -> Void ) {
+        guard let sid = getSid(camera) else {
+            print("hasn't sid")
+            completion(nil)
+            return
+        }
+        guard var urlBase = URLComponents(string: camera.baseURLString) else {
+            print(camera.baseURLString)
+            completion(nil)
+            return
+        }
+        
+        urlBase.query? = "type=timeline&sid=\(sid)"
+        urlBase.path = "/archive_status"
+        guard let url = urlBase.url else {
+            print(urlBase)
+            completion(nil)
+            return
+        }
+        let request = URLRequest(url: url)
+        print(request.url?.absoluteString ?? "")
+        
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data,
+                  let json = try? JSONSerialization.jsonObject(with: data, options: [])
+            else {
+                print(error?.localizedDescription as Any)
+                completion(nil)
+                return
+            }
+            print(json)
+            completion(json)
+        }
+        .resume()
+    }
+    
     // TODO:
     // Запрос к серверу:
     // GET https://server:port/screenshot/{guid}?timestamp={timestamp}&sid={sid}
@@ -347,5 +405,45 @@ enum TrassirService {
         let result = request.url?.absoluteString ?? ""
         print(result)
         return result
+    }
+    
+    static func getRanges(_ camera: CameraObject, date: Date, _ completion: @escaping ([APIArchiveRange]) -> Void) {
+        updateSid(camera) {
+            getToken(camera, suffix: "&stream=archive_main") { token in
+                seekTo(camera, token: token, startDate: date) { token in
+                    var attemptCount = 20
+                    func attempt() {
+                        getTimeline(camera) { json in
+                            guard let array = json as? [[String: Any]],
+                                  let calendarObj = array.first(where: { $0["token"] as? String == token }),
+                                  let timeline = calendarObj["timeline"] as? [[String: String]],
+                                  !timeline.isEmpty else {
+                                if attemptCount > 0 {
+                                    attemptCount -= 1
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        attempt()
+                                    }
+                                    return
+                                } else {
+                                    return
+                                }
+                            }
+                            let ranges = timeline.map { day -> APIArchiveRange in
+                                let begin = Int(day["begin"] ?? "0") ?? 0
+                                let end = Int(day["end"] ?? "0") ?? 0
+                                
+                                let from = date.adding(.second, value: begin).timeIntervalSince1970.int
+                                let duration = date.adding(.second, value: end).timeIntervalSince1970.int - date.timeIntervalSince1970.int
+                                
+                                return APIArchiveRange( duration: duration, from: from )
+                            }
+                            completion(ranges)
+                            return
+                        }
+                    }
+                    attempt()
+                }
+            }
+        }
     }
 }
