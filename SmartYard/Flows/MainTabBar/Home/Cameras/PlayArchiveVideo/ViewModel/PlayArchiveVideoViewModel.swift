@@ -221,7 +221,8 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     return ([url], nil)
                 }
                 return observable.asDriver(onErrorJustReturn: nil)
-            }.trackActivity(activityVideoTracker)
+            }
+            .trackActivity(activityVideoTracker)
         
         let videoData = Driver.merge(videoDataFromSelectedPeriod, videoDataFromSeek)
         
@@ -233,7 +234,10 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     return (nil, false)
                 }
                
-                return (url: URL(string: self.camera.previewMP4URL(date)), jpeg: self.camera.serverType == .macroscop )
+                return (
+                    url: URL(string: self.camera.previewMP4URL(date)),
+                    jpeg: [.macroscop, .trassir].contains(self.camera.serverType)
+                )
             }
         
         // определяем границы архива на сервере

@@ -59,6 +59,7 @@ enum DVRServerType: String, Decodable, EmptyDataInitializable {
     case flussonic
     case nimble
     case macroscop
+    case trassir
     
     init () {
         self = .flussonic

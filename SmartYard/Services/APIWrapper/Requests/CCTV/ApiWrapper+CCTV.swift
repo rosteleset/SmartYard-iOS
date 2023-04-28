@@ -86,6 +86,8 @@ extension APIWrapper {
                     streamInfo.first?.ranges ?? []
                 }
                 .mapToOptional()
+        case .trassir:
+            return TrassirService.getRanges(camera)
         default:
             let request = StreamInfoRequest(cameraUrl: camera.baseURLString, from: 1525186456, token: camera.token)
             

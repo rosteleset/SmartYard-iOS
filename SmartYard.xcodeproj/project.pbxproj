@@ -119,6 +119,7 @@
 		3AC5C71626131D4A008D74DE /* HistoryLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC5C71526131D4A008D74DE /* HistoryLoadingTableViewCell.swift */; };
 		3AC7CA7D271D7048007F35C7 /* AccountParams+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */; };
 		3AD968DC25E976C5000EEB4E /* SmartYardDropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */; };
+		3ADC76E129E09ABA00EDE4D7 /* TrassirService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC76E029E09ABA00EDE4D7 /* TrassirService.swift */; };
 		3ADC7EB628B3CBDB00E0BD0F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3ADC7EB528B3CBDB00E0BD0F /* GoogleService-Info.plist */; };
 		3AE65A3C264DA3EB0093284C /* DeleteFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE65A3A264DA3EB0093284C /* DeleteFaceViewController.swift */; };
 		3AE65A43264DA4130093284C /* DeleteFaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AE65A3B264DA3EB0093284C /* DeleteFaceViewController.xib */; };
@@ -759,6 +760,7 @@
 		3AC5C71526131D4A008D74DE /* HistoryLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountParams+Extensions.swift"; sourceTree = "<group>"; };
 		3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardDropDownTextField.swift; sourceTree = "<group>"; };
+		3ADC76E029E09ABA00EDE4D7 /* TrassirService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrassirService.swift; sourceTree = "<group>"; };
 		3ADC7EB528B3CBDB00E0BD0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3AE65A3A264DA3EB0093284C /* DeleteFaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFaceViewController.swift; sourceTree = "<group>"; };
 		3AE65A3B264DA3EB0093284C /* DeleteFaceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeleteFaceViewController.xib; sourceTree = "<group>"; };
@@ -1628,6 +1630,14 @@
 				3AC5C6182608F0F2008D74DE /* HistoryViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3ADC76DF29E09A8500EDE4D7 /* DVRServices */ = {
+			isa = PBXGroup;
+			children = (
+				3ADC76E029E09ABA00EDE4D7 /* TrassirService.swift */,
+			);
+			path = DVRServices;
 			sourceTree = "<group>";
 		};
 		3AE65A4F264DAFA80093284C /* RemovePersonFace */ = {
@@ -2866,6 +2876,7 @@
 		84B9EC8923E0846400979C39 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				3ADC76DF29E09A8500EDE4D7 /* DVRServices */,
 				844AC39323E9776F0066006D /* AccessService */,
 				84AF095B24ADF9AE005CEECE /* AlertService */,
 				E92EFB4C242A22F2003AF7FE /* APIWrapper */,
@@ -4724,6 +4735,7 @@
 				E9C0E813247282DE001CE018 /* OnboardingViewController.swift in Sources */,
 				E92EFBE2242A22F2003AF7FE /* EmptyDataInitializable.swift in Sources */,
 				8496396324851B7E0086B6E9 /* AllCCTVRequest.swift in Sources */,
+				3ADC76E129E09ABA00EDE4D7 /* TrassirService.swift in Sources */,
 				E92EFBD3242A22F2003AF7FE /* AccessRequest.swift in Sources */,
 				8477217A2497C329003FCC24 /* OnlinePageViewController.swift in Sources */,
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,

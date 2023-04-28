@@ -58,6 +58,8 @@ struct CameraObject: Equatable {
             return ""
         case .flussonic:
             return "\(baseURLString)/preview.mp4?token=\(token)"
+        case .trassir:
+            return TrassirService.getScreenshotURL(self, date: Date())
         }
     }
     
@@ -123,6 +125,13 @@ struct CameraObject: Equatable {
                 "-preview.mp4" +
                 "?token=\(token)"
             return resultingString
+        case .trassir:
+            if TrassirService.getSid(self) != nil {
+                return TrassirService.getScreenshotURL(self, date: date)
+            } else {
+                print("Missing sid")
+            }
+            return ""
         }
     }
     
@@ -161,6 +170,15 @@ struct CameraObject: Equatable {
                 
             }
             .resume()
+        case .trassir:
+            TrassirService.updateSid(self) {
+                print(TrassirService.getSid(self) ?? "")
+                TrassirService.getToken(self, suffix: "&stream=main") { token in
+                    let urlString = TrassirService.generateURL(self, token: token)
+                    print(urlString)
+                    if !urlString.isEmpty { task(urlString) }
+                }
+            }
         default:
             print(liveURL)
             task(liveURL)
@@ -180,6 +198,20 @@ struct CameraObject: Equatable {
             let parameters = "&starttime=" + starttime + "&mode=archive&isForward=true&speed=\(speedStr)&sound=off"
             
             updateURLAndExec(parameters: parameters, task)
+        case .trassir:
+            TrassirService.updateSid(self) {
+                print(TrassirService.getSid(self) ?? "")
+                TrassirService.getToken(self, suffix: "&stream=archive_main") { token in
+                    TrassirService.playArchive(self, token: token, startDate: startDate, endDate: endDate) { token in
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
+                            let urlString = TrassirService.generateURL(self, token: token)
+                            print(urlString)
+                            if !urlString.isEmpty { task(urlString) }
+                        }
+                    }
+                }
+            }
+            
         default:
             let urlString = archiveURL(startDate: startDate, endDate: endDate)
             print(urlString)
@@ -198,7 +230,7 @@ struct CameraObject: Equatable {
             fallbackUrl: fallbackUrl
         )
         switch self.serverType {
-        case .macroscop:
+        case .macroscop, .trassir:
             guard let startDate = period.ranges.first?.startDate,
                   let endDate = period.ranges.last?.endDate else {
                 return .just(([], thumbnailConfig))

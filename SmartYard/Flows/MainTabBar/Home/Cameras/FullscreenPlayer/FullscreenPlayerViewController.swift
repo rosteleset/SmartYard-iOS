@@ -175,8 +175,8 @@ class FullscreenPlayerViewController: UIViewController {
         }
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         playerLayer?.frame = contentView.bounds
     }
 

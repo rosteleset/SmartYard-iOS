@@ -320,7 +320,9 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         }
     }
     override func viewDidLayoutSubviews() {
-        realVideoPlayerLayer?.frame = realVideoContainer.bounds
+        if !isInFullscreen {
+            realVideoPlayerLayer?.frame = realVideoContainer.bounds
+        }
         super.viewDidLayoutSubviews()
     }
     private func destroyPeriodicTimeObserver(_ player: AVQueuePlayer) {
