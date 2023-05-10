@@ -5,6 +5,7 @@
 //  Created by admin on 23/03/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import RxSwift
 import RxCocoa

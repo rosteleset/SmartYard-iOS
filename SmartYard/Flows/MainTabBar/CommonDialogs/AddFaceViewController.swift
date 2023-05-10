@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
+// swiftlint:disable function_body_length closure_body_length
 class AddFaceViewController: BaseViewController {
 
     @IBOutlet private weak var imageView: ScaledHeightImageView!

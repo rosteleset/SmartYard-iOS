@@ -42,6 +42,5 @@ struct APIExtensionListItem: Decodable {
             highlight = false
         }
         
-        
     }
 }

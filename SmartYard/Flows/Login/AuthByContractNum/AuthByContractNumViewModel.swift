@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 10.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import Foundation
 import RxCocoa
@@ -33,7 +34,6 @@ class AuthByContractNumViewModel: BaseViewModel {
         self.alertService = alertService
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()

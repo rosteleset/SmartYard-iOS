@@ -5,12 +5,13 @@
 //  Created by admin on 06/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length cyclomatic_complexity
+// swiftlint:disable closure_body_length file_length
 
 import RxSwift
 import RxCocoa
 import XCoordinator
 
-// swiftlint:disable:next type_body_length
 class SettingsViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
@@ -37,7 +38,6 @@ class SettingsViewModel: BaseViewModel {
         self.alertService = alertService
     }
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()
@@ -413,12 +413,10 @@ class SettingsViewModel: BaseViewModel {
         )
     }
     
-    // swiftlint:disable:next function_body_length
     private func createSections(
         data: [APISettingsAddress],
         expansionStateDict: [String: Bool]
     ) -> [SettingsSectionModel] {
-        // swiftlint:disable:next closure_body_length
         let mainSections: [SettingsSectionModel] = data.map { item in
             let isExpanded = expansionStateDict[item.uniqueId, default: false]
             

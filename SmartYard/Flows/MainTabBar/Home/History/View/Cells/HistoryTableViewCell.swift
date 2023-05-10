@@ -5,6 +5,7 @@
 //  Created by Александр Васильев on 23.03.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length cyclomatic_complexity
 
 import UIKit
 

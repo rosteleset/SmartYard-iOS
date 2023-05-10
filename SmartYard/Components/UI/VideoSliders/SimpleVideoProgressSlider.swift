@@ -9,8 +9,6 @@
 import UIKit
 import AVKit
 
-// swiftlint:disable all
-
 @objc protocol SimpleVideoProgressSliderDelegate: AnyObject {
     
     func indicatorDidChangePosition(
@@ -26,7 +24,7 @@ import AVKit
 
 class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     
-    weak var delegate: SimpleVideoProgressSliderDelegate? = nil
+    weak var delegate: SimpleVideoProgressSliderDelegate?
     
     private let progressTimeView = SimpleVideoTimeView(size: .zero)
     private let progressIndicator = SimpleVideoProgressIndicator()
@@ -38,7 +36,7 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     
     private var progressPercentage: CGFloat = 0         // Represented in percentage
     
-    public var isReceivingGesture: Bool = false
+    public var isReceivingGesture = false
     
     private var relativeStartDate: Date?
     private var referenceCalendar = Calendar.current
@@ -57,7 +55,7 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         super.init(coder: aDecoder)
     }
 
-    private func setup(){
+    private func setup() {
         backgroundColor = .clear
         
         layer.cornerRadius = 3
@@ -69,7 +67,7 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         // Setup Progress Indicator
 
         let progressDrag = UIPanGestureRecognizer(
-            target:self,
+            target: self,
             action: #selector(progressDragged(recognizer:))
         )
         
@@ -174,7 +172,7 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         let positionLimitEnd    = positionFromValue(value: 100)
 
         var position = positionFromValue(value: self.progressPercentage)
-        position = position + translation.x
+        position += translation.x
 
         if position < positionLimitStart {
             position = positionLimitStart
@@ -186,7 +184,7 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
 
         recognizer.setTranslation(CGPoint.zero, in: self)
 
-        progressIndicator.center = CGPoint(x: position , y: progressIndicator.center.y)
+        progressIndicator.center = CGPoint(x: position, y: progressIndicator.center.y)
 
         let percentage = valueFromPosition(position: progressIndicator.center.x)
 
@@ -311,9 +309,9 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
         let progressSeconds = negateConversionLosses(secondsFromValue(value: percentage))
         
         guard let relativeStartDate = relativeStartDate else {
-            let hours:Int = Int(progressSeconds.truncatingRemainder(dividingBy: 86400) / 3600)
-            let minutes:Int = Int(progressSeconds.truncatingRemainder(dividingBy: 3600) / 60)
-            let seconds:Int = Int(progressSeconds.truncatingRemainder(dividingBy: 60))
+            let hours = Int(progressSeconds.truncatingRemainder(dividingBy: 86400) / 3600)
+            let minutes = Int(progressSeconds.truncatingRemainder(dividingBy: 3600) / 60)
+            let seconds = Int(progressSeconds.truncatingRemainder(dividingBy: 60))
             
             if hours > 0 {
                 return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
@@ -352,5 +350,3 @@ class SimpleVideoProgressSlider: UIView, UIGestureRecognizerDelegate {
     }
     
 }
-
-// swiftlint:enable all

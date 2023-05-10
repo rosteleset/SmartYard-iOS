@@ -5,6 +5,7 @@
 //  Created by Александр Васильев on 06.01.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length closure_body_length
 
 import XCoordinator
 import RxSwift
@@ -33,7 +34,6 @@ class MainMenuViewModel: BaseViewModel {
         self.items = BehaviorSubject<[MenuListItem]>(value: defaultItems)
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()
@@ -93,7 +93,7 @@ class MainMenuViewModel: BaseViewModel {
                 
                 // TODO: Удалить городские камеры при их отсутствии
                 
-                let filteredItems = compiledItems.filter () {
+                let filteredItems = compiledItems.filter {
                     var itemShow = true
                     var camCount = 0
                     let activityTracker = ActivityTracker()
@@ -103,7 +103,7 @@ class MainMenuViewModel: BaseViewModel {
                             .trackActivity(activityTracker)
                             .asDriver(onErrorJustReturn: nil)
                             .ignoreNil()
-                            .map { response in
+                            .map { _ in
                                 camCount += 1
                             }
                             .drive(

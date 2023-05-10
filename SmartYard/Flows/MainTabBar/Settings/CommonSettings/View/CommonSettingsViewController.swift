@@ -5,6 +5,7 @@
 //  Created by admin on 14/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import UIKit
 import TouchAreaInsets
@@ -183,10 +184,10 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             collapsedBottomConstraint: collapsedCallsBottomConstraint,
             expandedBottomConstraint: expandedCallsBottomConstraint,
             headerArrowImageView: callsHeaderArrowImageView,
-            containerView: callsContainerView)
+            containerView: callsContainerView
+        )
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
         let input = CommonSettingsViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),

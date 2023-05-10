@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 06.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable line_length
 
 import UIKit
 import RxCocoa
@@ -23,9 +24,7 @@ class OutgoingCallViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private var sendCodeAgainGroupButtonConstraint: NSLayoutConstraint!
     
-    // swiftlint:disable all
     @IBOutlet weak var makeCallButton: BlueButton!
-    // swiftlint:enable all
 
     private let viewModel: OutgoingCallViewModel
     

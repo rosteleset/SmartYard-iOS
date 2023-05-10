@@ -5,6 +5,7 @@
 //  Created by admin on 19/03/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import RxCocoa
 import RxSwift
@@ -28,7 +29,6 @@ class QRCodeScanViewModel: BaseViewModel {
         self.delegate = delegate
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         // MARK: Если попытаться вернуть QR-код до того, как будет завершен транзишен, может произойти глич
         // Поэтому последовательность такая:

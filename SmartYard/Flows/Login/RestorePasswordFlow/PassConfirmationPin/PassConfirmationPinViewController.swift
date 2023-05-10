@@ -17,12 +17,10 @@ class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var titleMessageLabel: UILabel!
     @IBOutlet private weak var pinTextField: PinTextField!
     
-    // swiftlint:disable all
     @IBOutlet weak var sendCodeAgainButton: BlueButton!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var sendCodeAgainGroupView: UIView!
     @IBOutlet weak var sendCodeAgainMessageView: UIView!
-    // swiftlint:enable all
     
     @IBOutlet private weak var sendCodeAgainGroupViewBottomConstraint: NSLayoutConstraint!
     

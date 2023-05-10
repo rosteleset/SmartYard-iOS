@@ -5,6 +5,7 @@
 //  Created by admin on 06/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import RxSwift
 import RxCocoa
@@ -25,7 +26,6 @@ class PaymentsViewModel: BaseViewModel {
         self.router = router
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()

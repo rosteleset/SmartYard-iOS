@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 05.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import Foundation
 import RxSwift
@@ -23,7 +24,6 @@ class InputPhoneNumberViewModel: BaseViewModel {
         self.router = router
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         let tempPhoneSubject = BehaviorSubject<String?>(value: nil)
         let tempPhone = tempPhoneSubject.asDriver(onErrorJustReturn: nil)

@@ -29,7 +29,7 @@ class PaymentPopupController: BaseViewController {
     
     @IBOutlet private var animatedViewBottomOffset: NSLayoutConstraint!
     
-    @IBAction func cardButtonAction(sender: AnyObject) {
+    @IBAction private func cardButtonAction(sender: AnyObject) {
         if let button = sender as? BlueButton {
             button.isHidden = true
         }
@@ -65,9 +65,7 @@ class PaymentPopupController: BaseViewController {
         swipeDismissInteractor?.animatedViewBottomOffset = animatedViewBottomOffset.constant
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
-        
         
 //        let output = viewModel.transform(input: input)
 
@@ -379,7 +377,7 @@ extension PaymentPopupController: UIViewControllerTransitioningDelegate {
     
 }
 
-//extension PaymentPopupController: PKPaymentAuthorizationViewControllerDelegate {
+// extension PaymentPopupController: PKPaymentAuthorizationViewControllerDelegate {
 //
 //    func paymentAuthorizationViewController(
 //        _ controller: PKPaymentAuthorizationViewController,
@@ -393,4 +391,4 @@ extension PaymentPopupController: UIViewControllerTransitioningDelegate {
 //        controller.dismiss(animated: true, completion: nil)
 //    }
 //
-//}
+// }

@@ -5,6 +5,7 @@
 //  Created by admin on 23/03/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable line_length file_length
 
 import Foundation
 import RxSwift
@@ -320,7 +321,6 @@ extension APIWrapper {
         forceUpdateSettings = false
         
         let request = GetSettingsListRequest(accessToken: accessToken, forceRefresh: forceRefresh)
-        print(request)
         
         return provider.rx
             .request(.getSettingsList(request: request))

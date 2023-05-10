@@ -5,6 +5,7 @@
 //  Created by admin on 11/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length cyclomatic_complexity file_length
 
 import RxCocoa
 import RxSwift
@@ -51,7 +52,6 @@ class AddressSettingsViewModel: BaseViewModel {
         self.router = router
     }
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: Input) -> Output {
         errorTracker.asDriver()
             .catchAuthorizationError { [weak self] in

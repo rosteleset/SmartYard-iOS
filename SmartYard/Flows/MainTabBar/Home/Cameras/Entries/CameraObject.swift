@@ -9,6 +9,16 @@
 import Foundation
 import CoreLocation
 
+struct DoorObject: Equatable {
+    let domophoneId: String
+    let doorId: Int
+    let entrance: String
+    let type: String
+    let name: String
+    let blocked: String
+    let dst: String
+}
+
 struct CameraObject: Equatable {
     
     let id: Int
@@ -17,5 +27,6 @@ struct CameraObject: Equatable {
     let name: String
     let video: String
     let token: String
+    let doors: [DoorObject]
     
 }

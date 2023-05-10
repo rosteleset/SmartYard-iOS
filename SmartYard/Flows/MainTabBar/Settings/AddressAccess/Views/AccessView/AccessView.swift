@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 14.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import Foundation
 import RxSwift
@@ -53,7 +54,6 @@ class AccessView: PMNibLinkableView {
             .disposed(by: disposeBag)
     }
     
-    // swiftlint:disable:next function_body_length
     private func configureTableView() {
         tableView.register(nibWithCellClass: AllowedPersonCell.self)
         tableView.register(nibWithCellClass: NewPersonCell.self)

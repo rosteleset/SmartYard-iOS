@@ -5,6 +5,7 @@
 //  Created by Александр Васильев on 26.04.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length closure_body_length
 
 import UIKit
 

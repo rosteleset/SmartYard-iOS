@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,21 +11,25 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatwootViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
-                <outlet property="fakeNavBar" destination="3Wt-2h-bmE" id="jXV-Kj-Yla"/>
+                <outlet property="fakeNavBar" destination="3Wt-2h-bmE" id="5Z0-go-b2C"/>
                 <outlet property="view" destination="iN0-l3-epB" id="j8h-jf-zjj"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" id="9dc-As-WBF">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="9dc-As-WBF">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bmz-9D-D0H">
+                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                    <viewLayoutGuide key="safeArea" id="Rvf-wM-1GV"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wt-2h-bmE" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                     <viewLayoutGuide key="safeArea" id="Rh3-iH-UhH"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -36,9 +40,17 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="bmz-9D-D0H" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="8CM-Ug-UGP"/>
                 <constraint firstItem="3Wt-2h-bmE" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="AXY-3v-9EL"/>
+                <constraint firstItem="9dc-As-WBF" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="E1L-a8-Wf8"/>
                 <constraint firstItem="3Wt-2h-bmE" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Yfe-wx-WFF"/>
+                <constraint firstAttribute="bottom" secondItem="9dc-As-WBF" secondAttribute="bottom" id="Z7a-aK-iEK"/>
+                <constraint firstItem="9dc-As-WBF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="bFl-5S-Cos"/>
                 <constraint firstItem="3Wt-2h-bmE" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="dBz-fN-594"/>
+                <constraint firstItem="bmz-9D-D0H" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="qz9-xi-UPk"/>
+                <constraint firstItem="9dc-As-WBF" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="r1m-pV-u4o"/>
+                <constraint firstItem="bmz-9D-D0H" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="sIn-gG-cKw"/>
+                <constraint firstItem="bmz-9D-D0H" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="zMg-0s-d3E"/>
             </constraints>
             <point key="canvasLocation" x="-313.04347826086956" y="55.580357142857139"/>
         </view>

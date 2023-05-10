@@ -5,6 +5,7 @@
 //  Created by Александр Васильев on 24.04.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length cyclomatic_complexity line_length
 
 import UIKit
 import AVFoundation
@@ -282,13 +283,10 @@ class HistoryCollectionViewCell: UICollectionViewCell {
             
             if flags.contains("canDislike") || flags.contains("canDisLike") {
                 denyAccessButton.isHidden = false
-                // swiftlint:disable:next line_length
                 actionsDescriptionLabel.text = "При выборе «‎Чужой»‎ мы удалим ваше зарегистрированное лицо, на какое произошло ложное срабатывание наших алгоритмов.\nВсе лица, зарегистрированные в системе, можно найти в разделе Настройки адресов -> Управление доступом -> Вход по лицу без ключа."
             } else {
                 openAccessButton.isHidden = false
-                // swiftlint:disable:next line_length
                 actionsDescriptionLabel.text = "При выборе «‎Свой»‎ мы добавим фотографию из этого события, для дальнейшего распознавания пользователя по лицу.\nВсе лица, зарегистрированные в системе, можно найти в разделе Настройки адресов -> Управление доступом -> Вход по лицу без ключа."
-                
             }
             
         } else {

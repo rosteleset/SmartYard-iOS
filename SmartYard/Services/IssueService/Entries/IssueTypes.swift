@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 27.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable line_length
 
 import Foundation
 

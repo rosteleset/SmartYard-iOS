@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 23.03.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import Foundation
 import RxSwift
@@ -37,7 +38,6 @@ class PassConfirmationPinViewModel: BaseViewModel {
         self.contractNum = contractNum
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()

@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 10.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import UIKit
 import RxSwift
@@ -79,7 +80,6 @@ class InputAddressViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
         streetTextField.rx
             .controlEvent(.editingDidBegin)

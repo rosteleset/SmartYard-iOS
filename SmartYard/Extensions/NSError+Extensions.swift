@@ -80,6 +80,12 @@ extension NSError {
             userInfo: [NSLocalizedDescriptionKey: "Нет соединения"]
         )
         
+        static let noImageBase64Converted = NSError(
+            domain: domain,
+            code: 3102,
+            userInfo: [NSLocalizedDescriptionKey: "Изображение не может быть отправлено"]
+        )
+        
         static func codeIsNotSuccessful(_ code: Int) -> NSError {
             return NSError(
                 domain: domain,

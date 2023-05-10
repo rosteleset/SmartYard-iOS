@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 13.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import Foundation
 import RxCocoa
@@ -43,7 +44,6 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
         self.issueSubject = BehaviorSubject<APIIssueConnect>(value: issue)
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         errorTracker.asDriver()
             .catchAuthorizationError { [weak self] in

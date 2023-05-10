@@ -5,6 +5,7 @@
 //  Created by Александр Васильев on 15.04.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable line_length
 
 import Foundation
 import UIKit
@@ -21,7 +22,7 @@ extension HistoryViewController {
         self.present(controller, animated: true)
     }
     
-    public func showEventsFilterPopover(from sourceView: UIView, items: [String], onSelect:@escaping (String, Int) -> Void ) {
+    public func showEventsFilterPopover(from sourceView: UIView, items: [String], onSelect: @escaping (String, Int) -> Void ) {
         let controller = ArrayChoiceTableViewController(
             items,
             selectedRow: items.firstIndex(of: eventsFilter.value.name) ?? 0,

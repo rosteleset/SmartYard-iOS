@@ -5,6 +5,7 @@
 //  Created by admin on 30/01/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable closure_body_length
 
 import Moya
 
@@ -41,7 +42,10 @@ enum APITarget {
     case delivered(request: DeliveredRequest)
     case chatReaded(request: ChatReadedRequest)
 
-//    case chatwootinbox(request: ChatwootRequest)
+    case chatwootinbox(request: ChatwootGetMessagesRequest)
+    case chatwootsend(request: ChatwootSendMessageRequest)
+    case chatwootsendimage(request: ChatwootSendImageRequest)
+    case chatwootlist(request: ChatwootGetChatListRequest)
 
     case getListConnect(request: GetListConnectRequest)
     case createIssue(request: CreateIssueRequest)
@@ -128,7 +132,10 @@ extension APITarget: TargetType {
         case .delivered: return "inbox/delivered"
         case .chatReaded: return "inbox/chatReaded"
             
-//        case .chatwootinbox: return "inbox/message"
+        case .chatwootinbox: return "inbox/message"
+        case .chatwootsend: return "inbox/message"
+        case .chatwootsendimage: return "inbox/message"
+        case .chatwootlist: return "inbox/chat/all"
             
         case .getListConnect: return "issues/listConnect"
         case .createIssue: return "issues/create"
@@ -176,7 +183,6 @@ extension APITarget: TargetType {
             "Content-type": "application/json"
         ]
         
-        // swiftlint:disable:next closure_body_length
         let (authorization, forceRefresh): (String?, Bool) = {
             switch self {
             case .registerQR(let request): return (request.accessToken, false)
@@ -210,8 +216,11 @@ extension APITarget: TargetType {
             case .delivered(let request): return (request.accessToken, false)
             case .chatReaded(let request): return (request.accessToken, false)
                 
-//            case .chatwootinbox(let request): return (request.accessToken, false)
-                
+            case .chatwootinbox(let request): return (request.accessToken, false)
+            case .chatwootsend(let request): return (request.accessToken, false)
+            case .chatwootsendimage(let request): return (request.accessToken, false)
+            case .chatwootlist(let request): return (request.accessToken, false)
+
             case .getListConnect(let request): return (request.accessToken, request.forceRefresh)
             case .createIssue(let request): return (request.accessToken, false)
             case .actionIssue(let request): return (request.accessToken, false)
@@ -227,7 +236,7 @@ extension APITarget: TargetType {
                 
             case .payPrepare(let request): return (request.accessToken, false)
             case .payProcess(let request): return (request.accessToken, false)
-            case .sberbankRegister(let request): return (request.accessToken, false) //TODO
+            case .sberbankRegister(let request): return (request.accessToken, false) // TODO
                 
             case .getPersonFaces(let request): return (request.accessToken, request.forceRefresh)
             case .removePersonFace(let request): return (request.accessToken, false)
@@ -301,7 +310,10 @@ extension APITarget: TargetType {
         case .delivered(let request): return request.requestParameters
         case .chatReaded(let request): return request.requestParameters
             
-//        case .chatwootinbox(let request): return request.requestParameters
+        case .chatwootinbox(let request): return request.requestParameters
+        case .chatwootsend(let request): return request.requestParameters
+        case .chatwootsendimage(let request): return request.requestParameters
+        case .chatwootlist(let request): return request.requestParameters
 
         case .getListConnect(let request): return request.requestParameters
         case .createIssue(let request): return request.requestParameters

@@ -5,6 +5,7 @@
 //  Created by admin on 31/03/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import RxSwift
 import RxCocoa
@@ -40,7 +41,6 @@ class ChatViewModel: BaseViewModel {
         subscribeToChatNotifications()
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()

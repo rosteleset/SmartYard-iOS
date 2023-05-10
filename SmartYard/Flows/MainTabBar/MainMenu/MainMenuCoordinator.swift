@@ -5,6 +5,7 @@
 //  Created by admin on 06/02/2020.
 //  Copyright © 2020 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length cyclomatic_complexity
 
 import XCoordinator
 import SafariServices
@@ -86,7 +87,6 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
-    // swiftlint:disable:next function_body_length
     override func prepareTransition(for route: MainMenuRoute) -> NavigationTransition {
         switch route {
         case .main:
@@ -154,7 +154,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             alert.addAction(UIAlertAction(title: "Позвонить по телефону", style: .default, handler: callHandler))
             alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
             
-            alert.view.tintColor = UIColor.SmartYard.blue;
+            alert.view.tintColor = UIColor.SmartYard.blue
             
             self.viewController.present(alert, animated: true, completion: nil)
             return.none()

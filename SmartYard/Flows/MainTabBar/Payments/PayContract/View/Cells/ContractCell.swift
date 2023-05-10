@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 03.04.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable line_length
 
 import UIKit
 import RxSwift

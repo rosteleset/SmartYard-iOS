@@ -5,13 +5,14 @@
 //  Created by admin on 06/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length cyclomatic_complexity
+// swiftlint:disable closure_body_length line_length file_length
 
 import RxSwift
 import RxCocoa
 import XCoordinator
 import SmartYardSharedDataFramework
 
-// swiftlint:disable:next type_body_length
 class AddressesListViewModel: BaseViewModel {
     
     // MARK: Я в курсе, что это хреновая идея
@@ -59,7 +60,6 @@ class AddressesListViewModel: BaseViewModel {
     
     private let appVersionCheckResult = BehaviorSubject<APIAppVersionCheckResult?>(value: nil)
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: Input) -> Output {
         let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
             .asDriver(onErrorJustReturn: false)
@@ -118,7 +118,8 @@ class AddressesListViewModel: BaseViewModel {
             .registerForPushNotifications(
                 voipToken: accessService.prefersVoipForCalls ? accessService.voipToken : nil
             )
-            // приложение иногда запрашивает токен, когда он ещё неизвестен и показывает пользователю ошибку "Отсутствует FCM-токен"
+            // приложение иногда запрашивает токен, когда он ещё неизвестен
+            // и показывает пользователю ошибку "Отсутствует FCM-токен"
             // дабы не портить пользователю настроение я решил убрать отображение этой ошибки в интерфейсе.
             // .trackError(errorTracker)
             .asDriver(onErrorJustReturn: nil)
@@ -349,7 +350,7 @@ class AddressesListViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                // Донейтим системе сведения об откывании дверей.
+                // Донейтим системе сведения об открывании дверей.
                 let object = SmartYardSharedObject(
                     objectName: matchingDoor.name,
                     objectAddress: matchingAddress.address,
@@ -615,14 +616,12 @@ extension AddressesListViewModel {
         areSectionsExpanded.onNext(mutableDict)
     }
     
-    // swiftlint:disable:next function_body_length
     private func createSections(
         approvedAddressesData: GetAddressListResponseData,
         unapprovedAddressesData: GetListConnectResponseData,
         expansionStateDict: [String: Bool],
         objectAccessDict: [AddressesListDataItemIdentity: Bool]
     ) -> [AddressesListSectionModel] {
-        // swiftlint:disable:next closure_body_length
         var sectionModels = approvedAddressesData.map { address -> AddressesListSectionModel in
             let addressId = address.houseId
             let isSectionExpanded = expansionStateDict[addressId, default: false]

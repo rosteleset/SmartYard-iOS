@@ -5,6 +5,7 @@
 //  Created by admin on 06/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length line_length file_length
 
 import UIKit
 import RxSwift
@@ -52,7 +53,6 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         return children[safe: rootViewController.selectedIndex]
     }
     
-    // swiftlint:disable:next function_body_length
     init(
         accessService: AccessService,
         pushNotificationService: PushNotificationService,
@@ -208,10 +208,10 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         customTabBarController.delegate = customTabBarController
         
         let tabs = accessService.showPayments ?
-//            [homeRouter, notificationsRouter, chatwootRouter, paymentsRouter, menuRouter] as [Presentable] :
-//            [homeRouter, notificationsRouter, chatwootRouter, menuRouter] as [Presentable]
-        [homeRouter, notificationsRouter, chatRouter, paymentsRouter, menuRouter] as [Presentable] :
-        [homeRouter, notificationsRouter, chatRouter, menuRouter] as [Presentable]
+            [homeRouter, notificationsRouter, chatwootRouter, paymentsRouter, menuRouter] as [Presentable] :
+            [homeRouter, notificationsRouter, chatwootRouter, menuRouter] as [Presentable]
+//        [homeRouter, notificationsRouter, chatRouter, paymentsRouter, menuRouter] as [Presentable] :
+//        [homeRouter, notificationsRouter, chatRouter, menuRouter] as [Presentable]
 
         super.init(
             rootViewController: customTabBarController,
@@ -225,7 +225,8 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         subscribeToBadgeUpdates()
         subscribeToAddAddressNotifications()
-        subscribeToChatNotifications()
+        subscribeToChatwootNotifications()
+//        subscribeToChatNotifications()
         subscribeToOptionsNotifications()
     }
     
@@ -306,7 +307,8 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .disposed(by: disposeBag)
         
         NotificationCenter.default.rx
-            .notification(.unreadChatMessagesAvailable)
+            .notification(.unreadChatwootMessagesAvailable)
+//            .notification(.unreadChatMessagesAvailable)
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] _ in
@@ -347,8 +349,20 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             .mapToVoid()
             .drive(
                 onNext: { [weak self] in
-//                    self?.trigger(.chatwoot)
                     self?.trigger(.chat)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func subscribeToChatwootNotifications() {
+        NotificationCenter.default.rx
+            .notification(Notification.Name.chatwootRequested)
+            .asDriverOnErrorJustComplete()
+            .mapToVoid()
+            .drive(
+                onNext: { [weak self] in
+                    self?.trigger(.chatwoot)
                 }
             )
             .disposed(by: disposeBag)

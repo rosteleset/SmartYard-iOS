@@ -383,9 +383,9 @@
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
 		85E437EBD8028F17EA854687 /* Pods_SmartYard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3264A75344A37C60971E215B /* Pods_SmartYard.framework */; };
-		C015E51A29CBF16E0002C959 /* ChatwootPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E51929CBF16E0002C959 /* ChatwootPreviewController.swift */; };
-		C015E51C29CC01EB0002C959 /* ChatwootPreviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C015E51B29CC01EA0002C959 /* ChatwootPreviewController.xib */; };
-		C015E52229CC46DA0002C959 /* ChatwootPreviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E52129CC46DA0002C959 /* ChatwootPreviewModel.swift */; };
+		C015E51A29CBF16E0002C959 /* ChatwootSelectChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E51929CBF16E0002C959 /* ChatwootSelectChatController.swift */; };
+		C015E51C29CC01EB0002C959 /* ChatwootSelectChatController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C015E51B29CC01EA0002C959 /* ChatwootSelectChatController.xib */; };
+		C015E52229CC46DA0002C959 /* ChatwootSelectChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E52129CC46DA0002C959 /* ChatwootSelectChatModel.swift */; };
 		C015E52629CC4AF50002C959 /* ChatwootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C015E52429CC4AF50002C959 /* ChatwootView.xib */; };
 		C015E52729CC4AF50002C959 /* ChatwootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015E52529CC4AF50002C959 /* ChatwootView.swift */; };
 		C0560D1B29C0315600672C6B /* SberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0560D1A29C0315600672C6B /* SberViewController.xib */; };
@@ -395,9 +395,35 @@
 		C0560D2C29C8497900672C6B /* ChatwootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0560D2B29C8497900672C6B /* ChatwootCoordinator.swift */; };
 		C0560D3129C8500000672C6B /* ChatwootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0560D3029C8500000672C6B /* ChatwootViewModel.swift */; };
 		C0560D3329C8501600672C6B /* ChatwootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0560D3229C8501600672C6B /* ChatwootViewController.swift */; };
+		C09A392E29F662D900F7BA23 /* CameraLockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09A392D29F662D900F7BA23 /* CameraLockButton.swift */; };
+		C09A393129F677D900F7BA23 /* DoorsDataItemIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09A393029F677D900F7BA23 /* DoorsDataItemIdentity.swift */; };
+		C09A393329F6784F00F7BA23 /* DoorsDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09A393229F6784F00F7BA23 /* DoorsDataItem.swift */; };
+		C0A2D3E229E6980E0056C515 /* ChatwootSendImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A2D3E129E6980E0056C515 /* ChatwootSendImageRequest.swift */; };
+		C0A2D3E529E7E4080056C515 /* FullscreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A2D3E429E7E4080056C515 /* FullscreenImageViewController.swift */; };
+		C0A2D3E729E7E6C00056C515 /* FullscreenImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0A2D3E629E7E6BF0056C515 /* FullscreenImageViewController.xib */; };
+		C0A3240629D5A7A800EABD49 /* APIWrapper+Chatwoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3240529D5A7A800EABD49 /* APIWrapper+Chatwoot.swift */; };
+		C0A3240A29D5AA6A00EABD49 /* ChatwootGetMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3240929D5AA6A00EABD49 /* ChatwootGetMessagesRequest.swift */; };
+		C0A3240C29D5AA8200EABD49 /* ChatwootSendMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3240B29D5AA8200EABD49 /* ChatwootSendMessageRequest.swift */; };
+		C0A3240E29D6A10900EABD49 /* ChatwootGetMessagesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3240D29D6A10900EABD49 /* ChatwootGetMessagesResponseData.swift */; };
+		C0A3241029D6A1D400EABD49 /* APIChatwoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3240F29D6A1D400EABD49 /* APIChatwoot.swift */; };
+		C0A3241229D6A53100EABD49 /* APISender.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3241129D6A53100EABD49 /* APISender.swift */; };
+		C0A3241529DAA19600EABD49 /* ChatwootGetChatListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3241429DAA19500EABD49 /* ChatwootGetChatListRequest.swift */; };
+		C0A3241729DAA1FC00EABD49 /* ChatwootGetChatListResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3241629DAA1FC00EABD49 /* ChatwootGetChatListResponseData.swift */; };
+		C0A3241929DAA2A000EABD49 /* APIChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3241829DAA2A000EABD49 /* APIChat.swift */; };
+		C0A3241C29DAC08500EABD49 /* ChatListSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3241B29DAC08500EABD49 /* ChatListSkeletonView.swift */; };
+		C0A3241E29DAC0DE00EABD49 /* ChatListSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0A3241D29DAC0DE00EABD49 /* ChatListSkeletonView.xib */; };
+		C0A3242329DAC41800EABD49 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3242229DAC41800EABD49 /* ChatCell.swift */; };
+		C0A3242629DBF80A00EABD49 /* SenderDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3242529DBF80A00EABD49 /* SenderDataItem.swift */; };
+		C0A3242829DBFB2800EABD49 /* MessageDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3242729DBFB2800EABD49 /* MessageDataItem.swift */; };
+		C0A3242A29DD845000EABD49 /* ChatwootMessagesResponsedata.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3242929DD845000EABD49 /* ChatwootMessagesResponsedata.swift */; };
+		C0A3242C29DFCD4800EABD49 /* APIAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3242B29DFCD4800EABD49 /* APIAttachment.swift */; };
+		C0A3242E29DFDE9500EABD49 /* MediaDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3242D29DFDE9500EABD49 /* MediaDataItem.swift */; };
+		C0A3243029E0067200EABD49 /* AudioDataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A3242F29E0067200EABD49 /* AudioDataItem.swift */; };
 		C0AF145129AF162100DFAFA7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0AF145029AF162100DFAFA7 /* GoogleService-Info.plist */; };
 		C0B613A929CDB7B000539282 /* ChatwootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0B613A829CDB7B000539282 /* ChatwootViewController.xib */; };
 		C0B613AB29D16BC300539282 /* Calendar+Novokuznetsk.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B613AA29D16BC200539282 /* Calendar+Novokuznetsk.swift */; };
+		C0D487BC2A00BDC200C415C9 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D487BB2A00BDC200C415C9 /* WebSocketManager.swift */; };
+		C0D487BE2A00BE2E00C415C9 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D487BD2A00BE2E00C415C9 /* Observable.swift */; };
 		C673268E8E85CC222687D7E8 /* Pods_SmartYardWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B39F8B748C32EE679BAD55 /* Pods_SmartYardWidget.framework */; };
 		E9004C5F23FABF2200B59976 /* IntercomTemporaryAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9004C5D23FABF1C00B59976 /* IntercomTemporaryAccessView.xib */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
@@ -693,7 +719,6 @@
 		3A555B122700573400E70CB9 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		3A555B142700573400E70CB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A555B1B270058E700E70CB9 /* SYOpenDoorIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYOpenDoorIntentHandler.swift; sourceTree = "<group>"; };
-		3A555B2727007A7500E70CB9 /* SmartYardIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmartYardIntents.entitlements; sourceTree = "<group>"; };
 		3A5E1BC0276B092500E2880D /* WebPopupController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebPopupController.xib; sourceTree = "<group>"; };
 		3A5E1BC1276B098500E2880D /* WebPopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPopupController.swift; sourceTree = "<group>"; };
 		3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FullscreenPlayerViewController.xib; sourceTree = "<group>"; };
@@ -1032,9 +1057,9 @@
 		97B39F8B748C32EE679BAD55 /* Pods_SmartYardWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2A1A1EFE6F98E147D51B5C1 /* Pods-SmartYardWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.release.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.release.xcconfig"; sourceTree = "<group>"; };
 		B71FAE0EFA55AC44F72F14E5 /* Pods-SmartYardIntents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.release.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.release.xcconfig"; sourceTree = "<group>"; };
-		C015E51929CBF16E0002C959 /* ChatwootPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootPreviewController.swift; sourceTree = "<group>"; };
-		C015E51B29CC01EA0002C959 /* ChatwootPreviewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatwootPreviewController.xib; sourceTree = "<group>"; };
-		C015E52129CC46DA0002C959 /* ChatwootPreviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootPreviewModel.swift; sourceTree = "<group>"; };
+		C015E51929CBF16E0002C959 /* ChatwootSelectChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootSelectChatController.swift; sourceTree = "<group>"; };
+		C015E51B29CC01EA0002C959 /* ChatwootSelectChatController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatwootSelectChatController.xib; sourceTree = "<group>"; };
+		C015E52129CC46DA0002C959 /* ChatwootSelectChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootSelectChatModel.swift; sourceTree = "<group>"; };
 		C015E52429CC4AF50002C959 /* ChatwootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatwootView.xib; sourceTree = "<group>"; };
 		C015E52529CC4AF50002C959 /* ChatwootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatwootView.swift; sourceTree = "<group>"; };
 		C0560D1A29C0315600672C6B /* SberViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SberViewController.xib; sourceTree = "<group>"; };
@@ -1044,9 +1069,36 @@
 		C0560D2B29C8497900672C6B /* ChatwootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootCoordinator.swift; sourceTree = "<group>"; };
 		C0560D3029C8500000672C6B /* ChatwootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootViewModel.swift; sourceTree = "<group>"; };
 		C0560D3229C8501600672C6B /* ChatwootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootViewController.swift; sourceTree = "<group>"; };
+		C09A392D29F662D900F7BA23 /* CameraLockButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraLockButton.swift; sourceTree = "<group>"; };
+		C09A393029F677D900F7BA23 /* DoorsDataItemIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsDataItemIdentity.swift; sourceTree = "<group>"; };
+		C09A393229F6784F00F7BA23 /* DoorsDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorsDataItem.swift; sourceTree = "<group>"; };
+		C0A2D3E129E6980E0056C515 /* ChatwootSendImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootSendImageRequest.swift; sourceTree = "<group>"; };
+		C0A2D3E429E7E4080056C515 /* FullscreenImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenImageViewController.swift; sourceTree = "<group>"; };
+		C0A2D3E629E7E6BF0056C515 /* FullscreenImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FullscreenImageViewController.xib; sourceTree = "<group>"; };
+		C0A3240529D5A7A800EABD49 /* APIWrapper+Chatwoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIWrapper+Chatwoot.swift"; sourceTree = "<group>"; };
+		C0A3240929D5AA6A00EABD49 /* ChatwootGetMessagesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootGetMessagesRequest.swift; sourceTree = "<group>"; };
+		C0A3240B29D5AA8200EABD49 /* ChatwootSendMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootSendMessageRequest.swift; sourceTree = "<group>"; };
+		C0A3240D29D6A10900EABD49 /* ChatwootGetMessagesResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootGetMessagesResponseData.swift; sourceTree = "<group>"; };
+		C0A3240F29D6A1D400EABD49 /* APIChatwoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIChatwoot.swift; sourceTree = "<group>"; };
+		C0A3241129D6A53100EABD49 /* APISender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISender.swift; sourceTree = "<group>"; };
+		C0A3241429DAA19500EABD49 /* ChatwootGetChatListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootGetChatListRequest.swift; sourceTree = "<group>"; };
+		C0A3241629DAA1FC00EABD49 /* ChatwootGetChatListResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootGetChatListResponseData.swift; sourceTree = "<group>"; };
+		C0A3241829DAA2A000EABD49 /* APIChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIChat.swift; sourceTree = "<group>"; };
+		C0A3241B29DAC08500EABD49 /* ChatListSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListSkeletonView.swift; sourceTree = "<group>"; };
+		C0A3241D29DAC0DE00EABD49 /* ChatListSkeletonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatListSkeletonView.xib; path = SmartYard/Components/UI/Skeletons/AddressesListSkeletonView/ChatListSkeletonView.xib; sourceTree = SOURCE_ROOT; };
+		C0A3242229DAC41800EABD49 /* ChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatCell.swift; path = SmartYard/Flows/MainTabBar/Payments/PaymentAddressesList/View/Cells/ChatCell.swift; sourceTree = SOURCE_ROOT; };
+		C0A3242529DBF80A00EABD49 /* SenderDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderDataItem.swift; sourceTree = "<group>"; };
+		C0A3242729DBFB2800EABD49 /* MessageDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDataItem.swift; sourceTree = "<group>"; };
+		C0A3242929DD845000EABD49 /* ChatwootMessagesResponsedata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatwootMessagesResponsedata.swift; sourceTree = "<group>"; };
+		C0A3242B29DFCD4800EABD49 /* APIAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAttachment.swift; sourceTree = "<group>"; };
+		C0A3242D29DFDE9500EABD49 /* MediaDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDataItem.swift; sourceTree = "<group>"; };
+		C0A3242F29E0067200EABD49 /* AudioDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDataItem.swift; sourceTree = "<group>"; };
 		C0AF145029AF162100DFAFA7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C0B613A829CDB7B000539282 /* ChatwootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatwootViewController.xib; sourceTree = "<group>"; };
 		C0B613AA29D16BC200539282 /* Calendar+Novokuznetsk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Calendar+Novokuznetsk.swift"; sourceTree = "<group>"; };
+		C0D487B929FA835700C415C9 /* SmartYardIntents.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = SmartYardIntents.entitlements; path = ../../../../.Trash/SmartYardIntents.entitlements; sourceTree = "<group>"; };
+		C0D487BB2A00BDC200C415C9 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
+		C0D487BD2A00BE2E00C415C9 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		E9004C5D23FABF1C00B59976 /* IntercomTemporaryAccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntercomTemporaryAccessView.xib; sourceTree = "<group>"; };
 		E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntercomTemporaryAccessView.swift; sourceTree = "<group>"; };
 		E9004C6123FABF6800B59976 /* AccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccessView.xib; sourceTree = "<group>"; };
@@ -1402,7 +1454,7 @@
 		3A555B112700573400E70CB9 /* SmartYardIntents */ = {
 			isa = PBXGroup;
 			children = (
-				3A555B2727007A7500E70CB9 /* SmartYardIntents.entitlements */,
+				C0D487B929FA835700C415C9 /* SmartYardIntents.entitlements */,
 				3A555B122700573400E70CB9 /* IntentHandler.swift */,
 				3A555B142700573400E70CB9 /* Info.plist */,
 				3A555B1B270058E700E70CB9 /* SYOpenDoorIntentHandler.swift */,
@@ -1936,6 +1988,7 @@
 				3AFBA73726375B8600C7DEB6 /* BetterSnappingFlowLayout.swift */,
 				3AE65A47264DA4A00093284C /* ScaledHeightImageView.swift */,
 				3A200B0A27297EAC0022A0EC /* PeriodPicker.swift */,
+				C09A392D29F662D900F7BA23 /* CameraLockButton.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1979,8 +2032,8 @@
 		844AC3CB23EBFCCA0066006D /* Payments */ = {
 			isa = PBXGroup;
 			children = (
-				C0560D1529C0303A00672C6B /* PayView */,
 				844AC3EC23EBFF0E0066006D /* PaymentsCoordinator.swift */,
+				C0560D1529C0303A00672C6B /* PayView */,
 				846DC6B624B33DC600A11914 /* PayContract */,
 				846DC6AD24B33DC600A11914 /* PaymentAddressesList */,
 				846DC6A924B33DC600A11914 /* PaymentPopup */,
@@ -2333,6 +2386,7 @@
 		847CF7D3240689C400070007 /* Skeletons */ = {
 			isa = PBXGroup;
 			children = (
+				C0A3241A29DAC05B00EABD49 /* ChatListSkeletonView */,
 				845842D324223D550019635E /* AddressSettingsSkeletonView */,
 				84A6705E241FB6B200BBA12B /* AddressAccessSkeletonView */,
 				847CF7D424068B1900070007 /* AddressesListSkeletonView */,
@@ -2825,6 +2879,7 @@
 		84B9EC8823E0844E00979C39 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C0D487BA2A00BD9900C415C9 /* Socket */,
 				84950CF823E431BD00F3C550 /* Animations */,
 				84950CF723E431B700F3C550 /* Base Classes */,
 				844AC3BF23EB17000066006D /* UI */,
@@ -3022,6 +3077,7 @@
 		84F64922247402DB000C0028 /* Cameras */ = {
 			isa = PBXGroup;
 			children = (
+				C09A392F29F6758400F7BA23 /* Entries */,
 				847880E624AB3EAC008D9E33 /* FullscreenPlayer */,
 				8477216B2497C2BF003FCC24 /* ArchivePage */,
 				8477216A2497C2B3003FCC24 /* OnlinePage */,
@@ -3064,21 +3120,12 @@
 		84F6493F24740E8F000C0028 /* YardMap */ = {
 			isa = PBXGroup;
 			children = (
-				84F6494024740E8F000C0028 /* Entries */,
 				84F6494424740E8F000C0028 /* Views */,
 				84F6494224740E8F000C0028 /* YardMapViewController.swift */,
 				84F6494324740E8F000C0028 /* YardMapViewController.xib */,
 				84F6494624740E8F000C0028 /* YardMapViewModel.swift */,
 			);
 			path = YardMap;
-			sourceTree = "<group>";
-		};
-		84F6494024740E8F000C0028 /* Entries */ = {
-			isa = PBXGroup;
-			children = (
-				84F6494E247410DD000C0028 /* CameraObject.swift */,
-			);
-			path = Entries;
 			sourceTree = "<group>";
 		};
 		84F6494424740E8F000C0028 /* Views */ = {
@@ -3236,10 +3283,13 @@
 		C0560D2E29C84FAE00672C6B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C0A2D3E329E7E3C20056C515 /* FullscreenImage */,
+				C0A3242429DBF64A00EABD49 /* Entries */,
+				C0A3241F29DAC2C900EABD49 /* Cells */,
 				C015E52329CC4A960002C959 /* ChatwootView */,
-				C015E51B29CC01EA0002C959 /* ChatwootPreviewController.xib */,
+				C015E51B29CC01EA0002C959 /* ChatwootSelectChatController.xib */,
 				C0560D3229C8501600672C6B /* ChatwootViewController.swift */,
-				C015E51929CBF16E0002C959 /* ChatwootPreviewController.swift */,
+				C015E51929CBF16E0002C959 /* ChatwootSelectChatController.swift */,
 				C0B613A829CDB7B000539282 /* ChatwootViewController.xib */,
 			);
 			path = View;
@@ -3249,9 +3299,104 @@
 			isa = PBXGroup;
 			children = (
 				C0560D3029C8500000672C6B /* ChatwootViewModel.swift */,
-				C015E52129CC46DA0002C959 /* ChatwootPreviewModel.swift */,
+				C015E52129CC46DA0002C959 /* ChatwootSelectChatModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C09A392F29F6758400F7BA23 /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				84F6494E247410DD000C0028 /* CameraObject.swift */,
+				C09A393029F677D900F7BA23 /* DoorsDataItemIdentity.swift */,
+				C09A393229F6784F00F7BA23 /* DoorsDataItem.swift */,
+			);
+			path = Entries;
+			sourceTree = "<group>";
+		};
+		C0A2D3E329E7E3C20056C515 /* FullscreenImage */ = {
+			isa = PBXGroup;
+			children = (
+				C0A2D3E629E7E6BF0056C515 /* FullscreenImageViewController.xib */,
+				C0A2D3E429E7E4080056C515 /* FullscreenImageViewController.swift */,
+			);
+			path = FullscreenImage;
+			sourceTree = "<group>";
+		};
+		C0A3240429D5A75000EABD49 /* Chatwoot */ = {
+			isa = PBXGroup;
+			children = (
+				C0A3241329DAA17800EABD49 /* GetChatList */,
+				C0A3240829D5AA3F00EABD49 /* SendMessage */,
+				C0A3240729D5AA1900EABD49 /* GetMessages */,
+				C0A3240529D5A7A800EABD49 /* APIWrapper+Chatwoot.swift */,
+			);
+			path = Chatwoot;
+			sourceTree = "<group>";
+		};
+		C0A3240729D5AA1900EABD49 /* GetMessages */ = {
+			isa = PBXGroup;
+			children = (
+				C0A3240929D5AA6A00EABD49 /* ChatwootGetMessagesRequest.swift */,
+				C0A3240D29D6A10900EABD49 /* ChatwootGetMessagesResponseData.swift */,
+			);
+			path = GetMessages;
+			sourceTree = "<group>";
+		};
+		C0A3240829D5AA3F00EABD49 /* SendMessage */ = {
+			isa = PBXGroup;
+			children = (
+				C0A3240B29D5AA8200EABD49 /* ChatwootSendMessageRequest.swift */,
+				C0A2D3E129E6980E0056C515 /* ChatwootSendImageRequest.swift */,
+			);
+			path = SendMessage;
+			sourceTree = "<group>";
+		};
+		C0A3241329DAA17800EABD49 /* GetChatList */ = {
+			isa = PBXGroup;
+			children = (
+				C0A3241429DAA19500EABD49 /* ChatwootGetChatListRequest.swift */,
+				C0A3241629DAA1FC00EABD49 /* ChatwootGetChatListResponseData.swift */,
+				C0A3242929DD845000EABD49 /* ChatwootMessagesResponsedata.swift */,
+			);
+			path = GetChatList;
+			sourceTree = "<group>";
+		};
+		C0A3241A29DAC05B00EABD49 /* ChatListSkeletonView */ = {
+			isa = PBXGroup;
+			children = (
+				C0A3241D29DAC0DE00EABD49 /* ChatListSkeletonView.xib */,
+				C0A3241B29DAC08500EABD49 /* ChatListSkeletonView.swift */,
+			);
+			path = ChatListSkeletonView;
+			sourceTree = "<group>";
+		};
+		C0A3241F29DAC2C900EABD49 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C0A3242229DAC41800EABD49 /* ChatCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		C0A3242429DBF64A00EABD49 /* Entries */ = {
+			isa = PBXGroup;
+			children = (
+				C0A3242529DBF80A00EABD49 /* SenderDataItem.swift */,
+				C0A3242729DBFB2800EABD49 /* MessageDataItem.swift */,
+				C0A3242D29DFDE9500EABD49 /* MediaDataItem.swift */,
+				C0A3242F29E0067200EABD49 /* AudioDataItem.swift */,
+			);
+			path = Entries;
+			sourceTree = "<group>";
+		};
+		C0D487BA2A00BD9900C415C9 /* Socket */ = {
+			isa = PBXGroup;
+			children = (
+				C0D487BB2A00BDC200C415C9 /* WebSocketManager.swift */,
+				C0D487BD2A00BE2E00C415C9 /* Observable.swift */,
+			);
+			path = Socket;
 			sourceTree = "<group>";
 		};
 		E91724492410E27D00F2B810 /* SmartYardSearchTextField */ = {
@@ -3329,6 +3474,10 @@
 				3AEB886A27E0D01100B19925 /* APIExtensionListItem.swift */,
 				3AEB886C27E12C6600B19925 /* APIExtension.swift */,
 				3AEB887527E1FD7F00B19925 /* MenuListItem.swift */,
+				C0A3240F29D6A1D400EABD49 /* APIChatwoot.swift */,
+				C0A3241129D6A53100EABD49 /* APISender.swift */,
+				C0A3241829DAA2A000EABD49 /* APIChat.swift */,
+				C0A3242B29DFCD4800EABD49 /* APIAttachment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3347,6 +3496,7 @@
 		E92EFB61242A22F2003AF7FE /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				C0A3240429D5A75000EABD49 /* Chatwoot */,
 				3AEB886427E0CEBF00B19925 /* Extensions */,
 				E92EFB86242A22F2003AF7FE /* Address */,
 				8496395E24851B4D0086B6E9 /* CCTV */,
@@ -4337,6 +4487,7 @@
 				844AC3B823EB104E0066006D /* UserNameViewController.xib in Resources */,
 				3AEFB46B264C2C81000F37D0 /* AddFaceCell.xib in Resources */,
 				3AEFB484264D1ADF000F37D0 /* FaceViewController.xib in Resources */,
+				C0A2D3E729E7E6C00056C515 /* FullscreenImageViewController.xib in Resources */,
 				846DC6C924B33DC600A11914 /* ContractCell.xib in Resources */,
 				846DC6C424B33DC600A11914 /* PaymentsViewController.xib in Resources */,
 				E9A4D49123EC2A780070A591 /* PinTextField.xib in Resources */,
@@ -4388,7 +4539,7 @@
 				849FF08C24CEBFD900C234BC /* IncomingCallLandscapeViewController.xib in Resources */,
 				E9A1D78423F27AE500234B2A /* AddressConfirmationViewController.xib in Resources */,
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
-				C015E51C29CC01EB0002C959 /* ChatwootPreviewController.xib in Resources */,
+				C015E51C29CC01EB0002C959 /* ChatwootSelectChatController.xib in Resources */,
 				3A8B954325D9743D007CDD3C /* CityMapViewController.xib in Resources */,
 				E940581223F682EA00623746 /* AllowedPersonCell.xib in Resources */,
 				3AEFB47C264C346A000F37D0 /* FaceCell.xib in Resources */,
@@ -4424,6 +4575,7 @@
 				84B89A9923F2FA97009692B4 /* ServiceIsActivatedViewController.xib in Resources */,
 				848D1B8A23F29D6100D6E368 /* AddressSettingsViewController.xib in Resources */,
 				843C38EA242A6E490035BF80 /* QRCodeScanViewController.xib in Resources */,
+				C0A3241E29DAC0DE00EABD49 /* ChatListSkeletonView.xib in Resources */,
 				E9A4D4A523ED75D20070A591 /* AuthByContractNumViewController.xib in Resources */,
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
@@ -4672,6 +4824,7 @@
 				E92EFBAE242A22F2003AF7FE /* APIHouse.swift in Sources */,
 				847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */,
 				846DC6E124B33DEA00A11914 /* PayProcessResponseData.swift in Sources */,
+				C0A2D3E529E7E4080056C515 /* FullscreenImageViewController.swift in Sources */,
 				3AFBA7B9263984E000C7DEB6 /* AVPlayer+Extensions.swift in Sources */,
 				843C38E9242A6E490035BF80 /* QRCodeScanViewController.swift in Sources */,
 				84AADD262431FAA80056994A /* NotificationResponseData.swift in Sources */,
@@ -4700,13 +4853,16 @@
 				84CD304724D305F500CC079E /* IncomingCallScreenType.swift in Sources */,
 				3A3B8B9525A5CD2500BFB72E /* MainMenuCoordinator.swift in Sources */,
 				E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */,
+				C0A3240629D5A7A800EABD49 /* APIWrapper+Chatwoot.swift in Sources */,
 				E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */,
 				E92EFBAD242A22F2003AF7FE /* APIStreet.swift in Sources */,
 				84898A8723F14CB100E6B78E /* SettingsControlPanelCell.swift in Sources */,
 				E92EFBAB242A22F2003AF7FE /* APILocation.swift in Sources */,
 				E99A837E2434CBF1001CEE95 /* CommentIssueRequest.swift in Sources */,
+				C0A2D3E229E6980E0056C515 /* ChatwootSendImageRequest.swift in Sources */,
 				84CD304524D2CFDE00CC079E /* IncomingCallSoundOutputState.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
+				C0A3242329DAC41800EABD49 /* ChatCell.swift in Sources */,
 				3AEFB483264D1ADE000F37D0 /* FaceViewController.swift in Sources */,
 				3AEFB457264C0DAA000F37D0 /* APIFace.swift in Sources */,
 				E92EFBC2242A22F2003AF7FE /* GetHousesResponseData.swift in Sources */,
@@ -4731,6 +4887,7 @@
 				3AC5C6F42612654E008D74DE /* PlogDaysRequest.swift in Sources */,
 				3A99E25328AED3D300DA6BDA /* OutgoingCallViewModel.swift in Sources */,
 				E94B6C922408EF6B00FD9F65 /* MainUserInfo.swift in Sources */,
+				C0A3240A29D5AA6A00EABD49 /* ChatwootGetMessagesRequest.swift in Sources */,
 				844AC3ED23EBFF0E0066006D /* PaymentsCoordinator.swift in Sources */,
 				E92EFBD9242A22F2003AF7FE /* RegisterQRRequest.swift in Sources */,
 				844AC3BC23EB15ED0066006D /* UIFont+Extensions.swift in Sources */,
@@ -4758,6 +4915,7 @@
 				84963952247C25C50086B6E9 /* LogoutHelper.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
 				846DC6C024B33DC600A11914 /* PaymentPopupViewModel.swift in Sources */,
+				C09A393129F677D900F7BA23 /* DoorsDataItemIdentity.swift in Sources */,
 				3AD968DC25E976C5000EEB4E /* SmartYardDropDownTextField.swift in Sources */,
 				E92EFBE1242A22F2003AF7FE /* APITarget.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
@@ -4771,9 +4929,9 @@
 				E9C0E813247282DE001CE018 /* OnboardingViewController.swift in Sources */,
 				E92EFBE2242A22F2003AF7FE /* EmptyDataInitializable.swift in Sources */,
 				C0B613AB29D16BC300539282 /* Calendar+Novokuznetsk.swift in Sources */,
-				C015E51A29CBF16E0002C959 /* ChatwootPreviewController.swift in Sources */,
+				C015E51A29CBF16E0002C959 /* ChatwootSelectChatController.swift in Sources */,
 				8496396324851B7E0086B6E9 /* AllCCTVRequest.swift in Sources */,
-				C015E52229CC46DA0002C959 /* ChatwootPreviewModel.swift in Sources */,
+				C015E52229CC46DA0002C959 /* ChatwootSelectChatModel.swift in Sources */,
 				E92EFBD3242A22F2003AF7FE /* AccessRequest.swift in Sources */,
 				8477217A2497C329003FCC24 /* OnlinePageViewController.swift in Sources */,
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
@@ -4798,6 +4956,7 @@
 				843C38CE242A577C0035BF80 /* InboxResponseData.swift in Sources */,
 				843C38E8242A6E490035BF80 /* QRCodeScanViewModel.swift in Sources */,
 				3AEB885F27DF50AA00B19925 /* SberbankRegisterResponseData.swift in Sources */,
+				C0A3242629DBF80A00EABD49 /* SenderDataItem.swift in Sources */,
 				3A40A4C427672872004E53A7 /* PaymentsListAccount.swift in Sources */,
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				E94057F423F56BF800623746 /* IssueDeliveryType.swift in Sources */,
@@ -4812,17 +4971,20 @@
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				E92EFBDA242A22F2003AF7FE /* APIWrapper+Address.swift in Sources */,
 				3AEB886727E0CEFE00B19925 /* GetExtensionsListRequest.swift in Sources */,
+				C0A3242A29DD845000EABD49 /* ChatwootMessagesResponsedata.swift in Sources */,
 				84AADD20242E22640056994A /* EditNameViewController.swift in Sources */,
 				C0560D1F29C031B700672C6B /* SberViewController.swift in Sources */,
 				3A8B953025D96933007CDD3C /* OverviewCCTVRequest.swift in Sources */,
 				E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */,
 				84D29B9524B799B100CFBE6B /* StreamInfoRequest.swift in Sources */,
 				3A003CE625E0466D002F193B /* RequestRecordViewModel.swift in Sources */,
+				C09A393329F6784F00F7BA23 /* DoorsDataItem.swift in Sources */,
 				3A1BDEC626285DB60075410B /* HistoryHelpers.swift in Sources */,
 				3A99E25928AED41B00DA6BDA /* GetOptionsRequest.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				3AFBA73E26383A2F00C7DEB6 /* CamMapCCTVRequest.swift in Sources */,
 				E92EFBBF242A22F2003AF7FE /* GetServicesRequest.swift in Sources */,
+				C0A3242E29DFDE9500EABD49 /* MediaDataItem.swift in Sources */,
 				84F6494B24740E90000C0028 /* YardMapViewModel.swift in Sources */,
 				84F6493C247402DC000C0028 /* CustomDayCell.swift in Sources */,
 				E92EFBA7242A22F2003AF7FE /* APIWrapper.swift in Sources */,
@@ -4832,6 +4994,7 @@
 				84F6494F247410DE000C0028 /* CameraObject.swift in Sources */,
 				84F64936247402DC000C0028 /* SelectCameraContainerViewModel.swift in Sources */,
 				3A8B952A25D9336D007CDD3C /* CityCamsCoordinator.swift in Sources */,
+				C09A392E29F662D900F7BA23 /* CameraLockButton.swift in Sources */,
 				3AC5C71626131D4A008D74DE /* HistoryLoadingTableViewCell.swift in Sources */,
 				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
@@ -4845,7 +5008,9 @@
 				3A99E26428AED43A00DA6BDA /* RequestCodeRequest.swift in Sources */,
 				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
 				E92EFBBA242A22F2003AF7FE /* GetStreetsRequest.swift in Sources */,
+				C0A3241929DAA2A000EABD49 /* APIChat.swift in Sources */,
 				8496396B248667040086B6E9 /* PlayArchiveVideoViewModel.swift in Sources */,
+				C0A3241229D6A53100EABD49 /* APISender.swift in Sources */,
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				3A99E26328AED43A00DA6BDA /* RequestCodeResponseData.swift in Sources */,
 				E92EFBC8242A22F2003AF7FE /* AddMyPhoneRequest.swift in Sources */,
@@ -4854,6 +5019,8 @@
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
 				84F6494A24740E90000C0028 /* CamerasMapPointView.swift in Sources */,
 				846DC6C724B33DC600A11914 /* PayContractViewModel.swift in Sources */,
+				C0A3243029E0067200EABD49 /* AudioDataItem.swift in Sources */,
+				C0D487BC2A00BDC200C415C9 /* WebSocketManager.swift in Sources */,
 				3AEB887427E130D600B19925 /* GetExtensionRequest.swift in Sources */,
 				84D29B9624B799B100CFBE6B /* StreamInfoResponseData.swift in Sources */,
 				846DC6DC24B33DEA00A11914 /* SberbankPayProcessRequest.swift in Sources */,
@@ -4930,6 +5097,7 @@
 				3A1BDED326287E690075410B /* HistoryViewController+Extension.swift in Sources */,
 				3A8B951625D9312D007CDD3C /* CityCameraObject.swift in Sources */,
 				E940580723F680F000623746 /* AccessView.swift in Sources */,
+				C0A3241C29DAC08500EABD49 /* ChatListSkeletonView.swift in Sources */,
 				3AEB886D27E12C6600B19925 /* APIExtension.swift in Sources */,
 				84B9EC9423E0884400979C39 /* LinphoneDelegate.swift in Sources */,
 				3AE65A59264DB1C20093284C /* RemovePersonFaceRequest.swift in Sources */,
@@ -4937,6 +5105,7 @@
 				843C38DF242A57C40035BF80 /* NotificationsViewModel.swift in Sources */,
 				846DC6E624B33E1C00A11914 /* PickerPresentAnimator.swift in Sources */,
 				3A8B953825D96946007CDD3C /* OverviewCCTVResponseData.swift in Sources */,
+				C0A3242829DBFB2800EABD49 /* MessageDataItem.swift in Sources */,
 				84B9EC8C23E085AE00979C39 /* Observable+Extensions.swift in Sources */,
 				E92EFBBB242A22F2003AF7FE /* GetAddressRequest.swift in Sources */,
 				E92EFBD0242A22F2003AF7FE /* GetAddressListRequest.swift in Sources */,
@@ -4947,8 +5116,11 @@
 				3AEB887627E1FD7F00B19925 /* MenuListItem.swift in Sources */,
 				84AA8D7F23E30C32001B3B43 /* BaseViewModel.swift in Sources */,
 				84F64934247402DC000C0028 /* SelectCameraContainerViewController.swift in Sources */,
+				C0A3240E29D6A10900EABD49 /* ChatwootGetMessagesResponseData.swift in Sources */,
+				C0A3241529DAA19600EABD49 /* ChatwootGetChatListRequest.swift in Sources */,
 				84CC15CB23EC350100A1CB95 /* AddressesListDataItemIdentity.swift in Sources */,
 				844AC3DB23EBFE140066006D /* ChatViewController.swift in Sources */,
+				C0A3241029D6A1D400EABD49 /* APIChatwoot.swift in Sources */,
 				84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */,
 				3A1BDF39263444BD0075410B /* HistoryDetailViewController.swift in Sources */,
 				84854B5023FBD3E7001B44F2 /* AppState.swift in Sources */,
@@ -5026,6 +5198,7 @@
 				84D29BA124B79E6300CFBE6B /* CXProviderProxy.swift in Sources */,
 				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
 				3AC5C61B2608F18B008D74DE /* HistoryViewController.swift in Sources */,
+				C0A3241729DAA1FC00EABD49 /* ChatwootGetChatListResponseData.swift in Sources */,
 				843FB12224C1AE850060ACEC /* AddressesHeaderCell.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
 				3A1BDF492634459C0075410B /* HistoryCollectionViewCell.swift in Sources */,
@@ -5037,10 +5210,12 @@
 				844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */,
 				E92EFBCE242A22F2003AF7FE /* GetPaymentsListRequest.swift in Sources */,
 				E92EFBD8242A22F2003AF7FE /* GetSettingsListRequest.swift in Sources */,
+				C0D487BE2A00BE2E00C415C9 /* Observable.swift in Sources */,
 				84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */,
 				84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */,
 				846DC6C224B33DC600A11914 /* PaymentsViewModel.swift in Sources */,
 				3AEB886327DF510F00B19925 /* SberbankRegisterError.swift in Sources */,
+				C0A3242C29DFCD4800EABD49 /* APIAttachment.swift in Sources */,
 				3AEFB45F264C12F0000F37D0 /* FacesSettingsViewModel.swift in Sources */,
 				E92EFBBC242A22F2003AF7FE /* GetAddressResponseData.swift in Sources */,
 				E92EFBA8242A22F2003AF7FE /* APIPaymentsListAddress.swift in Sources */,
@@ -5063,6 +5238,7 @@
 				C0560D3329C8501600672C6B /* ChatwootViewController.swift in Sources */,
 				E92EFBC1242A22F2003AF7FE /* APIWrapper+Geo.swift in Sources */,
 				84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */,
+				C0A3240C29D5AA8200EABD49 /* ChatwootSendMessageRequest.swift in Sources */,
 				84854B5323FBFDD6001B44F2 /* PushNotificationService.swift in Sources */,
 				3AEB886927E0CF3400B19925 /* GetExtensionsListResponseData.swift in Sources */,
 				84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */,
@@ -5254,6 +5430,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L4KRQ3FWX6;
@@ -5277,6 +5454,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -5429,18 +5607,20 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23.03.28;
+				CURRENT_PROJECT_VERSION = 23.05.05;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = L4KRQ3FWX6;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Centra.Дом";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -5612,17 +5792,19 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23.03.28;
+				CURRENT_PROJECT_VERSION = 23.05.05;
 				DEVELOPMENT_TEAM = L4KRQ3FWX6;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Centra.Дом";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",

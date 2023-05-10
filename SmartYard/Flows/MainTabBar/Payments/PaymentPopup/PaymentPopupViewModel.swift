@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 14.05.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length line_length
 
 import Foundation
 import RxSwift
@@ -35,7 +36,6 @@ class PaymentPopupViewModel: BaseViewModel {
         self.router = router
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
 //        let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
@@ -76,7 +76,6 @@ class PaymentPopupViewModel: BaseViewModel {
 //                }
 //                return
 //                    self.apiWrapper.sberbankPayProcess(
-////                            merchant: "lanta", //TODO
 //                            merchant: "centra",
 //                            orderNumber: orderNumber,
 //                            paymentToken: uToken
@@ -115,7 +114,7 @@ class PaymentPopupViewModel: BaseViewModel {
 //                }
 //            )
 //            .disposed(by: disposeBag)
-        var routeState:Driver<Bool> = .just(true)
+        var routeState: Driver<Bool> = .just(true)
         
         let isAbleToProceed = Driver
             .combineLatest(

@@ -5,6 +5,7 @@
 //  Created by admin on 06/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length cyclomatic_complexity
 
 import XCoordinator
 import RxSwift
@@ -70,7 +71,6 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         subscribeToNewAddressNotifications()
     }
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     override func prepareTransition(for route: HomeRoute) -> NavigationTransition {
         switch route {
         case .main:
@@ -244,7 +244,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
                 router: weakRouter
             )
             
-            let onlineVc = OnlinePageViewController()
+            let onlineVc = OnlinePageViewController(apiWrapper: apiWrapper)
             onlineVc.loadViewIfNeeded()
             
             let archiveVc = ArchivePageViewController(apiWrapper: apiWrapper)

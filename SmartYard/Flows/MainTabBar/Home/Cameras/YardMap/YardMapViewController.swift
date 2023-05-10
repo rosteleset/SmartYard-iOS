@@ -46,7 +46,7 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
         )
         let options = MapInitOptions(
             cameraOptions: cameraOptions,
-            styleURI: StyleURI(url: URL(string: "mapbox://styles/mapbox/streets-v11")!)
+            styleURI: StyleURI(url: URL(string: "mapbox://styles/mapbox/streets-v12")!)
         )
         mapView = MapView(frame: containerView.bounds, mapInitOptions: options)
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +66,7 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
             let point = CamerasMapPointView()
             point.configure(cameraNumber: camera.cameraNumber) { [weak self] in
                 self?.cameraSelectedTrigger.onNext(camera.cameraNumber)
+//                self?.cameraSelectedTrigger.onNext(camera.cameraNumber)
             }
             let options = ViewAnnotationOptions(
                 geometry: Point(camera.position),

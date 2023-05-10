@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 10.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length cyclomatic_complexity file_length
 
 import Foundation
 import XCoordinator
@@ -47,7 +48,6 @@ class InputAddressViewModel: BaseViewModel {
         self.alertService = alertService
     }
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
         errorTracker.asDriver()
             .catchAuthorizationError { [weak self] in

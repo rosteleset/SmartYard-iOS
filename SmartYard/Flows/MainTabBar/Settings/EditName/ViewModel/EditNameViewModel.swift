@@ -5,6 +5,7 @@
 //  Created by admin on 27/03/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import RxSwift
 import RxCocoa
@@ -32,7 +33,6 @@ class EditNameViewModel: BaseViewModel {
         self.router = router
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()

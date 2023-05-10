@@ -29,6 +29,8 @@ class APIWrapper {
     var forceUpdateAddress = false
     var forceUpdatePayments = false
     var forceUpdateIssues = false
+    var forseUpdateChatwootChat = false
+    var forseUpdateChatwootList = false
     
     var isReachable: Bool {
         return reachability.isReachable

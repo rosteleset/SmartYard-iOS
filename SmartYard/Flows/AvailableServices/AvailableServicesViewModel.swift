@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 12.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import Foundation
 import RxSwift
@@ -48,7 +49,6 @@ class AvailableServicesViewModel: BaseViewModel {
         serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: serviceModels)
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         let сonnectSelectedServicesTrigger = PublishSubject<(String, [ServiceModel])>()
         let сonnectOnlyNonHousesServicesTrigger = PublishSubject<(String, [ServiceModel])>()

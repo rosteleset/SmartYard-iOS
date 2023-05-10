@@ -5,6 +5,7 @@
 //  Created by admin on 06/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length cyclomatic_complexity
 
 import XCoordinator
 import SafariServices
@@ -76,7 +77,7 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
                 router: weakRouter
             )
             
-            if items.count == 1 { //если выбор адреса из одного элемента, то пропускаем его
+            if items.count == 1 { // если выбор адреса из одного элемента, то пропускаем его
                 let vc = PayContractViewController(viewModel: vm, hideNavBar: true)
                 return .set([vc])
             } else {
@@ -97,7 +98,7 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             return .none()
     
         case let .paymentPopup(apiWrapper, clientId, recommendedSum, contractNumber):
-            print("CLIENTID",clientId)
+            print("CLIENTID", clientId)
             let vm = PaymentPopupViewModel(
                 apiWrapper: apiWrapper,
                 clientId: clientId,
@@ -182,7 +183,9 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
                     
                     if let urlString = userInfo["paymentsUrl"] as? String,
                        let url = URL(string: urlString) {
-                        guard self.apiWrapper.accessService.paymentsUrl != urlString else { return }
+                        guard self.apiWrapper.accessService.paymentsUrl != urlString else {
+                            return
+                        }
                         
                         self.apiWrapper.accessService.paymentsUrl = urlString
                         self.trigger(.webView(url: url))

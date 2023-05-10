@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 17.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import UIKit
 import RxSwift
@@ -15,13 +16,11 @@ import SHSPhoneComponent
 
 class NewAllowedPersonViewController: BaseViewController {
     
-    // swiftlint:disable all
     @IBOutlet weak var textField: SHSPhoneTextField!
     @IBOutlet weak var selectFromContactButton: UIButton!
     @IBOutlet weak var contactImageView: RoundedImageView!
     @IBOutlet weak var contactNameLabel: UILabel!
     @IBOutlet weak var addAccessButton: BlueButton!
-    // swiftlint:enable all
     
     @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var mainContainerBottomConstraint: NSLayoutConstraint!
@@ -67,7 +66,6 @@ class NewAllowedPersonViewController: BaseViewController {
         textField.formatter.prefix = prefix
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
         textField.rx
             .controlEvent(.editingChanged)

@@ -19,7 +19,8 @@ struct APICCTV: Decodable {
     let coordinate: CLLocationCoordinate2D
     let video: String
     let token: String
-    
+    let doors: [APIDoor]
+
     private enum CodingKeys: String, CodingKey {
         case houseId
         case id
@@ -28,6 +29,7 @@ struct APICCTV: Decodable {
         case lon
         case url
         case token
+        case doors
     }
     
     init(from decoder: Decoder) throws {
@@ -49,5 +51,8 @@ struct APICCTV: Decodable {
         
         video = try container.decode(String.self, forKey: .url)
         token = try container.decode(String.self, forKey: .token)
+        
+        doors = (try? container.decode([APIDoor].self, forKey: .doors)) ?? []
+        
     }
 }

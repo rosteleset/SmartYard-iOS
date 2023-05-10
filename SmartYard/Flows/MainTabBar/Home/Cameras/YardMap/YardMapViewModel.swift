@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 27.04.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import Foundation
 import XCoordinator
@@ -32,7 +33,6 @@ class YardMapViewModel: BaseViewModel {
         self.address = BehaviorSubject<String?>(value: address)
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()
@@ -91,7 +91,18 @@ class YardMapViewModel: BaseViewModel {
                         cameraNumber: offset + 1,
                         name: element.name,
                         video: element.video,
-                        token: element.token
+                        token: element.token,
+                        doors: element.doors.enumerated().map { _, delement in
+                                DoorObject(
+                                    domophoneId: delement.domophoneId,
+                                    doorId: delement.doorId,
+                                    entrance: delement.entrance ?? "",
+                                    type: delement.type.iconImageName,
+                                    name: delement.name,
+                                    blocked: delement.blocked ?? "",
+                                    dst: delement.dst ?? ""
+                                )
+                        }
                     )
                 }
             }

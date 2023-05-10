@@ -5,13 +5,15 @@
 //  Created by admin on 30.06.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length cyclomatic_complexity closure_body_length file_length
 
 import UIKit
 import AVKit
 import RxSwift
 import RxCocoa
+import JGProgressHUD
 
-class FullscreenPlayerViewController: UIViewController {
+class FullscreenPlayerViewController: UIViewController, LoaderPresentable {
     
     enum PlayedVideoType {
         case online
@@ -20,26 +22,58 @@ class FullscreenPlayerViewController: UIViewController {
     
     private let playedVideoType: PlayedVideoType
     private let preferredPlaybackRate: Float
+    private let doors: [DoorObject]
+    private let position: CGRect?
 
     private weak var playerLayer: AVPlayerLayer?
     private var progressSlider: SimpleVideoProgressSlider?
     private var sliderConstraints: [NSLayoutConstraint] = []
-    
+
+    private let apiWrapper: APIWrapper?
+    private let activityTracker = ActivityTracker()
+    private let errorTracker = ErrorTracker()
+
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var playPauseButton: UIButton!
+    @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var muteButton: UIButton!
+    @IBOutlet private weak var openButtonsCollection: UIView!
     
+    @IBOutlet private weak var openButton1View: UIView!
+    @IBOutlet private weak var openButton2View: UIView!
+    @IBOutlet private weak var openButton3View: UIView!
+    @IBOutlet private weak var openButton1: CameraLockButton!
+    @IBOutlet private weak var openButton2: CameraLockButton!
+    @IBOutlet private weak var openButton3: CameraLockButton!
+    @IBOutlet private weak var textButton1: UILabel!
+    @IBOutlet private weak var textButton2: UILabel!
+    @IBOutlet private weak var textButton3: UILabel!
+
     private var controls: [UIView] = []
     private var timer: Timer?
     
+    var loader: JGProgressHUD?
+
     private var disposeBag = DisposeBag()
     
-    init(playedVideoType: PlayedVideoType, preferredPlaybackRate: Float) {
+    init(
+        playedVideoType: PlayedVideoType,
+        preferredPlaybackRate: Float,
+        position: CGRect? = nil,
+        doors: [DoorObject] = [],
+        apiWrapper: APIWrapper? = nil
+    ) {
         self.playedVideoType = playedVideoType
         self.preferredPlaybackRate = preferredPlaybackRate
+        self.doors = doors
+        self.apiWrapper = apiWrapper
+        self.position = position
         
         super.init(nibName: nil, bundle: nil)
+        
+        bind()
     }
     
     @available(*, unavailable)
@@ -47,12 +81,77 @@ class FullscreenPlayerViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @IBAction private func tapOpenButton1() {
+        let identity = 0
+        self.apiWrapper?
+            .openDoor(domophoneId: doors[identity].domophoneId, doorId: doors[identity].doorId, blockReason: nil)
+            .trackActivity(self.activityTracker)
+            .trackError(self.errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] _ in
+//                    self?.areObjectsGrantAccessed.onNext(newDict)
+                    self?.openButton1.isEnabled = false
+                    self?.textButton1.isHidden = true
+                    self?.closeDoorAccessAfterTimeout(identity: identity)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    @IBAction private func tapOpenButton2() {
+        var identity = 1
+        if doors.count == 2 {
+            identity = 0
+        }
+        self.apiWrapper?
+            .openDoor(domophoneId: doors[identity].domophoneId, doorId: doors[identity].doorId, blockReason: nil)
+            .trackActivity(self.activityTracker)
+            .trackError(self.errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] _ in
+//                    self?.areObjectsGrantAccessed.onNext(newDict)
+                    self?.openButton2.isEnabled = false
+                    self?.textButton2.isHidden = true
+                    self?.closeDoorAccessAfterTimeout(identity: identity)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    @IBAction private func tapOpenButton3() {
+        var identity = 2
+        if doors.count == 2 {
+            identity = 1
+        }
+
+        self.apiWrapper?
+            .openDoor(domophoneId: doors[identity].domophoneId, doorId: doors[identity].doorId, blockReason: nil)
+            .trackActivity(self.activityTracker)
+            .trackError(self.errorTracker)
+            .asDriver(onErrorJustReturn: nil)
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] _ in
+//                    self?.areObjectsGrantAccessed.onNext(newDict)
+                    self?.openButton3.isEnabled = false
+                    self?.textButton3.isHidden = true
+                    self?.closeDoorAccessAfterTimeout(identity: identity)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
     @IBAction private func tapCloseButton() {
         // чтобы корректно отработала анимация и не было конфликта в ходе анимации за эту переходящую вьюшку,
         // убираем её из иерархии до запуска анимации закрытия окна.
-        progressSlider?.removeFromSuperview()
-        
-        self.dismiss(animated: true, completion: nil)
+//        progressSlider?.removeFromSuperview()
+//
+//        self.dismiss(animated: true, completion: nil)
+        animatedClose()
     }
     
     @IBAction private func tapPlayPauseButton() {
@@ -64,6 +163,23 @@ class FullscreenPlayerViewController: UIViewController {
         self.playPauseButton.isSelected = newState
         
         player.rate = newState ? self.preferredPlaybackRate : 0
+    }
+    
+    @IBAction private func tapMuteButton() {
+        guard let player = self.playerLayer?.player else {
+            return
+        }
+
+        player.isMuted = !player.isMuted
+
+        if player.isMuted {
+            self.muteButton.setImage(UIImage(named: "volumeOff"), for: .normal)
+            self.muteButton.setImage(UIImage(named: "volumeOff")?.darkened(), for: [.normal, .highlighted])
+        } else {
+            self.muteButton.setImage(UIImage(named: "volumeOn"), for: .normal)
+            self.muteButton.setImage(UIImage(named: "volumeOn")?.darkened(), for: [.normal, .highlighted])
+        }
+
     }
     
     func onTimer(_: Timer) {
@@ -158,6 +274,32 @@ class FullscreenPlayerViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
+        if !doors.isEmpty {
+            if view.frame.size.height > view.frame.size.width {
+                var height: CGFloat = view.frame.size.width / 400
+                
+                if height > 1 {
+                    height = 1
+                }
+                openButtonsCollection.bounds.size = CGSize(width: view.frame.width, height: height * 100)
+                openButtonsCollection.heightAnchor.constraint(equalToConstant: height * 100).isActive = true
+            } else {
+                var height: CGFloat = view.frame.size.height / 400
+
+                if height > 1 {
+                    height = 1
+                }
+                openButtonsCollection.bounds.size = CGSize(width: view.frame.width, height: height * 100)
+                openButtonsCollection.heightAnchor.constraint(equalToConstant: height * 100).isActive = true
+            }
+            DispatchQueue.main.async {
+                self.openButton1.layerCornerRadius = self.openButton1.frame.height / 2
+                self.openButton2.layerCornerRadius = self.openButton2.frame.height / 2
+                self.openButton3.layerCornerRadius = self.openButton3.frame.height / 2
+            }
+        }
+        
         super.viewDidAppear(animated)
         
         UIViewController.attemptRotationToDeviceOrientation()
@@ -166,6 +308,7 @@ class FullscreenPlayerViewController: UIViewController {
             self.showControls()
             self.timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: onTimer)
         }
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -177,9 +320,14 @@ class FullscreenPlayerViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
-        DispatchQueue.main.async() {
+        DispatchQueue.main.async {
             self.scrollView.zoomScale = 1.0
             self.scrollView.contentSize = size
+            if size.width > size.height {
+                self.scrollView.maximumZoomScale = 7.0
+            } else {
+                self.scrollView.maximumZoomScale = 2.8
+            }
             self.playerLayer?.frame = self.contentView.bounds
             self.playerLayer?.videoGravity = .resizeAspect
         }
@@ -188,6 +336,41 @@ class FullscreenPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
       
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 3.0
+        
+        switch doors.count {
+        case 1:
+            openButtonsCollection.isHidden = false
+            openButton1View.isHidden = false
+            openButton2View.isHidden = true
+            openButton3View.isHidden = true
+            textButton1.text = doors[0].name
+            openButton1.imageView?.image = UIImage(named: doors[0].type)
+        case 2:
+            openButtonsCollection.isHidden = false
+            openButton1View.isHidden = true
+            openButton2View.isHidden = false
+            openButton3View.isHidden = false
+            textButton2.text = doors[0].name
+            openButton2.imageView?.image = UIImage(named: doors[0].type)
+            textButton3.text = doors[1].name
+            openButton3.imageView?.image = UIImage(named: doors[1].type)
+        case 3:
+            openButtonsCollection.isHidden = false
+            openButton1View.isHidden = false
+            openButton2View.isHidden = false
+            openButton3View.isHidden = false
+            textButton1.text = doors[0].name
+            openButton1.imageView?.image = UIImage(named: doors[0].type)
+            textButton2.text = doors[1].name
+            openButton2.imageView?.image = UIImage(named: doors[1].type)
+            textButton3.text = doors[2].name
+            openButton3.imageView?.image = UIImage(named: doors[2].type)
+        default:
+            openButtonsCollection.isHidden = true
+        }
+        
         let swipeLeft = UISwipeGestureRecognizer(
             target: self,
             action: #selector(handleSwipeGestureRecognizer)
@@ -201,6 +384,20 @@ class FullscreenPlayerViewController: UIViewController {
         )
         swipeRight.direction = .right
         contentView.addGestureRecognizer(swipeRight)
+        
+        let swipeUp = UISwipeGestureRecognizer(
+            target: self,
+            action: #selector(handleSwipeGestureRecognizer)
+        )
+        swipeUp.direction = .up
+        contentView.addGestureRecognizer(swipeUp)
+        
+        let swipeDown = UISwipeGestureRecognizer(
+            target: self,
+            action: #selector(handleSwipeGestureRecognizer)
+        )
+        swipeDown.direction = .down
+        contentView.addGestureRecognizer(swipeDown)
         
         if let playerLayer = playerLayer {
            contentView.layer.insertSublayer(playerLayer, at: 0)
@@ -233,37 +430,54 @@ class FullscreenPlayerViewController: UIViewController {
     }
     
     @objc private dynamic func handleSwipeGestureRecognizer(_ recognizer: UISwipeGestureRecognizer) {
-        progressSlider?.removeFromSuperview()
-        
-        if recognizer.direction == .left {
-            UIView.animate(
-                withDuration: 0.5,
-                delay: 0.0,
-                options: .curveEaseOut,
-                animations: {
-                    self.contentView.frame.origin.x -= self.contentView.frame.size.width
-                    self.contentView.alpha = 0.0
-                },
-                completion: { _ in
-                    self.dismiss(animated: true, completion: nil)
-                }
-            )
-        }else if recognizer.direction == .right{
-            UIView.animate(
-                withDuration: 0.5,
-                delay: 0.0,
-                options: .curveEaseOut,
-                animations: {
-                    self.contentView.frame.origin.x += self.contentView.frame.size.width
-                    self.contentView.alpha = 0.0
-                },
-                completion: { _ in
-                    self.dismiss(animated: true, completion: nil)
-                }
-            )
-        }
+
+        animatedClose()
+//        if recognizer.direction == .left {
+//            UIView.animate(
+//                withDuration: 0.5,
+//                delay: 0.0,
+//                options: .curveEaseOut,
+//                animations: {
+//                    self.contentView.frame.origin.x -= self.contentView.frame.size.width
+//                    self.contentView.alpha = 0.0
+//                },
+//                completion: { _ in
+//                    self.dismiss(animated: true, completion: nil)
+//                }
+//            )
+//        }
     }
 
+    private func animatedClose() {
+        progressSlider?.removeFromSuperview()
+        muteButton.isHidden = true
+        closeButton.isHidden = true
+        playPauseButton.isHidden = true
+        openButtonsCollection.isHidden = true
+        self.scrollView.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
+        UIView.animate(
+            withDuration: 0.7,
+            delay: 0.0,
+            options: .curveEaseInOut,
+            animations: {
+                if let playerLayer = self.playerLayer,
+                   let position = self.position {
+                    self.contentView.bounds = position
+                    self.contentView.frame = position
+                    self.contentView.layerCornerRadius = 12
+                    playerLayer.frame = position
+                    playerLayer.player?.pause()
+                    playerLayer.cornerRadius = 12
+                    playerLayer.videoGravity = .resizeAspectFill
+                }
+            },
+            completion: { _ in
+                self.dismiss(animated: true, completion: nil)
+            }
+        )
+    }
+    
     func setPlayerLayer(_ playerLayer: AVPlayerLayer) {
         
         self.playerLayer = playerLayer
@@ -295,17 +509,92 @@ class FullscreenPlayerViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
+    private func bind() {
+        activityTracker
+            .asDriver()
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        errorTracker
+            .asDriver()
+            .drive(
+                onNext: { [weak self] _ in
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
     func setProgressSlider(_ progressSlider: SimpleVideoProgressSlider) {
         self.progressSlider = progressSlider
     }
 
+    func setMuteButton(icon: String) {
+        self.muteButton.setImage(UIImage(named: icon), for: .normal)
+        self.muteButton.setImage(UIImage(named: icon)?.darkened(), for: [.normal, .highlighted])
+    }
 }
+
 extension FullscreenPlayerViewController: UIScrollViewDelegate {
     public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.contentView
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    }
 }
+
 extension FullscreenPlayerViewController {
+    func closeDoorAccessAfterTimeout(identity: Int) {
+        Timer.scheduledTimer(
+            withTimeInterval: 5,
+            repeats: false
+        ) { [weak self] _ in
+            guard let self = self else {
+                return
+            }
+
+            switch self.doors.count {
+            case 1:
+                self.openButton1.isEnabled = true
+                self.textButton1.isHidden = false
+            case 2:
+                switch identity {
+                case 0:
+                    self.openButton2.isEnabled = true
+                    self.textButton2.isHidden = false
+                case 1:
+                    self.openButton3.isEnabled = true
+                    self.textButton3.isHidden = false
+                default:
+                    break
+                }
+                
+            case 3:
+                switch identity {
+                case 0:
+                    self.openButton1.isEnabled = true
+                    self.textButton1.isHidden = false
+                case 1:
+                    self.openButton2.isEnabled = true
+                    self.textButton2.isHidden = false
+                case 2:
+                    self.openButton3.isEnabled = true
+                    self.textButton3.isHidden = false
+                default:
+                    break
+                }
+            default:
+                break
+            }
+//            self.doors[identity].blocked
+        }
+    }
+
     private func showControls () {
         controls.forEach({ $0.isHidden = false })
     }

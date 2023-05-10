@@ -5,6 +5,7 @@
 //  Created by admin on 11/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length
 
 import UIKit
 import TouchAreaInsets
@@ -164,7 +165,6 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         }
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
         let input = AddressSettingsViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),

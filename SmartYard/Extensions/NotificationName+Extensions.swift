@@ -26,6 +26,7 @@ extension Notification.Name {
     static let addAddressFromSettings = Notification.Name("AddAddressFromSettings")
     static let userNameUpdated = Notification.Name("UserNameUpdated")
     static let chatRequested = Notification.Name("ChatRequested")
+    static let chatwootRequested = Notification.Name("ChatwootRequested")
     static let onlineFullscreenModeClosed = Notification.Name("OnlineFullscreenModeClosed")
     static let archiveFullscreenModeClosed = Notification.Name("ArchiveFullscreenModeClosed")
     static let paymentCompleted = Notification.Name("PaymentCompleted")
@@ -40,6 +41,11 @@ extension Notification.Name {
     static let allChatMessagesRead = Notification.Name("AllChatMessagesRead")
     static let unreadChatMessagesAvailable = Notification.Name("UnreadChatMessagesAvailable")
     
+    static let newChatwootMessageReceived = Notification.Name("NewChatwootMessageReceived")
+    static let unreadChatwootMessagesAvailable = Notification.Name("UnreadChatwootMessagesAvailable")
+    static let updateChatwootChat = Notification.Name("UpdateChatwootChat")
+    static let updateChatwootChatSelect = Notification.Name("UpdateChatwootChatSelect")
+
     static let incomingCallForceLandscape = Notification.Name("IncomingCallForceLandscape")
     static let incomingCallForcePortrait = Notification.Name("IncomingCallForcePortrait")
     

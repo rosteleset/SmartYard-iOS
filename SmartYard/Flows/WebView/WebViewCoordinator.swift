@@ -5,6 +5,7 @@
 //  Created by Александр Васильев on 05.02.2022.
 //  Copyright © 2022 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import XCoordinator
 import RxSwift

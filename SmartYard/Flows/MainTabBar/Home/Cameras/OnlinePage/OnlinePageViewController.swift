@@ -5,6 +5,7 @@
 //  Created by admin on 15.06.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length closure_body_length line_length file_length
 
 import UIKit
 import RxSwift
@@ -24,9 +25,12 @@ class OnlinePageViewController: BaseViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var cameraContainer: UIView!
+    @IBOutlet private weak var muteButton: UIButton!
     @IBOutlet private weak var fullscreenButton: UIButton!
     @IBOutlet private weak var videoLoadingAnimationView: LottieAnimationView!
     
+    private var apiWrapper: APIWrapper
+
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
     
@@ -42,7 +46,9 @@ class OnlinePageViewController: BaseViewController {
     
     weak var delegate: OnlinePageViewControllerDelegate?
     
-    init() {
+    init(apiWrapper: APIWrapper) {
+        self.apiWrapper = apiWrapper
+
         super.init(nibName: nil, bundle: nil)
         
         title = "Онлайн"
@@ -62,6 +68,7 @@ class OnlinePageViewController: BaseViewController {
         
         configurePlayer()
         configureFullscreenButton()
+        configureMuteButton()
         configureCollectionView()
         bind()
     }
@@ -93,8 +100,8 @@ class OnlinePageViewController: BaseViewController {
         }
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
+        
         isVideoBeingLoaded
             .asDriver(onErrorJustReturn: false)
             .debounce(.milliseconds(25))
@@ -102,7 +109,11 @@ class OnlinePageViewController: BaseViewController {
                 onNext: { [weak self] isLoading in
                     self?.videoLoadingAnimationView.isHidden = !isLoading
                     
-                    isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
+                    if isLoading {
+                        self?.videoLoadingAnimationView.play()
+                    } else {
+                        self?.videoLoadingAnimationView.stop()
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -112,6 +123,7 @@ class OnlinePageViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] isVideoValid in
                     self?.fullscreenButton.isHidden = !isVideoValid
+                    self?.muteButton.isHidden = !isVideoValid
                 }
             )
             .disposed(by: disposeBag)
@@ -161,7 +173,6 @@ class OnlinePageViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    // swiftlint:disable:next function_body_length
     private func configurePlayer() {
         let player = AVPlayer()
         self.player = player
@@ -177,7 +188,7 @@ class OnlinePageViewController: BaseViewController {
         playerLayer?.removeAllAnimations()
         playerLayer?.backgroundColor = UIColor.black.cgColor
         playerLayer?.videoGravity = .resizeAspectFill
-//        playerLayer?.player?.isMuted = true
+        playerLayer?.player?.isMuted = true
 
         // MARK: Настройка лоадера
         
@@ -205,6 +216,16 @@ class OnlinePageViewController: BaseViewController {
                     playerLayer.videoGravity = .resizeAspectFill
 
                     self.player?.play()
+                    
+                    if let player = playerLayer.player,
+                       player.isMuted {
+                        self.muteButton.setImage(UIImage(named: "volumeOff"), for: .normal)
+                        self.muteButton.setImage(UIImage(named: "volumeOff")?.darkened(), for: [.normal, .highlighted])
+                    } else {
+                        self.muteButton.setImage(UIImage(named: "volumeOn"), for: .normal)
+                        self.muteButton.setImage(UIImage(named: "volumeOn")?.darkened(), for: [.normal, .highlighted])
+                    }
+
                 }
             )
             .disposed(by: disposeBag)
@@ -239,6 +260,39 @@ class OnlinePageViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    private func configureMuteButton() {
+        
+        muteButton.setImage(UIImage(named: "volumeOff"), for: .normal)
+        muteButton.setImage(UIImage(named: "volumeOff")?.darkened(), for: [.normal, .highlighted])
+        
+        muteButton.touchAreaInsets = UIEdgeInsets(inset: 12)
+        
+        // MARK: При нажатии на кнопку mute включаем или выключаем звук
+
+        muteButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let playerLayer = self?.playerLayer else {
+                        return
+                    }
+                    
+                    playerLayer.player?.isMuted = !(playerLayer.player?.isMuted ?? true)
+                    
+                    if let player = playerLayer.player,
+                       player.isMuted {
+                        self?.muteButton.setImage(UIImage(named: "volumeOff"), for: .normal)
+                        self?.muteButton.setImage(UIImage(named: "volumeOff")?.darkened(), for: [.normal, .highlighted])
+                    } else {
+                        self?.muteButton.setImage(UIImage(named: "volumeOn"), for: .normal)
+                        self?.muteButton.setImage(UIImage(named: "volumeOn")?.darkened(), for: [.normal, .highlighted])
+                    }
+
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
     private func configureFullscreenButton() {
         fullscreenButton.setImage(UIImage(named: "FullScreen20"), for: .normal)
         fullscreenButton.setImage(UIImage(named: "FullScreen20")?.darkened(), for: [.normal, .highlighted])
@@ -254,12 +308,15 @@ class OnlinePageViewController: BaseViewController {
                     guard let playerLayer = self?.playerLayer else {
                         return
                     }
-                    
+                    let playerposition = playerLayer.superview?.convert(playerLayer.frame, to: nil)
                     playerLayer.removeFromSuperlayer()
                     
                     let fullscreenVc = FullscreenPlayerViewController(
                         playedVideoType: .online,
-                        preferredPlaybackRate: 1
+                        preferredPlaybackRate: 1,
+                        position: playerposition,
+                        doors: (self?.cameras.first(where: { $0.cameraNumber == self?.selectedCameraNumber })!.doors)!,
+                        apiWrapper: self?.apiWrapper
                     )
                     
                     fullscreenVc.modalPresentationStyle = .overFullScreen
@@ -268,6 +325,14 @@ class OnlinePageViewController: BaseViewController {
 
                     self?.present(fullscreenVc, animated: true) {
                         self?.player?.play()
+                        
+                        if let player = playerLayer.player,
+                           player.isMuted {
+                            fullscreenVc.setMuteButton(icon: "volumeOff")
+                        } else {
+                            fullscreenVc.setMuteButton(icon: "volumeOn")
+                        }
+
                     }
                 }
             )

@@ -5,6 +5,7 @@
 //  Created by Александр Васильев on 24.04.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length closure_body_length line_length
 
 import UIKit
 import JGProgressHUD
@@ -57,6 +58,7 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         return .default
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -91,7 +93,8 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                 return nil
             }
             
-            // Если мы попали в этот контроллер без указания элемнта на какой надо спозиционироваться, то позиционируемся на самый первый.
+            // Если мы попали в этот контроллер без указания элемента на какой надо спозиционироваться,
+            // то позиционируемся на самый первый
             if self.selectItemOnLoad == nil,
                !dataSource.sectionModels.isEmpty,
                !dataSource.sectionModels.first!.items.isEmpty {

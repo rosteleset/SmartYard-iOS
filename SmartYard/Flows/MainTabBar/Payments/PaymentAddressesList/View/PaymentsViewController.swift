@@ -13,6 +13,7 @@ import JGProgressHUD
 
 class PaymentsViewController: BaseViewController, LoaderPresentable {
 
+    @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var skeletonContainer: UIView!
     
@@ -35,7 +36,7 @@ class PaymentsViewController: BaseViewController, LoaderPresentable {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        return .lightContent
     }
     
     override func viewDidLoad() {
@@ -92,9 +93,11 @@ class PaymentsViewController: BaseViewController, LoaderPresentable {
                     self?.collectionView.isHidden = shouldBlockInteraction
                     self?.skeletonContainer.isHidden = !shouldBlockInteraction
                     
-                    shouldBlockInteraction ?
-                        self?.skeletonContainer.showSkeletonAsynchronously() :
+                    if shouldBlockInteraction {
+                        self?.skeletonContainer.showSkeletonAsynchronously()
+                    } else {
                         self?.skeletonContainer.hideSkeleton()
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -109,9 +112,12 @@ class PaymentsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureTableView() {
+        mainContainerView.layerCornerRadius = 24
+        mainContainerView.layer.maskedCorners = .topCorners
+        
         collectionView.delegate = self
         collectionView.dataSource = self
-        
+
         collectionView.register(cellWithClass: PaymentsAddressCell.self)
         
         collectionView.refreshControl = refreshControl
@@ -151,7 +157,7 @@ extension PaymentsViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 8, left: 16, bottom: 20, right: 16)
+        return UIEdgeInsets(top: 16, left: 16, bottom: 20, right: 16)
     }
     
 }

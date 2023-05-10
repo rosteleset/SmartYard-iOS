@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 08.04.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import UIKit
 import NotificationCenter
@@ -77,8 +78,11 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
                     let range = (1...abs(cellCountDifference))
                     let indexPaths = range.map { IndexPath(row: $0, section: 0) }
                     
-                    cellCountDifference > 0 ? self.tableView.insertRows(at: indexPaths, with: .fade)
-                        : self.tableView.deleteRows(at: indexPaths, with: .fade)
+                    if cellCountDifference > 0 {
+                        self.tableView.insertRows(at: indexPaths, with: .fade)
+                    } else {
+                        self.tableView.deleteRows(at: indexPaths, with: .fade)
+                    }
                 }
                 
                 self.tableView.performBatchUpdates(updateBlock, completion: nil)

@@ -5,6 +5,7 @@
 //  Created by admin on 03/04/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable line_length
 
 enum SettingsServiceAction: String {
     

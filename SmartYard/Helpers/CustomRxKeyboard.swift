@@ -5,8 +5,8 @@
 //  Created by admin on 17/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length line_length
 
-// swiftlint:disable all
 import UIKit
 import RxCocoa
 import RxSwift
@@ -100,7 +100,7 @@ public class RxKeyboard: NSObject, RxKeyboardType {
                     return newFrame
                 }
                 return frame
-        }
+            }
         
         // keyboard will hide
         let willHide = NotificationCenter.default.rx.notification(keyboardWillHide)
@@ -126,12 +126,12 @@ public class RxKeyboard: NSObject, RxKeyboardType {
                     return newFrame
                 }
                 return frame
-        }
+            }
         
         // pan gesture
         let didPan = self.panRecognizer.rx.event
             .withLatestFrom(frameVariable.asObservable()) { ($0, $1) }
-            .flatMap { (gestureRecognizer, frame) -> Observable<CGRect> in
+            .flatMap { gestureRecognizer, frame -> Observable<CGRect> in
                 guard case .changed = gestureRecognizer.state,
                     let window = UIApplication.shared.windows.first,
                     frame.origin.y < UIScreen.main.bounds.height
@@ -140,10 +140,12 @@ public class RxKeyboard: NSObject, RxKeyboardType {
                 var newFrame = frame
                 newFrame.origin.y = max(origin.y, UIScreen.main.bounds.height - frame.height)
                 return .just(newFrame)
-        }
+            }
         
         // merge into single sequence
-        Observable.of(didPan, willChangeFrame, willHide).merge()
+        Observable
+            .of(didPan, willChangeFrame, willHide)
+            .merge()
             .bind(to: frameVariable)
             .disposed(by: self.disposeBag)
         
@@ -157,9 +159,7 @@ public class RxKeyboard: NSObject, RxKeyboardType {
             })
             .disposed(by: self.disposeBag)
     }
-    
 }
-
 
 // MARK: - UIGestureRecognizerDelegate
 
@@ -189,5 +189,3 @@ extension RxKeyboard: UIGestureRecognizerDelegate {
     }
     
 }
-// swiftlint:enable all
-

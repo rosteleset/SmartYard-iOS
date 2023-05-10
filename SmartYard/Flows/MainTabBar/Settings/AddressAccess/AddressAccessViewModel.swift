@@ -5,6 +5,8 @@
 //  Created by Mad Brains on 14.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length cyclomatic_complexity
+// swiftlint:disable closure_body_length line_length file_length
 
 import Foundation
 import XCoordinator
@@ -12,7 +14,6 @@ import RxSwift
 import RxCocoa
 import Contacts
 
-// swiftlint:disable:next type_body_length
 class AddressAccessViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
@@ -61,7 +62,6 @@ class AddressAccessViewModel: BaseViewModel {
         super.init()
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         errorTracker.asDriver()
             .catchAuthorizationError { [weak self] in
@@ -472,7 +472,6 @@ class AddressAccessViewModel: BaseViewModel {
                 .disposed(by: self.disposeBag)
         }
         
-        // swiftlint:disable:next line_length
         let guestAccessAlertText = "Всем, кто будет набирать номер вашей квартиры на домофоне, дверь будет открываться автоматически в течение 60 минут. По истечению данного времени работа домофона вернется в стандартный режим автоматически."
         
         let guestAccessAlertTitle = "Включить гостевой доступ на час?"
@@ -659,5 +658,4 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
             .disposed(by: disposeBag)
     }
 
-// swiftlint:disable:next file_length
 }

@@ -5,6 +5,7 @@
 //  Created by admin on 28/01/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length cyclomatic_complexity file_length
 
 import UIKit
 import FirebaseCore
@@ -111,17 +112,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let topVc = window?.rootViewController?.topViewController else {
             return .portrait
         }
-        
+
         if topVc is FullscreenPlayerViewController,
-            !topVc.isBeingDismissed,
-            !topVc.isBeingPresented {
-            return .allButUpsideDown
+           !topVc.isBeingDismissed {
+            if #available(iOS 16.0, *),
+               topVc.isBeingPresented {
+                return .allButUpsideDown
+            } else if !topVc.isBeingPresented {
+                return .allButUpsideDown
+            }
+        } else if topVc is FullscreenImageViewController,
+                  !topVc.isBeingDismissed {
+            
+            if #available(iOS 16.0, *),
+               topVc.isBeingPresented {
+                return .allButUpsideDown
+            } else if !topVc.isBeingPresented {
+                return .allButUpsideDown
+            }
         } else if topVc is IncomingCallLandscapeViewController,
             !topVc.isBeingDismissed {
             return .landscape
-        } else {
-            return .portrait
         }
+        return .portrait
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
@@ -191,8 +204,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         let userInfo = notification.request.content.userInfo
-        print("TEST USER INFO")
-        print(userInfo)
         // TODO
         print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo.jsonString() ?? "\(userInfo)")")
         
@@ -235,19 +246,25 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // Это вызовет показ баджа в табе "Чат" и обновление сообщений чата
         
         if action == .chat {
-            NotificationCenter.default.post(name: .newChatMessageReceived, object: nil)
-            NotificationCenter.default.post(name: .unreadChatMessagesAvailable, object: nil)
+            NotificationCenter.default.post(name: .newChatwootMessageReceived, object: nil)
+            NotificationCenter.default.post(name: .unreadChatwootMessagesAvailable, object: nil)
+//            NotificationCenter.default.post(name: .newChatMessageReceived, object: nil)
+//            NotificationCenter.default.post(name: .unreadChatMessagesAvailable, object: nil)
             
             // MARK: Если уже находимся на вкладке "Чат", то не показываем пуш
             
-            if appCoordinator.selectedTabPresentable?.router(for: ChatRoute.main) != nil {
-                completionHandler([])
-                return
+//            if appCoordinator.selectedTabPresentable?.router(for: ChatRoute.main) != nil {
+//                completionHandler([])
+//                return
+//            }
+            if let typeaction = userInfo["type"] as? String {
+                NotificationCenter.default.post(name: .updateChatwootChatSelect, object: typeaction)
             }
             if appCoordinator.selectedTabPresentable?.router(for: ChatwootRoute.main) != nil {
                 completionHandler([])
                 return
             }
+
         }
         
         // MARK: Если пришло уведомление о добавленном адресе - отправляем .addressAdded
@@ -331,8 +348,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         case .inbox, .newAddress, .paySuccess, .payError, .videoReady:
             appCoordinator.openNotificationsTab()
         case .chat:
-//            appCoordinator.openChatwootTab()
-            appCoordinator.openChatTab()
+            appCoordinator.openChatwootTab()
+//            appCoordinator.openChatTab()
         }
         
         // MARK: Если нажали на уведомление о добавленном адресе - отправляем .addressAdded
@@ -347,6 +364,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         if action == .paySuccess {
             NotificationCenter.default.post(name: .paymentCompleted, object: nil)
+        }
+        
+        if action == .chat {
+            if let typeaction = userInfo["type"] as? String {
+                NotificationCenter.default.post(name: .updateChatwootChatSelect, object: typeaction)
+            }
+            NotificationCenter.default.post(name: .updateChatwootChat, object: nil)
         }
         
         completionHandler()
@@ -385,7 +409,7 @@ extension AppDelegate: PKPushRegistryDelegate {
         for type: PKPushType,
         completion: @escaping () -> Void
     ) {
-        print("DEBUG / VOIP NOTIFICATIONS / Payload: \(payload.dictionaryPayload)")
+//        print("DEBUG / VOIP NOTIFICATIONS / Payload: \(payload.dictionaryPayload)")
         
         guard let data = payload.dictionaryPayload["data"] as? [AnyHashable: Any],
             let callPayload = CallPayload(pushNotificationPayload: data) else {

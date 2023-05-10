@@ -18,10 +18,14 @@ class CamerasMapPointView: UIView {
     private let cameraImageView: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "CameraIcon")?.withRenderingMode(.alwaysTemplate)
-        imageView.tintColor = UIColor.SmartYard.gray
-        
+        imageView.contentMode = .scaleAspectFill
+//        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "CameraIcon")
+//        imageView.image = UIImage(named: "CameraIcon")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = .white
+//        imageView.tintColor = UIColor.SmartYard.blue
+//        imageView.tintColor = UIColor.SmartYard.gray
+
         return imageView
     }()
     
@@ -38,10 +42,11 @@ class CamerasMapPointView: UIView {
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         
-        backgroundColor = .white
+        backgroundColor = UIColor.SmartYard.blue
+//        backgroundColor = .white
         
         addSubview(cameraImageView)
-        addSubview(cameraNumberLabel)
+//        addSubview(cameraNumberLabel)
     
         clipsToBounds = true
         
@@ -63,14 +68,15 @@ class CamerasMapPointView: UIView {
 
         layerCornerRadius = width / 2
         
-        cameraImageView.pin.width(15).height(13).top(8).hCenter()
-        cameraNumberLabel.pin.height(15).below(of: cameraImageView).hCenter().sizeToFit(.height)
+        cameraImageView.pin.width(24).height(24).top(8).hCenter()
+//        cameraImageView.pin.width(15).height(13).top(8).hCenter()
+//        cameraNumberLabel.pin.height(15).below(of: cameraImageView).hCenter().sizeToFit(.height)
     }
     
     func configure(cameraNumber: Int, _ onTap: @escaping (() -> Void)) {
         self.cameraNumber = cameraNumber
         self.tapCallback = onTap
-        cameraNumberLabel.text = "\(cameraNumber)"
+//        cameraNumberLabel.text = "\(cameraNumber)"
     }
     
 }

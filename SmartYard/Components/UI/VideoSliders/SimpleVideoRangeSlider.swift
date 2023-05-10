@@ -1,7 +1,7 @@
+// swiftlint:disable type_body_length function_body_length closure_body_length line_length file_length
+
 import UIKit
 import AVKit
-
-// swiftlint:disable all
 
 protocol SimpleVideoRangeSliderDelegate: AnyObject {
     
@@ -31,7 +31,7 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         case end
     }
     
-    weak var delegate: SimpleVideoRangeSliderDelegate? = nil
+    weak var delegate: SimpleVideoRangeSliderDelegate?
 
     private let startIndicator = SimpleVideoStartIndicator()
     private let endIndicator = SimpleVideoEndIndicator()
@@ -49,7 +49,7 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     
     private var startPercentage: CGFloat = 0         // Represented in percentage
     private var endPercentage: CGFloat = 100       // Represented in percentage
-    private var isReceivingGesture: Bool = false
+    private var isReceivingGesture = false
 
     var minSpace: Float = 10              // In Seconds
     var maxSpace: Float = 0              // In Seconds
@@ -97,7 +97,7 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         super.init(coder: aDecoder)
     }
 
-    private func setup(){
+    private func setup() {
         backgroundColor = .clear
         
         layer.cornerRadius = 3
@@ -267,7 +267,11 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
             return
         }
         
-        value < 0 ? shiftTimelineBackward(abs(value)) : shiftTimelineForward(value)
+        if value < 0 {
+            shiftTimelineBackward(abs(value))
+        } else {
+            shiftTimelineForward(value)
+        }
     }
     
     func setThumbnailImage(_ image: UIImage?, atIndex index: Int) {
@@ -324,7 +328,7 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     // MARK: - Private functions
 
     // MARK: - Crop Handle Drag Functions
-    @objc private func startDragged(recognizer: UIPanGestureRecognizer){
+    @objc private func startDragged(recognizer: UIPanGestureRecognizer) {
         self.processHandleDrag(
             recognizer: recognizer,
             drag: .start,
@@ -333,7 +337,7 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         )
     }
     
-    @objc private func endDragged(recognizer: UIPanGestureRecognizer){
+    @objc private func endDragged(recognizer: UIPanGestureRecognizer) {
         self.processHandleDrag(
             recognizer: recognizer,
             drag: .end,
@@ -356,9 +360,10 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         let translation = recognizer.translation(in: self)
         
-        var position: CGFloat = positionFromValue(value: currentPositionPercentage) // self.startPercentage or self.endPercentage
+        var position: CGFloat = positionFromValue(value: currentPositionPercentage)
+        // self.startPercentage or self.endPercentage
         
-        position = position + translation.x
+        position += translation.x
         
         if position < startIndicator.bounds.width { position = startIndicator.bounds.width }
         
@@ -383,7 +388,7 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         recognizer.setTranslation(CGPoint.zero, in: self)
         
-        currentIndicator.center = CGPoint(x: position , y: currentIndicator.center.y)
+        currentIndicator.center = CGPoint(x: position, y: currentIndicator.center.y)
         
         let percentage = valueFromPosition(position: currentIndicator.center.x)
         
@@ -411,78 +416,6 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         layoutSubviews()
     }
     
-    // MARK: - Drag Functions Helpers
-    private func positionFromValue(value: CGFloat) -> CGFloat {
-        let startPosition = startIndicator.bounds.width
-        let endPosition = frame.size.width - endIndicator.bounds.width
-        let neededPosition = startPosition + value * (endPosition - startPosition) / 100
-
-        return neededPosition
-    }
-    
-    private func valueFromPosition(position: CGFloat) -> CGFloat {
-        let startPosition = startIndicator.bounds.width
-        let endPosition = frame.size.width - endIndicator.bounds.width
-        
-        return (position - startPosition) * 100 / (endPosition - startPosition)
-    }
-    
-    private func getPositionLimits(with drag: DragHandleChoice) -> (min: CGFloat, max: CGFloat) {
-        if drag == .start {
-            return (
-                positionFromValue(value: self.endPercentage - valueFromSeconds(seconds: self.minSpace)),
-                positionFromValue(value: self.endPercentage - valueFromSeconds(seconds: self.maxSpace))
-            )
-        } else {
-            return (
-                positionFromValue(value: self.startPercentage + valueFromSeconds(seconds: self.minSpace)),
-                positionFromValue(value: self.startPercentage + valueFromSeconds(seconds: self.maxSpace))
-            )
-        }
-    }
-    
-    private func checkEdgeCasesForPosition(with position: CGFloat, and positionLimit: CGFloat, and drag: DragHandleChoice) -> CGFloat {
-        if drag == .start {
-            if Float(self.duration) < self.minSpace {
-                return 0
-            } else {
-                if position > positionLimit {
-                    return positionLimit
-                }
-            }
-        } else {
-            if Float(self.duration) < self.minSpace {
-                return self.frame.size.width
-            } else {
-                if position < positionLimit {
-                    return positionLimit
-                }
-            }
-        }
-        
-        return position
-    }
-    
-    private func secondsFromValue(value: CGFloat) -> Float64 {
-        return duration * Float64((value / 100))
-    }
-
-    private func valueFromSeconds(seconds: Float) -> CGFloat {
-        guard duration > 0 else {
-            return 0
-        }
-        
-        return CGFloat(seconds * 100) / CGFloat(duration)
-    }
-    
-    private func updateGestureStatus(recognizer: UIGestureRecognizer) {
-        if recognizer.state == .began {
-            self.isReceivingGesture = true
-        } else if recognizer.state == .ended {
-            self.isReceivingGesture = false
-        }
-    }
-
     // MARK: -
 
     override func layoutSubviews() {
@@ -550,7 +483,6 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         }
         
         // Update fake thumbnails frames
-        
         startCropBlurView.frame = CGRect(
             x: 0,
             y: 0,
@@ -632,4 +564,78 @@ class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
     
 }
 
-// swiftlint:enable all
+extension SimpleVideoRangeSlider {
+    
+    // MARK: - Drag Functions Helpers
+    private func positionFromValue(value: CGFloat) -> CGFloat {
+        let startPosition = startIndicator.bounds.width
+        let endPosition = frame.size.width - endIndicator.bounds.width
+        let neededPosition = startPosition + value * (endPosition - startPosition) / 100
+
+        return neededPosition
+    }
+    
+    private func valueFromPosition(position: CGFloat) -> CGFloat {
+        let startPosition = startIndicator.bounds.width
+        let endPosition = frame.size.width - endIndicator.bounds.width
+        
+        return (position - startPosition) * 100 / (endPosition - startPosition)
+    }
+    
+    private func getPositionLimits(with drag: DragHandleChoice) -> (min: CGFloat, max: CGFloat) {
+        if drag == .start {
+            return (
+                positionFromValue(value: self.endPercentage - valueFromSeconds(seconds: self.minSpace)),
+                positionFromValue(value: self.endPercentage - valueFromSeconds(seconds: self.maxSpace))
+            )
+        } else {
+            return (
+                positionFromValue(value: self.startPercentage + valueFromSeconds(seconds: self.minSpace)),
+                positionFromValue(value: self.startPercentage + valueFromSeconds(seconds: self.maxSpace))
+            )
+        }
+    }
+    
+    private func checkEdgeCasesForPosition(with position: CGFloat, and positionLimit: CGFloat, and drag: DragHandleChoice) -> CGFloat {
+        if drag == .start {
+            if Float(self.duration) < self.minSpace {
+                return 0
+            } else {
+                if position > positionLimit {
+                    return positionLimit
+                }
+            }
+        } else {
+            if Float(self.duration) < self.minSpace {
+                return self.frame.size.width
+            } else {
+                if position < positionLimit {
+                    return positionLimit
+                }
+            }
+        }
+        
+        return position
+    }
+    
+    private func secondsFromValue(value: CGFloat) -> Float64 {
+        return duration * Float64((value / 100))
+    }
+
+    private func valueFromSeconds(seconds: Float) -> CGFloat {
+        guard duration > 0 else {
+            return 0
+        }
+        
+        return CGFloat(seconds * 100) / CGFloat(duration)
+    }
+    
+    private func updateGestureStatus(recognizer: UIGestureRecognizer) {
+        if recognizer.state == .began {
+            self.isReceivingGesture = true
+        } else if recognizer.state == .ended {
+            self.isReceivingGesture = false
+        }
+    }
+
+}

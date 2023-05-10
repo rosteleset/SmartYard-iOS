@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 03.04.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable line_length
 
 import UIKit
 import RxCocoa
@@ -225,11 +226,7 @@ extension PayContractViewController: UICollectionViewDataSource {
         let paymentSubject = PublishSubject<Void>()
         
         paymentSubject
-            .map { (
-                data[indexPath.row].account.clientId,
-                data[indexPath.row].account.payAdvice,
-                data[indexPath.row].account.contractName
-            ) }
+            .map { (data[indexPath.row].account.clientId, data[indexPath.row].account.payAdvice, data[indexPath.row].account.contractName) }
             .bind(to: payContractTrigger)
             .disposed(by: cell.disposeBag)
         

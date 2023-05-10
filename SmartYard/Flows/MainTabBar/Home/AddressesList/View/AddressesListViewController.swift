@@ -5,6 +5,7 @@
 //  Created by admin on 06/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable file_length function_body_length closure_body_length
 
 import UIKit
 import RxSwift
@@ -78,7 +79,6 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         }
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
         let itemSelected = collectionView.rx.itemSelected
             .map { [weak self] indexPath in
@@ -200,9 +200,11 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
                     self?.collectionView.isHidden = shouldBlockInteraction
                     self?.skeletonContainer.isHidden = !shouldBlockInteraction
                     
-                    shouldBlockInteraction ?
-                        self?.skeletonContainer.showSkeletonAsynchronously() :
+                    if shouldBlockInteraction {
+                        self?.skeletonContainer.showSkeletonAsynchronously()
+                    } else {
                         self?.skeletonContainer.hideSkeleton()
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -285,7 +287,6 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
         self.dataSource = dataSource
     }
     
-    // swiftlint:disable:next function_body_length
     private func configureCell(
         collectionView: UICollectionView,
         indexPath: IndexPath,

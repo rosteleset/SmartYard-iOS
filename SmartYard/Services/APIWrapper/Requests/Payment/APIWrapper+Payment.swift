@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 14.05.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable line_length
 
 import Foundation
 import RxSwift
@@ -57,7 +58,6 @@ extension APIWrapper {
             paymentToken: paymentToken
         )
 
-        
         return provider.rx
             .request(.sberbankPayProcess(request: request))
             .convertNoConnectionError()
@@ -69,13 +69,13 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
         
-        //TODO
+        // TODO
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
         let request = SberbankRegisterRequest(
-            accessToken: accessToken, //TODO
+            accessToken: accessToken, // TODO
             userName: Constants.sberbankAPILogin,
             password: Constants.sberbankAPIPassword,
             orderNumber: orderNumber,
@@ -84,7 +84,6 @@ extension APIWrapper {
             failUrl: Constants.sberbankFailureReturnURL
         )
 
-        
         return provider.rx
             .request(.sberbankRegister(request: request))
             .convertNoConnectionError()

@@ -5,6 +5,8 @@
 //  Created by Mad Brains on 27.04.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length cyclomatic_complexity
+// swiftlint:disable closure_body_length line_length file_length
 
 import Foundation
 import XCoordinator
@@ -16,7 +18,6 @@ import RxDataSources
 typealias FlatId = Int
 typealias AvailableDays = [FlatId: PlogDaysResponseData] // [FlatId: [APIPlogDay]]
 
-// swiftlint:disable:next type_body_length
 class HistoryViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
@@ -78,7 +79,6 @@ class HistoryViewModel: BaseViewModel {
     /// таблица лиц по квартирам
     private var listFaces: [FlatId: GetPersonFacesResponseData] = [:]
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity 
     init(
         apiWrapper: APIWrapper,
         houseId: String? = nil,
@@ -88,7 +88,7 @@ class HistoryViewModel: BaseViewModel {
         router: WeakRouter<HistoryRoute>
     ) {
         self.apiWrapper = apiWrapper
-        self.houseId = try( houseId?.components(separatedBy: "_")[0]) ?? nil
+        self.houseId = houseId?.components(separatedBy: "_")[0]
 //        self.houseId = houseId
         self.flatId = flatId
         self.router = router
@@ -178,7 +178,6 @@ class HistoryViewModel: BaseViewModel {
             .asDriverOnErrorJustComplete()
             .debounce(.milliseconds(100))
             .drive(
-                // swiftlint:disable:next closure_body_length
                 onNext: { [weak self] _ in
                     guard let self = self else {
                         return
@@ -206,7 +205,6 @@ class HistoryViewModel: BaseViewModel {
                         // удаляеем даты в которых нет ни одной записи
                         .filter { !$0.items.isEmpty }
                         // сами элементы в секциях фильтруем в соответствии с фильтром отображаемых событий
-                        // swiftlint:disable:next closure_body_length
                         .map { (day: Date, items: [APIPlog]) -> (day: Date, items: [APIPlog]) in
                             let itemsFiltered = items.filter {
                                 // если выбраны "все" события в фильтре, то не фильтруем совсем
@@ -244,11 +242,15 @@ class HistoryViewModel: BaseViewModel {
                                 state: .loaded,
                                 items: items
                                     .enumerated()
-                                    // поскольку RxDataSource определяет небходимость обновлять ячейки по изменению их содержимого,
-                                    // то приходится в элементах хранить атрибут позиции внутри секции, чтобы TableView правильно перерисовывал
-                                    // закругления и управлял отображением заголовка секции в каждой первой ячейке.
-                                    .map { // RxDataSource отслеживает изменения данных по identity, поэтому,
-                                            // чтобы при изменении flags данные обновлялись, пришлось замиксовать uuid и flags в идентификатор
+                                    // поскольку RxDataSource определяет небходимость обновлять
+                                    // ячейки по изменению их содержимого, то приходится
+                                    // в элементах хранить атрибут позиции внутри секции,
+                                    // чтобы TableView правильно перерисовывал закругления
+                                    // и управлял отображением заголовка секции в каждой первой ячейке.
+                                    .map {
+                                        // RxDataSource отслеживает изменения данных по identity, поэтому,
+                                        // чтобы при изменении flags данные обновлялись,
+                                        // пришлось замиксовать uuid и flags в идентификатор
                                         HistoryDataItem(
                                             identity: $0.element.uuid + String(($0.element.detailX?.flags ?? []).joined(separator: ":")).md5,
                                             order: self.orderOf(row: $0.offset, count: items.count),
@@ -257,7 +259,8 @@ class HistoryViewModel: BaseViewModel {
                                     }
                             )
                         }
-                        // удаляем секции тех дней, для которых из-за фильтра по типу событий не оказалось ни одной записи
+                        // удаляем секции тех дней, для которых из-за фильтра по типу событий
+                        // не оказалось ни одной записи
                         .filter { $0.items.isEmpty == false }
                         
                     self.sections.accept(result)
@@ -290,7 +293,7 @@ class HistoryViewModel: BaseViewModel {
                         .trackError(self.errorTracker)
                         .trackActivity(self.activityTracker)
                         // поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
-                        .map { $0 == nil ?  nil : [flatId: $0!] }
+                        .map { $0 == nil ? nil : [flatId: $0!] }
                         .asDriver(onErrorJustReturn: [flatId: []])
                         .drive { result in
                             results.onNext(result)
@@ -320,7 +323,7 @@ class HistoryViewModel: BaseViewModel {
                     self.apiWrapper.getPersonFaces(flatId: flatId, forceRefresh: forceRefresh)
                         .trackError(self.errorTracker)
                         // поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
-                        .map { $0 == nil ?  nil : [flatId: $0!] }
+                        .map { $0 == nil ? nil : [flatId: $0!] }
                         .asDriver(onErrorJustReturn: [flatId: []])
                         .drive { result in
                             results.onNext(result)
@@ -345,7 +348,8 @@ class HistoryViewModel: BaseViewModel {
             .disposed(by: disposeBag)
             
         // мы знаем только id дома, а логи запрашиваются для id квартиры,
-        // поэтому получаем список настроек чтобы понять по id дома идентификатор первой доступной квартиры в данном доме
+        // поэтому получаем список настроек чтобы понять по id дома
+        // идентификатор первой доступной квартиры в данном доме
         // на будущее надо заменить на запросы логов для каждой квартиры.
         let getSettingsAddresses = apiWrapper.getSettingsAddresses()
             .trackError(errorTracker)
@@ -371,10 +375,9 @@ class HistoryViewModel: BaseViewModel {
                     
                     self.flatIds = [flatId]
                     self.flatNumbers = [0]
-                    print("!!!!!! DEBUG !!!!!!",self.flatIds)
-                    print("!!!!!! DEBUG !!!!!!",self.flatNumbers)
                     self.apptsFilter.accept(self.flatIds)
-                    // изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
+                    // изменение фильтра запустит запрос списков дат для квартир,
+                    // поэтому больше ничего отсюда уже можно не дёргать
                 }
                 .disposed(by: disposeBag)
         } else {
@@ -387,8 +390,7 @@ class HistoryViewModel: BaseViewModel {
                     self.camMap.accept(camMap)
 
                     // получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
-                    self.flatIds = args.filtered(
-                        { address in // swiftlint:disable:this opening_brace
+                    self.flatIds = args.filtered( { address in
                             return address.houseId == self.houseId && address.hasPlog
                         },
                         map: { address in
@@ -398,19 +400,19 @@ class HistoryViewModel: BaseViewModel {
                     .withoutDuplicates()
                     
                     // получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
-                    self.flatNumbers = args.filtered({ $0.houseId == self.houseId  && $0.hasPlog }, map: { (Int($0.flatNumber!) ?? -1) }).withoutDuplicates()
+                    self.flatNumbers = args.filtered({ $0.houseId == self.houseId && $0.hasPlog }, map: { (Int($0.flatNumber!) ?? -1) }).withoutDuplicates()
                     
-                    print("!!!!!! DEBUG !!!!!!",self.flatIds)
-                    print("!!!!!! DEBUG !!!!!!",self.flatNumbers)
                     // по умолчанию фильтр содержит все доступные квартиры
                     self.apptsFilter.accept(self.flatIds)
                     
-                    // изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
+                    // изменение фильтра запустит запрос списков дат для квартир,
+                    // поэтому больше ничего отсюда уже можно не дёргать
                 }
                 .disposed(by: disposeBag)
         }
         
-        // если события изменились, то обновляем данные (dataCache не обнуляется при этом, а вот список лиц при этом обновится с сервера)
+        // если события изменились, то обновляем данные (dataCache не обнуляется при этом,
+        // а вот список лиц при этом обновится с сервера)
         NotificationCenter.default.rx.notification(.updateEvent)
             .asDriverOnErrorJustComplete()
             .drive(
@@ -436,7 +438,6 @@ class HistoryViewModel: BaseViewModel {
         
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         
         input.backTrigger
@@ -491,7 +492,7 @@ class HistoryViewModel: BaseViewModel {
                     
                     self.apiWrapper.plog(flatId: flatId, fromDate: day, forceRefresh: self.forceRefresh)
                         .trackError(self.errorTracker)
-                        .map { $0 == nil ?  nil : (day: day, items: $0!, flatId: Int(flatId) ) }
+                        .map { $0 == nil ? nil : (day: day, items: $0!, flatId: Int(flatId)) }
                         .asDriver(onErrorJustReturn: nil)
                         .ignoreNil()
                         .drive { result in
@@ -549,7 +550,7 @@ class HistoryViewModel: BaseViewModel {
         
         return nil
     }
-    // swiftlint:disable:next function_body_length
+    
     func transform(_ input: InputDetail) -> OutputDetail {
         
         input.backTrigger
@@ -566,7 +567,6 @@ class HistoryViewModel: BaseViewModel {
         
         input.loadDay
             .distinctUntilChanged()
-            // swiftlint:disable:next closure_body_length
             .flatMap { [weak self] day -> Driver<DayFlatItemsData?> in
                     
                 guard let self = self else {
@@ -603,7 +603,7 @@ class HistoryViewModel: BaseViewModel {
                     
                     self.apiWrapper.plog(flatId: flatId, fromDate: day, forceRefresh: self.forceRefresh)
                         .trackError(self.errorTracker)
-                        .map { $0 == nil ?  nil : (day: day, items: $0!, flatId: Int(flatId) ) }
+                        .map { $0 == nil ? nil : (day: day, items: $0!, flatId: Int(flatId)) }
                         .asDriver(onErrorJustReturn: nil)
                         .ignoreNil()
                         .drive { result in
@@ -709,7 +709,7 @@ extension HistoryViewModel {
             switch row {
             case 0:
                 return count == 1 ? .single : .first
-            case count - 1 :
+            case count - 1:
                 return .last
             default:
                 return .regular

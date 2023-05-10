@@ -32,7 +32,6 @@ class FakeNavBar: PMNibLinkableView {
 extension Reactive where Base: FakeNavBar {
     
     var backButtonTap: ControlEvent<Void> {
-        print("DEBUG - tap")
         return base.backButton.rx.tap
     }
     

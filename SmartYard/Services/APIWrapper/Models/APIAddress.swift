@@ -35,7 +35,6 @@ struct APIAddress: Decodable {
         
         houseId = String(hid) + "_" + address
 
-        
         doors = (try? container.decode([APIDoor].self, forKey: .doors)) ?? []
         cctv = (try? container.decode(Int.self, forKey: .cctv)) ?? 0
         

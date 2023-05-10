@@ -5,6 +5,7 @@
 //  Created by admin on 02.06.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length cyclomatic_complexity closure_body_length line_length
 
 import XCoordinator
 import RxSwift
@@ -38,7 +39,6 @@ class PlayArchiveVideoViewModel: BaseViewModel {
         self.ranges = availableRanges
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         

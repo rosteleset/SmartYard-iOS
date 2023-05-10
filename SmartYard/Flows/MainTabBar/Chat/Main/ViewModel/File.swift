@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 import WebKit
 
-
 class ChatWootViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
@@ -37,9 +36,6 @@ class ChatWootViewModel: BaseViewModel {
         super.init()
                        
     }
-    
-
-    
 }
 
 extension ChatViewModel {

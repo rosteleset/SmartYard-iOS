@@ -68,6 +68,8 @@
 	<string>Доступ к местоположению позволит отобразить Вашу позицию на карте</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Доступ к микрофону нужен для передачи звука во время звонка</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Доступ к библиотеке фотографий, позволяет передавать в чат техподдержки фотоматериалы</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>SYOpenDoorIntent</string>

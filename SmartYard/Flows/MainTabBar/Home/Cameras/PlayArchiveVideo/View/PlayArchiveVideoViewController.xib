@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -31,6 +31,7 @@
                 <outlet property="fullscreenButton" destination="sTb-NK-D3v" id="3aT-kW-RWt"/>
                 <outlet property="mainContainerToAnotherLabelConstraint" destination="ox8-xt-pbO" id="zw6-hv-O3B"/>
                 <outlet property="mainContainerToVideoLabelConstraint" destination="aAK-FQ-Pji" id="YIf-Gu-rxG"/>
+                <outlet property="muteButton" destination="4jL-nF-pbg" id="Lls-Th-UDC"/>
                 <outlet property="nextSpeedButton" destination="fr5-Hf-wxY" id="eXW-NV-SNT"/>
                 <outlet property="periodCollectionView" destination="8od-sE-j0B" id="WpC-H6-pGy"/>
                 <outlet property="playButton" destination="5f4-F5-jna" id="dzY-fn-tKq"/>
@@ -61,14 +62,14 @@
                     <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOo-JF-vkg" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="44" width="390" height="44"/>
+                    <rect key="frame" x="0.0" y="47" width="390" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Q1A-uw-tf3"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dqz-l5-6XG">
-                    <rect key="frame" x="16" y="100" width="358" height="41"/>
+                    <rect key="frame" x="16" y="103" width="358" height="41"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="2f7-hX-NGA"/>
                     </constraints>
@@ -77,7 +78,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0x5-ZA-ub8">
-                    <rect key="frame" x="16" y="100" width="358" height="41"/>
+                    <rect key="frame" x="16" y="103" width="358" height="41"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="DTh-B0-A8g"/>
                     </constraints>
@@ -86,7 +87,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Nk-mk-3jm" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="181" width="390" height="629"/>
+                    <rect key="frame" x="0.0" y="184" width="390" height="626"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oe3-0L-wZ8">
                             <rect key="frame" x="16" y="16" width="358" height="201.33333333333334"/>
@@ -94,6 +95,16 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbA-7j-j0f" userLabel="RealVideoContainer">
                                     <rect key="frame" x="0.0" y="0.0" width="358" height="201.33333333333334"/>
                                     <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jL-nF-pbg">
+                                            <rect key="frame" x="12" y="12" width="16" height="16"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="16" id="I4H-9q-qCi"/>
+                                                <constraint firstAttribute="width" constant="16" id="fNR-5r-UHY"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="volumeOff"/>
+                                        </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTb-NK-D3v">
                                             <rect key="frame" x="330" y="12" width="16" height="11"/>
                                             <constraints>
@@ -121,6 +132,8 @@
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
+                                        <constraint firstItem="4jL-nF-pbg" firstAttribute="top" secondItem="gbA-7j-j0f" secondAttribute="top" constant="12" id="0Bd-aS-2y7"/>
+                                        <constraint firstItem="4jL-nF-pbg" firstAttribute="leading" secondItem="gbA-7j-j0f" secondAttribute="leading" constant="12" id="58O-lI-bBN"/>
                                         <constraint firstItem="lT9-Mp-zMH" firstAttribute="centerY" secondItem="gbA-7j-j0f" secondAttribute="centerY" id="HC6-OG-DP2"/>
                                         <constraint firstItem="lT9-Mp-zMH" firstAttribute="centerX" secondItem="gbA-7j-j0f" secondAttribute="centerX" id="ccR-su-Jdt"/>
                                         <constraint firstAttribute="trailing" secondItem="sTb-NK-D3v" secondAttribute="trailing" constant="12" id="fee-1l-zlX"/>
@@ -162,10 +175,10 @@
                                 <constraint firstAttribute="bottom" secondItem="iCv-cW-g6T" secondAttribute="bottom" id="7lc-oP-Pqj"/>
                                 <constraint firstItem="gbA-7j-j0f" firstAttribute="top" secondItem="Oe3-0L-wZ8" secondAttribute="top" id="JG5-9o-8eq"/>
                                 <constraint firstItem="iCv-cW-g6T" firstAttribute="top" secondItem="Oe3-0L-wZ8" secondAttribute="top" id="TwY-JK-ZLe"/>
-                                <constraint firstAttribute="width" secondItem="Oe3-0L-wZ8" secondAttribute="height" multiplier="16:9" id="YS3-A7-0LO"/>
                                 <constraint firstItem="gbA-7j-j0f" firstAttribute="leading" secondItem="Oe3-0L-wZ8" secondAttribute="leading" id="Yfg-4v-fqd"/>
                                 <constraint firstAttribute="trailing" secondItem="iCv-cW-g6T" secondAttribute="trailing" id="Yje-cC-cGi"/>
                                 <constraint firstItem="iCv-cW-g6T" firstAttribute="leading" secondItem="Oe3-0L-wZ8" secondAttribute="leading" id="mjZ-fD-q4R"/>
+                                <constraint firstAttribute="width" secondItem="Oe3-0L-wZ8" secondAttribute="height" multiplier="16:9" id="qJ6-82-bSD"/>
                                 <constraint firstAttribute="bottom" secondItem="gbA-7j-j0f" secondAttribute="bottom" id="qaj-n0-9OK"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
@@ -188,10 +201,10 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwK-tW-GMy" userLabel="ButtonsCentering">
-                            <rect key="frame" x="0.0" y="321.33333333333331" width="390" height="195.66666666666669"/>
+                            <rect key="frame" x="0.0" y="321.33333333333331" width="390" height="192.66666666666669"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="25D-Cj-lb4" userLabel="PreviewButtonsContainer">
-                                    <rect key="frame" x="40" y="64.000000000000057" width="310" height="68"/>
+                                    <rect key="frame" x="40" y="62.333333333333314" width="310" height="68"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UDc-4s-ZnY">
                                             <rect key="frame" x="20" y="16" width="39" height="36"/>
@@ -226,10 +239,10 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I2I-wA-dkd" userLabel="EditButtonsContainer">
-                                    <rect key="frame" x="40" y="64.000000000000057" width="310" height="68"/>
+                                    <rect key="frame" x="40" y="62.333333333333314" width="310" height="68"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CPg-RE-9lw">
-                                            <rect key="frame" x="0.0" y="10.333333333333258" width="47" height="47"/>
+                                            <rect key="frame" x="0.0" y="10.666666666666742" width="47" height="47"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="47" id="2n4-u2-JCo"/>
                                                 <constraint firstAttribute="height" constant="47" id="q9x-fP-zfQ"/>
@@ -237,7 +250,7 @@
                                             <state key="normal" image="FastBackward"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eey-Hz-Pq4">
-                                            <rect key="frame" x="263" y="10.333333333333258" width="47" height="47"/>
+                                            <rect key="frame" x="263" y="10.666666666666742" width="47" height="47"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="47" id="kNq-R5-b8M"/>
                                                 <constraint firstAttribute="width" constant="47" id="ss7-OW-qQT"/>
@@ -282,7 +295,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JBH-Xw-Dmj" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="40" y="537" width="310" height="60"/>
+                            <rect key="frame" x="40" y="534" width="310" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" priority="999" constant="60" id="T7m-MH-yug"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="zO7-GK-WKz"/>
@@ -292,7 +305,7 @@
                             <state key="normal" title="Загрузить и получить ссылку"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkd-4A-ePf" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="40" y="537" width="310" height="60"/>
+                            <rect key="frame" x="40" y="534" width="310" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" priority="999" constant="60" id="0Wl-IZ-B7H"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="xab-LC-QE7"/>
@@ -361,6 +374,7 @@
         <image name="FastForward" width="47" height="47"/>
         <image name="Fullscreen" width="16" height="11"/>
         <image name="MainBackground" width="375" height="812"/>
+        <image name="volumeOff" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

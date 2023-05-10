@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,9 +13,11 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatwootPreviewController" customModule="SmartYard" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatwootSelectChatController" customModule="SmartYard" customModuleProvider="target">
             <connections>
-                <outlet property="chatwootView" destination="Va0-eR-c0F" id="41I-xn-Uum"/>
+                <outlet property="collectionView" destination="OvU-at-ANt" id="bfu-He-HAt"/>
+                <outlet property="mainContainerView" destination="n8q-GS-Qe3" id="HoS-Z1-JbO"/>
+                <outlet property="skeletonContainer" destination="XDN-Wh-rth" id="MN6-R9-gYS"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -27,17 +29,17 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="5Pz-Zp-1ER">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Техподдержка" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Heg-K3-tM4">
-                    <rect key="frame" x="16" y="100" width="221.5" height="37.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Чаты" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Heg-K3-tM4">
+                    <rect key="frame" x="16" y="104" width="76" height="37.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n8q-GS-Qe3">
-                    <rect key="frame" x="0.0" y="177.5" width="414" height="684.5"/>
+                    <rect key="frame" x="0.0" y="181.5" width="414" height="680.5"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="OvU-at-ANt">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="684.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="680.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aeM-NL-B3v" customClass="JumpAvoidingFlowLayout" customModule="SmartYard" customModuleProvider="target">
                                 <size key="itemSize" width="50" height="50"/>
@@ -46,16 +48,45 @@
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
-                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Va0-eR-c0F" customClass="ChatwootView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="47" y="150" width="320" height="347"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XDN-Wh-rth" userLabel="Skeleton Container">
+                            <rect key="frame" x="16" y="24" width="382" height="128"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="ANx-1T-0oa" customClass="ChatListSkeletonView" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="128"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                                            <real key="value" value="12"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
+                                            <color key="value" red="0.94117647059999998" green="0.94117647059999998" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="ANx-1T-0oa" secondAttribute="bottom" id="Qk6-aD-4w0"/>
+                                <constraint firstAttribute="trailing" secondItem="ANx-1T-0oa" secondAttribute="trailing" id="W6n-jh-l0E"/>
+                                <constraint firstItem="ANx-1T-0oa" firstAttribute="top" secondItem="XDN-Wh-rth" secondAttribute="top" id="auk-tf-pCD"/>
+                                <constraint firstItem="ANx-1T-0oa" firstAttribute="leading" secondItem="XDN-Wh-rth" secondAttribute="leading" id="pkB-DY-Bui"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                            </userDefinedRuntimeAttributes>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="OvU-at-ANt" firstAttribute="top" secondItem="n8q-GS-Qe3" secondAttribute="top" id="8lI-jL-Tm2"/>
+                        <constraint firstItem="XDN-Wh-rth" firstAttribute="top" secondItem="n8q-GS-Qe3" secondAttribute="top" constant="24" id="9gb-xz-cwM"/>
                         <constraint firstAttribute="bottom" secondItem="OvU-at-ANt" secondAttribute="bottom" id="Vuq-cP-2qf"/>
+                        <constraint firstItem="XDN-Wh-rth" firstAttribute="leading" secondItem="n8q-GS-Qe3" secondAttribute="leading" constant="16" id="a5N-QO-1cP"/>
+                        <constraint firstAttribute="trailing" secondItem="XDN-Wh-rth" secondAttribute="trailing" constant="16" id="gDr-uc-MIK"/>
                         <constraint firstItem="OvU-at-ANt" firstAttribute="leading" secondItem="n8q-GS-Qe3" secondAttribute="leading" id="ojz-GD-6cT"/>
                         <constraint firstAttribute="trailing" secondItem="OvU-at-ANt" secondAttribute="trailing" id="ucU-xN-BBo"/>
                     </constraints>

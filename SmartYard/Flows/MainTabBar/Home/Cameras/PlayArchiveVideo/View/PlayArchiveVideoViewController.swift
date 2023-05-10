@@ -5,6 +5,8 @@
 //  Created by admin on 02.06.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length cyclomatic_complexity
+// swiftlint:disable closure_body_length line_length file_length
 
 import UIKit
 import RxSwift
@@ -14,7 +16,6 @@ import JGProgressHUD
 import TouchAreaInsets
 import Lottie
 
-// swiftlint:disable:next type_body_length
 class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     enum Mode {
@@ -40,6 +41,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var periodCollectionView: UICollectionView!
     @IBOutlet private weak var previewButtonsContainer: UIView!
     @IBOutlet private weak var playButton: UIButton!
+    @IBOutlet private weak var muteButton: UIButton!
     @IBOutlet private weak var selectFragmentButton: BlueButton!
     
     @IBOutlet private weak var realVideoContainer: UIView!
@@ -135,6 +137,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         configureSpeedButtons()
         configureSelectFragmentButton()
         configureRealVideoPlayer()
+        configureMuteButton()
         configureFullscreenButton()
         
         preferredPlaybackSpeedConfig = .normal
@@ -309,7 +312,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         self.periodicTimeObserver = nil
     }
     
-    // swiftlint:disable:next function_body_length
     private func configureRealVideoPlayer() {
         let player = AVQueuePlayer()
         self.realVideoPlayer = player
@@ -319,15 +321,12 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         }
         
         realVideoPlayerLayer = AVPlayerLayer(player: player)
-        realVideoContainer.bounds = CGRect(x: 0, y: 0, width: realVideoContainer.frame.width, height: realVideoContainer.frame.width / 16 * 9)
         realVideoContainer.layer.insertSublayer(realVideoPlayerLayer!, at: 0)
-
         realVideoPlayerLayer?.frame = realVideoContainer.bounds
-
         realVideoPlayerLayer?.removeAllAnimations()
         realVideoPlayerLayer?.backgroundColor = UIColor.black.cgColor
         realVideoPlayerLayer?.videoGravity = .resizeAspectFill
-//        realVideoPlayerLayer?.player?.isMuted = true
+        realVideoPlayerLayer?.player?.isMuted = true
 
         // MARK: Настройка лоадера
         
@@ -353,6 +352,15 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     playerLayer.frame = self.realVideoContainer.bounds
                     playerLayer.removeAllAnimations()
                     playerLayer.videoGravity = .resizeAspectFill
+
+                    if let player = playerLayer.player,
+                       player.isMuted {
+                        self.muteButton.setImage(UIImage(named: "volumeOff"), for: .normal)
+                        self.muteButton.setImage(UIImage(named: "volumeOff")?.darkened(), for: [.normal, .highlighted])
+                    } else {
+                        self.muteButton.setImage(UIImage(named: "volumeOn"), for: .normal)
+                        self.muteButton.setImage(UIImage(named: "volumeOn")?.darkened(), for: [.normal, .highlighted])
+                    }
 
                     self.realVideoContainer.insertSubview(self.progressSlider, at: 2)
 
@@ -416,6 +424,39 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
 
     }
     
+    private func configureMuteButton() {
+        
+        muteButton.setImage(UIImage(named: "volumeOff"), for: .normal)
+        muteButton.setImage(UIImage(named: "volumeOff")?.darkened(), for: [.normal, .highlighted])
+        
+        muteButton.touchAreaInsets = UIEdgeInsets(inset: 12)
+        
+        // MARK: При нажатии на кнопку mute включаем или выключаем звук
+        
+        muteButton.rx.tap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    guard let playerLayer = self?.realVideoPlayerLayer else {
+                        return
+                    }
+                    
+                    playerLayer.player?.isMuted = !(playerLayer.player?.isMuted ?? true)
+                    
+                    if let player = playerLayer.player,
+                       player.isMuted {
+                        self?.muteButton.setImage(UIImage(named: "volumeOff"), for: .normal)
+                        self?.muteButton.setImage(UIImage(named: "volumeOff")?.darkened(), for: [.normal, .highlighted])
+                    } else {
+                        self?.muteButton.setImage(UIImage(named: "volumeOn"), for: .normal)
+                        self?.muteButton.setImage(UIImage(named: "volumeOn")?.darkened(), for: [.normal, .highlighted])
+                    }
+
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+
     private func configureFullscreenButton() {
         fullscreenButton.setImage(UIImage(named: "Fullscreen"), for: .normal)
         fullscreenButton.setImage(UIImage(named: "Fullscreen")?.darkened(), for: [.normal, .highlighted])
@@ -433,12 +474,13 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                           let progressSlider = self.progressSlider else {
                         return
                     }
-                    
+                    let playerposition = playerLayer.superview?.convert(playerLayer.frame, to: nil)
                     playerLayer.removeFromSuperlayer()
                     
                     let fullscreenVc = FullscreenPlayerViewController(
                         playedVideoType: .archive,
-                        preferredPlaybackRate: self.preferredPlaybackSpeedConfig.value
+                        preferredPlaybackRate: self.preferredPlaybackSpeedConfig.value,
+                        position: playerposition
                     )
                     
                     fullscreenVc.modalPresentationStyle = .overFullScreen
@@ -449,7 +491,14 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     for constraint in self.sliderConstraints {
                         constraint.isActive = false
                     }
-                    self.present(fullscreenVc, animated: true)
+                    self.present(fullscreenVc, animated: true) {
+                        if let player = playerLayer.player,
+                           player.isMuted {
+                            fullscreenVc.setMuteButton(icon: "volumeOff")
+                        } else {
+                            fullscreenVc.setMuteButton(icon: "volumeOn")
+                        }
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -463,7 +512,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         rangeSlider.delegate = self
     }
     
-    // swiftlint:disable:next function_body_length
     private func configureUIBindings() {
         Driver
             .combineLatest(
@@ -520,7 +568,11 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 onNext: { [weak self] isLoading in
                     self?.videoLoadingAnimationView.isHidden = !isLoading
                     
-                    isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
+                    if isLoading {
+                        self?.videoLoadingAnimationView.play()
+                    } else {
+                        self?.videoLoadingAnimationView.stop()
+                    }
                     
                     guard !isLoading else {
                         return
@@ -544,7 +596,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         for asset in self.assetArray {
                             let playerItem = AVPlayerItem(asset: asset)
                             
-                            // Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
+                            // Необходимо для того, чтобы в HLS потоке мог быть выбран поток
+                            // с разрешением превышающим разрешение экрана телефона
                             playerItem.preferredMaximumResolution = CGSize(width: 3840, height: 2160)
                             
                             if let realVideoPlayer = self.realVideoPlayer,
@@ -568,6 +621,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         }
         
         fullscreenButton.isHidden = mode == .edit || !isVideoValid
+        muteButton.isHidden = mode == .edit || !isVideoValid
         progressSlider.isHidden = mode == .edit || !isVideoValid
         playButton.isEnabled = mode == .preview && isVideoValid
         
@@ -587,13 +641,14 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         editDateLabel.isHidden = mode == .preview
         
         buttonsToCollectionViewConstraint.isActive = mode == .preview
-        
+
         if mode == .edit {
             realVideoPlayer?.rate = 0
+        } else {
+            realVideoPlayerLayer?.frame = realVideoContainer.bounds
         }
     }
 
-    // swiftlint:disable:next function_body_length
     private func bind() {
         let input = PlayArchiveVideoViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
@@ -1067,7 +1122,8 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
             for asset in self.assetArray.dropFirst(destIndex ?? 0) {
                 let playerItem = AVPlayerItem(asset: asset)
                 
-                // Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
+                // Необходимо для того, чтобы в HLS потоке мог быть выбран поток
+                // с разрешением превышающим разрешение экрана телефона
                 playerItem.preferredMaximumResolution = CGSize(width: 3840, height: 2160)
                 
                 if let realVideoPlayer = self.realVideoPlayer,
@@ -1134,5 +1190,4 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
             break
         }
     }
-    // swiftlint:disable:next file_length
 }

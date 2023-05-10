@@ -110,7 +110,7 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         guard shouldReloadOnAppear else {
             return
         }
@@ -122,10 +122,10 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        guard shouldReloadOnAppear else {
-            return
-        }
+
+//        guard shouldReloadOnAppear else {
+//            return
+//        }
         
         shouldReloadOnAppear = false
         
@@ -140,6 +140,7 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
     
     func setAvailableRanges(_ ranges: [APIArchiveRange]?) {
         availableRanges = ranges
+        
     }
     
     private func bind() {
@@ -189,11 +190,11 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         // MARK: Заголовок
         
         let formatter = DateFormatter()
-        
+
         formatter.timeZone = Calendar.novokuznetskCalendar.timeZone
         formatter.locale = Calendar.novokuznetskCalendar.locale
         formatter.dateFormat = "LLLL"
-        
+
         let nameOfMonth = formatter.string(from: visibleDate).capitalized
         let year = Calendar.novokuznetskCalendar.component(.year, from: visibleDate)
         
@@ -265,10 +266,10 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
         headerViewForDateRange range: (start: Date, end: Date),
         at indexPath: IndexPath
     ) -> JTACMonthReusableView {
-        // swiftlint:disable force_cast
         return calendar.dequeueReusableJTAppleSupplementaryView(
             withReuseIdentifier: "WhiteSectionHeaderView",
             for: indexPath
+        // swiftlint:disable:next force_cast
         ) as! WhiteSectionHeaderView
     }
 
@@ -292,10 +293,10 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
         cellState: CellState,
         indexPath: IndexPath
     ) -> JTACDayCell {
-        // swiftlint: force_cast
         let cell = calendar.dequeueReusableJTAppleCell(
             withReuseIdentifier: "CustomDayCell",
             for: indexPath
+        // swiftlint:disable:next force_cast
         ) as! CustomDayCell
 
         configureCell(view: cell, cellState: cellState)
@@ -320,7 +321,8 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
             numberOfRows: 6,
             calendar: Calendar.novokuznetskCalendar,
             generateInDates: .forAllMonths,
-            generateOutDates: .tillEndOfGrid,
+            generateOutDates: .off,
+//            generateOutDates: .tillEndOfGrid,
             firstDayOfWeek: .monday,
             hasStrictBoundaries: true
         )

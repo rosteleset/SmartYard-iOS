@@ -5,6 +5,7 @@
 //  Created by Александр Васильев on 13.05.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length closure_body_length
 
 import UIKit
 import RxSwift
@@ -29,7 +30,6 @@ class DeleteFaceViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // swiftlint:disable:next function_body_length
     init(
         apiWrapper: APIWrapper,
         image: UIImage? = nil,
@@ -125,7 +125,8 @@ class DeleteFaceViewController: BaseViewController {
                         NotificationCenter.default.post(.init(name: .updateEvent, object: updatedEvent))
                     }
                     
-                    // уведомляю контроллеры, зависимые от списка лиц (Список лиц в настройках доступа), что он требует обновление
+                    // уведомляю контроллеры, зависимые от списка лиц
+                    // (Список лиц в настройках доступа), что он требует обновление
                     NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
                     self?.dismiss(animated: true, completion: nil)
                 }

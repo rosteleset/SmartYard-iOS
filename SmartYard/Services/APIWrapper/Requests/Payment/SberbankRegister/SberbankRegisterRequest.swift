@@ -7,7 +7,7 @@
 //
 
 struct SberbankRegisterRequest {
-    let accessToken: String //TODO
+    let accessToken: String // TODO
     let userName: String
     let password: String
     let orderNumber: String

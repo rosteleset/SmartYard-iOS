@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,6 +16,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PaymentsViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="816-NR-sjE" id="7Ck-8A-pV2"/>
+                <outlet property="mainContainerView" destination="tza-JB-CqP" id="XCf-ac-Ive"/>
                 <outlet property="skeletonContainer" destination="kS9-T1-r7s" id="UEU-cw-yOX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -25,17 +26,20 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="QRy-0g-97t">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Выберите адрес" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nis-Xa-l5N">
-                    <rect key="frame" x="16" y="84" width="382" height="40.5"/>
+                    <rect key="frame" x="16" y="104" width="382" height="37.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
-                    <color key="textColor" red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tza-JB-CqP">
-                    <rect key="frame" x="0.0" y="139.5" width="414" height="722.5"/>
+                    <rect key="frame" x="0.0" y="181.5" width="414" height="680.5"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="816-NR-sjE">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="722.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="680.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="p01-3w-Wzm">
                                 <size key="itemSize" width="50" height="50"/>
@@ -45,7 +49,7 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kS9-T1-r7s" userLabel="Skeleton Container">
-                            <rect key="frame" x="16" y="16" width="382" height="128"/>
+                            <rect key="frame" x="16" y="24" width="382" height="128"/>
                             <subviews>
                                 <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="5ey-FI-W6j" customClass="AddressesListSkeletonView" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="382" height="128"/>
@@ -82,7 +86,7 @@
                         <constraint firstAttribute="bottom" secondItem="816-NR-sjE" secondAttribute="bottom" id="BTX-Z8-vDZ"/>
                         <constraint firstAttribute="trailing" secondItem="816-NR-sjE" secondAttribute="trailing" id="D0W-wW-Os1"/>
                         <constraint firstItem="kS9-T1-r7s" firstAttribute="leading" secondItem="tza-JB-CqP" secondAttribute="leading" constant="16" id="J3i-o9-Chc"/>
-                        <constraint firstItem="kS9-T1-r7s" firstAttribute="top" secondItem="tza-JB-CqP" secondAttribute="top" constant="16" id="Wz7-Ph-MsZ"/>
+                        <constraint firstItem="kS9-T1-r7s" firstAttribute="top" secondItem="tza-JB-CqP" secondAttribute="top" constant="24" id="Wz7-Ph-MsZ"/>
                         <constraint firstAttribute="trailing" secondItem="kS9-T1-r7s" secondAttribute="trailing" constant="16" id="l9x-JX-wxn"/>
                         <constraint firstItem="816-NR-sjE" firstAttribute="leading" secondItem="tza-JB-CqP" secondAttribute="leading" id="sZz-Gt-lgR"/>
                     </constraints>
@@ -91,15 +95,22 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="tza-JB-CqP" firstAttribute="top" secondItem="nis-Xa-l5N" secondAttribute="bottom" constant="15" id="5hr-nT-0dW"/>
+                <constraint firstItem="QRy-0g-97t" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="43L-q8-Mc9"/>
+                <constraint firstItem="tza-JB-CqP" firstAttribute="top" secondItem="nis-Xa-l5N" secondAttribute="bottom" constant="40" id="5hr-nT-0dW"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="tza-JB-CqP" secondAttribute="bottom" id="O7q-xg-jFU"/>
                 <constraint firstItem="tza-JB-CqP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Pcf-wc-2Tr"/>
                 <constraint firstAttribute="trailing" secondItem="tza-JB-CqP" secondAttribute="trailing" id="R5d-Rr-ARu"/>
-                <constraint firstItem="nis-Xa-l5N" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="c1l-Bx-nJq"/>
+                <constraint firstItem="QRy-0g-97t" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Yq1-hI-gfL"/>
+                <constraint firstItem="QRy-0g-97t" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="agT-mF-dXx"/>
+                <constraint firstItem="nis-Xa-l5N" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="56" id="c1l-Bx-nJq"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="nis-Xa-l5N" secondAttribute="trailing" constant="16" id="dEr-eD-xxy"/>
+                <constraint firstItem="QRy-0g-97t" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="jsk-C1-062"/>
                 <constraint firstItem="nis-Xa-l5N" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="mxc-f8-Z4N"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="107.8125"/>
         </view>
     </objects>
+    <resources>
+        <image name="MainBackground" width="375" height="812"/>
+    </resources>
 </document>

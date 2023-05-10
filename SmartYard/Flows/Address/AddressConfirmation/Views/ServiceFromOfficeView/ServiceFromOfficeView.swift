@@ -35,7 +35,7 @@ class ServiceFromOfficeView: PMNibLinkableView {
         )
         let options = MapInitOptions(
             cameraOptions: cameraOptions,
-            styleURI: StyleURI(url: URL(string: "mapbox://styles/mapbox/streets-v11")!)
+            styleURI: StyleURI(url: URL(string: "mapbox://styles/mapbox/streets-v12")!)
         )
         mapView = MapView(frame: containerView.bounds, mapInitOptions: options)
         mapView.translatesAutoresizingMaskIntoConstraints = false

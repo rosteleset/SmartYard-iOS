@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 14.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length line_length
 
 import UIKit
 import RxCocoa
@@ -88,7 +89,6 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
         skeletonView.showSkeletonAsynchronously()
     }
     
-    // swiftlint:disable:next function_body_length
     private func bind() {
         let input = AddressAccessViewModel.Input(
             viewDidAppearTrigger: rx.viewWillAppear.asDriverOnErrorJustComplete(),

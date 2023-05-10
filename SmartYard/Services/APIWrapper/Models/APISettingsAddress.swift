@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 25.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable cyclomatic_complexity line_length
 
 struct APISettingsAddress: Decodable {
     

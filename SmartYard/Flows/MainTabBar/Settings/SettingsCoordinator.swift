@@ -5,10 +5,11 @@
 //  Created by admin on 06/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length cyclomatic_complexity
 
 import XCoordinator
 import SafariServices
-//import Lottie
+// import Lottie
 
 enum SettingsRoute: Route {
     
@@ -69,7 +70,6 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     override func prepareTransition(for route: SettingsRoute) -> NavigationTransition {
         switch route {
         case .main:

@@ -4,6 +4,8 @@
 //
 //  Created by Александр Васильев on 14.02.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
+//
+// swiftlint:disable type_body_length function_body_length closure_body_length file_length
 
 import UIKit
 import JGProgressHUD
@@ -20,9 +22,8 @@ class CityCameraViewController: BaseViewController {
     enum ViewState {
         case normal, compact
     }
-    //
+
     @IBOutlet private var cameraNameConstraints: [NSLayoutConstraint]!
-    //
     @IBOutlet private var cameraNameConstraintsMini: [NSLayoutConstraint]!
     
     @IBOutlet private weak var cameraName: UILabel!
@@ -131,7 +132,6 @@ class CityCameraViewController: BaseViewController {
         }
     }
     
-    // swiftlint:disable:next function_body_length
     func bind() {
         let input = CityCameraViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
@@ -149,7 +149,11 @@ class CityCameraViewController: BaseViewController {
                 onNext: { [weak self] isLoading in
                     self?.videoLoadingAnimationView.isHidden = !isLoading
                     
-                    isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
+                    if isLoading {
+                        self?.videoLoadingAnimationView.play()
+                    } else {
+                        self?.videoLoadingAnimationView.stop()
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -402,7 +406,8 @@ class CityCameraViewController: BaseViewController {
                     self.player?.play()
                     
                     // странный баг на iOS 12.4
-                    // если был переход в полноэкранный режим, потом поворот экрана и возврат назад, то у кнопки менялся свет текста на непойми какой.
+                    // если был переход в полноэкранный режим, потом поворот экрана и
+                    // возврат назад, то у кнопки менялся свет текста на непойми какой.
                     // приходится ручками при возврате из полноэкранного режима обновлять значения полей.
                     self.fixButton()
                 }
@@ -454,12 +459,13 @@ class CityCameraViewController: BaseViewController {
                     guard let playerLayer = self?.playerLayer else {
                         return
                     }
-                    
+                    let playerposition = playerLayer.superview?.convert(playerLayer.frame, to: nil)
                     playerLayer.removeFromSuperlayer()
                     
                     let fullscreenVc = FullscreenPlayerViewController(
                         playedVideoType: .online,
-                        preferredPlaybackRate: 1
+                        preferredPlaybackRate: 1,
+                        position: playerposition
                     )
                     
                     fullscreenVc.modalPresentationStyle = .overFullScreen
@@ -530,7 +536,8 @@ class CityCameraViewController: BaseViewController {
                 
                 let playerItem = AVPlayerItem(asset: asset)
                 
-                // Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
+                // Необходимо для того, чтобы в HLS потоке мог быть выбран поток
+                // с разрешением превышающим разрешение экрана телефона
                 playerItem.preferredMaximumResolution = CGSize(width: 3840, height: 2160)
                 
                 self?.player?.replaceCurrentItem(with: playerItem)

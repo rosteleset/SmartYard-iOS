@@ -5,11 +5,19 @@
 //  Created by Antol Peshkov on 28/12/2019.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length cyclomatic_complexity
 
 import Foundation
 import linphonesw
 import UIKit
 import CallKit
+
+class LinphoneLoggingServiceManager: LoggingServiceDelegate {
+    func onLogMessageWritten(logService: LoggingService, domain: String, level: LogLevel, message: String) {
+        print("Logging service log: \(message) \n")
+    }
+    
+}
 
 class LinphoneService: CoreDelegate {
     
@@ -178,13 +186,6 @@ class LinphoneService: CoreDelegate {
     private func bridge<T: AnyObject>(obj: T) -> UnsafeRawPointer {
         let pointer = Unmanaged.passUnretained(obj).toOpaque()
         return UnsafeRawPointer(pointer)
-    }
-    
-}
-
-class LinphoneLoggingServiceManager: LoggingServiceDelegate {
-    func onLogMessageWritten(logService: LoggingService, domain: String, level: LogLevel, message: String) {
-        print("Logging service log: \(message) \n")
     }
     
 }

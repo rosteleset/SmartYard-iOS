@@ -31,12 +31,6 @@ struct Rectangle: Decodable, Equatable, Hashable {
               let height = try? container.decode(Int.self, forKey: .height) else {
             throw NSError.APIWrapperError.noDataError
         }
-//        guard let left = Int(try container.decode(String.self, forKey: .left)),
-//              let top = Int(try container.decode(String.self, forKey: .top)),
-//              let width = Int(try container.decode(String.self, forKey: .width)),
-//              let height = Int(try container.decode(String.self, forKey: .height)) else {
-//            throw NSError.APIWrapperError.noDataError
-//        }
         self.left = left
         self.top = top
         self.width = width
@@ -76,7 +70,7 @@ struct DetailX: Decodable, Equatable, Hashable {
         faceId = try? container.decode(String.self, forKey: .faceId)
      }
     
-    //пришлось добавить инициализатор для ручного создания объектов
+    // пришлось добавить инициализатор для ручного создания объектов
     init(
         key: String?,
         face: Rectangle?,
@@ -157,7 +151,7 @@ struct APIPlog: Decodable, Equatable, Hashable {
         uuid = try container.decode(String.self, forKey: .uuid)
         imageUuid = try? container.decode(String.self, forKey: .image)
         
-        objectId = try container.decode(Int.self, forKey: .objectId) ?? -1
+        objectId = try container.decode(Int.self, forKey: .objectId) 
         
         objectType = try container.decode(String.self, forKey: .objectType).int ?? -1
         objectMechanizma = try container.decode(String.self, forKey: .objectMechanizma).int ?? -1

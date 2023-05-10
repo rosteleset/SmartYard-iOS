@@ -95,9 +95,11 @@ class MainMenuViewController: BaseViewController, LoaderPresentable {
                     self?.collectionView.isHidden = shouldBlockInteraction
                     self?.skeletonContainer.isHidden = !shouldBlockInteraction
                     
-                    shouldBlockInteraction ?
-                        self?.skeletonContainer.showSkeletonAsynchronously() :
+                    if shouldBlockInteraction {
+                        self?.skeletonContainer.showSkeletonAsynchronously()
+                    } else {
                         self?.skeletonContainer.hideSkeleton()
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -156,7 +158,7 @@ extension MainMenuViewController: UICollectionViewDelegateFlowLayout {
     ) -> UIEdgeInsets {
         // высчитываем сколько надо добавить пустого места между последним элементом меню и нижней кнопкой,
         // что бы нижняя кнопка встала ровно на 60 единиц от нижнего края вьюшки.
-        let extraSpace = collectionView.height.float - 21 - collectionView.numberOfItems(inSection: 0).float * 80 + 8 - 20 - 16 - 60 - 60
+        let extraSpace = collectionView.height.float - collectionView.numberOfItems(inSection: 0).float * 80 - 169
         switch section {
         case collectionView.numberOfSections - 1:
             return UIEdgeInsets(top: 16 + (extraSpace > 0 ? CGFloat(extraSpace) : 0), left: 16, bottom: 60, right: 16)

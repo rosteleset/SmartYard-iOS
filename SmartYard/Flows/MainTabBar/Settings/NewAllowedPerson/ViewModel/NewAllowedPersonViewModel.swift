@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 17.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import Foundation
 import XCoordinator
@@ -45,7 +46,6 @@ class NewAllowedPersonViewModel: BaseViewModel {
         self.delegate = delegate
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         input.closeTrigger
             .drive(
@@ -183,7 +183,7 @@ extension NewAllowedPersonViewModel {
     struct Input {
         let closeTrigger: Driver<Void>
         let rawPhoneAddedTrigger: Driver<String>
-        let cnContactAddedTrigger: Driver<(CNContact,Int)>
+        let cnContactAddedTrigger: Driver<(CNContact, Int)>
         let addAccessTrigger: Driver<Void>
     }
     

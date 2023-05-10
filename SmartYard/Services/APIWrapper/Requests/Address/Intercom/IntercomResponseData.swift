@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 21.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length cyclomatic_complexity
 
 import Foundation
 
@@ -36,7 +37,6 @@ struct IntercomResponseData: Decodable {
         case enableDoorCode
     }
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         

@@ -61,7 +61,7 @@ class ServiceIsNotActivatedViewModel: BaseViewModel {
                         userInfo[NotificationKeys.serviceTypeKey] = service
                     }
                     
-                    NotificationCenter.default.post(name: .chatRequested, object: nil, userInfo: userInfo)
+//                    NotificationCenter.default.post(name: .chatRequested, object: nil, userInfo: userInfo)
                     
                     self?.router.trigger(.dismiss)
                 }

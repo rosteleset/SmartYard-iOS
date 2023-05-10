@@ -23,11 +23,9 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private var sendCodeAgainGroupButtonConstraint: NSLayoutConstraint!
     
-    // swiftlint:disable all
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var sendCodeAgainLabelView: UIView!
     @IBOutlet weak var sendCodeAgainButton: BlueButton!
-    // swiftlint:enable all
 
     private let viewModel: PinCodeViewModel
     private let isInitial: Bool

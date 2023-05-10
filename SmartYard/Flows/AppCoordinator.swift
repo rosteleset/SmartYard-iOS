@@ -5,6 +5,7 @@
 //  Created by admin on 28/01/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length cyclomatic_complexity line_length file_length
 
 import UIKit
 import XCoordinator
@@ -90,7 +91,6 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         observeOrientationChanges()
     }
     
-    // swiftlint:disable:next function_body_length
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
         case .main:
@@ -418,7 +418,6 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             .disposed(by: disposeBag)
     }
     
-    // swiftlint:disable:next function_body_length
     private func observeOrientationChanges() {
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         

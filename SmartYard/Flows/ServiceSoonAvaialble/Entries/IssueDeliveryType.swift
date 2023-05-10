@@ -24,8 +24,7 @@ enum IssueDeliveryType {
     var hintText: String {
         switch self {
         case .office:
-            // swiftlint:disable:next line_length
-            return "Для подтверждения адреса вам нужно принести квитанцию ЖКХ не старше трёх месяцев в ближайший офис Lanta."
+            return "Для подтверждения адреса вам нужно принести квитанцию ЖКХ не старше трёх месяцев в ближайший офис."
         case .courier:
             return "Дождитесь курьера по адресу {value} и сфотографируйте QR-код, который он принесёт."
         }

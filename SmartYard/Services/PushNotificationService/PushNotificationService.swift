@@ -81,7 +81,8 @@ class PushNotificationService {
         )
     }
     
-/// Помечает все inbox message, которые сейчас есть в NotificationCenter, как доставленные (чтобы бэк не присылал их повторно)
+    /// Помечает все inbox message, которые сейчас есть в NotificationCenter,
+    /// как доставленные (чтобы бэк не присылал их повторно)
     func markAllMessagesAsDelivered() {
         userNotificationCenter.getDeliveredNotifications { [weak self] notifications in
             let messageIds: [String] = notifications.compactMap { notification in
@@ -158,7 +159,7 @@ class PushNotificationService {
                     )
                     
                     NotificationCenter.default.post(
-                        name: response.chat == 0 ? .allChatMessagesRead : .unreadChatMessagesAvailable,
+                        name: response.chat == 0 ? .allChatMessagesRead : .unreadChatwootMessagesAvailable,
                         object: nil
                     )
                 }

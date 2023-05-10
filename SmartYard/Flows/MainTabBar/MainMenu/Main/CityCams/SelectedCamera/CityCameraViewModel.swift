@@ -5,6 +5,7 @@
 //  Created by Александр Васильев on 27.01.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable line_length
 
 import Foundation
 import XCoordinator

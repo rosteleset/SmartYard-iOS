@@ -5,6 +5,7 @@
 //  Created by Александр Васильев on 15.04.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable line_length
 
 import Foundation
 import UIKit
@@ -100,6 +101,7 @@ class ArrayChoiceTableViewController<Element>: UITableViewController {
         
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -118,7 +120,7 @@ class ArrayChoiceTableViewController<Element>: UITableViewController {
         let sansFont = UIFont(descriptor: UIFontDescriptor(fontAttributes: [.family: "Source Sans Pro"]), size: 16)
         cell.textLabel?.font = sansFont
         cell.textLabel?.text = labels(values[indexPath.row])
-        cell.imageView?.image = selectedRow == indexPath.row ? UIImage(named: "PopoverCheckBoxSelected"): UIImage(named: "PopoverCheckBoxNormal")
+        cell.imageView?.image = selectedRow == indexPath.row ? UIImage(named: "PopoverCheckBoxSelected") : UIImage(named: "PopoverCheckBoxNormal")
         cell.selectionStyle = .none
         return cell
     }

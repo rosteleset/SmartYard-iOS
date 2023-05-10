@@ -5,6 +5,8 @@
 //  Created by admin on 04/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable type_body_length function_body_length cyclomatic_complexity
+// swiftlint:disable closure_body_length line_length file_length
 
 import Kingfisher
 import RxSwift
@@ -15,7 +17,6 @@ import XCoordinator
 import AVFoundation
 import CallKit
 
-// swiftlint:disable:next type_body_length
 class IncomingCallViewModel: BaseViewModel {
     
     private let providerProxy: CXProviderProxy
@@ -110,7 +111,6 @@ class IncomingCallViewModel: BaseViewModel {
     }
     
     // Все, что не зависит от Input, а привязано к локальным сабжектам
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     private func createCommonBindings() {
         let currentState = currentStateSubject.asDriverOnErrorJustComplete()
         
@@ -665,7 +665,6 @@ class IncomingCallViewModel: BaseViewModel {
         }
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
         // MARK: Общий стейт экрана
         
@@ -948,5 +947,4 @@ extension IncomingCallViewModel: CXProviderProxyDelegate {
         linphoneService.core?.activateAudioSession(actived: false)
     }
     
-    // swiftlint:disable:next file_length
 }
