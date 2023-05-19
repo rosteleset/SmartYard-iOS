@@ -60,7 +60,7 @@ struct CallPayload {
         username + password + server + port
     }
     
-    init?(pushNotificationPayload data: [AnyHashable: Any]) {
+    init?(pushNotificationPayload data: [AnyHashable: Any], useCallKit: Bool) {
         let accessService = AccessService()
         
         let hash = data["hash"] as? String ?? ""
