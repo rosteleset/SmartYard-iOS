@@ -330,11 +330,6 @@ class CityCameraViewController: BaseViewController {
         try? AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
-    override func viewDidLayoutSubviews() {
-        playerLayer?.frame = cameraContainer.bounds
-        super.viewDidLayoutSubviews()
-    }
-    
     private func configureCollectionView() {
    
         collectionView.dataSource = self
