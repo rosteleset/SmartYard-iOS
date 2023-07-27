@@ -18,6 +18,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let paymentsUrl: String?
     let chatUrl: String?
     let supportPhone: String?
+    let guestAccessOnOnly: Bool
     let timeZone: String?
     
     private enum CodingKeys: String, CodingKey {
@@ -28,6 +29,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case chatOptions
         case chatUrl
         case supportPhone
+        case guestAccess
         case timeZone
     }
     
@@ -64,6 +66,16 @@ struct APIOptions: Decodable, EmptyDataInitializable {
             chat = nil
         }
         
+        if let guestAccessModeRaw = try? container.decode(String.self, forKey: .guestAccess) {
+            switch guestAccessModeRaw {
+            case "turnOnAndOff": guestAccessOnOnly = false
+            case "turnOnOnly": guestAccessOnOnly = true
+            default: guestAccessOnOnly = true
+            }
+        } else {
+            guestAccessOnOnly = true
+        }
+        
         chatOptions = try? container.decode(ChatOptions.self, forKey: .chatOptions)
         paymentsUrl = try? container.decode(String.self, forKey: .paymentsUrl)
         chatUrl = try? container.decode(String.self, forKey: .chatUrl)
@@ -79,6 +91,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         supportPhone = nil
         chat = nil
         chatOptions = nil
+        guestAccessOnOnly = true
         timeZone = nil
     }
 }

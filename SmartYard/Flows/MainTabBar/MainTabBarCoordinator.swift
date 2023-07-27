@@ -384,6 +384,7 @@ private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService
                     accessService.showCityCams = cityCams
                 }
                 
+                accessService.guestAccessModeOnOnly = response.guestAccessOnOnly 
                 if let timeZone = response.timeZone {
                     accessService.timeZone = timeZone
                 }

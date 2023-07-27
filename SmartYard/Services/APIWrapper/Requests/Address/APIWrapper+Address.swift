@@ -61,12 +61,12 @@ extension APIWrapper {
         return intercom(flatId: flatId, forceRefresh: true, settings: nil)
     }
     
-    func grantHourGuestAccess(flatId: String) -> Single<IntercomResponseData?> {
+    func grantHourGuestAccess(enable: Bool, flatId: String) -> Single<IntercomResponseData?> {
         let settings = APIIntercomSettings(
             enableDoorCode: nil,
             cms: nil,
             voip: nil,
-            autoOpen: Date().dateHourAfter,
+            autoOpen: enable ? Date().dateHourAfter : Date().adding(.day, value: -10),
             whiteRabbit: nil,
             paperBill: nil,
             disablePlog: nil,

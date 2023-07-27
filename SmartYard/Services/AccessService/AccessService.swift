@@ -29,6 +29,7 @@ private let chatUrlKey = "chatUrl"
 private let supportPhoneKey = "supportPhoneKey"
 private let phonePrefixKey = "phonePrefixKey"
 private let phonePatternKey = "phonePatternKey"
+private let guestAccessModeKey = "guestAccessKey"
 private let timeZoneKey = "timeZoneKey"
 
 class AccessService {
@@ -257,6 +258,15 @@ class AccessService {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: phonePatternKey)
+        }
+    }
+    
+    var guestAccessModeOnOnly: Bool {
+        get {
+            UserDefaults.standard.value(forKey: guestAccessModeKey)  as? Bool ?? true
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: guestAccessModeKey)
         }
     }
     

@@ -32,7 +32,7 @@ class AddressesListObjectCell: CustomBorderCollectionViewCell {
     func configure(objectType: DomophoneObjectType, name: String?, isOpened: Bool) {
         nameLabel.text = name
         iconImageView.image = objectType.icon
-        openButton.isEnabled = !isOpened
+        openButton.isOn = isOpened
     }
     
     func bind(with outerSubject: PublishSubject<Void>) {

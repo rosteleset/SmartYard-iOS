@@ -26,7 +26,7 @@ class IntercomTemporaryAccessView: PMNibLinkableView {
     
     var isAccessGranted = false {
         didSet {
-            openButton.isEnabled = !isAccessGranted
+            openButton.isOn = isAccessGranted
         }
     }
     
@@ -40,6 +40,7 @@ class IntercomTemporaryAccessView: PMNibLinkableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        openButton.modeOnOnly = AccessService.shared.guestAccessModeOnOnly
         containerView.layerBorderWidth = 1
         containerView.layerBorderColor = UIColor.SmartYard.grayBorder
     }

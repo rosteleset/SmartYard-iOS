@@ -257,7 +257,7 @@ class AddressAccessViewModel: BaseViewModel {
         input.openGuestAccessTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.openGuestAccess()
+                    self?.toggleGuestAccess()
                 }
             )
             .disposed(by: disposeBag)
@@ -437,7 +437,7 @@ class AddressAccessViewModel: BaseViewModel {
         )
     }
     
-    private func openGuestAccess() {
+    private func toggleGuestAccess() {
         let cancelAction = UIAlertAction(
             title: "Отмена",
             style: .cancel
@@ -453,7 +453,7 @@ class AddressAccessViewModel: BaseViewModel {
                 return
             }
             
-            let response = self.apiWrapper.grantHourGuestAccess(flatId: self.flatId)
+            let response = self.apiWrapper.grantHourGuestAccess(enable: true, flatId: self.flatId)
                 .trackActivity(self.activityTracker)
                 .trackError(self.errorTracker)
                 .asDriver(onErrorJustReturn: nil)
@@ -461,14 +461,22 @@ class AddressAccessViewModel: BaseViewModel {
             
             response
                 .map { $0.doorCode }
-                .drive(self.intercomAccessCode)
+                .drive(
+                    onNext: { value in
+                        self.intercomAccessCode.onNext(value)
+                    }
+                )
                 .disposed(by: self.disposeBag)
             
             response
                 .map { response -> Bool in
                     response.autoOpen > Date()
                 }
-                .drive(self.isGrantedIntercomGuestAccess)
+                .drive(
+                    onNext: { value in
+                        self.isGrantedIntercomGuestAccess.onNext(value)
+                    }
+                )
                 .disposed(by: self.disposeBag)
         }
         
@@ -477,13 +485,47 @@ class AddressAccessViewModel: BaseViewModel {
         
         let guestAccessAlertTitle = "Включить гостевой доступ на час?"
         
-        self.router.trigger(
-            .dialog(
-                title: guestAccessAlertTitle,
-                message: guestAccessAlertText,
-                actions: [cancelAction, okAction]
+        guard let isGrantedIntercomGuestAccess = try? self.isGrantedIntercomGuestAccess.value() else {
+            return
+        }
+        
+        if isGrantedIntercomGuestAccess {
+            // disable
+            let response = self.apiWrapper.grantHourGuestAccess(enable: false, flatId: self.flatId)
+                .trackActivity(self.activityTracker)
+                .trackError(self.errorTracker)
+                .asDriver(onErrorJustReturn: nil)
+                .ignoreNil()
+            
+            response
+                .map { $0.doorCode }
+                .drive(
+                    onNext: { value in
+                        self.intercomAccessCode.onNext(value)
+                    }
+                )
+                .disposed(by: self.disposeBag)
+            
+            response
+                .map { response -> Bool in
+                    response.autoOpen > Date()
+                }
+                .drive(
+                    onNext: { value in
+                        self.isGrantedIntercomGuestAccess.onNext(value)
+                    }
+                )
+                .disposed(by: self.disposeBag)
+        } else {
+            // enable
+            self.router.trigger(
+                .dialog(
+                    title: guestAccessAlertTitle,
+                    message: guestAccessAlertText,
+                    actions: [cancelAction, okAction]
+                )
             )
-        )
+        }
     }
     
     private func deleteTempAccessContact(index: Int) {

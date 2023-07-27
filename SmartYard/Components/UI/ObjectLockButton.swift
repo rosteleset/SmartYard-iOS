@@ -10,24 +10,40 @@ import UIKit
 
 class ObjectLockButton: UIButton {
     
+    var modeOnOnly = true {
+        didSet {
+            prepareUI()
+        }
+    }
+    
     override var isHighlighted: Bool {
         didSet {
             updateAppearance()
         }
     }
     
-    override var isEnabled: Bool {
+    var isOn = false {
         didSet {
+            if modeOnOnly {
+                isEnabled = !isOn
+                
+            } else {
+                isEnabled = true
+                isSelected = isOn
+            }
             updateAppearance()
         }
+        
     }
     
     override init(frame: CGRect) {
+        isOn = false
         super.init(frame: frame)
         prepareUI()
     }
     
     required init?(coder aDecoder: NSCoder) {
+        isOn = false
         super.init(coder: aDecoder)
         prepareUI()
     }
@@ -36,14 +52,23 @@ class ObjectLockButton: UIButton {
         layerCornerRadius = 8
         titleLabel?.font = UIFont.SourceSansPro.semibold(size: 14)
         
-        setTitleColor(UIColor.SmartYard.blue, for: .normal)
-        setTitle("Открыть", for: .normal)
+        if modeOnOnly {
+            setTitleColor(UIColor.SmartYard.blue, for: .normal)
+            setTitle("Открыть", for: .normal)
+        } else {
+            setTitleColor(UIColor.SmartYard.blue, for: .normal)
+            setTitle("Включить", for: .normal)
+        }
         
         setTitleColor(UIColor.SmartYard.blue.darken(by: 0.1), for: .highlighted)
         setTitle("Открыть", for: .highlighted)
         
         setTitleColor(.white, for: .disabled)
         setTitle("Открыто", for: .disabled)
+        
+        setTitleColor(.white, for: .selected)
+        setTitle("Выключить", for: .selected)
+        
         
         updateAppearance()
     }
@@ -61,6 +86,11 @@ class ObjectLockButton: UIButton {
             layerBorderColor = UIColor.SmartYard.blue.darken(by: 0.1)
             
         case .disabled:
+            backgroundColor = UIColor.SmartYard.darkGreen
+            layerBorderWidth = 0
+            layerBorderColor = .clear
+            
+        case .selected:
             backgroundColor = UIColor.SmartYard.darkGreen
             layerBorderWidth = 0
             layerBorderColor = .clear
