@@ -20,8 +20,8 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
     var title: String {
         let formatter = DateFormatter()
         
-        formatter.timeZone = Calendar.moscowCalendar.timeZone
-        formatter.locale = Calendar.moscowCalendar.locale
+        formatter.timeZone = Calendar.serverCalendar.timeZone
+        formatter.locale = Calendar.serverCalendar.locale
         formatter.dateFormat = "HH:mm"
         
         return formatter.string(from: startDate) + " - " + formatter.string(from: endDate)

@@ -71,7 +71,7 @@ extension APIWrapper {
         }
         
         switch camera.serverType {
-        case .nimble, .macroscop:
+        case .nimble, .macroscop, .forpost:
             guard let accessToken = accessService.accessToken else {
                 return .error(NSError.APIWrapperError.accessTokenMissingError)
             }

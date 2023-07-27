@@ -14,6 +14,7 @@ enum AppState: Codable {
     case selectProvider
     case phoneNumber
     case smsCode(phoneNumber: String)
+    case flashCall(phoneNumber: String)
     case authByOutgoingCall(phoneNumber: String, confirmPhoneNumber: String)
     case userName
     case main
@@ -23,6 +24,7 @@ enum AppState: Codable {
         case selectProvider
         case phoneNumber
         case smsCode
+        case flashCall
         case outgoingCall
         case confirmPhoneNumber
         case userName
@@ -58,6 +60,11 @@ enum AppState: Codable {
             return
         }
         
+        if let phoneNumber = try? values.decode(String.self, forKey: .flashCall) {
+            self = .flashCall(phoneNumber: phoneNumber)
+            return
+        }
+        
         if (try? values.decode(Bool.self, forKey: .userName)) != nil {
             self = .userName
             return
@@ -83,10 +90,11 @@ enum AppState: Codable {
             try container.encode(true, forKey: .phoneNumber)
         case .smsCode(let phoneNumber):
             try container.encode(phoneNumber, forKey: .smsCode)
+        case .flashCall(let phoneNumber):
+            try container.encode(phoneNumber, forKey: .flashCall)
         case .authByOutgoingCall(let phoneNumber, let confirmNumber):
             try container.encode(phoneNumber, forKey: .outgoingCall)
             try container.encode(confirmNumber, forKey: .confirmPhoneNumber)
-                                 
         case .userName:
             try container.encode(true, forKey: .userName)
         case .main:

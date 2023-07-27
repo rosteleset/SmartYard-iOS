@@ -29,6 +29,7 @@ private let chatUrlKey = "chatUrl"
 private let supportPhoneKey = "supportPhoneKey"
 private let phonePrefixKey = "phonePrefixKey"
 private let phonePatternKey = "phonePatternKey"
+private let timeZoneKey = "timeZoneKey"
 
 class AccessService {
     static let shared = AccessService()
@@ -121,7 +122,7 @@ class AccessService {
         case .onboarding: return .onboarding
         case .selectProvider: return .selectProvider
         case .phoneNumber: return .phoneNumber
-        case .smsCode(let phoneNumber): return .pinCode(phoneNumber: phoneNumber, isInitial: false)
+        case .smsCode(let phoneNumber): return .pinCode(phoneNumber: phoneNumber, isInitial: false, useFlashCall: false)
         case .userName: return .userName(preloadedName: clientName)
         case .main: return .main
         case .authByOutgoingCall(let phoneNumber, let confirmPhoneNumber):
@@ -129,6 +130,7 @@ class AccessService {
                 phoneNumber: phoneNumber,
                 confirmPhoneNumber: confirmPhoneNumber
             )
+        case .flashCall(let phoneNumber): return .pinCode(phoneNumber: phoneNumber, isInitial: false, useFlashCall: true)
         }
     }
     
@@ -255,6 +257,15 @@ class AccessService {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: phonePatternKey)
+        }
+    }
+    
+    var timeZone: String {
+        get {
+            UserDefaults.standard.value(forKey: timeZoneKey)  as? String ?? Constants.defaultTimeZone
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: timeZoneKey)
         }
     }
     

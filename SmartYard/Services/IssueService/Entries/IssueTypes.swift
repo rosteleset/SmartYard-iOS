@@ -108,8 +108,8 @@ enum IssueType {
         case let .requestRec(camera, date, duration, notes):
             let formatter = DateFormatter()
             formatter.dateFormat = "dd.MM.yyyy HH:mm"
-            formatter.timeZone = Calendar.moscowCalendar.timeZone
-            formatter.locale = Calendar.moscowCalendar.locale
+            formatter.timeZone = Calendar.serverCalendar.timeZone
+            formatter.locale = Calendar.serverCalendar.locale
             let result = """
 Обработать запрос на добавление видеофрагмента из архива видовой видеокамеры \(camera.name) (id=\(camera.id)) по парамертам:
 время: \(formatter.string(from: date)),
@@ -154,8 +154,8 @@ enum IssueType {
     
     var customFields: [String: String] {
         let formatter = DateFormatter()
-        formatter.timeZone = Calendar.moscowCalendar.timeZone
-        formatter.locale = Calendar.moscowCalendar.locale
+        formatter.timeZone = Calendar.serverCalendar.timeZone
+        formatter.locale = Calendar.serverCalendar.locale
         formatter.dateFormat = "dd.MM.yyyy HH:mm"
         
         let now = formatter.string(from: Date())

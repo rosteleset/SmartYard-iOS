@@ -496,10 +496,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureSliders() {
-        progressSlider.setReferenceCalendar(.moscowCalendar)
+        progressSlider.setReferenceCalendar(.serverCalendar)
         progressSlider.delegate = self
         
-        rangeSlider.setReferenceCalendar(.moscowCalendar)
+        rangeSlider.setReferenceCalendar(.serverCalendar)
         rangeSlider.delegate = self
     }
     
@@ -822,15 +822,15 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 
                 return mode == .edit
             }
-            .map { args -> (url: URL?, jpeg: Bool) in
-                let (_, (url, jpeg)) = args
+            .map { args -> (url: URL?, imageType: SYImageType) in
+                let (_, (url, imageType)) = args
                 
-                return (url, jpeg)
+                return (url, imageType)
             }
             .distinctUntilChanged { $0.url == $1.url }
             .drive(
                 onNext: { [weak self] args in
-                    let (screenshotUrl, jpeg) = args
+                    let (screenshotUrl, imageType) = args
                     
                     guard let screenshotUrl = screenshotUrl else {
                         return
@@ -839,7 +839,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
                         url: screenshotUrl,
                         forTime: .zero,
-                        jpeg: jpeg
+                        imageType: imageType
                     ) { cgImage in
                         guard let cgImage = cgImage else {
                             return
@@ -955,23 +955,23 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     preferredUrl: url,
                     fallbackUrl: config.fallbackUrl,
                     identifier: config.identifier,
-                    jpeg: config.camera.jpegScreenshots
+                    imageType: config.camera.screenshotsType
                 )
             }
     }
     
-    private func loadThumbnail(index: Int, preferredUrl: URL, fallbackUrl: URL, identifier: String, jpeg: Bool) {
+    private func loadThumbnail(index: Int, preferredUrl: URL, fallbackUrl: URL, identifier: String, imageType: SYImageType) {
         ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
             url: preferredUrl,
             forTime: .zero,
-            jpeg: jpeg
+            imageType: imageType
         ) { [weak self] cgImage in
             guard identifier == self?.latestThumbnailConfig?.identifier else {
                 return
             }
             
             guard let cgImage = cgImage else {
-                self?.loadFallbackThumbnail(index: index, url: fallbackUrl, identifier: identifier, jpeg: jpeg)
+                self?.loadFallbackThumbnail(index: index, url: fallbackUrl, identifier: identifier, imageType: imageType)
                 return
             }
             
@@ -984,11 +984,11 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         }
     }
     
-    private func loadFallbackThumbnail(index: Int, url: URL, identifier: String, jpeg: Bool) {
+    private func loadFallbackThumbnail(index: Int, url: URL, identifier: String, imageType: SYImageType) {
         ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
             url: url,
             forTime: .zero,
-            jpeg: jpeg
+            imageType: imageType
         ) { [weak self] cgImage in
             guard identifier == self?.latestThumbnailConfig?.identifier else {
                 return
@@ -1212,7 +1212,7 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         
         let dateFormatter = DateFormatter()
         
-        dateFormatter.timeZone = Calendar.moscowCalendar.timeZone
+        dateFormatter.timeZone = Calendar.serverCalendar.timeZone
         dateFormatter.dateFormat = "dd.MM.yy"
         
         editDateLabel.text = "Видео от \(dateFormatter.string(from: startDate))"

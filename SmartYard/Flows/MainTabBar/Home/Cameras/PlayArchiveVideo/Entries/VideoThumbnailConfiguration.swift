@@ -25,7 +25,7 @@ struct VideoThumbnailConfiguration {
         )
         
         return thumbnailDates.compactMap {
-            URL(string: camera.previewMP4URL($0))
+            URL(string: camera.previewURL($0))
         }
     }
     

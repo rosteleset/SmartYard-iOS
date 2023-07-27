@@ -10,10 +10,10 @@ import Foundation
 
 extension Calendar {
     
-    static let moscowCalendar: Calendar = {
+    static let serverCalendar: Calendar = {
         var calendar = Calendar(identifier: .gregorian)
         
-        calendar.timeZone = TimeZone(identifier: "Europe/Moscow") ?? TimeZone.current
+        calendar.timeZone = TimeZone(identifier: AccessService.shared.timeZone) ?? TimeZone.current
         calendar.locale = .init(identifier: "RU")
         
         return calendar

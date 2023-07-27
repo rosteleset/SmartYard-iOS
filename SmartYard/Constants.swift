@@ -26,5 +26,6 @@ enum Constants {
     static let defaultMapCenterCoordinates = CLLocationCoordinate2D(latitude: 52.675463000000001, longitude: 41.465411000000003)
     static let defaultPhonePrefix = "7"
     static let defaultPhonePattern = "(###) ###-##-##"
+    static let defaultTimeZone = "Europe/Moscow"
     
 }

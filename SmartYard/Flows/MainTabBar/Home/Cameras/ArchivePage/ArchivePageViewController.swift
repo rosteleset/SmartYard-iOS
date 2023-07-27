@@ -168,7 +168,7 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
             return
         }
         
-        let startOfDay = Calendar.moscowCalendar.startOfDay(for: cellState.date)
+        let startOfDay = Calendar.serverCalendar.startOfDay(for: cellState.date)
         let endOfDay = startOfDay.adding(.hour, value: 24)
         
         let matchingRange = availableRanges?.first { range in
@@ -190,12 +190,12 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         
         let formatter = DateFormatter()
         
-        formatter.timeZone = Calendar.moscowCalendar.timeZone
-        formatter.locale = Calendar.moscowCalendar.locale
+        formatter.timeZone = Calendar.serverCalendar.timeZone
+        formatter.locale = Calendar.serverCalendar.locale
         formatter.dateFormat = "LLLL"
         
         let nameOfMonth = formatter.string(from: visibleDate).capitalized
-        let year = Calendar.moscowCalendar.component(.year, from: visibleDate)
+        let year = Calendar.serverCalendar.component(.year, from: visibleDate)
         
         monthLabel.text = nameOfMonth + " " + String(year)
         
@@ -318,7 +318,7 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
             startDate: startDate,
             endDate: endDate,
             numberOfRows: 6,
-            calendar: Calendar.moscowCalendar,
+            calendar: Calendar.serverCalendar,
             generateInDates: .forAllMonths,
             generateOutDates: .tillEndOfGrid,
             firstDayOfWeek: .monday,
@@ -339,7 +339,7 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
             return false
         }
         
-        let startOfDay = Calendar.moscowCalendar.startOfDay(for: cellState.date)
+        let startOfDay = Calendar.serverCalendar.startOfDay(for: cellState.date)
         let endOfDay = startOfDay.adding(.hour, value: 24)
         
         let matchingRange = availableRanges.first { range in

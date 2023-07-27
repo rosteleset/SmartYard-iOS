@@ -106,7 +106,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 
                 // MARK: А тут сервак жрет строки не в GMT, а в MSK
                 
-                formatter.timeZone = Calendar.moscowCalendar.timeZone
+                formatter.timeZone = Calendar.serverCalendar.timeZone
                 formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 
                 return .just((from: formatter.string(from: start), to: formatter.string(from: end)))
@@ -229,14 +229,24 @@ class PlayArchiveVideoViewModel: BaseViewModel {
         let screenshotURL = input.screenshotTrigger
             .debounce(.milliseconds(250))
             .distinctUntilChanged()
-            .map { [weak self] date -> (url: URL?, jpeg: Bool) in
+            .map { [weak self] date -> (url: URL?, imageType: SYImageType) in
                 guard let self = self else {
-                    return (nil, false)
+                    return (nil, .mp4)
                 }
-               
+                let imageType: SYImageType = {
+                    switch self.camera.serverType {
+                    case .forpost:
+                        return .jpegLink
+                    case .macroscop, .trassir:
+                        return .jpeg
+                    default:
+                        return .mp4
+                    }
+                } ()
+                
                 return (
-                    url: URL(string: self.camera.previewMP4URL(date)),
-                    jpeg: [.macroscop, .trassir].contains(self.camera.serverType)
+                    url: URL(string: self.camera.previewURL(date)),
+                    imageType: imageType
                 )
             }
         let rangeBoundsSubject = BehaviorSubject<(lower: Date, upper: Date)?>(value: nil)
@@ -258,7 +268,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             // определяем периоды, для которых есть архив на сервере
             var periods = [ArchiveVideoPreviewPeriod]()
             
-            let startOfDay = Calendar.moscowCalendar.startOfDay(for: self.date)
+            let startOfDay = Calendar.serverCalendar.startOfDay(for: self.date)
             
             for mult in 0...7 {
                 let startHours = mult * 3
@@ -332,7 +342,7 @@ extension PlayArchiveVideoViewModel {
         let periodConfiguration: Driver<[ArchiveVideoPreviewPeriod]>
         let rangeBounds: Driver<(lower: Date, upper: Date)?>
         let videoData: Driver<([URL], VideoThumbnailConfiguration?)?>
-        let screenshotURL: Driver<(url: URL?, jpeg: Bool)>
+        let screenshotURL: Driver<(url: URL?, imageType: SYImageType)>
         let isLoading: Driver<Bool>
         let isVideoLoading: Driver<Bool>
     }

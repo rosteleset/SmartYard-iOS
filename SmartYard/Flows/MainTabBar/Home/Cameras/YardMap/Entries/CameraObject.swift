@@ -32,7 +32,7 @@ struct CameraObject: Equatable {
         }
     }
     
-    var previewMP4URL: String {
+    var previewURL: String {
         switch self.serverType {
         case .nimble:
             return "\(baseURLString)/dvr_thumbnail.mp4?wmsAuthSign=\(token)"
@@ -42,6 +42,8 @@ struct CameraObject: Equatable {
             return "\(baseURLString)/preview.mp4?token=\(token)"
         case .trassir:
             return TrassirService.getScreenshotURL(self, date: Date())
+        case .forpost:
+            return ForpostService.getScreenshotURL(self)
         }
     }
     
@@ -51,11 +53,21 @@ struct CameraObject: Equatable {
     }
     
     /// отвечает за формат скриншотов
-    var jpegScreenshots: Bool {
-        ![.flussonic, .nimble].contains(serverType)
+    var screenshotsType: SYImageType {
+        let imageType: SYImageType = {
+            switch self.serverType {
+            case .forpost:
+                return .jpegLink
+            case .macroscop, .trassir:
+                return .jpeg
+            default:
+                return .mp4
+            }
+        } ()
+        return imageType
     }
     
-    func previewMP4URL(_ date: Date) -> String {
+    func previewURL(_ date: Date) -> String {
         switch self.serverType {
         case .nimble:
             let resultingString = baseURLString +
@@ -84,14 +96,16 @@ struct CameraObject: Equatable {
                 print("Missing sid")
             }
             return ""
+        case .forpost:
+            return ForpostService.getScreenshotURL(self, date: date)
         }
     }
     
-    func updateURLAndExec(parameters: String = "", _ task: @escaping ( _ urlString: String ) -> Void ) {
+    func updateURLAndExec(_ task: @escaping ( _ urlString: String ) -> Void ) {
         // Update live url if needed
         switch serverType {
         case .macroscop:
-            MacroscopService.generateURL(self, parameters: parameters, task)
+            MacroscopService.generateURL(self, task)
         case .trassir:
             TrassirService.updateSid(self) {
                 print(TrassirService.getSid(self) ?? "")
@@ -101,6 +115,8 @@ struct CameraObject: Equatable {
                     if !urlString.isEmpty { task(urlString) }
                 }
             }
+        case .forpost:
+            ForpostService.generateURL(self, task)
         default:
             print(liveURL)
             task(liveURL)
@@ -124,7 +140,8 @@ struct CameraObject: Equatable {
                     }
                 }
             }
-            
+        case .forpost:
+            ForpostService.generateURL(self, startDate: startDate, endDate: endDate, speed: speed, task)
         default:
             let urlString = archiveURL(startDate: startDate, endDate: endDate)
             print(urlString)
@@ -133,7 +150,7 @@ struct CameraObject: Equatable {
     }
     
     func dataModelForArchive(period: ArchiveVideoPreviewPeriod) -> Driver<([URL], VideoThumbnailConfiguration)?> {
-        guard let fallbackUrl = URL(string: previewMP4URL) else {
+        guard let fallbackUrl = URL(string: previewURL) else {
             return .just(nil)
         }
         
@@ -143,7 +160,7 @@ struct CameraObject: Equatable {
             fallbackUrl: fallbackUrl
         )
         switch self.serverType {
-        case .macroscop, .trassir:
+        case .macroscop, .trassir, .forpost:
             guard let startDate = period.ranges.first?.startDate,
                   let endDate = period.ranges.last?.endDate else {
                 return .just(([], thumbnailConfig))

@@ -118,7 +118,7 @@ enum TrassirService {
                 return
         }
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = Calendar.moscowCalendar.timeZone
+        dateFormatter.timeZone = Calendar.serverCalendar.timeZone
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         let starttime = dateFormatter.string(from: startDate)
@@ -156,7 +156,7 @@ enum TrassirService {
                 return
         }
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = Calendar.moscowCalendar.timeZone
+        dateFormatter.timeZone = Calendar.serverCalendar.timeZone
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         let starttime = dateFormatter.string(from: startDate)
@@ -255,8 +255,8 @@ enum TrassirService {
                             }
                             let dateFormatter = DateFormatter()
                             dateFormatter.dateFormat = "yyyy-MM-dd"
-                            dateFormatter.locale = Calendar.moscowCalendar.locale
-                            dateFormatter.timeZone = Calendar.moscowCalendar.timeZone
+                            dateFormatter.locale = Calendar.serverCalendar.locale
+                            dateFormatter.timeZone = Calendar.serverCalendar.timeZone
                             let ranges = calendar.map { day -> APIArchiveRange in
                                 let from = dateFormatter.date(from: day)?.timeIntervalSince1970.int ?? 0
                                 return APIArchiveRange( duration: 3600 * 24 - 1, from: from )
@@ -390,8 +390,8 @@ enum TrassirService {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.locale = Calendar.moscowCalendar.locale
-        dateFormatter.timeZone = Calendar.moscowCalendar.timeZone
+        dateFormatter.locale = Calendar.serverCalendar.locale
+        dateFormatter.timeZone = Calendar.serverCalendar.timeZone
         
         let timestamp = dateFormatter.string(from: date)
         

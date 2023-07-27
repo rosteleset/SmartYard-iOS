@@ -225,6 +225,9 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         scrollView.contentOffset = .zero
         
         let df = DateFormatter()
+        df.timeZone = Calendar.serverCalendar.timeZone
+        df.locale = Calendar.serverCalendar.locale
+        
         df.dateFormat = "EEEE, d MMMM HH:mm"
         dateLabel.text = df.string(from: value.date)
         

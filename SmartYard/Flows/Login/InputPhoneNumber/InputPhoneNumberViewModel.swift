@@ -103,8 +103,10 @@ class InputPhoneNumberViewModel: BaseViewModel {
                             return
                         }
                         self.router.trigger(.authByOutgoingCall(phoneNumber: phone, confirmPhoneNumber: confirmNumber))
-                    default:
-                        self.router.trigger(.pinCode(phoneNumber: phone, isInitial: true))
+                    case .flashCall:
+                        self.router.trigger(.pinCode(phoneNumber: phone, isInitial: true, useFlashCall: true))
+                    case .otp:
+                        self.router.trigger(.pinCode(phoneNumber: phone, isInitial: true, useFlashCall: false))
                     }
                     
                 }

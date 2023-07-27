@@ -31,14 +31,16 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
 
     private let viewModel: PinCodeViewModel
     private let isInitial: Bool
+    private let useFlashCall: Bool
     
     var timer: Timer?
     var timeEnd: Date?
     var loader: JGProgressHUD?
     
-    init(viewModel: PinCodeViewModel, isInitial: Bool) {
+    init(viewModel: PinCodeViewModel, isInitial: Bool, useFlashCall: Bool) {
         self.viewModel = viewModel
         self.isInitial = isInitial
+        self.useFlashCall = useFlashCall
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -128,8 +130,13 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
         
         output.phoneNumber
             .drive(
-                onNext: { phoneNumber in
-                    self.hintInputPhoneLabel.text = "Введите код из СМС,\nотправленный на номер +\(AccessService.shared.phonePrefix)\(phoneNumber)"
+                onNext: { [weak self] phoneNumber in
+                    guard let self = self else { return }
+                    if self.useFlashCall {
+                        self.hintInputPhoneLabel.text = "Введите последние 4 цифры номера,\nс которого поступит звонок на номер +\(AccessService.shared.phonePrefix)\(phoneNumber)"
+                    } else {
+                        self.hintInputPhoneLabel.text = "Введите код из СМС,\nотправленный на номер +\(AccessService.shared.phonePrefix)\(phoneNumber)"
+                    }
                 }
             )
             .disposed(by: disposeBag)

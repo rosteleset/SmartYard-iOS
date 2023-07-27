@@ -384,6 +384,10 @@ private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService
                     accessService.showCityCams = cityCams
                 }
                 
+                if let timeZone = response.timeZone {
+                    accessService.timeZone = timeZone
+                }
+                
                 sem.signal()
             }
         )

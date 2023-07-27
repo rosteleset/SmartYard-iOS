@@ -66,7 +66,10 @@ enum MacroscopService {
         return ""
     }
     
-    static func generateURL(_ camera: CameraObject, parameters: String, _ completion: @escaping ( _ urlString: String ) -> Void ) -> Void {
+    static func generateURL(_ camera: CameraObject,
+                            parameters: String = "",
+                            _ completion: @escaping ( _ urlString: String ) -> Void
+    ) {
         let url = camera.baseURLString + (camera.token.isEmpty ? "" : "&\(camera.token)") + parameters
         guard
             let request = URLRequest(urlString: url) else {
