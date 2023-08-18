@@ -21,10 +21,16 @@ struct APIFace: Decodable, Hashable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        guard let faceId = Int(try container.decode(String.self, forKey: .faceId)) else {
+        let rawFaceIdString = try? container.decode(String.self, forKey: .faceId)
+        let rawFaceIdInt = try? container.decode(Int.self, forKey: .faceId)
+        
+        if let rawFaceIdInt = rawFaceIdInt {
+            self.faceId = rawFaceIdInt
+        } else if let rawFaceIdString = rawFaceIdString, let faceId = Int(rawFaceIdString) {
+            self.faceId = faceId
+        } else {
             throw NSError.APIWrapperError.noDataError
         }
-        self.faceId = faceId
         
         image = try container.decode(String.self, forKey: .image)
     }

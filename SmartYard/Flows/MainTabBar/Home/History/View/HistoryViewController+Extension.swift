@@ -45,7 +45,12 @@ extension HistoryViewController {
         showPopup(controller, sourceView: sourceView)
     }
     
-    public func showCalendarPopover(from sourceView: UIView, minDate: Date, maxDate: Date, onSelect: @escaping (Date) -> Void ) {
+    public func showCalendarPopover(
+        from sourceView: UIView,
+        minDate: Date,
+        maxDate: Date,
+        onSelect: @escaping (Date) -> Void
+    ) {
         let date = Date()
         
         let popOverDatePickerViewController = SYPopOverDatePickerViewController.instantiate()
@@ -53,7 +58,8 @@ extension HistoryViewController {
         popOverDatePickerViewController.set(minimumDate: minDate)
         popOverDatePickerViewController.set(maximumDate: maxDate)
         popOverDatePickerViewController.set(datePickerMode: .date)
-        popOverDatePickerViewController.set(locale: Locale(identifier: "ru-RU"))
+        popOverDatePickerViewController.set(locale: Calendar.serverCalendar.locale ?? Locale(identifier: "ru-RU"))
+        popOverDatePickerViewController.set(timeZone: Calendar.serverCalendar.timeZone)
         popOverDatePickerViewController.presentationController?.delegate = self
         popOverDatePickerViewController.changeHandler = onSelect
         

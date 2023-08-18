@@ -12,11 +12,15 @@ extension Date {
     
     var apiString: String {
         let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = Calendar.serverCalendar.timeZone
+        dateFormatter.locale = Calendar.serverCalendar.locale
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return dateFormatter.string(from: self)
     }
     var apiShortString: String {
         let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = Calendar.serverCalendar.timeZone
+        dateFormatter.locale = Calendar.serverCalendar.locale
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: self)
     }

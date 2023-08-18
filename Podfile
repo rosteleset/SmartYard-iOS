@@ -39,7 +39,7 @@ target 'SmartYard' do
   
   # Calendar
   pod 'JTAppleCalendar'
-  pod 'PopOverDatePicker'
+  pod 'PopOverDatePicker', :git => 'https://github.com/rosteleset/PopOverDatePicker.git', :branch => 'timezoneSupport'
   
   # Map
   pod 'MapboxMaps'#, '10.2.0'

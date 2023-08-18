@@ -223,7 +223,7 @@ DEPENDENCIES:
   - Parchment
   - PinLayout
   - PMNibLinkableView
-  - PopOverDatePicker
+  - PopOverDatePicker (from `https://github.com/rosteleset/PopOverDatePicker.git`, branch `timezoneSupport`)
   - RxCocoa
   - RxDataSources
   - RxSwift
@@ -271,7 +271,6 @@ SPEC REPOS:
     - Parchment
     - PinLayout
     - PMNibLinkableView
-    - PopOverDatePicker
     - PromisesObjC
     - PromisesSwift
     - RxCocoa
@@ -293,6 +292,9 @@ EXTERNAL SOURCES:
   OnlineChatSdk:
     :branch: feature/build-fix
     :git: https://github.com/rosteleset/OnlineChatSdk-Swift.git
+  PopOverDatePicker:
+    :branch: timezoneSupport
+    :git: https://github.com/rosteleset/PopOverDatePicker.git
   SSCustomTabbar:
     :branch: feature/add-animation-options
     :git: https://github.com/rosteleset/SSCustomTabbar.git
@@ -304,6 +306,9 @@ CHECKOUT OPTIONS:
   OnlineChatSdk:
     :commit: 6751393fd1884b09581755efb735aa301c09a390
     :git: https://github.com/rosteleset/OnlineChatSdk-Swift.git
+  PopOverDatePicker:
+    :commit: 3fbbde3a2beed8c5e6fafacca0a6c55a70d9c9be
+    :git: https://github.com/rosteleset/PopOverDatePicker.git
   SSCustomTabbar:
     :commit: 90e83f277033d7cd2374e6fb71a926e800ce3659
     :git: https://github.com/rosteleset/SSCustomTabbar.git
@@ -361,6 +366,6 @@ SPEC CHECKSUMS:
   WKCookieWebView: 528260c9cf7d89d312d61639cfca75c5618326a2
   XCoordinator: 2cf9f72e10998b7a4a4bbeac3d07e071ea82fca3
 
-PODFILE CHECKSUM: af628df1c5f7cad346a39f9eccabae71f5bc9f62
+PODFILE CHECKSUM: 234cd3eb81034b219097c52243f296022b97d9de
 
 COCOAPODS: 1.11.3
