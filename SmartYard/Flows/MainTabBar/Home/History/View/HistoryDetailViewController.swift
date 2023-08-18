@@ -84,6 +84,14 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        if  let focusedCellIndexPath = focusedCellIndexPath {
+            let cell = collectionView.cellForItem(at: focusedCellIndexPath) as? HistoryCollectionViewCell
+            cell?.stopVideo()
+        }
+        super.viewDidDisappear(animated)
+    }
+    
     fileprivate func pointViewToSelectedItem() {
         guard let indexPath = { () -> IndexPath? in
             
