@@ -20,11 +20,14 @@ struct APICamMap: Decodable {
     
     let serverType: DVRServerType
     
+    let hlsMode: DVRHLSMode
+    
     private enum CodingKeys: String, CodingKey {
         case id
         case url
         case token
         case serverType
+        case hlsMode
     }
     
     init(from decoder: Decoder) throws {
@@ -34,6 +37,7 @@ struct APICamMap: Decodable {
         url = try container.decode(String.self, forKey: .url)
         token = try container.decode(String.self, forKey: .token)
         serverType = (try? container.decode(DVRServerType.self, forKey: .serverType)) ?? .flussonic
+        hlsMode = (try? container.decode(DVRHLSMode.self, forKey: .hlsMode)) ?? .fmp4
     }
     
 }

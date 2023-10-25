@@ -20,6 +20,7 @@ struct APICCTV: Decodable {
     let video: String
     let token: String
     let serverType: DVRServerType?
+    let hlsMode: DVRHLSMode
     
     private enum CodingKeys: String, CodingKey {
         case houseId
@@ -30,6 +31,7 @@ struct APICCTV: Decodable {
         case url
         case token
         case serverType
+        case hlsMode
     }
     
     init(from decoder: Decoder) throws {
@@ -52,6 +54,7 @@ struct APICCTV: Decodable {
         video = try container.decode(String.self, forKey: .url)
         token = try container.decode(String.self, forKey: .token)
         serverType = try? container.decode(DVRServerType.self, forKey: .serverType)
+        hlsMode = (try? container.decode(DVRHLSMode.self, forKey: .hlsMode)) ?? .fmp4
     }
 }
 
@@ -64,5 +67,13 @@ enum DVRServerType: String, Decodable, EmptyDataInitializable {
     
     init () {
         self = .flussonic
+    }
+}
+
+enum DVRHLSMode: String, Decodable, EmptyDataInitializable {
+    case mpegts
+    case fmp4
+    init () {
+        self = .fmp4
     }
 }

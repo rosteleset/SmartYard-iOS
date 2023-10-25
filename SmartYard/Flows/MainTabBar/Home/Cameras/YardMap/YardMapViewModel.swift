@@ -89,7 +89,8 @@ class YardMapViewModel: BaseViewModel {
                         name: element.name,
                         video: element.video,
                         token: element.token,
-                        serverType: element.serverType
+                        serverType: element.serverType,
+                        hlsMode: element.hlsMode
                     )
                 }
             }

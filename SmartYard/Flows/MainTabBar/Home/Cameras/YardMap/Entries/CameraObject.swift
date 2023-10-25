@@ -20,13 +20,14 @@ struct CameraObject: Equatable {
     let baseURLString: String
     let token: String
     let serverType: DVRServerType
+    let hlsMode: DVRHLSMode
     
     private var liveURL: String {
         switch self.serverType {
         case .nimble:
             return "\(baseURLString)/playlist.m3u8?wmsAuthSign=\(token)"
         case .flussonic:
-            return "\(baseURLString)/index.m3u8?token=\(token)"
+            return hlsMode == .fmp4 ? "\(baseURLString)/index.fmp4.m3u8?token=\(token)" : "\(baseURLString)/index.m3u8?token=\(token)"
         default:
             return "empty"
         }
@@ -212,7 +213,7 @@ struct CameraObject: Equatable {
         case .nimble:
             return "\(baseURLString)/playlist_dvr_range-\(urlComponents).m3u8?wmsAuthSign=\(token)"
         default:
-            return "\(baseURLString)/index-\(urlComponents).m3u8?token=\(token)"
+            return "\(baseURLString)/index-\(urlComponents).fmp4.m3u8?token=\(token)"
         }
     }
     
@@ -223,7 +224,8 @@ struct CameraObject: Equatable {
         name: String,
         video: String,
         token: String,
-        serverType: DVRServerType? = nil) {
+        serverType: DVRServerType? = nil,
+        hlsMode: DVRHLSMode? = nil) {
             self.id = id
             self.position = position
             self.cameraNumber = cameraNumber
@@ -231,13 +233,15 @@ struct CameraObject: Equatable {
             self.baseURLString = video
             self.token = token
             self.serverType = serverType ?? .flussonic
+            self.hlsMode = hlsMode ?? .fmp4
     }
     
     init(
         id: Int,
         url: String,
         token: String,
-        serverType: DVRServerType? = nil
+        serverType: DVRServerType? = nil,
+        hlsMode: DVRHLSMode? = nil
     ) {
         self.id = id
         self.position = CLLocationCoordinate2D()
@@ -246,5 +250,6 @@ struct CameraObject: Equatable {
         self.baseURLString = url
         self.token = token
         self.serverType = serverType ?? .flussonic
+        self.hlsMode = hlsMode ?? .fmp4
     }
 }
