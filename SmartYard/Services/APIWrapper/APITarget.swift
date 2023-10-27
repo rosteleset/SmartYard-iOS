@@ -24,6 +24,7 @@ enum APITarget {
     case phonePattern(request: PhonePrefixRequest)
     
     case allCCTV(request: AllCCTVRequest)
+    case allCCTVTree(request: AllCCTVRequest)
     case overviewCCTV(request: OverviewCCTVRequest)
     case youtube(request: YouTubeRequest)
     case recPrepare(request: RecPrepareRequest)
@@ -112,6 +113,7 @@ extension APITarget: TargetType {
         case .plogDays: return "address/plogDays"
         
         case .allCCTV: return "cctv/all"
+        case .allCCTVTree: return "cctv/allTree"
         case .overviewCCTV: return "cctv/overview"
         case .youtube: return "cctv/youtube"
         case .recPrepare: return "cctv/recPrepare"
@@ -194,6 +196,7 @@ extension APITarget: TargetType {
             case .plogDays(let request): return (request.accessToken, request.forceRefresh)
             
             case .allCCTV(let request): return (request.accessToken, request.forceRefresh)
+            case .allCCTVTree(let request): return (request.accessToken, request.forceRefresh)
             case .overviewCCTV(let request): return (request.accessToken, request.forceRefresh)
             case .youtube(let request): return (request.accessToken, request.forceRefresh)
             case .recPrepare(let request): return (request.accessToken, false)
@@ -284,6 +287,7 @@ extension APITarget: TargetType {
         case .phonePattern(let request): return request.requestParameters
         
         case .allCCTV(let request): return request.requestParameters
+        case .allCCTVTree(let request): return request.requestParameters
         case .overviewCCTV(let request): return request.requestParameters
         case .youtube(let request): return request.requestParameters
         case .recPrepare(let request): return request.requestParameters

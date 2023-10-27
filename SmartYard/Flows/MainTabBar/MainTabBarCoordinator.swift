@@ -389,6 +389,8 @@ private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService
                     accessService.timeZone = timeZone
                 }
                 
+                accessService.cctvView = response.cctvView.rawValue
+                
                 sem.signal()
             }
         )

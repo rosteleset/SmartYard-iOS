@@ -73,6 +73,13 @@
 		3A5C2D18292CF6CA00966E85 /* RangesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5C2D17292CF6CA00966E85 /* RangesRequest.swift */; };
 		3A5E1BC2276B098500E2880D /* WebPopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5E1BC1276B098500E2880D /* WebPopupController.swift */; };
 		3A61E56125A07F4F00A368FA /* FullscreenPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */; };
+		3A67172F2ADD5DF600D6B9C7 /* AllCCTVTreeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A67172E2ADD5DF600D6B9C7 /* AllCCTVTreeResponseData.swift */; };
+		3A6717322AE005F900D6B9C7 /* CamerasListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6717312AE005F900D6B9C7 /* CamerasListViewController.xib */; };
+		3A6717362AE0094D00D6B9C7 /* CamerasListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6717352AE0094D00D6B9C7 /* CamerasListViewController.swift */; };
+		3A6717392AE1393900D6B9C7 /* CamerasListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6717382AE1393900D6B9C7 /* CamerasListItemCell.swift */; };
+		3A67173D2AE150F200D6B9C7 /* CamerasListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A67173C2AE150F200D6B9C7 /* CamerasListViewModel.swift */; };
+		3A6717402AE156DA00D6B9C7 /* CamerasListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A67173F2AE156DA00D6B9C7 /* CamerasListItem.swift */; };
+		3A6717422AEC37FA00D6B9C7 /* CamerasTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6717412AEC37F900D6B9C7 /* CamerasTree.swift */; };
 		3A6D0F9C27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
 		3A6D0F9D27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
 		3A6D0F9E27072DB9007A9F66 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3A6D0FA027072DB9007A9F66 /* Intents.intentdefinition */; };
@@ -719,6 +726,13 @@
 		3A5E1BC0276B092500E2880D /* WebPopupController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebPopupController.xib; sourceTree = "<group>"; };
 		3A5E1BC1276B098500E2880D /* WebPopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPopupController.swift; sourceTree = "<group>"; };
 		3A61E56025A07F4F00A368FA /* FullscreenPlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FullscreenPlayerViewController.xib; sourceTree = "<group>"; };
+		3A67172E2ADD5DF600D6B9C7 /* AllCCTVTreeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCCTVTreeResponseData.swift; sourceTree = "<group>"; };
+		3A6717312AE005F900D6B9C7 /* CamerasListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CamerasListViewController.xib; sourceTree = "<group>"; };
+		3A6717352AE0094D00D6B9C7 /* CamerasListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerasListViewController.swift; sourceTree = "<group>"; };
+		3A6717382AE1393900D6B9C7 /* CamerasListItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerasListItemCell.swift; sourceTree = "<group>"; };
+		3A67173C2AE150F200D6B9C7 /* CamerasListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerasListViewModel.swift; sourceTree = "<group>"; };
+		3A67173F2AE156DA00D6B9C7 /* CamerasListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerasListItem.swift; sourceTree = "<group>"; };
+		3A6717412AEC37F900D6B9C7 /* CamerasTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerasTree.swift; sourceTree = "<group>"; };
 		3A6D0F9F27072DB9007A9F66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/Intents.intentdefinition; sourceTree = "<group>"; };
 		3A6D0FA227072DD9007A9F66 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Intents.strings; sourceTree = "<group>"; };
 		3A7CD5452857688E003CDDC7 /* SelectProviderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectProviderViewController.xib; sourceTree = "<group>"; };
@@ -1457,6 +1471,42 @@
 				3A555B1B270058E700E70CB9 /* SYOpenDoorIntentHandler.swift */,
 			);
 			path = SmartYardIntents;
+			sourceTree = "<group>";
+		};
+		3A67172D2ADD5DC300D6B9C7 /* AllTree */ = {
+			isa = PBXGroup;
+			children = (
+				3A67172E2ADD5DF600D6B9C7 /* AllCCTVTreeResponseData.swift */,
+			);
+			path = AllTree;
+			sourceTree = "<group>";
+		};
+		3A6717302AE0051100D6B9C7 /* CamerasListView */ = {
+			isa = PBXGroup;
+			children = (
+				3A67173E2AE156A900D6B9C7 /* Models */,
+				3A6717372AE011F600D6B9C7 /* Cells */,
+				3A6717312AE005F900D6B9C7 /* CamerasListViewController.xib */,
+				3A6717352AE0094D00D6B9C7 /* CamerasListViewController.swift */,
+				3A67173C2AE150F200D6B9C7 /* CamerasListViewModel.swift */,
+			);
+			path = CamerasListView;
+			sourceTree = "<group>";
+		};
+		3A6717372AE011F600D6B9C7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				3A6717382AE1393900D6B9C7 /* CamerasListItemCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		3A67173E2AE156A900D6B9C7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3A67173F2AE156DA00D6B9C7 /* CamerasListItem.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		3A7CD5442857685B003CDDC7 /* SelectProvider */ = {
@@ -2531,6 +2581,7 @@
 				3A8B952E25D968E6007CDD3C /* Overview */,
 				8496395F24851B660086B6E9 /* ApiWrapper+CCTV.swift */,
 				8496396124851B6B0086B6E9 /* All */,
+				3A67172D2ADD5DC300D6B9C7 /* AllTree */,
 				845E9EF324977264000CBBC6 /* RecDownload */,
 				845E9EF02492761D000CBBC6 /* RecPrepare */,
 				84D29B9224B799B100CFBE6B /* StreamInfo */,
@@ -3073,6 +3124,7 @@
 		84F64922247402DB000C0028 /* Cameras */ = {
 			isa = PBXGroup;
 			children = (
+				3A6717302AE0051100D6B9C7 /* CamerasListView */,
 				847880E624AB3EAC008D9E33 /* FullscreenPlayer */,
 				8477216B2497C2BF003FCC24 /* ArchivePage */,
 				8477216A2497C2B3003FCC24 /* OnlinePage */,
@@ -3293,6 +3345,7 @@
 				3A25BA842891109900D2401E /* APIOptions.swift */,
 				3AEB887527E1FD7F00B19925 /* MenuListItem.swift */,
 				3A7CD55628588E2A003CDDC7 /* APIProvidersListResult.swift */,
+				3A6717412AEC37F900D6B9C7 /* CamerasTree.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4297,6 +4350,7 @@
 				847721772497C31D003FCC24 /* ArchivePageViewController.xib in Resources */,
 				E9004C6223FABF6800B59976 /* AccessView.xib in Resources */,
 				3A18347225D9AD8600139385 /* CityCameraViewController.xib in Resources */,
+				3A6717322AE005F900D6B9C7 /* CamerasListViewController.xib in Resources */,
 				E9E4273623F55C5E00F5D593 /* ServiceUnavailableViewController.xib in Resources */,
 				E9C0E815247282DE001CE018 /* OnboardingBaseView.xib in Resources */,
 				E9E4273123F55B7800F5D593 /* ServicesActivationRequestViewController.xib in Resources */,
@@ -4815,6 +4869,8 @@
 				E9E4272423F42A7600F5D593 /* ServiceModel.swift in Sources */,
 				E92EFBBA242A22F2003AF7FE /* GetStreetsRequest.swift in Sources */,
 				8496396B248667040086B6E9 /* PlayArchiveVideoViewModel.swift in Sources */,
+				3A6717362AE0094D00D6B9C7 /* CamerasListViewController.swift in Sources */,
+				3A6717422AEC37FA00D6B9C7 /* CamerasTree.swift in Sources */,
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				E92EFBC8242A22F2003AF7FE /* AddMyPhoneRequest.swift in Sources */,
 				3AC5C61A2608F18B008D74DE /* HistoryViewModel.swift in Sources */,
@@ -4888,7 +4944,9 @@
 				E92EFBD5242A22F2003AF7FE /* ResetCodeRequest.swift in Sources */,
 				3A25BA9A28967A6800D2401E /* OutgoingCallViewModel.swift in Sources */,
 				843C38E1242A57C40035BF80 /* NotificationsViewController.swift in Sources */,
+				3A6717402AE156DA00D6B9C7 /* CamerasListItem.swift in Sources */,
 				E92EFBD2242A22F2003AF7FE /* IntercomResponseData.swift in Sources */,
+				3A6717392AE1393900D6B9C7 /* CamerasListItemCell.swift in Sources */,
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
 				E92EFBCC242A22F2003AF7FE /* RegisterPushTokenRequest.swift in Sources */,
 				84898A7C23F13E4700E6B78E /* AddressesListViewController.swift in Sources */,
@@ -4947,6 +5005,7 @@
 				E92EFBE0242A22F2003AF7FE /* CreateIssueRequest.swift in Sources */,
 				843C38D1242A577C0035BF80 /* UnreadedResponseData.swift in Sources */,
 				E92EFBEC242A2507003AF7FE /* NotificationName+Extensions.swift in Sources */,
+				3A67172F2ADD5DF600D6B9C7 /* AllCCTVTreeResponseData.swift in Sources */,
 				3A2881B12665093200F42097 /* AddFaceViewController.swift in Sources */,
 				847880E024A4BB3B008D9E33 /* ScreenshotHelper.swift in Sources */,
 				3A003C7025DEF2B7002F193B /* YouTubeRequest.swift in Sources */,
@@ -4956,6 +5015,7 @@
 				E98C382923F173480010BBC1 /* ClearButtonWithDashedUnderline.swift in Sources */,
 				84B89A9823F2FA97009692B4 /* ServiceIsActivatedViewController.swift in Sources */,
 				84D29BAD24BDCBC300CFBE6B /* IncomingCallStateContainer.swift in Sources */,
+				3A67173D2AE150F200D6B9C7 /* CamerasListViewModel.swift in Sources */,
 				3A03FD0125DD5D5700B8488A /* YTCollectionViewCell.swift in Sources */,
 				844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */,
 				3AB41E0A25C200B900AEC8C3 /* CityMapViewModel.swift in Sources */,

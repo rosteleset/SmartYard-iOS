@@ -30,6 +30,24 @@ extension APIWrapper {
             .mapToOptional()
     }
     
+    func getAllTreeCCTV(houseId: String?, forceRefresh: Bool = false) -> Single<AllCCTVTreeResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = AllCCTVRequest(accessToken: accessToken, forceRefresh: forceRefresh, houseId: houseId)
+        
+        return provider.rx
+            .request(.allCCTVTree(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
+    
     func recPrepare(id: Int, from: String, to: String) -> Single<Int?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)

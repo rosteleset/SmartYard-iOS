@@ -31,7 +31,9 @@ private let phonePrefixKey = "phonePrefixKey"
 private let phonePatternKey = "phonePatternKey"
 private let guestAccessModeKey = "guestAccessKey"
 private let timeZoneKey = "timeZoneKey"
+private let cctvViewKey = "cctvViewKey"
 
+// swiftlint:disable:next type_body_length
 class AccessService {
     static let shared = AccessService()
     
@@ -267,6 +269,15 @@ class AccessService {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: guestAccessModeKey)
+        }
+    }
+    
+    var cctvView: String {
+        get {
+            UserDefaults.standard.value(forKey: cctvViewKey)  as? String ?? "list"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: cctvViewKey)
         }
     }
     

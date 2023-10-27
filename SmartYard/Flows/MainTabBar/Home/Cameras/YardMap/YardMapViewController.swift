@@ -110,7 +110,7 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
                     case let count where count > 1:
                         let camera = self.mapView.mapboxMap.camera(
                             for: annotationCoordinates,
-                            padding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50),
+                            padding: UIEdgeInsets(top: 90, left: 50, bottom: 90, right: 50),
                             bearing: .none,
                             pitch: .none
                         )

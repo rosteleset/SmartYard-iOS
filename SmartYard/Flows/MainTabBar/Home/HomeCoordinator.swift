@@ -29,7 +29,8 @@ enum HomeRoute: Route {
     case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
     case serviceSoonAvailable(issue: APIIssueConnect)
     case cameraContainer(address: String, cameras: [CameraObject], selectedCamera: CameraObject)
-    case yardCamerasMap(houseId: String, address: String)
+    case yardCamerasMap(houseId: String, address: String, cameras: [CameraObject]?)
+    case yardCamerasList(houseId: String, address: String, tree: CamerasTree, path: [Int])
     case playArchiveVideo(camera: CameraObject, date: Date, availableRanges: [APIArchiveRange])
     case history(houseId: String, address: String)
 }
@@ -229,9 +230,29 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             return .push(vc)
             
-        case let .yardCamerasMap(houseId, address):
-            let vm = YardMapViewModel(apiWrapper: apiWrapper, houseId: houseId, address: address, router: weakRouter)
+        case let .yardCamerasMap(houseId, address, cameras):
+            let vm = YardMapViewModel(
+                apiWrapper: apiWrapper,
+                houseId: houseId,
+                address: address,
+                router: weakRouter,
+                cameras: cameras
+            )
             let vc = YardMapViewController(viewModel: vm)
+            
+            return .push(vc)
+            
+        case let .yardCamerasList(houseId, address, tree, path):
+            let vm = CamerasListViewModel(
+                apiWrapper: apiWrapper,
+                accessService: accessService,
+                router: weakRouter,
+                houseId: houseId,
+                address: address,
+                tree: tree,
+                path: path
+            )
+            let vc = CamerasListViewController(viewModel: vm)
             
             return .push(vc)
             

@@ -19,14 +19,22 @@ class YardMapViewModel: BaseViewModel {
     private let router: WeakRouter<HomeRoute>
     
     private let address: BehaviorSubject<String?>
-    private let cameras = PublishSubject<[CameraObject]>()
+    private let cameras = BehaviorSubject<[CameraObject]>(value: [])
     
-    init(apiWrapper: APIWrapper, houseId: String, address: String?, router: WeakRouter<HomeRoute>) {
+    private let camerasProxy: [CameraObject]?
+    
+    init(
+        apiWrapper: APIWrapper,
+        houseId: String,
+        address: String?,
+        router: WeakRouter<HomeRoute>,
+        cameras: [CameraObject]? = nil
+    ) {
         self.apiWrapper = apiWrapper
         self.houseId = houseId
         self.router = router
-        
         self.address = BehaviorSubject<String?>(value: address)
+        self.camerasProxy = cameras
     }
     
     // swiftlint:disable:next function_body_length
@@ -75,31 +83,35 @@ class YardMapViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        apiWrapper.getAllCCTV(houseId: houseId)
-            .trackError(errorTracker)
-            .trackActivity(activityTracker)
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
-            .map { response in
-                response.enumerated().map { offset, element in
-                    CameraObject(
-                        id: element.id,
-                        position: element.coordinate,
-                        cameraNumber: offset + 1,
-                        name: element.name,
-                        video: element.video,
-                        token: element.token,
-                        serverType: element.serverType,
-                        hlsMode: element.hlsMode
-                    )
+        if let camerasProxy = camerasProxy {
+            self.cameras.onNext(camerasProxy)
+        } else {
+            apiWrapper.getAllCCTV(houseId: houseId)
+                .trackError(errorTracker)
+                .trackActivity(activityTracker)
+                .asDriver(onErrorJustReturn: nil)
+                .ignoreNil()
+                .map { response in
+                    response.enumerated().map { offset, element in
+                        CameraObject(
+                            id: element.id,
+                            position: element.coordinate,
+                            cameraNumber: offset + 1,
+                            name: element.name,
+                            video: element.video,
+                            token: element.token,
+                            serverType: element.serverType,
+                            hlsMode: element.hlsMode
+                        )
+                    }
                 }
-            }
-            .drive(
-                onNext: { [weak self] in
-                    self?.cameras.onNext($0)
-                }
-            )
+                .drive(
+                    onNext: { [weak self] in
+                        self?.cameras.onNext($0)
+                    }
+                )
             .disposed(by: disposeBag)
+        }
         
         return Output(
             cameras: cameras.asDriver(onErrorJustReturn: []),

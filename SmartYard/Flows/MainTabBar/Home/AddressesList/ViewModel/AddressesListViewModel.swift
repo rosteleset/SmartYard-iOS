@@ -417,15 +417,76 @@ class AddressesListViewModel: BaseViewModel {
             }
             .withLatestFrom(loadedApprovedAddressesData.asDriverOnErrorJustComplete()) { ($0, $1) }
             .drive(
+                // swiftlint:disable:next closure_body_length
                 onNext: { [weak self] args in
                     let (addressId, loadedAddresses) = args
                     let matchingAddress = loadedAddresses?.first { $0.houseId == addressId }
                     
-                    guard let uHouseId = matchingAddress?.houseId, let uAddress = matchingAddress?.address else {
+                    guard let self = self,
+                        let uHouseId = matchingAddress?.houseId, let uAddress = matchingAddress?.address else {
                         return
                     }
-                
-                    self?.router.trigger(.yardCamerasMap(houseId: uHouseId, address: uAddress))
+                    
+                    // проверяем какой тип отображения камер получен от сервера.
+                    // возможно два варината:
+                    // старый (.list) - отображение на карте всех камер
+                    // новый (.tree) - древовидная структура в которой можно отобразить камеры как на карте,
+                    // так и списком с подгруппами.
+                    // какой вариант использовать прилетает в приложение от ext/options -> cctvView
+                    
+                    if self.accessService.cctvView == "list" {
+                        self.router.trigger(.yardCamerasMap(houseId: uHouseId, address: uAddress, cameras: nil))
+                    } else {
+                        self.apiWrapper.getAllTreeCCTV(houseId: uHouseId)
+                            .trackActivity(self.activityTracker)
+                            .trackError(self.errorTracker)
+                            .asDriver(onErrorJustReturn: nil)
+                            // swiftlint:disable:next closure_body_length
+                            .drive { response in
+                                guard let response = response.optional else {
+                                    return
+                                }
+                                
+                                if response.type == .map {
+                                    let camObjects: [CameraObject] = {
+                                        
+                                        guard let cams = response.cameras else {
+                                            return []
+                                        }
+                                        let result = cams.enumerated().map { offset, element in
+                                            CameraObject(
+                                                id: element.id,
+                                                position: element.coordinate,
+                                                cameraNumber: offset + 1,
+                                                name: element.name,
+                                                video: element.video,
+                                                token: element.token,
+                                                serverType: element.serverType
+                                            )
+                                        }
+                                        return result
+                                        
+                                    }()
+                                    self.router.trigger(
+                                        .yardCamerasMap(
+                                            houseId: uHouseId,
+                                            address: uAddress,
+                                            cameras: camObjects
+                                        )
+                                    )
+                                } else {
+                                    self.router.trigger(
+                                        .yardCamerasList(
+                                            houseId: uHouseId,
+                                            address: uAddress,
+                                            tree: response,
+                                            path: []
+                                        )
+                                    )
+                                }
+                            }
+                            .disposed(by: self.disposeBag)
+                    }
                 }
             )
             .disposed(by: disposeBag)
