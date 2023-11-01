@@ -42,14 +42,19 @@ struct APICCTV: Decodable {
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         
-        lat = try container.decode(String.self, forKey: .lat)
-        lon = try container.decode(String.self, forKey: .lon)
+        let latRaw = try? container.decode(String.self, forKey: .lat)
+        let lonRaw = try? container.decode(String.self, forKey: .lon)
         
-        guard let latDouble = Double(lat), let lonDouble = Double(lon) else {
-            throw NSError.APIWrapperError.noDataError
+        if let latRaw = latRaw, let lonRaw = lonRaw,
+            let latDouble = Double(latRaw), let lonDouble = Double(lonRaw) {
+            lat = latRaw
+            lon = lonRaw
+            coordinate = CLLocationCoordinate2D(latitude: latDouble, longitude: lonDouble)
+        } else {
+            lat = Constants.defaultMapCenterCoordinates.latitude.string
+            lon = Constants.defaultMapCenterCoordinates.longitude.string
+            coordinate = Constants.defaultMapCenterCoordinates
         }
-        
-        coordinate = CLLocationCoordinate2D(latitude: latDouble, longitude: lonDouble)
         
         video = try container.decode(String.self, forKey: .url)
         token = try container.decode(String.self, forKey: .token)
