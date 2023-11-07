@@ -49,7 +49,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // То, что мы можем пометить одно и то же сообщение много раз - пофиг. Главное - пометить
         
         appCoordinator.markAllMessagesAsDelivered()
-        
+
+        mainWindow.tintColor = UIColor(named: "blue")
+        mainWindow.tintAdjustmentMode = .dimmed
+
         return true
     }
     
