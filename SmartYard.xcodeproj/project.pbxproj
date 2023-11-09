@@ -160,6 +160,13 @@
 		3AEFB47C264C346A000F37D0 /* FaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AEFB473264C2C95000F37D0 /* FaceCell.xib */; };
 		3AEFB483264D1ADE000F37D0 /* FaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB481264D1ADE000F37D0 /* FaceViewController.swift */; };
 		3AEFB484264D1ADF000F37D0 /* FaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AEFB482264D1ADE000F37D0 /* FaceViewController.xib */; };
+		3AF99FBC2AFCFF9D007B7ECA /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF99FBB2AFCFF9D007B7ECA /* WebRTCClient.swift */; };
+		3AF99FBE2AFCFFD2007B7ECA /* SignalingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF99FBD2AFCFFD2007B7ECA /* SignalingClient.swift */; };
+		3AF99FC02AFD008D007B7ECA /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF99FBF2AFD008D007B7ECA /* Message.swift */; };
+		3AF99FC52AFD0374007B7ECA /* RTCStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF99FC22AFD0374007B7ECA /* RTCStates.swift */; };
+		3AF99FC62AFD0374007B7ECA /* SessionDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF99FC32AFD0374007B7ECA /* SessionDescription.swift */; };
+		3AF99FC72AFD0374007B7ECA /* IceCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF99FC42AFD0374007B7ECA /* IceCandidate.swift */; };
+		3AF99FC92AFD08C9007B7ECA /* WebRTCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF99FC82AFD08C9007B7ECA /* WebRTCService.swift */; };
 		3AFBA733263752B300C7DEB6 /* SafeCachedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA732263752B300C7DEB6 /* SafeCachedImageView.swift */; };
 		3AFBA73826375B8600C7DEB6 /* BetterSnappingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA73726375B8600C7DEB6 /* BetterSnappingFlowLayout.swift */; };
 		3AFBA73E26383A2F00C7DEB6 /* CamMapCCTVRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA73D26383A2F00C7DEB6 /* CamMapCCTVRequest.swift */; };
@@ -812,6 +819,13 @@
 		3AEFB473264C2C95000F37D0 /* FaceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FaceCell.xib; sourceTree = "<group>"; };
 		3AEFB481264D1ADE000F37D0 /* FaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceViewController.swift; sourceTree = "<group>"; };
 		3AEFB482264D1ADE000F37D0 /* FaceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FaceViewController.xib; sourceTree = "<group>"; };
+		3AF99FBB2AFCFF9D007B7ECA /* WebRTCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
+		3AF99FBD2AFCFFD2007B7ECA /* SignalingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalingClient.swift; sourceTree = "<group>"; };
+		3AF99FBF2AFD008D007B7ECA /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		3AF99FC22AFD0374007B7ECA /* RTCStates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTCStates.swift; sourceTree = "<group>"; };
+		3AF99FC32AFD0374007B7ECA /* SessionDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDescription.swift; sourceTree = "<group>"; };
+		3AF99FC42AFD0374007B7ECA /* IceCandidate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IceCandidate.swift; sourceTree = "<group>"; };
+		3AF99FC82AFD08C9007B7ECA /* WebRTCService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRTCService.swift; sourceTree = "<group>"; };
 		3AFBA732263752B300C7DEB6 /* SafeCachedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeCachedImageView.swift; sourceTree = "<group>"; };
 		3AFBA73726375B8600C7DEB6 /* BetterSnappingFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterSnappingFlowLayout.swift; sourceTree = "<group>"; };
 		3AFBA73D26383A2F00C7DEB6 /* CamMapCCTVRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamMapCCTVRequest.swift; sourceTree = "<group>"; };
@@ -1824,6 +1838,28 @@
 				3AEFB482264D1ADE000F37D0 /* FaceViewController.xib */,
 			);
 			path = CommonDialogs;
+			sourceTree = "<group>";
+		};
+		3AF99FBA2AFCFE22007B7ECA /* WebRTCService */ = {
+			isa = PBXGroup;
+			children = (
+				3AF99FCA2AFD5FBC007B7ECA /* Extensions */,
+				3AF99FBB2AFCFF9D007B7ECA /* WebRTCClient.swift */,
+				3AF99FBD2AFCFFD2007B7ECA /* SignalingClient.swift */,
+				3AF99FBF2AFD008D007B7ECA /* Message.swift */,
+				3AF99FC82AFD08C9007B7ECA /* WebRTCService.swift */,
+			);
+			path = WebRTCService;
+			sourceTree = "<group>";
+		};
+		3AF99FCA2AFD5FBC007B7ECA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3AF99FC22AFD0374007B7ECA /* RTCStates.swift */,
+				3AF99FC32AFD0374007B7ECA /* SessionDescription.swift */,
+				3AF99FC42AFD0374007B7ECA /* IceCandidate.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		3AFBA7312637523900C7DEB6 /* SafeCachedImage */ = {
@@ -2936,6 +2972,7 @@
 		84B9EC8923E0846400979C39 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				3AF99FBA2AFCFE22007B7ECA /* WebRTCService */,
 				3ADC76DF29E09A8500EDE4D7 /* DVRServices */,
 				844AC39323E9776F0066006D /* AccessService */,
 				84AF095B24ADF9AE005CEECE /* AlertService */,
@@ -4764,6 +4801,7 @@
 				84AF095D24ADF9AF005CEECE /* AlertService.swift in Sources */,
 				84898A9823F1556B00E6B78E /* SettingsSectionModel.swift in Sources */,
 				3A4A4A782704826600C5B609 /* SharedFunctions.swift in Sources */,
+				3AF99FBE2AFCFFD2007B7ECA /* SignalingClient.swift in Sources */,
 				E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */,
 				849F2AD72448687C005693B3 /* AddressesListEmptyStateCell.swift in Sources */,
 				E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */,
@@ -4845,6 +4883,7 @@
 				3A003CE625E0466D002F193B /* RequestRecordViewModel.swift in Sources */,
 				3A1BDEC626285DB60075410B /* HistoryHelpers.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
+				3AF99FC02AFD008D007B7ECA /* Message.swift in Sources */,
 				3AFBA73E26383A2F00C7DEB6 /* CamMapCCTVRequest.swift in Sources */,
 				E92EFBBF242A22F2003AF7FE /* GetServicesRequest.swift in Sources */,
 				84F6494B24740E90000C0028 /* YardMapViewModel.swift in Sources */,
@@ -4878,6 +4917,7 @@
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
 				84F6494A24740E90000C0028 /* CamerasMapPointView.swift in Sources */,
 				846DC6C724B33DC600A11914 /* PayContractViewModel.swift in Sources */,
+				3AF99FC92AFD08C9007B7ECA /* WebRTCService.swift in Sources */,
 				3AEB887427E130D600B19925 /* GetExtensionRequest.swift in Sources */,
 				84D29B9624B799B100CFBE6B /* StreamInfoResponseData.swift in Sources */,
 				846DC6DC24B33DEA00A11914 /* SberbankPayProcessRequest.swift in Sources */,
@@ -4910,6 +4950,7 @@
 				E98C382D23F180530010BBC1 /* TopRoundedView.swift in Sources */,
 				843FB12424C1C58E0060ACEC /* PaymentsAddressCell.swift in Sources */,
 				E9A4D48323EC229F0070A591 /* PinCodeViewModel.swift in Sources */,
+				3AF99FC62AFD0374007B7ECA /* SessionDescription.swift in Sources */,
 				8496396024851B660086B6E9 /* ApiWrapper+CCTV.swift in Sources */,
 				E9C2568124224DF200BE32E0 /* RestoreMethod.swift in Sources */,
 				843C38DE242A57C40035BF80 /* NotificationsCoordinator.swift in Sources */,
@@ -4945,6 +4986,7 @@
 				3A25BA9A28967A6800D2401E /* OutgoingCallViewModel.swift in Sources */,
 				843C38E1242A57C40035BF80 /* NotificationsViewController.swift in Sources */,
 				3A6717402AE156DA00D6B9C7 /* CamerasListItem.swift in Sources */,
+				3AF99FC52AFD0374007B7ECA /* RTCStates.swift in Sources */,
 				E92EFBD2242A22F2003AF7FE /* IntercomResponseData.swift in Sources */,
 				3A6717392AE1393900D6B9C7 /* CamerasListItemCell.swift in Sources */,
 				E9A1D78623F27B9A00234B2A /* AddressConfirmationViewModel.swift in Sources */,
@@ -5003,6 +5045,7 @@
 				E9E4271523F40DAF00F5D593 /* SmartYardCheckBoxView.swift in Sources */,
 				845E9EE324895AE4000CBBC6 /* SimpleVideoRangeSlider.swift in Sources */,
 				E92EFBE0242A22F2003AF7FE /* CreateIssueRequest.swift in Sources */,
+				3AF99FC72AFD0374007B7ECA /* IceCandidate.swift in Sources */,
 				843C38D1242A577C0035BF80 /* UnreadedResponseData.swift in Sources */,
 				E92EFBEC242A2507003AF7FE /* NotificationName+Extensions.swift in Sources */,
 				3A67172F2ADD5DF600D6B9C7 /* AllCCTVTreeResponseData.swift in Sources */,
@@ -5099,6 +5142,7 @@
 				3AEB886927E0CF3400B19925 /* GetExtensionsListResponseData.swift in Sources */,
 				84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */,
 				E92EFBCB242A22F2003AF7FE /* RequestCodeRequest.swift in Sources */,
+				3AF99FBC2AFCFF9D007B7ECA /* WebRTCClient.swift in Sources */,
 				E940581123F682EA00623746 /* AllowedPersonCell.swift in Sources */,
 				84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */,
 				849FF08E24CEE3C900C234BC /* LinearGradientView.swift in Sources */,
@@ -5194,7 +5238,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5220,7 +5264,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5245,7 +5289,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5270,7 +5314,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5295,7 +5339,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5320,7 +5364,7 @@
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5470,7 +5514,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5511,7 +5555,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SmartYard/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5554,7 +5598,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SmartYardSharedDataFramework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5589,7 +5633,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SmartYardSharedDataFramework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

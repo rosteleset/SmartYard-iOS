@@ -32,6 +32,7 @@ class IncomingCallPortraitViewController: BaseViewController {
     
     @IBOutlet private weak var videoBackgroundBlur: UIView!
     @IBOutlet private weak var videoPreview: UIView!
+    @IBOutlet private weak var webRTCView: UIView!
     
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
@@ -100,19 +101,19 @@ class IncomingCallPortraitViewController: BaseViewController {
                 }
             )
         
-        let actualVideoViews: Driver<(UIView, UIView)> = rx.viewWillAppear.asDriver()
+        let actualVideoViews: Driver<(UIView, UIView, UIView)> = rx.viewWillAppear.asDriver()
             .flatMap { [weak self] _ in
                 guard let self = self else {
                     return .empty()
                 }
                 
-                return .just((self.videoPreview, UIView()))
+                return .just((self.videoPreview, self.webRTCView, UIView()))
             }
         
         let input = IncomingCallViewModel.Input(
             previewTrigger: previewButton.rx.tap.asDriver(),
             callTrigger: callTrigger.asDriverOnErrorJustComplete(),
-            videoViewsTrigger: .merge(actualVideoViews, .just((videoPreview, UIView()))),
+            videoViewsTrigger: .merge(actualVideoViews, .just((videoPreview, webRTCView, UIView()))),
             ignoreTrigger: ignoreButton.rx.tap.asDriver(),
             openTrigger: openButton.rx.tap.asDriver(),
             speakerTrigger: speakerButton.rx.tap.asDriver(),
@@ -175,6 +176,7 @@ class IncomingCallPortraitViewController: BaseViewController {
         
         videoBackgroundBlur.isHidden = !shouldShowVideo
         videoPreview.isHidden = !shouldShowVideo
+        webRTCView.isHidden = !(state.previewState == .video)
         
         imageView.isHidden = shouldShowVideo
         imageViewActivityIndicator.isHidden = shouldShowVideo || hasImage

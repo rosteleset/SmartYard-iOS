@@ -199,6 +199,7 @@ PODS:
   - TouchAreaInsets (1.1.0)
   - TPKeyboardAvoiding (1.3.5)
   - Turf (2.6.1)
+  - WebRTC-lib (115.0.0)
   - WKCookieWebView (2.0.3)
   - XCoordinator (2.2.1):
     - XCoordinator/Core (= 2.2.1)
@@ -236,6 +237,7 @@ DEPENDENCIES:
   - SwiftLint
   - TouchAreaInsets
   - TPKeyboardAvoiding
+  - WebRTC-lib
   - WKCookieWebView (~> 2.0)
   - XCoordinator
   - XCoordinator/RxSwift
@@ -285,6 +287,7 @@ SPEC REPOS:
     - TouchAreaInsets
     - TPKeyboardAvoiding
     - Turf
+    - WebRTC-lib
     - WKCookieWebView
     - XCoordinator
 
@@ -363,9 +366,10 @@ SPEC CHECKSUMS:
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
   Turf: 469ce2c3d22e5e8e4818d5a3b254699a5c89efa4
+  WebRTC-lib: 24e13422ccff5546041fd86afbdb94cbdceeeb64
   WKCookieWebView: 528260c9cf7d89d312d61639cfca75c5618326a2
   XCoordinator: 2cf9f72e10998b7a4a4bbeac3d07e071ea82fca3
 
-PODFILE CHECKSUM: 234cd3eb81034b219097c52243f296022b97d9de
+PODFILE CHECKSUM: ac83f51d940462faf2f49f5447f4c66e6bced95d
 
 COCOAPODS: 1.11.3

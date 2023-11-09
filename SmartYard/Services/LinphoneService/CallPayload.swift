@@ -24,6 +24,10 @@ struct CallPayload {
     let callerId: String
     let hash: String?
     let useCallKit: Bool
+    let videoType: CallVideoType
+    let videoStream: String?
+    let videoServer: String?
+    let videoToken: String?
     
     var asPushNotificationPayload: [AnyHashable: Any] {
         var params = [
@@ -60,6 +64,16 @@ struct CallPayload {
         username + password + server + port
     }
     
+    var videoUrl: String? {
+        if videoType == .webrtc,
+           let tokenPart = videoToken.isNilOrEmpty ? "" : "?token=\(videoToken ?? "")",
+           let streamPart = videoStream {
+            return streamPart + tokenPart
+        } else {
+            return nil
+        }
+    }
+    
     init?(pushNotificationPayload data: [AnyHashable: Any], useCallKit: Bool) {
         let accessService = AccessService.shared
         
@@ -90,6 +104,28 @@ struct CallPayload {
         self.stun = data["stun"] as? String
         self.hash = data["hash"] as? String
         self.useCallKit = useCallKit
+        
+        if let videoTypeStr = data["videoType"] as? String {
+            switch videoTypeStr {
+            case "webrtc": self.videoType = .webrtc
+            default: self.videoType = .inband
+            }
+            
+            self.videoStream = data["videoStream"] as? String
+            self.videoToken = data["videoToken"] as? String
+            self.videoServer = data["videoServer"] as? String
+            
+        } else {
+            self.videoType = .inband
+            self.videoStream = nil
+            self.videoToken = nil
+            self.videoServer = nil
+        }
+        
     }
     
+    enum CallVideoType: String {
+        case inband
+        case webrtc
+    }
 }

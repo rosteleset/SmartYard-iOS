@@ -1,4 +1,4 @@
-platform :ios, '11.0'
+platform :ios, '12.0'
 inhibit_all_warnings!
 
 source 'https://cdn.cocoapods.org/'
@@ -12,6 +12,7 @@ target 'SmartYard' do
   pod 'Kingfisher'
   pod 'linphone-sdk' #, '4.4.28'
   pod 'WKCookieWebView', '~> 2.0'
+  pod 'WebRTC-lib'
   
   # Reactive
   pod 'RxSwift'
