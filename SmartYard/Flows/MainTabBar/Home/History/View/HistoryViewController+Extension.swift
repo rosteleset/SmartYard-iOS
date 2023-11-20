@@ -58,7 +58,7 @@ extension HistoryViewController {
         popOverDatePickerViewController.set(minimumDate: minDate)
         popOverDatePickerViewController.set(maximumDate: maxDate)
         popOverDatePickerViewController.set(datePickerMode: .date)
-        popOverDatePickerViewController.set(locale: Calendar.serverCalendar.locale ?? Locale(identifier: "ru-RU"))
+        popOverDatePickerViewController.set(locale: Calendar.current.locale ?? Locale(identifier: "ru-RU"))
         popOverDatePickerViewController.set(timeZone: Calendar.serverCalendar.timeZone)
         popOverDatePickerViewController.presentationController?.delegate = self
         popOverDatePickerViewController.changeHandler = onSelect

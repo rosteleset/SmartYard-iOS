@@ -191,7 +191,7 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         let formatter = DateFormatter()
         
         formatter.timeZone = Calendar.serverCalendar.timeZone
-        formatter.locale = Calendar.serverCalendar.locale
+        formatter.locale = Calendar.current.locale
         formatter.dateFormat = "LLLL"
         
         let nameOfMonth = formatter.string(from: visibleDate).capitalized
@@ -318,7 +318,7 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
             startDate: startDate,
             endDate: endDate,
             numberOfRows: 6,
-            calendar: Calendar.serverCalendar,
+            calendar: Calendar.current,
             generateInDates: .forAllMonths,
             generateOutDates: .tillEndOfGrid,
             firstDayOfWeek: .monday,

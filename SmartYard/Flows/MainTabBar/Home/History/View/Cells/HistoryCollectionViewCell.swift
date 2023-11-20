@@ -226,7 +226,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         
         let df = DateFormatter()
         df.timeZone = Calendar.serverCalendar.timeZone
-        df.locale = Calendar.serverCalendar.locale
+        df.locale = Calendar.current.locale
         
         df.dateFormat = "EEEE, d MMMM HH:mm"
         dateLabel.text = df.string(from: value.date)
