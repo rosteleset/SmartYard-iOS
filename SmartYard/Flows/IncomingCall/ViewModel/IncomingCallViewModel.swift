@@ -87,10 +87,6 @@ class IncomingCallViewModel: BaseViewModel {
         
         subtitleSubject = BehaviorSubject<String?>(value: callPayload.callerId)
         
-        currentStateSubject = BehaviorSubject<IncomingCallStateContainer>(
-            value: .getDefaultSpeakerMode(isCallKitUsed, apiWrapper: apiWrapper)
-        )
-        
         if callPayload.videoType == .webrtc,
             let stun = callPayload.stun,
            let urlString = callPayload.videoUrl,
@@ -100,6 +96,18 @@ class IncomingCallViewModel: BaseViewModel {
         } else {
             self.webRTCService = nil
         }
+        
+        let defaultSpeakerMode = IncomingCallStateContainer.getDefaultSpeakerMode(isCallKitUsed, apiWrapper: apiWrapper)
+        
+        let initialCallState = IncomingCallStateContainer(
+            callState: defaultSpeakerMode.callState,
+            doorState: defaultSpeakerMode.doorState,
+            previewState: self.webRTCService != nil ? .video : defaultSpeakerMode.previewState,
+            soundOutputState: defaultSpeakerMode.soundOutputState
+        )
+        
+        currentStateSubject = BehaviorSubject<IncomingCallStateContainer>(value: initialCallState)
+        
         super.init()
         
         linphoneService.delegate = self
