@@ -213,7 +213,7 @@ struct CameraObject: Equatable {
         case .nimble:
             return "\(baseURLString)/playlist_dvr_range-\(urlComponents).m3u8?wmsAuthSign=\(token)"
         default:
-            return "\(baseURLString)/index-\(urlComponents).fmp4.m3u8?token=\(token)"
+            return hlsMode == .fmp4 ? "\(baseURLString)/index-\(urlComponents).fmp4.m3u8?token=\(token)" : "\(baseURLString)/index-\(urlComponents).m3u8?token=\(token)"
         }
     }
     
