@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "Вход по лицу без ключа"; ObjectID = "X41-NV-dVv"; */
+"X41-NV-dVv.text" = "Keyless face entry";
+
+/* Class = "UIButton"; normalTitle = "Настроить"; ObjectID = "cKZ-vB-e1c"; */
+"cKZ-vB-e1c.normalTitle" = "Setup";
+
+/* Class = "UILabel"; text = "Распознавание лиц отключено владельцем квартиры"; ObjectID = "gy9-BF-Mh4"; */
+"gy9-BF-Mh4.text" = "Facial recognition disabled by apartment owner";
+
+/* Class = "UILabel"; text = "beta"; ObjectID = "iZK-e1-rDt"; */
+"iZK-e1-rDt.text" = "beta";
+
+/* Class = "UILabel"; text = "Зарегистрированные лица"; ObjectID = "pz7-6N-TqU"; */
+"pz7-6N-TqU.text" = "Registered faces";

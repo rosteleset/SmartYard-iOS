@@ -250,7 +250,13 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             case .main:
                 break
             default:
-                self.trigger(.alert(title: "Сначала авторизуйтесь в приложении, а затем повторите попытку добавить адрес", message: nil))
+                self.trigger(.alert(
+                    title: NSLocalizedString(
+                        "First, log in to the application, and then try to add the address again",
+                        comment: ""
+                    ),
+                    message: nil
+                ))
                 return .none()
             }
             
@@ -283,7 +289,8 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
                 apiWrapper: apiWrapper,
                 alertService: alertService,
                 accessService: accessService,
-                router: weakRouter)
+                router: weakRouter
+            )
             let vc = SelectProviderViewController(viewModel: vm)
             return .set([vc], animation: .fade)
         }
@@ -339,7 +346,7 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         providerProxy.reportIncomingCall(
             uuid: uuid,
-            handle: "Входящий звонок",
+            handle: NSLocalizedString("Incoming call", comment: ""),
             hasVideo: true,
             completion: callKitCompletion
         )

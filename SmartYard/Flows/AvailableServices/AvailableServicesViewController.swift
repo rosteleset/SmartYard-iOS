@@ -67,7 +67,7 @@ class AvailableServicesViewController: BaseViewController, LoaderPresentable {
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
-                    self?.updateLoader(isEnabled: isLoading, detailText: "Создание заявки")
+                    self?.updateLoader(isEnabled: isLoading, detailText: NSLocalizedString("Creating a task", comment: ""))
                 }
             )
             .disposed(by: disposeBag)

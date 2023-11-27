@@ -39,7 +39,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     
     fileprivate let viewModel: HistoryViewModel
     internal var eventsFilter = BehaviorRelay<EventsFilter>(value: .all)
-    private var apptsFilterString = BehaviorRelay<String>(value: "все") 
+    private var apptsFilterString = BehaviorRelay<String>(value: NSLocalizedString("all", comment: ""))
     private let apptsFilter = BehaviorRelay<[Int]>(value: [])
     
     private let loadDayTriger = PublishSubject<Date>()
@@ -116,7 +116,7 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fakeNavBar.setText("Адреса")
+        fakeNavBar.setText(NSLocalizedString("Addresses", comment: ""))
         setupShadows()
         setupTableView()
         bind()
@@ -269,7 +269,8 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     }
     
     @IBAction private func tapAppartments(_ sender: UIView) {
-        let flatLabels = ["Все квартиры"] + viewModel.flatNumbers.map { "Квартира " + String($0) }
+        let flatLabels = [NSLocalizedString("All apts", comment: "")] +
+            viewModel.flatNumbers.map { NSLocalizedString("Appartment", comment: "") + " " + String($0) }
         let itemsId = [""] + viewModel.flatIds.map { String($0) }
         
         let selectedRow = { () -> Int in
@@ -285,9 +286,16 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
             selectedRow: selectedRow,
             onSelect: { _, selectedRow in
                 if selectedRow == 0 {
-                    self.appartmentFilterButton.setTitle("Квартира, все", for: .normal)
+                    self.appartmentFilterButton.setTitle(
+                        NSLocalizedString("Appartment, all", comment: ""),
+                        for: .normal
+                    )
                 } else {
-                    self.appartmentFilterButton.setTitle("Квартира, \(self.viewModel.flatNumbers[selectedRow - 1])", for: .normal)
+                    self.appartmentFilterButton.setTitle(
+                        NSLocalizedString("Appartment", comment: "")
+                        + ", \(self.viewModel.flatNumbers[selectedRow - 1])",
+                        for: .normal
+                    )
                 }
                 self.appartmentFilterButton.sizeToFit()
                 self.apptsFilterString.accept(itemsId[selectedRow])

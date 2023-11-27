@@ -82,7 +82,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         )
         
         let homeTabBarItem = UITabBarItem(
-            title: "Адреса",
+            title: NSLocalizedString("Addresses", comment: ""),
             image: UIImage(named: "HomeTabUnselected"),
             selectedImage: UIImage(named: "HomeTabSelected")
         )
@@ -100,7 +100,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         )
         
         let notificationsTabBarItem = UITabBarItem(
-            title: "Уведомления",
+            title: NSLocalizedString("Notifications", comment: ""),
             image: UIImage(named: "NotificationsTabUnselected"),
             selectedImage: UIImage(named: "NotificationsTabSelected")
         )
@@ -118,7 +118,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         )
         
         let chatTabBarItem = UITabBarItem(
-            title: "Чат",
+            title: NSLocalizedString("Chat", comment: ""),
             image: UIImage(named: "ChatTabUnselected"),
             selectedImage: UIImage(named: "ChatTabSelected")
         )
@@ -132,7 +132,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         )
         
         let paymentsTabBarItem = UITabBarItem(
-            title: "Оплатить",
+            title: NSLocalizedString("Pay", comment: ""),
             image: UIImage(named: "PaymentsTabUnselected"),
             selectedImage: UIImage(named: "PaymentsTabSelected")
         )
@@ -152,7 +152,7 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         )
         
         let menuTabBarItem = UITabBarItem(
-            title: "Меню",
+            title: NSLocalizedString("Menu", comment: ""),
             image: UIImage(named: "MenuTabUnselected"),
             selectedImage: UIImage(named: "MenuTabSelected")
         )

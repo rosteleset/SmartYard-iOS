@@ -84,15 +84,15 @@ class AddressesListViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] error in
                     if (error as NSError) == NSError.PermissionError.noCameraPermission {
-                        let msg = "Чтобы использовать эту функцию, перейдите в настройки и предоставьте доступ к камере"
+                        let msg = NSLocalizedString("To use this feature, go to settings and grant access to the camera", comment: "")
                         
-                        self?.router.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
+                        self?.router.trigger(.appSettings(title: NSLocalizedString("Can't access camera", comment: ""), message: msg))
                         
                         return
                     }
                     
                     self?.alertService.showAlert(
-                        title: "Ошибка",
+                        title: NSLocalizedString("Error", comment: ""),
                         message: error.localizedDescription,
                         priority: 250
                     )
@@ -755,9 +755,9 @@ extension AddressesListViewModel {
             break
             
         case .upgrade:
-            let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
             
-            let updateAction = UIAlertAction(title: "Обновить", style: .default) { _ in
+            let updateAction = UIAlertAction(title: NSLocalizedString("Update", comment: ""), style: .default) { _ in
                 guard let url = URL(string: Constants.appstoreUrl) else {
                     return
                 }
@@ -766,14 +766,14 @@ extension AddressesListViewModel {
             }
             
             alertService.showDialog(
-                title: "Доступна новая версия приложения",
+                title: NSLocalizedString("A new version of the application is available", comment: ""),
                 message: nil,
                 actions: [cancelAction, updateAction],
                 priority: 5000
             )
             
         case .forceUpgrade:
-            let updateAction = UIAlertAction(title: "Обновить", style: .default) { _ in
+            let updateAction = UIAlertAction(title: NSLocalizedString("Update", comment: ""), style: .default) { _ in
                 guard let url = URL(string: Constants.appstoreUrl) else {
                     return
                 }
@@ -782,8 +782,8 @@ extension AddressesListViewModel {
             }
             
             alertService.showDialog(
-                title: "Версия приложения устарела",
-                message: "Чтобы продолжить пользоваться приложением, пожалуйста, обновите его",
+                title: NSLocalizedString("App version out of date", comment: ""),
+                message: NSLocalizedString("To continue using the app, please update it", comment: ""),
                 actions: [updateAction],
                 priority: 5000
             )

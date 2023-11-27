@@ -82,7 +82,7 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         
         super.init(nibName: nil, bundle: nil)
         
-        title = "Архив"
+        title = NSLocalizedString("Archive", comment: "")
     }
     
     @available(*, unavailable)

@@ -40,7 +40,7 @@ class LogoutHelper {
         errorTracker: ErrorTracker,
         disposeBag: DisposeBag
     ) {
-        let okAction = UIAlertAction(title: "ОК", style: .destructive) { [weak self] _ in
+        let okAction = UIAlertAction(title: "OK", style: .destructive) { [weak self] _ in
             guard let self = self else {
                 return
             }
@@ -60,8 +60,8 @@ class LogoutHelper {
         }
         
         alertService.showDialog(
-            title: "Внимание!",
-            message: "Произведена авторизация на другом устройстве",
+            title: NSLocalizedString("Attention", comment: "") + "!",
+            message: NSLocalizedString("You have been authorized on another device", comment: ""),
             actions: [okAction],
             priority: 1000
         )

@@ -120,7 +120,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             errorTracker.asDriver()
                 .drive(
                     onNext: { [weak self] error in
-                        self?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                        self?.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                     }
                 )
                 .disposed(by: self.disposeBag)
@@ -141,8 +141,8 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
                                 }
                                 self.trigger(
                                     .alert(
-                                        title: "Заявка отправлена",
-                                        message: "Мы позвоним Вам в ближайшее время"
+                                        title: NSLocalizedString("Request submitted", comment: ""),
+                                        message: NSLocalizedString("We will call you shortly", comment: "")
                                     )
                                 )
                             }
@@ -150,9 +150,21 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
                         .disposed(by: self.disposeBag)
             }
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Заказать обратный звонок", style: .default, handler: callbackHandler))
-            alert.addAction(UIAlertAction(title: "Позвонить по телефону", style: .default, handler: callHandler))
-            alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(
+                title: NSLocalizedString("Request a call back", comment: ""),
+                style: .default,
+                handler: callbackHandler
+            ))
+            alert.addAction(UIAlertAction(
+                title: NSLocalizedString("Make a phone call", comment: ""),
+                style: .default,
+                handler: callHandler
+            ))
+            
+            alert.addAction(UIAlertAction(
+                title: NSLocalizedString("Cancel", comment: ""),
+                style: .cancel,
+                handler: nil))
             
             self.viewController.present(alert, animated: true, completion: nil)
             return.none()
@@ -168,7 +180,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
                 url: url,
-                backButtonLabel: "Меню",
+                backButtonLabel: NSLocalizedString("Menu", comment: ""),
                 push: true,
                 version: version
             )
@@ -182,7 +194,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
                 apiWrapper: apiWrapper,
                 content: content,
                 baseURL: baseURL,
-                backButtonLabel: "Меню",
+                backButtonLabel: NSLocalizedString("Menu", comment: ""),
                 push: true,
                 version: version
             )

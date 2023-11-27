@@ -68,7 +68,7 @@ class AddressSettingsViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -317,7 +317,7 @@ class AddressSettingsViewModel: BaseViewModel {
             areLogsEnabled: areLogsEnabledSubject.asDriver(onErrorJustReturn: nil),
             areLogsVisibleOnlyForOwner: areLogsVisibleOnlyForOwnerSubject.asDriver(onErrorJustReturn: nil),
             isFRSEnabled: isFRSEnabledSubject.asDriver(onErrorJustReturn: nil),
-            ringtone: .just("Нота"),
+            ringtone: .just(NSLocalizedString("Note", comment: "")),
             hasDomophone: .just(hasDomophone),
             isLoading: activityTracker.asDriver(),
             shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
@@ -330,9 +330,9 @@ class AddressSettingsViewModel: BaseViewModel {
             return
         }
         
-        let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        let noAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
         
-        let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
+        let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { [weak self] _ in
             guard let self = self else {
                 return
             }
@@ -357,7 +357,7 @@ class AddressSettingsViewModel: BaseViewModel {
                 .disposed(by: self.disposeBag)
         }
         
-        router.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
+        router.trigger(.dialog(title: NSLocalizedString("Are you sure?", comment: ""), message: nil, actions: [noAction, yesAction]))
     }
     
 }

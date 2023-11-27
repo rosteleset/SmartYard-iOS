@@ -100,8 +100,9 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         }
         
         seekVideo(offsetSeconds: offset)
+        let secText = NSLocalizedString("sec", comment: "")
         videoPlayerViewContainer.backgroundColor = .black
-        let label = (offset > 0) ? UILabel(text: "+\(abs(offset)) сек") : UILabel(text: "-\(abs(offset)) сек")
+        let label = (offset > 0) ? UILabel(text: "+\(abs(offset)) \(secText)") : UILabel(text: "-\(abs(offset)) \(secText)")
         label.font = UIFont(name: "System", size: 16)
         label.font = label.font.bold
         label.textAlignment = .center
@@ -240,42 +241,42 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         
         switch value.event {
         case .answered:
-            titleLabel.text = "Звонок в домофон"
+            titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
             callStatusView.isHidden = false
             descriptionLabel.isHidden = true
-            callStatusLabel.text = "Отвеченный вызов"
+            callStatusLabel.text = NSLocalizedString("Answered call", comment: "")
             callStatusLabel.textColor = UIColor(named: "darkGreen")
             callStatusIcon.image = UIImage(named: "AnsweredCall")
         case .unanswered:
-            titleLabel.text = "Звонок в домофон"
+            titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
             callStatusView.isHidden = false
             descriptionLabel.isHidden = true
-            callStatusLabel.text = "Неотвеченный вызов"
+            callStatusLabel.text = NSLocalizedString("Missed call", comment: "")
             callStatusLabel.textColor = UIColor(named: "incorrectDataRed")
             callStatusIcon.image = UIImage(named: "MissedCall")
         case .rfid:
-            titleLabel.text = "Открывание ключом"
+            titleLabel.text = NSLocalizedString("Opening with a key", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
         case .app:
-            titleLabel.text = "Открытие из приложения"
+            titleLabel.text = NSLocalizedString("Opening from the app", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
         case .face:
-            titleLabel.text = "Открывание по лицу"
+            titleLabel.text = NSLocalizedString("Opening with Face-ID", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
             faceFrameColor = .green
         case .passcode:
-            titleLabel.text = "Открытие по коду"
+            titleLabel.text = NSLocalizedString("Opening with code", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
         case .call:
-            titleLabel.text = "Открытие ворот по звонку"
+            titleLabel.text = NSLocalizedString("Gate opening on call", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
         case .plate:
-            titleLabel.text = "Открытие ворот по номеру"
+            titleLabel.text = NSLocalizedString("Gate opening by numberplate", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
         case .unknown:
-            titleLabel.text = "Неизвестное событие"
+            titleLabel.text = NSLocalizedString("Unknown event", comment: "")
             titleLabel.textColor = UIColor(named: "incorrectDataRed")
         }
         image.image = nil
@@ -285,7 +286,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
                 urlString: value.previewURL ?? "",
                 cache: cache,
                 label: underImageLabel,
-                errorMessage: "Изображение отсутствует",
+                errorMessage: NSLocalizedString("Image missing", comment: ""),
                 rect: value.detailX?.face?.asCGRect,
                 rectColor: faceFrameColor
             )
@@ -303,11 +304,11 @@ class HistoryCollectionViewCell: UICollectionViewCell {
             if flags.contains("canDislike") || flags.contains("canDisLike") {
                 denyAccessButton.isHidden = false
                 // swiftlint:disable:next line_length
-                actionsDescriptionLabel.text = "При выборе «‎Чужой»‎ мы удалим ваше зарегистрированное лицо, на какое произошло ложное срабатывание наших алгоритмов.\nВсе лица, зарегистрированные в системе, можно найти в разделе Настройки адресов -> Управление доступом -> Вход по лицу без ключа."
+                actionsDescriptionLabel.text = NSLocalizedString("If you select Deny...", comment: "")
             } else {
                 openAccessButton.isHidden = false
                 // swiftlint:disable:next line_length
-                actionsDescriptionLabel.text = "При выборе «‎Свой»‎ мы добавим фотографию из этого события, для дальнейшего распознавания пользователя по лицу.\nВсе лица, зарегистрированные в системе, можно найти в разделе Настройки адресов -> Управление доступом -> Вход по лицу без ключа."
+                actionsDescriptionLabel.text = NSLocalizedString("If you select Allow...", comment: "")
                 
             }
             

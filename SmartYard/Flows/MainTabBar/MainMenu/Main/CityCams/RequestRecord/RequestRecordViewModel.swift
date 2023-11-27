@@ -31,7 +31,7 @@ class RequestRecordViewModel: BaseViewModel {
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -64,7 +64,10 @@ class RequestRecordViewModel: BaseViewModel {
                     }
                     
                     self.router.trigger(.back)
-                    self.router.trigger(.alert(title: "Заявка отправлена", message: "Мы свяжемся с Вами в течение суток"))
+                    self.router.trigger(.alert(
+                        title: NSLocalizedString("Request submitted", comment: ""),
+                        message: NSLocalizedString("We will contact you within 24 hours", comment: "")
+                    ))
                 }
             )
             .disposed(by: disposeBag)

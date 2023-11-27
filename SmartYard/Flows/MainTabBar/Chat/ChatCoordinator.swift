@@ -46,7 +46,10 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
             if let url = URL(string: self.apiWrapper.accessService.chatUrl) {
                 super.init(initialRoute: .webView(url: url))
             } else {
-                super.init(initialRoute: .alert(title: "Ошибка", message: "Не удаётся открыть страницу чата."))
+                super.init(initialRoute: .alert(
+                    title: NSLocalizedString("Error", comment: ""),
+                    message: NSLocalizedString("Unable to open chat page.", comment: "")
+                ))
             }
         }
         

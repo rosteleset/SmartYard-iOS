@@ -9,7 +9,9 @@
 import UIKit
 
 class PeriodPicker: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate {
-    private let pickerData = ["10 минут", "20 минут", "30 минут", "40 минут", "50 минут", "60 минут"]
+    private static let minText = NSLocalizedString("minutes", comment: "")
+    private let pickerData = ["10 " + minText, "20 " + minText, "30 " + minText,
+                              "40 " + minText, "50 " + minText, "60 " + minText]
     private let pickerRawValue = [10, 20, 30, 40, 50, 60]
     private var callback: ((_ value: Int) -> Void)?
     

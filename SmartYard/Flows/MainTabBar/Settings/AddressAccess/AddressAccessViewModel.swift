@@ -78,7 +78,7 @@ class AddressAccessViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -303,7 +303,7 @@ class AddressAccessViewModel: BaseViewModel {
                 onNext: { [weak self] in
                     self?.router.trigger(
                         .dialog(
-                            title: "Информация для гостя успешно отправлена!",
+                            title: NSLocalizedString("Guest information has been successfully sent!", comment: ""),
                             message: nil,
                             actions: [UIAlertAction(title: "OK", style: .default, handler: nil)]
                         )
@@ -332,7 +332,7 @@ class AddressAccessViewModel: BaseViewModel {
                 onNext: { [weak self] in
                     self?.router.trigger(
                         .dialog(
-                            title: "Информация для гостя успешно отправлена!",
+                            title: NSLocalizedString("Guest information has been successfully sent!", comment: ""),
                             message: nil,
                             actions: [UIAlertAction(title: "OK", style: .default, handler: nil)]
                         )
@@ -348,13 +348,13 @@ class AddressAccessViewModel: BaseViewModel {
                         return
                     }
                     
-                    let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+                    let noAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
                     
-                    let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
+                    let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { [weak self] _ in
                         self?.deleteTempAccessContact(index: index)
                     }
                     
-                    self.router.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
+                    self.router.trigger(.dialog(title: NSLocalizedString("Are you sure?", comment: ""), message: nil, actions: [noAction, yesAction]))
                 }
             )
             .disposed(by: disposeBag)
@@ -366,13 +366,13 @@ class AddressAccessViewModel: BaseViewModel {
                         return
                     }
                     
-                    let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+                    let noAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
                     
-                    let yesAction = UIAlertAction(title: "Да", style: .destructive) { [weak self] _ in
+                    let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { [weak self] _ in
                         self?.deletePermanentAccessContact(index: index)
                     }
                     
-                    self.router.trigger(.dialog(title: "Вы уверены?", message: nil, actions: [noAction, yesAction]))
+                    self.router.trigger(.dialog(title: NSLocalizedString("Are you sure?", comment: ""), message: nil, actions: [noAction, yesAction]))
                 }
             )
             .disposed(by: disposeBag)
@@ -439,14 +439,14 @@ class AddressAccessViewModel: BaseViewModel {
     
     private func toggleGuestAccess() {
         let cancelAction = UIAlertAction(
-            title: "Отмена",
+            title: NSLocalizedString("Cancel", comment: ""),
             style: .cancel
         ) { _ in
             // nothing
         }
         
         let okAction = UIAlertAction(
-            title: "Включить",
+            title: NSLocalizedString("Enable", comment: ""),
             style: .default
         ) { [weak self] _ in
             guard let self = self else {
@@ -481,9 +481,9 @@ class AddressAccessViewModel: BaseViewModel {
         }
         
         // swiftlint:disable:next line_length
-        let guestAccessAlertText = "Всем, кто будет набирать номер вашей квартиры на домофоне, дверь будет открываться автоматически в течение 60 минут. По истечению данного времени работа домофона вернется в стандартный режим автоматически."
+        let guestAccessAlertText = NSLocalizedString("guestAccessAlertText", comment: "")
         
-        let guestAccessAlertTitle = "Включить гостевой доступ на час?"
+        let guestAccessAlertTitle = NSLocalizedString("Enable guest access for an hour?", comment: "")
         
         guard let isGrantedIntercomGuestAccess = try? self.isGrantedIntercomGuestAccess.value() else {
             return

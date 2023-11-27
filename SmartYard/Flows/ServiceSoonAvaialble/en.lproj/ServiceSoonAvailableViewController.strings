@@ -1,0 +1,13 @@
+
+/* Class = "UILabel"; text = "Дождитесь курьера по адресу Тамбов, Советская, 80, 16 и сфотографируйте QR-код, который он принесёт."; ObjectID = "C8F-0W-d0e"; */
+"C8F-0W-d0e.text" = "Wait for the courier at Tambov, Sovetskaya, 80, 16 and take a photo of the QR code he brings.";
+
+/* Class = "UILabel"; text = "Совсем скоро  все заработает!"; ObjectID = "L7d-yT-XF9"; */
+"L7d-yT-XF9.text" = "Everything will work
+very soon!";
+
+/* Class = "UIButton"; normalTitle = "Отменить заявку"; ObjectID = "Ot2-BH-XPn"; */
+"Ot2-BH-XPn.normalTitle" = "Cancel request";
+
+/* Class = "UIButton"; normalTitle = "Приду в офис самостоятельно"; ObjectID = "YL9-kH-ngA"; */
+"YL9-kH-ngA.normalTitle" = "I'll come to the office on my own";

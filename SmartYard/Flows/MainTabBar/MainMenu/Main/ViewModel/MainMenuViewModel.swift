@@ -27,10 +27,25 @@ class MainMenuViewModel: BaseViewModel {
         self.router = router
         defaultItems = (
             accessService.showCityCams ?
-            [ MenuListItem.essential(label: "Городские камеры", iconName: "PublicCamsMenuIcon", route: .cityCams, order: 100) ] : []
+            [ MenuListItem.essential(
+                label: NSLocalizedString("Public cams", comment: ""),
+                iconName: "PublicCamsMenuIcon",
+                route: .cityCams,
+                order: 100
+            ) ] : []
         ) + [
-            MenuListItem.essential(label: "Настройки адресов", iconName: "HomeIcon", route: .settings, order: 200),
-            MenuListItem.essential(label: "Общие настройки", iconName: "SettingsMenuIcon", route: .profile, order: 300)
+            MenuListItem.essential(
+                label: NSLocalizedString("Address settings", comment: ""),
+                iconName: "HomeIcon",
+                route: .settings,
+                order: 200
+            ),
+            MenuListItem.essential(
+                label: NSLocalizedString("Common settings", comment: ""),
+                iconName: "SettingsMenuIcon",
+                route: .profile,
+                order: 300
+            )
         ]
         self.items = BehaviorSubject<[MenuListItem]>(value: defaultItems)
     }
@@ -43,7 +58,7 @@ class MainMenuViewModel: BaseViewModel {
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)

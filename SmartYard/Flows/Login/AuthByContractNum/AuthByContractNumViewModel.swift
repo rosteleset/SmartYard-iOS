@@ -53,7 +53,7 @@ class AuthByContractNumViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -87,15 +87,15 @@ class AuthByContractNumViewModel: BaseViewModel {
         input.forgetEverythingTapped
             .drive(
                 onNext: { [weak self] in
-                    let okAction = UIAlertAction(title: "Создать", style: .default) { _ in
+                    let okAction = UIAlertAction(title: NSLocalizedString("Create", comment: ""), style: .default) { _ in
                         restoreContractDataSubject.onNext(())
                     }
                     
-                    let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
                     
                     self?.router.trigger(
                         .dialog(
-                            title: "Создать заявку на восстановление данных по договору?",
+                            title: NSLocalizedString("Create a request for restoration by contract number?", comment: ""),
                             message: nil,
                             actions: [okAction, cancelAction]
                         )

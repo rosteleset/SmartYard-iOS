@@ -17,7 +17,13 @@ struct MainUserInfo {
     var address: String
     
     func convertToString() -> String {
-        return "ФИО: \(fullName)\nТелефон: \(phoneNumber)\nАдрес, введённый пользователем: \(address)"
+        let text = String.localizedStringWithFormat(
+            NSLocalizedString("Full name: %@\nPhone: %@\nAddress entered by user: %@", comment: ""),
+            "\(fullName)",
+            "\(phoneNumber)",
+            "\(address)"
+        )
+        return text
     }
     
 }

@@ -190,27 +190,27 @@ class IncomingCallPortraitViewController: BaseViewController {
         
         switch (state.callState, state.previewState) {
         case (.callReceived, .staticImage):
-            titleLabel.text = "Звонок в домофон"
-            ignoreButtonLabel.text = "Игнорировать"
-            previewButtonLabel.text = "Глазок"
+            titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
+            ignoreButtonLabel.text = NSLocalizedString("Ignore", comment: "")
+            previewButtonLabel.text = NSLocalizedString("Peephole", comment: "")
             
         case (.callReceived, .video):
-            titleLabel.text = "Глазок включен"
-            ignoreButtonLabel.text = "Игнорировать"
-            previewButtonLabel.text = "Глазок"
+            titleLabel.text = NSLocalizedString("Peephole on", comment: "")
+            ignoreButtonLabel.text = NSLocalizedString("Ignore", comment: "")
+            previewButtonLabel.text = NSLocalizedString("Peephole", comment: "")
             
         case (.establishingConnection, _):
-            titleLabel.text = "Соединение..."
-            ignoreButtonLabel.text = "Отклонить"
-            previewButtonLabel.text = "Видео"
+            titleLabel.text = NSLocalizedString("Conectiong...", comment: "")
+            ignoreButtonLabel.text = NSLocalizedString("Decline", comment: "")
+            previewButtonLabel.text = NSLocalizedString("Video", comment: "")
             
         case (.callActive, _):
-            titleLabel.text = "Разговор"
-            ignoreButtonLabel.text = "Отклонить"
-            previewButtonLabel.text = "Видео"
+            titleLabel.text = NSLocalizedString("Conversation", comment: "")
+            ignoreButtonLabel.text = NSLocalizedString("Decline", comment: "")
+            previewButtonLabel.text = NSLocalizedString("Video", comment: "")
             
         case (.callFinished, _):
-            titleLabel.text = "Звонок завершен"
+            titleLabel.text = "Call completed"
         }
     }
     

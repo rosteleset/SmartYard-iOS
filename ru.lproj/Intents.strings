@@ -2,11 +2,11 @@
 
 "75DQQs" = "Тип";
 
-"7OB1Ww" = "There are ${count} options matching ‘${door}’.";
+"7OB1Ww" = "Нашлось ${count} соответствующих ‘${door}’.";
 
 "7lOt11" = "Открыть ${door} @ ${address}";
 
-"7pPNLK" = "Door";
+"7pPNLK" = "Дверь";
 
 "Brixr9" = "Вы хотите открыть ‘${address}’?";
 
@@ -18,21 +18,21 @@
 
 "Lab1IV" = "Что открыть";
 
-"MWf04e-fVQgAq" = "Just to confirm, you wanted ‘Все’?";
+"MWf04e-fVQgAq" = "Подтвердите, вы имели в виду ‘Все’?";
 
-"MWf04e-pEOc1e" = "Just to confirm, you wanted ‘Ворота’?";
+"MWf04e-pEOc1e" = "Подтвердите, вы имели в виду ‘Ворота’?";
 
-"MWf04e-rR3Lh0" = "Just to confirm, you wanted ‘Калитка’?";
+"MWf04e-rR3Lh0" = "Подтвердите, вы имели в виду ‘Калитка’?";
 
-"MWf04e-tyxO3i" = "Just to confirm, you wanted ‘Подъезд’?";
+"MWf04e-tyxO3i" = "Подтвердите, вы имели в виду ‘Подъезд’?";
 
-"OE741o-fVQgAq" = "There are ${count} options matching ‘Все’.";
+"OE741o-fVQgAq" = "Нашлось ${count} соответствующих ‘Все’.";
 
-"OE741o-pEOc1e" = "There are ${count} options matching ‘Ворота’.";
+"OE741o-pEOc1e" = "Нашлось ${count} соответствующих ‘Ворота’.";
 
-"OE741o-rR3Lh0" = "There are ${count} options matching ‘Калитка’.";
+"OE741o-rR3Lh0" = "Нашлось ${count} соответствующих ‘Калитка’.";
 
-"OE741o-tyxO3i" = "There are ${count} options matching ‘Подъезд’.";
+"OE741o-tyxO3i" = "Нашлось ${count} соответствующих ‘Подъезд’.";
 
 "RB0yYo" = "Что открыть?";
 
@@ -42,11 +42,11 @@
 
 "g6Beaz" = "Открыть ${door} @ ${address}";
 
-"mNEDvp" = "House Address";
+"mNEDvp" = "Адрес Дома";
 
-"mav2aR" = "Domophone Id";
+"mav2aR" = "Домофон Id";
 
-"oi81HC" = "Door Id";
+"oi81HC" = "Вход Id";
 
 "pEOc1e" = "Ворота";
 
@@ -54,7 +54,7 @@
 
 "ryTv95" = "Где открыть";
 
-"sf9Ajl" = "There are ${count} options matching ‘${address}’.";
+"sf9Ajl" = "Нашлось ${count} соответствующих ‘${address}’.";
 
 "tyxO3i" = "Подъезд";
 

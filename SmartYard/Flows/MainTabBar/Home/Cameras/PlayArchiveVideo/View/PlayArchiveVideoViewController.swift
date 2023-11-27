@@ -658,7 +658,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd.MM.yy"
                 
-                return "Видео от \(dateFormatter.string(from: date))"
+                return "\(NSLocalizedString("Video dated", comment: "")) \(dateFormatter.string(from: date))"
             }
             .drive(previewDateLabel.rx.text)
             .disposed(by: disposeBag)
@@ -1215,7 +1215,7 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         dateFormatter.timeZone = Calendar.serverCalendar.timeZone
         dateFormatter.dateFormat = "dd.MM.yy"
         
-        editDateLabel.text = "Видео от \(dateFormatter.string(from: startDate))"
+        editDateLabel.text = "\(NSLocalizedString("Video dated", comment: "")) \(dateFormatter.string(from: startDate))"
         
         guard !isReceivingGesture else {
             return

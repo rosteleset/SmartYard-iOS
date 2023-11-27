@@ -51,7 +51,10 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             if let url = URL(string: self.apiWrapper.accessService.paymentsUrl) {
                 super.init(initialRoute: .webView(url: url))
             } else {
-                super.init(initialRoute: .alert(title: "Ошибка", message: "Не удаётся открыть страницу оплаты."))
+                super.init(initialRoute: .alert(
+                    title: NSLocalizedString("Error", comment: ""),
+                    message: NSLocalizedString("Unable to open payment page.", comment: "")
+                ))
             }
         }
         rootViewController.setNavigationBarHidden(true, animated: false)

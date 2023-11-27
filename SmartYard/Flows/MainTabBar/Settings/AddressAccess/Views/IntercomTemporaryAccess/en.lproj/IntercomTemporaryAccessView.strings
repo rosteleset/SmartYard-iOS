@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "Гостевой доступ на час"; ObjectID = "7lW-Yj-xxP"; */
+"7lW-Yj-xxP.text" = "Guest access for an hour";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "F3N-qO-4bf"; */
+"F3N-qO-4bf.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Открыть"; ObjectID = "enN-rb-QVd"; */
+"enN-rb-QVd.normalTitle" = "Open";
+
+/* Class = "UILabel"; text = "Код открытия"; ObjectID = "puz-1u-oTr"; */
+"puz-1u-oTr.text" = "Opening code";
+
+/* Class = "UILabel"; text = "Временный доступ к домофону"; ObjectID = "tfD-m2-Zi6"; */
+"tfD-m2-Zi6.text" = "Temporary access to intercom";

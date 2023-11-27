@@ -72,7 +72,7 @@ class RequestRecordViewController: BaseViewController, LoaderPresentable, UIPick
         addressLabel.text = output.camera.name
     }
     fileprivate func configureView() {
-        fakeNavBar.setText("Городские камеры")
+        fakeNavBar.setText(NSLocalizedString("Public cams", comment: ""))
         view.hideKeyboardWhenTapped = true
         
         // готовим toolbar для пикеров

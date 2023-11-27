@@ -38,11 +38,11 @@ class InputPhoneNumberViewModel: BaseViewModel {
                     
                     switch nsError.code {
                     case 429:
-                        let message = "Вы запрашиваете код слишком часто. Пожалуйста, попробуйте позже"
-                        self?.router.trigger(.alert(title: "Ошибка", message: message))
+                        let message = NSLocalizedString("You are requesting a code too often. Please try again later", comment: "")
+                        self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: message))
                         
                     default:
-                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                        self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                     }
                 }
             )
@@ -99,7 +99,10 @@ class InputPhoneNumberViewModel: BaseViewModel {
                     switch response {
                     case .outgoingCall(let confirmNumbers):
                         guard let confirmNumber = confirmNumbers.first else {
-                            self.router.trigger(.alert(title: "Ошибка", message: "Отсутствует номер для подтверждения"))
+                            self.router.trigger(.alert(
+                                title: NSLocalizedString("Error", comment: ""),
+                                message: NSLocalizedString("Missing confirmation number", comment: "")
+                            ))
                             return
                         }
                         self.router.trigger(.authByOutgoingCall(phoneNumber: phone, confirmPhoneNumber: confirmNumber))

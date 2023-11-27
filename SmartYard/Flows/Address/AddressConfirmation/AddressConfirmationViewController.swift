@@ -41,7 +41,10 @@ class AddressConfirmationViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureUI() {
-        segmentControl.segmentItems = ["Через курьера", "Визит в офис"]
+        segmentControl.segmentItems = [
+            NSLocalizedString("Via Courier", comment: ""),
+            NSLocalizedString("In Office", comment: "")
+        ]
     }
     
     private func bind() {

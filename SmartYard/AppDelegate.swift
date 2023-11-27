@@ -148,13 +148,13 @@ extension AppDelegate: MessagingDelegate {
         
         let openAction = UNNotificationAction(
             identifier: "OPEN_ACTION",
-            title: "Открыть",
+            title: NSLocalizedString("Open", comment: ""),
             options: []
         )
         
         let ignoreAction = UNNotificationAction(
             identifier: "IGNORE_ACTION",
-            title: "Игнорировать",
+            title: NSLocalizedString("Ignore", comment: ""),
             options: []
         )
         

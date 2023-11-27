@@ -1,0 +1,24 @@
+
+/* Class = "UITextField"; placeholder = "Номер договора"; ObjectID = "1fV-QD-lmA"; */
+"1fV-QD-lmA.placeholder" = "Contract number";
+
+/* Class = "UITextField"; placeholder = "Пароль"; ObjectID = "Hma-MD-8gc"; */
+"Hma-MD-8gc.placeholder" = "Password";
+
+/* Class = "UILabel"; text = "Введите номер и пароль договора, привязанного к данному адресу,  и управляйте услугами из этого приложения."; ObjectID = "IL8-bB-yIA"; */
+"IL8-bB-yIA.text" = "Enter the number and password of the contract associated with this address and manage services from this application.";
+
+/* Class = "UIButton"; normalTitle = "Ничего не помню"; ObjectID = "L3p-t8-69e"; */
+"L3p-t8-69e.normalTitle" = "I don't remember anything";
+
+/* Class = "UILabel"; text = "У вас есть договор c оператором?"; ObjectID = "U90-l7-45t"; */
+"U90-l7-45t.text" = "Do you have an agreement with the operator?";
+
+/* Class = "UIButton"; normalTitle = "Войти"; ObjectID = "aXB-Ea-sHa"; */
+"aXB-Ea-sHa.normalTitle" = "Login";
+
+/* Class = "UIButton"; normalTitle = "Не помню пароль"; ObjectID = "bBo-iL-hgv"; */
+"bBo-iL-hgv.normalTitle" = "Forget password";
+
+/* Class = "UIButton"; normalTitle = "У меня нет договора"; ObjectID = "ztw-Ug-GgA"; */
+"ztw-Ug-GgA.normalTitle" = "I don't have a contract";

@@ -1,0 +1,9 @@
+
+/* Class = "UIButton"; normalTitle = "Оставить заявку"; ObjectID = "V11-jX-2gX"; */
+"V11-jX-2gX.normalTitle" = "Leave a request";
+
+/* Class = "UILabel"; text = "Ваш адрес требует уточнения. Дождитесь звонка специалиста.  Какую услугу вы хотели бы подключить?"; ObjectID = "aJH-T6-aZr"; */
+"aJH-T6-aZr.text" = "Your address needs clarification. Wait for a specialist to call.\n\nWhat service would you like to connect to?";
+
+/* Class = "UILabel"; text = "Упс :("; ObjectID = "drb-lf-7Tm"; */
+"drb-lf-7Tm.text" = "Oops :(";

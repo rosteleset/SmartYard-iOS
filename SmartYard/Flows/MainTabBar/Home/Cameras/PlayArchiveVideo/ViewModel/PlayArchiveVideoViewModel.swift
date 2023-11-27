@@ -46,7 +46,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -139,16 +139,13 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 onNext: { [weak self] responseData in
                     // Если нет урла - показываем "видео готовится"
                     guard let stringUrl = responseData.url else {
-                        let msg = """
-                        Как только процесс закончится, вам придет сообщение в чат.
-                        В зависимости от длины видео процесс загрузки может занять от нескольких минут до нескольких часов.
-                        """
+                        let msg = NSLocalizedString("As soon as the process is over...", comment: "")
                         
-                        let okAction = UIAlertAction(title: "Спасибо", style: .default, handler: nil)
+                        let okAction = UIAlertAction(title: NSLocalizedString("Thank you", comment: ""), style: .default, handler: nil)
                         
                         self?.router.trigger(
                             .dialog(
-                                title: "Видео готовится",
+                                title: NSLocalizedString("Video in progress", comment: ""),
                                 message: msg,
                                 actions: [okAction]
                             )
@@ -164,7 +161,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                             
                             self?.router.trigger(
                                 .alert(
-                                    title: "Ссылка на видео скопирована в буфер обмена",
+                                    title: NSLocalizedString("Link to video copied to clipboard", comment: ""),
                                     message: nil
                                 )
                             )

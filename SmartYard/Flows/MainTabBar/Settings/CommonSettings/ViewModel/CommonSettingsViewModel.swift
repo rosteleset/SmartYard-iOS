@@ -58,7 +58,7 @@ class CommonSettingsViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -230,9 +230,9 @@ class CommonSettingsViewModel: BaseViewModel {
         input.logoutTrigger
             .drive(
                 onNext: { [weak self] in
-                    let noAction = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
+                    let noAction = UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel, handler: nil)
                     
-                    let yesAction = UIAlertAction(title: "Да", style: .destructive) { _ in
+                    let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { _ in
                         guard let self = self else {
                             return
                         }
@@ -253,8 +253,8 @@ class CommonSettingsViewModel: BaseViewModel {
                     
                     self?.router.trigger(
                         .dialog(
-                            title: "Выход из приложения",
-                            message: "Вы действительно хотите выйти из вашей учетной записи?",
+                            title: NSLocalizedString("Exiting the application", comment: ""),
+                            message: NSLocalizedString("Are you sure you want to log out of your account?", comment: ""),
                             actions: [noAction, yesAction]
                         )
                     )

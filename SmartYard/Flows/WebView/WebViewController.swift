@@ -40,7 +40,7 @@ class WebViewController: BaseViewController, LoaderPresentable {
     
     init(
         viewModel: WebViewModel,
-        backButtonLabel: String = "Назад",
+        backButtonLabel: String = NSLocalizedString("Back", comment: ""),
         accessToken: String = "",
         version: Int
     ) {
@@ -373,7 +373,11 @@ extension WebViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: NSLocalizedString("Error", comment: ""),
+            message: error.localizedDescription,
+            preferredStyle: .alert
+        )
         let okAction = UIAlertAction(title: "OK", style: .cancel)
         alert.addAction(okAction)
         self.present(alert, animated: true)
@@ -412,7 +416,7 @@ extension BaseViewController: WKUIDelegate {
             completionHandler(true)
         }
         
-        let calcelAction = UIAlertAction(title: "Отмена", style: .cancel) { _ in
+        let calcelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { _ in
             completionHandler(false)
         }
         
@@ -438,7 +442,7 @@ extension BaseViewController: WKUIDelegate {
             completionHandler(textField.text)
         }
         
-        let calcelAction = UIAlertAction(title: "Отмена", style: .cancel) { _ in
+        let calcelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { _ in
             completionHandler(nil)
         }
         

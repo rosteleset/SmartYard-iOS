@@ -76,7 +76,7 @@ class CityCameraViewController: BaseViewController {
         */
     }
     fileprivate func configureView() {
-        fakeNavBar.setText("Карта")
+        fakeNavBar.setText(NSLocalizedString("Map", comment: ""))
         
         guard let camera = camera else {
             return
@@ -178,7 +178,7 @@ class CityCameraViewController: BaseViewController {
                     case .incidents:
                         self.toggleView()
                         
-                        self.button.setTitle("Запросить запись", for: .normal)
+                        self.button.setTitle(NSLocalizedString("Request a record", comment: ""), for: .normal)
                         self.button.backgroundColor = UIColor.SmartYard.blue
                         self.button.setTitleColor(UIColor.white, for: .normal)
                         
@@ -295,13 +295,16 @@ class CityCameraViewController: BaseViewController {
                     
                     if self.viewState == .normal {
                         if videos.isEmpty {
-                            self.button.setTitle("Запросить запись", for: .normal)
+                            self.button.setTitle(NSLocalizedString("Request a record", comment: ""), for: .normal)
                             self.button.backgroundColor = UIColor.SmartYard.blue
                             self.button.setTitleColor(UIColor.white, for: .normal)
                             self.buttonState = .requestRec
                             
                         } else {
-                            self.button.setTitle("Проишествия (" + String(self.videos?.count ?? 0) + ")", for: .normal)
+                            self.button.setTitle(
+                                "\(NSLocalizedString("Incidents", comment: "")) (" + String(self.videos?.count ?? 0) + ")",
+                                for: .normal
+                            )
                             self.button.backgroundColor = UIColor.white
                             self.button.setTitleColor(UIColor.SmartYard.blue, for: .normal)
                             self.buttonState = .incidents
@@ -341,13 +344,16 @@ class CityCameraViewController: BaseViewController {
     
     fileprivate func fixButton() {
         if self.buttonState == .requestRec {
-            self.button.setTitle("Запросить запись", for: .normal)
+            self.button.setTitle(NSLocalizedString("Request a record", comment: ""), for: .normal)
             self.button.backgroundColor = UIColor.SmartYard.blue
             self.button.setTitleColor(UIColor.white, for: .normal)
             self.buttonState = .requestRec
             
         } else {
-            self.button.setTitle("Проишествия (" + String(self.videos?.count ?? 0) + ")", for: .normal)
+            self.button.setTitle(
+                "\(NSLocalizedString("Incidents", comment: "")) (" + String(self.videos?.count ?? 0) + ")",
+                for: .normal
+            )
             self.button.backgroundColor = UIColor.white
             self.button.setTitleColor(UIColor.SmartYard.blue, for: .normal)
             self.buttonState = .incidents

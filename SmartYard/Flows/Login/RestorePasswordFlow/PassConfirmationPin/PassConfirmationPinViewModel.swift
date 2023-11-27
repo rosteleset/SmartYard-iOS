@@ -67,7 +67,7 @@ class PassConfirmationPinViewModel: BaseViewModel {
                         isPinCorrect.onNext(false)
                         
                     default:
-                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                        self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                     }
                 }
             )
@@ -108,12 +108,12 @@ class PassConfirmationPinViewModel: BaseViewModel {
                         return
                     }
 
-                    let okAction = UIAlertAction(title: "Ок", style: .default) { [weak self] _ in
+                    let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
                         self?.router.trigger(.main)
                     }
                     
-                    let passDestination = self.selectedRestoreMethod.contact.contains("@") ? "email" : "телефон"
-                    let dialogText = "Пароль от указанной записи отправлен на указанный \(passDestination)"
+                    let passDestination = self.selectedRestoreMethod.contact.contains("@") ? "email" : NSLocalizedString("phone", comment: "")
+                    let dialogText = "\(NSLocalizedString("The password for the specified entry has been sent to the specified", comment: "")) \(passDestination)"
                     
                     self.router.trigger(.dialog(title: "", message: dialogText, actions: [okAction]))
                 }

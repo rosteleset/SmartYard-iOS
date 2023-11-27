@@ -63,7 +63,11 @@ class ServiceIsActivatedViewController: BaseViewController, LoaderPresentable {
         output.service
             .drive(
                 onNext: { [weak self] service in
-                    self?.titleLabel.text = "Услуга \"\(service.localizedTitle)\" подключена"
+                    let text = String.localizedStringWithFormat(
+                        NSLocalizedString("Service \"%@\" is connected", comment: ""),
+                        "\(service.localizedTitle)"
+                    )
+                    self?.titleLabel.text = text
                 }
             )
             .disposed(by: disposeBag)
@@ -75,8 +79,8 @@ class ServiceIsActivatedViewController: BaseViewController, LoaderPresentable {
                     if isLoading {
                         self?.view.endEditing(true)
                     }
-                    
-                    self?.updateLoader(isEnabled: isLoading, detailText: "Создание заявки")
+                    let text = NSLocalizedString("Create a request", comment: "")
+                    self?.updateLoader(isEnabled: isLoading, detailText: text)
                 }
             )
             .disposed(by: disposeBag)

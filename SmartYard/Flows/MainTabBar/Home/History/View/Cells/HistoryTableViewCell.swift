@@ -90,47 +90,47 @@ class HistoryTableViewCell: UITableViewCell {
         // настраиваем отображение иконки и заголовка
         switch value.event {
         case .answered:
-            titleLabel.text = "Звонок в домофон"
+            titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsDomophone")
             description = ""
         case .unanswered:
-            titleLabel.text = "Звонок в домофон"
+            titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
             titleLabel.textColor = UIColor(named: "incorrectDataRed")
             iconImage.image = UIImage(named: "LogsDomophone")
             description = ""
         case .rfid:
-            titleLabel.text = "Открывание ключом"
+            titleLabel.text = NSLocalizedString("Opening with a key", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsKey")
             description = ""
         case .app:
-            titleLabel.text = "Открытие из приложения"
+            titleLabel.text = NSLocalizedString("Opening from the app", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsApp")
             description = ""
         case .face:
-            titleLabel.text = "Открывание по лицу"
+            titleLabel.text = NSLocalizedString("Opening with Face-ID", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsFace")
             description = ""
         case .passcode:
-            titleLabel.text = "Открытие по коду"
+            titleLabel.text = NSLocalizedString("Opening with code", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsCode")
             description = ""
         case .call:
-            titleLabel.text = "Открытие ворот по звонку"
+            titleLabel.text = NSLocalizedString("Gate opening on call", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsCall")
             description = ""
         case .plate:
-            titleLabel.text = "Открытие ворот по номеру"
+            titleLabel.text = NSLocalizedString("Gate opening by numberplate", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
             iconImage.image = UIImage(named: "LogsWicket")
             description = ""
         case .unknown:
-            titleLabel.text = "Неизвестное событие"
+            titleLabel.text = NSLocalizedString("Unknown event", comment: "")
             titleLabel.textColor = UIColor(named: "incorrectDataRed")
             iconImage.image = UIImage(named: "LogsApp")
             description = ""

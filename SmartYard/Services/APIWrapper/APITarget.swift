@@ -177,7 +177,8 @@ extension APITarget: TargetType {
     
     var headers: [String: String]? {
         let defaultHeaders = [
-            "Content-type": "application/json"
+            "Content-type": "application/json",
+            "Accept-Language": currentLanguage()
         ]
         
         // swiftlint:disable:next closure_body_length
@@ -346,4 +347,11 @@ extension APITarget: TargetType {
         return Data()
     }
     
+    func currentLanguage() -> String {
+        if #available(iOS 16, *) {
+            return (Locale.current.language.languageCode ?? .russian).identifier
+        } else {
+            return Locale.current.languageCode ?? "ru"
+        }
+    }
 }

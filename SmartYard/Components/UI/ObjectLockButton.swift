@@ -54,20 +54,20 @@ class ObjectLockButton: UIButton {
         
         if modeOnOnly {
             setTitleColor(UIColor.SmartYard.blue, for: .normal)
-            setTitle("Открыть", for: .normal)
+            setTitle(NSLocalizedString("Open", comment: ""), for: .normal)
         } else {
             setTitleColor(UIColor.SmartYard.blue, for: .normal)
-            setTitle("Включить", for: .normal)
+            setTitle(NSLocalizedString("Enable", comment: ""), for: .normal)
         }
         
         setTitleColor(UIColor.SmartYard.blue.darken(by: 0.1), for: .highlighted)
-        setTitle("Открыть", for: .highlighted)
+        setTitle(NSLocalizedString("Open", comment: ""), for: .highlighted)
         
         setTitleColor(.white, for: .disabled)
-        setTitle("Открыто", for: .disabled)
+        setTitle(NSLocalizedString("hasOpened", comment: ""), for: .disabled)
         
         setTitleColor(.white, for: .selected)
-        setTitle("Выключить", for: .selected)
+        setTitle(NSLocalizedString("Disable", comment: ""), for: .selected)
         
         
         updateAppearance()

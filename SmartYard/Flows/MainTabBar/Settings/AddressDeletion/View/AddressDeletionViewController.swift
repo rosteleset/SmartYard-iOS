@@ -95,7 +95,7 @@ class AddressDeletionViewController: BaseViewController {
     
     private func configureView() {
         let attrString = NSAttributedString(
-            string: "Укажите причину",
+            string: NSLocalizedString("Specify a reason", comment: ""),
             attributes: [
                 .font: UIFont.SourceSansPro.regular(size: 14),
                 .foregroundColor: UIColor.SmartYard.gray.withAlphaComponent(0.4) as Any

@@ -85,14 +85,14 @@ class InputAddressViewModel: BaseViewModel {
                     }
                     
                     if nsError == NSError.PermissionError.noCameraPermission {
-                        let msg = "Чтобы использовать эту функцию, перейдите в настройки и предоставьте доступ к камере"
+                        let msg = NSLocalizedString("To use this feature, go to settings and grant access to the camera", comment: "")
                         
-                        self?.router.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
+                        self?.router.trigger(.appSettings(title: NSLocalizedString("Can't access camera", comment: ""), message: msg))
                         
                         return
                     }
                     
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -254,7 +254,7 @@ class InputAddressViewModel: BaseViewModel {
                 var addressString = [uCityName, uStreetName, uBuildingName].joined(separator: ", ")
                 
                 if let uFlatName = flatName?.trimmed, !uFlatName.isEmpty {
-                    addressString += ", квартира \(uFlatName)"
+                    addressString += ", " + NSLocalizedString("appartment", comment: "") + " \(uFlatName)"
                 }
                 
                 guard let buildings = self.loadedBuildings[uStreetName] else {

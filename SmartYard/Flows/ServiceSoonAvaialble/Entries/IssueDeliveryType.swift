@@ -16,8 +16,8 @@ enum IssueDeliveryType {
     
     var changeTypeActionText: String {
         switch self {
-        case .office: return "Вызвать курьера"
-        case .courier: return "Приду в офис самостоятельно"
+        case .office: return NSLocalizedString("Call a courier", comment: "")
+        case .courier: return NSLocalizedString("I'll come to the office myself", comment: "")
         }
     }
     
@@ -25,9 +25,9 @@ enum IssueDeliveryType {
         switch self {
         case .office:
             // swiftlint:disable:next line_length
-            return "Для подтверждения адреса вам нужно принести квитанцию ЖКХ не старше трёх месяцев в наш ближайший офис."
+            return NSLocalizedString("To confirm the address, you need to bring a utility bill no older than three months to our nearest office.", comment: "")
         case .courier:
-            return "Дождитесь курьера по адресу {value} и сфотографируйте QR-код, который он принесёт."
+            return NSLocalizedString("Wait for the courier at {value} and take a photo of the QR code he brings.", comment: "")
         }
     }
     
@@ -46,8 +46,8 @@ enum IssueDeliveryType {
         var params: [String: String] = ["number": "10941"]
         
         switch self {
-        case .office: params["value"] = "Самовывоз"
-        case .courier: params["value"] = "Курьер"
+        case .office: params["value"] = NSLocalizedString("Pickup", comment: "")
+        case .courier: params["value"] = NSLocalizedString("Courier", comment: "")
         }
         
         return [params]
@@ -55,8 +55,8 @@ enum IssueDeliveryType {
     
     var deliveryComment: String {
         switch self {
-        case .office: return "Cменился способ доставки. Клиент подойдет в офис."
-        case .courier: return "Cменился способ доставки. Подготовить пакет для курьера."
+        case .office: return NSLocalizedString("The delivery method has changed. The client will come to the office.", comment: "")
+        case .courier: return NSLocalizedString("The delivery method has changed. Prepare a package for the courier.", comment: "")
         }
     }
     

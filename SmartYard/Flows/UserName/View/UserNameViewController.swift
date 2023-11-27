@@ -58,12 +58,12 @@ class UserNameViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        nameTextField.setPlaceholder(string: "Имя", isRequiredField: true)
+        nameTextField.setPlaceholder(string: NSLocalizedString("First Name", comment: ""), isRequiredField: true)
         nameTextField.delegate = self
         nameTextField.text = preloadedName?.name
         nameTextField.sendActions(for: .allEditingEvents)
         
-        middleNameTextField.setPlaceholder(string: "Отчество")
+        middleNameTextField.setPlaceholder(string: NSLocalizedString("Patronymic", comment: ""))
         middleNameTextField.delegate = self
         middleNameTextField.text = preloadedName?.patronymic
         middleNameTextField.sendActions(for: .allEditingEvents)

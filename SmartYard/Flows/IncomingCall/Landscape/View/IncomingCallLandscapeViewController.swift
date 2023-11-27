@@ -212,19 +212,19 @@ class IncomingCallLandscapeViewController: BaseViewController {
         
         switch (state.callState, state.previewState) {
         case (.callReceived, .staticImage):
-            titleLabel.text = "Звонок в домофон"
+            titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
             
         case (.callReceived, .video):
-            titleLabel.text = "Глазок включен"
+            titleLabel.text = NSLocalizedString("Peephole on", comment: "")
             
         case (.establishingConnection, _):
-            titleLabel.text = "Соединение..."
+            titleLabel.text = NSLocalizedString("Conectiong...", comment: "")
             
         case (.callActive, _):
-            titleLabel.text = "Разговор"
+            titleLabel.text = NSLocalizedString("Conversation", comment: "")
             
         case (.callFinished, _):
-            titleLabel.text = "Звонок завершен"
+            titleLabel.text = "Call completed"
         }
     }
 

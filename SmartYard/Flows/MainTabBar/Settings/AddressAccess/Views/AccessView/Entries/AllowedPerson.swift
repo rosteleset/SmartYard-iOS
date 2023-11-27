@@ -21,7 +21,7 @@ struct AllowedPerson: Hashable {
     
     var formattedNumber: String {
         guard let fNumber = rawNumber.formattedNumberFromRawNumber else {
-            fatalError("Неправильный формат номера")
+            fatalError(NSLocalizedString("Wrong number format", comment: ""))
         }
         
         return fNumber
@@ -29,7 +29,7 @@ struct AllowedPerson: Hashable {
     
     var apiNumber: String {
         guard rawNumber.count == AccessService.shared.phoneLengthWithoutPrefix else {
-            fatalError("Неправильный формат номера")
+            fatalError(NSLocalizedString("Wrong number format", comment: ""))
         }
         
         return AccessService.shared.phonePrefix + rawNumber

@@ -45,7 +45,7 @@ class OnlinePageViewController: BaseViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         
-        title = "Онлайн"
+        title = NSLocalizedString("Online", comment: "")
     }
     
     @available(*, unavailable)

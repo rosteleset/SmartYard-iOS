@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  SmartYard
+
+  Created by Александр Васильев on 19.11.2023.
+  Copyright © 2023 LanTa. All rights reserved.
+*/
+
+"CFBundleDisplayName" = "Teledom";

@@ -57,11 +57,11 @@ class RestorePasswordViewModel: BaseViewModel {
                     
                     switch nsError.code {
                     case 422, 404:
-                        let message = "Введен неверный номер договора"
-                        self?.router.trigger(.alert(title: "Ошибка", message: message))
+                        let message = NSLocalizedString("Invalid contract number entered", comment: "")
+                        self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: message))
                         
                     default:
-                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                        self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                     }
                 }
             )

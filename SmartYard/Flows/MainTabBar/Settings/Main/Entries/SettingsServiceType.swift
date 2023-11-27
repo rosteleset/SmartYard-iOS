@@ -44,13 +44,13 @@ enum SettingsServiceType: String {
     
     var localizedTitle: String {
         switch self {
-        case .internet: return "Интернет"
-        case .iptv: return "Телевидение"
-        case .phone: return "Телефония"
-        case .domophone: return "Умный домофон"
-        case .cctv: return "Видеонаблюдение"
-        case .ctv: return "Кабельное телевидение"
-        case .gsm: return "Мобильная связь"
+        case .internet: return NSLocalizedString("Internet", comment: "")
+        case .iptv: return "IPTV"
+        case .phone: return NSLocalizedString("Wired Phone", comment: "")
+        case .domophone: return NSLocalizedString("Smart intercom", comment: "")
+        case .cctv: return NSLocalizedString("Video surveillance", comment: "")
+        case .ctv: return NSLocalizedString("Cable TV", comment: "")
+        case .gsm: return NSLocalizedString("Mobile Phone", comment: "")
         }
     }
     

@@ -1,0 +1,7 @@
+
+/* Class = "UILabel"; text = "Список пока пуст :("; ObjectID = "E5D-C5-3Lf"; */
+"E5D-C5-3Lf.text" = "List is empty :(";
+
+/* Class = "UILabel"; text = "Для добавления адреса нажмите на \"+\" в верхней части экрана.  Если добавленный адрес не отображается, пожалуйста, подождите несколько минут. Список обновится автоматически."; ObjectID = "iZ7-hx-jin"; */
+"iZ7-hx-jin.text" = "To add an address, click on \"+\" at the top of the screen.
+If the added address does not appear, please wait a few minutes. The list will update automatically.";

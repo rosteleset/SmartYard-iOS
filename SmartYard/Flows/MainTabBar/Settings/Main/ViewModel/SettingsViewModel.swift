@@ -57,7 +57,7 @@ class SettingsViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -427,7 +427,7 @@ class SettingsViewModel: BaseViewModel {
                     return nil
                 }
                 
-                return "Номер договора: \(contractName)"
+                return NSLocalizedString("Number of contract", comment: "") + ": \(contractName)"
             }()
             
             let header: SettingsDataItem = .header(

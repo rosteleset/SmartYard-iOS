@@ -65,7 +65,7 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         super.viewDidLoad()
         
         fakeNavBar.configueDarkNavBar()
-        fakeNavBar.setText("События")
+        fakeNavBar.setText(NSLocalizedString("Events", comment: ""))
         emptyStateView.isHidden = true
         
         setupCollectionView()

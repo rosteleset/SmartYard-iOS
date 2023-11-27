@@ -1,0 +1,18 @@
+
+/* Class = "UILabel"; text = "Видео от"; ObjectID = "0x5-ZA-ub8"; */
+"0x5-ZA-ub8.text" = "Video from";
+
+/* Class = "UILabel"; text = "Видео от"; ObjectID = "Dqz-l5-6XG"; */
+"Dqz-l5-6XG.text" = "Video from";
+
+/* Class = "UIButton"; normalTitle = "Загрузить и получить ссылку"; ObjectID = "JBH-Xw-Dmj"; */
+"JBH-Xw-Dmj.normalTitle" = "Download and get link";
+
+/* Class = "UIButton"; normalTitle = "0.5x"; ObjectID = "UDc-4s-ZnY"; */
+"UDc-4s-ZnY.normalTitle" = "0.5x";
+
+/* Class = "UIButton"; normalTitle = "1.5x"; ObjectID = "fr5-Hf-wxY"; */
+"fr5-Hf-wxY.normalTitle" = "1.5x";
+
+/* Class = "UIButton"; normalTitle = "Выбрать фрагмент"; ObjectID = "wkd-4A-ePf"; */
+"wkd-4A-ePf.normalTitle" = "Select fragment";

@@ -133,9 +133,16 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
                 onNext: { [weak self] phoneNumber in
                     guard let self = self else { return }
                     if self.useFlashCall {
-                        self.hintInputPhoneLabel.text = "Введите последние 4 цифры номера,\nс которого поступит звонок на номер +\(AccessService.shared.phonePrefix)\(phoneNumber)"
+                        let text = String.localizedStringWithFormat(
+                            NSLocalizedString("Enter the last 4 digits of the number\nfrom which the call will come to the number +%@", comment: ""),
+                            "\(AccessService.shared.phonePrefix)\(phoneNumber)"
+                        )
+                        self.hintInputPhoneLabel.text = text
                     } else {
-                        self.hintInputPhoneLabel.text = "Введите код из СМС,\nотправленный на номер +\(AccessService.shared.phonePrefix)\(phoneNumber)"
+                        let text = String.localizedStringWithFormat(
+                            NSLocalizedString("Enter the code from SMS\nsent to +%@", comment: ""), "\(AccessService.shared.phonePrefix)\(phoneNumber)"
+                        )
+                        self.hintInputPhoneLabel.text = text
                     }
                 }
             )

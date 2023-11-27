@@ -1,0 +1,35 @@
+
+/* Class = "UILabel"; text = "Общие настройки"; ObjectID = "Fyv-Y1-rkc"; */
+"Fyv-Y1-rkc.text" = "Common settings";
+
+/* Class = "UILabel"; text = "Прислать уведомление, когда баланс приблизится к нулю"; ObjectID = "Se0-Td-bhj"; */
+"Se0-Td-bhj.text" = "Send a notification when
+your balance
+gets close to zero";
+
+/* Class = "UILabel"; text = "Уведомления"; ObjectID = "Udn-vA-xLw"; */
+"Udn-vA-xLw.text" = "Notifications";
+
+/* Class = "UILabel"; text = "Оповещать о недостатке средств"; ObjectID = "VJ4-nm-C6t"; */
+"VJ4-nm-C6t.text" = "Notify about insufficient funds";
+
+/* Class = "UILabel"; text = "Использовать CallKit"; ObjectID = "XUA-3w-YEb"; */
+"XUA-3w-YEb.text" = "Use CallKit";
+
+/* Class = "UILabel"; text = "+7 (964) 134 00 00"; ObjectID = "Zey-yG-NRX"; */
+"Zey-yG-NRX.text" = "+7 (964) 134 00 00";
+
+/* Class = "UILabel"; text = "Громкая связь по умолчанию"; ObjectID = "dKt-Xe-i1X"; */
+"dKt-Xe-i1X.text" = "Speakerphone by default";
+
+/* Class = "UIButton"; normalTitle = "Выйти"; ObjectID = "lGe-ZA-fd6"; */
+"lGe-ZA-fd6.normalTitle" = "Logout";
+
+/* Class = "UILabel"; text = "Звонки"; ObjectID = "mSK-dn-aYH"; */
+"mSK-dn-aYH.text" = "Calls";
+
+/* Class = "UILabel"; text = "Показывать уведомления"; ObjectID = "tfa-8o-Ay8"; */
+"tfa-8o-Ay8.text" = "Show notifications";
+
+/* Class = "UILabel"; text = "Александр Сергеевич"; ObjectID = "xe0-3V-fgv"; */
+"xe0-3V-fgv.text" = "Александр Сергеевич";

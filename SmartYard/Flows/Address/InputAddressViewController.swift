@@ -198,10 +198,10 @@ class InputAddressViewController: BaseViewController {
     }
     
     private func configureUI() {
-        cityTextField.setPlaceholder(string: "Город")
-        streetTextField.setPlaceholder(string: "Улица")
-        buildingTextField.setPlaceholder(string: "Дом")
-        flatTextField.setPlaceholder(string: "Квартира")
+        cityTextField.setPlaceholder(string: NSLocalizedString("City", comment: ""))
+        streetTextField.setPlaceholder(string: NSLocalizedString("Street", comment: ""))
+        buildingTextField.setPlaceholder(string: NSLocalizedString("Building", comment: ""))
+        flatTextField.setPlaceholder(string: NSLocalizedString("Appartment", comment: ""))
         
         qrCodeButton.setLeftAlignment()
         

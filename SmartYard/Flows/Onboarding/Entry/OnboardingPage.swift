@@ -25,17 +25,17 @@ enum OnboardingPage: Int, CaseIterable {
     
     var titleText: String {
         switch self {
-        case .cctv: return "Видеонаблюдение"
-        case .fullControl: return "Всё под контролем"
-        case .smartYard: return "Умный двор"
+        case .cctv: return NSLocalizedString("Video surveillance", comment: "")
+        case .fullControl: return NSLocalizedString("Everything's under control", comment: "")
+        case .smartYard: return NSLocalizedString("Smart yard", comment: "")
         }
     }
     
     var subTitleText: String {
         switch self {
-        case .cctv: return "Будь в курсе всего, что происходит возле дома"
-        case .fullControl: return "Управляй услугами и оплачивай их через приложение"
-        case .smartYard: return "Управляй домофоном, воротами или шлагбаумом со смартфона"
+        case .cctv: return NSLocalizedString("Be aware of everything that happens near the house", comment: "")
+        case .fullControl: return NSLocalizedString("Manage services and pay for them via the app", comment: "")
+        case .smartYard: return NSLocalizedString("Control your intercom, gate or barrier from your smartphone", comment: "")
         }
     }
     

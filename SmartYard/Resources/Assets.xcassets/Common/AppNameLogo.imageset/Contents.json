@@ -3,10 +3,23 @@
     {
       "filename" : "OEMAppLogo.pdf",
       "idiom" : "universal"
+    },
+    {
+      "filename" : "OEMAppLogo 1.pdf",
+      "idiom" : "universal",
+      "locale" : "ru"
+    },
+    {
+      "filename" : "AppLogoOEM_en.pdf",
+      "idiom" : "universal",
+      "locale" : "en"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "localizable" : true
   }
 }

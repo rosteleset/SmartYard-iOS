@@ -36,7 +36,7 @@ class CityMapViewController: BaseViewController, LoaderPresentable {
     }
     
     fileprivate func configureView() {
-        fakeNavBar.setText("Меню")
+        fakeNavBar.setText(NSLocalizedString("Menu", comment: ""))
     }
     
     fileprivate func configureMapBox() {

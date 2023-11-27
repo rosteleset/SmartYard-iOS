@@ -111,7 +111,11 @@ class QRCodeScanViewModel: BaseViewModel {
                     
                     let message = NSError.GenericError.cameraSetupFailed.localizedDescription
                     
-                    self?.router.trigger(.dialog(title: "Ошибка", message: message, actions: [okAction]))
+                    self?.router.trigger(.dialog(
+                        title: NSLocalizedString("Error", comment: ""),
+                        message: message,
+                        actions: [okAction]
+                    ))
                 }
             )
             .disposed(by: disposeBag)

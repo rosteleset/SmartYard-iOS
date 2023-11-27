@@ -28,18 +28,18 @@ enum RestoreMethod {
     }
     
     var displayedTextHasBeenSent: String {
-        let baseText = "Код подтверждения отправлен на "
+        let baseText = NSLocalizedString("Confirmation code has been sent to your ", comment: "")
         switch self {
-        case let .byEmail(_, contact): return baseText + "почту \(contact)"
-        case let .byPhoneNumber(_, contact): return baseText + "телефон \(contact)"
+        case let .byEmail(_, contact): return baseText + NSLocalizedString("email", comment: "") + " \(contact)"
+        case let .byPhoneNumber(_, contact): return baseText + NSLocalizedString("phone", comment: "") + " \(contact)"
         }
     }
     
     var displayedTextShouldSent: String {
-        let baseText = "Выслать код восстановления на "
+        let baseText = NSLocalizedString("Send recovery code to ", comment: "")
         switch self {
-        case let .byEmail(_, contact): return baseText + "почту \(contact)"
-        case let .byPhoneNumber(_, contact): return baseText + "телефон \(contact)"
+        case let .byEmail(_, contact): return baseText + NSLocalizedString("email", comment: "") + " \(contact)"
+        case let .byPhoneNumber(_, contact): return baseText + NSLocalizedString("phone", comment: "") + " \(contact)"
         }
     }
     

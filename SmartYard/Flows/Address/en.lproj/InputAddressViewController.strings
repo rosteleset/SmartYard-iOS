@@ -1,0 +1,9 @@
+
+/* Class = "UIButton"; normalTitle = "Проверить доступные услуги"; ObjectID = "P3p-cv-8sH"; */
+"P3p-cv-8sH.normalTitle" = "Check available services";
+
+/* Class = "UILabel"; text = "Введите адрес"; ObjectID = "bEB-Xo-NYK"; */
+"bEB-Xo-NYK.text" = "Input your address";
+
+/* Class = "UIButton"; normalTitle = "У меня есть QR-код"; ObjectID = "t7w-za-uue"; */
+"t7w-za-uue.normalTitle" = "I have QR-code";

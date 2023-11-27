@@ -119,7 +119,9 @@ class FullscreenPlayerViewController: UIViewController {
             player.seek(offset)
         }
         
-        let label = (offset > 0) ? UILabel(text: "+\(abs(offset)) сек") : UILabel(text: "-\(abs(offset)) сек")
+        player.seek(offset)
+        let secText = NSLocalizedString("sec", comment: "")
+        let label = (offset > 0) ? UILabel(text: "+\(abs(offset)) \(secText)") : UILabel(text: "-\(abs(offset)) \(secText)")
         label.font = UIFont(name: "System", size: 16)
         label.font = label.font.bold
         label.textAlignment = .center

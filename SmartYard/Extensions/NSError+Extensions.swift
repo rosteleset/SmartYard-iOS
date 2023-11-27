@@ -17,7 +17,7 @@ extension NSError {
         private static let domain = "GenericError"
         
         static let selfIsDeadError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "self уничтожился"]
+            let errorUserInfo = [NSLocalizedDescriptionKey: NSLocalizedString("self destroyed", comment: "")]
             
             return NSError(
                 domain: domain,
@@ -27,7 +27,7 @@ extension NSError {
         }()
         
         static let unknownError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Неизвестная ошибка"]
+            let errorUserInfo = [NSLocalizedDescriptionKey: NSLocalizedString("Unknown error", comment: "")]
             
             return NSError(
                 domain: domain,
@@ -40,7 +40,7 @@ extension NSError {
         static let cameraSetupFailed = NSError(
             domain: domain,
             code: 1003,
-            userInfo: [NSLocalizedDescriptionKey: "Не удалось настроить камеру"]
+            userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Failed to setup camera", comment: "")]
         )
     }
     
@@ -55,7 +55,7 @@ extension NSError {
         static let domain = "APIWrapperError"
         
         static let baseResponseMappingError: NSError = {
-            let description = "Не удалось представить ответ сервера в виде базовой модели"
+            let description = NSLocalizedString("Failed to represent server response as base model", comment: "")
             
             return NSError(
                 domain: domain,
@@ -65,7 +65,7 @@ extension NSError {
         }()
         
         static let noDataError: NSError = {
-            let description = "Ошибка маппинга поля Data, либо же оно отсутствует при коде отличном от 204"
+            let description = NSLocalizedString("Error mapping the Data field, or it is missing with a code other than 204", comment: "")
 
             return NSError(
                 domain: domain,
@@ -77,14 +77,19 @@ extension NSError {
         static let noConnectionError = NSError(
             domain: domain,
             code: 3102,
-            userInfo: [NSLocalizedDescriptionKey: "Нет соединения"]
+            userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("noConnectionError", comment: "")]
         )
         
         static func codeIsNotSuccessful(_ code: Int) -> NSError {
             return NSError(
                 domain: domain,
                 code: code,
-                userInfo: [NSLocalizedDescriptionKey: "В ходе выполнения запроса произошла ошибка \(code)"]
+                userInfo: [
+                    NSLocalizedDescriptionKey: String.localizedStringWithFormat(
+                        NSLocalizedString("An error occurred while executing the request", comment: ""),
+                        String(code)
+                    )
+                ]
             )
         }
         
@@ -97,7 +102,9 @@ extension NSError {
         }
         
         static let accessTokenMissingError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден access token. Выполнить запрос невозможно"]
+            let errorUserInfo = [NSLocalizedDescriptionKey:
+                NSLocalizedString("Access token not found. Request cannot be completed", comment: "")
+            ]
             
             return NSError(
                 domain: domain,
@@ -107,7 +114,9 @@ extension NSError {
         }()
         
         static let clientIdMissingError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден client id. Выполнить запрос невозможно"]
+            let errorUserInfo = [NSLocalizedDescriptionKey:
+                NSLocalizedString("Client id not found. Request cannot be completed", comment: "")
+            ]
             
             return NSError(
                 domain: domain,
@@ -117,7 +126,7 @@ extension NSError {
         }()
         
         static let alreadyLoggedInError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Пользователь уже авторизован"]
+            let errorUserInfo = [NSLocalizedDescriptionKey: NSLocalizedString("User is already logged in", comment: "")]
             
             return NSError(
                 domain: domain,
@@ -127,7 +136,9 @@ extension NSError {
         }()
         
         static let houseIdMissingError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден house id. Выполнить запрос невозможно"]
+            let errorUserInfo = [NSLocalizedDescriptionKey:
+                NSLocalizedString("House id not found. Request cannot be completed", comment: "")
+            ]
             
             return NSError(
                 domain: domain,
@@ -147,7 +158,9 @@ extension NSError {
         }
         
         static let userPhoneMissing: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден номер телефона текущего пользователя"]
+            let errorUserInfo = [NSLocalizedDescriptionKey:
+                NSLocalizedString("Current user's phone number not found", comment: "")
+            ]
             
             return NSError(
                 domain: domain,
@@ -167,7 +180,9 @@ extension NSError {
         }
         
         static let contractNumberMissingError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Не найден номер договора. Выполнить запрос невозможно"]
+            let errorUserInfo = [NSLocalizedDescriptionKey:
+                NSLocalizedString("The contract number was not found. It is impossible to complete the request", comment: "")
+            ]
             
             return NSError(
                 domain: domain,
@@ -189,7 +204,7 @@ extension NSError {
         private static let domain = "AccessServiceError"
         
         static let stateExtractionError: NSError = {
-            let errorUserInfo = [NSLocalizedDescriptionKey: "Невозможно восстановить состояние приложения"]
+            let errorUserInfo = [NSLocalizedDescriptionKey: NSLocalizedString("Unable to restore application state", comment: "")]
             
             return NSError(
                 domain: domain,
@@ -214,33 +229,37 @@ extension NSError {
         static let pushDisabledInSystem = NSError(
             domain: domain,
             code: 5001,
-            userInfo: [NSLocalizedDescriptionKey: "Push-уведомления выключены для приложения на системном уровне"]
+            userInfo: [NSLocalizedDescriptionKey:
+                NSLocalizedString("Push notifications are disabled for the application at the system level", comment: "")
+            ]
         )
         
         /// Push-уведомления выключены в настройках приложения
         static let pushDisabledInApp = NSError(
             domain: domain,
             code: 5002,
-            userInfo: [NSLocalizedDescriptionKey: "Push-уведомления выключены в настройках приложения"]
+            userInfo: [NSLocalizedDescriptionKey:
+                NSLocalizedString("Push notifications are disabled in the app settings", comment: "")
+            ]
         )
         
         /// Отсутствует FCM токен
         static let fcmTokenMissing = NSError(
             domain: domain,
             code: 5003,
-            userInfo: [NSLocalizedDescriptionKey: "Отсутствует FCM токен"]
+            userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Missing FCM token", comment: "")]
         )
         
         static let instanceIdNotInitialized = NSError(
             domain: domain,
             code: 5004,
-            userInfo: [NSLocalizedDescriptionKey: "InstanceID не инициализирован"]
+            userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("InstanceID not initialized", comment: "")]
         )
         
         static let connectionRequired = NSError(
             domain: domain,
             code: 5005,
-            userInfo: [NSLocalizedDescriptionKey: "Для смены пользователя требуется интернет-соединение"]
+            userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Internet connection required to change user", comment: "")]
         )
         
     }
@@ -259,20 +278,20 @@ extension NSError {
         static let noContactsPermission = NSError(
             domain: domain,
             code: 6001,
-            userInfo: [NSLocalizedDescriptionKey: "Доступ к контактам отсутствует"]
+            userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("No access to contacts", comment: "")]
         )
         
         /// Доступ к камере отсутствует
         static let noCameraPermission = NSError(
             domain: domain,
             code: 6002,
-            userInfo: [NSLocalizedDescriptionKey: "Доступ к камере отсутствует"]
+            userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("No camera access", comment: "")]
         )
         
         static let noMicPermission = NSError(
             domain: domain,
             code: 6003,
-            userInfo: [NSLocalizedDescriptionKey: "Доступ к микрофону отсутствует"]
+            userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("No microphone access", comment: "")]
         )
         
     }

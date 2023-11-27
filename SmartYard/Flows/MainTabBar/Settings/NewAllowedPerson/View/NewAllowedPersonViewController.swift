@@ -227,7 +227,7 @@ extension NewAllowedPersonViewController: CNContactPickerDelegate {
                 alert.addAction(action)
             }
         
-            let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
             alert.addAction(cancelAction)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {

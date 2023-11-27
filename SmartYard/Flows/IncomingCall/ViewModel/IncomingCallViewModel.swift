@@ -135,18 +135,18 @@ class IncomingCallViewModel: BaseViewModel {
         
         // MARK: Обработка ошибок
         
-        let micMsg = "Исходящего звука в этом звонке не будет. " +
-        "Чтобы он появился в следующих звонках, предоставьте доступ к микрофону в настройках"
+        let micMsg = NSLocalizedString("There will be no outgoing audio on this call.", comment: "") + " " +
+        NSLocalizedString("To make it appear in your next calls, please grant access to the microphone in the settings", comment: "")
         
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
                     if (error as NSError) == NSError.PermissionError.noMicPermission {
-                        self?.router.trigger(.alert(title: "Нет доступа к микрофону", message: micMsg))
+                        self?.router.trigger(.alert(title: NSLocalizedString("No microphone access", comment: ""), message: micMsg))
                         return
                     }
                     
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)

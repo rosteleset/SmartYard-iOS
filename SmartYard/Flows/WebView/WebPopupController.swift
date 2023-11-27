@@ -465,7 +465,11 @@ extension WebPopupController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: NSLocalizedString("Error", comment: ""),
+            message: error.localizedDescription,
+            preferredStyle: .alert
+        )
         let okAction = UIAlertAction(title: "OK", style: .cancel)
         alert.addAction(okAction)
         self.present(alert, animated: true)

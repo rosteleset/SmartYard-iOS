@@ -95,8 +95,14 @@ class PaymentPopupController: BaseViewController {
                         return
                     }
                     
-                    request.paymentSummaryItems = [PKPaymentSummaryItem(label: "Внести", amount: amount)]
+                    request.paymentSummaryItems = [
+                        PKPaymentSummaryItem(
+                            label: NSLocalizedString("Deposit", comment: ""),
+                            amount: amount
+                        )
+                    ]
                     
+                    // swiftlint:disable:next line_length
                     guard let authorizationViewController = PKPaymentAuthorizationViewController(paymentRequest: request) else {
                         return
                     }
@@ -148,8 +154,14 @@ class PaymentPopupController: BaseViewController {
                     self.sumTextField.isHidden = true
                     self.successView.isHidden = false
                     
-                    self.payResultTitle.text = isSuccess ? "Готово!" : "Ошибка!"
-                    self.payResultHint.text = isSuccess ? "Ваш баланс пополнен" : "Оплата не прошла"
+                    let doneText = NSLocalizedString("Done", comment: "")
+                    let errorText = NSLocalizedString("Error", comment: "")
+                    
+                    self.payResultTitle.text = isSuccess ? "\(doneText)!" : "\(errorText)!"
+                    
+                    let successText = NSLocalizedString("Your balance is topped up", comment: "")
+                    let failText = NSLocalizedString("Payment has failed", comment: "")
+                    self.payResultHint.text = isSuccess ? successText : failText
                     
                     let resultImageName = isSuccess ? "SuccessIcon" : "ErrorIcon"
                     self.payResultImageView.image = UIImage(named: resultImageName)
@@ -169,7 +181,8 @@ class PaymentPopupController: BaseViewController {
                     }
                     
                     self?.recommendedSumLabel.isHidden = false
-                    self?.recommendedSumLabel.text = "Рекомендуемая - " + String(uSum)
+                    // swiftlint:disable:next line_length
+                    self?.recommendedSumLabel.text = NSLocalizedString("Recommended", comment: "") + " - " + String(uSum)
                 }
             )
             .disposed(by: disposeBag)
@@ -292,6 +305,7 @@ class PaymentPopupController: BaseViewController {
                     let textFieldOffsetToButton: CGFloat = 20
                     let buttonWithOffset: CGFloat = 65
                     
+                    // swiftlint:disable:next line_length
                     let calcOffset = keyboardHeight - textFieldBottomOffset + 2 * textFieldOffsetToButton + 2 * buttonWithOffset
                     
                     let offset = keyboardHeight == 0 ? defaultBottomOffset : calcOffset
