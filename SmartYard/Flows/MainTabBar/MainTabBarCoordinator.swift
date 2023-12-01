@@ -191,10 +191,21 @@ class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             (accessService.showPayments ? [paymentsRouter] : []) +
             [menuRouter] as [Presentable]
             
+        var selectedTab: Presentable
+        
+        switch accessService.activeTab {
+        case "addresses": selectedTab = homeRouter
+        case "notifications": selectedTab = notificationsRouter
+        case "chat": selectedTab = chatRouter
+        case "pay": selectedTab = paymentsRouter
+        case "menu": selectedTab = menuRouter
+        default: selectedTab = homeRouter
+        }
+        
         super.init(
             rootViewController: customTabBarController,
             tabs: tabs,
-            select: homeRouter
+            select: selectedTab
         )
         
         updateNotificationsTab(shouldShowBadge: UIApplication.shared.applicationIconBadgeNumber > 0)

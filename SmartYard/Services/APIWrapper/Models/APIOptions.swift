@@ -21,6 +21,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let guestAccessOnOnly: Bool
     let timeZone: String?
     let cctvView: CCTVViewType
+    let activeTab: TabNames
     
     private enum CodingKeys: String, CodingKey {
         case paymentsUrl
@@ -33,6 +34,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case guestAccess
         case timeZone
         case cctvView
+        case activeTab
     }
     // swiftlint:disable:next cyclomatic_complexity
     init(from decoder: Decoder) throws {
@@ -84,6 +86,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         supportPhone = try? container.decode(String.self, forKey: .supportPhone)
         timeZone = try? container.decode(String.self, forKey: .timeZone)
         cctvView = (try? container.decode(CCTVViewType.self, forKey: .cctvView)) ?? .list
+        activeTab = (try? container.decode(TabNames.self, forKey: .activeTab)) ?? .addresses
     }
     
     init() {
@@ -97,6 +100,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         guestAccessOnOnly = true
         timeZone = nil
         cctvView = .list
+        activeTab = .addresses
     }
     
     struct ChatOptions: Decodable {
@@ -108,6 +112,14 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     enum CCTVViewType: String, Decodable {
         case list
         case tree
+    }
+    
+    enum TabNames: String, Decodable {
+        case addresses
+        case notifications
+        case chat
+        case pay
+        case menu
     }
 }
 

@@ -32,6 +32,7 @@ private let phonePatternKey = "phonePatternKey"
 private let guestAccessModeKey = "guestAccessKey"
 private let timeZoneKey = "timeZoneKey"
 private let cctvViewKey = "cctvViewKey"
+private let activeTabKey = "activeTabKey"
 
 // swiftlint:disable:next type_body_length
 class AccessService {
@@ -278,6 +279,15 @@ class AccessService {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: cctvViewKey)
+        }
+    }
+    
+    var activeTab: String {
+        get {
+            UserDefaults.standard.value(forKey: activeTabKey)  as? String ?? APIOptions.TabNames.addresses.rawValue
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: activeTabKey)
         }
     }
     
