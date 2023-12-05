@@ -401,6 +401,7 @@ private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService
                 }
                 
                 accessService.cctvView = response.cctvView.rawValue
+                accessService.activeTab = response.activeTab.rawValue
                 
                 sem.signal()
             }
