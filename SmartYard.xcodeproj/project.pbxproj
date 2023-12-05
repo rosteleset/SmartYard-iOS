@@ -180,6 +180,7 @@
 		3AC5C71126131D3D008D74DE /* HistoryLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AC5C71026131D3D008D74DE /* HistoryLoadingTableViewCell.xib */; };
 		3AC5C71626131D4A008D74DE /* HistoryLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC5C71526131D4A008D74DE /* HistoryLoadingTableViewCell.swift */; };
 		3AC7CA7D271D7048007F35C7 /* AccountParams+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */; };
+		3ACD65322B1F649300146796 /* FakeNavBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ACD65342B1F649300146796 /* FakeNavBar.xib */; };
 		3AD968DC25E976C5000EEB4E /* SmartYardDropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */; };
 		3ADC76E129E09ABA00EDE4D7 /* TrassirService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC76E029E09ABA00EDE4D7 /* TrassirService.swift */; };
 		3ADC76E329E4364D00EDE4D7 /* MacroscopService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADC76E229E4364D00EDE4D7 /* MacroscopService.swift */; };
@@ -228,7 +229,6 @@
 		842FECB7242B89DF007CA0F3 /* OfficesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */; };
 		842FECB9242B8A04007CA0F3 /* APIOffice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FECB8242B8A04007CA0F3 /* APIOffice.swift */; };
 		843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A7A7E23F29A2900840E51 /* FakeNavBar.swift */; };
-		843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843A7A8023F29A3400840E51 /* FakeNavBar.xib */; };
 		843C38CE242A577C0035BF80 /* InboxResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38C6242A577B0035BF80 /* InboxResponseData.swift */; };
 		843C38CF242A577C0035BF80 /* InboxRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38C7242A577B0035BF80 /* InboxRequest.swift */; };
 		843C38D0242A577C0035BF80 /* UnreadedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38C9242A577B0035BF80 /* UnreadedRequest.swift */; };
@@ -909,6 +909,8 @@
 		3AC5C71026131D3D008D74DE /* HistoryLoadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryLoadingTableViewCell.xib; sourceTree = "<group>"; };
 		3AC5C71526131D4A008D74DE /* HistoryLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountParams+Extensions.swift"; sourceTree = "<group>"; };
+		3ACD65332B1F649300146796 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FakeNavBar.xib; sourceTree = "<group>"; };
+		3ACD65362B1F649600146796 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FakeNavBar.strings; sourceTree = "<group>"; };
 		3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardDropDownTextField.swift; sourceTree = "<group>"; };
 		3ADC76E029E09ABA00EDE4D7 /* TrassirService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrassirService.swift; sourceTree = "<group>"; };
 		3ADC76E229E4364D00EDE4D7 /* MacroscopService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroscopService.swift; sourceTree = "<group>"; };
@@ -960,7 +962,6 @@
 		842FECB5242B89DF007CA0F3 /* OfficesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfficesRequest.swift; sourceTree = "<group>"; };
 		842FECB8242B8A04007CA0F3 /* APIOffice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIOffice.swift; sourceTree = "<group>"; };
 		843A7A7E23F29A2900840E51 /* FakeNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNavBar.swift; sourceTree = "<group>"; };
-		843A7A8023F29A3400840E51 /* FakeNavBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FakeNavBar.xib; sourceTree = "<group>"; };
 		843C38C6242A577B0035BF80 /* InboxResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxResponseData.swift; sourceTree = "<group>"; };
 		843C38C7242A577B0035BF80 /* InboxRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxRequest.swift; sourceTree = "<group>"; };
 		843C38C9242A577B0035BF80 /* UnreadedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnreadedRequest.swift; sourceTree = "<group>"; };
@@ -1968,7 +1969,7 @@
 			isa = PBXGroup;
 			children = (
 				843A7A7E23F29A2900840E51 /* FakeNavBar.swift */,
-				843A7A8023F29A3400840E51 /* FakeNavBar.xib */,
+				3ACD65342B1F649300146796 /* FakeNavBar.xib */,
 			);
 			path = FakeNavBar;
 			sourceTree = "<group>";
@@ -4555,7 +4556,7 @@
 				3A8FC6882B065D7C00F90D73 /* AvailableServiceCell.xib in Resources */,
 				3A8FC6C12B06603C00F90D73 /* PassConfirmationPinViewController.xib in Resources */,
 				3A8FC6DF2B06613700F90D73 /* AddressesListHistoryCell.xib in Resources */,
-				843A7A8123F29A3400840E51 /* FakeNavBar.xib in Resources */,
+				3ACD65322B1F649300146796 /* FakeNavBar.xib in Resources */,
 				3A8FC7752B09F9A400F90D73 /* ServiceSoonAvailableViewController.xib in Resources */,
 				3A8FC7342B09E53B00F90D73 /* NewAllowedPersonViewController.xib in Resources */,
 				3A1BDF4A2634459C0075410B /* HistoryCollectionViewCell.xib in Resources */,
@@ -5879,6 +5880,15 @@
 				3AAAB4922B0A7C8F003DDBA6 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3ACD65342B1F649300146796 /* FakeNavBar.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3ACD65332B1F649300146796 /* Base */,
+				3ACD65362B1F649600146796 /* en */,
+			);
+			name = FakeNavBar.xib;
 			sourceTree = "<group>";
 		};
 		8496531A2472C96F000E1375 /* MainInterface.storyboard */ = {
