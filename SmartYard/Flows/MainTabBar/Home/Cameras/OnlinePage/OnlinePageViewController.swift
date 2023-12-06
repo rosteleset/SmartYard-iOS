@@ -42,6 +42,8 @@ class OnlinePageViewController: BaseViewController {
     
     weak var delegate: OnlinePageViewControllerDelegate?
     
+    private var isInFullscreen = false
+    
     init() {
         super.init(nibName: nil, bundle: nil)
         
@@ -57,6 +59,11 @@ class OnlinePageViewController: BaseViewController {
         player?.replaceCurrentItem(with: nil)
     }
     
+    override func viewDidLayoutSubviews() {
+        if !isInFullscreen {
+            playerLayer?.frame = cameraContainer.bounds
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -100,9 +107,10 @@ class OnlinePageViewController: BaseViewController {
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
-                    self?.videoLoadingAnimationView.isHidden = !isLoading
-                    
-                    isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
+                    if !(self?.isInFullscreen ?? false) {
+                        self?.videoLoadingAnimationView.isHidden = !isLoading
+                        isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -201,6 +209,7 @@ class OnlinePageViewController: BaseViewController {
                     playerLayer.removeAllAnimations()
                     
                     self.player?.play()
+                    self.isInFullscreen = false
                 }
             )
             .disposed(by: disposeBag)
@@ -261,7 +270,9 @@ class OnlinePageViewController: BaseViewController {
                     fullscreenVc.modalPresentationStyle = .overFullScreen
                     fullscreenVc.modalTransitionStyle = .crossDissolve
                     fullscreenVc.setPlayerLayer(playerLayer)
-
+                    
+                    self?.isInFullscreen = true
+                    
                     self?.present(fullscreenVc, animated: true) {
                         self?.player?.play()
                     }
