@@ -48,7 +48,7 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
         if self.apiWrapper.accessService.paymentsUrl.isEmpty {
             super.init(initialRoute: .main)
         } else {
-            if let url = URL(string: self.apiWrapper.accessService.paymentsUrl) {
+            if let url = URL(string: self.apiWrapper.accessService.paymentsUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)) {
                 super.init(initialRoute: .webView(url: url))
             } else {
                 super.init(initialRoute: .alert(

@@ -43,7 +43,7 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
         if self.apiWrapper.accessService.chatUrl.isEmpty {
             super.init(initialRoute: .main)
         } else {
-            if let url = URL(string: self.apiWrapper.accessService.chatUrl) {
+            if let url = URL(string: self.apiWrapper.accessService.chatUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)) {
                 super.init(initialRoute: .webView(url: url))
             } else {
                 super.init(initialRoute: .alert(
