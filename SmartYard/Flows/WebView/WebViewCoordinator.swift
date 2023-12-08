@@ -15,8 +15,8 @@ enum WebViewRoute: Route {
     case dialog(title: String, message: String?, actions: [UIAlertAction])
     case back
     case dismiss
-    case webView(url: URL, push: Bool)
-    case webViewFromContent(content: String, baseURL: String, push: Bool)
+    case webView(url: URL, push: Bool, refreshControl: Bool = true)
+    case webViewFromContent(content: String, baseURL: String, push: Bool, refreshControl: Bool = true)
     case webViewPopup(url: URL)
 }
 
@@ -36,13 +36,14 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
         url: URL,
         backButtonLabel: String,
         push: Bool,
-        version: Int // = 2
+        version: Int, // = 2
+        refreshControl: Bool = true
     ) {
         self.apiWrapper = apiWrapper
         self.version = version
         self.backButtonLabel = backButtonLabel
         super.init(rootViewController: rootVC, initialRoute: nil)
-        trigger(.webView(url: url, push: push))
+        trigger(.webView(url: url, push: push, refreshControl: refreshControl))
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
@@ -53,13 +54,14 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
         baseURL: String,
         backButtonLabel: String,
         push: Bool,
-        version: Int // = 2
+        version: Int, // = 2
+        refreshControl: Bool = true
     ) {
         self.apiWrapper = apiWrapper
         self.version = version
         self.backButtonLabel = backButtonLabel
         super.init(rootViewController: rootVC, initialRoute: nil)
-        trigger(.webViewFromContent(content: content, baseURL: baseURL, push: push))
+        trigger(.webViewFromContent(content: content, baseURL: baseURL, push: push, refreshControl: refreshControl))
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
@@ -83,7 +85,7 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
         case .dismiss:
             return .dismiss()
             
-        case let .webView(url, push):
+        case let .webView(url, push, refreshControl):
             let vm = WebViewModel(
                 apiWrapper: apiWrapper,
                 router: weakRouter,
@@ -100,11 +102,12 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
                 viewModel: vm,
                 backButtonLabel: topVc?.documentTitle ?? backButtonLabel,
                 accessToken: apiWrapper.accessService.accessToken ?? "",
-                version: version
+                version: version,
+                refreshControl: refreshControl
             )
             
             return .push(vc)
-        case let .webViewFromContent(content, baseURL, push):
+        case let .webViewFromContent(content, baseURL, push, refreshControl):
             let vm = WebViewModel(
                 apiWrapper: apiWrapper,
                 router: weakRouter,
@@ -122,7 +125,8 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
                 viewModel: vm,
                 backButtonLabel: topVc?.documentTitle ?? backButtonLabel,
                 accessToken: apiWrapper.accessService.accessToken ?? "",
-                version: version
+                version: version,
+                refreshControl: refreshControl
             )
             return .push(vc)
             

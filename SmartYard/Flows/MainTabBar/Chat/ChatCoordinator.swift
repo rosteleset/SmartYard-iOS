@@ -86,7 +86,8 @@ class ChatCoordinator: NavigationCoordinator<ChatRoute> {
                 url: url,
                 backButtonLabel: "",
                 push: false,
-                version: 2
+                version: 2,
+                refreshControl: false
             )
             guard let childCoordinator = childCoordinator else {
                 return .none()

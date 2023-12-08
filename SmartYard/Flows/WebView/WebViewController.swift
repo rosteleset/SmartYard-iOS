@@ -37,17 +37,20 @@ class WebViewController: BaseViewController, LoaderPresentable {
     private let refreshSubject = PublishSubject<Void>()
     
     private let version: Int
+    private let enableRefreshControl: Bool
     
     init(
         viewModel: WebViewModel,
         backButtonLabel: String = NSLocalizedString("Back", comment: ""),
         accessToken: String = "",
-        version: Int
+        version: Int,
+        refreshControl: Bool = true
     ) {
         self.viewModel = viewModel
         self.backButtonLabel = backButtonLabel
         self.accessToken = accessToken
         self.version = version
+        self.enableRefreshControl = refreshControl
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -133,7 +136,7 @@ class WebViewController: BaseViewController, LoaderPresentable {
         webView.scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 17, left: 0, bottom: 5, right: 0)
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        webView.scrollView.refreshControl = refreshControl
+        webView.scrollView.refreshControl = self.enableRefreshControl ? refreshControl : nil
         configureUserContentController()
         
     }
