@@ -1,0 +1,16 @@
+/* 
+  InfoPlist.strings
+  SmartYard
+
+  Created by Александр Васильев on 19.11.2023.
+  Copyright © 2023 LanTa. All rights reserved.
+*/
+
+"CFBundleDisplayName" = "Теледом";
+"UILaunchStoryboardName" = "LaunchScreen";
+
+"NSCameraUsageDescription" = "Доступ к камере нужен для возможности сканирования QR-кодов";
+"NSContactsUsageDescription" = "Доступ к списку контактов нужен для отображения имен и фотографий людей, на чьи номера выделен доступ к адресу";
+"NSLocationWhenInUseUsageDescription" = "Доступ к местоположению позволит отобразить Вашу позицию на карте";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Доступ к местоположению позволит отобразить Вашу позицию на карте";
+"NSMicrophoneUsageDescription" = "Доступ к микрофону нужен для передачи звука во время звонка";

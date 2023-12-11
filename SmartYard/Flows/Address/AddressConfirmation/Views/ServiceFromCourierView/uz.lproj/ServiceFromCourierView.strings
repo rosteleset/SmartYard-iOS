@@ -1,0 +1,21 @@
+
+/* Class = "UILabel"; text = "В течение недели курьер принесёт секретный конверт"; ObjectID = "YxH-AT-uxw"; */
+"YxH-AT-uxw.text" = "В течение недели курьер принесёт секретный конверт";
+
+/* Class = "UILabel"; text = "Пользуйтесь!"; ObjectID = "a1P-Cb-nhI"; */
+"a1P-Cb-nhI.text" = "Пользуйтесь!";
+
+/* Class = "UILabel"; text = "Вы сразу получите доступ ко всему  функционалу приложения «‎Умный домофон»."; ObjectID = "b5M-ID-Ktm"; */
+"b5M-ID-Ktm.text" = "Вы сразу получите доступ ко всему  функционалу приложения «‎Умный домофон».";
+
+/* Class = "UILabel"; text = "Он будет внутри конверта"; ObjectID = "bVA-4d-BdL"; */
+"bVA-4d-BdL.text" = "Он будет внутри конверта";
+
+/* Class = "UILabel"; text = "Оставьте заявку"; ObjectID = "mNi-2b-TlW"; */
+"mNi-2b-TlW.text" = "Оставьте заявку";
+
+/* Class = "UILabel"; text = "Отсканируйте QR-код"; ObjectID = "paM-th-zUQ"; */
+"paM-th-zUQ.text" = "Отсканируйте QR-код";
+
+/* Class = "UIButton"; normalTitle = "Супер! Оставить заявку"; ObjectID = "tO8-Xk-JaM"; */
+"tO8-Xk-JaM.normalTitle" = "Супер! Оставить заявку";

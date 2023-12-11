@@ -1,0 +1,18 @@
+
+/* Class = "UILabel"; text = "При удалении адреса вам будет недоступно управление услугами адреса"; ObjectID = "3ej-st-xQH"; */
+"3ej-st-xQH.text" = "При удалении адреса вам будет недоступно управление услугами адреса";
+
+/* Class = "UILabel"; text = "Хочу расторгнуть договор"; ObjectID = "EG4-P3-gKW"; */
+"EG4-P3-gKW.text" = "Хочу расторгнуть договор";
+
+/* Class = "UILabel"; text = "Другое"; ObjectID = "dNu-fF-o5e"; */
+"dNu-fF-o5e.text" = "Другое";
+
+/* Class = "UIButton"; normalTitle = "Отмена"; ObjectID = "nlH-Pd-ANd"; */
+"nlH-Pd-ANd.normalTitle" = "Отмена";
+
+/* Class = "UIButton"; normalTitle = "Удалить"; ObjectID = "puN-ny-jxO"; */
+"puN-ny-jxO.normalTitle" = "Удалить";
+
+/* Class = "UILabel"; text = "Укажите причину"; ObjectID = "yh9-uz-hcE"; */
+"yh9-uz-hcE.text" = "Укажите причину";

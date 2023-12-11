@@ -1,0 +1,27 @@
+
+/* Class = "UILabel"; text = "Ваш баланс пополнен"; ObjectID = "0tA-bU-0fp"; */
+"0tA-bU-0fp.text" = "Ваш баланс пополнен";
+
+/* Class = "UILabel"; text = "Рекомендуемая - 480 рублей"; ObjectID = "99Y-gl-f8E"; */
+"99Y-gl-f8E.text" = "Рекомендуемая - 480 рублей";
+
+/* Class = "UILabel"; text = "Готово!"; ObjectID = "Fr5-sq-kBi"; */
+"Fr5-sq-kBi.text" = "Готово!";
+
+/* Class = "UIButton"; normalTitle = "Оплата банковской картой"; ObjectID = "H43-xa-rwD"; */
+"H43-xa-rwD.normalTitle" = "Оплата банковской картой";
+
+/* Class = "UILabel"; text = "№68992"; ObjectID = "IIm-3l-khM"; */
+"IIm-3l-khM.text" = "№68992";
+
+/* Class = "UIButton"; normalTitle = "Pay"; ObjectID = "St8-Dw-f2Z"; */
+"St8-Dw-f2Z.normalTitle" = "Pay";
+
+/* Class = "UITextField"; placeholder = "Сумма"; ObjectID = "Wwk-4I-F7O"; */
+"Wwk-4I-F7O.placeholder" = "Сумма";
+
+/* Class = "UILabel"; text = "Сумма:"; ObjectID = "fd5-bC-tmj"; */
+"fd5-bC-tmj.text" = "Сумма:";
+
+/* Class = "UILabel"; text = "Пополнить баланс"; ObjectID = "yfI-I0-XKC"; */
+"yfI-I0-XKC.text" = "Пополнить баланс";

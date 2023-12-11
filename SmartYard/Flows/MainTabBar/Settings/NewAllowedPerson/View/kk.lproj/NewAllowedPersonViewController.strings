@@ -1,0 +1,12 @@
+
+/* Class = "UIButton"; normalTitle = "Поделиться"; ObjectID = "1sJ-jH-6or"; */
+"1sJ-jH-6or.normalTitle" = "Поделиться";
+
+/* Class = "UILabel"; text = "Имя"; ObjectID = "d86-8d-Cc7"; */
+"d86-8d-Cc7.text" = "Имя";
+
+/* Class = "UILabel"; text = "Поделиться доступом"; ObjectID = "gda-I1-7lg"; */
+"gda-I1-7lg.text" = "Поделиться доступом";
+
+/* Class = "UILabel"; text = "Введите номер телефона человека, которому  хотите предоставить доступ, или выберите его из контактов"; ObjectID = "xKP-zL-fU1"; */
+"xKP-zL-fU1.text" = "Введите номер телефона человека, которому  хотите предоставить доступ, или выберите его из контактов";
