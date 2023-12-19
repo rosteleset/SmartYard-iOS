@@ -1,9 +1,9 @@
 
 /* Class = "UIButton"; normalTitle = "Оставить заявку"; ObjectID = "V11-jX-2gX"; */
-"V11-jX-2gX.normalTitle" = "Оставить заявку";
+"V11-jX-2gX.normalTitle" = "Ariza qoldirish";
 
 /* Class = "UILabel"; text = "Ваш адрес требует уточнения. Дождитесь звонка специалиста.  Какую услугу вы хотели бы подключить?"; ObjectID = "aJH-T6-aZr"; */
-"aJH-T6-aZr.text" = "Ваш адрес требует уточнения. Дождитесь звонка специалиста.  Какую услугу вы хотели бы подключить?";
+"aJH-T6-aZr.text" = "Sizning manzilingiz aniqlashtirishni talab qiladi. Mutaxassis qo'ng'irog'ini kutib turing.  Qaysi xizmatni ulamoqchi bo'lar edingiz?";
 
 /* Class = "UILabel"; text = "Упс :("; ObjectID = "drb-lf-7Tm"; */
-"drb-lf-7Tm.text" = "Упс :(";
+"drb-lf-7Tm.text" = "Ups :(";

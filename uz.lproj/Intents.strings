@@ -1,62 +1,63 @@
-"0cUuHX" = "Вы хотите открыть ‘${door}’?";
+"0cUuHX" = "‘${door}’ni ochmoqchimisiz?";
 
-"75DQQs" = "Тип";
+"75DQQs" = "Turi";
 
-"7OB1Ww" = "There are ${count} options matching ‘${door}’.";
+"7OB1Ww" = "‘${door}’ga mos ${count} ta variant mavjud.";
 
-"7lOt11" = "Открыть ${door} @ ${address}";
+"7lOt11" = "${door}ni ochish @ ${address}";
 
-"7pPNLK" = "Door";
+"7pPNLK" = "Eshik";
 
-"Brixr9" = "Вы хотите открыть ‘${address}’?";
+"Brixr9" = "‘${address}’ni ochmoqchimisiz?";
 
-"EVkcmA" = "Открыть ...";
+"EVkcmA" = "Ochish ...";
 
-"GooWrv" = "Открывает любые двери";
+"GooWrv" = "Har qanday eshikni ochadi";
 
-"H8fR3T" = "Открыть ...";
+"H8fR3T" = "Ochish ...";
 
-"Lab1IV" = "Что открыть";
+"Lab1IV" = "Nimani ochish";
 
-"MWf04e-fVQgAq" = "Just to confirm, you wanted ‘Все’?";
+"MWf04e-fVQgAq" = "Tasdiqlash uchun, siz ‘Hammasi’ni xohladingizmi?";
 
-"MWf04e-pEOc1e" = "Just to confirm, you wanted ‘Ворота’?";
+"MWf04e-pEOc1e" = "Tasdiqlash uchun, siz ‘Darvoza’ni xohladingizmi?";
 
-"MWf04e-rR3Lh0" = "Just to confirm, you wanted ‘Калитка’?";
+"MWf04e-rR3Lh0" = "Tasdiqlash uchun, siz ‘Kichik darvoza’ni xohladingizmi?";
 
-"MWf04e-tyxO3i" = "Just to confirm, you wanted ‘Подъезд’?";
+"MWf04e-tyxO3i" = "Tasdiqlash uchun, siz ‘Pod'ezd’ni xohladingizmi?";
 
-"OE741o-fVQgAq" = "There are ${count} options matching ‘Все’.";
+"OE741o-fVQgAq" = "‘Hammasi’ga mos ${count} ta variant mavjud.";
 
-"OE741o-pEOc1e" = "There are ${count} options matching ‘Ворота’.";
+"OE741o-pEOc1e" = "‘Darvoza’ga mos ${count} ta variant mavjud.";
 
-"OE741o-rR3Lh0" = "There are ${count} options matching ‘Калитка’.";
+"OE741o-rR3Lh0" = "‘Kichik darvoza’ga mos ${count} ta variant mavjud.";
 
-"OE741o-tyxO3i" = "There are ${count} options matching ‘Подъезд’.";
+"OE741o-tyxO3i" = "‘Pod'ezd’ga mos ${count} ta variant mavjud.";
 
-"RB0yYo" = "Что открыть?";
+"RB0yYo" = "Nimani ochish?";
 
-"fVQgAq" = "Все";
+"fVQgAq" = "Hammasi";
 
-"fy6B1Z" = "Где открыть?";
+"fy6B1Z" = "Qayerda ochish?";
 
-"g6Beaz" = "Открыть ${door} @ ${address}";
+"g6Beaz" = "${door}ni ochish @ ${address}";
 
-"mNEDvp" = "House Address";
+"mNEDvp" = "Uy manzili";
 
-"mav2aR" = "Domophone Id";
+"mav2aR" = "Domofon IDsi";
 
-"oi81HC" = "Door Id";
+"oi81HC" = "Eshik IDsi";
 
-"pEOc1e" = "Ворота";
+"pEOc1e" = "Darvoza";
 
-"rR3Lh0" = "Калитка";
+"rR3Lh0" = "Kichik darvoza";
 
-"ryTv95" = "Где открыть";
+"ryTv95" = "Qayerda ochish";
 
-"sf9Ajl" = "There are ${count} options matching ‘${address}’.";
+"sf9Ajl" = "‘${address}’ga mos ${count} ta variant mavjud.";
 
-"tyxO3i" = "Подъезд";
+"tyxO3i" = "Pod'ezd";
 
-"zDKNd0" = "Тип входа";
+"zDKNd0" = "Kirish turi";
+
 

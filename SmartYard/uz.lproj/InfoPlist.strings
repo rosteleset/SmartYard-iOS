@@ -6,11 +6,11 @@
   Copyright © 2023 LanTa. All rights reserved.
 */
 
-"CFBundleDisplayName" = "Теледом";
-"UILaunchStoryboardName" = "LaunchScreen";
+"CFBundleDisplayName" = "Teledom";
+"UILaunchStoryboardName" = "LaunchScreen_en";
 
-"NSCameraUsageDescription" = "Доступ к камере нужен для возможности сканирования QR-кодов";
-"NSContactsUsageDescription" = "Доступ к списку контактов нужен для отображения имен и фотографий людей, на чьи номера выделен доступ к адресу";
-"NSLocationWhenInUseUsageDescription" = "Доступ к местоположению позволит отобразить Вашу позицию на карте";
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "Доступ к местоположению позволит отобразить Вашу позицию на карте";
-"NSMicrophoneUsageDescription" = "Доступ к микрофону нужен для передачи звука во время звонка";
+"NSCameraUsageDescription" = "Kamera kirish imkoniyati QR-kodlarni skanerlash uchun zarur";
+"NSContactsUsageDescription" = "Kontaktlar ro'yxatiga kirish sizning manzilingizga kirish huquqiga ega bo'lgan odamlarning ismlari va suratlarini ko'rsatish uchun kerak";
+"NSLocationWhenInUseUsageDescription" = "Joylashuvga kirish sizning pozitsiyangizni xaritada ko'rsatish imkonini beradi";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Joylashuvga doimiy va foydalanish vaqtidagi kirish sizning pozitsiyangizni xaritada ko'rsatish imkonini beradi";
+"NSMicrophoneUsageDescription" = "Mikrofonga kirish qo'ng'iroq vaqtida ovozni uzatish uchun zarur";

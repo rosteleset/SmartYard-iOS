@@ -1,0 +1,12 @@
+
+/* Class = "UILabel"; text = "01:00"; ObjectID = "58D-aL-5Mh"; */
+"58D-aL-5Mh.text" = "01:00";
+
+/* Class = "UILabel"; text = "Отправить код повторно можно через"; ObjectID = "P50-Bq-deW"; */
+"P50-Bq-deW.text" = "Отправить код повторно можно через";
+
+/* Class = "UILabel"; text = "Код подтверждения отправлен на телефон +79025308094"; ObjectID = "aDl-zG-Nme"; */
+"aDl-zG-Nme.text" = "Код подтверждения отправлен на телефон +79025308094";
+
+/* Class = "UIButton"; normalTitle = "Отправить код повторно"; ObjectID = "gGI-M9-YUZ"; */
+"gGI-M9-YUZ.normalTitle" = "Отправить код повторно";

@@ -1,15 +1,15 @@
 
 /* Class = "UIButton"; normalTitle = "Позвонить"; ObjectID = "8gN-95-GzJ"; */
-"8gN-95-GzJ.normalTitle" = "Позвонить";
+"8gN-95-GzJ.normalTitle" = "Qo'ng'iroq qilish";
 
 /* Class = "UILabel"; text = "чтобы мы могли подтвердить, \nчто это ваш номер"; ObjectID = "ROh-6b-UUP"; */
-"ROh-6b-UUP.text" = "чтобы мы могли подтвердить, \nчто это ваш номер";
+"ROh-6b-UUP.text" = "biz sizning raqamingizni tasdiqlay olishimiz uchun";
 
 /* Class = "UILabel"; text = "Сделайте бесплатный звонок на номер"; ObjectID = "Usv-6A-CQh"; */
-"Usv-6A-CQh.text" = "Сделайте бесплатный звонок на номер";
+"Usv-6A-CQh.text" = "Raqamga bepul qo'ng'iroq qiling";
 
 /* Class = "UIButton"; normalTitle = "Исправить номер телефона"; ObjectID = "c8f-g0-jL7"; */
-"c8f-g0-jL7.normalTitle" = "Исправить номер телефона";
+"c8f-g0-jL7.normalTitle" = "Telefon raqamini tuzatish";
 
 /* Class = "UILabel"; text = "Нам необходимо убедиться, \nчто номер +79025308094 действительно ваш."; ObjectID = "eDz-2O-KUv"; */
-"eDz-2O-KUv.text" = "Нам необходимо убедиться, \nчто номер +79025308094 действительно ваш.";
+"eDz-2O-KUv.text" = "+79025308094 raqami haqiqatan ham sizniki ekanligiga ishonch hosil qilishimiz kerak.";

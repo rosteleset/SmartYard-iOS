@@ -1,9 +1,9 @@
 
 /* Class = "UIButton"; normalTitle = "Отмена"; ObjectID = "6Yr-fY-VGD"; */
-"6Yr-fY-VGD.normalTitle" = "Отмена";
+"6Yr-fY-VGD.normalTitle" = "Bekor qilish";
 
 /* Class = "UILabel"; text = "Удалить это лицо?"; ObjectID = "TXq-h2-f5D"; */
-"TXq-h2-f5D.text" = "Удалить это лицо?";
+"TXq-h2-f5D.text" = "Bu yuzni o'chirish kerakmi?";
 
 /* Class = "UIButton"; normalTitle = "Удалить"; ObjectID = "TiH-DQ-nUy"; */
-"TiH-DQ-nUy.normalTitle" = "Удалить";
+"TiH-DQ-nUy.normalTitle" = "O'chirish";

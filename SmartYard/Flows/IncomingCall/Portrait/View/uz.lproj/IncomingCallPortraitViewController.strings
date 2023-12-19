@@ -1,24 +1,24 @@
 
 /* Class = "UILabel"; text = "Глазок"; ObjectID = "6nl-Pt-61e"; */
-"6nl-Pt-61e.text" = "Глазок";
+"6nl-Pt-61e.text" = "Ko'zcha";
 
 /* Class = "UILabel"; text = "Звонок в домофон"; ObjectID = "EaG-bR-VV0"; */
-"EaG-bR-VV0.text" = "Звонок в домофон";
+"EaG-bR-VV0.text" = "Domofonga qo'ng'iroq";
 
 /* Class = "UILabel"; text = "Динамик"; ObjectID = "I5j-fH-LRs"; */
-"I5j-fH-LRs.text" = "Динамик";
+"I5j-fH-LRs.text" = "Dinamik";
 
 /* Class = "UILabel"; text = "Ответить"; ObjectID = "OFY-ve-MGk"; */
-"OFY-ve-MGk.text" = "Ответить";
+"OFY-ve-MGk.text" = "Javob berish";
 
 /* Class = "UILabel"; text = "Тамбов, ул. Советская 20, кв. 52"; ObjectID = "Rh6-Xt-7AB"; */
-"Rh6-Xt-7AB.text" = "Тамбов, ул. Советская 20, кв. 52";
+"Rh6-Xt-7AB.text" = "Тамбов, Советская кўчаси 20, 52-уй";
 
 /* Class = "UILabel"; text = "Открыть"; ObjectID = "T2d-Xs-GlG"; */
-"T2d-Xs-GlG.text" = "Открыть";
+"T2d-Xs-GlG.text" = "Ochish";
 
 /* Class = "UILabel"; text = "Игнорировать"; ObjectID = "jj8-ob-kSL"; */
-"jj8-ob-kSL.text" = "Игнорировать";
+"jj8-ob-kSL.text" = "E'tiborsiz qoldirish";
 
 /* Class = "UILabel"; text = "Открыто"; ObjectID = "qoh-Fa-xYP"; */
-"qoh-Fa-xYP.text" = "Открыто";
+"qoh-Fa-xYP.text" = "Ochildi";

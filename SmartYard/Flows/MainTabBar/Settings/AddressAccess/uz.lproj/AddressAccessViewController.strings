@@ -1,12 +1,12 @@
 
 /* Class = "UILabel"; text = "Постоянный доступ к адресу"; ObjectID = "4eY-cI-gDO"; */
-"4eY-cI-gDO.text" = "Постоянный доступ к адресу";
+"4eY-cI-gDO.text" = "Doimiy manzilga kirish";
 
 /* Class = "UILabel"; text = "Временный доступ к шлагбауму/воротам"; ObjectID = "SFF-xT-WW6"; */
-"SFF-xT-WW6.text" = "Временный доступ к шлагбауму/воротам";
+"SFF-xT-WW6.text" = "Vaqtinchalik shlagbaum/vorotalarga kirish";
 
 /* Class = "UILabel"; text = "г. Тамбов, ул. Советская, 16, к. 4"; ObjectID = "Vjf-7h-gEU"; */
-"Vjf-7h-gEU.text" = "г. Тамбов, ул. Советская, 16, к. 4";
+"Vjf-7h-gEU.text" = "Тамбов ш., Советская кўчаси, 16, к. 4";
 
 /* Class = "UILabel"; text = "Доступ к адресу"; ObjectID = "iuZ-VJ-41V"; */
-"iuZ-VJ-41V.text" = "Доступ к адресу";
+"iuZ-VJ-41V.text" = "Manzilga kirish";

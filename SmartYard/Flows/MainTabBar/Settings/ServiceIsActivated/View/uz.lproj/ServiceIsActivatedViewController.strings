@@ -1,9 +1,9 @@
 
 /* Class = "UIButton"; normalTitle = "Сменить тариф"; ObjectID = "GbW-UQ-G33"; */
-"GbW-UQ-G33.normalTitle" = "Сменить тариф";
+"GbW-UQ-G33.normalTitle" = "Tarifni o'zgartirish";
 
 /* Class = "UILabel"; text = "Услуга подключена"; ObjectID = "YeC-Yi-BOi"; */
-"YeC-Yi-BOi.text" = "Услуга подключена";
+"YeC-Yi-BOi.text" = "Xizmat ulangan";
 
 /* Class = "UILabel"; text = "Если хотите сменить тариф, оставьте заявку"; ObjectID = "pmt-1V-kNk"; */
-"pmt-1V-kNk.text" = "Если хотите сменить тариф, оставьте заявку";
+"pmt-1V-kNk.text" = "Agar tarifni o'zgartirmoqchi bo'lsangiz, ariza qoldiring";

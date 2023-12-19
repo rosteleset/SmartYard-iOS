@@ -1,27 +1,27 @@
 
 /* Class = "UILabel"; text = "Ваш баланс пополнен"; ObjectID = "0tA-bU-0fp"; */
-"0tA-bU-0fp.text" = "Ваш баланс пополнен";
+"0tA-bU-0fp.text" = "Sizning balansingiz to'ldirildi";
 
 /* Class = "UILabel"; text = "Рекомендуемая - 480 рублей"; ObjectID = "99Y-gl-f8E"; */
-"99Y-gl-f8E.text" = "Рекомендуемая - 480 рублей";
+"99Y-gl-f8E.text" = "Tavsiya etilgan - 480 rubl";
 
 /* Class = "UILabel"; text = "Готово!"; ObjectID = "Fr5-sq-kBi"; */
-"Fr5-sq-kBi.text" = "Готово!";
+"Fr5-sq-kBi.text" = "Tayyor!";
 
 /* Class = "UIButton"; normalTitle = "Оплата банковской картой"; ObjectID = "H43-xa-rwD"; */
-"H43-xa-rwD.normalTitle" = "Оплата банковской картой";
+"H43-xa-rwD.normalTitle" = "Bank kartasi orqali to'lov";
 
 /* Class = "UILabel"; text = "№68992"; ObjectID = "IIm-3l-khM"; */
 "IIm-3l-khM.text" = "№68992";
 
 /* Class = "UIButton"; normalTitle = "Pay"; ObjectID = "St8-Dw-f2Z"; */
-"St8-Dw-f2Z.normalTitle" = "Pay";
+"St8-Dw-f2Z.normalTitle" = "To'lash";
 
 /* Class = "UITextField"; placeholder = "Сумма"; ObjectID = "Wwk-4I-F7O"; */
-"Wwk-4I-F7O.placeholder" = "Сумма";
+"Wwk-4I-F7O.placeholder" = "Summa";
 
 /* Class = "UILabel"; text = "Сумма:"; ObjectID = "fd5-bC-tmj"; */
-"fd5-bC-tmj.text" = "Сумма:";
+"fd5-bC-tmj.text" = "Summa:";
 
 /* Class = "UILabel"; text = "Пополнить баланс"; ObjectID = "yfI-I0-XKC"; */
-"yfI-I0-XKC.text" = "Пополнить баланс";
+"yfI-I0-XKC.text" = "Balansni to'ldirish";

@@ -1,9 +1,9 @@
 
 /* Class = "UILabel"; text = "Фотографии ваших гостей хранятся в разделе История событий. \n\nДля выбора и регистрации лица перейдите в указанный раздел, кликнув на Плюс. \nВ Истории событий кликните на значок информации напротив нужного события и на открывшемся экране выберите необходимое фото.\n\n"; ObjectID = "6no-0a-lvC"; */
-"6no-0a-lvC.text" = "Фотографии ваших гостей хранятся в разделе История событий. \n\nДля выбора и регистрации лица перейдите в указанный раздел, кликнув на Плюс. \nВ Истории событий кликните на значок информации напротив нужного события и на открывшемся экране выберите необходимое фото.\n\n";
+"6no-0a-lvC.text" = "Mehmonlaringizning suratlari Voqealar tarixi bo'limida saqlanadi. \n\nShaxsni tanlash va ro'yxatdan o'tkazish uchun ushbu bo'limga o'ting, Plus tugmasini bosib. \nVoqealar tarixida kerakli voqea yonida ma'lumot belgisini bosib, ochilgan ekranda zarur suratni tanlang.\n\n";
 
 /* Class = "UILabel"; text = "Регистрация лица"; ObjectID = "Fyv-Y1-rkc"; */
-"Fyv-Y1-rkc.text" = "Регистрация лица";
+"Fyv-Y1-rkc.text" = "Yuzni ro'yxatdan o'tkazish";
 
 /* Class = "UILabel"; text = "Зарегистрированные лица"; ObjectID = "aDB-gW-47T"; */
-"aDB-gW-47T.text" = "Зарегистрированные лица";
+"aDB-gW-47T.text" = "Ro'yxatdan o'tgan yuzlar";

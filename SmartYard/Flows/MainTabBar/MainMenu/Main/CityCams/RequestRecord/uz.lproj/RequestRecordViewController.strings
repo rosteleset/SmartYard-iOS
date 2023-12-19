@@ -1,27 +1,27 @@
 
 /* Class = "UILabel"; text = "Продолжительность обработки запроса может составлять до 1 рабочего дня."; ObjectID = "51d-1h-aop"; */
-"51d-1h-aop.text" = "Продолжительность обработки запроса может составлять до 1 рабочего дня.";
+"51d-1h-aop.text" = "So'rovni ko'rib chiqish davomiyligi 1 ish kuni davomida bo'lishi mumkin.";
 
 /* Class = "UITextField"; text = "Время: мм"; ObjectID = "9kJ-lO-X07"; */
-"9kJ-lO-X07.text" = "Время: мм";
+"9kJ-lO-X07.text" = "Vaqt: mm";
 
 /* Class = "UITextField"; text = "Время: чч"; ObjectID = "GRD-jm-9e7"; */
-"GRD-jm-9e7.text" = "Время: чч";
+"GRD-jm-9e7.text" = "Vaqt: soat";
 
 /* Class = "UIButton"; normalTitle = "Отправить запрос"; ObjectID = "L4j-9z-B66"; */
-"L4j-9z-B66.normalTitle" = "Отправить запрос";
+"L4j-9z-B66.normalTitle" = "So'rov yuborish";
 
 /* Class = "UITextField"; text = "Дата записи: 5.09.2020"; ObjectID = "LuE-DE-5IR"; */
-"LuE-DE-5IR.text" = "Дата записи: 5.09.2020";
+"LuE-DE-5IR.text" = "Yozuv sanasi: 5.09.2020";
 
 /* Class = "UILabel"; text = "Запросить запись"; ObjectID = "Yr0-wC-iKV"; */
-"Yr0-wC-iKV.text" = "Запросить запись";
+"Yr0-wC-iKV.text" = "Yozuvni so'rab olish";
 
 /* Class = "UITextField"; placeholder = "Комментарий"; ObjectID = "h8p-pN-Ahl"; */
-"h8p-pN-Ahl.placeholder" = "Комментарий";
+"h8p-pN-Ahl.placeholder" = "Izoh";
 
 /* Class = "UITextField"; text = "Продолжительность: 10 мин"; ObjectID = "ppf-df-Gg8"; */
-"ppf-df-Gg8.text" = "Продолжительность: 10 мин";
+"ppf-df-Gg8.text" = "Davomiyligi: 10 daqiqa";
 
 /* Class = "UILabel"; text = "г. Тамбов, ул. Советская, 16"; ObjectID = "qGD-eH-dBA"; */
-"qGD-eH-dBA.text" = "г. Тамбов, ул. Советская, 16";
+"qGD-eH-dBA.text" = "Тамбов ш., Советская кўчаси, 16";

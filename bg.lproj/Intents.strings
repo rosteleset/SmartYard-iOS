@@ -1,0 +1,62 @@
+"0cUuHX" = "Вы хотите открыть ‘${door}’?";
+
+"75DQQs" = "Тип";
+
+"7OB1Ww" = "There are ${count} options matching ‘${door}’.";
+
+"7lOt11" = "Открыть ${door} @ ${address}";
+
+"7pPNLK" = "Door";
+
+"Brixr9" = "Вы хотите открыть ‘${address}’?";
+
+"EVkcmA" = "Открыть ...";
+
+"GooWrv" = "Открывает любые двери";
+
+"H8fR3T" = "Открыть ...";
+
+"Lab1IV" = "Что открыть";
+
+"MWf04e-fVQgAq" = "Just to confirm, you wanted ‘Все’?";
+
+"MWf04e-pEOc1e" = "Just to confirm, you wanted ‘Ворота’?";
+
+"MWf04e-rR3Lh0" = "Just to confirm, you wanted ‘Калитка’?";
+
+"MWf04e-tyxO3i" = "Just to confirm, you wanted ‘Подъезд’?";
+
+"OE741o-fVQgAq" = "There are ${count} options matching ‘Все’.";
+
+"OE741o-pEOc1e" = "There are ${count} options matching ‘Ворота’.";
+
+"OE741o-rR3Lh0" = "There are ${count} options matching ‘Калитка’.";
+
+"OE741o-tyxO3i" = "There are ${count} options matching ‘Подъезд’.";
+
+"RB0yYo" = "Что открыть?";
+
+"fVQgAq" = "Все";
+
+"fy6B1Z" = "Где открыть?";
+
+"g6Beaz" = "Открыть ${door} @ ${address}";
+
+"mNEDvp" = "House Address";
+
+"mav2aR" = "Domophone Id";
+
+"oi81HC" = "Door Id";
+
+"pEOc1e" = "Ворота";
+
+"rR3Lh0" = "Калитка";
+
+"ryTv95" = "Где открыть";
+
+"sf9Ajl" = "There are ${count} options matching ‘${address}’.";
+
+"tyxO3i" = "Подъезд";
+
+"zDKNd0" = "Тип входа";
+
