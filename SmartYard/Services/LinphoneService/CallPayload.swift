@@ -68,7 +68,7 @@ struct CallPayload {
         if videoType == .webrtc,
            let tokenPart = videoToken.isNilOrEmpty ? "" : "?token=\(videoToken ?? "")",
            let streamPart = videoStream {
-            return streamPart + tokenPart
+            return streamPart + "/whep" + tokenPart
         } else {
             return nil
         }
