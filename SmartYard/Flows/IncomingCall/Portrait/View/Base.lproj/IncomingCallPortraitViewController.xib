@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -68,6 +68,15 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o7y-sM-LFP">
                     <rect key="frame" x="16" y="201.99999999999997" width="361" height="309.33333333333326"/>
                     <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Wg-Q1-NS9" userLabel="Video Background Blur">
+                            <rect key="frame" x="0.0" y="53.333333333333343" width="361" height="203.00000000000003"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                                    <real key="value" value="24"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="640" placeholderIntrinsicHeight="480" translatesAutoresizingMaskIntoConstraints="NO" id="ws9-YM-GBC">
                             <rect key="frame" x="0.0" y="53.333333333333343" width="361" height="203.00000000000003"/>
                             <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -80,15 +89,6 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </imageView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Wg-Q1-NS9" userLabel="Video Background Blur">
-                            <rect key="frame" x="0.0" y="53.333333333333343" width="361" height="203.00000000000003"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
-                                    <real key="value" value="24"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </view>
                         <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="kjw-hq-KIl" userLabel="WebRTCView">
                             <rect key="frame" x="0.0" y="53.333333333333343" width="361" height="203.00000000000003"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -101,9 +101,6 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="HGl-tO-Nut">
-                            <rect key="frame" x="162" y="136.33333333333331" width="37" height="37"/>
-                        </activityIndicatorView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qZy-mX-wC7">
                             <rect key="frame" x="-459.66666666666669" y="-205.33333333333334" width="1280.3333333333333" height="720"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -117,6 +114,10 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="HGl-tO-Nut">
+                            <rect key="frame" x="162" y="136" width="37" height="37"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0rq-fX-JWl">
                             <rect key="frame" x="321" y="216.33333333333331" width="20" height="20"/>
                             <constraints>
@@ -133,9 +134,7 @@
                         <constraint firstItem="4Wg-Q1-NS9" firstAttribute="bottom" secondItem="ws9-YM-GBC" secondAttribute="bottom" id="IpC-Mc-xIA"/>
                         <constraint firstAttribute="trailing" secondItem="kjw-hq-KIl" secondAttribute="trailing" id="KJ0-uw-fj2"/>
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="o7y-sM-LFP" secondAttribute="top" id="KMz-Gh-K0p"/>
-                        <constraint firstItem="HGl-tO-Nut" firstAttribute="centerX" secondItem="ws9-YM-GBC" secondAttribute="centerX" id="MgF-uY-1ei"/>
                         <constraint firstItem="ws9-YM-GBC" firstAttribute="trailing" secondItem="0rq-fX-JWl" secondAttribute="trailing" constant="20" id="PKs-HN-Ssx"/>
-                        <constraint firstItem="HGl-tO-Nut" firstAttribute="centerY" secondItem="ws9-YM-GBC" secondAttribute="centerY" id="Qrd-vU-6uW"/>
                         <constraint firstItem="4Wg-Q1-NS9" firstAttribute="leading" secondItem="ws9-YM-GBC" secondAttribute="leading" id="Sj2-ws-Di1"/>
                         <constraint firstItem="kjw-hq-KIl" firstAttribute="leading" secondItem="o7y-sM-LFP" secondAttribute="leading" id="VET-ma-DvF"/>
                         <constraint firstItem="4Wg-Q1-NS9" firstAttribute="trailing" secondItem="ws9-YM-GBC" secondAttribute="trailing" id="XBf-AM-rU0"/>

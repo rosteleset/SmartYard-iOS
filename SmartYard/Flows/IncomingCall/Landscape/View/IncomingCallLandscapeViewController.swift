@@ -17,7 +17,7 @@ class IncomingCallLandscapeViewController: BaseViewController {
     @IBOutlet private weak var callButton: UIButton!
     @IBOutlet private weak var ignoreButton: UIButton!
     @IBOutlet private weak var openButton: LoadingButton!
-    @IBOutlet private weak var alreadyOpenedButton: UIButton!
+    @IBOutlet private weak var alreadyOpenedButton: UIButton! 
     @IBOutlet private weak var speakerButton: UIButton!
     
     @IBOutlet private weak var imageView: UIImageView!
@@ -31,6 +31,9 @@ class IncomingCallLandscapeViewController: BaseViewController {
     @IBOutlet private weak var subtitleLabel: UILabel!
     
     @IBOutlet private weak var exitFullscreenButton: UIButton!
+    
+    private var SIPHasVideo = true
+    private var webRTCHasVideo = false
     
     private let viewModel: IncomingCallViewModel
     
@@ -168,6 +171,22 @@ class IncomingCallLandscapeViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.isSIPHasVideo
+            .drive(
+                onNext: { [weak self] hasVideo in
+                    self?.SIPHasVideo = hasVideo
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isWebRTCHasVideo
+            .drive(
+                onNext: { [weak self] hasVideo in
+                    self?.webRTCHasVideo = hasVideo
+                }
+            )
+            .disposed(by: disposeBag)
 
         output.isDoorBeingOpened
             .debounce(.milliseconds(25))
@@ -195,11 +214,11 @@ class IncomingCallLandscapeViewController: BaseViewController {
             && state.doorState == .notDetermined
         speakerButton.isSelected = state.soundOutputState == .speaker
         
-        let shouldShowVideo = state.callState == .callActive && state.previewState == .video
+        let shouldShowVideo = (state.callState == .callActive || state.callState == .callReceived) && state.previewState == .video
         
-        videoPreview.isHidden = !shouldShowVideo
-        webRTCView.isHidden = !(state.previewState == .video)
-        
+        videoPreview.isHidden = !shouldShowVideo || (!SIPHasVideo && webRTCHasVideo)
+        webRTCView.isHidden = !shouldShowVideo || (SIPHasVideo && !webRTCHasVideo)
+
         imageView.isHidden = shouldShowVideo
         imageViewActivityIndicator.isHidden = shouldShowVideo || hasImage
         

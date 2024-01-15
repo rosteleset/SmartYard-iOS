@@ -39,6 +39,9 @@ class IncomingCallPortraitViewController: BaseViewController {
     
     @IBOutlet private weak var fullscreenButton: UIButton!
     
+    private var SIPHasVideo = false
+    private var webRTCHasVideo = false
+    
     private let viewModel: IncomingCallViewModel
     
     init(viewModel: IncomingCallViewModel) {
@@ -155,6 +158,22 @@ class IncomingCallPortraitViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
+        output.isSIPHasVideo
+            .drive(
+                onNext: { [weak self] hasVideo in
+                    self?.SIPHasVideo = hasVideo
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.isWebRTCHasVideo
+            .drive(
+                onNext: { [weak self] hasVideo in
+                    self?.webRTCHasVideo = hasVideo
+                }
+            )
+            .disposed(by: disposeBag)
+        
         fullscreenButton.rx.tap
             .subscribe(
                 onNext: {
@@ -172,11 +191,12 @@ class IncomingCallPortraitViewController: BaseViewController {
             && state.doorState == .notDetermined
         speakerButton.isSelected = state.soundOutputState == .speaker
         
-        let shouldShowVideo = state.callState == .callActive && state.previewState == .video
+        let shouldShowVideo = (state.callState == .callActive || state.callState == .callReceived) && state.previewState == .video
         
         videoBackgroundBlur.isHidden = !shouldShowVideo
-        videoPreview.isHidden = !shouldShowVideo
-        webRTCView.isHidden = !(state.previewState == .video)
+        
+        videoPreview.isHidden = !shouldShowVideo || (!SIPHasVideo && webRTCHasVideo)
+        webRTCView.isHidden = !shouldShowVideo || (SIPHasVideo && !webRTCHasVideo)
         
         imageView.isHidden = shouldShowVideo
         imageViewActivityIndicator.isHidden = shouldShowVideo || hasImage

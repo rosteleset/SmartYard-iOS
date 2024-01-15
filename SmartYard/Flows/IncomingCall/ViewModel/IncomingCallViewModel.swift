@@ -21,7 +21,7 @@ class IncomingCallViewModel: BaseViewModel {
     
     private let providerProxy: CXProviderProxy
     private let linphoneService: LinphoneService
-    private let webRTCService: WebRTCService?
+    private var webRTCService: WebRTCService?
     private let permissionService: PermissionService
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
@@ -39,7 +39,9 @@ class IncomingCallViewModel: BaseViewModel {
     private let incomingCallAcceptedByUser = BehaviorSubject<Bool>(value: false)
     private let doorOpeningRequestedByUser = BehaviorSubject<Bool>(value: false)
     private let isDoorBeingOpened = BehaviorSubject<Bool>(value: false)
-    
+    private let isSIPHasVideo = BehaviorSubject<Bool>(value: false)
+    private let isWebRTCHasVideo = BehaviorSubject<Bool>(value: false)
+ 
     // MARK: По умолчанию звонок принятый через CallKit должен показываться со статичной картинкой
     // Чтобы показалось видео - нужно, чтобы пользователь нажал на кнопку "Video" в коллките
     // Если CallKit выключен, то всегда по умолчанию показывается видео
@@ -88,12 +90,13 @@ class IncomingCallViewModel: BaseViewModel {
         subtitleSubject = BehaviorSubject<String?>(value: callPayload.callerId)
         
         if callPayload.videoType == .webrtc,
-            let stun = callPayload.stun,
+           let stun = callPayload.stun,
            let urlString = callPayload.videoUrl,
            let endpointUrl = URL(string: urlString) {
             self.webRTCService = WebRTCService(iceServers: [ stun ], endpointUrl: endpointUrl)
-            
+            self.isWebRTCHasVideo.onNext(true)
         } else {
+            self.isWebRTCHasVideo.onNext(false)
             self.webRTCService = nil
         }
         
@@ -102,7 +105,7 @@ class IncomingCallViewModel: BaseViewModel {
         let initialCallState = IncomingCallStateContainer(
             callState: defaultSpeakerMode.callState,
             doorState: defaultSpeakerMode.doorState,
-            previewState: self.webRTCService != nil ? .video : defaultSpeakerMode.previewState,
+            previewState: defaultSpeakerMode.previewState,
             soundOutputState: defaultSpeakerMode.soundOutputState
         )
         
@@ -213,7 +216,7 @@ class IncomingCallViewModel: BaseViewModel {
                 incomingCallAcceptedByUser.asDriver(onErrorJustReturn: false),
                 doorOpeningRequestedByUser.asDriver(onErrorJustReturn: false)
             )
-            .flatMap { args -> Driver<(Call, CallParams)> in
+            .flatMap { [weak self] args -> Driver<(Call, CallParams)> in
                 let (incomingCall, isAccepted, isDoorOpeningRequested) = args
                 
                 guard let unwrappedIncomingCall = incomingCall, (isAccepted || isDoorOpeningRequested) else {
@@ -225,6 +228,10 @@ class IncomingCallViewModel: BaseViewModel {
                 if isDoorOpeningRequested {
                     call.speakerMuted = true
                     call.microphoneMuted = true
+                }
+                 
+                if let remoteParams = call.remoteParams {
+                    self?.isSIPHasVideo.onNext(remoteParams.videoEnabled)
                 }
                 
                 return .just((call, callParams))
@@ -830,7 +837,9 @@ class IncomingCallViewModel: BaseViewModel {
             state: currentState,
             subtitle: subtitleSubject.asDriverOnErrorJustComplete(),
             image: imageSubject.asDriverOnErrorJustComplete(),
-            isDoorBeingOpened: isDoorBeingOpened.asDriver(onErrorJustReturn: false)
+            isDoorBeingOpened: isDoorBeingOpened.asDriver(onErrorJustReturn: false), 
+            isSIPHasVideo: isSIPHasVideo.asDriverOnErrorJustComplete(),
+            isWebRTCHasVideo: isWebRTCHasVideo.asDriverOnErrorJustComplete()
         )
     }
     
@@ -968,7 +977,6 @@ extension IncomingCallViewModel: CXProviderProxyDelegate {
         linphoneService.core?.configureAudioSession()
         answerCallProxySubject.onNext(())
         NotificationCenter.default.post(name: .answeredByCallKit, object: nil)
-        
     }
     
     func provider(_ provider: CXProvider, didActivateAudioSession audioSession: AVAudioSession) {
