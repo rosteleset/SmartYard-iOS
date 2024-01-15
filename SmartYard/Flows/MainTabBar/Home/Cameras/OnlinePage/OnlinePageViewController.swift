@@ -233,7 +233,21 @@ class OnlinePageViewController: BaseViewController {
                     asset.duration.seconds > 0 || asset.duration.flags.rawValue == 17 else {
                     return false
                 }
-                
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) { [weak self] in
+                    
+                    guard let asset = self?.player?.currentItem?.asset else {
+                        return
+                    }
+                    
+                    if #available(iOS 15.0, *) {
+                        let media = asset.loadMediaSelectionGroup(for: .visual) { selectionGroup, err in
+                            print(selectionGroup.debugDescription)
+                        }
+                    } else {
+                        // Fallback on earlier versions
+                    }
+                    
+                }
                 return true
             }
             .drive(
@@ -329,6 +343,21 @@ class OnlinePageViewController: BaseViewController {
             guard tracksStatus == .loaded, durationStatus == .loaded else {
                 return
             }
+            
+//            print("Audio tracks count: \(asset.tracks(withMediaType: .audio).count)")
+//            print("Video tracks count: \(asset.tracks(withMediaType: .video).count)")
+            
+            if #available(iOS 15.0, *) {
+                let media = asset.loadMediaSelectionGroup(for: .visual) { selectionGroup, err in
+                    print(selectionGroup.debugDescription)
+                    
+                }
+            } else {
+                // Fallback on earlier versions
+            }
+            
+            // print("Audio present: \(String(describing: asset.mediaSelectionGroup(forMediaCharacteristic: .audible)))")
+            // print("tracks value: \(String(describing: asset.value(forKey: "tracks") as? [AVAssetTrack]))")
             
             self?.isVideoBeingLoaded.onNext(false)
             

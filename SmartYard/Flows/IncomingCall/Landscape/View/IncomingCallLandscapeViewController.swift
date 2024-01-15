@@ -218,7 +218,7 @@ class IncomingCallLandscapeViewController: BaseViewController {
             titleLabel.text = NSLocalizedString("Peephole on", comment: "")
             
         case (.establishingConnection, _):
-            titleLabel.text = NSLocalizedString("Conectiong...", comment: "")
+            titleLabel.text = NSLocalizedString("Connecting...", comment: "")
             
         case (.callActive, _):
             titleLabel.text = NSLocalizedString("Conversation", comment: "")

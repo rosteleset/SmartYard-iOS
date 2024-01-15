@@ -200,7 +200,7 @@ class IncomingCallPortraitViewController: BaseViewController {
             previewButtonLabel.text = NSLocalizedString("Peephole", comment: "")
             
         case (.establishingConnection, _):
-            titleLabel.text = NSLocalizedString("Conectiong...", comment: "")
+            titleLabel.text = NSLocalizedString("Connecting...", comment: "")
             ignoreButtonLabel.text = NSLocalizedString("Decline", comment: "")
             previewButtonLabel.text = NSLocalizedString("Video", comment: "")
             
