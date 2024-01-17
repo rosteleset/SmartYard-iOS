@@ -46,6 +46,12 @@ class PushNotificationService {
     func resetInstanceId() -> Single<Void?> {
         return Single.create { single in
             Messaging.messaging().deleteData { error in
+                #if targetEnvironment(simulator)
+                
+                return single(.success(()))
+                
+                #else
+
                 guard let error = error else {
                     single(.success(()))
                     return
@@ -58,6 +64,8 @@ class PushNotificationService {
                 } else {
                     single(.failure(error))
                 }
+                
+                #endif
             }
             
             return Disposables.create()
