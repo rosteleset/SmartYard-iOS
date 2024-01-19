@@ -45,6 +45,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var realVideoContainer: UIView!
     @IBOutlet private weak var progressSlider: SimpleVideoProgressSlider!
     @IBOutlet private weak var fullscreenButton: UIButton!
+    @IBOutlet private weak var soundToggleButton: UIButton!
     @IBOutlet private weak var videoLoadingAnimationView: LottieAnimationView!
     @IBOutlet private var sliderConstraints: [NSLayoutConstraint]!
     
@@ -63,6 +64,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private var baseTimerShift: Double = 0
     
     private var isInFullscreen = false
+    private var hasSound = false
     
     
     private var preferredPlaybackSpeedConfig: ArchiveVideoPlaybackSpeed = .normal {
@@ -111,7 +113,9 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private let currentMode = BehaviorSubject<Mode>(value: .preview)
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
     private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: false)
+    private let isSoundOn = BehaviorSubject<Bool>(value: false)
     private let currentPlaybackTime = BehaviorSubject<CMTime>(value: .zero)
+    private var soundStateBeforeFullScreen = false
     
     private var latestThumbnailConfig: VideoThumbnailConfiguration?
     
@@ -147,6 +151,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         configureSelectFragmentButton()
         configureRealVideoPlayer()
         configureFullscreenButton()
+        configureSoundToggleButton()
         
         preferredPlaybackSpeedConfig = .normal
         
@@ -287,6 +292,19 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
     
+    private func configureSoundToggleButton() {
+        soundToggleButton.setImage(UIImage(named: "SoundOff"), for: .normal)
+        soundToggleButton.setImage(UIImage(named: "SoundOn"), for: .selected)
+        
+        soundToggleButton.touchAreaInsets = UIEdgeInsets(inset: 12)
+        
+        soundToggleButton.rx.tap
+            .withLatestFrom(isSoundOn) { _, isSoundOn in !isSoundOn }
+            .bind(to: isSoundOn)
+            .disposed(by: disposeBag)
+    }
+    
+    
     private func configurePeriodicTimeObserver(_ player: AVQueuePlayer) {
         // проверяем, что periodicTimeObserver не был уже создан
         guard self.periodicTimeObserver == nil else {
@@ -337,6 +355,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     // swiftlint:disable:next function_body_length
     private func configureRealVideoPlayer() {
         let player = AVQueuePlayer()
+        player.isMuted = true
         self.realVideoPlayer = player
         
         if realVideoPlayerLayer != nil {
@@ -368,6 +387,14 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         let playerLayer = self.realVideoPlayerLayer else {
                         return
                     }
+                    
+                    var shouldTurnOnSound = true
+                    do {
+                        shouldTurnOnSound = try !(self.isSoundOn.value() || self.realVideoPlayer?.isMuted ?? true)
+                    } catch {
+                        print("Error getting isSoundOn value: \(error)")
+                    }
+                    
                     playerLayer.removeFromSuperlayer()
                     self.realVideoContainer.layer.insertSublayer(playerLayer, at: 0)
                     playerLayer.frame = self.realVideoContainer.bounds
@@ -380,6 +407,8 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         constraint.isActive = true
                     }
                     self.isInFullscreen = false
+                    
+                    self.isSoundOn.onNext(shouldTurnOnSound)
                 }
             )
             .disposed(by: disposeBag)
@@ -475,9 +504,18 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     
                     playerLayer.removeFromSuperlayer()
                     
+                    var shouldTurnOnSound = false
+                    do {
+                        shouldTurnOnSound = try isSoundOn.value()
+                    } catch {
+                        print("Error getting isSoundOn value: \(error)")
+                    }
+                    
                     let fullscreenVc = FullscreenPlayerViewController(
                         playedVideoType: .archive,
-                        preferredPlaybackRate: self.preferredPlaybackSpeedConfig.value
+                        preferredPlaybackRate: self.preferredPlaybackSpeedConfig.value,
+                        hasSound: self.hasSound,
+                        isSoundOn: shouldTurnOnSound
                     )
                     
                     fullscreenVc.modalPresentationStyle = .overFullScreen
@@ -488,8 +526,10 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     for constraint in self.sliderConstraints {
                         constraint.isActive = false
                     }
+//                    self.isSoundOn.onNext(false)
+                    
                     self.isInFullscreen = true
-                    self.present(fullscreenVc, animated: true)
+                    self.present(fullscreenVc, animated: true) 
                 }
             )
             .disposed(by: disposeBag)
@@ -507,7 +547,9 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     private func configureUIBindings() {
         Driver
             .combineLatest(
-                currentMode.asDriverOnErrorJustComplete(), isVideoValid.asDriverOnErrorJustComplete()
+                currentMode.asDriverOnErrorJustComplete(),
+                isVideoValid.asDriverOnErrorJustComplete(),
+                isSoundOn.asDriverOnErrorJustComplete()
             )
             .drive(
                 onNext: { [weak self] args in
@@ -515,7 +557,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-                    let (mode, isVideoValid) = args
+                    let (mode, isVideoValid, isSoundOn) = args
                     
                     self.updateUI(mode: mode, isVideoValid: isVideoValid)
                 }
@@ -550,6 +592,17 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     
                     self?.isVideoBeingLoaded.onNext(false)
                     self?.progressSlider.setRelativeStartDate(startDate)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        
+        isSoundOn
+            .asDriver(onErrorJustReturn: false)
+            .drive(
+                onNext: { [weak self] isSoundOn in
+                    self?.soundToggleButton.isSelected = isSoundOn
+                    self?.realVideoPlayer?.isMuted = !isSoundOn
                 }
             )
             .disposed(by: disposeBag)
@@ -608,6 +661,9 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         ].forEach {
             $0?.isEnabled = isVideoValid
         }
+        
+        print("Режим: \(mode), видео валидно: \(isVideoValid)")
+
         
         fullscreenButton.isHidden = mode == .edit || !isVideoValid
         progressSlider.isHidden = mode == .edit // || !isVideoValid
@@ -857,6 +913,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
             .drive(
                 onNext: { [weak self] in
                     self?.periodsProxy.onNext($0)
+                    
                 }
             )
             .disposed(by: disposeBag)
@@ -878,6 +935,15 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     self?.updateLoader(isEnabled: isLoading, detailText: nil)
                 }
             )
+            .disposed(by: disposeBag)
+        
+        output.hasSound
+            .drive(onNext: { [weak self] hasSound in
+                DispatchQueue.main.async {
+                    self?.soundToggleButton.isHidden = !hasSound
+                    self?.hasSound = hasSound
+                }
+            })
             .disposed(by: disposeBag)
         
         // При уходе с окна или при сворачивании приложения - паузим плеер

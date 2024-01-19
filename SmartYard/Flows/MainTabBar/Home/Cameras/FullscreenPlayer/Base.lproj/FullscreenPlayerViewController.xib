@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,6 +14,7 @@
                 <outlet property="contentView" destination="eZo-zX-GVn" id="eAK-58-4nI"/>
                 <outlet property="playPauseButton" destination="WpW-eU-D7d" id="aQw-A6-Y7i"/>
                 <outlet property="scrollView" destination="LQe-fM-AoA" id="XkY-1s-XAE"/>
+                <outlet property="soundToggleButton" destination="V1y-Fh-QOD" id="BEr-Ck-ooW"/>
                 <outlet property="view" destination="3P2-35-kG3" id="oN8-By-vOt"/>
             </connections>
         </placeholder>
@@ -41,7 +42,7 @@
                     </connections>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tlq-8g-sRa">
-                    <rect key="frame" x="366" y="72" width="26" height="26"/>
+                    <rect key="frame" x="366" y="76" width="26" height="26"/>
                     <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="26" id="kEL-Mm-Zpa"/>
@@ -59,7 +60,7 @@
                     </connections>
                 </button>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WpW-eU-D7d">
-                    <rect key="frame" x="174" y="414" width="64" height="64"/>
+                    <rect key="frame" x="173" y="414" width="64" height="64"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
                     <color key="tintColor" systemColor="systemGray5Color"/>
@@ -75,15 +76,25 @@
                         <action selector="tapPlayPauseButton" destination="-1" eventType="touchUpInside" id="MIL-nY-QAg"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V1y-Fh-QOD">
+                    <rect key="frame" x="22" y="76" width="22" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="w3M-ff-GOo"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="SoundOff"/>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="eWg-9w-Um7"/>
             <gestureRecognizers/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="LQe-fM-AoA" secondAttribute="trailing" id="4QL-uf-1Vd"/>
+                <constraint firstItem="V1y-Fh-QOD" firstAttribute="leading" secondItem="eWg-9w-Um7" secondAttribute="leading" constant="22" id="EmP-mx-QFg"/>
                 <constraint firstItem="LQe-fM-AoA" firstAttribute="top" secondItem="3P2-35-kG3" secondAttribute="top" id="MEU-7l-TN6"/>
                 <constraint firstItem="Tlq-8g-sRa" firstAttribute="top" secondItem="eWg-9w-Um7" secondAttribute="top" constant="28" id="dLs-xa-cnz"/>
                 <constraint firstItem="LQe-fM-AoA" firstAttribute="leading" secondItem="3P2-35-kG3" secondAttribute="leading" id="jn8-l1-by2"/>
                 <constraint firstAttribute="bottom" secondItem="LQe-fM-AoA" secondAttribute="bottom" id="kdM-05-jIo"/>
+                <constraint firstItem="V1y-Fh-QOD" firstAttribute="top" secondItem="eWg-9w-Um7" secondAttribute="top" constant="28" id="n42-uh-8uK"/>
                 <constraint firstItem="eWg-9w-Um7" firstAttribute="trailing" secondItem="Tlq-8g-sRa" secondAttribute="trailing" constant="22" id="w2n-bl-oIJ"/>
             </constraints>
             <connections>
@@ -104,13 +115,14 @@
     </objects>
     <resources>
         <image name="CloseButtonIcon" width="24" height="24"/>
+        <image name="SoundOff" width="22" height="23"/>
         <image name="pauseButton" width="256" height="256"/>
         <image name="playButton" width="256" height="256"/>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29803921570000003" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

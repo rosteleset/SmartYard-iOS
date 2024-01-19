@@ -28,15 +28,21 @@ class FullscreenPlayerViewController: UIViewController {
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var playPauseButton: UIButton!
+    @IBOutlet private weak var soundToggleButton: UIButton!
     
     private var controls: [UIView] = []
     private var timer: Timer?
     
+    private let isSoundOn = BehaviorSubject<Bool>(value: false)
+    private var hasSound: Bool
+    
     private var disposeBag = DisposeBag()
     
-    init(playedVideoType: PlayedVideoType, preferredPlaybackRate: Float) {
+    init(playedVideoType: PlayedVideoType, preferredPlaybackRate: Float, hasSound: Bool, isSoundOn: Bool) {
         self.playedVideoType = playedVideoType
         self.preferredPlaybackRate = preferredPlaybackRate
+        self.hasSound = hasSound
+        self.isSoundOn.onNext(isSoundOn)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -191,6 +197,8 @@ class FullscreenPlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureSoundToggleButton()
+        bind()
       
         if let playerLayer = playerLayer {
            contentView.layer.insertSublayer(playerLayer, at: 0)
@@ -218,8 +226,33 @@ class FullscreenPlayerViewController: UIViewController {
         controls = []
         controls.append(progressSlider)
         controls.append(playPauseButton)
-        
+    
         hideControls()
+    }
+    
+    private func bind() { 
+        isSoundOn
+            .asDriver(onErrorJustReturn: false)
+            .drive(
+                onNext: { [weak self] isSoundOn in
+                    self?.soundToggleButton.isSelected = isSoundOn
+                    self?.playerLayer?.player?.isMuted = !isSoundOn
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+    
+    private func configureSoundToggleButton() {
+        soundToggleButton.setImage(UIImage(named: "SoundOff"), for: .normal)
+        soundToggleButton.setImage(UIImage(named: "SoundOn"), for: .selected)
+        
+        soundToggleButton.touchAreaInsets = UIEdgeInsets(inset: 12)
+        soundToggleButton.isHidden = !hasSound
+        
+        soundToggleButton.rx.tap
+            .withLatestFrom(isSoundOn) { _, isSoundOn in !isSoundOn }
+            .bind(to: isSoundOn)
+            .disposed(by: disposeBag)
     }
     
     func setPlayerLayer(_ playerLayer: AVPlayerLayer) {
@@ -229,6 +262,7 @@ class FullscreenPlayerViewController: UIViewController {
         guard let player = playerLayer.player else {
             return
         }
+    
         
         player.rx
             .observe(Float.self, "rate", options: [.new])

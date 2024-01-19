@@ -25,6 +25,7 @@ class OnlinePageViewController: BaseViewController {
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var cameraContainer: UIView!
     @IBOutlet private weak var fullscreenButton: UIButton!
+    @IBOutlet private weak var soundToggleButton: UIButton!
     @IBOutlet private weak var videoLoadingAnimationView: LottieAnimationView!
     
     private var player: AVPlayer?
@@ -39,10 +40,12 @@ class OnlinePageViewController: BaseViewController {
     
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
     private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: false)
+    private let isSoundOn = BehaviorSubject<Bool>(value: false)
     
     weak var delegate: OnlinePageViewControllerDelegate?
     
     private var isInFullscreen = false
+    private var hasSound = false
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -69,6 +72,7 @@ class OnlinePageViewController: BaseViewController {
         
         configurePlayer()
         configureFullscreenButton()
+        configureSoundToggleButton()
         configureCollectionView()
         bind()
     }
@@ -97,6 +101,7 @@ class OnlinePageViewController: BaseViewController {
             )
 
             self?.reloadCameraIfNeeded(selectedIndexPath: indexPath)
+            self?.updateSoundButtonVisibility(for: selectedCamera.hasSound)
         }
     }
     
@@ -120,6 +125,16 @@ class OnlinePageViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] isVideoValid in
                     self?.fullscreenButton.isHidden = !isVideoValid
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        isSoundOn
+            .asDriver(onErrorJustReturn: false)
+            .drive(
+                onNext: { [weak self] isSoundOn in
+                    self?.soundToggleButton.isSelected = isSoundOn
+                    self?.player?.isMuted = !isSoundOn
                 }
             )
             .disposed(by: disposeBag)
@@ -172,6 +187,7 @@ class OnlinePageViewController: BaseViewController {
     // swiftlint:disable:next function_body_length
     private func configurePlayer() {
         let player = AVPlayer()
+        player.isMuted = true
         self.player = player
         
         if playerLayer != nil {
@@ -258,6 +274,22 @@ class OnlinePageViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    private func configureSoundToggleButton() {
+        soundToggleButton.setImage(UIImage(named: "SoundOff"), for: .normal)
+        soundToggleButton.setImage(UIImage(named: "SoundOn"), for: .selected)
+        
+        soundToggleButton.touchAreaInsets = UIEdgeInsets(inset: 12)
+        
+        soundToggleButton.rx.tap
+            .withLatestFrom(isSoundOn) { _, isSoundOn in !isSoundOn }
+            .bind(to: isSoundOn)
+            .disposed(by: disposeBag)
+    }
+    
+    private func updateSoundButtonVisibility(for hasSound: Bool) {
+        soundToggleButton.isHidden = !hasSound
+    }
+    
     private func configureFullscreenButton() {
         fullscreenButton.setImage(UIImage(named: "FullScreen20"), for: .normal)
         fullscreenButton.setImage(UIImage(named: "FullScreen20")?.darkened(), for: [.normal, .highlighted])
@@ -270,26 +302,67 @@ class OnlinePageViewController: BaseViewController {
             .asDriver()
             .drive(
                 onNext: { [weak self] in
-                    guard let playerLayer = self?.playerLayer else {
+                    guard let self = self,
+                          let playerLayer = self.playerLayer else {
                         return
                     }
                     
                     playerLayer.removeFromSuperlayer()
                     
+                    var shouldTurnOnSound = false
+                    do {
+                        shouldTurnOnSound = try isSoundOn.value() 
+                    } catch {
+                        print("Error getting isSoundOn value: \(error)")
+                    }
+                   
                     let fullscreenVc = FullscreenPlayerViewController(
                         playedVideoType: .online,
-                        preferredPlaybackRate: 1
+                        preferredPlaybackRate: 1,
+                        hasSound: hasSound,
+                        isSoundOn: shouldTurnOnSound
                     )
                     
                     fullscreenVc.modalPresentationStyle = .overFullScreen
                     fullscreenVc.modalTransitionStyle = .crossDissolve
                     fullscreenVc.setPlayerLayer(playerLayer)
                     
-                    self?.isInFullscreen = true
+                    self.isSoundOn.onNext(false)
+                    self.isInFullscreen = true
                     
-                    self?.present(fullscreenVc, animated: true) {
-                        self?.player?.play()
+                    self.present(fullscreenVc, animated: true) {
+                        self.player?.play()
                     }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx
+            .notification(.onlineFullscreenModeClosed)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    guard let self = self, let playerLayer = self.playerLayer else {
+                        return
+                    }
+
+                    var shouldTurnOnSound = true
+                    do {
+                        shouldTurnOnSound = try !(self.isSoundOn.value() || self.player?.isMuted ?? true)
+                    } catch {
+                        print("Error getting isSoundOn value: \(error)")
+                    }
+                    
+                    playerLayer.removeFromSuperlayer()
+                    self.cameraContainer.layer.insertSublayer(playerLayer, at: 0)
+
+                    playerLayer.frame = self.cameraContainer.bounds
+                    playerLayer.removeAllAnimations()
+
+                    self.player?.play()
+                    self.isInFullscreen = false
+
+                    self.isSoundOn.onNext(shouldTurnOnSound)
                 }
             )
             .disposed(by: disposeBag)
@@ -400,6 +473,9 @@ class OnlinePageViewController: BaseViewController {
         loadingAsset?.cancelLoading()
         loadingAsset = nil
         
+        // При переключении между камерами звук выключается
+        isSoundOn.onNext(false)
+        
         isVideoBeingLoaded.onNext(true)
         
         camera.updateURLAndExec { [weak self] urlString in
@@ -407,6 +483,8 @@ class OnlinePageViewController: BaseViewController {
                 self?.isVideoBeingLoaded.onNext(false)
                 return
             }
+            self.updateSoundButtonVisibility(for: camera.hasSound)
+            self.hasSound = camera.hasSound
             self.startToPlay(url)
         }
         

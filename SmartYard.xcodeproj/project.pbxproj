@@ -4540,12 +4540,12 @@
 				84F840CF23E07DA5008DBE50 /* Frameworks */,
 				E988DABC2444AB1D00C66371 /* Setup GoogleService-Info.plist */,
 				84F840D023E07DA5008DBE50 /* Resources */,
-				84B9ECA023E08DAD00979C39 /* Crashlytics */,
 				84B9EC9F23E08D7500979C39 /* SwiftLint */,
 				84EEBCA823F55A9B00C9557F /* Embed App Extensions */,
 				E97EAFD9243E048900D81243 /* Embed Frameworks */,
 				3AF20E9F27102745000AA0E4 /* MapBox Access Token Injection Run Script */,
 				4DA6BFC05CFF96F33420E667 /* [CP] Embed Pods Frameworks */,
+				84B9ECA023E08DAD00979C39 /* Crashlytics */,
 			);
 			buildRules = (
 			);

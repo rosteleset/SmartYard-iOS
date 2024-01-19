@@ -54,6 +54,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let activityVideoTracker = ActivityTracker()
         
+        
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
@@ -246,8 +247,12 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     imageType: imageType
                 )
             }
+        let hasSound = BehaviorSubject<Bool>(value: self.camera.hasSound )
         let rangeBoundsSubject = BehaviorSubject<(lower: Date, upper: Date)?>(value: nil)
         let periodsSubject = BehaviorSubject<[ArchiveVideoPreviewPeriod]>(value: [])
+        
+        print(#line, hasSound)
+        print(#line, hasSound)
         
         camera.requestRanges(for: date, ranges: ranges) { [weak self] ranges in
             guard let self = self else { return }
@@ -316,7 +321,8 @@ class PlayArchiveVideoViewModel: BaseViewModel {
             videoData: videoData,
             screenshotURL: screenshotURL,
             isLoading: activityTracker.asDriver(),
-            isVideoLoading: activityVideoTracker.asDriver()
+            isVideoLoading: activityVideoTracker.asDriver(),
+            hasSound: hasSound.asDriverOnErrorJustComplete()
         )
     }
     
@@ -342,6 +348,7 @@ extension PlayArchiveVideoViewModel {
         let screenshotURL: Driver<(url: URL?, imageType: SYImageType)>
         let isLoading: Driver<Bool>
         let isVideoLoading: Driver<Bool>
+        let hasSound: Driver<Bool>
     }
     
 }

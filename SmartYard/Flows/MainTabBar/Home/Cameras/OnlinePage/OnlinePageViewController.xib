@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,6 +16,7 @@
                 <outlet property="collectionViewHeightConstraint" destination="oSU-TK-D9Z" id="ajc-Xp-GIS"/>
                 <outlet property="fullscreenButton" destination="2iH-Th-533" id="Euh-ru-yCS"/>
                 <outlet property="scrollView" destination="BCu-Kg-FKQ" id="TyJ-Po-4DJ"/>
+                <outlet property="soundToggleButton" destination="DxH-CH-V7S" id="IhR-L6-Z8l"/>
                 <outlet property="videoLoadingAnimationView" destination="RhJ-w5-BqI" id="00f-U8-dn6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -43,6 +44,14 @@
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <state key="normal" image="FullScreen20"/>
                                         </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DxH-CH-V7S">
+                                            <rect key="frame" x="20" y="202" width="22" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="p3R-BS-JM0"/>
+                                            </constraints>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="SoundOff"/>
+                                        </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RhJ-w5-BqI" customClass="LottieAnimationView" customModule="Lottie">
                                             <rect key="frame" x="139" y="81" width="80" height="80"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -56,9 +65,12 @@
                                     <constraints>
                                         <constraint firstItem="RhJ-w5-BqI" firstAttribute="centerX" secondItem="JPd-UE-6AD" secondAttribute="centerX" id="9jG-Wv-o3x"/>
                                         <constraint firstAttribute="width" secondItem="JPd-UE-6AD" secondAttribute="height" multiplier="343:232" id="DNG-x6-Bgs"/>
+                                        <constraint firstAttribute="bottom" secondItem="DxH-CH-V7S" secondAttribute="bottom" constant="20" id="E80-q3-a4S"/>
                                         <constraint firstAttribute="bottom" secondItem="2iH-Th-533" secondAttribute="bottom" constant="20" id="G1L-Jz-1oi"/>
                                         <constraint firstAttribute="trailing" secondItem="2iH-Th-533" secondAttribute="trailing" constant="20" id="Kk8-Ai-IAa"/>
                                         <constraint firstItem="RhJ-w5-BqI" firstAttribute="centerY" secondItem="JPd-UE-6AD" secondAttribute="centerY" id="Lfr-Ku-3gg"/>
+                                        <constraint firstItem="DxH-CH-V7S" firstAttribute="centerY" secondItem="2iH-Th-533" secondAttribute="centerY" id="agB-tc-SSx"/>
+                                        <constraint firstItem="DxH-CH-V7S" firstAttribute="leading" secondItem="JPd-UE-6AD" secondAttribute="leading" constant="20" id="l1u-U2-M5j"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
@@ -113,8 +125,12 @@
             <point key="canvasLocation" x="139" y="129"/>
         </view>
     </objects>
+    <designables>
+        <designable name="RhJ-w5-BqI"/>
+    </designables>
     <resources>
         <image name="FullScreen20" width="20" height="20"/>
+        <image name="SoundOff" width="22" height="23"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

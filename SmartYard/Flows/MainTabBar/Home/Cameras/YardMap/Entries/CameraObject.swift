@@ -21,6 +21,7 @@ struct CameraObject: Equatable {
     let token: String
     let serverType: DVRServerType
     let hlsMode: DVRHLSMode
+    let hasSound: Bool
     
     private var liveURL: String {
         switch self.serverType {
@@ -225,7 +226,8 @@ struct CameraObject: Equatable {
         video: String,
         token: String,
         serverType: DVRServerType? = nil,
-        hlsMode: DVRHLSMode? = nil) {
+        hlsMode: DVRHLSMode? = nil,
+        hasSound: Bool) {
             self.id = id
             self.position = position
             self.cameraNumber = cameraNumber
@@ -234,6 +236,7 @@ struct CameraObject: Equatable {
             self.token = token
             self.serverType = serverType ?? .flussonic
             self.hlsMode = hlsMode ?? .fmp4
+            self.hasSound = hasSound
     }
     
     init(
@@ -241,7 +244,8 @@ struct CameraObject: Equatable {
         url: String,
         token: String,
         serverType: DVRServerType? = nil,
-        hlsMode: DVRHLSMode? = nil
+        hlsMode: DVRHLSMode? = nil,
+        hasSound: Bool?
     ) {
         self.id = id
         self.position = CLLocationCoordinate2D()
@@ -251,5 +255,6 @@ struct CameraObject: Equatable {
         self.token = token
         self.serverType = serverType ?? .flussonic
         self.hlsMode = hlsMode ?? .fmp4
+        self.hasSound = hasSound ?? false
     }
 }

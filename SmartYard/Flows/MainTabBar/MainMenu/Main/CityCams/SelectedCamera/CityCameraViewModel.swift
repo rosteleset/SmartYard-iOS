@@ -42,6 +42,7 @@ class CityCameraViewModel: BaseViewModel {
             .disposed(by: disposeBag)
     }
     
+    
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()

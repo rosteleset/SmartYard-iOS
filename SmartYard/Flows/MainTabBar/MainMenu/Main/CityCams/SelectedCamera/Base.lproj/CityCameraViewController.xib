@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,6 +32,7 @@
                 <outlet property="fullscreenButton" destination="osh-mh-yHh" id="bg2-eJ-x1O"/>
                 <outlet property="gradientView" destination="fq9-SO-WI9" id="lf6-iA-fUD"/>
                 <outlet property="skeletonContainer" destination="WGt-Q3-Sqg" id="wwf-T8-AdL"/>
+                <outlet property="soundToggleButton" destination="YJm-br-86b" id="IlO-VP-HjC"/>
                 <outlet property="videoLoadingAnimationView" destination="h2I-vF-0Vn" id="n4m-ga-I48"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="FFQ-Jh-oTH"/>
                 <outletCollection property="cameraNameConstraints" destination="M3h-N3-Dei" collectionClass="NSMutableArray" id="4Su-1H-bOz"/>
@@ -172,12 +173,22 @@
                                         <constraint firstAttribute="height" constant="80" id="LfG-Xg-bO1"/>
                                     </constraints>
                                 </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YJm-br-86b">
+                                    <rect key="frame" x="20" y="175" width="22" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="YtP-8S-q9i"/>
+                                    </constraints>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="SoundOff"/>
+                                </button>
                             </subviews>
                             <viewLayoutGuide key="safeArea" id="9fS-6u-9ac"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="qGs-Gq-B4s" secondAttribute="height" multiplier="16:9" id="DRJ-zN-9In"/>
                                 <constraint firstAttribute="trailing" secondItem="osh-mh-yHh" secondAttribute="trailing" constant="20" id="I7a-1x-BsD"/>
+                                <constraint firstItem="9fS-6u-9ac" firstAttribute="bottom" secondItem="YJm-br-86b" secondAttribute="bottom" constant="20" id="Me2-mX-gRv"/>
+                                <constraint firstItem="YJm-br-86b" firstAttribute="leading" secondItem="9fS-6u-9ac" secondAttribute="leading" constant="20" id="MqV-yk-QM8"/>
                                 <constraint firstItem="h2I-vF-0Vn" firstAttribute="centerY" secondItem="qGs-Gq-B4s" secondAttribute="centerY" id="Pu3-Zm-f0S"/>
                                 <constraint firstAttribute="bottom" secondItem="osh-mh-yHh" secondAttribute="bottom" constant="20" id="RwP-b4-NfX"/>
                                 <constraint firstItem="h2I-vF-0Vn" firstAttribute="centerX" secondItem="qGs-Gq-B4s" secondAttribute="centerX" id="iAS-Kd-dc2"/>
@@ -255,9 +266,13 @@
             <point key="canvasLocation" x="137.68115942028987" y="126.5625"/>
         </view>
     </objects>
+    <designables>
+        <designable name="h2I-vF-0Vn"/>
+    </designables>
     <resources>
         <image name="FullScreen20" width="20" height="20"/>
         <image name="MainBackground" width="375" height="812"/>
+        <image name="SoundOff" width="22" height="23"/>
         <namedColor name="blue">
             <color red="0.16078431372549021" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

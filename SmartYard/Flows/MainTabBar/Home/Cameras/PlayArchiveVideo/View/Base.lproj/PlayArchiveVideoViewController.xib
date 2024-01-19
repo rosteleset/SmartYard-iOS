@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -45,6 +45,7 @@
                 <outlet property="selectFragmentButton" destination="wkd-4A-ePf" id="g5B-Zw-XrB"/>
                 <outlet property="shiftTimelineBackwardButton" destination="CPg-RE-9lw" id="ruA-dh-Lhu"/>
                 <outlet property="shiftTimelineForwardButton" destination="eey-Hz-Pq4" id="JQa-tR-LNq"/>
+                <outlet property="soundToggleButton" destination="IAW-UT-jVM" id="4pk-JG-1U6"/>
                 <outlet property="videoLoadingAnimationView" destination="lT9-Mp-zMH" id="32Z-8S-g9p"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outletCollection property="sliderConstraints" destination="lwW-yC-7QN" collectionClass="NSMutableArray" id="Mxd-cx-pzm"/>
@@ -94,6 +95,14 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbA-7j-j0f" userLabel="RealVideoContainer">
                                     <rect key="frame" x="0.0" y="0.0" width="358" height="242"/>
                                     <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAW-UT-jVM">
+                                            <rect key="frame" x="12" y="12" width="22" height="11"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="11" id="6cj-Qw-qFs"/>
+                                            </constraints>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="SoundOff"/>
+                                        </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTb-NK-D3v">
                                             <rect key="frame" x="330" y="12" width="16" height="11"/>
                                             <constraints>
@@ -122,10 +131,13 @@
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstItem="lT9-Mp-zMH" firstAttribute="centerY" secondItem="gbA-7j-j0f" secondAttribute="centerY" id="HC6-OG-DP2"/>
+                                        <constraint firstItem="IAW-UT-jVM" firstAttribute="top" secondItem="gbA-7j-j0f" secondAttribute="top" constant="12" id="T5j-c5-x3C"/>
                                         <constraint firstItem="lT9-Mp-zMH" firstAttribute="centerX" secondItem="gbA-7j-j0f" secondAttribute="centerX" id="ccR-su-Jdt"/>
                                         <constraint firstAttribute="trailing" secondItem="sTb-NK-D3v" secondAttribute="trailing" constant="12" id="fee-1l-zlX"/>
                                         <constraint firstItem="sTb-NK-D3v" firstAttribute="top" secondItem="gbA-7j-j0f" secondAttribute="top" constant="12" id="gLN-uh-jpR"/>
                                         <constraint firstAttribute="leading" secondItem="gTL-Y7-3LT" secondAttribute="leading" constant="-12" identifier="progressSliderLeading" id="lwW-yC-7QN"/>
+                                        <constraint firstItem="IAW-UT-jVM" firstAttribute="centerY" secondItem="sTb-NK-D3v" secondAttribute="centerY" id="mJT-gC-2le"/>
+                                        <constraint firstItem="IAW-UT-jVM" firstAttribute="leading" secondItem="gbA-7j-j0f" secondAttribute="leading" constant="12" id="o5j-Bz-UkA"/>
                                         <constraint firstAttribute="bottom" secondItem="gTL-Y7-3LT" secondAttribute="bottom" constant="16" identifier="progressSliderBottom" id="oo0-8N-jyU"/>
                                         <constraint firstAttribute="trailing" secondItem="gTL-Y7-3LT" secondAttribute="trailing" constant="12" identifier="progressSliderTrailing" id="qxt-Od-ra8"/>
                                     </constraints>
@@ -195,7 +207,7 @@
                                     <rect key="frame" x="40" y="62" width="310" height="68"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UDc-4s-ZnY">
-                                            <rect key="frame" x="20" y="16" width="39" height="36"/>
+                                            <rect key="frame" x="20" y="15" width="34" height="38"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="20"/>
                                             <state key="normal" title="0.5x"/>
                                         </button>
@@ -207,7 +219,7 @@
                                             </constraints>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fr5-Hf-wxY">
-                                            <rect key="frame" x="251" y="16" width="39" height="36"/>
+                                            <rect key="frame" x="256" y="15" width="34" height="38"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="20"/>
                                             <state key="normal" title="1.5x"/>
                                         </button>
@@ -362,6 +374,7 @@
         <image name="FastForward" width="47" height="47"/>
         <image name="Fullscreen" width="16" height="11"/>
         <image name="MainBackground" width="375" height="812"/>
+        <image name="SoundOff" width="22" height="23"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

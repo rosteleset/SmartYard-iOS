@@ -79,7 +79,8 @@ class CityMapViewModel: BaseViewModel {
                         video: element.video,
                         token: element.token,
                         serverType: element.serverType,
-                        hlsMode: element.hlsMode
+                        hlsMode: element.hlsMode,
+                        hasSound: element.hasSound
                     )
                 }
             }

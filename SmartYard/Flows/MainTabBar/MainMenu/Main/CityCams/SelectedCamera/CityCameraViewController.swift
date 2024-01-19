@@ -37,6 +37,7 @@ class CityCameraViewController: BaseViewController {
     @IBOutlet private weak var button: UIButton!
     @IBOutlet private weak var gradientView: UIView!
     @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet private weak var soundToggleButton: UIButton!
     
     private var camera: CityCameraObject?
     private var videos: [YouTubeVideo]?
@@ -51,6 +52,9 @@ class CityCameraViewController: BaseViewController {
     private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: false)
     private let videoTrigger = PublishSubject<String>()
     private let requestRecordTrigger = PublishSubject<Void>()
+    private let isSoundOn = BehaviorSubject<Bool>(value: false)
+    
+    private var hasSound = false
     
     private var refreshControl = UIRefreshControl()
     
@@ -160,6 +164,16 @@ class CityCameraViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] isVideoValid in
                     self?.fullscreenButton.isHidden = !isVideoValid
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        isSoundOn
+            .asDriver(onErrorJustReturn: false)
+            .drive(
+                onNext: { [weak self] isSoundOn in
+                    self?.soundToggleButton.isSelected = isSoundOn
+                    self?.player?.isMuted = !isSoundOn
                 }
             )
             .disposed(by: disposeBag)
@@ -319,8 +333,8 @@ class CityCameraViewController: BaseViewController {
         configureView()
         configurePlayer()
         configureFullscreenButton()
+        configureSoundToggleButton()
         loadVideo()
-        
     }
     
     deinit {
@@ -370,6 +384,7 @@ class CityCameraViewController: BaseViewController {
     
     private func configurePlayer() {
         let player = AVPlayer()
+        player.isMuted = true
         self.player = player
         
         if playerLayer != nil {
@@ -400,12 +415,21 @@ class CityCameraViewController: BaseViewController {
                     guard let self = self, let playerLayer = self.playerLayer else {
                         return
                     }
+                    
+                    var shouldTurnOnSound = true
+                    do {
+                        shouldTurnOnSound = try !(self.isSoundOn.value() || self.player?.isMuted ?? true)
+                    } catch {
+                        print("Error getting isSoundOn value: \(error)")
+                    }
+                    
                     playerLayer.removeFromSuperlayer()
                     self.cameraContainer.layer.insertSublayer(playerLayer, at: 0)
                     
                     playerLayer.frame = self.cameraContainer.bounds
                     playerLayer.removeAllAnimations()
                     
+                    self.isSoundOn.onNext(shouldTurnOnSound)
                     self.player?.play()
                     
                     // странный баг на iOS 12.4
@@ -446,6 +470,22 @@ class CityCameraViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    private func configureSoundToggleButton() {
+        soundToggleButton.setImage(UIImage(named: "SoundOff"), for: .normal)
+        soundToggleButton.setImage(UIImage(named: "SoundOn"), for: .selected)
+        
+        soundToggleButton.touchAreaInsets = UIEdgeInsets(inset: 12)
+        
+        soundToggleButton.rx.tap
+            .withLatestFrom(isSoundOn) { _, isSoundOn in !isSoundOn }
+            .bind(to: isSoundOn)
+            .disposed(by: disposeBag)
+    }
+    
+    private func updateSoundButtonVisibility(for hasSound: Bool) {
+        soundToggleButton.isHidden = !hasSound
+    }
+    
     private func configureFullscreenButton() {
         fullscreenButton.setImage(UIImage(named: "FullScreen20"), for: .normal)
         fullscreenButton.setImage(UIImage(named: "FullScreen20")?.darkened(), for: [.normal, .highlighted])
@@ -458,23 +498,33 @@ class CityCameraViewController: BaseViewController {
             .asDriver()
             .drive(
                 onNext: { [weak self] in
-                    guard let playerLayer = self?.playerLayer else {
+                    guard let self = self,
+                          let playerLayer = self.playerLayer else {
                         return
                     }
                     
                     playerLayer.removeFromSuperlayer()
                     
+                    var shouldTurnOnSound = false
+                    do {
+                        shouldTurnOnSound = try isSoundOn.value()
+                    } catch {
+                        print("Error getting isSoundOn value: \(error)")
+                    }
+                    
                     let fullscreenVc = FullscreenPlayerViewController(
                         playedVideoType: .online,
-                        preferredPlaybackRate: 1
+                        preferredPlaybackRate: 1, 
+                        hasSound: self.hasSound, 
+                        isSoundOn: shouldTurnOnSound
                     )
                     
                     fullscreenVc.modalPresentationStyle = .overFullScreen
                     fullscreenVc.modalTransitionStyle = .crossDissolve
                     fullscreenVc.setPlayerLayer(playerLayer)
 
-                    self?.present(fullscreenVc, animated: true) {
-                        self?.player?.play()
+                    self.present(fullscreenVc, animated: true) {
+                        self.player?.play()
                     }
                 }
             )
@@ -547,7 +597,8 @@ class CityCameraViewController: BaseViewController {
             guard let self = self, let url = URL(string: urlString) else {
                 return
             }
-            
+            self.updateSoundButtonVisibility(for: camera.hasSound)
+            self.hasSound = camera.hasSound
             self.startToPlay(url)
         }
     }

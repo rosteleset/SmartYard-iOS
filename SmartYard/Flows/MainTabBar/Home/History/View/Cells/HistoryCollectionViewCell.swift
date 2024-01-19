@@ -208,7 +208,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         self.event = value
         
         if let camera = camera {
-            self.camera = CameraObject(id: camera.id, url: camera.url, token: camera.token, serverType: camera.serverType, hlsMode: camera.hlsMode)
+            self.camera = CameraObject(id: camera.id, url: camera.url, token: camera.token, serverType: camera.serverType, hlsMode: camera.hlsMode, hasSound: camera.hasSound)
         } else {
             self.camera = nil
         }

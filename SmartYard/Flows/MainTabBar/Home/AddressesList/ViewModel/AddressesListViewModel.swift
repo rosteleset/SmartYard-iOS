@@ -461,7 +461,8 @@ class AddressesListViewModel: BaseViewModel {
                                                 name: element.name,
                                                 video: element.video,
                                                 token: element.token,
-                                                serverType: element.serverType
+                                                serverType: element.serverType, 
+                                                hasSound: element.hasSound
                                             )
                                         }
                                         return result
