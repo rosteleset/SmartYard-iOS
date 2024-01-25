@@ -378,7 +378,7 @@ class IncomingCallViewModel: BaseViewModel {
                 .filter { args in
                     let (_, currentState) = args
                     
-                    return currentState.callState == .callReceived && currentState.previewState == .video
+                    return (currentState.callState == .callReceived || currentState.callState == .callActive) && currentState.previewState == .video
                 }
                 .mapToVoid()
                 .drive(

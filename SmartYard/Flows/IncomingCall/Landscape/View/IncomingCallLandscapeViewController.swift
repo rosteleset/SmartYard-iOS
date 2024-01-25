@@ -219,7 +219,7 @@ class IncomingCallLandscapeViewController: BaseViewController {
         videoPreview.isHidden = !shouldShowVideo || (!SIPHasVideo && webRTCHasVideo)
         webRTCView.isHidden = !shouldShowVideo || (SIPHasVideo && !webRTCHasVideo)
 
-        imageView.isHidden = shouldShowVideo
+        imageView.isHidden = !(state.previewState == .staticImage || (state.previewState == .video && !SIPHasVideo && !webRTCHasVideo))
         imageViewActivityIndicator.isHidden = shouldShowVideo || hasImage
         
         callButton.isHidden = [.callActive, .callFinished].contains(state.callState)
