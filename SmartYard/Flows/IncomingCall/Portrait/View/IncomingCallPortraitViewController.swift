@@ -230,7 +230,7 @@ class IncomingCallPortraitViewController: BaseViewController {
             previewButtonLabel.text = NSLocalizedString("Video", comment: "")
             
         case (.callFinished, _):
-            titleLabel.text = "Call completed"
+            titleLabel.text = NSLocalizedString("Call completed", comment: "")
         }
     }
     
