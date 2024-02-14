@@ -243,7 +243,7 @@ class IncomingCallLandscapeViewController: BaseViewController {
             titleLabel.text = NSLocalizedString("Conversation", comment: "")
             
         case (.callFinished, _):
-            titleLabel.text = "Call completed"
+            titleLabel.text = NSLocalizedString("Call completed", comment: "")
         }
     }
 
