@@ -507,7 +507,7 @@ class CityCameraViewController: BaseViewController {
                     
                     var shouldTurnOnSound = false
                     do {
-                        shouldTurnOnSound = try isSoundOn.value()
+                        shouldTurnOnSound = try self.isSoundOn.value()
                     } catch {
                         print("Error getting isSoundOn value: \(error)")
                     }
