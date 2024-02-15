@@ -311,7 +311,7 @@ class OnlinePageViewController: BaseViewController {
                     
                     var shouldTurnOnSound = false
                     do {
-                        shouldTurnOnSound = try isSoundOn.value() 
+                        shouldTurnOnSound = try self.isSoundOn.value()
                     } catch {
                         print("Error getting isSoundOn value: \(error)")
                     }
@@ -319,7 +319,7 @@ class OnlinePageViewController: BaseViewController {
                     let fullscreenVc = FullscreenPlayerViewController(
                         playedVideoType: .online,
                         preferredPlaybackRate: 1,
-                        hasSound: hasSound,
+                        hasSound: self.hasSound,
                         isSoundOn: shouldTurnOnSound
                     )
                     
