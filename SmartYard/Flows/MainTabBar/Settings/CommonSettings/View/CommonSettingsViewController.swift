@@ -46,6 +46,7 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var callkitContainerView: UIView!
     @IBOutlet private weak var callkitSwitch: UISwitch!
+    @IBOutlet private weak var callkitQuestionMark: UIButton!
     
     @IBOutlet private var collapsedCallsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedCallsBottomConstraint: NSLayoutConstraint!
@@ -193,7 +194,8 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             moneyTrigger: balanceWarningTapGesture.rx.event.asDriver().mapToVoid(),
             callkitTrigger: callkitTapGesture.rx.event.asDriver().mapToVoid(),
             speakerTrigger: speakerTapGesture.rx.event.asDriver().mapToVoid(),
-            logoutTrigger: logoutButton.rx.tap.asDriver()
+            logoutTrigger: logoutButton.rx.tap.asDriver(), 
+            callKitHintTrigger: callkitQuestionMark.rx.tap.asDriver()
         )
         
         let output = viewModel.transform(input)

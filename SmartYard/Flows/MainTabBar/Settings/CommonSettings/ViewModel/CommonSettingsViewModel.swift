@@ -262,6 +262,14 @@ class CommonSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.callKitHintTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.showModal(withContent: .aboutCallKit))
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             name: nameAsString,
             phone: .just(phone),
@@ -286,6 +294,7 @@ extension CommonSettingsViewModel {
         let callkitTrigger: Driver<Void>
         let speakerTrigger: Driver<Void>
         let logoutTrigger: Driver<Void>
+        let callKitHintTrigger: Driver<Void>
     }
     
     struct Output {

@@ -16,10 +16,11 @@ enum ModalContent: String {
     case aboutWhiteRabbit = "WhiteRabbitModalViewContent"
     case aboutWaitingGuests = "WaitingGuestModalViewContent"
     case aboutVideoEvent = "VideoEventModalViewContent"
+    case aboutCallKit = "CallKitModalViewContent"
 }
 
 /// чтобы не делать 100500 классов для очень похожих модальных окошек с крестиком в правом верхнем углу,
-/// я решил сделать один общай класс,
+/// я решил сделать один общий класс,
 /// который в инициализаторе принимает название файла с содержимым
 class ModalViewController: BaseViewController {
     

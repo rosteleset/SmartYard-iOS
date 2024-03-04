@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,6 +25,7 @@
                 <outlet property="balanceWarningSkeleton" destination="YJs-4R-Kis" id="nkd-lo-mgM"/>
                 <outlet property="balanceWarningSwitch" destination="ehC-mw-0P1" id="fVU-3X-roA"/>
                 <outlet property="callkitContainerView" destination="XCs-kk-ZWD" id="rxd-9s-t6R"/>
+                <outlet property="callkitQuestionMark" destination="RNt-Bo-aTz" id="4Qm-mP-Fbe"/>
                 <outlet property="callkitSwitch" destination="ccK-Dt-wlB" id="1Tb-mk-jeB"/>
                 <outlet property="callsContainerView" destination="3WQ-4A-fRg" id="qJ9-M1-q8j"/>
                 <outlet property="callsHeader" destination="Oud-4l-96E" id="cvR-Jj-7U3"/>
@@ -59,23 +60,23 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H0v-1I-nbB" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Q46-UD-KZh"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Общие настройки" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fyv-Y1-rkc">
-                    <rect key="frame" x="16" y="100" width="382" height="40.5"/>
+                    <rect key="frame" x="16" y="104" width="382" height="40.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8MI-1O-eYe" userLabel="GrayBackground">
-                    <rect key="frame" x="0.0" y="194.5" width="414" height="667.5"/>
+                    <rect key="frame" x="0.0" y="198.5" width="414" height="663.5"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gga-je-1mc">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="667.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="663.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pc0-J4-eWa">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="616"/>
@@ -418,7 +419,7 @@
                                                                     <rect key="frame" x="0.0" y="55" width="382" height="55"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Использовать CallKit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUA-3w-YEb">
-                                                                            <rect key="frame" x="24" y="18.5" width="261" height="18"/>
+                                                                            <rect key="frame" x="24" y="18.5" width="127.5" height="18"/>
                                                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                                                             <color key="textColor" red="0.15686274510000001" green="0.1960784314" blue="0.24313725489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -443,6 +444,14 @@
                                                                                 <constraint firstAttribute="height" constant="1" id="t8W-Cj-jGb"/>
                                                                             </constraints>
                                                                         </view>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RNt-Bo-aTz">
+                                                                            <rect key="frame" x="169.5" y="15" width="25" height="25"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="25" id="Tl9-nT-jlp"/>
+                                                                                <constraint firstAttribute="width" constant="25" id="p6u-Ml-dFs"/>
+                                                                            </constraints>
+                                                                            <state key="normal" title="Button" image="QuestionMark"/>
+                                                                        </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
@@ -454,9 +463,10 @@
                                                                         <constraint firstAttribute="trailing" secondItem="ccK-Dt-wlB" secondAttribute="trailing" constant="24" id="NDD-wn-qkf"/>
                                                                         <constraint firstItem="ccK-Dt-wlB" firstAttribute="leading" secondItem="VyV-ny-Hom" secondAttribute="leading" id="ZPF-N0-EdL"/>
                                                                         <constraint firstItem="ccK-Dt-wlB" firstAttribute="top" secondItem="VyV-ny-Hom" secondAttribute="top" id="mHQ-Kd-KDn"/>
-                                                                        <constraint firstItem="ccK-Dt-wlB" firstAttribute="leading" secondItem="XUA-3w-YEb" secondAttribute="trailing" constant="24" id="mP8-Mz-uuy"/>
+                                                                        <constraint firstItem="RNt-Bo-aTz" firstAttribute="leading" secondItem="XUA-3w-YEb" secondAttribute="trailing" constant="18" id="man-hF-gaQ"/>
                                                                         <constraint firstAttribute="height" constant="55" id="qSv-JN-8d4"/>
                                                                         <constraint firstItem="ccK-Dt-wlB" firstAttribute="centerY" secondItem="XCs-kk-ZWD" secondAttribute="centerY" id="rGj-Ul-tWC"/>
+                                                                        <constraint firstItem="RNt-Bo-aTz" firstAttribute="centerY" secondItem="XUA-3w-YEb" secondAttribute="centerY" id="t9i-OA-wno"/>
                                                                         <constraint firstItem="XUA-3w-YEb" firstAttribute="centerY" secondItem="XCs-kk-ZWD" secondAttribute="centerY" id="wXk-Rz-apv"/>
                                                                         <constraint firstItem="cHI-rH-aqS" firstAttribute="leading" secondItem="XCs-kk-ZWD" secondAttribute="leading" id="xEu-YN-ExC"/>
                                                                     </constraints>
@@ -588,6 +598,7 @@
     </objects>
     <resources>
         <image name="MainBackground" width="375" height="812"/>
+        <image name="QuestionMark" width="25" height="25"/>
         <image name="UpArrowIcon" width="13" height="8"/>
         <image name="pencil" width="12" height="12"/>
     </resources>

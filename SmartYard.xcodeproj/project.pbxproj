@@ -592,6 +592,7 @@
 		E9E4273523F55C4400F5D593 /* ServiceUnavailableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89A8423F2F996009692B4 /* ServiceUnavailableViewModel.swift */; };
 		E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4273823F5609E00F5D593 /* ServiceSoonAvailableViewController.swift */; };
 		E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4273C23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift */; };
+		FA991F3A2B95F947000B9C8E /* CallKitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA991F392B95F947000B9C8E /* CallKitModalViewContent.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1535,6 +1536,7 @@
 		E9E4273823F5609E00F5D593 /* ServiceSoonAvailableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSoonAvailableViewController.swift; sourceTree = "<group>"; };
 		E9E4273C23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSoonAvailableViewModel.swift; sourceTree = "<group>"; };
 		EBFF984061C4CB6B6C8AFF21 /* Pods-SmartYardIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.debug.xcconfig"; sourceTree = "<group>"; };
+		FA991F392B95F947000B9C8E /* CallKitModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CallKitModalViewContent.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1646,6 +1648,7 @@
 				3AAB0D3626E2439E00A5AD75 /* WaitingGuestModalViewContent.xib */,
 				3AAB0D3926E3ADA700A5AD75 /* VideoEventModalViewContent.xib */,
 				3A1F213F26E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib */,
+				FA991F392B95F947000B9C8E /* CallKitModalViewContent.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4709,6 +4712,7 @@
 				3A8FC7252B079FA100F90D73 /* EditNameViewController.xib in Resources */,
 				3A8FC76B2B09F89C00F90D73 /* OnboardingViewController.xib in Resources */,
 				3A8FC7162B079E7900F90D73 /* AddressAccessViewController.xib in Resources */,
+				FA991F3A2B95F947000B9C8E /* CallKitModalViewContent.xib in Resources */,
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
 				8477217B2497C329003FCC24 /* OnlinePageViewController.xib in Resources */,
 				3A8FC72F2B09E51200F90D73 /* SettingsViewController.xib in Resources */,
