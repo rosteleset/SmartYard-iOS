@@ -62,7 +62,7 @@ struct APICCTV: Decodable {
         token = try container.decode(String.self, forKey: .token)
         serverType = try? container.decode(DVRServerType.self, forKey: .serverType)
         hlsMode = (try? container.decode(DVRHLSMode.self, forKey: .hlsMode)) ?? .fmp4
-        hasSound = try container.decode(Bool.self, forKey: .hasSound)
+        hasSound = (try? container.decode(Bool.self, forKey: .hasSound)) ?? false
     }
 }
 
