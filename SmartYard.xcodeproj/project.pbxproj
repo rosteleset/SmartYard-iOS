@@ -88,6 +88,8 @@
 		3A7CD55128577CBA003CDDC7 /* APIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD55028577CBA003CDDC7 /* APIProvider.swift */; };
 		3A7CD5552857B75A003CDDC7 /* ProviderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD5542857B75A003CDDC7 /* ProviderCell.swift */; };
 		3A7CD55728588E2A003CDDC7 /* APIProvidersListResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD55628588E2A003CDDC7 /* APIProvidersListResult.swift */; };
+		3A897A5F2BA99A4600A06B15 /* PayRegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A897A5D2BA99A4600A06B15 /* PayRegisterRequest.swift */; };
+		3A897A602BA99A4600A06B15 /* PayRegisterResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A897A5E2BA99A4600A06B15 /* PayRegisterResponseData.swift */; };
 		3A8B94FA25D92E6F007CDD3C /* CityMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */; };
 		3A8B950B25D93098007CDD3C /* CityCamerasMapPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B950A25D93097007CDD3C /* CityCamerasMapPointView.swift */; };
 		3A8B951625D9312D007CDD3C /* CityCameraObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B951525D9312D007CDD3C /* CityCameraObject.swift */; };
@@ -189,10 +191,6 @@
 		3AE65A48264DA4A00093284C /* ScaledHeightImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE65A47264DA4A00093284C /* ScaledHeightImageView.swift */; };
 		3AE65A59264DB1C20093284C /* RemovePersonFaceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE65A50264DAFBE0093284C /* RemovePersonFaceRequest.swift */; };
 		3AE65A5F264DC92D0093284C /* LikePersonFaceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE65A5E264DC9180093284C /* LikePersonFaceRequest.swift */; };
-		3AEB885D27DF4FAD00B19925 /* SberbankRegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB885C27DF4FAD00B19925 /* SberbankRegisterRequest.swift */; };
-		3AEB885F27DF50AA00B19925 /* SberbankRegisterResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB885E27DF50AA00B19925 /* SberbankRegisterResponseData.swift */; };
-		3AEB886227DF510F00B19925 /* SberbankRegisterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB886127DF510F00B19925 /* SberbankRegisterData.swift */; };
-		3AEB886327DF510F00B19925 /* SberbankRegisterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB886027DF510F00B19925 /* SberbankRegisterError.swift */; };
 		3AEB886727E0CEFE00B19925 /* GetExtensionsListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB886627E0CEFE00B19925 /* GetExtensionsListRequest.swift */; };
 		3AEB886927E0CF3400B19925 /* GetExtensionsListResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB886827E0CF3400B19925 /* GetExtensionsListResponseData.swift */; };
 		3AEB886B27E0D01100B19925 /* APIExtensionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEB886A27E0D01100B19925 /* APIExtensionListItem.swift */; };
@@ -759,6 +757,8 @@
 		3A7CD55028577CBA003CDDC7 /* APIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIProvider.swift; sourceTree = "<group>"; };
 		3A7CD5542857B75A003CDDC7 /* ProviderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderCell.swift; sourceTree = "<group>"; };
 		3A7CD55628588E2A003CDDC7 /* APIProvidersListResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIProvidersListResult.swift; sourceTree = "<group>"; };
+		3A897A5D2BA99A4600A06B15 /* PayRegisterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayRegisterRequest.swift; sourceTree = "<group>"; };
+		3A897A5E2BA99A4600A06B15 /* PayRegisterResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayRegisterResponseData.swift; sourceTree = "<group>"; };
 		3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityMapViewController.swift; sourceTree = "<group>"; };
 		3A8B950A25D93097007CDD3C /* CityCamerasMapPointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCamerasMapPointView.swift; sourceTree = "<group>"; };
 		3A8B951525D9312D007CDD3C /* CityCameraObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraObject.swift; sourceTree = "<group>"; };
@@ -1121,10 +1121,6 @@
 		3AE65A47264DA4A00093284C /* ScaledHeightImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledHeightImageView.swift; sourceTree = "<group>"; };
 		3AE65A50264DAFBE0093284C /* RemovePersonFaceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePersonFaceRequest.swift; sourceTree = "<group>"; };
 		3AE65A5E264DC9180093284C /* LikePersonFaceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikePersonFaceRequest.swift; sourceTree = "<group>"; };
-		3AEB885C27DF4FAD00B19925 /* SberbankRegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SberbankRegisterRequest.swift; sourceTree = "<group>"; };
-		3AEB885E27DF50AA00B19925 /* SberbankRegisterResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SberbankRegisterResponseData.swift; sourceTree = "<group>"; };
-		3AEB886027DF510F00B19925 /* SberbankRegisterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SberbankRegisterError.swift; sourceTree = "<group>"; };
-		3AEB886127DF510F00B19925 /* SberbankRegisterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SberbankRegisterData.swift; sourceTree = "<group>"; };
 		3AEB886627E0CEFE00B19925 /* GetExtensionsListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetExtensionsListRequest.swift; sourceTree = "<group>"; };
 		3AEB886827E0CF3400B19925 /* GetExtensionsListResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetExtensionsListResponseData.swift; sourceTree = "<group>"; };
 		3AEB886A27E0D01100B19925 /* APIExtensionListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIExtensionListItem.swift; sourceTree = "<group>"; };
@@ -1833,6 +1829,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		3A897A5C2BA99A4600A06B15 /* PayRegister */ = {
+			isa = PBXGroup;
+			children = (
+				3A897A5D2BA99A4600A06B15 /* PayRegisterRequest.swift */,
+				3A897A5E2BA99A4600A06B15 /* PayRegisterResponseData.swift */,
+			);
+			path = PayRegister;
+			sourceTree = "<group>";
+		};
 		3A8B951A25D93132007CDD3C /* Entries */ = {
 			isa = PBXGroup;
 			children = (
@@ -2006,17 +2011,6 @@
 				3AE65A5E264DC9180093284C /* LikePersonFaceRequest.swift */,
 			);
 			path = LikePersonFace;
-			sourceTree = "<group>";
-		};
-		3AEB885B27DF4F5B00B19925 /* SberbankRegister */ = {
-			isa = PBXGroup;
-			children = (
-				3AEB885C27DF4FAD00B19925 /* SberbankRegisterRequest.swift */,
-				3AEB885E27DF50AA00B19925 /* SberbankRegisterResponseData.swift */,
-				3AEB886027DF510F00B19925 /* SberbankRegisterError.swift */,
-				3AEB886127DF510F00B19925 /* SberbankRegisterData.swift */,
-			);
-			path = SberbankRegister;
 			sourceTree = "<group>";
 		};
 		3AEB886427E0CEBF00B19925 /* Extensions */ = {
@@ -2669,9 +2663,9 @@
 		846DC6CC24B33DE900A11914 /* Payment */ = {
 			isa = PBXGroup;
 			children = (
+				3A897A5C2BA99A4600A06B15 /* PayRegister */,
 				846DC6CD24B33DE900A11914 /* APIWrapper+Payment.swift */,
 				846DC6CE24B33DE900A11914 /* SberbankPayProcess */,
-				3AEB885B27DF4F5B00B19925 /* SberbankRegister */,
 				846DC6D324B33DE900A11914 /* PayPrepare */,
 				846DC6D624B33DE900A11914 /* PayProcess */,
 			);
@@ -5120,6 +5114,7 @@
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
 				846DC6C024B33DC600A11914 /* PaymentPopupViewModel.swift in Sources */,
 				3AD968DC25E976C5000EEB4E /* SmartYardDropDownTextField.swift in Sources */,
+				3A897A5F2BA99A4600A06B15 /* PayRegisterRequest.swift in Sources */,
 				E92EFBE1242A22F2003AF7FE /* APITarget.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				845E9EE024895AE4000CBBC6 /* SimpleVideoEndIndicator.swift in Sources */,
@@ -5136,7 +5131,6 @@
 				E92EFBD3242A22F2003AF7FE /* AccessRequest.swift in Sources */,
 				8477217A2497C329003FCC24 /* OnlinePageViewController.swift in Sources */,
 				E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */,
-				3AEB886227DF510F00B19925 /* SberbankRegisterData.swift in Sources */,
 				3A18347125D9AD8600139385 /* CityCameraViewController.swift in Sources */,
 				3A25BA852891109A00D2401E /* APIOptions.swift in Sources */,
 				E92EFBB7242A22F2003AF7FE /* APIClientName.swift in Sources */,
@@ -5157,7 +5151,6 @@
 				E92EFBDD242A22F2003AF7FE /* GetListConnectResponseData.swift in Sources */,
 				843C38CE242A577C0035BF80 /* InboxResponseData.swift in Sources */,
 				843C38E8242A6E490035BF80 /* QRCodeScanViewModel.swift in Sources */,
-				3AEB885F27DF50AA00B19925 /* SberbankRegisterResponseData.swift in Sources */,
 				3A40A4C427672872004E53A7 /* PaymentsListAccount.swift in Sources */,
 				844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */,
 				E94057F423F56BF800623746 /* IssueDeliveryType.swift in Sources */,
@@ -5255,7 +5248,6 @@
 				849FF08B24CEBFD900C234BC /* IncomingCallLandscapeViewController.swift in Sources */,
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
 				E92EFBEA242A24EB003AF7FE /* APIRestoreData.swift in Sources */,
-				3AEB885D27DF4FAD00B19925 /* SberbankRegisterRequest.swift in Sources */,
 				3A3B8BBA25A5E8DA00BFB72E /* MainMenuItem.swift in Sources */,
 				E92EFBC0242A22F2003AF7FE /* GetServicesResponseData.swift in Sources */,
 				846DC6D924B33DEA00A11914 /* APIWrapper+Payment.swift in Sources */,
@@ -5274,6 +5266,7 @@
 				843C38D2242A577C0035BF80 /* APIWrapper+Inbox.swift in Sources */,
 				846DC6DE24B33DEA00A11914 /* PayPrepareRequest.swift in Sources */,
 				E9C0E811247282DE001CE018 /* OnboardingPage.swift in Sources */,
+				3A897A602BA99A4600A06B15 /* PayRegisterResponseData.swift in Sources */,
 				E92EFBD7242A22F2003AF7FE /* GetSettingsListResponseData.swift in Sources */,
 				E92EFBB9242A22F2003AF7FE /* GetStreetsResponseData.swift in Sources */,
 				E92EFBE6242A2494003AF7FE /* RestoreResponseData.swift in Sources */,
@@ -5412,7 +5405,6 @@
 				84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */,
 				84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */,
 				846DC6C224B33DC600A11914 /* PaymentsViewModel.swift in Sources */,
-				3AEB886327DF510F00B19925 /* SberbankRegisterError.swift in Sources */,
 				3AEFB45F264C12F0000F37D0 /* FacesSettingsViewModel.swift in Sources */,
 				E92EFBBC242A22F2003AF7FE /* GetAddressResponseData.swift in Sources */,
 				E92EFBA8242A22F2003AF7FE /* APIPaymentsListAddress.swift in Sources */,

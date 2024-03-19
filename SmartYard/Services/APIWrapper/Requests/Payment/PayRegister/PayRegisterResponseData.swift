@@ -1,5 +1,5 @@
 //
-//  SberbankRegisterData.swift
+//  PayRegisterResponseData.swift
 //  SmartYard
 //
 //  Created by Александр Васильев on 14.03.2022.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SberbankRegisterData: Codable {
+struct PayRegisterResponseData: Codable {
     
     let orderId: String
     let formUrl: String
