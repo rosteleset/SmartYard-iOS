@@ -148,14 +148,26 @@ class WebPopupController: BaseViewController, LoaderPresentable {
                     self.configureGestures(with: keyboardHeight)
                     
                     let defaultBottomOffset: CGFloat = -50
+                    let maxHeight = self.backgroundView.frame.height - 100
+                    let webContentHeight = self.webContentHeight ?? 0
                     
-                    let calcOffset = keyboardHeight + defaultBottomOffset
-                    let offset = keyboardHeight == 0 ? defaultBottomOffset : calcOffset
+                    // определяем, насколько мы можем безопасно подвинуть вверх
+                    // наш popup-view, чтобы он не обрезался сверху
+                    let maxOffset = maxHeight - webContentHeight > 0 ? maxHeight - webContentHeight : 0
+                    
+                    // определяем на сколько нам достаточно поднять вверх наш pop-up,
+                    // чтобы он не перекрывался клавиатурой
+                    let desiredOffset = keyboardHeight
+                    
+                    // окончательно определяем допустимое смещение, чтобы оно не превышало максимальное.
+                    let calcOffset = desiredOffset <= maxOffset ? desiredOffset : maxOffset
+                    
+                    let offset = keyboardHeight == 0 ? 0 : calcOffset
                     
                     UIView.animate(
                         withDuration: 0.05,
                         animations: { [weak self] in
-                            self?.animatedViewBottomOffset.constant = offset
+                            self?.animatedViewBottomOffset.constant = offset + defaultBottomOffset
                             self?.view.layoutIfNeeded()
                             
                             if keyboardHeight == 0 {
