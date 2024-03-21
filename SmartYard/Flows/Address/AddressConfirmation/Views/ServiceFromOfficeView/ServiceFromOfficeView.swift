@@ -18,7 +18,7 @@ class ServiceFromOfficeView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var doSoButton: BlueButton!
     @IBOutlet private weak var containerView: UIView!
-    private var shownAnnotationView: UIView?
+    private var shownAnnotation: ViewAnnotation?
     private var mapView: MapView!
     
     override func awakeFromNib() {
@@ -58,34 +58,33 @@ class ServiceFromOfficeView: PMNibLinkableView {
     }
     
     private func showViewAnnotation(with text: String, at coordinate: CLLocationCoordinate2D) {
-        if let shownView = self.shownAnnotationView {
-            mapView.viewAnnotations.remove(shownView)
-            self.shownAnnotationView = nil
+        if let shownAnnotation = self.shownAnnotation {
+            shownAnnotation.remove()
+            self.shownAnnotation = nil
         }
         
         let sampleView = createSampleView(withText: text)
+        let annotation = ViewAnnotation(coordinate: coordinate, view: sampleView)
+        annotation.allowOverlap = false
+        annotation.variableAnchors = [ViewAnnotationAnchorConfig(anchor: .top, offsetY: -14)]
+        mapView.viewAnnotations.add(annotation)
         
-        let options = ViewAnnotationOptions(
-            geometry: Point(coordinate),
-            width: sampleView.bounds.width + 20,
-            height: sampleView.bounds.height,
-            allowOverlap: false,
-            anchor: .top,
-            offsetY: -14
-        )
-        
-        try? mapView.viewAnnotations.add(sampleView, options: options)
-        self.shownAnnotationView = sampleView
+        self.shownAnnotation = annotation
     }
     
     func setOffices(offices: [APIOffice]) {
         let annotationManager = self.mapView.annotations.makePointAnnotationManager()
-        annotationManager.delegate = self
         annotationManager.annotations = []
         
         let officesPoints = offices.map { value -> PointAnnotation in
             var point = PointAnnotation(coordinate: CLLocationCoordinate2D(latitude: value.lat, longitude: value.lon))
-            point.userInfo = ["LabelText": value.address]
+            point.tapHandler = { [weak self] _ in
+                self?.showViewAnnotation(
+                    with: value.address,
+                    at: CLLocationCoordinate2D(latitude: value.lat, longitude: value.lon)
+                )
+                return true
+            }
             point.image = .init(image: UIImage(named: "MapPoint")!, name: "MapPoint")
             point.iconAnchor = .center
             return point
@@ -114,18 +113,6 @@ class ServiceFromOfficeView: PMNibLinkableView {
             self.mapView.mapboxMap.setCamera(to: camera)
         }
     }
-}
-
-extension ServiceFromOfficeView: AnnotationInteractionDelegate {
-    func annotationManager(_ manager: AnnotationManager,
-                           didDetectTappedAnnotations annotations: [Annotation]) {
-        guard let annotation = annotations.first as? PointAnnotation,
-            let labelText = annotation.userInfo?["LabelText"] as? String else {
-            return
-        }
-        showViewAnnotation(with: labelText, at: annotation.point.coordinates)
-    }
-
 }
 
 extension Reactive where Base: ServiceFromOfficeView {

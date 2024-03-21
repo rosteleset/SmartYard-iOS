@@ -67,14 +67,11 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
             point.configure(cameraNumber: camera.cameraNumber) { [weak self] in
                 self?.cameraSelectedTrigger.onNext(camera.cameraNumber)
             }
-            let options = ViewAnnotationOptions(
-                geometry: Point(camera.position),
-                width: 40,
-                height: 40,
-                allowOverlap: true,
-                anchor: .center
-            )
-            try? self.mapView.viewAnnotations.add(point, options: options)
+            
+            let annotation = ViewAnnotation(coordinate: camera.position, view: point)
+            annotation.allowOverlap = true
+            
+            self.mapView.viewAnnotations.add(annotation)
             
             return point
         }
@@ -137,8 +134,6 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
     }
     
     func removeAllAnnotations() {
-        self.annotationViews.forEach {
-            self.mapView.viewAnnotations.remove($0)
-        }
+        self.mapView.viewAnnotations.removeAll()
     }
 }

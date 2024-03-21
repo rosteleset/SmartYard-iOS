@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // MARK: подключаем MapBox
         
-        ResourceOptionsManager.default.resourceOptions.accessToken = Constants.mapBoxPublicKey
+        MapboxOptions.accessToken = Constants.mapBoxPublicKey
         
         appCoordinator.setRoot(for: mainWindow)
         

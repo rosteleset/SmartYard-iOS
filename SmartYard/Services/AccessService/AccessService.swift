@@ -129,7 +129,7 @@ class AccessService {
         case .smsCode(let phoneNumber): return .pinCode(phoneNumber: phoneNumber, isInitial: false, useFlashCall: false)
         case .userName: return .userName(preloadedName: clientName)
         case .main: return .main
-        case .authByOutgoingCall(let phoneNumber, let confirmPhoneNumber):
+        case let .authByOutgoingCall(phoneNumber, confirmPhoneNumber):
             return .authByOutgoingCall(
                 phoneNumber: phoneNumber,
                 confirmPhoneNumber: confirmPhoneNumber

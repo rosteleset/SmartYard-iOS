@@ -3,10 +3,9 @@ excluded:
   - Pods
   - build
 opt_in_rules:
-  - anyobject_protocol
   - array_init
   - attributes
-  - closure_body_length
+#  - closure_body_length
   - closure_end_indentation
   - closure_spacing
   - collection_alignment
@@ -52,6 +51,7 @@ disabled_rules:
   - trailing_newline
   - trailing_whitespace
   - implicit_return
+  - line_length
   - todo # включить перед первым релизом!
 
 identifier_name:

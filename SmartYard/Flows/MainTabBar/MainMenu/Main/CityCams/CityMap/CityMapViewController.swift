@@ -68,7 +68,11 @@ class CityMapViewController: BaseViewController, LoaderPresentable {
         
         let points = cameras.map { camera -> PointAnnotation in
             var point = PointAnnotation(coordinate: camera.position)
-            point.userInfo = ["camera": camera]
+            point.tapHandler = { [weak self] _ -> Bool in
+                self?.cameraSelectedTrigger.onNext(camera.cameraNumber)
+                return true
+            }
+            // point.userInfo = ["camera": camera]
             point.image = .init(
                 image: (UIImage(named: "CityCam")?.withRenderingMode(.alwaysOriginal))!,
                 name: "MapPoint"
@@ -98,7 +102,6 @@ class CityMapViewController: BaseViewController, LoaderPresentable {
                     
                     self.camerasProxy.onNext(cameras)
                     let annotationManager = self.mapView.annotations.makePointAnnotationManager()
-                    annotationManager.delegate = self
                     
                     self.updateAnnotations(annotationManager, cameras)
                     
@@ -135,18 +138,4 @@ class CityMapViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
     }
-}
-
-extension CityMapViewController: AnnotationInteractionDelegate {
-    func annotationManager(
-        _ manager: AnnotationManager,
-        didDetectTappedAnnotations annotations: [Annotation]
-    ) {
-        guard let annotation = annotations.first as? PointAnnotation,
-              let camera = annotation.userInfo?["camera"] as? CityCameraObject else {
-            return
-        }
-        cameraSelectedTrigger.onNext(camera.cameraNumber)
-    }
-
 }
