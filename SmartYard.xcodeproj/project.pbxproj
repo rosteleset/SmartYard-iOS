@@ -4532,6 +4532,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84F840E423E07DA5008DBE50 /* Build configuration list for PBXNativeTarget "SmartYard" */;
 			buildPhases = (
+				3AC0546F2BAD95B400781C82 /* Update banks list for SBP into LSApplicationQueriesSchemes */,
 				698BAC68F20826355F7B9989 /* [CP] Check Pods Manifest.lock */,
 				84F840CE23E07DA5008DBE50 /* Sources */,
 				84F840CF23E07DA5008DBE50 /* Frameworks */,
@@ -4796,6 +4797,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3AC0546F2BAD95B400781C82 /* Update banks list for SBP into LSApplicationQueriesSchemes */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Update banks list for SBP into LSApplicationQueriesSchemes";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# you need make: \"brew install jq\" to use this script\nplutil -remove LSApplicationQueriesSchemes ${PRODUCT_SETTINGS_PATH}\n\nplutil -insert LSApplicationQueriesSchemes -xml '<array/>' ${PRODUCT_SETTINGS_PATH}\n\nlist=$(curl -s 'https://qr.nspk.ru/proxyapp/c2bmembers.json' | jq -r '.dictionary[].schema')\n\nindex=0\n\nfor value in $list;\ndo\n    plutil -insert LSApplicationQueriesSchemes.$index -string $value ${PRODUCT_SETTINGS_PATH}\n    index=$((index+1))\ndone\n";
+		};
 		3AF20E9F27102745000AA0E4 /* MapBox Access Token Injection Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
