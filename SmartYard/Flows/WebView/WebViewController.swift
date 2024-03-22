@@ -132,8 +132,11 @@ class WebViewController: BaseViewController, LoaderPresentable {
             let javaScript = """
 isAppInstalled = function(url, callbackFunc ) {
     if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.isAppInstalledHandler) {
+            window.SmartYardWebExt_service_func = function (url, result) {
+                callbackFunc(url, result);
+            }
             window.webkit.messageHandlers.isAppInstalledHandler.postMessage({
-                    "url": url, "callback": callbackFunc.name
+                    "url": url, "callback": "window.SmartYardWebExt_service_func"
             });
         } };
 """
