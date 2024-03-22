@@ -74,6 +74,7 @@ class WebViewController: BaseViewController, LoaderPresentable {
         webView.configuration.userContentController.removeAllUserScripts()
         webView.configuration.userContentController.removeScriptMessageHandler(forName: "loadingStartedHandler")
         webView.configuration.userContentController.removeScriptMessageHandler(forName: "loadingFinishedHandler")
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: "isAppInstalledHandler")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -121,10 +122,24 @@ class WebViewController: BaseViewController, LoaderPresentable {
     fileprivate func configureUserContentController() {
         webView.configuration.userContentController.add(self, name: "loadingStartedHandler")
         webView.configuration.userContentController.add(self, name: "loadingFinishedHandler")
+        webView.configuration.userContentController.add(self, name: "isAppInstalledHandler")
         
         let javaScript = "bearerToken = function() { return \"" + accessToken + "\"; };"
         let script = WKUserScript(source: javaScript, injectionTime: .atDocumentStart, forMainFrameOnly: false)
         webView.configuration.userContentController.addUserScript(script)
+        
+        _ = {
+            let javaScript = """
+isAppInstalled = function(url, callbackFunc ) {
+    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.isAppInstalledHandler) {
+            window.webkit.messageHandlers.isAppInstalledHandler.postMessage({
+                    "url": url, "callback": callbackFunc.name
+            });
+        } };
+"""
+            let script = WKUserScript(source: javaScript, injectionTime: .atDocumentStart, forMainFrameOnly: false)
+            webView.configuration.userContentController.addUserScript(script)
+        }()
     }
     
     private func configureView() {
@@ -208,9 +223,9 @@ class WebViewController: BaseViewController, LoaderPresentable {
 }
 extension WebViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-//        guard let dict = message.body as? [String: AnyObject] else {
-//            return
-//        }
+        guard let dict = message.body as? [String: AnyObject] else {
+            return
+        }
         
         if message.name == "loadingFinishedHandler" {
             self.updateLoader(isEnabled: false, detailText: nil)
@@ -220,6 +235,20 @@ extension WebViewController: WKScriptMessageHandler {
         if message.name == "loadingStartedHandler" {
             self.updateLoader(isEnabled: true, detailText: nil)
             self.skeletonView.isHidden = false
+        }
+        
+        if message.name == "isAppInstalledHandler" {
+            let url = dict["url"] as? String
+            let callbackName = dict["callback"] as? String
+            guard let url = URL(string: url), let callbackName = callbackName else { return }
+            let result = UIApplication.shared.canOpenURL(url)
+            
+            _ = {
+                let javaScript = """
+                \(callbackName)("\(url)", \(result));
+    """
+                webView.evaluateJavaScript(javaScript)
+            }()
         }
     }
 }
