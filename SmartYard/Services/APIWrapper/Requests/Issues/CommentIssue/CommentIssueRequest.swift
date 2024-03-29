@@ -26,3 +26,22 @@ extension CommentIssueRequest {
     }
     
 }
+
+struct CommentIssueV2Request: Codable {
+    
+    let accessToken: String
+    let key: String
+    let comment: String
+    
+}
+
+extension CommentIssueV2Request {
+    
+    var requestParameters: [String: Any] {
+        return [
+            "key": key,
+            "comment": comment
+        ]
+    }
+    
+}

@@ -21,3 +21,17 @@ extension GetListConnectRequest {
     }
     
 }
+
+struct GetListConnectV2Request {
+    
+    let accessToken: String
+    let forceRefresh: Bool
+}
+
+extension GetListConnectV2Request {
+    
+    var requestParameters: [String: Any] {
+        return [:]
+    }
+    
+}

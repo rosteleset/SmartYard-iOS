@@ -50,6 +50,11 @@ enum APITarget {
     case actionIssue(request: ActionIssueRequest)
     case commentIssue(request: CommentIssueRequest)
     
+    case getListConnectV2(request: GetListConnectV2Request)
+    case createIssueV2(request: CreateIssueV2Request)
+    case actionIssueV2(request: ActionIssueV2Request)
+    case commentIssueV2(request: CommentIssueV2Request)
+    
     case appVersion(request: AppVersionRequest)
     case addMyPhone(request: AddMyPhoneRequest)
     case requestCode(request: RequestCodeRequest)
@@ -136,6 +141,11 @@ extension APITarget: TargetType {
         case .actionIssue: return "issues/action"
         case .commentIssue: return "issues/comment"
             
+        case .getListConnectV2: return "issues/listConnectV2"
+        case .createIssueV2: return "issues/createV2"
+        case .actionIssueV2: return "issues/actionV2"
+        case .commentIssueV2: return "issues/commentV2"
+            
         case .appVersion: return "user/appVersion"
         case .addMyPhone: return "user/addMyPhone"
         case .requestCode: return "user/requestCode"
@@ -161,7 +171,6 @@ extension APITarget: TargetType {
         case .extList: return "ext/list"
         case .ext: return "ext/ext"
         case .options: return "ext/options"
-        
         }
     }
     
@@ -218,6 +227,11 @@ extension APITarget: TargetType {
             case .createIssue(let request): return (request.accessToken, false)
             case .actionIssue(let request): return (request.accessToken, false)
             case .commentIssue(let request): return (request.accessToken, false)
+                
+            case .getListConnectV2(let request): return (request.accessToken, request.forceRefresh)
+            case .createIssueV2(let request): return (request.accessToken, false)
+            case .actionIssueV2(let request): return (request.accessToken, false)
+            case .commentIssueV2(let request): return (request.accessToken, false)
                 
             case .appVersion(let request): return (request.accessToken, false)
             case .addMyPhone(let request): return (request.accessToken, false)
@@ -310,6 +324,11 @@ extension APITarget: TargetType {
         case .createIssue(let request): return request.requestParameters
         case .actionIssue(let request): return request.requestParameters
         case .commentIssue(let request): return request.requestParameters
+            
+        case .getListConnectV2(let request): return request.requestParameters
+        case .createIssueV2(let request): return request.requestParameters
+        case .actionIssueV2(request: let request): return request.requestParameters
+        case .commentIssueV2(request: let request): return request.requestParameters
             
         case .appVersion(let request): return request.requestParameters
         case .addMyPhone(let request): return request.requestParameters

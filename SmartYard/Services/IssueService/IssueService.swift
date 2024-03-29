@@ -23,20 +23,61 @@ class IssueService {
     }
     // экран 37 - Запрос записи
     func sendRequestRecIssue(camera: CityCameraObject, date: Date, duration: Int, notes: String) -> Single<CreateIssueResponseData?> {
-        let issue = Issue(issueType: .requestRec(camera: camera, date: date, duration: duration, notes: notes))
-        return apiWrapper.sendIssue(issue: issue)
+        
+        switch apiWrapper.issueVersion {
+        case .version1:
+            let issue = Issue(
+                issueType: .requestRec(
+                    camera: camera,
+                    date: date,
+                    duration: duration,
+                    notes: notes
+                )
+            )
+            return apiWrapper.sendIssue(issueV1: issue)
+        case .version2:
+            let issue = IssueV2(
+                type: .requestFragment,
+                userName: accessService.clientName?.name,
+                comments: notes,
+                fragmentDate: date.string(withFormat: "d.MM.yyyy"),
+                fragmentDuration: duration.string
+            )
+            return apiWrapper.sendIssue(issueV2: issue)
+        }
     }
     
     // экран 35 - Меню
     func sendCallbackIssue() -> Single<CreateIssueResponseData?> {
-        let issue = Issue(issueType: .orderCallback)
-        return apiWrapper.sendIssue(issue: issue)
+        
+        switch apiWrapper.issueVersion {
+        case .version1:
+            let issue = Issue(issueType: .orderCallback)
+            return apiWrapper.sendIssue(issueV1: issue)
+        case .version2:
+            let issue = IssueV2(
+                type: .requestCallback,
+                userName: accessService.clientName?.name
+            )
+            return apiWrapper.sendIssue(issueV2: issue)
+
+        }
     }
     
     // экран 19 и 34.00
     func sendNothingRememberIssue() -> Single<CreateIssueResponseData?> {
-        let issue = Issue(issueType: .dontRememberAnythingIssue(userInfo: getUserInfo(address: nil, clientId: nil)))
-        return apiWrapper.sendIssue(issue: issue)
+        
+        switch apiWrapper.issueVersion {
+        case .version1:
+            let issue = Issue(issueType: .dontRememberAnythingIssue(userInfo: getUserInfo(address: nil, clientId: nil)))
+            return apiWrapper.sendIssue(issueV1: issue)
+        case .version2:
+            let issue = IssueV2(
+                type: .requestCredentials,
+                userName: accessService.clientName?.name
+            )
+            return apiWrapper.sendIssue(issueV2: issue)
+        }
     }
     
     // экраны 23, 29
@@ -50,15 +91,24 @@ class IssueService {
                 let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
 
-                let issue = Issue(
-                    issueType: .confirmAddressByCourierIssue(
-                        userInfo: self.getUserInfo(address: address, clientId: nil),
-                        lat: latitude,
-                        lon: longitude
+                switch apiWrapper.issueVersion {
+                case .version1:
+                    let issue = Issue(
+                        issueType: .confirmAddressByCourierIssue(
+                            userInfo: self.getUserInfo(address: address, clientId: nil),
+                            lat: latitude,
+                            lon: longitude
+                        )
                     )
-                )
-                
-                return self.apiWrapper.sendIssue(issue: issue)
+                    return apiWrapper.sendIssue(issueV1: issue)
+                case .version2:
+                    let issue = IssueV2(
+                        type: .requestQRCodeCourier,
+                        userName: accessService.clientName?.name,
+                        inputAddress: address
+                    )
+                    return apiWrapper.sendIssue(issueV2: issue)
+                }
             }
     }
     
@@ -73,15 +123,24 @@ class IssueService {
                 let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
                 
-                let issue = Issue(
-                    issueType: .confirmAddressInOfficeIssue(
-                        userInfo: self.getUserInfo(address: address, clientId: nil),
-                        lat: latitude,
-                        lon: longitude
+                switch apiWrapper.issueVersion {
+                case .version1:
+                    let issue = Issue(
+                        issueType: .confirmAddressInOfficeIssue(
+                            userInfo: self.getUserInfo(address: address, clientId: nil),
+                            lat: latitude,
+                            lon: longitude
+                        )
                     )
-                )
-                
-                return self.apiWrapper.sendIssue(issue: issue)
+                    return apiWrapper.sendIssue(issueV1: issue)
+                case .version2:
+                    let issue = IssueV2(
+                        type: .requestQRCodeOffice,
+                        userName: accessService.clientName?.name,
+                        inputAddress: address
+                    )
+                    return apiWrapper.sendIssue(issueV2: issue)
+                }
             }
     }
     
@@ -95,17 +154,27 @@ class IssueService {
                 
                 let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
-                
-                let issue = Issue(
-                    issueType: .deleteAddressIssue(
-                        userInfo: self.getUserInfo(address: address, clientId: nil),
-                        lat: latitude,
-                        lon: longitude,
-                        reason: reason
+                  
+                switch apiWrapper.issueVersion {
+                case .version1:
+                    let issue = Issue(
+                        issueType: .deleteAddressIssue(
+                            userInfo: self.getUserInfo(address: address, clientId: nil),
+                            lat: latitude,
+                            lon: longitude,
+                            reason: reason
+                        )
                     )
-                )
-                
-                return self.apiWrapper.sendIssue(issue: issue)
+                    return apiWrapper.sendIssue(issueV1: issue)
+                case .version2:
+                    let issue = IssueV2(
+                        type: .removeAddress,
+                        userName: accessService.clientName?.name,
+                        inputAddress: address,
+                        comments: reason
+                    )
+                    return apiWrapper.sendIssue(issueV2: issue)
+                }
             }
     }
     
@@ -122,17 +191,27 @@ class IssueService {
                 
                 let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
-                
-                let issue = Issue(
-                    issueType: .servicesUnavailableIssue(
-                        userInfo: self.getUserInfo(address: address, clientId: nil),
-                        serviceNames: serviceNames,
-                        lat: latitude,
-                        lon: longitude
+
+                switch apiWrapper.issueVersion {
+                case .version1:
+                    let issue = Issue(
+                        issueType: .servicesUnavailableIssue(
+                            userInfo: self.getUserInfo(address: address, clientId: nil),
+                            serviceNames: serviceNames,
+                            lat: latitude,
+                            lon: longitude
+                        )
                     )
-                )
-                
-                return self.apiWrapper.sendIssue(issue: issue)
+                    return apiWrapper.sendIssue(issueV1: issue)
+                case .version2:
+                    let issue = IssueV2(
+                        type: .connectServicesNoNetwork,
+                        userName: accessService.clientName?.name,
+                        inputAddress: address,
+                        services: serviceNames.joined(separator: ", ")
+                    )
+                    return apiWrapper.sendIssue(issueV2: issue)
+                }
             }
     }
     
@@ -149,17 +228,27 @@ class IssueService {
                 
                 let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
-                
-                let issue = Issue(
-                    issueType: .comeInOfficeMyselfIssue(
-                        userInfo: self.getUserInfo(address: address, clientId: nil),
-                        lat: latitude,
-                        lon: longitude,
-                        serviceNames: serviceNames
+                                
+                switch apiWrapper.issueVersion {
+                case .version1:
+                    let issue = Issue(
+                        issueType: .comeInOfficeMyselfIssue(
+                            userInfo: self.getUserInfo(address: address, clientId: nil),
+                            lat: latitude,
+                            lon: longitude,
+                            serviceNames: serviceNames
+                        )
                     )
-                )
-                
-                return self.apiWrapper.sendIssue(issue: issue)
+                    return apiWrapper.sendIssue(issueV1: issue)
+                case .version2:
+                    let issue = IssueV2(
+                        type: .connectServicesHasCommon,
+                        userName: accessService.clientName?.name,
+                        inputAddress: address,
+                        services: serviceNames.joined(separator: ", ")
+                    )
+                    return apiWrapper.sendIssue(issueV2: issue)
+                }
             }
     }
     
@@ -176,17 +265,30 @@ class IssueService {
                 
                 let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
-                
-                let issue = Issue(
-                    issueType: .connectOnlyNonHousesServices(
-                        userInfo: self.getUserInfo(address: address, clientId: nil),
-                        lat: latitude,
-                        lon: longitude,
-                        serviceNames: serviceNames
+                                
+                switch apiWrapper.issueVersion {
+                case .version1:
+                    let issue = Issue(
+                        issueType: .connectOnlyNonHousesServices(
+                            userInfo: self.getUserInfo(
+                                address: address,
+                                clientId: nil
+                            ),
+                            lat: latitude,
+                            lon: longitude,
+                            serviceNames: serviceNames
+                        )
                     )
-                )
-                
-                return self.apiWrapper.sendIssue(issue: issue)
+                    return self.apiWrapper.sendIssue(issueV1: issue)
+                case .version2:
+                    let issue = IssueV2(
+                        type: .connectServicesNoCommon,
+                        userName: accessService.clientName?.name,
+                        inputAddress: address,
+                        services: serviceNames.joined(separator: ", ")
+                    )
+                    return apiWrapper.sendIssue(issueV2: issue)
+                }
             }
     }
 

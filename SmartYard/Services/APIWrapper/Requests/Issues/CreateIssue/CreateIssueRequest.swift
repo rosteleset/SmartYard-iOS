@@ -35,3 +35,36 @@ extension CreateIssueRequest {
     }
     
 }
+
+struct CreateIssueV2Request: Codable {
+    
+    let accessToken: String
+    let issue: IssueV2
+    
+    init(accessToken: String, issue: IssueV2) {
+        self.accessToken = accessToken
+        self.issue = issue
+    }
+    
+}
+
+extension CreateIssueV2Request {
+    
+    var requestParameters: [String: Any] {
+        var parameters: [String: Any] = [:]
+        
+        parameters["type"] = issue.type?.rawValue
+        parameters["userName"] = issue.userName
+        parameters["inputAddress"] = issue.inputAddress
+        parameters["services"] = issue.services
+        parameters["comments"] = issue.comments
+        parameters["cameraId"] = issue.cameraId
+        parameters["cameraName"] = issue.cameraName
+        parameters["fragmentDate"] = issue.fragmentDate
+        parameters["fragmentTime"] = issue.fragmentTime
+        parameters["fragmentDuration"] = issue.fragmentDuration
+        
+        return parameters
+    }
+    
+}

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum IssueDeliveryType {
+enum IssueDeliveryType: String, Codable {
     
     case office
     case courier

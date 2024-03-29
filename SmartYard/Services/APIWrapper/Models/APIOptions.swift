@@ -22,6 +22,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let timeZone: String?
     let cctvView: CCTVViewType
     let activeTab: TabNames
+    let issuesVersion: String?
     
     private enum CodingKeys: String, CodingKey {
         case paymentsUrl
@@ -35,6 +36,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case timeZone
         case cctvView
         case activeTab
+        case issuesVersion
     }
     // swiftlint:disable:next cyclomatic_complexity
     init(from decoder: Decoder) throws {
@@ -87,6 +89,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         timeZone = try? container.decode(String.self, forKey: .timeZone)
         cctvView = (try? container.decode(CCTVViewType.self, forKey: .cctvView)) ?? .list
         activeTab = (try? container.decode(TabNames.self, forKey: .activeTab)) ?? .addresses
+        issuesVersion = (try? container.decode(String.self, forKey: .issuesVersion))
     }
     
     init() {
@@ -101,6 +104,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         timeZone = nil
         cctvView = .list
         activeTab = .addresses
+        issuesVersion = nil
     }
     
     struct ChatOptions: Decodable {

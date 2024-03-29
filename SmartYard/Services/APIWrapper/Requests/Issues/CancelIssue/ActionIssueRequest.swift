@@ -33,3 +33,35 @@ extension ActionIssueRequest {
     }
     
 }
+
+struct ActionIssueV2Request: Codable {
+    
+    let accessToken: String
+    let key: String
+    let action: String
+    let deliveryType: String?
+    
+    init(accessToken: String, key: String, action: ActionTypeIssue, deliveryType: IssueDeliveryType? = nil) {
+        self.accessToken = accessToken
+        self.key = key
+        self.action = action.rawValue
+        self.deliveryType = deliveryType?.rawValue
+    }
+    
+}
+
+extension ActionIssueV2Request {
+
+    var requestParameters: [String: Any] {
+        var params: [String: Any] = [
+            "key": key,
+            "action": action
+        ]
+        
+        if let deliveryType = deliveryType {
+            params["customFields"] = deliveryType
+        }
+
+        return params
+    }
+}

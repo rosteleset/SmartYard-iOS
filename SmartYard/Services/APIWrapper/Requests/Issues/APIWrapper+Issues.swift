@@ -12,7 +12,7 @@ import RxCocoa
 
 extension APIWrapper {
     
-    func sendIssue(issue: Issue) -> Single<CreateIssueResponseData?> {
+    func sendIssue(issueV1: Issue? = nil, issueV2: IssueV2? = nil) -> Single<CreateIssueResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -21,12 +21,26 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = CreateIssueRequest(accessToken: accessToken, issue: issue)
-        
-        return provider.rx
-            .request(.createIssue(request: request))
-            .convertNoConnectionError()
-            .mapAsDefaultResponse()
+        switch issueVersion {
+        case .version1:
+            let request = CreateIssueRequest(accessToken: accessToken, issue: issueV1!)
+            
+            return provider.rx
+                .request(.createIssue(request: request))
+                .convertNoConnectionError()
+                .mapAsDefaultResponse()
+        case .version2:
+            let request = CreateIssueV2Request(
+                accessToken: accessToken,
+                issue: issueV2!
+            )
+            
+            return provider.rx
+                .request(.createIssueV2(request: request))
+                .printDebugInfo()
+                .convertNoConnectionError()
+                .mapAsDefaultResponse()
+        }
     }
     
     func getListConnect(forceRefresh: Bool = false) -> Single<GetListConnectResponseData?> {
@@ -41,13 +55,25 @@ extension APIWrapper {
         let forceRefresh = forceUpdateIssues || forceRefresh
         forceUpdateIssues = false
         
-        let request = GetListConnectRequest(accessToken: accessToken, forceRefresh: forceRefresh)
-        
-        return provider.rx
-            .request(.getListConnect(request: request))
-            .convertNoConnectionError()
-            .mapAsEmptyDataInitializableResponse()
-            .mapToOptional()
+        switch issueVersion {
+        case .version1:
+            let request = GetListConnectRequest(accessToken: accessToken, forceRefresh: forceRefresh)
+            
+            return provider.rx
+                .request(.getListConnect(request: request))
+                .convertNoConnectionError()
+                .mapAsEmptyDataInitializableResponse()
+                .mapToOptional()
+        case .version2:
+            let request = GetListConnectV2Request(accessToken: accessToken, forceRefresh: forceRefresh)
+            
+            return provider.rx
+                .request(.getListConnectV2(request: request))
+                .printDebugInfo()
+                .convertNoConnectionError()
+                .mapAsEmptyDataInitializableResponse()
+                .mapToOptional()
+        }
     }
     
     func cancelIssue(key: String) -> Single<Void?> {
@@ -59,18 +85,34 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = ActionIssueRequest(
-            accessToken: accessToken,
-            key: key,
-            action: "Jelly.Закрыть авто",
-            customFields: nil
-        )
-        
-        return provider.rx
-            .request(.actionIssue(request: request))
-            .convertNoConnectionError()
-            .mapAsVoidResponse()
-            .mapToOptional()
+        switch issueVersion {
+        case .version1:
+            let request = ActionIssueRequest(
+                accessToken: accessToken,
+                key: key,
+                action: "Jelly.Закрыть авто",
+                customFields: nil
+            )
+            
+            return provider.rx
+                .request(.actionIssue(request: request))
+                .convertNoConnectionError()
+                .mapAsVoidResponse()
+                .mapToOptional()
+        case .version2:
+            let request = ActionIssueV2Request(
+                accessToken: accessToken, 
+                key: key,
+                action: .close
+            )
+            
+            return provider.rx
+                .request(.actionIssueV2(request: request))
+                .printDebugInfo()
+                .convertNoConnectionError()
+                .mapAsVoidResponse()
+                .mapToOptional()
+        }
     }
     
     func changeDeliveryMethod(newMethod: IssueDeliveryType, key: String) -> Single<Void?> {
@@ -81,19 +123,36 @@ extension APIWrapper {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
-    
-        let request = ActionIssueRequest(
-            accessToken: accessToken,
-            key: key,
-            action: "Jelly.Способ доставки",
-            customFields: newMethod.deliveryCustomFields
-        )
+        
+        switch issueVersion {
+        case .version1:
+            let request = ActionIssueRequest(
+                accessToken: accessToken,
+                key: key,
+                action: "Jelly.Способ доставки",
+                customFields: newMethod.deliveryCustomFields
+            )
 
-        return provider.rx
-            .request(.actionIssue(request: request))
-            .convertNoConnectionError()
-            .mapAsVoidResponse()
-            .mapToOptional()
+            return provider.rx
+                .request(.actionIssue(request: request))
+                .convertNoConnectionError()
+                .mapAsVoidResponse()
+                .mapToOptional()
+        case .version2:
+            let request = ActionIssueV2Request(
+                accessToken: accessToken,
+                key: key,
+                action: .changeQRDeliveryType,
+                deliveryType: newMethod
+            )
+            
+            return provider.rx
+                .request(.actionIssueV2(request: request))
+                .printDebugInfo()
+                .convertNoConnectionError()
+                .mapAsVoidResponse()
+                .mapToOptional()
+        }
     }
     
     func sendCommentAfterDeliveryMethodChanging(newMethod: IssueDeliveryType, key: String) -> Single<Void?> {
@@ -105,13 +164,33 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = CommentIssueRequest(accessToken: accessToken, key: key, comment: newMethod.deliveryComment)
-        
-        return provider.rx
-            .request(.commentIssue(request: request))
-            .convertNoConnectionError()
-            .mapAsVoidResponse()
-            .mapToOptional()
+        switch issueVersion {
+        case .version1:
+            let request = CommentIssueRequest(
+                accessToken: accessToken,
+                key: key,
+                comment: newMethod.deliveryComment
+            )
+            
+            return provider.rx
+                .request(.commentIssue(request: request))
+                .convertNoConnectionError()
+                .mapAsVoidResponse()
+                .mapToOptional()
+        case .version2:
+            let request = CommentIssueV2Request(
+                accessToken: accessToken,
+                key: key,
+                comment: newMethod.deliveryComment
+            )
+            
+            return provider.rx
+                .request(.commentIssueV2(request: request))
+                .printDebugInfo()
+                .convertNoConnectionError()
+                .mapAsVoidResponse()
+                .mapToOptional()
+        }
     }
     
 }

@@ -33,6 +33,7 @@ private let guestAccessModeKey = "guestAccessKey"
 private let timeZoneKey = "timeZoneKey"
 private let cctvViewKey = "cctvViewKey"
 private let activeTabKey = "activeTabKey"
+private let issuesVersionKey = "issuesVersionKey"
 
 // swiftlint:disable:next type_body_length
 class AccessService {
@@ -300,6 +301,15 @@ class AccessService {
         }
     }
     
+    var issuesVersion: String {
+        get {
+            UserDefaults.standard.value(forKey: issuesVersionKey) as? String ?? "2"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: issuesVersionKey)
+        }
+    }
+    
     var phoneLengthWithoutPrefix: Int {
             phonePattern.count(of: "#")
     }
@@ -346,6 +356,7 @@ class AccessService {
         paymentsUrl = ""
         supportPhone = ""
         showChat = false
+        issuesVersion = ""
         chatId = ""
         chatDomain = ""
         chatToken = ""
