@@ -303,7 +303,7 @@ class AccessService {
     
     var issuesVersion: String {
         get {
-            UserDefaults.standard.value(forKey: issuesVersionKey) as? String ?? "2"
+            UserDefaults.standard.value(forKey: issuesVersionKey) as? String ?? "1"
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: issuesVersionKey)

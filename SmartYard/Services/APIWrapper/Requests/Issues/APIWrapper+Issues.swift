@@ -37,7 +37,6 @@ extension APIWrapper {
             
             return provider.rx
                 .request(.createIssueV2(request: request))
-                .printDebugInfo()
                 .convertNoConnectionError()
                 .mapAsDefaultResponse()
         }
@@ -69,7 +68,6 @@ extension APIWrapper {
             
             return provider.rx
                 .request(.getListConnectV2(request: request))
-                .printDebugInfo()
                 .convertNoConnectionError()
                 .mapAsEmptyDataInitializableResponse()
                 .mapToOptional()
@@ -108,7 +106,6 @@ extension APIWrapper {
             
             return provider.rx
                 .request(.actionIssueV2(request: request))
-                .printDebugInfo()
                 .convertNoConnectionError()
                 .mapAsVoidResponse()
                 .mapToOptional()
@@ -148,7 +145,6 @@ extension APIWrapper {
             
             return provider.rx
                 .request(.actionIssueV2(request: request))
-                .printDebugInfo()
                 .convertNoConnectionError()
                 .mapAsVoidResponse()
                 .mapToOptional()
@@ -186,7 +182,6 @@ extension APIWrapper {
             
             return provider.rx
                 .request(.commentIssueV2(request: request))
-                .printDebugInfo()
                 .convertNoConnectionError()
                 .mapAsVoidResponse()
                 .mapToOptional()

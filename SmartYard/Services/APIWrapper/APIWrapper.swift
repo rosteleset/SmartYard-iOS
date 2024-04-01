@@ -148,7 +148,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         .printDebugInfo()
     }
     
-    func printDebugInfo() -> PrimitiveSequence<Trait, Element> {
+    private func printDebugInfo() -> PrimitiveSequence<Trait, Element> {
         flatMap { response in
             if let request = response.request {
                 var bodyIfPresent = ""
