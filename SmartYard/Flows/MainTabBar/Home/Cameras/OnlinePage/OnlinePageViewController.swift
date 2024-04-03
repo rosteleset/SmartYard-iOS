@@ -11,42 +11,30 @@ import RxSwift
 import RxCocoa
 import AVKit
 import TouchAreaInsets
-import Lottie
 
 protocol OnlinePageViewControllerDelegate: AnyObject {
-    
     func onlinePageViewController(_ vc: OnlinePageViewController, didSelectCamera camera: CameraObject)
-    
 }
 
 class OnlinePageViewController: BaseViewController {
+    weak var delegate: OnlinePageViewControllerDelegate?
     
-    @IBOutlet private weak var collectionView: UICollectionView!
-    @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet private weak var cameraContainer: UIView!
-    @IBOutlet private weak var fullscreenButton: UIButton!
-    @IBOutlet private weak var soundToggleButton: UIButton!
-    @IBOutlet private weak var videoLoadingAnimationView: LottieAnimationView!
+    // MARK: - Properties
+    @IBOutlet private weak var camerasCollectionView: UICollectionView!
+    @IBOutlet private weak var pointsCollectionView: UICollectionView!
+    @IBOutlet private weak var camerasFlowLayout: UICollectionViewFlowLayout!
+    @IBOutlet private weak var pointsFlowLayout: UICollectionViewFlowLayout!
     
-    private var player: AVPlayer?
-    private var playerLayer: AVPlayerLayer?
-    
-    @IBOutlet private var collectionViewHeightConstraint: NSLayoutConstraint!
+    private let buttonSize = CGSize(width: 36, height: 36)
     
     private var cameras = [CameraObject]()
     private var selectedCameraNumber: Int?
+    private var focusedCellIndexPath: IndexPath?
+    private var indexOfCellBeforeDragging = 0
+    private var itemWasPointed = false
+    private var itemCountsPerCell: [Int] = []
     
-    private var loadingAsset: AVAsset?
-    
-    private let isVideoValid = BehaviorSubject<Bool>(value: false)
-    private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: false)
-    private let isSoundOn = BehaviorSubject<Bool>(value: false)
-    
-    weak var delegate: OnlinePageViewControllerDelegate?
-    
-    private var isInFullscreen = false
-    private var hasSound = false
-    
+    // MARK: - Initialization
     init() {
         super.init(nibName: nil, bundle: nil)
         
@@ -59,101 +47,102 @@ class OnlinePageViewController: BaseViewController {
     }
     
     deinit {
-        player?.replaceCurrentItem(with: nil)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        if !isInFullscreen {
-            playerLayer?.frame = cameraContainer.bounds
+        if  let focusedCellIndexPath = self.focusedCellIndexPath {
+            let cell = self.camerasCollectionView.cellForItem(at: focusedCellIndexPath) as? CameraCollectionViewCell
+            cell?.player?.replaceCurrentItem(with: nil)
         }
     }
+    
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        configurePlayer()
-        configureFullscreenButton()
-        configureSoundToggleButton()
         configureCollectionView()
         bind()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        try? AVAudioSession.sharedInstance().setCategory(.playback)
+
+    override func viewDidLayoutSubviews() {
+        configureFlowLayoutItemSize(flowLayout: camerasFlowLayout)
+        configureFlowLayoutItemSize(flowLayout: pointsFlowLayout)
     }
     
+    // MARK: - Public Methods
     func setCameras(_ cameras: [CameraObject], selectedCamera: CameraObject?) {
         self.cameras = cameras
         
-        collectionView.reloadData { [weak self] in
+        pointsCollectionView.reloadData()
+        camerasCollectionView.reloadData { [weak self] in
             guard let selectedCamera = selectedCamera,
-                let index = cameras.firstIndex(of: selectedCamera) else {
+                  let index = cameras.firstIndex(of: selectedCamera) else {
                 return
             }
-
-            let indexPath = IndexPath(row: index, section: 0)
-
-            self?.collectionView.selectItem(
+            
+            let rowsPerPage = self?.calculateRowsPerPageForPoints()
+            let itemsPerPage = (rowsPerPage ?? 5) * 5
+            let page = index / itemsPerPage
+            
+            let indexPath = IndexPath(item: page, section: 0)
+            self?.pointsCollectionView.selectItem(
                 at: indexPath,
                 animated: false,
-                scrollPosition: .top
+                scrollPosition: .centeredHorizontally
             )
-
-            self?.reloadCameraIfNeeded(selectedIndexPath: indexPath)
-            self?.updateSoundButtonVisibility(for: selectedCamera.hasSound)
+            
+            let selectedIndexPath = IndexPath(row: index, section: 0)
+            self?.reloadCameraIfNeeded(selectedIndexPath: selectedIndexPath)
         }
     }
     
+    // MARK: - Private Methods
     // swiftlint:disable:next function_body_length
     private func bind() {
-        isVideoBeingLoaded
-            .asDriver(onErrorJustReturn: false)
-            .debounce(.milliseconds(25))
-            .drive(
-                onNext: { [weak self] isLoading in
-                    if !(self?.isInFullscreen ?? false) {
-                        self?.videoLoadingAnimationView.isHidden = !isLoading
-                        isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
-                    }
-                }
-            )
-            .disposed(by: disposeBag)
+        let didEnterBackground = NotificationCenter.default.rx.notification(UIApplication.didEnterBackgroundNotification)
+            .asDriverOnErrorJustComplete()
+            .mapToVoid()
         
-        isVideoValid
-            .asDriver(onErrorJustReturn: false)
-            .drive(
-                onNext: { [weak self] isVideoValid in
-                    self?.fullscreenButton.isHidden = !isVideoValid
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        isSoundOn
-            .asDriver(onErrorJustReturn: false)
-            .drive(
-                onNext: { [weak self] isSoundOn in
-                    self?.soundToggleButton.isSelected = isSoundOn
-                    self?.player?.isMuted = !isSoundOn
-                }
-            )
-            .disposed(by: disposeBag)
+        let viewDidDisappear = rx.viewDidDisappear
+            .asDriver()
+            .mapToVoid()
         
         // При уходе с окна или при сворачивании приложения - паузим плеер
         
         Driver
-            .merge(
-                NotificationCenter.default.rx
-                    .notification(UIApplication.didEnterBackgroundNotification)
-                    .asDriverOnErrorJustComplete()
-                    .mapToVoid(),
-                rx.viewDidDisappear
-                    .asDriver()
-                    .mapToVoid()
-            )
+            .merge(didEnterBackground, viewDidDisappear)
             .drive(
                 onNext: { [weak self] _ in
-                    self?.player?.pause()
+                    if  let focusedCellIndexPath = self?.focusedCellIndexPath {
+                        let cell = self?.camerasCollectionView.cellForItem(at: focusedCellIndexPath) as? CameraCollectionViewCell
+                        cell?.player?.pause()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+    
+        // При загрузке скрываем коллекцию кнопок, считаем количество столбцов
+        // на странице и фокусируемся на ячейке камеры
+        
+        rx.viewWillAppear
+            .asDriver()
+            .drive(
+                onNext: { [weak self] _ in
+                    let rowsPerPage = self?.calculateRowsPerPageForPoints()
+                    self?.pointsCollectionView.isHidden = true
+                    
+                    if let rowsPerPage = rowsPerPage {
+                        self?.calculateItemsPerCell(
+                            totalItemCount: self?.cameras.count ?? 0,
+                            itemsPerRow: 5,
+                            rowsPerPage: rowsPerPage
+                        )
+                    }
+                    
+                    if let itemWasPointed = self?.itemWasPointed {
+                        if !itemWasPointed {
+                            DispatchQueue.main.async {
+                                self?.pointViewToSelectedItem()
+                                self?.itemWasPointed = true
+                            }
+                        }
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -164,7 +153,12 @@ class OnlinePageViewController: BaseViewController {
             .asDriver()
             .drive(
                 onNext: { [weak self] _ in
-                    self?.player?.play()
+                    if  let focusedCellIndexPath = self?.focusedCellIndexPath {
+                        let cell = self?.camerasCollectionView.cellForItem(at: focusedCellIndexPath) as? CameraCollectionViewCell
+                        cell?.player?.play()
+                    }
+                    self?.pointsCollectionView.reloadData()
+                    self?.pointsCollectionView.isHidden = false
                 }
             )
             .disposed(by: disposeBag)
@@ -178,285 +172,26 @@ class OnlinePageViewController: BaseViewController {
             .isTrue()
             .drive(
                 onNext: { [weak self] _ in
-                    self?.player?.play()
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-    // swiftlint:disable:next function_body_length
-    private func configurePlayer() {
-        let player = AVPlayer()
-        player.isMuted = true
-        self.player = player
-        
-        if playerLayer != nil {
-            playerLayer?.removeFromSuperlayer()
-        }
-        
-        playerLayer = AVPlayerLayer(player: player)
-        cameraContainer.layer.insertSublayer(playerLayer!, at: 0)
-        playerLayer?.frame = cameraContainer.bounds
-        playerLayer?.removeAllAnimations()
-        playerLayer?.backgroundColor = UIColor.black.cgColor
-        
-        // MARK: Настройка лоадера
-        
-        let animation = LottieAnimation.named("LoaderAnimation")
-        
-        videoLoadingAnimationView.animation = animation
-        videoLoadingAnimationView.loopMode = .loop
-        videoLoadingAnimationView.backgroundBehavior = .pauseAndRestore
-        
-        // MARK: Когда полноэкранное видео будет закрыто, нужно добавить слой заново
-        
-        NotificationCenter.default.rx
-            .notification(.onlineFullscreenModeClosed)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] _ in
-                    guard let self = self, let playerLayer = self.playerLayer else {
-                        return
-                    }
-                    playerLayer.removeFromSuperlayer()
-                    self.cameraContainer.layer.insertSublayer(playerLayer, at: 0)
-                    
-                    playerLayer.frame = self.cameraContainer.bounds
-                    playerLayer.removeAllAnimations()
-                    
-                    self.player?.play()
-                    self.isInFullscreen = false
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        // MARK: Проверка, валидно ли текущее видео
-        
-        Driver
-            .combineLatest(
-                player.rx
-                    .observe(AVPlayer.Status.self, "status", options: [.new])
-                    .asDriver(onErrorJustReturn: nil),
-                player.rx
-                    .observe(AVPlayerItem.self, "currentItem", options: [.new])
-                    .asDriver(onErrorJustReturn: nil)
-            )
-            .map { args -> Bool in
-                let (status, currentItem) = args
-                
-                guard status == .readyToPlay,
-                    let asset = currentItem?.asset,
-                    asset.duration.seconds > 0 || asset.duration.flags.rawValue == 17 else {
-                    return false
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) { [weak self] in
-                    
-                    guard let asset = self?.player?.currentItem?.asset else {
-                        return
-                    }
-                    
-                    if #available(iOS 15.0, *) {
-                        let media = asset.loadMediaSelectionGroup(for: .visual) { selectionGroup, err in
-                            print(selectionGroup.debugDescription)
-                        }
-                    } else {
-                        // Fallback on earlier versions
-                    }
-                    
-                }
-                return true
-            }
-            .drive(
-                onNext: { [weak self] isVideoValid in
-                    self?.isVideoValid.onNext(isVideoValid)
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-    private func configureSoundToggleButton() {
-        soundToggleButton.setImage(UIImage(named: "SoundOff"), for: .normal)
-        soundToggleButton.setImage(UIImage(named: "SoundOn"), for: .selected)
-        
-        soundToggleButton.touchAreaInsets = UIEdgeInsets(inset: 12)
-        
-        soundToggleButton.rx.tap
-            .withLatestFrom(isSoundOn) { _, isSoundOn in !isSoundOn }
-            .bind(to: isSoundOn)
-            .disposed(by: disposeBag)
-    }
-    
-    private func updateSoundButtonVisibility(for hasSound: Bool) {
-        soundToggleButton.isHidden = !hasSound
-    }
-    
-    private func configureFullscreenButton() {
-        fullscreenButton.setImage(UIImage(named: "FullScreen20"), for: .normal)
-        fullscreenButton.setImage(UIImage(named: "FullScreen20")?.darkened(), for: [.normal, .highlighted])
-        
-        fullscreenButton.touchAreaInsets = UIEdgeInsets(inset: 12)
-        
-        // MARK: При нажатии на кнопку фуллскрина показываем новый VC с видео на весь экран
-        
-        fullscreenButton.rx.tap
-            .asDriver()
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self,
-                          let playerLayer = self.playerLayer else {
-                        return
-                    }
-                    
-                    playerLayer.removeFromSuperlayer()
-                    
-                    var shouldTurnOnSound = false
-                    do {
-                        shouldTurnOnSound = try self.isSoundOn.value()
-                    } catch {
-                        print("Error getting isSoundOn value: \(error)")
-                    }
-                   
-                    let fullscreenVc = FullscreenPlayerViewController(
-                        playedVideoType: .online,
-                        preferredPlaybackRate: 1,
-                        hasSound: self.hasSound,
-                        isSoundOn: shouldTurnOnSound
-                    )
-                    
-                    fullscreenVc.modalPresentationStyle = .overFullScreen
-                    fullscreenVc.modalTransitionStyle = .crossDissolve
-                    fullscreenVc.setPlayerLayer(playerLayer)
-                    
-                    self.isSoundOn.onNext(false)
-                    self.isInFullscreen = true
-                    
-                    self.present(fullscreenVc, animated: true) {
-                        self.player?.play()
+                    if  let focusedCellIndexPath = self?.focusedCellIndexPath {
+                        let cell = self?.camerasCollectionView.cellForItem(at: focusedCellIndexPath) as? CameraCollectionViewCell
+                        cell?.player?.play()
                     }
                 }
             )
             .disposed(by: disposeBag)
         
-        NotificationCenter.default.rx
-            .notification(.onlineFullscreenModeClosed)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] _ in
-                    guard let self = self, let playerLayer = self.playerLayer else {
-                        return
-                    }
-
-                    var shouldTurnOnSound = true
-                    do {
-                        shouldTurnOnSound = try !(self.isSoundOn.value() || self.player?.isMuted ?? true)
-                    } catch {
-                        print("Error getting isSoundOn value: \(error)")
-                    }
-                    
-                    playerLayer.removeFromSuperlayer()
-                    self.cameraContainer.layer.insertSublayer(playerLayer, at: 0)
-
-                    playerLayer.frame = self.cameraContainer.bounds
-                    playerLayer.removeAllAnimations()
-
-                    self.player?.play()
-                    self.isInFullscreen = false
-
-                    self.isSoundOn.onNext(shouldTurnOnSound)
-                }
-            )
-            .disposed(by: disposeBag)
     }
     
     private func configureCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        camerasFlowLayout.minimumLineSpacing = 0
+        pointsCollectionView.register(nibWithCellClass: CameraNumberCell.self)
+        camerasCollectionView.register(nibWithCellClass: CameraCollectionViewCell.self)
         
-        collectionView.register(nibWithCellClass: CameraNumberCell.self)
-        
-        collectionView.rx
-            .observeWeakly(CGSize.self, "contentSize")
-            .subscribe(
-                onNext: { [weak self] size in
-                    guard let self = self, let uSize = size else {
-                        return
-                    }
-                    
-                    self.collectionViewHeightConstraint.constant = uSize.height
-                    self.view.setNeedsLayout()
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-    fileprivate func startToPlay(_ url: URL) {
-        let asset = AVAsset(url: url)
-        
-        loadingAsset = asset
-        
-        asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { [weak self, weak asset] in
-            guard let asset = asset else {
-                return
-            }
-            
-            var tracksError: NSError?
-            var durationError: NSError?
-            
-            let tracksStatus = asset.statusOfValue(forKey: "tracks", error: &tracksError)
-            let durationStatus = asset.statusOfValue(forKey: "duration", error: &durationError)
-            
-            if tracksStatus == .cancelled ||
-                tracksStatus == .failed ||
-                durationStatus == .cancelled ||
-                durationStatus == .failed {
-                self?.isVideoBeingLoaded.onNext(false)
-                return
-            }
-            
-            guard tracksStatus == .loaded, durationStatus == .loaded else {
-                return
-            }
-            
-//            print("Audio tracks count: \(asset.tracks(withMediaType: .audio).count)")
-//            print("Video tracks count: \(asset.tracks(withMediaType: .video).count)")
-            
-            if #available(iOS 15.0, *) {
-                let media = asset.loadMediaSelectionGroup(for: .visual) { selectionGroup, err in
-                    print(selectionGroup.debugDescription)
-                    
-                }
-            } else {
-                // Fallback on earlier versions
-            }
-            
-            // print("Audio present: \(String(describing: asset.mediaSelectionGroup(forMediaCharacteristic: .audible)))")
-            // print("tracks value: \(String(describing: asset.value(forKey: "tracks") as? [AVAssetTrack]))")
-            
-            self?.isVideoBeingLoaded.onNext(false)
-            
-            DispatchQueue.main.async {
-                // MARK: Ассет загружен, больше хранить его не нужно
-                
-                self?.loadingAsset = nil
-                
-                // MARK: Видео готово к просмотру, засовываем его в плеер
-                
-                let playerItem = AVPlayerItem(asset: asset)
-                
-                // Необходимо для того, чтобы в HLS потоке мог быть выбран поток с разрешением превышающим разрешение экрана телефона
-                playerItem.preferredMaximumResolution = CGSize(width: 3840, height: 2160)
-                
-                self?.player?.replaceCurrentItem(with: playerItem)
-                
-                if self?.isVisible == true {
-                    self?.player?.play()
-                }
-            }
-        }
     }
     
     private func reloadCameraIfNeeded(selectedIndexPath: IndexPath) {
         let camera = cameras[selectedIndexPath.row]
+        let cell = camerasCollectionView.cellForItem(at: selectedIndexPath) as? CameraCollectionViewCell
         
         print("Selected Camera #\(camera.cameraNumber)")
         
@@ -468,89 +203,305 @@ class OnlinePageViewController: BaseViewController {
         
         delegate?.onlinePageViewController(self, didSelectCamera: camera)
         
-        player?.replaceCurrentItem(with: nil)
+        cell?.player?.replaceCurrentItem(with: nil)
         
-        loadingAsset?.cancelLoading()
-        loadingAsset = nil
-        
-        // При переключении между камерами звук выключается
-        isSoundOn.onNext(false)
-        
-        isVideoBeingLoaded.onNext(true)
+        camerasCollectionView.scrollToItem(
+            at: selectedIndexPath,
+            at: .centeredHorizontally,
+            animated: true
+        )
         
         camera.updateURLAndExec { [weak self] urlString in
             guard let self = self, let url = URL(string: urlString) else {
-                self?.isVideoBeingLoaded.onNext(false)
                 return
             }
-            self.updateSoundButtonVisibility(for: camera.hasSound)
-            self.hasSound = camera.hasSound
-            self.startToPlay(url)
+            cell?.startToPlay(url)
         }
-        
     }
     
+    fileprivate func pointViewToSelectedItem() {
+        if let focusedCellIndexPath = focusedCellIndexPath {
+            reloadCameraIfNeeded(selectedIndexPath: focusedCellIndexPath)
+            onItemFocused(indexPath: focusedCellIndexPath)
+        }
+    }
+    
+    fileprivate func configureFlowLayoutItemSize(flowLayout: UICollectionViewFlowLayout) {
+        let inset: CGFloat = calculateSectionInsetForCollection()
+        
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+        flowLayout.itemSize = CGSize(
+            width: flowLayout.collectionView!.frame.size.width - inset * 2,
+            height: flowLayout.collectionView!.frame.size.height
+        )
+    }
+    
+    fileprivate func calculateRowsPerPageForPoints() -> Int {
+        let collectionHeight = view.height - 36 - camerasCollectionView.height
+        let inset = 10
+        let rowHeight = buttonSize.height + CGFloat(inset)
+        let rows = round(collectionHeight / rowHeight)
+        return Int(rows)
+    }
+    
+    fileprivate func calculateSectionInsetForCollection() -> CGFloat {
+        let collectionViewWidth = camerasFlowLayout.collectionView!.frame.width
+        let itemWidth: CGFloat = 280
+        let inset = (collectionViewWidth - itemWidth) / 4
+        return inset
+    }
+    
+    fileprivate func calculateItemsPerCell(totalItemCount: Int, itemsPerRow: Int, rowsPerPage: Int) {
+        let itemsPerPage = itemsPerRow * rowsPerPage
+        
+        let totalCells = totalItemCount / itemsPerPage
+        let remainder = totalItemCount % itemsPerPage
+        let additionalCells = remainder > 0 ? 1 : 0
+        let totalPages = totalCells + additionalCells
+        
+        itemCountsPerCell = Array(repeating: itemsPerPage, count: totalCells)
+        
+        if remainder > 0 {
+            itemCountsPerCell.append(remainder)
+        }
+    }
+    
+    private func onItemFocused(indexPath: IndexPath) {
+        camerasCollectionView.layoutIfNeeded()
+        let cell = camerasCollectionView.cellForItem(at: indexPath) as? CameraCollectionViewCell
+        let camera = cameras[indexPath.row]
+        
+        print("Selected Camera #\(camera.cameraNumber)")
+        
+        guard camera.cameraNumber != selectedCameraNumber else {
+            return
+        }
+        
+        selectedCameraNumber = camera.cameraNumber
+        
+        delegate?.onlinePageViewController(self, didSelectCamera: camera)
+        
+        guard let url = URL(string: camera.baseURLString) else {
+            return
+        }
+        
+        cell?.saveLastImage(cell?.image.image)
+        cell?.loadVideo()
+    }
+    
+    private func onItemLostFocus(indexPath: IndexPath) {
+        camerasCollectionView.layoutIfNeeded()
+        let cell = camerasCollectionView.cellForItem(at: indexPath) as? CameraCollectionViewCell
+        
+        cell?.stopVideo()
+        cell?.image.image = cell?.lastImage
+    }
 }
 
+// MARK: - UICollectionViewDataSource
 extension OnlinePageViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        1
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cameras.count
+        switch collectionView {
+        case camerasCollectionView:
+            return cameras.count
+        default:
+            let rows = calculateRowsPerPageForPoints()
+            let itemsPerPage = rows * 5
+            return cameras.count % itemsPerPage == 0 ? cameras.count / itemsPerPage : (cameras.count / itemsPerPage) + 1
+        }
     }
 
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withClass: CameraNumberCell.self, for: indexPath)
 
-        cell.configure(curCamera: cameras[indexPath.row])
-
-        return cell
+        switch collectionView {
+        case camerasCollectionView:
+            let cell = collectionView.dequeueReusableCell(withClass: CameraCollectionViewCell.self, for: indexPath)
+            cell.configure(curCamera: cameras[indexPath.row], cache: imagesCache)
+            return cell
+            
+        default:
+            let cell = collectionView.dequeueReusableCell(withClass: CameraNumberCell.self, for: indexPath)
+            
+            let rows = calculateRowsPerPageForPoints()
+            let itemsPerPage = rows * 5
+            
+            let startIndex = indexPath.item * itemsPerPage
+            let endIndex = min((indexPath.item + 1) * itemsPerPage, cameras.count)
+            let dataChunk = Array(cameras[startIndex..<endIndex])
+            
+            if startIndex < cameras.count {
+                let dataChunk = Array(cameras[startIndex..<endIndex])
+                cell.configure(
+                    with: dataChunk,
+                    rows: rows,
+                    selectedCameraNumber: selectedCameraNumber ?? 1
+                )
+                cell.delegate = self
+            }
+            
+            return cell
+        }
     }
-
+    
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        return CGSize(width: 36, height: 36)
+        
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if scrollView == pointsCollectionView {
+            indexOfCellBeforeDragging = indexOfMajorCellForPoints()
+        } else if scrollView == camerasCollectionView {
+            indexOfCellBeforeDragging = indexOfMajorCellForCameras()
+        }
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        minimumInteritemSpacingForSectionAt section: Int
-    ) -> CGFloat {
-        return 28
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        if scrollView == pointsCollectionView {
+            targetContentOffset.pointee = scrollView.contentOffset
+            
+            let targetIndex: Int
+            if velocity.x > 0 {
+                targetIndex = indexOfCellBeforeDragging + 1
+            } else if velocity.x < 0 {
+                targetIndex = indexOfCellBeforeDragging - 1
+            } else {
+                let collectionViewWidth = pointsFlowLayout.collectionView!.bounds.width
+                targetIndex = Int((targetContentOffset.pointee.x + collectionViewWidth / 2) / collectionViewWidth)
+            }
+            
+            let safeTargetIndex = max(0, min(targetIndex, pointsCollectionView.numberOfItems(inSection: 0) - 1))
+            
+            let offset = CGFloat(safeTargetIndex) * pointsFlowLayout.itemSize.width
+            targetContentOffset.pointee = CGPoint(x: offset, y: 0)
+    
+        } else if scrollView == camerasCollectionView {
+            targetContentOffset.pointee = scrollView.contentOffset
+            
+            let indexOfMajorCell = self.indexOfMajorCellForCameras()
+            
+            // calculate conditions:
+            let swipeVelocityThreshold: CGFloat = 0.5 // after some trail and error
+            let hasEnoughVelocityToSlideToTheNextCell = indexOfCellBeforeDragging + 1 < cameras.count && velocity.x > swipeVelocityThreshold
+            let hasEnoughVelocityToSlideToThePreviousCell = indexOfCellBeforeDragging - 1 >= 0 && velocity.x < -swipeVelocityThreshold
+            let majorCellIsTheCellBeforeDragging = indexOfMajorCell == indexOfCellBeforeDragging
+            let didUseSwipeToSkipCell = majorCellIsTheCellBeforeDragging && (hasEnoughVelocityToSlideToTheNextCell || hasEnoughVelocityToSlideToThePreviousCell)
+            
+            if didUseSwipeToSkipCell {
+                let snapToIndex = indexOfCellBeforeDragging + (hasEnoughVelocityToSlideToTheNextCell ? 1 : -1)
+                let toValue = camerasFlowLayout.itemSize.width * CGFloat(snapToIndex)
+                
+                UIView.animate(
+                    withDuration: 0.3,
+                    delay: 0,
+                    usingSpringWithDamping: 1,
+                    initialSpringVelocity: velocity.x,
+                    options: .allowUserInteraction,
+                    animations: 
+                        {
+                            scrollView.contentOffset = CGPoint(x: toValue, y: 0)
+                            scrollView.layoutIfNeeded()
+                        },
+                    completion: nil
+                )
+                
+            } else {
+                let indexPath = IndexPath(row: indexOfMajorCell, section: 0)
+                camerasFlowLayout.collectionView!.scrollToItem(
+                    at: indexPath,
+                    at: .centeredHorizontally,
+                    animated: false
+                )
+            }
+        }
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        minimumLineSpacingForSectionAt section: Int
-    ) -> CGFloat {
-        return 24
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if camerasCollectionView == scrollView {
+            if !decelerate {
+                handleScrollViewEnd()
+            }
+        }
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        insetForSectionAt section: Int
-    ) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if camerasCollectionView == scrollView {
+            handleScrollViewEnd()
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    fileprivate func handleScrollViewEnd() {
+        guard let center = camerasCollectionView.getCenterPoint() else {
+            return
+        }
+        
+        guard let indexPath = camerasCollectionView!.indexPathForItem(at: center) else {
+            return
+        }
+        
+        if indexPath != focusedCellIndexPath {
+            if let focusedCellIndexPath = focusedCellIndexPath {
+                onItemLostFocus(indexPath: focusedCellIndexPath)
+            }
+            focusedCellIndexPath = indexPath
+            onItemFocused(indexPath: indexPath)
+        }
+        
+        for cell in pointsCollectionView.visibleCells {
+            guard let cameraCell = cell as? CameraNumberCell else { continue }
+            cameraCell.resetSelection()
+            cameraCell.selectCameraButton(cameraNumber: selectedCameraNumber ?? 0)
+        }
+        
+        // обрабатываем переход до следующей ячейки pointsCollection
+        let rowsPerPage = calculateRowsPerPageForPoints()
+        let itemsPerPage = rowsPerPage * 5
+        let page = indexPath.row / itemsPerPage
+
+        let pointsIndexPath = IndexPath(item: page, section: 0)
+        pointsCollectionView.selectItem(
+            at: pointsIndexPath,
+            animated: true,
+            scrollPosition: .centeredHorizontally
+        )
+    }
+    
+    fileprivate func indexOfMajorCellForCameras() -> Int {
+        let itemWidth = camerasFlowLayout.itemSize.width
+        let proportionalOffset = camerasFlowLayout.collectionView!.contentOffset.x / itemWidth
+        let index = Int(round(proportionalOffset))
+        let safeIndex = max(0, min(cameras.count - 1, index))
+        return safeIndex
+    }
+    
+    fileprivate func indexOfMajorCellForPoints() -> Int {
+        let itemWidth = pointsFlowLayout.itemSize.width
+        let spacing = pointsFlowLayout.minimumInteritemSpacing
+        let offset = pointsCollectionView.contentOffset.x
+        let pageWidth = itemWidth + spacing
+        let approximateIndex = offset / pageWidth
+        let cellIndex = Int(round(approximateIndex))
+        return max(0, min(cellIndex, pointsCollectionView.numberOfItems(inSection: 0) - 1))
+    }
+}
+
+// MARK: - CameraButtonDelegate
+extension OnlinePageViewController: CameraButtonDelegate {
+    func didTapCameraButton(cameraNumber: Int) {
+        guard let index = cameras.firstIndex(where: { $0.cameraNumber == cameraNumber }) else {
+            return
+        }
+        let indexPath = IndexPath(row: index, section: 0)
+        
         reloadCameraIfNeeded(selectedIndexPath: indexPath)
     }
-    
 }

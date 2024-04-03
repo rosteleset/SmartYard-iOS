@@ -186,6 +186,7 @@ class FullscreenPlayerViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         playerLayer?.frame = contentView.bounds
+        playerLayer?.videoGravity = .resizeAspect
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

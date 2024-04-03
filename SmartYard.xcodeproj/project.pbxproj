@@ -591,6 +591,11 @@
 		E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4273823F5609E00F5D593 /* ServiceSoonAvailableViewController.swift */; };
 		E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4273C23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift */; };
 		FA991F3A2B95F947000B9C8E /* CallKitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA991F392B95F947000B9C8E /* CallKitModalViewContent.xib */; };
+		FA9E30E92BBBEF420087E689 /* CameraCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E30E72BBBEF420087E689 /* CameraCollectionViewCell.swift */; };
+		FA9E30EA2BBBEF420087E689 /* CameraCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9E30E82BBBEF420087E689 /* CameraCollectionViewCell.xib */; };
+		FA9E30EC2BBBEFFA0087E689 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E30EB2BBBEFFA0087E689 /* UICollectionView+Extensions.swift */; };
+		FA9E30EE2BBBF01E0087E689 /* AutoRefreshingCachedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E30ED2BBBF01E0087E689 /* AutoRefreshingCachedImageView.swift */; };
+		FA9E30F02BBBF0450087E689 /* CameraButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E30EF2BBBF0450087E689 /* CameraButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1373,7 +1378,7 @@
 		84F6494524740E8F000C0028 /* CamerasMapPointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CamerasMapPointView.swift; sourceTree = "<group>"; };
 		84F6494624740E8F000C0028 /* YardMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YardMapViewModel.swift; sourceTree = "<group>"; };
 		84F6494E247410DD000C0028 /* CameraObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraObject.swift; sourceTree = "<group>"; };
-		84F64951247410F9000C0028 /* CameraNumberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraNumberCell.swift; sourceTree = "<group>"; };
+		84F64951247410F9000C0028 /* CameraNumberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = CameraNumberCell.swift; sourceTree = "<group>"; };
 		84F64952247410F9000C0028 /* CameraNumberCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraNumberCell.xib; sourceTree = "<group>"; };
 		84F840D223E07DA5008DBE50 /* SmartYard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartYard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F840D523E07DA5008DBE50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1533,6 +1538,11 @@
 		E9E4273C23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSoonAvailableViewModel.swift; sourceTree = "<group>"; };
 		EBFF984061C4CB6B6C8AFF21 /* Pods-SmartYardIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.debug.xcconfig"; sourceTree = "<group>"; };
 		FA991F392B95F947000B9C8E /* CallKitModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CallKitModalViewContent.xib; sourceTree = "<group>"; };
+		FA9E30E72BBBEF420087E689 /* CameraCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraCollectionViewCell.swift; sourceTree = "<group>"; };
+		FA9E30E82BBBEF420087E689 /* CameraCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraCollectionViewCell.xib; sourceTree = "<group>"; };
+		FA9E30EB2BBBEFFA0087E689 /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
+		FA9E30ED2BBBF01E0087E689 /* AutoRefreshingCachedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoRefreshingCachedImageView.swift; sourceTree = "<group>"; };
+		FA9E30EF2BBBF0450087E689 /* CameraButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2139,6 +2149,7 @@
 		3AFBA7312637523900C7DEB6 /* SafeCachedImage */ = {
 			isa = PBXGroup;
 			children = (
+				FA9E30ED2BBBF01E0087E689 /* AutoRefreshingCachedImageView.swift */,
 				3A288198265D42AA00F42097 /* SafeCachedButton.swift */,
 				3AFBA732263752B300C7DEB6 /* SafeCachedImageView.swift */,
 			);
@@ -2319,6 +2330,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				FAC8CFF72BA6890D00D377E2 /* CameraButton */,
 				3AFBA7312637523900C7DEB6 /* SafeCachedImage */,
 				846DC6E224B33E1C00A11914 /* PickerAnimator */,
 				845E9ED624895AE3000CBBC6 /* VideoSliders */,
@@ -3198,6 +3210,7 @@
 		84B9EC8623E0844500979C39 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				FA9E30EB2BBBEFFA0087E689 /* UICollectionView+Extensions.swift */,
 				84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */,
 				3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */,
 				84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */,
@@ -3509,6 +3522,8 @@
 		84F64950247410F9000C0028 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				FA9E30E72BBBEF420087E689 /* CameraCollectionViewCell.swift */,
+				FA9E30E82BBBEF420087E689 /* CameraCollectionViewCell.xib */,
 				84F64951247410F9000C0028 /* CameraNumberCell.swift */,
 				84F64952247410F9000C0028 /* CameraNumberCell.xib */,
 			);
@@ -4458,6 +4473,14 @@
 			path = ServiceSoonAvaialble;
 			sourceTree = "<group>";
 		};
+		FAC8CFF72BA6890D00D377E2 /* CameraButton */ = {
+			isa = PBXGroup;
+			children = (
+				FA9E30EF2BBBF0450087E689 /* CameraButton.swift */,
+			);
+			path = CameraButton;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -4675,6 +4698,7 @@
 				3A8FC7522B09F11400F90D73 /* CityCameraViewController.xib in Resources */,
 				3A8FC6E42B06617500F90D73 /* CamerasListViewController.xib in Resources */,
 				3A8FC7432B09EA8700F90D73 /* ServiceUnavailableViewController.xib in Resources */,
+				FA9E30EA2BBBEF420087E689 /* CameraCollectionViewCell.xib in Resources */,
 				3A8FC7662B09F7AF00F90D73 /* OnboardingBaseView.xib in Resources */,
 				3A8FC7612B09F21F00F90D73 /* ServicesActivationRequestViewController.xib in Resources */,
 				3A8FC6B22B065F8700F90D73 /* PinCodeViewController.xib in Resources */,
@@ -4835,7 +4859,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Look for a global file named 'mapbox' or '.mapbox' within the home directory\ntoken_file=~/.mapbox\ntoken_file2=~/mapbox\ntoken=\"$(cat $token_file 2>/dev/null || cat $token_file2 2>/dev/null)\"\nif [ \"$token\" ]; then\n  plutil -replace MGLMapboxAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\n  echo 'warning: Missing Mapbox access token'\n  open 'https://account.mapbox.com/access-tokens/'\n  echo \"warning: Get an access token from <https://account.mapbox.com/access-tokens/>, then create a new file at $token_file or $token_file2 that contains the access token.\"\nfi\n";
+			shellScript = "# Look for a global file named 'mapbox' or '.mapbox' within the home directory\ntoken_file=~/.mapbox\ntoken_file2=~/mapbox\ntoken=\"$(cat $token_file 2>/dev/null || cat $token_file2 2>/dev/null)\"\nif [ \"$token\" ]; then\n  plutil -replace MGLMapboxAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\n  echo 'warning: Missing Mapbox access token'\n  echo \"warning: Get an access token from <https://account.mapbox.com/access-tokens/>, then create a new file at $token_file or $token_file2 that contains the access token.\"\nfi\n";
 		};
 		4DA6BFC05CFF96F33420E667 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5037,12 +5061,14 @@
 				3AC5C60626089682008D74DE /* APIPlog.swift in Sources */,
 				E92EFBC4242A22F2003AF7FE /* GeoCoderRequest.swift in Sources */,
 				84B89A7C23F2D2BA009692B4 /* SettingsSectionUpdateKind.swift in Sources */,
+				FA9E30F02BBBF0450087E689 /* CameraButton.swift in Sources */,
 				E98C383523F192600010BBC1 /* InputAddressViewController.swift in Sources */,
 				3AEB886B27E0D01100B19925 /* APIExtensionListItem.swift in Sources */,
 				846DC6E824B33E1C00A11914 /* SwipeInteractionController.swift in Sources */,
 				E92EFBAE242A22F2003AF7FE /* APIHouse.swift in Sources */,
 				847CF7DB240696BE00070007 /* SettingsListSkeletonView.swift in Sources */,
 				846DC6E124B33DEA00A11914 /* PayProcessResponseData.swift in Sources */,
+				FA9E30EE2BBBF01E0087E689 /* AutoRefreshingCachedImageView.swift in Sources */,
 				3AFBA7B9263984E000C7DEB6 /* AVPlayer+Extensions.swift in Sources */,
 				843C38E9242A6E490035BF80 /* QRCodeScanViewController.swift in Sources */,
 				84AADD262431FAA80056994A /* NotificationResponseData.swift in Sources */,
@@ -5168,6 +5194,7 @@
 				E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */,
 				844AC39523E977810066006D /* AccessService.swift in Sources */,
 				84D29B9824B79B5400CFBE6B /* Calendar+Moscow.swift in Sources */,
+				FA9E30E92BBBEF420087E689 /* CameraCollectionViewCell.swift in Sources */,
 				E92EFBDD242A22F2003AF7FE /* GetListConnectResponseData.swift in Sources */,
 				843C38CE242A577C0035BF80 /* InboxResponseData.swift in Sources */,
 				843C38E8242A6E490035BF80 /* QRCodeScanViewModel.swift in Sources */,
@@ -5280,6 +5307,7 @@
 				3A2881532657EE7100F42097 /* FaceIdAccessView.swift in Sources */,
 				E94B6C4323FFF2A800FD9F65 /* Date+Helper.swift in Sources */,
 				E92EFBD6242A22F2003AF7FE /* OpenDoorRequest.swift in Sources */,
+				FA9E30EC2BBBEFFA0087E689 /* UICollectionView+Extensions.swift in Sources */,
 				E92EFBDB242A22F2003AF7FE /* ResendRequest.swift in Sources */,
 				E92EFBC7242A22F2003AF7FE /* SendNameRequest.swift in Sources */,
 				84854B6323FD7FDE001B44F2 /* AllowedPersonDataItem.swift in Sources */,

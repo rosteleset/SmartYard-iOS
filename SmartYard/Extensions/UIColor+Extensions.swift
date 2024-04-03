@@ -29,6 +29,9 @@ extension UIColor {
         
         /// #28323E
         static let semiBlack = UIColor(hex: 0x28323E)!
+        
+        /// #F3F4FA
+        static let backgroundColor = UIColor(hex: 0xF3F4FA)!
     }
     
 }

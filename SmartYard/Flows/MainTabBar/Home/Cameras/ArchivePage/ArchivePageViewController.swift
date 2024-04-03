@@ -134,7 +134,6 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
                 return
             }
             
-            self.setupCalendarHeader(from: self.calendarView.visibleDates().monthDates.first?.date)
         }
     }
     

@@ -7,11 +7,17 @@
 //
 
 import UIKit
+import AVFoundation
 
 class SafeCachedImageView: UIImageView {
-
-    private var imageUrlString: String?
-    private var loadingImageIndicator: UIActivityIndicatorView?
+    
+    var imageUrlString: String?
+    private lazy var loadingImageIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .gray)
+        indicator.center = view.center
+        self.addSubview(indicator)
+        return indicator
+    }()
     
     func loadImageUsingUrlString(urlString: String,
                                  cache: NSCache<NSString, UIImage>,
@@ -19,57 +25,34 @@ class SafeCachedImageView: UIImageView {
                                  errorMessage: String = "",
                                  rect: CGRect? = nil,
                                  rectColor: UIColor = .clear) {
-        
-        imageUrlString = urlString
-        
         self.image = nil
         
-        if let imageFromCache = cache.object(forKey: NSString(string: urlString)) {
-            self.image = imageFromCache
+        loadingImageIndicator.center = self.view.center
+        loadingImageIndicator.contentMode = .center
+        loadingImageIndicator.startAnimating()
+        
+        imageUrlString = urlString
+        guard let url = URL(string: urlString) else { return }
+                
+        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            guard let self = self else { return }
             
-            label?.text = ""
-            if let rect = rect {
-                self.drawRectangle(rect: rect, rectColor: rectColor)
+            DispatchQueue.main.async {
+                self.loadingImageIndicator.stopAnimating()
+                self.backgroundColor = .black
             }
-            return
-        }
-        
-        guard let url = URL(string: urlString) else {
-            return
-        }
-        
-        if loadingImageIndicator == nil {
-            loadingImageIndicator = UIActivityIndicatorView(style: .gray)
-        }
-        
-        loadingImageIndicator!.center = view.center
-        view.addSubview(loadingImageIndicator!)
-        loadingImageIndicator!.startAnimating()
-        self.backgroundColor = UIColor(named: "backgroundColor")
-        
-        URLSession.shared.dataTask(
-            with: url,
-            completionHandler: { data, response, _ in
+            
+            guard let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                  let data = data else {
                 DispatchQueue.main.async {
-                    self.loadingImageIndicator!.stopAnimating()
-                    self.loadingImageIndicator!.removeFromSuperview()
-                    self.backgroundColor = .clear
-                }
-                
-                guard
-                    let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                    let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                    let data = data,
-                    let loadedImage = UIImage(data: data)
-                else {
-                    DispatchQueue.main.async {
-                        if self.imageUrlString == urlString {
-                            label?.text = errorMessage
-                        }
+                    if self.imageUrlString == urlString {
+                        label?.text = errorMessage
                     }
-                    return
                 }
-                
+                return
+            }
+            
+            if let loadedImage = UIImage(data: data) {
                 DispatchQueue.main.async {
                     if self.imageUrlString == urlString {
                         self.image = loadedImage
@@ -80,33 +63,69 @@ class SafeCachedImageView: UIImageView {
                     }
                     cache.setObject(loadedImage, forKey: NSString(string: urlString))
                 }
+            } else {
+                DispatchQueue.global(qos: .userInteractive).async {
+                    if let loadedImage = self.imageFromVideo(url: url, at: 1) {
+                        DispatchQueue.main.async {
+                            self.image = loadedImage
+                            if let rect = rect {
+                                self.drawRectangle(rect: rect, rectColor: rectColor)
+                            }
+                            cache.setObject(loadedImage, forKey: NSString(string: urlString))
+                        }
+                    }
+                }
             }
-        )
-            .resume()
+        }.resume()
     }
     
     func drawRectangle(rect: CGRect, rectColor: UIColor) {
-        guard let image = self.image else {
-            return
-        }
+        guard let image = self.image else { return }
         
         let imageSize = image.size
         let scale: CGFloat = self.contentScaleFactor
-        UIGraphicsBeginImageContextWithOptions(imageSize, false, scale)
         let context = UIGraphicsGetCurrentContext()
+        let transform = CGAffineTransform(
+            scaleX: 1 / scale,
+            y: 1 / scale
+        )
+        
+        UIGraphicsBeginImageContextWithOptions(imageSize, false, scale)
+        
         context?.setLineWidth(3.0)
         
-        image.draw(at: CGPoint.zero)
-
+        defer { UIGraphicsEndImageContext() }
+        
+        image.draw(at: .zero)
+        
         rectColor.setStroke()
-        let transform = CGAffineTransform(scaleX: 1 / scale, y: 1 / scale)
         UIRectFrame(rect.applying(transform))
         
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        if newImage != nil {
+        if let newImage = UIGraphicsGetImageFromCurrentImageContext() {
             self.image = newImage
+        }
+    }
+}
+
+
+// Понимаю что не относится к классу, пока что для первой реализации оставлю так.
+// В будущем нужно вынести отдельно
+extension SafeCachedImageView {
+    
+    fileprivate func imageFromVideo(url: URL, at time: TimeInterval) -> UIImage? {
+        let asset = AVURLAsset(url: url)
+        let assetIG = AVAssetImageGenerator(asset: asset)
+        let cmTime = CMTime(seconds: time, preferredTimescale: 60)
+        
+        assetIG.appliesPreferredTrackTransform = true
+        assetIG.apertureMode = .encodedPixels
+        
+        do {
+            let thumbnailImageRef = try assetIG.copyCGImage(at: cmTime, actualTime: nil)
+            return UIImage(cgImage: thumbnailImageRef)
+        } catch let error {
+            print("Error: \(error)")
+            return nil
         }
     }
     
