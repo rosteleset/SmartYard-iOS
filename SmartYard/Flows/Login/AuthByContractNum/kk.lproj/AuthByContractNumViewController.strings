@@ -1,24 +1,24 @@
 
 /* Class = "UITextField"; placeholder = "Номер договора"; ObjectID = "1fV-QD-lmA"; */
-"1fV-QD-lmA.placeholder" = "Номер договора";
+"1fV-QD-lmA.placeholder" = "Договор нөмірі";
 
 /* Class = "UITextField"; placeholder = "Пароль"; ObjectID = "Hma-MD-8gc"; */
-"Hma-MD-8gc.placeholder" = "Пароль";
+"Hma-MD-8gc.placeholder" = "Құпия сөз";
 
 /* Class = "UILabel"; text = "Введите номер и пароль договора, привязанного к данному адресу,  и управляйте услугами из этого приложения."; ObjectID = "IL8-bB-yIA"; */
-"IL8-bB-yIA.text" = "Введите номер и пароль договора, привязанного к данному адресу,  и управляйте услугами из этого приложения.";
+"IL8-bB-yIA.text" = "Берілген мекенжайға байланыстырылған келісімнің нөмірін және күйгі парольді енгізіңіз және осы қосымшадан қызметтерді басқарыңыз.";
 
 /* Class = "UIButton"; normalTitle = "Ничего не помню"; ObjectID = "L3p-t8-69e"; */
-"L3p-t8-69e.normalTitle" = "Ничего не помню";
+"L3p-t8-69e.normalTitle" = "Нәтіжесіз есті ештеңе естемін";
 
 /* Class = "UILabel"; text = "У вас есть договор c оператором?"; ObjectID = "U90-l7-45t"; */
-"U90-l7-45t.text" = "У вас есть договор c оператором?";
+"U90-l7-45t.text" = "Сізде оператормен келісім бар ма?";
 
 /* Class = "UIButton"; normalTitle = "Войти"; ObjectID = "aXB-Ea-sHa"; */
-"aXB-Ea-sHa.normalTitle" = "Войти";
+"aXB-Ea-sHa.normalTitle" = "Кіру";
 
 /* Class = "UIButton"; normalTitle = "Не помню пароль"; ObjectID = "bBo-iL-hgv"; */
-"bBo-iL-hgv.normalTitle" = "Не помню пароль";
+"bBo-iL-hgv.normalTitle" = "Құпия сөзді естемін";
 
 /* Class = "UIButton"; normalTitle = "У меня нет договора"; ObjectID = "ztw-Ug-GgA"; */
-"ztw-Ug-GgA.normalTitle" = "У меня нет договора";
+"ztw-Ug-GgA.normalTitle" = "Менде келісім жоқ";

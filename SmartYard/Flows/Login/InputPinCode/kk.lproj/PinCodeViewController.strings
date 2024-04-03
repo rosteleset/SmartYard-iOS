@@ -3,13 +3,13 @@
 "26f-34-CC5.text" = "01:00";
 
 /* Class = "UIButton"; normalTitle = "Отправить код повторно"; ObjectID = "8gN-95-GzJ"; */
-"8gN-95-GzJ.normalTitle" = "Отправить код повторно";
+"8gN-95-GzJ.normalTitle" = "Кодты қайтадан жіберу";
 
 /* Class = "UILabel"; text = "Отправить код повторно можно через"; ObjectID = "GMd-is-zf9"; */
-"GMd-is-zf9.text" = "Отправить код повторно можно через";
+"GMd-is-zf9.text" = "Кодты қайтадан жіберу мүмкін";
 
 /* Class = "UIButton"; normalTitle = "Исправить номер телефона"; ObjectID = "c8f-g0-jL7"; */
-"c8f-g0-jL7.normalTitle" = "Исправить номер телефона";
+"c8f-g0-jL7.normalTitle" = "Телефон нөмірін түзету";
 
 /* Class = "UILabel"; text = "Введите код из СМС,  отправленный на номер +79025308094"; ObjectID = "eDz-2O-KUv"; */
-"eDz-2O-KUv.text" = "Введите код из СМС,  отправленный на номер +79025308094";
+"eDz-2O-KUv.text" = "+79025308094 нөміріне жіберілген СМС-тен кодты енгізіңіз";

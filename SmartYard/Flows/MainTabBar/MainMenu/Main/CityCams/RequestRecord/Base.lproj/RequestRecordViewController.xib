@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -46,7 +46,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MXz-Le-IUg" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="KPr-fW-WRG"/>
@@ -54,7 +54,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Запросить запись" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yr0-wC-iKV">
-                    <rect key="frame" x="16" y="100" width="382" height="38"/>
+                    <rect key="frame" x="16" y="104" width="382" height="38"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="38" id="3BM-Hf-6s2"/>
                     </constraints>
@@ -63,7 +63,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="г. Тамбов, ул. Советская, 16" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGD-eH-dBA">
-                    <rect key="frame" x="16" y="142" width="382" height="24"/>
+                    <rect key="frame" x="16" y="146" width="382" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="HKu-AF-Dpg"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="vzE-hs-Lk7"/>
@@ -73,13 +73,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YT7-xC-EWd" customClass="TopRoundedView24" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="190" width="414" height="672"/>
+                    <rect key="frame" x="0.0" y="194" width="414" height="668"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dd-aG-0qo" customClass="TPKeyboardAvoidingScrollView">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="668"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1OE-oY-p4x">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="668"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Время: чч" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="GRD-jm-9e7" customClass="SmartYardDropDownTextField" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="16" y="88" width="186.5" height="56"/>
@@ -185,7 +185,7 @@
                                                     <string key="content">Вы можете запросить фрагмент продолжительностью не более 1 часа. Наш сервис позволяет хранить видеозаписи не более 10 суток, после этого видео из архива безвозвратно удаляется. </string>
                                                     <attributes>
                                                         <color key="NSColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="10" name="SourceSansPro-Regular"/>
+                                                        <font key="NSFont" metaFont="system" size="10"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="1" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
@@ -202,7 +202,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4j-9z-B66" userLabel="Кнопка">
-                                            <rect key="frame" x="16" y="581" width="382" height="48"/>
+                                            <rect key="frame" x="16" y="577" width="382" height="48"/>
                                             <color key="backgroundColor" name="blue"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="48" id="flL-N2-EtF"/>

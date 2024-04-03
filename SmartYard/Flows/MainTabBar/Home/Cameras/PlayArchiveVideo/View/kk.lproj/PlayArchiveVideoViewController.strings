@@ -6,7 +6,7 @@
 "Dqz-l5-6XG.text" = "Видео от";
 
 /* Class = "UIButton"; normalTitle = "Загрузить и получить ссылку"; ObjectID = "JBH-Xw-Dmj"; */
-"JBH-Xw-Dmj.normalTitle" = "Загрузить и получить ссылку";
+"JBH-Xw-Dmj.normalTitle" = "Жүктеу және сілтеме алу";
 
 /* Class = "UIButton"; normalTitle = "0.5x"; ObjectID = "UDc-4s-ZnY"; */
 "UDc-4s-ZnY.normalTitle" = "0.5x";
@@ -15,4 +15,4 @@
 "fr5-Hf-wxY.normalTitle" = "1.5x";
 
 /* Class = "UIButton"; normalTitle = "Выбрать фрагмент"; ObjectID = "wkd-4A-ePf"; */
-"wkd-4A-ePf.normalTitle" = "Выбрать фрагмент";
+"wkd-4A-ePf.normalTitle" = "Фрагментты таңдау";

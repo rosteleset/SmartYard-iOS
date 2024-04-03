@@ -1,36 +1,36 @@
 
 /* Class = "UILabel"; text = "Вести журнал событий"; ObjectID = "2pG-Oj-xOo"; */
-"2pG-Oj-xOo.text" = "Вести журнал событий";
+"2pG-Oj-xOo.text" = "Оқиғалар журналын жүргізу";
 
 /* Class = "UILabel"; text = "Настройки адреса"; ObjectID = "8Eq-Xo-T29"; */
-"8Eq-Xo-T29.text" = "Настройки адреса";
+"8Eq-Xo-T29.text" = "Мекен-жай параметрлері";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Lv1-z9-kae"; */
-"Lv1-z9-kae.text" = "Label";
+"Lv1-z9-kae.text" = "Құжат атауы";
 
 /* Class = "UILabel"; text = "Получать бумажные счета"; ObjectID = "Pul-Vy-tR0"; */
-"Pul-Vy-tR0.text" = "Получать бумажные счета";
+"Pul-Vy-tR0.text" = "Қағаз есептіктерін алу";
 
 /* Class = "UILabel"; text = "Домофон"; ObjectID = "TyT-G0-g5P"; */
 "TyT-G0-g5P.text" = "Домофон";
 
 /* Class = "UILabel"; text = "Интерком включен"; ObjectID = "Uhf-0U-VJx"; */
-"Uhf-0U-VJx.text" = "Интерком включен";
+"Uhf-0U-VJx.text" = "Интерком қосылған";
 
 /* Class = "UILabel"; text = "Режим \"Белый кролик\""; ObjectID = "cfP-r1-vq0"; */
-"cfP-r1-vq0.text" = "Режим \"Белый кролик\"";
+"cfP-r1-vq0.text" = "Режим \"Ақ айық\"";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "dvv-PF-VJi"; */
-"dvv-PF-VJi.normalTitle" = "Button";
+"dvv-PF-VJi.normalTitle" = "Түймешік";
 
 /* Class = "UILabel"; text = "Распознавать лица"; ObjectID = "hUw-Nq-3Y7"; */
-"hUw-Nq-3Y7.text" = "Распознавать лица";
+"hUw-Nq-3Y7.text" = "Беталарды анықтау";
 
 /* Class = "UIButton"; normalTitle = "Удалить адрес"; ObjectID = "kq1-WA-VLg"; */
-"kq1-WA-VLg.normalTitle" = "Удалить адрес";
+"kq1-WA-VLg.normalTitle" = "Мекенжайды жою";
 
 /* Class = "UILabel"; text = "Скрыть журнал событий\nот других пользователей квартиры"; ObjectID = "oYC-ZJ-cYh"; */
-"oYC-ZJ-cYh.text" = "Скрыть журнал событий\nот других пользователей квартиры";
+"oYC-ZJ-cYh.text" = "Басқа жайлардың қонақтарынан\nоқиғалар журналын жасыру";
 
 /* Class = "UILabel"; text = "Принимать вызовы"; ObjectID = "r25-qp-rMe"; */
-"r25-qp-rMe.text" = "Принимать вызовы";
+"r25-qp-rMe.text" = "Шағымдарды қабылдау";

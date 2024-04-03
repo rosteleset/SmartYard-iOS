@@ -1,18 +1,18 @@
 
 /* Class = "UILabel"; text = "При удалении адреса вам будет недоступно управление услугами адреса"; ObjectID = "3ej-st-xQH"; */
-"3ej-st-xQH.text" = "При удалении адреса вам будет недоступно управление услугами адреса";
+"3ej-st-xQH.text" = "Мекен-жай жою кезінде сізге мекен-жай қызметтерін басқару мүмкіндігі болмайды";
 
 /* Class = "UILabel"; text = "Хочу расторгнуть договор"; ObjectID = "EG4-P3-gKW"; */
-"EG4-P3-gKW.text" = "Хочу расторгнуть договор";
+"EG4-P3-gKW.text" = "Шартты тоқтату керек";
 
 /* Class = "UILabel"; text = "Другое"; ObjectID = "dNu-fF-o5e"; */
-"dNu-fF-o5e.text" = "Другое";
+"dNu-fF-o5e.text" = "Басқа";
 
 /* Class = "UIButton"; normalTitle = "Отмена"; ObjectID = "nlH-Pd-ANd"; */
-"nlH-Pd-ANd.normalTitle" = "Отмена";
+"nlH-Pd-ANd.normalTitle" = "Болдырма";
 
 /* Class = "UIButton"; normalTitle = "Удалить"; ObjectID = "puN-ny-jxO"; */
-"puN-ny-jxO.normalTitle" = "Удалить";
+"puN-ny-jxO.normalTitle" = "Жою";
 
 /* Class = "UILabel"; text = "Укажите причину"; ObjectID = "yh9-uz-hcE"; */
-"yh9-uz-hcE.text" = "Укажите причину";
+"yh9-uz-hcE.text" = "Себепті көрсетіңіз";

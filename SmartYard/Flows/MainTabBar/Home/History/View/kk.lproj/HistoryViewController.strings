@@ -1,12 +1,13 @@
 
 /* Class = "UILabel"; text = "Журнал событий"; ObjectID = "44I-US-rjd"; */
-"44I-US-rjd.text" = "Журнал событий";
+"44I-US-rjd.text" = "Оқиғалар журналы";
 
 /* Class = "UIButton"; normalTitle = "Квартира, все"; ObjectID = "QPa-0r-0rp"; */
-"QPa-0r-0rp.normalTitle" = "Квартира, все";
+"QPa-0r-0rp.normalTitle" = "Құрылым, барлығы";
 
 /* Class = "UILabel"; text = "г. Тамбов, ул. Советская, 16"; ObjectID = "UPE-Nc-jsD"; */
 "UPE-Nc-jsD.text" = "г. Тамбов, ул. Советская, 16";
 
 /* Class = "UIButton"; normalTitle = "Все"; ObjectID = "n17-MI-9sr"; */
-"n17-MI-9sr.normalTitle" = "Все";
+"n17-MI-9sr.normalTitle" = "Барлық";
+
