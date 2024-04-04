@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PinCodeViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
@@ -31,42 +36,49 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fyG-BD-Iur" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="113" width="414" height="783"/>
+                    <rect key="frame" x="0.0" y="117" width="414" height="779"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Введите код из СМС,  отправленный на номер +79025308094" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDz-2O-KUv">
-                            <rect key="frame" x="80" y="36" width="254" height="31.5"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <rect key="frame" x="97" y="36" width="220" height="33"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="13"/>
                             <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8f-g0-jL7">
-                            <rect key="frame" x="107" y="96" width="200" height="30"/>
-                            <state key="normal" title="Исправить номер телефона">
-                                <color key="titleColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c8f-g0-jL7">
+                            <rect key="frame" x="115" y="97.5" width="184" height="31"/>
+                            <state key="normal">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="Исправить номер телефона">
+                                        <attributes>
+                                            <color key="NSColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="15" name="SourceSansPro-Regular"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                             </state>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mfp-YF-jc5" customClass="PinTextField" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="5" y="146" width="404" height="80"/>
+                            <rect key="frame" x="5" y="148.5" width="404" height="80"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="80" id="K1v-AC-dBA"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8mg-56-oeR">
-                            <rect key="frame" x="0.0" y="661" width="414" height="60"/>
+                            <rect key="frame" x="0.0" y="657" width="414" height="60"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cMX-s0-EoV">
                                     <rect key="frame" x="20" y="14" width="374" height="32"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Отправить код повторно можно через" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GMd-is-zf9">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="16"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="13"/>
                                             <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26f-34-CC5">
-                                            <rect key="frame" x="170" y="19" width="34.5" height="16"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <rect key="frame" x="172.5" y="19" width="29.5" height="16"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="13"/>
                                             <color key="textColor" red="0.42745098039215684" green="0.47843137254901957" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -82,13 +94,20 @@
                                         <constraint firstItem="26f-34-CC5" firstAttribute="top" secondItem="GMd-is-zf9" secondAttribute="bottom" constant="3" id="q71-r4-MT2"/>
                                     </constraints>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8gN-95-GzJ" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8gN-95-GzJ" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="40" y="0.0" width="334" height="60"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="60" id="XU3-Ig-IIC"/>
                                     </constraints>
-                                    <state key="normal" title="Отправить код повторно">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal">
+                                        <attributedString key="attributedTitle">
+                                            <fragment content="Отправить код повторно">
+                                                <attributes>
+                                                    <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <font key="NSFont" size="15" name="SourceSansPro-Regular"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
                                     </state>
                                 </button>
                             </subviews>
