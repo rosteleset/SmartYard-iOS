@@ -226,6 +226,13 @@ class OnlinePageViewController: BaseViewController {
         }
     }
     
+    fileprivate func calculateSectionInsetForCollection() -> CGFloat {
+        let collectionViewWidth = camerasFlowLayout.collectionView!.frame.width
+        let itemWidth: CGFloat = 280
+        let inset = (collectionViewWidth - itemWidth) / 4
+        return inset
+    }
+    
     fileprivate func configureFlowLayoutItemSize(flowLayout: UICollectionViewFlowLayout) {
         let inset: CGFloat = calculateSectionInsetForCollection()
         
@@ -242,13 +249,6 @@ class OnlinePageViewController: BaseViewController {
         let rowHeight = buttonSize.height + CGFloat(inset)
         let rows = round(collectionHeight / rowHeight)
         return Int(rows)
-    }
-    
-    fileprivate func calculateSectionInsetForCollection() -> CGFloat {
-        let collectionViewWidth = camerasFlowLayout.collectionView!.frame.width
-        let itemWidth: CGFloat = 280
-        let inset = (collectionViewWidth - itemWidth) / 4
-        return inset
     }
     
     fileprivate func calculateItemsPerCell(totalItemCount: Int, itemsPerRow: Int, rowsPerPage: Int) {
@@ -406,11 +406,10 @@ extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
                     usingSpringWithDamping: 1,
                     initialSpringVelocity: velocity.x,
                     options: .allowUserInteraction,
-                    animations: 
-                        {
-                            scrollView.contentOffset = CGPoint(x: toValue, y: 0)
-                            scrollView.layoutIfNeeded()
-                        },
+                    animations: {
+                        scrollView.contentOffset = CGPoint(x: toValue, y: 0)
+                        scrollView.layoutIfNeeded()
+                    },
                     completion: nil
                 )
                 
@@ -419,7 +418,7 @@ extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
                 camerasFlowLayout.collectionView!.scrollToItem(
                     at: indexPath,
                     at: .centeredHorizontally,
-                    animated: false
+                    animated: true
                 )
             }
         }
@@ -428,23 +427,26 @@ extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if camerasCollectionView == scrollView {
             if !decelerate {
-                handleScrollViewEnd()
+                updatePointCell()
             }
         }
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if camerasCollectionView == scrollView {
-            handleScrollViewEnd()
+            updatePointCell()
         }
     }
     
-    fileprivate func handleScrollViewEnd() {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        updateCameraCell()
+    }
+    
+    fileprivate func updateCameraCell() {
         guard let center = camerasCollectionView.getCenterPoint() else {
             return
         }
-        
-        guard let indexPath = camerasCollectionView!.indexPathForItem(at: center) else {
+        guard let indexPath = camerasCollectionView.indexPathForItem(at: center) else {
             return
         }
         
@@ -454,6 +456,16 @@ extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
             }
             focusedCellIndexPath = indexPath
             onItemFocused(indexPath: indexPath)
+        }
+    }
+    
+    fileprivate func updatePointCell() {
+        guard let center = camerasCollectionView.getCenterPoint() else {
+            return
+        }
+        
+        guard let indexPath = camerasCollectionView!.indexPathForItem(at: center) else {
+            return
         }
         
         for cell in pointsCollectionView.visibleCells {
