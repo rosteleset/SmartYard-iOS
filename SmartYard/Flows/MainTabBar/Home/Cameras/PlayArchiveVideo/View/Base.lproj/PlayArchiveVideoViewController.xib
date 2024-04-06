@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -96,18 +96,18 @@
                                     <rect key="frame" x="0.0" y="0.0" width="358" height="242"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAW-UT-jVM">
-                                            <rect key="frame" x="12" y="12" width="22" height="11"/>
+                                            <rect key="frame" x="12" y="12" width="22" height="24"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="11" id="6cj-Qw-qFs"/>
+                                                <constraint firstAttribute="height" constant="24" id="6cj-Qw-qFs"/>
                                             </constraints>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" image="SoundOff"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTb-NK-D3v">
-                                            <rect key="frame" x="330" y="12" width="16" height="11"/>
+                                            <rect key="frame" x="322" y="12" width="24" height="24"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="16" id="9yt-8V-NdD"/>
-                                                <constraint firstAttribute="height" constant="11" id="UgS-9m-pLQ"/>
+                                                <constraint firstAttribute="width" constant="24" id="9yt-8V-NdD"/>
+                                                <constraint firstAttribute="height" constant="24" id="UgS-9m-pLQ"/>
                                             </constraints>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <state key="normal" image="Fullscreen"/>
@@ -365,14 +365,11 @@
             <point key="canvasLocation" x="137.68115942028987" y="128.57142857142856"/>
         </view>
     </objects>
-    <designables>
-        <designable name="lT9-Mp-zMH"/>
-    </designables>
     <resources>
         <image name="CameraIcon" width="30" height="26"/>
         <image name="FastBackward" width="47" height="47"/>
         <image name="FastForward" width="47" height="47"/>
-        <image name="Fullscreen" width="16" height="11"/>
+        <image name="Fullscreen" width="24" height="24"/>
         <image name="MainBackground" width="375" height="812"/>
         <image name="SoundOff" width="22" height="23"/>
         <systemColor name="systemBackgroundColor">
