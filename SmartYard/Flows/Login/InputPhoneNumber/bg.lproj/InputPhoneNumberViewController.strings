@@ -1,9 +1,8 @@
 
-/* Class = "UILabel"; text = "Введите номер телефона  для регистрации"; ObjectID = "5mZ-NZ-IAo"; */
-"5mZ-NZ-IAo.text" = "Введите номер телефона  для регистрации";
+/* Class = "UILabel"; text = "Введите номер телефона для регистрации"; ObjectID = "5mZ-NZ-IAo"; */ "5mZ-NZ-IAo.text" = "Въведете телефонния номер за регистрация";
 
 /* Class = "UIButton"; normalTitle = "Вернуться к выбору провайдера"; ObjectID = "IHg-lz-EEz"; */
-"IHg-lz-EEz.normalTitle" = "Вернуться к выбору провайдера";
+"IHg-lz-EEz.normalTitle" = "Върнете се към избора на доставчик";
 
 /* Class = "UILabel"; text = "Назание провайдера"; ObjectID = "mFk-jt-akI"; */
-"mFk-jt-akI.text" = "Назание провайдера";
+"mFk-jt-akI.text" = "Име на доставчика";

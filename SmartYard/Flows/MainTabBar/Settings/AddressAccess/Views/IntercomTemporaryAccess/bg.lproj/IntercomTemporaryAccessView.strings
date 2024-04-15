@@ -1,15 +1,15 @@
 
 /* Class = "UILabel"; text = "Гостевой доступ на час"; ObjectID = "7lW-Yj-xxP"; */
-"7lW-Yj-xxP.text" = "Гостевой доступ на час";
+"7lW-Yj-xxP.text" = "Гостов достъп за час";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "F3N-qO-4bf"; */
-"F3N-qO-4bf.normalTitle" = "Button";
+"F3N-qO-4bf.normalTitle" = "Бутон";
 
 /* Class = "UIButton"; normalTitle = "Открыть"; ObjectID = "enN-rb-QVd"; */
-"enN-rb-QVd.normalTitle" = "Открыть";
+"enN-rb-QVd.normalTitle" = "Отвори";
 
 /* Class = "UILabel"; text = "Код открытия"; ObjectID = "puz-1u-oTr"; */
-"puz-1u-oTr.text" = "Код открытия";
+"puz-1u-oTr.text" = "Код за отваряне";
 
 /* Class = "UILabel"; text = "Временный доступ к домофону"; ObjectID = "tfD-m2-Zi6"; */
-"tfD-m2-Zi6.text" = "Временный доступ к домофону";
+"tfD-m2-Zi6.text" = "Временен достъп до домофона";

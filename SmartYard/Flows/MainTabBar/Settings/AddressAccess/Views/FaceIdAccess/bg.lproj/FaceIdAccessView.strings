@@ -1,15 +1,15 @@
 
 /* Class = "UILabel"; text = "Вход по лицу без ключа"; ObjectID = "X41-NV-dVv"; */
-"X41-NV-dVv.text" = "Вход по лицу без ключа";
+"X41-NV-dVv.text" = "Вход с лице без ключ";
 
 /* Class = "UIButton"; normalTitle = "Настроить"; ObjectID = "cKZ-vB-e1c"; */
-"cKZ-vB-e1c.normalTitle" = "Настроить";
+"cKZ-vB-e1c.normalTitle" = "Настройте";
 
 /* Class = "UILabel"; text = "Распознавание лиц отключено владельцем квартиры"; ObjectID = "gy9-BF-Mh4"; */
-"gy9-BF-Mh4.text" = "Распознавание лиц отключено владельцем квартиры";
+"gy9-BF-Mh4.text" = "Разпознаването на лица е изключено от собственика на апартамента";
 
 /* Class = "UILabel"; text = "beta"; ObjectID = "iZK-e1-rDt"; */
-"iZK-e1-rDt.text" = "beta";
+"iZK-e1-rDt.text" = "бета";
 
 /* Class = "UILabel"; text = "Зарегистрированные лица"; ObjectID = "pz7-6N-TqU"; */
-"pz7-6N-TqU.text" = "Зарегистрированные лица";
+"pz7-6N-TqU.text" = "Регистрирани лица";

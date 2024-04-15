@@ -1,9 +1,9 @@
 
 /* Class = "UILabel"; text = "Услуга не подключена"; ObjectID = "FRg-G2-ZvH"; */
-"FRg-G2-ZvH.text" = "Услуга не подключена";
+"FRg-G2-ZvH.text" = "Услугата не е активирана";
 
 /* Class = "UILabel"; text = "Если хотите активировать услугу,  оставьте заявку"; ObjectID = "KnB-CN-jeP"; */
-"KnB-CN-jeP.text" = "Если хотите активировать услугу,  оставьте заявку";
+"KnB-CN-jeP.text" = "Ако искате да активирате услугата, оставете заявка";
 
 /* Class = "UIButton"; normalTitle = "Оставить заявку"; ObjectID = "WOW-JA-L8S"; */
-"WOW-JA-L8S.normalTitle" = "Оставить заявку";
+"WOW-JA-L8S.normalTitle" = "Оставете заявка";

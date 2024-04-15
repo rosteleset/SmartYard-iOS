@@ -1,9 +1,9 @@
 
 /* Class = "UIButton"; normalTitle = "Проверить доступные услуги"; ObjectID = "P3p-cv-8sH"; */
-"P3p-cv-8sH.normalTitle" = "Проверить доступные услуги";
+"P3p-cv-8sH.normalTitle" = "Проверете наличните услуги";
 
 /* Class = "UILabel"; text = "Введите адрес"; ObjectID = "bEB-Xo-NYK"; */
-"bEB-Xo-NYK.text" = "Введите адрес";
+"bEB-Xo-NYK.text" = "Въведете адрес";
 
 /* Class = "UIButton"; normalTitle = "У меня есть QR-код"; ObjectID = "t7w-za-uue"; */
-"t7w-za-uue.normalTitle" = "У меня есть QR-код";
+"t7w-za-uue.normalTitle" = "Имам QR код";

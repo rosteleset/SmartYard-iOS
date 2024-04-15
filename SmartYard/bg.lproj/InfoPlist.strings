@@ -9,8 +9,8 @@
 "CFBundleDisplayName" = "Теледом";
 "UILaunchStoryboardName" = "LaunchScreen";
 
-"NSCameraUsageDescription" = "Доступ к камере нужен для возможности сканирования QR-кодов";
-"NSContactsUsageDescription" = "Доступ к списку контактов нужен для отображения имен и фотографий людей, на чьи номера выделен доступ к адресу";
-"NSLocationWhenInUseUsageDescription" = "Доступ к местоположению позволит отобразить Вашу позицию на карте";
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "Доступ к местоположению позволит отобразить Вашу позицию на карте";
-"NSMicrophoneUsageDescription" = "Доступ к микрофону нужен для передачи звука во время звонка";
+"NSCameraUsageDescription" = "Необходим е достъп до камерата за сканиране на QR кодове";
+"NSContactsUsageDescription" = "Необходим е достъп до списъка с контакти, за да се покажат имената и снимките на хората, които имат достъп до адреса";
+"NSLocationWhenInUseUsageDescription" = "Необходим е достъп до местоположението, за да се покаже вашето местоположение на картата"; "NSLocationAlwaysAndWhenInUseUsageDescription" = "Необходим е достъп до местоположението, за да се покаже вашето местоположение на картата";
+"NSMicrophoneUsageDescription" = "Необходим е достъп до микрофона за изпращане на аудио по време на обаждане";
+

@@ -1,33 +1,33 @@
 
 /* Class = "UILabel"; text = "Общие настройки"; ObjectID = "Fyv-Y1-rkc"; */
-"Fyv-Y1-rkc.text" = "Общие настройки";
+"Fyv-Y1-rkc.text" = "Общи настройки";
 
-/* Class = "UILabel"; text = "Прислать уведомление, когда баланс приблизится к нулю"; ObjectID = "Se0-Td-bhj"; */
-"Se0-Td-bhj.text" = "Прислать уведомление, когда баланс приблизится к нулю";
+/* Class = "UILabel"; text = "Прислать уведомление, когда баланст приблизится к нулю"; ObjectID = "Se0-Td-bhj"; */
+"Se0-Td-bhj.text" = "Изпратете известие, когато балансът се приближи до нула";
 
 /* Class = "UILabel"; text = "Уведомления"; ObjectID = "Udn-vA-xLw"; */
-"Udn-vA-xLw.text" = "Уведомления";
+"Udn-vA-xLw.text" = "Известия";
 
 /* Class = "UILabel"; text = "Оповещать о недостатке средств"; ObjectID = "VJ4-nm-C6t"; */
-"VJ4-nm-C6t.text" = "Оповещать о недостатке средств";
+"VJ4-nm-C6t.text" = "Информирайте за недостиг на средства";
 
 /* Class = "UILabel"; text = "Использовать CallKit"; ObjectID = "XUA-3w-YEb"; */
-"XUA-3w-YEb.text" = "Использовать CallKit";
+"XUA-3w-YEb.text" = "Използвайте CallKit";
 
 /* Class = "UILabel"; text = "+7 (964) 134 00 00"; ObjectID = "Zey-yG-NRX"; */
 "Zey-yG-NRX.text" = "+7 (964) 134 00 00";
 
 /* Class = "UILabel"; text = "Громкая связь по умолчанию"; ObjectID = "dKt-Xe-i1X"; */
-"dKt-Xe-i1X.text" = "Громкая связь по умолчанию";
+"dKt-Xe-i1X.text" = "Говорител по подразбиране";
 
 /* Class = "UIButton"; normalTitle = "Выйти"; ObjectID = "lGe-ZA-fd6"; */
-"lGe-ZA-fd6.normalTitle" = "Выйти";
+"lGe-ZA-fd6.normalTitle" = "Изход";
 
 /* Class = "UILabel"; text = "Звонки"; ObjectID = "mSK-dn-aYH"; */
-"mSK-dn-aYH.text" = "Звонки";
+"mSK-dn-aYH.text" = "Обаждания";
 
 /* Class = "UILabel"; text = "Показывать уведомления"; ObjectID = "tfa-8o-Ay8"; */
-"tfa-8o-Ay8.text" = "Показывать уведомления";
+"tfa-8o-Ay8.text" = "Показвайте известия";
 
 /* Class = "UILabel"; text = "Александр Сергеевич"; ObjectID = "xe0-3V-fgv"; */
-"xe0-3V-fgv.text" = "Александр Сергеевич";
+"xe0-3V-fgv.text" = "Александър Сергеевич";
