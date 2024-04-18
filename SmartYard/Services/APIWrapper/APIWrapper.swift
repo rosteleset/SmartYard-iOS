@@ -30,8 +30,6 @@ class APIWrapper {
     var forceUpdatePayments = false
     var forceUpdateIssues = false
     
-    let issueVersion: IssuesVersion
-    
     var isReachable: Bool {
         return reachability.isReachable
     }
@@ -40,8 +38,6 @@ class APIWrapper {
         self.accessService = accessService
         
         reachability = NetworkReachabilityManager()!
-        
-        issueVersion = (accessService.issuesVersion == "1") ? .version1 : .version2
         
         isReachableObservable = BehaviorSubject<Bool>(value: reachability.isReachable)
         

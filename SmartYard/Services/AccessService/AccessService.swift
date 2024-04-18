@@ -301,12 +301,12 @@ class AccessService {
         }
     }
     
-    var issuesVersion: String {
+    var issuesVersion: IssuesVersion {
         get {
-            UserDefaults.standard.value(forKey: issuesVersionKey) as? String ?? "1"
+            UserDefaults.standard.object(IssuesVersion.self, with: issuesVersionKey) ?? .version1
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: issuesVersionKey)
+            UserDefaults.standard.set(object: newValue, forKey: issuesVersionKey)
         }
     }
     
@@ -356,7 +356,7 @@ class AccessService {
         paymentsUrl = ""
         supportPhone = ""
         showChat = false
-        issuesVersion = ""
+        issuesVersion = .version1
         chatId = ""
         chatDomain = ""
         chatToken = ""

@@ -21,7 +21,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        switch issueVersion {
+        switch accessService.issuesVersion {
         case .version1:
             let request = CreateIssueRequest(accessToken: accessToken, issue: issueV1!)
             
@@ -54,7 +54,7 @@ extension APIWrapper {
         let forceRefresh = forceUpdateIssues || forceRefresh
         forceUpdateIssues = false
         
-        switch issueVersion {
+        switch accessService.issuesVersion {
         case .version1:
             let request = GetListConnectRequest(accessToken: accessToken, forceRefresh: forceRefresh)
             
@@ -83,7 +83,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        switch issueVersion {
+        switch accessService.issuesVersion {
         case .version1:
             let request = ActionIssueRequest(
                 accessToken: accessToken,
@@ -121,7 +121,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        switch issueVersion {
+        switch accessService.issuesVersion {
         case .version1:
             let request = ActionIssueRequest(
                 accessToken: accessToken,
@@ -160,7 +160,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        switch issueVersion {
+        switch accessService.issuesVersion {
         case .version1:
             let request = CommentIssueRequest(
                 accessToken: accessToken,

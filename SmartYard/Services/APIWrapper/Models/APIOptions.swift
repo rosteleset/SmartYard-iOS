@@ -22,7 +22,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let timeZone: String?
     let cctvView: CCTVViewType
     let activeTab: TabNames
-    let issuesVersion: String?
+    let issuesVersion: IssuesVersion?
     
     private enum CodingKeys: String, CodingKey {
         case paymentsUrl
@@ -82,6 +82,16 @@ struct APIOptions: Decodable, EmptyDataInitializable {
             guestAccessOnOnly = true
         }
         
+        if let issuesVersionRaw = try? container.decode(String.self, forKey: .issuesVersion) {
+            switch issuesVersionRaw {
+            case "1": issuesVersion = .version1
+            case "2": issuesVersion = .version2
+            default: issuesVersion = nil
+            }
+        } else {
+            issuesVersion = nil
+        }
+        
         chatOptions = try? container.decode(ChatOptions.self, forKey: .chatOptions)
         paymentsUrl = try? container.decode(String.self, forKey: .paymentsUrl)
         chatUrl = try? container.decode(String.self, forKey: .chatUrl)
@@ -89,7 +99,6 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         timeZone = try? container.decode(String.self, forKey: .timeZone)
         cctvView = (try? container.decode(CCTVViewType.self, forKey: .cctvView)) ?? .list
         activeTab = (try? container.decode(TabNames.self, forKey: .activeTab)) ?? .addresses
-        issuesVersion = (try? container.decode(String.self, forKey: .issuesVersion))
     }
     
     init() {

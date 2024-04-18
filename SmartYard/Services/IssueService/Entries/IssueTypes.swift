@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum IssuesVersion {
+enum IssuesVersion: Codable {
     
     case version1
     case version2

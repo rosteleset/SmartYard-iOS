@@ -24,7 +24,7 @@ class IssueService {
     // экран 37 - Запрос записи
     func sendRequestRecIssue(camera: CityCameraObject, date: Date, duration: Int, notes: String) -> Single<CreateIssueResponseData?> {
         
-        switch apiWrapper.issueVersion {
+        switch accessService.issuesVersion {
         case .version1:
             let issue = Issue(
                 issueType: .requestRec(
@@ -50,7 +50,7 @@ class IssueService {
     // экран 35 - Меню
     func sendCallbackIssue() -> Single<CreateIssueResponseData?> {
         
-        switch apiWrapper.issueVersion {
+        switch accessService.issuesVersion {
         case .version1:
             let issue = Issue(issueType: .orderCallback)
             return apiWrapper.sendIssue(issueV1: issue)
@@ -60,14 +60,13 @@ class IssueService {
                 userName: accessService.clientName?.name
             )
             return apiWrapper.sendIssue(issueV2: issue)
-
         }
     }
     
     // экран 19 и 34.00
     func sendNothingRememberIssue() -> Single<CreateIssueResponseData?> {
         
-        switch apiWrapper.issueVersion {
+        switch accessService.issuesVersion {
         case .version1:
             let issue = Issue(issueType: .dontRememberAnythingIssue(userInfo: getUserInfo(address: nil, clientId: nil)))
             return apiWrapper.sendIssue(issueV1: issue)
@@ -91,7 +90,7 @@ class IssueService {
                 let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
 
-                switch apiWrapper.issueVersion {
+                switch accessService.issuesVersion {
                 case .version1:
                     let issue = Issue(
                         issueType: .confirmAddressByCourierIssue(
@@ -123,7 +122,7 @@ class IssueService {
                 let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
                 
-                switch apiWrapper.issueVersion {
+                switch accessService.issuesVersion {
                 case .version1:
                     let issue = Issue(
                         issueType: .confirmAddressInOfficeIssue(
@@ -155,7 +154,7 @@ class IssueService {
                 let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
                   
-                switch apiWrapper.issueVersion {
+                switch accessService.issuesVersion {
                 case .version1:
                     let issue = Issue(
                         issueType: .deleteAddressIssue(
@@ -192,7 +191,7 @@ class IssueService {
                 let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
 
-                switch apiWrapper.issueVersion {
+                switch accessService.issuesVersion {
                 case .version1:
                     let issue = Issue(
                         issueType: .servicesUnavailableIssue(
@@ -229,7 +228,7 @@ class IssueService {
                 let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
                                 
-                switch apiWrapper.issueVersion {
+                switch accessService.issuesVersion {
                 case .version1:
                     let issue = Issue(
                         issueType: .comeInOfficeMyselfIssue(
@@ -266,7 +265,7 @@ class IssueService {
                 let latitude = unwrappedResponse.lat.replacingOccurrences(of: ".", with: ",")
                 let longitude = unwrappedResponse.lon.replacingOccurrences(of: ".", with: ",")
                                 
-                switch apiWrapper.issueVersion {
+                switch accessService.issuesVersion {
                 case .version1:
                     let issue = Issue(
                         issueType: .connectOnlyNonHousesServices(
