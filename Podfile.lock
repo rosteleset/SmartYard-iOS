@@ -115,7 +115,21 @@ PODS:
   - JGProgressHUD (2.2)
   - JTAppleCalendar (8.0.5)
   - Kingfisher (7.11.0)
-  - linphone-sdk (5.3.34)
+  - linphone-sdk (5.2.28):
+    - linphone-sdk/all-frameworks (= 5.2.28)
+    - linphone-sdk/app-extension (= 5.2.28)
+    - linphone-sdk/app-extension-swift (= 5.2.28)
+    - linphone-sdk/basic-frameworks (= 5.2.28)
+    - linphone-sdk/swift (= 5.2.28)
+  - linphone-sdk/all-frameworks (5.2.28)
+  - linphone-sdk/app-extension (5.2.28)
+  - linphone-sdk/app-extension-swift (5.2.28):
+    - linphone-sdk/app-extension
+  - linphone-sdk/basic-frameworks (5.2.28):
+    - linphone-sdk/app-extension
+  - linphone-sdk/swift (5.2.28):
+    - linphone-sdk/app-extension-swift
+    - linphone-sdk/basic-frameworks
   - lottie-ios (4.4.1)
   - MapboxCommon (24.2.0)
   - MapboxCoreMaps (11.2.0):
@@ -213,7 +227,7 @@ DEPENDENCIES:
   - JGProgressHUD
   - JTAppleCalendar
   - Kingfisher
-  - linphone-sdk
+  - linphone-sdk (= 5.2.28)
   - lottie-ios
   - MapboxMaps
   - Moya/RxSwift
@@ -335,7 +349,7 @@ SPEC CHECKSUMS:
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   JTAppleCalendar: 16c6501b22cb27520372c28b0a2e0b12c8d0cd73
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
-  linphone-sdk: af97eb2199a042c23fe7e138d6a70336c6809733
+  linphone-sdk: a70028a240027557ab10cae46cabca59ca80e3f2
   lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
   MapboxCommon: f40f1e8c8f3ee8e2bee3b15437812ab114722420
   MapboxCoreMaps: 4294d3178201702a95f2ae316bc4ad419f5fa16a
@@ -367,6 +381,6 @@ SPEC CHECKSUMS:
   WKCookieWebView: 528260c9cf7d89d312d61639cfca75c5618326a2
   XCoordinator: 2cf9f72e10998b7a4a4bbeac3d07e071ea82fca3
 
-PODFILE CHECKSUM: 06cbc6e71a29f0466f643b54a478c8b7ee3c4060
+PODFILE CHECKSUM: cf5a5d09f744bf2b3f56c5bec9616bd99a6b47cf
 
 COCOAPODS: 1.15.2

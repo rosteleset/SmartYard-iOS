@@ -11,7 +11,7 @@ target 'SmartYard' do
   # Networking
   pod 'Moya/RxSwift' 
   pod 'Kingfisher'
-  pod 'linphone-sdk' #, '4.4.28'
+  pod 'linphone-sdk', '5.2.28'
   pod 'WKCookieWebView', '~> 2.0'
   pod 'WebRTC-lib'
   
