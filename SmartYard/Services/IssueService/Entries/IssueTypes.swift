@@ -8,13 +8,6 @@
 
 import Foundation
 
-enum IssuesVersion: Codable {
-    
-    case version1
-    case version2
-    
-}
-
 struct Issue {
     
     let issueFields: [String: String]

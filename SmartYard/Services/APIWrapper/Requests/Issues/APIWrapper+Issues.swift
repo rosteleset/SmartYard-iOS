@@ -22,14 +22,7 @@ extension APIWrapper {
         }
         
         switch accessService.issuesVersion {
-        case .version1:
-            let request = CreateIssueRequest(accessToken: accessToken, issue: issueV1!)
-            
-            return provider.rx
-                .request(.createIssue(request: request))
-                .convertNoConnectionError()
-                .mapAsDefaultResponse()
-        case .version2:
+        case "2":
             let request = CreateIssueV2Request(
                 accessToken: accessToken,
                 issue: issueV2!
@@ -37,6 +30,13 @@ extension APIWrapper {
             
             return provider.rx
                 .request(.createIssueV2(request: request))
+                .convertNoConnectionError()
+                .mapAsDefaultResponse()
+        default:
+            let request = CreateIssueRequest(accessToken: accessToken, issue: issueV1!)
+            
+            return provider.rx
+                .request(.createIssue(request: request))
                 .convertNoConnectionError()
                 .mapAsDefaultResponse()
         }
@@ -55,19 +55,19 @@ extension APIWrapper {
         forceUpdateIssues = false
         
         switch accessService.issuesVersion {
-        case .version1:
-            let request = GetListConnectRequest(accessToken: accessToken, forceRefresh: forceRefresh)
-            
-            return provider.rx
-                .request(.getListConnect(request: request))
-                .convertNoConnectionError()
-                .mapAsEmptyDataInitializableResponse()
-                .mapToOptional()
-        case .version2:
+        case "2":
             let request = GetListConnectV2Request(accessToken: accessToken, forceRefresh: forceRefresh)
             
             return provider.rx
                 .request(.getListConnectV2(request: request))
+                .convertNoConnectionError()
+                .mapAsEmptyDataInitializableResponse()
+                .mapToOptional()
+        default:
+            let request = GetListConnectRequest(accessToken: accessToken, forceRefresh: forceRefresh)
+            
+            return provider.rx
+                .request(.getListConnect(request: request))
                 .convertNoConnectionError()
                 .mapAsEmptyDataInitializableResponse()
                 .mapToOptional()
@@ -84,7 +84,19 @@ extension APIWrapper {
         }
         
         switch accessService.issuesVersion {
-        case .version1:
+        case "2":
+            let request = ActionIssueV2Request(
+                accessToken: accessToken,
+                key: key,
+                action: .close
+            )
+            
+            return provider.rx
+                .request(.actionIssueV2(request: request))
+                .convertNoConnectionError()
+                .mapAsVoidResponse()
+                .mapToOptional()
+        default:
             let request = ActionIssueRequest(
                 accessToken: accessToken,
                 key: key,
@@ -94,18 +106,6 @@ extension APIWrapper {
             
             return provider.rx
                 .request(.actionIssue(request: request))
-                .convertNoConnectionError()
-                .mapAsVoidResponse()
-                .mapToOptional()
-        case .version2:
-            let request = ActionIssueV2Request(
-                accessToken: accessToken, 
-                key: key,
-                action: .close
-            )
-            
-            return provider.rx
-                .request(.actionIssueV2(request: request))
                 .convertNoConnectionError()
                 .mapAsVoidResponse()
                 .mapToOptional()
@@ -122,20 +122,7 @@ extension APIWrapper {
         }
         
         switch accessService.issuesVersion {
-        case .version1:
-            let request = ActionIssueRequest(
-                accessToken: accessToken,
-                key: key,
-                action: "Jelly.Способ доставки",
-                customFields: newMethod.deliveryCustomFields
-            )
-
-            return provider.rx
-                .request(.actionIssue(request: request))
-                .convertNoConnectionError()
-                .mapAsVoidResponse()
-                .mapToOptional()
-        case .version2:
+        case "2":
             let request = ActionIssueV2Request(
                 accessToken: accessToken,
                 key: key,
@@ -145,6 +132,19 @@ extension APIWrapper {
             
             return provider.rx
                 .request(.actionIssueV2(request: request))
+                .convertNoConnectionError()
+                .mapAsVoidResponse()
+                .mapToOptional()
+        default:
+            let request = ActionIssueRequest(
+                accessToken: accessToken,
+                key: key,
+                action: "Jelly.Способ доставки",
+                customFields: newMethod.deliveryCustomFields
+            )
+
+            return provider.rx
+                .request(.actionIssue(request: request))
                 .convertNoConnectionError()
                 .mapAsVoidResponse()
                 .mapToOptional()
@@ -161,19 +161,7 @@ extension APIWrapper {
         }
         
         switch accessService.issuesVersion {
-        case .version1:
-            let request = CommentIssueRequest(
-                accessToken: accessToken,
-                key: key,
-                comment: newMethod.deliveryComment
-            )
-            
-            return provider.rx
-                .request(.commentIssue(request: request))
-                .convertNoConnectionError()
-                .mapAsVoidResponse()
-                .mapToOptional()
-        case .version2:
+        case "2":
             let request = CommentIssueV2Request(
                 accessToken: accessToken,
                 key: key,
@@ -182,6 +170,18 @@ extension APIWrapper {
             
             return provider.rx
                 .request(.commentIssueV2(request: request))
+                .convertNoConnectionError()
+                .mapAsVoidResponse()
+                .mapToOptional()
+        default:
+            let request = CommentIssueRequest(
+                accessToken: accessToken,
+                key: key,
+                comment: newMethod.deliveryComment
+            )
+            
+            return provider.rx
+                .request(.commentIssue(request: request))
                 .convertNoConnectionError()
                 .mapAsVoidResponse()
                 .mapToOptional()

@@ -400,7 +400,7 @@ private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService
                     accessService.timeZone = timeZone
                 }
                 
-                accessService.issuesVersion = response.issuesVersion ?? .version1
+                accessService.issuesVersion = response.issuesVersion ?? "1"
                 accessService.cctvView = response.cctvView.rawValue
                 accessService.activeTab = response.activeTab.rawValue
                 
