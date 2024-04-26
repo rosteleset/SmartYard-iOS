@@ -443,7 +443,7 @@ class SettingsViewModel: BaseViewModel {
                 }
                 
                 let controlPanel: SettingsDataItem? = {
-                    guard item.contractOwner ?? false else {
+                    guard (item.contractOwner ?? false) || (item.flatOwner ?? false) else {
                         return nil
                     }
                     
