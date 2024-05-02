@@ -17,14 +17,12 @@ class CameraCollectionViewCell: UICollectionViewCell {
     
     var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
-  
-    var lastImage: UIImage?
-    
+      
     @IBOutlet private weak var cameraContainer: UIView!
     @IBOutlet private weak var fullscreenButton: UIButton!
     @IBOutlet private weak var soundToggleButton: UIButton!
     @IBOutlet private weak var videoLoadingAnimationView: LottieAnimationView!
-    @IBOutlet weak var image: AutoRefreshingCachedImageView!
+    @IBOutlet private weak var image: AutoRefreshingCachedImageView!
     
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
     private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: true)
@@ -48,9 +46,22 @@ class CameraCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         disposeBag = DisposeBag()
         player?.pause()
+        showImage()
         configureFullscreenButton()
         configureSoundToggleButton()
         bind()
+    }
+    
+    func showImage() {
+        DispatchQueue.main.async {
+            self.image.isHidden = false
+        }
+    }
+
+    private func hideImage() {
+        DispatchQueue.main.async {
+            self.image.isHidden = true
+        }
     }
     
     override func didMoveToSuperview() {
@@ -299,8 +310,6 @@ class CameraCollectionViewCell: UICollectionViewCell {
             let tracksStatus = asset.statusOfValue(forKey: "tracks", error: &tracksError)
             let durationStatus = asset.statusOfValue(forKey: "duration", error: &durationError)
             
-            // ВОТ ЗДЕСЬ ОСТАНОВЛЮСЬ
-            
             if tracksStatus == .cancelled ||
                 tracksStatus == .failed ||
                 durationStatus == .cancelled ||
@@ -353,13 +362,36 @@ class CameraCollectionViewCell: UICollectionViewCell {
                     print("Error getting isSoundOn value: \(error)")
                 }
                 
-             //   self?.playerLayer?.backgroundColor = UIColor.clear.cgColor
-                                
                 self?.player?.play()
-                
-                
                 self?.isVideoBeingLoaded.onNext(false)
             }
+        }
+    }
+    
+    override func observeValue(
+        forKeyPath keyPath: String?,
+        of object: Any?,
+        change: [NSKeyValueChangeKey : Any]?,
+        context: UnsafeMutableRawPointer?
+    ) {
+        guard keyPath == "status", let playerItem = object as? AVPlayerItem else {
+            super.observeValue(
+                forKeyPath: keyPath,
+                of: object,
+                change: change,
+                context: context
+            )
+            return
+        }
+        
+        switch playerItem.status {
+        case .readyToPlay:
+            hideImage()
+        case .failed, .unknown:
+            showImage()
+            print("Failed to load the video: \(String(describing: playerItem.error?.localizedDescription))")
+        default:
+            break
         }
     }
     
@@ -385,6 +417,8 @@ class CameraCollectionViewCell: UICollectionViewCell {
     
     func stopVideo() {
         player?.pause()
+        showImage()
+        
         if playerLayer != nil {
             playerLayer?.removeFromSuperlayer()
             playerLayer = nil
@@ -394,27 +428,15 @@ class CameraCollectionViewCell: UICollectionViewCell {
         isSoundOn.onNext(false)
     }
     
-    func saveLastImage(_ image: UIImage?) {
-        self.lastImage = image
-    }
-    
     func configure(curCamera: CameraObject, cache: NSCache<NSString, UIImage>) {
         self.camera = curCamera
         self.hasSound = curCamera.hasSound
-        
-        image.backgroundColor = .black
         
         if playerLayer != nil {
             playerLayer?.removeFromSuperlayer()
             playerLayer = nil
         }
         player = nil
-        
-        if let image = lastImage {
-            self.image.image = image
-        } else {
-            self.image.image = nil
-        }
         
         self.image.loadImageUsingUrlString(
             urlString: curCamera.previewURL, 

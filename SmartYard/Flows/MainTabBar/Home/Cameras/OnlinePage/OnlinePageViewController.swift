@@ -285,7 +285,6 @@ class OnlinePageViewController: BaseViewController {
             return
         }
         
-        cell?.saveLastImage(cell?.image.image)
         cell?.loadVideo()
     }
     
@@ -294,7 +293,6 @@ class OnlinePageViewController: BaseViewController {
         let cell = camerasCollectionView.cellForItem(at: indexPath) as? CameraCollectionViewCell
         
         cell?.stopVideo()
-        cell?.image.image = cell?.lastImage
     }
 }
 
