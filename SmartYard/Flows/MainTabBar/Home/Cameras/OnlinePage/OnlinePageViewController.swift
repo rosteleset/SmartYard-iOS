@@ -67,7 +67,7 @@ class OnlinePageViewController: BaseViewController {
     
     // MARK: - Public Methods
     func setCameras(_ cameras: [CameraObject], selectedCamera: CameraObject?) {
-        self.cameras = cameras
+        self.cameras = cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras
         
         pointsCollectionView.reloadData()
         camerasCollectionView.reloadData { [weak self] in
@@ -399,7 +399,7 @@ extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
                 let toValue = camerasFlowLayout.itemSize.width * CGFloat(snapToIndex)
                 
                 UIView.animate(
-                    withDuration: 0.3,
+                    withDuration: 0.5,
                     delay: 0,
                     usingSpringWithDamping: 1,
                     initialSpringVelocity: velocity.x,
