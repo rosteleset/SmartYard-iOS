@@ -84,18 +84,24 @@ enum MacroscopService {
                   
             else {
                 print(error?.localizedDescription ?? "")
-                completion("")
+                DispatchQueue.main.async {
+                    completion("")
+                }
                 return
             }
             if var baseURL = URLComponents(string: url.deletingAllPathComponents().absoluteURL.absoluteString) {
                 baseURL.query = nil
                 guard let baseURL = baseURL.url else {
-                    completion("")
+                    DispatchQueue.main.async {
+                        completion("")
+                    }
                     return
                 }
                 
                 let streamURL = baseURL.absoluteString + "hls/" + resourceString
-                completion(streamURL)
+                DispatchQueue.main.async {
+                    completion(streamURL)
+                }
                 print(streamURL)
             }
             
