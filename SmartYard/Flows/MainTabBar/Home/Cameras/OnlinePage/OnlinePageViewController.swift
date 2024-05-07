@@ -67,7 +67,7 @@ class OnlinePageViewController: BaseViewController {
     
     // MARK: - Public Methods
     func setCameras(_ cameras: [CameraObject], selectedCamera: CameraObject?) {
-        self.cameras = cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras + cameras
+        self.cameras = cameras
         
         pointsCollectionView.reloadData()
         camerasCollectionView.reloadData { [weak self] in
