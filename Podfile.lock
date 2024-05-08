@@ -131,12 +131,12 @@ PODS:
     - linphone-sdk/app-extension-swift
     - linphone-sdk/basic-frameworks
   - lottie-ios (4.4.1)
-  - MapboxCommon (24.2.0)
-  - MapboxCoreMaps (11.2.0):
-    - MapboxCommon (~> 24.2)
-  - MapboxMaps (11.2.0):
-    - MapboxCommon (= 24.2.0)
-    - MapboxCoreMaps (= 11.2.0)
+  - MapboxCommon (24.3.1)
+  - MapboxCoreMaps (11.3.0):
+    - MapboxCommon (~> 24.3)
+  - MapboxMaps (11.3.0):
+    - MapboxCommon (= 24.3.1)
+    - MapboxCoreMaps (= 11.3.0)
     - Turf (= 2.8.0)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
@@ -229,7 +229,7 @@ DEPENDENCIES:
   - Kingfisher
   - linphone-sdk (= 5.2.28)
   - lottie-ios
-  - MapboxMaps
+  - MapboxMaps (= 11.3.0)
   - Moya/RxSwift
   - OnlineChatSdk (from `https://github.com/rosteleset/OnlineChatSdk-Swift.git`, branch `feature/build-fix`)
   - Parchment
@@ -351,9 +351,9 @@ SPEC CHECKSUMS:
   Kingfisher: b9c985d864d43515f404f1ef4a8ce7d802ace3ac
   linphone-sdk: a70028a240027557ab10cae46cabca59ca80e3f2
   lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
-  MapboxCommon: f40f1e8c8f3ee8e2bee3b15437812ab114722420
-  MapboxCoreMaps: 4294d3178201702a95f2ae316bc4ad419f5fa16a
-  MapboxMaps: 413cb886e75b6703c0a3084ce84c29cd681d916f
+  MapboxCommon: e6d0d15f1e34278e21bae28bdc548d378757b51e
+  MapboxCoreMaps: 0e3eab0bd5787e833d48261fa1d01f356d6c4ad8
+  MapboxMaps: 5aba2ba70a85d08e0ea00ad011ca3d2965e69a59
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   OnlineChatSdk: 421b17a804f22c193f81f02a891e7d91128c525b
@@ -381,6 +381,6 @@ SPEC CHECKSUMS:
   WKCookieWebView: 528260c9cf7d89d312d61639cfca75c5618326a2
   XCoordinator: 2cf9f72e10998b7a4a4bbeac3d07e071ea82fca3
 
-PODFILE CHECKSUM: cf5a5d09f744bf2b3f56c5bec9616bd99a6b47cf
+PODFILE CHECKSUM: c8e458bf4de38f855c9445a714eb088b150a30cb
 
 COCOAPODS: 1.15.2
