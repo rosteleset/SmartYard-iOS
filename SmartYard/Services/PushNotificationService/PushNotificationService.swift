@@ -42,6 +42,25 @@ class PushNotificationService {
         return ignoredCallIds.contains(callId)
     }
     
+    /// Удалит токен на РБТ. Переведет его в off. Более надежное решение при разлогине чем метод resetInstanceId.
+    func deletePushToken() {
+        apiWrapper.registerPushToken(
+            pushToken: "",
+            voipToken: nil,
+            clientId: nil,
+            type: .fcmRepeating
+        )
+        .subscribe(
+            onSuccess: { _ in
+                print("DEBUG: Push token successfully reset on backend")
+            },
+            onFailure: { error in
+                print("DEBUG: Error resetting push token: \(error)")
+            }
+        )
+        .disposed(by: disposeBag)
+    }
+    
     /// Сбрасывает InstanceId. Этакий способ гарантированно отписаться от уведомлений при разлогине
     func resetInstanceId() -> Single<Void?> {
         return Single.create { single in

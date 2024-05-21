@@ -237,6 +237,7 @@ class CommonSettingsViewModel: BaseViewModel {
                             return
                         }
                         
+                        self.pushNotificationService.deletePushToken()
                         self.pushNotificationService.resetInstanceId()
                             .trackActivity(activityTracker)
                             .trackError(errorTracker)
