@@ -45,7 +45,6 @@ class LogoutHelper {
                 return
             }
             
-            self.pushNotificationService.deletePushToken()
             self.pushNotificationService.resetInstanceId()
                 .trackActivity(activityTracker)
                 .trackError(errorTracker)
