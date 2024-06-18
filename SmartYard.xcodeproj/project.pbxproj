@@ -4972,6 +4972,8 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}\n",
+				"$(SRCROOT)/SmartYard/Resources/GoogleService-Info.plist",
 			);
 			name = Crashlytics;
 			outputFileListPaths = (
@@ -4980,7 +4982,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n\nif [[ \"${CONFIGURATION}\" = \"Release\" ]] || [[ \"${CONFIGURATION}\" = \"Adhoc\" ]]; then\n  echo \"Uploading dSYMs..\"\n  find \"${DWARF_DSYM_FOLDER_PATH}\" -name \"*.dSYM\" | xargs -I \\{\\} \"${PODS_ROOT}/FirebaseCrashlytics/upload-symbols\" -gsp \"${SRCROOT}/SmartYard/Resources/GoogleService-Info.plist\" -p ios \\{\\}\nelse\n  echo \"Skip dSYMs upload\"\nfi\n";
 		};
 		E988DABC2444AB1D00C66371 /* Setup GoogleService-Info.plist */ = {
 			isa = PBXShellScriptBuildPhase;
