@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,6 +20,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OutgoingCallViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="containerView" destination="fyG-BD-Iur" id="ptC-XZ-jGd"/>
+                <outlet property="fakeNavBar" destination="wuJ-je-V7W" id="qqB-tH-vfp"/>
                 <outlet property="fixPhoneNumberButton" destination="c8f-g0-jL7" id="jes-j9-JSY"/>
                 <outlet property="hintInputPhoneLabel" destination="eDz-2O-KUv" id="FKe-SE-3LB"/>
                 <outlet property="makeCallButton" destination="8gN-95-GzJ" id="Fxu-BP-gEo"/>
@@ -126,14 +127,22 @@
                         <constraint firstAttribute="bottom" secondItem="8mg-56-oeR" secondAttribute="bottom" priority="999" id="zNY-39-FIO"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wuJ-je-V7W" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="48" width="414" height="69"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jxW-Bf-8Xa" secondAttribute="trailing" id="2Lw-vD-dKV"/>
+                <constraint firstItem="wuJ-je-V7W" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6b0-9m-yOG"/>
                 <constraint firstItem="jxW-Bf-8Xa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="9Jx-Bd-Dm6"/>
                 <constraint firstItem="fyG-BD-Iur" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" priority="998" constant="69" id="C4G-6J-I0C"/>
+                <constraint firstItem="fyG-BD-Iur" firstAttribute="top" secondItem="wuJ-je-V7W" secondAttribute="bottom" id="Lu2-Z8-1nO"/>
                 <constraint firstAttribute="bottom" secondItem="fyG-BD-Iur" secondAttribute="bottom" id="QJh-UN-hSQ"/>
+                <constraint firstItem="wuJ-je-V7W" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Yjq-tY-2eO"/>
+                <constraint firstItem="wuJ-je-V7W" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="b9l-WJ-KUx"/>
                 <constraint firstAttribute="bottom" secondItem="jxW-Bf-8Xa" secondAttribute="bottom" id="ce8-mf-TLp"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8mg-56-oeR" secondAttribute="bottom" constant="28" id="h7G-VH-yh8"/>
                 <constraint firstItem="jxW-Bf-8Xa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kFa-qT-JzD"/>

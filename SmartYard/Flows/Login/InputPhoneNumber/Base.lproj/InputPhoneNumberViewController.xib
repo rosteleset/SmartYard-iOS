@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,6 +17,7 @@
             <connections>
                 <outlet property="backButton" destination="IHg-lz-EEz" id="WkF-sF-hf9"/>
                 <outlet property="containerView" destination="lCk-sj-GES" id="vXt-Eh-MtL"/>
+                <outlet property="fakeNavBar" destination="G6u-G9-Y5r" id="JX1-0n-goT"/>
                 <outlet property="phoneTextView" destination="Soq-Bs-M2f" id="UFc-xt-xgK"/>
                 <outlet property="selectedProviderNameLabel" destination="mFk-jt-akI" id="dkS-M4-AiV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -33,6 +34,11 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lCk-sj-GES">
                     <rect key="frame" x="0.0" y="48" width="414" height="848"/>
                     <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G6u-G9-Y5r" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="69"/>
+                            <viewLayoutGuide key="safeArea" id="oaR-ht-HsY"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EhW-0V-SYx" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="69" width="414" height="779"/>
                             <subviews>
@@ -82,6 +88,10 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="G6u-G9-Y5r" secondAttribute="trailing" id="1Ft-58-Bid"/>
+                        <constraint firstItem="EhW-0V-SYx" firstAttribute="top" secondItem="G6u-G9-Y5r" secondAttribute="bottom" id="4SU-Sj-yjr"/>
+                        <constraint firstItem="G6u-G9-Y5r" firstAttribute="top" secondItem="lCk-sj-GES" secondAttribute="top" id="F0I-KD-vL9"/>
+                        <constraint firstItem="G6u-G9-Y5r" firstAttribute="leading" secondItem="lCk-sj-GES" secondAttribute="leading" id="FEx-iV-2Da"/>
                         <constraint firstItem="EhW-0V-SYx" firstAttribute="top" secondItem="lCk-sj-GES" secondAttribute="top" constant="69" id="TZT-CD-b0B"/>
                         <constraint firstAttribute="trailing" secondItem="EhW-0V-SYx" secondAttribute="trailing" id="Wov-dw-G4K"/>
                         <constraint firstItem="EhW-0V-SYx" firstAttribute="left" secondItem="lCk-sj-GES" secondAttribute="left" id="YiI-M4-Zv3"/>

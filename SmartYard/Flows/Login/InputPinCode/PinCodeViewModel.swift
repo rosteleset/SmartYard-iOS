@@ -105,6 +105,16 @@ class PinCodeViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.backButtonTapped
+            .drive(
+                onNext: { [weak self] in
+                    self?.accessService.appState = .phoneNumber
+                    
+                    self?.router.trigger(.phoneNumber)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         input.sendCodeAgainButtonTapped
             .flatMapLatest { [weak self] _ -> Driver<RequestCodeResponseData?> in
                 guard let self = self else {
@@ -135,6 +145,7 @@ extension PinCodeViewModel {
     struct Input {
         let inputPinText: Driver<String>
         let fixPhoneNumberButtonTapped: Driver<Void>
+        let backButtonTapped: Driver<Void>
         let sendCodeAgainButtonTapped: Driver<Void>
     }
     

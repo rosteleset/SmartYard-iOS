@@ -13,6 +13,7 @@ import JGProgressHUD
 
 class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
     
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var phoneTextView: PhoneTextField!
     @IBOutlet private weak var backButton: UIButton!
@@ -63,7 +64,8 @@ class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
         
         let input = InputPhoneNumberViewModel.Input(
             inputPhoneText: text,
-            backButtonTapped: backButton.rx.tap.asDriverOnErrorJustComplete()
+            backButtonTapped: fakeNavBar.rx.backButtonTap.asDriver(), 
+            fixProviderButtonTapped: backButton.rx.tap.asDriverOnErrorJustComplete()
         )
         let output = viewModel.transform(input: input)
         

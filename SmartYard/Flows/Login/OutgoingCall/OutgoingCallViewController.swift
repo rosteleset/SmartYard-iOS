@@ -1,5 +1,5 @@
 //
-//  PinCodeViewController.swift
+//  OutgoingCallViewController.swift
 //  SmartYard
 //
 //  Created by Mad Brains on 06.02.2020.
@@ -14,6 +14,7 @@ import JGProgressHUD
 
 class OutgoingCallViewController: BaseViewController, LoaderPresentable {
     
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var hintInputPhoneLabel: UILabel!
     @IBOutlet private weak var messageLabel: UILabel!
     @IBOutlet private weak var fixPhoneNumberButton: UIButton!
@@ -55,6 +56,7 @@ class OutgoingCallViewController: BaseViewController, LoaderPresentable {
     private func bind() {
         let input = OutgoingCallViewModel.Input(
             fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(),
+            backButtonTapped: fakeNavBar.rx.backButtonTap.asDriver(),
             makeCallButtonTapped: makeCallButton.rx.tap.asDriverOnErrorJustComplete()
         )
         

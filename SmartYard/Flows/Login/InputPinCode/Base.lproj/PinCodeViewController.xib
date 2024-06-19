@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,6 +16,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PinCodeViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="containerView" destination="fyG-BD-Iur" id="ptC-XZ-jGd"/>
+                <outlet property="fakeNavBar" destination="1aH-bS-ibF" id="Qrn-Z7-jW5"/>
                 <outlet property="fixPhoneNumberButton" destination="c8f-g0-jL7" id="jes-j9-JSY"/>
                 <outlet property="hintInputPhoneLabel" destination="eDz-2O-KUv" id="FKe-SE-3LB"/>
                 <outlet property="pinInputFieldView" destination="Mfp-YF-jc5" id="nRV-u5-nON"/>
@@ -35,6 +36,11 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="jxW-Bf-8Xa">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1aH-bS-ibF" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="48" width="414" height="69"/>
+                    <viewLayoutGuide key="safeArea" id="S96-5z-5QD"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fyG-BD-Iur" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="117" width="414" height="779"/>
                     <subviews>
@@ -142,17 +148,22 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="fyG-BD-Iur" firstAttribute="top" secondItem="1aH-bS-ibF" secondAttribute="bottom" id="1ce-0O-md9"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jxW-Bf-8Xa" secondAttribute="trailing" id="2Lw-vD-dKV"/>
                 <constraint firstItem="jxW-Bf-8Xa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="9Jx-Bd-Dm6"/>
                 <constraint firstItem="fyG-BD-Iur" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" priority="998" constant="69" id="C4G-6J-I0C"/>
+                <constraint firstItem="1aH-bS-ibF" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Ffo-pd-JEn"/>
                 <constraint firstAttribute="bottom" secondItem="fyG-BD-Iur" secondAttribute="bottom" id="QJh-UN-hSQ"/>
                 <constraint firstAttribute="bottom" secondItem="jxW-Bf-8Xa" secondAttribute="bottom" id="ce8-mf-TLp"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8mg-56-oeR" secondAttribute="bottom" constant="28" id="h7G-VH-yh8"/>
                 <constraint firstItem="jxW-Bf-8Xa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kFa-qT-JzD"/>
+                <constraint firstItem="1aH-bS-ibF" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="nef-rr-Wt6"/>
                 <constraint firstItem="fyG-BD-Iur" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vxg-gW-174"/>
                 <constraint firstAttribute="trailing" secondItem="fyG-BD-Iur" secondAttribute="trailing" id="wi9-BL-UBB"/>
+                <constraint firstItem="1aH-bS-ibF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="z9M-Qa-Lfl"/>
+                <constraint firstItem="fyG-BD-Iur" firstAttribute="top" secondItem="1aH-bS-ibF" secondAttribute="bottom" id="zTj-0T-l25"/>
             </constraints>
-            <point key="canvasLocation" x="139" y="78"/>
+            <point key="canvasLocation" x="137.68115942028987" y="77.678571428571431"/>
         </view>
     </objects>
     <resources>

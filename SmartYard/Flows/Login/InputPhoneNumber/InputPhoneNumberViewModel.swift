@@ -115,15 +115,26 @@ class InputPhoneNumberViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+    
+        input.backButtonTapped
+            .drive(
+                onNext: { [weak self] in
+                    self?.accessService.appState = .selectProvider
+                    
+                    self?.router.trigger(.selectProvider)
+                }
+            )
+            .disposed(by: disposeBag)
             
-            input.backButtonTapped
-                .drive(
-                    onNext: { [weak self] in
-                        self?.accessService.appState = .selectProvider
-                        self?.router.trigger(.selectProvider)
-                    }
-                )
-                .disposed(by: disposeBag)
+        input.fixProviderButtonTapped
+            .drive(
+                onNext: { [weak self] in
+                    self?.accessService.appState = .selectProvider
+                    
+                    self?.router.trigger(.selectProvider)
+                }
+            )
+            .disposed(by: disposeBag)
         
         return Output(
             isLoading: activityTracker.asDriver(),
@@ -139,6 +150,7 @@ extension InputPhoneNumberViewModel {
     struct Input {
         let inputPhoneText: Driver<String>
         let backButtonTapped: Driver<Void>
+        let fixProviderButtonTapped: Driver<Void>
     }
     
     struct Output {

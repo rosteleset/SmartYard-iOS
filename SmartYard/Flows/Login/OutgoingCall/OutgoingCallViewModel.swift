@@ -60,7 +60,17 @@ class OutgoingCallViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-
+        
+        input.backButtonTapped
+            .drive(
+                onNext: { [weak self] in
+                    self?.accessService.appState = .phoneNumber
+                    
+                    self?.router.trigger(.phoneNumber)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         input.fixPhoneNumberButtonTapped
             .drive(
                 onNext: { [weak self] in
@@ -86,6 +96,7 @@ extension OutgoingCallViewModel {
     
     struct Input {
         let fixPhoneNumberButtonTapped: Driver<Void>
+        let backButtonTapped: Driver<Void>
         let makeCallButtonTapped: Driver<Void>
     }
     

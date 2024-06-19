@@ -14,6 +14,7 @@ import JGProgressHUD
 
 class PinCodeViewController: BaseViewController, LoaderPresentable {
     
+    @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var hintInputPhoneLabel: UILabel!
     @IBOutlet private weak var fixPhoneNumberButton: UIButton!
     @IBOutlet private weak var sendCodeAgainGroupView: UIView!
@@ -122,7 +123,8 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
         
         let input = PinCodeViewModel.Input(
             inputPinText: text,
-            fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(),
+            fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(), 
+            backButtonTapped: fakeNavBar.rx.backButtonTap.asDriver(),
             sendCodeAgainButtonTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete()
         )
         
