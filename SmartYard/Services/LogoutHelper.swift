@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SmartYardSharedDataFramework
+import FirebaseMessaging
 
 // Есть таск - при получении 401 ошибки отправлять пользователя на логаут
 // Изначально был вариант отслеживать получение 401 прямо в ApiWrapper и кидать оттуда notification
@@ -45,6 +46,8 @@ class LogoutHelper {
                 return
             }
             
+            Messaging.messaging().isAutoInitEnabled = false
+            self.pushNotificationService.deletePushToken()
             self.pushNotificationService.resetInstanceId()
                 .trackActivity(activityTracker)
                 .trackError(errorTracker)

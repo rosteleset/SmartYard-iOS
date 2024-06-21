@@ -20,6 +20,8 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FirebaseMessagingAutoInitEnabled</key>
+	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
@@ -79,7 +81,6 @@
 		<string>bank100000000022</string>
 		<string>bank100000000029</string>
 		<string>bank100000000050</string>
-		<string>bank100000000065</string>
 		<string>bank100000000177</string>
 		<string>bank100000000084</string>
 		<string>bank100000000088</string>
@@ -116,7 +117,6 @@
 		<string>bank100000000062</string>
 		<string>bank100000000058</string>
 		<string>bank100000000195</string>
-		<string>bank100000000130</string>
 		<string>bank100000000206</string>
 		<string>bank100000000203</string>
 		<string>bank100000000081</string>
@@ -216,6 +216,7 @@
 		<string>bank100000000296</string>
 		<string>bank100000000286</string>
 		<string>bank100000000293</string>
+		<string>bank100000000288</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

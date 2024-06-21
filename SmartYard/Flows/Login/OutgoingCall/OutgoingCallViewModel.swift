@@ -11,6 +11,7 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 import FirebaseCrashlytics
+import FirebaseMessaging
 
 class OutgoingCallViewModel: BaseViewModel {
     
@@ -152,6 +153,7 @@ extension OutgoingCallViewModel {
                     
                     // когда пользователь авторизовался уже после инициализации Crashlytics, то надо обновить  UserId
                     Crashlytics.crashlytics().setUserID(self.accessService.clientPhoneNumber ?? "unknown")
+                    Messaging.messaging().isAutoInitEnabled = true
                     
                 }
             )

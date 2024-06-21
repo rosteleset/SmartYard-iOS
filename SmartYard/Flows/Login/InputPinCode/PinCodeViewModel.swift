@@ -11,6 +11,7 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 import FirebaseCrashlytics
+import FirebaseMessaging
 
 class PinCodeViewModel: BaseViewModel {
     
@@ -83,6 +84,7 @@ class PinCodeViewModel: BaseViewModel {
                     
                     // когда пользователь авторизовался уже после инициализации Crashlytics, то надо обновить  UserId
                     Crashlytics.crashlytics().setUserID(self?.accessService.clientPhoneNumber ?? "unknown")
+                    Messaging.messaging().isAutoInitEnabled = true
                     
                     prepareTransitionTrigger.onNext(())
                 }

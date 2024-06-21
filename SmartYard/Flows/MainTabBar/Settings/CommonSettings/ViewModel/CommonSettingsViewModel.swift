@@ -11,6 +11,7 @@ import RxSwift
 import XCoordinator
 import SmartYardSharedDataFramework
 import WebKit
+import FirebaseMessaging
 
 class CommonSettingsViewModel: BaseViewModel {
     
@@ -237,6 +238,7 @@ class CommonSettingsViewModel: BaseViewModel {
                             return
                         }
                         
+                        Messaging.messaging().isAutoInitEnabled = false
                         self.pushNotificationService.deletePushToken()
                         self.pushNotificationService.resetInstanceId()
                             .trackActivity(activityTracker)
