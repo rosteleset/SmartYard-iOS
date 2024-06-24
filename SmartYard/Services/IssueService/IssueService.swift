@@ -30,7 +30,10 @@ class IssueService {
                 type: .requestFragment,
                 userName: accessService.clientName?.name,
                 comments: notes,
+                cameraId: camera.id.string,
+                cameraName: camera.name, 
                 fragmentDate: date.string(withFormat: "d.MM.yyyy"),
+                fragmentTime: date.timeString(),
                 fragmentDuration: duration.string
             )
             return apiWrapper.sendIssue(issueV2: issue)
