@@ -31,7 +31,6 @@ class OnlinePageViewController: BaseViewController {
     private var selectedCameraNumber: Int?
     private var focusedCellIndexPath: IndexPath?
     private var indexOfCellBeforeDragging = 0
-    private var itemWasPointed = false
     private var itemCountsPerCell: [Int] = []
     
     // MARK: - Initialization
@@ -69,7 +68,6 @@ class OnlinePageViewController: BaseViewController {
     func setCameras(_ cameras: [CameraObject], selectedCamera: CameraObject?) {
         self.cameras = cameras
         
-        pointsCollectionView.reloadData()
         camerasCollectionView.reloadData { [weak self] in
             guard let selectedCamera = selectedCamera,
                   let index = cameras.firstIndex(of: selectedCamera) else {
@@ -90,6 +88,8 @@ class OnlinePageViewController: BaseViewController {
             let selectedIndexPath = IndexPath(row: index, section: 0)
             self?.reloadCameraIfNeeded(selectedIndexPath: selectedIndexPath)
         }
+        
+        pointsCollectionView.reloadData()
     }
     
     // MARK: - Private Methods
@@ -134,15 +134,7 @@ class OnlinePageViewController: BaseViewController {
                             rowsPerPage: rowsPerPage
                         )
                     }
-                    
-                    if let itemWasPointed = self?.itemWasPointed {
-                        if !itemWasPointed {
-                            DispatchQueue.main.async {
-                                self?.pointViewToSelectedItem()
-                                self?.itemWasPointed = true
-                            }
-                        }
-                    }
+                
                 }
             )
             .disposed(by: disposeBag)
@@ -219,12 +211,6 @@ class OnlinePageViewController: BaseViewController {
         }
     }
     
-    fileprivate func pointViewToSelectedItem() {
-        if let focusedCellIndexPath = focusedCellIndexPath {
-            reloadCameraIfNeeded(selectedIndexPath: focusedCellIndexPath)
-            onItemFocused(indexPath: focusedCellIndexPath)
-        }
-    }
     
     fileprivate func calculateSectionInsetForCollection() -> CGFloat {
         let collectionViewWidth = camerasFlowLayout.collectionView!.frame.width
