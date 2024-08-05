@@ -132,7 +132,6 @@
 		<string>bank100000000182</string>
 		<string>bank100000000189</string>
 		<string>bank100000000202</string>
-		<string>bank100000000213</string>
 		<string>bank100000000071</string>
 		<string>bank100000000066</string>
 		<string>bank100000000154</string>
@@ -217,6 +216,7 @@
 		<string>bank100000000286</string>
 		<string>bank100000000293</string>
 		<string>bank100000000288</string>
+		<string>bank100000000108</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

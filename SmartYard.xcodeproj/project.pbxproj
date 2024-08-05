@@ -596,6 +596,7 @@
 		FA9E30EC2BBBEFFA0087E689 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E30EB2BBBEFFA0087E689 /* UICollectionView+Extensions.swift */; };
 		FA9E30EE2BBBF01E0087E689 /* AutoRefreshingCachedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E30ED2BBBF01E0087E689 /* AutoRefreshingCachedImageView.swift */; };
 		FA9E30F02BBBF0450087E689 /* CameraButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E30EF2BBBF0450087E689 /* CameraButton.swift */; };
+		FAC12F592C6114080016A9DC /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC12F582C6114080016A9DC /* UIDevice+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1543,6 +1544,7 @@
 		FA9E30EB2BBBEFFA0087E689 /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		FA9E30ED2BBBF01E0087E689 /* AutoRefreshingCachedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoRefreshingCachedImageView.swift; sourceTree = "<group>"; };
 		FA9E30EF2BBBF0450087E689 /* CameraButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraButton.swift; sourceTree = "<group>"; };
+		FAC12F582C6114080016A9DC /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3212,6 +3214,7 @@
 			children = (
 				FA9E30EB2BBBEFFA0087E689 /* UICollectionView+Extensions.swift */,
 				84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */,
+				FAC12F582C6114080016A9DC /* UIDevice+Extensions.swift */,
 				3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */,
 				84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */,
 				844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */,
@@ -5106,6 +5109,7 @@
 				3A7CD54A28577927003CDDC7 /* SelectProviderViewModel.swift in Sources */,
 				E92EFBAB242A22F2003AF7FE /* APILocation.swift in Sources */,
 				E99A837E2434CBF1001CEE95 /* CommentIssueRequest.swift in Sources */,
+				FAC12F592C6114080016A9DC /* UIDevice+Extensions.swift in Sources */,
 				84CD304524D2CFDE00CC079E /* IncomingCallSoundOutputState.swift in Sources */,
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
 				3AEFB483264D1ADE000F37D0 /* FaceViewController.swift in Sources */,

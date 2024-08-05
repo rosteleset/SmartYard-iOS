@@ -184,6 +184,7 @@ extension APITarget: TargetType {
     var headers: [String: String]? {
         let defaultHeaders = [
             "Content-type": "application/json",
+            "X-System-Info": currentDevice(),
             "Accept-Language": currentLanguage()
         ]
         
@@ -369,5 +370,15 @@ extension APITarget: TargetType {
         } else {
             return Locale.current.languageCode ?? "ru"
         }
+    }
+    
+    func currentDevice() -> String {
+        let device = UIDevice.current
+        let modelName = device.modelName
+        let systemName = device.systemName
+        let systemVersion = device.systemVersion
+        let infoDevice = "Device: \(modelName), OS: \(systemName) \(systemVersion)"
+        
+        return infoDevice
     }
 }
