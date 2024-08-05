@@ -74,17 +74,6 @@ class OnlinePageViewController: BaseViewController {
                 return
             }
             
-            let rowsPerPage = self?.calculateRowsPerPageForPoints()
-            let itemsPerPage = (rowsPerPage ?? 5) * 5
-            let page = index / itemsPerPage
-            
-            let indexPath = IndexPath(item: page, section: 0)
-            self?.pointsCollectionView.selectItem(
-                at: indexPath,
-                animated: false,
-                scrollPosition: .centeredHorizontally
-            )
-            
             let selectedIndexPath = IndexPath(row: index, section: 0)
             self?.reloadCameraIfNeeded(selectedIndexPath: selectedIndexPath)
         }
@@ -117,28 +106,6 @@ class OnlinePageViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
     
-        // При загрузке скрываем коллекцию кнопок, считаем количество столбцов
-        // на странице и фокусируемся на ячейке камеры
-        
-        rx.viewWillAppear
-            .asDriver()
-            .drive(
-                onNext: { [weak self] _ in
-                    let rowsPerPage = self?.calculateRowsPerPageForPoints()
-                    self?.pointsCollectionView.isHidden = true
-                    
-                    if let rowsPerPage = rowsPerPage {
-                        self?.calculateItemsPerCell(
-                            totalItemCount: self?.cameras.count ?? 0,
-                            itemsPerRow: 5,
-                            rowsPerPage: rowsPerPage
-                        )
-                    }
-                
-                }
-            )
-            .disposed(by: disposeBag)
-        
         // При заходе на окно - запускаем плеер
         
         rx.viewDidAppear
@@ -149,6 +116,25 @@ class OnlinePageViewController: BaseViewController {
                         let cell = self?.camerasCollectionView.cellForItem(at: focusedCellIndexPath) as? CameraCollectionViewCell
                         cell?.player?.play()
                     }
+                    let rowsPerPage = self?.calculateRowsPerPageForPoints() ?? 1
+                    
+                    self?.calculateItemsPerCell(
+                        totalItemCount: self?.cameras.count ?? 0,
+                        itemsPerRow: 5,
+                        rowsPerPage: rowsPerPage
+                    )
+                    let itemsPerPage = rowsPerPage * 5
+                    let page = (self?.selectedCameraNumber ?? 1) / itemsPerPage
+                    let pointsIndexPath = IndexPath(item: page, section: 0)
+                    
+                    DispatchQueue.main.async {
+                        self?.pointsCollectionView.selectItem(
+                            at: pointsIndexPath,
+                            animated: true,
+                            scrollPosition: .centeredHorizontally
+                        )
+                    }
+
                     self?.pointsCollectionView.reloadData()
                     self?.pointsCollectionView.isHidden = false
                 }
@@ -175,10 +161,9 @@ class OnlinePageViewController: BaseViewController {
     }
     
     private func configureCollectionView() {
-        camerasFlowLayout.minimumLineSpacing = 0
         pointsCollectionView.register(nibWithCellClass: CameraNumberCell.self)
         camerasCollectionView.register(nibWithCellClass: CameraCollectionViewCell.self)
-        
+        pointsCollectionView.isHidden = true
     }
     
     private func reloadCameraIfNeeded(selectedIndexPath: IndexPath) {
@@ -210,7 +195,6 @@ class OnlinePageViewController: BaseViewController {
             cell?.startToPlay(url)
         }
     }
-    
     
     fileprivate func calculateSectionInsetForCollection() -> CGFloat {
         let collectionViewWidth = camerasFlowLayout.collectionView!.frame.width
@@ -266,10 +250,6 @@ class OnlinePageViewController: BaseViewController {
         selectedCameraNumber = camera.cameraNumber
         
         delegate?.onlinePageViewController(self, didSelectCamera: camera)
-        
-        guard let url = URL(string: camera.baseURLString) else {
-            return
-        }
         
         cell?.loadVideo()
     }
@@ -499,5 +479,10 @@ extension OnlinePageViewController: CameraButtonDelegate {
         let indexPath = IndexPath(row: index, section: 0)
         
         reloadCameraIfNeeded(selectedIndexPath: indexPath)
+        for cell in pointsCollectionView.visibleCells {
+            guard let cameraCell = cell as? CameraNumberCell else { continue }
+            cameraCell.resetSelection()
+            cameraCell.selectCameraButton(cameraNumber: selectedCameraNumber ?? 0)
+        }
     }
 }
