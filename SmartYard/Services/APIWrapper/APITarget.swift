@@ -374,11 +374,13 @@ extension APITarget: TargetType {
     
     func currentDevice() -> String {
         let device = UIDevice.current
-        let modelName = device.modelName
-        let systemName = device.systemName
-        let systemVersion = device.systemVersion
-        let infoDevice = "Device: \(modelName), OS: \(systemName) \(systemVersion)"
+        let info = [
+            device.systemName,
+            device.systemVersion,
+            device.name,
+            device.modelName
+        ]
         
-        return infoDevice
+        return info.joined(separator: ", ")
     }
 }
