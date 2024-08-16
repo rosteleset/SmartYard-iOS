@@ -47,8 +47,8 @@ target 'SmartYard' do
   pod 'MapboxMaps', '11.3.0'
   
   # Analytics
-  pod 'FirebaseCrashlytics', '10.24.0'
-  pod 'FirebaseAnalytics', '10.24.0'
+  pod 'FirebaseCrashlytics'
+  pod 'FirebaseAnalytics'
   
   # Push Notifications
   pod 'FirebaseMessaging'
