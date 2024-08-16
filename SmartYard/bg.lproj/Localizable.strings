@@ -157,7 +157,7 @@
 "Request submitted" = "Заявката е подадена";
 "We will contact you within 24 hours" = "Ще се свържем с вас в рамките на 24 часа";
 "Public cams" = "Публични камери"; "Request a record" = "Заявете запис"; "Incidents" = "Инциденти";
-"Address settings" = "Настройки на адреса"; "Common settings" = "Общи настройки";
+"Addresses settings" = "Настройки на адресите"; "Common settings" = "Общи настройки";
 // Errors
 "noConnectionError" = "Няма връзка";
 "An error occurred while executing the request" = "Възникна грешка при изпълнение на заявката: %@";
