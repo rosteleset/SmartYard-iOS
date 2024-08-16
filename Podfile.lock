@@ -222,8 +222,8 @@ PODS:
 
 DEPENDENCIES:
   - Cartography
-  - FirebaseAnalytics (= 10.24.0)
-  - FirebaseCrashlytics (= 10.24.0)
+  - FirebaseAnalytics
+  - FirebaseCrashlytics
   - FirebaseMessaging
   - JGProgressHUD
   - JTAppleCalendar
@@ -382,6 +382,6 @@ SPEC CHECKSUMS:
   WKCookieWebView: 528260c9cf7d89d312d61639cfca75c5618326a2
   XCoordinator: 2cf9f72e10998b7a4a4bbeac3d07e071ea82fca3
 
-PODFILE CHECKSUM: 677b3050063dfdcc81b648db74a445248761fe9c
+PODFILE CHECKSUM: c8e458bf4de38f855c9445a714eb088b150a30cb
 
 COCOAPODS: 1.15.2
