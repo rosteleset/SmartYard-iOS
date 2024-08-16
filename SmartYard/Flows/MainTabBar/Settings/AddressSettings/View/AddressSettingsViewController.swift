@@ -258,13 +258,18 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         output.isFRSEnabled
             .drive(
                 onNext: { [weak self] state in
+                    // MARK: - We remove the logic because the switch doesn't work on the server
+                    /*
+                     guard let state = state else {
+                         self?.frsContainerView.isHidden = true
+                         return
+                     }
+                     self?.frsContainerView.isHidden = false
+                     self?.frsSwitch.setOn(state, animated: true)
+                     */
                     
-                    guard let state = state else {
-                        self?.frsContainerView.isHidden = true
-                        return
-                    }
-                    self?.frsContainerView.isHidden = false
-                    self?.frsSwitch.setOn(state, animated: true)
+                    // Hiding the button at all times
+                    self?.frsContainerView.isHidden = true
                 }
             )
             .disposed(by: disposeBag)
