@@ -92,12 +92,12 @@ class HistoryTableViewCell: UITableViewCell {
         case .answered:
             titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
-            iconImage.image = UIImage(named: "LogsDomophone")
+            iconImage.image = UIImage(named: "LogsCall")
             description = ""
         case .unanswered:
             titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
             titleLabel.textColor = UIColor(named: "incorrectDataRed")
-            iconImage.image = UIImage(named: "LogsDomophone")
+            iconImage.image = UIImage(named: "LogsCall")
             description = ""
         case .rfid:
             titleLabel.text = NSLocalizedString("Opening with a key", comment: "")
@@ -122,7 +122,7 @@ class HistoryTableViewCell: UITableViewCell {
         case .call:
             titleLabel.text = NSLocalizedString("Gate opening on call", comment: "")
             titleLabel.textColor = UIColor(named: "semiBlack")
-            iconImage.image = UIImage(named: "LogsCall")
+            iconImage.image = UIImage(named: "LogsWicket")
             description = ""
         case .plate:
             titleLabel.text = NSLocalizedString("Gate opening by numberplate", comment: "")
