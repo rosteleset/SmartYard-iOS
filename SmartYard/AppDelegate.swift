@@ -56,6 +56,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    // MARK: - При разворачивании приложения запрашиваем количество непрочитанных сообщений
+    // И помечаем их как прочитанные 
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        appCoordinator.syncBadgeNumber()
+        appCoordinator.markAllMessagesAsDelivered()
+    }
+    
     func application(
         _ application: UIApplication,
         continue userActivity: NSUserActivity,
