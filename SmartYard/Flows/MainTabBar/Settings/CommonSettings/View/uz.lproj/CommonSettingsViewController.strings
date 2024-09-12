@@ -31,3 +31,9 @@
 
 /* Class = "UILabel"; text = "Александр Сергеевич"; ObjectID = "xe0-3V-fgv"; */
 "xe0-3V-fgv.text" = "Aleksandr Sergeyevich";
+
+/* Class = "UILabel"; text = "Камеры"; ObjectID = "AmF-1g-Ii8"; */
+"AmF-1g-Ii8.text" = "Kameralar";
+
+/* Class = "UILabel"; text = "Показать на карте"; ObjectID = "mLP-oQ-Prc"; */
+"mLP-oQ-Prc.text" = "Xaritada ko'rsatish";

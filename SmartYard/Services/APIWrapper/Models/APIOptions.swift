@@ -116,6 +116,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     enum CCTVViewType: String, Decodable {
         case list
         case tree
+        case userDefined
     }
     
     enum TabNames: String, Decodable {

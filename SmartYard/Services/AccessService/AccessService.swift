@@ -32,6 +32,7 @@ private let phonePatternKey = "phonePatternKey"
 private let guestAccessModeKey = "guestAccessKey"
 private let timeZoneKey = "timeZoneKey"
 private let cctvViewKey = "cctvViewKey"
+private let showListKey = "showListKey"
 private let activeTabKey = "activeTabKey"
 private let issuesVersionKey = "issuesVersionKey"
 
@@ -244,6 +245,15 @@ class AccessService {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: showCityCamsKey)
+        }
+    }
+    
+    var showList: Bool {
+        get {
+            UserDefaults.standard.value(forKey: showListKey) as? Bool ?? true
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: showListKey)
         }
     }
     

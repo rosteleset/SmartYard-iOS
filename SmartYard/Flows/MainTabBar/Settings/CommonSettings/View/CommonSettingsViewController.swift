@@ -51,6 +51,16 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private var collapsedCallsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedCallsBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet private weak var camerasContainerView: UIView!
+    @IBOutlet private weak var camerasHeader: UIView!
+    @IBOutlet private weak var camerasHeaderArrowImageView: UIImageView!
+    
+    @IBOutlet private weak var enableListContainerView: UIView!
+    @IBOutlet private weak var enableListSwitch: UISwitch!
+    
+    @IBOutlet private var сollapsedCamerasBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private var expandedCamerasBottomConstaint: NSLayoutConstraint!
+    
     @IBOutlet private weak var logoutButton: UIButton!
     
     private let viewModel: CommonSettingsViewModel
@@ -60,6 +70,7 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     private let textNotificationsTapGesture = UITapGestureRecognizer()
     private let callkitTapGesture = UITapGestureRecognizer()
     private let speakerTapGesture = UITapGestureRecognizer()
+    private let enableListTapGesture = UITapGestureRecognizer()
     private let balanceWarningTapGesture = UITapGestureRecognizer()
     
     var loader: JGProgressHUD?
@@ -128,6 +139,17 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
+        let camerasTapGesture = UITapGestureRecognizer()
+        camerasHeader.addGestureRecognizer(camerasTapGesture)
+        
+        camerasTapGesture.rx.event
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.toggleCamerasSection()
+                }
+            )
+            .disposed(by: disposeBag)
+        
         textNotificationsContainerView.addGestureRecognizer(textNotificationsTapGesture)
         textNotificationsSwitch.isUserInteractionEnabled = false
         
@@ -140,6 +162,8 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
         speakerContainerView.addGestureRecognizer(speakerTapGesture)
         speakerSwitch.isUserInteractionEnabled = false
         
+        enableListContainerView.addGestureRecognizer(enableListTapGesture)
+        enableListSwitch.isUserInteractionEnabled = false
     }
     
     private func toggleSection(
@@ -182,7 +206,17 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             collapsedBottomConstraint: collapsedCallsBottomConstraint,
             expandedBottomConstraint: expandedCallsBottomConstraint,
             headerArrowImageView: callsHeaderArrowImageView,
-            containerView: callsContainerView)
+            containerView: callsContainerView
+        )
+    }
+    
+    private func toggleCamerasSection() {
+        toggleSection(
+            collapsedBottomConstraint: сollapsedCamerasBottomConstraint,
+            expandedBottomConstraint: expandedCamerasBottomConstaint,
+            headerArrowImageView: camerasHeaderArrowImageView,
+            containerView: camerasContainerView
+        )
     }
     
     // swiftlint:disable:next function_body_length
@@ -194,7 +228,8 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             moneyTrigger: balanceWarningTapGesture.rx.event.asDriver().mapToVoid(),
             callkitTrigger: callkitTapGesture.rx.event.asDriver().mapToVoid(),
             speakerTrigger: speakerTapGesture.rx.event.asDriver().mapToVoid(),
-            logoutTrigger: logoutButton.rx.tap.asDriver(), 
+            enableListTrigger: enableListTapGesture.rx.event.asDriver().mapToVoid(),
+            logoutTrigger: logoutButton.rx.tap.asDriver(),
             callKitHintTrigger: callkitQuestionMark.rx.tap.asDriver()
         )
         
@@ -244,6 +279,23 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             .drive(
                 onNext: { [weak self] state in
                     self?.speakerSwitch.setOn(state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.enableList
+            .drive(
+                onNext: { [weak self] state in
+                    self?.enableListSwitch.setOn(state, animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        output.showCameras
+            .drive(
+                onNext: {  [weak self] isHidden in
+                    self?.camerasContainerView.isHidden = !isHidden
+                    self?.camerasContainerView.heightAnchor.constraint(equalToConstant: 0).isActive = !isHidden
                 }
             )
             .disposed(by: disposeBag)

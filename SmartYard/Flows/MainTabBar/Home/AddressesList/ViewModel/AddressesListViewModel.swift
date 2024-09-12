@@ -428,13 +428,15 @@ class AddressesListViewModel: BaseViewModel {
                     }
                     
                     // проверяем какой тип отображения камер получен от сервера.
-                    // возможно два варината:
+                    // возможно три варианта:
                     // старый (.list) - отображение на карте всех камер
                     // новый (.tree) - древовидная структура в которой можно отобразить камеры как на карте,
                     // так и списком с подгруппами.
                     // какой вариант использовать прилетает в приложение от ext/options -> cctvView
+                    // выбор пользователя (.userDefined) - если от сервера не пришло ничего, то
+                    // даем пользователю выбрать как он хочет отобразить камеры, но по умолчанию будет стоять list 
                     
-                    if self.accessService.cctvView == "list" {
+                    if accessService.showList {
                         self.router.trigger(.yardCamerasMap(houseId: uHouseId, address: uAddress, cameras: nil))
                     } else {
                         self.apiWrapper.getAllTreeCCTV(houseId: uHouseId)

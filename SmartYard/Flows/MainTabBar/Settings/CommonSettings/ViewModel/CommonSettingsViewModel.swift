@@ -74,6 +74,8 @@ class CommonSettingsViewModel: BaseViewModel {
         let enableAccountBalanceWarningSubject = BehaviorSubject<Bool>(value: false)
         let enableCallkitSubject = BehaviorSubject<Bool>(value: accessService.prefersVoipForCalls)
         let enableSpeakerByDefaultSubject = BehaviorSubject<Bool>(value: accessService.prefersSpeakerForCalls)
+        let enableListSubject = BehaviorSubject<Bool>(value: accessService.showList)
+        let showCamerasSettingsSubject = BehaviorSubject<Bool>(value: accessService.cctvView == "userDefined")
         
         apiWrapper
             .getCurrentNotificationState()
@@ -187,6 +189,20 @@ class CommonSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: - Обработка нажатия "Показывать на карте"
+        input.enableListTrigger
+            .withLatestFrom(enableListSubject.asDriverOnErrorJustComplete())
+            .drive(
+                onNext: { [weak self] state in
+                    let newState = !state
+
+                    self?.accessService.showList = newState
+                    enableListSubject.onNext(newState)
+                    print(">>> enableListTrigger: ", self?.accessService.showList)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Отображение имени. Актуализируем при каждом обновлении имени в настройках
         
         let currentName = Driver<APIClientName?>.merge(
@@ -279,7 +295,9 @@ class CommonSettingsViewModel: BaseViewModel {
             enableNotifications: enableNotificationsSubject.asDriverOnErrorJustComplete(),
             enableAccountBalanceWarning: enableAccountBalanceWarningSubject.asDriverOnErrorJustComplete(),
             enableCallkit: enableCallkitSubject.asDriverOnErrorJustComplete(),
-            enableSpeakerByDefault: enableSpeakerByDefaultSubject.asDriverOnErrorJustComplete(),
+            enableSpeakerByDefault: enableSpeakerByDefaultSubject.asDriverOnErrorJustComplete(), 
+            enableList: enableListSubject.asDriverOnErrorJustComplete(), 
+            showCameras: showCamerasSettingsSubject.asDriverOnErrorJustComplete(),
             isLoading: activityTracker.asDriver(),
             shouldShowInitialLoading: initialLoadingTracker.asDriver()
         )
@@ -296,6 +314,7 @@ extension CommonSettingsViewModel {
         let moneyTrigger: Driver<Void>
         let callkitTrigger: Driver<Void>
         let speakerTrigger: Driver<Void>
+        let enableListTrigger: Driver<Void>
         let logoutTrigger: Driver<Void>
         let callKitHintTrigger: Driver<Void>
     }
@@ -307,6 +326,8 @@ extension CommonSettingsViewModel {
         let enableAccountBalanceWarning: Driver<Bool>
         let enableCallkit: Driver<Bool>
         let enableSpeakerByDefault: Driver<Bool>
+        let enableList: Driver<Bool>
+        let showCameras: Driver<Bool>
         let isLoading: Driver<Bool>
         let shouldShowInitialLoading: Driver<Bool>
     }
