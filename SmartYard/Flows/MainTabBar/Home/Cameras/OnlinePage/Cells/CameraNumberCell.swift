@@ -46,7 +46,6 @@ class CameraNumberCell: UICollectionViewCell {
           }
      }
      
-     
      func selectCameraButton(cameraNumber: Int) {
          guard let buttonIndex = buttons.firstIndex(where: { $0.cameraNumber == cameraNumber }) else {
              return
@@ -68,7 +67,7 @@ class CameraNumberCell: UICollectionViewCell {
          
           let buttonOffset = (self.width - 40 - buttonSize.width) / CGFloat(maxColumns - 1)
           let buttonInset = buttonOffset - buttonSize.width
-          let spacingBetweenRows: CGFloat = (containerViewHeight - CGFloat(rows) * buttonSize.height) / CGFloat(rows - 1)
+          let spacingBetweenRows: CGFloat = rows > 1 ? (containerViewHeight - CGFloat(rows) * buttonSize.height) / CGFloat(rows - 1) : 0
           
           var currentRow = 0
           var currentColumn = 0

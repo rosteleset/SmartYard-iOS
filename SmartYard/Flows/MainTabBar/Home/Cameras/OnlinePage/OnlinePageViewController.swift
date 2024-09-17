@@ -218,7 +218,7 @@ class OnlinePageViewController: BaseViewController {
         let inset = 10
         let rowHeight = buttonSize.height + CGFloat(inset)
         let rows = round(collectionHeight / rowHeight)
-        return Int(rows)
+        return Int(max(1, rows))
     }
     
     fileprivate func calculateItemsPerCell(totalItemCount: Int, itemsPerRow: Int, rowsPerPage: Int) {
