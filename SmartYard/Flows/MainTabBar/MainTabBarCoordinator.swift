@@ -404,8 +404,8 @@ private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService
                 
                 accessService.issuesVersion = response.issuesVersion ?? "1"
                 accessService.cctvView = response.cctvView.rawValue
+                accessService.showList = shouldShowList 
                 accessService.activeTab = response.activeTab.rawValue
-                accessService.showList = shouldShowList
                 
                 sem.signal()
             }
