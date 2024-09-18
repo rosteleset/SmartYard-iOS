@@ -64,6 +64,8 @@
 "Specify a reason" = "Посочете причина";
 "Exiting the application" = "Излизане от приложението";
 "Are you sure you want to log out of your account?" = "Сигурни ли сте, че искате да излезете от вашия акаунт?";
+"Account deleting" = "Изтриване на акаунт";
+"Are you sure you want to delete your account? All previously added addresses will be deleted" = "Сигурни ли сте, че искате да изтриете акаунта си? Всички добавени преди това адреси ще бъдат изтрити";
 "Number of contract" = "Номер на договор";
 "Address settings" = "Настройки на адреса";
 "Access setting" = "Настройка на достъп";

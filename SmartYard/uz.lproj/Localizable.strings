@@ -70,6 +70,8 @@
 "Specify a reason" = "Sababni ko'rsating";
 "Exiting the application" = "Ilovadan chiqish";
 "Are you sure you want to log out of your account?" = "Hisobingizdan chiqishni istaysizmi?";
+"Account deleting" = "Hisobni o'chirish";
+"Are you sure you want to delete your account? All previously added addresses will be deleted" = "Hisobingizni oʻchirib tashlamoqchimisiz? Oldin qo'shilgan barcha manzillar o'chiriladi";
 "Number of contract" = "Shartnoma raqami";
 "Address settings" = "Manzil sozlamalari";
 "Access setting" = "Kirishni boshqarish";

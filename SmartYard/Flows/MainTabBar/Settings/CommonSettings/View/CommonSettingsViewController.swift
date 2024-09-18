@@ -62,6 +62,9 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private var expandedCamerasBottomConstaint: NSLayoutConstraint!
     
     @IBOutlet private weak var logoutButton: UIButton!
+    @IBOutlet private weak var deleteAccountButton: UIButton!
+    
+    @IBOutlet private var deleteAccountBottomConstraint: NSLayoutConstraint!
     
     private let viewModel: CommonSettingsViewModel
     
@@ -117,6 +120,9 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
         logoutButton.layerBorderWidth = 1
         logoutButton.layerBorderColor = UIColor.SmartYard.grayBorder
         
+        deleteAccountButton.layerBorderWidth = 1
+        deleteAccountButton.layerBorderColor = UIColor.SmartYard.grayBorder
+        
         let notificationsTapGesture = UITapGestureRecognizer()
         notificationsHeader.addGestureRecognizer(notificationsTapGesture)
         
@@ -164,6 +170,11 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
         
         enableListContainerView.addGestureRecognizer(enableListTapGesture)
         enableListSwitch.isUserInteractionEnabled = false
+        
+        if !Constants.showDeleteAccountButton {
+            deleteAccountButton.isHidden = true
+            deleteAccountBottomConstraint.isActive = false
+        }
     }
     
     private func toggleSection(
@@ -230,6 +241,7 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             speakerTrigger: speakerTapGesture.rx.event.asDriver().mapToVoid(),
             enableListTrigger: enableListTapGesture.rx.event.asDriver().mapToVoid(),
             logoutTrigger: logoutButton.rx.tap.asDriver(),
+            deleteAccountTrigger: deleteAccountButton.rx.tap.asDriver(),
             callKitHintTrigger: callkitQuestionMark.rx.tap.asDriver()
         )
         

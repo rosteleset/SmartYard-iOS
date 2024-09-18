@@ -70,6 +70,8 @@
 "Specify a reason" = "Specify a reason";
 "Exiting the application" = "Exiting the application";
 "Are you sure you want to log out of your account?" = "Are you sure you want to log out of your account?";
+"Account deleting" = "Account deleting";
+"Are you sure you want to delete your account? All previously added addresses will be deleted" = "Are you sure you want to delete your account? All previously added addresses will be deleted";
 "Number of contract" = "Number of contract";
 "Address settings" = "Address settings";
 "Access setting" = "Access setting";

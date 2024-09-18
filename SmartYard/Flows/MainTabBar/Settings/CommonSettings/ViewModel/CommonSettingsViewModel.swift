@@ -281,6 +281,53 @@ class CommonSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Удаление аккаунта
+        
+        input.deleteAccountTrigger
+            .drive(
+                onNext: { [weak self] in
+                    let noAction = UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel, handler: nil)
+                    
+                    let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { _ in
+                        guard let self = self else {
+                            return
+                        }
+                        
+                        self.apiWrapper.deleteAccount()
+                            .subscribe(
+                                onSuccess: { _ in
+                                    print("DEBUG: Account deleted on backend")
+                                    self.pushNotificationService.resetInstanceId()
+                                        .trackActivity(activityTracker)
+                                        .trackError(errorTracker)
+                                        .asDriver(onErrorJustReturn: nil)
+                                        .ignoreNil()
+                                        .drive(
+                                            onNext: { [weak self] in
+                                                SmartYardSharedDataUtilities.clearSharedData()
+                                                self?.accessService.logout()
+                                            }
+                                        )
+                                        .disposed(by: self.disposeBag)
+                                },
+                                onFailure: { error in
+                                    print("DEBUG: Error delete account: \(error)")
+                                }
+                            )
+                            .disposed(by: self.disposeBag)
+                    }
+                    
+                    self?.router.trigger(
+                        .dialog(
+                            title: NSLocalizedString("Account deleting", comment: ""),
+                            message: NSLocalizedString("Are you sure you want to delete your account? All previously added addresses will be deleted", comment: ""),
+                            actions: [noAction, yesAction]
+                        )
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+        
         input.callKitHintTrigger
             .drive(
                 onNext: { [weak self] in
@@ -316,6 +363,7 @@ extension CommonSettingsViewModel {
         let speakerTrigger: Driver<Void>
         let enableListTrigger: Driver<Void>
         let logoutTrigger: Driver<Void>
+        let deleteAccountTrigger: Driver<Void>
         let callKitHintTrigger: Driver<Void>
     }
     

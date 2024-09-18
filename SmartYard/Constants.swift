@@ -27,5 +27,6 @@ enum Constants {
     static let defaultPhonePrefix = "7"
     static let defaultPhonePattern = "(###) ###-##-##"
     static let defaultTimeZone = "Europe/Moscow"
+    static let showDeleteAccountButton = false
     
 }
