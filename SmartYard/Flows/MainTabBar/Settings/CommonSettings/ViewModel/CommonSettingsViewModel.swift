@@ -249,7 +249,7 @@ class CommonSettingsViewModel: BaseViewModel {
                 onNext: { [weak self] in
                     let noAction = UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel, handler: nil)
                     
-                    let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { _ in
+                    let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { [weak self] _ in
                         guard let self = self else {
                             return
                         }
@@ -288,16 +288,14 @@ class CommonSettingsViewModel: BaseViewModel {
                 onNext: { [weak self] in
                     let noAction = UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel, handler: nil)
                     
-                    let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { _ in
-                        guard let self = self else {
-                            return
-                        }
+                    let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { [weak self] _ in
+                        guard let self = self else { return }
                         
                         self.apiWrapper.deleteAccount()
                             .subscribe(
-                                onSuccess: { _ in
+                                onSuccess: { [weak self] _ in
                                     print("DEBUG: Account deleted on backend")
-                                    self.pushNotificationService.resetInstanceId()
+                                    self?.pushNotificationService.resetInstanceId()
                                         .trackActivity(activityTracker)
                                         .trackError(errorTracker)
                                         .asDriver(onErrorJustReturn: nil)
@@ -308,7 +306,7 @@ class CommonSettingsViewModel: BaseViewModel {
                                                 self?.accessService.logout()
                                             }
                                         )
-                                        .disposed(by: self.disposeBag)
+                                        .disposed(by: self?.disposeBag ?? DisposeBag())
                                 },
                                 onFailure: { error in
                                     print("DEBUG: Error delete account: \(error)")
