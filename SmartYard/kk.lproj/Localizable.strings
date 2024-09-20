@@ -72,6 +72,8 @@
 "Specify a reason" = "Себепті көрсетіңіз";
 "Exiting the application" = "Қолданбадан шығу";
 "Are you sure you want to log out of your account?" = "Сіз сөйлеміңіз келсе, сіз жеке кабинетіңізден шығу керек пе?";
+"Account deleting" = "Есептік жазбаны жою";
+"Are you sure you want to delete your account? All previously added addresses will be deleted" = "Есептік жазбаңызды шынымен жойғыңыз келе ме? Бұрын қосылған барлық мекенжайлар жойылады";
 "Number of contract" = "Договор нөмері";
 "Address settings" = "Мекен-жай параметрлері";
 "Access setting" = "Кіруге рұқсат беру параметрлері";

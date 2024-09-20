@@ -40,3 +40,6 @@
 
 /* Class = "UILabel"; text = "Показать на карте"; ObjectID = "mLP-oQ-Prc"; */
 "mLP-oQ-Prc.text" = "Покажи на картата";
+
+/* Class = "UIButton"; normalTitle = "Удалить аккаунт"; ObjectID = "duv-cH-I0h"; */
+"duv-cH-I0h.normalTitle" = "Изтриване на акаунт";

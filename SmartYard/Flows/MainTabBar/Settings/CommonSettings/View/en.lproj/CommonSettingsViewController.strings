@@ -40,3 +40,5 @@ gets close to zero";
 /* Class = "UILabel"; text = "Показать на карте"; ObjectID = "mLP-oQ-Prc"; */
 "mLP-oQ-Prc.text" = "Show on map";
 
+/* Class = "UIButton"; normalTitle = "Удалить аккаунт"; ObjectID = "duv-cH-I0h"; */
+"duv-cH-I0h.normalTitle" = "Delete account";

@@ -71,6 +71,8 @@
 "Specify a reason" = "Укажите причину";
 "Exiting the application" = "Выход из приложения";
 "Are you sure you want to log out of your account?" = "Вы действительно хотите выйти из вашей учетной записи?";
+"Account deleting" = "Удаление учетной записи";
+"Are you sure you want to delete your account? All previously added addresses will be deleted" = "Вы уверены, что хотите удалить свою учетную запись? Все ранее добавленные адреса будут удалены";
 "Number of contract" = "Номер договора";
 "Address settings" = "Настройки адреса";
 "Access setting" = "Управление доступом";

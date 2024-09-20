@@ -37,3 +37,6 @@
 
 /* Class = "UILabel"; text = "Показать на карте"; ObjectID = "mLP-oQ-Prc"; */
 "mLP-oQ-Prc.text" = "Картада көрсету";
+
+/* Class = "UIButton"; normalTitle = "Удалить аккаунт"; ObjectID = "duv-cH-I0h"; */
+"duv-cH-I0h.normalTitle" = "Есептік жазбаны жою";

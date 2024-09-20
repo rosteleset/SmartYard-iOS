@@ -260,4 +260,22 @@ extension APIWrapper {
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
+    
+    func deleteAccount() -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+
+        let request = DeleteAccountRequest(accessToken: accessToken)
+
+        return provider.rx
+            .request(.deleteAccount(request: request))
+            .convertNoConnectionError()
+            .mapAsVoidResponse()
+            .mapToOptional()
+    }
 }
