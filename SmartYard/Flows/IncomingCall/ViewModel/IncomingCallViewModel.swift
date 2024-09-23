@@ -722,15 +722,6 @@ class IncomingCallViewModel: BaseViewModel {
         // MARK: Выставляем вьюхи для отображения видео
         
         input.videoViewsTrigger
-            .distinctUntilChanged({ old, new in
-                let (oldView1, oldView2, oldView3) = old
-                let (newView1, newView2, newView3) = new
-                
-                return (oldView1.frame == newView1.frame) &&
-                        (oldView2.frame == newView2.frame) &&
-                        (oldView3.frame == newView3.frame)
-                
-            })
             .debounce(.milliseconds(10))
             .drive(
                 onNext: { [weak self] args in
