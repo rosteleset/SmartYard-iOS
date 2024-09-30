@@ -132,13 +132,13 @@ PODS:
     - linphone-sdk/app-extension-swift
     - linphone-sdk/basic-frameworks
   - lottie-ios (4.4.1)
-  - MapboxCommon (24.3.1)
-  - MapboxCoreMaps (11.3.0):
-    - MapboxCommon (~> 24.3)
-  - MapboxMaps (11.3.0):
-    - MapboxCommon (= 24.3.1)
-    - MapboxCoreMaps (= 11.3.0)
-    - Turf (= 2.8.0)
+  - MapboxCommon (24.7.0)
+  - MapboxCoreMaps (11.7.0):
+    - MapboxCommon (~> 24.7)
+  - MapboxMaps (11.7.0):
+    - MapboxCommon (= 24.7.0)
+    - MapboxCoreMaps (= 11.7.0)
+    - Turf (= 3.0.0)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (15.0.0):
@@ -150,7 +150,7 @@ PODS:
   - nanopb/decode (2.30910.0)
   - nanopb/encode (2.30910.0)
   - OnlineChatSdk (0.0.2)
-  - Parchment (4.0.0)
+  - Parchment (4.1.0)
   - PinLayout (1.10.5)
   - PMNibLinkableView (0.3.0)
   - PopOverDatePicker (1.1.0)
@@ -210,8 +210,8 @@ PODS:
   - SwiftLint (0.57.0)
   - TouchAreaInsets (1.1.0)
   - TPKeyboardAvoiding (1.3.5)
-  - Turf (2.8.0)
-  - WebRTC-lib (128.0.0)
+  - Turf (3.0.0)
+  - WebRTC-lib (129.0.0)
   - WKCookieWebView (2.0.3)
   - XCoordinator (2.2.1):
     - XCoordinator/Core (= 2.2.1)
@@ -230,7 +230,7 @@ DEPENDENCIES:
   - Kingfisher
   - linphone-sdk (= 5.2.28)
   - lottie-ios
-  - MapboxMaps (= 11.3.0)
+  - MapboxMaps
   - Moya/RxSwift
   - OnlineChatSdk (from `https://github.com/rosteleset/OnlineChatSdk-Swift.git`, branch `feature/build-fix`)
   - Parchment
@@ -352,13 +352,13 @@ SPEC CHECKSUMS:
   Kingfisher: 53a10ea35051a436b5fb626ca2dd8f3144d755e9
   linphone-sdk: a70028a240027557ab10cae46cabca59ca80e3f2
   lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
-  MapboxCommon: e6d0d15f1e34278e21bae28bdc548d378757b51e
-  MapboxCoreMaps: 0e3eab0bd5787e833d48261fa1d01f356d6c4ad8
-  MapboxMaps: 5aba2ba70a85d08e0ea00ad011ca3d2965e69a59
+  MapboxCommon: fbc1138a831f4c1b728167c3f49701fe3a9aeed1
+  MapboxCoreMaps: 8946c9fa51e588d594ee6ebf192d9942368abb6a
+  MapboxMaps: bf9f775d921ed357ae642c379ebad90550cdb9de
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   OnlineChatSdk: 421b17a804f22c193f81f02a891e7d91128c525b
-  Parchment: 60038b444208afbcfd7c7d5b7d7accc0c036ab2c
+  Parchment: fdea264f5de6d73b0b69a31c686fab762c78ed2f
   PinLayout: f6c2b63a5a5b24864064e1d15c67de41b4e74748
   PMNibLinkableView: 06ebf6128feb70c3ba589d6be232748c1b7b1767
   PopOverDatePicker: 352207019f4dd717f1fef6d9bb42997a252f243f
@@ -377,11 +377,11 @@ SPEC CHECKSUMS:
   SwiftLint: eb47480d47c982481592c195c221d11013a679cc
   TouchAreaInsets: eb1ad705965a142a30a9c6a3405bec5e46d8613b
   TPKeyboardAvoiding: d55b3ea7b362540af8fcf36aa3ed2e87bf210cc6
-  Turf: aa2ede4298009639d10db36aba1a7ebaad072a5e
-  WebRTC-lib: f93dfa8d970e9b3b9e75c405f93e9cbba7234b22
+  Turf: a1604e74adce15c58462c9ae2acdbf049d5be35e
+  WebRTC-lib: 69a44303f66e2b548cd8f4a94b8f012723ab60f6
   WKCookieWebView: 528260c9cf7d89d312d61639cfca75c5618326a2
   XCoordinator: 2cf9f72e10998b7a4a4bbeac3d07e071ea82fca3
 
-PODFILE CHECKSUM: 7bac8d1b7dd8a665e3d5f0ebbb4f314b8b4aeb33
+PODFILE CHECKSUM: 058ded8a9eafa67c68d598b632bc9a079a21df0a
 
 COCOAPODS: 1.15.2

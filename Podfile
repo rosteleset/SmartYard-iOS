@@ -44,7 +44,7 @@ target 'SmartYard' do
   pod 'PopOverDatePicker', :git => 'https://github.com/rosteleset/PopOverDatePicker.git', :branch => 'timezoneSupport'
   
   # Map
-  pod 'MapboxMaps', '11.3.0'
+  pod 'MapboxMaps'
   
   # Analytics
   pod 'FirebaseCrashlytics', '10.29.0'
