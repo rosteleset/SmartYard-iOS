@@ -114,6 +114,9 @@ class DeleteFaceViewController: BaseViewController {
                             objectType: event.objectType,
                             objectMechanizma: event.objectMechanizma,
                             mechanizmaDescription: event.mechanizmaDescription,
+                            houseId: event.houseId,
+                            entranceId: event.entranceId,
+                            cameraId: event.cameraId,
                             event: event.event,
                             detail: event.detail,
                             detailX: newDetailX, // заменяем только вот это поле

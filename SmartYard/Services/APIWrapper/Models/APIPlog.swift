@@ -101,6 +101,12 @@ struct APIPlog: Decodable, Equatable, Hashable {
     let objectMechanizma: Int
     /// описание нагрузки (двери)
     let mechanizmaDescription: String
+    /// идентификатор дома
+    let houseId: Int?
+    /// идентификатор входа
+    let entranceId: Int?
+    /// идентификатор камеры
+    let cameraId: Int?
     let event: EventType
     let detail: String
     let detailX: DetailX?
@@ -116,6 +122,9 @@ struct APIPlog: Decodable, Equatable, Hashable {
         case objectMechanizma
         case mechanizmaDescription
         case event
+        case houseId
+        case entranceId
+        case cameraId
         case detail
         case detailX
         case preview
@@ -154,6 +163,9 @@ struct APIPlog: Decodable, Equatable, Hashable {
         objectType = try container.decode(String.self, forKey: .objectType).int ?? -1
         objectMechanizma = try container.decode(String.self, forKey: .objectMechanizma).int ?? -1
         mechanizmaDescription = try container.decode(String.self, forKey: .mechanizmaDescription)
+        houseId = try? container.decode(String.self, forKey: .houseId).int ?? nil
+        entranceId = try? container.decode(String.self, forKey: .entranceId).int ?? nil
+        cameraId = try? container.decode(String.self, forKey: .cameraId).int ?? nil
         event = APIPlog.EventType(rawValue: try container.decode(String.self, forKey: .event).int ?? -1) ?? .unknown
         detail = (try? container.decode(String.self, forKey: .detail)) ?? ""
         detailX = try? container.decode(DetailX.self, forKey: .detailX)
@@ -176,6 +188,9 @@ struct APIPlog: Decodable, Equatable, Hashable {
         objectType: Int, // тип объекта (0 - домофон)
         objectMechanizma: Int, // идентификатор нагрузки (двери). Допустимые значения: "0", "1", "2"
         mechanizmaDescription: String, // описание нагрузки (двери)
+        houseId: Int?,
+        entranceId: Int?,
+        cameraId: Int?,
         event: EventType,
         detail: String,
         detailX: DetailX?,
@@ -189,6 +204,9 @@ struct APIPlog: Decodable, Equatable, Hashable {
         self.objectType = objectType
         self.objectMechanizma = objectMechanizma
         self.mechanizmaDescription = mechanizmaDescription
+        self.houseId = houseId
+        self.entranceId = entranceId
+        self.cameraId = cameraId
         self.event = event
         self.detail = detail
         self.detailX = detailX
