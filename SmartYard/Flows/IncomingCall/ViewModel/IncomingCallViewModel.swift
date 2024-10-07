@@ -971,11 +971,11 @@ extension IncomingCallViewModel: CXProviderProxyDelegate {
     }
     
     func provider(_ provider: CXProvider, didActivateAudioSession audioSession: AVAudioSession) {
-        linphoneService.core?.activateAudioSession(actived: true)
+        linphoneService.core?.activateAudioSession(activated: true)
     }
     
     func provider(_ provider: CXProvider, didDeactivateAudioSession audioSession: AVAudioSession) {
-        linphoneService.core?.activateAudioSession(actived: false)
+        linphoneService.core?.activateAudioSession(activated: false)
     }
     
     // swiftlint:disable:next file_length
