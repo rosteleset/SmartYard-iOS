@@ -5,6 +5,7 @@
 //  Created by admin on 23/03/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import UIKit
 import RxSwift
@@ -98,17 +99,15 @@ class WebViewController: BaseViewController, LoaderPresentable {
         var webScrollView: UIView?
         var contentView: UIView?
         
-        if #available(iOS 11.0, *) {
-            guard let noDragWebView = webView else {
-                return
-            }
-            webScrollView = noDragWebView.subviews.compactMap { $0 as? UIScrollView }.first
-            contentView = webScrollView?.subviews.first(where: { $0.interactions.count > 1 })
-            guard let dragInteraction = (contentView?.interactions.compactMap { $0 as? UIDragInteraction }.first) else {
-                return
-            }
-            contentView?.removeInteraction(dragInteraction)
+        guard let noDragWebView = webView else {
+            return
         }
+        webScrollView = noDragWebView.subviews.compactMap { $0 as? UIScrollView }.first
+        contentView = webScrollView?.subviews.first(where: { $0.interactions.count > 1 })
+        guard let dragInteraction = (contentView?.interactions.compactMap { $0 as? UIDragInteraction }.first) else {
+            return
+        }
+        contentView?.removeInteraction(dragInteraction)
     }
     
     fileprivate func configureUserContentController() {
@@ -118,6 +117,21 @@ class WebViewController: BaseViewController, LoaderPresentable {
         let javaScript = "bearerToken = function() { return \"" + accessToken + "\"; };"
         let script = WKUserScript(source: javaScript, injectionTime: .atDocumentStart, forMainFrameOnly: false)
         webView.configuration.userContentController.addUserScript(script)
+        
+        if #available(iOS 13.0,*){
+            let validator = CertificateValidator()
+            Task {
+                let names = ["Russian Trusted Root CA", "Russian Trusted Sub CA"]
+                await validator.prepareCertificates(names)
+            }
+        }
+    }
+    
+    @objc func gotoHomeURL() {
+        guard let url = self.viewModel.getUrl() else {
+            return
+        }
+        self.webView.loadURL(url)
     }
     
     private func configureView() {
@@ -126,7 +140,14 @@ class WebViewController: BaseViewController, LoaderPresentable {
         if backButtonLabel.isEmpty {
             fakeNavBar.isHidden = true
         }
+        if backButtonLabel == "Home" {
+            fakeNavBar.setText("В начало")
+            fakeNavBar.isHidden = true
+            fakeNavBar.addWebViewAction(self, action: #selector(gotoHomeURL))
+        }
+        
         webView.scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 17, left: 0, bottom: 5, right: 0)
+        
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webView.scrollView.refreshControl = refreshControl
@@ -199,6 +220,7 @@ class WebViewController: BaseViewController, LoaderPresentable {
     }
 
 }
+
 extension WebViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 //        guard let dict = message.body as? [String: AnyObject] else {
@@ -249,6 +271,14 @@ extension WebViewController: WKNavigationDelegate {
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
+        print("DEBUG URL:", navigationAction.request.url, self.viewModel.getUrl())
+        if navigationAction.request.url == webView.url,
+           self.backButtonLabel == "Home" {
+            self.fakeNavBar.isHidden = true
+        } else if self.backButtonLabel == "Home" {
+            self.fakeNavBar.isHidden = false
+        }
+        
         guard [.linkActivated, .formSubmitted].contains(navigationAction.navigationType) else {
             decisionHandler(WKNavigationActionPolicy.allow)
             return
@@ -264,7 +294,7 @@ extension WebViewController: WKNavigationDelegate {
             }
             
             // если это страницы, которые не хостятся у нас, то делаем обычный переход по ссылке.
-            guard let host = url.host, host.hasPrefix("dm.lanta.me") else {
+            guard let host = url.host, host.hasPrefix("lk-demo.mycentra.ru") else {
                       decisionHandler(WKNavigationActionPolicy.allow)
                       return
                   }
@@ -285,76 +315,97 @@ extension WebViewController: WKNavigationDelegate {
         decisionHandler(WKNavigationActionPolicy.cancel)
     }
     
+    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        guard let serverTrust = challenge.protectionSpace.serverTrust else {
+            return completionHandler(.performDefaultHandling, nil)
+        }
+        
+        if #available(iOS 13.0,*) {
+            let validator = CertificateValidator()
+            Task.detached(priority: .userInitiated) {
+                if await validator.checkValidity(of: serverTrust) {
+                    let cred = URLCredential(trust: serverTrust)
+                    completionHandler(.useCredential, cred)
+                } else {
+                    completionHandler(.performDefaultHandling, nil)
+                }
+            }
+        } else {
+            completionHandler(.performDefaultHandling, nil)
+        }
+    }
+    
 }
 
-extension BaseViewController: WKUIDelegate {
-    func webView(
-        _ webView: WKWebView,
-        runJavaScriptAlertPanelWithMessage message: String,
-        initiatedByFrame frame: WKFrameInfo,
-        completionHandler: @escaping () -> Void
-    ) {
-        
-        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "OK", style: .cancel) { _ in
-            completionHandler()
-        }
-        
-        alert.addAction(okAction)
-        
-        self.present(alert, animated: true)
-    }
-    
-    func webView(
-        _ webView: WKWebView,
-        runJavaScriptConfirmPanelWithMessage message: String,
-        initiatedByFrame frame: WKFrameInfo,
-        completionHandler: @escaping (Bool) -> Void
-    ) {
-        
-        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            completionHandler(true)
-        }
-        
-        let calcelAction = UIAlertAction(title: "Отмена", style: .cancel) { _ in
-            completionHandler(false)
-        }
-        
-        alert.addAction(okAction)
-        alert.addAction(calcelAction)
-        
-        self.present(alert, animated: true)
-    }
-    
-    func webView(
-        _ webView: WKWebView,
-        runJavaScriptTextInputPanelWithPrompt prompt: String,
-        defaultText: String?,
-        initiatedByFrame frame: WKFrameInfo,
-        completionHandler: @escaping (String?) -> Void
-    ) {
-        let alert = UIAlertController(title: "", message: prompt, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            guard let textField = alert.textFields?.first else {
-                return
-            }
-            completionHandler(textField.text)
-        }
-        
-        let calcelAction = UIAlertAction(title: "Отмена", style: .cancel) { _ in
-            completionHandler(nil)
-        }
-        
-        alert.addTextField {textField in
-            textField.text = defaultText
-        }
-        alert.addAction(okAction)
-        alert.addAction(calcelAction)
-        
-        self.present(alert, animated: true)
-    }
-}
+//extension BaseViewController: WKUIDelegate {
+//    func webView(
+//        _ webView: WKWebView,
+//        runJavaScriptAlertPanelWithMessage message: String,
+//        initiatedByFrame frame: WKFrameInfo,
+//        completionHandler: @escaping () -> Void
+//    ) {
+//        
+//        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+//        
+//        let okAction = UIAlertAction(title: "OK", style: .cancel) { _ in
+//            completionHandler()
+//        }
+//        
+//        alert.addAction(okAction)
+//        
+//        self.present(alert, animated: true)
+//    }
+//    
+//    func webView(
+//        _ webView: WKWebView,
+//        runJavaScriptConfirmPanelWithMessage message: String,
+//        initiatedByFrame frame: WKFrameInfo,
+//        completionHandler: @escaping (Bool) -> Void
+//    ) {
+//        
+//        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+//        
+//        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+//            completionHandler(true)
+//        }
+//        
+//        let calcelAction = UIAlertAction(title: "Отмена", style: .cancel) { _ in
+//            completionHandler(false)
+//        }
+//        
+//        alert.addAction(okAction)
+//        alert.addAction(calcelAction)
+//        
+//        self.present(alert, animated: true)
+//    }
+//    
+//    func webView(
+//        _ webView: WKWebView,
+//        runJavaScriptTextInputPanelWithPrompt prompt: String,
+//        defaultText: String?,
+//        initiatedByFrame frame: WKFrameInfo,
+//        completionHandler: @escaping (String?) -> Void
+//    ) {
+//        let alert = UIAlertController(title: "", message: prompt, preferredStyle: .alert)
+//        
+//        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+//            guard let textField = alert.textFields?.first else {
+//                return
+//            }
+//            completionHandler(textField.text)
+//        }
+//        
+//        let calcelAction = UIAlertAction(title: "Отмена", style: .cancel) { _ in
+//            completionHandler(nil)
+//        }
+//        
+//        alert.addTextField {textField in
+//            textField.text = defaultText
+//        }
+//        alert.addAction(okAction)
+//        alert.addAction(calcelAction)
+//        
+//        self.present(alert, animated: true)
+//    }
+//}
+// swiftlint:enable function_body_length

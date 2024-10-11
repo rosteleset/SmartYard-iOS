@@ -65,3 +65,6 @@ sourcetree-hook.json
 # Private tokens, keys, backend urls and so on.
 GoogleService-Info.plist
 Constants.swift
+SmartYard/Constants.swift
+SmartYard/Resources/Info.plist
+SmartYard/Resources/GoogleService-Info.plist

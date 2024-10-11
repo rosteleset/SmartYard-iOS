@@ -11,6 +11,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import XCoordinator
+import FirebaseMessaging
 
 class InputPhoneNumberViewModel: BaseViewModel {
     
@@ -63,6 +64,12 @@ class InputPhoneNumberViewModel: BaseViewModel {
                     return .just(nil)
                 }
 
+                if let fcmToken = Messaging.messaging().fcmToken {
+                    return self.apiWrapper.requestCode(userPhone: "8" + phone, type: "push", pushToken: fcmToken)
+                        .trackActivity(activityTracker)
+                        .trackError(errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+                }
                 return self.apiWrapper.requestCode(userPhone: "8" + phone)
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
@@ -81,6 +88,11 @@ class InputPhoneNumberViewModel: BaseViewModel {
                         self?.accessService.appState = .authByOutgoingCall(
                             phoneNumber: phoneNumber,
                             confirmPhoneNumber: confirmNumber
+                        )
+                    case .pushMobile(let requestId):
+                        self?.accessService.appState = .authByMobileProvider(
+                            phoneNumber: phoneNumber,
+                            requestId: requestId
                         )
                     default:
                         self?.accessService.appState = .smsCode(phoneNumber: phoneNumber)
@@ -103,6 +115,8 @@ class InputPhoneNumberViewModel: BaseViewModel {
                             return
                         }
                         self.router.trigger(.authByOutgoingCall(phoneNumber: phone, confirmPhoneNumber: confirmNumber))
+                    case .pushMobile(let requestId):
+                        self.router.trigger(.authByMobileProvider(phoneNumber: phone, requestId: requestId))
                     default:
                         self.router.trigger(.pinCode(phoneNumber: phone, isInitial: true))
                     }
@@ -131,3 +145,4 @@ extension InputPhoneNumberViewModel {
     }
     
 }
+// swiftlint:enable function_body_length

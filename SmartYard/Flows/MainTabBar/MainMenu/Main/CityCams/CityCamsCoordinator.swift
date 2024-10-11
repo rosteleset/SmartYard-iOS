@@ -16,6 +16,7 @@ enum CityCamsRoute: Route {
     case main
     case alert(title: String, message: String?)
     case dialog(title: String, message: String?, actions: [UIAlertAction])
+    case share(items: [Any])
     case back
     case cameraContainer(selectedCamera: CityCameraObject)
     case requestRecord(selectedCamera: CityCameraObject)
@@ -36,7 +37,7 @@ class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute> {
     private let logoutHelper: LogoutHelper
     
     init(
-        rootViewController: RootViewController,
+//        rootViewController: RootViewController,
         apiWrapper: APIWrapper,
         pushNotificationService: PushNotificationService,
         accessService: AccessService,
@@ -53,8 +54,35 @@ class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute> {
         self.alertService = alertService
         self.logoutHelper = logoutHelper
         
+        super.init(initialRoute: .main)
+//        super.init(rootViewController: rootViewController, initialRoute: nil)
+        
+        rootViewController.setNavigationBarHidden(true, animated: false)
+    }
+    
+    init(
+        rootViewController: RootViewController,
+        apiWrapper: APIWrapper,
+        pushNotificationService: PushNotificationService,
+        accessService: AccessService,
+        issueService: IssueService,
+        permissionService: PermissionService,
+        alertService: AlertService,
+        logoutHelper: LogoutHelper,
+        camera: CityCameraObject
+    ) {
+        self.apiWrapper = apiWrapper
+        self.pushNotificationService = pushNotificationService
+        self.accessService = accessService
+        self.issueService = issueService
+        self.permissionService = permissionService
+        self.alertService = alertService
+        self.logoutHelper = logoutHelper
+        
         super.init(rootViewController: rootViewController, initialRoute: nil)
         
+        trigger(.cameraContainer(selectedCamera: camera))
+
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
@@ -66,12 +94,15 @@ class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute> {
                 router: weakRouter
             )
             
-            let vc = CityMapViewController(viewModel: vm)
+            let vc = CityMapViewController(viewModel: vm, apiWrapper: apiWrapper)
             
             return .push(vc)
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
             
+        case let .share(items):
+            return .shareTransition(items: items)
+
         case let .dialog(title, message, actions):
             return .dialogTransition(title: title, message: message, actions: actions)
             
@@ -99,6 +130,7 @@ class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute> {
         
         case .requestRecord(selectedCamera: let selectedCamera):
             let vm = RequestRecordViewModel(
+                apiWrapper: apiWrapper,
                 camera: selectedCamera,
                 issueService: issueService,
                 router: weakRouter

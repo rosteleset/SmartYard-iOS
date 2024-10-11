@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "paywrong.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

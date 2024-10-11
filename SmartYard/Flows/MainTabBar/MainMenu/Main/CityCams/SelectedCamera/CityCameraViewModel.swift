@@ -5,7 +5,7 @@
 //  Created by Александр Васильев on 27.01.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
-// swiftlint:disable line_length
+// swiftlint:disable line_length function_body_length
 
 import Foundation
 import XCoordinator
@@ -123,4 +123,4 @@ extension CityCameraViewModel {
     }
     
 }
-
+// swiftlint:enable line_length function_body_length

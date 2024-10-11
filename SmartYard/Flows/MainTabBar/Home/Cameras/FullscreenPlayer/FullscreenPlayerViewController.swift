@@ -18,6 +18,7 @@ class FullscreenPlayerViewController: UIViewController, LoaderPresentable {
     enum PlayedVideoType {
         case online
         case archive
+        case city
     }
     
     private let playedVideoType: PlayedVideoType
@@ -58,6 +59,11 @@ class FullscreenPlayerViewController: UIViewController, LoaderPresentable {
 
     private var disposeBag = DisposeBag()
     
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return .default
+//        return .lightContent
+//    }
+
     init(
         playedVideoType: PlayedVideoType,
         preferredPlaybackRate: Float,
@@ -73,7 +79,6 @@ class FullscreenPlayerViewController: UIViewController, LoaderPresentable {
         
         super.init(nibName: nil, bundle: nil)
         
-        bind()
     }
     
     @available(*, unavailable)
@@ -266,16 +271,16 @@ class FullscreenPlayerViewController: UIViewController, LoaderPresentable {
             self.timer = nil
             progressSlider?.isHidden = false
         }
-        
         switch playedVideoType {
         case .online: NotificationCenter.default.post(name: .onlineFullscreenModeClosed, object: nil)
         case .archive: NotificationCenter.default.post(name: .archiveFullscreenModeClosed, object: nil)
+        case .city: NotificationCenter.default.post(name: .cityFullscreenModeClosed, object: nil)
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
-        if !doors.isEmpty {
+        if playedVideoType == .online, !doors.isEmpty {
             if view.frame.size.height > view.frame.size.width {
                 var height: CGFloat = view.frame.size.width / 400
                 
@@ -336,38 +341,44 @@ class FullscreenPlayerViewController: UIViewController, LoaderPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
       
+        bind()
+        
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 3.0
         
-        switch doors.count {
-        case 1:
-            openButtonsCollection.isHidden = false
-            openButton1View.isHidden = false
-            openButton2View.isHidden = true
-            openButton3View.isHidden = true
-            textButton1.text = doors[0].name
-            openButton1.imageView?.image = UIImage(named: doors[0].type)
-        case 2:
-            openButtonsCollection.isHidden = false
-            openButton1View.isHidden = true
-            openButton2View.isHidden = false
-            openButton3View.isHidden = false
-            textButton2.text = doors[0].name
-            openButton2.imageView?.image = UIImage(named: doors[0].type)
-            textButton3.text = doors[1].name
-            openButton3.imageView?.image = UIImage(named: doors[1].type)
-        case 3:
-            openButtonsCollection.isHidden = false
-            openButton1View.isHidden = false
-            openButton2View.isHidden = false
-            openButton3View.isHidden = false
-            textButton1.text = doors[0].name
-            openButton1.imageView?.image = UIImage(named: doors[0].type)
-            textButton2.text = doors[1].name
-            openButton2.imageView?.image = UIImage(named: doors[1].type)
-            textButton3.text = doors[2].name
-            openButton3.imageView?.image = UIImage(named: doors[2].type)
-        default:
+        if playedVideoType == .online {
+            switch doors.count {
+            case 1:
+                openButtonsCollection.isHidden = false
+                openButton1View.isHidden = false
+                openButton2View.isHidden = true
+                openButton3View.isHidden = true
+                textButton1.text = doors[0].name
+                openButton1.setImage(UIImage(named: doors[0].type), for: .normal)
+            case 2:
+                openButtonsCollection.isHidden = false
+                openButton1View.isHidden = true
+                openButton2View.isHidden = false
+                openButton3View.isHidden = false
+                textButton2.text = doors[0].name
+                openButton1.setImage(UIImage(named: doors[0].type), for: .normal)
+                textButton3.text = doors[1].name
+                openButton1.setImage(UIImage(named: doors[1].type), for: .normal)
+            case 3:
+                openButtonsCollection.isHidden = false
+                openButton1View.isHidden = false
+                openButton2View.isHidden = false
+                openButton3View.isHidden = false
+                textButton1.text = doors[0].name
+                openButton1.setImage(UIImage(named: doors[0].type), for: .normal)
+                textButton2.text = doors[1].name
+                openButton1.setImage(UIImage(named: doors[1].type), for: .normal)
+                textButton3.text = doors[2].name
+                openButton1.setImage(UIImage(named: doors[2].type), for: .normal)
+            default:
+                openButtonsCollection.isHidden = true
+            }
+        } else {
             openButtonsCollection.isHidden = true
         }
         
@@ -401,6 +412,10 @@ class FullscreenPlayerViewController: UIViewController, LoaderPresentable {
         
         if let playerLayer = playerLayer {
            contentView.layer.insertSublayer(playerLayer, at: 0)
+        }
+        
+        if playedVideoType == .city {
+            muteButton.isHidden = true
         }
         
         guard playedVideoType == .archive else {
@@ -520,13 +535,13 @@ class FullscreenPlayerViewController: UIViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        errorTracker
-            .asDriver()
-            .drive(
-                onNext: { [weak self] _ in
-                }
-            )
-            .disposed(by: disposeBag)
+//        errorTracker
+//            .asDriver()
+//            .drive(
+//                onNext: { [weak self] _ in
+//                }
+//            )
+//            .disposed(by: disposeBag)
     }
     
     func setProgressSlider(_ progressSlider: SimpleVideoProgressSlider) {
@@ -603,3 +618,4 @@ extension FullscreenPlayerViewController {
         controls.forEach({ $0.isHidden = true })
     }
 }
+// swiftlint:enable type_body_length function_body_length cyclomatic_complexity closure_body_length file_length

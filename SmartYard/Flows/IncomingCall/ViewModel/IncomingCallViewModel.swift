@@ -204,8 +204,15 @@ class IncomingCallViewModel: BaseViewModel {
                 let (call, callParams) = unwrappedIncomingCall
                 
                 if isDoorOpeningRequested {
-                    call.speakerMuted = true
-                    call.microphoneMuted = true
+                    if callParams.micEnabled {
+//                        print("MIC ENABLED")
+                        call.microphoneMuted = true
+                    }
+                    if callParams.audioEnabled {
+//                        print("AUDIO ENABLED")
+                        call.speakerMuted = true
+                    }
+//                    call.microphoneMuted = true
                 }
                 
                 return .just((call, callParams))
@@ -934,17 +941,20 @@ extension IncomingCallViewModel: CXProviderProxyDelegate {
     }
     
     func providerDidAnswerCall(_ provider: CXProvider) {
+        linphoneService.core?.configureAudioSession()
         answerCallProxySubject.onNext(())
         NotificationCenter.default.post(name: .answeredByCallKit, object: nil)
         
     }
     
     func provider(_ provider: CXProvider, didActivateAudioSession audioSession: AVAudioSession) {
-        linphoneService.core?.activateAudioSession(actived: true)
+        linphoneService.core?.activateAudioSession(activated: true)
     }
     
     func provider(_ provider: CXProvider, didDeactivateAudioSession audioSession: AVAudioSession) {
-        linphoneService.core?.activateAudioSession(actived: false)
+        linphoneService.core?.activateAudioSession(activated: false)
     }
     
 }
+// swiftlint:enable type_body_length function_body_length cyclomatic_complexity
+// swiftlint:enable closure_body_length line_length file_length

@@ -15,7 +15,7 @@ import RxCocoa
 enum MainMenuRoute: Route {
     
     case main
-    case cityCams
+//    case cityCams
     case settings
     case profile
     case callSupport
@@ -38,7 +38,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
     private let logoutHelper: LogoutHelper
     
     private var settingsRouter: StrongRouter<SettingsRoute>!
-    private var cityCamsRouter: StrongRouter<CityCamsRoute>!
+//    private var cityCamsRouter: StrongRouter<CityCamsRoute>!
     
     init(
         accessService: AccessService,
@@ -70,19 +70,19 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             alertService: alertService
         )
         
-        let cityCamsCoordinator = CityCamsCoordinator(
-            rootViewController: rootViewController,
-            apiWrapper: apiWrapper,
-            pushNotificationService: pushNotificationService,
-            accessService: accessService,
-            issueService: issueService,
-            permissionService: permissionService,
-            alertService: alertService,
-            logoutHelper: logoutHelper
-        )
+//        let cityCamsCoordinator = CityCamsCoordinator(
+//            rootViewController: rootViewController,
+//            apiWrapper: apiWrapper,
+//            pushNotificationService: pushNotificationService,
+//            accessService: accessService,
+//            issueService: issueService,
+//            permissionService: permissionService,
+//            alertService: alertService,
+//            logoutHelper: logoutHelper
+//        )
         
         self.settingsRouter = settingsCoordinator.strongRouter
-        self.cityCamsRouter = cityCamsCoordinator.strongRouter
+//        self.cityCamsRouter = cityCamsCoordinator.strongRouter
         
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
@@ -94,8 +94,8 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             let vc = MainMenuViewController(viewModel: vm)
             return .set([vc])
         
-        case .cityCams:
-            return .trigger(CityCamsRoute.main, on: cityCamsRouter)
+//        case .cityCams:
+//            return .trigger(CityCamsRoute.main, on: cityCamsRouter)
             
         case .settings:
             return .trigger(SettingsRoute.main, on: settingsRouter)
@@ -192,3 +192,4 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         }
     }
 }
+// swiftlint:enable function_body_length cyclomatic_complexity

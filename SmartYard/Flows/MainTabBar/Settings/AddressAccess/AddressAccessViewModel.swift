@@ -6,7 +6,7 @@
 //  Copyright © 2021 LanTa. All rights reserved.
 //
 // swiftlint:disable type_body_length function_body_length cyclomatic_complexity
-// swiftlint:disable closure_body_length line_length file_length
+// swiftlint:disable line_length file_length
 
 import Foundation
 import XCoordinator
@@ -25,6 +25,7 @@ class AddressAccessViewModel: BaseViewModel {
     private let intercomAccessCode = BehaviorSubject<String?>(value: nil)
     private let isGrantedIntercomGuestAccess = BehaviorSubject<Bool>(value: false)
     private let isFrsAvailable = BehaviorSubject<Bool?>(value: nil)
+    private let isIntercomAvailable = BehaviorSubject<Bool?>(value: nil)
     
     private let address: String
     private let flatId: String
@@ -105,17 +106,27 @@ class AddressAccessViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] response in
+                    
                     self?.intercomAccessCode.onNext(response.doorCode)
                     
                     let isAccessGranted = response.autoOpen > Date()
                     
                     self?.isGrantedIntercomGuestAccess.onNext(isAccessGranted)
+                    self?.isIntercomAvailable.onNext(true)
                     
                     if let isFrsNotAvailable = response.frsDisabled {
                         self?.isFrsAvailable.onNext(!isFrsNotAvailable)
                     } else {
                         self?.isFrsAvailable.onNext(nil)
                     }
+                    if response.allowDoorCode == false,
+                       response.cms == false,
+                       response.enableDoorCode == false,
+                       response.frsDisabled == true {
+                        self?.isFrsAvailable.onNext(nil)
+                        self?.isIntercomAvailable.onNext(nil)
+                    }
+
                 }
             )
             .disposed(by: disposeBag)
@@ -159,6 +170,7 @@ class AddressAccessViewModel: BaseViewModel {
             .ignoreNil()
             .do(
                 onNext: { [weak self] address in
+
                     let isOwner = (address.flatOwner ?? false) || (address.contractOwner ?? false)
                     let hasGates = address.hasGates ?? false
                     
@@ -168,6 +180,11 @@ class AddressAccessViewModel: BaseViewModel {
                     // MARK: Здесь нужно запросить доступ к контактам при выполнении условий:
                     // 1. Юзер может раздавать временный или постоянный доступ (иначе нет смысла)
                     // 2. Статус доступа - .notDetermined (еще не запрашивали)
+                    
+                    if address.servicesAvailability[.domophone] != true {
+                        self?.isFrsAvailable.onNext(nil)
+                        self?.isIntercomAvailable.onNext(nil)
+                    }
                     
                     guard let self = self,
                         (isOwner || hasGates),
@@ -249,7 +266,7 @@ class AddressAccessViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] result in
-                    self?.intercomAccessCode.onNext(result.code.string)
+                    self?.intercomAccessCode.onNext(result.code)
                 }
             )
             .disposed(by: disposeBag)
@@ -431,6 +448,7 @@ class AddressAccessViewModel: BaseViewModel {
             isGrantedIntercomAccess: isGrantedIntercomGuestAccess.asDriver(onErrorJustReturn: false),
             isLoading: activityTracker.asDriver(),
             isFRSEnabled: isFrsAvailable.asDriver(onErrorJustReturn: nil),
+            isIntercomEnabled: isIntercomAvailable.asDriver(onErrorJustReturn: nil),
             hasGates: hasGatesSubject.asDriver(onErrorJustReturn: false),
             isOwner: isOwnerSubject.asDriver(onErrorJustReturn: false),
             isInitialLoadingFinished: isInitialLoadingFinished
@@ -580,6 +598,7 @@ extension AddressAccessViewModel {
         let isGrantedIntercomAccess: Driver<Bool>
         let isLoading: Driver<Bool>
         let isFRSEnabled: Driver<Bool?>
+        let isIntercomEnabled: Driver<Bool?>
         let hasGates: Driver<Bool>
         let isOwner: Driver<Bool>
         let isInitialLoadingFinished: Driver<Bool>
@@ -659,3 +678,5 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
     }
 
 }
+// swiftlint:enable type_body_length function_body_length cyclomatic_complexity
+// swiftlint:enable line_length file_length

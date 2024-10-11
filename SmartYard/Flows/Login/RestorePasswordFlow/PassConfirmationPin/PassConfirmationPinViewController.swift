@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 23.03.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import UIKit
 import RxSwift
@@ -44,6 +45,7 @@ class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fakeNavBar.configueBlueNavBar()
         bind()
         configureView()
         configureRxKeyboard()
@@ -81,12 +83,15 @@ class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
         RxKeyboard.instance.visibleHeight
             .drive(
                 onNext: { [weak self] keyboardVisibleHeight in
-                    self?.sendCodeAgainGroupViewBottomConstraint.constant = keyboardVisibleHeight == 0 ?
+                    guard let self = self else {
+                        return
+                    }
+                    self.sendCodeAgainGroupViewBottomConstraint.constant = (keyboardVisibleHeight == 0) || (self.view.frame.height == keyboardVisibleHeight) ?
                         28 :
                         keyboardVisibleHeight
                     
                     UIView.animate(withDuration: 0) {
-                        self?.view.layoutIfNeeded()
+                        self.view.layoutIfNeeded()
                     }
                 }
             )
@@ -157,3 +162,4 @@ class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
     }
     
 }
+// swiftlint:enable function_body_length

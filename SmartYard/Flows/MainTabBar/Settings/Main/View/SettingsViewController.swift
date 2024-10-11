@@ -52,6 +52,8 @@ class SettingsViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fakeNavBar.configureBlueNavBar()
         configureView()
         configureCollectionView()
         bind()
@@ -244,8 +246,8 @@ class SettingsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        mainContainerView.layerCornerRadius = 24
-        mainContainerView.layer.maskedCorners = .topCorners
+//        mainContainerView.layerCornerRadius = 24
+//        mainContainerView.layer.maskedCorners = .topCorners
     }
     
     private func configureCollectionView() {
@@ -428,4 +430,4 @@ extension SettingsViewController: UICollectionViewDelegateFlowLayout {
     }
     
 }
-
+// swiftlint:enable function_body_length closure_body_length file_length

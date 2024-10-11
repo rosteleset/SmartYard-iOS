@@ -19,6 +19,9 @@ private let backendURLKey = "backendURL"
 private let showPaymentsKey = "showPayments"
 private let paymentsUrlKey = "paymentsUrl"
 private let supportPhoneKey = "supportPhoneKey"
+private let centraScreenUrlKey = "centraScreenUrl"
+private let intercomScreenUrlKey = "intercomScreenUrl"
+private let activeTabKey = "activeTab"
 
 class AccessService {
     
@@ -117,12 +120,19 @@ class AccessService {
                 phoneNumber: phoneNumber,
                 confirmPhoneNumber: confirmPhoneNumber
             )
+        case let .authByMobileProvider(phoneNumber, requestId):
+            return .authByMobileProvider(phoneNumber: phoneNumber, requestId: requestId)
         }
     }
     
     var backendURL: String {
         get {
-            UserDefaults.standard.string(forKey: backendURLKey) ?? Constants.defaultBackendURL
+            #if DEBUG
+            Constants.debugBackendURL
+//            UserDefaults.standard.string(forKey: backendURLKey) ?? Constants.debugBackendURL
+            #else
+            Constants.defaultBackendURL
+            #endif
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: backendURLKey)
@@ -149,10 +159,37 @@ class AccessService {
     
     var supportPhone: String {
         get {
-            UserDefaults.standard.string(forKey: supportPhoneKey) ?? "+7(3843)756000"
+            UserDefaults.standard.string(forKey: supportPhoneKey) ?? ""
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: supportPhoneKey)
+        }
+    }
+    
+    var centraScreenUrl: String {
+        get {
+            UserDefaults.standard.string(forKey: centraScreenUrlKey) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: centraScreenUrlKey)
+        }
+    }
+    
+    var intercomScreenUrl: String {
+        get {
+            UserDefaults.standard.string(forKey: intercomScreenUrlKey) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: intercomScreenUrlKey)
+        }
+    }
+    
+    var activeTab: String {
+        get {
+            UserDefaults.standard.string(forKey: activeTabKey) ?? "centra"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: activeTabKey)
         }
     }
     
@@ -161,10 +198,17 @@ class AccessService {
         accessToken = nil
         clientName = nil
         clientPhoneNumber = nil
+        #if DEBUG
+        backendURL = Constants.debugBackendURL
+        #elseif RELEASE
         backendURL = Constants.defaultBackendURL
+        #endif
         showPayments = true
         paymentsUrl = ""
-        supportPhone = "+7(3843)756000"
+        supportPhone = ""
+        centraScreenUrl = ""
+        intercomScreenUrl = ""
+        activeTab = "centra"
         
         NotificationCenter.default.post(name: .init("UserLoggedOut"), object: nil)
     }

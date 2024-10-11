@@ -9,15 +9,27 @@
 struct RequestCodeRequest {
     
     let userPhone: String
+    let type: String?
+    let pushToken: String?
     
 }
 
 extension RequestCodeRequest {
     
     var requestParameters: [String: Any] {
-        return [
+        var params: [String: Any] = [
             "userPhone": userPhone
         ]
+
+        if let type = type {
+            params["type"] = type
+        }
+        
+        if let pushToken = pushToken {
+            params["pushToken"] = pushToken
+        }
+        
+        return params
     }
     
 }

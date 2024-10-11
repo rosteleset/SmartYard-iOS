@@ -26,6 +26,7 @@ class YardMapViewModel: BaseViewModel {
         self.apiWrapper = apiWrapper
         
         let houseExplode = houseId.components(separatedBy: "_")
+        
         self.houseId = houseExplode[0]
 //        self.houseId = houseId
         self.router = router
@@ -136,3 +137,4 @@ extension YardMapViewModel {
     }
     
 }
+// swiftlint:enable function_body_length

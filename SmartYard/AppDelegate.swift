@@ -11,7 +11,7 @@ import UIKit
 import FirebaseCore
 import FirebaseMessaging
 import FirebaseCrashlytics
-import YandexMobileMetrica
+// import YandexMobileMetrica
 import PushKit
 import MapboxMaps
 
@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // MARK: подключаем MapBox
         
-        ResourceOptionsManager.default.resourceOptions.accessToken = Constants.mapBoxPublicKey
+        MapboxOptions.accessToken = Constants.mapBoxPublicKey
         
         appCoordinator.setRoot(for: mainWindow)
         
@@ -92,9 +92,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if path == "/open_app.html" {
                     NotificationCenter.default.post(name: .refreshVisibleWebVC, object: nil)
                 }
-            } else
+            } else {
             // в противном случае даём OS обработать это событие самостоятельно
-            {
                 return false
             }
             
@@ -121,9 +120,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else if !topVc.isBeingPresented {
                 return .allButUpsideDown
             }
+        } else if topVc is FullscreenHomePlayerViewController,
+                  !topVc.isBeingDismissed {
+           if #available(iOS 16.0, *),
+              topVc.isBeingPresented {
+               return .allButUpsideDown
+           } else if !topVc.isBeingPresented {
+               return .allButUpsideDown
+           }
+        } else if topVc is FullscreenIntercomPlayerViewController,
+                  !topVc.isBeingDismissed {
+           if #available(iOS 16.0, *),
+              topVc.isBeingPresented {
+               return .allButUpsideDown
+           } else if !topVc.isBeingPresented {
+               return .allButUpsideDown
+           }
         } else if topVc is FullscreenImageViewController,
                   !topVc.isBeingDismissed {
-            
             if #available(iOS 16.0, *),
                topVc.isBeingPresented {
                 return .allButUpsideDown
@@ -131,14 +145,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return .allButUpsideDown
             }
         } else if topVc is IncomingCallLandscapeViewController,
-            !topVc.isBeingDismissed {
+                  !topVc.isBeingDismissed {
+            return .landscape
+        } else if topVc is FullscreenArchiveIntercomLandscapeViewController,
+                  !topVc.isBeingDismissed {
             return .landscape
         }
         return .portrait
     }
     
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        guard let rawAction = userInfo["action"] as? String,
+            let action = PushMessageType(rawValue: rawAction) else {
+            completionHandler(.newData)
+            return
+        }
+
+        if action == .javascript {
+            NotificationCenter.default.post(name: .resendPushToJS, object: nil, userInfo: userInfo)
+        }
+        
+        completionHandler(.newData)
+    }
+    
     func applicationWillTerminate(_ application: UIApplication) {
         UserDefaults.standard.synchronize()
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().setAPNSToken(deviceToken, type: .unknown)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: any Error) {
+        print("NOTIFICATION ERROR", error.localizedDescription)
     }
 }
 
@@ -151,7 +193,7 @@ extension AppDelegate: MessagingDelegate {
         
         appCoordinator.updateFCMToken()
     }
-    
+  
     private func configureFirebase(for application: UIApplication) {
         FirebaseApp.configure()
         appCoordinator.setCrashlyticsUserID()
@@ -214,7 +256,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         // MARK: Если пришел входящий звонок - переходим на экран входящего звонка, но не показываем пуш
         
-        if let callPayload = CallPayload(pushNotificationPayload: userInfo) {
+        if let callPayload = CallPayload(pushNotificationPayload: userInfo, useCallKit: false) {
             appCoordinator.processIncomingCallRequest(callPayload: callPayload, useCallKit: false)
             completionHandler([])
             return
@@ -242,7 +284,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             NotificationCenter.default.post(name: .unreadInboxMessagesAvailable, object: nil)
         }
         
-        // MARK: Если пришло уведомление о новом сообщении чата - отправляем .newInboxMessageReceived
+        // MARK: Если пришло уведомление о новом сообщении чата - отправляем .newChatwootMessageReceived
         // Это вызовет показ баджа в табе "Чат" и обновление сообщений чата
         
         if action == .chat {
@@ -258,7 +300,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 //                return
 //            }
             if let typeaction = userInfo["type"] as? String {
-                NotificationCenter.default.post(name: .updateChatwootChatSelect, object: typeaction)
+                NotificationCenter.default.post(name: .updateChatwootChatSelect, object: nil, userInfo: userInfo)
             }
             if appCoordinator.selectedTabPresentable?.router(for: ChatwootRoute.main) != nil {
                 completionHandler([])
@@ -277,8 +319,29 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // MARK: Если пришло уведомление об успешном платеже - отправляем .paymentCompleted
         // Это вызовет обновление данных в табе "Оплатить"
         
-        if action == .paySuccess {
-            NotificationCenter.default.post(name: .paymentCompleted, object: nil)
+        if action == .updateStatusPay {
+            NotificationCenter.default.post(name: .paymentCompleted, object: nil, userInfo: userInfo)
+            
+//            if appCoordinator.selectedTabPresentable?.router(for: HomePayRoute.payStatusPopup) != nil {
+//                completionHandler([])
+//                return
+//            }
+        }
+        
+//        if action == .paySuccess {
+//            NotificationCenter.default.post(name: .paymentCompleted, object: nil)
+//        }
+        
+        if action == .authorization {
+            NotificationCenter.default.post(name: .authorizationCompleted, object: nil, userInfo: userInfo)
+            completionHandler([])
+            return
+        }
+        
+        if action == .authorizationFail {
+            NotificationCenter.default.post(name: .authorizationFailed, object: nil)
+            completionHandler([])
+            return
         }
         
         completionHandler([.alert, .badge, .sound])
@@ -302,7 +365,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // MARK: Если нажали на уведомление о входящем звонке - процессим запрос
         
         if let callPayload = CallPayload(
-            pushNotificationPayload: userInfo
+            pushNotificationPayload: userInfo,
+            useCallKit: false
         ) {
             switch response.actionIdentifier {
             case UNNotificationDefaultActionIdentifier: // обычное нажатие на push
@@ -317,6 +381,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             case UNNotificationDismissActionIdentifier: // смахивание push
                 break
             default: // выбор действия из списка по длинному нажатию
+                print("DEBUG LONG TAP", completionHandler)
                 appCoordinator.processIncomingCallRequest(
                     callPayload: callPayload,
                     useCallKit: false,
@@ -345,11 +410,28 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // MARK: Переход в конкретный таб при нажатии на уведомление
         
         switch action {
-        case .inbox, .newAddress, .paySuccess, .payError, .videoReady:
-            appCoordinator.openNotificationsTab()
+        case .inbox, .newAddress, .paySuccess, .updateStatusPay, .payError, .videoReady:
+            if #available(iOS 14.0, *) {
+                appCoordinator.openHomeTab()
+            } else {
+                appCoordinator.openHomeWebTab()
+////                appCoordinator.openNotificationsTab()
+            }
+        case .javascript:
+            completionHandler()
+            return
+        case .authorization:
+            appCoordinator.authorizeClient()
+            NotificationCenter.default.post(name: .authorizationCompleted, object: nil, userInfo: userInfo)
+            completionHandler()
+            return
+        case .authorizationFail:
+            appCoordinator.authorizeClient()
+            NotificationCenter.default.post(name: .authorizationFailed, object: nil)
+            completionHandler()
+            return
         case .chat:
             appCoordinator.openChatwootTab()
-//            appCoordinator.openChatTab()
         }
         
         // MARK: Если нажали на уведомление о добавленном адресе - отправляем .addressAdded
@@ -362,17 +444,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         // MARK: Для платежей - аналогично
         
-        if action == .paySuccess {
-            NotificationCenter.default.post(name: .paymentCompleted, object: nil)
+        if action == .updateStatusPay {
+            NotificationCenter.default.post(name: .paymentCompleted, object: nil, userInfo: userInfo)
         }
         
         if action == .chat {
             if let typeaction = userInfo["type"] as? String {
-                NotificationCenter.default.post(name: .updateChatwootChatSelect, object: typeaction)
+                NotificationCenter.default.post(name: .updateChatwootChatSelect, object: nil, userInfo: userInfo)
             }
             NotificationCenter.default.post(name: .updateChatwootChat, object: nil)
         }
-        
+        NotificationCenter.default.post(name: .updateInboxNotificationsSelect, object: nil)
+
         completionHandler()
     }
     
@@ -409,10 +492,17 @@ extension AppDelegate: PKPushRegistryDelegate {
         for type: PKPushType,
         completion: @escaping () -> Void
     ) {
-//        print("DEBUG / VOIP NOTIFICATIONS / Payload: \(payload.dictionaryPayload)")
-        
+        // Отключили звонок при отключенном CallKit
+        guard AccessService().prefersVoipForCalls else {
+            print("DEBUG / NOT CALLKIT")
+            appCoordinator.reportInvalidCall(callKitCompletion: completion)
+            completion()
+            return
+        }
+        print("DEBUG / VOIP NOTIFICATIONS / Payload: \(payload.dictionaryPayload)")
+
         guard let data = payload.dictionaryPayload["data"] as? [AnyHashable: Any],
-            let callPayload = CallPayload(pushNotificationPayload: data) else {
+            let callPayload = CallPayload(pushNotificationPayload: data, useCallKit: true) else {
                 appCoordinator.reportInvalidCall(callKitCompletion: completion)
             completion()
             return
@@ -440,3 +530,5 @@ extension AppDelegate: PKPushRegistryDelegate {
 }
 
 public let imagesCache = NSCache<NSString, UIImage>()
+public let datesCache = NSCache<NSString, NSDate>()
+// swiftlint:enable function_body_length cyclomatic_complexity file_length

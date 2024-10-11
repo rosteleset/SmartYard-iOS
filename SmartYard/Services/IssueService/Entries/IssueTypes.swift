@@ -244,3 +244,4 @@ enum IssueType {
     }
     
 }
+// swiftlint:enable line_length

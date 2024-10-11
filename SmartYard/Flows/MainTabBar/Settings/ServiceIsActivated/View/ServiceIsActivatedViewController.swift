@@ -39,8 +39,8 @@ class ServiceIsActivatedViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        closeButton.setImage(UIImage(named: "CloseIcon"), for: .normal)
-        closeButton.setImage(UIImage(named: "CloseIcon")?.darkened(), for: .highlighted)
+        closeButton.setImage(UIImage(named: "closeIcon-1"), for: .normal)
+        closeButton.setImage(UIImage(named: "closeIcon-1")?.darkened(), for: .highlighted)
     }
     
     private func bind() {

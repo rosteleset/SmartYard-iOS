@@ -5,7 +5,7 @@
 //  Created by Александр Васильев on 14.02.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
-// swiftlint:disable type_body_length function_body_length closure_body_length file_length
+// swiftlint:disable type_body_length function_body_length file_length
 
 import UIKit
 import JGProgressHUD
@@ -75,6 +75,7 @@ class CityCameraViewController: BaseViewController {
         }
         */
     }
+    
     fileprivate func configureView() {
         fakeNavBar.setText("Карта")
         
@@ -83,7 +84,7 @@ class CityCameraViewController: BaseViewController {
         }
         
         // Устанавливаем название камеры и её адрес
-        let cameraStrings = camera.name.split(separator: "/", maxSplits: 1, omittingEmptySubsequences: true)
+        let cameraStrings = camera.name.split(separator: "-", maxSplits: 1, omittingEmptySubsequences: true)
         
         var cameraNameString = ""
         var cameraAddressString = ""
@@ -99,27 +100,38 @@ class CityCameraViewController: BaseViewController {
         cameraAddress.text = cameraAddressString
         
         // настраиваем градиент между кнопкой и CollectionView
-        let gradientBackgroundColors = [UIColor.white.cgColor, UIColor.white.withAlphaComponent(0).cgColor]
+//        let gradientBackgroundColors = [UIColor.white.cgColor, UIColor.white.withAlphaComponent(0).cgColor]
         
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = gradientBackgroundColors
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-        gradientLayer.locations = [0.0, 1.0]
-
-        gradientLayer.frame = gradientView.bounds
-        gradientView.layer.addSublayer(gradientLayer)
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = gradientBackgroundColors
+//        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+//        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+//        gradientLayer.locations = [0.0, 1.0]
+//
+//        gradientLayer.frame = gradientView.bounds
+//        gradientView.layer.addSublayer(gradientLayer)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fakeNavBar.configueBlueNavBar()
+//        configurePlayer()
         configureCollectionView()
         bind()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        playerLayer?.frame = cameraContainer.bounds
+    }
+    
     fileprivate func toggleView() {
         if viewState == .normal {
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(
+                withDuration: 0.5,
+                animations: {
                     self.cameraNameConstraints.forEach { $0.isActive = false }
                     self.cameraNameConstraintsMini.forEach { $0.isActive = true }
                     self.cameraAddress.isHidden = true
@@ -158,15 +170,6 @@ class CityCameraViewController: BaseViewController {
             )
             .disposed(by: disposeBag)
         
-        isVideoValid
-            .asDriver(onErrorJustReturn: false)
-            .drive(
-                onNext: { [weak self] isVideoValid in
-                    self?.fullscreenButton.isHidden = !isVideoValid
-                }
-            )
-            .disposed(by: disposeBag)
-       
         // по нажатию на кнопку переключаем вид (у кнопки по мере переключений будет 2 разных действия)
         button.rx.tap
             .asDriver()
@@ -285,11 +288,15 @@ class CityCameraViewController: BaseViewController {
             .disposed(by: disposeBag)
         */
         output.videos
+            .withLatestFrom(isVideoValid.asDriver(onErrorJustReturn: false)) { ($0, $1) }
             .drive(
-                onNext: { [weak self] videos in
+                onNext: { [weak self] args in
+                    let (videos, isVideoValid) = args
+                    
                     guard let self = self else {
                         return
                     }
+                    self.fullscreenButton.isHidden = !isVideoValid
                     self.activityIndicatorView.isHidden = true
                     self.activityIndicatorView.stopAnimating()
                     
@@ -331,6 +338,7 @@ class CityCameraViewController: BaseViewController {
         super.viewDidAppear(animated)
         
         try? AVAudioSession.sharedInstance().setCategory(.playback)
+        playerLayer?.frame = cameraContainer.bounds
     }
     
     private func configureCollectionView() {
@@ -375,10 +383,11 @@ class CityCameraViewController: BaseViewController {
         
         playerLayer = AVPlayerLayer(player: player)
         cameraContainer.layer.insertSublayer(playerLayer!, at: 0)
-        playerLayer?.frame = cameraContainer.bounds
         playerLayer?.removeAllAnimations()
         playerLayer?.backgroundColor = UIColor.black.cgColor
-        
+        playerLayer?.videoGravity = .resizeAspect
+        playerLayer?.player?.isMuted = true
+
         // MARK: Настройка лоадера
         
         let animation = LottieAnimation.named("LoaderAnimation")
@@ -390,7 +399,7 @@ class CityCameraViewController: BaseViewController {
         // MARK: Когда полноэкранное видео будет закрыто, нужно добавить слой заново
         
         NotificationCenter.default.rx
-            .notification(.onlineFullscreenModeClosed)
+            .notification(.cityFullscreenModeClosed)
             .asDriverOnErrorJustComplete()
             .drive(
                 onNext: { [weak self] _ in
@@ -402,7 +411,7 @@ class CityCameraViewController: BaseViewController {
                     
                     playerLayer.frame = self.cameraContainer.bounds
                     playerLayer.removeAllAnimations()
-                    
+                    playerLayer.videoGravity = .resizeAspectFill
                     self.player?.play()
                     
                     // странный баг на iOS 12.4
@@ -410,6 +419,16 @@ class CityCameraViewController: BaseViewController {
                     // возврат назад, то у кнопки менялся свет текста на непойми какой.
                     // приходится ручками при возврате из полноэкранного режима обновлять значения полей.
                     self.fixButton()
+                    
+//                    if let player = playerLayer.player,
+//                       player.isMuted {
+//                        self.muteButton.setImage(UIImage(named: "volumeOff"), for: .normal)
+//                        self.muteButton.setImage(UIImage(named: "volumeOff")?.darkened(), for: [.normal, .highlighted])
+//                    } else {
+//                        self.muteButton.setImage(UIImage(named: "volumeOn"), for: .normal)
+//                        self.muteButton.setImage(UIImage(named: "volumeOn")?.darkened(), for: [.normal, .highlighted])
+//                    }
+
                 }
             )
             .disposed(by: disposeBag)
@@ -445,6 +464,7 @@ class CityCameraViewController: BaseViewController {
     }
     
     private func configureFullscreenButton() {
+        fullscreenButton.isHidden = true
         fullscreenButton.setImage(UIImage(named: "FullScreen20"), for: .normal)
         fullscreenButton.setImage(UIImage(named: "FullScreen20")?.darkened(), for: [.normal, .highlighted])
         
@@ -463,7 +483,7 @@ class CityCameraViewController: BaseViewController {
                     playerLayer.removeFromSuperlayer()
                     
                     let fullscreenVc = FullscreenPlayerViewController(
-                        playedVideoType: .online,
+                        playedVideoType: .city,
                         preferredPlaybackRate: 1,
                         position: playerposition
                     )
@@ -536,6 +556,18 @@ class CityCameraViewController: BaseViewController {
                 
                 let playerItem = AVPlayerItem(asset: asset)
                 
+//                let colorAttributes = [
+//                    AVVideoAllowWideColorKey: false,
+//                    AVVideoColorPropertiesKey: [
+//                        AVVideoColorPrimariesKey: AVVideoColorPrimaries_ITU_R_709_2,
+//                        AVVideoTransferFunctionKey: AVVideoTransferFunction_ITU_R_709_2,
+//                        AVVideoYCbCrMatrixKey: AVVideoYCbCrMatrix_ITU_R_709_2
+//                    ]
+//                    kCVPixelBufferPixelFormatTypeKey as String: NSNumber(value: kCVPixelFormatType_64RGBAHalf)
+//                ] as [String : Any]
+//                let playerItemVideoOutput = AVPlayerItemVideoOutput(outputSettings: colorAttributes)
+//                playerItem.add(playerItemVideoOutput)
+
                 // Необходимо для того, чтобы в HLS потоке мог быть выбран поток
                 // с разрешением превышающим разрешение экрана телефона
                 playerItem.preferredMaximumResolution = CGSize(width: 3840, height: 2160)
@@ -544,6 +576,7 @@ class CityCameraViewController: BaseViewController {
                 
                 if self?.isVisible == true {
                     self?.player?.play()
+//                    print("NOW PAYING")
                 }
             }
         }
@@ -613,3 +646,4 @@ extension CityCameraViewController: UICollectionViewDelegateFlowLayout {
         self.videoTrigger.onNext(video.url)
     }
 }
+// swiftlint:enable type_body_length function_body_length file_length

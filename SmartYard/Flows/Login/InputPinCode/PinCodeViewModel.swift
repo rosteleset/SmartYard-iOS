@@ -88,8 +88,39 @@ class PinCodeViewModel: BaseViewModel {
                 }
             )
             .delay(.milliseconds(100))
+            .do(
+                onNext: { [weak self] data in
+                    
+                    self?.apiWrapper.checkAppVersion()
+                        .trackError(errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+                        .ignoreNil()
+                        .drive(
+                            onNext: { _ in
+                            }
+                        )
+                        .disposed(by: self!.disposeBag)
+                }
+            )
+            .delay(.milliseconds(100))
             .drive(
                 onNext: { [weak self] data in
+                    
+                    self?.apiWrapper.getOptions()
+                        .trackError(errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+                        .ignoreNil()
+                        .drive(
+                            onNext: { [weak self] result in
+                                self?.accessService.paymentsUrl = result.paymentsUrl ?? ""
+                                self?.accessService.supportPhone = result.supportPhone ?? ""
+                                self?.accessService.centraScreenUrl = result.centraScreenUrl ?? ""
+                                self?.accessService.intercomScreenUrl = result.intercomScreenUrl ?? ""
+                                self?.accessService.activeTab = result.activeTab ?? "centra"
+                            }
+                        )
+                        .disposed(by: self!.disposeBag)
+
                     self?.router.trigger(.userName(preloadedName: data.name))
                 }
             )
@@ -146,4 +177,4 @@ extension PinCodeViewModel {
     }
     
 }
-
+// swiftlint:enable function_body_length

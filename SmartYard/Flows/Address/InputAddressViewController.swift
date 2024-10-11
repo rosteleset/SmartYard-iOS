@@ -41,6 +41,7 @@ class InputAddressViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fakeNavBar.configueBlueNavBar()
         configureUI()
         bind()
 //        configureRxKeyboard()
@@ -67,14 +68,15 @@ class InputAddressViewController: BaseViewController {
         RxKeyboard.instance.visibleHeight
             .drive(
                 onNext: { [weak self] keyboardVisibleHeight in
-                    guard let self = self, keyboardVisibleHeight == 0 else {
+                    guard let self = self else {
                         return
                     }
-
-                    self.scrollView.setContentOffset(
-                        CGPoint(x: 0, y: 0),
-                        animated: true
-                    )
+                    if (keyboardVisibleHeight == 0) || (self.view.frame.height == keyboardVisibleHeight) {
+                        self.scrollView.setContentOffset(
+                            CGPoint(x: 0, y: 0),
+                            animated: true
+                        )
+                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -229,3 +231,4 @@ class InputAddressViewController: BaseViewController {
     }
     
 }
+// swiftlint:enable function_body_length

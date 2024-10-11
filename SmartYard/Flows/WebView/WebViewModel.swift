@@ -33,6 +33,20 @@ class WebViewModel: BaseViewModel {
         self.baseURL = baseURL
     }
     
+    func getUrl() -> URL? {
+        guard let url = self.url else {
+            return nil
+        }
+        return url
+    }
+    
+    func getUrlString() -> String {
+        guard let url = self.url?.absoluteString else {
+            return ""
+        }
+        return url
+    }
+    
     func transform(_ input: Input) -> Output {
         let activityTracker = ActivityTracker()
         
@@ -92,6 +106,7 @@ class WebViewModel: BaseViewModel {
             .isTrue()
             .mapToVoid()
             
+        
         Driver
             .merge(input.viewWillAppearTrigger.distinctUntilChanged().mapToVoid(), hasNetworkBecomeReachable)
             .drive(
@@ -138,3 +153,4 @@ extension WebViewModel {
     }
     
 }
+// swiftlint:enable function_body_length

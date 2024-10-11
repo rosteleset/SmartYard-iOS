@@ -15,7 +15,10 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let payments: Bool?
     let paymentsUrl: String?
     let supportPhone: String?
-    
+    let centraScreenUrl: String?
+    let intercomScreenUrl: String?
+    let activeTab: String?
+
     var dictionary: [AnyHashable: Any] {
         var result: [AnyHashable: Any] = [:]
         
@@ -31,6 +34,15 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         if let supportPhone = supportPhone {
             result["supportPhone"] = supportPhone
         }
+        if let centraScreenUrl = centraScreenUrl {
+            result["centraScreenUrl"] = centraScreenUrl
+        }
+        if let intercomScreenUrl = intercomScreenUrl {
+            result["intercomScreenUrl"] = intercomScreenUrl
+        }
+        if let activeTab = activeTab {
+            result["activeTab"] = activeTab
+        }
         return result
     }
     
@@ -39,6 +51,9 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case cityCams
         case payments
         case supportPhone
+        case centraScreenUrl
+        case intercomScreenUrl
+        case activeTab
     }
     
     init(from decoder: Decoder) throws {
@@ -66,6 +81,10 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         
         paymentsUrl = try? container.decode(String.self, forKey: .paymentsUrl)
         supportPhone = try? container.decode(String.self, forKey: .supportPhone)
+        centraScreenUrl = try? container.decode(String.self, forKey: .centraScreenUrl)
+        intercomScreenUrl = try? container.decode(String.self, forKey: .intercomScreenUrl)
+        
+        activeTab = try? container.decode(String.self, forKey: .activeTab)
     }
     
     init() {
@@ -73,5 +92,8 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         payments = nil
         paymentsUrl = nil
         supportPhone = nil
+        centraScreenUrl = nil
+        intercomScreenUrl = nil
+        activeTab = nil
     }
 }

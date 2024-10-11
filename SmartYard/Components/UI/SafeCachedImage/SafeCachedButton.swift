@@ -40,7 +40,7 @@ class SafeCachedButton: UIButton {
         loadingImageIndicator!.center = view.center
         view.addSubview(loadingImageIndicator!)
         loadingImageIndicator!.startAnimating()
-        self.backgroundColor = UIColor(named: "backgroundColor")
+        self.backgroundColor = UIColor.SmartYard.backgroundColor
         
         URLSession.shared.dataTask(
             with: url,

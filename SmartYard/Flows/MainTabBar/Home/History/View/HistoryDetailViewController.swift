@@ -5,7 +5,7 @@
 //  Created by Александр Васильев on 24.04.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
-// swiftlint:disable function_body_length closure_body_length line_length
+// swiftlint:disable function_body_length line_length
 
 import UIKit
 import JGProgressHUD
@@ -66,10 +66,11 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fakeNavBar.configueDarkNavBar()
-        fakeNavBar.setText("События")
+//        fakeNavBar.configueDarkNavBar()
+//        fakeNavBar.setText("События")
         emptyStateView.isHidden = true
         
+        fakeNavBar.configueBlueNavBar()
         setupCollectionView()
         bind()
         
@@ -337,3 +338,4 @@ extension HistoryDetailViewController: UICollectionViewDelegateFlowLayout {
         
     }
 }
+// swiftlint:enable function_body_length line_length

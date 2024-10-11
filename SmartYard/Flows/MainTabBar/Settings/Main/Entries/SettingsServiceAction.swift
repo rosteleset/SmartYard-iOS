@@ -40,3 +40,4 @@ enum SettingsServiceAction: String {
     }
     
 }
+// swiftlint:enable line_length

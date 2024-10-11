@@ -64,7 +64,7 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-    func getServicesByHouseId(houseId: String?) -> Single<GetServicesResponseData?> {
+    func getServicesByHouseId(houseId: String?, flat: String? = nil) -> Single<GetServicesResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -77,7 +77,7 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.houseIdMissingError)
         }
         
-        let request = GetServicesRequest(accessToken: accessToken, houseId: houseId)
+        let request = GetServicesRequest(accessToken: accessToken, houseId: houseId, flat: flat)
         
         return provider.rx
             .request(.getServices(request: request))

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "check_selected.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

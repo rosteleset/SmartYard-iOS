@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "settings_iptv_unselected.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

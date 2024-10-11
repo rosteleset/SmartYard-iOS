@@ -57,14 +57,6 @@ class CityMapViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        input.backTrigger
-            .drive(
-                onNext: { [weak self] in
-                    self?.router.trigger(.back)
-                }
-            )
-            .disposed(by: disposeBag)
-        
         apiWrapper.getOverviewCCTV()
             .trackError(errorTracker)
             .trackActivity(activityTracker)
@@ -101,7 +93,6 @@ extension CityMapViewModel {
     
     struct Input {
         let cameraSelected: Driver<Int>
-        let backTrigger: Driver<Void>
     }
     
     struct Output {
@@ -110,4 +101,4 @@ extension CityMapViewModel {
     }
     
 }
-
+// swiftlint:enable function_body_length

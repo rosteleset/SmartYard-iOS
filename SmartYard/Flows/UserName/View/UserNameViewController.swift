@@ -82,14 +82,18 @@ class UserNameViewController: BaseViewController, LoaderPresentable {
                     let (firstPack, duration) = args
                     let (keyboardVisibleHeight, curve) = firstPack
                     
-                    self?.mainContainerBottomConstraint.constant = keyboardVisibleHeight == 0 ?
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.mainContainerBottomConstraint.constant = (keyboardVisibleHeight == 0) || (self.view.frame.height == keyboardVisibleHeight) ?
                         0 :
                         keyboardVisibleHeight
                     
                     UIView.beginAnimations(nil, context: nil)
                     UIView.setAnimationCurve(curve ?? .linear)
                     UIView.setAnimationDuration(duration ?? 0.25)
-                    self?.view.layoutIfNeeded()
+                    self.view.layoutIfNeeded()
                     UIView.commitAnimations()
                 }
             )

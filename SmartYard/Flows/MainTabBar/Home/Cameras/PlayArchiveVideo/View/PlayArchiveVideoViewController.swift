@@ -149,9 +149,16 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         
         // Common
         
+        fakeNavBar.configueBlueNavBar()
         configureSliders()
         configureUIBindings()
         bind()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        realVideoPlayerLayer?.frame = realVideoContainer.bounds
     }
     
     private func configurePeriodPicker() {
@@ -322,7 +329,6 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
         
         realVideoPlayerLayer = AVPlayerLayer(player: player)
         realVideoContainer.layer.insertSublayer(realVideoPlayerLayer!, at: 0)
-        realVideoPlayerLayer?.frame = realVideoContainer.bounds
         realVideoPlayerLayer?.removeAllAnimations()
         realVideoPlayerLayer?.backgroundColor = UIColor.black.cgColor
         realVideoPlayerLayer?.videoGravity = .resizeAspectFill
@@ -731,11 +737,12 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     self.realVideoPlayer?.removeAllItems()
                     
                     self.isVideoBeingLoaded.onNext(true)
+                    self.realVideoPlayerLayer?.frame = self.realVideoContainer.bounds
 
                     // MARK: Грузим ассеты асинхронно
-
-                    for asset in urls.map({ AVAsset(url: $0) }) {
+                    let lock = NSLock()
                     
+                    for asset in urls.map({ AVAsset(url: $0) }) {
                         self.loadingAsset.append(asset) // массив для отслеживания хода загрузки ассетов
                         self.assetArray.append(asset) // массив для опредения позиций загружаемых ассетов
                         
@@ -752,23 +759,26 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                             let tracksStatus = asset.statusOfValue(forKey: "tracks", error: &tracksError)
                             let durationStatus = asset.statusOfValue(forKey: "duration", error: &durationError)
                             
+                            lock.lock()
                             if tracksStatus == .cancelled ||
                                 tracksStatus == .failed ||
                                 durationStatus == .cancelled ||
                                 durationStatus == .failed {
                                     self.loadingAsset.removeAll(asset) // удаляем asset из списка загружаемых
-                                    
                                     if self.loadingAsset.isEmpty {
                                         self.isVideoBeingLoaded.onNext(false)
                                     }
+                                    lock.unlock()
                                     return
                             }
                             
                             guard tracksStatus == .loaded, durationStatus == .loaded else {
+                                lock.unlock()
                                 return
                             }
-                            
+
                             self.loadingAsset.removeAll(asset) // удаляем asset из списка загружаемых
+                            lock.unlock()
                             
                             if self.loadingAsset.isEmpty {
                                 self.isVideoBeingLoaded.onNext(false)
@@ -817,7 +827,7 @@ class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
                     guard let screenshotUrl = url else {
                         return
                     }
-                    
+
                     ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
                         url: screenshotUrl,
                         forTime: .zero
@@ -1191,3 +1201,5 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         }
     }
 }
+// swiftlint:enable type_body_length function_body_length cyclomatic_complexity
+// swiftlint:enable closure_body_length line_length file_length

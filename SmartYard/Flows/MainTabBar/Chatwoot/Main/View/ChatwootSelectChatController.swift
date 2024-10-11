@@ -23,10 +23,6 @@ class ChatwootSelectChatController: BaseViewController, LoaderPresentable {
 
     private let itemsProxy = BehaviorSubject<[APIChat]>(value: [])
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     var loader: JGProgressHUD?
 
     init(viewModel: ChatwootSelectChatModel) {
@@ -114,8 +110,8 @@ class ChatwootSelectChatController: BaseViewController, LoaderPresentable {
     }
 
     private func configureTableView() {
-        mainContainerView.layerCornerRadius = 24
-        mainContainerView.layer.maskedCorners = .topCorners
+//        mainContainerView.layerCornerRadius = 24
+//        mainContainerView.layer.maskedCorners = .topCorners
         
         collectionView.delegate = self
         collectionView.dataSource = self

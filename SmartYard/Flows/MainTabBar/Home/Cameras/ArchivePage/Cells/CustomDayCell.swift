@@ -32,7 +32,7 @@ class CustomDayCell: JTACDayCell {
                 return .white
             }
             
-            return isValidDate ? .black : UIColor(hex: 0xBEBEBE)
+            return isValidDate ? UIColor.SmartYard.textAddon : UIColor(hex: 0xBEBEBE)
         }()
         
         dayLabel.textColor = textColor

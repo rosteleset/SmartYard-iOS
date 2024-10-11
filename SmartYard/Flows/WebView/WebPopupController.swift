@@ -149,16 +149,19 @@ class WebPopupController: BaseViewController, LoaderPresentable {
                     let defaultBottomOffset: CGFloat = -50
                     
                     let calcOffset = keyboardHeight + defaultBottomOffset
-                    let offset = keyboardHeight == 0 ? defaultBottomOffset : calcOffset
+                    let offset = (keyboardHeight == 0) || (self.view.frame.height == keyboardHeight) ? defaultBottomOffset : calcOffset
                     
                     UIView.animate(
                         withDuration: 0.05,
                         animations: { [weak self] in
-                            self?.animatedViewBottomOffset.constant = offset
-                            self?.view.layoutIfNeeded()
+                            guard let self = self else {
+                                return
+                            }
+                            self.animatedViewBottomOffset.constant = offset
+                            self.view.layoutIfNeeded()
                             
-                            if keyboardHeight == 0 {
-                                self?.webView.scrollView.contentOffset = .zero
+                            if (keyboardHeight == 0) || (self.view.frame.height == keyboardHeight) {
+                                self.webView.scrollView.contentOffset = .zero
                             }
                             
                         }
@@ -205,17 +208,15 @@ class WebPopupController: BaseViewController, LoaderPresentable {
         var webScrollView: UIView?
         var contentView: UIView?
         
-        if #available(iOS 11.0, *) {
-            guard let noDragWebView = webView else {
-                return
-            }
-            webScrollView = noDragWebView.subviews.compactMap { $0 as? UIScrollView }.first
-            contentView = webScrollView?.subviews.first(where: { $0.interactions.count > 1 })
-            guard let dragInteraction = (contentView?.interactions.compactMap { $0 as? UIDragInteraction }.first) else {
-                return
-            }
-            contentView?.removeInteraction(dragInteraction)
+        guard let noDragWebView = webView else {
+            return
         }
+        webScrollView = noDragWebView.subviews.compactMap { $0 as? UIScrollView }.first
+        contentView = webScrollView?.subviews.first(where: { $0.interactions.count > 1 })
+        guard let dragInteraction = (contentView?.interactions.compactMap { $0 as? UIDragInteraction }.first) else {
+            return
+        }
+        contentView?.removeInteraction(dragInteraction)
     }
     
     fileprivate func updateViewHeight(_ webView: WKWebView) {

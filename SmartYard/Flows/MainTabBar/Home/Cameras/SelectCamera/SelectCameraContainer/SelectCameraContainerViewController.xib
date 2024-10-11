@@ -4,18 +4,18 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="SourceSansPro-Regular.ttf">
-            <string>SourceSansPro-Regular</string>
+        <array key="SourceSansPro-Bold.ttf">
+            <string>SourceSansPro-Bold</string>
         </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectCameraContainerViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
-                <outlet property="addressLabel" destination="ee5-rI-ERl" id="GVa-Lo-eGk"/>
                 <outlet property="cameraNameLabel" destination="MnK-n4-LKg" id="nhb-jz-KtR"/>
                 <outlet property="fakeNavBar" destination="1QV-aV-M8U" id="1yD-xE-KZS"/>
                 <outlet property="pagingContainer" destination="Fo3-sD-Sau" id="fPw-oo-Z49"/>
@@ -30,72 +30,60 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="oYf-Gn-iao">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y0b-WI-nlM">
-                    <rect key="frame" x="0.0" y="92" width="414" height="109"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="999" text="Камера 1, п. №2" textAlignment="natural" lineBreakMode="tailTruncation" minimumFontSize="16" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MnK-n4-LKg">
-                            <rect key="frame" x="16" y="12" width="382" height="41"/>
-                            <constraints>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="e5P-Zs-9tg"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="г. Тамбов, ул. Советская, 16" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ee5-rI-ERl">
-                            <rect key="frame" x="16" y="57" width="186" height="24"/>
-                            <constraints>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="lvb-6w-LNX"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="trailing" secondItem="MnK-n4-LKg" secondAttribute="trailing" constant="16" id="K8S-h7-lVW"/>
-                        <constraint firstItem="ee5-rI-ERl" firstAttribute="top" secondItem="MnK-n4-LKg" secondAttribute="bottom" constant="4" id="WCK-aB-Cr1"/>
-                        <constraint firstItem="ee5-rI-ERl" firstAttribute="leading" secondItem="Y0b-WI-nlM" secondAttribute="leading" constant="16" id="ecN-8u-ffl"/>
-                        <constraint firstItem="MnK-n4-LKg" firstAttribute="leading" secondItem="Y0b-WI-nlM" secondAttribute="leading" constant="16" id="ioM-vN-Wje"/>
-                        <constraint firstAttribute="bottom" secondItem="ee5-rI-ERl" secondAttribute="bottom" constant="28" id="j89-qh-Frw"/>
-                        <constraint firstItem="MnK-n4-LKg" firstAttribute="top" secondItem="Y0b-WI-nlM" secondAttribute="top" constant="12" id="kMA-EB-U4D"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1QV-aV-M8U" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                    <rect key="frame" x="6" y="68" width="30" height="30"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="BIl-Vk-oKl"/>
+                        <constraint firstAttribute="height" constant="30" id="BIl-Vk-oKl"/>
+                        <constraint firstAttribute="width" constant="30" id="HhA-Db-1QR"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="999" text="Камера 1, п. №2" lineBreakMode="tailTruncation" minimumFontSize="16" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MnK-n4-LKg">
+                    <rect key="frame" x="46" y="68" width="322" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="AK6-7W-S4E"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="28"/>
+                    <color key="textColor" name="blue"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fo3-sD-Sau" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="201" width="414" height="661"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <rect key="frame" x="0.0" y="118" width="414" height="744"/>
+                    <color key="backgroundColor" name="backgroundColor"/>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" name="backgroundColor"/>
             <constraints>
+                <constraint firstItem="MnK-n4-LKg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="46" id="19I-Ue-Mt6"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Fo3-sD-Sau" secondAttribute="trailing" id="2qd-Qa-sKR"/>
-                <constraint firstItem="Y0b-WI-nlM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ER1-ol-xYW"/>
                 <constraint firstItem="oYf-Gn-iao" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="HLg-Vw-Odr"/>
-                <constraint firstItem="Fo3-sD-Sau" firstAttribute="top" secondItem="Y0b-WI-nlM" secondAttribute="bottom" id="Mph-xP-EMC"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="MnK-n4-LKg" secondAttribute="trailing" constant="46" id="HjA-4d-VjC"/>
+                <constraint firstItem="Fo3-sD-Sau" firstAttribute="top" secondItem="MnK-n4-LKg" secondAttribute="bottom" constant="20" id="New-gi-696"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Fo3-sD-Sau" secondAttribute="bottom" id="RfX-Ax-0YK"/>
-                <constraint firstItem="1QV-aV-M8U" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="TfA-OA-tZN"/>
-                <constraint firstItem="Y0b-WI-nlM" firstAttribute="top" secondItem="1QV-aV-M8U" secondAttribute="bottom" id="Y1h-xO-97b"/>
-                <constraint firstItem="1QV-aV-M8U" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fBK-HI-QiW"/>
+                <constraint firstItem="MnK-n4-LKg" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="TeS-m7-RnE"/>
+                <constraint firstItem="1QV-aV-M8U" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="TfA-OA-tZN"/>
+                <constraint firstItem="1QV-aV-M8U" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="6" id="fBK-HI-QiW"/>
                 <constraint firstAttribute="bottom" secondItem="oYf-Gn-iao" secondAttribute="bottom" id="igO-S5-keq"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1QV-aV-M8U" secondAttribute="trailing" id="mCk-Ou-2Ky"/>
                 <constraint firstAttribute="trailing" secondItem="oYf-Gn-iao" secondAttribute="trailing" id="qAg-Hb-pPx"/>
                 <constraint firstItem="Fo3-sD-Sau" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="suy-dp-fUX"/>
-                <constraint firstAttribute="trailing" secondItem="Y0b-WI-nlM" secondAttribute="trailing" id="tUw-T3-KDo"/>
                 <constraint firstItem="oYf-Gn-iao" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="wAZ-9Y-SyZ"/>
             </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="oYf-Gn-iao"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="139" y="85"/>
         </view>
     </objects>
     <resources>
         <image name="MainBackground" width="375" height="812"/>
+        <namedColor name="backgroundColor">
+            <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="blue">
+            <color red="0.89411764705882357" green="0.10196078431372549" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

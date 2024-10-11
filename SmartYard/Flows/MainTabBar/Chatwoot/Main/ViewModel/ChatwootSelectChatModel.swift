@@ -178,3 +178,4 @@ extension ChatwootSelectChatModel {
     }
 
 }
+// swiftlint:enable function_body_length

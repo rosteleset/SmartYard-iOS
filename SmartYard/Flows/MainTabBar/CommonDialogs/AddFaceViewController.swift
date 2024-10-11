@@ -5,13 +5,13 @@
 //  Created by Александр Васильев on 13.05.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length closure_body_length
 
 import UIKit
 import RxSwift
 import RxCocoa
 import XCoordinator
 
-// swiftlint:disable function_body_length closure_body_length
 class AddFaceViewController: BaseViewController {
 
     @IBOutlet private weak var imageView: ScaledHeightImageView!
@@ -121,3 +121,4 @@ class AddFaceViewController: BaseViewController {
     }
 
 }
+// swiftlint:enable function_body_length closure_body_length

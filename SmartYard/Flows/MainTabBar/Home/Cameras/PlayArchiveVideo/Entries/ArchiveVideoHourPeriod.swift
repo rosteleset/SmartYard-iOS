@@ -76,8 +76,10 @@ struct ArchiveVideoPreviewPeriod /*: Equatable*/ {
         
         return (0 ..< thumbnailsCount).map {
             let date = startDate.addingTimeInterval(Double($0) * intervalForOneThumbnail)
+            let timestamp = String(date.unixTimestamp.int)
             
-            return "/\(dateFormatter.string(from: date))-preview.mp4"
+            return "/\(timestamp)-preview.mp4"
+//            return "/\(dateFormatter.string(from: date))-preview.mp4"
         }
     }
     

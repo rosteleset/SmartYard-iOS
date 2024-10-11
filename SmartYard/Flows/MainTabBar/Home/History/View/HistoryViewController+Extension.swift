@@ -62,3 +62,4 @@ extension HistoryViewController {
     }
     
 }
+// swiftlint:enable line_length

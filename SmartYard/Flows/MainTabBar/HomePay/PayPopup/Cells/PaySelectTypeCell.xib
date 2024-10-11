@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regulat.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="REz-0Q-G4w" customClass="PaySelectTypeCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="345" height="46"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hZx-6J-Cvh">
+                <rect key="frame" x="0.0" y="0.0" width="345" height="46"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2s4-HJ-fU4">
+                        <rect key="frame" x="0.0" y="0.0" width="345" height="46"/>
+                        <color key="backgroundColor" white="0.95044420273987562" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Все способы оплаты" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NvV-NV-vW3">
+                        <rect key="frame" x="18" y="14.333333333333334" width="281" height="17.666666666666664"/>
+                        <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RightArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="NTp-W8-0d0">
+                        <rect key="frame" x="311" y="15" width="16" height="16"/>
+                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="RiS-wq-aaH"/>
+                            <constraint firstAttribute="width" constant="16" id="rTS-0R-6o1"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="NvV-NV-vW3" firstAttribute="leading" secondItem="hZx-6J-Cvh" secondAttribute="leading" constant="18" id="Ayr-jo-dZy"/>
+                    <constraint firstItem="NTp-W8-0d0" firstAttribute="leading" secondItem="NvV-NV-vW3" secondAttribute="trailing" constant="12" id="Fcx-TF-zC3"/>
+                    <constraint firstAttribute="bottom" secondItem="2s4-HJ-fU4" secondAttribute="bottom" id="MSy-UT-l22"/>
+                    <constraint firstItem="NvV-NV-vW3" firstAttribute="centerY" secondItem="hZx-6J-Cvh" secondAttribute="centerY" id="NCg-p8-69c"/>
+                    <constraint firstItem="NTp-W8-0d0" firstAttribute="centerY" secondItem="hZx-6J-Cvh" secondAttribute="centerY" id="YFG-dp-yqA"/>
+                    <constraint firstItem="2s4-HJ-fU4" firstAttribute="top" secondItem="hZx-6J-Cvh" secondAttribute="top" id="kmR-9x-hUK"/>
+                    <constraint firstAttribute="trailing" secondItem="2s4-HJ-fU4" secondAttribute="trailing" id="sDs-VW-Vcu"/>
+                    <constraint firstItem="2s4-HJ-fU4" firstAttribute="leading" secondItem="hZx-6J-Cvh" secondAttribute="leading" id="vh5-5n-bhc"/>
+                    <constraint firstAttribute="trailing" secondItem="NTp-W8-0d0" secondAttribute="trailing" constant="18" id="zTi-Dt-qtY"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <connections>
+                <outlet property="selectView" destination="hZx-6J-Cvh" id="TL4-eC-70Y"/>
+            </connections>
+            <point key="canvasLocation" x="87" y="-11"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="RightArrowIcon" width="8" height="13"/>
+    </resources>
+</document>

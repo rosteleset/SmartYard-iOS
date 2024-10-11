@@ -14,19 +14,54 @@ import RxCocoa
 
 class AddressConfirmationViewModel: BaseViewModel {
     
-    private let router: WeakRouter<HomeRoute>
+//    private let router: WeakRouter<HomeRoute>?
+    private let router: WeakRouter<MyYardRoute>?
+    private let routerhomepay: WeakRouter<HomePayRoute>?
+    private let routerweb: WeakRouter<HomeWebRoute>?
+//    private let routerintercom: WeakRouter<IntercomWebRoute>?
+    
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     
     private let address: String
     
     init(
-        router: WeakRouter<HomeRoute>,
+        routerweb: WeakRouter<HomeWebRoute>,
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        address: String
+    ) {
+        self.router = nil
+        self.routerweb = routerweb
+        self.routerhomepay = nil
+        self.apiWrapper = apiWrapper
+        self.issueService = issueService
+        self.address = address
+    }
+    
+    init(
+        routerhomepay: WeakRouter<HomePayRoute>,
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        address: String
+    ) {
+        self.router = nil
+        self.routerweb = nil
+        self.routerhomepay = routerhomepay
+        self.apiWrapper = apiWrapper
+        self.issueService = issueService
+        self.address = address
+    }
+    
+    init(
+        router: WeakRouter<MyYardRoute>,
         apiWrapper: APIWrapper,
         issueService: IssueService,
         address: String
     ) {
         self.router = router
+        self.routerweb = nil
+        self.routerhomepay = nil
         self.apiWrapper = apiWrapper
         self.issueService = issueService
         self.address = address
@@ -65,7 +100,9 @@ class AddressConfirmationViewModel: BaseViewModel {
             .mapToVoid()
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.main)
+                    self?.router?.trigger(.main)
+                    self?.routerweb?.trigger(.main)
+                    self?.routerhomepay?.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
@@ -85,7 +122,10 @@ class AddressConfirmationViewModel: BaseViewModel {
             .mapToVoid()
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.main)
+                    self?.router?.trigger(.main)
+                    self?.routerweb?.trigger(.main)
+                    self?.routerhomepay?.trigger(.main)
+                    NotificationCenter.default.post(name: .addressAdded, object: nil)
                 }
             )
             .disposed(by: disposeBag)
@@ -93,7 +133,9 @@ class AddressConfirmationViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.back)
+                    self?.router?.trigger(.back)
+                    self?.routerweb?.trigger(.back)
+                    self?.routerhomepay?.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -117,3 +159,4 @@ extension AddressConfirmationViewModel {
     }
     
 }
+// swiftlint:enable function_body_length

@@ -37,6 +37,8 @@ class AvailableServicesViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fakeNavBar.configueBlueNavBar()
         configureTableView()
         bind()
     }

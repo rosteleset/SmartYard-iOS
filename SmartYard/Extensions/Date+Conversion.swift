@@ -32,8 +32,10 @@ extension String {
         let result = dateFormatter.date(from: self)
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let resultShort = dateFormatter.date(from: self)
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        let resultRus = dateFormatter.date(from: self)
         
-        return (result != nil) ? result : resultShort
+        return (result != nil) ? result : ((resultShort != nil) ? resultShort : resultRus)
     }
     
 }

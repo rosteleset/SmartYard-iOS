@@ -168,7 +168,7 @@ class ChatwootViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.main)
+                    self?.router.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -259,3 +259,4 @@ extension ChatwootViewModel {
     }
 
 }
+// swiftlint:enable function_body_length line_length

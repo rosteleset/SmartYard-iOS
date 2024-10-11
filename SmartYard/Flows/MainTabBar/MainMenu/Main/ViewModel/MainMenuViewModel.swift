@@ -17,7 +17,7 @@ class MainMenuViewModel: BaseViewModel {
     private let router: WeakRouter<MainMenuRoute>
     
     private let defaultItems = [
-        MenuListItem.essential(label: "Городские камеры", iconName: "PublicCamsMenuIcon", route: .cityCams, order: 100),
+//        MenuListItem.essential(label: "Городские камеры", iconName: "PublicCamsMenuIcon", route: .cityCams, order: 100),
         MenuListItem.essential(label: "Настройки адресов", iconName: "HomeIcon", route: .settings, order: 200),
         MenuListItem.essential(label: "Общие настройки", iconName: "SettingsMenuIcon", route: .profile, order: 300)
     ]
@@ -80,7 +80,7 @@ class MainMenuViewModel: BaseViewModel {
                     return
                 }
                 
-                let optionalItems = extensions.map { ext-> MenuListItem in
+                let optionalItems = extensions.map { ext -> MenuListItem in
                     return MenuListItem.optional(
                         label: ext.caption,
                         icon: ext.icon,
@@ -93,30 +93,33 @@ class MainMenuViewModel: BaseViewModel {
                 
                 // TODO: Удалить городские камеры при их отсутствии
                 
-                let filteredItems = compiledItems.filter {
-                    var itemShow = true
-                    var camCount = 0
-                    let activityTracker = ActivityTracker()
-                    let isCityCams = ($0.label == "Городские камеры")
-                    if isCityCams {
-                        self.apiWrapper.getOverviewCCTV()
-                            .trackActivity(activityTracker)
-                            .asDriver(onErrorJustReturn: nil)
-                            .ignoreNil()
-                            .map { _ in
-                                camCount += 1
-                            }
-                            .drive(
-                                onNext: {}
-                            )
-                            .dispose()
-                        
-                        itemShow = !(camCount == 0)
-                    }
-                    return itemShow
-                }
+//                let filteredItems = compiledItems.filter {
+//                    var itemShow = true
+//                    var camCount = 0
+//                    let activityTracker = ActivityTracker()
+//                    let isCityCams = ($0.label == "Городские камеры")
+//                    if isCityCams {
+//                        print(camCount)
+//
+//                        self.apiWrapper.getOverviewCCTV()
+//                            .trackActivity(activityTracker)
+//                            .asDriver(onErrorJustReturn: nil)
+//                            .ignoreNil()
+//                            .map {_ in
+//                                camCount += 1
+//                            }
+//                            .drive(
+//                                onNext: {}
+//                            )
+//                            .dispose()
+//
+//                        itemShow = !(camCount == 0)
+//                    }
+//                    return itemShow
+//                }
                 
-                self.items.onNext(filteredItems)
+                self.items.onNext(compiledItems)
+//                self.items.onNext(filteredItems)
             }
             .disposed(by: disposeBag)
 
@@ -191,3 +194,4 @@ extension MainMenuViewModel {
     }
     
 }
+// swiftlint:enable function_body_length closure_body_length

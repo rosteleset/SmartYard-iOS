@@ -70,6 +70,33 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
+    init(
+        rootViewController: RootViewController,
+        accessService: AccessService,
+        pushNotificationService: PushNotificationService,
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        permissionService: PermissionService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
+        flatId: String,
+        address: String,
+        clientId: String?
+    ) {
+        self.accessService = accessService
+        self.pushNotificationService = pushNotificationService
+        self.apiWrapper = apiWrapper
+        self.issueService = issueService
+        self.permissionService = permissionService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
+        
+        super.init(rootViewController: rootViewController, initialRoute: nil)
+        trigger(.addressAccess(address: address, flatId: flatId, clientId: clientId))
+
+        rootViewController.setNavigationBarHidden(true, animated: false)
+    }
+    
     override func prepareTransition(for route: SettingsRoute) -> NavigationTransition {
         switch route {
         case .main:
@@ -299,3 +326,4 @@ class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     }
     
 }
+// swiftlint:enable function_body_length cyclomatic_complexity

@@ -10,7 +10,7 @@ import Foundation
 
 struct APIArchiveRange: Decodable {
     
-    let duration: Int
+    var duration: Double
     let from: Int
     
     var startDate: Date {
@@ -18,7 +18,7 @@ struct APIArchiveRange: Decodable {
     }
     
     var endDate: Date {
-        return startDate.addingTimeInterval(duration.double)
+        return startDate.addingTimeInterval(duration)
     }
     
     func intersects(start: Date, end: Date) -> Bool {

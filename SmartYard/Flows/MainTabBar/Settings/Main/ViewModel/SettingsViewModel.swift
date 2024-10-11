@@ -331,6 +331,7 @@ class SettingsViewModel: BaseViewModel {
         // MARK: Обработка нажатия на добавление адреса
         
         input.addAddressTrigger
+            .debounce(.milliseconds(25))
             .drive(
                 onNext: { _ in
                     NotificationCenter.default.post(.init(name: .addAddressFromSettings, object: nil))
@@ -465,7 +466,11 @@ class SettingsViewModel: BaseViewModel {
                 }()
                 
                 let grantAccessAction: SettingsDataItem? = {
-                    guard item.flatId != nil, item.servicesAvailability[.domophone] == true else {
+//                    guard item.flatId != nil, item.servicesAvailability[.domophone] == true else {
+//                        return nil
+//                    }
+                    guard item.servicesAvailability[.domophone] == true
+                            || item.servicesAvailability[.cctv] == true else {
                         return nil
                     }
                     
@@ -532,3 +537,5 @@ extension SettingsViewModel {
     }
     
 }
+// swiftlint:enable type_body_length function_body_length cyclomatic_complexity
+// swiftlint:enable closure_body_length file_length

@@ -74,3 +74,4 @@ class ContractCell: UICollectionViewCell {
     }
     
 }
+// swiftlint:enable line_length

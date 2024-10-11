@@ -16,7 +16,7 @@ class SelectCameraContainerViewController: BaseViewController {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var cameraNameLabel: UILabel!
-    @IBOutlet private weak var addressLabel: UILabel!
+//    @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var pagingContainer: TopRoundedView!
     
     private var pagingController: PagingViewController?
@@ -27,7 +27,8 @@ class SelectCameraContainerViewController: BaseViewController {
     
     let selectDateTrigger = PublishSubject<Date>()
     let selectCameraTrigger = PublishSubject<CameraObject>()
-    
+    let camSortTrigger = PublishSubject<[Int]>()
+
     init(
         onlinePage: OnlinePageViewController,
         archivePage: ArchivePageViewController,
@@ -48,8 +49,8 @@ class SelectCameraContainerViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fakeNavBar.configueBlueNavBar()
         configurePaging()
-        
         bind()
     }
     
@@ -57,7 +58,7 @@ class SelectCameraContainerViewController: BaseViewController {
         super.viewDidLayoutSubviews()
         
         pagingController?.view.frame = pagingContainer.bounds
-        pagingController?.menuItemSize = .sizeToFit(minWidth: 100, height: 70)
+        pagingController?.menuItemSize = .sizeToFit(minWidth: 100, height: 50)
     }
     
     private func configurePaging() {
@@ -72,9 +73,12 @@ class SelectCameraContainerViewController: BaseViewController {
         pagingController.selectedFont = UIFont.SourceSansPro.semibold(size: 18)
         
         pagingController.textColor = UIColor.SmartYard.gray
-        pagingController.selectedTextColor = UIColor.SmartYard.semiBlack
+        pagingController.selectedTextColor = UIColor.SmartYard.textAddon
         
-        pagingController.menuItemSize = .sizeToFit(minWidth: 100, height: 70)
+        pagingController.menuItemSize = .sizeToFit(minWidth: 100, height: 50)
+        
+        pagingController.backgroundColor = UIColor.SmartYard.backgroundColor
+        pagingController.indicatorColor = UIColor.SmartYard.blue
         
         pagingController.collectionView.isScrollEnabled = false
         pagingController.contentInteraction = .none
@@ -87,6 +91,7 @@ class SelectCameraContainerViewController: BaseViewController {
         let input = SelectCameraContainerViewModel.Input(
             selectedCameraTrigger: selectCameraTrigger.asDriverOnErrorJustComplete(),
             selectedDateTrigger: selectDateTrigger.asDriverOnErrorJustComplete(),
+            camSortTrigger: camSortTrigger.asDriverOnErrorJustComplete(),
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
         )
         
@@ -94,16 +99,19 @@ class SelectCameraContainerViewController: BaseViewController {
         
         output.address
             .drive(
-                onNext: { [weak self] in
-                    self?.addressLabel.text = $0
+                onNext: { [weak self] address in
+                    self?.cameraNameLabel.text = address
                 }
             )
             .disposed(by: disposeBag)
-        
+
         output.cameraConfiguration
             .drive(
                 onNext: { [weak self] config in
-                    self?.onlinePage.setCameras(config.cameras, selectedCamera: config.preselectedCamera)
+                    guard !config.cameras.isEmpty, let preselectedCamera = config.preselectedCamera else {
+                        return
+                    }
+                    self?.onlinePage.setCameras(config.cameras, selectedCamera: preselectedCamera)
                 }
             )
             .disposed(by: disposeBag)
@@ -135,6 +143,9 @@ extension SelectCameraContainerViewController: OnlinePageViewControllerDelegate 
         cameraNameLabel.text = camera.name
     }
     
+    func onlinePageViewController(_ vc: OnlinePageViewController, didSortCameras camIds: [Int]) {
+        camSortTrigger.onNext(camIds)
+    }
 }
 
 extension SelectCameraContainerViewController: ArchivePageViewControllerDelegate {

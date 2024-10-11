@@ -12,15 +12,22 @@ struct GetServicesRequest {
     
     let accessToken: String
     let houseId: String
+    let flat: String?
     
 }
 
 extension GetServicesRequest {
     
     var requestParameters: [String: Any] {
-        return [
+        var params: [String: Any] = [
             "houseId": houseId
         ]
+        
+        if let flat = flat {
+            params["flat"] = flat
+        }
+
+        return params
     }
     
 }

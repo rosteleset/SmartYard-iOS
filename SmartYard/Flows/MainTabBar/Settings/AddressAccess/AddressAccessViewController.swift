@@ -16,7 +16,6 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var addressLabel: UILabel!
-    @IBOutlet private weak var addressView: FullRoundedView!
     @IBOutlet private weak var intercomAccessView: IntercomTemporaryAccessView!
     @IBOutlet private weak var faceIdAccessView: FaceIdAccessView!
     
@@ -50,6 +49,8 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fakeNavBar.configureBlueNavBar()
         configureView()
         bind()
     }
@@ -67,9 +68,9 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
         
         // MARK: 24 px = это то, насколько addressView выступает над scrollView
         // 16 px - это отступ между addressView и следующей за ней вьюхой
-        let neededInset = addressView.bounds.height - 24 + 16
-        
-        stackViewTopConstraint.constant = neededInset
+//        let neededInset = addressView.bounds.height - 24 + 16
+//
+//        stackViewTopConstraint.constant = neededInset
     }
     
     private func configureView() {
@@ -219,6 +220,18 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
+        output.isIntercomEnabled
+            .drive(
+                onNext: { [weak self] state in
+                    guard let state = state else {
+                        self?.intercomAccessView.isHidden = true
+                        return
+                    }
+                    self?.intercomAccessView.isHidden = false
+                }
+            )
+            .disposed(by: disposeBag)
+        
         output.isOwner
             .distinctUntilChanged()
             .drive(
@@ -254,3 +267,4 @@ class AddressAccessViewController: BaseViewController, LoaderPresentable {
     }
     
 }
+// swiftlint:enable function_body_length line_length

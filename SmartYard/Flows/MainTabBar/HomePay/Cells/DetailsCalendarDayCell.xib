@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="tFD-oe-rxb" customClass="DetailsCalendarDayCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Bn5-uY-mBz">
+                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MV8-yg-juh">
+                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                        <color key="backgroundColor" name="blue"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="7CQ-ez-le7"/>
+                            <constraint firstAttribute="height" constant="30" id="KaQ-cs-aRm"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCN-fQ-PKI">
+                        <rect key="frame" x="-5.6666666666666679" y="3.6666666666666661" width="41.333333333333343" height="22.666666666666671"/>
+                        <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="QCN-fQ-PKI" firstAttribute="centerY" secondItem="Bn5-uY-mBz" secondAttribute="centerY" id="3Hk-61-GJs"/>
+                    <constraint firstItem="MV8-yg-juh" firstAttribute="leading" secondItem="Bn5-uY-mBz" secondAttribute="leading" id="GvC-ri-Y6z"/>
+                    <constraint firstItem="MV8-yg-juh" firstAttribute="top" secondItem="Bn5-uY-mBz" secondAttribute="top" id="Sri-JK-xBl"/>
+                    <constraint firstAttribute="trailing" secondItem="MV8-yg-juh" secondAttribute="trailing" id="Th6-pZ-cID"/>
+                    <constraint firstAttribute="bottom" secondItem="MV8-yg-juh" secondAttribute="bottom" id="hy4-Dd-Jme"/>
+                    <constraint firstItem="QCN-fQ-PKI" firstAttribute="centerX" secondItem="Bn5-uY-mBz" secondAttribute="centerX" id="pzk-TJ-Eh2"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <connections>
+                <outlet property="dayLabel" destination="QCN-fQ-PKI" id="2kl-EF-oTS"/>
+                <outlet property="selectedView" destination="MV8-yg-juh" id="ELO-Nt-pBE"/>
+            </connections>
+            <point key="canvasLocation" x="17" y="-11"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="blue">
+            <color red="0.89411764705882357" green="0.10196078431372549" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

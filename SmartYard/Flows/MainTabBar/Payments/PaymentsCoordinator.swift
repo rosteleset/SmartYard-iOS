@@ -55,7 +55,7 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             }
         }
         rootViewController.setNavigationBarHidden(true, animated: false)
-        subscribeToPaymentsNotifications()
+//        subscribeToPaymentsNotifications()
         subscribeToOptionsNotifications()
     }
     
@@ -122,7 +122,7 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
                 url: url,
-                backButtonLabel: "",
+                backButtonLabel: "Home",
                 push: false
             )
             children.forEach { removeChild($0) }
@@ -199,3 +199,4 @@ class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
     }
     
 }
+// swiftlint:enable function_body_length cyclomatic_complexity

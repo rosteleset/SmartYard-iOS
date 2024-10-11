@@ -158,3 +158,4 @@ extension FacesSettingsViewModel {
     }
     
 }
+// swiftlint:enable function_body_length

@@ -18,6 +18,7 @@ import Photos
 class ChatwootViewController: MessagesViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
+    @IBOutlet private weak var backView: UIView!
     private var NBView: UIView?
     private var currentUser = SenderDataItem(id: 0, name: "")
     private var refreshControl = UIRefreshControl()
@@ -30,6 +31,7 @@ class ChatwootViewController: MessagesViewController, LoaderPresentable {
 
     private var messages = [MessageDataItem]()
     private let viewModel: ChatwootViewModel
+    private let chatName: String
 
     private var isSendingPhoto = false {
         didSet {
@@ -47,9 +49,9 @@ class ChatwootViewController: MessagesViewController, LoaderPresentable {
     
     var loader: JGProgressHUD?
 
-    init(viewModel: ChatwootViewModel) {
+    init(viewModel: ChatwootViewModel, chatName: String?) {
         self.viewModel = viewModel
-        
+        self.chatName = chatName ?? ""
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -76,21 +78,53 @@ class ChatwootViewController: MessagesViewController, LoaderPresentable {
         self.showMessageTimestampOnSwipeLeft = false // swipe left to show time activate
                 
         let nbview = UIView()
+        let header = UILabel()
         
         view.addSubview(nbview)
-        
-        nbview.frame = CGRect(x: 0, y: 0, width: view.width + 20, height: 88)
-        nbview.backgroundColor = .white
-        nbview.insertSubview(fakeNavBar, at: 0)
-        self.NBView = nbview
+
+        nbview.backgroundColor = UIColor.SmartYard.backgroundColor
+        print("BACK COLOR", UITraitCollection().userInterfaceStyle)
+        nbview.addSubview(fakeNavBar)
+        nbview.addSubview(header)
+//        nbview.insertSubview(fakeNavBar, at: 0)
+//        nbview.insertSubview(header, at: 0)
+        nbview.translatesAutoresizingMaskIntoConstraints = false
         fakeNavBar.translatesAutoresizingMaskIntoConstraints = false
+        header.translatesAutoresizingMaskIntoConstraints = false
+        fakeNavBar.configureBlueNavBar()
+        header.text = chatName
+        header.textColor = UIColor.SmartYard.blue
+        header.font = UIFont.SourceSansPro.bold(size: 28)
+        header.textAlignment = .left
+        header.numberOfLines = 1
+        header.adjustsFontForContentSizeCategory = true
+        header.adjustsFontSizeToFitWidth = true
+        header.minimumScaleFactor = 0.6
 
-        let topFakeNavBar = fakeNavBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 44)
-        topFakeNavBar.isActive = true
-        fakeNavBar.backgroundColor = UIColor(white: 1, alpha: 1.0)
-
-        fakeNavBar.configueDarkNavBar()
-
+        NSLayoutConstraint.activate([
+            nbview.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            nbview.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            nbview.topAnchor.constraint(equalTo: view.topAnchor),
+            nbview.bottomAnchor.constraint(equalTo: backView.safeAreaLayoutGuide.topAnchor, constant: 70)
+        ])
+        
+        NSLayoutConstraint.activate([
+            fakeNavBar.bottomAnchor.constraint(equalTo: nbview.bottomAnchor, constant: -20),
+            fakeNavBar.leadingAnchor.constraint(equalTo: nbview.leadingAnchor, constant: 6),
+            fakeNavBar.heightAnchor.constraint(equalToConstant: 30),
+            fakeNavBar.widthAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        NSLayoutConstraint.activate([
+            header.bottomAnchor.constraint(equalTo: nbview.bottomAnchor, constant: -20),
+            header.leadingAnchor.constraint(equalTo: nbview.leadingAnchor, constant: 46),
+            header.trailingAnchor.constraint(equalTo: nbview.trailingAnchor, constant: 46),
+            header.heightAnchor.constraint(equalToConstant: 30),
+            header.widthAnchor.constraint(equalTo: nbview.widthAnchor, constant: -92)
+        ])
+        
+        self.NBView = nbview
+        
         messageInputBar.sendButton
             .configure {
                 $0.setSize(CGSize(width: 90, height: 36), animated: false)
@@ -108,7 +142,8 @@ class ChatwootViewController: MessagesViewController, LoaderPresentable {
             }
         messageInputBar.setRightStackViewWidthConstant(to: 90, animated: false)
         messageInputBar.inputTextView.placeholder = "Ваше сообщение..."
-        messagesCollectionView.contentInset.top = 44
+        messagesCollectionView.contentInset.top = 70
+        messagesCollectionView.backgroundColor = .clear
         addAttachmentBarButton()
         messagesCollectionView.refreshControl = refreshControl
         
@@ -354,11 +389,12 @@ extension ChatwootViewController: UIImagePickerControllerDelegate, UINavigationC
                 for: asset,
                 targetSize: size,
                 contentMode: .aspectFit,
-                options: nil) { result, _ in
-                    guard let image = result else {
-                        return
-                    }
-                    self.sendPhoto(image)
+                options: nil
+            ) { result, _ in
+                guard let image = result else {
+                    return
+                }
+                self.sendPhoto(image)
             }
             
         } else if let image = info[.originalImage] as? UIImage {
@@ -588,11 +624,12 @@ extension ChatwootViewController: MessagesDataSource, MessagesLayoutDelegate, Me
         default: break
         }
 
-        return isFromCurrentSender(message: message) ? .lightGray : UIColor.SmartYard.blue
+        return isFromCurrentSender(message: message) ? UIColor(hex: 0xD3DFED)! : UIColor.SmartYard.blue
     }
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return .white
+        return isFromCurrentSender(message: message) ? UIColor(named: "textAddon")! : .white
     }
     
 }
+// swiftlint:enable function_body_length cyclomatic_complexity closure_body_length line_length file_length

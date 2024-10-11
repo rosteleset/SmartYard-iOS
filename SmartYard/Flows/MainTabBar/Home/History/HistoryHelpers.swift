@@ -157,3 +157,4 @@ class SYPopOverDatePickerViewController: PopOverDatePickerViewController {
         NotificationCenter.default.post(.init(name: .popupDimissed, object: nil))
     }
 }
+// swiftlint:enable line_length

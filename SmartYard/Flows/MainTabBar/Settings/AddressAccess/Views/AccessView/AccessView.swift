@@ -156,3 +156,4 @@ extension AccessView: UITableViewDelegate {
     }
     
 }
+// swiftlint:enable function_body_length

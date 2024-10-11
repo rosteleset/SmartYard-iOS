@@ -14,20 +14,62 @@ import XCoordinator
 
 class AuthByContractNumViewModel: BaseViewModel {
     
-    private let router: WeakRouter<HomeRoute>
+//    private let router: WeakRouter<HomeRoute>?
+    private let router: WeakRouter<MyYardRoute>?
+    private let routerhomepay: WeakRouter<HomePayRoute>?
+    private let routerweb: WeakRouter<HomeWebRoute>?
+//    private let routerintercom: WeakRouter<IntercomWebRoute>?
+
     private let issueService: IssueService
     private let apiWrapper: APIWrapper
     private let logoutHelper: LogoutHelper
     private let alertService: AlertService
 
     init(
-        router: WeakRouter<HomeRoute>,
+        routerweb: WeakRouter<HomeWebRoute>,
+        issueService: IssueService,
+        apiWrapper: APIWrapper,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
+    ) {
+        self.routerweb = routerweb
+        self.router = nil
+        self.routerhomepay = nil
+//        self.routerintercom = nil
+        self.issueService = issueService
+        self.apiWrapper = apiWrapper
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
+    }
+    
+    init(
+        router: WeakRouter<MyYardRoute>,
         issueService: IssueService,
         apiWrapper: APIWrapper,
         logoutHelper: LogoutHelper,
         alertService: AlertService
     ) {
         self.router = router
+        self.routerweb = nil
+        self.routerhomepay = nil
+//        self.routerintercom = nil
+        self.issueService = issueService
+        self.apiWrapper = apiWrapper
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
+    }
+    
+    init(
+        routerhomepay: WeakRouter<HomePayRoute>,
+        issueService: IssueService,
+        apiWrapper: APIWrapper,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
+    ) {
+        self.router = nil
+        self.routerweb = nil
+        self.routerhomepay = routerhomepay
+//        self.routerintercom = nil
         self.issueService = issueService
         self.apiWrapper = apiWrapper
         self.logoutHelper = logoutHelper
@@ -53,7 +95,9 @@ class AuthByContractNumViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] error in
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.routerweb?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.routerhomepay?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -62,7 +106,9 @@ class AuthByContractNumViewModel: BaseViewModel {
             .withLatestFrom(input.inputContractNumText.asDriver(onErrorJustReturn: nil))
             .drive(
                 onNext: { [weak self] contractNum in
-                    self?.router.trigger(.restorePassword(contractNum: contractNum))
+                    self?.router?.trigger(.restorePassword(contractNum: contractNum))
+                    self?.routerweb?.trigger(.restorePassword(contractNum: contractNum))
+                    self?.routerhomepay?.trigger(.restorePassword(contractNum: contractNum))
                 }
             )
             .disposed(by: disposeBag)
@@ -93,7 +139,21 @@ class AuthByContractNumViewModel: BaseViewModel {
                     
                     let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
                     
-                    self?.router.trigger(
+                    self?.router?.trigger(
+                        .dialog(
+                            title: "Создать заявку на восстановление данных по договору?",
+                            message: nil,
+                            actions: [okAction, cancelAction]
+                        )
+                    )
+                    self?.routerweb?.trigger(
+                        .dialog(
+                            title: "Создать заявку на восстановление данных по договору?",
+                            message: nil,
+                            actions: [okAction, cancelAction]
+                        )
+                    )
+                    self?.routerhomepay?.trigger(
                         .dialog(
                             title: "Создать заявку на восстановление данных по договору?",
                             message: nil,
@@ -107,7 +167,9 @@ class AuthByContractNumViewModel: BaseViewModel {
         input.noContractTapped
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.inputAddress)
+                    self?.router?.trigger(.inputAddress)
+                    self?.routerweb?.trigger(.inputAddress)
+                    self?.routerhomepay?.trigger(.inputAddress)
                 }
             )
             .disposed(by: disposeBag)
@@ -133,28 +195,55 @@ class AuthByContractNumViewModel: BaseViewModel {
             .isTrue()
             .withLatestFrom(input.inputContractNumText.asDriver(onErrorJustReturn: nil))
             .withLatestFrom(input.inputPasswordNumText.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
-            .flatMapLatest { [weak self] args -> Driver<Void?> in
+            .flatMapLatest { [weak self] args -> Driver<(CheckOffertaRequestResponseData, String, String)?> in
                 let (login, password) = args
                 
                 guard let self = self, let uLogin = login, let uPassword = password else {
-                    return .just(nil)
+                    return .empty()
                 }
                 
                 return self.apiWrapper
-                    .addMyPhone(
+                    .checkOfferta(
                         login: uLogin.trimmed,
-                        password: uPassword.trimmed,
-                        comment: nil,
-                        useForNotifications: true
+                        password: uPassword.trimmed
                     )
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
+                    .map {
+                        guard let response = $0 else {
+                            return nil
+                        }
+                        
+                        return (response, uLogin.trimmed, uPassword.trimmed)
+                    }
                     .asDriver(onErrorJustReturn: nil)
+                
+//                return self.apiWrapper
+//                    .addMyPhone(
+//                        login: uLogin.trimmed,
+//                        password: uPassword.trimmed,
+//                        comment: nil,
+//                        useForNotifications: true
+//                    )
+//                    .trackActivity(activityTracker)
+//                    .trackError(errorTracker)
+//                    .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
             .drive(
-                onNext: { [weak self] _ in
-                    self?.router.trigger(.main)
+                onNext: { [weak self] args in
+                    let (offers, login, password) = args
+                    
+                    guard let self = self, !offers.isEmpty else {
+                        self?.router?.trigger(.main)
+                        self?.routerweb?.trigger(.main)
+                        self?.routerhomepay?.trigger(.main)
+                        NotificationCenter.default.post(name: .addressAdded, object: nil)
+                        return
+                    }
+                    self.router?.trigger(.acceptOfferta(login: login, password: password, offers: offers))
+                    self.routerweb?.trigger(.acceptOfferta(login: login, password: password, offers: offers))
+                    self.routerhomepay?.trigger(.acceptOfferta(login: login, password: password, offers: offers))
                 }
             )
             .disposed(by: disposeBag)
@@ -162,7 +251,9 @@ class AuthByContractNumViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.back)
+                    self?.router?.trigger(.back)
+                    self?.routerweb?.trigger(.back)
+                    self?.routerhomepay?.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -194,3 +285,4 @@ extension AuthByContractNumViewModel {
     }
     
 }
+// swiftlint:enable function_body_length

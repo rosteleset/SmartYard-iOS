@@ -269,6 +269,24 @@ extension APIWrapper {
             .mapToOptional()
     }
     
+    func setParentControl(clientId: String) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+
+        let request = SetParentControlRequest(accessToken: accessToken, clientId: clientId)
+        
+        return provider.rx
+            .request(.setParentControl(request: request))
+            .convertNoConnectionError()
+            .mapAsVoidResponse()
+            .mapToOptional()
+    }
+    
     func openDoor(domophoneId: String, doorId: Int?, blockReason: String?) -> Single<Void?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
@@ -291,7 +309,7 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-    func resetCode(flatId: String) -> Single<ResetCodeResponseData?> {
+    func resetCode(flatId: String, domophoneId: String? = nil) -> Single<ResetCodeResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -300,10 +318,34 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = ResetCodeRequest(accessToken: accessToken, flatId: flatId)
+        let request = ResetCodeRequest(accessToken: accessToken, flatId: flatId, domophoneId: domophoneId)
         
         return provider.rx
             .request(.resetCode(request: request))
+            .convertNoConnectionError()
+            .mapAsDefaultResponse()
+    }
+    
+    func shareGenerate(houseId: Int, flat: Int, domophoneId: String, timeExpire: Int? = nil, count: Int? = nil) -> Single<ShareGenerateResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = ShareGenerateRequest(
+            accessToken: accessToken,
+            houseId: houseId,
+            flat: flat,
+            domophoneId: domophoneId,
+            timeExpire: timeExpire,
+            count: count
+        )
+        
+        return provider.rx
+            .request(.shareGenerate(request: request))
             .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
@@ -363,6 +405,27 @@ extension APIWrapper {
         
         return provider.rx
             .request(.getAddressList(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
+    
+    func getContracts(forceRefresh: Bool = false) -> Single<GetContractsResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let forceRefresh = forceUpdateAddress || forceRefresh
+        forceUpdateAddress = false
+        
+        let request = GetContractsRequest(accessToken: accessToken, forceRefresh: forceRefresh)
+        
+        return provider.rx
+            .request(.getContracts(request: request))
             .convertNoConnectionError()
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
@@ -481,3 +544,4 @@ extension APIWrapper {
     }
     
 }
+// swiftlint:enable line_length file_length

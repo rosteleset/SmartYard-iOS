@@ -10,15 +10,22 @@ struct ResetCodeRequest {
     
     let accessToken: String
     let flatId: String
+    let domophoneId: String?
     
 }
 
 extension ResetCodeRequest {
     
     var requestParameters: [String: Any] {
-        return [
+        var params: [String: Any] = [
             "flatId": flatId
         ]
+        
+        if let domophoneId = domophoneId {
+            params["domophoneId"] = domophoneId
+        }
+        
+        return params
     }
     
 }

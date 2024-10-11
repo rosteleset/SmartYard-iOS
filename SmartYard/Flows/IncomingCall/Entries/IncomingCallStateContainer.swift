@@ -44,3 +44,4 @@ struct IncomingCallStateContainer {
     }
     
 }
+// swiftlint:enable line_length

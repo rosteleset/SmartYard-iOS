@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "settings_barrier_selected.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

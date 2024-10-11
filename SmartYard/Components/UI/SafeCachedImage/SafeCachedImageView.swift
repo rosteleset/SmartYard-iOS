@@ -5,7 +5,7 @@
 //  Created by Александр Васильев on 26.04.2021.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
-// swiftlint:disable function_body_length closure_body_length
+// swiftlint:disable function_body_length
 
 import UIKit
 
@@ -46,7 +46,7 @@ class SafeCachedImageView: UIImageView {
         loadingImageIndicator!.center = view.center
         view.addSubview(loadingImageIndicator!)
         loadingImageIndicator!.startAnimating()
-        self.backgroundColor = UIColor(named: "backgroundColor")
+        self.backgroundColor = UIColor.SmartYard.backgroundColor
         
         URLSession.shared.dataTask(
             with: url,
@@ -112,3 +112,4 @@ class SafeCachedImageView: UIImageView {
     }
     
 }
+// swiftlint:enable function_body_length

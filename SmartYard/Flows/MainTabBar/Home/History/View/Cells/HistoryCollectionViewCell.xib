@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -34,10 +34,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="e69-Tq-V4s" userLabel="ContainerView">
-                                <rect key="frame" x="6" y="0.0" width="315" height="592"/>
+                                <rect key="frame" x="6" y="0.0" width="315" height="534.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="thh-lH-5Wj">
-                                        <rect key="frame" x="0.0" y="0.0" width="315" height="592"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="315" height="534.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q2u-nO-ahc" userLabel="Space">
                                                 <rect key="frame" x="0.0" y="0.0" width="315" height="12"/>
@@ -46,33 +46,33 @@
                                                     <constraint firstAttribute="height" constant="12" id="t4z-9Q-j5M"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="Открытие из приложения" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UTx-sj-H9R">
-                                                <rect key="frame" x="0.0" y="12" width="315" height="80.5"/>
-                                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
-                                                <color key="textColor" name="semiBlack"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Открытие из приложения" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UTx-sj-H9R">
+                                                <rect key="frame" x="0.0" y="12" width="315" height="23.5"/>
+                                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="20"/>
+                                                <color key="textColor" name="textAddon"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DLs-nd-l1M" userLabel="Space">
-                                                <rect key="frame" x="0.0" y="92.5" width="315" height="20"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DLs-nd-l1M" userLabel="Space">
+                                                <rect key="frame" x="0.0" y="35.5" width="315" height="20"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="Shd-rK-1IW"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" horizontalHuggingPriority="252" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nL3-iT-qx9" userLabel="DescriptionContainer">
-                                                <rect key="frame" x="0.0" y="112.5" width="315" height="92.5"/>
+                                            <view contentMode="scaleToFill" horizontalHuggingPriority="252" translatesAutoresizingMaskIntoConstraints="NO" id="nL3-iT-qx9" userLabel="DescriptionContainer">
+                                                <rect key="frame" x="0.0" y="55.5" width="315" height="92"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2an-wc-hUH">
-                                                        <rect key="frame" x="0.0" y="6" width="315" height="80.5"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2an-wc-hUH">
+                                                        <rect key="frame" x="0.0" y="7.5" width="315" height="77"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" ambiguous="YES" text="г. Тамбов, ул. Советская, 16, кв. 4" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="c7q-sO-8fW">
-                                                                <rect key="frame" x="20" y="0.0" width="275" height="23"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="г. Новокузнецк, ул. Курако, 51" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="c7q-sO-8fW">
+                                                                <rect key="frame" x="20" y="0.0" width="275" height="21"/>
                                                                 <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
-                                                                <color key="textColor" name="semiBlack"/>
+                                                                <color key="textColor" name="textAddon"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ds9-MV-Qss">
-                                                                <rect key="frame" x="20" y="23" width="275" height="23"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ds9-MV-Qss">
+                                                                <rect key="frame" x="20" y="21" width="275" height="23"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" text="08.02.2021, 10:30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wfz-84-L1N">
                                                                         <rect key="frame" x="0.0" y="0.0" width="275" height="23"/>
@@ -85,14 +85,14 @@
                                                                     <constraint firstAttribute="height" constant="23" id="GBD-aV-Nlr"/>
                                                                 </constraints>
                                                             </stackView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="p9X-PG-myM">
-                                                                <rect key="frame" x="20" y="46" width="275" height="19"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="p9X-PG-myM">
+                                                                <rect key="frame" x="20" y="44" width="275" height="19"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" image="MissedCall" translatesAutoresizingMaskIntoConstraints="NO" id="aUo-vq-eca">
                                                                         <rect key="frame" x="0.0" y="4" width="15" height="15"/>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" text="Неотвеченный вызов" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mUv-Hk-yJw">
-                                                                        <rect key="frame" x="21" y="2" width="254" height="15.5"/>
+                                                                        <rect key="frame" x="21" y="2.5" width="254" height="14"/>
                                                                         <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="12"/>
                                                                         <color key="textColor" name="incorrectDataRed"/>
                                                                         <nil key="highlightedColor"/>
@@ -102,10 +102,10 @@
                                                                     <constraint firstAttribute="height" constant="19" id="IPh-w3-rwt"/>
                                                                 </constraints>
                                                             </stackView>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" ambiguous="YES" text="Дополнительный текст" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JPV-1h-Qtf">
-                                                                <rect key="frame" x="20" y="65" width="275" height="15.5"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Дополнительный текст" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JPV-1h-Qtf">
+                                                                <rect key="frame" x="20" y="63" width="275" height="14"/>
                                                                 <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="12"/>
-                                                                <color key="textColor" name="semiBlack"/>
+                                                                <color key="textColor" name="textAddon"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
@@ -142,20 +142,20 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Cf-Hu-IO3" userLabel="Space">
-                                                <rect key="frame" x="0.0" y="205" width="315" height="8"/>
+                                                <rect key="frame" x="0.0" y="147.5" width="315" height="8"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="8" id="6KH-vt-I3T"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="bsQ-eJ-6Bp" userLabel="ImageContainer">
-                                                <rect key="frame" x="0.0" y="213" width="315" height="177"/>
+                                                <rect key="frame" x="0.0" y="155.5" width="315" height="177"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNZ-gk-Xes">
                                                         <rect key="frame" x="157.5" y="88.5" width="0.0" height="0.0"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" name="semiBlack"/>
+                                                        <color key="textColor" name="textAddon"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="0z6-lI-UZP" customClass="SafeCachedImageView" customModule="SmartYard" customModuleProvider="target">
@@ -168,12 +168,18 @@
                                                         <gestureRecognizers/>
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktx-Qn-MTp">
-                                                        <rect key="frame" x="270" y="20" width="25" height="25"/>
+                                                        <rect key="frame" x="271" y="20" width="24" height="24"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="25" id="fJH-ca-ioW"/>
-                                                            <constraint firstAttribute="width" constant="25" id="heU-A4-DVG"/>
+                                                            <constraint firstAttribute="height" constant="24" id="fJH-ca-ioW"/>
+                                                            <constraint firstAttribute="width" constant="24" id="heU-A4-DVG"/>
                                                         </constraints>
                                                         <state key="normal" image="QuestionMark"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                                                                <real key="value" value="12"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -199,14 +205,14 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pWI-sl-GMM" userLabel="Space">
-                                                <rect key="frame" x="0.0" y="390" width="315" height="20"/>
+                                                <rect key="frame" x="0.0" y="332.5" width="315" height="20"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="nrc-r8-Z2B"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Nsw-xM-f0E" userLabel="ActionsContainer">
-                                                <rect key="frame" x="0.0" y="410" width="315" height="162"/>
+                                                <rect key="frame" x="0.0" y="352.5" width="315" height="162"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBO-uS-mK9">
                                                         <rect key="frame" x="0.0" y="0.0" width="315" height="36"/>
@@ -249,7 +255,7 @@
                                                         <rect key="frame" x="0.0" y="56" width="315" height="106"/>
                                                         <string key="text">При клике на «‎Открытие доступа»‎ фотография запоминается нейросетью для дальнейшего распознавания пользователя. Чем больше снимков одного пользователя вы зарегистрируете, тем точнее будет работа нейросети.</string>
                                                         <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
-                                                        <color key="textColor" name="semiBlack"/>
+                                                        <color key="textColor" name="textAddon"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
@@ -268,7 +274,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dtw-0O-OAK" userLabel="Space">
-                                                <rect key="frame" x="0.0" y="572" width="315" height="20"/>
+                                                <rect key="frame" x="0.0" y="514.5" width="315" height="20"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="gGH-si-efL"/>
@@ -327,7 +333,7 @@
     </objects>
     <resources>
         <image name="MissedCall" width="15" height="15"/>
-        <image name="QuestionMark" width="25" height="25"/>
+        <image name="QuestionMark" width="27" height="27"/>
         <image name="confirm" width="14" height="14"/>
         <image name="deny" width="20" height="20"/>
         <namedColor name="darkGreen">
@@ -342,8 +348,8 @@
         <namedColor name="incorrectDataRed">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="semiBlack">
-            <color red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="textAddon">
+            <color red="0.24313725490196078" green="0.19607843137254902" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

@@ -14,7 +14,9 @@ import XCoordinator
 
 class ServiceSoonAvailableViewModel: BaseViewModel {
     
-    private let router: WeakRouter<HomeRoute>
+    private let router: WeakRouter<HomeRoute>?
+    private let routerweb: WeakRouter<HomeWebRoute>?
+    
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     private let permissionService: PermissionService
@@ -27,6 +29,25 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
     let errorTracker = ErrorTracker()
     
     init(
+        routerweb: WeakRouter<HomeWebRoute>,
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        permissionService: PermissionService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
+        issue: APIIssueConnect
+    ) {
+        self.router = nil
+        self.routerweb = routerweb
+        self.apiWrapper = apiWrapper
+        self.issueService = issueService
+        self.permissionService = permissionService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
+        self.issueSubject = BehaviorSubject<APIIssueConnect>(value: issue)
+    }
+    
+    init(
         router: WeakRouter<HomeRoute>,
         apiWrapper: APIWrapper,
         issueService: IssueService,
@@ -36,6 +57,7 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
         issue: APIIssueConnect
     ) {
         self.router = router
+        self.routerweb = nil
         self.apiWrapper = apiWrapper
         self.issueService = issueService
         self.permissionService = permissionService
@@ -63,12 +85,14 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
                     if (error as NSError) == NSError.PermissionError.noCameraPermission {
                         let msg = "Чтобы использовать эту функцию, перейдите в настройки и предоставьте доступ к камере"
                         
-                        self?.router.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
-                        
+                        self?.router?.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
+                        self?.routerweb?.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
+
                         return
                     }
                     
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.routerweb?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -118,7 +142,8 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
                         return
                     }
                     
-                    self.router.trigger(.qrCodeScan(delegate: self))
+                    self.router?.trigger(.qrCodeScan(delegate: self))
+//                    self.routerweb?.trigger(.qrCodeScan(delegate: self))
                 }
             )
             .disposed(by: disposeBag)
@@ -156,7 +181,8 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.main)
+                    self?.router?.trigger(.main)
+                    self?.routerweb?.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
@@ -177,7 +203,8 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.main)
+                    self?.router?.trigger(.main)
+                    self?.routerweb?.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
@@ -185,7 +212,8 @@ class ServiceSoonAvailableViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.back)
+                    self?.router?.trigger(.back)
+                    self?.routerweb?.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -224,7 +252,7 @@ extension ServiceSoonAvailableViewModel {
 extension ServiceSoonAvailableViewModel: QRCodeScanViewModelDelegate {
     
     func qrCodeScanViewModel(_ viewModel: QRCodeScanViewModel, didExtractCode code: String) {
-        router.rx
+        router?.rx
             .trigger(.back)
             .asDriverOnErrorJustComplete()
             .flatMapLatest { [weak self] _ -> Driver<Void?> in
@@ -240,10 +268,12 @@ extension ServiceSoonAvailableViewModel: QRCodeScanViewModelDelegate {
             }
             .drive(
                 onNext: { [weak self] _ in
-                    self?.router.trigger(.main)
+                    self?.router?.trigger(.main)
+                    self?.routerweb?.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
     }
     
 }
+// swiftlint:enable function_body_length

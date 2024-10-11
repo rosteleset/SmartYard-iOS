@@ -15,6 +15,7 @@ enum AddressesListDataItem: IdentifiableType, Equatable {
     case cameras(identity: AddressesListDataItemIdentity, numberOfCameras: Int)
     case history(identity: AddressesListDataItemIdentity, numberOfEvents: Int)
     case unapprovedAddresses(identity: AddressesListDataItemIdentity, address: String)
+    case addAddress
     case emptyState
     
 }
@@ -33,6 +34,8 @@ extension AddressesListDataItem {
             return identity
         case .unapprovedAddresses(let identity, _):
             return identity
+        case .addAddress:
+            return .addAddress
         case .emptyState:
             return .emptyState
         }

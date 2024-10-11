@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Bold.ttf">
+            <string>SourceSansPro-Bold</string>
+        </array>
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="GC5-EG-6dr" customClass="DetailsViewTableCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GC5-EG-6dr" id="JkK-Jn-FGA">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kw0-TT-8U0">
+                        <rect key="frame" x="0.0" y="10" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="BN8-1S-F9f"/>
+                            <constraint firstAttribute="height" constant="24" id="w66-b1-qXh"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Пополнение/Списание" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uAv-XJ-1wD">
+                        <rect key="frame" x="40" y="13.333333333333334" width="272" height="17.666666666666664"/>
+                        <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
+                        <color key="textColor" name="textAddon"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nVw-53-pQv">
+                        <rect key="frame" x="328" y="0.0" width="65" height="44"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEx-Nj-3fp">
+                                <rect key="frame" x="0.0" y="3" width="65" height="20.333333333333332"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="16"/>
+                                <color key="textColor" name="textAddon"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01.01.2024" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBR-Nt-9Pi">
+                                <rect key="frame" x="0.0" y="23.333333333333329" width="65" height="17.666666666666671"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                                <color key="textColor" name="gray"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="65" id="5vN-UL-MRd"/>
+                            <constraint firstAttribute="height" constant="44" id="C5p-cp-fnE"/>
+                            <constraint firstItem="wEx-Nj-3fp" firstAttribute="top" secondItem="nVw-53-pQv" secondAttribute="top" constant="3" id="ERO-7T-iIi"/>
+                            <constraint firstAttribute="trailing" secondItem="wEx-Nj-3fp" secondAttribute="trailing" id="FO0-O3-JZN"/>
+                            <constraint firstItem="pBR-Nt-9Pi" firstAttribute="leading" secondItem="nVw-53-pQv" secondAttribute="leading" id="IIg-DQ-pML"/>
+                            <constraint firstAttribute="trailing" secondItem="pBR-Nt-9Pi" secondAttribute="trailing" id="R8E-bb-k00"/>
+                            <constraint firstAttribute="bottom" secondItem="pBR-Nt-9Pi" secondAttribute="bottom" constant="3" id="hPe-fK-QOZ"/>
+                            <constraint firstItem="wEx-Nj-3fp" firstAttribute="leading" secondItem="nVw-53-pQv" secondAttribute="leading" id="lhz-rJ-mNh"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Kw0-TT-8U0" firstAttribute="centerY" secondItem="JkK-Jn-FGA" secondAttribute="centerY" id="ANd-vL-CT9"/>
+                    <constraint firstItem="nVw-53-pQv" firstAttribute="centerY" secondItem="JkK-Jn-FGA" secondAttribute="centerY" id="ZcG-zW-LAE"/>
+                    <constraint firstItem="Kw0-TT-8U0" firstAttribute="leading" secondItem="JkK-Jn-FGA" secondAttribute="leading" id="bqq-p6-CYu"/>
+                    <constraint firstItem="nVw-53-pQv" firstAttribute="leading" secondItem="uAv-XJ-1wD" secondAttribute="trailing" constant="16" id="it8-02-3C0"/>
+                    <constraint firstItem="uAv-XJ-1wD" firstAttribute="centerY" secondItem="JkK-Jn-FGA" secondAttribute="centerY" id="m4d-7y-TYN"/>
+                    <constraint firstAttribute="trailing" secondItem="nVw-53-pQv" secondAttribute="trailing" id="s4o-3u-lkd"/>
+                    <constraint firstItem="uAv-XJ-1wD" firstAttribute="leading" secondItem="Kw0-TT-8U0" secondAttribute="trailing" constant="16" id="y9W-vJ-OYJ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="detailDateLabel" destination="pBR-Nt-9Pi" id="YdB-ZL-IeQ"/>
+                <outlet property="detailImage" destination="Kw0-TT-8U0" id="X83-TS-ZIa"/>
+                <outlet property="detailLabel" destination="uAv-XJ-1wD" id="GZw-Un-SJ1"/>
+                <outlet property="detailSummaLabel" destination="wEx-Nj-3fp" id="Uzr-U6-I95"/>
+            </connections>
+            <point key="canvasLocation" x="16" y="-11"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="gray">
+            <color red="0.42745098039215684" green="0.47843137254901963" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="textAddon">
+            <color red="0.24313725490196078" green="0.19607843137254902" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

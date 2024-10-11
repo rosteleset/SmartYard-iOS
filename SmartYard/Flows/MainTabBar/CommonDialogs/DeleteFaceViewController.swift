@@ -154,3 +154,4 @@ class DeleteFaceViewController: BaseViewController {
     }
 
 }
+// swiftlint:enable function_body_length closure_body_length

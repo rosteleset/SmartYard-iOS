@@ -32,7 +32,8 @@ struct APISettingsAddress: Decodable {
             .phone: services.contains("phone"),
             .cctv: services.contains("cctv"),
             .domophone: services.contains("domophone"),
-            .gsm: services.contains("gsm")
+            .gsm: services.contains("gsm"),
+            .barrier: services.contains("barrier")
         ]
     }
     
@@ -94,3 +95,4 @@ struct APISettingsAddress: Decodable {
     }
     
 }
+// swiftlint:enable cyclomatic_complexity line_length

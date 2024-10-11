@@ -6,10 +6,15 @@
 //  Copyright © 2021 LanTa. All rights reserved.
 //
 
-struct ConfirmCodeResponseData: Decodable {
+struct ConfirmCodeResponseData: Decodable, EmptyDataInitializable {
     
     let accessToken: String
     let name: APIClientName?
+    
+    init() {
+        accessToken = ""
+        name = nil
+    }
     
     private enum CodingKeys: String, CodingKey {
         case accessToken = "accessToken"

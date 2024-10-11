@@ -41,8 +41,8 @@ class ServicesActivationRequestViewController: BaseViewController, LoaderPresent
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fakeNavBar.configueBlueNavBar()
         configureTableView()
-        fakeNavBar.configureBlueNavBar()
         bind()
     }
 

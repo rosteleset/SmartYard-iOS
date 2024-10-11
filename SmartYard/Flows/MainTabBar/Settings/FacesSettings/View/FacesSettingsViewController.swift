@@ -40,6 +40,8 @@ class FacesSettingsViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fakeNavBar.configureBlueNavBar()
         configureView()
         bind()
     }
@@ -50,8 +52,8 @@ class FacesSettingsViewController: BaseViewController, LoaderPresentable {
        }
     
     private func configureView() {
-        mainContainerView.layerCornerRadius = 24
-        mainContainerView.layer.maskedCorners = .topCorners
+//        mainContainerView.layerCornerRadius = 24
+//        mainContainerView.layer.maskedCorners = .topCorners
         
         facesCollectionView.delegate = self
         facesCollectionView.dataSource = self
@@ -191,3 +193,4 @@ extension FacesSettingsViewController: UICollectionViewDataSource {
         }
     }
 }
+// swiftlint:enable line_length

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="SourceSansPro-Bold.ttf">
+            <string>SourceSansPro-Bold</string>
+        </array>
         <array key="SourceSansPro-Regular.ttf">
             <string>SourceSansPro-Regular</string>
         </array>
@@ -28,16 +31,25 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JXc-hx-DfM" userLabel="FakeNavBar" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <rect key="frame" x="6" y="20" width="30" height="30"/>
                     <viewLayoutGuide key="safeArea" id="gy9-ff-X6V"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="XLy-js-h1r"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="g7E-kq-Vm4"/>
+                        <constraint firstAttribute="height" constant="30" id="XLy-js-h1r"/>
+                        <constraint firstAttribute="width" constant="30" id="iOS-ME-MOi"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Журнал событий" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="16" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SET-Yg-SwW">
+                    <rect key="frame" x="46" y="20" width="283" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="svb-8f-Cvs"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="28"/>
+                    <color key="textColor" name="blue"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="n0H-ZY-xSx">
-                    <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                    <rect key="frame" x="0.0" y="70" width="375" height="597"/>
                     <color key="backgroundColor" name="backgroundColor"/>
                     <collectionViewLayout key="collectionViewLayout" id="vaW-Qi-2Sb" customClass="BetterSnappingLayout" customModule="SmartYard" customModuleProvider="target"/>
                     <connections>
@@ -45,10 +57,10 @@
                     </connections>
                 </collectionView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="er8-BG-sa1">
-                    <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                    <rect key="frame" x="0.0" y="70" width="375" height="597"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHh-uL-LfI">
-                            <rect key="frame" x="20" y="197.5" width="335" height="228.5"/>
+                            <rect key="frame" x="20" y="184.5" width="335" height="228.5"/>
                             <string key="text">Похоже, что в журнале пока нет подходящих событий.
 
 Убедитесь, что владелец квартиры включил ведение журнала событий.
@@ -57,7 +69,7 @@
 
 PS: Напоминаем, что мы всегда готовы помочь в чате или по телефону техподдержки через меню данного приложения.</string>
                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
-                            <color key="textColor" name="semiBlack"/>
+                            <color key="textColor" name="textAddon"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -72,15 +84,17 @@ PS: Напоминаем, что мы всегда готовы помочь в 
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="backgroundColor"/>
             <constraints>
-                <constraint firstItem="JXc-hx-DfM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="2b4-wa-c1Z"/>
+                <constraint firstItem="JXc-hx-DfM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="6" id="2b4-wa-c1Z"/>
                 <constraint firstItem="n0H-ZY-xSx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4o3-iy-70S"/>
-                <constraint firstItem="er8-BG-sa1" firstAttribute="top" secondItem="JXc-hx-DfM" secondAttribute="bottom" id="6bu-Xc-IPu"/>
-                <constraint firstItem="JXc-hx-DfM" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="8vB-mu-wPs"/>
-                <constraint firstItem="JXc-hx-DfM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ISG-Ey-GIF"/>
+                <constraint firstItem="er8-BG-sa1" firstAttribute="top" secondItem="SET-Yg-SwW" secondAttribute="bottom" constant="20" id="6bu-Xc-IPu"/>
+                <constraint firstItem="JXc-hx-DfM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="ISG-Ey-GIF"/>
+                <constraint firstItem="SET-Yg-SwW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="46" id="PRS-V0-sX6"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="SET-Yg-SwW" secondAttribute="trailing" constant="46" id="S2D-Kq-nQK"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="n0H-ZY-xSx" secondAttribute="bottom" id="TPy-4V-xEN"/>
                 <constraint firstItem="er8-BG-sa1" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="c31-5Z-fsO"/>
-                <constraint firstItem="n0H-ZY-xSx" firstAttribute="top" secondItem="JXc-hx-DfM" secondAttribute="bottom" id="d2b-Ud-wSB"/>
+                <constraint firstItem="n0H-ZY-xSx" firstAttribute="top" secondItem="SET-Yg-SwW" secondAttribute="bottom" constant="20" id="d2b-Ud-wSB"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="er8-BG-sa1" secondAttribute="bottom" id="qdC-5W-EWM"/>
+                <constraint firstItem="SET-Yg-SwW" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="ya7-zf-rPt"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="er8-BG-sa1" secondAttribute="trailing" id="z6R-Vf-A5h"/>
                 <constraint firstAttribute="trailing" secondItem="n0H-ZY-xSx" secondAttribute="trailing" id="zzD-xJ-OLu"/>
             </constraints>
@@ -91,8 +105,11 @@ PS: Напоминаем, что мы всегда готовы помочь в 
         <namedColor name="backgroundColor">
             <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="semiBlack">
-            <color red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="blue">
+            <color red="0.89411764705882357" green="0.10196078431372549" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="textAddon">
+            <color red="0.24313725490196078" green="0.19607843137254902" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

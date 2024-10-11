@@ -51,7 +51,8 @@ class PushNotificationService {
                     single(.success(()))
                     return
                 }
-                
+                single(.success(()))
+                return
                 let nsError = error as NSError
                 
                 if nsError.domain == "NSURLErrorDomain", nsError.code == -1009 {

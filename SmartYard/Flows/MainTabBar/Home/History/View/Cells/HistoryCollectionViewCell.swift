@@ -142,7 +142,8 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         videoPlayerViewContainer.layer.addSublayer(playerLayer!)
         playerLayer?.frame = videoPlayerViewContainer.frame
         playerLayer?.backgroundColor = UIColor.clear.cgColor
-        
+        playerLayer?.videoGravity = .resizeAspectFill
+
         player?.play()
         
     }
@@ -222,7 +223,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
         switch value.event {
         case .answered:
             titleLabel.text = "Звонок в домофон"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
             callStatusView.isHidden = false
             descriptionLabel.isHidden = true
             callStatusLabel.text = "Отвеченный вызов"
@@ -230,7 +231,7 @@ class HistoryCollectionViewCell: UICollectionViewCell {
             callStatusIcon.image = UIImage(named: "AnsweredCall")
         case .unanswered:
             titleLabel.text = "Звонок в домофон"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
             callStatusView.isHidden = false
             descriptionLabel.isHidden = true
             callStatusLabel.text = "Неотвеченный вызов"
@@ -238,23 +239,26 @@ class HistoryCollectionViewCell: UICollectionViewCell {
             callStatusIcon.image = UIImage(named: "MissedCall")
         case .rfid:
             titleLabel.text = "Открывание ключом"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
         case .app:
             titleLabel.text = "Открытие из приложения"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
         case .face:
             titleLabel.text = "Открывание по лицу"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
             faceFrameColor = .green
         case .passcode:
             titleLabel.text = "Открытие по коду"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
         case .call:
             titleLabel.text = "Открытие ворот по звонку"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
         case .plate:
             titleLabel.text = "Открытие ворот по номеру"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
+        case .link:
+            titleLabel.text = "Открытие по временной ссылке"
+            titleLabel.textColor = UIColor.SmartYard.textAddon
         case .unknown:
             titleLabel.text = "Неизвестное событие"
             titleLabel.textColor = UIColor(named: "incorrectDataRed")
@@ -296,3 +300,4 @@ class HistoryCollectionViewCell: UICollectionViewCell {
     }
 
 }
+// swiftlint:enable function_body_length cyclomatic_complexity line_length

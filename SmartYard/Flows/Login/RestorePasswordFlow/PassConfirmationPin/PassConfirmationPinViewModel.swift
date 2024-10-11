@@ -14,11 +14,16 @@ import XCoordinator
 
 class PassConfirmationPinViewModel: BaseViewModel {
     
+//    private let router: WeakRouter<HomeRoute>?
+    private let router: WeakRouter<MyYardRoute>?
+    private let routerhomepay: WeakRouter<HomePayRoute>?
+    private let routerweb: WeakRouter<HomeWebRoute>?
+//    private let routerintercom: WeakRouter<IntercomWebRoute>?
+
     private let apiWrapper: APIWrapper
     private let logoutHelper: LogoutHelper
     private let alertService: AlertService
-    private let router: WeakRouter<HomeRoute>
-    
+
     private let selectedRestoreMethod: RestoreMethod
     private let contractNum: String
     
@@ -26,7 +31,43 @@ class PassConfirmationPinViewModel: BaseViewModel {
         apiWrapper: APIWrapper,
         logoutHelper: LogoutHelper,
         alertService: AlertService,
-        router: WeakRouter<HomeRoute>,
+        routerweb: WeakRouter<HomeWebRoute>,
+        contractNum: String,
+        selectedRestoreMethod: RestoreMethod
+    ) {
+        self.apiWrapper = apiWrapper
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
+        self.router = nil
+        self.routerweb = routerweb
+        self.routerhomepay = nil
+        self.selectedRestoreMethod = selectedRestoreMethod
+        self.contractNum = contractNum
+    }
+    
+    init(
+        apiWrapper: APIWrapper,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
+        routerhomepay: WeakRouter<HomePayRoute>,
+        contractNum: String,
+        selectedRestoreMethod: RestoreMethod
+    ) {
+        self.apiWrapper = apiWrapper
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
+        self.router = nil
+        self.routerweb = nil
+        self.routerhomepay = routerhomepay
+        self.selectedRestoreMethod = selectedRestoreMethod
+        self.contractNum = contractNum
+    }
+    
+    init(
+        apiWrapper: APIWrapper,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
+        router: WeakRouter<MyYardRoute>,
         contractNum: String,
         selectedRestoreMethod: RestoreMethod
     ) {
@@ -34,6 +75,8 @@ class PassConfirmationPinViewModel: BaseViewModel {
         self.logoutHelper = logoutHelper
         self.alertService = alertService
         self.router = router
+        self.routerweb = nil
+        self.routerhomepay = nil
         self.selectedRestoreMethod = selectedRestoreMethod
         self.contractNum = contractNum
     }
@@ -67,7 +110,9 @@ class PassConfirmationPinViewModel: BaseViewModel {
                         isPinCorrect.onNext(false)
                         
                     default:
-                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                        self?.router?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                        self?.routerweb?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                        self?.routerhomepay?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                     }
                 }
             )
@@ -109,13 +154,17 @@ class PassConfirmationPinViewModel: BaseViewModel {
                     }
 
                     let okAction = UIAlertAction(title: "Ок", style: .default) { [weak self] _ in
-                        self?.router.trigger(.main)
+                        self?.router?.trigger(.main)
+                        self?.routerweb?.trigger(.main)
+                        self?.routerhomepay?.trigger(.main)
                     }
                     
                     let passDestination = self.selectedRestoreMethod.contact.contains("@") ? "email" : "телефон"
                     let dialogText = "Пароль от указанной записи отправлен на указанный \(passDestination)"
                     
-                    self.router.trigger(.dialog(title: "", message: dialogText, actions: [okAction]))
+                    self.router?.trigger(.dialog(title: "", message: dialogText, actions: [okAction]))
+                    self.routerweb?.trigger(.dialog(title: "", message: dialogText, actions: [okAction]))
+                    self.routerhomepay?.trigger(.dialog(title: "", message: dialogText, actions: [okAction]))
                 }
             )
             .disposed(by: disposeBag)
@@ -141,7 +190,9 @@ class PassConfirmationPinViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.back)
+                    self?.router?.trigger(.back)
+                    self?.routerweb?.trigger(.back)
+                    self?.routerhomepay?.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -172,3 +223,4 @@ extension PassConfirmationPinViewModel {
     }
     
 }
+// swiftlint:enable function_body_length

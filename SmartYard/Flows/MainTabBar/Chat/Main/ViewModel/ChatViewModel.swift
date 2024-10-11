@@ -10,7 +10,7 @@
 import RxSwift
 import RxCocoa
 import WebKit
-import OnlineChatSdk
+//import OnlineChatSdk
 
 class ChatViewModel: BaseViewModel {
     
@@ -150,13 +150,13 @@ class ChatViewModel: BaseViewModel {
                         return
                     }
                     
-                    ChatApi.getNewMessages(Constants.Chat.token, md5) { result in
-                        if result?["error"] != nil {
-                            print("error : \(String(describing: result?["error"]))")
-                        } else {
-                            print("result : \(result.debugDescription)")
-                        }
-                    }
+//                    ChatApi.getNewMessages(Constants.Chat.token, md5) { result in
+//                        if result?["error"] != nil {
+//                            print("error : \(String(describing: result?["error"]))")
+//                        } else {
+//                            print("result : \(result.debugDescription)")
+//                        }
+//                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -220,3 +220,4 @@ extension ChatViewModel {
     }
     
 }
+// swiftlint:enable function_body_length

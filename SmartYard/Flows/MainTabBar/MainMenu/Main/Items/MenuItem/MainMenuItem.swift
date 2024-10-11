@@ -16,7 +16,7 @@ class MainMenuItem: UICollectionViewCell {
         
         label.numberOfLines = 0
         label.font = UIFont.SourceSansPro.regular(size: 14)
-        label.textColor = UIColor.SmartYard.semiBlack
+        label.textColor = UIColor.SmartYard.textAddon
         
         return label
     }()

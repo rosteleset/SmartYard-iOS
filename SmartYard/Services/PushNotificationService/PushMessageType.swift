@@ -14,5 +14,9 @@ enum PushMessageType: String {
     case paySuccess
     case payError
     case videoReady
+    case authorization
+    case authorizationFail
+    case javascript
+    case updateStatusPay
     
 }

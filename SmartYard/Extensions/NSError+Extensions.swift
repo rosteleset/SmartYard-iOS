@@ -182,6 +182,16 @@ extension NSError {
             )
         }()
     
+        static let confirmCodeMissingError: NSError = {
+            let errorUserInfo = [NSLocalizedDescriptionKey: "Отсутствует код подтверждения. Выполнить запрос невозможно"]
+            
+            return NSError(
+                domain: domain,
+                code: 3008,
+                userInfo: errorUserInfo
+            )
+        }()
+    
     }
     
 }

@@ -30,8 +30,10 @@ enum HomeRoute: Route {
     case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
     case serviceSoonAvailable(issue: APIIssueConnect)
     case cameraContainer(address: String, cameras: [CameraObject], selectedCamera: CameraObject)
+    case camerasContainer(houseId: String, camId: Int?, fullscreen: Bool)
     case yardCamerasMap(houseId: String, address: String)
     case playArchiveVideo(camera: CameraObject, date: Date, availableRanges: [APIArchiveRange])
+    case notifications
     case history(houseId: String, address: String)
 }
 
@@ -46,6 +48,87 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
     private let permissionService: PermissionService
     private let alertService: AlertService
     private let logoutHelper: LogoutHelper
+    
+    init(
+        rootVC: UINavigationController,
+        apiWrapper: APIWrapper,
+        pushNotificationService: PushNotificationService,
+        accessService: AccessService,
+        issueService: IssueService,
+        permissionService: PermissionService,
+        alertService: AlertService,
+        logoutHelper: LogoutHelper,
+        houseId: String,
+        address: String
+    ) {
+        self.apiWrapper = apiWrapper
+        self.pushNotificationService = pushNotificationService
+        self.accessService = accessService
+        self.issueService = issueService
+        self.permissionService = permissionService
+        self.alertService = alertService
+        self.logoutHelper = logoutHelper
+        
+        super.init(rootViewController: rootVC, initialRoute: nil)
+        
+        trigger(.yardCamerasMap(houseId: houseId, address: address))
+
+        rootViewController.setNavigationBarHidden(true, animated: false)
+    }
+    
+    init(
+        rootVC: UINavigationController,
+        apiWrapper: APIWrapper,
+        pushNotificationService: PushNotificationService,
+        accessService: AccessService,
+        issueService: IssueService,
+        permissionService: PermissionService,
+        alertService: AlertService,
+        logoutHelper: LogoutHelper,
+        houseId: String,
+        camId: Int?,
+        fullscreen: Bool = false
+    ) {
+        self.apiWrapper = apiWrapper
+        self.pushNotificationService = pushNotificationService
+        self.accessService = accessService
+        self.issueService = issueService
+        self.permissionService = permissionService
+        self.alertService = alertService
+        self.logoutHelper = logoutHelper
+        
+        super.init(rootViewController: rootVC, initialRoute: nil)
+        
+        trigger(.camerasContainer(houseId: houseId, camId: camId, fullscreen: fullscreen))
+
+        rootViewController.setNavigationBarHidden(true, animated: false)
+    }
+    
+    init(
+        rootVC: UINavigationController,
+        apiWrapper: APIWrapper,
+        pushNotificationService: PushNotificationService,
+        accessService: AccessService,
+        issueService: IssueService,
+        permissionService: PermissionService,
+        alertService: AlertService,
+        logoutHelper: LogoutHelper,
+        isManualTrigger: Bool
+    ) {
+        self.apiWrapper = apiWrapper
+        self.pushNotificationService = pushNotificationService
+        self.accessService = accessService
+        self.issueService = issueService
+        self.permissionService = permissionService
+        self.alertService = alertService
+        self.logoutHelper = logoutHelper
+        
+        super.init(rootViewController: rootVC, initialRoute: nil)
+
+        trigger(.inputContract(isManualTrigger: isManualTrigger))
+        
+        rootViewController.setNavigationBarHidden(true, animated: false)
+    }
     
     init(
         apiWrapper: APIWrapper,
@@ -69,6 +152,7 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         rootViewController.setNavigationBarHidden(true, animated: false)
         
         subscribeToNewAddressNotifications()
+        subscribeToNewInboxNotifications()
     }
     
     override func prepareTransition(for route: HomeRoute) -> NavigationTransition {
@@ -100,79 +184,84 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             return .appSettingsTransition(title: title, message: message)
             
         case let .inputContract(isManualTrigger):
-            let vm = AuthByContractNumViewModel(
-                router: weakRouter,
-                issueService: issueService,
-                apiWrapper: apiWrapper,
-                logoutHelper: logoutHelper,
-                alertService: alertService
-            )
-            
-            let vc = AuthByContractNumViewController(viewModel: vm, isShowingManual: isManualTrigger)
-            
-            let transition: NavigationTransition = {
-                guard isManualTrigger else {
-                    return .set([vc], animation: .fade)
-                }
-                
-                if (rootViewController.viewControllers.contains { $0 is AuthByContractNumViewController }) {
-                    return .none()
-                } else {
-                    return .push(vc)
-                }
-            }()
-            
-            return transition
+//            let vm = AuthByContractNumViewModel(
+//                router: weakRouter,
+//                issueService: issueService,
+//                apiWrapper: apiWrapper,
+//                logoutHelper: logoutHelper,
+//                alertService: alertService
+//            )
+//            
+//            let vc = AuthByContractNumViewController(viewModel: vm, isShowingManual: isManualTrigger)
+//            
+//            let transition: NavigationTransition = {
+//                guard isManualTrigger else {
+//                    return .set([vc], animation: .fade)
+//                }
+//                
+//                if (rootViewController.viewControllers.contains { $0 is AuthByContractNumViewController }) {
+//                    return .none()
+//                } else {
+//                    return .push(vc)
+//                }
+//            }()
+//            
+//            return transition
+            return .none()
             
         case .inputAddress:
-            let vm = InputAddressViewModel(
-                router: weakRouter,
-                apiWrapper: apiWrapper,
-                permissionService: permissionService,
-                logoutHelper: logoutHelper,
-                alertService: alertService
-            )
-            
-            let vc = InputAddressViewController(viewModel: vm)
-            
-            return .push(vc)
+//            let vm = InputAddressViewModel(
+//                router: weakRouter,
+//                apiWrapper: apiWrapper,
+//                permissionService: permissionService,
+//                logoutHelper: logoutHelper,
+//                alertService: alertService
+//            )
+//            
+//            let vc = InputAddressViewController(viewModel: vm)
+//            
+//            return .push(vc)
+            return .none()
             
         case let .availableServices(address, services):
-            let vm = AvailableServicesViewModel(
-                router: weakRouter,
-                apiWrapper: apiWrapper,
-                issueService: issueService,
-                address: address,
-                services: services
-            )
-            
-            let vc = AvailableServicesViewController(viewModel: vm)
-            
-            return .push(vc)
+//            let vm = AvailableServicesViewModel(
+//                router: weakRouter,
+//                apiWrapper: apiWrapper,
+//                issueService: issueService,
+//                address: address,
+//                services: services
+//            )
+//            
+//            let vc = AvailableServicesViewController(viewModel: vm)
+//            
+//            return .push(vc)
+            return .none()
             
         case let .unavailableServices(address):
-            let vm = ServicesActivationRequestViewModel(
-                router: weakRouter,
-                apiWrapper: apiWrapper,
-                issueService: issueService,
-                address: address
-            )
-            
-            let vc = ServicesActivationRequestViewController(viewModel: vm)
-            
-            return .push(vc)
+//            let vm = ServicesActivationRequestViewModel(
+//                router: weakRouter,
+//                apiWrapper: apiWrapper,
+//                issueService: issueService,
+//                address: address
+//            )
+//            
+//            let vc = ServicesActivationRequestViewController(viewModel: vm)
+//            
+//            return .push(vc)
+            return .none()
             
         case let .confirmAddress(address):
-            let vm = AddressConfirmationViewModel(
-                router: weakRouter,
-                apiWrapper: apiWrapper,
-                issueService: issueService,
-                address: address
-            )
-            
-            let vc = AddressConfirmationViewController(viewModel: vm)
-            
-            return .push(vc)
+//            let vm = AddressConfirmationViewModel(
+//                router: weakRouter,
+//                apiWrapper: apiWrapper,
+//                issueService: issueService,
+//                address: address
+//            )
+//            
+//            let vc = AddressConfirmationViewController(viewModel: vm)
+//            
+//            return .push(vc)
+            return .none()
         
         case .back:
             return .pop(animation: .default)
@@ -181,30 +270,32 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             return .dismiss()
             
         case let .restorePassword(contractNum):
-            let vm = RestorePasswordViewModel(
-                apiWrapper: apiWrapper,
-                logoutHelper: logoutHelper,
-                alertService: alertService,
-                router: weakRouter
-            )
-            
-            let vc = RestorePasswordViewController(viewModel: vm, preloadedContractNumber: contractNum)
-            
-            return .push(vc)
+//            let vm = RestorePasswordViewModel(
+//                apiWrapper: apiWrapper,
+//                logoutHelper: logoutHelper,
+//                alertService: alertService,
+//                router: weakRouter
+//            )
+//            
+//            let vc = RestorePasswordViewController(viewModel: vm, preloadedContractNumber: contractNum)
+//            
+//            return .push(vc)
+            return .none()
             
         case let .pinCode(contractNum, restoreMethod):
-            let vm = PassConfirmationPinViewModel(
-                apiWrapper: apiWrapper,
-                logoutHelper: logoutHelper,
-                alertService: alertService,
-                router: weakRouter,
-                contractNum: contractNum,
-                selectedRestoreMethod: restoreMethod
-            )
-            
-            let vc = PassConfirmationPinViewController(viewModel: vm)
-            
-            return .push(vc)
+//            let vm = PassConfirmationPinViewModel(
+//                apiWrapper: apiWrapper,
+//                logoutHelper: logoutHelper,
+//                alertService: alertService,
+//                router: weakRouter,
+//                contractNum: contractNum,
+//                selectedRestoreMethod: restoreMethod
+//            )
+//            
+//            let vc = PassConfirmationPinViewController(viewModel: vm)
+//            
+//            return .push(vc)
+            return .none()
             
         case let .qrCodeScan(delegate):
             let vm = QRCodeScanViewModel(router: weakRouter, delegate: delegate)
@@ -231,7 +322,29 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
         case let .yardCamerasMap(houseId, address):
             let vm = YardMapViewModel(apiWrapper: apiWrapper, houseId: houseId, address: address, router: weakRouter)
-            let vc = YardMapViewController(viewModel: vm)
+            let vc = YardMapViewController(viewModel: vm, apiWrapper: apiWrapper)
+            
+            return .push(vc)
+            
+        case let .camerasContainer(houseId, camId, fullscreen):
+            let vm = SelectCameraContainerViewModel(
+                apiWrapper: apiWrapper,
+                houseId: houseId,
+                camId: camId,
+                router: weakRouter
+            )
+            
+            let onlineVc = OnlinePageViewController(apiWrapper: apiWrapper, fullscreen: fullscreen)
+            onlineVc.loadViewIfNeeded()
+            
+            let archiveVc = ArchivePageViewController(apiWrapper: apiWrapper)
+            archiveVc.loadViewIfNeeded()
+            
+            let vc = SelectCameraContainerViewController(
+                onlinePage: onlineVc,
+                archivePage: archiveVc,
+                viewModel: vm
+            )
             
             return .push(vc)
             
@@ -271,8 +384,20 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             
             return .push(vc)
             
-        case let .history(houseId, address):
+        case .notifications:
+            let vm = NotificationsAddressViewModel(
+                apiWrapper: apiWrapper,
+                pushNotificationService: pushNotificationService,
+                logoutHelper: logoutHelper,
+                alertService: alertService,
+                router: weakRouter
+            )
             
+            let vc = NotificationsAddressViewController(viewModel: vm)
+            return .push(vc)
+            
+        case let .history(houseId, address):
+            let houseId = Int(houseId)
             let coordinator = HistoryCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
@@ -315,4 +440,26 @@ class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             .disposed(by: disposeBag)
     }
     
+    private func subscribeToNewInboxNotifications() {
+        NotificationCenter.default.rx.notification(.updateInboxNotificationsSelect)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] notification in
+                    guard let self = self else {
+                        return
+                    }
+                    // MARK: Если в стеке уже есть NotificationsAddressViewController - ничего делать не надо
+                    guard !(self.rootViewController.viewControllers.contains {
+                        $0 is NotificationsAddressViewController
+                    }) else {
+                        return
+                    }
+                    // MARK: Если его нет в стеке - принудительно отправляем юзера на страницу уведомлений
+                    print("goto notification")
+                    self.trigger(.notifications)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
 }
+// swiftlint:enable function_body_length cyclomatic_complexity

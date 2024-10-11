@@ -5,7 +5,6 @@
 //  Created by devcentra on 20.03.2023.
 //  Copyright © 2023 LanTa. All rights reserved.
 //
-// swiftlint:disable function_body_length
 
 import RxSwift
 import RxCocoa
@@ -14,7 +13,7 @@ import XCoordinator
 enum ChatwootRoute: Route {
     case main
     case personalchat(index: Int, items: [APIChat])
-    case chatselect(chat: String)
+    case chatselect(chat: String, name: String?)
     case back
     case alert(title: String, message: String?)
 }
@@ -48,6 +47,31 @@ class ChatwootCoordinator: NavigationCoordinator<ChatwootRoute> {
         subscribeToNewChatwootNotifications()
     }
 
+    init(
+        rootVC: UINavigationController,
+        apiWrapper: APIWrapper,
+        accessService: AccessService,
+        pushNotificationService: PushNotificationService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
+        chat: String,
+        name: String?
+    ) {
+        self.apiWrapper = apiWrapper
+        self.accessService = accessService
+        self.pushNotificationService = pushNotificationService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
+        
+        super.init(rootViewController: rootVC, initialRoute: nil)
+        
+        trigger(.chatselect(chat: chat, name: name))
+
+        rootViewController.setNavigationBarHidden(true, animated: false)
+        
+        subscribeToNewChatwootNotifications()
+    }
+
     override func prepareTransition(for route: ChatwootRoute) -> NavigationTransition {
         switch route {
         case .main:
@@ -60,7 +84,8 @@ class ChatwootCoordinator: NavigationCoordinator<ChatwootRoute> {
             )
             let vc = ChatwootSelectChatController(viewModel: vm)
             return .set([vc])
-        case let .chatselect(chat):
+            
+        case let .chatselect(chat, name):
             let vm = ChatwootViewModel(
                 apiWrapper: apiWrapper,
                 accessService: accessService,
@@ -70,7 +95,7 @@ class ChatwootCoordinator: NavigationCoordinator<ChatwootRoute> {
                 chatRow: chat,
                 router: weakRouter
             )
-            let vc = ChatwootViewController(viewModel: vm)
+            let vc = ChatwootViewController(viewModel: vm, chatName: name)
             vc.loadViewIfNeeded()
             return .push(vc)
         case let .personalchat(index, items):
@@ -86,7 +111,7 @@ class ChatwootCoordinator: NavigationCoordinator<ChatwootRoute> {
             
             if let typeChat = items[index].type,
                typeChat == "personal" {
-                let vc = ChatwootViewController(viewModel: vm)
+                let vc = ChatwootViewController(viewModel: vm, chatName: items[index].name)
 
                 vc.loadViewIfNeeded()
                 return .push(vc)
@@ -108,7 +133,8 @@ class ChatwootCoordinator: NavigationCoordinator<ChatwootRoute> {
             .drive(
                 onNext: { [weak self] notification in
                     guard let self = self,
-                          let chat = notification.object as? String else {
+                          let userInfo = notification.userInfo,
+                          let chat = userInfo["type"] as? String else {
                         return
                     }
                     // MARK: Если в стеке уже есть ChatwootViewController - ничего делать не надо
@@ -118,7 +144,7 @@ class ChatwootCoordinator: NavigationCoordinator<ChatwootRoute> {
                         return
                     }
                     // MARK: Если его нет в стеке - принудительно возвращаем юзера на главный экран
-                    self.trigger(.chatselect(chat: chat))
+                    self.trigger(.chatselect(chat: chat, name: userInfo["name"] as? String))
                 }
             )
             .disposed(by: disposeBag)

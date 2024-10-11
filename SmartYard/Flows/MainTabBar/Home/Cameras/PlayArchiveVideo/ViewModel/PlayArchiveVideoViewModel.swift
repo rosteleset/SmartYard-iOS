@@ -5,7 +5,7 @@
 //  Created by admin on 02.06.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
-// swiftlint:disable function_body_length cyclomatic_complexity closure_body_length line_length
+// swiftlint:disable function_body_length cyclomatic_complexity line_length
 
 import XCoordinator
 import RxSwift
@@ -197,6 +197,7 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                     return nil
                 }
                 
+                let timestamp = String(date.unixTimestamp.int)
                 // MARK: А здесь сервак жрет дату в GMT. Р - разнообразие
                 
                 let dateFormatter = DateFormatter()
@@ -206,9 +207,15 @@ class PlayArchiveVideoViewModel: BaseViewModel {
                 
                 let resultingString = self.camera.video +
                     "/" +
-                    dateFormatter.string(from: date) +
+                    timestamp +
                     "-preview.mp4" +
                     "?token=\(self.camera.token)"
+
+//                let resultingString = self.camera.video +
+//                    "/" +
+//                    dateFormatter.string(from: date) +
+//                    "-preview.mp4" +
+//                    "?token=\(self.camera.token)"
                 
                 return URL(string: resultingString)
             }
@@ -298,3 +305,4 @@ extension PlayArchiveVideoViewModel {
     }
     
 }
+// swiftlint:enable function_body_length cyclomatic_complexity line_length

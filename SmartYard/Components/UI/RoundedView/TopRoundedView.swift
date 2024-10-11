@@ -13,7 +13,7 @@ class TopRoundedView24: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        roundCorners([.topLeft, .topRight], radius: 24.0)
+//        roundCorners([.topLeft, .topRight], radius: 24.0)
     }
 }
 
@@ -21,6 +21,6 @@ class TopRoundedView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        roundCorners([.topLeft, .topRight], radius: 12.0)
+//        roundCorners([.topLeft, .topRight], radius: 12.0)
     }
 }

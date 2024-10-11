@@ -14,8 +14,13 @@ import XCoordinator
 
 class RestorePasswordViewModel: BaseViewModel {
     
+//    private let router: WeakRouter<HomeRoute>?
+    private let router: WeakRouter<MyYardRoute>?
+    private let routerhomepay: WeakRouter<HomePayRoute>?
+    private let routerweb: WeakRouter<HomeWebRoute>?
+//    private let routerintercom: WeakRouter<IntercomWebRoute>?
+    
     private let apiWrapper: APIWrapper
-    private let router: WeakRouter<HomeRoute>
     private let logoutHelper: LogoutHelper
     private let alertService: AlertService
     
@@ -26,12 +31,42 @@ class RestorePasswordViewModel: BaseViewModel {
         apiWrapper: APIWrapper,
         logoutHelper: LogoutHelper,
         alertService: AlertService,
-        router: WeakRouter<HomeRoute>
+        routerweb: WeakRouter<HomeWebRoute>
+    ) {
+        self.apiWrapper = apiWrapper
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
+        self.router = nil
+        self.routerweb = routerweb
+        self.routerhomepay = nil
+    }
+    
+    init(
+        apiWrapper: APIWrapper,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
+        routerhomepay: WeakRouter<HomePayRoute>
+    ) {
+        self.apiWrapper = apiWrapper
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
+        self.router = nil
+        self.routerweb = nil
+        self.routerhomepay = routerhomepay
+    }
+    
+    init(
+        apiWrapper: APIWrapper,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService,
+        router: WeakRouter<MyYardRoute>
     ) {
         self.apiWrapper = apiWrapper
         self.logoutHelper = logoutHelper
         self.alertService = alertService
         self.router = router
+        self.routerweb = nil
+        self.routerhomepay = nil
     }
     
     func transform(input: Input) -> Output {
@@ -58,10 +93,14 @@ class RestorePasswordViewModel: BaseViewModel {
                     switch nsError.code {
                     case 422, 404:
                         let message = "Введен неверный номер договора"
-                        self?.router.trigger(.alert(title: "Ошибка", message: message))
-                        
+                        self?.router?.trigger(.alert(title: "Ошибка", message: message))
+                        self?.routerweb?.trigger(.alert(title: "Ошибка", message: message))
+                        self?.routerhomepay?.trigger(.alert(title: "Ошибка", message: message))
+
                     default:
-                        self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                        self?.router?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                        self?.routerweb?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                        self?.routerhomepay?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                     }
                 }
             )
@@ -111,7 +150,13 @@ class RestorePasswordViewModel: BaseViewModel {
                     
                     let (selectedMethodModel, inputContractNum) = args
                     
-                    self.router.trigger(
+                    self.router?.trigger(
+                        .pinCode(contractNum: inputContractNum, selectedRestoreMethod: selectedMethodModel.method)
+                    )
+                    self.routerweb?.trigger(
+                        .pinCode(contractNum: inputContractNum, selectedRestoreMethod: selectedMethodModel.method)
+                    )
+                    self.routerhomepay?.trigger(
                         .pinCode(contractNum: inputContractNum, selectedRestoreMethod: selectedMethodModel.method)
                     )
                 }
@@ -172,7 +217,9 @@ class RestorePasswordViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.back)
+                    self?.router?.trigger(.back)
+                    self?.routerweb?.trigger(.back)
+                    self?.routerhomepay?.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -201,3 +248,4 @@ extension RestorePasswordViewModel {
     }
     
 }
+// swiftlint:enable function_body_length

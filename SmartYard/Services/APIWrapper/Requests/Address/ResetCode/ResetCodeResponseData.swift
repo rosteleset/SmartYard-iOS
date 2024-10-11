@@ -8,7 +8,7 @@
 
 struct ResetCodeResponseData: Decodable {
     
-    let code: Int
+    let code: String?
 
     private enum CodingKeys: String, CodingKey {
         case code
@@ -17,7 +17,7 @@ struct ResetCodeResponseData: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        code = (try? container.decode(String.self, forKey: .code).int) ?? -1
+        code = try? container.decode(String.self, forKey: .code)
        
     }
 }

@@ -9,8 +9,10 @@
 struct APIAddress: Decodable {
     
     let houseId: String
+    let hid: Int
     let address: String
     let doors: [APIDoor]
+    let intercoms: [APIIntercoms]
     let cctv: Int
     let hasPlog: Bool
     
@@ -20,6 +22,7 @@ struct APIAddress: Decodable {
         case doors
         case cctv
         case hasPlog
+        case intercoms
     }
     
     var uniqueId: String {
@@ -30,12 +33,13 @@ struct APIAddress: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
 //        houseId = try container.decode(String.self, forKey: .houseId)
-        let hid = try container.decode(Int.self, forKey: .houseId)
+        hid = try container.decode(Int.self, forKey: .houseId)
         address = try container.decode(String.self, forKey: .address)
         
         houseId = String(hid) + "_" + address
 
         doors = (try? container.decode([APIDoor].self, forKey: .doors)) ?? []
+        intercoms = (try? container.decode([APIIntercoms].self, forKey: .intercoms)) ?? []
         cctv = (try? container.decode(Int.self, forKey: .cctv)) ?? 0
         
         let hasPlogRawValue = (try? container.decode(String.self, forKey: .hasPlog)) ?? ""
@@ -43,6 +47,7 @@ struct APIAddress: Decodable {
         case "t": hasPlog = true
         default: hasPlog = false
         }
+        
     }
     
 }

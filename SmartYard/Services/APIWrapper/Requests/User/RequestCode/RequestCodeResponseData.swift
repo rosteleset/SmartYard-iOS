@@ -10,6 +10,7 @@ enum RequestCodeResponseData: Decodable, EmptyDataInitializable {
     case otp
     case outgoingCall(confirmNumbers: [String])
     case flashCall
+    case pushMobile(requestId: String)
     
     init() {
         self = .otp
@@ -18,6 +19,7 @@ enum RequestCodeResponseData: Decodable, EmptyDataInitializable {
     private enum CodingKeys: String, CodingKey {
         case method
         case confirmationNumbers
+        case requestId
     }
     
     init(from decoder: Decoder) throws {
@@ -39,6 +41,9 @@ enum RequestCodeResponseData: Decodable, EmptyDataInitializable {
             self = .outgoingCall(confirmNumbers: confirmNumbers)
         case "flashCall":
             self = .flashCall
+        case "push":
+            let requestId = try container.decode(String.self, forKey: .requestId)
+            self = .pushMobile(requestId: requestId)
         default: self = .otp
         }
     }

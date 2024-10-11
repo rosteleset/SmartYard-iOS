@@ -206,3 +206,4 @@ class IssueService {
     }
     
 }
+// swiftlint:enable line_length

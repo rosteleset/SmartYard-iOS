@@ -14,8 +14,12 @@ import XCoordinator
 
 class AvailableServicesViewModel: BaseViewModel {
     
-    private let router: WeakRouter<HomeRoute>
-    
+//    private let router: WeakRouter<HomeRoute>?
+    private let router: WeakRouter<MyYardRoute>?
+    private let routerhomepay: WeakRouter<HomePayRoute>?
+    private let routerweb: WeakRouter<HomeWebRoute>?
+//    private let routerintercom: WeakRouter<IntercomWebRoute>?
+
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     
@@ -23,13 +27,15 @@ class AvailableServicesViewModel: BaseViewModel {
     private let addressSubject: BehaviorSubject<String?>
     
     init(
-        router: WeakRouter<HomeRoute>,
+        routerweb: WeakRouter<HomeWebRoute>,
         apiWrapper: APIWrapper,
         issueService: IssueService,
         address: String,
         services: [APIServiceModel]
     ) {
-        self.router = router
+        self.routerweb = routerweb
+        self.router = nil
+        self.routerhomepay = nil
         self.apiWrapper = apiWrapper
         self.issueService = issueService
         
@@ -45,8 +51,66 @@ class AvailableServicesViewModel: BaseViewModel {
         
         serviceModels = serviceModels.sorted { $0.state.sortOrder < $1.state.sortOrder }
 
-        addressSubject = BehaviorSubject<String?>(value: address)
-        serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: serviceModels)
+        self.addressSubject = BehaviorSubject<String?>(value: address)
+        self.serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: serviceModels)
+    }
+
+    init(
+        routerhomepay: WeakRouter<HomePayRoute>,
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        address: String,
+        services: [APIServiceModel]
+    ) {
+        self.routerweb = nil
+        self.router = nil
+        self.routerhomepay = routerhomepay
+        self.apiWrapper = apiWrapper
+        self.issueService = issueService
+        
+        var serviceModels = services.enumerated().map { offset, element in
+            ServiceModel(
+                id: String(offset),
+                icon: element.icon,
+                name: element.title,
+                description: element.description,
+                state: element.isAvailableByDefault ? .checkedInactive : .uncheckedActive
+            )
+        }
+        
+        serviceModels = serviceModels.sorted { $0.state.sortOrder < $1.state.sortOrder }
+
+        self.addressSubject = BehaviorSubject<String?>(value: address)
+        self.serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: serviceModels)
+    }
+
+    init(
+        router: WeakRouter<MyYardRoute>,
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        address: String,
+        services: [APIServiceModel]
+    ) {
+        self.router = router
+        self.routerweb = nil
+        self.routerhomepay = nil
+        self.apiWrapper = apiWrapper
+        self.issueService = issueService
+        
+        var serviceModels = services.enumerated().map { offset, element in
+            ServiceModel(
+                id: String(offset),
+                icon: element.icon,
+                name: element.title,
+                description: element.description,
+                state: element.isAvailableByDefault ? .checkedInactive : .uncheckedActive
+            )
+        }
+        
+        serviceModels = serviceModels.sorted { $0.state.sortOrder < $1.state.sortOrder }
+
+        self.addressSubject = BehaviorSubject<String?>(value: address)
+        self.serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: serviceModels)
     }
     
     func transform(input: Input) -> Output {
@@ -77,10 +141,18 @@ class AvailableServicesViewModel: BaseViewModel {
                     let housesServices = services.filter { $0.state == .checkedInactive }
                     
                     switch (housesServices.isEmpty, selectedServices.isEmpty) {
-                    case (false, true): self.router.trigger(.confirmAddress(address: address)) // 1
-                    case (false, false): сonnectSelectedServicesTrigger.onNext((address, selectedServices)) // 2
-                    case (true, false): сonnectOnlyNonHousesServicesTrigger.onNext((address, selectedServices)) // 3
-                    default: self.router.trigger(.alert(title: "Не выбран ни один сервис", message: nil))
+                    case (false, true):
+                        self.router?.trigger(.confirmAddress(address: address)) // 1
+                        self.routerweb?.trigger(.confirmAddress(address: address))
+                        self.routerhomepay?.trigger(.confirmAddress(address: address))
+                    case (false, false):
+                        сonnectSelectedServicesTrigger.onNext((address, selectedServices)) // 2
+                    case (true, false):
+                        сonnectOnlyNonHousesServicesTrigger.onNext((address, selectedServices)) // 3
+                    default:
+                        self.router?.trigger(.alert(title: "Пожалуйста, выберите услугу", message: nil))
+                        self.routerweb?.trigger(.alert(title: "Пожалуйста, выберите услугу", message: nil))
+                        self.routerhomepay?.trigger(.alert(title: "Пожалуйста, выберите услугу", message: nil))
                     }
                 }
             )
@@ -108,7 +180,10 @@ class AvailableServicesViewModel: BaseViewModel {
             .mapToVoid()
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.main)
+                    self?.router?.trigger(.main)
+                    self?.routerweb?.trigger(.main)
+                    self?.routerhomepay?.trigger(.main)
+                    NotificationCenter.default.post(name: .addressAdded, object: nil)
                 }
             )
             .disposed(by: disposeBag)
@@ -135,7 +210,10 @@ class AvailableServicesViewModel: BaseViewModel {
             .mapToVoid()
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.main)
+                    self?.router?.trigger(.main)
+                    self?.routerweb?.trigger(.main)
+                    self?.routerhomepay?.trigger(.main)
+                    NotificationCenter.default.post(name: .addressAdded, object: nil)
                 }
             )
             .disposed(by: disposeBag)
@@ -160,7 +238,9 @@ class AvailableServicesViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.back)
+                    self?.router?.trigger(.back)
+                    self?.routerweb?.trigger(.back)
+                    self?.routerhomepay?.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -190,3 +270,4 @@ extension AvailableServicesViewModel {
     }
     
 }
+// swiftlint:enable function_body_length

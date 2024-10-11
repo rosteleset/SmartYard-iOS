@@ -20,7 +20,8 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var addButton: UIButton!
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var skeletonContainer: UIView!
-    
+    @IBOutlet private weak var notificationButton: UIButton!
+
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<AddressesListSectionModel>?
     private var refreshControl = UIRefreshControl()
     
@@ -38,6 +39,8 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
     private let requestGuestAccess = PublishSubject<AddressesListDataItemIdentity>()
     private let qrCodeTapped = PublishSubject<Void>()
     
+    private let addAddressTrigger = PublishSubject<Void>()
+
     var loader: JGProgressHUD?
     
     init(viewModel: AddressesListViewModel) {
@@ -90,7 +93,9 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
             guestAccessRequested: requestGuestAccess.asDriverOnErrorJustComplete(),
             refreshDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriver(),
+//            addAddressTrigger: addAddressTrigger.asDriverOnErrorJustComplete(),
             addAddressTrigger: addButton.rx.tap.asDriver(),
+            notificationTrigger: notificationButton.rx.tap.asDriverOnErrorJustComplete(),
             issueQrCodeTrigger: qrCodeTapped.asDriverOnErrorJustComplete()
         )
         
@@ -210,6 +215,35 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
     
+    private func updateNotificationsButton(shouldShowBadge: Bool) {
+        notificationButton.imageForNormal = UIImage(
+            named: shouldShowBadge ? "NotificationsBadge" : "Notifications"
+        )
+    }
+    
+    private func subscribeToBadgeUpdates() {
+        NotificationCenter.default.rx
+            .notification(.unreadInboxMessagesAvailable)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.updateNotificationsButton(shouldShowBadge: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx
+            .notification(.allInboxMessagesRead)
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] _ in
+                    self?.updateNotificationsButton(shouldShowBadge: false)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+    }
+
     private func performScrollUpdate(updateKind: AddressesListSectionUpdateKind, to indexPath: IndexPath) {
         switch updateKind {
         case .expand:
@@ -241,11 +275,14 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        mainContainerView.layerCornerRadius = 24
-        mainContainerView.layer.maskedCorners = .topCorners
+//        mainContainerView.layerCornerRadius = 24
+//        mainContainerView.layer.maskedCorners = .topCorners
         
         addButton.setImage(UIImage(named: "AddButtonIcon"), for: .normal)
         addButton.setImage(UIImage(named: "AddButtonIcon")?.darkened(), for: .highlighted)
+        
+        subscribeToBadgeUpdates()
+
     }
     
     private func configureCollectionView() {
@@ -335,6 +372,19 @@ class AddressesListViewController: BaseViewController, LoaderPresentable {
                 cell.bind(with: qrCodeTapped)
                 
                 return cell
+                
+            case .addAddress:
+                let cell = collectionView.dequeueReusableCell(withClass: SettingsAddAddressCell.self, for: indexPath)
+                
+                let subject = PublishSubject<Void>()
+                
+                subject
+                    .bind(to: addAddressTrigger)
+                    .disposed(by: cell.disposeBag)
+                
+                cell.bind(with: subject)
+                
+                return (cell as? CustomBorderCollectionViewCell)!
                 
             case .emptyState:
                 fatalError("Should be handled separately")
@@ -429,3 +479,4 @@ extension AddressesListViewController: UICollectionViewDelegateFlowLayout {
     }
     
 }
+// swiftlint:enable file_length function_body_length closure_body_length

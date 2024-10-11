@@ -16,7 +16,7 @@ class CameraNumberCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             circleView.backgroundColor = isSelected ? UIColor.SmartYard.blue : .white
-            cameraNumberLabel.textColor = isSelected ? .white : UIColor.SmartYard.semiBlack
+            cameraNumberLabel.textColor = isSelected ? .white : UIColor.SmartYard.textAddon
         }
     }
     

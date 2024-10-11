@@ -72,15 +72,20 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     func mapAsDefaultResponse<T: Decodable>() -> Single<T> {
         return flatMap { response in
             // MARK: Если вернулся успешный код - пытаемся замапить реквест
+            
             if 200...299 ~= response.statusCode {
                 do {
                     let mappedResponse = try response.map(BaseAPIResponse<T>.self)
-                    
+
                     guard let data = mappedResponse.data else {
                         return .error(NSError.APIWrapperError.noDataError)
                     }
                     return .just(data)
                 } catch {
+                    guard let mapResponseError = try? response.map(BaseAPIEmptyResponse<String>.self) else {
+                        return .error(NSError.APIWrapperError.baseResponseMappingError)
+                    }
+                    /// тут можно отрабатывать code и message из response
                     return .error(NSError.APIWrapperError.baseResponseMappingError)
                 }
             }
@@ -112,6 +117,11 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
             if 200...299 ~= response.statusCode {
                 do {
                     let mappedResponse = try response.map(BaseAPIResponse<T>.self)
+
+                    // Глупая заглушка для 200 ответов с кодом 204!!!
+                    if mappedResponse.code == 204 {
+                        return .just(T())
+                    }
                     
                     guard let data = mappedResponse.data else {
                         return .error(NSError.APIWrapperError.noDataError)
@@ -131,7 +141,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     func convertNoConnectionError() -> PrimitiveSequence<Trait, Element> {
         `catch` { error in
             let nsError = error as NSError
-            
+
             guard nsError.domain == "Moya.MoyaError",
                 nsError.code == 6,
                 let afError = nsError.userInfo["NSUnderlyingError"] as? AFError,
@@ -177,7 +187,7 @@ extension Response {
     func extractBaseAPIResponseError() -> Error {
         do {
             let mappedResponse = try map(BaseAPIResponse<String>.self)
-            
+
             return NSError.APIWrapperError.codeIsNotSuccessfulExtended(
                 code: mappedResponse.code,
                 message: mappedResponse.message

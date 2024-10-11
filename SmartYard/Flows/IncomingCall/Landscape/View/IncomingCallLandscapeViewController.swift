@@ -228,3 +228,4 @@ class IncomingCallLandscapeViewController: BaseViewController {
     }
 
 }
+// swiftlint:enable function_body_length

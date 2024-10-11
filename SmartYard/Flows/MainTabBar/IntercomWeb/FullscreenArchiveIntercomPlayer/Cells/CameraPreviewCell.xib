@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="dTc-8Z-Ow7" customClass="CameraPreviewCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="188" height="117"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0x7-kT-ZIn">
+                <rect key="frame" x="0.0" y="0.0" width="188" height="117"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8MC-fe-inY">
+                        <rect key="frame" x="10" y="0.0" width="168" height="94.666666666666671"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="8MC-fe-inY" secondAttribute="height" multiplier="16:9" id="Ao9-9q-GjQ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                                <integer key="value" value="6"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DxF-t4-yRo" customClass="LottieAnimationView" customModule="Lottie">
+                        <rect key="frame" x="66.666666666666671" y="19.999999999999996" width="54.666666666666671" height="54.666666666666657"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" secondItem="DxF-t4-yRo" secondAttribute="width" multiplier="1:1" id="ZNC-jB-v5b"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="КУРАКО 51" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Us-du-tzD">
+                        <rect key="frame" x="10" y="98.666666666666671" width="168" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="FL3-2w-kDM"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="DxF-t4-yRo" firstAttribute="top" secondItem="8MC-fe-inY" secondAttribute="top" constant="20" id="C5b-do-xQ8"/>
+                    <constraint firstItem="DxF-t4-yRo" firstAttribute="bottom" secondItem="8MC-fe-inY" secondAttribute="bottom" constant="-20" id="F4n-z7-8g2"/>
+                    <constraint firstAttribute="trailing" secondItem="8MC-fe-inY" secondAttribute="trailing" constant="10" id="Is2-Xs-12R"/>
+                    <constraint firstItem="8MC-fe-inY" firstAttribute="top" secondItem="0x7-kT-ZIn" secondAttribute="top" id="S9c-3Y-qjn"/>
+                    <constraint firstAttribute="bottom" secondItem="9Us-du-tzD" secondAttribute="bottom" constant="6" id="VW6-ot-aQp"/>
+                    <constraint firstItem="9Us-du-tzD" firstAttribute="leading" secondItem="0x7-kT-ZIn" secondAttribute="leading" constant="10" id="aJ4-3i-zwh"/>
+                    <constraint firstAttribute="trailing" secondItem="9Us-du-tzD" secondAttribute="trailing" constant="10" id="d9W-rR-3Kj"/>
+                    <constraint firstItem="9Us-du-tzD" firstAttribute="top" secondItem="8MC-fe-inY" secondAttribute="bottom" constant="4" id="edX-kw-oIo"/>
+                    <constraint firstItem="8MC-fe-inY" firstAttribute="centerX" secondItem="0x7-kT-ZIn" secondAttribute="centerX" id="eiH-mg-wOK"/>
+                    <constraint firstItem="DxF-t4-yRo" firstAttribute="centerX" secondItem="8MC-fe-inY" secondAttribute="centerX" id="nZi-SG-j8o"/>
+                    <constraint firstItem="8MC-fe-inY" firstAttribute="leading" secondItem="0x7-kT-ZIn" secondAttribute="leading" constant="10" id="rth-8c-AlX"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <connections>
+                <outlet property="cameraLabel" destination="9Us-du-tzD" id="s2K-LL-vZo"/>
+                <outlet property="loadingAnimationView" destination="DxF-t4-yRo" id="ScL-V6-vgl"/>
+                <outlet property="previewImage" destination="8MC-fe-inY" id="XzX-Po-THj"/>
+            </connections>
+            <point key="canvasLocation" x="103.81679389312977" y="-45.070422535211272"/>
+        </collectionViewCell>
+    </objects>
+    <designables>
+        <designable name="DxF-t4-yRo"/>
+    </designables>
+</document>

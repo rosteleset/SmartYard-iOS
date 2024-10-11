@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="NOe-6h-qIb" customClass="CheckBoxView" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="252" height="179"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qpm-zp-jaL">
+                    <rect key="frame" x="0.0" y="0.0" width="252" height="179"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheckSelected" translatesAutoresizingMaskIntoConstraints="NO" id="wTP-x5-vAs">
+                            <rect key="frame" x="114" y="77.666666666666671" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="wYQ-M9-2Lv"/>
+                                <constraint firstAttribute="width" constant="24" id="xFF-bx-3Gv"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="wTP-x5-vAs" firstAttribute="centerY" secondItem="qpm-zp-jaL" secondAttribute="centerY" id="F1a-7P-uep"/>
+                        <constraint firstItem="wTP-x5-vAs" firstAttribute="centerX" secondItem="qpm-zp-jaL" secondAttribute="centerX" id="maO-JA-fMO"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="pfc-IP-ljf"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="qpm-zp-jaL" secondAttribute="trailing" id="00W-nZ-UEz"/>
+                <constraint firstItem="qpm-zp-jaL" firstAttribute="leading" secondItem="NOe-6h-qIb" secondAttribute="leading" id="Mzo-ef-OMa"/>
+                <constraint firstItem="qpm-zp-jaL" firstAttribute="top" secondItem="NOe-6h-qIb" secondAttribute="top" id="QCU-cQ-mhx"/>
+                <constraint firstAttribute="bottom" secondItem="qpm-zp-jaL" secondAttribute="bottom" id="xlv-3A-RYw"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="checkImageView" destination="wTP-x5-vAs" id="flq-Ou-ODQ"/>
+            </connections>
+            <point key="canvasLocation" x="20.289855072463769" y="-123.54910714285714"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="CheckSelected" width="24" height="24"/>
+    </resources>
+</document>

@@ -25,7 +25,7 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
     
     private let itemsProxy = BehaviorSubject<[RestoreMethodCellModel]>(value: [])
     private let itemStateChanged = PublishSubject<Int?>()
-    
+
     private let preloadedContractNumber: String?
     
     init(viewModel: RestorePasswordViewModel, preloadedContractNumber: String?) {
@@ -43,6 +43,7 @@ class RestorePasswordViewController: BaseViewController, LoaderPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fakeNavBar.configueBlueNavBar()
         configureUI()
         bind()
     }

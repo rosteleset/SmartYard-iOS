@@ -14,6 +14,7 @@ enum AppState: Codable {
     case phoneNumber
     case smsCode(phoneNumber: String)
     case authByOutgoingCall(phoneNumber: String, confirmPhoneNumber: String)
+    case authByMobileProvider(phoneNumber: String, requestId: String)
     case userName
     case main
     
@@ -23,6 +24,7 @@ enum AppState: Codable {
         case smsCode
         case outgoingCall
         case confirmPhoneNumber
+        case requestId
         case userName
         case main
     }
@@ -44,6 +46,11 @@ enum AppState: Codable {
             let phoneNumber = try? values.decode(String.self, forKey: .outgoingCall) {
             self = .authByOutgoingCall(phoneNumber: phoneNumber, confirmPhoneNumber: confirmPhoneNumber)
             return
+        }
+        
+        if let requestId = try? values.decode(String.self, forKey: .requestId),
+           let phoneNumber = try? values.decode(String.self, forKey: .phoneNumber) {
+            self = .authByMobileProvider(phoneNumber: phoneNumber, requestId: requestId)
         }
         
         if let phoneNumber = try? values.decode(String.self, forKey: .smsCode) {
@@ -77,7 +84,9 @@ enum AppState: Codable {
         case let .authByOutgoingCall(phoneNumber, confirmNumber):
             try container.encode(phoneNumber, forKey: .outgoingCall)
             try container.encode(confirmNumber, forKey: .confirmPhoneNumber)
-                                 
+        case let .authByMobileProvider(phoneNumber, requestId):
+            try container.encode(phoneNumber, forKey: .phoneNumber)
+            try container.encode(requestId, forKey: .requestId)
         case .userName:
             try container.encode(true, forKey: .userName)
         case .main:

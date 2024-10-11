@@ -133,7 +133,7 @@
                                         <action selector="tapOpenButton2" destination="-1" eventType="touchUpInside" id="9jO-zv-vFf"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подъезд" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xjv-kc-7Jj">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подъезд" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xjv-kc-7Jj">
                                     <rect key="frame" x="0.0" y="80" width="80" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="6Yy-UZ-WMZ"/>
@@ -178,7 +178,7 @@
                                         <action selector="tapOpenButton3" destination="-1" eventType="touchUpInside" id="VT2-wl-2ze"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подъезд" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZ7-lQ-MgR">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подъезд" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dZ7-lQ-MgR">
                                     <rect key="frame" x="0.0" y="80" width="80" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="E0M-Bk-NzH"/>
@@ -223,7 +223,7 @@
                                         <action selector="tapOpenButton1" destination="-1" eventType="touchUpInside" id="hL8-tr-5Rm"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подъезд" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiS-Ir-E60">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подъезд" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DiS-Ir-E60">
                                     <rect key="frame" x="0.0" y="80" width="80" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="izI-kh-1kr"/>

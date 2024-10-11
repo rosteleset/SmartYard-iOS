@@ -9,17 +9,29 @@
 struct ConfirmCodeRequest {
     
     let userPhone: String
-    let smsCode: String
+    let smsCode: String?
+    let type: String?
+    let requestId: String?
     
 }
 
 extension ConfirmCodeRequest {
     
     var requestParameters: [String: Any] {
-        return [
-            "userPhone": userPhone,
-            "smsCode": smsCode
+        var params: [String: Any] = [
+            "userPhone": userPhone
         ]
+
+        if let smsCode = smsCode {
+            params["smsCode"] = smsCode
+        }
+        
+        if let requestId = requestId {
+            params["requestId"] = requestId
+            params["type"] = "push"
+        }
+        
+        return params
     }
     
 }

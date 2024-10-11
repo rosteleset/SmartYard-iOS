@@ -121,3 +121,4 @@ struct IntercomResponseData: Decodable {
     }
     
 }
+// swiftlint:enable function_body_length cyclomatic_complexity

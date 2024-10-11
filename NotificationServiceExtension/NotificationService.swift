@@ -7,6 +7,7 @@
 //
 
 import UserNotifications
+// import os.log
 
 class NotificationService: UNNotificationServiceExtension {
 
@@ -39,26 +40,31 @@ class NotificationService: UNNotificationServiceExtension {
             return
         }
         
-        bestAttemptContent.title = "Звонок в домофон"
-        bestAttemptContent.body = request.content.userInfo["callerId"] as? String ?? ""
-        bestAttemptContent.body += "\n\n(нажмите и удерживайте для быстрого ответа)"
-        bestAttemptContent.sound = .default
-        bestAttemptContent.categoryIdentifier = "INCOMING_DOOR_CALL"
+        if let category = request.content.categoryIdentifier as? String,
+           category == "myMedia" {
+            bestAttemptContent.sound = .default
+        } else {
+            bestAttemptContent.title = "Звонок в домофон"
+            bestAttemptContent.body = request.content.userInfo["callerId"] as? String ?? ""
+            bestAttemptContent.body += "\n\n(нажмите и удерживайте для быстрого ответа)"
+            bestAttemptContent.sound = .default
+            bestAttemptContent.categoryIdentifier = "INCOMING_DOOR_CALL"
+        }
         
         self.bestAttemptContent = bestAttemptContent
-        
+
         // MARK: Грузится слишком долго (3+ секунды)
         guard let image = bestAttemptContent.userInfo["live"] as? String, let imageUrl = URL(string: image) else {
             // MARK: Удаление уведомлений происходит асинхронно, и иногда просто не успевает произойти до показа нового
             // Здесь, я подозреваю, нужно будет ресерчить и разруливать как-то менее костыльно. Пока не знаю как
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 contentHandler(bestAttemptContent)
             }
             
             return
         }
-
+        
         store(imageUrl: imageUrl) { result in
             if let path = try? result.get(),
                 let attachment = try? UNNotificationAttachment(
@@ -68,13 +74,16 @@ class NotificationService: UNNotificationServiceExtension {
                 ) {
                 bestAttemptContent.attachments = [attachment]
             }
+//            if #available(iOSApplicationExtension 12.0, *) {
+//                os_log("%{public}@", log: OSLog(subsystem: "me.layka.home", category: "NotificationServiceExtension"), type: OSLogType.debug, "Attachment Store!")
+//            }
 
             contentHandler(bestAttemptContent)
         }
     }
     
     private func store(imageUrl: URL, completion: ((Result<URL, Error>) -> Void)?) {
-        let filename = ProcessInfo.processInfo.globallyUniqueString + imageUrl.lastPathComponent
+        let filename = ProcessInfo.processInfo.globallyUniqueString + imageUrl.lastPathComponent + ".jpg"
         let path = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(filename)
         
         let task = URLSession.shared.dataTask(with: imageUrl) { data, _, error in

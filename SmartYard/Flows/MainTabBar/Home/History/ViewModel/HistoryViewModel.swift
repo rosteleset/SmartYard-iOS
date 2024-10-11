@@ -81,14 +81,19 @@ class HistoryViewModel: BaseViewModel {
     
     init(
         apiWrapper: APIWrapper,
-        houseId: String? = nil,
+        houseId: Int? = nil,
         flatId: Int? = nil,
         eventsFilter: EventsFilter = .all,
         address: String,
         router: WeakRouter<HistoryRoute>
     ) {
         self.apiWrapper = apiWrapper
-        self.houseId = houseId?.components(separatedBy: "_")[0]
+        self.houseId = {
+            guard let houseId = houseId else {
+                return nil
+            }
+            return String(houseId)
+        }()
 //        self.houseId = houseId
         self.flatId = flatId
         self.router = router
@@ -222,7 +227,7 @@ class HistoryViewModel: BaseViewModel {
                                     eventType = .application
                                 case .face:
                                     eventType = .faces
-                                case .passcode:
+                                case .passcode, .link:
                                     eventType = .code
                                 case .call, .plate:
                                     eventType = .phoneCall
@@ -390,7 +395,8 @@ class HistoryViewModel: BaseViewModel {
                     self.camMap.accept(camMap)
 
                     // получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
-                    self.flatIds = args.filtered( { address in
+                    self.flatIds = args.filtered(
+                        { address in
                             return address.houseId == self.houseId && address.hasPlog
                         },
                         map: { address in
@@ -717,3 +723,5 @@ extension HistoryViewModel {
         }()
     }
 }
+// swiftlint:enable type_body_length function_body_length cyclomatic_complexity
+// swiftlint:enable closure_body_length line_length file_length

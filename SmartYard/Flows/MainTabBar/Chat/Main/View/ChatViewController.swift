@@ -9,13 +9,14 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import OnlineChatSdk
+//import OnlineChatSdk
 import JGProgressHUD
 import WebKit
 
-class ChatViewController: ChatController, LoaderPresentable {
+class ChatViewController: BaseViewController, LoaderPresentable {
+//class ChatViewController: ChatController, LoaderPresentable {
     
-    private let disposeBag = DisposeBag()
+//    private let disposeBag = DisposeBag()
     private let viewModel: ChatViewModel
     
     var loader: JGProgressHUD?
@@ -47,12 +48,12 @@ class ChatViewController: ChatController, LoaderPresentable {
         output.chatConfiguration
             .drive(
                 onNext: { [weak self] config in
-                    self?.load(
-                        config.id,
-                        config.domain,
-                        language: config.language ?? "",
-                        clientId: config.clientId ?? ""
-                    )
+//                    self?.load(
+//                        config.id,
+//                        config.domain,
+//                        language: config.language ?? "",
+//                        clientId: config.clientId ?? ""
+//                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -60,7 +61,7 @@ class ChatViewController: ChatController, LoaderPresentable {
         output.automaticMessage
             .drive(
                 onNext: { [weak self] message in
-                    self?.callJsSendMessage(message)
+//                    self?.callJsSendMessage(message)
                 }
             )
             .disposed(by: disposeBag)
@@ -83,7 +84,7 @@ class ChatViewController: ChatController, LoaderPresentable {
                     
                     let finalString = "{" + params.joined(separator: ", ") + "}"
                     
-                    self?.callJsSetClientInfo(finalString)
+//                    self?.callJsSetClientInfo(finalString)
                 }
             )
             .disposed(by: disposeBag)

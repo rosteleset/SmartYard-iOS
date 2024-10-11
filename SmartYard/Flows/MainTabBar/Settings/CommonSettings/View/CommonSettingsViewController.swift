@@ -51,6 +51,16 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private var collapsedCallsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedCallsBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet private weak var cacheContainerView: UIView!
+    @IBOutlet private weak var cacheHeader: UIView!
+    @IBOutlet private weak var cacheHeaderArrowImageView: UIImageView!
+    @IBOutlet private weak var cacheSizeLabel: UILabel!
+    
+    @IBOutlet private weak var cacheClearButton: UIButton!
+    
+    @IBOutlet private var collapsedCacheBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private var expandedCacheBottomConstraint: NSLayoutConstraint!
+
     @IBOutlet private weak var logoutButton: UIButton!
     
     private let viewModel: CommonSettingsViewModel
@@ -76,6 +86,8 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fakeNavBar.configureBlueNavBar()
         configureView()
         bind()
     }
@@ -93,8 +105,8 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        mainContainerView.layerCornerRadius = 24
-        mainContainerView.layer.maskedCorners = .topCorners
+//        mainContainerView.layerCornerRadius = 24
+//        mainContainerView.layer.maskedCorners = .topCorners
         
         editNameButton.setImage(UIImage(named: "pencil"), for: .normal)
         editNameButton.setImage(UIImage(named: "pencil")?.darkened(), for: .highlighted)
@@ -104,6 +116,11 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
         notificationsContainerView.layerBorderColor = UIColor.SmartYard.grayBorder
         notificationsContainerView.frame.size = CGSize(width: 0, height: 0)
         notificationsContainerView.isHidden = true
+        
+//        cacheContainerView.layerBorderWidth = 1
+//        cacheContainerView.layerBorderColor = UIColor.SmartYard.grayBorder
+//        cacheContainerView.frame.size = CGSize(width: 0, height: 0)
+//        cacheContainerView.isHidden = false
         
         logoutButton.layerBorderWidth = 1
         logoutButton.layerBorderColor = UIColor.SmartYard.grayBorder
@@ -129,6 +146,16 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+        
+        let cacheTapGesture = UITapGestureRecognizer()
+        cacheHeader.addGestureRecognizer(cacheTapGesture)
+        
+        cacheTapGesture.rx.event
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.toggleCacheSection()
+                }
+            )
         
         textNotificationsContainerView.addGestureRecognizer(textNotificationsTapGesture)
         textNotificationsSwitch.isUserInteractionEnabled = false
@@ -188,6 +215,15 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
         )
     }
     
+    private func toggleCacheSection() {
+        toggleSection(
+            collapsedBottomConstraint: collapsedCacheBottomConstraint,
+            expandedBottomConstraint: expandedCacheBottomConstraint,
+            headerArrowImageView: cacheHeaderArrowImageView,
+            containerView: cacheContainerView
+        )
+    }
+    
     private func bind() {
         let input = CommonSettingsViewModel.Input(
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
@@ -196,7 +232,8 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
             moneyTrigger: balanceWarningTapGesture.rx.event.asDriver().mapToVoid(),
             callkitTrigger: callkitTapGesture.rx.event.asDriver().mapToVoid(),
             speakerTrigger: speakerTapGesture.rx.event.asDriver().mapToVoid(),
-            logoutTrigger: logoutButton.rx.tap.asDriver()
+            logoutTrigger: logoutButton.rx.tap.asDriver(),
+            clearCacheTrigger: cacheClearButton.rx.tap.asDriver()
         )
         
         let output = viewModel.transform(input)
@@ -269,6 +306,14 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+        
+        output.cacheSize
+            .drive(
+                onNext: { [weak self] size in
+                    self?.cacheSizeLabel.text = size
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
     private func showInitialLoading() {
@@ -301,3 +346,4 @@ class CommonSettingsViewController: BaseViewController, LoaderPresentable {
     }
     
 }
+// swiftlint:enable function_body_length

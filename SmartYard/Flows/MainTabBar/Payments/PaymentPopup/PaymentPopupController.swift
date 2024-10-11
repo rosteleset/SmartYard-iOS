@@ -314,7 +314,7 @@ class PaymentPopupController: BaseViewController {
                     
                     let calcOffset = keyboardHeight - textFieldBottomOffset + 2 * textFieldOffsetToButton + 2 * buttonWithOffset
                     
-                    let offset = keyboardHeight == 0 ? defaultBottomOffset : calcOffset
+                    let offset = (keyboardHeight == 0) || (self.view.frame.height == keyboardHeight) ? defaultBottomOffset : calcOffset
                     
                     UIView.animate(
                         withDuration: 0.05,

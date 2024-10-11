@@ -201,7 +201,6 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         monthLabel.text = nameOfMonth + " " + String(year)
         
         // MARK: Показ и скрытие стрелочек
-        
         guard let lowerBound = lowerDateLimit, let upperBound = upperDateLimit else {
             leftArrowButton.isHidden = true
             rightArrowButton.isHidden = true
@@ -212,9 +211,17 @@ class ArchivePageViewController: BaseViewController, LoaderPresentable {
         let startDateMonth = lowerBound.month
         let endDateMonth = upperBound.month
         let visibleDateMonth = visibleDate.month
+        let startDateYear = lowerBound.year
+        let endDateYear = upperBound.year
+
+        if endDateYear == startDateYear {
+            leftArrowButton.isHidden = visibleDateMonth <= startDateMonth
+            rightArrowButton.isHidden = visibleDateMonth >= endDateMonth
+        }
         
-        leftArrowButton.isHidden = visibleDateMonth <= startDateMonth
-        rightArrowButton.isHidden = visibleDateMonth >= endDateMonth
+        let visibleDateYear = visibleDate.year
+        rightArrowButton.isHidden = (visibleDateYear == endDateYear) && (visibleDateMonth >= endDateMonth)
+        leftArrowButton.isHidden = (visibleDateYear == startDateYear) && (visibleDateMonth <= startDateMonth)
     }
     
     private func configureCalendarView() {

@@ -5,7 +5,7 @@
 //  Created by admin on 15.06.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
-// swiftlint:disable type_body_length function_body_length closure_body_length line_length file_length
+// swiftlint:disable type_body_length function_body_length line_length file_length
 
 import UIKit
 import RxSwift
@@ -17,6 +17,7 @@ import Lottie
 protocol OnlinePageViewControllerDelegate: AnyObject {
     
     func onlinePageViewController(_ vc: OnlinePageViewController, didSelectCamera camera: CameraObject)
+    func onlinePageViewController(_ vc: OnlinePageViewController, didSortCameras camIds: [Int])
     
 }
 
@@ -29,6 +30,8 @@ class OnlinePageViewController: BaseViewController {
     @IBOutlet private weak var fullscreenButton: UIButton!
     @IBOutlet private weak var videoLoadingAnimationView: LottieAnimationView!
     
+    fileprivate var longPressGesture: UILongPressGestureRecognizer!
+    
     private var apiWrapper: APIWrapper
 
     private var player: AVPlayer?
@@ -37,17 +40,30 @@ class OnlinePageViewController: BaseViewController {
     @IBOutlet private var collectionViewHeightConstraint: NSLayoutConstraint!
     
     private var cameras = [CameraObject]()
+    private var selectedCamera: CameraObject?
     private var selectedCameraNumber: Int?
+    private var cameraFullscreen: Bool
     
     private var loadingAsset: AVAsset?
     
     private let isVideoValid = BehaviorSubject<Bool>(value: false)
     private let isVideoBeingLoaded = BehaviorSubject<Bool>(value: false)
-    
+    private let itemSelected = BehaviorSubject<CameraObject?>(value: nil)
+
     weak var delegate: OnlinePageViewControllerDelegate?
     
     init(apiWrapper: APIWrapper) {
         self.apiWrapper = apiWrapper
+        self.cameraFullscreen = false
+
+        super.init(nibName: nil, bundle: nil)
+        
+        title = "Онлайн"
+    }
+    
+    init(apiWrapper: APIWrapper, fullscreen: Bool) {
+        self.apiWrapper = apiWrapper
+        self.cameraFullscreen = fullscreen
 
         super.init(nibName: nil, bundle: nil)
         
@@ -79,25 +95,60 @@ class OnlinePageViewController: BaseViewController {
         try? AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        if !cameraFullscreen {
+            playerLayer?.frame = cameraContainer.bounds
+        }
+//        guard let selectedCamera = selectedCamera else {
+//            return
+//        }
+//        let indexPath = IndexPath(row: selectedCamera.cameraNumber, section: 0)
+//        scrollToCenter(indexPath)
+    }
+    
     func setCameras(_ cameras: [CameraObject], selectedCamera: CameraObject?) {
         self.cameras = cameras
+        self.selectedCamera = selectedCamera
         
         collectionView.reloadData { [weak self] in
-            guard let selectedCamera = selectedCamera,
-                let index = cameras.firstIndex(of: selectedCamera) else {
+            guard let self = self,
+                  let selectedCamera = selectedCamera,
+                  let index = cameras.firstIndex(of: selectedCamera),
+                  let camera = (cameras.first { $0.cameraNumber == selectedCamera.cameraNumber }) else {
                 return
             }
 
             let indexPath = IndexPath(row: index, section: 0)
 
-            self?.collectionView.selectItem(
+            self.collectionView.selectItem(
                 at: indexPath,
                 animated: false,
                 scrollPosition: .top
             )
+            self.itemSelected.onNext(camera)
+            self.reloadCameraIfNeeded(row: camera.cameraNumber)
+            self.scrollToCenter(camera)
 
-            self?.reloadCameraIfNeeded(selectedIndexPath: indexPath)
+            if self.cameraFullscreen {
+                self.showFullscreen()
+            }
         }
+    }
+    
+    private func scrollToCenter(_ camera: CameraObject) {
+        let top = camera.cameraNumber.cgFloat * 54 - scrollView.bounds.height / 2
+        guard top > 0 else {
+            return
+        }
+        let maxTop = collectionViewHeightConstraint.constant - scrollView.bounds.height
+
+        guard top < maxTop else {
+            scrollView.contentOffset = CGPoint(x: 0, y: maxTop)
+            return
+        }
+        scrollView.contentOffset = CGPoint(x: 0, y: top)
     }
     
     private func bind() {
@@ -182,9 +233,7 @@ class OnlinePageViewController: BaseViewController {
         }
         
         playerLayer = AVPlayerLayer(player: player)
-        cameraContainer.bounds = CGRect(x: 0, y: 0, width: cameraContainer.frame.width, height: cameraContainer.frame.width / 16 * 9)
         cameraContainer.layer.insertSublayer(playerLayer!, at: 0)
-        playerLayer?.frame = cameraContainer.bounds
         playerLayer?.removeAllAnimations()
         playerLayer?.backgroundColor = UIColor.black.cgColor
         playerLayer?.videoGravity = .resizeAspectFill
@@ -216,6 +265,7 @@ class OnlinePageViewController: BaseViewController {
                     playerLayer.videoGravity = .resizeAspectFill
 
                     self.player?.play()
+                    self.cameraFullscreen = false
                     
                     if let player = playerLayer.player,
                        player.isMuted {
@@ -305,46 +355,127 @@ class OnlinePageViewController: BaseViewController {
             .asDriver()
             .drive(
                 onNext: { [weak self] in
-                    guard let playerLayer = self?.playerLayer else {
-                        return
-                    }
-                    let playerposition = playerLayer.superview?.convert(playerLayer.frame, to: nil)
-                    playerLayer.removeFromSuperlayer()
-                    
-                    let fullscreenVc = FullscreenPlayerViewController(
-                        playedVideoType: .online,
-                        preferredPlaybackRate: 1,
-                        position: playerposition,
-                        doors: (self?.cameras.first(where: { $0.cameraNumber == self?.selectedCameraNumber })!.doors)!,
-                        apiWrapper: self?.apiWrapper
-                    )
-                    
-                    fullscreenVc.modalPresentationStyle = .overFullScreen
-                    fullscreenVc.modalTransitionStyle = .crossDissolve
-                    fullscreenVc.setPlayerLayer(playerLayer)
-
-                    self?.present(fullscreenVc, animated: true) {
-                        self?.player?.play()
-                        
-                        if let player = playerLayer.player,
-                           player.isMuted {
-                            fullscreenVc.setMuteButton(icon: "volumeOff")
-                        } else {
-                            fullscreenVc.setMuteButton(icon: "volumeOn")
-                        }
-
-                    }
+                    self?.showFullscreen()
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    func showFullscreen() {
+        cameraFullscreen = false
+        guard let playerLayer = self.playerLayer, let camera = (cameras.first(where: { $0.cameraNumber == selectedCameraNumber })) else {
+            return
+        }
+        let playerposition = playerLayer.superview?.convert(playerLayer.frame, to: nil)
+        playerLayer.removeFromSuperlayer()
+        
+        let fullscreenVc = FullscreenPlayerViewController(
+            playedVideoType: .online,
+            preferredPlaybackRate: 1,
+            position: playerposition,
+            doors: camera.doors,
+            apiWrapper: apiWrapper
+        )
+        
+        fullscreenVc.modalPresentationStyle = .overFullScreen
+        fullscreenVc.modalTransitionStyle = .crossDissolve
+        fullscreenVc.setPlayerLayer(playerLayer)
+
+        present(fullscreenVc, animated: true) {
+            self.player?.play()
+            self.cameraFullscreen = true
+
+            if let player = playerLayer.player,
+               player.isMuted {
+                fullscreenVc.setMuteButton(icon: "volumeOff")
+            } else {
+                fullscreenVc.setMuteButton(icon: "volumeOn")
+            }
+        }
+    }
+    
+    var dragPosition: CGFloat?
+    
+    @objc func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
+        switch(gesture.state) {
+        case .began:
+            guard let selectedIndexPath = collectionView?.indexPathForItem(at: gesture.location(in: collectionView)) else {
+                break
+            }
+            collectionView?.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case .changed:
+            guard let collectionView = collectionView else {
+                break
+            }
+            var gesturelocation = gesture.location(in: collectionView)
+            gesturelocation.x = collectionView.frame.width / 2 + 5
+            
+            if gesturelocation.y > 30, gesturelocation.y < collectionViewHeightConstraint.constant - 30 {
+                collectionView.updateInteractiveMovementTargetPosition(gesturelocation)
+                guard let dragPosition = dragPosition else {
+                    self.dragPosition = gesturelocation.y
+                    return
+                }
+                self.dragPosition = gesturelocation.y
+                if gesturelocation.y < dragPosition {
+                    if scrollView.contentOffset.y > 0 {
+                        let delta = (scrollView.contentOffset.y + scrollView.frame.size.height - gesturelocation.y) / 50
+                        //                        print("DELTA up", delta)
+                        let newOffset = scrollView.contentOffset.y - delta
+                        if newOffset > 0 {
+                            scrollView.contentOffset = CGPoint(x: 0, y: newOffset)
+                        } else {
+                            scrollView.contentOffset = CGPoint(x: 0, y: 0)
+                        }
+                    }
+                } else if gesturelocation.y > dragPosition {
+                    if scrollView.contentOffset.y + scrollView.frame.size.height < scrollView.contentSize.height {
+                        let delta = (gesturelocation.y - scrollView.contentOffset.y) / 50
+                        //                        print("DELTA down", delta)
+                        let newOffset = scrollView.contentOffset.y + delta
+                        if newOffset < scrollView.contentSize.height - scrollView.frame.size.height {
+                            scrollView.contentOffset = CGPoint(x: 0, y: newOffset)
+                        } else {
+                            scrollView.contentOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.frame.size.height)
+                        }
+                    }
+                }
+            }
+        case .ended, .cancelled:
+            dragPosition = nil
+            collectionView.reloadData()
+            
+            let camIds = cameras.map { $0.id }
+            delegate?.onlinePageViewController(self, didSortCameras: camIds)
+
+            if let camera = try? itemSelected.value(),
+               let index = cameras.firstIndex(of: camera) {
+                let indexPath = IndexPath(row: index, section: 0)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+                    self?.collectionView.selectItem(
+                        at: indexPath,
+                        animated: false,
+                        scrollPosition: .top
+                    )
+                }
+            }
+            collectionView?.endInteractiveMovement()
+            
+        default:
+            dragPosition = nil
+            collectionView?.cancelInteractiveMovement()
+        }
     }
     
     private func configureCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        collectionView.register(nibWithCellClass: CameraNumberCell.self)
-        
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(_:)))
+        collectionView?.addGestureRecognizer(longPressGesture)
+
+        collectionView.register(nibWithCellClass: CameraNameCell.self)
+//        collectionView.register(nibWithCellClass: CameraNumberCell.self)
         collectionView.rx
             .observeWeakly(CGSize.self, "contentSize")
             .subscribe(
@@ -352,7 +483,7 @@ class OnlinePageViewController: BaseViewController {
                     guard let self = self, let uSize = size else {
                         return
                     }
-                    
+//                    print("CONTENTSIZE", uSize)
                     self.collectionViewHeightConstraint.constant = uSize.height
                     self.view.setNeedsLayout()
                 }
@@ -360,8 +491,11 @@ class OnlinePageViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func reloadCameraIfNeeded(selectedIndexPath: IndexPath) {
-        let camera = cameras[selectedIndexPath.row]
+    private func reloadCameraIfNeeded(row: Int) {
+//        let camera = cameras[row]
+        guard let camera = (cameras.first { $0.cameraNumber == row }) else {
+            return
+        }
         
         print("Selected Camera #\(camera.cameraNumber)")
         
@@ -390,7 +524,6 @@ class OnlinePageViewController: BaseViewController {
         
         isVideoBeingLoaded.onNext(true)
         playerLayer?.frame = cameraContainer.bounds
-        playerLayer?.videoGravity = .resizeAspectFill
 
         asset.loadValuesAsynchronously(forKeys: ["tracks", "duration"]) { [weak self, weak asset] in
             guard let asset = asset else {
@@ -440,6 +573,12 @@ class OnlinePageViewController: BaseViewController {
     
 }
 
+extension OnlinePageViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return otherGestureRecognizer == scrollView.panGestureRecognizer
+    }
+}
+
 extension OnlinePageViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -454,13 +593,49 @@ extension OnlinePageViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withClass: CameraNumberCell.self, for: indexPath)
+//        let cell = collectionView.dequeueReusableCell(withClass: CameraNumberCell.self, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withClass: CameraNameCell.self, for: indexPath)
 
-        cell.configure(curCamera: cameras[indexPath.row])
+        cell.configure(camera: cameras[indexPath.row])
+        cell.cameraSelectButton.tag = indexPath.row
+        cell.cameraSelectButton.addTarget(self, action: #selector(OnlinePageViewController.cameraSelectTaped(_:)), for: .touchUpInside)
+        cell.cameraDragImage.tag = indexPath.row
+        cell.tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(OnlinePageViewController.handleLongGesture(_:)))
+        cell.tapGesture.minimumPressDuration = 0
+        cell.cameraDragImage.addGestureRecognizer(cell.tapGesture)
 
         return cell
     }
 
+    @objc func cameraSelectTaped(_ sender: UIButton) {
+        let indexPath = IndexPath(row: sender.tag, section: 0)
+        
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CameraNameCell,
+              let cameraNumber = cell.cameraNumber else {
+            return
+        }
+        let camera = cameras.first(where: { $0.cameraNumber == cameraNumber })
+        itemSelected.onNext(camera)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            self?.collectionView.selectItem(
+                at: indexPath,
+                animated: false,
+                scrollPosition: .top
+            )
+        }
+        
+        reloadCameraIfNeeded(row: cameraNumber)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+//        print("MOVE CAMERA", sourceIndexPath.row, destinationIndexPath.row, self.longPressGesture.state.rawValue)
+        let item = cameras.remove(at: sourceIndexPath.row)
+        cameras.insert(item, at: destinationIndexPath.row)
+    }
 }
 
 extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
@@ -470,7 +645,8 @@ extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: 36, height: 36)
+        return CGSize(width: UIScreen.main.bounds.width - 40, height: 50)
+//        return CGSize(width: 36, height: 36)
     }
     
     func collectionView(
@@ -478,7 +654,8 @@ extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return 28
+        return 0
+//        return 28
     }
     
     func collectionView(
@@ -486,7 +663,8 @@ extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return 24
+        return 4
+//        return 24
     }
     
     func collectionView(
@@ -495,10 +673,44 @@ extension OnlinePageViewController: UICollectionViewDelegateFlowLayout {
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
         return UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
+//        return UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        reloadCameraIfNeeded(selectedIndexPath: indexPath)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? CameraNameCell,
+              let cameraNumber = cell.cameraNumber else {
+            return
+        }
+        let camera = cameras.first(where: { $0.cameraNumber == cameraNumber })
+        itemSelected.onNext(camera)
+        reloadCameraIfNeeded(row: cameraNumber)
     }
     
 }
+
+extension UICollectionViewFlowLayout {
+    
+    open override func invalidationContext(forInteractivelyMovingItems targetIndexPaths: [IndexPath], withTargetPosition targetPosition: CGPoint, previousIndexPaths: [IndexPath], previousPosition: CGPoint) -> UICollectionViewLayoutInvalidationContext {
+        let context = super.invalidationContext(forInteractivelyMovingItems: targetIndexPaths, withTargetPosition: targetPosition, previousIndexPaths: previousIndexPaths, previousPosition: previousPosition)
+        
+        if let firstPrevious = previousIndexPaths.first, let firstTarget = targetIndexPaths.first, let lastTarget = targetIndexPaths.last, firstPrevious.item != firstTarget.item {
+            collectionView?.dataSource?.collectionView?(collectionView!, moveItemAt: firstPrevious, to: lastTarget)
+        }
+        return context
+    }
+    
+    open override func invalidationContextForEndingInteractiveMovementOfItems(toFinalIndexPaths indexPaths: [IndexPath], previousIndexPaths: [IndexPath], movementCancelled: Bool) -> UICollectionViewLayoutInvalidationContext {
+        return super.invalidationContextForEndingInteractiveMovementOfItems(toFinalIndexPaths: indexPaths, previousIndexPaths: previousIndexPaths, movementCancelled: movementCancelled)
+    }
+    
+    open override func layoutAttributesForInteractivelyMovingItem(at indexPath: IndexPath, withTargetPosition position: CGPoint) -> UICollectionViewLayoutAttributes {
+        let attributes = super.layoutAttributesForInteractivelyMovingItem(at: indexPath, withTargetPosition: position)
+        attributes.alpha = 0.8
+        return attributes
+    }
+}
+// swiftlint:enable type_body_length function_body_length line_length file_length

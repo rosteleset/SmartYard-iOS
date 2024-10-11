@@ -117,7 +117,9 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fakeNavBar.setText("Адреса")
+//        fakeNavBar.setText("Адреса")
+        
+        fakeNavBar.configueBlueNavBar()
         setupShadows()
         setupTableView()
         bind()
@@ -244,7 +246,11 @@ class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePr
         self.topToolbarPositon.constant = 0
         self.view.layoutIfNeeded()
         lockToolbar = true
-        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        
+        if tableView.numberOfSections > 0,
+           tableView.numberOfRows(inSection: 0) > 0 {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.stopDynamicLoading = false
@@ -470,7 +476,7 @@ extension HistoryViewController: UITableViewDelegate {
         // ниже - магия работы с тулбаром "туда-сюда" при скроле
         if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
             // Scrolled to bottom
-            topToolbarPositon.constant = -44
+            topToolbarPositon.constant = -40
             UIView.animate(
                 withDuration: 0.5,
                 delay: 0,
@@ -495,9 +501,9 @@ extension HistoryViewController: UITableViewDelegate {
                 }
             )
         } else
-        if (scrollView.contentOffset.y > self.lastContentOffset) && topToolbarPositon.constant != -44.0 {
+        if (scrollView.contentOffset.y > self.lastContentOffset) && topToolbarPositon.constant != -40.0 {
             // Scrolling down
-            topToolbarPositon.constant = -44
+            topToolbarPositon.constant = -40
             UIView.animate(
                 withDuration: 0.5,
                 delay: 0,
@@ -512,3 +518,4 @@ extension HistoryViewController: UITableViewDelegate {
         // конец "магии" тулбара
     }
 }
+// swiftlint:enable type_body_length function_body_length line_length file_length

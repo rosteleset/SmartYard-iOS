@@ -5,7 +5,7 @@
 //  Created by admin on 11/02/2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
-// swiftlint:disable type_body_length function_body_length
+// swiftlint:disable function_body_length
 
 import UIKit
 import TouchAreaInsets
@@ -15,7 +15,6 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
-    @IBOutlet private weak var addressContainerView: UIView!
     @IBOutlet private weak var addressLabel: UILabel!
     
     @IBOutlet private weak var notificationsContainerView: UIView!
@@ -79,6 +78,8 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fakeNavBar.configureBlueNavBar()
         configureView()
         bind()
     }
@@ -96,14 +97,14 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
         
         // MARK: 24 px = это то, насколько addressContainerView выступает над scrollView
         // 8 px - это отступ между addressContainerView и следующей за ней вьюхой
-        let neededInset = addressContainerView.bounds.height - 24 + 8
-        
-        notificationsViewTopConstraint.constant = neededInset
+//        let neededInset = addressContainerView.bounds.height - 24 + 8
+//
+//        notificationsViewTopConstraint.constant = neededInset
     }
     
     private func configureView() {
-        addressContainerView.layerBorderWidth = 1
-        addressContainerView.layerBorderColor = UIColor.SmartYard.grayBorder
+//        addressContainerView.layerBorderWidth = 1
+//        addressContainerView.layerBorderColor = UIColor.SmartYard.grayBorder
         
         notificationsContainerView.layerBorderWidth = 1
         notificationsContainerView.layerBorderColor = UIColor.SmartYard.grayBorder
@@ -326,3 +327,4 @@ class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     }
     
 }
+// swiftlint:enable function_body_length

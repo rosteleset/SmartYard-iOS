@@ -32,15 +32,12 @@ class MainMenuViewController: BaseViewController, LoaderPresentable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureTableView()
         bind()
+        
     }
     
     private func bind() {
@@ -106,6 +103,9 @@ class MainMenuViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureTableView() {
+//        mainContainerView.layerCornerRadius = 24
+//        mainContainerView.layer.maskedCorners = .topCorners
+
         collectionView.delegate = self
         collectionView.dataSource = self
         

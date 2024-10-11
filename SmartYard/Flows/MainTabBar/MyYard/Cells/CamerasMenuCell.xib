@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="zRY-fI-Gi3" customClass="CamerasMenuCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zRY-fI-Gi3" id="vho-95-edg">
+                <rect key="frame" x="0.0" y="0.0" width="150" height="60"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="est-21-2oH">
+                        <rect key="frame" x="20" y="5" width="110" height="50"/>
+                        <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                        <color key="textColor" name="textAddon"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Uv-3M-nrm" userLabel="Left View">
+                        <rect key="frame" x="0.0" y="0.0" width="10" height="60"/>
+                        <viewLayoutGuide key="safeArea" id="jKj-ge-CGe"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="0uZ-Ha-vOQ"/>
+                        </constraints>
+                    </view>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ty4-SP-ccL" userLabel="Right View">
+                        <rect key="frame" x="140" y="0.0" width="10" height="60"/>
+                        <viewLayoutGuide key="safeArea" id="8X6-r6-ECN"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="GNQ-Zc-upr"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="est-21-2oH" secondAttribute="bottom" constant="5" id="0P9-b6-pLO"/>
+                    <constraint firstItem="est-21-2oH" firstAttribute="leading" secondItem="7Uv-3M-nrm" secondAttribute="trailing" constant="10" id="2ZS-d5-P1J"/>
+                    <constraint firstAttribute="trailing" secondItem="Ty4-SP-ccL" secondAttribute="trailing" id="6My-qW-w5l"/>
+                    <constraint firstAttribute="bottom" secondItem="Ty4-SP-ccL" secondAttribute="bottom" id="CjO-nQ-jVW"/>
+                    <constraint firstItem="Ty4-SP-ccL" firstAttribute="leading" secondItem="est-21-2oH" secondAttribute="trailing" constant="10" id="FWd-G2-3Oa"/>
+                    <constraint firstItem="est-21-2oH" firstAttribute="top" secondItem="vho-95-edg" secondAttribute="top" constant="5" id="GoB-Ka-AdF"/>
+                    <constraint firstItem="7Uv-3M-nrm" firstAttribute="top" secondItem="vho-95-edg" secondAttribute="top" id="Zze-d7-rrD"/>
+                    <constraint firstItem="Ty4-SP-ccL" firstAttribute="top" secondItem="vho-95-edg" secondAttribute="top" id="hpJ-rI-3pW"/>
+                    <constraint firstItem="7Uv-3M-nrm" firstAttribute="leading" secondItem="vho-95-edg" secondAttribute="leading" id="llN-Jx-ABz"/>
+                    <constraint firstAttribute="bottom" secondItem="7Uv-3M-nrm" secondAttribute="bottom" id="tHw-7e-unF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="optionLabel" destination="est-21-2oH" id="PVB-kO-7sP"/>
+            </connections>
+            <point key="canvasLocation" x="-211" y="-349"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="textAddon">
+            <color red="0.24313725490196078" green="0.19607843137254902" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

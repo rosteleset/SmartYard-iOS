@@ -214,3 +214,4 @@ class IncomingCallPortraitViewController: BaseViewController {
     }
     
 }
+// swiftlint:enable function_body_length

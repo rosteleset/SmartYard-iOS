@@ -13,21 +13,49 @@ import PinLayout
 class CityCamerasMapPointView: UIView {
     
     private(set) var cameraNumber: Int?
+    private var tapCallback: (() -> Void)?
     
     private let cameraImageView: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "CityCam")?.withRenderingMode(.alwaysOriginal)
-        
+        imageView.contentMode = .scaleAspectFill
+//        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "CameraIcon")
+//        imageView.image = UIImage(named: "CameraIcon")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = .white
+//        imageView.tintColor = UIColor.SmartYard.blue
+//        imageView.tintColor = UIColor.SmartYard.gray
+
         return imageView
     }()
     
+    private let cameraNumberLabel: UILabel = {
+        let label = UILabel()
+        
+        label.font = UIFont.SourceSansPro.semibold(size: 14)
+        label.textColor = UIColor.SmartYard.blue
+        label.textAlignment = .center
+        
+        return label
+    }()
+
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         
-        backgroundColor = .none
+        backgroundColor = UIColor.SmartYard.blue
+//        backgroundColor = .white
+        
         addSubview(cameraImageView)
+//        addSubview(cameraNumberLabel)
+    
+        clipsToBounds = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
+        self.addGestureRecognizer(tapGesture)
+    }
+
+    @objc func handleTap(sender: UITapGestureRecognizer) {
+        self.tapCallback?()
     }
     
     @available(*, unavailable)
@@ -37,12 +65,18 @@ class CityCamerasMapPointView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        cameraImageView.pin.width(66).height(66).vCenter(4).hCenter()
+
+        layerCornerRadius = width / 2
+        
+        cameraImageView.pin.width(24).height(24).top(8).hCenter()
+//        cameraImageView.pin.width(15).height(13).top(8).hCenter()
+//        cameraNumberLabel.pin.height(15).below(of: cameraImageView).hCenter().sizeToFit(.height)
     }
     
-    func configure(cameraNumber: Int) {
+    func configure(cameraNumber: Int, _ onTap: @escaping (() -> Void)) {
         self.cameraNumber = cameraNumber
-        
+        self.tapCallback = onTap
+//        cameraNumberLabel.text = "\(cameraNumber)"
     }
     
 }

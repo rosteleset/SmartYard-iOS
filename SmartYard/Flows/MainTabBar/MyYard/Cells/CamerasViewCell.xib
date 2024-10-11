@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="nnl-Bq-Hod" customClass="CamerasViewCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="180" height="103"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Zyz-Ay-dHr">
+                <rect key="frame" x="0.0" y="0.0" width="180" height="103"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1jV-E5-YZT" customClass="LottieAnimationView" customModule="Lottie">
+                        <rect key="frame" x="60" y="21.666666666666671" width="60" height="60"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="5Wb-Nh-hL1"/>
+                            <constraint firstAttribute="height" secondItem="1jV-E5-YZT" secondAttribute="width" multiplier="1:1" id="qYn-Ue-96Y"/>
+                        </constraints>
+                    </view>
+                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Edy-oF-zW4">
+                        <rect key="frame" x="0.0" y="0.0" width="180" height="103"/>
+                    </imageView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="онлайн" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rq3-tY-t49">
+                        <rect key="frame" x="8" y="6" width="164" height="16.666666666666668"/>
+                        <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="13"/>
+                        <color key="textColor" name="superWhite"/>
+                        <nil key="highlightedColor"/>
+                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="Edy-oF-zW4" firstAttribute="leading" secondItem="Zyz-Ay-dHr" secondAttribute="leading" id="6hR-xw-gQf"/>
+                    <constraint firstAttribute="trailing" secondItem="Edy-oF-zW4" secondAttribute="trailing" id="DKA-p6-2uS"/>
+                    <constraint firstItem="Rq3-tY-t49" firstAttribute="leading" secondItem="Zyz-Ay-dHr" secondAttribute="leading" constant="8" id="JiL-oe-zLJ"/>
+                    <constraint firstAttribute="bottom" secondItem="Edy-oF-zW4" secondAttribute="bottom" id="NaL-kB-LAF"/>
+                    <constraint firstItem="Rq3-tY-t49" firstAttribute="top" secondItem="Zyz-Ay-dHr" secondAttribute="top" constant="6" id="TPn-5I-pK7"/>
+                    <constraint firstItem="Edy-oF-zW4" firstAttribute="top" secondItem="Zyz-Ay-dHr" secondAttribute="top" id="aVL-4D-Ujc"/>
+                    <constraint firstAttribute="trailing" secondItem="Rq3-tY-t49" secondAttribute="trailing" constant="8" id="g7i-YF-gyu"/>
+                    <constraint firstItem="1jV-E5-YZT" firstAttribute="centerY" secondItem="Zyz-Ay-dHr" secondAttribute="centerY" id="v0U-hz-Hju"/>
+                    <constraint firstItem="1jV-E5-YZT" firstAttribute="centerX" secondItem="Zyz-Ay-dHr" secondAttribute="centerX" id="vcu-h2-ape"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <connections>
+                <outlet property="imageTimeLabel" destination="Rq3-tY-t49" id="Rc7-0l-kON"/>
+                <outlet property="loadingAnimationView" destination="1jV-E5-YZT" id="25f-EW-Hja"/>
+                <outlet property="previewImage" destination="Edy-oF-zW4" id="f1c-Gh-Qhz"/>
+            </connections>
+            <point key="canvasLocation" x="50" y="-11"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="superWhite">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

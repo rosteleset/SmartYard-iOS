@@ -21,14 +21,23 @@ enum APITarget {
     case offices(request: OfficesRequest)
     case plog(request: PlogRequest)
     case plogDays(request: PlogDaysRequest)
+    case shareGenerate(request: ShareGenerateRequest)
+    case getContracts(request: GetContractsRequest)
+    case setParentControl(request: SetParentControlRequest)
     
     case allCCTV(request: AllCCTVRequest)
+    case camCCTV(request: CamCCTVRequest)
+    case cityCoordinate(request: CityCoordinateRequest)
     case overviewCCTV(request: OverviewCCTVRequest)
     case youtube(request: YouTubeRequest)
     case recPrepare(request: RecPrepareRequest)
+    case recSize(request: RecSizeRequest)
     case recDownload(request: RecDownloadRequest)
     case streamInfo(request: StreamInfoRequest)
     case getCamMap(request: CamMapCCTVRequest)
+    case camSortCCTV(request: CamSortCCTVRequest)
+    case allPlaces(request: AllPlacesRequest)
+    case allCameras(request: AllCamerasRequest)
     
     case getAddress(request: GetAddressRequest)
     case getGeoCoder(request: GeoCoderRequest)
@@ -53,12 +62,15 @@ enum APITarget {
     case commentIssue(request: CommentIssueRequest)
     
     case appVersion(request: AppVersionRequest)
+    case appLogout(request: AppLogoutRequest)
     case addMyPhone(request: AddMyPhoneRequest)
     case requestCode(request: RequestCodeRequest)
     case registerPushToken(request: RegisterPushTokenRequest)
     case confirmCode(request: ConfirmCodeRequest)
     case checkPhone(request: CheckPhoneRequest)
-    
+    case acceptOfferta(request: AcceptOffertaRequest)
+    case checkOfferta(request: CheckOffertaRequest)
+
     case getPaymentsList(request: GetPaymentsListRequest)
     case sendName(request: SendNameRequest)
     case restore(request: RestoreRequest)
@@ -77,6 +89,21 @@ enum APITarget {
     case removePersonFace(request: RemovePersonFaceRequest)
     case likePersonFace(request: LikePersonFaceRequest)
     case disLikePersonFace(request: DisLikePersonFaceRequest)
+    
+    case payBalanceDetail(request: DetailRequest)
+    case paySendDetail(request: SendDetailRequest)
+    case payGetCards(request: GetCardsRequest)
+    case payAuto(request: AutoPayRequest)
+    case payNew(request: NewPayRequest)
+    case payCheck(request: CheckPayRequest)
+    case payRemoveCard(request: RemoveCardRequest)
+    case addAutopay(request: AddAutopayRequest)
+    case removeAutopay(request: RemoveAutopayRequest)
+    case newSBPPay(request: CreateSBPOrderRequest)
+    case updateSBPPay(request: UpdateSBPOrderRequest)
+    case yooKassaNewPay(request: YooKassaNewPayRequest)
+    
+    case activateLimit(request: ActivateLimitRequest)
 }
 
 extension APITarget: TargetType {
@@ -111,14 +138,23 @@ extension APITarget: TargetType {
         case .offices: return "address/offices"
         case .plog: return "address/plog"
         case .plogDays: return "address/plogDays"
+        case .shareGenerate: return "address/intercom/url/v2/generate"
+        case .getContracts: return "address/getContracts"
+        case .setParentControl: return "contract/setParentControl"
         
         case .allCCTV: return "cctv/all"
+        case .camCCTV: return "cctv/getCamById"
+        case .cityCoordinate: return "cctv/cityCoordinate"
         case .overviewCCTV: return "cctv/overview"
         case .youtube: return "cctv/youtube"
         case .recPrepare: return "cctv/recPrepare"
+        case .recSize: return "cctv/getArchiveSize"
         case .recDownload: return "cctv/recDownload"
         case .getCamMap: return "cctv/camMap"
         case .streamInfo: return "recording_status.json"
+        case .camSortCCTV: return "cctv/sort"
+        case .allPlaces: return "cctv/places"
+        case .allCameras: return "cctv/cameras"
             
         case .getAddress: return "geo/address"
         case .getGeoCoder: return "geo/coder"
@@ -143,11 +179,14 @@ extension APITarget: TargetType {
         case .commentIssue: return "issues/comment"
             
         case .appVersion: return "user/appVersion"
+        case .appLogout: return "user/logout"
         case .addMyPhone: return "user/addMyPhone"
         case .requestCode: return "user/requestCode"
         case .registerPushToken: return "user/registerPushToken"
         case .confirmCode: return "user/confirmCode"
         case .checkPhone: return "user/checkPhone"
+        case .acceptOfferta: return "user/acceptOffer"
+        case .checkOfferta: return "user/checkOffer"
         
         case .getPaymentsList: return "user/getPaymentsList"
         case .sendName: return "user/sendName"
@@ -167,7 +206,22 @@ extension APITarget: TargetType {
         case .extList: return "ext/list"
         case .ext: return "ext/ext"
         case .options: return "ext/options"
-        
+            
+        case .payBalanceDetail: return "pay/balance/detail"
+        case .paySendDetail: return "pay/send/detail"
+        case .payGetCards: return "pay/getCards"
+        case .payAuto: return "pay/auto"
+        case .payNew: return "pay/new"
+        case .payCheck: return "pay/check"
+        case .payRemoveCard: return "pay/removeCard"
+        case .addAutopay: return "pay/addAuto"
+        case .removeAutopay: return "pay/removeAuto"
+        case .newSBPPay: return "pay/newFake"
+        case .updateSBPPay: return "pay/checkFake"
+        case .yooKassaNewPay: return "pay/mobile"
+
+        case .activateLimit: return "contract/activateLimit"
+            
         }
     }
     
@@ -186,23 +240,32 @@ extension APITarget: TargetType {
         let (authorization, forceRefresh): (String?, Bool) = {
             switch self {
             case .registerQR(let request): return (request.accessToken, false)
-            case .intercom(let request): return (request.accessToken, request.forceRefresh)
             case .openDoor(let request): return (request.accessToken, false)
             case .resetCode(let request): return (request.accessToken, false)
-            case .getSettingsList(let request): return (request.accessToken, request.forceRefresh)
             case .getAddressList(let request): return (request.accessToken, request.forceRefresh)
+            case .intercom(let request): return (request.accessToken, request.forceRefresh)
+            case .getSettingsList(let request): return (request.accessToken, request.forceRefresh)
             case .access(let request): return (request.accessToken, false)
             case .resend(let request): return (request.accessToken, false)
             case .offices(let request): return (request.accessToken, false)
             case .plog(let request): return (request.accessToken, request.forceRefresh)
             case .plogDays(let request): return (request.accessToken, request.forceRefresh)
+            case .shareGenerate(let request): return (request.accessToken, false)
+            case .getContracts(let request): return (request.accessToken, request.forceRefresh)
+            case .setParentControl(let request): return (request.accessToken, false)
             
             case .allCCTV(let request): return (request.accessToken, request.forceRefresh)
+            case .camCCTV(let request): return (request.accessToken, request.forceRefresh)
+            case .cityCoordinate(let request): return (request.accessToken, request.forceRefresh)
             case .overviewCCTV(let request): return (request.accessToken, request.forceRefresh)
             case .youtube(let request): return (request.accessToken, request.forceRefresh)
             case .recPrepare(let request): return (request.accessToken, false)
+            case .recSize(let request): return (request.accessToken, false)
             case .recDownload(let request): return (request.accessToken, false)
             case .getCamMap(let request): return (request.accessToken, false)
+            case .camSortCCTV(let request): return (request.accessToken, false)
+            case .allPlaces(let request): return (request.accessToken, request.forceRefresh)
+            case .allCameras(let request): return (request.accessToken, request.forceRefresh)
                 
             case .getAddress(let request): return (request.accessToken, false)
             case .getGeoCoder(let request): return (request.accessToken, false)
@@ -227,26 +290,45 @@ extension APITarget: TargetType {
             case .commentIssue(let request): return (request.accessToken, false)
                 
             case .appVersion(let request): return (request.accessToken, false)
+            case .appLogout(let request): return (request.accessToken, false)
             case .addMyPhone(let request): return (request.accessToken, false)
             case .registerPushToken(let request): return (request.accessToken, false)
+            case .checkOfferta(let request): return (request.accessToken, false)
+            case .acceptOfferta(let request): return (request.accessToken, false)
+
             case .getPaymentsList(let request): return (request.accessToken, request.forceRefresh)
             case .sendName(let request): return (request.accessToken, false)
             case .restore(let request): return (request.accessToken, false)
             case .notification(let request): return (request.accessToken, false)
-                
+
             case .payPrepare(let request): return (request.accessToken, false)
             case .payProcess(let request): return (request.accessToken, false)
             case .sberbankRegister(let request): return (request.accessToken, false) // TODO
+                
+            case .extList(let request): return (request.accessToken, false)
+            case .ext(let request): return (request.accessToken, false)
+            case .options(let request): return (request.accessToken, false)
                 
             case .getPersonFaces(let request): return (request.accessToken, request.forceRefresh)
             case .removePersonFace(let request): return (request.accessToken, false)
             case .likePersonFace(let request): return (request.accessToken, false)
             case .disLikePersonFace(let request): return (request.accessToken, false)
                 
-            case .extList(let request): return (request.accessToken, false)
-            case .ext(let request): return (request.accessToken, false)
-            case .options(let request): return (request.accessToken, false)
-            
+            case .payBalanceDetail(let request): return (request.accessToken, false)
+            case .paySendDetail(let request): return (request.accessToken, false)
+            case .payGetCards(let request): return (request.accessToken, false)
+            case .payAuto(let request): return (request.accessToken, false)
+            case .payNew(let request): return (request.accessToken, false)
+            case .payCheck(let request): return (request.accessToken, false)
+            case .payRemoveCard(let request): return (request.accessToken, false)
+            case .addAutopay(let request): return (request.accessToken, false)
+            case .removeAutopay(let request): return (request.accessToken, false)
+            case .newSBPPay(let request): return (request.accessToken, false)
+            case .updateSBPPay(let request): return (request.accessToken, false)
+            case .yooKassaNewPay(let request): return (request.accessToken, false)
+
+            case .activateLimit(let request): return (request.accessToken, false)
+                
             default: return (nil, false)
             }
         }()
@@ -289,14 +371,23 @@ extension APITarget: TargetType {
         case .offices(let request): return request.requestParameters
         case .plog(let request): return request.requestParameters
         case .plogDays(let request): return request.requestParameters
+        case .shareGenerate(let request): return request.requestParameters
+        case .getContracts(let request): return request.requestParameters
+        case .setParentControl(let request): return request.requestParameters
         
         case .allCCTV(let request): return request.requestParameters
+        case .camCCTV(let request): return request.requestParameters
+        case .cityCoordinate(let request): return request.requestParameters
         case .overviewCCTV(let request): return request.requestParameters
         case .youtube(let request): return request.requestParameters
         case .recPrepare(let request): return request.requestParameters
+        case .recSize(let request): return request.requestParameters
         case .recDownload(let request): return request.requestParameters
         case .getCamMap(let request): return request.requestParameters
         case .streamInfo(let request): return request.requestParameters
+        case .camSortCCTV(let request): return request.requestParameters
+        case .allPlaces(let request): return request.requestParameters
+        case .allCameras(let request): return request.requestParameters
             
         case .getAddress(let request): return request.requestParameters
         case .getGeoCoder(let request): return request.requestParameters
@@ -321,11 +412,14 @@ extension APITarget: TargetType {
         case .commentIssue(let request): return request.requestParameters
             
         case .appVersion(let request): return request.requestParameters
+        case .appLogout(let request): return request.requestParameters
         case .addMyPhone(let request): return request.requestParameters
         case .requestCode(let request): return request.requestParameters
         case .registerPushToken(let request): return request.requestParameters
         case .confirmCode(let request): return request.requestParameters
         case .checkPhone(let request): return request.requestParameters
+        case .acceptOfferta(let request): return request.requestParameters
+        case .checkOfferta(let request): return request.requestParameters
         
         case .getPaymentsList(let request): return request.requestParameters
         case .sendName(let request): return request.requestParameters
@@ -345,7 +439,22 @@ extension APITarget: TargetType {
         case .extList(let request): return request.requestParameters
         case .ext(let request): return request.requestParameters
         case .options(let request): return request.requestParameters
-        
+            
+        case .payBalanceDetail(let request): return request.requestParameters
+        case .paySendDetail(let request): return request.requestParameters
+        case .payGetCards(let request): return request.requestParameters
+        case .payAuto(let request): return request.requestParameters
+        case .payNew(let request): return request.requestParameters
+        case .payCheck(let request): return request.requestParameters
+        case .payRemoveCard(let request): return request.requestParameters
+        case .addAutopay(let request): return request.requestParameters
+        case .removeAutopay(let request): return request.requestParameters
+        case .newSBPPay(let request): return request.requestParameters
+        case .updateSBPPay(let request): return request.requestParameters
+        case .yooKassaNewPay(let request): return request.requestParameters
+
+        case .activateLimit(let request): return request.requestParameters
+            
         }
     }
     
@@ -354,3 +463,4 @@ extension APITarget: TargetType {
     }
     
 }
+// swiftlint:enable closure_body_length

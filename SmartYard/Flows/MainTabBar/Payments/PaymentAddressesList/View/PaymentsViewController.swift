@@ -112,8 +112,8 @@ class PaymentsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureTableView() {
-        mainContainerView.layerCornerRadius = 24
-        mainContainerView.layer.maskedCorners = .topCorners
+//        mainContainerView.layerCornerRadius = 24
+//        mainContainerView.layer.maskedCorners = .topCorners
         
         collectionView.delegate = self
         collectionView.dataSource = self

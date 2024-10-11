@@ -146,12 +146,15 @@ class NewAllowedPersonViewController: BaseViewController {
             .debounce(.milliseconds(50))
             .drive(
                 onNext: { [weak self] keyboardVisibleHeight in
-                    self?.mainContainerBottomConstraint.constant = keyboardVisibleHeight == 0 ?
+                    guard let self = self else {
+                        return
+                    }
+                    self.mainContainerBottomConstraint.constant = (keyboardVisibleHeight == 0) || (self.view.frame.height == keyboardVisibleHeight) ?
                         0 :
                         keyboardVisibleHeight + 16
                     
                     UIView.animate(withDuration: 0.25) {
-                        self?.view.layoutIfNeeded()
+                        self.view.layoutIfNeeded()
                     }
                 }
             )
@@ -233,3 +236,4 @@ extension NewAllowedPersonViewController: CNContactPickerDelegate {
     }
 
 }
+// swiftlint:enable function_body_length

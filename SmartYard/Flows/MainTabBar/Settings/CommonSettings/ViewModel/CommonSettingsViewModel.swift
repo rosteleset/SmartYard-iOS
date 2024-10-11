@@ -12,6 +12,7 @@ import RxSwift
 import XCoordinator
 import SmartYardSharedDataFramework
 import WebKit
+import Kingfisher
 
 class CommonSettingsViewModel: BaseViewModel {
     
@@ -22,7 +23,10 @@ class CommonSettingsViewModel: BaseViewModel {
     private let alertService: AlertService
     
     private let router: WeakRouter<SettingsRoute>
+    private let cache = ImageCache.default
     
+    private let cacheSize = PublishSubject<String>()
+
     init(
         apiWrapper: APIWrapper,
         accessService: AccessService,
@@ -73,6 +77,19 @@ class CommonSettingsViewModel: BaseViewModel {
         let enableAccountBalanceWarningSubject = BehaviorSubject<Bool>(value: false)
         let enableCallkitSubject = BehaviorSubject<Bool>(value: accessService.prefersVoipForCalls)
         let enableSpeakerByDefaultSubject = BehaviorSubject<Bool>(value: accessService.prefersSpeakerForCalls)
+        
+        cache.calculateDiskStorageSize() { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            switch (result){
+            case .success(let size):
+                let sizeString = "(" + String(size / 1024 / 1024) + " МБ)"
+                self.cacheSize.onNext(sizeString)
+            case .failure(let error):
+                print(error.errorDescription)
+            }
+        }
         
         apiWrapper
             .getCurrentNotificationState()
@@ -225,6 +242,37 @@ class CommonSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        // MARK: Очистка дискового кэша
+        
+        input.clearCacheTrigger
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    self.cacheSize.onNext("удаляем...")
+                    self.cache.clearDiskCache() { [weak self] in
+                        guard let self = self else {
+                            return
+                        }
+                        self.cacheSize.onNext("вычисляем...")
+                        self.cache.calculateDiskStorageSize() { [weak self] result in
+                            guard let self = self else {
+                                return
+                            }
+                            switch (result){
+                            case .success(let size):
+                                let sizeString = "(" + String(size / 1024 / 1024) + " МБ)"
+                                self.cacheSize.onNext(sizeString)
+                            case .failure(let error):
+                                print(error.errorDescription)
+                            }
+                        }
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
         // MARK: Выход из аккаунта
         
         input.logoutTrigger
@@ -237,6 +285,17 @@ class CommonSettingsViewModel: BaseViewModel {
                             return
                         }
                         
+                        self.apiWrapper
+                            .logoutApp()
+                            .trackError(errorTracker)
+                            .asDriver(onErrorJustReturn: nil)
+                            .ignoreNil()
+                            .drive(
+                                onNext: { _ in
+                                }
+                            )
+                            .disposed(by: self.disposeBag)
+
                         self.pushNotificationService.resetInstanceId()
                             .trackActivity(activityTracker)
                             .trackError(errorTracker)
@@ -270,7 +329,8 @@ class CommonSettingsViewModel: BaseViewModel {
             enableCallkit: enableCallkitSubject.asDriverOnErrorJustComplete(),
             enableSpeakerByDefault: enableSpeakerByDefaultSubject.asDriverOnErrorJustComplete(),
             isLoading: activityTracker.asDriver(),
-            shouldShowInitialLoading: initialLoadingTracker.asDriver()
+            shouldShowInitialLoading: initialLoadingTracker.asDriver(),
+            cacheSize: cacheSize.asDriverOnErrorJustComplete()
         )
     }
     
@@ -286,6 +346,7 @@ extension CommonSettingsViewModel {
         let callkitTrigger: Driver<Void>
         let speakerTrigger: Driver<Void>
         let logoutTrigger: Driver<Void>
+        let clearCacheTrigger: Driver<Void>
     }
     
     struct Output {
@@ -297,6 +358,8 @@ extension CommonSettingsViewModel {
         let enableSpeakerByDefault: Driver<Bool>
         let isLoading: Driver<Bool>
         let shouldShowInitialLoading: Driver<Bool>
+        let cacheSize: Driver<String>
     }
     
 }
+// swiftlint:enable function_body_length

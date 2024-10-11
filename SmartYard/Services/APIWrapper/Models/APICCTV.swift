@@ -9,7 +9,7 @@
 import CoreLocation
 import SwifterSwift
 
-struct APICCTV: Decodable {
+struct APICCTV: Decodable, Equatable {
     
     let houseId: Int?
     let id: Int
@@ -20,7 +20,13 @@ struct APICCTV: Decodable {
     let video: String
     let token: String
     let doors: [APIDoor]
+    let flatIds: [String?]
+    let status: Bool?
 
+    static func == (lhs: APICCTV, rhs: APICCTV) -> Bool {
+        return lhs.video == rhs.video
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case houseId
         case id
@@ -30,6 +36,8 @@ struct APICCTV: Decodable {
         case url
         case token
         case doors
+        case flatIds
+        case status
     }
     
     init(from decoder: Decoder) throws {
@@ -53,6 +61,8 @@ struct APICCTV: Decodable {
         token = try container.decode(String.self, forKey: .token)
         
         doors = (try? container.decode([APIDoor].self, forKey: .doors)) ?? []
+        flatIds = (try? container.decode([String].self, forKey: .flatIds)) ?? []
         
+        status = try? container.decode(Bool.self, forKey: .status)
     }
 }

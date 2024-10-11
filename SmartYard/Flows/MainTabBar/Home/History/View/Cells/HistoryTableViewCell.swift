@@ -92,7 +92,7 @@ class HistoryTableViewCell: UITableViewCell {
         switch value.event {
         case .answered:
             titleLabel.text = "Звонок в домофон"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
             iconImage.image = UIImage(named: "LogsDomophone")
             description = ""
         case .unanswered:
@@ -102,33 +102,38 @@ class HistoryTableViewCell: UITableViewCell {
             description = ""
         case .rfid:
             titleLabel.text = "Открывание ключом"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
             iconImage.image = UIImage(named: "LogsKey")
             description = ""
         case .app:
             titleLabel.text = "Открытие из приложения"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
             iconImage.image = UIImage(named: "LogsApp")
             description = ""
         case .face:
             titleLabel.text = "Открывание по лицу"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
             iconImage.image = UIImage(named: "LogsFace")
             description = ""
         case .passcode:
             titleLabel.text = "Открытие по коду"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
             iconImage.image = UIImage(named: "LogsCode")
             description = ""
         case .call:
-            titleLabel.text = "Открытие ворот по звонку"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.text = "Открытие по звонку"
+            titleLabel.textColor = UIColor.SmartYard.textAddon
             iconImage.image = UIImage(named: "LogsCall")
             description = ""
         case .plate:
             titleLabel.text = "Открытие ворот по номеру"
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.textAddon
             iconImage.image = UIImage(named: "LogsWicket")
+            description = ""
+        case .link:
+            titleLabel.text = "Открытие по временной ссылке"
+            titleLabel.textColor = UIColor.SmartYard.textAddon
+            iconImage.image = UIImage(named: "LogsApp")
             description = ""
         case .unknown:
             titleLabel.text = "Неизвестное событие"
@@ -150,3 +155,4 @@ class HistoryTableViewCell: UITableViewCell {
     }
     
 }
+// swiftlint:enable function_body_length cyclomatic_complexity

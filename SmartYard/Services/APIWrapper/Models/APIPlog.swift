@@ -128,8 +128,9 @@ struct APIPlog: Decodable, Equatable, Hashable {
         case app = 4 // – Открытия из приложения  (+id пользователя)
         case face = 5 // – Открытия по распознаванию лица  (+id дескриптора лица)
         case passcode = 6 // – Открытие по коду квартиры
-        case call = 7 // – Открытие ворот по звонку (номер звонящего в тексте)
+        case call = 7 // – Автооткрытие
         case plate = 8 // – Открытие ворот по распознаванию номера (номер машины в тексте)
+        case link = 9 // - Открытие двери по временной ссылке
         case unknown = -1
     }
     
@@ -162,8 +163,9 @@ struct APIPlog: Decodable, Equatable, Hashable {
         
         previewURL = try? container.decode(String.self, forKey: .preview)
         
-        if let previewURL = previewURL {
-            previewImage = UIImage(base64URLString: previewURL)
+        if let previewURL = previewURL, let url = URL(string: previewURL) {
+            previewImage = try? UIImage(url: url)
+//            previewImage = UIImage(base64URLString: previewURL)
         } else {
             previewImage = nil
         }

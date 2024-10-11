@@ -5,6 +5,7 @@
 //  Created by Mad Brains on 06.02.2020.
 //  Copyright © 2021 LanTa. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import UIKit
 import RxCocoa
@@ -88,12 +89,15 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
         RxKeyboard.instance.visibleHeight
             .drive(
                 onNext: { [weak self] keyboardVisibleHeight in
-                    self?.sendCodeAgainGroupButtonConstraint.constant = keyboardVisibleHeight == 0 ?
+                    guard let self = self else {
+                        return
+                    }
+                    self.sendCodeAgainGroupButtonConstraint.constant = (keyboardVisibleHeight == 0) || (self.view.frame.height == keyboardVisibleHeight) ?
                         28 :
                         keyboardVisibleHeight + 28
                     
                     UIView.animate(withDuration: 0) {
-                        self?.view.layoutIfNeeded()
+                        self.view.layoutIfNeeded()
                     }
                 }
             )
@@ -164,4 +168,4 @@ class PinCodeViewController: BaseViewController, LoaderPresentable {
     }
     
 }
-
+// swiftlint:enable function_body_length

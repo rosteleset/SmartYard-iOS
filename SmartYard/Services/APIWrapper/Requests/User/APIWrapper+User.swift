@@ -30,6 +30,24 @@ extension APIWrapper {
             .mapToOptional()
     }
     
+    func logoutApp() -> Single<Void?> {
+        guard isReachable else {
+            return .just(nil)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .just(nil)
+        }
+        
+        let request = AppLogoutRequest(accessToken: accessToken)
+        
+        return provider.rx
+            .request(.appLogout(request: request))
+            .convertNoConnectionError()
+            .mapAsVoidResponse()
+            .mapToOptional()
+    }
+    
     func addMyPhone(login: String, password: String, comment: String?, useForNotifications: Bool?) -> Single<Void?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
@@ -54,12 +72,60 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-    func requestCode(userPhone: String) -> Single<RequestCodeResponseData?> {
+    func checkOfferta(login: String? = nil, password: String? = nil, houseId: String? = nil, flat: String? = nil) -> Single<CheckOffertaRequestResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
         
-        let request = RequestCodeRequest(userPhone: userPhone)
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+
+        let request = CheckOffertaRequest(
+            accessToken: accessToken,
+            login: login,
+            password: password,
+            houseId: houseId,
+            flat: flat
+        )
+        
+        return provider.rx
+            .request(.checkOfferta(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
+    
+    func acceptOfferta(login: String? = nil, password: String? = nil, houseId: String? = nil, flat: String? = nil) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+
+        let request = AcceptOffertaRequest(
+            accessToken: accessToken,
+            login: login,
+            password: password,
+            houseId: houseId,
+            flat: flat
+        )
+        
+        return provider.rx
+            .request(.acceptOfferta(request: request))
+            .convertNoConnectionError()
+            .mapAsVoidResponse()
+            .mapToOptional()
+    }
+    
+    func requestCode(userPhone: String, type: String? = nil, pushToken: String? = nil) -> Single<RequestCodeResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        let request = RequestCodeRequest(userPhone: userPhone, type: type, pushToken: pushToken)
         
         return provider.rx
             .request(.requestCode(request: request))
@@ -104,7 +170,7 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-    func confirmCode(userPhone: String, smsCode: String) -> Single<ConfirmCodeResponseData?> {
+    func confirmCode(userPhone: String, smsCode: String? = nil, type: String? = nil, requestId: String? = nil) -> Single<ConfirmCodeResponseData?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
         }
@@ -113,12 +179,14 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.alreadyLoggedInError)
         }
         
-        let request = ConfirmCodeRequest(userPhone: userPhone, smsCode: smsCode)
+        let request = ConfirmCodeRequest(userPhone: userPhone, smsCode: smsCode, type: type, requestId: requestId)
         
         return provider.rx
             .request(.confirmCode(request: request))
             .convertNoConnectionError()
-            .mapAsDefaultResponse()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+//            .mapAsDefaultResponse()
     }
     
     func checkPhone(userPhone: String) -> Single<CheckPhoneResponseData?> {

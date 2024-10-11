@@ -10,8 +10,8 @@ import linphonesw
 
 extension AccountParams {
     func setAccountConfiguration(core: Core, configuration config: SipConfig) {
-        guard let identityAddress = core.interpretUrl(url: "sip:\(config.username)@\(config.domain)"),
-              let proxyAddress = core.interpretUrl(url: "<sip:\(config.domain);transport=\(config.transport)>")
+        guard let identityAddress = core.interpretUrl(url: "sip:\(config.username)@\(config.domain)", applyInternationalPrefix: false),
+              let proxyAddress = core.interpretUrl(url: "<sip:\(config.domain);transport=\(config.transport)>", applyInternationalPrefix: false)
         else {
             return
         }

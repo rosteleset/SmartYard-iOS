@@ -108,6 +108,9 @@ class LinphoneService: CoreDelegate {
                     core.natPolicy = natPolicy
                 }
             
+                print("DEBUG CORE", config.useCallKit)
+                core.callkitEnabled = config.useCallKit
+                
                 try core.start()
                 
                 core.clearAllAuthInfo()
@@ -189,3 +192,4 @@ class LinphoneService: CoreDelegate {
     }
     
 }
+// swiftlint:enable function_body_length cyclomatic_complexity

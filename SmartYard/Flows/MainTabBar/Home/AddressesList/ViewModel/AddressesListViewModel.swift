@@ -574,6 +574,14 @@ class AddressesListViewModel: BaseViewModel {
                 )
             }
         
+        input.notificationTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.notifications)
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             sectionModels: sectionModels,
             updateKind: updateKind,
@@ -699,7 +707,12 @@ extension AddressesListViewModel {
             sectionModels.append(emptyStateSection)
         }
         
-        return sectionModels
+//        let addAddressSection = AddressesListSectionModel(
+//            identity: "AddAddressSection",
+//            items: [.addAddress]
+//        )
+//
+        return sectionModels // + [addAddressSection]
     }
     
     private func handleAppVersionCheckResult(_ result: APIAppVersionCheckResult) {
@@ -752,6 +765,7 @@ extension AddressesListViewModel {
         let guestAccessRequested: Driver<AddressesListDataItemIdentity>
         let refreshDataTrigger: Driver<Void>
         let addAddressTrigger: Driver<Void>
+        let notificationTrigger: Driver<Void>
         let issueQrCodeTrigger: Driver<Void>
     }
     
@@ -792,3 +806,5 @@ extension AddressesListViewModel: QRCodeScanViewModelDelegate {
     }
     
 }
+// swiftlint:enable type_body_length function_body_length cyclomatic_complexity
+// swiftlint:enable closure_body_length line_length file_length

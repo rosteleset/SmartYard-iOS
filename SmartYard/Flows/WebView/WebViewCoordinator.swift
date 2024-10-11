@@ -27,6 +27,18 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
     
     private let apiWrapper: APIWrapper
     
+//    init(
+//        rootVC: UINavigationController,
+//        apiWrapper: APIWrapper,
+//        url: URL,
+//        push: Bool
+//    ) {
+//        self.apiWrapper = apiWrapper
+//        super.init(rootViewController: rootVC, initialRoute: nil)
+//        trigger(.webViewHome(url: url))
+//        rootViewController.setNavigationBarHidden(true, animated: false)
+//    }
+//    
     init(
         rootVC: UINavigationController,
         apiWrapper: APIWrapper,
@@ -91,7 +103,7 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
             } else {
                 let nc = rootViewController
                 nc.popViewController(animated: false)
-                
+
                 return .push(vc)
             }
             
@@ -135,4 +147,4 @@ class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
         }
     }
 }
-
+// swiftlint:enable function_body_length

@@ -30,6 +30,78 @@ extension APIWrapper {
             .mapToOptional()
     }
     
+    func getAllCameras(forceRefresh: Bool = false) -> Single<AllCamerasResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = AllCamerasRequest(accessToken: accessToken, forceRefresh: forceRefresh)
+        
+        return provider.rx
+            .request(.allCameras(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
+    
+    func getAllPlaces(forceRefresh: Bool = false) -> Single<AllPlacesResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = AllPlacesRequest(accessToken: accessToken, forceRefresh: forceRefresh)
+        
+        return provider.rx
+            .request(.allPlaces(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
+
+    func getCamCCTV(camId: Int?, forceRefresh: Bool = false) -> Single<CamCCTVResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = CamCCTVRequest(accessToken: accessToken, forceRefresh: forceRefresh, camId: camId)
+        
+        return provider.rx
+            .request(.camCCTV(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
+    
+    func getCityCoordinate(cityName: String?, forceRefresh: Bool = false) -> Single<CityCoordinateResponseData?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = CityCoordinateRequest(accessToken: accessToken, forceRefresh: forceRefresh, cityName: cityName)
+        
+        return provider.rx
+            .request(.cityCoordinate(request: request))
+            .convertNoConnectionError()
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
+    
     func recPrepare(id: Int, from: String, to: String) -> Single<Int?> {
         guard isReachable else {
             return .error(NSError.APIWrapperError.noConnectionError)
@@ -45,6 +117,41 @@ extension APIWrapper {
             .request(.recPrepare(request: request))
             .convertNoConnectionError()
             .mapAsDefaultResponse()
+    }
+    
+    func recSize(id: Int, from: String, to: String) -> Single<String?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = RecSizeRequest(accessToken: accessToken, id: id, from: from, to: to)
+        
+        return provider.rx
+            .request(.recSize(request: request))
+            .convertNoConnectionError()
+            .mapAsDefaultResponse()
+    }
+    
+    func camSortCCTV(sort: [Int]) -> Single<Void?> {
+        guard isReachable else {
+            return .error(NSError.APIWrapperError.noConnectionError)
+        }
+        
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = CamSortCCTVRequest(accessToken: accessToken, sort: sort)
+        
+        return provider.rx
+            .request(.camSortCCTV(request: request))
+            .convertNoConnectionError()
+            .mapAsVoidResponse()
+            .mapToOptional()
     }
     
     func recDownload(id: Int) -> Single<RecDownloadResponseData?> {

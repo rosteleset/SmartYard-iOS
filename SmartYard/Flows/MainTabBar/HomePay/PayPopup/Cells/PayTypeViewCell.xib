@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="fws-iV-RRD" customClass="PayTypeViewCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="345" height="54"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Tvu-bn-EwW">
+                <rect key="frame" x="0.0" y="0.0" width="345" height="54"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z5B-WT-RNj" userLabel="Delete Button View">
+                        <rect key="frame" x="0.0" y="0.0" width="345" height="54"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ALC-Bi-Jgt">
+                                <rect key="frame" x="18" y="9" width="36" height="36"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="9Eg-Ra-3L8"/>
+                                    <constraint firstAttribute="width" constant="36" id="g3X-oL-rPL"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
+                                <inset key="imageEdgeInsets" minX="-20" minY="-20" maxX="-20" maxY="-20"/>
+                                <state key="normal" image="DeleteCard"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="deleteCardAction:" destination="fws-iV-RRD" eventType="touchUpInside" id="755-jp-7QN"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" name="blue"/>
+                        <constraints>
+                            <constraint firstItem="ALC-Bi-Jgt" firstAttribute="centerY" secondItem="z5B-WT-RNj" secondAttribute="centerY" id="Ri8-xq-Z5o"/>
+                            <constraint firstItem="ALC-Bi-Jgt" firstAttribute="leading" secondItem="z5B-WT-RNj" secondAttribute="leading" constant="18" id="oLs-eB-Hvk"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                                <real key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
+                                <color key="value" name="blue"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fZI-Ud-K5C">
+                        <rect key="frame" x="0.0" y="0.0" width="345" height="54"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ba5-PZ-jiB">
+                                <rect key="frame" x="18" y="9" width="36" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="UjY-Fh-gra"/>
+                                    <constraint firstAttribute="width" constant="36" id="lPl-z4-53d"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fT1-BT-HWc">
+                                <rect key="frame" x="66" y="27" width="229" height="0.0"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-SemiBold" family="Source Sans Pro" pointSize="16"/>
+                                <color key="textColor" name="textAddon"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VZZ-vT-3Vo" customClass="RadioBoxView" customModule="SmartYard" customModuleProvider="target">
+                                <rect key="frame" x="307" y="17" width="20" height="20"/>
+                                <viewLayoutGuide key="safeArea" id="NFS-US-v7b"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="5tq-3o-f5Y"/>
+                                    <constraint firstAttribute="width" constant="20" id="wYX-6B-nT0"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.94918764679581968" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ba5-PZ-jiB" firstAttribute="centerY" secondItem="fZI-Ud-K5C" secondAttribute="centerY" id="27l-ub-iHn"/>
+                            <constraint firstItem="fT1-BT-HWc" firstAttribute="centerY" secondItem="fZI-Ud-K5C" secondAttribute="centerY" id="Cg6-Ki-QAY"/>
+                            <constraint firstItem="fT1-BT-HWc" firstAttribute="leading" secondItem="ba5-PZ-jiB" secondAttribute="trailing" constant="12" id="Cph-Gt-WW4"/>
+                            <constraint firstItem="VZZ-vT-3Vo" firstAttribute="leading" secondItem="fT1-BT-HWc" secondAttribute="trailing" constant="12" id="SnM-qw-AVR"/>
+                            <constraint firstAttribute="trailing" secondItem="VZZ-vT-3Vo" secondAttribute="trailing" constant="18" id="gN0-EI-6Ru"/>
+                            <constraint firstItem="VZZ-vT-3Vo" firstAttribute="centerY" secondItem="fZI-Ud-K5C" secondAttribute="centerY" id="gql-qX-QWz"/>
+                            <constraint firstItem="ba5-PZ-jiB" firstAttribute="leading" secondItem="fZI-Ud-K5C" secondAttribute="leading" constant="18" id="zK2-NT-hH0"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                                <real key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="layerBorderColor">
+                                <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="z5B-WT-RNj" firstAttribute="top" secondItem="Tvu-bn-EwW" secondAttribute="top" id="Hex-fB-QGE"/>
+                    <constraint firstAttribute="trailing" secondItem="z5B-WT-RNj" secondAttribute="trailing" id="RZV-h8-e3H"/>
+                    <constraint firstItem="fZI-Ud-K5C" firstAttribute="leading" secondItem="Tvu-bn-EwW" secondAttribute="leading" id="XJ4-53-jkH"/>
+                    <constraint firstItem="fZI-Ud-K5C" firstAttribute="top" secondItem="Tvu-bn-EwW" secondAttribute="top" id="Znm-5W-0qa"/>
+                    <constraint firstAttribute="bottom" secondItem="z5B-WT-RNj" secondAttribute="bottom" id="doh-iP-fy7"/>
+                    <constraint firstAttribute="bottom" secondItem="fZI-Ud-K5C" secondAttribute="bottom" id="dyp-t8-gkL"/>
+                    <constraint firstAttribute="trailing" secondItem="fZI-Ud-K5C" secondAttribute="trailing" id="j4n-rn-aXx"/>
+                    <constraint firstItem="z5B-WT-RNj" firstAttribute="leading" secondItem="Tvu-bn-EwW" secondAttribute="leading" id="oLz-yt-sUf"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <connections>
+                <outlet property="deleteButton" destination="ALC-Bi-Jgt" id="oJK-ij-cPJ"/>
+                <outlet property="deleteButtonView" destination="z5B-WT-RNj" id="kRw-Ix-0bc"/>
+                <outlet property="iconImage" destination="ba5-PZ-jiB" id="y1i-YC-UNd"/>
+                <outlet property="iconLabel" destination="fT1-BT-HWc" id="7np-LG-goj"/>
+                <outlet property="iconView" destination="fZI-Ud-K5C" id="JGb-GI-OOw"/>
+                <outlet property="leadingIconViewConstraint" destination="XJ4-53-jkH" id="Top-36-E9o"/>
+                <outlet property="stateMarker" destination="VZZ-vT-3Vo" id="C3n-2a-myE"/>
+                <outlet property="trailingIconViewConstraint" destination="j4n-rn-aXx" id="1ND-xX-Gr7"/>
+            </connections>
+            <point key="canvasLocation" x="87" y="-11"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="DeleteCard" width="19.267599105834961" height="23.486299514770508"/>
+        <namedColor name="blue">
+            <color red="0.89411764705882357" green="0.10196078431372549" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="textAddon">
+            <color red="0.24313725490196078" green="0.19607843137254902" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

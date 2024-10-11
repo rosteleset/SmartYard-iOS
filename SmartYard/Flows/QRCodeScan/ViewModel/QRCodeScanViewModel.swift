@@ -20,12 +20,26 @@ protocol QRCodeScanViewModelDelegate: AnyObject {
 
 class QRCodeScanViewModel: BaseViewModel {
     
-    private let router: WeakRouter<HomeRoute>
-    
+//    private let router: WeakRouter<HomeRoute>?
+    private let routerweb: WeakRouter<HomeWebRoute>?
+
     private weak var delegate: QRCodeScanViewModelDelegate?
     
-    init(router: WeakRouter<HomeRoute>, delegate: QRCodeScanViewModelDelegate) {
-        self.router = router
+//    init(
+//        routerweb: WeakRouter<HomeWebRoute>,
+//        delegate: QRCodeScanViewModelDelegate
+//    ) {
+//        self.router = nil
+//        self.routerweb = routerweb
+//        self.delegate = delegate
+//    }
+    
+    init(
+        router: WeakRouter<HomeRoute>,
+        delegate: QRCodeScanViewModelDelegate
+    ) {
+//        self.router = router
+        self.routerweb = nil
         self.delegate = delegate
     }
     
@@ -97,7 +111,8 @@ class QRCodeScanViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.back)
+//                    self?.router?.trigger(.back)
+                    self?.routerweb?.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -106,12 +121,14 @@ class QRCodeScanViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] in
                     let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-                        self?.router.trigger(.back)
+//                        self?.router?.trigger(.back)
+                        self?.routerweb?.trigger(.back)
                     }
                     
                     let message = NSError.GenericError.cameraSetupFailed.localizedDescription
                     
-                    self?.router.trigger(.dialog(title: "Ошибка", message: message, actions: [okAction]))
+//                    self?.router?.trigger(.dialog(title: "Ошибка", message: message, actions: [okAction]))
+                    self?.routerweb?.trigger(.dialog(title: "Ошибка", message: message, actions: [okAction]))
                 }
             )
             .disposed(by: disposeBag)
@@ -140,3 +157,4 @@ extension QRCodeScanViewModel {
     }
     
 }
+// swiftlint:enable function_body_length

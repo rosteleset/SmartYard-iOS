@@ -51,6 +51,7 @@ class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fakeNavBar.configueBlueNavBar()
         configureUI()
         bind()
     }

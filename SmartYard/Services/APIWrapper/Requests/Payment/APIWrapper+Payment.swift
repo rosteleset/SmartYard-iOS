@@ -76,12 +76,12 @@ extension APIWrapper {
         
         let request = SberbankRegisterRequest(
             accessToken: accessToken, // TODO
-            userName: Constants.sberbankAPILogin,
-            password: Constants.sberbankAPIPassword,
+            userName: "", // Constants.sberbankAPILogin,
+            password: "", // Constants.sberbankAPIPassword,
             orderNumber: orderNumber,
             amount: amount,
-            returnUrl: Constants.sberbankSuccessReturnURL,
-            failUrl: Constants.sberbankFailureReturnURL
+            returnUrl: "", // Constants.sberbankSuccessReturnURL,
+            failUrl: "" // Constants.sberbankFailureReturnURL
         )
 
         return provider.rx
@@ -105,3 +105,4 @@ extension APIWrapper {
     }
     
 }
+// swiftlint:enable line_length

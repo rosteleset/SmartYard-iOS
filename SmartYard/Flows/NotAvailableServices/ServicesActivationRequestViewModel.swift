@@ -14,8 +14,12 @@ import RxSwift
 
 class ServicesActivationRequestViewModel: BaseViewModel {
     
-    private let router: WeakRouter<HomeRoute>
-    
+//    private let router: WeakRouter<HomeRoute>?
+    private let router: WeakRouter<MyYardRoute>?
+    private let routerhomepay: WeakRouter<HomePayRoute>?
+    private let routerweb: WeakRouter<HomeWebRoute>?
+//    private let routerintercom: WeakRouter<IntercomWebRoute>?
+
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     
@@ -23,8 +27,43 @@ class ServicesActivationRequestViewModel: BaseViewModel {
 
     private let serviceItemsSubject = BehaviorSubject<[ServiceModel]>(value: [])
 
-    init(router: WeakRouter<HomeRoute>, apiWrapper: APIWrapper, issueService: IssueService, address: String) {
+    init(
+        routerweb: WeakRouter<HomeWebRoute>,
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        address: String
+    ) {
+        self.router = nil
+        self.routerweb = routerweb
+        self.routerhomepay = nil
+        self.apiWrapper = apiWrapper
+        self.issueService = issueService
+        self.address = address
+    }
+    
+    init(
+        routerhomepay: WeakRouter<HomePayRoute>,
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        address: String
+    ) {
+        self.router = nil
+        self.routerweb = nil
+        self.routerhomepay = routerhomepay
+        self.apiWrapper = apiWrapper
+        self.issueService = issueService
+        self.address = address
+    }
+    
+    init(
+        router: WeakRouter<MyYardRoute>,
+        apiWrapper: APIWrapper,
+        issueService: IssueService,
+        address: String
+    ) {
         self.router = router
+        self.routerweb = nil
+        self.routerhomepay = nil
         self.apiWrapper = apiWrapper
         self.issueService = issueService
         self.address = address
@@ -68,7 +107,9 @@ class ServicesActivationRequestViewModel: BaseViewModel {
             .mapToVoid()
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.main)
+                    self?.router?.trigger(.main)
+                    self?.routerweb?.trigger(.main)
+                    self?.routerhomepay?.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
@@ -93,7 +134,9 @@ class ServicesActivationRequestViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.back)
+                    self?.router?.trigger(.back)
+                    self?.routerweb?.trigger(.back)
+                    self?.routerhomepay?.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -139,3 +182,4 @@ extension ServicesActivationRequestViewModel {
     }
     
 }
+// swiftlint:enable function_body_length

@@ -4,13 +4,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatwootViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
+                <outlet property="backView" destination="bmz-9D-D0H" id="5eG-U9-cUr"/>
                 <outlet property="fakeNavBar" destination="3Wt-2h-bmE" id="5Z0-go-b2C"/>
                 <outlet property="view" destination="iN0-l3-epB" id="j8h-jf-zjj"/>
             </connections>
@@ -20,45 +21,69 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bmz-9D-D0H">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <subviews>
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="11x-6B-9Sx">
+                            <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" alpha="0.050000000000000003" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ChatBackground" translatesAutoresizingMaskIntoConstraints="NO" id="7g1-XL-HwX">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="814"/>
+                                </imageView>
+                            </subviews>
+                            <viewLayoutGuide key="safeArea" id="8og-Wm-RBv"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="7g1-XL-HwX" firstAttribute="trailing" secondItem="8og-Wm-RBv" secondAttribute="trailing" id="E6r-Mv-YYe"/>
+                                <constraint firstItem="7g1-XL-HwX" firstAttribute="bottom" secondItem="8og-Wm-RBv" secondAttribute="bottom" id="GpJ-xR-e4M"/>
+                                <constraint firstItem="7g1-XL-HwX" firstAttribute="top" secondItem="8og-Wm-RBv" secondAttribute="top" id="l3U-K1-cjS"/>
+                                <constraint firstItem="7g1-XL-HwX" firstAttribute="leading" secondItem="8og-Wm-RBv" secondAttribute="leading" id="xtB-wo-qiN"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="Rvf-wM-1GV"/>
+                    <color key="backgroundColor" name="backgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="11x-6B-9Sx" firstAttribute="bottom" secondItem="Rvf-wM-1GV" secondAttribute="bottom" id="9NW-78-Yr5"/>
+                        <constraint firstItem="11x-6B-9Sx" firstAttribute="leading" secondItem="bmz-9D-D0H" secondAttribute="leading" id="AaI-58-ceu"/>
+                        <constraint firstItem="11x-6B-9Sx" firstAttribute="top" secondItem="Rvf-wM-1GV" secondAttribute="top" id="X0D-6u-4WL"/>
+                        <constraint firstItem="11x-6B-9Sx" firstAttribute="trailing" secondItem="bmz-9D-D0H" secondAttribute="trailing" id="alu-SD-Ozo"/>
+                    </constraints>
+                </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="9dc-As-WBF">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bmz-9D-D0H">
-                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
-                    <viewLayoutGuide key="safeArea" id="Rvf-wM-1GV"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wt-2h-bmE" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="48" width="414" height="44"/>
-                    <viewLayoutGuide key="safeArea" id="Rh3-iH-UhH"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="ZvA-ZS-P9I"/>
-                    </constraints>
-                </view>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="backgroundColor"/>
             <constraints>
-                <constraint firstItem="bmz-9D-D0H" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="8CM-Ug-UGP"/>
-                <constraint firstItem="3Wt-2h-bmE" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="AXY-3v-9EL"/>
+                <constraint firstItem="bmz-9D-D0H" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="8CM-Ug-UGP"/>
                 <constraint firstItem="9dc-As-WBF" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="E1L-a8-Wf8"/>
-                <constraint firstItem="3Wt-2h-bmE" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Yfe-wx-WFF"/>
                 <constraint firstAttribute="bottom" secondItem="9dc-As-WBF" secondAttribute="bottom" id="Z7a-aK-iEK"/>
-                <constraint firstItem="9dc-As-WBF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="bFl-5S-Cos"/>
-                <constraint firstItem="3Wt-2h-bmE" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="dBz-fN-594"/>
-                <constraint firstItem="bmz-9D-D0H" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="qz9-xi-UPk"/>
-                <constraint firstItem="9dc-As-WBF" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="r1m-pV-u4o"/>
-                <constraint firstItem="bmz-9D-D0H" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="sIn-gG-cKw"/>
-                <constraint firstItem="bmz-9D-D0H" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="zMg-0s-d3E"/>
+                <constraint firstItem="9dc-As-WBF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bFl-5S-Cos"/>
+                <constraint firstItem="bmz-9D-D0H" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qz9-xi-UPk"/>
+                <constraint firstItem="9dc-As-WBF" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="r1m-pV-u4o"/>
+                <constraint firstItem="bmz-9D-D0H" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="sIn-gG-cKw"/>
+                <constraint firstItem="bmz-9D-D0H" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="zMg-0s-d3E"/>
             </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="9dc-As-WBF"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="-313.04347826086956" y="55.580357142857139"/>
+        </view>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wt-2h-bmE" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <viewLayoutGuide key="safeArea" id="Rh3-iH-UhH"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <point key="canvasLocation" x="-886" y="-589"/>
         </view>
     </objects>
     <resources>
+        <image name="ChatBackground" width="1125" height="2436"/>
         <image name="MainBackground" width="375" height="812"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="backgroundColor">
+            <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

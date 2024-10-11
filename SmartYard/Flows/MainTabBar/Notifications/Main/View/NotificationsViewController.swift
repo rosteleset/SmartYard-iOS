@@ -40,8 +40,8 @@ class NotificationsViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
-        webView.layerCornerRadius = 24
-        webView.layer.maskedCorners = .topCorners
+//        webView.layerCornerRadius = 24
+//        webView.layer.maskedCorners = .topCorners
         
         webView.scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 17, left: 0, bottom: 5, right: 0)
         webView.navigationDelegate = self
@@ -94,7 +94,7 @@ extension NotificationsViewController: WKNavigationDelegate {
         }
         
         if let url = navigationAction.request.url {
-            if url.absoluteString.starts(with: "https://cam.lanta.me/files/") {
+            if url.absoluteString.starts(with: "https://cam.mycentra.ru/files/") {
                 shareUrlTrigger.onNext(url)
             } else {
                 UIApplication.shared.open(url)

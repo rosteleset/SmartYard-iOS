@@ -15,8 +15,12 @@ import AVFoundation
 
 class InputAddressViewModel: BaseViewModel {
     
-    private let router: WeakRouter<HomeRoute>
-    
+//    private let router: WeakRouter<HomeRoute>?
+    private let router: WeakRouter<MyYardRoute>?
+    private let routerhomepay: WeakRouter<HomePayRoute>?
+    private let routerweb: WeakRouter<HomeWebRoute>?
+//    private let routerintercom: WeakRouter<IntercomWebRoute>?
+
     private let apiWrapper: APIWrapper
     private let permissionService: PermissionService
     private let logoutHelper: LogoutHelper
@@ -35,13 +39,47 @@ class InputAddressViewModel: BaseViewModel {
     private let errorTracker = ErrorTracker()
     
     init(
-        router: WeakRouter<HomeRoute>,
+        routerweb: WeakRouter<HomeWebRoute>,
+        apiWrapper: APIWrapper,
+        permissionService: PermissionService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
+    ) {
+        self.routerweb = routerweb
+        self.router = nil
+        self.routerhomepay = nil
+        self.apiWrapper = apiWrapper
+        self.permissionService = permissionService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
+    }
+    
+    init(
+        routerhomepay: WeakRouter<HomePayRoute>,
+        apiWrapper: APIWrapper,
+        permissionService: PermissionService,
+        logoutHelper: LogoutHelper,
+        alertService: AlertService
+    ) {
+        self.routerhomepay = routerhomepay
+        self.routerweb = nil
+        self.router = nil
+        self.apiWrapper = apiWrapper
+        self.permissionService = permissionService
+        self.logoutHelper = logoutHelper
+        self.alertService = alertService
+    }
+    
+    init(
+        router: WeakRouter<MyYardRoute>,
         apiWrapper: APIWrapper,
         permissionService: PermissionService,
         logoutHelper: LogoutHelper,
         alertService: AlertService
     ) {
         self.router = router
+        self.routerweb = nil
+        self.routerhomepay = nil
         self.apiWrapper = apiWrapper
         self.permissionService = permissionService
         self.logoutHelper = logoutHelper
@@ -70,16 +108,42 @@ class InputAddressViewModel: BaseViewModel {
                     
                     if nsError.domain == NSError.APIWrapperError.domain, nsError.code == 3007 {
                         let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
-                            self?.router.trigger(.main)
+                            if let router = self?.router {
+                                router.trigger(.main)
+                            } else if let router = self?.routerweb {
+                                router.trigger(.main)
+                            } else if let router = self?.routerhomepay {
+                                router.trigger(.main)
+                            } else {
+                                return
+                            }
                         }
                         
-                        self?.router.trigger(
-                            .dialog(
-                                title: error.localizedDescription,
-                                message: nil,
-                                actions: [okAction]
+                        if let router = self?.router {
+                            router.trigger(
+                                .dialog(
+                                    title: error.localizedDescription,
+                                    message: nil,
+                                    actions: [okAction]
+                                )
                             )
-                        )
+                        } else if let router = self?.routerweb {
+                            router.trigger(
+                                .dialog(
+                                    title: error.localizedDescription,
+                                    message: nil,
+                                    actions: [okAction]
+                                )
+                            )
+                        } else if let router = self?.routerhomepay {
+                            router.trigger(
+                                .dialog(
+                                    title: error.localizedDescription,
+                                    message: nil,
+                                    actions: [okAction]
+                                )
+                            )
+                        }
                         
                         return
                     }
@@ -87,12 +151,16 @@ class InputAddressViewModel: BaseViewModel {
                     if nsError == NSError.PermissionError.noCameraPermission {
                         let msg = "Чтобы использовать эту функцию, перейдите в настройки и предоставьте доступ к камере"
                         
-                        self?.router.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
-                        
+                        self?.router?.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
+                        self?.routerweb?.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
+                        self?.routerhomepay?.trigger(.appSettings(title: "Нет доступа к камере", message: msg))
+
                         return
                     }
                     
-                    self?.router.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.router?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.routerweb?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
+                    self?.routerhomepay?.trigger(.alert(title: "Ошибка", message: error.localizedDescription))
                 }
             )
             .disposed(by: disposeBag)
@@ -201,7 +269,7 @@ class InputAddressViewModel: BaseViewModel {
                         return
                     }
                     
-                    self.router.trigger(.qrCodeScan(delegate: self))
+//                    self.router?.trigger(.qrCodeScan(delegate: self))
                 }
             )
             .disposed(by: disposeBag)
@@ -209,7 +277,9 @@ class InputAddressViewModel: BaseViewModel {
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
-                    self?.router.trigger(.back)
+                    self?.router?.trigger(.back)
+                    self?.routerweb?.trigger(.back)
+                    self?.routerhomepay?.trigger(.back)
                 }
             )
             .disposed(by: disposeBag)
@@ -241,7 +311,7 @@ class InputAddressViewModel: BaseViewModel {
                     input.inputFlatName
                 )
             )
-            .flatMap { [weak self] args -> Driver<(String, String?)> in
+            .flatMap { [weak self] args -> Driver<(String, String?, String?)> in
                 let (cityName, streetName, buildingName, flatName) = args
                 
                 guard let self = self,
@@ -258,16 +328,19 @@ class InputAddressViewModel: BaseViewModel {
                 }
                 
                 guard let buildings = self.loadedBuildings[uStreetName] else {
-                    return .just((addressString, nil))
+                    return .just((addressString, nil, nil))
                 }
                 
                 let houseId = buildings.first { $0.number == uBuildingName }?.houseId
                 
-                return .just((addressString, houseId))
+                guard let flat = flatName?.trimmed, !flat.isEmpty else {
+                    return .just((addressString, houseId, nil))
+                }
+                return .just((addressString, houseId, flat))
             }
         
         let withoutHouseId = requestData.flatMap { args -> Driver<String> in
-            let (address, houseId) = args
+            let (address, houseId, flat) = args
             
             guard houseId == nil else {
                 return .empty()
@@ -279,31 +352,60 @@ class InputAddressViewModel: BaseViewModel {
         withoutHouseId
             .drive(
                 onNext: { [weak self] address in
-                    self?.router.trigger(.unavailableServices(address: address))
+                    self?.router?.trigger(.unavailableServices(address: address))
+                    self?.routerweb?.trigger(.unavailableServices(address: address))
+                    self?.routerhomepay?.trigger(.unavailableServices(address: address))
                 }
             )
             .disposed(by: disposeBag)
 
         let withHouseId = requestData
-            .flatMap { args -> Driver<(String, String)> in
-                let (address, houseId) = args
+            .flatMap { args -> Driver<(String, String, String?)> in
+                let (address, houseId, flat) = args
                 
                 guard let uHouseId = houseId else {
                     return .empty()
                 }
                 
-                return .just((address, uHouseId))
+                guard let uFlat = flat else {
+                    return .just((address, uHouseId, nil))
+                }
+                return .just((address, uHouseId, uFlat))
             }
         
         withHouseId
+            .flatMapLatest { [weak self] args -> Driver<(String, String, String?)?> in
+                guard let self = self else {
+                    return .just(nil)
+                }
+
+                let (address, houseId, flat) = args
+
+                return self.apiWrapper.checkOfferta(houseId: houseId, flat: flat)
+                    .trackError(self.errorTracker)
+                    .map {
+                        guard let offers = $0 else {
+                            return nil
+                        }
+                        guard offers.isEmpty else {
+                            self.router?.trigger(.acceptOffertaByAddress(houseId: houseId, flat: flat, offers: offers))
+                            self.routerweb?.trigger(.acceptOffertaByAddress(houseId: houseId, flat: flat, offers: offers))
+                            self.routerhomepay?.trigger(.acceptOffertaByAddress(houseId: houseId, flat: flat, offers: offers))
+                            return nil
+                        }
+                        return (address, houseId, flat)
+                    }
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
             .flatMapLatest { [weak self] args -> Driver<(String, GetServicesResponseData?)?> in
                 guard let self = self else {
                     return .just(nil)
                 }
 
-                let (address, houseId) = args
+                let (address, houseId, flat) = args
 
-                return self.apiWrapper.getServicesByHouseId(houseId: houseId)
+                return self.apiWrapper.getServicesByHouseId(houseId: houseId, flat: flat)
                     .trackError(self.errorTracker)
                     .map {
                         guard let response = $0 else {
@@ -324,16 +426,26 @@ class InputAddressViewModel: BaseViewModel {
                     }
 
                     guard !services.isEmpty else {
-                        self.router.trigger(.unavailableServices(address: address))
+                        self.router?.trigger(.unavailableServices(address: address))
+                        self.routerweb?.trigger(.unavailableServices(address: address))
+                        self.routerhomepay?.trigger(.unavailableServices(address: address))
                         return
                     }
-
-                    self.router.trigger(
-                        .availableServices(
-                            address: address,
-                            services: services
-                        )
-                    )
+                    if services.count == 1 {
+                        let srv = services.filter {
+                            return ($0.icon == "domophone") && $0.title.isEmpty
+                        }
+                        if !srv.isEmpty {
+                            self.router?.trigger(.main)
+                            self.routerweb?.trigger(.main)
+                            self.routerhomepay?.trigger(.main)
+                            NotificationCenter.default.post(name: .addressAdded, object: nil)
+                            return
+                        }
+                    }
+                    self.router?.trigger(.availableServices(address: address, services: services))
+                    self.routerweb?.trigger(.availableServices(address: address, services: services))
+                    self.routerhomepay?.trigger(.availableServices(address: address, services: services))
                 }
             )
             .disposed(by: disposeBag)
@@ -386,7 +498,7 @@ extension InputAddressViewModel: QRCodeScanViewModelDelegate {
     // Если ошибка и выскочит, то она презентнется нормально, поскольку мы уже ушли с того экрана
     
     func qrCodeScanViewModel(_ viewModel: QRCodeScanViewModel, didExtractCode code: String) {
-        router.rx
+        router?.rx
             .trigger(.back)
             .asDriverOnErrorJustComplete()
             .flatMapLatest { [weak self] _ -> Driver<Void?> in
@@ -408,10 +520,11 @@ extension InputAddressViewModel: QRCodeScanViewModelDelegate {
                     self?.apiWrapper.forceUpdateSettings = true
                     self?.apiWrapper.forceUpdatePayments = true
                     
-                    self?.router.trigger(.main)
+                    self?.router?.trigger(.main)
                 }
             )
             .disposed(by: disposeBag)
     }
     
 }
+// swiftlint:enable type_body_length function_body_length cyclomatic_complexity file_length

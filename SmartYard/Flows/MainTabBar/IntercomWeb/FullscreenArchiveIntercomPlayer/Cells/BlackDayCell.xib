@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="kcc-ev-Rtt" userLabel="Black Day Cell" customClass="BlackDayCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="191" height="99"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="191" height="99"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEO-d9-YLs">
+                        <rect key="frame" x="80.666666666666671" y="64" width="30" height="30"/>
+                        <color key="backgroundColor" name="blue"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="4va-5u-zeU"/>
+                            <constraint firstAttribute="width" constant="30" id="7ub-YS-Pk5"/>
+                            <constraint firstAttribute="width" constant="20" id="aMl-b9-4Gx"/>
+                            <constraint firstAttribute="height" constant="30" id="xlf-iQ-r38"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                                <integer key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="4va-5u-zeU"/>
+                                <exclude reference="aMl-b9-4Gx"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uQ-ac-Hgy">
+                        <rect key="frame" x="73.666666666666671" y="68.666666666666671" width="44" height="21"/>
+                        <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7wR-10-EaY">
+                        <rect key="frame" x="0.0" y="98" width="191" height="1"/>
+                        <color key="backgroundColor" red="0.92941176469999998" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="PRz-kB-jrw"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="P8K-I5-4hp"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="7wR-10-EaY" secondAttribute="trailing" id="30w-wq-5Jk"/>
+                <constraint firstItem="3uQ-ac-Hgy" firstAttribute="centerY" secondItem="P8K-I5-4hp" secondAttribute="centerY" id="8Nk-92-K1I"/>
+                <constraint firstItem="3uQ-ac-Hgy" firstAttribute="centerX" secondItem="P8K-I5-4hp" secondAttribute="centerX" id="ELH-Kn-OPn"/>
+                <constraint firstItem="7wR-10-EaY" firstAttribute="leading" secondItem="kcc-ev-Rtt" secondAttribute="leading" id="PJf-Ss-M1d"/>
+                <constraint firstItem="HEO-d9-YLs" firstAttribute="centerX" secondItem="P8K-I5-4hp" secondAttribute="centerX" id="alD-ea-AeS"/>
+                <constraint firstItem="HEO-d9-YLs" firstAttribute="centerY" secondItem="P8K-I5-4hp" secondAttribute="centerY" id="gQX-Q1-tGr"/>
+                <constraint firstAttribute="bottom" secondItem="7wR-10-EaY" secondAttribute="bottom" id="lZc-xb-0FU"/>
+            </constraints>
+            <size key="customSize" width="191" height="99"/>
+            <connections>
+                <outlet property="bottomSeparatorHeightConstraint" destination="PRz-kB-jrw" id="UxA-Cy-dZL"/>
+                <outlet property="bottomSeparatorView" destination="7wR-10-EaY" id="Ue8-iX-9Z3"/>
+                <outlet property="dayLabel" destination="3uQ-ac-Hgy" id="gkL-kb-sHZ"/>
+                <outlet property="selectedView" destination="HEO-d9-YLs" id="hp1-YQ-xIO"/>
+            </connections>
+            <point key="canvasLocation" x="155.79710144927537" y="51.897321428571423"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="blue">
+            <color red="0.89411764705882357" green="0.10196078431372549" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

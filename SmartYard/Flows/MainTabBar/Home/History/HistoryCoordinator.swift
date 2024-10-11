@@ -15,7 +15,7 @@ enum HistoryRoute: Route {
     case dialog(title: String, message: String?, actions: [UIAlertAction])
     case back
     case dismiss
-    case main(houseId: String? = nil, flatId: Int? = nil, eventsFilter: EventsFilter = .all, address: String)
+    case main(houseId: Int? = nil, flatId: Int? = nil, eventsFilter: EventsFilter = .all, address: String)
     case detail(viewModel: HistoryViewModel, item: HistoryDataItem)
     case addFaceFromEvent(event: APIPlog)
     case deleteFaceFromEvent(event: APIPlog, imageURL: String?)
@@ -43,7 +43,7 @@ class HistoryCoordinator: NavigationCoordinator<HistoryRoute> {
         permissionService: PermissionService,
         alertService: AlertService,
         logoutHelper: LogoutHelper,
-        houseId: String? = nil,
+        houseId: Int? = nil,
         flatId: Int? = nil,
         eventsFilter: EventsFilter = .all,
         address: String

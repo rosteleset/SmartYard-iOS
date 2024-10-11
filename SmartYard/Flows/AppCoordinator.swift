@@ -24,6 +24,7 @@ enum AppRoute: Route {
     case phoneNumber
     case pinCode(phoneNumber: String, isInitial: Bool)
     case authByOutgoingCall(phoneNumber: String, confirmPhoneNumber: String)
+    case authByMobileProvider(phoneNumber: String, requestId: String)
     case alert(title: String, message: String?)
     case onboarding
     case appSettings(title: String, message: String?)
@@ -154,6 +155,18 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
             )
             
             let vc = OutgoingCallViewController(viewModel: vm)
+            return .set([vc], animation: .fade)
+            
+        case let .authByMobileProvider(phoneNumber: phoneNumber, requestId: requestId):
+            let vm = AuthByMobileProviderViewModel(
+                accessService: accessService,
+                apiWrapper: apiWrapper,
+                router: weakRouter,
+                phoneNumber: phoneNumber,
+                requestId: requestId
+            )
+            
+            let vc = AuthByMobileProviderViewController(viewModel: vm)
             return .set([vc], animation: .fade)
             
         case let .alert(title, message):
@@ -379,19 +392,40 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
         SmartYardSharedDataUtilities.saveSharedData(data: sharedData)
     }
     
+    func authorizeClient() {
+        // MARK: Авторизация через пуш
+        print("DEBUG AUTHORIZATION BY PUSH")
+    }
+    
+    func openHomeTab() {
+        // MARK: DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            self?.mainTabBarCoordinator?.trigger(.homepay)
+        }
+    }
+    
+    func openHomeWebTab() {
+        // MARK: DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            self?.mainTabBarCoordinator?.trigger(.homeww)
+        }
+    }
+    
+    func openIntercomTab() {
+        // MARK: DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            self?.mainTabBarCoordinator?.trigger(.myyard)
+        }
+    }
+    
     func openNotificationsTab() {
         // MARK: DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             self?.mainTabBarCoordinator?.trigger(.notifications)
-        }
-    }
-    
-    func openChatTab() {
-        // MARK: DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            self?.mainTabBarCoordinator?.trigger(.chat)
         }
     }
     
@@ -489,3 +523,4 @@ class AppCoordinator: NavigationCoordinator<AppRoute> {
     }
     
 }
+// swiftlint:enable type_body_length function_body_length cyclomatic_complexity line_length file_length

@@ -48,6 +48,8 @@ class RequestRecordViewController: BaseViewController, LoaderPresentable, UIPick
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fakeNavBar.configueBlueNavBar()
         configureView()
         bind()
     }
@@ -77,6 +79,9 @@ class RequestRecordViewController: BaseViewController, LoaderPresentable, UIPick
         
         // Настраиваем DatePicker для поля Дата
         datePicker.date = selectedDate
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        }
         datePicker.datePickerMode = .dateAndTime
         datePicker.maximumDate = Date()
         datePicker.minimumDate = Calendar.current.date(byAdding: .day, value: -10, to: Date())
@@ -89,7 +94,7 @@ class RequestRecordViewController: BaseViewController, LoaderPresentable, UIPick
         hoursTextField.inputAccessoryView = toolbar
         hoursTextField.inputView = datePicker
         hoursTextField.tintColor = UIColor.clear
-        
+
         minutesTextField.inputAccessoryView = toolbar
         minutesTextField.inputView = datePicker
         minutesTextField.tintColor = UIColor.clear
@@ -131,7 +136,7 @@ extension RequestRecordViewController {
     }
     
     func selectPeriodAction(_ value: Int) {
-        durationTextField.text = "Продолжительность: \(value)"
+        durationTextField.text = "Продолжительность: \(value) мин"
         periodProxy.onNext(value)
     }
     
