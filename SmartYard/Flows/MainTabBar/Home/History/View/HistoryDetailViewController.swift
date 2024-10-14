@@ -138,7 +138,13 @@ class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                 let cell: HistoryCollectionViewCell = collectionView.dequeueReusableCell(withClass: HistoryCollectionViewCell.self, for: indexPath)
                 
                 // если у домофона есть камера, то конфигурируем ячейку с параметрами для отображения видео
-                if let camera = self.camMap.first(where: { $0.id == item.value.objectId }) {
+                if let camera = self.camMap.first(where: { $0.entranceId == item.value.entranceId }) {
+                    cell.configure(
+                        value: item.value,
+                        using: imagesCache,
+                        camera: camera
+                    )
+                } else if let camera = self.camMap.first(where: { $0.id == item.value.objectId }){
                     cell.configure(
                         value: item.value,
                         using: imagesCache,
