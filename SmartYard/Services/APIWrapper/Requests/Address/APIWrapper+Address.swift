@@ -323,6 +323,7 @@ extension APIWrapper {
         }
         
         let request = CamMapCCTVRequest(accessToken: accessToken)
+        print(request)
         
         return provider.rx
             .request(.getCamMap(request: request))
