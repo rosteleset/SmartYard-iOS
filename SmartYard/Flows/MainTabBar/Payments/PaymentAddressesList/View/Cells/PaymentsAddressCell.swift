@@ -9,7 +9,7 @@
 import UIKit
 import PinLayout
 
-class PaymentsAddressCell: UICollectionViewCell {
+final class PaymentsAddressCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()

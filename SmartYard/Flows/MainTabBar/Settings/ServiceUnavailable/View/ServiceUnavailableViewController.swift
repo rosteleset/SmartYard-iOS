@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import JGProgressHUD
 
-class ServiceUnavailableViewController: BaseViewController, LoaderPresentable {
+final class ServiceUnavailableViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var closeButton: UIButton!

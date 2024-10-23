@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class LinearGradientView: UIView {
+final class LinearGradientView: UIView {
     
     override class var layerClass: AnyClass {
         return CAGradientLayer.self

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ServicesActivationRequestСell: UITableViewCell {
+final class ServicesActivationRequestСell: UITableViewCell {
 
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var checkBox: SmartYardCheckBoxView!

@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 
-class ServiceSoonAvailableViewModel: BaseViewModel {
+final class ServiceSoonAvailableViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
     private let apiWrapper: APIWrapper

@@ -9,7 +9,7 @@
 import UIKit
 import JGProgressHUD
 
-class EditNameViewController: BaseViewController, LoaderPresentable {
+final class EditNameViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var nameTextField: SmartYardTextField!
     @IBOutlet private weak var middleNameTextField: SmartYardTextField!

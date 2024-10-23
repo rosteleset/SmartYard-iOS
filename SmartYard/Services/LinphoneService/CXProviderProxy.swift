@@ -22,7 +22,7 @@ protocol CXProviderProxyDelegate: AnyObject {
     
 }
 
-class CXProviderProxy: NSObject {
+final class CXProviderProxy: NSObject {
     
     private let provider: CXProvider
     

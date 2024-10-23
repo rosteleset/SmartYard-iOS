@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import TouchAreaInsets
 
-class IncomingCallPortraitViewController: BaseViewController {
+final class IncomingCallPortraitViewController: BaseViewController {
     
     @IBOutlet private weak var previewButton: UIButton!
     @IBOutlet private weak var callButton: UIButton!

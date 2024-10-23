@@ -11,7 +11,7 @@ import PassKit
 import RxSwift
 import RxCocoa
 
-class PaymentPopupController: BaseViewController {
+final class PaymentPopupController: BaseViewController {
     
     @IBOutlet private weak var successView: UIView!
     @IBOutlet private weak var contractNumberLabel: UILabel!

@@ -11,7 +11,7 @@ import RxCocoa
 import WebKit
 import OnlineChatSdk
 
-class ChatViewModel: BaseViewModel {
+final class ChatViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let accessService: AccessService

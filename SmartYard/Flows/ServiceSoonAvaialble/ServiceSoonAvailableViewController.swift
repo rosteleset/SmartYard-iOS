@@ -9,7 +9,7 @@
 import UIKit
 import JGProgressHUD
 
-class ServiceSoonAvailableViewController: BaseViewController, LoaderPresentable {
+final class ServiceSoonAvailableViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var titleImageView: UIImageView!
     @IBOutlet private weak var hintLabel: UILabel!

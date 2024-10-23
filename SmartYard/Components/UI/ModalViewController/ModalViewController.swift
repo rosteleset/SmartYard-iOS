@@ -22,7 +22,7 @@ enum ModalContent: String {
 /// чтобы не делать 100500 классов для очень похожих модальных окошек с крестиком в правом верхнем углу,
 /// я решил сделать один общий класс,
 /// который в инициализаторе принимает название файла с содержимым
-class ModalViewController: BaseViewController {
+final class ModalViewController: BaseViewController {
     
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var containerView: UIView!

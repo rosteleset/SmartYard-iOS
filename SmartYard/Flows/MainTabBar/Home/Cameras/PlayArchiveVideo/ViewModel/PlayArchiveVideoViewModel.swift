@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import AVKit
 
-class PlayArchiveVideoViewModel: BaseViewModel {
+final class PlayArchiveVideoViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<HomeRoute>

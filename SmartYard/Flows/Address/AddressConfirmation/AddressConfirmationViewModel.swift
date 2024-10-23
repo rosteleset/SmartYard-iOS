@@ -11,7 +11,7 @@ import XCoordinator
 import RxSwift
 import RxCocoa
 
-class AddressConfirmationViewModel: BaseViewModel {
+final class AddressConfirmationViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
     private let apiWrapper: APIWrapper

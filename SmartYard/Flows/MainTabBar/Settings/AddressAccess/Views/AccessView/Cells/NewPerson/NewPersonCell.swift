@@ -8,4 +8,4 @@
 
 import UIKit
 
-class NewPersonCell: UITableViewCell { }
+final class NewPersonCell: UITableViewCell { }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OnboardingViewController: BaseViewController {
+final class OnboardingViewController: BaseViewController {
 
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var pageControl: UIPageControl!

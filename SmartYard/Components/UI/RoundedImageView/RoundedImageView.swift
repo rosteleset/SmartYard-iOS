@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class RoundedImageView: UIImageView {
+final class RoundedImageView: UIImageView {
     
     override func layoutSubviews() {
         super.layoutSubviews()

@@ -11,7 +11,7 @@ import RxCocoa
 import XCoordinator
 
 // swiftlint:disable:next type_body_length
-class SettingsViewModel: BaseViewModel {
+final class SettingsViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
     private let apiWrapper: APIWrapper

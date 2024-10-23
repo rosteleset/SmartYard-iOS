@@ -11,7 +11,7 @@ import AVFoundation
 import RxSwift
 import RxCocoa
 
-class HistoryCollectionViewCell: UICollectionViewCell {
+final class HistoryCollectionViewCell: UICollectionViewCell {
     private var camera: CameraObject? // APICamMap?
     private var itIsMe: Bool?
     private var event: APIPlog?

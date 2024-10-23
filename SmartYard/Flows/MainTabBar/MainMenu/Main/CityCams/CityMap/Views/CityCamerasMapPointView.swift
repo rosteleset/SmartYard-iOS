@@ -10,7 +10,7 @@ import Foundation
 import MapboxMaps
 import PinLayout
 
-class CityCamerasMapPointView: UIView {
+final class CityCamerasMapPointView: UIView {
     
     private(set) var cameraNumber: Int?
     

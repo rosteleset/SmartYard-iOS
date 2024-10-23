@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import TouchAreaInsets
 
-class SmartYardPasswordTextField: SmartYardTextField {
+final class SmartYardPasswordTextField: SmartYardTextField {
     
     private let disposeBag = DisposeBag()
     

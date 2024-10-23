@@ -14,7 +14,7 @@ import AVKit
 import Lottie
 
 // swiftlint:disable:next type_body_length
-class CityCameraViewController: BaseViewController {
+final class CityCameraViewController: BaseViewController {
     enum ButtonState {
         case initial, incidents, requestRec
     }

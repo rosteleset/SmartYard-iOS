@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 
-class RestorePasswordViewModel: BaseViewModel {
+final class RestorePasswordViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<HomeRoute>

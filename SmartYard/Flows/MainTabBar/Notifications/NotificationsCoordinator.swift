@@ -16,7 +16,7 @@ enum NotificationsRoute: Route {
     
 }
 
-class NotificationsCoordinator: NavigationCoordinator<NotificationsRoute> {
+final class NotificationsCoordinator: NavigationCoordinator<NotificationsRoute> {
     
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService

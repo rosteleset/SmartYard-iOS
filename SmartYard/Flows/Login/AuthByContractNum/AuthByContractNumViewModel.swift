@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 
-class AuthByContractNumViewModel: BaseViewModel {
+final class AuthByContractNumViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
     private let issueService: IssueService

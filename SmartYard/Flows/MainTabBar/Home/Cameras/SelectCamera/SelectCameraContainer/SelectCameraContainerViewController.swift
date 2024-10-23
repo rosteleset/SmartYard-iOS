@@ -12,7 +12,7 @@ import RxCocoa
 import AVKit
 import Parchment
 
-class SelectCameraContainerViewController: BaseViewController {
+final class SelectCameraContainerViewController: BaseViewController {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var cameraNameLabel: UILabel!

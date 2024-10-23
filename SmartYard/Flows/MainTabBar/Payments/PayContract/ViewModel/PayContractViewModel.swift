@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
-class PayContractViewModel: BaseViewModel {
+final class PayContractViewModel: BaseViewModel {
     
     private var apiWrapper: APIWrapper
     private var router: WeakRouter<PaymentsRoute>

@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
-class NotificationsViewModel: BaseViewModel {
+final class NotificationsViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService

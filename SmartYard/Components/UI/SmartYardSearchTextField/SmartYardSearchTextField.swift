@@ -9,7 +9,7 @@
 import Foundation
 import SearchTextField
 
-class SmartYardSearchTextField: SearchTextField {
+final class SmartYardSearchTextField: SearchTextField {
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: UIEdgeInsets(top: 16, left: 20, bottom: 16, right: 20))

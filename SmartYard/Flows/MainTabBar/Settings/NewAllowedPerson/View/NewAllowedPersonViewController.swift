@@ -13,7 +13,7 @@ import ContactsUI
 import Contacts
 import SHSPhoneComponent
 
-class NewAllowedPersonViewController: BaseViewController {
+final class NewAllowedPersonViewController: BaseViewController {
     
     // swiftlint:disable all
     @IBOutlet weak var textField: SHSPhoneTextField!

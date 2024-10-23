@@ -9,7 +9,7 @@
 import UIKit
 import PinLayout
 
-class SettingsHeaderCell: CustomBorderCollectionViewCell {
+final class SettingsHeaderCell: CustomBorderCollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()

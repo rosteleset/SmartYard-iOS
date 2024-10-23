@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PeriodPicker: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate {
+final class PeriodPicker: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate {
     private static let minText = NSLocalizedString("minutes", comment: "")
     private let pickerData = ["10 " + minText, "20 " + minText, "30 " + minText,
                               "40 " + minText, "50 " + minText, "60 " + minText]

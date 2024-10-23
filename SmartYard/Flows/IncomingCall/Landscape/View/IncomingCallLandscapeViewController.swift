@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import TouchAreaInsets
 
-class IncomingCallLandscapeViewController: BaseViewController {
+final class IncomingCallLandscapeViewController: BaseViewController {
     
     @IBOutlet private weak var previewButton: UIButton!
     @IBOutlet private weak var callButton: UIButton!

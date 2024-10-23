@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class WhiteButtonWithBorder: UIButton {
+final class WhiteButtonWithBorder: UIButton {
     
     override func layoutSubviews() {
         super.layoutSubviews()

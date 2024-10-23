@@ -11,7 +11,7 @@ import AVKit
 import RxSwift
 import RxCocoa
 
-class FullscreenPlayerViewController: UIViewController {
+final class FullscreenPlayerViewController: UIViewController {
     
     enum PlayedVideoType {
         case online

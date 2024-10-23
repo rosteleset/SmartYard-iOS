@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TopRoundedView24: UIView {
+final class TopRoundedView24: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()

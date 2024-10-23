@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class AutoRefreshingCachedImageView: SafeCachedImageView {
+final class AutoRefreshingCachedImageView: SafeCachedImageView {
     
     private var timer: Timer?
     

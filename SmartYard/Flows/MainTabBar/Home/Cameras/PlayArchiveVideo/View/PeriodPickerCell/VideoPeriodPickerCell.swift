@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VideoPeriodPickerCell: UICollectionViewCell {
+final class VideoPeriodPickerCell: UICollectionViewCell {
     
     @IBOutlet private weak var titleLabel: UILabel!
 

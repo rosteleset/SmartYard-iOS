@@ -12,7 +12,7 @@ import RxCocoa
 import PMNibLinkableView
 import RxDataSources
 
-class AccessView: PMNibLinkableView {
+final class AccessView: PMNibLinkableView {
     
     @IBOutlet private weak var tableView: UITableView!
     

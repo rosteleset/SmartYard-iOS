@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import JGProgressHUD
 
-class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
+final class PassConfirmationPinViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var titleMessageLabel: UILabel!

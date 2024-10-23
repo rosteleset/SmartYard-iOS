@@ -14,7 +14,7 @@ import CoreLocation
 import MapboxMaps
 import UIKit
 
-class ServiceFromOfficeView: PMNibLinkableView {
+final class ServiceFromOfficeView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var doSoButton: BlueButton!
     @IBOutlet private weak var containerView: UIView!

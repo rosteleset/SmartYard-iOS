@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsActionCell: CustomBorderCollectionViewCell {
+final class SettingsActionCell: CustomBorderCollectionViewCell {
     
     @IBOutlet private weak var titleLabel: UILabel!
 

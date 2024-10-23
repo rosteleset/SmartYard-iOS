@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PhoneField: UIView {
+final class PhoneField: UIView {
     
     private let prefixLabel = UILabel()
     

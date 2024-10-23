@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import JGProgressHUD
 
-class FacesSettingsViewController: BaseViewController, LoaderPresentable {
+final class FacesSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var facesCollectionView: UICollectionView!

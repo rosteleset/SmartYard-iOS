@@ -15,7 +15,7 @@ enum HistoryCellOrder: Equatable {
     case single
 }
 
-class HistoryTableViewCell: UITableViewCell {
+final class HistoryTableViewCell: UITableViewCell {
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var dateView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!

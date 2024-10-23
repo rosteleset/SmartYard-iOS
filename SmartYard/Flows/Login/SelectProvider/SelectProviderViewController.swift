@@ -11,7 +11,7 @@ import JGProgressHUD
 import RxCocoa
 import RxSwift
 
-class SelectProviderViewController: BaseViewController, LoaderPresentable {
+final class SelectProviderViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var providerTextField: SmartYardTextField!
     @IBOutlet private weak var selectProviderButton: WhiteButtonWithBorder!

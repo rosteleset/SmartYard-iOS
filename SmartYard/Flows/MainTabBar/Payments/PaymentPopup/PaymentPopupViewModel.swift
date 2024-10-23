@@ -12,7 +12,7 @@ import RxCocoa
 import XCoordinator
 import UIKit
 
-class PaymentPopupViewModel: BaseViewModel {
+final class PaymentPopupViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let clientId: String

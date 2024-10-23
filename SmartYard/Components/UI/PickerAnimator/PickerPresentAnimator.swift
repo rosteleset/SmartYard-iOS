@@ -8,7 +8,7 @@ protocol PickerAnimatable {
     
 }
 
-class PickerPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+final class PickerPresentAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5

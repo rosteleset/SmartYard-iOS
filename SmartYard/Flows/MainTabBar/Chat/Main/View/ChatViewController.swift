@@ -13,7 +13,7 @@ import OnlineChatSdk
 import JGProgressHUD
 import WebKit
 
-class ChatViewController: ChatController, LoaderPresentable {
+final class ChatViewController: ChatController, LoaderPresentable {
     
     private let disposeBag = DisposeBag()
     private let viewModel: ChatViewModel

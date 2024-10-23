@@ -8,7 +8,7 @@
 
 import Alamofire
 
-class BaseRequestRetrier: RequestInterceptor {
+final class BaseRequestRetrier: RequestInterceptor {
     
     func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
         return urlRequest

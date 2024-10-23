@@ -11,7 +11,7 @@ import PMNibLinkableView
 import RxCocoa
 import RxSwift
 
-class IntercomTemporaryAccessView: PMNibLinkableView {
+final class IntercomTemporaryAccessView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var refreshButton: UIButton!
     @IBOutlet fileprivate weak var openButton: ObjectLockButton!

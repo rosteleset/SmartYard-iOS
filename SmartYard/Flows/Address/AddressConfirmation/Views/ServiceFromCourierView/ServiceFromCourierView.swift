@@ -11,7 +11,7 @@ import PMNibLinkableView
 import RxSwift
 import RxCocoa
 
-class ServiceFromCourierView: PMNibLinkableView {
+final class ServiceFromCourierView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var requestButton: BlueButton!
     

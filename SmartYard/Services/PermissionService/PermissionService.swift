@@ -11,7 +11,7 @@ import RxSwift
 import AVFoundation
 import Contacts
 
-class PermissionService {
+final class PermissionService {
     
     func hasAccess(to mediaType: AVMediaType) -> Single<Void?> {
         return Single.create(

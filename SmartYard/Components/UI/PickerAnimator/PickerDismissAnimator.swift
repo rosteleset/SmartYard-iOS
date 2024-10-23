@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class PickerDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+final class PickerDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.4

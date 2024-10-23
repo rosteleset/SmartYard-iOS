@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class IssueService {
+final class IssueService {
     
     private let apiWrapper: APIWrapper
     private let accessService: AccessService

@@ -11,7 +11,7 @@ import JGProgressHUD
 import RxCocoa
 import RxSwift
 
-class RestorePasswordViewController: BaseViewController, LoaderPresentable {
+final class RestorePasswordViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var contractTextField: SmartYardTextField!
     @IBOutlet private weak var getCodeButton: WhiteButtonWithBorder!

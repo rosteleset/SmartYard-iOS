@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 
-class AddressSettingsViewModel: BaseViewModel {
+final class AddressSettingsViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let issueService: IssueService

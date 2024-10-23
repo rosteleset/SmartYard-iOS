@@ -13,7 +13,7 @@ protocol CameraButtonDelegate: AnyObject {
     func didTapCameraButton(cameraNumber: Int)
 }
 
-class CameraButton: UIButton {
+final class CameraButton: UIButton {
     weak var delegate: CameraButtonDelegate?
     var cameraNumber: Int
     

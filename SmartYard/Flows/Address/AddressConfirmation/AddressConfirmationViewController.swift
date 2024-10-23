@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import JGProgressHUD
 
-class AddressConfirmationViewController: BaseViewController, LoaderPresentable {
+final class AddressConfirmationViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var segmentControl: SmartYardSegmentedControl!
     

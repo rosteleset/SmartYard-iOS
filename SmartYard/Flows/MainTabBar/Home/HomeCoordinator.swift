@@ -35,7 +35,7 @@ enum HomeRoute: Route {
     case history(houseId: String, address: String)
 }
 
-class HomeCoordinator: NavigationCoordinator<HomeRoute> {
+final class HomeCoordinator: NavigationCoordinator<HomeRoute> {
     
     private let disposeBag = DisposeBag()
     

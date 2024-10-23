@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import Lottie
 
-class CameraCollectionViewCell: UICollectionViewCell {
+final class CameraCollectionViewCell: UICollectionViewCell {
     private var camera: CameraObject? // APICamMap?
     
     var player: AVPlayer?

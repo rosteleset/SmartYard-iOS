@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import CoreLocation
 
-class RequestRecordViewModel: BaseViewModel {
+final class RequestRecordViewModel: BaseViewModel {
     
     private let issueService: IssueService
     private let router: WeakRouter<CityCamsRoute>

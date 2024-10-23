@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SafeCachedButton: UIButton {
+final class SafeCachedButton: UIButton {
 
     private var imageUrlString: String?
     private var loadingImageIndicator: UIActivityIndicatorView?

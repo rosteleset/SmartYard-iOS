@@ -11,7 +11,7 @@ import PMNibLinkableView
 import RxSwift
 import RxCocoa
 
-class PinTextField: PMNibLinkableView {
+final class PinTextField: PMNibLinkableView {
     
     @IBOutlet private weak var containerView: UIView!
     

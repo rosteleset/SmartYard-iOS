@@ -9,7 +9,7 @@
 import UIKit
 import PinLayout
 
-class AddressesHeaderCell: CustomBorderCollectionViewCell {
+final class AddressesHeaderCell: CustomBorderCollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()

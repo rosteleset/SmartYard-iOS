@@ -12,7 +12,7 @@ import RxSwift
 import RxViewController
 import JGProgressHUD
 
-class OutgoingCallViewController: BaseViewController, LoaderPresentable {
+final class OutgoingCallViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var hintInputPhoneLabel: UILabel!

@@ -18,7 +18,7 @@ protocol ArchivePageViewControllerDelegate: AnyObject {
     
 }
 
-class ArchivePageViewController: BaseViewController, LoaderPresentable {
+final class ArchivePageViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var calendarView: JTACMonthView!
     @IBOutlet private weak var monthLabel: UILabel!

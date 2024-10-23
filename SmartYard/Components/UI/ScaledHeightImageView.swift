@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ScaledHeightImageView: SafeCachedImageView {
+final class ScaledHeightImageView: SafeCachedImageView {
 
     override var intrinsicContentSize: CGSize {
 

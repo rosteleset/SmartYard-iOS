@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import JGProgressHUD
 
-class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
+final class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
     @IBOutlet private weak var containerView: UIView!

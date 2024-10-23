@@ -16,7 +16,8 @@ protocol OnlinePageViewControllerDelegate: AnyObject {
     func onlinePageViewController(_ vc: OnlinePageViewController, didSelectCamera camera: CameraObject)
 }
 
-class OnlinePageViewController: BaseViewController {
+// swiftlint:disable type_body_length
+final class OnlinePageViewController: BaseViewController {
     weak var delegate: OnlinePageViewControllerDelegate?
     
     // MARK: - Properties

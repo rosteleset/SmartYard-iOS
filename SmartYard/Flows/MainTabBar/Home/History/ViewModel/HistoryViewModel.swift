@@ -17,7 +17,7 @@ typealias FlatId = Int
 typealias AvailableDays = [FlatId: PlogDaysResponseData] // [FlatId: [APIPlogDay]]
 
 // swiftlint:disable:next type_body_length
-class HistoryViewModel: BaseViewModel {
+final class HistoryViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<HistoryRoute>

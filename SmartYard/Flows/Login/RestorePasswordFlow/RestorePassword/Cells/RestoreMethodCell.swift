@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RestoreMethodCell: UITableViewCell {
+final class RestoreMethodCell: UITableViewCell {
 
     @IBOutlet private weak var checkBox: SmartYardCheckBoxView!
     @IBOutlet private weak var titleLabel: UILabel!

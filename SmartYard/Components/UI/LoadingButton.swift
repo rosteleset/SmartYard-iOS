@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoadingButton: UIButton {
+final class LoadingButton: UIButton {
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()

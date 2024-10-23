@@ -26,7 +26,7 @@ protocol NewAllowedPersonViewModelDelegate: AnyObject {
     
 }
 
-class NewAllowedPersonViewModel: BaseViewModel {
+final class NewAllowedPersonViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
     private let allowedPersonType: AllowedPersonType

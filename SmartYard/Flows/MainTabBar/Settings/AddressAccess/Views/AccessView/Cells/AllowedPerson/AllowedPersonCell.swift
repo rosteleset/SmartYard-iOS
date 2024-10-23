@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class AllowedPersonCell: UITableViewCell {
+final class AllowedPersonCell: UITableViewCell {
 
     @IBOutlet private weak var userLogoImageView: RoundedImageView!
     @IBOutlet private weak var userNameLabel: UILabel!

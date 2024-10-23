@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProviderCell: UITableViewCell {
+final class ProviderCell: UITableViewCell {
 
     @IBOutlet private weak var checkBox: SmartYardCheckBoxView!
     @IBOutlet private weak var titleLabel: UILabel!

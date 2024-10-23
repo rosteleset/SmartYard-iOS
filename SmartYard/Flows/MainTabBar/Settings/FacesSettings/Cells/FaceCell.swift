@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class FaceCell: UICollectionViewCell {
+final class FaceCell: UICollectionViewCell {
 
     private var disposeBag = DisposeBag()
     @IBOutlet private weak var deleteButton: UIButton!

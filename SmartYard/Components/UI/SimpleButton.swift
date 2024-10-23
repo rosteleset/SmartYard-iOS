@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SimpleButton: UIButton {
+final class SimpleButton: UIButton {
     
     override var isHighlighted: Bool {
         didSet {

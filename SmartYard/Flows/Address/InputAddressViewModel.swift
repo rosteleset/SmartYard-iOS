@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import AVFoundation
 
-class InputAddressViewModel: BaseViewModel {
+final class InputAddressViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
     

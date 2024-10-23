@@ -17,7 +17,7 @@ import CallKit
 import WebRTC
 
 // swiftlint:disable:next type_body_length
-class IncomingCallViewModel: BaseViewModel {
+final class IncomingCallViewModel: BaseViewModel {
     
     private let providerProxy: CXProviderProxy
     private let linphoneService: LinphoneService

@@ -13,7 +13,7 @@ import RxDataSources
 import JGProgressHUD
 import SkeletonView
 
-class AddressesListViewController: BaseViewController, LoaderPresentable {
+final class AddressesListViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var addButton: UIButton!

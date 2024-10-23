@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ObjectLockButton: UIButton {
+final class ObjectLockButton: UIButton {
     
     var modeOnOnly = true {
         didSet {

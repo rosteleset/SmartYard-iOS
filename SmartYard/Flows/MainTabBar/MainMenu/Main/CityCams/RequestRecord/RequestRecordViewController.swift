@@ -11,7 +11,7 @@ import JGProgressHUD
 import TPKeyboardAvoiding
 import RxSwift
 
-class RequestRecordViewController: BaseViewController, LoaderPresentable, UIPickerViewDelegate {
+final class RequestRecordViewController: BaseViewController, LoaderPresentable, UIPickerViewDelegate {
     var loader: JGProgressHUD?
     private let viewModel: RequestRecordViewModel
     

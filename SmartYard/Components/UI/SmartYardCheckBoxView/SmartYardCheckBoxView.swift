@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import PMNibLinkableView
 
-class SmartYardCheckBoxView: PMNibLinkableView {
+final class SmartYardCheckBoxView: PMNibLinkableView {
     
     @IBOutlet private weak var borderImageView: UIImageView!
     @IBOutlet private weak var checkImageView: UIImageView!

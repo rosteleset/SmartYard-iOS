@@ -18,7 +18,7 @@ enum TransitionType {
     case replace
 }
 
-class WebPopupController: BaseViewController, LoaderPresentable {
+final class WebPopupController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var animatedView: UIView!

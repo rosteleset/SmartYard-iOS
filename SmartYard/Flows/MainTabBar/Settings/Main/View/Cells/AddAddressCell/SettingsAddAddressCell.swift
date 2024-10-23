@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class SettingsAddAddressCell: UICollectionViewCell {
+final class SettingsAddAddressCell: UICollectionViewCell {
     
     @IBOutlet private weak var addAddressButton: UIButton!
 

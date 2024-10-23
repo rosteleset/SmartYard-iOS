@@ -10,7 +10,7 @@ import UIKit
 import TouchAreaInsets
 import JGProgressHUD
 
-class AddressSettingsViewController: BaseViewController, LoaderPresentable {
+final class AddressSettingsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     

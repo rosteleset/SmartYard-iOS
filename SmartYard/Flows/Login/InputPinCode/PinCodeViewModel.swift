@@ -13,7 +13,7 @@ import XCoordinator
 import FirebaseCrashlytics
 import FirebaseMessaging
 
-class PinCodeViewModel: BaseViewModel {
+final class PinCodeViewModel: BaseViewModel {
     
     private let accessService: AccessService
     private let apiWrapper: APIWrapper

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
-class InputPhoneNumberViewModel: BaseViewModel {
+final class InputPhoneNumberViewModel: BaseViewModel {
     
     private let accessService: AccessService
     private let apiWrapper: APIWrapper

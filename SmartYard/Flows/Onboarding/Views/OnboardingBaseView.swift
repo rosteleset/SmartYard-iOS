@@ -9,7 +9,7 @@
 import Foundation
 import PMNibLinkableView
 
-class OnboardingBaseView: PMNibLinkableView {
+final class OnboardingBaseView: PMNibLinkableView {
     
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!

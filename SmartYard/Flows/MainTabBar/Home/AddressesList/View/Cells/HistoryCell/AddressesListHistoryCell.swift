@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddressesListHistoryCell: CustomBorderCollectionViewCell {
+final class AddressesListHistoryCell: CustomBorderCollectionViewCell {
     
     @IBOutlet private weak var labelContainer: UIView!
     @IBOutlet private weak var historyCountLabel: UILabel!

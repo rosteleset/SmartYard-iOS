@@ -12,7 +12,7 @@ import JGProgressHUD
 import RxSwift
 import RxCocoa
 
-class CityMapViewController: BaseViewController, LoaderPresentable {
+final class CityMapViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!

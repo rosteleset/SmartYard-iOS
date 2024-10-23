@@ -12,7 +12,7 @@ import FirebaseMessaging
 
 private let ignoredCallIdsKey = "ignoredCallIds"
 
-class PushNotificationService {
+final class PushNotificationService {
     
     private let apiWrapper: APIWrapper
     private let disposeBag = DisposeBag()

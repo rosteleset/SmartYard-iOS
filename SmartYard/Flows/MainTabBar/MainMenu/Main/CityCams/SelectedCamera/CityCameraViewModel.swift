@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import CoreLocation
 
-class CityCameraViewModel: BaseViewModel {
+final class CityCameraViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<CityCamsRoute>

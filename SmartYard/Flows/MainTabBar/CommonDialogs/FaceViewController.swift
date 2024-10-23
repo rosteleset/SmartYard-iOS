@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
-class FaceViewController: BaseViewController {
+final class FaceViewController: BaseViewController {
 
     @IBOutlet private weak var imageView: ScaledHeightImageView!
     @IBOutlet private weak var closeButton: UIButton!

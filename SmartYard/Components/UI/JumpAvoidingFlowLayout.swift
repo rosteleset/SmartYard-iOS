@@ -8,7 +8,7 @@
 
 import UIKit
 
-class JumpAvoidingFlowLayout: UICollectionViewFlowLayout {
+final class JumpAvoidingFlowLayout: UICollectionViewFlowLayout {
     
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
         guard let collectionView = collectionView else {

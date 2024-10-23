@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class AddressesListObjectCell: CustomBorderCollectionViewCell {
+final class AddressesListObjectCell: CustomBorderCollectionViewCell {
     
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!

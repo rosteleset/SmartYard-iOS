@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class SwipeInteractionController: UIPercentDrivenInteractiveTransition {
+final class SwipeInteractionController: UIPercentDrivenInteractiveTransition {
     
     // MARK: Для закрытия окна нужно сделать свайп вниз. Необходимая длина свайпа рассчитывается по формуле:
     // translation == animatedView.height - animatedViewBottomOffset - translationDecreaseConstant

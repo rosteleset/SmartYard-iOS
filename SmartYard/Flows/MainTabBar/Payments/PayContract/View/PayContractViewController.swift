@@ -10,7 +10,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class PayContractViewController: BaseViewController {
+final class PayContractViewController: BaseViewController {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var addressLabel: UILabel!

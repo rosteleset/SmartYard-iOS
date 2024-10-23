@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HistoryLoadingTableViewCell: UITableViewCell {
+final class HistoryLoadingTableViewCell: UITableViewCell {
     
     @IBOutlet private var loader: UIActivityIndicatorView!
     

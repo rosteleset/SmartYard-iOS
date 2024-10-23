@@ -12,7 +12,7 @@ import RxCocoa
 import WebKit
 import JGProgressHUD
 
-class NotificationsViewController: BaseViewController, LoaderPresentable {
+final class NotificationsViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var webView: WKWebView!
     

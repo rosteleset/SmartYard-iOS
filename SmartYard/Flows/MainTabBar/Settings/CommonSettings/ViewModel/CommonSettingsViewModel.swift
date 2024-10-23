@@ -13,7 +13,7 @@ import SmartYardSharedDataFramework
 import WebKit
 import FirebaseMessaging
 
-class CommonSettingsViewModel: BaseViewModel {
+final class CommonSettingsViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let accessService: AccessService

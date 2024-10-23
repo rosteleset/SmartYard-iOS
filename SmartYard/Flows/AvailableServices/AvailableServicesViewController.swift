@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import JGProgressHUD
 
-class AvailableServicesViewController: BaseViewController, LoaderPresentable {
+final class AvailableServicesViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var tableView: UITableView!

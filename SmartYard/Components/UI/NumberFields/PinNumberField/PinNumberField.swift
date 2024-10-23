@@ -9,7 +9,7 @@
 import UIKit
 import PMNibLinkableView
 
-class PinNumberField: PMNibLinkableView {
+final class PinNumberField: PMNibLinkableView {
 
     @IBOutlet private weak var numberLabel: UILabel!
     @IBOutlet private weak var underlineView: UIView!

@@ -9,7 +9,7 @@
 import UIKit
 import PinLayout
 
-class CamerasListItemCell: UICollectionViewCell {
+final class CamerasListItemCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()

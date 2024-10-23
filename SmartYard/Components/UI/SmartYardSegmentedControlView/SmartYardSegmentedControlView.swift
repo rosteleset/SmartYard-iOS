@@ -11,7 +11,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class SmartYardSegmentedControl: UIView {
+final class SmartYardSegmentedControl: UIView {
     
     fileprivate let segmentControl: UISegmentedControl = {
         let control = UISegmentedControl()

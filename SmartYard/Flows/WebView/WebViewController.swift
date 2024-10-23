@@ -13,7 +13,7 @@ import WebKit
 import JGProgressHUD
 import WKCookieWebView
 
-class WebViewController: BaseViewController, LoaderPresentable {
+final class WebViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var webView: WKCookieWebView!
     @IBOutlet private weak var skeletonView: UIView!

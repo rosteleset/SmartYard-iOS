@@ -20,7 +20,7 @@ enum WebViewRoute: Route {
     case webViewPopup(url: URL)
 }
 
-class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
+final class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
     
     private let disposeBag = DisposeBag()
     

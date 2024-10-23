@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import JGProgressHUD
 
-class PaymentsViewController: BaseViewController, LoaderPresentable {
+final class PaymentsViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var skeletonContainer: UIView!

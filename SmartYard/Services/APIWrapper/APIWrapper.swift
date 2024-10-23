@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import FirebaseCrashlytics
 
-class APIWrapper {
+final class APIWrapper {
     
     let reachability: NetworkReachabilityManager
     let accessService: AccessService

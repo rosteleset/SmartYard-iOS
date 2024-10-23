@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
-class WebViewModel: BaseViewModel {
+final class WebViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<WebViewRoute>

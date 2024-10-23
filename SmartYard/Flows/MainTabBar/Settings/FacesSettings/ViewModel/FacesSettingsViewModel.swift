@@ -11,7 +11,7 @@ import RxSwift
 import XCoordinator
 import SmartYardSharedDataFramework
 
-class FacesSettingsViewModel: BaseViewModel {
+final class FacesSettingsViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let accessService: AccessService

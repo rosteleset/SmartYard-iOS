@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
-class ServiceUnavailableViewModel: BaseViewModel {
+final class ServiceUnavailableViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
     

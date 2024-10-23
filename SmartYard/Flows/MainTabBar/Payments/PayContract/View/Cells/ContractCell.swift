@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class ContractCell: UICollectionViewCell {
+final class ContractCell: UICollectionViewCell {
 
     @IBOutlet private weak var contractNumLabel: UILabel!
     @IBOutlet private weak var balanceLabel: UILabel!

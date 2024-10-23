@@ -33,7 +33,7 @@ enum PaymentsRoute: Route {
     
 }
 
-class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
+final class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
     
     private let disposeBag = DisposeBag()
     

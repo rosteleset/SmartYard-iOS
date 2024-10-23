@@ -8,6 +8,6 @@
 
 import PMNibLinkableView
 
-class SettingsListSkeletonView: PMNibLinkableView {
+final class SettingsListSkeletonView: PMNibLinkableView {
     
 }

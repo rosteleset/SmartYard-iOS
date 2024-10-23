@@ -17,7 +17,7 @@ protocol QRCodeScanViewModelDelegate: AnyObject {
     
 }
 
-class QRCodeScanViewModel: BaseViewModel {
+final class QRCodeScanViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
     

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import JGProgressHUD
 
-class ServicesActivationRequestViewController: BaseViewController, LoaderPresentable {
+final class ServicesActivationRequestViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var sendRequestButton: BlueButton!

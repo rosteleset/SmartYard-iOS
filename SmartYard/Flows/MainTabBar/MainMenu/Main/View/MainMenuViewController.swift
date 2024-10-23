@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import JGProgressHUD
 
-class MainMenuViewController: BaseViewController, LoaderPresentable {
+final class MainMenuViewController: BaseViewController, LoaderPresentable {
     var loader: JGProgressHUD?
     private let viewModel: MainMenuViewModel
     private let itemsProxy = BehaviorSubject<[MenuListItem]>(value: [])

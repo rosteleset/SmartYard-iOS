@@ -21,7 +21,7 @@ enum MainTabBarRoute: Route {
     case menu
 }
 
-class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
+final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     
     private let disposeBag = DisposeBag()
     

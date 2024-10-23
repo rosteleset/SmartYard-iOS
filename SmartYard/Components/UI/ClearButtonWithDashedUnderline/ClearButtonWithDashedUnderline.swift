@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ClearButtonWithDashedUnderline: UIButton {
+final class ClearButtonWithDashedUnderline: UIButton {
     
     override func layoutSubviews() {
         super.layoutSubviews()

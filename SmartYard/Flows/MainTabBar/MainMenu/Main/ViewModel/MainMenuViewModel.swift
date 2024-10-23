@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import UIKit
 
-class MainMenuViewModel: BaseViewModel {
+final class MainMenuViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<MainMenuRoute>
     private var defaultItems: [MenuListItem] = []

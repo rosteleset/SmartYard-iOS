@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
-class UserNameViewModel: BaseViewModel {
+final class UserNameViewModel: BaseViewModel {
     
     private let accessService: AccessService
     private let apiWrapper: APIWrapper

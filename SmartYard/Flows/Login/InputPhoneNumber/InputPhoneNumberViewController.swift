@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import JGProgressHUD
 
-class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
+final class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var containerView: UIView!

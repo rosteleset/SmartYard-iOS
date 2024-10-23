@@ -15,7 +15,7 @@ import TouchAreaInsets
 import Lottie
 
 // swiftlint:disable:next type_body_length
-class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
+final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentable {
     
     enum Mode {
         case preview

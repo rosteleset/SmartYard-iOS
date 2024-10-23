@@ -11,7 +11,7 @@ import linphonesw
 import UIKit
 import CallKit
 
-class LinphoneService: CoreDelegate {
+final class LinphoneService: CoreDelegate {
     
     private(set) var core: Core?
     private var timer: Timer?

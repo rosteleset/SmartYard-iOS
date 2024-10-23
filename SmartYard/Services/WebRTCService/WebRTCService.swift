@@ -9,7 +9,7 @@
 import UIKit
 import WebRTC
 
-class WebRTCService: NSObject {
+final class WebRTCService: NSObject {
     private let webRTCClient: WebRTCClient
     private let signalClient: SignalingClient
     private let endpointUrl: URL

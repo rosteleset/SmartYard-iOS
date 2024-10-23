@@ -10,7 +10,7 @@ import PMNibLinkableView
 import RxSwift
 import RxCocoa
 
-class FakeNavBar: PMNibLinkableView {
+final class FakeNavBar: PMNibLinkableView {
 
     @IBOutlet fileprivate weak var backButton: UIButton!
     

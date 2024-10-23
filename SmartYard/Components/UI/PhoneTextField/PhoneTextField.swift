@@ -12,7 +12,7 @@ import PMNibLinkableView
 import RxSwift
 import RxCocoa
 
-class PhoneTextField: PMNibLinkableView {
+final class PhoneTextField: PMNibLinkableView {
     
     @IBOutlet private weak var containerView: UIView!
     

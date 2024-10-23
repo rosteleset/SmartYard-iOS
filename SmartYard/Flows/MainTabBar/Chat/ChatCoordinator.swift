@@ -16,7 +16,7 @@ enum ChatRoute: Route {
     case alert(title: String, message: String)
 }
 
-class ChatCoordinator: NavigationCoordinator<ChatRoute> {
+final class ChatCoordinator: NavigationCoordinator<ChatRoute> {
     
     private let disposeBag = DisposeBag()
     private let apiWrapper: APIWrapper

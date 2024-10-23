@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import TouchAreaInsets
 
-class AddressDeletionViewController: BaseViewController {
+final class AddressDeletionViewController: BaseViewController {
     
     @IBOutlet private weak var wantToBreakTheContractContainer: UIView!
     @IBOutlet private weak var wantToBreakTheContractCheckbox: SmartYardCheckBoxView!

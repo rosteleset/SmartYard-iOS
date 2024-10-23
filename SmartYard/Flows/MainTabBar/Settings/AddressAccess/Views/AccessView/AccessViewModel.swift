@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class AccessViewModel: BaseViewModel {
+final class AccessViewModel: BaseViewModel {
     
     let sectionModels = BehaviorSubject<[AllowedPersonSectionModel]>(value: [])
     

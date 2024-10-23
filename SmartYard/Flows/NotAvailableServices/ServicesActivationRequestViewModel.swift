@@ -11,7 +11,7 @@ import XCoordinator
 import RxCocoa
 import RxSwift
 
-class ServicesActivationRequestViewModel: BaseViewModel {
+final class ServicesActivationRequestViewModel: BaseViewModel {
     
     private let router: WeakRouter<HomeRoute>
     

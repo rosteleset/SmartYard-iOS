@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
-class PassConfirmationPinViewModel: BaseViewModel {
+final class PassConfirmationPinViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
     private let logoutHelper: LogoutHelper

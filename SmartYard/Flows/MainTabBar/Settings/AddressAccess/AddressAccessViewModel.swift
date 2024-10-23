@@ -13,7 +13,7 @@ import RxCocoa
 import Contacts
 
 // swiftlint:disable:next type_body_length
-class AddressAccessViewModel: BaseViewModel {
+final class AddressAccessViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
     

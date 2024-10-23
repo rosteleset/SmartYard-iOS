@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CameraNumberCell: UICollectionViewCell {
+final class CameraNumberCell: UICollectionViewCell {
      weak var delegate: CameraButtonDelegate?
      
      private let buttonSize = CGSize(width: 36, height: 36)

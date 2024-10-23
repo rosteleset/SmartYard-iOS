@@ -13,7 +13,7 @@ import XCoordinator
 import FirebaseCrashlytics
 import FirebaseMessaging
 
-class OutgoingCallViewModel: BaseViewModel {
+final class OutgoingCallViewModel: BaseViewModel {
     
     private let accessService: AccessService
     private let apiWrapper: APIWrapper

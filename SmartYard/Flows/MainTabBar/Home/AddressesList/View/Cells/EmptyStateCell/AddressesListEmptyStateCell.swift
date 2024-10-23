@@ -8,6 +8,6 @@
 
 import UIKit
 
-class AddressesListEmptyStateCell: UICollectionViewCell {
+final class AddressesListEmptyStateCell: UICollectionViewCell {
 
 }

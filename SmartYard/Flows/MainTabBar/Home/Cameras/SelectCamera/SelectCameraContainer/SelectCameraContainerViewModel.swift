@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 
-class SelectCameraContainerViewModel: BaseViewModel {
+final class SelectCameraContainerViewModel: BaseViewModel {
     
     private let address: String
     private let cameras: [CameraObject]

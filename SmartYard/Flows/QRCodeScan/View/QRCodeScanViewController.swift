@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import TouchAreaInsets
 
-class QRCodeScanViewController: BaseViewController {
+final class QRCodeScanViewController: BaseViewController {
     
     @IBOutlet private weak var previewContainer: UIView!
     @IBOutlet private weak var backButton: UIButton!

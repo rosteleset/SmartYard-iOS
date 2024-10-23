@@ -36,7 +36,7 @@ enum SettingsRoute: Route {
     case deleteFaceFromEvent(event: APIPlog, imageURL: String?)
 }
 
-class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
+final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService

@@ -8,7 +8,7 @@
 import UIKit
 import JTAppleCalendar
 
-class WhiteSectionHeaderView: JTACMonthReusableView {
+final class WhiteSectionHeaderView: JTACMonthReusableView {
     
     @IBOutlet private weak var separatorView: UIView!
     @IBOutlet private weak var separatorViewHeightConstraint: NSLayoutConstraint!

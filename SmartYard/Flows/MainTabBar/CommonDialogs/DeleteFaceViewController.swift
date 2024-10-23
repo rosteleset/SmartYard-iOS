@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import XCoordinator
 
-class DeleteFaceViewController: BaseViewController {
+final class DeleteFaceViewController: BaseViewController {
 
     @IBOutlet private weak var imageView: ScaledHeightImageView!
     @IBOutlet private weak var cancelButton: UIButton!

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import JGProgressHUD
 
-class CamerasListViewController: BaseViewController, LoaderPresentable {
+final class CamerasListViewController: BaseViewController, LoaderPresentable {
     var loader: JGProgressHUD?
     private let viewModel: CamerasListViewModel
     private let itemsProxy = BehaviorSubject<[CamerasListItem]>(value: [])

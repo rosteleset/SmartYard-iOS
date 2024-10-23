@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import UIKit
 
-class CamerasListViewModel: BaseViewModel {
+final class CamerasListViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<HomeRoute>
     private let items: BehaviorSubject<[CamerasListItem]>

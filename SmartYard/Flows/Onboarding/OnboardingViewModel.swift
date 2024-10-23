@@ -11,7 +11,7 @@ import XCoordinator
 import RxCocoa
 import RxSwift
 
-class OnboardingViewModel: BaseViewModel {
+final class OnboardingViewModel: BaseViewModel {
     
     private let router: WeakRouter<AppRoute>
     private let accessService: AccessService

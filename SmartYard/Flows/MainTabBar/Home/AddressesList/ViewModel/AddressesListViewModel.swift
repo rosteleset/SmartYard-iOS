@@ -12,7 +12,7 @@ import XCoordinator
 import SmartYardSharedDataFramework
 
 // swiftlint:disable:next type_body_length
-class AddressesListViewModel: BaseViewModel {
+final class AddressesListViewModel: BaseViewModel {
     
     // MARK: Я в курсе, что это хреновая идея
     // Но это самый простой способ хранить значение переменной для одной сессии (до перезапуска)

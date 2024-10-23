@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AvailableServiceCell: UITableViewCell {
+final class AvailableServiceCell: UITableViewCell {
 
     @IBOutlet private weak var checkBox: SmartYardCheckBoxView!
     @IBOutlet private weak var titleLabel: UILabel!

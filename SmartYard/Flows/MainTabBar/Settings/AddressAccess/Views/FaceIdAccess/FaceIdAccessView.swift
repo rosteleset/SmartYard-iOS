@@ -11,7 +11,7 @@ import PMNibLinkableView
 import RxCocoa
 import RxSwift
 
-class FaceIdAccessView: PMNibLinkableView {
+final class FaceIdAccessView: PMNibLinkableView {
     
     @IBOutlet private weak var containerView: FullRoundedView!
     @IBOutlet private weak var manageFacesView: UIView!

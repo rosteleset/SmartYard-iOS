@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import PMNibLinkableView
 
-class NumberFieldView: PMNibLinkableView {
+final class NumberFieldView: PMNibLinkableView {
 
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var numberLabel: UILabel!

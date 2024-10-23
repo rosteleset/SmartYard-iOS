@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class UnapprovedObjectCell: CustomBorderCollectionViewCell {
+final class UnapprovedObjectCell: CustomBorderCollectionViewCell {
 
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var qrCodeButton: UIButton!

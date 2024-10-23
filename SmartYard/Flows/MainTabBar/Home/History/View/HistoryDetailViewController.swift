@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class HistoryDetailViewController: BaseViewController, LoaderPresentable {
+final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     var loader: JGProgressHUD?
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     

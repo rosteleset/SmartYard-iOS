@@ -16,7 +16,7 @@ protocol AddressDeletionViewModelDelegate: AnyObject {
     
 }
 
-class AddressDeletionViewModel: BaseViewModel {
+final class AddressDeletionViewModel: BaseViewModel {
     
     private let router: WeakRouter<SettingsRoute>
     

@@ -20,7 +20,7 @@ import FirebaseMessaging
 // Было решено разруливать логаут в каждой вьюмодели отдельно. Копипаста, но более гибкая
 // На всякий случай также происходит отписка от пушей (не знаю, разрулено ли это сервером)
 
-class LogoutHelper {
+final class LogoutHelper {
     
     private let pushNotificationService: PushNotificationService
     private let accessService: AccessService

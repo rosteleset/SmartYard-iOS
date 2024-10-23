@@ -12,7 +12,7 @@ import RxCocoa
 import SearchTextField
 import TPKeyboardAvoiding
 
-class InputAddressViewController: BaseViewController {
+final class InputAddressViewController: BaseViewController {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var containerView: UIView!

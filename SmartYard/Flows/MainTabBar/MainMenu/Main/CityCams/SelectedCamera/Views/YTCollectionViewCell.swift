@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YTCollectionViewCell: UICollectionViewCell {
+final class YTCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet private weak var bottomSeparator: UIView!
     @IBOutlet private weak var topSeparator: UIView!
