@@ -21,7 +21,7 @@ extension HistoryViewController {
         self.present(controller, animated: true)
     }
     
-    public func showEventsFilterPopover(from sourceView: UIView, items: [String], onSelect:@escaping (String, Int) -> Void ) {
+    public func showEventsFilterPopover(from sourceView: UIView, items: [String], onSelect: @escaping (String, Int) -> Void ) {
         let controller = ArrayChoiceTableViewController(
             items,
             selectedRow: items.firstIndex(of: eventsFilter.value.name) ?? 0,

@@ -168,11 +168,13 @@ class HistoryViewModel: BaseViewModel {
                         .map { $0.day }
                         .withoutDuplicates()
                         .sorted(by: >)
+                    
+                    self.updateSections.onNext(())
                 }
             }
             .disposed(by: disposeBag)
             
-        // выдаёт в sections готовые секции для dataModel в учётом всех фильтров
+        // выдаёт в sections готовые секции для dataModel с учётом всех фильтров
         updateSections
             .asDriverOnErrorJustComplete()
             .debounce(.milliseconds(100))
