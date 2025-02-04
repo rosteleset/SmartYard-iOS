@@ -411,7 +411,10 @@ final class CameraCollectionViewCell: UICollectionViewCell {
                 return
             }
             
-            self.startToPlay(url)
+            // TODO: - Переписать весь этот экран на адекватную архитектуру!!!
+            DispatchQueue.main.async {
+                self.startToPlay(url)
+            }
         }
     }
     
