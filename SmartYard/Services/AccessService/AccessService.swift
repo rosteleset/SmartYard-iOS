@@ -124,6 +124,10 @@ class AccessService {
     }
     
     var routeForCurrentState: AppRoute {
+        if let token = accessToken, !token.isEmpty {
+            return .main
+        }
+        
         switch appState {
         case .onboarding: return .onboarding
         case .selectProvider: return .selectProvider
@@ -355,11 +359,11 @@ class AccessService {
     }
     
     func logout() {
-        appState = Constants.defaultBackendURL.isNilOrEmpty ? .selectProvider : .phoneNumber
         accessToken = nil
         clientName = nil
         clientPhoneNumber = nil
         backendURL = Constants.defaultBackendURL ?? "https://127.0.0.1/mobile"
+        appState = Constants.defaultBackendURL.isNilOrEmpty ? .selectProvider : .phoneNumber
         providerId = "default"
         providerName = "default"
         showPayments = true
