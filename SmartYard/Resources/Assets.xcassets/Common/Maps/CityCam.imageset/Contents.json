@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "CityCam_any.svg",
+      "filename" : "CityCam_any.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "light"
         }
       ],
-      "filename" : "CityCam_light.svg",
+      "filename" : "CityCam_light.pdf",
       "idiom" : "universal"
     },
     {
@@ -21,7 +21,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Group 161.pdf",
+      "filename" : "CityCam_dark.pdf",
       "idiom" : "universal"
     }
   ],
