@@ -193,7 +193,11 @@ final class OnlinePageViewController: BaseViewController {
             guard let self = self, let url = URL(string: urlString) else {
                 return
             }
-            cell?.startToPlay(url)
+            
+            // Добавляем такое же временное решение как и в CameraCollectionViewCell, но в ближайшем будущем переписываем тут ВСЕ и делаем красоту!!!
+            DispatchQueue.main.async {
+                cell?.startToPlay(url)
+            }
         }
     }
     
