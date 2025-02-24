@@ -816,12 +816,15 @@ final class IncomingCallViewModel: BaseViewModel {
         // MARK: Поскольку доставка тонового сигнала вообще не гарантируется, решено отправлять их несколько раз
         // С промежутком в 750 мс
         
-        let dtmfRetrier = Driver<Int>
-            .interval(.milliseconds(750))
+        let dtmfRetrier = Observable<Int>.interval(
+            .milliseconds(750),
+            scheduler: SerialDispatchQueueScheduler(qos: .background)
+        )
         
         dtmfRetrier
+            .delay(.milliseconds(750), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
             .filter { $0 < 3 }
-            .drive(
+            .subscribe(
                 onNext: { [weak self] _ in
                     guard let self = self, call.state == .StreamsRunning else {
                         Logger.logWarning("Cannot send DTMF. Call is not in StreamsRunning state.")
@@ -842,8 +845,7 @@ final class IncomingCallViewModel: BaseViewModel {
         
         dtmfRetrier
             .filter { $0 >= 3 }
-            .throttle(.never)
-            .drive(
+            .subscribe(
                 onNext: { [weak self] _ in
                     Logger.logInfo("DTMF code was sent. Delivery is not guaranteed tho")
                     
