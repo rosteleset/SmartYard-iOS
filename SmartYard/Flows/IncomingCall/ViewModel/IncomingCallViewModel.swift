@@ -845,6 +845,7 @@ final class IncomingCallViewModel: BaseViewModel {
         
         dtmfRetrier
             .filter { $0 >= 3 }
+            .take(1)
             .subscribe(
                 onNext: { [weak self] _ in
                     Logger.logInfo("DTMF code was sent. Delivery is not guaranteed tho")
