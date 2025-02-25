@@ -6,6 +6,8 @@
 //  Copyright © 2021 LanTa. All rights reserved.
 //
 
+import Foundation
+
 enum TokenType: Int {
     
     case fcm
@@ -29,10 +31,12 @@ struct RegisterPushTokenRequest {
 extension RegisterPushTokenRequest {
     
     var requestParameters: [String: Any] {
+        let bundle = Bundle.main.bundleIdentifier ?? "Bundle Identifier extraction error"
         var params: [String: Any] = [
             "pushToken": pushToken,
             "type": type.rawValue,
-            "platform": "ios"
+            "platform": "ios",
+            "bundle": bundle
         ]
         
         if let clientId = clientId {
