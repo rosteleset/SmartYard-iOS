@@ -919,6 +919,7 @@ extension IncomingCallViewModel: LinphoneDelegate {
                 )
             }
             
+            self.webRTCService = nil
             providerProxy.endCall(uuid: callPayload.uuid)
             
             self.completionHandler?()
