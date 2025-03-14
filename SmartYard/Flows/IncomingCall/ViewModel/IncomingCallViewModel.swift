@@ -844,11 +844,11 @@ final class IncomingCallViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         dtmfRetrier
-            .filter { $0 >= 3 }
-            .take(1)
+            .filter { $0 > 3 }
+            .take(2)
             .subscribe(
                 onNext: { [weak self] _ in
-                    Logger.logInfo("DTMF code was sent. Delivery is not guaranteed tho")
+                    Logger.logInfo("DTMF code was sent. Delivery is not guaranteed tho.")
                     
                     self?.isDoorBeingOpened.onNext(false)
                     
@@ -861,6 +861,7 @@ final class IncomingCallViewModel: BaseViewModel {
                     
                     do {
                         try call.terminate()
+                        Logger.logInfo("Call is terminated.")
                     } catch {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                             guard let self = self else {
@@ -871,6 +872,7 @@ final class IncomingCallViewModel: BaseViewModel {
                             self.completionHandler?()
                             self.completionHandler = nil
                             self.router.trigger(.closeIncomingCall)
+                            Logger.logInfo("Close incoming call triggered")
                         }
                     }
                 }
