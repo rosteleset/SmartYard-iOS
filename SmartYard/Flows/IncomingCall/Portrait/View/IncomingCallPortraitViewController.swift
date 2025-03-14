@@ -184,11 +184,12 @@ final class IncomingCallPortraitViewController: BaseViewController {
         // Video preview and WebRTC view logic
         let isWebRTC = videoState == .webrtc
         let isInband = videoState == .inband
+        let isNotWebRTCAndNotInband = !isWebRTC && !isInband
         videoPreview.isHidden = !shouldShowVideo || (!isInband && isWebRTC)
         webRTCView.isHidden = !shouldShowVideo || (isInband && !isWebRTC)
         
         // Image view visibility
-        imageView.isHidden = !(previewState == .staticImage) || (previewState == .video && !isInband && !isWebRTC)
+        imageView.isHidden = !(previewState == .staticImage || isNotWebRTCAndNotInband)
         imageViewActivityIndicator.isHidden = shouldShowVideo || hasImage
         
         // Button containers visibility

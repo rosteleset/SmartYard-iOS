@@ -31,10 +31,7 @@ final class IncomingCallLandscapeViewController: BaseViewController {
     @IBOutlet private weak var subtitleLabel: UILabel!
     
     @IBOutlet private weak var exitFullscreenButton: UIButton!
-    
-    private var SIPHasVideo = true
-    private var webRTCHasVideo = false
-    
+        
     private let viewModel: IncomingCallViewModel
     
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
@@ -208,11 +205,12 @@ final class IncomingCallLandscapeViewController: BaseViewController {
         let shouldShowVideo = (callState == .callActive || callState == .callReceived) && previewState == .video
         let isWebRTC = videoState == .webrtc
         let isInband = videoState == .inband
+        let isNotWebRTCAndNotInband = !isWebRTC && !isInband
         videoPreview.isHidden = !shouldShowVideo || (!isInband && isWebRTC)
         webRTCView.isHidden = !shouldShowVideo || (isInband && !isWebRTC)
-        
+
         // Image view visibility
-        imageView.isHidden = !(previewState == .staticImage) || (previewState == .video && !isInband && !isWebRTC)
+        imageView.isHidden = !(previewState == .staticImage || isNotWebRTCAndNotInband)
         imageViewActivityIndicator.isHidden = shouldShowVideo || hasImage
         
         // Button containers visibility

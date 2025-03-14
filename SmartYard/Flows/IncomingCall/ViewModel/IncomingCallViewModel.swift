@@ -746,13 +746,10 @@ final class IncomingCallViewModel: BaseViewModel {
                     guard let self = self, currentState.doorState == .notDetermined else {
                         return
                     }
-                    let isWebRTC = callPayload.videoType == .webrtc
                     
                     switch currentState.previewState {
-                    case .staticImage:
-                        self.updateState(previewState: .video)
-                    case .video:
-                        self.updateState(previewState: .staticImage)
+                    case .staticImage: self.updateState(previewState: .video)
+                    case .video: self.updateState(previewState: .staticImage)
                     }
                 }
             )
