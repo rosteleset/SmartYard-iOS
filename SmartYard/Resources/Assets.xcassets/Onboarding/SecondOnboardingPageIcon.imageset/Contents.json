@@ -1,27 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "SecondOnboardingPageIcon_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "SecondOnboardingPageIcon_light.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "SecondOnboardingPageIcon_dark.pdf",
+      "filename" : "SecondOnboardingPageIcon.pdf",
       "idiom" : "universal"
     }
   ],

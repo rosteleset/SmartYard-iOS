@@ -8,20 +8,9 @@
       "appearances" : [
         {
           "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "SettingsTabUnselected_light.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
           "value" : "dark"
         }
       ],
-      "filename" : "SettingsTabUnselected_dark.pdf",
       "idiom" : "universal"
     }
   ],

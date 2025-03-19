@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "SettingsWiFiSelectedIcon_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "SettingsWiFiSelectedIcon_light.pdf",
+      "filename" : "SettingsWiFiSelectedIcon.pdf",
       "idiom" : "universal"
     },
     {
@@ -21,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "SettingsWiFiSelectedIcon_dark.pdf",
+      "filename" : "SettingsWiFiSelectedIcon 1.pdf",
       "idiom" : "universal"
     }
   ],

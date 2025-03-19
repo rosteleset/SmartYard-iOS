@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "HomeTabUnselected_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "HomeTabUnselected_light.pdf",
+      "filename" : "HomeTabUnselected.pdf",
       "idiom" : "universal"
     },
     {
@@ -21,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "HomeTabUnselected_dark.pdf",
+      "filename" : "ic_address_no_active.pdf",
       "idiom" : "universal"
     }
   ],

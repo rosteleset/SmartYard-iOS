@@ -1,27 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "PublicCamsMenuIcon_any.svg",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "PublicCamsMenuIcon_light.svg",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "PublicCamsMenuIcon_dark.pdf",
+      "filename" : "PublicCamsMenuIcon.pdf",
       "idiom" : "universal"
     }
   ],
@@ -30,6 +10,6 @@
     "version" : 1
   },
   "properties" : {
-    "template-rendering-intent" : "original"
+    "template-rendering-intent" : "template"
   }
 }

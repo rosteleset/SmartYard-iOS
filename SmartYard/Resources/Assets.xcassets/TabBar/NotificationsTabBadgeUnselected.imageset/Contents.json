@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "NotificationsTabBadgeUnselected_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "NotificationsTabBadgeUnselected_light.pdf",
+      "filename" : "NotificationsTabBadgeUnselected.pdf",
       "idiom" : "universal"
     },
     {

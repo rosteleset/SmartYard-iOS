@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "SettingsKeySelectedIcon_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "SettingsKeySelectedIcon_light.pdf",
+      "filename" : "SettingsKeySelectedIcon.pdf",
       "idiom" : "universal"
     },
     {
@@ -21,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "SettingsKeySelectedIcon_dark.pdf",
+      "filename" : "SettingsKeySelectedIcon 1.pdf",
       "idiom" : "universal"
     }
   ],

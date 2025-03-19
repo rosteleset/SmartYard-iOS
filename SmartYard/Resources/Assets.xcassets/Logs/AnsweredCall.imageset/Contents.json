@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "AnsweredCall_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "AnsweredCall_light.pdf",
+      "filename" : "AnsweredCall.pdf",
       "idiom" : "universal"
     },
     {

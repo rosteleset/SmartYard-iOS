@@ -8,20 +8,10 @@
       "appearances" : [
         {
           "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "MainBackground_light.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
           "value" : "dark"
         }
       ],
-      "filename" : "background_fullscreen.pdf",
+      "filename" : "MainBackground_dark.pdf",
       "idiom" : "universal"
     }
   ],

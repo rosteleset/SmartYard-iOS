@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "LockIcon_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "LockIcon_light.pdf",
+      "filename" : "LockIcon.pdf",
       "idiom" : "universal"
     },
     {

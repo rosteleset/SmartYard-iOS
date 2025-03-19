@@ -110,6 +110,7 @@
                                                                         <constraint firstAttribute="height" constant="12" id="czE-ca-xso"/>
                                                                         <constraint firstAttribute="width" constant="12" id="yE9-iV-LT6"/>
                                                                     </constraints>
+                                                                    <color key="tintColor" name="gray"/>
                                                                     <state key="normal" image="pencil"/>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Александр Сергеевич" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xe0-3V-fgv">
@@ -826,7 +827,7 @@
         </view>
     </objects>
     <resources>
-        <image name="MainBackground" width="375" height="812"/>
+        <image name="MainBackground" width="371" height="812"/>
         <image name="QuestionMark" width="25" height="25"/>
         <image name="RightArrowIcon" width="8" height="13"/>
         <image name="UpArrowIcon" width="13" height="8"/>

@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "CloseIcon_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "CloseIcon_light.pdf",
+      "filename" : "CloseIconBlue.pdf",
       "idiom" : "universal"
     },
     {
@@ -21,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "CloseIcon_dark.pdf",
+      "filename" : "CloseIconBlue 1.pdf",
       "idiom" : "universal"
     }
   ],

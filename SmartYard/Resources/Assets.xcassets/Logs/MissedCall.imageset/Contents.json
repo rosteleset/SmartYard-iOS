@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "MissedCall_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "MissedCall_light.pdf",
+      "filename" : "MissedCall.pdf",
       "idiom" : "universal"
     },
     {

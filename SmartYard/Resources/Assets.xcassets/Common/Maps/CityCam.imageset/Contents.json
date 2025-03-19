@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "CityCam_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "CityCam_light.pdf",
+      "filename" : "CityCam.pdf",
       "idiom" : "universal"
     },
     {
@@ -21,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "CityCam_dark.pdf",
+      "filename" : "CityCam 1.pdf",
       "idiom" : "universal"
     }
   ],

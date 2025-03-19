@@ -1,27 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "PopoverCheckBoxNormal_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "PopoverCheckBoxNormal_light.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "PopoverCheckBoxNormal_dark.pdf",
+      "filename" : "PopoverCheckBoxNormal.pdf",
       "idiom" : "universal"
     }
   ],

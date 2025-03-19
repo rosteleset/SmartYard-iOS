@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "QuestionMark_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "QuestionMark_light.pdf",
+      "filename" : "QuestionMark.pdf",
       "idiom" : "universal"
     },
     {
@@ -21,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "QuestionMark_dark.pdf",
+      "filename" : "QuestionMark 1.pdf",
       "idiom" : "universal"
     }
   ],

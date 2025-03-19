@@ -8,20 +8,10 @@
       "appearances" : [
         {
           "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "PaymentsTabUnselected_light.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
           "value" : "dark"
         }
       ],
-      "filename" : "PaymentsTabUnselected_dark.pdf",
+      "filename" : "ic_pay_no_active.pdf",
       "idiom" : "universal"
     }
   ],

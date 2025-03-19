@@ -1,27 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "CheckIcon_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "CheckIcon_light.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "CheckIcon_dark.pdf",
+      "filename" : "CheckIcon.pdf",
       "idiom" : "universal"
     }
   ],

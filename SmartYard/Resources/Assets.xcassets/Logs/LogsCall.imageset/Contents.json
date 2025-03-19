@@ -1,27 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "LogsCall_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "LogsCall_light.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "LogsCall_dark.pdf",
+      "filename" : "LogsCall.pdf",
       "idiom" : "universal"
     }
   ],
@@ -30,6 +10,6 @@
     "version" : 1
   },
   "properties" : {
-    "template-rendering-intent" : "original"
+    "template-rendering-intent" : "template"
   }
 }

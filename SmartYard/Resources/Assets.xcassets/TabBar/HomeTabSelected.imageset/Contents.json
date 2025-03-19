@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "HomeTabSelected_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "HomeTabSelected_light.pdf",
+      "filename" : "HomeTabSelected.pdf",
       "idiom" : "universal"
     },
     {

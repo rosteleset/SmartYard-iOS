@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "NotificationsTabSelected_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "NotificationsTabSelected_light.pdf",
+      "filename" : "NotificationsTabSelected.pdf",
       "idiom" : "universal"
     },
     {

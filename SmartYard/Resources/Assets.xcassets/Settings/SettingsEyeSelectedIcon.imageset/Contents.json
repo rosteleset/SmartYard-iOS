@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "SettingsEyeSelectedIcon_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "SettingsEyeSelectedIcon_light.pdf",
+      "filename" : "SettingsEyeSelectedIcon.pdf",
       "idiom" : "universal"
     },
     {
@@ -21,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "SettingsEyeSelectedIcon_dark.pdf",
+      "filename" : "SettingsEyeSelectedIcon 1.pdf",
       "idiom" : "universal"
     }
   ],

@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "MenuTabSelected_any.svg",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "MenuTabSelected_light.svg",
+      "filename" : "MenuTabSelected.pdf",
       "idiom" : "universal"
     },
     {

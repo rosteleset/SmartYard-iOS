@@ -3,26 +3,6 @@
     {
       "filename" : "FirstOnboardingPageIcon_any.pdf",
       "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "FirstOnboardingPageIcon_light.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "FirstOnboardingPageIcon_dark.pdf",
-      "idiom" : "universal"
     }
   ],
   "info" : {

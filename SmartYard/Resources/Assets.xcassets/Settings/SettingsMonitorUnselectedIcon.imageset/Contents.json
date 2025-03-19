@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "SettingsMonitorUnselectedIcon_any.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
-      "filename" : "SettingsMonitorUnselectedIcon_light.pdf",
+      "filename" : "SettingsMonitorUnselectedIcon.pdf",
       "idiom" : "universal"
     },
     {
@@ -21,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "SettingsMonitorUnselectedIcon_dark.pdf",
+      "filename" : "SettingsMonitorUnselectedIcon 1.pdf",
       "idiom" : "universal"
     }
   ],
