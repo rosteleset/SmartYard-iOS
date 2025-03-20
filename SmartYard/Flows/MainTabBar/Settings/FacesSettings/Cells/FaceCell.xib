@@ -56,7 +56,7 @@
                                     <constraint firstAttribute="width" constant="28" id="qa0-RS-QPV"/>
                                     <constraint firstAttribute="height" constant="28" id="szl-ax-6pM"/>
                                 </constraints>
-                                <state key="normal" image="closeIconRed"/>
+                                <state key="normal" image="CloseIconRed"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -86,7 +86,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="closeIconRed" width="28" height="28"/>
+        <image name="CloseIconRed" width="28" height="27"/>
         <namedColor name="backgroundColor">
             <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
