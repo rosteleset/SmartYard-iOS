@@ -16,13 +16,21 @@ import FirebaseMessaging
 final class PinCodeViewModel: BaseViewModel {
     
     private let accessService: AccessService
+    private let alertService: AlertService
     private let apiWrapper: APIWrapper
     private let router: WeakRouter<AppRoute>
     
     private let phoneNumber: String
     
-    init(accessService: AccessService, apiWrapper: APIWrapper, router: WeakRouter<AppRoute>, phoneNumber: String) {
+    init(
+        accessService: AccessService,
+        alertService: AlertService,
+        apiWrapper: APIWrapper,
+        router: WeakRouter<AppRoute>,
+        phoneNumber: String
+    ) {
         self.accessService = accessService
+        self.alertService = alertService
         self.apiWrapper = apiWrapper
         self.router = router
         self.phoneNumber = phoneNumber
@@ -82,6 +90,32 @@ final class PinCodeViewModel: BaseViewModel {
                 return self.apiWrapper.confirmCode(userPhone: AccessService.shared.phonePrefix + self.phoneNumber, smsCode: smsCode)
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
+                    .catch { [weak self] error in
+                        guard let self = self else {
+                            return .just(nil)
+                        }
+                        let nsError = error as NSError
+                        
+                        if nsError.code == 403 {
+                            let okAction = UIAlertAction(
+                                title: NSLocalizedString("OK", comment: ""),
+                                style: .default,
+                                handler: { [weak self] _ in
+                                    self?.router.trigger(.phoneNumber)
+                                }
+                            )
+                            
+                            self.alertService.showDialog(
+                                title: NSLocalizedString("Error", comment: ""),
+                                message: nsError.localizedDescription,
+                                preferredStyle: .alert,
+                                actions: [okAction],
+                                priority: 250
+                            )
+                        }
+                        
+                        return .just(nil)
+                    }
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()

@@ -159,6 +159,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
         case let .authByOutgoingCall(phoneNumber: phoneNumber, confirmPhoneNumber: confirmPhone):
             let vm = OutgoingCallViewModel(
                 accessService: accessService,
+                alertService: alertService,
                 apiWrapper: apiWrapper,
                 router: weakRouter,
                 phoneNumber: phoneNumber,
