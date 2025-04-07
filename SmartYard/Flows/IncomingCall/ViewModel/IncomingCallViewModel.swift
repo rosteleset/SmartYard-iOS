@@ -163,14 +163,15 @@ final class IncomingCallViewModel: BaseViewModel {
         Driver
             .combineLatest(
                 currentStateSubject.observe(on: MainScheduler.asyncInstance).asDriverOnErrorJustComplete(),
-                doorOpeningRequestedByUser.asDriver(onErrorJustReturn: false)
+                doorOpeningRequestedByUser.asDriver(onErrorJustReturn: false),
+                isDoorBeingOpened.asDriver(onErrorJustReturn: false)
             )
             .filter { args in
-                let (currentState, isDoorOpeningRequested) = args
+                let (currentState, isDoorOpeningRequested, isAlreadyOpening) = args
                 
                 return currentState.callState == .callActive &&
                        currentState.doorState == .notDetermined &&
-                       isDoorOpeningRequested
+                       isDoorOpeningRequested && !isAlreadyOpening
             }
             .mapToVoid()
             .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
@@ -693,6 +694,7 @@ final class IncomingCallViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] currentState in
                     Logger.logInfo("User tapped 'Open'. Current state: \(currentState.callState)")
+                    
                     if currentState.callState == .callReceived {
                         self?.updateState(callState: .establishingConnection)
                     }
@@ -813,67 +815,62 @@ final class IncomingCallViewModel: BaseViewModel {
         // MARK: Поскольку доставка тонового сигнала вообще не гарантируется, решено отправлять их несколько раз
         // С промежутком в 750 мс
         
-        let dtmfRetrier = Observable<Int>.interval(
-            .milliseconds(750),
-            scheduler: SerialDispatchQueueScheduler(qos: .background)
-        )
-        
-        dtmfRetrier
-            .delay(.milliseconds(750), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
-            .filter { $0 < 3 }
-            .subscribe(
-                onNext: { [weak self] _ in
-                    guard let self = self, call.state == .StreamsRunning else {
-                        Logger.logWarning("Cannot send DTMF. Call is not in StreamsRunning state.")
-                        return
-                    }
-                    
-                    do {
-                        try call.sendDtmfs(dtmfs: self.callPayload.dtmf)
-                        Logger.logSuccess("DTMF sent successfully.")
-                    } catch {
-                        Logger.logError("Failed to send DTMF. Error: \(error.localizedDescription)")
-                        self.isDoorBeingOpened.onNext(false)
-                        return
+        let scheduler = SerialDispatchQueueScheduler(qos: .background)
+
+        let dtmfStream = Observable<Int>
+            .interval(.milliseconds(750), scheduler: scheduler)
+            .take(3)
+            .observe(on: MainScheduler.instance)
+            .do(onNext: { [weak self] attempt in
+                guard let self = self, call.state == .StreamsRunning else { return }
+                Logger.logDebug("Sending DTMF [\(attempt + 1)/3]...")
+                
+                do {
+                    try call.sendDtmfs(dtmfs: self.callPayload.dtmf)
+                    Logger.logSuccess("DTMF sent successfully.")
+                } catch {
+                    self.isDoorBeingOpened.onNext(false)
+                    Logger.logError("Failed to send DTMF. Error: \(error.localizedDescription)")
+                }
+            })
+            .mapToVoid()
+
+        let finishStream = Observable.just(())
+            .delay(.milliseconds(750), scheduler: scheduler)
+            .observe(on: MainScheduler.instance)
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                Logger.logInfo("DTMF code was sent. Delivery is not guaranteed tho.")
+                
+                self.isDoorBeingOpened.onNext(false)
+
+                self.updateState(
+                    callState: .callFinished,
+                    doorState: .opened,
+                    previewState: .staticImage,
+                    soundOutputState: .disabled
+                )
+
+                do {
+                    Logger.logDebug("Calling terminate() for call with state: \(call.state)")
+                    try call.terminate()
+                    Logger.logInfo("Call is terminated.")
+                } catch {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                        guard let self = self else { return }
+
+                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
+                        self.completionHandler?()
+                        self.completionHandler = nil
+                        self.router.trigger(.closeIncomingCall)
+                        Logger.logInfo("Close incoming call triggered")
                     }
                 }
-            )
-            .disposed(by: disposeBag)
-        
-        dtmfRetrier
-            .filter { $0 > 3 }
-            .take(2)
-            .subscribe(
-                onNext: { [weak self] _ in
-                    Logger.logInfo("DTMF code was sent. Delivery is not guaranteed tho.")
-                    
-                    self?.isDoorBeingOpened.onNext(false)
-                    
-                    self?.updateState(
-                        callState: .callFinished,
-                        doorState: .opened,
-                        previewState: .staticImage,
-                        soundOutputState: .disabled
-                    )
-                    
-                    do {
-                        try call.terminate()
-                        Logger.logInfo("Call is terminated.")
-                    } catch {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                            guard let self = self else {
-                                return
-                            }
-                            
-                            self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                            self.completionHandler?()
-                            self.completionHandler = nil
-                            self.router.trigger(.closeIncomingCall)
-                            Logger.logInfo("Close incoming call triggered")
-                        }
-                    }
-                }
-            )
+            })
+
+        Observable
+            .concat(dtmfStream, finishStream)
+            .subscribe()
             .disposed(by: disposeBag)
     }
     
