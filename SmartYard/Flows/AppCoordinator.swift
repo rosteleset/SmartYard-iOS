@@ -348,12 +348,12 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
         // Скорее всего, дальше надо будет делать какую-то очередь, но сейчас для демо и так сгодится
         
         guard !linphoneService.hasEnqueuedCalls else {
-            print("Can only process one call at a time")
+            Logger.logWarning("Cannot process incoming call: already handling another call.")
             return
         }
         
         guard !pushNotificationService.isCallIgnored(callId: callPayload.uniqueIdentifier) else {
-            print("Call was ignored")
+            Logger.logInfo("Ignored call with ID: \(callPayload.uniqueIdentifier)")
             return
         }
         
@@ -415,7 +415,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
             .ignoreNil()
             .drive(
                 onNext: {
-                    print("DEBUG: Successfully subscribed to push notifications")
+                    Logger.logDebug("Successfully subscribed to push notifications")
                 }
             )
             .disposed(by: disposeBag)

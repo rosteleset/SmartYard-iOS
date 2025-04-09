@@ -60,7 +60,7 @@ final class ChatViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { error in
-                    print(error.localizedDescription)
+                    Logger.logError(error.localizedDescription)
                 }
             )
             .disposed(by: disposeBag)
@@ -156,9 +156,9 @@ final class ChatViewModel: BaseViewModel {
                     
                     ChatApi.getNewMessages(self.accessService.chatToken, md5) { result in
                         if result?["error"] != nil {
-                            print("error : \(String(describing: result?["error"]))")
+                            Logger.logError("\(String(describing: result?["error"]))")
                         } else {
-                            print("result : \(result.debugDescription)")
+                            Logger.logDebug("Result : \(result.debugDescription)")
                         }
                     }
                 }

@@ -83,7 +83,7 @@ final class WebRTCService: NSObject {
     func setRemoteSDP(sdp: RTCSessionDescription) {
         self.webRTCClient.set(remoteSdp: sdp) { error in
             if let error = error {
-                print(error.localizedDescription)
+                Logger.logError("Failed to set remote SDP: \(error.localizedDescription)")
             }
         }
     }
@@ -112,26 +112,26 @@ extension WebRTCService: SignalClientDelegate {
 
 extension WebRTCService: WebRTCClientDelegate {
     func webRTCClientHaveLocalOffer(_ client: WebRTCClient) {
-        print("webRTCClientHaveLocalOffer")
+        Logger.logDebug("webRTCClientHaveLocalOffer")
     }
     
     func webRTCClient(_ client: WebRTCClient, didDiscoverLocalCandidate candidate: RTCIceCandidate) {
-        print("didDiscoverLocalCandidate: \(candidate.description)")
+        Logger.logDebug("didDiscoverLocalCandidate: \(candidate.description)")
     }
     
     func webRTCClient(_ client: WebRTCClient, didChangeConnectionState state: RTCIceConnectionState) {
-        print("didChangeConnectionState: \(state.description)")
+        Logger.logInfo("didChangeConnectionState: \(state.description)")
         stateConnected = state == .connected
         if stateConnected, let containerView = self.containerView {
             DispatchQueue.main.async { [weak self] in
-                print("Binding to containerView right after connected")
+                Logger.logInfo("Binding to containerView right after connected")
                 self?.bindView(containerView)
             }
         }
     }
     
     func webRTCClient(_ client: WebRTCClient, didReceiveData data: Data) {
-        print("didReceiveData")
+        Logger.logDebug("didReceiveData")
     }
 }
 

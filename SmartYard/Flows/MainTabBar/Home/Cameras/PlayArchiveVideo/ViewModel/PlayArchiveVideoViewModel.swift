@@ -255,10 +255,7 @@ final class PlayArchiveVideoViewModel: BaseViewModel {
         let hasSound = BehaviorSubject<Bool>(value: self.camera.hasSound )
         let rangeBoundsSubject = BehaviorSubject<(lower: Date, upper: Date)?>(value: nil)
         let periodsSubject = BehaviorSubject<[ArchiveVideoPreviewPeriod]>(value: [])
-        
-        print(#line, hasSound)
-        print(#line, hasSound)
-        
+                
         camera.requestRanges(for: date, ranges: ranges) { [weak self] ranges in
             guard let self = self else { return }
             

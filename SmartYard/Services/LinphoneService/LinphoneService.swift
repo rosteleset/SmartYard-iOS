@@ -46,7 +46,7 @@ final class LinphoneService: CoreDelegate {
                 do {
                     try FileManager.default.copyItem(at: configSource, to: configTarget)
                 } catch {
-                    print("Unable to copy config file from bundle to library")
+                    Logger.logError("Unable to copy config file from bundle to library")
                 }
             }
             
@@ -114,7 +114,7 @@ final class LinphoneService: CoreDelegate {
                 }
             }
         } catch {
-            print("Error: \(error)")
+            Logger.logError("\(error)")
         }
     }
     
@@ -186,7 +186,7 @@ final class LinphoneService: CoreDelegate {
 
 class LinphoneLoggingServiceManager: LoggingServiceDelegate {
     func onLogMessageWritten(logService: LoggingService, domain: String, level: LogLevel, message: String) {
-        print("Logging service log: \(message) \n")
+        Logger.logDebug("Logging service log: \(message) \n")
     }
     
 }

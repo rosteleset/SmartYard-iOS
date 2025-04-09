@@ -94,7 +94,7 @@ extension UIView {
             case .dark:
                 themeColor = darkColor
             @unknown default:
-                print("Unknown ThemeManager style encountered: \(ThemeManager.shared.currentTheme.value)")
+                Logger.logWarning("Unknown ThemeManager style encountered: \(ThemeManager.shared.currentTheme.value)")
                 themeColor = color
             }
             

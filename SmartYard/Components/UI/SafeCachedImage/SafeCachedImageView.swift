@@ -124,7 +124,7 @@ extension SafeCachedImageView {
             let thumbnailImageRef = try assetIG.copyCGImage(at: cmTime, actualTime: nil)
             return UIImage(cgImage: thumbnailImageRef)
         } catch let error {
-            print("Error: \(error)")
+            Logger.logError("\(error)")
             return nil
         }
     }

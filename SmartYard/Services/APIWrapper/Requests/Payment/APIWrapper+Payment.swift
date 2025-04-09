@@ -57,8 +57,8 @@ extension APIWrapper {
             paymentToken: paymentToken
         )
 
-        print(request)
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.sberbankPayProcess(request: request))
             .convertNoConnectionError()
@@ -75,8 +75,8 @@ extension APIWrapper {
             amount: amount
         )
 
-        print(request)
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.payRegister(request: request))
             .convertNoConnectionError()

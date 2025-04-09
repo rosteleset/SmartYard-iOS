@@ -26,7 +26,7 @@ enum MacroscopService {
             }
             
             let url = baseURL.absoluteString
-            print(url)
+            Logger.logDebug("MacroscopService — generated live preview URL: \(url)")
             return url
         }
         return ""
@@ -59,7 +59,7 @@ enum MacroscopService {
             }
             
             let url = baseURL.absoluteString
-            print(url)
+            Logger.logDebug("MacroscopService — generated archive preview URL: \(url)")
             return url
         }
         
@@ -73,17 +73,17 @@ enum MacroscopService {
         let url = camera.baseURLString + (camera.token.isEmpty ? "" : "&\(camera.token)") + parameters
         guard
             let request = URLRequest(urlString: url) else {
-                print(url)
-                return
+            Logger.logError("MacroscopService.generateURL — failed to build request from URL: \(url)")
+            return
         }
-        print(camera.baseURLString + parameters)
+        Logger.logDebug("MacroscopService.generateURL — full request: \(camera.baseURLString + parameters)")
         URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data,
                   let resourceString = NSString(data: data, encoding: NSUTF8StringEncoding) as? String,
                   let url = URL(string: camera.baseURLString)
                   
             else {
-                print(error?.localizedDescription ?? "")
+                Logger.logError("MacroscopService.generateURL — request failed: \(error?.localizedDescription ?? "unknown error")")
                 DispatchQueue.main.async {
                     completion("")
                 }
@@ -102,7 +102,7 @@ enum MacroscopService {
                 DispatchQueue.main.async {
                     completion(streamURL)
                 }
-                print(streamURL)
+                Logger.logDebug("MacroscopService — stream URL generated: \(streamURL)")
             }
             
         }

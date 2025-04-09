@@ -25,8 +25,8 @@ extension APIWrapper {
         forceUpdateFaces = false
         
         let request = GetPersonFacesRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId)
-        print("request data: \(request)")
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.getPersonFaces(request: request))
             .convertNoConnectionError()
@@ -47,8 +47,8 @@ extension APIWrapper {
             accessToken: accessToken,
             event: uuid
         )
-        print("request data: \(request)")
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.disLikePersonFace(request: request))
             .convertNoConnectionError()
@@ -70,8 +70,8 @@ extension APIWrapper {
             flatId: flatId,
             faceId: faceId
         )
-        print("request data: \(request)")
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.removePersonFace(request: request))
             .convertNoConnectionError()
@@ -92,8 +92,8 @@ extension APIWrapper {
             accessToken: accessToken,
             event: uuid
         )
-        print("request data: \(request)")
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.likePersonFace(request: request))
             .convertNoConnectionError()

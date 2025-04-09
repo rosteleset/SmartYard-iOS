@@ -52,10 +52,10 @@ final class PushNotificationService {
         )
         .subscribe(
             onSuccess: { _ in
-                print("DEBUG: Push token successfully reset on backend")
+                Logger.logDebug("Push token successfully reset on backend")
             },
             onFailure: { error in
-                print("DEBUG: Error resetting push token: \(error)")
+                Logger.logDebug("Error resetting push token: \(error)")
             }
         )
         .disposed(by: disposeBag)
@@ -97,7 +97,7 @@ final class PushNotificationService {
             return .error(NSError.PushNotificationServiceError.fcmTokenMissing)
         }
         
-        print("DEBUG / REGISTER WITH VOIP TOKEN \(String(describing: voipToken))")
+        Logger.logDebug("REGISTER WITH VOIP TOKEN \(String(describing: voipToken))")
         
         return apiWrapper.registerPushToken(
             pushToken: fcmToken,
@@ -145,7 +145,7 @@ final class PushNotificationService {
             .concat(queries)
             .drive(
                 onNext: { messageId, isMarked in
-                    print("Message \(messageId) delivery state is: \(isMarked)")
+                    Logger.logDebug("📦 Message \(messageId) delivery state: \(isMarked ? "✅ Delivered" : "❌ Not marked")")
                 }
             )
             .disposed(by: disposeBag)

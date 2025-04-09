@@ -34,20 +34,20 @@ enum TrassirService {
             return
         }
         guard var urlBase = URLComponents(string: camera.baseURLString) else {
-            print(camera.baseURLString)
+            Logger.logError("invalid baseURL: \(camera.baseURLString)")
             return
         }
         urlBase.query = camera.token.isEmpty ? "" : "\(camera.token)"
         urlBase.path = "/login"
         guard let url = urlBase.url else { return }
         let request = URLRequest(url: url)
-        print(request.url?.absoluteString ?? "")
-        
+        Logger.logDebug("request URL: \(request.url?.absoluteString ?? "nil")")
+
         URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data, options: [])
             else {
-                print(error?.localizedDescription ?? "")
+                Logger.logError("error: \(error?.localizedDescription ?? "unknown error")")
                 task()
                 return
             }
@@ -62,11 +62,11 @@ enum TrassirService {
     /// получает токен для потока
     static func getToken(_ camera: CameraObject, suffix: String = "&stream=main", _ task: @escaping (String) -> Void ) {
         guard let sid = getSid(camera) else {
-            print("hasn't sid")
+            Logger.logError("missing sid")
             return
         }
         guard var urlBase = URLComponents(string: camera.baseURLString) else {
-            print(camera.baseURLString)
+            Logger.logError("invalid baseURL: \(camera.baseURLString)")
             return
         }
         urlBase.query?.append("&container=hls&sid=\(sid)")
@@ -75,27 +75,27 @@ enum TrassirService {
         }
         urlBase.path = "/get_video"
         guard let url = urlBase.url else {
-            print(urlBase)
+            Logger.logError("invalid URL: \(urlBase.string ?? "unknown")")
             return
         }
         let request = URLRequest(url: url)
-        print(request.url?.absoluteString ?? "")
-        
+        Logger.logDebug("request URL: \(request.url?.absoluteString ?? "nil")")
+
         URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data, options: [])
             else {
-                print(error?.localizedDescription as Any)
+                Logger.logError("error: \(error?.localizedDescription ?? "unknown error")")
                 return
             }
             guard  let array = json as? [String: Any],
                    let success = array["success"] as? Int else { return }
             if success == 1, let token = array["token"] as? String {
-                print("get token for \(suffix) = \(token)")
+                Logger.logDebug("token for \(suffix): \(token)")
                 task(token)
             } else {
                 if let error = array["error_code"] as? String {
-                    print(error)
+                    Logger.logWarning("error_code from server: \(error)")
                 }
             }
             
@@ -110,11 +110,11 @@ enum TrassirService {
     /// получает токен для потока
     static func seekTo(_ camera: CameraObject, token: String, startDate: Date, _ task: @escaping (String) -> Void ) {
         guard let sid = getSid(camera) else {
-            print("hasn't sid")
+            Logger.logError("missing sid")
             return
         }
         guard var urlBase = URLComponents(string: camera.baseURLString) else {
-            print(camera.baseURLString)
+            Logger.logError("invalid baseURL: \(camera.baseURLString)")
                 return
         }
         let dateFormatter = DateFormatter()
@@ -126,21 +126,21 @@ enum TrassirService {
         urlBase.query? = "command=seek&timestamp=\(starttime)&direction=0&speed=1&sid=\(sid)&token=\(token)"
         urlBase.path = "/archive_command"
         guard let url = urlBase.url else {
-                print(urlBase)
+            Logger.logError("TrassirService.seekTo — invalid URL: \(urlBase.string ?? "unknown")")
                 return
         }
         let request = URLRequest(url: url)
-        print(request.url?.absoluteString ?? "")
-        
+        Logger.logDebug("TrassirService.seekTo — request URL: \(request.url?.absoluteString ?? "nil")")
+
         URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data, options: [])
             else {
-                print(error?.localizedDescription as Any)
+                Logger.logError("error: \(error?.localizedDescription ?? "unknown error")")
                 return
             }
             guard  let array = json as? [String: Any] else { return }
-            print(array)
+            Logger.logDebug("response JSON: \(array)")
             task(token)
         }
         .resume()
@@ -148,12 +148,12 @@ enum TrassirService {
     /// подготавливает к воспроизведению фрагмент архива
     static func playArchive(_ camera: CameraObject, token: String, startDate: Date, endDate: Date, _ task: @escaping (String) -> Void ) {
         guard let sid = getSid(camera) else {
-            print("hasn't sid")
+            Logger.logError("missing sid")
             return
         }
         guard var urlBase = URLComponents(string: camera.baseURLString) else {
-            print(camera.baseURLString)
-                return
+            Logger.logError("invalid baseURL: \(camera.baseURLString)")
+            return
         }
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = Calendar.serverCalendar.timeZone
@@ -165,21 +165,21 @@ enum TrassirService {
         urlBase.query? = "command=play&start=\(starttime)&stop=\(endtime)&speed=1&sid=\(sid)&token=\(token)"
         urlBase.path = "/archive_command"
         guard let url = urlBase.url else {
-                print(urlBase)
+            Logger.logError("invalid URL: \(urlBase.string ?? "unknown")")
                 return
         }
         let request = URLRequest(url: url)
-        print(request.url?.absoluteString ?? "")
-        
+        Logger.logDebug("request URL: \(request.url?.absoluteString ?? "nil")")
+
         URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data, options: [])
             else {
-                print(error?.localizedDescription as Any)
+                Logger.logError("error: \(error?.localizedDescription ?? "unknown error")")
                 return
             }
             guard  let array = json as? [String: Any] else { return }
-            print(array)
+            Logger.logDebug("response JSON: \(array)")
             task(token)
         }
         .resume()
@@ -187,33 +187,33 @@ enum TrassirService {
     
     static func seekToLastFrame(_ camera: CameraObject, token: String, _ task: @escaping (String) -> Void ) {
         guard let sid = getSid(camera) else {
-            print("hasn't sid")
+            Logger.logError("missing sid")
             return
         }
         guard
             var urlBase = URLComponents(string: camera.baseURLString) else {
-            print(camera.baseURLString)
+            Logger.logError("invalid baseURL: \(camera.baseURLString)")
             return
         }
         
         urlBase.query? = "command=frame_last&direction=0&speed=1&sid=\(sid)&token=\(token)"
         urlBase.path = "/archive_command"
         guard let url = urlBase.url else {
-            print(urlBase)
+            Logger.logError("invalid URL: \(urlBase.string ?? "unknown")")
             return
         }
         let request = URLRequest(url: url)
-        print(request.url?.absoluteString ?? "")
-        
+        Logger.logDebug("request URL: \(request.url?.absoluteString ?? "nil")")
+
         URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data, options: [])
             else {
-                print(error?.localizedDescription as Any)
+                Logger.logError("error: \(error?.localizedDescription ?? "unknown error")")
                 return
             }
             guard let array = json as? [String: Any] else { return }
-            print(array)
+            Logger.logDebug("response JSON: \(array)")
             task(token)
         }
         .resume()
@@ -274,12 +274,12 @@ enum TrassirService {
     
     static func getCalendar(_ camera: CameraObject, _ completion: @escaping (Any?) -> Void ) {
         guard let sid = getSid(camera) else {
-            print("hasn't sid")
+            Logger.logError("missing sid")
             completion(nil)
             return
         }
         guard var urlBase = URLComponents(string: camera.baseURLString) else {
-            print(camera.baseURLString)
+            Logger.logError("invalid baseURL: \(camera.baseURLString)")
             completion(nil)
             return
         }
@@ -287,22 +287,22 @@ enum TrassirService {
         urlBase.query? = "type=calendar&sid=\(sid)"
         urlBase.path = "/archive_status"
         guard let url = urlBase.url else {
-            print(urlBase)
+            Logger.logError("invalid URL: \(urlBase.string ?? "unknown")")
             completion(nil)
             return
         }
         let request = URLRequest(url: url)
-        print(request.url?.absoluteString ?? "")
-        
+        Logger.logDebug("request URL: \(request.url?.absoluteString ?? "nil")")
+
         URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data, options: [])
             else {
-                print(error?.localizedDescription as Any)
+                Logger.logError("error: \(error?.localizedDescription ?? "unknown error")")
                 completion(nil)
                 return
             }
-            print(json)
+            Logger.logDebug("response JSON: \(json)")
             completion(json)
         }
         .resume()
@@ -331,12 +331,12 @@ enum TrassirService {
     //    ]
     static func getTimeline(_ camera: CameraObject, _ completion: @escaping (Any?) -> Void ) {
         guard let sid = getSid(camera) else {
-            print("hasn't sid")
+            Logger.logError("missing sid")
             completion(nil)
             return
         }
         guard var urlBase = URLComponents(string: camera.baseURLString) else {
-            print(camera.baseURLString)
+            Logger.logError("invalid baseURL: \(camera.baseURLString)")
             completion(nil)
             return
         }
@@ -344,22 +344,22 @@ enum TrassirService {
         urlBase.query? = "type=timeline&sid=\(sid)"
         urlBase.path = "/archive_status"
         guard let url = urlBase.url else {
-            print(urlBase)
+            Logger.logError("invalid URL: \(urlBase.string ?? "unknown")")
             completion(nil)
             return
         }
         let request = URLRequest(url: url)
-        print(request.url?.absoluteString ?? "")
-        
+        Logger.logDebug("request URL: \(request.url?.absoluteString ?? "nil")")
+
         URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data, options: [])
             else {
-                print(error?.localizedDescription as Any)
+                Logger.logError("error: \(error?.localizedDescription ?? "unknown error")")
                 completion(nil)
                 return
             }
-            print(json)
+            Logger.logDebug("response JSON: \(json)")
             completion(json)
         }
         .resume()
@@ -379,12 +379,12 @@ enum TrassirService {
     /// Возвращает url на скриншот
     static func getScreenshotURL(_ camera: CameraObject, date: Date) -> String {
         guard let sid = getSid(camera) else {
-            print("hasn't sid")
+            Logger.logError("missing sid")
             return ""
         }
         guard var urlBase = URLComponents(string: camera.baseURLString),
               let guid = urlBase.queryItems?.first(where: { $0.name == "channel" })?.value else {
-            print(camera.baseURLString)
+            Logger.logError("invalid baseURL or missing GUID: \(camera.baseURLString)")
             return ""
         }
         
@@ -398,12 +398,12 @@ enum TrassirService {
         urlBase.query? = "timestamp=\(timestamp)&sid=\(sid)"
         urlBase.path = "/screenshot/\(guid)"
         guard let url = urlBase.url else {
-            print(urlBase)
+            Logger.logError("invalid URL: \(urlBase.string ?? "unknown")")
             return ""
         }
         let request = URLRequest(url: url)
         let result = request.url?.absoluteString ?? ""
-        print(result)
+        Logger.logDebug("final screenshot URL: \(result)")
         return result
     }
     

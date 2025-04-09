@@ -28,7 +28,7 @@ extension AddressAccessViewModel {
         do {
             allContainers = try contactStore.containers(matching: nil)
         } catch {
-            print("Error fetching containers")
+            Logger.logError("Fetching containers")
         }
         
         var results: [CNContact] = []
@@ -48,7 +48,7 @@ extension AddressAccessViewModel {
                 
                 results.append(contentsOf: containerResults)
             } catch {
-                print("Error fetching containers")
+                Logger.logError("Fetching containers")
             }
         }
         

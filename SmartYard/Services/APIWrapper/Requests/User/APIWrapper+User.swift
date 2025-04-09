@@ -254,8 +254,8 @@ extension APIWrapper {
         }
         
         let request = PhonePrefixRequest()
-        print("request data: \(request)")
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.phonePattern(request: request))
             .convertNoConnectionError()

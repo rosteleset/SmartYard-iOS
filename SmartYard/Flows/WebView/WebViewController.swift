@@ -295,7 +295,7 @@ extension WebViewController: WKNavigationDelegate {
             }
             
             if let url = navigationAction.request.url {
-                print(url)
+                Logger.logDebug("WKWebView request URL: \(url.absoluteString)")
                 // если это sberpay:, tel: или ещё какой-то кастомный дип-линк, то обрабатывыаем переход по умолчанию
                 guard url.scheme == "https" || url.scheme == "http" else {
                     UIApplication.shared.open(url)
@@ -337,7 +337,7 @@ extension WebViewController: WKNavigationDelegate {
             }
             
             if let url = navigationAction.request.url {
-                print(url)
+                Logger.logDebug("WKWebView request URL: \(url.absoluteString)")
                 // #smart-yard-push
                 if url.relativeString.contains("#smart-yard-push"),
                    let newUrl = URL(
@@ -491,7 +491,7 @@ extension BaseViewController: WKUIDelegate {
     }
     
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        print("createWebView!")
+        Logger.logInfo("createWebView!")
         return nil
     }
 }

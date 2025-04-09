@@ -179,7 +179,7 @@ final class CameraCollectionViewCell: UICollectionViewCell {
                     do {
                         shouldTurnOnSound = try !(self.isSoundOn.value() || self.player?.isMuted ?? true)
                     } catch {
-                        print("Error getting isSoundOn value: \(error)")
+                        Logger.logError("Getting isSoundOn value: \(error)")
                     }
                     
                     playerLayer.removeFromSuperlayer()
@@ -264,7 +264,7 @@ final class CameraCollectionViewCell: UICollectionViewCell {
                     do {
                         shouldTurnOnSound = try isSoundOn.value()
                     } catch {
-                        print("Error getting isSoundOn value: \(error)")
+                        Logger.logError("Getting isSoundOn value: \(error)")
                     }
                     
                     let fullscreenVc = FullscreenPlayerViewController(
@@ -359,7 +359,7 @@ final class CameraCollectionViewCell: UICollectionViewCell {
                 do {
                     shouldTurnOnSound = try self!.isSoundOn.value()
                 } catch {
-                    print("Error getting isSoundOn value: \(error)")
+                    Logger.logError("Getting isSoundOn value: \(error)")
                 }
                 
                 self?.player?.play()
@@ -389,7 +389,7 @@ final class CameraCollectionViewCell: UICollectionViewCell {
             hideImage()
         case .failed, .unknown:
             showImage()
-            print("Failed to load the video: \(String(describing: playerItem.error?.localizedDescription))")
+            Logger.logError("Failed to load the video: \(String(describing: playerItem.error?.localizedDescription))")
         default:
             break
         }

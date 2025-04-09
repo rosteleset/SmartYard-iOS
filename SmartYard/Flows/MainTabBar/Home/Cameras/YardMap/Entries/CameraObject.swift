@@ -75,7 +75,7 @@ struct CameraObject: Equatable {
             let resultingString = baseURLString +
             "/dvr_thumbnail_\(date.unixTimestamp.int).mp4" +
                 "?wmsAuthSign=\(token)"
-            print(resultingString)
+            Logger.logDebug("Generated nimble preview URL: \(resultingString)")
             return resultingString
         case .macroscop:
             return MacroscopService.getScreenshotURL(self, date: date)
@@ -90,12 +90,13 @@ struct CameraObject: Equatable {
                 dateFormatter.string(from: date) +
                 "-preview.mp4" +
                 "?token=\(token)"
+            Logger.logDebug("Generated flussonic preview URL: \(resultingString)")
             return resultingString
         case .trassir:
             if TrassirService.getSid(self) != nil {
                 return TrassirService.getScreenshotURL(self, date: date)
             } else {
-                print("Missing sid")
+                Logger.logWarning("Trassir preview URL: missing sid")
             }
             return ""
         case .forpost:
@@ -110,17 +111,17 @@ struct CameraObject: Equatable {
             MacroscopService.generateURL(self, task)
         case .trassir:
             TrassirService.updateSid(self) {
-                print(TrassirService.getSid(self) ?? "")
+                Logger.logDebug("Trassir SID: \(TrassirService.getSid(self) ?? "nil")")
                 TrassirService.getToken(self, suffix: "&stream=main") { token in
                     let urlString = TrassirService.generateURL(self, token: token)
-                    print(urlString)
+                    Logger.logDebug("Generated Trassir live URL: \(urlString)")
                     if !urlString.isEmpty { task(urlString) }
                 }
             }
         case .forpost:
             ForpostService.generateURL(self, task)
         default:
-            print(liveURL)
+            Logger.logDebug("Generated default live URL: \(liveURL)")
             task(liveURL)
         }
     }
@@ -131,12 +132,12 @@ struct CameraObject: Equatable {
             MacroscopService.generateURL(self, startDate: startDate, endDate: endDate, speed: speed, task)
         case .trassir:
             TrassirService.updateSid(self) {
-                print(TrassirService.getSid(self) ?? "")
+                Logger.logDebug("Trassir SID: \(TrassirService.getSid(self) ?? "nil")")
                 TrassirService.getToken(self, suffix: "&stream=archive_main") { token in
                     TrassirService.playArchive(self, token: token, startDate: startDate, endDate: endDate) { token in
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
                             let urlString = TrassirService.generateURL(self, token: token)
-                            print(urlString)
+                            Logger.logDebug("Generated Trassir archive URL: \(urlString)")
                             if !urlString.isEmpty { task(urlString) }
                         }
                     }
@@ -146,7 +147,7 @@ struct CameraObject: Equatable {
             ForpostService.generateURL(self, startDate: startDate, endDate: endDate, speed: speed, task)
         default:
             let urlString = archiveURL(startDate: startDate, endDate: endDate)
-            print(urlString)
+            Logger.logDebug("Generated archive URL: \(urlString)")
             task(urlString)
         }
     }

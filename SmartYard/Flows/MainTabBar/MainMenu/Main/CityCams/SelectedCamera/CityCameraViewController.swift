@@ -420,7 +420,7 @@ final class CityCameraViewController: BaseViewController {
                     do {
                         shouldTurnOnSound = try !(self.isSoundOn.value() || self.player?.isMuted ?? true)
                     } catch {
-                        print("Error getting isSoundOn value: \(error)")
+                        Logger.logError("Getting isSoundOn value: \(error)")
                     }
                     
                     playerLayer.removeFromSuperlayer()
@@ -509,7 +509,7 @@ final class CityCameraViewController: BaseViewController {
                     do {
                         shouldTurnOnSound = try self.isSoundOn.value()
                     } catch {
-                        print("Error getting isSoundOn value: \(error)")
+                        Logger.logError("Getting isSoundOn value: \(error)")
                     }
                     
                     let fullscreenVc = FullscreenPlayerViewController(

@@ -146,24 +146,31 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     
     private func printDebugInfo() -> PrimitiveSequence<Trait, Element> {
         flatMap { response in
+            var logLines: [String] = []
+            
             if let request = response.request {
-                var bodyIfPresent = ""
-                if let httpBody = request.httpBody {
-                    bodyIfPresent = " body=\(String(decoding: httpBody, as: UTF8.self))"
+                logLines.append("➡️ Request:")
+                logLines.append("URL: \(request.description)")
+
+                if let body = request.httpBody {
+                    let bodyString = String(decoding: body, as: UTF8.self)
+                    logLines.append("Body: \(bodyString)")
                 }
-                
-                print(
-                    "request: url=\(request.description)\(bodyIfPresent) headers=\(String(describing: request.headers))"
-                )
+
+                logLines.append("Headers: \(String(describing: request.headers))")
             }
-            
-            if let debugString = try? response.mapString(), !(debugString.isEmpty) {
-                print("response(\(response.statusCode)): \(debugString)")
-                
+
+            logLines.append("⬅️ Response (\(response.statusCode)):")
+
+            if let responseString = try? response.mapString(), !responseString.isEmpty {
+                logLines.append(responseString)
             } else {
-                print("response(\(response.statusCode)): <empty>")
+                logLines.append("<empty>")
             }
-            
+
+            let fullLog = logLines.joined(separator: "\n")
+            Logger.logDebug(fullLog)
+
             return .just(response)
         }
     }

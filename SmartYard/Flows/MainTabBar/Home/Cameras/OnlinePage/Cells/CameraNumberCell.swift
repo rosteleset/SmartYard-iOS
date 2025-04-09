@@ -61,8 +61,8 @@ final class CameraNumberCell: UICollectionViewCell {
           containerView.layoutIfNeeded()
           
           let containerViewHeight = self.height
-          print(containerViewHeight)
-         
+          Logger.logDebug("CameraGridView height after layout: \(containerViewHeight)")
+
           let buttonOffset = (self.width - 40 - buttonSize.width) / CGFloat(maxColumns - 1)
           let buttonInset = buttonOffset - buttonSize.width
           let spacingBetweenRows: CGFloat = rows > 1 ? (containerViewHeight - CGFloat(rows) * buttonSize.height) / CGFloat(rows - 1) : 0

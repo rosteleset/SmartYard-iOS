@@ -220,23 +220,24 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
         switch route {
         case .home:
-            print("home")
+            Logger.logDebug("MainTabBarRoute → home")
             return .selectAndCallDelegate(homeRouter)
         case .notifications:
-            print("notifications")
+            Logger.logDebug("MainTabBarRoute → notifications")
             return .selectAndCallDelegate(notificationsRouter)
         case .chat:
-            print("chat")
+            Logger.logDebug("MainTabBarRoute → chat")
             return .selectAndCallDelegate(chatRouter)
         case .payments:
-            print("payments")
+            Logger.logDebug("MainTabBarRoute → payments")
             return .selectAndCallDelegate(paymentsRouter)
         case .settings:
-            print("TODO: проверить переадресацию в настройки")
+            // TODO: - проверить переадресацию
+            Logger.logInfo("MainTabBarRoute → settings")
             return .trigger(MainMenuRoute.settings, on: menuRouter)
-            // selectAndCallDelegate(settingsRouter)
+            // .selectAndCallDelegate(settingsRouter)
         case .menu:
-            print("menu")
+            Logger.logDebug("MainTabBarRoute → menu")
             return .selectAndCallDelegate(menuRouter)
         }
     }

@@ -170,8 +170,8 @@ final class PaymentPopupViewModel: BaseViewModel {
                     else {
                               return
                           }
-                    print(url)
-                    
+                    Logger.logDebug("Opening external URL: \(url.absoluteString)")
+
                     UIApplication.shared.open(url)
                     self.router.trigger(.dismiss)
                     // self.router.trigger(.webView(url: url))

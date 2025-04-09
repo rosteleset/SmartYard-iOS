@@ -22,8 +22,8 @@ extension APIWrapper {
         }
         
         let request = GetExtensionsListRequest(accessToken: accessToken)
-        print("request data: \(request)")
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.extList(request: request))
             .convertNoConnectionError()
@@ -41,8 +41,8 @@ extension APIWrapper {
         }
         
         let request = GetExtensionRequest(accessToken: accessToken, extId: extId)
-        print("request data: \(request)")
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.ext(request: request))
             .convertNoConnectionError()
@@ -59,8 +59,8 @@ extension APIWrapper {
         }
         
         let request = GetOptionsRequest(accessToken: accessToken)
-        print("request data: \(request)")
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.options(request: request), callbackQueue: .global(qos: .background))
             .convertNoConnectionError()

@@ -15,7 +15,7 @@ enum ForpostService {
     /// Возвращает url на скриншот
     static func getScreenshotURL(_ camera: CameraObject) -> String {
         guard var urlBase = URLComponents(string: camera.url()) else {
-            print(camera.url())
+            Logger.logError("Invalid URL for Forpost screenshot: \(camera.url())")
             return ""
         }
         
@@ -34,7 +34,7 @@ enum ForpostService {
         let parameters = "&TS=\(date.timeIntervalSince1970.int)&TZ=\(tz)"
         
         guard var urlBase = URLComponents(string: camera.url() + parameters) else {
-            print(camera.url())
+            Logger.logError("Invalid URL for Forpost screenshot: \(camera.url())")
             return ""
         }
         
@@ -52,12 +52,12 @@ enum ForpostService {
                             _ completion: @escaping ( _ urlString: String ) -> Void
     ) {
         guard var urlBase = URLComponents(string: camera.url() + parameters) else {
-            print(camera.url())
+            Logger.logError("ForpostService.generateURL — invalid URL or query items for camera: \(camera.url())")
             return
         }
         
         guard let queryItems = urlBase.queryItems else {
-            print(camera.url())
+            Logger.logError("ForpostService.generateURL — invalid URL or query items for camera: \(camera.url())")
             return
         }
         
@@ -68,7 +68,7 @@ enum ForpostService {
         urlBase.query = nil
         
         guard let url = urlBase.url else {
-            print(camera.url())
+            Logger.logError("ForpostService.generateURL — failed to construct final URL from components: \(camera.url())")
             return
         }
         
@@ -85,7 +85,7 @@ enum ForpostService {
                   let url = URL(string: camera.url())
                   
             else {
-                print(error?.localizedDescription ?? "")
+                Logger.logError("ForpostService.generateURL — request failed: \(error?.localizedDescription ?? "unknown error")")
                 completion("")
                 return
             }
@@ -94,7 +94,7 @@ enum ForpostService {
                 baseURL.query = nil
                 let streamURL = jsonDict["URL"] ?? "empty"
                 completion(streamURL)
-                print(streamURL)
+                Logger.logDebug("ForpostService generated stream URL: \(streamURL)")
             }
             
         }

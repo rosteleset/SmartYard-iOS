@@ -130,7 +130,7 @@ final class AddressesListViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: {
-                    print("DEBUG: Successfully subscribed to push notifications")
+                    Logger.logDebug("Successfully subscribed to push notifications")
                 }
             )
             .disposed(by: disposeBag)

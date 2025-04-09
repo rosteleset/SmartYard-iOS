@@ -109,7 +109,7 @@ final class SelectProviderViewModel: BaseViewModel {
                         return
                     }
                     let provider = providerCell.provider
-                    print("selected baseUrl = \(provider.baseUrl)")
+                    Logger.logInfo("Selected provider baseUrl: \(provider.baseUrl)")
                     self.accessService.backendURL = provider.baseUrl
                     self.accessService.providerId = provider.id
                     self.accessService.providerName = provider.name
@@ -119,7 +119,7 @@ final class SelectProviderViewModel: BaseViewModel {
                         .asDriver(onErrorJustReturn: nil)
                         .drive(
                             onNext: { [weak self] phonePattern in
-                                print("phonePattern = \(String(describing: phonePattern))")
+                                Logger.logDebug("Received phone pattern: \(String(describing: phonePattern))")
                                 self?.accessService.setPhonePattern(phonePattern)
                                 self?.router.trigger(.phoneNumber)
                             }

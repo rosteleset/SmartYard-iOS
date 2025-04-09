@@ -22,19 +22,21 @@ final class BaseRequestRetrier: RequestInterceptor {
     ) {
         // If task failed 4 attempts to finish, everything is very bad (connection is dead). TODO: Add Reachability
         guard request.retryCount < 4 else {
-            print("REQUEST RETRIER: Task failed to finish in 4 attempts. RIP")
+            Logger.logError("REQUEST RETRIER: Task failed to finish in 4 attempts. RIP")
             return completion(.doNotRetry)
         }
         
         // If task was not completed at all (probably because of unstable connection), try it again.
         guard let response = request.task?.response as? HTTPURLResponse else {
-            print("REQUEST RETRIER: Task returned no response. Trying again. Attempt #\(request.retryCount + 1)")
+            Logger.logWarning("REQUEST RETRIER: Task returned no response. Retrying. Attempt #\(request.retryCount + 1)")
             return completion(.retryWithDelay(Double(request.retryCount) * 2.0))
         }
         
         // Handle different status codes here
         switch response.statusCode {
-        default: completion(.doNotRetry)
+        default:
+            Logger.logInfo("REQUEST RETRIER: Received status code \(response.statusCode). Not retrying.")
+            completion(.doNotRetry)
         }
     }
     

@@ -24,12 +24,12 @@ enum ScreenshotHelper {
             downloadMP4ImageWithCompletion(url, completion, time)
         case .jpegLink:
             guard var urlBase = URLComponents(string: url.absoluteString) else {
-                print(url.absoluteString)
+                Logger.logError("Invalid URL string: \(url.absoluteString)")
                 return
             }
             
             guard let queryItems = urlBase.queryItems else {
-                print(url.absoluteString)
+                Logger.logError("No query items in URL: \(url.absoluteString)")
                 return
             }
             
@@ -40,7 +40,7 @@ enum ScreenshotHelper {
             urlBase.query = nil
             
             guard let url = urlBase.url else {
-                print(url.absoluteString)
+                Logger.logError("Unable to reconstruct base URL from: \(url.absoluteString)")
                 return
             }
             
@@ -54,20 +54,20 @@ enum ScreenshotHelper {
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 if let error = error {
                     completion?(nil)
-                    print(error.localizedDescription)
+                    Logger.logError("Image link request failed: \(error.localizedDescription)")
                     return
                 }
                 guard let data = data
                 else {
                     completion?(nil)
-                    print("Can't get image-link")
+                    Logger.logWarning("No data in image-link response")
                     return
                 }
                 
                 guard let jsonDict = try? JSONDecoder().decode([String: String].self, from: data),
                       let link = jsonDict["URL"],
                       let url = URL(string: link) else {
-                    print("url \(data) is invalid")
+                    Logger.logWarning("Invalid response for image-link: \(String(data: data, encoding: .utf8) ?? "<invalid>")")
                     return
                 }
                 
@@ -97,7 +97,7 @@ enum ScreenshotHelper {
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
                 completion?(nil)
-                print(error.localizedDescription)
+                Logger.logError("JPEG image download failed: \(error.localizedDescription)")
                 return
             }
             guard let data = data,
@@ -110,7 +110,7 @@ enum ScreenshotHelper {
                   )
             else {
                 completion?(nil)
-                print("Can't create image")
+                Logger.logWarning("Failed to create CGImage from JPEG data")
                 return
             }
             completion?(image)

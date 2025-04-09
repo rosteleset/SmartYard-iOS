@@ -199,8 +199,8 @@ extension APIWrapper {
         }
         
         let request = IntercomRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId, settings: settings)
-        print("request data: \(request)")
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.intercom(request: request))
             .convertNoConnectionError()
@@ -220,8 +220,8 @@ extension APIWrapper {
         }
         
         let request = PlogDaysRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId, events: events)
-        print("request data: \(request)")
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.plogDays(request: request))
             .convertNoConnectionError()
@@ -243,8 +243,8 @@ extension APIWrapper {
         }
         
         let request = PlogRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId, fromDate: fromDate)
-        print("request data: \(request)")
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.plog(request: request))
             .convertNoConnectionError()
@@ -304,7 +304,7 @@ extension APIWrapper {
         forceUpdateSettings = false
         
         let request = GetSettingsListRequest(accessToken: accessToken, forceRefresh: forceRefresh)
-        print(request)
+        Logger.logDebug("Request data: \(String(describing: request))")
         
         return provider.rx
             .request(.getSettingsList(request: request))
@@ -323,8 +323,8 @@ extension APIWrapper {
         }
         
         let request = CamMapCCTVRequest(accessToken: accessToken)
-        print(request)
-        
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         return provider.rx
             .request(.getCamMap(request: request))
             .convertNoConnectionError()

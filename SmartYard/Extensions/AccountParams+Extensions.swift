@@ -32,7 +32,7 @@ extension AccountParams {
             try core.addAccount(account: account)
             core.defaultAccount = account
         } catch {
-            print("Error: \(error)")
+            Logger.logError("\(error)")
         }
         
     }

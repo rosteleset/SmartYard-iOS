@@ -198,7 +198,7 @@ final class QRCodeScanViewController: BaseViewController {
             
             flashButton.isSelected = on
         } catch {
-            print("Torch could not be used")
+            Logger.logError("Torch could not be used: \(error.localizedDescription)")
         }
     }
     

@@ -392,7 +392,7 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
                     do {
                         shouldTurnOnSound = try !(self.isSoundOn.value() || self.realVideoPlayer?.isMuted ?? true)
                     } catch {
-                        print("Error getting isSoundOn value: \(error)")
+                        Logger.logError("Getting isSoundOn value: \(error)")
                     }
                     
                     playerLayer.removeFromSuperlayer()
@@ -508,7 +508,7 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
                     do {
                         shouldTurnOnSound = try self.isSoundOn.value()
                     } catch {
-                        print("Error getting isSoundOn value: \(error)")
+                        Logger.logError("Getting isSoundOn value: \(error)")
                     }
                     
                     let fullscreenVc = FullscreenPlayerViewController(
@@ -662,7 +662,7 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
             $0?.isEnabled = isVideoValid
         }
         
-        print("Режим: \(mode), видео валидно: \(isVideoValid)")
+        Logger.logDebug("updateUI — mode: \(mode), isVideoValid: \(isVideoValid)")
 
         
         fullscreenButton.isHidden = mode == .edit || !isVideoValid

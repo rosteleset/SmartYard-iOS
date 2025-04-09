@@ -144,7 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("DEBUG / PUSH NOTIFICATIONS / Firebase registration token: \(String(describing: fcmToken))")
+        Logger.logDebug("PUSH NOTIFICATIONS / Firebase registration token: \(String(describing: fcmToken))")
         
         appCoordinator.updateFCMToken()
     }
@@ -202,7 +202,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
         let userInfo = notification.request.content.userInfo
         
-        print("DEBUG / PUSH NOTIFICATIONS / User Info: \(userInfo.jsonString() ?? "\(userInfo)")")
+        Logger.logDebug("PUSH NOTIFICATIONS / User Info: \(userInfo.jsonString() ?? "\(userInfo)")")
         
         // MARK: если в push-сообщении есть адрес backend-сервера, то обновляем его.
         if let backendURL = userInfo["baseUrl"] as? String {
@@ -380,7 +380,7 @@ extension AppDelegate: PKPushRegistryDelegate {
             .map { String(format: "%02.2hhx", $0) }
             .joined()
         
-        print("DEBUG / GOT NEW TOKEN \(token)")
+        Logger.logDebug("GOT NEW TOKEN \(token)")
         
         appCoordinator.setVoipToken(token)
     }
@@ -391,7 +391,7 @@ extension AppDelegate: PKPushRegistryDelegate {
         for type: PKPushType,
         completion: @escaping () -> Void
     ) {
-        print("DEBUG / VOIP NOTIFICATIONS / Payload: \(payload.dictionaryPayload)")
+        Logger.logDebug("VOIP NOTIFICATIONS / Payload: \(payload.dictionaryPayload)")
         
         guard let data = payload.dictionaryPayload["data"] as? [AnyHashable: Any],
             let callPayload = CallPayload(pushNotificationPayload: data, useCallKit: true) else {

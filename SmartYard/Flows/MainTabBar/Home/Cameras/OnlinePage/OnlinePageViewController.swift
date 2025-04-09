@@ -171,7 +171,7 @@ final class OnlinePageViewController: BaseViewController {
         let camera = cameras[selectedIndexPath.row]
         let cell = camerasCollectionView.cellForItem(at: selectedIndexPath) as? CameraCollectionViewCell
         
-        print("Selected Camera #\(camera.cameraNumber)")
+        Logger.logDebug("Selected Camera #\(camera.cameraNumber)")
         
         guard camera.cameraNumber != selectedCameraNumber else {
             return
@@ -246,7 +246,7 @@ final class OnlinePageViewController: BaseViewController {
         let cell = camerasCollectionView.cellForItem(at: indexPath) as? CameraCollectionViewCell
         let camera = cameras[indexPath.row]
         
-        print("Selected Camera #\(camera.cameraNumber)")
+        Logger.logDebug("Selected Camera #\(camera.cameraNumber)")
         
         guard camera.cameraNumber != selectedCameraNumber else {
             return

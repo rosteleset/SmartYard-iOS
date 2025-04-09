@@ -410,8 +410,8 @@ extension WebPopupController: WKNavigationDelegate {
             if let url = navigationAction.request.url {
                 let trigger = self.openUrlTrigger
                 
-                print(url)
-                
+                Logger.logDebug("WKWebView request URL: \(url.absoluteString)")
+
                 // target = '_blank'
                 if navigationAction.targetFrame == nil {
                     UIApplication.shared.open(url)

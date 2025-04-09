@@ -64,6 +64,6 @@ final class SignalingClient {
     
     func send(candidate rtcIceCandidate: RTCIceCandidate) {
         let message = Message.candidate(IceCandidate(from: rtcIceCandidate))
-        print(message.sdpPayload)
+        Logger.logDebug("Sending ICE candidate SDP: \(message.sdpPayload)")
     }
 }
