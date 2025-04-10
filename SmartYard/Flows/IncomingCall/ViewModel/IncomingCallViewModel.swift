@@ -810,7 +810,9 @@ final class IncomingCallViewModel: BaseViewModel {
     
     private func openTheDoor(call: Call) {
         Logger.logInfo("Attempting to open the door...")
-        isDoorBeingOpened.onNext(true)
+        DispatchQueue.main.async {
+            self.isDoorBeingOpened.onNext(true)
+        } // Костыль, но пока что оставим так. Возможно нужен будет другой флаг добавить.
         
         // MARK: Поскольку доставка тонового сигнала вообще не гарантируется, решено отправлять их несколько раз
         // С промежутком в 750 мс
