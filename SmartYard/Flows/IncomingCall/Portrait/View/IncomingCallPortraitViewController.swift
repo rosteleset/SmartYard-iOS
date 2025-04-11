@@ -200,41 +200,30 @@ final class IncomingCallPortraitViewController: BaseViewController {
         openButtonContainer.isHidden = doorState == .opened
         ignoreButtonContainer.isHidden = doorState == .opened
         
-        // Title and button labels
-        let titleText: String
-        let ignoreLabelText: String
-        let previewLabelText: String
-        
-        switch (callState, previewState) {
+        switch (state.callState, state.previewState) {
         case (.callReceived, .staticImage):
-            titleText = NSLocalizedString("Call to intercom", comment: "")
-            ignoreLabelText = NSLocalizedString("Ignore", comment: "")
-            previewLabelText = NSLocalizedString("Peephole", comment: "")
+            titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
+            ignoreButtonLabel.text = NSLocalizedString("Ignore", comment: "")
+            previewButtonLabel.text = NSLocalizedString("Peephole", comment: "")
             
         case (.callReceived, .video):
-            titleText = NSLocalizedString("Peephole on", comment: "")
-            ignoreLabelText = NSLocalizedString("Ignore", comment: "")
-            previewLabelText = NSLocalizedString("Peephole", comment: "")
+            titleLabel.text = NSLocalizedString("Peephole on", comment: "")
+            ignoreButtonLabel.text = NSLocalizedString("Ignore", comment: "")
+            previewButtonLabel.text = NSLocalizedString("Peephole", comment: "")
             
         case (.establishingConnection, _):
-            titleText = NSLocalizedString("Connecting...", comment: "")
-            ignoreLabelText = NSLocalizedString("Decline", comment: "")
-            previewLabelText = NSLocalizedString("Video", comment: "")
+            titleLabel.text = NSLocalizedString("Connecting...", comment: "")
+            ignoreButtonLabel.text = NSLocalizedString("Decline", comment: "")
+            previewButtonLabel.text = NSLocalizedString("Video", comment: "")
             
         case (.callActive, _):
-            titleText = NSLocalizedString("Conversation", comment: "")
-            ignoreLabelText = NSLocalizedString("Decline", comment: "")
-            previewLabelText = NSLocalizedString("Video", comment: "")
+            titleLabel.text = NSLocalizedString("Conversation", comment: "")
+            ignoreButtonLabel.text = NSLocalizedString("Decline", comment: "")
+            previewButtonLabel.text = NSLocalizedString("Video", comment: "")
             
         case (.callFinished, _):
-            titleText = NSLocalizedString("Call completed", comment: "")
-            ignoreLabelText = ""
-            previewLabelText = ""
+            titleLabel.text = NSLocalizedString("Call completed", comment: "")
         }
-        
-        titleLabel.text = titleText
-        ignoreButtonLabel.text = ignoreLabelText
-        previewButtonLabel.text = previewLabelText
     }
 
 }
