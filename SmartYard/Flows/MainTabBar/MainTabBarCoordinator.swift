@@ -401,11 +401,20 @@ private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService
                     accessService.timeZone = timeZone
                 }
                 
-                let shouldShowList = accessService.cctvView == "list" || accessService.cctvView == "userDefined"
-                
                 accessService.issuesVersion = response.issuesVersion ?? "1"
                 accessService.cctvView = response.cctvView.rawValue
-                accessService.showList = shouldShowList 
+                
+                switch accessService.cctvView {
+                case "list":
+                    accessService.showList = true
+                case "tree":
+                    accessService.showList = false
+                default:
+                    // В этом случае 'showList' будет брать у себя значение по умолчанию 'true',
+                    // если значение не было установлено пользователем ранее в 'UserDefaults'.
+                    break
+                }
+                
                 accessService.activeTab = response.activeTab.rawValue
                 
                 sem.signal()
