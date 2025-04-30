@@ -219,6 +219,12 @@ final class HistoryCollectionViewCell: UICollectionViewCell {
         descriptionLabel.isHidden = false
         descriptionLabel.text = ""
         
+        let denyTitle = NSLocalizedString("Deny", comment: "")
+        let openTitle = NSLocalizedString("Allow", comment: "")
+        
+        denyAccessButton.setTitleForAllStates(denyTitle)
+        openAccessButton.setTitleForAllStates(openTitle)
+        
         if playerLayer != nil {
             playerLayer?.removeFromSuperlayer()
             playerLayer = nil

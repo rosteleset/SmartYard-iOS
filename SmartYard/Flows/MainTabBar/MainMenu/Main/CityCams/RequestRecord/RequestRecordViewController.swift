@@ -104,6 +104,7 @@ final class RequestRecordViewController: BaseViewController, LoaderPresentable, 
         datePicker.addTarget(self, action: #selector(valueChanged), for: .valueChanged)
         
         periodPicker.setCallback(callback: selectPeriodAction(_:))
+        selectPeriodAction(10)
         durationTextField.inputView = periodPicker
         durationTextField.inputAccessoryView = toolbar
         durationTextField.tintColor = UIColor.clear
@@ -125,20 +126,34 @@ extension RequestRecordViewController {
     }
     
     func getValueFromPicker() {
-        let formater = DateFormatter()
-        
         selectedDate = datePicker.date
         
-        formater.dateFormat = "d.MM.yyyy"
-        dateTextField.text = "Дата записи: \(formater.string(from: selectedDate))"
-        formater.dateFormat = "HH"
-        hoursTextField.text = "Время: \(formater.string(from: selectedDate)) ч"
-        formater.dateFormat = "mm"
-        minutesTextField.text = "\(formater.string(from: selectedDate)) мин"
+        let formatter = DateFormatter()
+        
+        formatter.dateFormat = "d.MM.yyyy"
+        let dateString = formatter.string(from: selectedDate)
+        
+        formatter.dateFormat = "HH"
+        let hourString = formatter.string(from: selectedDate)
+        
+        formatter.dateFormat = "mm"
+        let minuteString = formatter.string(from: selectedDate)
+        
+        let dateLabel = NSLocalizedString("Date of record", comment: "")
+        let timeLabel = NSLocalizedString("Time", comment: "")
+        let hourSuffix = NSLocalizedString("h", comment: "")
+        let minuteSuffix = NSLocalizedString("m", comment: "")
+        
+        dateTextField.text = "\(dateLabel): \(dateString)"
+        hoursTextField.text = "\(timeLabel): \(hourString) \(hourSuffix)"
+        minutesTextField.text = "\(minuteString) \(minuteSuffix)"
     }
-    
+
     func selectPeriodAction(_ value: Int) {
-        durationTextField.text = "Продолжительность: \(value)"
+        let durationLabel = NSLocalizedString("Duration", comment: "")
+        let minuteSuffix = NSLocalizedString("m", comment: "")
+        
+        durationTextField.text = "\(durationLabel): \(value) \(minuteSuffix)"
         periodProxy.onNext(value)
     }
     

@@ -187,3 +187,10 @@
 "Failed to setup camera" = "Неуспешно настройване на камерата";
 "Failed to represent server response as base model" = "Неуспешно представяне на отговора от сървъра като основен модел";
 "Error mapping the Data field, or it is missing with a code other than 204" = "Грешка при картографиране на полето Данни, или липсва с код, различен от 204";
+"Date of record" = "Дата на записа";
+"Time" = "Час";
+"Duration" = "Продължителност";
+"h" = "ч";
+"m" = "м";
+"Allow" = "Познат";
+"Deny" = "Непознат";

@@ -1,0 +1,18 @@
+
+/* Class = "UILabel"; text = "двойное нажатие в правой части видео – перемотка на 10 секунд вперёд"; ObjectID = "9Up-ke-t4m"; */
+"9Up-ke-t4m.text" = "double-tap on the right side of the video – skip forward 10 seconds";
+
+/* Class = "UILabel"; text = "свайп влево или вправо - листание ленты событий;"; ObjectID = "JX1-P5-f2T"; */
+"JX1-P5-f2T.text" = "swipe left or right – scroll through the event feed";
+
+/* Class = "UILabel"; text = "Для недавних событий показывается видео за небольшой промежуток времени. Для остальных – сохраненный кадр в момент события."; ObjectID = "NwP-ob-Rnk"; */
+"NwP-ob-Rnk.text" = "Recent events show a short video clip. Others show a saved frame at the moment of the event.";
+
+/* Class = "UILabel"; text = "двойное нажатие в левой части видео – перемотка на 10 секунд назад"; ObjectID = "VOo-Yj-6Gp"; */
+"VOo-Yj-6Gp.text" = "double-tap on the left side of the video – rewind 10 seconds";
+
+/* Class = "UILabel"; text = "Подсказка"; ObjectID = "gJJ-d5-8aF"; */
+"gJJ-d5-8aF.text" = "Hint";
+
+/* Class = "UILabel"; text = "Также можно использовать жесты:"; ObjectID = "r6e-0e-e0n"; */
+"r6e-0e-e0n.text" = "You can also use gestures:";

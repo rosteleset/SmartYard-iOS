@@ -36,7 +36,6 @@
 		3A1BDF4A2634459C0075410B /* HistoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1BDF482634459C0075410B /* HistoryCollectionViewCell.xib */; };
 		3A1F213826DF8F4F005FDB82 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1F213626DF8F4F005FDB82 /* ModalViewController.swift */; };
 		3A1F213926DF8F4F005FDB82 /* ModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1F213726DF8F4F005FDB82 /* ModalViewController.xib */; };
-		3A1F214126E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1F213F26E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib */; };
 		3A200B0927297B250022A0EC /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A200B0827297B240022A0EC /* SimpleButton.swift */; };
 		3A200B0B27297EAC0022A0EC /* PeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A200B0A27297EAC0022A0EC /* PeriodPicker.swift */; };
 		3A200B0D27297F950022A0EC /* SmartYardSharedDataUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A200B0C27297F950022A0EC /* SmartYardSharedDataUtilities.swift */; };
@@ -160,8 +159,6 @@
 		3A9E72412A4C7F8900ECDD18 /* SYImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9E72402A4C7F8900ECDD18 /* SYImageType.swift */; };
 		3AA6555C2666453D001EEC79 /* GetPersonFacesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB451264C0D44000F37D0 /* GetPersonFacesResponseData.swift */; };
 		3AAAB48F2B0A7C8B003DDBA6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3AAAB4912B0A7C8B003DDBA6 /* InfoPlist.strings */; };
-		3AAB0D3726E243D700A5AD75 /* WaitingGuestModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AAB0D3626E2439E00A5AD75 /* WaitingGuestModalViewContent.xib */; };
-		3AAB0D3B26E3B19100A5AD75 /* VideoEventModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AAB0D3926E3ADA700A5AD75 /* VideoEventModalViewContent.xib */; };
 		3AAB0D3D26E4035300A5AD75 /* HistoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAB0D3C26E4035200A5AD75 /* HistoryCoordinator.swift */; };
 		3AB41E0225C0879200AEC8C3 /* BottomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0025C0879200AEC8C3 /* BottomCell.swift */; };
 		3AB41E0A25C200B900AEC8C3 /* CityMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */; };
@@ -425,7 +422,6 @@
 		84F64934247402DC000C0028 /* SelectCameraContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64925247402DB000C0028 /* SelectCameraContainerViewController.swift */; };
 		84F64936247402DC000C0028 /* SelectCameraContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64927247402DB000C0028 /* SelectCameraContainerViewModel.swift */; };
 		84F64939247402DC000C0028 /* WhiteSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6492E247402DB000C0028 /* WhiteSectionHeaderView.swift */; };
-		84F6493A247402DC000C0028 /* WhiteSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F6492F247402DB000C0028 /* WhiteSectionHeaderView.xib */; };
 		84F6493B247402DC000C0028 /* CustomDayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F64930247402DC000C0028 /* CustomDayCell.xib */; };
 		84F6493C247402DC000C0028 /* CustomDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F64931247402DC000C0028 /* CustomDayCell.swift */; };
 		84F6494824740E90000C0028 /* YardMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6494224740E8F000C0028 /* YardMapViewController.swift */; };
@@ -438,6 +434,12 @@
 		84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DC23E07DA5008DBE50 /* Assets.xcassets */; };
 		84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F840DE23E07DA5008DBE50 /* LaunchScreen.storyboard */; };
 		866537D12C9AF3AA00753234 /* DeleteAccountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866537D02C9AF3AA00753234 /* DeleteAccountRequest.swift */; };
+		8B6C1BD82DC2142500617CF8 /* WaitingGuestModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BD72DC2142500617CF8 /* WaitingGuestModalViewContent.xib */; };
+		8B6C1BE32DC21B3600617CF8 /* VideoEventModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BE22DC21B3600617CF8 /* VideoEventModalViewContent.xib */; };
+		8B6C1BEE2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BED2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib */; };
+		8B6C1BF92DC21ED100617CF8 /* CallKitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BF82DC21ED100617CF8 /* CallKitModalViewContent.xib */; };
+		8B6C1C042DC2205E00617CF8 /* WhiteSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C032DC2205E00617CF8 /* WhiteSectionHeaderView.xib */; };
+		8BA1DB302DA56220009EBA0E /* DeviceUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1DB2F2DA56210009EBA0E /* DeviceUUID.swift */; };
 		C00F843EA1FB620BA1AA26C3 /* Pods_SmartYardWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD6C4E691C3E6B068AC5708 /* Pods_SmartYardWidget.framework */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
 		E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */; };
@@ -589,7 +591,6 @@
 		E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4273C23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift */; };
 		F5E02CAE54455B8FE193BD51 /* Pods_SmartYardIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E605C0D449F3A06D9B23DDDF /* Pods_SmartYardIntents.framework */; };
 		FA1A22A12CE3893800B8F919 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A22A02CE3893000B8F919 /* ThemeManager.swift */; };
-		FA991F3A2B95F947000B9C8E /* CallKitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA991F392B95F947000B9C8E /* CallKitModalViewContent.xib */; };
 		FA9E30E92BBBEF420087E689 /* CameraCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E30E72BBBEF420087E689 /* CameraCollectionViewCell.swift */; };
 		FA9E30EA2BBBEF420087E689 /* CameraCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA9E30E82BBBEF420087E689 /* CameraCollectionViewCell.xib */; };
 		FA9E30EC2BBBEFFA0087E689 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E30EB2BBBEFFA0087E689 /* UICollectionView+Extensions.swift */; };
@@ -714,7 +715,6 @@
 		3A1BDF482634459C0075410B /* HistoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryCollectionViewCell.xib; sourceTree = "<group>"; };
 		3A1F213626DF8F4F005FDB82 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		3A1F213726DF8F4F005FDB82 /* ModalViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ModalViewController.xib; sourceTree = "<group>"; };
-		3A1F213F26E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WhiteRabbitModalViewContent.xib; sourceTree = "<group>"; };
 		3A200B0827297B240022A0EC /* SimpleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
 		3A200B0A27297EAC0022A0EC /* PeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPicker.swift; sourceTree = "<group>"; };
 		3A200B0C27297F950022A0EC /* SmartYardSharedDataUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSharedDataUtilities.swift; sourceTree = "<group>"; };
@@ -901,8 +901,6 @@
 		3A9E72402A4C7F8900ECDD18 /* SYImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYImageType.swift; sourceTree = "<group>"; };
 		3AAAB4902B0A7C8B003DDBA6 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3AAAB4922B0A7C8F003DDBA6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3AAB0D3626E2439E00A5AD75 /* WaitingGuestModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaitingGuestModalViewContent.xib; sourceTree = "<group>"; };
-		3AAB0D3926E3ADA700A5AD75 /* VideoEventModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoEventModalViewContent.xib; sourceTree = "<group>"; };
 		3AAB0D3C26E4035200A5AD75 /* HistoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCoordinator.swift; sourceTree = "<group>"; };
 		3AB41E0025C0879200AEC8C3 /* BottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCell.swift; sourceTree = "<group>"; };
 		3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityMapViewModel.swift; sourceTree = "<group>"; };
@@ -1373,7 +1371,6 @@
 		84F64925247402DB000C0028 /* SelectCameraContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCameraContainerViewController.swift; sourceTree = "<group>"; };
 		84F64927247402DB000C0028 /* SelectCameraContainerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCameraContainerViewModel.swift; sourceTree = "<group>"; };
 		84F6492E247402DB000C0028 /* WhiteSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteSectionHeaderView.swift; sourceTree = "<group>"; };
-		84F6492F247402DB000C0028 /* WhiteSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhiteSectionHeaderView.xib; sourceTree = "<group>"; };
 		84F64930247402DC000C0028 /* CustomDayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomDayCell.xib; sourceTree = "<group>"; };
 		84F64931247402DC000C0028 /* CustomDayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDayCell.swift; sourceTree = "<group>"; };
 		84F6494224740E8F000C0028 /* YardMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YardMapViewController.swift; sourceTree = "<group>"; };
@@ -1387,6 +1384,32 @@
 		84F840DC23E07DA5008DBE50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84F840DF23E07DA5008DBE50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		866537D02C9AF3AA00753234 /* DeleteAccountRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountRequest.swift; sourceTree = "<group>"; };
+		8B6C1BD62DC2142500617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WaitingGuestModalViewContent.xib; sourceTree = "<group>"; };
+		8B6C1BDA2DC2142900617CF8 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/WaitingGuestModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BDC2DC2142A00617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WaitingGuestModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BDE2DC2142B00617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/WaitingGuestModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BE02DC2142B00617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/WaitingGuestModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BE12DC21B3600617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/VideoEventModalViewContent.xib; sourceTree = "<group>"; };
+		8B6C1BE52DC21B3800617CF8 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/VideoEventModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BE72DC21B3900617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/VideoEventModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BE92DC21B3A00617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/VideoEventModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BEB2DC21B3B00617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/VideoEventModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BEC2DC21C2600617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WhiteRabbitModalViewContent.xib; sourceTree = "<group>"; };
+		8B6C1BF02DC21C2800617CF8 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/WhiteRabbitModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BF22DC21C2800617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WhiteRabbitModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BF42DC21C2800617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/WhiteRabbitModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BF62DC21C2900617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/WhiteRabbitModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BF72DC21ED100617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CallKitModalViewContent.xib; sourceTree = "<group>"; };
+		8B6C1BFB2DC21ED300617CF8 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/CallKitModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BFD2DC21ED300617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CallKitModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1BFF2DC21ED400617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/CallKitModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1C012DC21ED500617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/CallKitModalViewContent.strings; sourceTree = "<group>"; };
+		8B6C1C022DC2205E00617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WhiteSectionHeaderView.xib; sourceTree = "<group>"; };
+		8B6C1C062DC2206000617CF8 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
+		8B6C1C082DC2206100617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
+		8B6C1C0A2DC2206200617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
+		8B6C1C0C2DC2206300617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
+		8BA1DB2F2DA56210009EBA0E /* DeviceUUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUUID.swift; sourceTree = "<group>"; };
 		BB0746908CEB376CAF4F47CA /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD7CD300677709F4E9C24DD9 /* Pods-SmartYardIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.debug.xcconfig"; sourceTree = "<group>"; };
 		C11A147380472F4F27E6BEB5 /* Pods-SmartYard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.debug.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1543,7 +1566,6 @@
 		E9E4273823F5609E00F5D593 /* ServiceSoonAvailableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSoonAvailableViewController.swift; sourceTree = "<group>"; };
 		E9E4273C23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSoonAvailableViewModel.swift; sourceTree = "<group>"; };
 		FA1A22A02CE3893000B8F919 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
-		FA991F392B95F947000B9C8E /* CallKitModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CallKitModalViewContent.xib; sourceTree = "<group>"; };
 		FA9E30E72BBBEF420087E689 /* CameraCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraCollectionViewCell.swift; sourceTree = "<group>"; };
 		FA9E30E82BBBEF420087E689 /* CameraCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraCollectionViewCell.xib; sourceTree = "<group>"; };
 		FA9E30EB2BBBEFFA0087E689 /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
@@ -1665,10 +1687,10 @@
 		3A1F213D26E09A96005FDB82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3AAB0D3626E2439E00A5AD75 /* WaitingGuestModalViewContent.xib */,
-				3AAB0D3926E3ADA700A5AD75 /* VideoEventModalViewContent.xib */,
-				3A1F213F26E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib */,
-				FA991F392B95F947000B9C8E /* CallKitModalViewContent.xib */,
+				8B6C1BD72DC2142500617CF8 /* WaitingGuestModalViewContent.xib */,
+				8B6C1BE22DC21B3600617CF8 /* VideoEventModalViewContent.xib */,
+				8B6C1BED2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib */,
+				8B6C1BF82DC21ED100617CF8 /* CallKitModalViewContent.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3503,7 +3525,7 @@
 			isa = PBXGroup;
 			children = (
 				84F6492E247402DB000C0028 /* WhiteSectionHeaderView.swift */,
-				84F6492F247402DB000C0028 /* WhiteSectionHeaderView.xib */,
+				8B6C1C032DC2205E00617CF8 /* WhiteSectionHeaderView.xib */,
 				84F64930247402DC000C0028 /* CustomDayCell.xib */,
 				84F64931247402DC000C0028 /* CustomDayCell.swift */,
 			);
@@ -4771,12 +4793,12 @@
 				3A8FC6F32B0661B700F90D73 /* PlayArchiveVideoViewController.xib in Resources */,
 				3A8FC7022B06621300F90D73 /* HistoryViewController.xib in Resources */,
 				E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */,
-				3A1F214126E09AF7005FDB82 /* WhiteRabbitModalViewContent.xib in Resources */,
+				8B6C1BEE2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				3A8FC7252B079FA100F90D73 /* EditNameViewController.xib in Resources */,
 				3A8FC76B2B09F89C00F90D73 /* OnboardingViewController.xib in Resources */,
 				3A8FC7162B079E7900F90D73 /* AddressAccessViewController.xib in Resources */,
-				FA991F3A2B95F947000B9C8E /* CallKitModalViewContent.xib in Resources */,
+				8B6C1BF92DC21ED100617CF8 /* CallKitModalViewContent.xib in Resources */,
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
 				8477217B2497C329003FCC24 /* OnlinePageViewController.xib in Resources */,
 				3A8FC72F2B09E51200F90D73 /* SettingsViewController.xib in Resources */,
@@ -4788,7 +4810,7 @@
 				845842D724223D7D0019635E /* AddressSettingsSkeletonView.xib in Resources */,
 				3A8FC68D2B065DB600F90D73 /* AvailableServicesViewController.xib in Resources */,
 				3A114823296EC93D00AAD2D6 /* Localizable.strings in Resources */,
-				84F6493A247402DC000C0028 /* WhiteSectionHeaderView.xib in Resources */,
+				8B6C1C042DC2205E00617CF8 /* WhiteSectionHeaderView.xib in Resources */,
 				3A8FC7482B09ED7B00F90D73 /* RequestRecordViewController.xib in Resources */,
 				847CF7DD240696D500070007 /* SettingsListSkeletonView.xib in Resources */,
 				84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */,
@@ -4843,11 +4865,11 @@
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
 				3A114819296EC46C00AAD2D6 /* SelectProviderViewController.xib in Resources */,
-				3AAB0D3726E243D700A5AD75 /* WaitingGuestModalViewContent.xib in Resources */,
+				8B6C1BD82DC2142500617CF8 /* WaitingGuestModalViewContent.xib in Resources */,
 				3A8FC6FD2B0661FB00F90D73 /* YardMapViewController.xib in Resources */,
 				3A1F213926DF8F4F005FDB82 /* ModalViewController.xib in Resources */,
 				3AC5C71126131D3D008D74DE /* HistoryLoadingTableViewCell.xib in Resources */,
-				3AAB0D3B26E3B19100A5AD75 /* VideoEventModalViewContent.xib in Resources */,
+				8B6C1BE32DC21B3600617CF8 /* VideoEventModalViewContent.xib in Resources */,
 				84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */,
 				3A114812296EC3A300AAD2D6 /* InputAddressViewController.xib in Resources */,
 				E9A4D48C23EC28760070A591 /* PinNumberField.xib in Resources */,
@@ -6409,6 +6431,66 @@
 				84F840DF23E07DA5008DBE50 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		8B6C1BD72DC2142500617CF8 /* WaitingGuestModalViewContent.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8B6C1BD62DC2142500617CF8 /* Base */,
+				8B6C1BDA2DC2142900617CF8 /* bg */,
+				8B6C1BDC2DC2142A00617CF8 /* en */,
+				8B6C1BDE2DC2142B00617CF8 /* kk */,
+				8B6C1BE02DC2142B00617CF8 /* uz */,
+			);
+			name = WaitingGuestModalViewContent.xib;
+			sourceTree = "<group>";
+		};
+		8B6C1BE22DC21B3600617CF8 /* VideoEventModalViewContent.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8B6C1BE12DC21B3600617CF8 /* Base */,
+				8B6C1BE52DC21B3800617CF8 /* bg */,
+				8B6C1BE72DC21B3900617CF8 /* en */,
+				8B6C1BE92DC21B3A00617CF8 /* kk */,
+				8B6C1BEB2DC21B3B00617CF8 /* uz */,
+			);
+			name = VideoEventModalViewContent.xib;
+			sourceTree = "<group>";
+		};
+		8B6C1BED2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8B6C1BEC2DC21C2600617CF8 /* Base */,
+				8B6C1BF02DC21C2800617CF8 /* bg */,
+				8B6C1BF22DC21C2800617CF8 /* en */,
+				8B6C1BF42DC21C2800617CF8 /* kk */,
+				8B6C1BF62DC21C2900617CF8 /* uz */,
+			);
+			name = WhiteRabbitModalViewContent.xib;
+			sourceTree = "<group>";
+		};
+		8B6C1BF82DC21ED100617CF8 /* CallKitModalViewContent.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8B6C1BF72DC21ED100617CF8 /* Base */,
+				8B6C1BFB2DC21ED300617CF8 /* bg */,
+				8B6C1BFD2DC21ED300617CF8 /* en */,
+				8B6C1BFF2DC21ED400617CF8 /* kk */,
+				8B6C1C012DC21ED500617CF8 /* uz */,
+			);
+			name = CallKitModalViewContent.xib;
+			sourceTree = "<group>";
+		};
+		8B6C1C032DC2205E00617CF8 /* WhiteSectionHeaderView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8B6C1C022DC2205E00617CF8 /* Base */,
+				8B6C1C062DC2206000617CF8 /* bg */,
+				8B6C1C082DC2206100617CF8 /* kk */,
+				8B6C1C0A2DC2206200617CF8 /* en */,
+				8B6C1C0C2DC2206300617CF8 /* uz */,
+			);
+			name = WhiteSectionHeaderView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -210,3 +210,10 @@
 "Failed to setup camera" = "Камераны орнату мүмкін болмады";
 "Failed to represent server response as base model" = "Серверден келген жауапты негізгі модельдің қалыптасуы мүмкін емес";
 "Error mapping the Data field, or it is missing with a code other than 204" = "Деректер өрісін карталандыруда қате пайда болды, немесе ол 204-тен басқа кодпен жоқ";
+"Date of record" = "Жазба күні";
+"Time" = "Уақыты";
+"Duration" = "Ұзақтығы";
+"h" = "сағ";
+"m" = "мин";
+"Allow" = "Таныс";
+"Deny" = "Бөгде";

@@ -202,3 +202,10 @@
 "Failed to setup camera" = "Failed to setup camera";
 "Failed to represent server response as base model" = "Failed to represent server response as base model";
 "Error mapping the Data field, or it is missing with a code other than 204" = "Error mapping the Data field, or it is missing with a code other than 204";
+"Date of record" = "Date of record";
+"Time" = "Time";
+"Duration" = "Duration";
+"h" = "h";
+"m" = "m";
+"Allow" = "Familiar";
+"Deny" = "Stranger";

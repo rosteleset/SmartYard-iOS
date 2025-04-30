@@ -1,0 +1,21 @@
+
+/* Class = "UILabel"; text = "Гость, подойдя к домофонной панели, набирает номер квартиры. Домофон откроется без звонка в квартиру."; ObjectID = "9Up-ke-t4m"; */
+"9Up-ke-t4m.text" = "The guest approaches the intercom panel and enters the apartment number. The intercom will open without calling the apartment.";
+
+/* Class = "UILabel"; text = "Гость подходит к калитке и набирает нужный номер квартиры;"; ObjectID = "JX1-P5-f2T"; */
+"JX1-P5-f2T.text" = "The guest approaches the gate and enters the desired apartment number;";
+
+/* Class = "UILabel"; text = "Функция, предназначенная для открытия калитки при звонке в квартиру и открытия подъездной панели по номеру квартиры без звонка в квартиру."; ObjectID = "NwP-ob-Rnk"; */
+"NwP-ob-Rnk.text" = "A feature designed to open the gate by calling the apartment and open the entrance panel by apartment number without calling the apartment.";
+
+/* Class = "UILabel"; text = "Хозяин квартиры отвечает гостю и нажимает кнопку Открыть в приложении или аналоговой трубке;"; ObjectID = "VOo-Yj-6Gp"; */
+"VOo-Yj-6Gp.text" = "The apartment owner answers the guest and presses the Open button in the app or on the analog handset;";
+
+/* Class = "UILabel"; text = "«Белый кролик»"; ObjectID = "gJJ-d5-8aF"; */
+"gJJ-d5-8aF.text" = "White Rabbit";
+
+/* Class = "UILabel"; text = "Работает следующим образом:"; ObjectID = "r6e-0e-e0n"; */
+"r6e-0e-e0n.text" = "Works as follows:";
+
+/* Class = "UILabel"; text = "Время действия данной функции после открытия калитки: 5 минут."; ObjectID = "ahP-hS-7Ud"; */
+"ahP-hS-7Ud.text" = "This feature remains active for 5 minutes after the gate is opened.";

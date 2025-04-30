@@ -202,3 +202,10 @@
 "Failed to setup camera" = "Kamerani sozlash muvaffaqiyatsiz bo'ldi";
 "Failed to represent server response as base model" = "Server javobini asosiy model sifatida ifodalash muvaffaqiyatsiz bo'ldi";
 "Error mapping the Data field, or it is missing with a code other than 204" = "Ma'lumotlar maydonini xaritalashda xato, yoki u 204-dan boshqa kod bilan yo'q";
+"Date of record" = "Yozuv sanasi";
+"Time" = "Vaqt";
+"Duration" = "Davomiyligi";
+"h" = "soat";
+"m" = "daq";
+"Allow" = "Tanish";
+"Deny" = "Begona";

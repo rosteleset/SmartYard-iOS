@@ -203,3 +203,10 @@
 "Failed to setup camera" = "Не удалось настроить камеру";
 "Failed to represent server response as base model" = "Не удалось представить ответ сервера в виде базовой модели";
 "Error mapping the Data field, or it is missing with a code other than 204" = "Ошибка маппинга поля Data, либо же оно отсутствует при коде отличном от 204";
+"Date of record" = "Дата записи";
+"Time" = "Время";
+"Duration" = "Продолжительность";
+"h" = "ч";
+"m" = "m";
+"Allow" = "Свой";
+"Deny" = "Чужой";

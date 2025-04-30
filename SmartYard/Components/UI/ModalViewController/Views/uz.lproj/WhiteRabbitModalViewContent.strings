@@ -1,0 +1,21 @@
+
+/* Class = "UILabel"; text = "Гость, подойдя к домофонной панели, набирает номер квартиры. Домофон откроется без звонка в квартиру."; ObjectID = "9Up-ke-t4m"; */
+"9Up-ke-t4m.text" = "Mehmon domofon paneliga yaqinlashib, kvartira raqamini teradi. Domofon kvartiraga qo‘ng‘iroq qilmasdan ochiladi.";
+
+/* Class = "UILabel"; text = "Гость подходит к калитке и набирает нужный номер квартиры;"; ObjectID = "JX1-P5-f2T"; */
+"JX1-P5-f2T.text" = "Mehmon darvozaga yaqinlashadi va kerakli kvartira raqamini teradi;";
+
+/* Class = "UILabel"; text = "Функция, предназначенная для открытия калитки при звонке в квартиру и открытия подъездной панели по номеру квартиры без звонка в квартиру."; ObjectID = "NwP-ob-Rnk"; */
+"NwP-ob-Rnk.text" = "Bu funksiya kvartiraga qo‘ng‘iroq orqali darvozani, va qo‘ng‘iroqsiz kirish panelini ochish uchun mo‘ljallangan.";
+
+/* Class = "UILabel"; text = "Хозяин квартиры отвечает гостю и нажимает кнопку Открыть в приложении или аналоговой трубке;"; ObjectID = "VOo-Yj-6Gp"; */
+"VOo-Yj-6Gp.text" = "Kvartira egasi mehmonning chaqirig‘iga javob beradi va ilovada yoki analog trubkada 'Ochish' tugmasini bosadi;";
+
+/* Class = "UILabel"; text = "«Белый кролик»"; ObjectID = "gJJ-d5-8aF"; */
+"gJJ-d5-8aF.text" = "Oq Quyon";
+
+/* Class = "UILabel"; text = "Работает следующим образом:"; ObjectID = "r6e-0e-e0n"; */
+"r6e-0e-e0n.text" = "Quyidagicha ishlaydi:";
+
+/* Class = "UILabel"; text = "Время действия данной функции после открытия калитки: 5 минут."; ObjectID = "ahP-hS-7Ud"; */
+"ahP-hS-7Ud.text" = "Darvoza ochilgandan so‘ng bu funksiya 5 daqiqa davomida faol bo‘ladi.";

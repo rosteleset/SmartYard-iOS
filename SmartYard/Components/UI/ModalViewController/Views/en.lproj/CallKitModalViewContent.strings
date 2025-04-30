@@ -1,0 +1,6 @@
+
+/* Class = "UILabel"; text = "Когда включен режим CallKit, звонки на ваш iPhone будут выглядеть как обычные звонки. Но в этом режиме вы не сможете заглянуть в \"глазок\" и посмотреть, кто пришел к вашему домофону, не поднимая трубку."; ObjectID = "B9b-OK-jJU"; */
+"B9b-OK-jJU.text" = "When CallKit mode is enabled, calls to your iPhone will appear as regular calls. But in this mode, you won’t be able to peek through the \"peephole\" to see who is at your intercom without picking up the call.";
+
+/* Class = "UILabel"; text = "Функция CallKit"; ObjectID = "EOV-NL-76Y"; */
+"EOV-NL-76Y.text" = "CallKit Feature";
