@@ -148,6 +148,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
         case let .pinCode(phoneNumber, isInitial, useFlashCall):
             let vm = PinCodeViewModel(
                 accessService: accessService,
+                alertService: alertService,
                 apiWrapper: apiWrapper,
                 router: weakRouter,
                 phoneNumber: phoneNumber
