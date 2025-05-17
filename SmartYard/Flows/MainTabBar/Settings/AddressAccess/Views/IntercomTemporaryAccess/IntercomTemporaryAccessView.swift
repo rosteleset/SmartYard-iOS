@@ -14,7 +14,7 @@ import RxSwift
 final class IntercomTemporaryAccessView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var refreshButton: UIButton!
-    @IBOutlet fileprivate weak var openButton: ObjectLockButton!
+    @IBOutlet fileprivate weak var openButton: SmartYardActionModeButton!
     @IBOutlet fileprivate weak var waitingGuestsQuestionMark: UIButton!
     
     @IBOutlet private weak var codeLabel: UILabel!
@@ -39,8 +39,7 @@ final class IntercomTemporaryAccessView: PMNibLinkableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        openButton.modeOnOnly = AccessService.shared.guestAccessModeOnOnly
+        openButton.mode = AccessService.shared.guestAccessModeOnOnly ? .open : .enable
         containerView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
     }
     

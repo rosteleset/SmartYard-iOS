@@ -7,7 +7,7 @@
 */
 "minutes" = "minutes";
 "Open" = "Open";
-"hasOpened" = "Opened";
+"Opened" = "Opened";
 "Cancel" = "Cancel";
 "Settings" = "Settings";
 "Ignore" = "Ignore";
@@ -208,4 +208,9 @@
 "h" = "h";
 "m" = "m";
 "Allow" = "Allow";
-"Deny" = "Stranger";
+"Deny" = "Deny";
+"Enable" = "Enable";
+"Disable" = "Disable";
+"Reset" = "Reset";
+"Reset address order?" = "Reset address order?";
+"This will restore the default sorting." = "Reset address order?";

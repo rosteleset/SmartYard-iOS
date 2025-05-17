@@ -17,6 +17,7 @@ enum ModalContent: String {
     case aboutWaitingGuests = "WaitingGuestModalViewContent"
     case aboutVideoEvent = "VideoEventModalViewContent"
     case aboutCallKit = "CallKitModalViewContent"
+    case aboutAddressOrder = "AddressOrderModalViewContent"
 }
 
 /// чтобы не делать 100500 классов для очень похожих модальных окошек с крестиком в правом верхнем углу,

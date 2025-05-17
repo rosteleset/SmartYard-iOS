@@ -8,9 +8,13 @@
 
 import UIKit
 
-final class ObjectLockButton: UIButton {
+final class SmartYardActionModeButton: UIButton {
     
-    var modeOnOnly = true {
+    enum ActionMode {
+        case open, enable, reset
+    }
+    
+    var mode: ActionMode = .open {
         didSet {
             prepareUI()
         }
@@ -24,16 +28,18 @@ final class ObjectLockButton: UIButton {
     
     var isOn = false {
         didSet {
-            if modeOnOnly {
+            switch mode {
+            case .open:
                 isEnabled = !isOn
-                
-            } else {
+            case .enable:
                 isEnabled = true
                 isSelected = isOn
+            case .reset:
+                isEnabled = !isOn
             }
+            
             updateAppearance()
         }
-        
     }
     
     override init(frame: CGRect) {
@@ -51,24 +57,33 @@ final class ObjectLockButton: UIButton {
     private func prepareUI() {
         layerCornerRadius = 8
         titleLabel?.font = UIFont.SourceSansPro.semibold(size: 14)
-        
-        if modeOnOnly {
-            setTitleColor(UIColor.SmartYard.blue, for: .normal)
+
+        switch mode {
+        case .open:
             setTitle(NSLocalizedString("Open", comment: ""), for: .normal)
-        } else {
-            setTitleColor(UIColor.SmartYard.blue, for: .normal)
+            setTitle(NSLocalizedString("Opened", comment: ""), for: .disabled)
+            
+            setTitleColor(.SmartYard.blue.darken(by: 0.1), for: .highlighted)
+
+        case .enable:
             setTitle(NSLocalizedString("Enable", comment: ""), for: .normal)
+            setTitle(NSLocalizedString("Disable", comment: ""), for: .selected)
+            setTitle(NSLocalizedString("Disable", comment: ""), for: [.highlighted, .selected])
+            
+            setTitleColor(.SmartYard.blue.darken(by: 0.1), for: .highlighted)
+            setTitleColor(.SmartYard.secondBackgroundColor.darken(by: 0.1), for: [.highlighted, .selected])
+
+        case .reset:
+            setTitle(NSLocalizedString("Reset", comment: ""), for: .normal)
+            setTitle(NSLocalizedString("Reset done", comment: ""), for: .disabled)
+            
+            setTitleColor(.SmartYard.blue.darken(by: 0.1), for: .highlighted)
         }
-        
-        setTitleColor(UIColor.SmartYard.blue.darken(by: 0.1), for: .highlighted)
-        setTitle(NSLocalizedString("Open", comment: ""), for: .highlighted)
-        
-        setTitleColor(.SmartYard.secondBackgroundColor, for: .disabled)
-        setTitle(NSLocalizedString("hasOpened", comment: ""), for: .disabled)
-        
+
+        setTitleColor(.SmartYard.blue, for: .normal)
         setTitleColor(.SmartYard.secondBackgroundColor, for: .selected)
-        setTitle(NSLocalizedString("Disable", comment: ""), for: .selected)
-        
+        setTitleColor(.SmartYard.secondBackgroundColor, for: .disabled)
+
         updateAppearance()
     }
     
@@ -80,17 +95,17 @@ final class ObjectLockButton: UIButton {
             layerBorderColor = UIColor.SmartYard.blue
             
         case .highlighted:
-            backgroundColor = UIColor.SmartYard.secondBackgroundColor.darken(by: 0.1)
+            backgroundColor = .SmartYard.secondBackgroundColor.darken(by: 0.1)
             layerBorderWidth = 1
             layerBorderColor = UIColor.SmartYard.blue.darken(by: 0.1)
             
         case .disabled:
-            backgroundColor = UIColor.SmartYard.darkGreen
+            backgroundColor = .SmartYard.darkGreen
             layerBorderWidth = 0
             layerBorderColor = .clear
             
         case .selected:
-            backgroundColor = UIColor.SmartYard.darkGreen
+            backgroundColor = .SmartYard.darkGreen
             layerBorderWidth = 0
             layerBorderColor = .clear
             

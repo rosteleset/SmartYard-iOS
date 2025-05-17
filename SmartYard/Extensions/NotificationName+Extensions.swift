@@ -22,6 +22,7 @@ extension Notification.Name {
     static let addressDeleted = Notification.Name("AddressDeleted")
     static let addressAdded = Notification.Name("AddressAdded")
     static let addressNeedUpdate = Notification.Name("AddressNeedUpdate")
+    static let addressOrderReset = Notification.Name("AddressOrderReset")
     
     static let addAddressFromSettings = Notification.Name("AddAddressFromSettings")
     static let userNameUpdated = Notification.Name("UserNameUpdated")
@@ -51,4 +52,5 @@ extension Notification.Name {
     static let refreshVisibleWebVC = Notification.Name("RefreshVisibleWebVC")
     
     static let videoPlayerSeek = Notification.Name("VideoPlayerSeek")
+    
 }

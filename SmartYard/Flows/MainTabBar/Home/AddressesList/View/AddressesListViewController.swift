@@ -220,7 +220,7 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
             )
             
         case .collapse:
-            collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
+            collectionView.scrollToItem(at: indexPath, at: .bottom, animated: false)
         }
     }
     
@@ -233,6 +233,9 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureCollectionView() {
+        collectionView.dragDelegate = self
+        collectionView.dropDelegate = self
+        collectionView.dragInteractionEnabled = true
         collectionView.refreshControl = refreshControl
         refreshControl.tintColor = UIColor.SmartYard.gray
         
@@ -411,6 +414,87 @@ extension AddressesListViewController: UICollectionViewDelegateFlowLayout {
         }()
         
         return UIEdgeInsets(top: topInset, left: 16, bottom: bottomInset, right: 16)
+    }
+    
+}
+
+extension AddressesListViewController: UICollectionViewDragDelegate {
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        itemsForBeginning session: UIDragSession,
+        at indexPath: IndexPath
+    ) -> [UIDragItem] {
+        guard indexPath.row == 0, let header = dataSource?[indexPath] else {
+            return []
+        }
+
+        guard let cell = collectionView.cellForItem(at: indexPath) else {
+            return []
+        }
+
+        let renderer = UIGraphicsImageRenderer(bounds: cell.bounds)
+        let image = renderer.image { ctx in
+            cell.layer.render(in: ctx.cgContext)
+        }
+
+        let snapshotView = UIImageView(image: image)
+        snapshotView.frame = cell.frame
+        snapshotView.layer.cornerRadius = 12
+        snapshotView.clipsToBounds = true
+        
+        viewModel.collapseAllSections()
+        collectionView.layoutIfNeeded()
+
+        let provider = NSItemProvider(object: NSString())
+        let dragItem = UIDragItem(itemProvider: provider)
+        dragItem.localObject = header.identity
+        dragItem.previewProvider = { UIDragPreview(view: snapshotView) }
+        
+        return [dragItem]
+    }
+    
+}
+
+extension AddressesListViewController: UICollectionViewDropDelegate {
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        performDropWith coordinator: UICollectionViewDropCoordinator
+    ) {
+        guard let destinationIndexPath = coordinator.destinationIndexPath else { return }
+
+        for wrapper in coordinator.items {
+            guard
+                let identity = wrapper.dragItem.localObject as? AddressesListDataItemIdentity,
+                case .header = identity,
+                let sourceIndexPath = wrapper.sourceIndexPath,
+                sourceIndexPath.row == 0
+            else { continue }
+
+            viewModel.moveApprovedAddress(
+                from: sourceIndexPath.section,
+                to: destinationIndexPath.section
+            )
+
+            let target = IndexPath(item: 0, section: destinationIndexPath.section)
+            coordinator.drop(wrapper.dragItem, toItemAt: target)
+        }
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        dropSessionDidUpdate session: UIDropSession,
+        withDestinationIndexPath destinationIndexPath: IndexPath?
+    ) -> UICollectionViewDropProposal {
+        if session.localDragSession != nil {
+            return UICollectionViewDropProposal(
+                operation: .move,
+                intent: .insertAtDestinationIndexPath
+            )
+        } else {
+            return UICollectionViewDropProposal(operation: .forbidden)
+        }
     }
     
 }

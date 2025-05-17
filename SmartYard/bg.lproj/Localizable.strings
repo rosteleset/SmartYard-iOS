@@ -7,7 +7,7 @@
 */
 "minutes" = "минути";
 "Open" = "Отвори";
-"hasOpened" = "Отворено";
+"Opened" = "Отворено";
 "Cancel" = "Отказ";
 "Settings" = "Настройки";
 "Ignore" = "Игнорирай";
@@ -194,3 +194,9 @@
 "m" = "м";
 "Allow" = "Познат";
 "Deny" = "Непознат";
+"Enable" = "Включи";
+"Disable" = "Изключи";
+"Reset" = "Нулиране";
+"Reset done" = "Нулирано";
+"Reset address order?" = "Да нулираме реда на адресите?";
+"This will restore the default sorting." = "Това ще върне стандартната подредба.";

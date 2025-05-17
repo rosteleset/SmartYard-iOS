@@ -14,7 +14,7 @@ final class AddressesListObjectCell: CustomBorderCollectionViewCell {
     
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
-    @IBOutlet private weak var openButton: ObjectLockButton!
+    @IBOutlet private weak var openButton: SmartYardActionModeButton!
     
     var disposeBag = DisposeBag()
     

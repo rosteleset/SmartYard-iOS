@@ -37,6 +37,9 @@ gets close to zero";
 /* Class = "UILabel"; text = "Отображение"; ObjectID = "AmF-1g-Ii8"; */
 "AmF-1g-Ii8.text" = "Appereance";
 
+/* Class = "UILabel"; text = "Порядок адресов"; ObjectID = "1qg-rb-8HA"; */
+"1qg-rb-8HA.text" = "Address order";
+
 /* Class = "UILabel"; text = "Показать на карте"; ObjectID = "mLP-oQ-Prc"; */
 "mLP-oQ-Prc.text" = "Show cameras on the map";
 

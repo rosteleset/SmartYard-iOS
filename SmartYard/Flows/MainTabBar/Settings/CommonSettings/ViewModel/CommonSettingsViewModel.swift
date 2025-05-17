@@ -14,6 +14,7 @@ import WebKit
 import FirebaseMessaging
 import SkeletonView
 
+// swiftlint:disable:next type_body_length
 final class CommonSettingsViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
@@ -83,9 +84,13 @@ final class CommonSettingsViewModel: BaseViewModel {
         let showCamerasOnMapSubject = BehaviorSubject<Bool>(value: accessService.showList)
         let isChangeEnableListButtonVisible = accessService.cctvView == "userDefined"
         let isChangeAppearanceButtonVisible = Constants.isDarkModeEnabled
-        let showDisplaySettings = isChangeEnableListButtonVisible || isChangeAppearanceButtonVisible
-        let displaySettingsSubject = BehaviorSubject<(Bool, Bool, Bool)>(value: (showDisplaySettings, isChangeEnableListButtonVisible, isChangeAppearanceButtonVisible))
+        let displaySettingsSubject = BehaviorSubject<(Bool, Bool)>(value: (isChangeEnableListButtonVisible, isChangeAppearanceButtonVisible))
         let appereanceButtonTextSubject = BehaviorSubject<String>(value: NSLocalizedString("System", comment: ""))
+        let resetConfirmed = PublishRelay<Void>()
+        let resetDidComplete = resetConfirmed
+            .do(onNext: { [weak self] in
+                self?.accessService.userPreferredAddressOrder = []
+            })
 
         if #available(iOS 13.0, *) {
             ThemeManager.shared.currentTheme
@@ -413,6 +418,53 @@ final class CommonSettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.addressOrderHintTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.showModal(withContent: .aboutAddressOrder))
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.addressOrderTrigger
+            .drive(
+                onNext: { [weak self] in
+                    
+                    let cancelAction = UIAlertAction(
+                        title: NSLocalizedString("Cancel", comment: ""),
+                        style: .cancel
+                    ) { _ in
+                        // nothing
+                    }
+                    let okAction = UIAlertAction(
+                        title: NSLocalizedString("Reset", comment: ""),
+                        style: .default
+                    ) { _ in
+                        resetConfirmed.accept(())
+                        NotificationCenter.default.post(name: .addressOrderReset, object: nil)
+                    }
+                    
+                    let resetOrderAlertTitle = NSLocalizedString(
+                        "Reset address order?",
+                        comment: ""
+                    )
+                    let resetOrderAlertText = NSLocalizedString(
+                        "This will restore the default sorting.",
+                        comment: ""
+                    )
+                    
+                    self?.router.trigger(
+                        .dialog(
+                            title: resetOrderAlertTitle,
+                            message: resetOrderAlertText,
+                            actions: [cancelAction, okAction],
+                            style: .alert
+                        )
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+        
         return Output(
             name: nameAsString,
             phone: .just(phone),
@@ -424,7 +476,8 @@ final class CommonSettingsViewModel: BaseViewModel {
             displaySettings: displaySettingsSubject.asDriverOnErrorJustComplete(),
             appereanceButtonText: appereanceButtonTextSubject.asDriverOnErrorJustComplete(),
             isLoading: activityTracker.asDriver(),
-            shouldShowInitialLoading: initialLoadingTracker.asDriver()
+            shouldShowInitialLoading: initialLoadingTracker.asDriver(),
+            resetDidComplete: resetDidComplete.asDriverOnErrorJustComplete()
         )
     }
     
@@ -444,6 +497,8 @@ extension CommonSettingsViewModel {
         let logoutTrigger: Driver<Void>
         let deleteAccountTrigger: Driver<Void>
         let callKitHintTrigger: Driver<Void>
+        let addressOrderHintTrigger: Driver<Void>
+        let addressOrderTrigger: Driver<Void>
     }
     
     struct Output {
@@ -454,10 +509,11 @@ extension CommonSettingsViewModel {
         let enableCallkit: Driver<Bool>
         let enableSpeakerByDefault: Driver<Bool>
         let showCamerasOnMap: Driver<Bool>
-        let displaySettings: Driver<(Bool, Bool, Bool)>
+        let displaySettings: Driver<(Bool, Bool)>
         let appereanceButtonText: Driver<String>
         let isLoading: Driver<Bool>
         let shouldShowInitialLoading: Driver<Bool>
+        let resetDidComplete: Driver<Void>
     }
     
 }

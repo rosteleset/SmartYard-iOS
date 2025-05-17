@@ -7,7 +7,7 @@
 */
 "minutes" = "daqiqalar";
 "Open" = "Ochish";
-"hasOpened" = "Ochilgan";
+"Opened" = "Ochilgan";
 "Cancel" = "Bekor qilish";
 "Settings" = "Sozlamalar";
 "Ignore" = "E'tiborsiz qoldirish";
@@ -209,3 +209,9 @@
 "m" = "daq";
 "Allow" = "Tanish";
 "Deny" = "Begona";
+"Enable" = "Yoqish";
+"Disable" = "O‘chirish";
+"Reset" = "Tiklash";
+"Reset done" = "Tiklandi";
+"Reset address order?" = "Manzillar tartibini tiklash?";
+"This will restore the default sorting." = "Bu manzillar standart tartibiga qaytariladi.";

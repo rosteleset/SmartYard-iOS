@@ -35,6 +35,7 @@ private let cctvViewKey = "cctvViewKey"
 private let showListKey = "showListKey"
 private let activeTabKey = "activeTabKey"
 private let issuesVersionKey = "issuesVersionKey"
+private let userPreferredAddressOrderKey = "userPreferredAddressOrderKey"
 
 // swiftlint:disable:next type_body_length
 class AccessService {
@@ -324,6 +325,15 @@ class AccessService {
         }
     }
     
+    var userPreferredAddressOrder: [String] {
+        get {
+            UserDefaults.standard.value(forKey: userPreferredAddressOrderKey) as? [String] ?? []
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: userPreferredAddressOrderKey)
+        }
+    }
+    
     var phoneLengthWithoutPrefix: Int {
             phonePattern.count(of: "#")
     }
@@ -375,6 +385,7 @@ class AccessService {
         chatDomain = ""
         chatToken = ""
         showCityCams = false
+        userPreferredAddressOrder = []
         phonePrefix = Constants.defaultPhonePrefix
         phonePattern = Constants.defaultPhonePattern
         

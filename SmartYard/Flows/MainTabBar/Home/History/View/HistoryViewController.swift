@@ -80,6 +80,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
         refreshControl.tintColor = UIColor.SmartYard.gray
         
         tableView.register(nibWithCellClass: HistoryTableViewCell.self)
+        // TODO: - Посмотреть где используется
         tableView.register(nibWithCellClass: HistoryLoadingTableViewCell.self)
         
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)

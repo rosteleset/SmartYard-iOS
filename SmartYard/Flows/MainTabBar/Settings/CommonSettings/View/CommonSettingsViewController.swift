@@ -56,7 +56,10 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
     @IBOutlet private weak var displayHeader: UIView!
     @IBOutlet private weak var displayHeaderArrowImageView: UIImageView!
     
-    @IBOutlet private weak var enableListContainerView: UIView!
+    @IBOutlet private weak var addressOrderResetButton: SmartYardActionModeButton!
+    @IBOutlet private weak var addressOrderQuestionMark: UIButton!
+    
+    @IBOutlet private weak var showCamerasOnMapContainerView: UIView!
     @IBOutlet private weak var showCamerasOnMapSwitch: UISwitch!
     
     @IBOutlet private weak var appearanceContainerView: UIView!
@@ -119,6 +122,7 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
         editNameButton.setImage(UIImage(named: "pencil")?.darkened(), for: .highlighted)
         editNameButton.touchAreaInsets = UIEdgeInsets(inset: 24)
         
+        addressOrderResetButton.mode = .reset
         changeAppereanceButton.setTitle("Как в системе", for: .normal)
 
         [
@@ -236,7 +240,9 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
             showApereanceApert: changeAppereanceButton.rx.tap.asDriver().mapToVoid(),
             logoutTrigger: logoutButton.rx.tap.asDriver(),
             deleteAccountTrigger: deleteAccountButton.rx.tap.asDriver(),
-            callKitHintTrigger: callkitQuestionMark.rx.tap.asDriver()
+            callKitHintTrigger: callkitQuestionMark.rx.tap.asDriver(),
+            addressOrderHintTrigger: addressOrderQuestionMark.rx.tap.asDriver(),
+            addressOrderTrigger: addressOrderResetButton.rx.tap.asDriver()
         )
         
         let output = viewModel.transform(input)
@@ -279,14 +285,17 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
         
         output.displaySettings
             .drive(
-                onNext: {  [weak self] (showDisplaySettings: Bool, isChangeEnableListButtonVisible: Bool, isChangeAppearanceButtonVisible: Bool) in
+                onNext: {  [weak self] isListVisible, isAppearanceVisible in
                     guard let self = self else { return }
     
-                    configureViewVisibility(displayContainerView, isVisible: showDisplaySettings)
-                    configureViewVisibility(appearanceContainerView, isVisible: isChangeAppearanceButtonVisible)
-                    configureViewVisibility(enableListContainerView, isVisible: isChangeEnableListButtonVisible)
-                    
-                    appearanceHighSeparator.isHidden = isChangeEnableListButtonVisible
+                    configureViewVisibility(
+                        appearanceContainerView,
+                        isVisible: isAppearanceVisible
+                    )
+                    configureViewVisibility(
+                        showCamerasOnMapContainerView,
+                        isVisible: !isListVisible
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -318,6 +327,31 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
                     shouldShowInitialLoading ? self?.showInitialLoading() : self?.finishInitialLoading()
                 }
             )
+            .disposed(by: disposeBag)
+        
+        output.resetDidComplete
+            .drive(onNext: { [weak self] in
+                guard let self = self else { return }
+
+                UIView.transition(
+                    with: self.addressOrderResetButton,
+                    duration: 0.25,
+                    options: [.transitionCrossDissolve]
+                ) {
+                    self.addressOrderResetButton.isOn = true
+                }
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    UIView.transition(
+                        with: self.addressOrderResetButton,
+                        duration: 0.25,
+                        options: [.transitionCrossDissolve]
+                    ) {
+                        self.addressOrderResetButton.isOn = false
+                    }
+                }
+
+            })
             .disposed(by: disposeBag)
     }
     

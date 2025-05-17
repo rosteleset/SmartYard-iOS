@@ -392,7 +392,6 @@
 		84CC15D823EC42E600A1CB95 /* DomophoneObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15D723EC42E600A1CB95 /* DomophoneObjectType.swift */; };
 		84CC15DC23EC6AA800A1CB95 /* AddressesListCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15DA23EC6AA800A1CB95 /* AddressesListCameraCell.swift */; };
 		84CC15E123EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */; };
-		84CC15E323EC86D900A1CB95 /* ObjectLockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */; };
 		84CC15E523EC999700A1CB95 /* AddressesListSectionUpdateKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E423EC999700A1CB95 /* AddressesListSectionUpdateKind.swift */; };
 		84CC15E923ED5E4B00A1CB95 /* CACornerMask+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */; };
 		84CC15ED23ED682C00A1CB95 /* CustomTabBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */; };
@@ -440,6 +439,8 @@
 		8B6C1BF92DC21ED100617CF8 /* CallKitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BF82DC21ED100617CF8 /* CallKitModalViewContent.xib */; };
 		8B6C1C042DC2205E00617CF8 /* WhiteSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C032DC2205E00617CF8 /* WhiteSectionHeaderView.xib */; };
 		8BA1DB302DA56220009EBA0E /* DeviceUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1DB2F2DA56210009EBA0E /* DeviceUUID.swift */; };
+		8BC048612DD20AB400F345C6 /* SmartYardActionModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC048602DD20AB400F345C6 /* SmartYardActionModeButton.swift */; };
+		8BC048B92DD639B100F345C6 /* AddressOrderModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BC048B82DD639B100F345C6 /* AddressOrderModalViewContent.xib */; };
 		C00F843EA1FB620BA1AA26C3 /* Pods_SmartYardWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD6C4E691C3E6B068AC5708 /* Pods_SmartYardWidget.framework */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
 		E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */; };
@@ -1341,7 +1342,6 @@
 		84CC15D723EC42E600A1CB95 /* DomophoneObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomophoneObjectType.swift; sourceTree = "<group>"; };
 		84CC15DA23EC6AA800A1CB95 /* AddressesListCameraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListCameraCell.swift; sourceTree = "<group>"; };
 		84CC15E023EC7FAB00A1CB95 /* CustomBorderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBorderCollectionViewCell.swift; sourceTree = "<group>"; };
-		84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectLockButton.swift; sourceTree = "<group>"; };
 		84CC15E423EC999700A1CB95 /* AddressesListSectionUpdateKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListSectionUpdateKind.swift; sourceTree = "<group>"; };
 		84CC15E823ED5E4B00A1CB95 /* CACornerMask+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CACornerMask+Extensions.swift"; sourceTree = "<group>"; };
 		84CC15EB23ED682C00A1CB95 /* CustomTabBarController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTabBarController.xib; sourceTree = "<group>"; };
@@ -1410,6 +1410,12 @@
 		8B6C1C0A2DC2206200617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
 		8B6C1C0C2DC2206300617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
 		8BA1DB2F2DA56210009EBA0E /* DeviceUUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUUID.swift; sourceTree = "<group>"; };
+		8BC048602DD20AB400F345C6 /* SmartYardActionModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardActionModeButton.swift; sourceTree = "<group>"; };
+		8BC048B32DD639B100F345C6 /* CallKitModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CallKitModalViewContent.xib; path = Base.lproj/AddressOrderModalViewContent.xib; sourceTree = "<group>"; };
+		8BC048B42DD639B100F345C6 /* CallKitModalViewContent.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = CallKitModalViewContent.strings; path = bg.lproj/AddressOrderModalViewContent.xib; sourceTree = "<group>"; };
+		8BC048B52DD639B100F345C6 /* CallKitModalViewContent.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = CallKitModalViewContent.strings; path = en.lproj/AddressOrderModalViewContent.xib; sourceTree = "<group>"; };
+		8BC048B62DD639B100F345C6 /* CallKitModalViewContent.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = CallKitModalViewContent.strings; path = kk.lproj/AddressOrderModalViewContent.xib; sourceTree = "<group>"; };
+		8BC048B72DD639B100F345C6 /* CallKitModalViewContent.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = CallKitModalViewContent.strings; path = uz.lproj/AddressOrderModalViewContent.xib; sourceTree = "<group>"; };
 		BB0746908CEB376CAF4F47CA /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD7CD300677709F4E9C24DD9 /* Pods-SmartYardIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.debug.xcconfig"; sourceTree = "<group>"; };
 		C11A147380472F4F27E6BEB5 /* Pods-SmartYard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.debug.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1691,6 +1697,7 @@
 				8B6C1BE22DC21B3600617CF8 /* VideoEventModalViewContent.xib */,
 				8B6C1BED2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib */,
 				8B6C1BF82DC21ED100617CF8 /* CallKitModalViewContent.xib */,
+				8BC048B82DD639B100F345C6 /* AddressOrderModalViewContent.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2392,7 +2399,7 @@
 				849FF08D24CEE3C900C234BC /* LinearGradientView.swift */,
 				84854B3A23FA8C38001B44F2 /* LoaderPresentable.swift */,
 				84854B5B23FC38F3001B44F2 /* LoadingButton.swift */,
-				84CC15E223EC86D900A1CB95 /* ObjectLockButton.swift */,
+				8BC048602DD20AB400F345C6 /* SmartYardActionModeButton.swift */,
 				3AFBA73726375B8600C7DEB6 /* BetterSnappingFlowLayout.swift */,
 				3AE65A47264DA4A00093284C /* ScaledHeightImageView.swift */,
 				3A200B0A27297EAC0022A0EC /* PeriodPicker.swift */,
@@ -4782,6 +4789,7 @@
 				3A8FC7A02B0A0A3100F90D73 /* FaceIdAccessView.xib in Resources */,
 				3A8FC7072B06623200F90D73 /* HistoryDetailViewController.xib in Resources */,
 				3A8FC67E2B065C7400F90D73 /* ServiceFromCourierView.xib in Resources */,
+				8BC048B92DD639B100F345C6 /* AddressOrderModalViewContent.xib in Resources */,
 				3AC5C625260A3249008D74DE /* HistoryTableViewCell.xib in Resources */,
 				3A8FC6B72B065FC200F90D73 /* RestoreMethodCell.xib in Resources */,
 				3A8FC6A12B065E8100F90D73 /* ProviderCell.xib in Resources */,
@@ -5283,6 +5291,7 @@
 				3A1F213826DF8F4F005FDB82 /* ModalViewController.swift in Sources */,
 				E92EFBA9242A22F2003AF7FE /* APIIssueConnect.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
+				8BC048612DD20AB400F345C6 /* SmartYardActionModeButton.swift in Sources */,
 				E92EFBDA242A22F2003AF7FE /* APIWrapper+Address.swift in Sources */,
 				3AEB886727E0CEFE00B19925 /* GetExtensionsListRequest.swift in Sources */,
 				84AADD20242E22640056994A /* EditNameViewController.swift in Sources */,
@@ -5538,7 +5547,6 @@
 				E92EFBB4242A22F2003AF7FE /* APICCTV.swift in Sources */,
 				84CC15E523EC999700A1CB95 /* AddressesListSectionUpdateKind.swift in Sources */,
 				84854B6523FD7FFC001B44F2 /* AllowedPersonDataItemIdentity.swift in Sources */,
-				84CC15E323EC86D900A1CB95 /* ObjectLockButton.swift in Sources */,
 				846DC6CB24B33DC600A11914 /* PayContractViewController.swift in Sources */,
 				843C38CF242A577C0035BF80 /* InboxRequest.swift in Sources */,
 				3AEB887327E130D000B19925 /* GetExtensionResponseData.swift in Sources */,
@@ -6491,6 +6499,18 @@
 				8B6C1C0C2DC2206300617CF8 /* uz */,
 			);
 			name = WhiteSectionHeaderView.xib;
+			sourceTree = "<group>";
+		};
+		8BC048B82DD639B100F345C6 /* AddressOrderModalViewContent.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8BC048B32DD639B100F345C6 /* CallKitModalViewContent.xib */,
+				8BC048B42DD639B100F345C6 /* CallKitModalViewContent.strings */,
+				8BC048B52DD639B100F345C6 /* CallKitModalViewContent.strings */,
+				8BC048B62DD639B100F345C6 /* CallKitModalViewContent.strings */,
+				8BC048B72DD639B100F345C6 /* CallKitModalViewContent.strings */,
+			);
+			name = AddressOrderModalViewContent.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

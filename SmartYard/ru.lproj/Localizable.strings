@@ -7,7 +7,7 @@
 */
 "minutes" = "минут";
 "Open" = "Открыть";
-"hasOpened" = "Открыто";
+"Opened" = "Открыто";
 "Cancel" = "Отмена";
 "Settings" = "Настройки";
 "Ignore" = "Игнорировать";
@@ -210,3 +210,9 @@
 "m" = "m";
 "Allow" = "Свой";
 "Deny" = "Чужой";
+"Enable" = "Включить";
+"Disable" = "Отключить";
+"Reset" = "Сбросить";
+"Reset done" = "Сброшено";
+"Reset address order?" = "Сбросить порядок адресов?";
+"This will restore the default sorting." = "Это вернёт порядок по умолчанию.";

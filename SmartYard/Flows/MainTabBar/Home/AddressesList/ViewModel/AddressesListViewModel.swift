@@ -174,6 +174,7 @@ final class AddressesListViewModel: BaseViewModel {
                 NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToTrue(),
                 NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToTrue(),
                 NotificationCenter.default.rx.notification(.addressNeedUpdate).asDriverOnErrorJustComplete().mapToTrue(),
+                NotificationCenter.default.rx.notification(.addressOrderReset).asDriverOnErrorJustComplete().mapToTrue(),
                 hasNetworkBecomeReachable.mapToFalse(),
                 .just(false)
             )
@@ -240,13 +241,7 @@ final class AddressesListViewModel: BaseViewModel {
             .map { args -> (GetAddressListResponseData, GetListConnectResponseData) in
                 var (approvedAddresses, uSecondResponse) = args
                 
-                // перемещаем наверх позиции в которых есть домофон
-                var movingElements: GetAddressListResponseData = []
-                for item in approvedAddresses where item.doors.isEmpty == false {
-                        movingElements.append(item)
-                }
-                approvedAddresses = movingElements + approvedAddresses.filtered({ $0.doors.isEmpty }, map: { $0 })
-                
+                approvedAddresses = self.applySavedOrder(to: approvedAddresses)
                 return (approvedAddresses, uSecondResponse)
             }
             .withLatestFrom(areSectionsExpanded.asDriver(onErrorJustReturn: [:])) { ($0, $1) }
@@ -282,7 +277,9 @@ final class AddressesListViewModel: BaseViewModel {
                         return
                     }
                     
-                    self?.loadedApprovedAddressesData.onNext(approvedAddresses)
+                    let sortedAddresses = self?.applySavedOrder(to: approvedAddresses)
+                    
+                    self?.loadedApprovedAddressesData.onNext(sortedAddresses)
                     self?.loadedUnapprovedAddressesData.onNext(unapprovedAddresses)
                     
                     guard let accessToken = self?.accessService.accessToken,
@@ -856,6 +853,65 @@ extension AddressesListViewModel: QRCodeScanViewModelDelegate {
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+}
+
+extension AddressesListViewModel {
+    
+    private func defaultSorted(_ addresses: GetAddressListResponseData) -> GetAddressListResponseData {
+        let alphabetic = addresses.sorted {
+            $0.address.localizedCaseInsensitiveCompare($1.address) == .orderedAscending
+        }
+        let withDoors = alphabetic.filter { !$0.doors.isEmpty }
+        let withoutDoors = alphabetic.filter { $0.doors.isEmpty }
+
+        return withDoors + withoutDoors
+    }
+    
+    func saveAddressesOrder(_ addresses: GetAddressListResponseData) {
+        let order = addresses.map { $0.houseId }
+        accessService.userPreferredAddressOrder = order
+    }
+    
+    private func applySavedOrder(to addresses: GetAddressListResponseData) -> GetAddressListResponseData {
+        let savedOrder = accessService.userPreferredAddressOrder
+        
+        guard !savedOrder.isEmpty else {
+            return defaultSorted(addresses)
+        }
+        
+        return addresses.sorted { a, b in
+            let i1 = savedOrder.firstIndex(of: a.houseId) ?? Int.max
+            let i2 = savedOrder.firstIndex(of: b.houseId) ?? Int.max
+            if i1 != i2 {
+                return i1 < i2
+            }
+            
+            // Если оба отсутствуют в saved (i1 = i2 = Int.max), сортируем по алфавиту
+            return a.address.localizedCaseInsensitiveCompare(b.address) == .orderedAscending
+        }
+    }
+    
+    func moveApprovedAddress(from fromIndex: Int, to toIndex: Int) {
+        var addresses = (try? loadedApprovedAddressesData.value()) ?? []
+        guard fromIndex < addresses.count, toIndex <= addresses.count else {
+            return
+        }
+        
+        let moved = addresses.remove(at: fromIndex)
+        addresses.insert(moved, at: toIndex)
+        
+        saveAddressesOrder(addresses)
+        loadedApprovedAddressesData.onNext(addresses)
+    }
+    
+    func collapseAllSections() {
+        let addresses = (try? loadedApprovedAddressesData.value()) ?? []
+        let newDict = Dictionary(
+            uniqueKeysWithValues: addresses.map { ($0.houseId, false) }
+        )
+        areSectionsExpanded.onNext(newDict)
     }
     
 }
