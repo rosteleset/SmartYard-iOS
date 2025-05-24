@@ -294,7 +294,7 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
                     )
                     configureViewVisibility(
                         showCamerasOnMapContainerView,
-                        isVisible: !isListVisible
+                        isVisible: isListVisible
                     )
                 }
             )
