@@ -67,7 +67,7 @@
                             </constraints>
                             <color key="textColor" name="semiBlack"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                     <real key="value" value="8"/>
