@@ -39,6 +39,7 @@ final class IncomingCallViewModel: BaseViewModel {
     private let incomingCallAcceptedByUser = BehaviorSubject<Bool>(value: false)
     private let doorOpeningRequestedByUser = BehaviorSubject<Bool>(value: false)
     private let isDoorBeingOpened = BehaviorSubject<Bool>(value: false)
+    private let shouldMuteCall = BehaviorSubject<Bool>(value: false)
     
     // MARK: По умолчанию звонок принятый через CallKit должен показываться со статичной картинкой
     // Чтобы показалось видео - нужно, чтобы пользователь нажал на кнопку "Video" в коллките
@@ -217,7 +218,7 @@ final class IncomingCallViewModel: BaseViewModel {
                 incomingCallAcceptedByUser.asDriver(onErrorJustReturn: false),
                 doorOpeningRequestedByUser.asDriver(onErrorJustReturn: false)
             )
-            .flatMap { args -> Driver<(Call, CallParams)> in
+            .flatMap { [weak self] args -> Driver<(Call, CallParams)> in
                 let (incomingCall, isAccepted, isDoorOpeningRequested) = args
                 
                 guard let unwrappedIncomingCall = incomingCall, (isAccepted || isDoorOpeningRequested) else {
@@ -227,8 +228,7 @@ final class IncomingCallViewModel: BaseViewModel {
                 let (call, callParams) = unwrappedIncomingCall
                 
                 if isDoorOpeningRequested {
-                    call.speakerMuted = true
-                    call.microphoneMuted = true
+                    self?.shouldMuteCall.onNext(true)
                 }
                 
                 return .just((call, callParams))
@@ -892,7 +892,14 @@ extension IncomingCallViewModel: LinphoneDelegate {
     
     func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
         Logger.logDebug("CALL STATE: \(cstate)")
-                
+        
+        if cstate == .StreamsRunning,
+           (try? shouldMuteCall.value()) == true {
+            call.speakerMuted = true
+            call.microphoneMuted = true
+            shouldMuteCall.onNext(false)
+        }
+        
         // обновляем режим вывода звука согласно текущего состояния, т.к. оно затирается при снятии трубки linphone-ом
         Logger.logInfo("Call streams running. Updating sound output state...")
         if cstate == .StreamsRunning,
