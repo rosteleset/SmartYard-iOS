@@ -151,8 +151,8 @@ final class LinphoneService: CoreDelegate {
             core.addAuthInfo(info: authInfo)
         }
         
-        core.useInfoForDtmf = false
-        core.useRfc2833ForDtmf = true
+        core.useInfoForDtmf = true
+        core.useRfc2833ForDtmf = false
         /*
         core.audioPayloadTypes.forEach {
             _ = $0.enable(enabled: true)

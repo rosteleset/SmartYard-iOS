@@ -820,12 +820,11 @@ final class IncomingCallViewModel: BaseViewModel {
         let scheduler = SerialDispatchQueueScheduler(qos: .background)
 
         let dtmfStream = Observable<Int>
-            .interval(.milliseconds(750), scheduler: scheduler)
-            .take(3)
+            .timer(.milliseconds(750), scheduler: scheduler)
             .observe(on: MainScheduler.instance)
-            .do(onNext: { [weak self] attempt in
+            .do(onNext: { [weak self] _ in
                 guard let self = self, call.state == .StreamsRunning else { return }
-                Logger.logDebug("Sending DTMF [\(attempt + 1)/3]...")
+                Logger.logDebug("Sending DTMF...")
                 
                 do {
                     try call.sendDtmfs(dtmfs: self.callPayload.dtmf)
@@ -838,7 +837,6 @@ final class IncomingCallViewModel: BaseViewModel {
             .mapToVoid()
 
         let finishStream = Observable.just(())
-            .delay(.milliseconds(750), scheduler: scheduler)
             .observe(on: MainScheduler.instance)
             .do(onNext: { [weak self] in
                 guard let self = self else { return }
