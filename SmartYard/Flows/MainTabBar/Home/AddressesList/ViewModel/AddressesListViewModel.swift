@@ -84,12 +84,15 @@ final class AddressesListViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] error in
                     if (error as NSError) == NSError.PermissionError.noCameraPermission {
-                        let msg = NSLocalizedString("To use this feature, go to settings and grant access to the camera", comment: "")
+                        let msg = NSLocalizedString(
+                            "To use this feature, go to settings and grant access to the camera",
+                            comment: ""
+                        )
                         
                         self?.router.trigger(
                             .appSettings(
-                                title: NSLocalizedString("Can't access camera", comment: ""),
-                                message: msg
+                            title: NSLocalizedString("Can't access camera", comment: ""),
+                            message: msg
                             )
                         )
                         
@@ -216,7 +219,10 @@ final class AddressesListViewModel: BaseViewModel {
                 }
 
                 return Single
-                    .zip(self.apiWrapper.getAddressList(forceRefresh: true), self.apiWrapper.getListConnect(forceRefresh: true))
+                    .zip(
+                        self.apiWrapper.getAddressList(forceRefresh: true),
+                        self.apiWrapper.getListConnect(forceRefresh: true)
+                    )
                     .trackError(self.errorTracker)
                     .map { args -> (GetAddressListResponseData, GetListConnectResponseData)? in
                         let (firstResponse, secondResponse) = args
@@ -277,7 +283,20 @@ final class AddressesListViewModel: BaseViewModel {
                         return
                     }
                     
-                    let sortedAddresses = self?.applySavedOrder(to: approvedAddresses)
+                    // TODO: Удалить этот workaround, когда сервер перестанет возвращать дубликаты адресов
+                    // В редких случаях сервер дважды присылает один и тот же address с одинаковым houseId — это баг на бэке
+                    // Временно фильтруем такие дубликаты вручную
+                    var seen = Set<String>()
+                    let uniqueApprovedAddresses = approvedAddresses.filter { address in
+                        if seen.contains(address.houseId) {
+                            return false
+                        } else {
+                            seen.insert(address.houseId)
+                            return true
+                        }
+                    }
+
+                    let sortedAddresses = self?.applySavedOrder(to: uniqueApprovedAddresses)
                     
                     self?.loadedApprovedAddressesData.onNext(sortedAddresses)
                     self?.loadedUnapprovedAddressesData.onNext(unapprovedAddresses)
