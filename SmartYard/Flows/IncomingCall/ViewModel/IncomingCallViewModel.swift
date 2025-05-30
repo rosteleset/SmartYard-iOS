@@ -820,7 +820,8 @@ final class IncomingCallViewModel: BaseViewModel {
         let scheduler = SerialDispatchQueueScheduler(qos: .background)
 
         let dtmfStream = Observable<Int>
-            .timer(.milliseconds(750), scheduler: scheduler)
+            .interval(.milliseconds(750), scheduler: scheduler)
+            .take(1)
             .observe(on: MainScheduler.instance)
             .do(onNext: { [weak self] _ in
                 guard let self = self, call.state == .StreamsRunning else { return }
@@ -837,6 +838,7 @@ final class IncomingCallViewModel: BaseViewModel {
             .mapToVoid()
 
         let finishStream = Observable.just(())
+            .delay(.milliseconds(750), scheduler: scheduler)
             .observe(on: MainScheduler.instance)
             .do(onNext: { [weak self] in
                 guard let self = self else { return }
