@@ -83,6 +83,10 @@ public extension UIDevice {
         case "iPhone15,5": return "15 Plus"
         case "iPhone16,1": return "15 Pro"
         case "iPhone16,2": return "15 Pro Max"
+        case "iPhone17,1": return "16"
+        case "iPhone17,2": return "16 Plus"
+        case "iPhone17,3": return "16 Pro"
+        case "iPhone17,4": return "16 Pro Max"
         
         // MARK: - iPod -
             
@@ -220,6 +224,11 @@ public extension UIDevice {
         case "Watch6,16": return "Apple Watch Series 8 41mm case (GPS+Cellular)"
         case "Watch6,17": return "Apple Watch Series 8 45mm case (GPS+Cellular)"
         case "Watch6,18": return "Apple Watch Ultra"
+        case "Watch7,1": return "Apple Watch Series 9 41mm (GPS)"
+        case "Watch7,2": return "Apple Watch Series 9 45mm (GPS)"
+        case "Watch7,3": return "Apple Watch Series 9 41mm (Cellular)"
+        case "Watch7,4": return "Apple Watch Series 9 45mm (Cellular)"
+        case "Watch7,5": return "Apple Watch Ultra 2"
         
         // MARK: - Apple TV -
             
