@@ -92,31 +92,40 @@ extension AddressesHeaderCell {
     static let arrowWidth: CGFloat = 13
     static let arrowSpacing: CGFloat = 16
     static let arrowHeight: CGFloat = 8
-    
+
+    private static let heightCache = NSCache<NSString, NSNumber>()
+
     class func preferredTitleLabelHeight(for width: CGFloat, title: String?) -> CGFloat {
-        guard !title.isNilOrEmpty else {
-            return 0
+        guard let title = title, !title.isEmpty else { return 0 }
+
+        let maxWidth = width - mainContainerMargins * 2 - arrowWidth - arrowSpacing
+        let cacheKey = "\(width)_\(title)" as NSString
+
+        if let cached = heightCache.object(forKey: cacheKey) {
+            return CGFloat(truncating: cached)
         }
-        
-        let label = UILabel()
-        
-        label.numberOfLines = 0
-        label.font = UIFont.SourceSansPro.regular(size: 14)
-        label.text = title
-        
-        return label.sizeThatFits(
-            CGSize(width: width - mainContainerMargins * 2 - arrowWidth - arrowSpacing, height: 1000)
-        ).height
+
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.SourceSansPro.regular(size: 14)
+        ]
+        let boundingRect = (title as NSString).boundingRect(
+            with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: attributes,
+            context: nil
+        )
+
+        let height = ceil(boundingRect.height)
+        heightCache.setObject(NSNumber(value: Double(height)), forKey: cacheKey)
+        return height
     }
-    
+
     class func preferredHeight(for width: CGFloat, title: String?) -> Dimensions {
         let titleLabelHeight = preferredTitleLabelHeight(for: width, title: title)
-        
         let mainContainerHeight = max(arrowHeight, titleLabelHeight, minMainContainerHeight)
         let totalHeight = mainContainerMargins * 2 + mainContainerHeight
-        
         let titleLabelWidth = width - mainContainerMargins * 2 - arrowWidth - arrowSpacing
-        
+
         return Dimensions(
             totalHeight: totalHeight,
             titleLabelHeight: titleLabelHeight,
