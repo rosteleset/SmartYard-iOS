@@ -65,8 +65,7 @@ final class NewAllowedPersonViewModel: BaseViewModel {
                 }
                 
                 let phoneCharsArray = phoneText.components(separatedBy: CharacterSet.alphanumerics.inverted)
-                
-                let cleanPhone = String(phoneCharsArray.joined(separator: "").dropFirst())
+                let cleanPhone = phoneCharsArray.joined().withoutPrefix(AccessService.shared.phonePrefix)
                 
                 guard cleanPhone.count == AccessService.shared.phoneLengthWithoutPrefix else {
                     return nil
