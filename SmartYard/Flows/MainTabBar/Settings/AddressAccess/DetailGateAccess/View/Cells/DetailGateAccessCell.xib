@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Regular.ttf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+        <array key="SourceSansPro-SemiBold.ttf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DetailGateAccessCell" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="340" height="59"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="340" height="59"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gs8-WD-bDu" userLabel="Content View">
+                        <rect key="frame" x="0.0" y="0.0" width="340" height="59"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="6yo-U4-Is2">
+                                <rect key="frame" x="12.000000000000007" y="12" width="109.66666666666669" height="35"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultCarIcon" translatesAutoresizingMaskIntoConstraints="NO" id="XMZ-gP-eRo">
+                                        <rect key="frame" x="0.0" y="1.6666666666666643" width="32" height="32"/>
+                                        <color key="tintColor" name="gray"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="YFc-lV-oge"/>
+                                            <constraint firstAttribute="height" constant="32" id="ueb-mN-kHB"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="М 565 ХВ 68" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEa-Mg-cPV">
+                                        <rect key="frame" x="44.000000000000007" y="9.6666666666666679" width="65.666666666666686" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="i39-Le-dgn"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="13"/>
+                                        <color key="textColor" name="semiBlack"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="WDd-SF-5MX">
+                                <rect key="frame" x="207.33333333333334" y="12" width="120.66666666666666" height="35"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="осталось 20 мин" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sxw-qq-9EN">
+                                        <rect key="frame" x="0.0" y="9.6666666666666679" width="92.666666666666671" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="I9K-6h-11N"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="13"/>
+                                        <color key="textColor" name="gray"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1A8-mW-VgN">
+                                        <rect key="frame" x="104.66666666666666" y="9.6666666666666679" width="16" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="16" id="eHz-Lu-tRp"/>
+                                            <constraint firstAttribute="height" constant="16" id="lTK-vD-sba"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="tintColor" name="gray"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal">
+                                            <imageReference key="image" image="ellipsis" catalog="system" symbolScale="medium"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" name="secondBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="WDd-SF-5MX" secondAttribute="bottom" constant="12" id="Fkz-sx-svl"/>
+                            <constraint firstItem="WDd-SF-5MX" firstAttribute="top" secondItem="gs8-WD-bDu" secondAttribute="top" constant="12" id="dGe-tM-kMB"/>
+                            <constraint firstItem="6yo-U4-Is2" firstAttribute="top" secondItem="gs8-WD-bDu" secondAttribute="top" constant="12" id="eCx-hc-CjG"/>
+                            <constraint firstAttribute="bottom" secondItem="6yo-U4-Is2" secondAttribute="bottom" constant="12" id="lbm-Ad-qFR"/>
+                            <constraint firstAttribute="trailing" secondItem="WDd-SF-5MX" secondAttribute="trailing" constant="12" id="qJm-Fy-6xm"/>
+                            <constraint firstItem="6yo-U4-Is2" firstAttribute="leading" secondItem="gs8-WD-bDu" secondAttribute="leading" constant="12" id="vL2-kd-0Wu"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="gs8-WD-bDu" secondAttribute="trailing" id="bxh-Tz-yQZ"/>
+                <constraint firstItem="gs8-WD-bDu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ejN-Ct-kz8"/>
+                <constraint firstAttribute="bottom" secondItem="gs8-WD-bDu" secondAttribute="bottom" id="nwA-dT-8zt"/>
+                <constraint firstItem="gs8-WD-bDu" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="sUC-zR-n9q"/>
+            </constraints>
+            <size key="customSize" width="340" height="59"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                    <integer key="value" value="12"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="imageView" destination="XMZ-gP-eRo" id="4UM-Gh-5ZQ"/>
+                <outlet property="menuButton" destination="1A8-mW-VgN" id="RYm-Js-s53"/>
+                <outlet property="numberLabel" destination="hEa-Mg-cPV" id="y6j-qq-Bop"/>
+                <outlet property="remainingTimeLabel" destination="Sxw-qq-9EN" id="T7h-kA-pyj"/>
+            </connections>
+            <point key="canvasLocation" x="-151.14503816793894" y="-111.61971830985917"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="DefaultCarIcon" width="32" height="32"/>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <namedColor name="gray">
+            <color red="0.42745098039215684" green="0.47843137254901963" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="secondBackgroundColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="semiBlack">
+            <color red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
+</document>

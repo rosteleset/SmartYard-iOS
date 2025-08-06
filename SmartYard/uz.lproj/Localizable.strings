@@ -53,6 +53,7 @@
 "Guest information has been successfully sent!" = "Mehmon ma'lumotlari muvaffaqiyatli jo'natildi!";
 "Yes" = "Ha";
 "Are you sure?" = "Ishonchingiz komilmi?";
+"Do you want to remove access?" = "Kirish huquqini olib tashlamoqchimisiz?";
 "Enable" = "Yo'lga qo'yish";
 "Disable" = "O'chirish";
 "guestAccessAlertText" = "Domofonga uyingiz raqamini tergan har bir kishiga eshik 60 daqiqa davomida avtomatik ravishda ochiladi. Ushbu vaqt o'tgach, domofon ishlash tartibi avtomatik ravishda standart rejimga qaytadi.";
@@ -215,3 +216,13 @@
 "Reset done" = "Tiklandi";
 "Reset address order?" = "Manzillar tartibini tiklash?";
 "This will restore the default sorting." = "Bu manzillar standart tartibiga qaytariladi.";
+"By car number" = "Avtomobil raqami orqali";
+"By phone number" = "Telefon raqami orqali";
+"All cars" = "Barcha mashinalar";
+"All people" = "Barcha odamlar";
+"Add car" = "Avtomobil qo‘shish";
+"Add person" = "Kontakt qo‘shish";
+"TimeLeftFormat" = "%@ qoldi";
+"expired" = "muddati tugadi";
+"Add" = "Qo‘shish";
+"unlimited" = "cheksiz";

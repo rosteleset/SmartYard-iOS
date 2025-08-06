@@ -53,6 +53,7 @@
 "Guest information has been successfully sent!" = "Қонақ ақпараты сәтті жіберілді!";
 "Yes" = "Ия";
 "Are you sure?" = "Сіз сенімдісіз бе?";
+"Do you want to remove access?" = "Қолжетімді жойғыңыз келе ме?";
 "Enable" = "Қосу";
 "Disable" = "Өшіру";
 "guestAccessAlertText" = "Домофонда сіздің келешекті дәрігер саныңызды терген барлық адамдар 60 минут ішінде автоматты түрде жақ
@@ -223,3 +224,13 @@
 "Reset done" = "Қалпына келтірілді";
 "Reset address order?" = "Мекенжайлар тәртібін қалпына келтіру?";
 "This will restore the default sorting." = "Бұл мекенжайлардың әдепкі ретін қайтарады.";
+"By car number" = "Көлік нөмірі бойынша";
+"By phone number" = "Телефон нөмірі бойынша";
+"All cars" = "Барлық көліктер";
+"All people" = "Барлық адамдар";
+"Add car" = "Көлікті қосу";      
+"Add person" = "Контактіні қосу";
+"TimeLeftFormat" = "%@ қалды";
+"expired" = "мерзімі өтті";
+"Add" = "Қосу";
+"unlimited" = "шексіз";

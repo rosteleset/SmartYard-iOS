@@ -81,6 +81,10 @@ enum APITarget {
     case removePersonFace(request: RemovePersonFaceRequest)
     case likePersonFace(request: LikePersonFaceRequest)
     case disLikePersonFace(request: DisLikePersonFaceRequest)
+    
+    case getLicensePlates(request: GetLicensePlatesRequest)
+    case addLicensePlate(request: AddLicensePlateRequest)
+    case removeLicensePlate(request: RemoveLicensePlateRequest)
 }
 
 extension APITarget: TargetType {
@@ -170,10 +174,16 @@ extension APITarget: TargetType {
         case .disLikePersonFace: return "frs/disLike"
         case .likePersonFace: return "frs/like"
         case .removePersonFace: return "frs/disLike"
+            
+        case .getLicensePlates: return "lprs/listNumbers"
+        case .addLicensePlate: return "lprs/addNumber"
+        case .removeLicensePlate: return "lprs/removeNumber"
+            
         case .extList: return "ext/list"
         case .ext: return "ext/ext"
         case .options: return "ext/options"
         }
+        
     }
     
     var method: Moya.Method {
@@ -252,6 +262,10 @@ extension APITarget: TargetType {
             case .removePersonFace(let request): return (request.accessToken, false)
             case .likePersonFace(let request): return (request.accessToken, false)
             case .disLikePersonFace(let request): return (request.accessToken, false)
+                
+            case .getLicensePlates(let request): return (request.accessToken, false)
+            case .addLicensePlate(let request): return (request.accessToken, false)
+            case .removeLicensePlate(let request): return (request.accessToken, false)
                 
             case .extList(let request): return (request.accessToken, false)
             case .ext(let request): return (request.accessToken, false)
@@ -356,6 +370,10 @@ extension APITarget: TargetType {
         case .removePersonFace(let request): return request.requestParameters
         case .likePersonFace(let request): return request.requestParameters
         case .disLikePersonFace(let request): return request.requestParameters
+            
+        case .getLicensePlates(let request): return request.requestParameters
+        case .addLicensePlate(let request): return request.requestParameters
+        case .removeLicensePlate(let request): return request.requestParameters
         
         case .extList(let request): return request.requestParameters
         case .ext(let request): return request.requestParameters

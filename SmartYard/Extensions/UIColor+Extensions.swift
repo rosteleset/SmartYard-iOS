@@ -40,5 +40,20 @@ extension UIColor {
     // TODO: - Заполнить остальные кастомные цвета сюда - 
     // Используется также кастомные цвета:
     //   1. Для ArrowIcons tintColor: #828282
+    
+    enum SYKeyboard {
+        /// light: #E5E5EA   :  dark: #1C1C1E
+        static let boardColor = UIColor(named: "boardColor")!
+        
+        /// light: #FFFFFF   :  dark: #2C2C2E
+        static let keyColor = UIColor(named: "keyColor")!
+        
+        /// light: #D1D1D6   :  dark: #000000
+        static let shadowKeyColor = UIColor(named: "shadowKeyColor")!
+        
+        /// light: #000000   :  dark: #FFFFFF
+        static let textKeyColor = UIColor(named: "textKeyColor")!
+    }
+    
 }
 

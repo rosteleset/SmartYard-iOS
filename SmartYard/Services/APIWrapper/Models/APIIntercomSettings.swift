@@ -19,6 +19,7 @@ struct APIIntercomSettings {
     let disablePlog: Bool?
     let hiddenPlog: Bool?
     let frsDisabled: Bool?
+    let lprsDisabled: Bool?
     
 }
 
@@ -63,7 +64,41 @@ extension APIIntercomSettings {
             params["FRSDisabled"] = frsDisabled ? "t" : "f"
         }
         
+        if let lprsDisabled = lprsDisabled {
+            params["LPRSDisabled"] = lprsDisabled ? "t" : "f"
+        }
+        
         return params
+    }
+    
+}
+
+extension APIIntercomSettings {
+    
+    static func create(
+        enableDoorCode: Bool? = nil,
+        cms: Bool? = nil,
+        voip: Bool? = nil,
+        autoOpen: Date? = nil,
+        whiteRabbit: Bool? = nil,
+        paperBill: Bool? = nil,
+        disablePlog: Bool? = nil,
+        hiddenPlog: Bool? = nil,
+        frsDisabled: Bool? = nil,
+        lprsDisabled: Bool? = nil
+    ) -> APIIntercomSettings? {
+        return APIIntercomSettings(
+            enableDoorCode: enableDoorCode,
+            cms: cms,
+            voip: voip,
+            autoOpen: autoOpen,
+            whiteRabbit: whiteRabbit,
+            paperBill: paperBill,
+            disablePlog: disablePlog,
+            hiddenPlog: hiddenPlog,
+            frsDisabled: frsDisabled,
+            lprsDisabled: lprsDisabled
+        )
     }
     
 }

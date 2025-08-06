@@ -53,6 +53,7 @@
 "Guest information has been successfully sent!" = "Guest information has been successfully sent!";
 "Yes" = "Yes";
 "Are you sure?" = "Are you sure?";
+"Do you want to remove access?" = "Do you want to remove access?";
 "Enable" = "Enable";
 "Disable" = "Disable";
 "guestAccessAlertText" = "To everyone who dials your apartment number on the intercom, the door will open automatically for 60 minutes. After this time, the intercom will return to standard mode automatically.";
@@ -214,3 +215,13 @@
 "Reset" = "Reset";
 "Reset address order?" = "Reset address order?";
 "This will restore the default sorting." = "Reset address order?";
+"By car number" = "By car number";
+"By phone number" = "By phone number";
+"All cars" = "All cars";
+"All people" = "All people";  
+"Add car" = "Add car";
+"Add person" = "Add person";
+"TimeLeftFormat" = "%@ left";
+"еxpired" = "еxpired";
+"Add" = "Add";
+"unlimited" = "unlimited";

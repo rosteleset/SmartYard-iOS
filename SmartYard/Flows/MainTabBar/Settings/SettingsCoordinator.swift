@@ -24,7 +24,9 @@ enum SettingsRoute: Route {
     case alert(title: String, message: String?)
     case dialog(title: String, message: String?, actions: [UIAlertAction], style: UIAlertController.Style)
     case addressAccess(address: String, flatId: String, clientId: String?)
+    case detailGateAccess(address: String, flatId: String, clientId: String?, segmentType: GateAccessSegmentType?)
     case newAllowedPerson(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
+    case newAllowedCar(delegate: NewAllowedCarViewModelDelegate)
     case safariPage(url: URL)
     case editName
     case facesSettings(flatId: Int, address: String)
@@ -193,6 +195,18 @@ final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
+        case let .newAllowedCar(delegate):
+            let vm = NewAllowedCarViewModel(
+                router: weakRouter,
+                delegate: delegate
+            )
+            
+            let vc = NewAllowedCarViewController(viewModel: vm)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            
+            return .present(vc)
+            
         case let .addressAccess(address, flatId, clientId):
             let vm = AddressAccessViewModel(
                 router: weakRouter,
@@ -206,6 +220,23 @@ final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             )
             
             let vc = AddressAccessViewController(viewModel: vm)
+            
+            return .push(vc)
+            
+        case let .detailGateAccess(address, flatId, clientId, segmentType):
+            let vm = DetailGateAccessViewModel(
+                router: weakRouter,
+                address: address,
+                flatId: flatId,
+                clientId: clientId,
+                preselectedGateAccessSegmentType: segmentType,
+                apiWrapper: apiWrapper,
+                permissionService: permissionService,
+                logoutHelper: logoutHelper,
+                alertService: alertService
+            )
+            
+            let vc = DetailGateAccessViewController(viewModel: vm)
             
             return .push(vc)
             

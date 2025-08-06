@@ -254,7 +254,7 @@ extension APIWrapper {
         }
         
         let request = PhonePrefixRequest()
-        Logger.logDebug("Request data: \(String(describing: request))")
+        Logger.logDebug("Request data phoneprefic: \(String(describing: request))")
 
         return provider.rx
             .request(.phonePattern(request: request))

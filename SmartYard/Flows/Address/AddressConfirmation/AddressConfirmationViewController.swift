@@ -13,8 +13,7 @@ import JGProgressHUD
 
 final class AddressConfirmationViewController: BaseViewController, LoaderPresentable {
     
-    @IBOutlet private weak var segmentControl: SmartYardSegmentedControl!
-    
+    @IBOutlet private weak var segmentControl: SmartYardUnderlineSegmentedControlView!
     @IBOutlet private weak var officeView: ServiceFromOfficeView!
     @IBOutlet private weak var courierView: ServiceFromCourierView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!

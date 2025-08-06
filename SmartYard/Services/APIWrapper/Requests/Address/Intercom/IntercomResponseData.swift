@@ -20,6 +20,7 @@ struct IntercomResponseData: Decodable {
     let disablePlog: Bool?
     let hiddenPlog: Bool?
     let frsDisabled: Bool?
+    let lprsDisabled: Bool?
     
     private enum CodingKeys: String, CodingKey {
         case allowDoorCode
@@ -32,6 +33,7 @@ struct IntercomResponseData: Decodable {
         case disablePlog
         case hiddenPlog
         case frsDisabled = "FRSDisabled"
+        case lprsDisabled = "LPRSDisabled"
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
@@ -104,6 +106,14 @@ struct IntercomResponseData: Decodable {
         case "t": frsDisabled = true
         case "f": frsDisabled = false
         default: frsDisabled = nil
+        }
+        
+        let lprsDisabledRawValue = try? container.decode(String.self, forKey: .lprsDisabled)
+        
+        switch lprsDisabledRawValue {
+        case "t": lprsDisabled = true
+        case "f": lprsDisabled = false
+        default: lprsDisabled = nil
         }
     }
     

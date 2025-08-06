@@ -232,9 +232,12 @@ enum TrassirService {
     static func getRanges(_ camera: CameraObject) -> Single<[APIArchiveRange]?> {
         let result = PublishSubject<[APIArchiveRange]?>()
         updateSid(camera) {
+            
             getToken(camera, suffix: "&stream=archive_main") { token in
+                
                 seekToLastFrame(camera, token: token) { token in
                     var attemptCount = 20
+                    
                     func attempt() {
                         getCalendar(camera) { json in
                             guard let array = json as? [[String: Any]],
@@ -265,6 +268,7 @@ enum TrassirService {
                             result.onCompleted()
                         }
                     }
+                    
                     attempt()
                 }
             }

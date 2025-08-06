@@ -76,7 +76,8 @@ final class NewAllowedPersonViewModel: BaseViewModel {
                     roommateType: self.allowedPersonType == .temporary ? .outer : .inner,
                     displayedName: nil,
                     rawNumber: cleanPhone,
-                    logoImage: nil
+                    logoImage: nil,
+                    expire: self.allowedPersonType == .temporary ? Date().addingTimeInterval(3600) : nil
                 )
             }
             .drive(
@@ -92,10 +93,13 @@ final class NewAllowedPersonViewModel: BaseViewModel {
         
         input.cnContactAddedTrigger
             .map { [weak self] contact, phoneIndex in
-                guard let self = self,
-                      (0 ... contact.phoneNumbers.count - 1) ~= phoneIndex,
-                      let rawNumber = contact.phoneNumbers[phoneIndex].value.stringValue.rawPhoneNumberFromFullNumber
-                else { return nil }
+                guard
+                    let self,
+                    (0 ... contact.phoneNumbers.count - 1) ~= phoneIndex,
+                    let rawNumber = contact.phoneNumbers[phoneIndex].value.stringValue.rawPhoneNumberFromFullNumber
+                else {
+                   return nil
+                }
                 
                 let nameToShow: String? = {
                     let joinedName = [contact.givenName, contact.familyName]
@@ -117,7 +121,8 @@ final class NewAllowedPersonViewModel: BaseViewModel {
                     roommateType: self.allowedPersonType == .temporary ? .outer : .inner,
                     displayedName: nameToShow,
                     rawNumber: rawNumber,
-                    logoImage: icon
+                    logoImage: icon,
+                    expire: self.allowedPersonType == .temporary ? Date().addingTimeInterval(3600) : nil
                 )
 
                 return allowedPerson
@@ -183,7 +188,7 @@ extension NewAllowedPersonViewModel {
     struct Input {
         let closeTrigger: Driver<Void>
         let rawPhoneAddedTrigger: Driver<String>
-        let cnContactAddedTrigger: Driver<(CNContact,Int)>
+        let cnContactAddedTrigger: Driver<(CNContact, Int)>
         let addAccessTrigger: Driver<Void>
     }
     

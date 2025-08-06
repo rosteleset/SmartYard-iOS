@@ -62,130 +62,49 @@ extension APIWrapper {
     }
     
     func grantHourGuestAccess(enable: Bool, flatId: String) -> Single<IntercomResponseData?> {
-        let settings = APIIntercomSettings(
-            enableDoorCode: nil,
-            cms: nil,
-            voip: nil,
-            autoOpen: enable ? Date().dateHourAfter : Date().adding(.day, value: -10),
-            whiteRabbit: nil,
-            paperBill: nil,
-            disablePlog: nil,
-            hiddenPlog: nil,
-            frsDisabled: nil
+        let settings = APIIntercomSettings.create(
+            autoOpen: enable ? Date().dateHourAfter : Date().adding(.day, value: -10)
         )
-        
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomCMSState(flatId: String, isEnabled: Bool) -> Single<IntercomResponseData?> {
-        let settings = APIIntercomSettings(
-            enableDoorCode: nil,
-            cms: isEnabled,
-            voip: nil,
-            autoOpen: nil,
-            whiteRabbit: nil,
-            paperBill: nil,
-            disablePlog: nil,
-            hiddenPlog: nil,
-            frsDisabled: nil
-        )
-        
+        let settings = APIIntercomSettings.create(cms: isEnabled)
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomVoIPState(flatId: String, isEnabled: Bool) -> Single<IntercomResponseData?> {
-        let settings = APIIntercomSettings(
-            enableDoorCode: nil,
-            cms: nil,
-            voip: isEnabled,
-            autoOpen: nil,
-            whiteRabbit: nil,
-            paperBill: nil,
-            disablePlog: nil,
-            hiddenPlog: nil,
-            frsDisabled: nil
-        )
-        
+        let settings = APIIntercomSettings.create(voip: isEnabled)
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomWhiteRabbitState(flatId: String, isEnabled: Bool) -> Single<IntercomResponseData?> {
-        let settings = APIIntercomSettings(
-            enableDoorCode: nil,
-            cms: nil,
-            voip: nil,
-            autoOpen: nil,
-            whiteRabbit: isEnabled,
-            paperBill: nil,
-            disablePlog: nil,
-            hiddenPlog: nil,
-            frsDisabled: nil
-        )
-        
+        let settings = APIIntercomSettings.create(whiteRabbit: isEnabled)
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomPaperBillState(flatId: String, isEnabled: Bool) -> Single<IntercomResponseData?> {
-        let settings = APIIntercomSettings(
-            enableDoorCode: nil,
-            cms: nil,
-            voip: nil,
-            autoOpen: nil,
-            whiteRabbit: nil,
-            paperBill: isEnabled,
-            disablePlog: nil,
-            hiddenPlog: nil,
-            frsDisabled: nil
-        )
-        
+        let settings = APIIntercomSettings.create(paperBill: isEnabled)
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomDisablePlogState(flatId: String, isDisabled: Bool) -> Single<IntercomResponseData?> {
-        let settings = APIIntercomSettings(
-            enableDoorCode: nil,
-            cms: nil,
-            voip: nil,
-            autoOpen: nil,
-            whiteRabbit: nil,
-            paperBill: nil,
-            disablePlog: isDisabled,
-            hiddenPlog: nil,
-            frsDisabled: nil
-        )
-        
+        let settings = APIIntercomSettings.create(disablePlog: isDisabled)
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomHiddenPlogState(flatId: String, isHidden: Bool) -> Single<IntercomResponseData?> {
-        let settings = APIIntercomSettings(
-            enableDoorCode: nil,
-            cms: nil,
-            voip: nil,
-            autoOpen: nil,
-            whiteRabbit: nil,
-            paperBill: nil,
-            disablePlog: nil,
-            hiddenPlog: isHidden,
-            frsDisabled: nil
-        )
-        
+        let settings = APIIntercomSettings.create(hiddenPlog: isHidden)
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
     func setIntercomFRSDisabledState(flatId: String, isDisabled: Bool) -> Single<IntercomResponseData?> {
-        let settings = APIIntercomSettings(
-            enableDoorCode: nil,
-            cms: nil,
-            voip: nil,
-            autoOpen: nil,
-            whiteRabbit: nil,
-            paperBill: nil,
-            disablePlog: nil,
-            hiddenPlog: nil,
-            frsDisabled: isDisabled
-        )
-        
+        let settings = APIIntercomSettings.create(frsDisabled: isDisabled)
+        return intercom(flatId: flatId, forceRefresh: true, settings: settings)
+    }
+    
+    func setIntercomLPRSDisabledState(flatId: String, isDisabled: Bool) -> Single<IntercomResponseData?> {
+        let settings = APIIntercomSettings.create(lprsDisabled: isDisabled)
         return intercom(flatId: flatId, forceRefresh: true, settings: settings)
     }
     
@@ -198,7 +117,12 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = IntercomRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId, settings: settings)
+        let request = IntercomRequest(
+            accessToken: accessToken,
+            forceRefresh: forceRefresh,
+            flatId: flatId,
+            settings: settings
+        )
         Logger.logDebug("Request data: \(String(describing: request))")
 
         return provider.rx
@@ -206,6 +130,7 @@ extension APIWrapper {
             .convertNoConnectionError()
             .mapAsDefaultResponse()
     }
+    
     func plogDays(flatId: Int, events: EventsFilter? = .all, forceRefresh: Bool = false) -> Single<PlogDaysResponseData?> {
         return plogDays(flatId: String(flatId), events: events, forceRefresh: forceRefresh)
     }
@@ -219,7 +144,12 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = PlogDaysRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId, events: events)
+        let request = PlogDaysRequest(
+            accessToken: accessToken,
+            forceRefresh: forceRefresh,
+            flatId: flatId,
+            events: events
+        )
         Logger.logDebug("Request data: \(String(describing: request))")
 
         return provider.rx
@@ -242,7 +172,12 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = PlogRequest(accessToken: accessToken, forceRefresh: forceRefresh, flatId: flatId, fromDate: fromDate)
+        let request = PlogRequest(
+            accessToken: accessToken,
+            forceRefresh: forceRefresh,
+            flatId: flatId,
+            fromDate: fromDate
+        )
         Logger.logDebug("Request data: \(String(describing: request))")
 
         return provider.rx
@@ -265,7 +200,12 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.doorBlockedError(reason: blockReason))
         }
         
-        let request = OpenDoorRequest(accessToken: accessToken, domophoneId: domophoneId, doorId: doorId)
+        let request = OpenDoorRequest(
+            accessToken: accessToken,
+            domophoneId: domophoneId,
+            doorId: doorId
+        )
+        Logger.logDebug("Request data: \(String(describing: request))")
         
         return provider.rx
             .request(.openDoor(request: request))
@@ -283,7 +223,11 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = ResetCodeRequest(accessToken: accessToken, flatId: flatId)
+        let request = ResetCodeRequest(
+            accessToken: accessToken,
+            flatId: flatId
+        )
+        Logger.logDebug("Request data: \(String(describing: request))")
         
         return provider.rx
             .request(.resetCode(request: request))
@@ -303,7 +247,10 @@ extension APIWrapper {
         let forceRefresh = forceUpdateSettings || forceRefresh
         forceUpdateSettings = false
         
-        let request = GetSettingsListRequest(accessToken: accessToken, forceRefresh: forceRefresh)
+        let request = GetSettingsListRequest(
+            accessToken: accessToken,
+            forceRefresh: forceRefresh
+        )
         Logger.logDebug("Request data: \(String(describing: request))")
         
         return provider.rx
@@ -344,7 +291,12 @@ extension APIWrapper {
         let forceRefresh = forceUpdateAddress || forceRefresh
         forceUpdateAddress = false
         
-        let request = GetAddressListRequest(accessToken: accessToken, forceRefresh: forceRefresh)
+        let request = GetAddressListRequest(
+            accessToken: accessToken,
+            forceRefresh: forceRefresh
+        )
+        Logger.logDebug("Request data: \(String(describing: request))")
+
         
         return provider.rx
             .request(.getAddressList(request: request))
@@ -421,6 +373,7 @@ extension APIWrapper {
             type: type,
             expire: expire
         )
+        Logger.logDebug("Request data: \(String(describing: request))")
         
         return provider.rx
             .request(.access(request: request))
@@ -438,7 +391,12 @@ extension APIWrapper {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
         
-        let request = ResendRequest(accessToken: accessToken, flatId: flatId, guestPhone: guestPhone)
+        let request = ResendRequest(
+            accessToken: accessToken,
+            flatId: flatId,
+            guestPhone: guestPhone
+        )
+        Logger.logDebug("Request data: \(String(describing: request))")
         
         return provider.rx
             .request(.resend(request: request))
@@ -457,6 +415,7 @@ extension APIWrapper {
         }
         
         let request = OfficesRequest(accessToken: accessToken)
+        Logger.logDebug("Request data: \(String(describing: request))")
         
         return provider.rx
             .request(.offices(request: request))

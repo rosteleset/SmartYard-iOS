@@ -28,11 +28,6 @@ final class FaceCell: UICollectionViewCell {
             .asDriver()
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()

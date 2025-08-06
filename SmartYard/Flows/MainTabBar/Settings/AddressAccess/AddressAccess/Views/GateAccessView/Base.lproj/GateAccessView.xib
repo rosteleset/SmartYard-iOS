@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ddU-aQ-RrV" customClass="GateAccessView" customModule="SmartYard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="536" height="161"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dtB-Sh-70X" customClass="SmartYardHighlightSegmentedControlView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="16" y="0.0" width="504" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="EXh-he-UZp"/>
+                    </constraints>
+                </view>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="LxH-Zs-Em8">
+                    <rect key="frame" x="0.0" y="60" width="536" height="95"/>
+                    <color key="backgroundColor" name="backgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="8" minimumInteritemSpacing="8" id="ufb-Dr-sLH">
+                        <size key="itemSize" width="96" height="72"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="dtB-Sh-70X" secondAttribute="trailing" constant="16" id="ChZ-ed-spB"/>
+                <constraint firstItem="LxH-Zs-Em8" firstAttribute="top" secondItem="ddU-aQ-RrV" secondAttribute="top" priority="750" id="GjR-bM-g2C"/>
+                <constraint firstItem="LxH-Zs-Em8" firstAttribute="top" secondItem="dtB-Sh-70X" secondAttribute="bottom" constant="16" id="Jh7-jX-ehP"/>
+                <constraint firstItem="dtB-Sh-70X" firstAttribute="leading" secondItem="ddU-aQ-RrV" secondAttribute="leading" constant="16" id="Oeo-PV-Ehq"/>
+                <constraint firstItem="LxH-Zs-Em8" firstAttribute="leading" secondItem="ddU-aQ-RrV" secondAttribute="leading" id="RHe-B2-KiJ"/>
+                <constraint firstItem="dtB-Sh-70X" firstAttribute="top" secondItem="ddU-aQ-RrV" secondAttribute="top" id="olY-aV-KGj"/>
+                <constraint firstAttribute="trailing" secondItem="LxH-Zs-Em8" secondAttribute="trailing" id="qHa-dC-qCZ"/>
+                <constraint firstAttribute="bottom" secondItem="LxH-Zs-Em8" secondAttribute="bottom" id="xQw-8S-fDR"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="collectionView" destination="LxH-Zs-Em8" id="lel-IK-EYg"/>
+                <outlet property="segmentControl" destination="dtB-Sh-70X" id="ts5-Gi-m05"/>
+                <outlet property="segmentToCollectionConstraint" destination="Jh7-jX-ehP" id="VJ3-Xq-Nyp"/>
+            </connections>
+            <point key="canvasLocation" x="-593.89312977099235" y="-62.323943661971832"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="backgroundColor">
+            <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
+</document>
