@@ -34,6 +34,7 @@ final class IncomingCallViewModel: BaseViewModel {
     
     private let errorTracker = ErrorTracker()
     
+    private let callStateIsStreamRunning = BehaviorSubject<Bool>(value: false)
     private let registrationFinished = BehaviorSubject<Bool>(value: false)
     private let incomingCall = BehaviorSubject<(Call, CallParams)?>(value: nil)
     private let incomingCallAcceptedByUser = BehaviorSubject<Bool>(value: false)
@@ -156,23 +157,19 @@ final class IncomingCallViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         // MARK: мы можем нажать кнопку "Открыть" еще до того, как примем звонок.
-        // Поэтому нам надо будет отложенно выполнить действие по открытию тогда, когда звонок будет принят
-        // Именно для этого и используется combineLatest, чтобы выполнить первую проверку после принятия звонка
-        // observeOn добавлен для подавления варнинга о циклической зависимости
-        // По факту, цикла не будет, тк мы не можем два раза подряд получить один и тот же стейт + мы фильтруем стейты
-        
         Driver
             .combineLatest(
                 currentStateSubject.observe(on: MainScheduler.asyncInstance).asDriverOnErrorJustComplete(),
                 doorOpeningRequestedByUser.asDriver(onErrorJustReturn: false),
-                isDoorBeingOpened.asDriver(onErrorJustReturn: false)
+                isDoorBeingOpened.asDriver(onErrorJustReturn: false),
+                callStateIsStreamRunning.asDriverOnErrorJustComplete()
             )
             .filter { args in
-                let (currentState, isDoorOpeningRequested, isAlreadyOpening) = args
+                let (currentState, isDoorOpeningRequested, isAlreadyOpening, isStreamRunning) = args
                 
                 return currentState.callState == .callActive &&
                        currentState.doorState == .notDetermined &&
-                       isDoorOpeningRequested && !isAlreadyOpening
+                       isDoorOpeningRequested && !isAlreadyOpening && isStreamRunning
             }
             .mapToVoid()
             .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
@@ -184,7 +181,7 @@ final class IncomingCallViewModel: BaseViewModel {
                     }
                     
                     let (call, _) = callInfo
-                    self.openTheDoor(call: call)
+                    self.openTheDoor(for: call)
                 }
             )
             .disposed(by: disposeBag)
@@ -323,10 +320,7 @@ final class IncomingCallViewModel: BaseViewModel {
                         return
                     }
                     
-                    self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                    self.completionHandler?()
-                    self.completionHandler = nil
-                    self.router.trigger(.closeIncomingCall)
+                    self.finishCallAndClose()
                 }
             )
             .disposed(by: disposeBag)
@@ -344,15 +338,11 @@ final class IncomingCallViewModel: BaseViewModel {
                     }
                     
                     switch currentState.callState {
-                        
-                        // MARK: Если звонок активен - то принудительно запускаем видео
-                        
                     case .callActive:
+                        /// Если звонок активен - то принудительно запускаем видео
                         self.updateState(previewState: .video)
-                        
-                        // MARK: Если звонок только пришел, устанавливается соединение - обновляем предпочтение
-                        
                     default:
+                        /// Если звонок только пришел, устанавливается соединение - обновляем предпочтение
                         self.preferredPreviewModeForActiveCall.onNext(.video)
                     }
                 }
@@ -558,21 +548,14 @@ final class IncomingCallViewModel: BaseViewModel {
                     
                     guard let currentCall = callInfo?.0,
                         (currentCall.state == .Connected || currentCall.state == .StreamsRunning) else {
-                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                        self.completionHandler?()
-                        self.completionHandler = nil
-                        self.router.trigger(.closeIncomingCall)
-                        
+                        self.finishCallAndClose()
                         return
                     }
 
                     do {
                         try currentCall.terminate()
                     } catch {
-                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                        self.completionHandler?()
-                        self.completionHandler = nil
-                        self.router.trigger(.closeIncomingCall)
+                        self.finishCallAndClose()
                     }
                 }
             )
@@ -694,7 +677,6 @@ final class IncomingCallViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] currentState in
                     Logger.logInfo("User tapped 'Open'. Current state: \(currentState.callState)")
-                    
                     if currentState.callState == .callReceived {
                         self?.updateState(callState: .establishingConnection)
                     }
@@ -808,72 +790,76 @@ final class IncomingCallViewModel: BaseViewModel {
         }
     }
     
-    private func openTheDoor(call: Call) {
-        Logger.logInfo("Attempting to open the door...")
-        DispatchQueue.main.async {
-            self.isDoorBeingOpened.onNext(true)
-        } // Костыль, но пока что оставим так. Возможно нужен будет другой флаг добавить.
+    private func openTheDoor(for call: Call) {
+        isDoorBeingOpened.onNext(true)
+        doorOpeningRequestedByUser.onNext(false)
         
-        // MARK: Поскольку доставка тонового сигнала вообще не гарантируется, решено отправлять их несколько раз
-        // С промежутком в 750 мс
-        
-        let scheduler = SerialDispatchQueueScheduler(qos: .background)
-
-        let dtmfStream = Observable<Int>
-            .interval(.milliseconds(750), scheduler: scheduler)
-            .take(1)
+        sendDTMF(for: call)
+            .delay(.milliseconds(500), scheduler: MainScheduler.instance)
             .observe(on: MainScheduler.instance)
-            .do(onNext: { [weak self] _ in
-                guard let self = self, call.state == .StreamsRunning else { return }
-                Logger.logDebug("Sending DTMF...")
-                
-                do {
-                    try call.sendDtmfs(dtmfs: self.callPayload.dtmf)
-                    Logger.logSuccess("DTMF sent successfully.")
-                } catch {
-                    self.isDoorBeingOpened.onNext(false)
-                    Logger.logError("Failed to send DTMF. Error: \(error.localizedDescription)")
+            .subscribe(onCompleted: { [weak self] in
+                guard let self else { return }
+                Logger.logInfo("DTMF sent, terminating call in 3s")
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.safeTerminate(call: call)
                 }
             })
-            .mapToVoid()
-
-        let finishStream = Observable.just(())
-            .delay(.milliseconds(750), scheduler: scheduler)
-            .observe(on: MainScheduler.instance)
-            .do(onNext: { [weak self] in
-                guard let self = self else { return }
-                Logger.logInfo("DTMF code was sent. Delivery is not guaranteed tho.")
-                
-                self.isDoorBeingOpened.onNext(false)
-
-                self.updateState(
-                    callState: .callFinished,
-                    doorState: .opened,
-                    previewState: .staticImage,
-                    soundOutputState: .disabled
-                )
-
-                do {
-                    Logger.logDebug("Calling terminate() for call with state: \(call.state)")
-                    try call.terminate()
-                    Logger.logInfo("Call is terminated.")
-                } catch {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                        guard let self = self else { return }
-
-                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                        self.completionHandler?()
-                        self.completionHandler = nil
-                        self.router.trigger(.closeIncomingCall)
-                        Logger.logInfo("Close incoming call triggered")
-                    }
-                }
-            })
-
-        Observable
-            .concat(dtmfStream, finishStream)
-            .subscribe()
             .disposed(by: disposeBag)
+    }
+    
+    private func sendDTMF(for call: Call) -> Completable {
+        return Completable.create { [weak self] completable in
+            guard let self = self else {
+                completable(.completed)
+                return Disposables.create()
+            }
+
+            do {
+                Logger.logDebug("Trying to send DTMF... Call.state: \(call.state)")
+                try call.sendDtmfs(dtmfs: self.callPayload.dtmf)
+                Logger.logSuccess("DTMF sent successfully.")
+                completable(.completed)
+            } catch {
+                Logger.logError("DTMF send error: \(error.localizedDescription)")
+                completable(.error(error))
+            }
+
+            return Disposables.create()
+        }
+    }
+
+    private func safeTerminate(call: Call) {
+        guard call.state != .End, call.state != .Error else {
+            Logger.logDebug("Call already ended, skip terminate")
+            return
+        }
+
+        do {
+            Logger.logDebug("Calling terminate()...")
+            try call.terminate()
+            Logger.logInfo("Call.terminate() completed. Wait for .End.")
+        } catch {
+            Logger.logError("Call.terminate() failed: \(error.localizedDescription)")
+            finishCallAndClose()
+        }
+    }
+    
+    private func finishCallAndClose() {
+        updateState(
+            callState: .callFinished,
+            previewState: .staticImage,
+            soundOutputState: .disabled
+        )
+
+        providerProxy.endCall(uuid: callPayload.uuid)
+
+        completionHandler?()
+        completionHandler = nil
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.router.trigger(.closeIncomingCall)
+        }
     }
     
 }
@@ -892,19 +878,22 @@ extension IncomingCallViewModel: LinphoneDelegate {
     
     func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
         Logger.logDebug("CALL STATE: \(cstate)")
+        callStateIsStreamRunning.onNext(cstate == .StreamsRunning ? true : false)
         
         if cstate == .StreamsRunning,
-           (try? shouldMuteCall.value()) == true {
-            call.speakerMuted = true
-            call.microphoneMuted = true
-            shouldMuteCall.onNext(false)
+           let shouldMute = try? shouldMuteCall.value() {
+            if shouldMute {
+                call.speakerMuted = true
+                call.microphoneMuted = true
+                shouldMuteCall.onNext(false)
+            }
         }
         
         // обновляем режим вывода звука согласно текущего состояния, т.к. оно затирается при снятии трубки linphone-ом
         Logger.logInfo("Call streams running. Updating sound output state...")
         if cstate == .StreamsRunning,
-            let soundOutputState = try? currentStateSubject.value().soundOutputState {
-            setSpeakerEnabled(soundOutputState == .speaker)
+           let state = try? currentStateSubject.value() {
+            setSpeakerEnabled(state.soundOutputState == .speaker)
         }
         
         if cstate == .IncomingReceived, let params = try? lc.createCallParams(call: call) {
@@ -916,22 +905,7 @@ extension IncomingCallViewModel: LinphoneDelegate {
         
         if cstate == .End {
             Logger.logInfo("Call ended. Cleaning up...")
-            if (try? currentStateSubject.value()) != nil {
-                updateState(
-                    callState: .callFinished,
-                    previewState: .staticImage,
-                    soundOutputState: .disabled
-                )
-            }
-            
-            self.webRTCService = nil
-            providerProxy.endCall(uuid: callPayload.uuid)
-            
-            self.completionHandler?()
-            self.completionHandler = nil
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                self?.router.trigger(.closeIncomingCall)
-            }
+            finishCallAndClose()
         }
     }
     
