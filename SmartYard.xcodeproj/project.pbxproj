@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1614,8 +1614,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		8B171B512DF6E54000CAECF7 /* FALPRS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FALPRS; sourceTree = "<group>"; };
-		8B171BCD2DF729FF00CAECF7 /* User */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = User; sourceTree = "<group>"; };
+		8B171B512DF6E54000CAECF7 /* FALPRS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = FALPRS;
+			sourceTree = "<group>";
+		};
+		8B171BCD2DF729FF00CAECF7 /* User */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		3A555B0B2700573400E70CB9 /* Frameworks */ = {
@@ -4741,7 +4754,6 @@
 				};
 			};
 			buildConfigurationList = 84F840CD23E07DA5008DBE50 /* Build configuration list for PBXProject "SmartYard" */;
-			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = ru;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -4753,6 +4765,7 @@
 				bg,
 			);
 			mainGroup = 84F840C923E07DA5008DBE50;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 84F840D323E07DA5008DBE50 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -5086,13 +5099,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
