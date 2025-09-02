@@ -155,8 +155,7 @@ final class IncomingCallViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-        
-        // MARK: мы можем нажать кнопку "Открыть" еще до того, как примем звонок.
+
         Driver
             .combineLatest(
                 currentStateSubject.observe(on: MainScheduler.asyncInstance).asDriverOnErrorJustComplete(),
@@ -791,19 +790,16 @@ final class IncomingCallViewModel: BaseViewModel {
     }
     
     private func openTheDoor(for call: Call) {
-        isDoorBeingOpened.onNext(true)
         doorOpeningRequestedByUser.onNext(false)
-        
+        isDoorBeingOpened.onNext(true)
+
         sendDTMF(for: call)
-            .delay(.milliseconds(500), scheduler: MainScheduler.instance)
+            .delay(.seconds(3), scheduler: MainScheduler.instance)
             .observe(on: MainScheduler.instance)
             .subscribe(onCompleted: { [weak self] in
-                guard let self else { return }
                 Logger.logInfo("DTMF sent, terminating call in 3s")
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    self.safeTerminate(call: call)
-                }
+                self?.isDoorBeingOpened.onNext(false)
+                self?.safeTerminate(call: call)
             })
             .disposed(by: disposeBag)
     }
@@ -848,6 +844,7 @@ final class IncomingCallViewModel: BaseViewModel {
     private func finishCallAndClose() {
         updateState(
             callState: .callFinished,
+            doorState: .opened,
             previewState: .staticImage,
             soundOutputState: .disabled
         )
@@ -857,7 +854,7 @@ final class IncomingCallViewModel: BaseViewModel {
         completionHandler?()
         completionHandler = nil
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
             self?.router.trigger(.closeIncomingCall)
         }
     }
@@ -878,7 +875,9 @@ extension IncomingCallViewModel: LinphoneDelegate {
     
     func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
         Logger.logDebug("CALL STATE: \(cstate)")
-        callStateIsStreamRunning.onNext(cstate == .StreamsRunning ? true : false)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.callStateIsStreamRunning.onNext(cstate == .StreamsRunning ? true : false)
+        }
         
         if cstate == .StreamsRunning,
            let shouldMute = try? shouldMuteCall.value() {
