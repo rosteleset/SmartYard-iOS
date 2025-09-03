@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24062"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,14 +38,14 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvP-Fn-DFe" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="jnF-Nj-6nP"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mdn-tp-L4l" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="92" width="414" height="770"/>
+                    <rect key="frame" x="0.0" y="140" width="414" height="756"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Выберите провайдера" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="rPl-Hf-egw">
                             <rect key="frame" x="16" y="28" width="382" height="35.5"/>
@@ -75,7 +75,7 @@
                             </userDefinedRuntimeAttributes>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="DzP-PA-sgU" customClass="WhiteButtonWithBorder" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="16" y="680" width="382" height="60"/>
+                            <rect key="frame" x="16" y="666" width="382" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="7tG-PP-KNr"/>
                             </constraints>
@@ -85,7 +85,7 @@
                             </state>
                         </button>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GCf-IS-es8">
-                            <rect key="frame" x="0.0" y="216" width="414" height="439"/>
+                            <rect key="frame" x="0.0" y="216" width="414" height="425"/>
                             <color key="backgroundColor" name="secondBackgroundColor"/>
                             <color key="separatorColor" name="grayBorder"/>
                             <inset key="separatorInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
@@ -124,22 +124,22 @@
                 <constraint firstItem="Mdn-tp-L4l" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Zbu-R2-R2r"/>
                 <constraint firstItem="pvP-Fn-DFe" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="aAE-aH-kHc"/>
                 <constraint firstItem="9hb-iz-ryA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ces-cI-W3R"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Mdn-tp-L4l" secondAttribute="bottom" id="gmq-vK-4c8"/>
+                <constraint firstAttribute="bottom" secondItem="Mdn-tp-L4l" secondAttribute="bottom" id="gmq-vK-4c8"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Mdn-tp-L4l" secondAttribute="trailing" id="xoK-ZB-dqx"/>
             </constraints>
             <point key="canvasLocation" x="47.826086956521742" y="35.491071428571423"/>
         </view>
     </objects>
     <resources>
-        <image name="MainBackground" width="375" height="812"/>
+        <image name="MainBackground" width="371" height="812"/>
         <namedColor name="blue">
-            <color red="0.27843137254901962" green="0.53725490196078429" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.16078431372549021" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="grayBorder">
             <color red="0.94117647058823528" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="secondBackgroundColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="semiBlack">
             <color red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

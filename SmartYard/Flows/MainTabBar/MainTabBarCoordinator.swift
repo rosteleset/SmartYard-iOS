@@ -167,24 +167,30 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.paymentsRouter = paymentsCoordinator.strongRouter
         self.menuRouter = menuCoordinator.strongRouter
         
-        // MARK: Инициализация кастомного UITabBarController
-        
-        let nib = UINib(nibName: "CustomTabBarController", bundle: .main)
-        
-        guard let customTabBarController = nib.instantiate(
-            withOwner: nil,
-            options: nil
-        ).first as? SSCustomTabBarViewController else {
-            fatalError("Failed to load custom UITabBarController")
+        // MARK: Инициализация кастомного/системного UITabBarController
+        let rootTabBarController: UITabBarController
+        if #available(iOS 26.0, *) {
+            // На iOS 26+ используем стандартный UITabBarController
+            rootTabBarController = UITabBarController()
+
+        } else {
+            // Загрузка кастомного таббара из nib как и раньше
+            let nib = UINib(nibName: "CustomTabBarController", bundle: .main)
+            guard let customTabBarController = nib.instantiate(
+                withOwner: nil,
+                options: nil
+            ).first as? SSCustomTabBarViewController else {
+                fatalError("Failed to load custom UITabBarController")
+            }
+            customTabBarController.animationConfiguration = AnimationConfiguration(
+                duration: 0.5,
+                delay: 0,
+                springDampingRatio: 0.65,
+                initialSpringVelocity: 0
+            )
+            customTabBarController.delegate = customTabBarController
+            rootTabBarController = customTabBarController
         }
-        
-        customTabBarController.animationConfiguration = AnimationConfiguration(
-            duration: 0.5,
-            delay: 0,
-            springDampingRatio: 0.65,
-            initialSpringVelocity: 0
-        )
-        customTabBarController.delegate = customTabBarController
         
         let tabs = [homeRouter, notificationsRouter] +
             (accessService.showChat ? [chatRouter] : []) +
@@ -201,17 +207,27 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         case "menu": selectedTab = menuRouter
         default: selectedTab = homeRouter
         }
-        
+
         super.init(
-            rootViewController: customTabBarController,
+            rootViewController: rootTabBarController,
             tabs: tabs,
             select: selectedTab
         )
-        
+
+        if #available(iOS 26.0, *) {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithTransparentBackground()
+            // appearance.backgroundColor = .clear
+            rootTabBarController.tabBar.standardAppearance = appearance
+            rootTabBarController.tabBar.scrollEdgeAppearance = appearance
+            rootTabBarController.tabBar.isTranslucent = true
+
+        } else {
+            // Fallback on earlier versions
+        }
+
         updateNotificationsTab(shouldShowBadge: UIApplication.shared.applicationIconBadgeNumber > 0)
-        
-        rootViewController.tabBar.isTranslucent = false
-        
+
         subscribeToBadgeUpdates()
         subscribeToAddAddressNotifications()
         subscribeToChatNotifications()

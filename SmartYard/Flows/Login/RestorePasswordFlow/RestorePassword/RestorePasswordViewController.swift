@@ -19,6 +19,9 @@ final class RestorePasswordViewController: BaseViewController, LoaderPresentable
     @IBOutlet private weak var getRestoreMethodsButton: WhiteButtonWithBorder!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
+    @IBOutlet private weak var getCodeButtonBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var getMethodsButtonBottomConstraint: NSLayoutConstraint!
+
     var loader: JGProgressHUD?
     
     private let viewModel: RestorePasswordViewModel
@@ -45,6 +48,17 @@ final class RestorePasswordViewController: BaseViewController, LoaderPresentable
         
         configureUI()
         bind()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        let bottomInset = view.safeAreaInsets.bottom
+        let buttonInset: CGFloat = 16
+        let constant = bottomInset + buttonInset
+
+      //  getMethodsButtonBottomConstraint.constant = constant
+    //    getCodeButtonBottomConstraint.constant = constant
     }
 
     private func configureUI() {

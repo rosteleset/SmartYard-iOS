@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24062"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -63,14 +63,14 @@
                     <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOo-JF-vkg" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="47" width="390" height="44"/>
+                    <rect key="frame" x="0.0" y="94" width="390" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Q1A-uw-tf3"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dqz-l5-6XG">
-                    <rect key="frame" x="16" y="103" width="358" height="41"/>
+                    <rect key="frame" x="16" y="150" width="358" height="41"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="2f7-hX-NGA"/>
                     </constraints>
@@ -79,7 +79,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Видео от" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0x5-ZA-ub8">
-                    <rect key="frame" x="16" y="103" width="358" height="41"/>
+                    <rect key="frame" x="16" y="150" width="358" height="41"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="DTh-B0-A8g"/>
                     </constraints>
@@ -88,7 +88,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Nk-mk-3jm" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="184" width="390" height="626"/>
+                    <rect key="frame" x="0.0" y="231" width="390" height="613"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oe3-0L-wZ8">
                             <rect key="frame" x="16" y="16" width="358" height="242"/>
@@ -202,10 +202,10 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwK-tW-GMy" userLabel="ButtonsCentering">
-                            <rect key="frame" x="0.0" y="322" width="390" height="192"/>
+                            <rect key="frame" x="0.0" y="322" width="390" height="111"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="25D-Cj-lb4" userLabel="PreviewButtonsContainer">
-                                    <rect key="frame" x="40" y="62" width="310" height="68"/>
+                                    <rect key="frame" x="40" y="21.666666666666629" width="310" height="68"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UDc-4s-ZnY">
                                             <rect key="frame" x="20" y="15" width="34" height="38"/>
@@ -240,10 +240,10 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I2I-wA-dkd" userLabel="EditButtonsContainer">
-                                    <rect key="frame" x="40" y="62" width="310" height="68"/>
+                                    <rect key="frame" x="40" y="21.666666666666629" width="310" height="68"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CPg-RE-9lw">
-                                            <rect key="frame" x="0.0" y="10.666666666666629" width="47" height="47"/>
+                                            <rect key="frame" x="0.0" y="10.333333333333371" width="47" height="47"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="47" id="2n4-u2-JCo"/>
                                                 <constraint firstAttribute="height" constant="47" id="q9x-fP-zfQ"/>
@@ -251,7 +251,7 @@
                                             <state key="normal" image="FastBackward"/>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eey-Hz-Pq4">
-                                            <rect key="frame" x="263" y="10.666666666666629" width="47" height="47"/>
+                                            <rect key="frame" x="263" y="10.333333333333371" width="47" height="47"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="47" id="kNq-R5-b8M"/>
                                                 <constraint firstAttribute="width" constant="47" id="ss7-OW-qQT"/>
@@ -296,7 +296,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JBH-Xw-Dmj" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="40" y="534" width="310" height="60"/>
+                            <rect key="frame" x="40" y="453" width="310" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" priority="999" constant="60" id="T7m-MH-yug"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="zO7-GK-WKz"/>
@@ -306,7 +306,7 @@
                             <state key="normal" title="Загрузить и получить ссылку"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkd-4A-ePf" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="40" y="534" width="310" height="60"/>
+                            <rect key="frame" x="40" y="453" width="310" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" priority="999" constant="60" id="0Wl-IZ-B7H"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="xab-LC-QE7"/>
@@ -331,7 +331,6 @@
                         <constraint firstItem="JBH-Xw-Dmj" firstAttribute="top" secondItem="jwK-tW-GMy" secondAttribute="bottom" constant="20" id="aRQ-q8-4Yo"/>
                         <constraint firstItem="wkd-4A-ePf" firstAttribute="top" secondItem="jwK-tW-GMy" secondAttribute="bottom" constant="20" id="d2f-gU-dnP"/>
                         <constraint firstAttribute="trailing" secondItem="wkd-4A-ePf" secondAttribute="trailing" constant="40" id="eJz-YI-req"/>
-                        <constraint firstAttribute="bottom" secondItem="JBH-Xw-Dmj" secondAttribute="bottom" constant="32" id="lV2-21-Rvo"/>
                         <constraint firstAttribute="trailing" secondItem="JBH-Xw-Dmj" secondAttribute="trailing" constant="40" id="qOY-rr-v2L"/>
                         <constraint firstItem="8od-sE-j0B" firstAttribute="leading" secondItem="2Nk-mk-3jm" secondAttribute="leading" id="qyY-p4-CpW"/>
                         <constraint firstAttribute="trailing" secondItem="8od-sE-j0B" secondAttribute="trailing" id="t2y-UX-pA4"/>
@@ -347,8 +346,9 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="WOo-JF-vkg" secondAttribute="trailing" id="DgD-SA-Haz"/>
                 <constraint firstItem="2Nk-mk-3jm" firstAttribute="top" secondItem="WOo-JF-vkg" secondAttribute="bottom" priority="999" constant="12" id="DlI-E4-KT5"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Dqz-l5-6XG" secondAttribute="trailing" constant="16" id="PiK-DZ-g82"/>
-                <constraint firstItem="2Nk-mk-3jm" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="SYL-c9-wA4"/>
+                <constraint firstItem="2Nk-mk-3jm" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="SYL-c9-wA4"/>
                 <constraint firstItem="2Nk-mk-3jm" firstAttribute="top" relation="greaterThanOrEqual" secondItem="WOo-JF-vkg" secondAttribute="bottom" constant="12" id="Swa-9N-cwW"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="JBH-Xw-Dmj" secondAttribute="bottom" constant="32" id="Vmm-zU-dEO"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0x5-ZA-ub8" secondAttribute="trailing" constant="16" id="Zny-ky-eEf"/>
                 <constraint firstItem="2Nk-mk-3jm" firstAttribute="top" secondItem="0x5-ZA-ub8" secondAttribute="bottom" constant="40" id="aAK-FQ-Pji"/>
                 <constraint firstItem="wtb-oa-JK1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="aRv-uI-aPA"/>
@@ -367,20 +367,20 @@
         </view>
     </objects>
     <resources>
-        <image name="CameraIcon" width="30" height="26"/>
+        <image name="CameraIcon" width="31" height="28"/>
         <image name="FastBackward" width="47" height="47"/>
         <image name="FastForward" width="47" height="47"/>
         <image name="Fullscreen" width="24" height="24"/>
-        <image name="MainBackground" width="375" height="812"/>
+        <image name="MainBackground" width="371" height="812"/>
         <image name="SoundOff" width="22" height="23"/>
         <namedColor name="backgroundColor">
             <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="gray">
-            <color red="0.43529411764705883" green="0.47450980392156861" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.42745098039215684" green="0.47843137254901963" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="secondBackgroundColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

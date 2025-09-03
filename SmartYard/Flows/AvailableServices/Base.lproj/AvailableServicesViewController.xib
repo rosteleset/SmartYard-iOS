@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24062"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -111,7 +111,7 @@
                 <constraint firstItem="n8T-dr-SIH" firstAttribute="top" secondItem="nuY-QD-9Nd" secondAttribute="bottom" id="RAW-Wo-hHI"/>
                 <constraint firstItem="nuY-QD-9Nd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Yfw-eQ-cs4"/>
                 <constraint firstItem="nuY-QD-9Nd" firstAttribute="top" secondItem="ZHo-ab-uCT" secondAttribute="bottom" constant="8" symbolic="YES" id="Z9A-hW-HTY"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="n8T-dr-SIH" secondAttribute="bottom" id="bIh-cg-R05"/>
+                <constraint firstAttribute="bottom" secondItem="n8T-dr-SIH" secondAttribute="bottom" id="bIh-cg-R05"/>
                 <constraint firstAttribute="bottom" secondItem="qEL-FS-mUt" secondAttribute="bottom" id="ckC-fj-dX9"/>
                 <constraint firstAttribute="trailing" secondItem="qEL-FS-mUt" secondAttribute="trailing" id="dub-Wf-CNe"/>
                 <constraint firstItem="n8T-dr-SIH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="gC1-fO-oGP"/>
@@ -123,9 +123,9 @@
         </view>
     </objects>
     <resources>
-        <image name="MainBackground" width="375" height="812"/>
+        <image name="MainBackground" width="371" height="812"/>
         <namedColor name="secondBackgroundColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

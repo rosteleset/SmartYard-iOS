@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24062"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -28,10 +28,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdD-ER-KhT" userLabel="ContainerView">
-                    <rect key="frame" x="0.0" y="162.5" width="414" height="699.5"/>
+                    <rect key="frame" x="0.0" y="210.5" width="414" height="685.5"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="3xa-Mz-Zyd">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="699.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="617.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="D5i-SN-HTc">
                                 <size key="itemSize" width="50" height="50"/>
@@ -125,14 +125,14 @@
                         <constraint firstItem="FNu-Nz-syI" firstAttribute="leading" secondItem="8NI-6T-g57" secondAttribute="leading" constant="16" id="300-4X-kjh"/>
                         <constraint firstItem="3xa-Mz-Zyd" firstAttribute="leading" secondItem="bdD-ER-KhT" secondAttribute="leading" id="Ab5-ef-SaK"/>
                         <constraint firstAttribute="trailing" secondItem="3xa-Mz-Zyd" secondAttribute="trailing" id="BdJ-Gv-b8W"/>
-                        <constraint firstAttribute="bottom" secondItem="3xa-Mz-Zyd" secondAttribute="bottom" id="C3U-XB-hXM"/>
+                        <constraint firstItem="8NI-6T-g57" firstAttribute="bottom" secondItem="3xa-Mz-Zyd" secondAttribute="bottom" id="C3U-XB-hXM"/>
                         <constraint firstItem="FNu-Nz-syI" firstAttribute="top" secondItem="8NI-6T-g57" secondAttribute="top" constant="21" id="Y8p-9F-yaT"/>
                         <constraint firstItem="8NI-6T-g57" firstAttribute="trailing" secondItem="FNu-Nz-syI" secondAttribute="trailing" constant="16" id="jnA-um-prj"/>
                         <constraint firstItem="3xa-Mz-Zyd" firstAttribute="top" secondItem="bdD-ER-KhT" secondAttribute="top" id="sM0-LQ-N8c"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Меню" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oGM-tc-KqL">
-                    <rect key="frame" x="16" y="104" width="84.5" height="40.5"/>
+                    <rect key="frame" x="16" y="152" width="84.5" height="40.5"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="rKd-By-AdO"/>
                     </constraints>
@@ -144,7 +144,7 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="backgroundColor"/>
             <constraints>
-                <constraint firstItem="bdD-ER-KhT" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Sw6-Pp-fgO"/>
+                <constraint firstItem="bdD-ER-KhT" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="Sw6-Pp-fgO"/>
                 <constraint firstItem="bdD-ER-KhT" firstAttribute="top" secondItem="oGM-tc-KqL" secondAttribute="bottom" constant="18" id="Xao-qy-lpb"/>
                 <constraint firstItem="bdD-ER-KhT" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="puz-WZ-MCn"/>
                 <constraint firstItem="oGM-tc-KqL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="tJX-84-QaU"/>
@@ -159,13 +159,13 @@
             <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="grayBorder">
-            <color red="0.94117647058823528" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94117647058823528" green="0.94117647058823528" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="secondBackgroundColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="semiBlack">
-            <color red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

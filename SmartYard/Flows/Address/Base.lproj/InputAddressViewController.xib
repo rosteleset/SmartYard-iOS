@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24062"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -43,29 +43,29 @@
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EcW-C1-LK6" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                    <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="hJx-JY-SeP"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Введите адрес" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEB-Xo-NYK">
-                    <rect key="frame" x="16" y="145" width="361" height="40.333333333333343"/>
+                    <rect key="frame" x="16" y="204" width="361" height="40.333333333333343"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHl-m0-xSg" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="225.33333333333331" width="393" height="592.66666666666674"/>
+                    <rect key="frame" x="0.0" y="284.33333333333331" width="393" height="567.66666666666674"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="95v-tL-giU" customClass="TPKeyboardAvoidingScrollView">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="592.66666666666663"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="567.66666666666663"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DMJ-9p-DBh" userLabel="Container View">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="592.66666666666663"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="567.66666666666663"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VY4-bh-98W" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="39.999999999999972" width="361" height="56"/>
+                                            <rect key="frame" x="16" y="24" width="361" height="56"/>
                                             <color key="backgroundColor" name="grayBorder"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="vXh-cE-YlD"/>
@@ -80,7 +80,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cmm-LE-hpZ" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="111.99999999999997" width="361" height="56"/>
+                                            <rect key="frame" x="16" y="96" width="361" height="56"/>
                                             <color key="backgroundColor" name="grayBorder"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="qRK-xK-9C1"/>
@@ -95,7 +95,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </textField>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qK5-R0-4tJ">
-                                            <rect key="frame" x="196" y="183.99999999999997" width="1" height="56"/>
+                                            <rect key="frame" x="196" y="168" width="1" height="56"/>
                                             <color key="backgroundColor" name="secondBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="1mA-KN-su0"/>
@@ -103,7 +103,7 @@
                                             </constraints>
                                         </view>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N8p-X9-uGr" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="183.99999999999997" width="173" height="56"/>
+                                            <rect key="frame" x="16" y="168" width="173" height="56"/>
                                             <color key="backgroundColor" name="grayBorder"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="qiB-aS-AmO"/>
@@ -118,7 +118,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WJV-KH-rtf" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="204" y="183.99999999999997" width="173" height="56"/>
+                                            <rect key="frame" x="204" y="168" width="173" height="56"/>
                                             <color key="backgroundColor" name="grayBorder"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="fSZ-DS-y90"/>
@@ -133,7 +133,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3p-cv-8sH" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="280" width="361" height="60"/>
+                                            <rect key="frame" x="16" y="264.00000000000006" width="361" height="60"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="60" id="UIU-Bb-ndi"/>
                                             </constraints>
@@ -146,10 +146,10 @@
                                             </userDefinedRuntimeAttributes>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOU-TA-YoR" userLabel="Centering View">
-                                            <rect key="frame" x="30" y="370" width="333" height="192.66666666666663"/>
+                                            <rect key="frame" x="30" y="354.00000000000006" width="333" height="183.66666666666669"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7xT-5V-6z5">
-                                                    <rect key="frame" x="91.666666666666686" y="84.333333333333258" width="150" height="24"/>
+                                                    <rect key="frame" x="91.666666666666686" y="80" width="150" height="24"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QrCodeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="52F-f9-FuX">
                                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -195,7 +195,7 @@
                                         <constraint firstItem="P3p-cv-8sH" firstAttribute="top" secondItem="WJV-KH-rtf" secondAttribute="bottom" constant="40" id="9fD-tJ-5y6"/>
                                         <constraint firstAttribute="trailing" secondItem="LOU-TA-YoR" secondAttribute="trailing" constant="30" id="BL5-yx-e3k"/>
                                         <constraint firstItem="N8p-X9-uGr" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="BXZ-v5-Kxi"/>
-                                        <constraint firstItem="VY4-bh-98W" firstAttribute="top" secondItem="DMJ-9p-DBh" secondAttribute="top" constant="40" id="Bae-Gc-g4T"/>
+                                        <constraint firstItem="VY4-bh-98W" firstAttribute="top" secondItem="DMJ-9p-DBh" secondAttribute="top" constant="24" id="Bae-Gc-g4T"/>
                                         <constraint firstItem="VY4-bh-98W" firstAttribute="leading" secondItem="DMJ-9p-DBh" secondAttribute="leading" constant="16" id="EhR-sC-okg"/>
                                         <constraint firstItem="WJV-KH-rtf" firstAttribute="top" secondItem="cmm-LE-hpZ" secondAttribute="bottom" constant="16" id="Fsj-ZL-1hE"/>
                                         <constraint firstAttribute="trailing" secondItem="cmm-LE-hpZ" secondAttribute="trailing" constant="16" id="GTJ-M6-3NG"/>
@@ -235,7 +235,7 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="secondBackgroundColor"/>
             <constraints>
-                <constraint firstItem="hHl-m0-xSg" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="03j-IG-O2M"/>
+                <constraint firstItem="hHl-m0-xSg" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="03j-IG-O2M"/>
                 <constraint firstAttribute="trailing" secondItem="EcW-C1-LK6" secondAttribute="trailing" id="0MK-oi-T9q"/>
                 <constraint firstItem="EcW-C1-LK6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5X7-hm-C6S"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bEB-Xo-NYK" secondAttribute="trailing" constant="16" id="6As-NM-oIe"/>

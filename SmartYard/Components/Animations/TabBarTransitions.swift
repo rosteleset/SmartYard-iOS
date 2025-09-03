@@ -25,7 +25,6 @@ extension TabBarTransition {
             }
             
             tbc.selectedIndex = index
-            tbc.tabBar(tbc.tabBar, didSelect: tabBarItem)
         }
     }
     

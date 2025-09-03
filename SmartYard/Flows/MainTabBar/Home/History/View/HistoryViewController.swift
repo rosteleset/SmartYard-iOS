@@ -67,13 +67,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func viewDidLayoutSubviews() {
-        
-        super.viewDidLayoutSubviews()
-        
-    }
-    
+
     fileprivate func setupTableView() {
         tableView.delegate = self
         tableView.refreshControl = refreshControl
@@ -86,7 +80,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
        
         dataSource = RxTableViewSectionedAnimatedDataSource<HistorySectionModel>(
-            configureCell: { [weak self] dataSource, tableView, indexPath, item in
+            configureCell: { [weak self] dataSource, tableView, indexPath, _  in
                 let cell: HistoryTableViewCell = tableView.dequeueReusableCell(withClass: HistoryTableViewCell.self, for: indexPath)
                 
                 guard let self = self else {
@@ -101,6 +95,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
     }
     
     fileprivate func setupShadows() {
+        toolbar.barStyle = .default
         toolbar.view.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
         toolbar.view.layer.shadowPath = UIBezierPath(rect: toolbar.view.bounds).cgPath
         toolbar.view.layer.shadowRadius = 32

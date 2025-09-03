@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24062"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,7 +24,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <wkWebView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="agD-LR-fcP">
-                    <rect key="frame" x="0.0" y="104" width="414" height="758"/>
+                    <rect key="frame" x="0.0" y="152" width="414" height="744"/>
                     <color key="backgroundColor" name="backgroundColor"/>
                     <wkWebViewConfiguration key="configuration">
                         <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -40,7 +40,7 @@
                 <constraint firstItem="agD-LR-fcP" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="56" id="Uti-lM-st8"/>
                 <constraint firstItem="Bfy-ae-ls4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VAW-be-4BD"/>
                 <constraint firstAttribute="trailing" secondItem="Bfy-ae-ls4" secondAttribute="trailing" id="aue-pu-PAx"/>
-                <constraint firstItem="agD-LR-fcP" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="dqB-mY-wO9"/>
+                <constraint firstItem="agD-LR-fcP" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="dqB-mY-wO9"/>
                 <constraint firstItem="agD-LR-fcP" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="eDa-vo-ds9"/>
                 <constraint firstItem="Bfy-ae-ls4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="x3w-Md-gCa"/>
             </constraints>
@@ -48,9 +48,9 @@
         </view>
     </objects>
     <resources>
-        <image name="MainBackground" width="375" height="812"/>
+        <image name="MainBackground" width="371" height="812"/>
         <namedColor name="backgroundColor">
-            <color red="0.95363956689834595" green="0.95673233270645142" blue="0.9782530665397644" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

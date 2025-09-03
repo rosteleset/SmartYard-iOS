@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24062"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="scrollableAxes" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="pHO-FP-93T" userLabel="Cameras Colllection View">
-                    <rect key="frame" x="0.0" y="59" width="390" height="379.66666666666669"/>
+                    <rect key="frame" x="0.0" y="12" width="390" height="337.66666666666669"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <gestureRecognizers/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="sz6-b7-T2Q">
@@ -39,7 +38,7 @@
                     </connections>
                 </collectionView>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="7eH-Pj-T9O" userLabel="Points Collection View">
-                    <rect key="frame" x="0.0" y="450.66666666666674" width="390" height="347.33333333333326"/>
+                    <rect key="frame" x="0.0" y="361.66666666666674" width="390" height="470.33333333333326"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="wCN-fl-WAd">
                         <size key="itemSize" width="36" height="36"/>
@@ -53,17 +52,16 @@
                     </connections>
                 </collectionView>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="secondBackgroundColor"/>
             <constraints>
                 <constraint firstItem="7eH-Pj-T9O" firstAttribute="top" secondItem="pHO-FP-93T" secondAttribute="bottom" constant="12" id="7Mj-cN-Fdh"/>
                 <constraint firstItem="7eH-Pj-T9O" firstAttribute="trailing" secondItem="gpI-Fy-j1V" secondAttribute="trailing" id="H3K-Fb-1XL"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="7eH-Pj-T9O" secondAttribute="bottom" constant="12" id="S0S-Zn-dRv"/>
-                <constraint firstItem="pHO-FP-93T" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="12" id="dIU-tX-yw1"/>
+                <constraint firstAttribute="bottom" secondItem="7eH-Pj-T9O" secondAttribute="bottom" constant="12" id="S0S-Zn-dRv"/>
+                <constraint firstItem="pHO-FP-93T" firstAttribute="top" secondItem="gpI-Fy-j1V" secondAttribute="top" constant="12" id="dIU-tX-yw1"/>
                 <constraint firstItem="pHO-FP-93T" firstAttribute="trailing" secondItem="gpI-Fy-j1V" secondAttribute="trailing" id="ePk-dv-TjY"/>
                 <constraint firstItem="7eH-Pj-T9O" firstAttribute="leading" secondItem="gpI-Fy-j1V" secondAttribute="leading" id="hjs-bC-nbb"/>
                 <constraint firstItem="pHO-FP-93T" firstAttribute="leading" secondItem="gpI-Fy-j1V" secondAttribute="leading" id="l23-Oz-rLx"/>
-                <constraint firstItem="pHO-FP-93T" firstAttribute="height" secondItem="gpI-Fy-j1V" secondAttribute="height" multiplier="0.45" id="wC5-Vt-Ro2"/>
+                <constraint firstItem="pHO-FP-93T" firstAttribute="height" secondItem="gpI-Fy-j1V" secondAttribute="height" multiplier="0.4" id="wC5-Vt-Ro2"/>
             </constraints>
             <point key="canvasLocation" x="139" y="129"/>
         </view>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24062"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,7 +15,6 @@
                 <outlet property="pinTextField" destination="eaR-Iu-Udm" id="e7K-bf-ro8"/>
                 <outlet property="sendCodeAgainButton" destination="gGI-M9-YUZ" id="mHg-h7-zi5"/>
                 <outlet property="sendCodeAgainGroupView" destination="fRv-aQ-uDM" id="AyX-iA-Ode"/>
-                <outlet property="sendCodeAgainGroupViewBottomConstraint" destination="1Ak-XW-bQ5" id="rcw-uZ-9Jp"/>
                 <outlet property="sendCodeAgainMessageView" destination="w5G-Uh-fIa" id="nvO-56-0a3"/>
                 <outlet property="timerLabel" destination="58D-aL-5Mh" id="83U-ej-ubO"/>
                 <outlet property="titleMessageLabel" destination="aDl-zG-Nme" id="v1t-A4-FVh"/>
@@ -31,14 +30,14 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
                 <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="syV-9N-tVU" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                    <rect key="frame" x="0.0" y="96" width="414" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="lBm-H6-Vr9"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xcm-SV-Q6e" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="117" width="414" height="745"/>
+                    <rect key="frame" x="0.0" y="165" width="414" height="731"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Код подтверждения отправлен на телефон +79025308094" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDl-zG-Nme">
                             <rect key="frame" x="40" y="36" width="334" height="31.5"/>
@@ -54,7 +53,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fRv-aQ-uDM">
-                            <rect key="frame" x="0.0" y="657" width="414" height="60"/>
+                            <rect key="frame" x="0.0" y="579" width="414" height="60"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w5G-Uh-fIa">
                                     <rect key="frame" x="20" y="14" width="374" height="32"/>
@@ -107,7 +106,6 @@
                     </subviews>
                     <color key="backgroundColor" name="secondBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="fRv-aQ-uDM" secondAttribute="bottom" priority="999" constant="28" id="1Ak-XW-bQ5"/>
                         <constraint firstItem="fRv-aQ-uDM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="eaR-Iu-Udm" secondAttribute="bottom" constant="20" id="ICO-Lx-tGJ"/>
                         <constraint firstAttribute="trailing" secondItem="eaR-Iu-Udm" secondAttribute="trailing" constant="5" id="Nw1-jN-ruo"/>
                         <constraint firstItem="fRv-aQ-uDM" firstAttribute="leading" secondItem="xcm-SV-Q6e" secondAttribute="leading" id="QGZ-ln-e4I"/>
@@ -127,12 +125,13 @@
                 <constraint firstItem="xcm-SV-Q6e" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="69" id="0c3-Ef-H70"/>
                 <constraint firstItem="syV-9N-tVU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="5j8-Ax-z1q"/>
                 <constraint firstItem="jFE-Bu-Rrc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WHr-9Y-ePc"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="xcm-SV-Q6e" secondAttribute="bottom" id="YZ8-4K-Hig"/>
+                <constraint firstAttribute="bottom" secondItem="xcm-SV-Q6e" secondAttribute="bottom" id="YZ8-4K-Hig"/>
                 <constraint firstItem="xcm-SV-Q6e" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YzJ-tp-qAW"/>
                 <constraint firstAttribute="bottom" secondItem="jFE-Bu-Rrc" secondAttribute="bottom" id="bqG-3l-mUd"/>
                 <constraint firstAttribute="trailing" secondItem="xcm-SV-Q6e" secondAttribute="trailing" id="dSr-oK-Jc6"/>
                 <constraint firstItem="syV-9N-tVU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="jOt-F8-WNF"/>
                 <constraint firstItem="syV-9N-tVU" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="nMu-al-M4o"/>
+                <constraint firstItem="fRv-aQ-uDM" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-24" id="qM7-hz-tMf"/>
                 <constraint firstItem="jFE-Bu-Rrc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="uUm-7B-hgS"/>
                 <constraint firstAttribute="trailing" secondItem="jFE-Bu-Rrc" secondAttribute="trailing" id="zHW-du-Sdk"/>
             </constraints>
@@ -140,12 +139,12 @@
         </view>
     </objects>
     <resources>
-        <image name="MainBackground" width="375" height="812"/>
+        <image name="MainBackground" width="371" height="812"/>
         <namedColor name="gray">
-            <color red="0.42745098039215684" green="0.47843137254901963" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.42745098039215684" green="0.47843137254901963" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="secondBackgroundColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

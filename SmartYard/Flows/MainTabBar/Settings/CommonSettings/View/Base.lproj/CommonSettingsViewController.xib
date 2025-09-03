@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24062"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -89,10 +89,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8MI-1O-eYe" userLabel="GrayBackground">
-                    <rect key="frame" x="0.0" y="246.5" width="414" height="581.5"/>
+                    <rect key="frame" x="0.0" y="246.5" width="414" height="649.5"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gga-je-1mc">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="581.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="649.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pc0-J4-eWa">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="924.5"/>
@@ -203,17 +203,17 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Показывать уведомления" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfa-8o-Ay8">
-                                                                            <rect key="frame" x="24" y="18.5" width="261" height="18"/>
+                                                                            <rect key="frame" x="24" y="18.5" width="249" height="18"/>
                                                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                                                             <color key="textColor" name="semiBlack"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pqi-cU-gi7">
-                                                                            <rect key="frame" x="309" y="12" width="51" height="31"/>
+                                                                            <rect key="frame" x="297" y="13.5" width="63" height="28"/>
                                                                             <color key="onTintColor" name="darkGreen"/>
                                                                         </switch>
                                                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vdl-Qp-ZA7">
-                                                                            <rect key="frame" x="309" y="12" width="49" height="31"/>
+                                                                            <rect key="frame" x="297" y="13.5" width="61" height="28"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
@@ -254,16 +254,16 @@
                                                                     <rect key="frame" x="0.0" y="55" width="382" height="88.5"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qN6-xJ-VU2">
-                                                                            <rect key="frame" x="24" y="18" width="261" height="52.5"/>
+                                                                            <rect key="frame" x="24" y="18" width="249" height="52.5"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Оповещать о недостатке средств" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VJ4-nm-C6t">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="261" height="18"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="249" height="18"/>
                                                                                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                                                                     <color key="textColor" name="semiBlack"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Прислать уведомление, когда баланс приблизится к нулю" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Se0-Td-bhj">
-                                                                                    <rect key="frame" x="0.0" y="22" width="261" height="30.5"/>
+                                                                                    <rect key="frame" x="0.0" y="22" width="249" height="30.5"/>
                                                                                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="12"/>
                                                                                     <color key="textColor" name="gray"/>
                                                                                     <nil key="highlightedColor"/>
@@ -281,11 +281,11 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ehC-mw-0P1">
-                                                                            <rect key="frame" x="309" y="29" width="51" height="31"/>
+                                                                            <rect key="frame" x="297" y="30.5" width="63" height="28"/>
                                                                             <color key="onTintColor" name="darkGreen"/>
                                                                         </switch>
                                                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJs-4R-Kis">
-                                                                            <rect key="frame" x="309" y="29" width="49" height="31"/>
+                                                                            <rect key="frame" x="297" y="30.5" width="61" height="28"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
@@ -388,17 +388,17 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Громкая связь по умолчанию" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dKt-Xe-i1X">
-                                                                            <rect key="frame" x="24" y="18.5" width="261" height="18"/>
+                                                                            <rect key="frame" x="24" y="18.5" width="249" height="18"/>
                                                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                                                             <color key="textColor" name="semiBlack"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ePw-5C-ph2">
-                                                                            <rect key="frame" x="309" y="12" width="51" height="31"/>
+                                                                            <rect key="frame" x="297" y="13.5" width="63" height="28"/>
                                                                             <color key="onTintColor" name="darkGreen"/>
                                                                         </switch>
                                                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cWD-Zs-wfy">
-                                                                            <rect key="frame" x="309" y="12" width="49" height="31"/>
+                                                                            <rect key="frame" x="297" y="13.5" width="61" height="28"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
@@ -445,11 +445,11 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ccK-Dt-wlB">
-                                                                            <rect key="frame" x="309" y="12" width="51" height="31"/>
+                                                                            <rect key="frame" x="297" y="13.5" width="63" height="28"/>
                                                                             <color key="onTintColor" name="darkGreen"/>
                                                                         </switch>
                                                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VyV-ny-Hom">
-                                                                            <rect key="frame" x="309" y="12" width="49" height="31"/>
+                                                                            <rect key="frame" x="297" y="13.5" width="61" height="28"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
@@ -572,17 +572,17 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Показывать камеры на карте" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mLP-oQ-Prc">
-                                                                            <rect key="frame" x="24" y="18.5" width="261" height="18"/>
+                                                                            <rect key="frame" x="24" y="18.5" width="249" height="18"/>
                                                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                                                             <color key="textColor" name="semiBlack"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ugu-Bn-1wd">
-                                                                            <rect key="frame" x="309" y="12" width="51" height="31"/>
+                                                                            <rect key="frame" x="297" y="13.5" width="63" height="28"/>
                                                                             <color key="onTintColor" name="darkGreen"/>
                                                                         </switch>
                                                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iUJ-sS-oKJ">
-                                                                            <rect key="frame" x="309" y="12" width="49" height="31"/>
+                                                                            <rect key="frame" x="297" y="13.5" width="61" height="28"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
@@ -868,7 +868,7 @@
                 <constraint firstItem="0aH-ke-d7M" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="hnn-VV-JMH"/>
                 <constraint firstItem="8MI-1O-eYe" firstAttribute="top" secondItem="Fyv-Y1-rkc" secondAttribute="bottom" constant="54" id="lQc-QK-kXf"/>
                 <constraint firstItem="8MI-1O-eYe" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="lxl-BD-1XF"/>
-                <constraint firstItem="8MI-1O-eYe" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="rls-e9-bI7"/>
+                <constraint firstItem="8MI-1O-eYe" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="rls-e9-bI7"/>
                 <constraint firstAttribute="bottom" secondItem="0aH-ke-d7M" secondAttribute="bottom" id="ybc-Ra-vSM"/>
                 <constraint firstItem="H0v-1I-nbB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="yrt-WU-nnj"/>
             </constraints>

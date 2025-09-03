@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24062"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,13 +38,13 @@
                     <rect key="frame" x="0.0" y="64" width="320" height="120"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Как вам будет удобнее это сделать?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kwu-21-IKd">
-                            <rect key="frame" x="16" y="79" width="242.5" height="16.5"/>
+                            <rect key="frame" x="16" y="84.5" width="219" height="18"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подтверждение адреса" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVn-3T-ISU">
-                            <rect key="frame" x="16" y="0.0" width="288" height="75"/>
+                            <rect key="frame" x="16" y="0.0" width="288" height="80.5"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -106,7 +106,7 @@
                 <constraint firstItem="yMA-ak-ijO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="59a-Ze-GRd"/>
                 <constraint firstAttribute="bottom" secondItem="NbX-aL-bqo" secondAttribute="bottom" id="BmZ-Tb-Prm"/>
                 <constraint firstItem="jvI-aM-Z2y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="IuP-3k-uji"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="jvI-aM-Z2y" secondAttribute="bottom" id="KMX-jR-9Re"/>
+                <constraint firstAttribute="bottom" secondItem="jvI-aM-Z2y" secondAttribute="bottom" id="KMX-jR-9Re"/>
                 <constraint firstItem="4bS-gB-f4A" firstAttribute="top" secondItem="yMA-ak-ijO" secondAttribute="bottom" id="T6I-6A-Y0C"/>
                 <constraint firstItem="NbX-aL-bqo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="U09-Pe-n7J"/>
                 <constraint firstItem="4bS-gB-f4A" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="XWL-fd-FPe"/>
