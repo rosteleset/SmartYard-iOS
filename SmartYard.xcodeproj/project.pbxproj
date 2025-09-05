@@ -1616,7 +1616,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8B171B512DF6E54000CAECF7 /* FALPRS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FALPRS; sourceTree = "<group>"; };
 		8B171BCD2DF729FF00CAECF7 /* User */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = User; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		3A555B0B2700573400E70CB9 /* Frameworks */ = {
@@ -4656,7 +4655,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84F840E423E07DA5008DBE50 /* Build configuration list for PBXNativeTarget "SmartYard" */;
 			buildPhases = (
-				4A77BD0011E9CFA0A08FADDC /* [CP] Check Pods Manifest.lock */,
+				8BA005512E6AFC39002195AB /* Update Project Version */,
+				DA437857D8C0BC0FC3F6890D /* [CP] Check Pods Manifest.lock */,
 				3AC0546F2BAD95B400781C82 /* Update banks list for SBP into LSApplicationQueriesSchemes */,
 				84F840CE23E07DA5008DBE50 /* Sources */,
 				84F840CF23E07DA5008DBE50 /* Frameworks */,
@@ -5060,7 +5060,25 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n\nif [[ \"${CONFIGURATION}\" = \"Release\" ]] || [[ \"${CONFIGURATION}\" = \"Adhoc\" ]]; then\n  echo \"Uploading dSYMs..\"\n  find \"${DWARF_DSYM_FOLDER_PATH}\" -name \"*.dSYM\" | xargs -S 1024 -I \\{\\} \"${PODS_ROOT}/FirebaseCrashlytics/upload-symbols\" -gsp \"${SRCROOT}/SmartYard/Resources/GoogleService-Info.plist\" -p ios \\{\\}\nelse\n  echo \"Skip dSYMs upload\"\nfi\n";
 		};
-		CB3B893F71AEBB0742A0A5D4 /* [CP] Embed Pods Frameworks */ = {
+		8BA005512E6AFC39002195AB /* Update Project Version */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Update Project Version";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "VERSION_FILE=\"${SRCROOT}/version\"\n\necho \"${MARKETING_VERSION}\" > \"$VERSION_FILE\"\necho \"Updated version file: ${MARKETING_VERSION}\"\n";
+		};
+		A20E583BB4A9FAF9C6B5E51A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -6881,7 +6899,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 58;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
@@ -6892,7 +6910,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.14.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -6923,7 +6941,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 58;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
@@ -6934,7 +6952,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.14.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
