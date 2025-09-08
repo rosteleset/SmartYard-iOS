@@ -83,11 +83,12 @@ public extension UIDevice {
         case "iPhone15,5": return "15 Plus"
         case "iPhone16,1": return "15 Pro"
         case "iPhone16,2": return "15 Pro Max"
-        case "iPhone17,1": return "16"
-        case "iPhone17,2": return "16 Plus"
-        case "iPhone17,3": return "16 Pro"
-        case "iPhone17,4": return "16 Pro Max"
-        
+        case "iPhone17,1": return "16 Pro"
+        case "iPhone17,2": return "16 Pro Max"
+        case "iPhone17,3": return "16"
+        case "iPhone17,4": return "16 Plus"
+        case "iPhone17,5": return "16e"
+
         // MARK: - iPod -
             
         case "iPod1,1": return "1st Gen iPod"
