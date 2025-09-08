@@ -63,7 +63,6 @@
                         <constraint firstAttribute="trailing" secondItem="89Y-FQ-vdr" secondAttribute="trailing" constant="16" id="TBn-Vp-LYV"/>
                         <constraint firstItem="w0Q-oS-zCM" firstAttribute="top" secondItem="n8T-dr-SIH" secondAttribute="top" id="Z9M-ZP-9Z3"/>
                         <constraint firstItem="w0Q-oS-zCM" firstAttribute="leading" secondItem="n8T-dr-SIH" secondAttribute="leading" id="ntW-w8-yfq"/>
-                        <constraint firstAttribute="bottom" secondItem="89Y-FQ-vdr" secondAttribute="bottom" constant="23" id="y3I-GX-V1b"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nuY-QD-9Nd">
@@ -118,6 +117,7 @@
                 <constraint firstItem="qEL-FS-mUt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="htK-xv-fhn"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="nuY-QD-9Nd" secondAttribute="trailing" id="ird-cl-Mc8"/>
                 <constraint firstItem="ZHo-ab-uCT" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="wbs-tN-BMb"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="89Y-FQ-vdr" secondAttribute="bottom" constant="24" id="wlC-r5-sWV"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="116.51785714285714"/>
         </view>
