@@ -168,11 +168,11 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.menuRouter = menuCoordinator.strongRouter
         
         // MARK: Инициализация кастомного/системного UITabBarController
+        let isNewTabBarActive = false
         let rootTabBarController: UITabBarController
-        if #available(iOS 26.0, *) {
+        if #available(iOS 26.0, *), isNewTabBarActive {
             // На iOS 26+ используем стандартный UITabBarController
             rootTabBarController = UITabBarController()
-
         } else {
             // Загрузка кастомного таббара из nib как и раньше
             let nib = UINib(nibName: "CustomTabBarController", bundle: .main)
@@ -214,7 +214,7 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             select: selectedTab
         )
 
-        if #available(iOS 26.0, *) {
+        if #available(iOS 26.0, *), isNewTabBarActive {
             let appearance = UITabBarAppearance()
             appearance.configureWithTransparentBackground()
             // appearance.backgroundColor = .clear
