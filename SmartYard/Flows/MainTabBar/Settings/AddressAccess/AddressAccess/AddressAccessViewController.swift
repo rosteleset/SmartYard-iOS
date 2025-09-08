@@ -202,12 +202,12 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
         
         output.isFRSEnabled
             .drive { [weak self] state in
-                guard let state = state  else {
+                guard let state = state else {
                     self?.faceIdAccessView.isHidden = true
                     return
                 }
                 self?.faceIdAccessView.isAvailable = state
-                self?.faceIdAccessView.isHidden = false
+                self?.faceIdAccessView.isHidden = !state
             }
             .disposed(by: disposeBag)
         
