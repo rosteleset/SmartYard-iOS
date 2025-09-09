@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24062"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -84,12 +84,10 @@
                         <constraint firstItem="BRa-A7-Ebr" firstAttribute="top" secondItem="Tbm-7a-VCj" secondAttribute="bottom" id="J4H-hC-Ebu"/>
                         <constraint firstItem="Tbm-7a-VCj" firstAttribute="leading" secondItem="jvI-aM-Z2y" secondAttribute="leading" id="KIA-UV-w8w"/>
                         <constraint firstItem="BRa-A7-Ebr" firstAttribute="leading" secondItem="jvI-aM-Z2y" secondAttribute="leading" id="NYY-5g-XCE"/>
-                        <constraint firstAttribute="bottom" secondItem="BRa-A7-Ebr" secondAttribute="bottom" id="dhS-7E-Qqv"/>
                         <constraint firstAttribute="trailing" secondItem="Tbm-7a-VCj" secondAttribute="trailing" id="fip-q5-q3q"/>
                         <constraint firstItem="mow-Yx-2Q3" firstAttribute="leading" secondItem="jvI-aM-Z2y" secondAttribute="leading" id="i7f-9Y-VPj"/>
                         <constraint firstAttribute="trailing" secondItem="BRa-A7-Ebr" secondAttribute="trailing" id="oVP-Wg-hE2"/>
                         <constraint firstAttribute="trailing" secondItem="mow-Yx-2Q3" secondAttribute="trailing" id="pma-kf-waK"/>
-                        <constraint firstAttribute="bottom" secondItem="mow-Yx-2Q3" secondAttribute="bottom" id="scS-qh-s4d"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yMA-ak-ijO" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
@@ -104,6 +102,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="yMA-ak-ijO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="59a-Ze-GRd"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="mow-Yx-2Q3" secondAttribute="bottom" id="A4u-n4-zYK"/>
                 <constraint firstAttribute="bottom" secondItem="NbX-aL-bqo" secondAttribute="bottom" id="BmZ-Tb-Prm"/>
                 <constraint firstItem="jvI-aM-Z2y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="IuP-3k-uji"/>
                 <constraint firstAttribute="bottom" secondItem="jvI-aM-Z2y" secondAttribute="bottom" id="KMX-jR-9Re"/>
@@ -117,6 +116,7 @@
                 <constraint firstItem="jvI-aM-Z2y" firstAttribute="top" secondItem="4bS-gB-f4A" secondAttribute="bottom" id="t29-yk-VMw"/>
                 <constraint firstItem="yMA-ak-ijO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="whg-oL-qXP"/>
                 <constraint firstAttribute="trailing" secondItem="jvI-aM-Z2y" secondAttribute="trailing" id="xGC-fM-OZF"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="BRa-A7-Ebr" secondAttribute="bottom" id="yZP-qT-Ws7"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="112.5"/>
         </view>
