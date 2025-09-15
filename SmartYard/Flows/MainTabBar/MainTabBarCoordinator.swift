@@ -168,7 +168,7 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.menuRouter = menuCoordinator.strongRouter
         
         // MARK: Инициализация кастомного/системного UITabBarController
-        let isNewTabBarActive = false
+        let isNewTabBarActive = true
         let rootTabBarController: UITabBarController
         if #available(iOS 26.0, *), isNewTabBarActive {
             // На iOS 26+ используем стандартный UITabBarController
