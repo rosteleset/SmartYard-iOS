@@ -553,6 +553,7 @@ final class IncomingCallViewModel: BaseViewModel {
 
                     do {
                         try currentCall.terminate()
+                        self.finishCallAndClose()
                     } catch {
                         self.finishCallAndClose()
                     }
@@ -835,16 +836,17 @@ final class IncomingCallViewModel: BaseViewModel {
             Logger.logDebug("Calling terminate()...")
             try call.terminate()
             Logger.logInfo("Call.terminate() completed. Wait for .End.")
+            finishCallAndClose(doorState: .opened)
         } catch {
             Logger.logError("Call.terminate() failed: \(error.localizedDescription)")
             finishCallAndClose()
         }
     }
     
-    private func finishCallAndClose() {
+    private func finishCallAndClose(doorState: IncomingCallDoorState = .notDetermined) {
         updateState(
             callState: .callFinished,
-            doorState: .opened,
+            doorState: doorState,
             previewState: .staticImage,
             soundOutputState: .disabled
         )
@@ -902,10 +904,6 @@ extension IncomingCallViewModel: LinphoneDelegate {
             incomingCall.onNext((call, params))
         }
         
-        if cstate == .End {
-            Logger.logInfo("Call ended. Cleaning up...")
-            finishCallAndClose()
-        }
     }
     
 }
