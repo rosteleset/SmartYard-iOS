@@ -104,9 +104,9 @@
                                     <constraints>
                                         <constraint firstItem="Bva-aU-jaI" firstAttribute="top" secondItem="aDB-gW-47T" secondAttribute="bottom" constant="12" id="5Db-Xy-iHx"/>
                                         <constraint firstItem="aDB-gW-47T" firstAttribute="top" secondItem="OuL-ZB-YLW" secondAttribute="top" constant="20" id="Brb-Ay-pp8"/>
-                                        <constraint firstAttribute="trailing" secondItem="Bva-aU-jaI" secondAttribute="trailing" constant="24" id="JDB-kC-1cY"/>
+                                        <constraint firstAttribute="trailing" secondItem="Bva-aU-jaI" secondAttribute="trailing" id="JDB-kC-1cY"/>
                                         <constraint firstItem="6no-0a-lvC" firstAttribute="leading" secondItem="OuL-ZB-YLW" secondAttribute="leading" constant="24" id="KH3-0E-A2U"/>
-                                        <constraint firstItem="Bva-aU-jaI" firstAttribute="leading" secondItem="OuL-ZB-YLW" secondAttribute="leading" constant="24" id="bZN-Jo-7We"/>
+                                        <constraint firstItem="Bva-aU-jaI" firstAttribute="leading" secondItem="OuL-ZB-YLW" secondAttribute="leading" id="bZN-Jo-7We"/>
                                         <constraint firstItem="6no-0a-lvC" firstAttribute="top" secondItem="Bva-aU-jaI" secondAttribute="bottom" priority="999" constant="28" id="dO7-nH-Ktn"/>
                                         <constraint firstAttribute="trailing" secondItem="6no-0a-lvC" secondAttribute="trailing" constant="24" id="hbT-Ti-kyk"/>
                                         <constraint firstAttribute="bottom" secondItem="6no-0a-lvC" secondAttribute="bottom" constant="24" id="vxq-7H-UGX"/>
