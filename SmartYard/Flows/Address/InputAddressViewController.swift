@@ -14,6 +14,7 @@ import TPKeyboardAvoiding
 
 final class InputAddressViewController: BaseViewController {
 
+    @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var cityTextField: SmartYardSearchTextField!
@@ -202,7 +203,8 @@ final class InputAddressViewController: BaseViewController {
         streetTextField.setPlaceholder(string: NSLocalizedString("Street", comment: ""))
         buildingTextField.setPlaceholder(string: NSLocalizedString("Building", comment: ""))
         flatTextField.setPlaceholder(string: NSLocalizedString("Appartment", comment: ""))
-        
+        headerView.setText(NSLocalizedString("Input your address", comment: ""))
+
         qrCodeButton.setLeftAlignment()
         
         let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))

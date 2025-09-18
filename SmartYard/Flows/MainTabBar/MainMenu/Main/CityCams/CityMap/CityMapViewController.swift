@@ -14,6 +14,7 @@ import RxCocoa
 
 final class CityMapViewController: BaseViewController, LoaderPresentable {
     
+    @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     private var mapView: MapView!
@@ -37,6 +38,8 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
     
     fileprivate func configureView() {
         fakeNavBar.setText(NSLocalizedString("Menu", comment: ""))
+
+        headerView.setText(NSLocalizedString("Public cams", comment: ""))
     }
     
     fileprivate func configureMapBox() {

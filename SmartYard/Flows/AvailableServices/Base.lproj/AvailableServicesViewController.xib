@@ -22,8 +22,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AvailableServicesViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
-                <outlet property="addressLabel" destination="F7n-PP-pF1" id="yHc-Ka-2VV"/>
                 <outlet property="fakeNavBar" destination="ZHo-ab-uCT" id="akb-uw-D0D"/>
+                <outlet property="headerView" destination="87M-ms-kNo" id="IkM-e3-1Ed"/>
                 <outlet property="nextButton" destination="89Y-FQ-vdr" id="j07-bY-Q4r"/>
                 <outlet property="tableView" destination="w0Q-oS-zCM" id="360-rJ-Exd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -34,6 +34,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="87M-ms-kNo" customClass="HeaderView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                    <viewLayoutGuide key="safeArea" id="GcW-VA-O6v"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="1" constant="44" id="hJS-MY-mko"/>
+                    </constraints>
+                </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="qEL-FS-mUt">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
@@ -65,33 +72,6 @@
                         <constraint firstItem="w0Q-oS-zCM" firstAttribute="leading" secondItem="n8T-dr-SIH" secondAttribute="leading" id="ntW-w8-yfq"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nuY-QD-9Nd">
-                    <rect key="frame" x="0.0" y="72" width="320" height="160"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Доступные услуги" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="epc-tO-9lb">
-                            <rect key="frame" x="16" y="54" width="288" height="40.5"/>
-                            <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Астраханская, 24, кв.60" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7n-PP-pF1">
-                            <rect key="frame" x="16" y="98.5" width="288" height="18"/>
-                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="trailing" secondItem="epc-tO-9lb" secondAttribute="trailing" constant="16" id="MNR-y4-q4V"/>
-                        <constraint firstAttribute="height" constant="160" id="kHi-tp-HzQ"/>
-                        <constraint firstItem="epc-tO-9lb" firstAttribute="top" secondItem="nuY-QD-9Nd" secondAttribute="top" constant="54" id="tkx-hc-PyD"/>
-                        <constraint firstItem="F7n-PP-pF1" firstAttribute="leading" secondItem="nuY-QD-9Nd" secondAttribute="leading" constant="16" id="wJf-si-rup"/>
-                        <constraint firstItem="epc-tO-9lb" firstAttribute="leading" secondItem="nuY-QD-9Nd" secondAttribute="leading" constant="16" id="x7Q-TJ-WER"/>
-                        <constraint firstItem="F7n-PP-pF1" firstAttribute="top" secondItem="epc-tO-9lb" secondAttribute="bottom" constant="4" id="xs5-oD-N2s"/>
-                        <constraint firstAttribute="trailing" secondItem="F7n-PP-pF1" secondAttribute="trailing" constant="16" id="yzX-Yt-g1K"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZHo-ab-uCT" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -106,16 +86,16 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="n8T-dr-SIH" secondAttribute="trailing" id="3Fx-8W-Ipy"/>
                 <constraint firstItem="qEL-FS-mUt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3ty-hd-aFk"/>
                 <constraint firstItem="ZHo-ab-uCT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6rE-1e-eQT"/>
+                <constraint firstAttribute="trailing" secondItem="87M-ms-kNo" secondAttribute="trailing" id="7WF-oy-9Qc"/>
+                <constraint firstItem="87M-ms-kNo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JoU-5c-9dV"/>
                 <constraint firstItem="ZHo-ab-uCT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="NjG-eP-5zD"/>
-                <constraint firstItem="n8T-dr-SIH" firstAttribute="top" secondItem="nuY-QD-9Nd" secondAttribute="bottom" id="RAW-Wo-hHI"/>
-                <constraint firstItem="nuY-QD-9Nd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Yfw-eQ-cs4"/>
-                <constraint firstItem="nuY-QD-9Nd" firstAttribute="top" secondItem="ZHo-ab-uCT" secondAttribute="bottom" constant="8" symbolic="YES" id="Z9A-hW-HTY"/>
+                <constraint firstItem="n8T-dr-SIH" firstAttribute="top" secondItem="87M-ms-kNo" secondAttribute="bottom" id="Qrc-G8-guq"/>
                 <constraint firstAttribute="bottom" secondItem="n8T-dr-SIH" secondAttribute="bottom" id="bIh-cg-R05"/>
+                <constraint firstItem="87M-ms-kNo" firstAttribute="top" secondItem="ZHo-ab-uCT" secondAttribute="bottom" id="bzB-S1-ggM"/>
                 <constraint firstAttribute="bottom" secondItem="qEL-FS-mUt" secondAttribute="bottom" id="ckC-fj-dX9"/>
                 <constraint firstAttribute="trailing" secondItem="qEL-FS-mUt" secondAttribute="trailing" id="dub-Wf-CNe"/>
                 <constraint firstItem="n8T-dr-SIH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="gC1-fO-oGP"/>
                 <constraint firstItem="qEL-FS-mUt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="htK-xv-fhn"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="nuY-QD-9Nd" secondAttribute="trailing" id="ird-cl-Mc8"/>
                 <constraint firstItem="ZHo-ab-uCT" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="wbs-tN-BMb"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="89Y-FQ-vdr" secondAttribute="bottom" constant="24" id="wlC-r5-sWV"/>
             </constraints>

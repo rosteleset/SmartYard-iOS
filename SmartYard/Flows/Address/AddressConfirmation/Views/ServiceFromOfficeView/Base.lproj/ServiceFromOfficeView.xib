@@ -61,15 +61,14 @@
                             <color key="backgroundColor" name="secondBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="bQy-0w-33M" secondAttribute="trailing" constant="16" id="3Np-S0-bzI"/>
-                                <constraint firstAttribute="bottom" secondItem="bQy-0w-33M" secondAttribute="bottom" constant="15" id="BFN-x4-Pc4"/>
                                 <constraint firstItem="bQy-0w-33M" firstAttribute="leading" secondItem="59B-VS-YVQ" secondAttribute="leading" constant="16" id="ORE-xG-O54"/>
                             </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" name="secondBackgroundColor"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="59B-VS-YVQ" secondAttribute="bottom" id="3IA-Mz-KgS"/>
                         <constraint firstItem="59B-VS-YVQ" firstAttribute="leading" secondItem="cGs-JD-k45" secondAttribute="leading" id="6mk-Qj-A6R"/>
-                        <constraint firstAttribute="bottom" secondItem="59B-VS-YVQ" secondAttribute="bottom" id="CcZ-hq-fON"/>
                         <constraint firstItem="RAz-Li-Zn5" firstAttribute="leading" secondItem="cGs-JD-k45" secondAttribute="leading" id="Keg-NU-yUW"/>
                         <constraint firstAttribute="trailing" secondItem="59B-VS-YVQ" secondAttribute="trailing" id="ORP-01-Rns"/>
                         <constraint firstItem="59B-VS-YVQ" firstAttribute="top" secondItem="RAz-Li-Zn5" secondAttribute="bottom" id="PCh-hH-HJG"/>
@@ -84,6 +83,7 @@
                 <constraint firstAttribute="trailing" secondItem="cGs-JD-k45" secondAttribute="trailing" id="4LX-Jc-JU8"/>
                 <constraint firstItem="cGs-JD-k45" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9ps-xi-kGY"/>
                 <constraint firstAttribute="bottom" secondItem="cGs-JD-k45" secondAttribute="bottom" id="UFN-0b-GkI"/>
+                <constraint firstItem="bQy-0w-33M" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="-16" id="gWq-Ms-67l"/>
                 <constraint firstItem="cGs-JD-k45" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uRV-Uv-y9u"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -96,10 +96,10 @@
     </objects>
     <resources>
         <namedColor name="gray">
-            <color red="0.43529411764705883" green="0.47450980392156861" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.42745098039215684" green="0.47843137254901963" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="secondBackgroundColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

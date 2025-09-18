@@ -14,9 +14,9 @@ import RxCocoa
 
 class YardMapViewController: BaseViewController, LoaderPresentable {
     
+    @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var containerView: TopRoundedView!
     private var mapView: MapView!
-    @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
     var loader: JGProgressHUD?
@@ -126,9 +126,14 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
         
         output.address
-            .drive(addressLabel.rx.text)
+            .drive(onNext: { [weak self] address in
+                self?.headerView.setText(
+                    NSLocalizedString("Select camera", comment: ""),
+                    subtitle: address ?? ""
+                )
+            })
             .disposed(by: disposeBag)
-        
+
         output.isLoading
             .debounce(.milliseconds(25))
             .drive(

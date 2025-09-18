@@ -1,7 +1,3 @@
-
-/* Class = "UILabel"; text = "Журнал событий"; ObjectID = "44I-US-rjd"; */
-"44I-US-rjd.text" = "Events log";
-
 /* Class = "UIButton"; normalTitle = "Квартира, все"; ObjectID = "QPa-0r-0rp"; */
 "QPa-0r-0rp.normalTitle" = "Appt, all";
 

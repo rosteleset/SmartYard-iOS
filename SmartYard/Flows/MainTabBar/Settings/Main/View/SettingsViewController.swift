@@ -14,6 +14,7 @@ import JGProgressHUD
 
 final class SettingsViewController: BaseViewController, LoaderPresentable {
     
+    @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -244,6 +245,8 @@ final class SettingsViewController: BaseViewController, LoaderPresentable {
     private func configureView() {
         mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
+
+        headerView.setText(NSLocalizedString("Addresses settings", comment: ""))
     }
     
     private func configureCollectionView() {

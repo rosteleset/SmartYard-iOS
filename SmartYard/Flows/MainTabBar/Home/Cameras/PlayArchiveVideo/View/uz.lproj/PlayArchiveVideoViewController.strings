@@ -1,10 +1,4 @@
 
-/* Class = "UILabel"; text = "Видео от"; ObjectID = "0x5-ZA-ub8"; */
-"0x5-ZA-ub8.text" = "Videodan";
-
-/* Class = "UILabel"; text = "Видео от"; ObjectID = "Dqz-l5-6XG"; */
-"Dqz-l5-6XG.text" = "Videodan";
-
 /* Class = "UIButton"; normalTitle = "Загрузить и получить ссылку"; ObjectID = "JBH-Xw-Dmj"; */
 "JBH-Xw-Dmj.normalTitle" = "Yuklab olish va havola olish";
 

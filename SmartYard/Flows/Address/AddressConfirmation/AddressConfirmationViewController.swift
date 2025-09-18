@@ -13,6 +13,7 @@ import JGProgressHUD
 
 final class AddressConfirmationViewController: BaseViewController, LoaderPresentable {
     
+    @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var segmentControl: SmartYardUnderlineSegmentedControlView!
     @IBOutlet private weak var officeView: ServiceFromOfficeView!
     @IBOutlet private weak var courierView: ServiceFromCourierView!
@@ -44,6 +45,14 @@ final class AddressConfirmationViewController: BaseViewController, LoaderPresent
             NSLocalizedString("Via Courier", comment: ""),
             NSLocalizedString("In Office", comment: "")
         ]
+
+        headerView.setText(
+            NSLocalizedString("Address confirmation", comment: ""),
+            subtitle: NSLocalizedString(
+                "How would it be more convenient for you to do this?",
+                comment: ""
+            )
+        )
     }
     
     private func bind() {

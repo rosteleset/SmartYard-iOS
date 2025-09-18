@@ -234,3 +234,15 @@
 "expired" = "мерзімі өтті";
 "Add" = "Қосу";
 "unlimited" = "шексіз";
+"Address confirmation" = "Мекен-жай растау";
+"How would it be more convenient for you to do this?" = "Сізге ол қалай ыңғайлы?";
+"Input your address" = "Мекенжайыңызды енгізіңіз";
+"Available services" = "Қол жетімді қызметтер";
+"Do you have an agreement with the operator?" = "Сізде оператормен келісім бар ма?";
+"Enter the number and password of the contract associated with this address and manage services from this application." = "Берілген мекенжайға байланыстырылған келісімнің нөмірін және күйгі парольді енгізіңіз және осы қосымшадан қызметтерді басқарыңыз.";
+"Select camera" = "Камераны таңдаңыз";
+"Events log" = "Оқиғалар журналы";
+"Common settings" = "Жалпы параметрлер";
+"Addresses settings" = "Мекен-жай қосу";
+"Request a record" = "Жазбаны сұрау қылу";
+"Public cams" = "Қала камералары";

@@ -22,12 +22,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RequestRecordViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
-                <outlet property="addressLabel" destination="qGD-eH-dBA" id="3NF-J1-DPE"/>
                 <outlet property="button" destination="L4j-9z-B66" id="ONk-l8-WYV"/>
-                <outlet property="buttonConstraint" destination="qGD-eH-dBA" id="r3G-1s-FhX"/>
                 <outlet property="dateTextField" destination="LuE-DE-5IR" id="GeN-xu-ZD3"/>
                 <outlet property="durationTextField" destination="ppf-df-Gg8" id="9Hc-2y-lgT"/>
                 <outlet property="fakeNavBar" destination="MXz-Le-IUg" id="n7O-dp-3iZ"/>
+                <outlet property="headerView" destination="kCC-bn-qoY" id="pyA-FG-PPN"/>
                 <outlet property="hoursTextField" destination="GRD-jm-9e7" id="5kb-17-MWg"/>
                 <outlet property="minutesTextField" destination="9kJ-lO-X07" id="whi-eo-2tB"/>
                 <outlet property="notesTextField" destination="h8p-pN-Ahl" id="CPE-zD-pEK"/>
@@ -52,25 +51,6 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="x1d-WZ-j5Z"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Запросить запись" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yr0-wC-iKV">
-                    <rect key="frame" x="16" y="152" width="382" height="38"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="38" id="3BM-Hf-6s2"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="г. Тамбов, ул. Советская, 16" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGD-eH-dBA">
-                    <rect key="frame" x="16" y="194" width="382" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="24" id="HKu-AF-Dpg"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="vzE-hs-Lk7"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YT7-xC-EWd" customClass="TopRoundedView24" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="242" width="414" height="654"/>
                     <subviews>
@@ -272,27 +252,31 @@
                         <constraint firstItem="1dd-aG-0qo" firstAttribute="leading" secondItem="YT7-xC-EWd" secondAttribute="leading" id="ufa-xr-JW9"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kCC-bn-qoY" customClass="HeaderView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="140" width="414" height="102"/>
+                    <viewLayoutGuide key="safeArea" id="911-eO-lIT"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="1" constant="44" id="22w-2X-6yu"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="secondBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="42p-0G-vHT" secondAttribute="bottom" id="65A-VR-wvW"/>
                 <constraint firstItem="MXz-Le-IUg" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="6eC-ee-5Xi"/>
-                <constraint firstItem="qGD-eH-dBA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="DqP-m5-9I1"/>
                 <constraint firstItem="42p-0G-vHT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="FTF-kG-RFW"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Yr0-wC-iKV" secondAttribute="trailing" constant="16" id="HN4-Lh-1nJ"/>
-                <constraint firstItem="qGD-eH-dBA" firstAttribute="top" secondItem="Yr0-wC-iKV" secondAttribute="bottom" constant="4" id="IvL-IE-s0D"/>
                 <constraint firstItem="YT7-xC-EWd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Jkg-Yi-bD2"/>
                 <constraint firstItem="42p-0G-vHT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Lme-yR-MgD"/>
                 <constraint firstItem="42p-0G-vHT" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="OyP-7O-0wa"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qGD-eH-dBA" secondAttribute="trailing" constant="16" id="aHN-px-VWN"/>
+                <constraint firstItem="kCC-bn-qoY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Usp-ff-8xk"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="YT7-xC-EWd" secondAttribute="trailing" id="b1d-OY-cOQ"/>
+                <constraint firstItem="YT7-xC-EWd" firstAttribute="top" secondItem="kCC-bn-qoY" secondAttribute="bottom" id="ci5-br-Pnc"/>
                 <constraint firstAttribute="trailing" secondItem="MXz-Le-IUg" secondAttribute="trailing" id="e0F-Tl-MAX"/>
-                <constraint firstItem="Yr0-wC-iKV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="juO-bA-BeU"/>
                 <constraint firstAttribute="bottom" secondItem="YT7-xC-EWd" secondAttribute="bottom" id="kWh-rM-koB"/>
-                <constraint firstItem="Yr0-wC-iKV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="56" id="nvO-Nd-Lc8"/>
-                <constraint firstItem="Yr0-wC-iKV" firstAttribute="bottom" secondItem="qGD-eH-dBA" secondAttribute="top" constant="-4" id="pad-zk-kNq"/>
+                <constraint firstItem="kCC-bn-qoY" firstAttribute="top" secondItem="MXz-Le-IUg" secondAttribute="bottom" id="mPe-kK-pUo"/>
                 <constraint firstItem="MXz-Le-IUg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="rAW-dL-8nY"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kCC-bn-qoY" secondAttribute="trailing" id="xCZ-q4-VLp"/>
                 <constraint firstItem="YT7-xC-EWd" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="146" id="z1B-oW-RZ0"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>

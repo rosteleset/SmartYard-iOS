@@ -227,3 +227,15 @@
 "еxpired" = "истекло";
 "Add" = "Добавить";
 "unlimited" = "бессрочно";
+"Address confirmation" = "Подтверждение адреса";
+"How would it be more convenient for you to do this?" = "Как вам будет удобнее это сделать?";
+"Input your address" = "Введите адрес";
+"Available services" = "Доступные услуги";
+"Do you have an agreement with the operator?" = "У вас есть договор c оператором?";
+"Enter the number and password of the contract associated with this address and manage services from this application." = "Введите номер и пароль договора, привязанного к данному адресу,  и управляйте услугами из этого приложения.";
+"Select camera" = "Выберите камеру";
+"Events log" = "Журнал событий";
+"Common settings" = "Общие настройки";
+"Addresses settings" = "Настройки адресов";
+"Request a record" = "Запросить запись";
+"Public cams" = "Городские камеры";

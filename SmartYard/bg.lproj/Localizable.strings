@@ -211,3 +211,15 @@
 "expired" = "изтече";
 "Add" = "Добавяне";
 "unlimited" = "неограничен";
+"Address confirmation" = "Потвърждаване на адреса";
+"How would it be more convenient for you to do this?" = "Как ще ви бъде по-удобно да го направите?";
+"Input your address" = "Въведете адрес";
+"Available services" = "Достъпни услуги";
+"Do you have an agreement with the operator?" = "Имате ли договор с оператора?";
+"Enter the number and password of the contract associated with this address and manage services from this application." = "Въведете номера и паролата на договора, асоцииран с този адрес, и управлявайте услугите от това приложение.";
+"Select camera" = "Изберете камера";
+"Events log" = "Дневник на събитията";
+"Common settings" = "Общи настройки";
+"Addresses settings" = "Настройки на адреси";
+"Request a record" = "Заявете запис";
+"Public cams" = "Градски камери";

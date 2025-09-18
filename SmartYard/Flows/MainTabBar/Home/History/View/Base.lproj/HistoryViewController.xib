@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24062"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SourceSansPro-Bold.ttf">
-            <string>SourceSansPro-Bold</string>
-        </array>
-        <array key="SourceSansPro-Regular.ttf">
-            <string>SourceSansPro-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HistoryViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
-                <outlet property="addressLabel" destination="UPE-Nc-jsD" id="Ees-LV-eUs"/>
                 <outlet property="appartmentFilterButton" destination="QPa-0r-0rp" id="LZs-7q-sZ0"/>
                 <outlet property="calendarButton" destination="rbP-8e-a35" id="zHC-AD-7nV"/>
                 <outlet property="eventsFilterButton" destination="n17-MI-9sr" id="zeD-EH-KxQ"/>
                 <outlet property="fakeNavBar" destination="3Mx-NN-sqX" id="JRw-hq-Koo"/>
+                <outlet property="headerView" destination="v6e-8v-Miu" id="Mi3-BX-zxR"/>
                 <outlet property="scrollUpButton" destination="MJm-xB-jU9" id="nyZ-aQ-8Ni"/>
                 <outlet property="tableView" destination="znB-hB-uvQ" id="pOM-Ou-YSY"/>
                 <outlet property="toolbar" destination="r6b-X1-Ta6" id="sO5-ks-S40"/>
@@ -39,36 +31,18 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="qRP-po-8iN">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Mx-NN-sqX" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6e-8v-Miu" customClass="HeaderView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                    <viewLayoutGuide key="safeArea" id="q90-CS-d5k"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="W6K-WY-NuY"/>
+                        <constraint firstAttribute="height" priority="1" constant="44" id="JRx-BG-LVS"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Журнал событий" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44I-US-rjd">
-                    <rect key="frame" x="16" y="76" width="343" height="41"/>
-                    <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="Ajc-L5-ZrI"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Советская, 16" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UPE-Nc-jsD">
-                    <rect key="frame" x="16" y="121" width="343" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="ERc-fU-gVh"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Diy-Ub-FSF" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="173" width="375" height="494"/>
+                    <rect key="frame" x="0.0" y="108" width="375" height="559"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znB-hB-uvQ" customClass="UITableViewWithHandler" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="48" width="375" height="446"/>
+                            <rect key="frame" x="0.0" y="48" width="375" height="511"/>
                             <color key="backgroundColor" name="backgroundColor"/>
                             <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -157,27 +131,33 @@
                         <constraint firstAttribute="trailing" secondItem="znB-hB-uvQ" secondAttribute="trailing" id="w9k-bU-dXJ"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Mx-NN-sqX" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="W6K-WY-NuY"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="backgroundColor"/>
             <constraints>
                 <constraint firstItem="Diy-Ub-FSF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4sh-tK-kUa"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="UPE-Nc-jsD" secondAttribute="trailing" constant="16" id="56k-Nx-YlL"/>
                 <constraint firstAttribute="bottom" secondItem="qRP-po-8iN" secondAttribute="bottom" id="5w8-EC-BXq"/>
                 <constraint firstItem="3Mx-NN-sqX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Azo-g8-sO4"/>
-                <constraint firstItem="UPE-Nc-jsD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="OnP-Ej-5Q8"/>
-                <constraint firstItem="44I-US-rjd" firstAttribute="top" secondItem="3Mx-NN-sqX" secondAttribute="bottom" constant="12" id="PcE-kC-xiB"/>
-                <constraint firstItem="Diy-Ub-FSF" firstAttribute="top" secondItem="UPE-Nc-jsD" secondAttribute="bottom" constant="28" id="QJX-Kq-MNj"/>
-                <constraint firstItem="44I-US-rjd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="R6E-EH-AFy"/>
-                <constraint firstItem="UPE-Nc-jsD" firstAttribute="top" secondItem="44I-US-rjd" secondAttribute="bottom" constant="4" id="ajz-V6-MVQ"/>
+                <constraint firstItem="3Mx-NN-sqX" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Hng-pR-TgU"/>
+                <constraint firstItem="3Mx-NN-sqX" firstAttribute="bottom" secondItem="v6e-8v-Miu" secondAttribute="top" id="KYF-Kx-d5I"/>
                 <constraint firstItem="3Mx-NN-sqX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="eK5-0i-dUR"/>
                 <constraint firstItem="qRP-po-8iN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="g3u-Bi-uLI"/>
                 <constraint firstItem="qRP-po-8iN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gfH-8g-MOk"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="44I-US-rjd" secondAttribute="trailing" constant="16" id="mhN-GO-tNJ"/>
+                <constraint firstItem="Diy-Ub-FSF" firstAttribute="top" secondItem="v6e-8v-Miu" secondAttribute="bottom" id="jxm-oU-krc"/>
                 <constraint firstAttribute="bottom" secondItem="Diy-Ub-FSF" secondAttribute="bottom" id="pjP-ue-v24"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Diy-Ub-FSF" secondAttribute="trailing" id="qY1-Lg-u2K"/>
+                <constraint firstItem="v6e-8v-Miu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="rsJ-vf-GsO"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qRP-po-8iN" secondAttribute="trailing" id="tCi-kJ-zxF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3Mx-NN-sqX" secondAttribute="trailing" id="ugq-LI-oB8"/>
+                <constraint firstItem="3Mx-NN-sqX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="uuS-lQ-73J"/>
+                <constraint firstAttribute="trailing" secondItem="v6e-8v-Miu" secondAttribute="trailing" id="x5j-7n-oBC"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="126.5625"/>
         </view>

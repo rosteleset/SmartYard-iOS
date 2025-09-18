@@ -8,16 +8,12 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SourceSansPro-Bold.ttf">
-            <string>SourceSansPro-Bold</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CityMapViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="containerView" destination="Diy-Ub-FSF" id="3h5-ii-gjS"/>
                 <outlet property="fakeNavBar" destination="3Mx-NN-sqX" id="YWH-nP-YgY"/>
+                <outlet property="headerView" destination="2cx-gw-Te3" id="RIF-ba-xP8"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="ajx-6H-BFo"/>
             </connections>
         </placeholder>
@@ -36,36 +32,34 @@
                         <constraint firstAttribute="height" constant="44" id="W6K-WY-NuY"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Городские камеры" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44I-US-rjd">
-                    <rect key="frame" x="16" y="152" width="382" height="41"/>
-                    <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="Ajc-L5-ZrI"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Diy-Ub-FSF" customClass="TopRoundedView24" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="225" width="414" height="671"/>
+                    <rect key="frame" x="0.0" y="184" width="414" height="712"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2cx-gw-Te3" customClass="HeaderView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="140" width="414" height="44"/>
+                    <viewLayoutGuide key="safeArea" id="WLD-J8-ZRW"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="1" constant="44" id="EQi-XI-u1u"/>
+                    </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="2cx-gw-Te3" firstAttribute="top" secondItem="3Mx-NN-sqX" secondAttribute="bottom" id="3z1-9S-0rd"/>
                 <constraint firstItem="Diy-Ub-FSF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4sh-tK-kUa"/>
                 <constraint firstAttribute="bottom" secondItem="qRP-po-8iN" secondAttribute="bottom" id="5w8-EC-BXq"/>
                 <constraint firstItem="3Mx-NN-sqX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Azo-g8-sO4"/>
-                <constraint firstItem="44I-US-rjd" firstAttribute="top" secondItem="3Mx-NN-sqX" secondAttribute="bottom" constant="12" id="PcE-kC-xiB"/>
-                <constraint firstItem="Diy-Ub-FSF" firstAttribute="top" secondItem="44I-US-rjd" secondAttribute="bottom" constant="32" id="QJX-Kq-MNj"/>
-                <constraint firstItem="44I-US-rjd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="R6E-EH-AFy"/>
+                <constraint firstItem="Diy-Ub-FSF" firstAttribute="top" secondItem="2cx-gw-Te3" secondAttribute="bottom" id="Ka3-Cw-v06"/>
                 <constraint firstItem="3Mx-NN-sqX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="eK5-0i-dUR"/>
                 <constraint firstItem="qRP-po-8iN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="g3u-Bi-uLI"/>
                 <constraint firstItem="qRP-po-8iN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gfH-8g-MOk"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="44I-US-rjd" secondAttribute="trailing" constant="16" id="mhN-GO-tNJ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2cx-gw-Te3" secondAttribute="trailing" id="mt5-Z8-ImB"/>
                 <constraint firstAttribute="bottom" secondItem="Diy-Ub-FSF" secondAttribute="bottom" id="pjP-ue-v24"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Diy-Ub-FSF" secondAttribute="trailing" id="qY1-Lg-u2K"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qRP-po-8iN" secondAttribute="trailing" id="tCi-kJ-zxF"/>
+                <constraint firstItem="2cx-gw-Te3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="tIM-lF-he9"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3Mx-NN-sqX" secondAttribute="trailing" id="ugq-LI-oB8"/>
             </constraints>
             <point key="canvasLocation" x="139" y="127"/>

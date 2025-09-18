@@ -14,7 +14,8 @@ import RxDataSources
 
 final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePresentationControllerDelegate {
     
-    @IBOutlet private weak var addressLabel: UILabel!
+
+    @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var tableView: UITableViewWithHandler!
     @IBOutlet private weak var toolbar: UIToolbar!
@@ -162,9 +163,16 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
                 }
             )
             .disposed(by: disposeBag)
-        
+
         output.address
-            .drive(addressLabel.rx.text)
+            .drive(
+                onNext: { [weak self] address in
+                    self?.headerView.setText(
+                        NSLocalizedString("Events log", comment: ""),
+                        subtitle: address ?? ""
+                    )
+                }
+            )
             .disposed(by: disposeBag)
         
         output.availableDays

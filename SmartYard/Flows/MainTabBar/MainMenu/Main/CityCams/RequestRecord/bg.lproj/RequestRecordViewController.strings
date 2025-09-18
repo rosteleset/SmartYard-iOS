@@ -17,9 +17,6 @@
 /* Class = "UITextField"; text = "Дата записи: 5.09.2020"; ObjectID = "LuE-DE-5IR"; */
 "LuE-DE-5IR.text" = "Дата на записа: 5.09.2020";
 
-/* Class = "UILabel"; text = "Запросить запись"; ObjectID = "Yr0-wC-iKV"; */
-"Yr0-wC-iKV.text" = "Заявете запис";
-
 /* Class = "UITextField"; placeholder = "Комментарий"; ObjectID = "h8p-pN-Ahl"; */
 "h8p-pN-Ahl.placeholder" = "Коментар";
 
@@ -28,3 +25,4 @@
 
 /* Class = "UILabel"; text = "г. Тамбов, ул. Советская, 16"; ObjectID = "qGD-eH-dBA"; */
 "qGD-eH-dBA.text" = "г. Тамбов, ул. Советская, 16";
+

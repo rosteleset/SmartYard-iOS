@@ -465,6 +465,8 @@
 		8BDAC6FE2DFC678700469D59 /* GateAccessShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDAC6FB2DFC678700469D59 /* GateAccessShortcutCell.swift */; };
 		8BF220B42E2D078A00D1A1E7 /* DetailGateAccessViewModel+ContactParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF220B32E2D078A00D1A1E7 /* DetailGateAccessViewModel+ContactParsing.swift */; };
 		8BF220BC2E2D112600D1A1E7 /* SmartYardThinSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF220BB2E2D112600D1A1E7 /* SmartYardThinSearchTextField.swift */; };
+		8BF6BAB82E7991EF00965949 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF6BAB72E7991EF00965949 /* HeaderView.swift */; };
+		8BF6BABC2E7992CA00965949 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF6BABB2E7992CA00965949 /* HeaderView.xib */; };
 		9770CD7E9D04A0BA9C6BDF88 /* Pods_SmartYardWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2747C08EF399AF3014899F8 /* Pods_SmartYardWidget.framework */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
 		E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */; };
@@ -789,7 +791,6 @@
 		3A8FC6762B065B9300F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AddressesListViewController.strings; sourceTree = "<group>"; };
 		3A8FC6782B065BCC00F90D73 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/AddressesListViewController.strings; sourceTree = "<group>"; };
 		3A8FC67A2B065BFF00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressConfirmationViewController.xib; sourceTree = "<group>"; };
-		3A8FC67D2B065C4900F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AddressConfirmationViewController.strings; sourceTree = "<group>"; };
 		3A8FC67F2B065C7400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServiceFromCourierView.xib; sourceTree = "<group>"; };
 		3A8FC6822B065C7800F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ServiceFromCourierView.strings; sourceTree = "<group>"; };
 		3A8FC6842B065CEF00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServiceFromOfficeView.xib; sourceTree = "<group>"; };
@@ -830,7 +831,6 @@
 		3A8FC6E02B06613700F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressesListHistoryCell.xib; sourceTree = "<group>"; };
 		3A8FC6E32B06613A00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AddressesListHistoryCell.strings; sourceTree = "<group>"; };
 		3A8FC6E52B06617500F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CamerasListViewController.xib; sourceTree = "<group>"; };
-		3A8FC6E82B06617800F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CamerasListViewController.strings; sourceTree = "<group>"; };
 		3A8FC6EA2B06618C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FullscreenPlayerViewController.xib; sourceTree = "<group>"; };
 		3A8FC6ED2B06618F00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FullscreenPlayerViewController.strings; sourceTree = "<group>"; };
 		3A8FC6EF2B06619A00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ArchivePageViewController.xib; sourceTree = "<group>"; };
@@ -860,7 +860,6 @@
 		3A8FC72B2B09E49B00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FacesSettingsViewController.xib; sourceTree = "<group>"; };
 		3A8FC72E2B09E4A200F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FacesSettingsViewController.strings; sourceTree = "<group>"; };
 		3A8FC7302B09E51200F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SettingsViewController.xib; sourceTree = "<group>"; };
-		3A8FC7332B09E51B00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SettingsViewController.strings; sourceTree = "<group>"; };
 		3A8FC7352B09E53B00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NewAllowedPersonViewController.xib; sourceTree = "<group>"; };
 		3A8FC7382B09E53F00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewAllowedPersonViewController.strings; sourceTree = "<group>"; };
 		3A8FC73A2B09E62A00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServiceIsActivatedViewController.xib; sourceTree = "<group>"; };
@@ -872,7 +871,6 @@
 		3A8FC7492B09ED7B00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RequestRecordViewController.xib; sourceTree = "<group>"; };
 		3A8FC74C2B09ED8100F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RequestRecordViewController.strings; sourceTree = "<group>"; };
 		3A8FC74E2B09F0F400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CityMapViewController.xib; sourceTree = "<group>"; };
-		3A8FC7512B09F0F800F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CityMapViewController.strings; sourceTree = "<group>"; };
 		3A8FC7532B09F11400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CityCameraViewController.xib; sourceTree = "<group>"; };
 		3A8FC7562B09F11800F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CityCameraViewController.strings; sourceTree = "<group>"; };
 		3A8FC7582B09F19000F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/BottomCell.xib; sourceTree = "<group>"; };
@@ -933,7 +931,6 @@
 		3ACD65382B27345100146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/FakeNavBar.strings; sourceTree = "<group>"; };
 		3ACD653B2B27345200146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ServiceFromCourierView.strings; sourceTree = "<group>"; };
 		3ACD653C2B27345300146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ServiceFromOfficeView.strings; sourceTree = "<group>"; };
-		3ACD653D2B27345300146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AddressConfirmationViewController.strings; sourceTree = "<group>"; };
 		3ACD653E2B27345300146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/InputAddressViewController.strings; sourceTree = "<group>"; };
 		3ACD653F2B27345400146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AvailableServiceCell.strings; sourceTree = "<group>"; };
 		3ACD65402B27345400146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AvailableServicesViewController.strings; sourceTree = "<group>"; };
@@ -955,7 +952,6 @@
 		3ACD65502B27345900146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AddressesListEmptyStateCell.strings; sourceTree = "<group>"; };
 		3ACD65512B27345A00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AddressesListCameraCell.strings; sourceTree = "<group>"; };
 		3ACD65522B27345A00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AddressesListHistoryCell.strings; sourceTree = "<group>"; };
-		3ACD65532B27345A00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/CamerasListViewController.strings; sourceTree = "<group>"; };
 		3ACD65542B27345B00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/FullscreenPlayerViewController.strings; sourceTree = "<group>"; };
 		3ACD65552B27345B00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ArchivePageViewController.strings; sourceTree = "<group>"; };
 		3ACD65562B27345B00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/PlayArchiveVideoViewController.strings; sourceTree = "<group>"; };
@@ -975,13 +971,11 @@
 		3ACD65652B27346000146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/EditNameViewController.strings; sourceTree = "<group>"; };
 		3ACD65662B27346100146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/FacesSettingsViewController.strings; sourceTree = "<group>"; };
 		3ACD65672B27346100146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/SettingsAddAddressCell.strings; sourceTree = "<group>"; };
-		3ACD65682B27346100146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/SettingsViewController.strings; sourceTree = "<group>"; };
 		3ACD65692B27346100146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/NewAllowedPersonViewController.strings; sourceTree = "<group>"; };
 		3ACD656A2B27346200146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ServiceIsActivatedViewController.strings; sourceTree = "<group>"; };
 		3ACD656B2B27346200146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ServiceIsNotActivatedViewController.strings; sourceTree = "<group>"; };
 		3ACD656C2B27346200146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ServiceUnavailableViewController.strings; sourceTree = "<group>"; };
 		3ACD656D2B27346200146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/RequestRecordViewController.strings; sourceTree = "<group>"; };
-		3ACD656E2B27346300146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/CityMapViewController.strings; sourceTree = "<group>"; };
 		3ACD656F2B27346300146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/CityCameraViewController.strings; sourceTree = "<group>"; };
 		3ACD65702B27346300146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/BottomCell.strings; sourceTree = "<group>"; };
 		3ACD65712B27346400146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/MainMenuViewController.strings; sourceTree = "<group>"; };
@@ -999,7 +993,6 @@
 		3ACD657D2B2734CD00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/FakeNavBar.strings; sourceTree = "<group>"; };
 		3ACD65802B2734CE00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ServiceFromCourierView.strings; sourceTree = "<group>"; };
 		3ACD65812B2734CE00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ServiceFromOfficeView.strings; sourceTree = "<group>"; };
-		3ACD65822B2734CF00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AddressConfirmationViewController.strings; sourceTree = "<group>"; };
 		3ACD65832B2734CF00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/InputAddressViewController.strings; sourceTree = "<group>"; };
 		3ACD65842B2734CF00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AvailableServiceCell.strings; sourceTree = "<group>"; };
 		3ACD65852B2734CF00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AvailableServicesViewController.strings; sourceTree = "<group>"; };
@@ -1021,7 +1014,6 @@
 		3ACD65952B2734D400146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AddressesListEmptyStateCell.strings; sourceTree = "<group>"; };
 		3ACD65962B2734D400146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AddressesListCameraCell.strings; sourceTree = "<group>"; };
 		3ACD65972B2734D400146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AddressesListHistoryCell.strings; sourceTree = "<group>"; };
-		3ACD65982B2734D400146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/CamerasListViewController.strings; sourceTree = "<group>"; };
 		3ACD65992B2734D400146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/FullscreenPlayerViewController.strings; sourceTree = "<group>"; };
 		3ACD659A2B2734D500146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ArchivePageViewController.strings; sourceTree = "<group>"; };
 		3ACD659B2B2734D500146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/PlayArchiveVideoViewController.strings; sourceTree = "<group>"; };
@@ -1041,13 +1033,11 @@
 		3ACD65AA2B2734D900146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/EditNameViewController.strings; sourceTree = "<group>"; };
 		3ACD65AB2B2734D900146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/FacesSettingsViewController.strings; sourceTree = "<group>"; };
 		3ACD65AC2B2734DA00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/SettingsAddAddressCell.strings; sourceTree = "<group>"; };
-		3ACD65AD2B2734DA00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/SettingsViewController.strings; sourceTree = "<group>"; };
 		3ACD65AE2B2734DA00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/NewAllowedPersonViewController.strings; sourceTree = "<group>"; };
 		3ACD65AF2B2734DA00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ServiceIsActivatedViewController.strings; sourceTree = "<group>"; };
 		3ACD65B02B2734DB00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ServiceIsNotActivatedViewController.strings; sourceTree = "<group>"; };
 		3ACD65B12B2734DB00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ServiceUnavailableViewController.strings; sourceTree = "<group>"; };
 		3ACD65B22B2734DB00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/RequestRecordViewController.strings; sourceTree = "<group>"; };
-		3ACD65B32B2734DB00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/CityMapViewController.strings; sourceTree = "<group>"; };
 		3ACD65B42B2734DC00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/CityCameraViewController.strings; sourceTree = "<group>"; };
 		3ACD65B52B2734DC00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/BottomCell.strings; sourceTree = "<group>"; };
 		3ACD65B62B2734DC00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/MainMenuViewController.strings; sourceTree = "<group>"; };
@@ -1065,7 +1055,6 @@
 		3AD02E6E2B304B6B001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/FakeNavBar.strings; sourceTree = "<group>"; };
 		3AD02E712B304B6D001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ServiceFromCourierView.strings; sourceTree = "<group>"; };
 		3AD02E722B304B6D001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ServiceFromOfficeView.strings; sourceTree = "<group>"; };
-		3AD02E732B304B6E001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AddressConfirmationViewController.strings; sourceTree = "<group>"; };
 		3AD02E742B304B6E001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/InputAddressViewController.strings; sourceTree = "<group>"; };
 		3AD02E752B304B6E001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AvailableServiceCell.strings; sourceTree = "<group>"; };
 		3AD02E762B304B6F001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AvailableServicesViewController.strings; sourceTree = "<group>"; };
@@ -1087,7 +1076,6 @@
 		3AD02E862B304B74001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AddressesListEmptyStateCell.strings; sourceTree = "<group>"; };
 		3AD02E872B304B74001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AddressesListCameraCell.strings; sourceTree = "<group>"; };
 		3AD02E882B304B75001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AddressesListHistoryCell.strings; sourceTree = "<group>"; };
-		3AD02E892B304B75001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/CamerasListViewController.strings; sourceTree = "<group>"; };
 		3AD02E8A2B304B75001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/FullscreenPlayerViewController.strings; sourceTree = "<group>"; };
 		3AD02E8B2B304B75001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ArchivePageViewController.strings; sourceTree = "<group>"; };
 		3AD02E8C2B304B76001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/PlayArchiveVideoViewController.strings; sourceTree = "<group>"; };
@@ -1107,13 +1095,11 @@
 		3AD02E9B2B304B7A001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/EditNameViewController.strings; sourceTree = "<group>"; };
 		3AD02E9C2B304B7A001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/FacesSettingsViewController.strings; sourceTree = "<group>"; };
 		3AD02E9D2B304B7A001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/SettingsAddAddressCell.strings; sourceTree = "<group>"; };
-		3AD02E9E2B304B7A001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/SettingsViewController.strings; sourceTree = "<group>"; };
 		3AD02E9F2B304B7B001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/NewAllowedPersonViewController.strings; sourceTree = "<group>"; };
 		3AD02EA02B304B7B001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ServiceIsActivatedViewController.strings; sourceTree = "<group>"; };
 		3AD02EA12B304B7B001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ServiceIsNotActivatedViewController.strings; sourceTree = "<group>"; };
 		3AD02EA22B304B7C001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ServiceUnavailableViewController.strings; sourceTree = "<group>"; };
 		3AD02EA32B304B7C001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/RequestRecordViewController.strings; sourceTree = "<group>"; };
-		3AD02EA42B304B7C001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/CityMapViewController.strings; sourceTree = "<group>"; };
 		3AD02EA52B304B7C001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/CityCameraViewController.strings; sourceTree = "<group>"; };
 		3AD02EA62B304B7C001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/BottomCell.strings; sourceTree = "<group>"; };
 		3AD02EA72B304B7D001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/MainMenuViewController.strings; sourceTree = "<group>"; };
@@ -1453,6 +1439,8 @@
 		8BDAC6FC2DFC678700469D59 /* GateAccessShortcutCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GateAccessShortcutCell.xib; sourceTree = "<group>"; };
 		8BF220B32E2D078A00D1A1E7 /* DetailGateAccessViewModel+ContactParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailGateAccessViewModel+ContactParsing.swift"; sourceTree = "<group>"; };
 		8BF220BB2E2D112600D1A1E7 /* SmartYardThinSearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardThinSearchTextField.swift; sourceTree = "<group>"; };
+		8BF6BAB72E7991EF00965949 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		8BF6BABB2E7992CA00965949 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 		8BF749CF2E3E6B6300547D19 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/DetailGateAccessViewController.strings; sourceTree = "<group>"; };
 		8BF749D12E3E6B6300547D19 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/DetailGateAccessViewController.strings; sourceTree = "<group>"; };
 		8E65EC65DF6EAF2CB3A1B831 /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2348,6 +2336,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8BF6BAB62E7991D300965949 /* HeaderView */,
 				FAC8CFF72BA6890D00D377E2 /* CameraButton */,
 				3AFBA7312637523900C7DEB6 /* SafeCachedImage */,
 				846DC6E224B33E1C00A11914 /* PickerAnimator */,
@@ -3740,6 +3729,15 @@
 			path = Shortcut;
 			sourceTree = "<group>";
 		};
+		8BF6BAB62E7991D300965949 /* HeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				8BF6BAB72E7991EF00965949 /* HeaderView.swift */,
+				8BF6BABB2E7992CA00965949 /* HeaderView.xib */,
+			);
+			path = HeaderView;
+			sourceTree = "<group>";
+		};
 		9597597AA6C1CAECCA7D92F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -4880,6 +4878,7 @@
 				3A8FC6972B065E1400F90D73 /* IncomingCallLandscapeViewController.xib in Resources */,
 				3A8FC6792B065BFF00F90D73 /* AddressConfirmationViewController.xib in Resources */,
 				8B07CD6B2E0856C000625C59 /* LicencePlateKeyboardView.xib in Resources */,
+				8BF6BABC2E7992CA00965949 /* HeaderView.xib in Resources */,
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
 				3A8FC74D2B09F0F400F90D73 /* CityMapViewController.xib in Resources */,
 				E940581223F682EA00623746 /* AllowedPersonCell.xib in Resources */,
@@ -5572,6 +5571,7 @@
 				E9C0E814247282DE001CE018 /* OnboardingBaseView.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
+				8BF6BAB82E7991EF00965949 /* HeaderView.swift in Sources */,
 				E9C256852423F31D00BE32E0 /* RestoreMethodCell.swift in Sources */,
 				84878DE52420DB3B004C11B2 /* AddressAccessViewModel+ContactParsing.swift in Sources */,
 				846DC6DF24B33DEA00A11914 /* PayPrepareResponseData.swift in Sources */,
@@ -5782,10 +5782,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC67A2B065BFF00F90D73 /* Base */,
-				3A8FC67D2B065C4900F90D73 /* en */,
-				3ACD653D2B27345300146796 /* kk */,
-				3ACD65822B2734CF00146796 /* uz */,
-				3AD02E732B304B6E001C4717 /* bg */,
 			);
 			name = AddressConfirmationViewController.xib;
 			sourceTree = "<group>";
@@ -6033,10 +6029,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6E52B06617500F90D73 /* Base */,
-				3A8FC6E82B06617800F90D73 /* en */,
-				3ACD65532B27345A00146796 /* kk */,
-				3ACD65982B2734D400146796 /* uz */,
-				3AD02E892B304B75001C4717 /* bg */,
 			);
 			name = CamerasListViewController.xib;
 			sourceTree = "<group>";
@@ -6213,10 +6205,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7302B09E51200F90D73 /* Base */,
-				3A8FC7332B09E51B00F90D73 /* en */,
-				3ACD65682B27346100146796 /* kk */,
-				3ACD65AD2B2734DA00146796 /* uz */,
-				3AD02E9E2B304B7A001C4717 /* bg */,
 			);
 			name = SettingsViewController.xib;
 			sourceTree = "<group>";
@@ -6285,10 +6273,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC74E2B09F0F400F90D73 /* Base */,
-				3A8FC7512B09F0F800F90D73 /* en */,
-				3ACD656E2B27346300146796 /* kk */,
-				3ACD65B32B2734DB00146796 /* uz */,
-				3AD02EA42B304B7C001C4717 /* bg */,
 			);
 			name = CityMapViewController.xib;
 			sourceTree = "<group>";

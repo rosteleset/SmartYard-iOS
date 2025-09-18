@@ -15,10 +15,9 @@ import Parchment
 final class SelectCameraContainerViewController: BaseViewController {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    @IBOutlet private weak var cameraNameLabel: UILabel!
-    @IBOutlet private weak var addressLabel: UILabel!
+    @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var pagingContainer: TopRoundedView!
-    
+
     private var pagingController: PagingViewController?
     
     private let onlinePage: OnlinePageViewController
@@ -93,15 +92,19 @@ final class SelectCameraContainerViewController: BaseViewController {
         )
         
         let output = viewModel.transform(input)
-        
-        output.address
-            .drive(
-                onNext: { [weak self] in
-                    self?.addressLabel.text = $0
-                }
-            )
+
+        Driver.combineLatest(
+            output.address,
+            selectCameraTrigger.asDriverOnErrorJustComplete()
+        ) { ($0, $1) }
+            .drive(onNext: { [weak self] address, camera in
+                self?.headerView.setText(
+                    camera.name,
+                    subtitle: address
+                )
+            })
             .disposed(by: disposeBag)
-        
+
         output.cameraConfiguration
             .drive(
                 onNext: { [weak self] config in
@@ -133,8 +136,6 @@ extension SelectCameraContainerViewController: OnlinePageViewControllerDelegate 
     
     func onlinePageViewController(_ vc: OnlinePageViewController, didSelectCamera camera: CameraObject) {
         selectCameraTrigger.onNext(camera)
-        
-        cameraNameLabel.text = camera.name
     }
     
 }

@@ -15,7 +15,6 @@ import JGProgressHUD
 final class AuthByContractNumViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
-    @IBOutlet private weak var containerView: UIView!
     
     @IBOutlet private weak var contractNumberTextField: SmartYardTextField!
     @IBOutlet private weak var passTextField: SmartYardPasswordTextField!
@@ -28,6 +27,7 @@ final class AuthByContractNumViewController: BaseViewController, LoaderPresentab
     @IBOutlet private weak var noContractButton: WhiteButtonWithBorder!
     @IBOutlet private weak var signInButton: BlueButton!
     
+    @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     
     private let viewModel: AuthByContractNumViewModel
@@ -91,13 +91,27 @@ final class AuthByContractNumViewController: BaseViewController, LoaderPresentab
     }
     
     private func configureUI() {
-        contractNumberTextField.setPlaceholder(string: NSLocalizedString("Contract number", comment: ""), isSemiBold: true)
-        passTextField.setPlaceholder(string: NSLocalizedString("Password", comment: ""), isSemiBold: true)
-        
+        contractNumberTextField.setPlaceholder(
+            string: NSLocalizedString("Contract number", comment: ""),
+            isSemiBold: true
+        )
+        passTextField.setPlaceholder(
+            string: NSLocalizedString("Password", comment: ""),
+            isSemiBold: true
+        )
+        headerView.setText(
+            NSLocalizedString("Do you have an agreement with the operator?", comment: ""),
+            subtitle: NSLocalizedString(
+                "Enter the number and password of the contract associated with this address and manage services from this application.",
+                comment: ""
+            )
+        )
+
         forgetPassButton.setLeftAlignment()
         forgetEverythingButton.setRightAlignment()
         
         let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        passTextField.addTarget(self, action: #selector(dismissKeyboard), for: .editingDidEnd)
         tapGestureReconizer.cancelsTouchesInView = false
         tapGestureReconizer.delegate = self
         view.addGestureRecognizer(tapGestureReconizer)
@@ -107,6 +121,7 @@ final class AuthByContractNumViewController: BaseViewController, LoaderPresentab
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
+        scrollView.setContentOffset(.zero, animated: true)
     }
 
 }

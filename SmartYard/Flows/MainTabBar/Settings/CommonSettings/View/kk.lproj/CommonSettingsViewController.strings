@@ -1,7 +1,4 @@
 
-/* Class = "UILabel"; text = "Общие настройки"; ObjectID = "Fyv-Y1-rkc"; */
-"Fyv-Y1-rkc.text" = "Жалпы параметрлер";
-
 /* Class = "UILabel"; text = "Прислать уведомление, когда баланс приблизится к нулю"; ObjectID = "Se0-Td-bhj"; */
 "Se0-Td-bhj.text" = "Баланс нөлге жақын келгенде хабарлама жіберу";
 

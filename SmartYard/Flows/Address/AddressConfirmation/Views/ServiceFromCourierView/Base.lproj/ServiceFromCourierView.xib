@@ -175,7 +175,6 @@
                         <constraint firstAttribute="trailing" secondItem="6kr-2k-p2B" secondAttribute="trailing" id="99m-iT-l3v"/>
                         <constraint firstItem="xj6-YY-9FM" firstAttribute="top" secondItem="YEc-j4-ljc" secondAttribute="bottom" id="9Wc-0Z-D26"/>
                         <constraint firstAttribute="trailing" secondItem="xj6-YY-9FM" secondAttribute="trailing" id="Cu1-hL-ETM"/>
-                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="tO8-Xk-JaM" secondAttribute="bottom" constant="6" id="E47-is-185"/>
                         <constraint firstItem="YEc-j4-ljc" firstAttribute="top" secondItem="s5A-wP-hVn" secondAttribute="bottom" priority="600" constant="27" id="Eqs-fL-oW1"/>
                         <constraint firstItem="YEc-j4-ljc" firstAttribute="leading" secondItem="Dm2-Fm-tSQ" secondAttribute="leading" id="FTA-s9-0cd"/>
                         <constraint firstItem="6kr-2k-p2B" firstAttribute="top" secondItem="xj6-YY-9FM" secondAttribute="bottom" id="Ioq-qp-iit"/>
@@ -191,7 +190,6 @@
                         <constraint firstItem="A0Q-DH-AGJ" firstAttribute="top" secondItem="s5A-wP-hVn" secondAttribute="bottom" id="Zik-ug-P0o"/>
                         <constraint firstItem="s5A-wP-hVn" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Dm2-Fm-tSQ" secondAttribute="top" constant="6" id="Znp-gf-Lqm"/>
                         <constraint firstItem="xj6-YY-9FM" firstAttribute="leading" secondItem="Dm2-Fm-tSQ" secondAttribute="leading" id="bXz-MZ-0MZ"/>
-                        <constraint firstAttribute="bottom" secondItem="tO8-Xk-JaM" secondAttribute="bottom" priority="500" constant="15" id="evb-hw-kxQ"/>
                         <constraint firstAttribute="trailing" secondItem="A0Q-DH-AGJ" secondAttribute="trailing" id="gRe-xY-pCk"/>
                         <constraint firstItem="6kr-2k-p2B" firstAttribute="leading" secondItem="Dm2-Fm-tSQ" secondAttribute="leading" id="iMc-gN-AU5"/>
                         <constraint firstItem="6kr-2k-p2B" firstAttribute="top" secondItem="YEc-j4-ljc" secondAttribute="bottom" priority="600" constant="27" id="jDo-gE-aKv"/>
@@ -214,6 +212,7 @@
                 <constraint firstAttribute="trailing" secondItem="Dm2-Fm-tSQ" secondAttribute="trailing" id="9XE-nw-hJx"/>
                 <constraint firstItem="Dm2-Fm-tSQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ga9-dO-izV"/>
                 <constraint firstItem="Dm2-Fm-tSQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="XwM-im-Zbp"/>
+                <constraint firstItem="tO8-Xk-JaM" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="-16" id="wkA-iQ-3q2"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
@@ -223,14 +222,14 @@
         </view>
     </objects>
     <resources>
-        <image name="RequestIcon" width="16" height="20"/>
+        <image name="RequestIcon" width="20" height="20"/>
         <image name="RoundCheckIcon" width="20" height="20"/>
         <image name="SmallQrCodeIcon" width="20" height="20"/>
         <namedColor name="gray">
-            <color red="0.43529411764705883" green="0.47450980392156861" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.42745098039215684" green="0.47843137254901963" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="secondBackgroundColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="semiBlack">
             <color red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

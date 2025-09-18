@@ -14,9 +14,9 @@ import RxSwift
 final class RequestRecordViewController: BaseViewController, LoaderPresentable, UIPickerViewDelegate {
     var loader: JGProgressHUD?
     private let viewModel: RequestRecordViewModel
-    
+
+    @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    @IBOutlet private weak var buttonConstraint: NSLayoutConstraint!
     @IBOutlet private weak var button: UIButton!
     @IBOutlet private weak var topRoundedView: UIView!
     @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
@@ -73,6 +73,9 @@ final class RequestRecordViewController: BaseViewController, LoaderPresentable, 
     }
     fileprivate func configureView() {
         fakeNavBar.setText(NSLocalizedString("Public cams", comment: ""))
+
+        headerView.setText(NSLocalizedString("Request a record", comment: ""))
+
         view.hideKeyboardWhenTapped = true
         
         // готовим toolbar для пикеров

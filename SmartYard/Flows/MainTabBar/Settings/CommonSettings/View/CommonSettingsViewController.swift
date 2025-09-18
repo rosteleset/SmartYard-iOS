@@ -13,7 +13,9 @@ import RxCocoa
 import JGProgressHUD
 
 final class CommonSettingsViewController: BaseViewController, LoaderPresentable {
-    
+
+
+    @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var mainContainerView: UIView!
     
@@ -117,7 +119,9 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
     private func configureView() {
         mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
-        
+
+        headerView.setText(NSLocalizedString("Common settings", comment: ""))
+
         editNameButton.setImage(UIImage(named: "pencil"), for: .normal)
         editNameButton.setImage(UIImage(named: "pencil")?.darkened(), for: .highlighted)
         editNameButton.touchAreaInsets = UIEdgeInsets(inset: 24)

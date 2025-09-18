@@ -226,3 +226,15 @@
 "expired" = "muddati tugadi";
 "Add" = "Qo‘shish";
 "unlimited" = "cheksiz";
+"Address confirmation" = "Manzilni tasdiqlash";
+"How would it be more convenient for you to do this?" = "Buni qanday qilib qulayroq bajarishingiz mumkin?";
+"Input your address" = "Manzilni kiriting";
+"Available services" = "Mavjud xizmatlar";
+"Do you have an agreement with the operator?" = "Sizda operator bilan shartnoma bormi?";
+"Enter the number and password of the contract associated with this address and manage services from this application." = "Ushbu manzilga bog'langan shartnoma raqami va parolini kiriting va ushbu ilovadan xizmatlarni boshqaring.";
+"Select camera" = "Kamerani tanlang";
+"Events log" = "Hodisalar jurnali";
+"Common settings" = "Umumiy sozlamalar";
+"Addresses settings" = "Manzillar sozlamalari";
+"Request a record" = "Yozuvni so'rab olish";
+"Public cams" = "Shahar kameralari";

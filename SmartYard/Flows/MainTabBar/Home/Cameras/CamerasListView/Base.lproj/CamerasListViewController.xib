@@ -147,47 +147,26 @@
                         <constraint firstAttribute="height" constant="44" id="mFw-vc-FWM"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Выберите камеру" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpa-N1-8iS">
-                    <rect key="frame" x="16" y="152" width="414" height="41"/>
-                    <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="61b-Fd-ZEH"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. Тамбов, ул. Советская, 16" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gD1-mO-mMZ">
-                    <rect key="frame" x="16" y="197" width="382" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="8po-xg-w7L"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="DU6-7A-OVf" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="0NZ-ow-4Ve"/>
-                <constraint firstItem="Vpa-N1-8iS" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="16" id="220-23-iX1"/>
                 <constraint firstItem="JgU-Bc-erX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="22y-F8-phU"/>
-                <constraint firstItem="DU6-7A-OVf" firstAttribute="top" secondItem="gD1-mO-mMZ" secondAttribute="bottom" constant="28" id="2uN-fO-d7d"/>
                 <constraint firstItem="JgU-Bc-erX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="3Gc-OO-UGq"/>
                 <constraint firstAttribute="trailing" secondItem="JgU-Bc-erX" secondAttribute="trailing" id="40W-kR-b8T"/>
+                <constraint firstItem="DU6-7A-OVf" firstAttribute="top" secondItem="Sma-HR-gft" secondAttribute="bottom" id="5SS-aq-U0q"/>
                 <constraint firstAttribute="trailing" secondItem="0Eb-KZ-HTZ" secondAttribute="trailing" id="BjG-jF-cde"/>
-                <constraint firstItem="Vpa-N1-8iS" firstAttribute="top" secondItem="0Eb-KZ-HTZ" secondAttribute="bottom" constant="12" id="F1s-vy-4R3"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Sma-HR-gft" secondAttribute="trailing" id="Gir-Cv-9cD"/>
                 <constraint firstItem="0Eb-KZ-HTZ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="IgC-7a-zgW"/>
-                <constraint firstItem="Vpa-N1-8iS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="VMJ-uT-ojg"/>
+                <constraint firstItem="Sma-HR-gft" firstAttribute="top" secondItem="0Eb-KZ-HTZ" secondAttribute="bottom" id="VM1-J8-31M"/>
                 <constraint firstItem="DU6-7A-OVf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Vz0-Vo-r3L"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gD1-mO-mMZ" secondAttribute="trailing" constant="16" id="XsR-AK-ufO"/>
-                <constraint firstItem="gD1-mO-mMZ" firstAttribute="top" secondItem="Vpa-N1-8iS" secondAttribute="bottom" constant="4" id="bod-Wt-fni"/>
-                <constraint firstItem="gD1-mO-mMZ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="cbU-1R-Ehp"/>
                 <constraint firstItem="DU6-7A-OVf" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="eSt-UR-hjR"/>
                 <constraint firstItem="0Eb-KZ-HTZ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="fJi-lB-ONm"/>
+                <constraint firstItem="Sma-HR-gft" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="fR1-rL-caK"/>
                 <constraint firstAttribute="bottom" secondItem="JgU-Bc-erX" secondAttribute="bottom" id="nvs-LB-x04"/>
             </constraints>
-            <point key="canvasLocation" x="133" y="21"/>
+            <point key="canvasLocation" x="131.8840579710145" y="20.758928571428569"/>
         </view>
     </objects>
     <resources>

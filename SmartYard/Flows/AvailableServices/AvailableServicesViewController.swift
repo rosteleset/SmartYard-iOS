@@ -13,10 +13,10 @@ import JGProgressHUD
 
 final class AvailableServicesViewController: BaseViewController, LoaderPresentable {
     
+    @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var nextButton: BlueButton!
-    @IBOutlet private weak var addressLabel: UILabel!
     
     var loader: JGProgressHUD?
     
@@ -58,7 +58,12 @@ final class AvailableServicesViewController: BaseViewController, LoaderPresentab
         output.addressSubject
             .drive(
                 onNext: { [weak self] address in
-                    self?.addressLabel.text = address
+                    self?.headerView.setText(
+                        NSLocalizedString(
+                            "Available services",
+                            comment: ""
+                        ),
+                        subtitle: address ?? "")
                 }
             )
             .disposed(by: disposeBag)

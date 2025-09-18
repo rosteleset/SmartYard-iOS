@@ -225,3 +225,15 @@
 "еxpired" = "еxpired";
 "Add" = "Add";
 "unlimited" = "unlimited";
+"Address confirmation" = "Address confirmation";
+"How would it be more convenient for you to do this?" = "How would it be more convenient for you to do this?";
+"Input your address" = "Input your address";
+"Available services" = "Available services";
+"Do you have an agreement with the operator?" = "Do you have an agreement with the operator?";
+"Enter the number and password of the contract associated with this address and manage services from this application." = "Enter the number and password of the contract associated with this address and manage services from this application.";
+"Select camera" = "Select camera";
+"Events log" = "Events log";
+"Common settings" = "Common settings";
+"Addresses settings" = "Addresses settings";
+"Request a record" = "Request a record";
+"Public cams" = "Public cams";

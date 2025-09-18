@@ -16,12 +16,13 @@ final class CamerasListViewController: BaseViewController, LoaderPresentable {
     private let viewModel: CamerasListViewModel
     private let itemsProxy = BehaviorSubject<[CamerasListItem]>(value: [])
     private let itemSelected = PublishSubject<IndexPath>()
-    
+
+
+    @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var containerView: TopRoundedView!
     @IBOutlet private weak var skeletonContainer: UIView!
     @IBOutlet private weak var collectionView: UICollectionView!
-    @IBOutlet private weak var addressLabel: UILabel!
     
     init(viewModel: CamerasListViewModel) {
         self.viewModel = viewModel
@@ -35,7 +36,6 @@ final class CamerasListViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureCollectionView()
         bind()
     }
@@ -60,9 +60,14 @@ final class CamerasListViewController: BaseViewController, LoaderPresentable {
         output.items
             .drive(itemsProxy)
             .disposed(by: disposeBag)
-        
+
         output.address
-            .drive(addressLabel.rx.text)
+            .drive(onNext: { [weak self] address in
+                self?.headerView.setText(
+                    NSLocalizedString("Select camera", comment: ""),
+                    subtitle: address ?? ""
+                )
+            })
             .disposed(by: disposeBag)
         
         itemsProxy

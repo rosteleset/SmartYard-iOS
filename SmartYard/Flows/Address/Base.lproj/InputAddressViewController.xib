@@ -28,6 +28,7 @@
                 <outlet property="containerView" destination="DMJ-9p-DBh" id="ufS-jd-h3l"/>
                 <outlet property="fakeNavBar" destination="EcW-C1-LK6" id="gts-6X-ny5"/>
                 <outlet property="flatTextField" destination="WJV-KH-rtf" id="EBc-sN-RcV"/>
+                <outlet property="headerView" destination="K4d-xe-EJj" id="y7n-cp-Yyf"/>
                 <outlet property="qrCodeButton" destination="t7w-za-uue" id="k7E-S4-oc4"/>
                 <outlet property="scrollView" destination="95v-tL-giU" id="dgq-jX-uQG"/>
                 <outlet property="streetTextField" destination="cmm-LE-hpZ" id="Jpf-KA-dYa"/>
@@ -42,6 +43,13 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="3vL-YD-f4m">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K4d-xe-EJj" customClass="HeaderView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="162" width="393" height="44"/>
+                    <viewLayoutGuide key="safeArea" id="h2p-rw-l0M"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="1" constant="44" id="GlQ-1c-aRZ"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EcW-C1-LK6" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -49,20 +57,14 @@
                         <constraint firstAttribute="height" constant="44" id="hJx-JY-SeP"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Введите адрес" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEB-Xo-NYK">
-                    <rect key="frame" x="16" y="204" width="361" height="40.333333333333343"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHl-m0-xSg" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="284.33333333333331" width="393" height="567.66666666666674"/>
+                    <rect key="frame" x="0.0" y="206" width="393" height="646"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="95v-tL-giU" customClass="TPKeyboardAvoidingScrollView">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="567.66666666666663"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="646"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DMJ-9p-DBh" userLabel="Container View">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="567.66666666666663"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="646"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VY4-bh-98W" customClass="SmartYardSearchTextField" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="16" y="24" width="361" height="56"/>
@@ -238,16 +240,16 @@
                 <constraint firstItem="hHl-m0-xSg" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="03j-IG-O2M"/>
                 <constraint firstAttribute="trailing" secondItem="EcW-C1-LK6" secondAttribute="trailing" id="0MK-oi-T9q"/>
                 <constraint firstItem="EcW-C1-LK6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5X7-hm-C6S"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bEB-Xo-NYK" secondAttribute="trailing" constant="16" id="6As-NM-oIe"/>
+                <constraint firstItem="K4d-xe-EJj" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="81I-jy-diw"/>
+                <constraint firstItem="K4d-xe-EJj" firstAttribute="top" secondItem="EcW-C1-LK6" secondAttribute="bottom" id="PNb-cJ-ZfJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="EcW-C1-LK6" secondAttribute="top" id="Smb-4a-Odb"/>
-                <constraint firstItem="bEB-Xo-NYK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="UeN-Wx-HfI"/>
                 <constraint firstItem="3vL-YD-f4m" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Un1-Vg-Itd"/>
-                <constraint firstItem="hHl-m0-xSg" firstAttribute="top" secondItem="bEB-Xo-NYK" secondAttribute="bottom" constant="40" id="iGi-8P-Aik"/>
-                <constraint firstItem="bEB-Xo-NYK" firstAttribute="top" secondItem="EcW-C1-LK6" secondAttribute="bottom" constant="42" id="nc9-x6-OPo"/>
                 <constraint firstItem="3vL-YD-f4m" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qGm-vQ-x6r"/>
+                <constraint firstItem="K4d-xe-EJj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="rHQ-zK-ak7"/>
                 <constraint firstItem="hHl-m0-xSg" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="vps-sV-Py5"/>
                 <constraint firstAttribute="bottom" secondItem="3vL-YD-f4m" secondAttribute="bottom" id="wLf-4i-bw3"/>
                 <constraint firstAttribute="trailing" secondItem="3vL-YD-f4m" secondAttribute="trailing" id="yOM-0u-peX"/>
+                <constraint firstItem="hHl-m0-xSg" firstAttribute="top" secondItem="K4d-xe-EJj" secondAttribute="bottom" id="yhE-5D-ioS"/>
                 <constraint firstItem="hHl-m0-xSg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="zZ3-8f-1M1"/>
             </constraints>
             <point key="canvasLocation" x="73.913043478260875" y="35.491071428571423"/>

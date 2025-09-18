@@ -8,16 +8,12 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SourceSansPro-Bold.ttf">
-            <string>SourceSansPro-Bold</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="Uan-Tk-dtE" id="cVX-RO-sfN"/>
                 <outlet property="fakeNavBar" destination="35e-2i-cvg" id="cPd-Nw-YYb"/>
+                <outlet property="headerView" destination="Yib-SF-uE7" id="edQ-4P-I1p"/>
                 <outlet property="mainContainerView" destination="BmX-GH-wtS" id="cku-Np-4I3"/>
                 <outlet property="skeletonContainer" destination="BcN-sV-7ui" id="Ugd-YO-GdZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -39,17 +35,11 @@
                         <constraint firstAttribute="height" constant="44" id="Gpd-gj-DYz"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Настройки адресов" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k53-fj-wtE">
-                    <rect key="frame" x="16" y="174" width="361" height="40.333333333333343"/>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BmX-GH-wtS" userLabel="MainView">
-                    <rect key="frame" x="0.0" y="256.33333333333331" width="393" height="595.66666666666674"/>
+                    <rect key="frame" x="0.0" y="206" width="393" height="646"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Uan-Tk-dtE">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="595.66666666666663"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="646"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ePG-aW-rAs" customClass="JumpAvoidingFlowLayout" customModule="SmartYard" customModuleProvider="target">
                                 <size key="itemSize" width="50" height="50"/>
@@ -103,24 +93,30 @@
                         <constraint firstItem="Uan-Tk-dtE" firstAttribute="leading" secondItem="BmX-GH-wtS" secondAttribute="leading" id="sAM-Kk-Jmg"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yib-SF-uE7" customClass="HeaderView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="162" width="393" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="1" constant="44" id="FMg-R3-Pxz"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="secondBackgroundColor"/>
             <constraints>
                 <constraint firstItem="CZd-t7-S4c" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2AJ-Hf-x1f"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="BmX-GH-wtS" secondAttribute="leading" id="4G8-vR-r2P"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="k53-fj-wtE" secondAttribute="trailing" constant="16" id="76b-oI-GBQ"/>
                 <constraint firstAttribute="trailing" secondItem="CZd-t7-S4c" secondAttribute="trailing" id="7iz-Uf-ttE"/>
-                <constraint firstItem="k53-fj-wtE" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="56" id="E4g-zy-eSA"/>
-                <constraint firstItem="BmX-GH-wtS" firstAttribute="top" secondItem="k53-fj-wtE" secondAttribute="bottom" constant="42" id="InF-Jb-wG7"/>
                 <constraint firstItem="35e-2i-cvg" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="O51-Db-J7T"/>
                 <constraint firstItem="35e-2i-cvg" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="WZv-v7-Gh1"/>
+                <constraint firstItem="Yib-SF-uE7" firstAttribute="top" secondItem="35e-2i-cvg" secondAttribute="bottom" id="YOg-fA-PYd"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Yib-SF-uE7" secondAttribute="trailing" id="bXp-Pz-RGf"/>
                 <constraint firstAttribute="bottom" secondItem="BmX-GH-wtS" secondAttribute="bottom" id="fDz-PG-J2v"/>
                 <constraint firstItem="35e-2i-cvg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="huv-UG-Oc2"/>
                 <constraint firstItem="CZd-t7-S4c" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="iNr-Oj-wiG"/>
+                <constraint firstItem="Yib-SF-uE7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="k4R-dP-OYr"/>
                 <constraint firstAttribute="bottom" secondItem="CZd-t7-S4c" secondAttribute="bottom" id="kd6-py-FrO"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BmX-GH-wtS" secondAttribute="trailing" id="mBc-cC-JbH"/>
-                <constraint firstItem="k53-fj-wtE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="yRe-YK-hMG"/>
+                <constraint firstItem="BmX-GH-wtS" firstAttribute="top" secondItem="Yib-SF-uE7" secondAttribute="bottom" id="yib-VJ-sFV"/>
             </constraints>
             <point key="canvasLocation" x="139" y="82"/>
         </view>
