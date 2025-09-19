@@ -69,12 +69,14 @@ final class RequestRecordViewController: BaseViewController, LoaderPresentable, 
                     notes: notesTextField.rx.text.asDriver()
                 )
             )
-        addressLabel.text = output.camera.name
+
+        headerView.setText(
+            NSLocalizedString("Request a record", comment: ""),
+            subtitle: output.camera.name
+        )
     }
     fileprivate func configureView() {
         fakeNavBar.setText(NSLocalizedString("Public cams", comment: ""))
-
-        headerView.setText(NSLocalizedString("Request a record", comment: ""))
 
         view.hideKeyboardWhenTapped = true
         
