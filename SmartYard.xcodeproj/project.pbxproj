@@ -443,6 +443,7 @@
 		8B6C1BEE2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BED2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib */; };
 		8B6C1BF92DC21ED100617CF8 /* CallKitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BF82DC21ED100617CF8 /* CallKitModalViewContent.xib */; };
 		8B6C1C042DC2205E00617CF8 /* WhiteSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C032DC2205E00617CF8 /* WhiteSectionHeaderView.xib */; };
+		8B9658AD2E816C7A00C9F9DA /* NSRegularExpression+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9658AC2E816C6D00C9F9DA /* NSRegularExpression+Extensions.swift */; };
 		8B9FCADB2E38FFBF00A23E23 /* DetailGateAccessSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9FCAD82E38FFBF00A23E23 /* DetailGateAccessSkeletonView.swift */; };
 		8B9FCADC2E38FFBF00A23E23 /* DetailGateAccessSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B9FCAD92E38FFBF00A23E23 /* DetailGateAccessSkeletonView.xib */; };
 		8BA6EA5C2DF9A88500CDA2DA /* AllowedCar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA6EA5B2DF9A86000CDA2DA /* AllowedCar.swift */; };
@@ -1417,6 +1418,7 @@
 		8B6C1C082DC2206100617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
 		8B6C1C0A2DC2206200617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
 		8B6C1C0C2DC2206300617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
+		8B9658AC2E816C6D00C9F9DA /* NSRegularExpression+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRegularExpression+Extensions.swift"; sourceTree = "<group>"; };
 		8B9FCAD82E38FFBF00A23E23 /* DetailGateAccessSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGateAccessSkeletonView.swift; sourceTree = "<group>"; };
 		8B9FCAD92E38FFBF00A23E23 /* DetailGateAccessSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailGateAccessSkeletonView.xib; sourceTree = "<group>"; };
 		8BA6EA5B2DF9A86000CDA2DA /* AllowedCar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedCar.swift; sourceTree = "<group>"; };
@@ -3208,6 +3210,7 @@
 		84B9EC8623E0844500979C39 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8B9658AC2E816C6D00C9F9DA /* NSRegularExpression+Extensions.swift */,
 				FA9E30EB2BBBEFFA0087E689 /* UICollectionView+Extensions.swift */,
 				84D29B9724B79B5400CFBE6B /* Calendar+Moscow.swift */,
 				FAC12F582C6114080016A9DC /* UIDevice+Extensions.swift */,
@@ -5373,6 +5376,7 @@
 				84854B4323FAA266001B44F2 /* NavigationTransitions.swift in Sources */,
 				844AC3D523EBFDAF0066006D /* AddressesListViewModel.swift in Sources */,
 				E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */,
+				8B9658AD2E816C7A00C9F9DA /* NSRegularExpression+Extensions.swift in Sources */,
 				8BF220BC2E2D112600D1A1E7 /* SmartYardThinSearchTextField.swift in Sources */,
 				844AC39523E977810066006D /* AccessService.swift in Sources */,
 				84D29B9824B79B5400CFBE6B /* Calendar+Moscow.swift in Sources */,
