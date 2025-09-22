@@ -345,10 +345,19 @@ class AccessService {
 
     var nameValidationPattern: NameValidationPattern? {
         get {
-            UserDefaults.standard.value(forKey: nameValidationPatternKey) as? NameValidationPattern ?? nil
+            guard let data = UserDefaults.standard.data(forKey: nameValidationPatternKey) else {
+                return nil
+            }
+            return try? JSONDecoder().decode(NameValidationPattern.self, from: data)
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: nameValidationPatternKey)
+            let defaults = UserDefaults.standard
+            if let value = newValue {
+                let data = try? JSONEncoder().encode(value)
+                defaults.set(data, forKey: nameValidationPatternKey)
+            } else {
+                defaults.removeObject(forKey: nameValidationPatternKey)
+            }
         }
     }
 
@@ -398,7 +407,8 @@ class AccessService {
         userPreferredAddressOrder = []
         phonePrefix = Constants.defaultPhonePrefix
         phonePattern = Constants.defaultPhonePattern
-        
+        nameValidationPattern = nil
+
         NotificationCenter.default.post(name: .init("UserLoggedOut"), object: nil)
     }
     

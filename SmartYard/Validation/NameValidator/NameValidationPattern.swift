@@ -6,7 +6,7 @@
 //  Copyright © 2025 LanTa. All rights reserved.
 //
 
-struct NameValidationPattern {
+struct NameValidationPattern: Codable, Equatable {
     let validationNamePattern: String?
     let validationPatronymicPattern: String?
     let validationLastPattern: String?
