@@ -23,7 +23,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let cctvView: CCTVViewType
     let activeTab: TabNames
     let issuesVersion: String?
-    let validationPattern: ValidationPattern?
+    let validationPattern: NameValidationPattern?
     let addressVerificationTab: AddressVerificationTabType?
 
     private enum CodingKeys: String, CodingKey {
@@ -87,7 +87,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
             forKey: .validationLastPattern
         )
 
-        self.validationPattern = ValidationPattern(
+        self.validationPattern = NameValidationPattern(
             validationNamePattern: namePattern,
             validationPatronymicPattern: patronymicPattern,
             validationLastPattern: lastPattern
@@ -164,10 +164,4 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case onlyCourierTab
     }
 
-    struct ValidationPattern {
-        let validationNamePattern: String?
-        let validationPatronymicPattern: String?
-        let validationLastPattern: String?
-    }
 }
-
