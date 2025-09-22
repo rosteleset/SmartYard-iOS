@@ -432,7 +432,7 @@ private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService
                 }
 
                 if let validationPattern = response.validationPattern {
-                    accessService.validationPattern = validationPattern
+                    accessService.nameValidationPattern = validationPattern
                 }
 
                 accessService.activeTab = response.activeTab.rawValue
