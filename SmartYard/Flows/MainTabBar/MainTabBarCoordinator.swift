@@ -430,7 +430,11 @@ private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService
                     // если значение не было установлено пользователем ранее в 'UserDefaults'.
                     break
                 }
-                
+
+                if let validationPattern = response.validationPattern {
+                    accessService.validationPattern = validationPattern
+                }
+
                 accessService.activeTab = response.activeTab.rawValue
                 
                 sem.signal()

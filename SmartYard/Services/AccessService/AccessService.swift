@@ -36,6 +36,7 @@ private let showListKey = "showListKey"
 private let activeTabKey = "activeTabKey"
 private let issuesVersionKey = "issuesVersionKey"
 private let userPreferredAddressOrderKey = "userPreferredAddressOrderKey"
+private let nameValidationPatternKey = "nameValidationPatternKey"
 
 // swiftlint:disable:next type_body_length
 class AccessService {
@@ -341,7 +342,16 @@ class AccessService {
     var phoneLengthWithPrefix: Int {
         phoneLengthWithoutPrefix + phonePrefix.count + 1
     }
-    
+
+    var nameValidationPattern: NameValidationPattern? {
+        get {
+            UserDefaults.standard.value(forKey: nameValidationPatternKey) as? NameValidationPattern ?? nil
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: nameValidationPatternKey)
+        }
+    }
+
     func setPhonePattern(_ from: String? = nil) {
         guard let from = from else {
             return
