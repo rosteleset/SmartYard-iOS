@@ -10,16 +10,16 @@ enum ValidatorFactory {
 
     // MARK: Name Validator
 
-    static func makeFirst(from p: NameValidationPattern?) -> NamePartValidatior {
-        NamePartValidatior(config: NameDefaults.first, serverRegex: p?.validationNamePattern)
+    static func makeFirst(from p: NameValidationPattern?) -> NamePartValidator {
+        NamePartValidator(config: NameDefaults.first, serverRegex: p?.validationNamePattern)
     }
 
-    static func makeLast(from p: NameValidationPattern?) -> NamePartValidatior {
-        NamePartValidatior(config: NameDefaults.last, serverRegex: p?.validationLastPattern)
+    static func makeLast(from p: NameValidationPattern?) -> NamePartValidator {
+        NamePartValidator(config: NameDefaults.last, serverRegex: p?.validationLastPattern)
     }
 
-    static func makePatronymic(from p: NameValidationPattern?) -> NamePartValidatior {
-        NamePartValidatior(config: NameDefaults.patronymic, serverRegex: p?.validationPatronymicPattern)
+    static func makePatronymic(from p: NameValidationPattern?) -> NamePartValidator {
+        NamePartValidator(config: NameDefaults.patronymic, serverRegex: p?.validationPatronymicPattern)
     }
 
 }
