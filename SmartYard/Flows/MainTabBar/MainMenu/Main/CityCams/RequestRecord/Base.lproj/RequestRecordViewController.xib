@@ -143,7 +143,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </textField>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Комментарий" adjustsFontSizeToFit="NO" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="h8p-pN-Ahl" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Комментарий" adjustsFontSizeToFit="NO" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="h8p-pN-Ahl" customClass="SmartYardBorderedTextField" customModule="SmartYard" customModuleProvider="target">
                                             <rect key="frame" x="16" y="232" width="382" height="56"/>
                                             <color key="backgroundColor" name="grayBorder"/>
                                             <constraints>

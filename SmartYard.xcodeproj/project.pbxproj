@@ -2336,19 +2336,16 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8B35B6C02E7EEB720081B28A /* SmartYardTextFields */,
 				8BF6BAB62E7991D300965949 /* HeaderView */,
 				FAC8CFF72BA6890D00D377E2 /* CameraButton */,
 				3AFBA7312637523900C7DEB6 /* SafeCachedImage */,
 				846DC6E224B33E1C00A11914 /* PickerAnimator */,
 				845E9ED624895AE3000CBBC6 /* VideoSliders */,
-				E91724492410E27D00F2B810 /* SmartYardSearchTextFields */,
 				E98C382723F173130010BBC1 /* ClearButtonWithDashedUnderline */,
 				E9A4D49823EC3DD00070A591 /* BlueButton */,
 				843A7A7D23F29A0D00840E51 /* FakeNavBar */,
-				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
 				E99EA6CD23EAD29500BECEE6 /* NumberFields */,
-				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
-				E9A4D48D23EC2A510070A591 /* PinTextField */,
 				E99EA6CC23EAD0C800BECEE6 /* RoundedView */,
 				E94B6C3523FD728F00FD9F65 /* RoundedImageView */,
 				3A1F213226DF8EC7005FDB82 /* ModalViewController */,
@@ -3612,6 +3609,36 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		8B35B6C02E7EEB720081B28A /* SmartYardTextFields */ = {
+			isa = PBXGroup;
+			children = (
+				8B07CD612E0854B000625C59 /* LicencePlateTextField */,
+				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
+				E91724492410E27D00F2B810 /* SmartYardSearchTextFields */,
+				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
+				E9A4D48D23EC2A510070A591 /* PinTextField */,
+				8B35B6C12E7EEC210081B28A /* SmartYardPasswordTextField */,
+				8B35B6C22E7EEC540081B28A /* SmartYardDropDownTextField */,
+			);
+			path = SmartYardTextFields;
+			sourceTree = "<group>";
+		};
+		8B35B6C12E7EEC210081B28A /* SmartYardPasswordTextField */ = {
+			isa = PBXGroup;
+			children = (
+				8477218724A0B345003FCC24 /* SmartYardPasswordTextField.swift */,
+			);
+			path = SmartYardPasswordTextField;
+			sourceTree = "<group>";
+		};
+		8B35B6C22E7EEC540081B28A /* SmartYardDropDownTextField */ = {
+			isa = PBXGroup;
+			children = (
+				3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */,
+			);
+			path = SmartYardDropDownTextField;
+			sourceTree = "<group>";
+		};
 		8B4009362E2AC7AA00A96598 /* DetailGateAccess */ = {
 			isa = PBXGroup;
 			children = (
@@ -4371,10 +4398,7 @@
 		E9A4D49B23EC424D0070A591 /* SmartYardTextField */ = {
 			isa = PBXGroup;
 			children = (
-				8B07CD612E0854B000625C59 /* LicencePlateTextField */,
 				E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */,
-				8477218724A0B345003FCC24 /* SmartYardPasswordTextField.swift */,
-				3AD968DB25E976C5000EEB4E /* SmartYardDropDownTextField.swift */,
 			);
 			path = SmartYardTextField;
 			sourceTree = "<group>";

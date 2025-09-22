@@ -13,7 +13,7 @@ import RxSwift
 
 final class RestorePasswordViewController: BaseViewController, LoaderPresentable {
     
-    @IBOutlet private weak var contractTextField: SmartYardTextField!
+    @IBOutlet private weak var contractTextField: SmartYardBorderedTextField!
     @IBOutlet private weak var getCodeButton: WhiteButtonWithBorder!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var getRestoreMethodsButton: WhiteButtonWithBorder!

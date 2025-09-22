@@ -11,8 +11,8 @@ import JGProgressHUD
 
 final class EditNameViewController: BaseViewController, LoaderPresentable {
     
-    @IBOutlet private weak var nameTextField: SmartYardTextField!
-    @IBOutlet private weak var middleNameTextField: SmartYardTextField!
+    @IBOutlet private weak var nameTextField: SmartYardBorderedTextField!
+    @IBOutlet private weak var middleNameTextField: SmartYardBorderedTextField!
     @IBOutlet private weak var saveButton: UIButton!
     @IBOutlet private weak var backgroundView: UIView!
     

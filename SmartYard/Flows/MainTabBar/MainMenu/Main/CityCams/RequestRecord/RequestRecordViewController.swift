@@ -21,12 +21,12 @@ final class RequestRecordViewController: BaseViewController, LoaderPresentable, 
     @IBOutlet private weak var topRoundedView: UIView!
     @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
     @IBOutlet private weak var addressLabel: UILabel!
-    @IBOutlet private weak var dateTextField: SmartYardTextField!
-    @IBOutlet private weak var hoursTextField: SmartYardTextField!
-    @IBOutlet private weak var minutesTextField: SmartYardTextField!
-    @IBOutlet private weak var durationTextField: SmartYardTextField!
-    @IBOutlet private weak var notesTextField: SmartYardTextField!
-    
+    @IBOutlet private weak var dateTextField: SmartYardBorderedTextField!
+    @IBOutlet private weak var hoursTextField: SmartYardBorderedTextField!
+    @IBOutlet private weak var minutesTextField: SmartYardBorderedTextField!
+    @IBOutlet private weak var durationTextField: SmartYardBorderedTextField!
+    @IBOutlet private weak var notesTextField: SmartYardBorderedTextField!
+
     private var datePicker: UIDatePicker
     private var periodPicker: PeriodPicker
     private var selectedDate: Date

@@ -11,8 +11,8 @@ import JGProgressHUD
 
 final class UserNameViewController: BaseViewController, LoaderPresentable {
 
-    @IBOutlet private weak var nameTextField: SmartYardTextField!
-    @IBOutlet private weak var middleNameTextField: SmartYardTextField!
+    @IBOutlet private weak var nameTextField: SmartYardBorderedTextField!
+    @IBOutlet private weak var middleNameTextField: SmartYardBorderedTextField!
     @IBOutlet private weak var continueButton: UIButton!
     
     @IBOutlet private var mainContainerBottomConstraint: NSLayoutConstraint!

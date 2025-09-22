@@ -16,7 +16,7 @@ final class AuthByContractNumViewController: BaseViewController, LoaderPresentab
 
     @IBOutlet private weak var scrollView: TPKeyboardAvoidingScrollView!
     
-    @IBOutlet private weak var contractNumberTextField: SmartYardTextField!
+    @IBOutlet private weak var contractNumberTextField: SmartYardBorderedTextField!
     @IBOutlet private weak var passTextField: SmartYardPasswordTextField!
     
     @IBOutlet private weak var roundedView: UIView!

@@ -13,7 +13,7 @@ import RxSwift
 
 final class SelectProviderViewController: BaseViewController, LoaderPresentable {
     
-    @IBOutlet private weak var providerTextField: SmartYardTextField!
+    @IBOutlet private weak var providerTextField: SmartYardBorderedTextField!
     @IBOutlet private weak var selectProviderButton: WhiteButtonWithBorder!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!

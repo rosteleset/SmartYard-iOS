@@ -1,5 +1,5 @@
 //
-//  SmartYardTextField.swift
+//  SmartYardBorderedTextField.swift
 //  SmartYard
 //
 //  Created by admin on 05/02/2020.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-class SmartYardTextField: UITextField {
-    
+class SmartYardBorderedTextField: UITextField {
+
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: UIEdgeInsets(top: 16, left: 20, bottom: 16, right: 20))
     }

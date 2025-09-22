@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class SmartYardDropDownTextField: SmartYardTextField {
+final class SmartYardDropDownTextField: SmartYardBorderedTextField {
     
     private let dropDownImage: UIImageView = {
         let image = UIImageView(image: UIImage(named: "DownArrowIcon"))
