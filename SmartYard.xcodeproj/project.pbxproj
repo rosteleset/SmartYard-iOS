@@ -574,7 +574,7 @@
 		E9A4D49123EC2A780070A591 /* PinTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9A4D49023EC2A780070A591 /* PinTextField.xib */; };
 		E9A4D49523EC2CC20070A591 /* PinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */; };
 		E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D49923EC3E200070A591 /* BlueButton.swift */; };
-		E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */; };
+		E9A4D4A123ED6FC20070A591 /* SmartYardBorderedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A023ED6FC20070A591 /* SmartYardBorderedTextField.swift */; };
 		E9A4D4A423ED75D20070A591 /* AuthByContractNumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */; };
 		E9A4D4A823ED9C110070A591 /* WhiteButtonWithBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */; };
 		E9B9EAC72421FCB8000A92B3 /* RestorePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9EAC52421FCB8000A92B3 /* RestorePasswordViewController.swift */; };
@@ -1555,7 +1555,7 @@
 		E9A4D49023EC2A780070A591 /* PinTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinTextField.xib; sourceTree = "<group>"; };
 		E9A4D49323EC2CC10070A591 /* PinCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeViewController.swift; sourceTree = "<group>"; };
 		E9A4D49923EC3E200070A591 /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
-		E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardTextField.swift; sourceTree = "<group>"; };
+		E9A4D4A023ED6FC20070A591 /* SmartYardBorderedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartYardBorderedTextField.swift; sourceTree = "<group>"; };
 		E9A4D4A223ED75D20070A591 /* AuthByContractNumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthByContractNumViewController.swift; sourceTree = "<group>"; };
 		E9A4D4A723ED9C110070A591 /* WhiteButtonWithBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteButtonWithBorder.swift; sourceTree = "<group>"; };
 		E9B9EAC52421FCB8000A92B3 /* RestorePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePasswordViewController.swift; sourceTree = "<group>"; };
@@ -3613,7 +3613,7 @@
 			isa = PBXGroup;
 			children = (
 				8B07CD612E0854B000625C59 /* LicencePlateTextField */,
-				E9A4D49B23EC424D0070A591 /* SmartYardTextField */,
+				E9A4D49B23EC424D0070A591 /* SmartYardBorderedTextField */,
 				E91724492410E27D00F2B810 /* SmartYardSearchTextFields */,
 				E99EA6C523EACCD200BECEE6 /* PhoneTextField */,
 				E9A4D48D23EC2A510070A591 /* PinTextField */,
@@ -4395,12 +4395,12 @@
 			path = BlueButton;
 			sourceTree = "<group>";
 		};
-		E9A4D49B23EC424D0070A591 /* SmartYardTextField */ = {
+		E9A4D49B23EC424D0070A591 /* SmartYardBorderedTextField */ = {
 			isa = PBXGroup;
 			children = (
-				E9A4D4A023ED6FC20070A591 /* SmartYardTextField.swift */,
+				E9A4D4A023ED6FC20070A591 /* SmartYardBorderedTextField.swift */,
 			);
-			path = SmartYardTextField;
+			path = SmartYardBorderedTextField;
 			sourceTree = "<group>";
 		};
 		E9A4D4A623ED9BED0070A591 /* WhiteButtonWithBorder */ = {
@@ -5288,7 +5288,7 @@
 				E96CC0D72423FAEA008DF44B /* RestoreMethodCellModel.swift in Sources */,
 				3AEFB474264C2C95000F37D0 /* FaceCell.swift in Sources */,
 				84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */,
-				E9A4D4A123ED6FC20070A591 /* SmartYardTextField.swift in Sources */,
+				E9A4D4A123ED6FC20070A591 /* SmartYardBorderedTextField.swift in Sources */,
 				E92EFBC3242A22F2003AF7FE /* GetHousesRequest.swift in Sources */,
 				84B89A9023F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift in Sources */,
 				84D29B9124B7999A00CFBE6B /* APIArchiveStreamInfo.swift in Sources */,
