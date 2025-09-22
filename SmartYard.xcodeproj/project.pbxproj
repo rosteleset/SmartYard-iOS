@@ -443,7 +443,14 @@
 		8B6C1BEE2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BED2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib */; };
 		8B6C1BF92DC21ED100617CF8 /* CallKitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BF82DC21ED100617CF8 /* CallKitModalViewContent.xib */; };
 		8B6C1C042DC2205E00617CF8 /* WhiteSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C032DC2205E00617CF8 /* WhiteSectionHeaderView.xib */; };
+		8B96589C2E81579D00C9F9DA /* TextValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96589B2E81579900C9F9DA /* TextValidation.swift */; };
+		8B96589E2E8157D700C9F9DA /* ValidationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96589D2E8157D000C9F9DA /* ValidationRule.swift */; };
+		8B9658A02E816A0100C9F9DA /* NamePartConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96589F2E8169F900C9F9DA /* NamePartConfig.swift */; };
+		8B9658A22E816A3E00C9F9DA /* NameDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9658A12E816A3B00C9F9DA /* NameDefaults.swift */; };
+		8B9658AB2E816AAA00C9F9DA /* NamePartValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9658AA2E816AAA00C9F9DA /* NamePartValidator.swift */; };
 		8B9658AD2E816C7A00C9F9DA /* NSRegularExpression+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9658AC2E816C6D00C9F9DA /* NSRegularExpression+Extensions.swift */; };
+		8B9658AF2E816F9200C9F9DA /* ValidatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9658AE2E816F8D00C9F9DA /* ValidatorFactory.swift */; };
+		8B9658B32E81702900C9F9DA /* NameValidationPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9658B22E81702200C9F9DA /* NameValidationPattern.swift */; };
 		8B9FCADB2E38FFBF00A23E23 /* DetailGateAccessSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9FCAD82E38FFBF00A23E23 /* DetailGateAccessSkeletonView.swift */; };
 		8B9FCADC2E38FFBF00A23E23 /* DetailGateAccessSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B9FCAD92E38FFBF00A23E23 /* DetailGateAccessSkeletonView.xib */; };
 		8BA6EA5C2DF9A88500CDA2DA /* AllowedCar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA6EA5B2DF9A86000CDA2DA /* AllowedCar.swift */; };
@@ -1418,7 +1425,14 @@
 		8B6C1C082DC2206100617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
 		8B6C1C0A2DC2206200617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
 		8B6C1C0C2DC2206300617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
+		8B96589B2E81579900C9F9DA /* TextValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValidation.swift; sourceTree = "<group>"; };
+		8B96589D2E8157D000C9F9DA /* ValidationRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationRule.swift; sourceTree = "<group>"; };
+		8B96589F2E8169F900C9F9DA /* NamePartConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamePartConfig.swift; sourceTree = "<group>"; };
+		8B9658A12E816A3B00C9F9DA /* NameDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameDefaults.swift; sourceTree = "<group>"; };
+		8B9658AA2E816AAA00C9F9DA /* NamePartValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamePartValidator.swift; sourceTree = "<group>"; };
 		8B9658AC2E816C6D00C9F9DA /* NSRegularExpression+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRegularExpression+Extensions.swift"; sourceTree = "<group>"; };
+		8B9658AE2E816F8D00C9F9DA /* ValidatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorFactory.swift; sourceTree = "<group>"; };
+		8B9658B22E81702200C9F9DA /* NameValidationPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameValidationPattern.swift; sourceTree = "<group>"; };
 		8B9FCAD82E38FFBF00A23E23 /* DetailGateAccessSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGateAccessSkeletonView.swift; sourceTree = "<group>"; };
 		8B9FCAD92E38FFBF00A23E23 /* DetailGateAccessSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailGateAccessSkeletonView.xib; sourceTree = "<group>"; };
 		8BA6EA5B2DF9A86000CDA2DA /* AllowedCar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedCar.swift; sourceTree = "<group>"; };
@@ -3559,6 +3573,7 @@
 			children = (
 				84F840D523E07DA5008DBE50 /* AppDelegate.swift */,
 				E9A4D47B23EC19110070A591 /* Constants.swift */,
+				8B96589A2E81578900C9F9DA /* Validation */,
 				84B9EC8823E0844E00979C39 /* Components */,
 				84B9EC8623E0844500979C39 /* Extensions */,
 				84B9EC8723E0844A00979C39 /* Helpers */,
@@ -3698,6 +3713,35 @@
 				8B4C56BC2E1E71A300D5496B /* NewAllowedCarViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		8B9658952E8151A200C9F9DA /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		8B96589A2E81578900C9F9DA /* Validation */ = {
+			isa = PBXGroup;
+			children = (
+				8B9658B42E8170AA00C9F9DA /* NameValidator */,
+				8B9658AE2E816F8D00C9F9DA /* ValidatorFactory.swift */,
+				8B96589B2E81579900C9F9DA /* TextValidation.swift */,
+				8B96589D2E8157D000C9F9DA /* ValidationRule.swift */,
+			);
+			path = Validation;
+			sourceTree = "<group>";
+		};
+		8B9658B42E8170AA00C9F9DA /* NameValidator */ = {
+			isa = PBXGroup;
+			children = (
+				8B9658AA2E816AAA00C9F9DA /* NamePartValidator.swift */,
+				8B9658B22E81702200C9F9DA /* NameValidationPattern.swift */,
+				8B96589F2E8169F900C9F9DA /* NamePartConfig.swift */,
+				8B9658A12E816A3B00C9F9DA /* NameDefaults.swift */,
+			);
+			path = NameValidator;
 			sourceTree = "<group>";
 		};
 		8B9FCADA2E38FFBF00A23E23 /* DetailGateAccessSkeletonView */ = {
@@ -4401,6 +4445,7 @@
 		E9A4D49B23EC424D0070A591 /* SmartYardBorderedTextField */ = {
 			isa = PBXGroup;
 			children = (
+				8B9658952E8151A200C9F9DA /* Entities */,
 				E9A4D4A023ED6FC20070A591 /* SmartYardBorderedTextField.swift */,
 			);
 			path = SmartYardBorderedTextField;
@@ -5255,6 +5300,7 @@
 				8BA6EA5E2DFA21CF00CDA2DA /* GateAccessDataItem.swift in Sources */,
 				E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */,
 				84F64939247402DC000C0028 /* WhiteSectionHeaderView.swift in Sources */,
+				8B96589E2E8157D700C9F9DA /* ValidationRule.swift in Sources */,
 				84B9EC9523E0884400979C39 /* LinphoneService.swift in Sources */,
 				3A4E5A4727AEE910002DE633 /* WebViewCoordinator.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
@@ -5294,6 +5340,7 @@
 				E9A4D4A123ED6FC20070A591 /* SmartYardBorderedTextField.swift in Sources */,
 				E92EFBC3242A22F2003AF7FE /* GetHousesRequest.swift in Sources */,
 				84B89A9023F2FA53009692B4 /* ServiceIsNotActivatedViewController.swift in Sources */,
+				8B96589C2E81579D00C9F9DA /* TextValidation.swift in Sources */,
 				84D29B9124B7999A00CFBE6B /* APIArchiveStreamInfo.swift in Sources */,
 				E9BB83CF23F69FE80071F91E /* AllowedPerson.swift in Sources */,
 				84AA8D7D23E30C2B001B3B43 /* BaseViewController.swift in Sources */,
@@ -5322,6 +5369,7 @@
 				E9BB83D323F6B1E70071F91E /* AccessViewModel.swift in Sources */,
 				3A5C2D18292CF6CA00966E85 /* RangesRequest.swift in Sources */,
 				848D1B8E23F2A26C00D6E368 /* SettingsAction.swift in Sources */,
+				8B9658AB2E816AAA00C9F9DA /* NamePartValidator.swift in Sources */,
 				84AADD1D242E22550056994A /* EditNameViewModel.swift in Sources */,
 				E92EFBB5242A22F2003AF7FE /* BaseAPIResponse.swift in Sources */,
 				E9618A332420ABC1003FF47D /* UnapprovedObjectCell.swift in Sources */,
@@ -5341,11 +5389,13 @@
 				3A897A5F2BA99A4600A06B15 /* PayRegisterRequest.swift in Sources */,
 				FAD4E0722D31CDFC00B0130C /* IncomingCallVideoState.swift in Sources */,
 				E92EFBE1242A22F2003AF7FE /* APITarget.swift in Sources */,
+				8B9658A02E816A0100C9F9DA /* NamePartConfig.swift in Sources */,
 				84898AA323F1A3A500E6B78E /* JumpAvoidingFlowLayout.swift in Sources */,
 				8B07CD662E08568B00625C59 /* LicencePlateKeyboardView.swift in Sources */,
 				845E9EE024895AE4000CBBC6 /* SimpleVideoEndIndicator.swift in Sources */,
 				84D29BAB24BDCB6900CFBE6B /* IncomingCallPreviewState.swift in Sources */,
 				3A3EF204271DFA9600B73B36 /* Swift.swift in Sources */,
+				8B9658AF2E816F9200C9F9DA /* ValidatorFactory.swift in Sources */,
 				843C38D3242A577C0035BF80 /* DeliveredRequest.swift in Sources */,
 				845842D524223D690019635E /* AddressSettingsSkeletonView.swift in Sources */,
 				84898A9C23F17EF100E6B78E /* SettingsAddAddressCell.swift in Sources */,
@@ -5418,6 +5468,7 @@
 				84F6494F247410DE000C0028 /* CameraObject.swift in Sources */,
 				84F64936247402DC000C0028 /* SelectCameraContainerViewModel.swift in Sources */,
 				3A8B952A25D9336D007CDD3C /* CityCamsCoordinator.swift in Sources */,
+				8B9658B32E81702900C9F9DA /* NameValidationPattern.swift in Sources */,
 				3AC5C71626131D4A008D74DE /* HistoryLoadingTableViewCell.swift in Sources */,
 				E9E4271123F40D2500F5D593 /* AvailableServicesViewController.swift in Sources */,
 				844AC3BA23EB105A0066006D /* UserNameViewModel.swift in Sources */,
@@ -5627,6 +5678,7 @@
 				3AC5C61B2608F18B008D74DE /* HistoryViewController.swift in Sources */,
 				843FB12224C1AE850060ACEC /* AddressesHeaderCell.swift in Sources */,
 				E964411823F1A4630045CEE7 /* InputAddressViewModel.swift in Sources */,
+				8B9658A22E816A3E00C9F9DA /* NameDefaults.swift in Sources */,
 				3A1BDF492634459C0075410B /* HistoryCollectionViewCell.swift in Sources */,
 				E9E4270923F2CD3000F5D593 /* ServiceFromOfficeView.swift in Sources */,
 				E9E4272F23F5417000F5D593 /* ServicesActivationRequestСell.swift in Sources */,
