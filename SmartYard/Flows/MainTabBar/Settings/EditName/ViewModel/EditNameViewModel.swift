@@ -62,9 +62,6 @@ final class EditNameViewModel: BaseViewModel {
         
         let prepareTransitionTrigger = PublishSubject<Void>()
         
-        let isAbleToSave = input.name
-            .map { !($0?.trimmed).isNilOrEmpty }
-        
         // MARK: Закрытие экрана
         
         input.dismissTrigger
@@ -114,7 +111,6 @@ final class EditNameViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            isAbleToSave: isAbleToSave,
             isLoading: activityTracker.asDriver(),
             prepareTransitionTrigger: prepareTransitionTrigger.asDriverOnErrorJustComplete()
         )
@@ -132,7 +128,6 @@ extension EditNameViewModel {
     }
     
     struct Output {
-        let isAbleToSave: Driver<Bool>
         let isLoading: Driver<Bool>
         let prepareTransitionTrigger: Driver<Void>
     }

@@ -49,7 +49,18 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
     private func configureView() {
         let gesture = UITapGestureRecognizer()
         view.addGestureRecognizer(gesture)
-        
+
+        let serverPattern = AccessService.shared.nameValidationPattern
+        let validators = (
+            first: ValidatorFactory.makeFirst(from: serverPattern),
+            last: ValidatorFactory.makeLast(from: serverPattern),
+            patronymic: ValidatorFactory.makePatronymic(from: serverPattern)
+        )
+
+        [nameTextField, middleNameTextField].forEach {
+            $0?.addTarget(self, action: #selector(enableContinueButton), for: .editingChanged)
+        }
+
         gesture.rx.event.asDriver()
             .drive(
                 onNext: { [weak self] _ in
@@ -62,11 +73,13 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         nameTextField.delegate = self
         nameTextField.text = preloadedName?.name
         nameTextField.sendActions(for: .allEditingEvents)
-        
+        nameTextField.configure(with: validators.first)
+
         middleNameTextField.setPlaceholder(string: NSLocalizedString("Patronymic", comment: ""))
         middleNameTextField.delegate = self
         middleNameTextField.text = preloadedName?.patronymic
         middleNameTextField.sendActions(for: .allEditingEvents)
+        middleNameTextField.configure(with: validators.patronymic)
     }
     
     private func configureRxKeyboard() {
@@ -105,10 +118,6 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         
         let output = viewModel.transform(input: input)
         
-        output.isAbleToContinue
-            .drive(continueButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-        
         output.isLoading
             .debounce(.milliseconds(25))
             .drive(
@@ -131,7 +140,11 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
     }
-    
+
+    @objc private func enableContinueButton() {
+        continueButton.isEnabled = nameTextField.isValid && middleNameTextField.isValid
+    }
+
 }
 
 extension UserNameViewController: UITextFieldDelegate {

@@ -63,9 +63,6 @@ final class UserNameViewModel: BaseViewModel {
         
         let prepareTransitionTrigger = PublishSubject<Void>()
         
-        let isAbleToContinue = input.name
-            .map { !($0?.trimmed).isNilOrEmpty }
-        
         input.continueTrigger
             .withLatestFrom(input.name)
             .withLatestFrom(input.middleName) { ($0, $1) }
@@ -107,7 +104,6 @@ final class UserNameViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            isAbleToContinue: isAbleToContinue,
             isLoading: activityTracker.asDriver(),
             prepareTransitionTrigger: prepareTransitionTrigger.asDriverOnErrorJustComplete()
         )
@@ -124,7 +120,6 @@ extension UserNameViewModel {
     }
     
     struct Output {
-        let isAbleToContinue: Driver<Bool>
         let isLoading: Driver<Bool>
         let prepareTransitionTrigger: Driver<Void>
     }
