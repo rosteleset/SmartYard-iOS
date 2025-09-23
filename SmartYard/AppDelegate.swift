@@ -56,13 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: - Настройка темы приложения
         // Если есть поддержка темной темы, то тогда узнаем какая тема была сохранена в настройках.
         // В противном случае строго ставим .light
-        if #available(iOS 13.0, *) {
-            if Constants.isDarkModeEnabled {
-                ThemeManager.shared.applySavedTheme()
-            } else {
-                ThemeManager.shared.setTheme(.light)
-            }
-        }
+        if Constants.isDarkModeEnabled { ThemeManager.shared.applySavedTheme() }
+
         return true
     }
     
