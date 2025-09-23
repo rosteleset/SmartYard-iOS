@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct NamePartValidator {
+struct NamePartValidator: TextValidation {
     private let rules: [ValidationRule]
     private let allowEmpty: Bool
     let errorMessage: String?
