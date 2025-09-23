@@ -59,7 +59,7 @@
                             <color key="textColor" name="semiBlack"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder=" Введите название компании" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yC8-pg-hVn" customClass="SmartYardTextField" customModule="SmartYard" customModuleProvider="target">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder=" Введите название компании" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yC8-pg-hVn" customClass="SmartYardBorderedTextField" customModule="SmartYard" customModuleProvider="target">
                             <rect key="frame" x="16" y="135" width="382" height="56"/>
                             <color key="backgroundColor" name="grayBorder"/>
                             <constraints>
