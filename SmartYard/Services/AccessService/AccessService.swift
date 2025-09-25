@@ -37,6 +37,7 @@ private let activeTabKey = "activeTabKey"
 private let issuesVersionKey = "issuesVersionKey"
 private let userPreferredAddressOrderKey = "userPreferredAddressOrderKey"
 private let nameValidationPatternKey = "nameValidationPatternKey"
+private let deliveryTabsConfigKey = "deliveryTabsConfigKey"
 
 // swiftlint:disable:next type_body_length
 class AccessService {
@@ -358,6 +359,12 @@ class AccessService {
             } else {
                 defaults.removeObject(forKey: nameValidationPatternKey)
             }
+    var deliveryTabsConfig: DeliveryTabsConfig? {
+        get {
+            decode(DeliveryTabsConfig.self, from: deliveryTabsConfigKey)
+        }
+        set {
+            encodeAndSave(newValue, to: deliveryTabsConfigKey)
         }
     }
 
