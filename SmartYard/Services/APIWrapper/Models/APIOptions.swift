@@ -24,7 +24,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let activeTab: TabNames
     let issuesVersion: String?
     let validationPattern: NameValidationPattern?
-    let addressVerificationTab: AddressVerificationTabType?
+    let deliveryTabsConfig: DeliveryTabsConfig?
 
     private enum CodingKeys: String, CodingKey {
         case paymentsUrl
@@ -87,29 +87,19 @@ struct APIOptions: Decodable, EmptyDataInitializable {
             forKey: .validationLastPattern
         )
 
-        self.validationPattern = NameValidationPattern(
+        validationPattern = NameValidationPattern(
             validationNamePattern: namePattern,
             validationPatronymicPattern: patronymicPattern,
             validationLastPattern: lastPattern
         )
 
-        let layoutVisible = boolFromTF(.addressVerificationTabLayoutVisible) == true
-        if layoutVisible {
-            let tab1 = boolFromTF(.addressVerificationTab1Visible) == true
-            let tab2 = boolFromTF(.addressVerificationTab2Visible) == true
-
-            if tab1 && tab2 {
-                self.addressVerificationTab = .allTabs
-            } else if tab1 {
-                self.addressVerificationTab = .onlyCourierTab
-            } else if tab2 {
-                self.addressVerificationTab = .onlyOfficeTab
-            } else {
-                self.addressVerificationTab = nil
-            }
-        } else {
-            self.addressVerificationTab = nil
-        }
+        deliveryTabsConfig = DeliveryTabsConfig(
+            deliveryTabs: DeliveryTabs(
+                layoutVisible: boolFromTF(.addressVerificationTabLayoutVisible),
+                courierVisible: boolFromTF(.addressVerificationTab1Visible),
+                officeVisible: boolFromTF(.addressVerificationTab2Visible)
+            )
+        )
 
         chatOptions = try? container.decode(ChatOptions.self, forKey: .chatOptions)
         paymentsUrl = try? container.decode(String.self, forKey: .paymentsUrl)
@@ -134,7 +124,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         cctvView = .list
         activeTab = .addresses
         issuesVersion = nil
-        addressVerificationTab = nil
+        deliveryTabsConfig = nil
         validationPattern = nil
     }
 
@@ -158,10 +148,43 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case menu
     }
 
-    enum AddressVerificationTabType {
-        case allTabs
-        case onlyOfficeTab
-        case onlyCourierTab
-    }
+}
 
+struct DeliveryTabs: Codable {
+    let layoutVisible: Bool?
+    let courierVisible: Bool?
+    let officeVisible: Bool?
+}
+
+enum DeliveryTab: String, Codable, CaseIterable {
+    case courier
+    case office
+
+    var title: String {
+        switch self {
+        case .courier: return NSLocalizedString("Via Courier", comment: "")
+        case .office:  return NSLocalizedString("In Office", comment: "")
+        }
+    }
+}
+
+struct DeliveryTabsConfig: Codable, Equatable {
+    let layoutVisible: Bool
+    let visibleTabs: [DeliveryTab]
+
+    init(deliveryTabs: DeliveryTabs) {
+        var tabs: [DeliveryTab] = []
+        if deliveryTabs.courierVisible == true { tabs.append(.courier) }
+        if deliveryTabs.officeVisible == true { tabs.append(.office)  }
+
+        if tabs.isEmpty {
+            Logger.logError("DeliveryTabsConfig: no tabs from server")
+            // Поэтому по умолчанию делаем как было раньше, то есть показываем все табы
+            tabs.append(.courier)
+            tabs.append(.office)
+        }
+
+        self.layoutVisible = deliveryTabs.layoutVisible ?? (tabs.count > 1)
+        self.visibleTabs = tabs
+    }
 }
