@@ -413,3 +413,24 @@ class AccessService {
     }
     
 }
+
+extension AccessService {
+
+    private func encodeAndSave<T: Encodable>(_ newValue: T?, to key: String) {
+        let defaults = UserDefaults.standard
+        if let value = newValue {
+            let data = try? JSONEncoder().encode(value)
+            defaults.set(data, forKey: key)
+        } else {
+            defaults.removeObject(forKey: key)
+        }
+    }
+
+    private func decode<T: Decodable>(_: T.Type, from key: String) -> T? {
+        guard let data = UserDefaults.standard.data(forKey: key) else {
+            return nil
+        }
+        return try? JSONDecoder().decode(T.self, from: data)
+    }
+
+}
