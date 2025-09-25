@@ -346,19 +346,13 @@ final class AccessService {
 
     var nameValidationPattern: NameValidationPattern? {
         get {
-            guard let data = UserDefaults.standard.data(forKey: nameValidationPatternKey) else {
-                return nil
-            }
-            return try? JSONDecoder().decode(NameValidationPattern.self, from: data)
+            decode(NameValidationPattern.self, from: nameValidationPatternKey)
         }
         set {
-            let defaults = UserDefaults.standard
-            if let value = newValue {
-                let data = try? JSONEncoder().encode(value)
-                defaults.set(data, forKey: nameValidationPatternKey)
-            } else {
-                defaults.removeObject(forKey: nameValidationPatternKey)
-            }
+            encodeAndSave(newValue, to: nameValidationPatternKey)
+        }
+    }
+
     var deliveryTabsConfig: DeliveryTabsConfig? {
         get {
             decode(DeliveryTabsConfig.self, from: deliveryTabsConfigKey)
