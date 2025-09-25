@@ -40,7 +40,7 @@ private let nameValidationPatternKey = "nameValidationPatternKey"
 private let deliveryTabsConfigKey = "deliveryTabsConfigKey"
 
 // swiftlint:disable:next type_body_length
-class AccessService {
+final class AccessService {
     static let shared = AccessService()
     
     var appState: AppState {
