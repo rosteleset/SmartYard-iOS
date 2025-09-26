@@ -97,8 +97,22 @@ final class AddressConfirmationViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-        
-        return Output(isLoading: activityTracker.asDriver(), offices: offices.asDriver(onErrorJustReturn: []))
+
+        // пока не придумал что вместо этого сделать, так как по сути эта ошибка никогда не выпадет. Оставляю как тех долг.
+        let errorConfig = DeliveryTabsConfig(
+            deliveryTabs: DeliveryTabs(
+                layoutVisible: nil,
+                courierVisible: nil,
+                officeVisible: nil
+            )
+        )
+        let deliveryTabsConfigDriver: Driver<DeliveryTabsConfig> = .just(AccessService.shared.deliveryTabsConfig ?? errorConfig)
+
+        return Output(
+            isLoading: activityTracker.asDriver(),
+            offices: offices.asDriver(onErrorJustReturn: []),
+            deliveryTabsConfig: deliveryTabsConfigDriver
+        )
     }
     
 }
@@ -114,6 +128,7 @@ extension AddressConfirmationViewModel {
     struct Output {
         let isLoading: Driver<Bool>
         let offices: Driver<[APIOffice]>
+        let deliveryTabsConfig: Driver<DeliveryTabsConfig>
     }
     
 }

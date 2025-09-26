@@ -15,7 +15,7 @@
                 <outlet property="fakeNavBar" destination="yMA-ak-ijO" id="Jsd-YA-tST"/>
                 <outlet property="headerView" destination="DGl-kB-hgw" id="UXc-fW-4ZU"/>
                 <outlet property="officeView" destination="BRa-A7-Ebr" id="zgl-Oz-N7O"/>
-                <outlet property="segmentControl" destination="Tbm-7a-VCj" id="STT-LN-Dus"/>
+                <outlet property="segmentControlContainerView" destination="Tbm-7a-VCj" id="mIr-oF-zHl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -34,35 +34,47 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jvI-aM-Z2y" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="108" width="320" height="460"/>
+                    <rect key="frame" x="0.0" y="116" width="320" height="452"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tbm-7a-VCj" customClass="SmartYardUnderlineSegmentedControlView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="57"/>
-                            <color key="backgroundColor" name="secondBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="57" id="QKU-53-5qW"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BRa-A7-Ebr" customClass="ServiceFromOfficeView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="57" width="320" height="327"/>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mow-Yx-2Q3" customClass="ServiceFromCourierView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="57" width="320" height="327"/>
-                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="utf-K7-IpZ">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="452"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tbm-7a-VCj" userLabel="Segment Control Container View">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="56" id="fTp-9V-mXH"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IXB-UP-U84" userLabel="Container View">
+                                    <rect key="frame" x="0.0" y="56" width="320" height="396"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BRa-A7-Ebr" customClass="ServiceFromOfficeView" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="396"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mow-Yx-2Q3" customClass="ServiceFromCourierView" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="396"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="mow-Yx-2Q3" firstAttribute="top" secondItem="IXB-UP-U84" secondAttribute="top" id="3cZ-7I-Lv1"/>
+                                        <constraint firstItem="BRa-A7-Ebr" firstAttribute="leading" secondItem="IXB-UP-U84" secondAttribute="leading" id="DPb-cB-ArC"/>
+                                        <constraint firstItem="mow-Yx-2Q3" firstAttribute="leading" secondItem="IXB-UP-U84" secondAttribute="leading" id="MEl-Yh-gLh"/>
+                                        <constraint firstAttribute="bottom" secondItem="BRa-A7-Ebr" secondAttribute="bottom" id="NCe-Bt-5mk"/>
+                                        <constraint firstAttribute="bottom" secondItem="mow-Yx-2Q3" secondAttribute="bottom" id="hh1-t6-4Lw"/>
+                                        <constraint firstAttribute="trailing" secondItem="BRa-A7-Ebr" secondAttribute="trailing" id="nQu-dV-OcL"/>
+                                        <constraint firstItem="BRa-A7-Ebr" firstAttribute="top" secondItem="IXB-UP-U84" secondAttribute="top" id="spe-74-VKc"/>
+                                        <constraint firstAttribute="trailing" secondItem="mow-Yx-2Q3" secondAttribute="trailing" id="y3l-SV-Afv"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                        </stackView>
                     </subviews>
-                    <color key="backgroundColor" name="backgroundColor"/>
+                    <color key="backgroundColor" name="secondBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="Tbm-7a-VCj" firstAttribute="top" secondItem="jvI-aM-Z2y" secondAttribute="top" id="4F5-ow-KIY"/>
-                        <constraint firstAttribute="bottom" secondItem="BRa-A7-Ebr" secondAttribute="bottom" id="8g0-nJ-nXk"/>
-                        <constraint firstItem="mow-Yx-2Q3" firstAttribute="top" secondItem="Tbm-7a-VCj" secondAttribute="bottom" id="9JX-E2-Wrg"/>
-                        <constraint firstItem="BRa-A7-Ebr" firstAttribute="top" secondItem="Tbm-7a-VCj" secondAttribute="bottom" id="J4H-hC-Ebu"/>
-                        <constraint firstItem="Tbm-7a-VCj" firstAttribute="leading" secondItem="jvI-aM-Z2y" secondAttribute="leading" id="KIA-UV-w8w"/>
-                        <constraint firstItem="BRa-A7-Ebr" firstAttribute="leading" secondItem="jvI-aM-Z2y" secondAttribute="leading" id="NYY-5g-XCE"/>
-                        <constraint firstAttribute="bottom" secondItem="mow-Yx-2Q3" secondAttribute="bottom" id="PXX-Yd-4zH"/>
-                        <constraint firstAttribute="trailing" secondItem="Tbm-7a-VCj" secondAttribute="trailing" id="fip-q5-q3q"/>
-                        <constraint firstItem="mow-Yx-2Q3" firstAttribute="leading" secondItem="jvI-aM-Z2y" secondAttribute="leading" id="i7f-9Y-VPj"/>
-                        <constraint firstAttribute="trailing" secondItem="BRa-A7-Ebr" secondAttribute="trailing" id="oVP-Wg-hE2"/>
-                        <constraint firstAttribute="trailing" secondItem="mow-Yx-2Q3" secondAttribute="trailing" id="pma-kf-waK"/>
+                        <constraint firstAttribute="bottom" secondItem="utf-K7-IpZ" secondAttribute="bottom" id="63S-nN-Ylh"/>
+                        <constraint firstAttribute="trailing" secondItem="utf-K7-IpZ" secondAttribute="trailing" id="OPs-Re-ufo"/>
+                        <constraint firstItem="utf-K7-IpZ" firstAttribute="top" secondItem="jvI-aM-Z2y" secondAttribute="top" id="YsO-82-9TU"/>
+                        <constraint firstItem="utf-K7-IpZ" firstAttribute="leading" secondItem="jvI-aM-Z2y" secondAttribute="leading" id="gYk-ZQ-bnq"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yMA-ak-ijO" customClass="FakeNavBar" customModule="SmartYard" customModuleProvider="target">
@@ -97,9 +109,6 @@
     </objects>
     <resources>
         <image name="MainBackground" width="371" height="812"/>
-        <namedColor name="backgroundColor">
-            <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
         <namedColor name="secondBackgroundColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
