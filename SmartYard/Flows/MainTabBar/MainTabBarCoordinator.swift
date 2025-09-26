@@ -411,12 +411,16 @@ private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService
                 if let cityCams = response.cityCams {
                     accessService.showCityCams = cityCams
                 }
-                
-                accessService.guestAccessModeOnOnly = response.guestAccessOnOnly 
+
                 if let timeZone = response.timeZone {
                     accessService.timeZone = timeZone
                 }
-                
+
+                if let deliveryTabsConfig = response.deliveryTabsConfig {
+                    accessService.deliveryTabsConfig = deliveryTabsConfig
+                }
+
+                accessService.guestAccessModeOnOnly = response.guestAccessOnOnly
                 accessService.issuesVersion = response.issuesVersion ?? "1"
                 accessService.cctvView = response.cctvView.rawValue
                 
