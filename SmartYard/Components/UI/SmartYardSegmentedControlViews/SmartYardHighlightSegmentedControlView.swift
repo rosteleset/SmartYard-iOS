@@ -61,14 +61,9 @@ final class SmartYardHighlightSegmentedControlView: UIView {
         backgroundColor = .SmartYard.secondBackgroundColor
         layer.cornerRadius = 12
         clipsToBounds = true
-        
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor)
-        ])
-        
+
+        stackView.alignToView(self)
+
         highlightView.addSubview(highlightLabel)
         highlightLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

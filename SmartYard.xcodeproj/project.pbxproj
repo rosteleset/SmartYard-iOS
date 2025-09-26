@@ -431,6 +431,8 @@
 		8B0A98B52E2FF0D00089C8C4 /* DetailGateAccessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0A98B42E2FF0D00089C8C4 /* DetailGateAccessCell.xib */; };
 		8B0A98B62E2FF0D00089C8C4 /* DetailGateAccessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A98B32E2FF0D00089C8C4 /* DetailGateAccessCell.swift */; };
 		8B13F98D2E26DC2000D79571 /* LicensePlateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B13F98C2E26DC1F00D79571 /* LicensePlateFormat.swift */; };
+		8B23F9D22E84739500E57573 /* SmartYardSegmentControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B23F9D12E84738200E57573 /* SmartYardSegmentControlView.swift */; };
+		8B23F9D42E868CB100E57573 /* SmartYardSegmentControlViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B23F9D32E868CA600E57573 /* SmartYardSegmentControlViewProtocol.swift */; };
 		8B2ACD502E1EE60B0067438F /* LicencePlateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2ACD4F2E1EE6040067438F /* LicencePlateValidator.swift */; };
 		8B32EDF92E3E6B4A0049B9A5 /* DetailGateAccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B32EDF82E3E6B4A0049B9A5 /* DetailGateAccessViewController.xib */; };
 		8B40093C2E2AC8E600A96598 /* DetailGateAccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4009392E2AC8E600A96598 /* DetailGateAccessViewController.swift */; };
@@ -1387,6 +1389,8 @@
 		8B0A98B32E2FF0D00089C8C4 /* DetailGateAccessCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGateAccessCell.swift; sourceTree = "<group>"; };
 		8B0A98B42E2FF0D00089C8C4 /* DetailGateAccessCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailGateAccessCell.xib; sourceTree = "<group>"; };
 		8B13F98C2E26DC1F00D79571 /* LicensePlateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateFormat.swift; sourceTree = "<group>"; };
+		8B23F9D12E84738200E57573 /* SmartYardSegmentControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSegmentControlView.swift; sourceTree = "<group>"; };
+		8B23F9D32E868CA600E57573 /* SmartYardSegmentControlViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSegmentControlViewProtocol.swift; sourceTree = "<group>"; };
 		8B2ACD4F2E1EE6040067438F /* LicencePlateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicencePlateValidator.swift; sourceTree = "<group>"; };
 		8B32EDF72E3E6B4A0049B9A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DetailGateAccessViewController.xib; sourceTree = "<group>"; };
 		8B32EDFB2E3E6B4F0049B9A5 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/DetailGateAccessViewController.strings; sourceTree = "<group>"; };
@@ -4529,6 +4533,8 @@
 		E9E426FC23F2B27300F5D593 /* SmartYardSegmentedControlViews */ = {
 			isa = PBXGroup;
 			children = (
+				8B23F9D32E868CA600E57573 /* SmartYardSegmentControlViewProtocol.swift */,
+				8B23F9D12E84738200E57573 /* SmartYardSegmentControlView.swift */,
 				8BCECFE12DEF38CF000D7D6D /* SmartYardHighlightSegmentedControlView.swift */,
 				E9E426FD23F2B2DD00F5D593 /* SmartYardUnderlineSegmentedControlView.swift */,
 			);
@@ -5360,6 +5366,7 @@
 				84D29B9024B7999A00CFBE6B /* APIArchiveRange.swift in Sources */,
 				E99EA6D123EAD2CE00BECEE6 /* NumberFieldView.swift in Sources */,
 				8BDAC6FE2DFC678700469D59 /* GateAccessShortcutCell.swift in Sources */,
+				8B23F9D22E84739500E57573 /* SmartYardSegmentControlView.swift in Sources */,
 				84AF095D24ADF9AF005CEECE /* AlertService.swift in Sources */,
 				84898A9823F1556B00E6B78E /* SettingsSectionModel.swift in Sources */,
 				8BBEC5A62E279854003A33B6 /* LicensePlateFormatter.swift in Sources */,
@@ -5536,6 +5543,7 @@
 				3A3B8BB325A5D00C00BFB72E /* MainMenuViewController.swift in Sources */,
 				849FF08B24CEBFD900C234BC /* IncomingCallLandscapeViewController.swift in Sources */,
 				E9A4D48F23EC2A6B0070A591 /* PinTextField.swift in Sources */,
+				8B23F9D42E868CB100E57573 /* SmartYardSegmentControlViewProtocol.swift in Sources */,
 				E92EFBEA242A24EB003AF7FE /* APIRestoreData.swift in Sources */,
 				3A3B8BBA25A5E8DA00BFB72E /* MainMenuItem.swift in Sources */,
 				E92EFBC0242A22F2003AF7FE /* GetServicesResponseData.swift in Sources */,

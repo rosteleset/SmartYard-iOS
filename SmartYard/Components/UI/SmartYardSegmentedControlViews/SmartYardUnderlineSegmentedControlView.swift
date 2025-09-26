@@ -11,19 +11,15 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SmartYardUnderlineSegmentedControlView: UIView {
-    
-    fileprivate let segmentControl: UISegmentedControl = {
+final class SmartYardUnderlineSegmentedControlView: UIView, SmartYardSegmentControlViewProtocol {
+
+    let segmentControl: UISegmentedControl = {
         let control = UISegmentedControl()
         control.backgroundColor = .clear
         control.tintColor = .SmartYard.secondBackgroundColor
-        
-        if #available(iOS 13.0, *) {
-            control.backgroundColor = .clear
-            control.selectedSegmentTintColor = .clear
-            control.layer.borderWidth = 0
-        }
-        
+        control.selectedSegmentTintColor = .clear
+        control.layer.borderWidth = 0
+
         let selectedControlFont = UIFont.SourceSansPro.semibold(size: 18)
         let unselectedControlFont = UIFont.SourceSansPro.regular(size: 18)
         
@@ -65,9 +61,9 @@ final class SmartYardUnderlineSegmentedControlView: UIView {
     private var bottomBarWidthAnchor: NSLayoutConstraint?
     private var bottomBarLeftAnchor: NSLayoutConstraint?
     
-    var segmentItems: [String] = [] {
+    var titles: [String] = [] {
         didSet {
-            guard !segmentItems.isEmpty else {
+            guard !titles.isEmpty else {
                 return
             }
             
@@ -76,7 +72,7 @@ final class SmartYardUnderlineSegmentedControlView: UIView {
             
             bottomBarWidthAnchor = bottomBar.widthAnchor.constraint(
                 equalTo: segmentControl.widthAnchor,
-                multiplier: 1 / CGFloat(segmentItems.count)
+                multiplier: 1 / CGFloat(titles.count)
             )
             
             bottomBarWidthAnchor?.isActive = true
@@ -94,7 +90,7 @@ final class SmartYardUnderlineSegmentedControlView: UIView {
     }
     
     private func setup() {
-        guard !segmentItems.isEmpty else {
+        guard !titles.isEmpty else {
             return
         }
         
@@ -152,7 +148,7 @@ final class SmartYardUnderlineSegmentedControlView: UIView {
         
         bottomBarWidthAnchor = bottomBar.widthAnchor.constraint(
             equalTo: segmentControl.widthAnchor,
-            multiplier: 1 / CGFloat(segmentItems.count)
+            multiplier: 1 / CGFloat(titles.count)
         )
     }
     
@@ -175,7 +171,7 @@ final class SmartYardUnderlineSegmentedControlView: UIView {
     }
     
     private func setupSegmentItems() {
-        segmentItems.enumerated().forEach { offset, element in
+        titles.enumerated().forEach { offset, element in
             segmentControl.insertSegment(
                 withTitle: element,
                 at: offset,
@@ -187,7 +183,7 @@ final class SmartYardUnderlineSegmentedControlView: UIView {
     }
     
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-        let segmentWidth = self.segmentControl.frame.width / CGFloat(self.segmentItems.count)
+        let segmentWidth = self.segmentControl.frame.width / CGFloat(self.titles.count)
         let selectedSegmentIndex = self.segmentControl.selectedSegmentIndex
         let originX = segmentWidth * CGFloat(selectedSegmentIndex)
         
@@ -209,14 +205,6 @@ final class SmartYardUnderlineSegmentedControlView: UIView {
                 }
             }
         }
-    }
-    
-}
-
-extension Reactive where Base: SmartYardUnderlineSegmentedControlView {
-    
-    var selectedIndex: ControlProperty<Int> {
-        return base.segmentControl.rx.selectedSegmentIndex
     }
     
 }
