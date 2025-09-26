@@ -127,7 +127,6 @@
                         <constraint firstItem="Ot2-BH-XPn" firstAttribute="top" secondItem="YL9-kH-ngA" secondAttribute="bottom" constant="10" id="0MT-RG-q0a"/>
                         <constraint firstItem="L7d-yT-XF9" firstAttribute="top" secondItem="k2J-IV-yeb" secondAttribute="bottom" constant="20" id="6H0-xG-fGY"/>
                         <constraint firstItem="sY4-Hs-Ho1" firstAttribute="top" relation="greaterThanOrEqual" secondItem="C8F-0W-d0e" secondAttribute="bottom" constant="10" id="6pK-VX-4O0"/>
-                        <constraint firstAttribute="bottom" secondItem="Ot2-BH-XPn" secondAttribute="bottom" constant="16" id="8hL-Zh-bQv"/>
                         <constraint firstAttribute="trailing" secondItem="C8F-0W-d0e" secondAttribute="trailing" constant="20" id="94v-In-zVF"/>
                         <constraint firstItem="YL9-kH-ngA" firstAttribute="leading" secondItem="6Ck-ZY-PK8" secondAttribute="leading" constant="20" id="Dlh-Va-fs1"/>
                         <constraint firstItem="L7d-yT-XF9" firstAttribute="centerX" secondItem="6Ck-ZY-PK8" secondAttribute="centerX" id="GP4-vM-CiV"/>
@@ -156,6 +155,7 @@
                 <constraint firstItem="Qeb-n0-SC1" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="YHn-a4-p8s"/>
                 <constraint firstAttribute="bottom" secondItem="Qeb-n0-SC1" secondAttribute="bottom" id="Ys8-TO-qSF"/>
                 <constraint firstItem="1jL-Th-fpk" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ect-6R-kUz"/>
+                <constraint firstItem="Ot2-BH-XPn" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-16" id="ke4-wc-Nhw"/>
                 <constraint firstItem="Qeb-n0-SC1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="nXx-LW-yGR"/>
                 <constraint firstItem="6Ck-ZY-PK8" firstAttribute="top" secondItem="1jL-Th-fpk" secondAttribute="bottom" constant="8" symbolic="YES" id="nkJ-UA-tM0"/>
             </constraints>
