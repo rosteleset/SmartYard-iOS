@@ -12,7 +12,7 @@ import RxSwift
 import JGProgressHUD
 
 final class AvailableServicesViewController: BaseViewController, LoaderPresentable {
-    
+
     @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var tableView: UITableView!
@@ -59,11 +59,9 @@ final class AvailableServicesViewController: BaseViewController, LoaderPresentab
             .drive(
                 onNext: { [weak self] address in
                     self?.headerView.setText(
-                        NSLocalizedString(
-                            "Available services",
-                            comment: ""
-                        ),
-                        subtitle: address ?? "")
+                        NSLocalizedString("Available services", comment: ""),
+                        subtitle: address ?? ""
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -72,7 +70,10 @@ final class AvailableServicesViewController: BaseViewController, LoaderPresentab
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
-                    self?.updateLoader(isEnabled: isLoading, detailText: NSLocalizedString("Creating a task", comment: ""))
+                    self?.updateLoader(
+                        isEnabled: isLoading,
+                        detailText: NSLocalizedString("Creating a task", comment: "")
+                    )
                 }
             )
             .disposed(by: disposeBag)

@@ -23,7 +23,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AvailableServicesViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="fakeNavBar" destination="ZHo-ab-uCT" id="akb-uw-D0D"/>
-                <outlet property="headerView" destination="87M-ms-kNo" id="IkM-e3-1Ed"/>
+                <outlet property="headerView" destination="yah-ll-BDW" id="iOS-yW-gtw"/>
                 <outlet property="nextButton" destination="89Y-FQ-vdr" id="j07-bY-Q4r"/>
                 <outlet property="tableView" destination="w0Q-oS-zCM" id="360-rJ-Exd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -34,21 +34,21 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="87M-ms-kNo" customClass="HeaderView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="64" width="320" height="44"/>
-                    <viewLayoutGuide key="safeArea" id="GcW-VA-O6v"/>
-                    <constraints>
-                        <constraint firstAttribute="height" priority="1" constant="44" id="hJS-MY-mko"/>
-                    </constraints>
-                </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="qEL-FS-mUt">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yah-ll-BDW" customClass="HeaderView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="1" constant="44" id="lwk-FZ-sFf"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n8T-dr-SIH" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="232" width="320" height="336"/>
+                    <rect key="frame" x="0.0" y="108" width="320" height="460"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w0Q-oS-zCM">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="230"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="353"/>
                             <color key="backgroundColor" name="secondBackgroundColor"/>
                             <color key="separatorColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94509803921568625" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="separatorInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
@@ -83,15 +83,15 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="yah-ll-BDW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="10J-r9-hdI"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="n8T-dr-SIH" secondAttribute="trailing" id="3Fx-8W-Ipy"/>
                 <constraint firstItem="qEL-FS-mUt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3ty-hd-aFk"/>
                 <constraint firstItem="ZHo-ab-uCT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6rE-1e-eQT"/>
-                <constraint firstAttribute="trailing" secondItem="87M-ms-kNo" secondAttribute="trailing" id="7WF-oy-9Qc"/>
-                <constraint firstItem="87M-ms-kNo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JoU-5c-9dV"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="yah-ll-BDW" secondAttribute="trailing" id="7qA-k2-arF"/>
+                <constraint firstItem="n8T-dr-SIH" firstAttribute="top" secondItem="yah-ll-BDW" secondAttribute="bottom" id="M0M-dk-SpT"/>
+                <constraint firstItem="yah-ll-BDW" firstAttribute="top" secondItem="ZHo-ab-uCT" secondAttribute="bottom" id="NFh-8A-dkI"/>
                 <constraint firstItem="ZHo-ab-uCT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="NjG-eP-5zD"/>
-                <constraint firstItem="n8T-dr-SIH" firstAttribute="top" secondItem="87M-ms-kNo" secondAttribute="bottom" id="Qrc-G8-guq"/>
                 <constraint firstAttribute="bottom" secondItem="n8T-dr-SIH" secondAttribute="bottom" id="bIh-cg-R05"/>
-                <constraint firstItem="87M-ms-kNo" firstAttribute="top" secondItem="ZHo-ab-uCT" secondAttribute="bottom" id="bzB-S1-ggM"/>
                 <constraint firstAttribute="bottom" secondItem="qEL-FS-mUt" secondAttribute="bottom" id="ckC-fj-dX9"/>
                 <constraint firstAttribute="trailing" secondItem="qEL-FS-mUt" secondAttribute="trailing" id="dub-Wf-CNe"/>
                 <constraint firstItem="n8T-dr-SIH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="gC1-fO-oGP"/>
@@ -107,5 +107,8 @@
         <namedColor name="secondBackgroundColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
