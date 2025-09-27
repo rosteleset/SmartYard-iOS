@@ -447,6 +447,7 @@
 		8B6C1C042DC2205E00617CF8 /* WhiteSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C032DC2205E00617CF8 /* WhiteSectionHeaderView.xib */; };
 		8B70309C2E87E18F0078DCE6 /* VPNDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B70309B2E87E18F0078DCE6 /* VPNDetector.swift */; };
 		8B7030F32E87ECC90078DCE6 /* SmartYardBannerColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */; };
+		8B7035692E885D470078DCE6 /* VPNBannerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7035682E885D2F0078DCE6 /* VPNBannerHelper.swift */; };
 		8B96589C2E81579D00C9F9DA /* TextValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96589B2E81579900C9F9DA /* TextValidation.swift */; };
 		8B96589E2E8157D700C9F9DA /* ValidationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96589D2E8157D000C9F9DA /* ValidationRule.swift */; };
 		8B9658A02E816A0100C9F9DA /* NamePartConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96589F2E8169F900C9F9DA /* NamePartConfig.swift */; };
@@ -1433,6 +1434,7 @@
 		8B6C1C0C2DC2206300617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
 		8B70309B2E87E18F0078DCE6 /* VPNDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNDetector.swift; sourceTree = "<group>"; };
 		8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardBannerColors.swift; sourceTree = "<group>"; };
+		8B7035682E885D2F0078DCE6 /* VPNBannerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNBannerHelper.swift; sourceTree = "<group>"; };
 		8B96589B2E81579900C9F9DA /* TextValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValidation.swift; sourceTree = "<group>"; };
 		8B96589D2E8157D000C9F9DA /* ValidationRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationRule.swift; sourceTree = "<group>"; };
 		8B96589F2E8169F900C9F9DA /* NamePartConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamePartConfig.swift; sourceTree = "<group>"; };
@@ -3261,8 +3263,9 @@
 		84B9EC8723E0844A00979C39 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */,
 				8B70309B2E87E18F0078DCE6 /* VPNDetector.swift */,
+				8B7035682E885D2F0078DCE6 /* VPNBannerHelper.swift */,
+				8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */,
 				8BA1DB2F2DA56210009EBA0E /* DeviceUUID.swift */,
 				FAD4E0732D31CF5E00B0130C /* Logger.swift */,
 				FA9EEFA02D0B115B006933A3 /* FontHelper.swift */,
@@ -5515,6 +5518,7 @@
 				E99EA6BA23EA9D4400BECEE6 /* InputPhoneNumberViewController.swift in Sources */,
 				846DC6DB24B33DEA00A11914 /* SberbankPayError.swift in Sources */,
 				84854B5C23FC38F3001B44F2 /* LoadingButton.swift in Sources */,
+				8B7035692E885D470078DCE6 /* VPNBannerHelper.swift in Sources */,
 				E94057FC23F6724100623746 /* AddressAccessViewModel.swift in Sources */,
 				84B89A9323F2FA6E009692B4 /* ServiceIsNotActivatedViewModel.swift in Sources */,
 				84B9EC9A23E0888B00979C39 /* SipConfig.swift in Sources */,
