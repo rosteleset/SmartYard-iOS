@@ -12,13 +12,15 @@ import FirebaseMessaging
 import FirebaseCrashlytics
 import PushKit
 import MapboxMaps
+import NotificationBannerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private let mainWindow: UIWindow
     private let appCoordinator: AppCoordinator
-    
+    private var hasShownVPNWarningThisSession = false
+
     override init() {
         mainWindow = UIWindow()
         appCoordinator = AppCoordinator(mainWindow: mainWindow)
@@ -67,6 +69,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         appCoordinator.syncBadgeNumber()
         appCoordinator.markAllMessagesAsDelivered()
+
+        if VPNDetector.isVPNActive, !hasShownVPNWarningThisSession {
+            hasShownVPNWarningThisSession = true
+
+            StatusBarNotificationBanner(
+                title: "Обнаружен VPN. Приложение может работать нестабильно.",
+                style: .danger,
+                colors: SmartYardBannerColors()
+            ).show()
+        }
     }
     
     func application(

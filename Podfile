@@ -14,6 +14,7 @@ target 'SmartYard' do
   pod 'linphone-sdk'
   pod 'WKCookieWebView', '~> 2.0'
   pod 'WebRTC-lib'
+  pod 'NotificationBannerSwift'
   
   # Reactive
   pod 'RxSwift'

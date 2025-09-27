@@ -445,6 +445,8 @@
 		8B6C1BEE2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BED2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib */; };
 		8B6C1BF92DC21ED100617CF8 /* CallKitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BF82DC21ED100617CF8 /* CallKitModalViewContent.xib */; };
 		8B6C1C042DC2205E00617CF8 /* WhiteSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C032DC2205E00617CF8 /* WhiteSectionHeaderView.xib */; };
+		8B70309C2E87E18F0078DCE6 /* VPNDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B70309B2E87E18F0078DCE6 /* VPNDetector.swift */; };
+		8B7030F32E87ECC90078DCE6 /* SmartYardBannerColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */; };
 		8B96589C2E81579D00C9F9DA /* TextValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96589B2E81579900C9F9DA /* TextValidation.swift */; };
 		8B96589E2E8157D700C9F9DA /* ValidationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96589D2E8157D000C9F9DA /* ValidationRule.swift */; };
 		8B9658A02E816A0100C9F9DA /* NamePartConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B96589F2E8169F900C9F9DA /* NamePartConfig.swift */; };
@@ -1429,6 +1431,8 @@
 		8B6C1C082DC2206100617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
 		8B6C1C0A2DC2206200617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
 		8B6C1C0C2DC2206300617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
+		8B70309B2E87E18F0078DCE6 /* VPNDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNDetector.swift; sourceTree = "<group>"; };
+		8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardBannerColors.swift; sourceTree = "<group>"; };
 		8B96589B2E81579900C9F9DA /* TextValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValidation.swift; sourceTree = "<group>"; };
 		8B96589D2E8157D000C9F9DA /* ValidationRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationRule.swift; sourceTree = "<group>"; };
 		8B96589F2E8169F900C9F9DA /* NamePartConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamePartConfig.swift; sourceTree = "<group>"; };
@@ -3257,6 +3261,9 @@
 		84B9EC8723E0844A00979C39 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */,
+				8B70309B2E87E18F0078DCE6 /* VPNDetector.swift */,
+				8BA1DB2F2DA56210009EBA0E /* DeviceUUID.swift */,
 				FAD4E0732D31CF5E00B0130C /* Logger.swift */,
 				FA9EEFA02D0B115B006933A3 /* FontHelper.swift */,
 				FA1A22A02CE3893000B8F919 /* ThemeManager.swift */,
@@ -5431,6 +5438,7 @@
 				FA9EEFA12D0B1160006933A3 /* FontHelper.swift in Sources */,
 				E94B6C4523FFFF5D00FD9F65 /* Date+Conversion.swift in Sources */,
 				84854B4323FAA266001B44F2 /* NavigationTransitions.swift in Sources */,
+				8B70309C2E87E18F0078DCE6 /* VPNDetector.swift in Sources */,
 				844AC3D523EBFDAF0066006D /* AddressesListViewModel.swift in Sources */,
 				E9E4270723F2CD1900F5D593 /* ServiceFromCourierView.swift in Sources */,
 				8B9658AD2E816C7A00C9F9DA /* NSRegularExpression+Extensions.swift in Sources */,
@@ -5668,6 +5676,7 @@
 				8BA6EA5C2DF9A88500CDA2DA /* AllowedCar.swift in Sources */,
 				847CF7D624068B3D00070007 /* AddressesListSkeletonView.swift in Sources */,
 				842FECB6242B89DF007CA0F3 /* OfficesResponseData.swift in Sources */,
+				8B7030F32E87ECC90078DCE6 /* SmartYardBannerColors.swift in Sources */,
 				3AE65A48264DA4A00093284C /* ScaledHeightImageView.swift in Sources */,
 				E94057FE23F6757D00623746 /* FullRoundedView.swift in Sources */,
 				84854B3D23FA9918001B44F2 /* ErrorTracker.swift in Sources */,
