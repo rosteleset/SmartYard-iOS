@@ -6989,7 +6989,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 61;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
@@ -7000,7 +7000,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.14.4;
+				MARKETING_VERSION = 1.14.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -7031,7 +7031,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 61;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
@@ -7042,7 +7042,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.14.4;
+				MARKETING_VERSION = 1.14.5;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
