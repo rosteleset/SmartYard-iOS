@@ -20,10 +20,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CamerasListViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
-                <outlet property="addressLabel" destination="gD1-mO-mMZ" id="FMV-kn-CPc"/>
                 <outlet property="collectionView" destination="d0h-uP-vt4" id="QWl-xa-gdL"/>
                 <outlet property="containerView" destination="DU6-7A-OVf" id="e1d-1N-CqE"/>
                 <outlet property="fakeNavBar" destination="0Eb-KZ-HTZ" id="deX-LZ-Ius"/>
+                <outlet property="headerView" destination="x6r-cM-6zU" id="nBi-Db-Hyf"/>
                 <outlet property="skeletonContainer" destination="DtJ-fR-aWv" id="UIx-aB-Kgt"/>
                 <outlet property="view" destination="iN0-l3-epB" id="iXm-3L-PNx"/>
             </connections>
@@ -36,6 +36,12 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBackground" translatesAutoresizingMaskIntoConstraints="NO" id="JgU-Bc-erX">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x6r-cM-6zU" customClass="HeaderView" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="140" width="414" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="1" constant="44" id="NhD-e8-VlX"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DU6-7A-OVf" customClass="TopRoundedView" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="249" width="414" height="647"/>
                     <subviews>
@@ -155,15 +161,15 @@
                 <constraint firstItem="JgU-Bc-erX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="22y-F8-phU"/>
                 <constraint firstItem="JgU-Bc-erX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="3Gc-OO-UGq"/>
                 <constraint firstAttribute="trailing" secondItem="JgU-Bc-erX" secondAttribute="trailing" id="40W-kR-b8T"/>
-                <constraint firstItem="DU6-7A-OVf" firstAttribute="top" secondItem="Sma-HR-gft" secondAttribute="bottom" id="5SS-aq-U0q"/>
                 <constraint firstAttribute="trailing" secondItem="0Eb-KZ-HTZ" secondAttribute="trailing" id="BjG-jF-cde"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Sma-HR-gft" secondAttribute="trailing" id="Gir-Cv-9cD"/>
+                <constraint firstItem="x6r-cM-6zU" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="HVL-C1-QLv"/>
                 <constraint firstItem="0Eb-KZ-HTZ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="IgC-7a-zgW"/>
-                <constraint firstItem="Sma-HR-gft" firstAttribute="top" secondItem="0Eb-KZ-HTZ" secondAttribute="bottom" id="VM1-J8-31M"/>
                 <constraint firstItem="DU6-7A-OVf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Vz0-Vo-r3L"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="x6r-cM-6zU" secondAttribute="trailing" id="YzE-Kc-01G"/>
                 <constraint firstItem="DU6-7A-OVf" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="eSt-UR-hjR"/>
                 <constraint firstItem="0Eb-KZ-HTZ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="fJi-lB-ONm"/>
-                <constraint firstItem="Sma-HR-gft" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="fR1-rL-caK"/>
+                <constraint firstItem="x6r-cM-6zU" firstAttribute="top" secondItem="0Eb-KZ-HTZ" secondAttribute="bottom" id="fuD-7o-Jst"/>
+                <constraint firstItem="DU6-7A-OVf" firstAttribute="top" secondItem="x6r-cM-6zU" secondAttribute="bottom" id="kFj-EG-FAk"/>
                 <constraint firstAttribute="bottom" secondItem="JgU-Bc-erX" secondAttribute="bottom" id="nvs-LB-x04"/>
             </constraints>
             <point key="canvasLocation" x="131.8840579710145" y="20.758928571428569"/>
