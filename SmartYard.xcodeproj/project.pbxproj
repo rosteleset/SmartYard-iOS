@@ -482,6 +482,7 @@
 		8BF220BC2E2D112600D1A1E7 /* SmartYardThinSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF220BB2E2D112600D1A1E7 /* SmartYardThinSearchTextField.swift */; };
 		8BF6BAB82E7991EF00965949 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF6BAB72E7991EF00965949 /* HeaderView.swift */; };
 		8BF6BABC2E7992CA00965949 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF6BABB2E7992CA00965949 /* HeaderView.xib */; };
+		8BF854D92E9009710074F080 /* SharedWebKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF854D82E9009600074F080 /* SharedWebKit.swift */; };
 		9770CD7E9D04A0BA9C6BDF88 /* Pods_SmartYardWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2747C08EF399AF3014899F8 /* Pods_SmartYardWidget.framework */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
 		E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */; };
@@ -1473,6 +1474,7 @@
 		8BF6BABB2E7992CA00965949 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 		8BF749CF2E3E6B6300547D19 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/DetailGateAccessViewController.strings; sourceTree = "<group>"; };
 		8BF749D12E3E6B6300547D19 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/DetailGateAccessViewController.strings; sourceTree = "<group>"; };
+		8BF854D82E9009600074F080 /* SharedWebKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedWebKit.swift; sourceTree = "<group>"; };
 		8E65EC65DF6EAF2CB3A1B831 /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9632D77FAF39A6CB99673DCB /* Pods-SmartYardIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.debug.xcconfig"; sourceTree = "<group>"; };
 		E2747C08EF399AF3014899F8 /* Pods_SmartYardWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3268,6 +3270,7 @@
 		84B9EC8723E0844A00979C39 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				8BF854D82E9009600074F080 /* SharedWebKit.swift */,
 				8B70309B2E87E18F0078DCE6 /* VPNDetector.swift */,
 				8B7035682E885D2F0078DCE6 /* VPNBannerHelper.swift */,
 				8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */,
@@ -5507,6 +5510,7 @@
 				84898A9423F1555700E6B78E /* SettingsDataItemIdentity.swift in Sources */,
 				8496396524851B8B0086B6E9 /* AllCCTVResponseData.swift in Sources */,
 				84F6494F247410DE000C0028 /* CameraObject.swift in Sources */,
+				8BF854D92E9009710074F080 /* SharedWebKit.swift in Sources */,
 				84F64936247402DC000C0028 /* SelectCameraContainerViewModel.swift in Sources */,
 				3A8B952A25D9336D007CDD3C /* CityCamsCoordinator.swift in Sources */,
 				8B9658B32E81702900C9F9DA /* NameValidationPattern.swift in Sources */,
