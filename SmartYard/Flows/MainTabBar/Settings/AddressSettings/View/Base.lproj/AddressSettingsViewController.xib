@@ -50,7 +50,7 @@
                 <outlet property="voipContainerView" destination="saN-cp-T40" id="d2s-PI-kY0"/>
                 <outlet property="voipSwitch" destination="88V-jW-eOT" id="sQ8-kk-ac3"/>
                 <outlet property="whiteRabbitContainerView" destination="pa4-GN-boo" id="UJ6-Db-Ypg"/>
-                <outlet property="whiteRabbitQuestionMark" destination="dvv-PF-VJi" id="V9K-iZ-u9t"/>
+                <outlet property="whiteRabbitQuestionMark" destination="S3K-hL-sT6" id="q6f-ei-3Ie"/>
                 <outlet property="whiteRabbitSwitch" destination="F7L-aq-SPt" id="tJt-g5-S0W"/>
             </connections>
         </placeholder>
@@ -221,27 +221,26 @@
                                                                                         <constraint firstAttribute="height" constant="1" id="FrC-Ft-62E"/>
                                                                                     </constraints>
                                                                                 </view>
-                                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvv-PF-VJi">
-                                                                                    <rect key="frame" x="185" y="15.000000000000057" width="25" height="25"/>
+                                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S3K-hL-sT6" customClass="CircleIconControl" customModule="SmartYard" customModuleProvider="target">
+                                                                                    <rect key="frame" x="185" y="15.666666666666686" width="24" height="24"/>
                                                                                     <constraints>
-                                                                                        <constraint firstAttribute="width" constant="25" id="6Y8-Qf-HLB"/>
-                                                                                        <constraint firstAttribute="height" constant="25" id="NBb-Tq-fYR"/>
+                                                                                        <constraint firstAttribute="height" constant="24" id="JfV-Lw-vDb"/>
+                                                                                        <constraint firstAttribute="width" constant="24" id="omr-jw-3oT"/>
                                                                                     </constraints>
-                                                                                    <state key="normal" title="Button" image="QuestionMark"/>
-                                                                                </button>
+                                                                                </view>
                                                                             </subviews>
                                                                             <color key="backgroundColor" name="secondBackgroundColor"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="trailing" secondItem="F7L-aq-SPt" secondAttribute="trailing" constant="24" id="6VA-vz-V9I"/>
-                                                                                <constraint firstItem="dvv-PF-VJi" firstAttribute="leading" secondItem="cfP-r1-vq0" secondAttribute="trailing" constant="18" id="6ZM-9D-DwG"/>
+                                                                                <constraint firstItem="S3K-hL-sT6" firstAttribute="leading" secondItem="cfP-r1-vq0" secondAttribute="trailing" constant="18" id="6ZM-9D-DwG"/>
                                                                                 <constraint firstItem="F7L-aq-SPt" firstAttribute="centerY" secondItem="pa4-GN-boo" secondAttribute="centerY" id="7a0-7f-9Y6"/>
                                                                                 <constraint firstAttribute="bottom" secondItem="aG4-Hq-44m" secondAttribute="bottom" id="PAt-nV-iFs"/>
                                                                                 <constraint firstItem="cfP-r1-vq0" firstAttribute="leading" secondItem="pa4-GN-boo" secondAttribute="leading" constant="24" id="bpb-qz-hqo"/>
                                                                                 <constraint firstAttribute="height" constant="55" id="fq7-FP-S78"/>
                                                                                 <constraint firstItem="cfP-r1-vq0" firstAttribute="centerY" secondItem="pa4-GN-boo" secondAttribute="centerY" id="i7D-te-l9J"/>
+                                                                                <constraint firstItem="S3K-hL-sT6" firstAttribute="centerY" secondItem="pa4-GN-boo" secondAttribute="centerY" id="lqk-2B-oGd"/>
                                                                                 <constraint firstItem="aG4-Hq-44m" firstAttribute="leading" secondItem="pa4-GN-boo" secondAttribute="leading" id="peI-4a-7yu"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="aG4-Hq-44m" secondAttribute="trailing" id="sB4-1Y-uip"/>
-                                                                                <constraint firstItem="dvv-PF-VJi" firstAttribute="centerY" secondItem="pa4-GN-boo" secondAttribute="centerY" id="x3D-4w-9pe"/>
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSt-af-Niu" userLabel="View4">
@@ -536,7 +535,6 @@
     </objects>
     <resources>
         <image name="MainBackground" width="371" height="812"/>
-        <image name="QuestionMark" width="25" height="25"/>
         <image name="UpArrowIcon" width="13" height="8"/>
         <namedColor name="backgroundColor">
             <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

@@ -25,7 +25,7 @@ enum ModalContent: String {
 /// который в инициализаторе принимает название файла с содержимым
 final class ModalViewController: BaseViewController {
     
-    @IBOutlet private weak var cancelButton: UIButton!
+    @IBOutlet private weak var cancelButton: CircleIconControl!
     @IBOutlet private weak var containerView: UIView!
     
     private let contentView: UIView
@@ -36,7 +36,7 @@ final class ModalViewController: BaseViewController {
         self.contentView = nib?.first as? UIView ?? UIView()
         let dismissGesture = UITapGestureRecognizer()
         super.init(nibName: nil, bundle: nil)
-        
+
         dismissGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(dismissGesture)
         
@@ -57,16 +57,8 @@ final class ModalViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        cancelButton.style = .Close.blue
         self.containerView.addSubview(self.contentView)
-        
-        NSLayoutConstraint.activate(
-            [
-                self.contentView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 0),
-                self.contentView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: 0),
-                self.contentView.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: 0),
-                self.contentView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor, constant: 0)
-            ]
-        )
+        contentView.alignToView(containerView)
     }
 }

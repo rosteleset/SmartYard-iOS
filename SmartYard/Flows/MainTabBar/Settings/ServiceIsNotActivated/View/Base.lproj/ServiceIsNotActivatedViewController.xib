@@ -23,7 +23,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServiceIsNotActivatedViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundView" destination="MeN-0R-DY3" id="rA8-Wb-IQg"/>
-                <outlet property="closeButton" destination="CwM-Rp-b89" id="Jgs-aW-ehq"/>
+                <outlet property="closeButton" destination="AzI-3e-mnQ" id="Th8-rD-Zwp"/>
                 <outlet property="sendRequestButton" destination="WOW-JA-L8S" id="nFD-hL-XQG"/>
                 <outlet property="titleLabel" destination="FRg-G2-ZvH" id="IP5-kU-Kap"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -38,15 +38,16 @@
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                     <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CwM-Rp-b89">
-                    <rect key="frame" x="345" y="285.33333333333331" width="28" height="28"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AzI-3e-mnQ" customClass="CircleIconControl" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="345" y="297.66666666666669" width="28" height="28"/>
+                    <viewLayoutGuide key="safeArea" id="pBu-87-PAv"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="28" id="FlX-ol-EPQ"/>
-                        <constraint firstAttribute="width" constant="28" id="lea-3m-P4b"/>
+                        <constraint firstAttribute="height" constant="28" id="S5B-SC-aCz"/>
+                        <constraint firstAttribute="width" constant="28" id="tcC-3g-ZOA"/>
                     </constraints>
-                </button>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ueN-rf-84F">
-                    <rect key="frame" x="16" y="321.33333333333331" width="361" height="234.66666666666669"/>
+                    <rect key="frame" x="16" y="333.66666666666669" width="361" height="234.66666666666669"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Услуга не подключена" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FRg-G2-ZvH">
                             <rect key="frame" x="24" y="28.000000000000004" width="313" height="35.333333333333343"/>
@@ -55,13 +56,13 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Если хотите активировать услугу,  оставьте заявку" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnB-CN-jeP">
-                            <rect key="frame" x="24" y="75.333333333333371" width="313" height="35.333333333333343"/>
+                            <rect key="frame" x="24" y="75.333333333333314" width="313" height="35.333333333333343"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                             <color key="textColor" name="semiBlack"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WOW-JA-L8S" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="24" y="146.66666666666669" width="313" height="60"/>
+                            <rect key="frame" x="24" y="146.66666666666663" width="313" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="kTW-jk-Bh3"/>
                             </constraints>
@@ -94,9 +95,9 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="ueN-rf-84F" firstAttribute="trailing" secondItem="CwM-Rp-b89" secondAttribute="trailing" constant="4" id="CzH-BM-oox"/>
+                <constraint firstItem="ueN-rf-84F" firstAttribute="trailing" secondItem="AzI-3e-mnQ" secondAttribute="trailing" constant="4" id="CzH-BM-oox"/>
                 <constraint firstItem="ueN-rf-84F" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-16" id="PJu-9G-5Cs"/>
-                <constraint firstItem="CwM-Rp-b89" firstAttribute="bottom" secondItem="ueN-rf-84F" secondAttribute="top" constant="-8" id="RNw-A3-9aI"/>
+                <constraint firstItem="AzI-3e-mnQ" firstAttribute="bottom" secondItem="ueN-rf-84F" secondAttribute="top" constant="-8" id="RNw-A3-9aI"/>
                 <constraint firstAttribute="bottom" secondItem="MeN-0R-DY3" secondAttribute="bottom" id="Z1R-Gh-Pal"/>
                 <constraint firstAttribute="trailing" secondItem="MeN-0R-DY3" secondAttribute="trailing" id="kJ7-Xf-Ljx"/>
                 <constraint firstItem="MeN-0R-DY3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="oKt-wo-Xc6"/>

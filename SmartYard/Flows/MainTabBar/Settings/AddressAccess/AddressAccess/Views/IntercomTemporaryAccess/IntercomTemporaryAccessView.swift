@@ -15,8 +15,8 @@ final class IntercomTemporaryAccessView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var refreshButton: UIButton!
     @IBOutlet fileprivate weak var openButton: SmartYardActionModeButton!
-    @IBOutlet fileprivate weak var waitingGuestsQuestionMark: UIButton!
-    
+    @IBOutlet fileprivate weak var waitingGuestsQuestionMark: CircleIconControl!
+
     @IBOutlet private weak var codeLabel: UILabel!
     @IBOutlet private weak var containerView: FullRoundedView!
     
@@ -41,6 +41,7 @@ final class IntercomTemporaryAccessView: PMNibLinkableView {
         super.awakeFromNib()
         openButton.mode = AccessService.shared.guestAccessModeOnOnly ? .open : .enable
         containerView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
+        waitingGuestsQuestionMark.style = .Others.question
     }
     
 }

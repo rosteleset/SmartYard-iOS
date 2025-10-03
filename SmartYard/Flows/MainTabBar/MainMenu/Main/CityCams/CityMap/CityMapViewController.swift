@@ -72,12 +72,12 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
         bind()
     }
     
-    private func getCityCamImage(for style: UIUserInterfaceStyle) -> UIImage {
-        let image = UIImage(named: "CityCam")!
-        let traitCollection = UITraitCollection(userInterfaceStyle: style)
-        return image.imageAsset?.image(with: traitCollection) ?? image
+    private func getCityCamImage() -> UIImage {
+        let camView = CircleIconControl(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        camView.style = .Others.cam
+        return camView.asImage()
     }
-    
+
     fileprivate func updateAnnotations(_ annotationManager: PointAnnotationManager, _ cameras: [CityCameraObject]) {
         annotationManager.annotations = []
         
@@ -88,17 +88,10 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
                 return true
             }
             // point.userInfo = ["camera": camera]
-            if #available(iOS 13.0, *) {
-                point.image = .init(
-                    image: getCityCamImage(for: ThemeManager.shared.currentTheme.value),
-                    name: "MapPoint"
-                )
-            } else {
-                point.image = .init(
-                    image: getCityCamImage(for: .light),
-                    name: "MapPoint"
-                )
-            }
+            point.image = .init(
+                image: getCityCamImage(),
+                name: "MapPoint"
+            )
             point.iconAnchor = .center
             return point
         }

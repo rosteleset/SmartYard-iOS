@@ -13,7 +13,7 @@ import RxCocoa
 final class FaceCell: UICollectionViewCell {
 
     private var disposeBag = DisposeBag()
-    @IBOutlet private weak var deleteButton: UIButton!
+    @IBOutlet private weak var deleteButton: CircleIconControl!
     @IBOutlet private weak var imageButton: SafeCachedButton!
     
     private(set) var faceId: Int?
@@ -48,7 +48,8 @@ final class FaceCell: UICollectionViewCell {
         imageButton.loadImageUsingUrlString(urlString: faceImageURL, cache: imagesCache)
         imageButton.contentMode = .scaleAspectFit
         self.faceId = faceId
-        
+
+        deleteButton.style = .Close.red
         deleteButton.isHidden = false
         
         deleteButtonTrigger

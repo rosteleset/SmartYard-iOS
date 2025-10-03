@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ModalViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
-                <outlet property="cancelButton" destination="Fj2-SJ-y5p" id="mlN-Mc-Lkg"/>
+                <outlet property="cancelButton" destination="qol-KF-sTu" id="Ajm-lQ-YAF"/>
                 <outlet property="containerView" destination="gc7-nj-dVr" id="cBd-B1-sYc"/>
                 <outlet property="view" destination="eGs-Vh-ouJ" id="POD-Rh-Qes"/>
             </connections>
@@ -34,35 +34,33 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fj2-SJ-y5p">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qol-KF-sTu" customClass="CircleIconControl" customModule="SmartYard" customModuleProvider="target">
                     <rect key="frame" x="325" y="317" width="28" height="28"/>
+                    <viewLayoutGuide key="safeArea" id="Q5U-eQ-pF8"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="28" id="7rj-hz-jb2"/>
-                        <constraint firstAttribute="width" constant="28" id="O1b-P8-lQH"/>
+                        <constraint firstAttribute="height" constant="28" id="azP-yr-El2"/>
+                        <constraint firstAttribute="width" constant="28" id="bdW-Ya-5Rp"/>
                     </constraints>
-                    <color key="tintColor" name="secondBackgroundColor"/>
-                    <state key="normal" image="CloseIconBlue"/>
-                </button>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Mmh-do-YCQ"/>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Mmh-do-YCQ" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gc7-nj-dVr" secondAttribute="trailing" constant="16" id="9px-Ca-g9b"/>
                 <constraint firstItem="gc7-nj-dVr" firstAttribute="centerX" secondItem="eGs-Vh-ouJ" secondAttribute="centerX" id="Ka3-86-i1I"/>
-                <constraint firstItem="gc7-nj-dVr" firstAttribute="top" secondItem="Fj2-SJ-y5p" secondAttribute="bottom" constant="8" id="LNg-Oe-Rla"/>
+                <constraint firstItem="gc7-nj-dVr" firstAttribute="top" secondItem="qol-KF-sTu" secondAttribute="bottom" constant="8" id="LNg-Oe-Rla"/>
                 <constraint firstItem="gc7-nj-dVr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Mmh-do-YCQ" secondAttribute="top" constant="44" id="SCz-is-8Mi"/>
                 <constraint firstItem="gc7-nj-dVr" firstAttribute="centerY" secondItem="eGs-Vh-ouJ" secondAttribute="centerY" constant="5" id="a5h-Ld-0oW"/>
                 <constraint firstItem="gc7-nj-dVr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Mmh-do-YCQ" secondAttribute="leading" constant="16" id="bXO-2i-kek"/>
-                <constraint firstItem="gc7-nj-dVr" firstAttribute="trailing" secondItem="Fj2-SJ-y5p" secondAttribute="trailing" constant="4" id="daI-Ga-Wvw"/>
+                <constraint firstItem="gc7-nj-dVr" firstAttribute="trailing" secondItem="qol-KF-sTu" secondAttribute="trailing" constant="4" id="daI-Ga-Wvw"/>
                 <constraint firstItem="Mmh-do-YCQ" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gc7-nj-dVr" secondAttribute="bottom" constant="16" id="oey-ai-PoH"/>
             </constraints>
             <point key="canvasLocation" x="138.75" y="90"/>
         </view>
     </objects>
     <resources>
-        <image name="CloseIconBlue" width="28" height="28"/>
         <namedColor name="secondBackgroundColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

@@ -17,7 +17,6 @@ final class CamerasListViewController: BaseViewController, LoaderPresentable {
     private let itemsProxy = BehaviorSubject<[CamerasListItem]>(value: [])
     private let itemSelected = PublishSubject<IndexPath>()
 
-
     @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var containerView: TopRoundedView!
@@ -41,7 +40,6 @@ final class CamerasListViewController: BaseViewController, LoaderPresentable {
     }
     
     private func bind() {
-        
         let input = CamerasListViewModel.Input(
             itemSelected: itemSelected.asDriverOnErrorJustComplete(),
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver()

@@ -14,7 +14,6 @@ import JGProgressHUD
 
 final class CommonSettingsViewController: BaseViewController, LoaderPresentable {
 
-
     @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var mainContainerView: UIView!
@@ -49,7 +48,7 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
     
     @IBOutlet private weak var callkitContainerView: UIView!
     @IBOutlet private weak var callkitSwitch: UISwitch!
-    @IBOutlet private weak var callkitQuestionMark: UIButton!
+    @IBOutlet private weak var callkitQuestionMark: CircleIconControl!
     
     @IBOutlet private var collapsedCallsBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedCallsBottomConstraint: NSLayoutConstraint!
@@ -59,8 +58,8 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
     @IBOutlet private weak var displayHeaderArrowImageView: UIImageView!
     
     @IBOutlet private weak var addressOrderResetButton: SmartYardActionModeButton!
-    @IBOutlet private weak var addressOrderQuestionMark: UIButton!
-    
+    @IBOutlet private weak var addressOrderQuestionMark: CircleIconControl!
+
     @IBOutlet private weak var showCamerasOnMapContainerView: UIView!
     @IBOutlet private weak var showCamerasOnMapSwitch: UISwitch!
     
@@ -119,6 +118,9 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
     private func configureView() {
         mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
+
+        callkitQuestionMark.style = .Others.question
+        addressOrderQuestionMark.style = .Others.question
 
         headerView.setText(NSLocalizedString("Common settings", comment: ""))
 

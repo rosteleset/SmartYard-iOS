@@ -456,6 +456,8 @@
 		8B9658AD2E816C7A00C9F9DA /* NSRegularExpression+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9658AC2E816C6D00C9F9DA /* NSRegularExpression+Extensions.swift */; };
 		8B9658AF2E816F9200C9F9DA /* ValidatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9658AE2E816F8D00C9F9DA /* ValidatorFactory.swift */; };
 		8B9658B32E81702900C9F9DA /* NameValidationPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9658B22E81702200C9F9DA /* NameValidationPattern.swift */; };
+		8B9D9E852E8C743D00F383A7 /* CircleIconControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9D9E842E8C742F00F383A7 /* CircleIconControl.swift */; };
+		8B9D9E8B2E8D200B00F383A7 /* CircleIconStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9D9E8A2E8D200B00F383A7 /* CircleIconStyle.swift */; };
 		8B9FCADB2E38FFBF00A23E23 /* DetailGateAccessSkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9FCAD82E38FFBF00A23E23 /* DetailGateAccessSkeletonView.swift */; };
 		8B9FCADC2E38FFBF00A23E23 /* DetailGateAccessSkeletonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B9FCAD92E38FFBF00A23E23 /* DetailGateAccessSkeletonView.xib */; };
 		8BA6EA5C2DF9A88500CDA2DA /* AllowedCar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA6EA5B2DF9A86000CDA2DA /* AllowedCar.swift */; };
@@ -1443,6 +1445,8 @@
 		8B9658AC2E816C6D00C9F9DA /* NSRegularExpression+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRegularExpression+Extensions.swift"; sourceTree = "<group>"; };
 		8B9658AE2E816F8D00C9F9DA /* ValidatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorFactory.swift; sourceTree = "<group>"; };
 		8B9658B22E81702200C9F9DA /* NameValidationPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameValidationPattern.swift; sourceTree = "<group>"; };
+		8B9D9E842E8C742F00F383A7 /* CircleIconControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleIconControl.swift; sourceTree = "<group>"; };
+		8B9D9E8A2E8D200B00F383A7 /* CircleIconStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleIconStyle.swift; sourceTree = "<group>"; };
 		8B9FCAD82E38FFBF00A23E23 /* DetailGateAccessSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGateAccessSkeletonView.swift; sourceTree = "<group>"; };
 		8B9FCAD92E38FFBF00A23E23 /* DetailGateAccessSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailGateAccessSkeletonView.xib; sourceTree = "<group>"; };
 		8BA6EA5B2DF9A86000CDA2DA /* AllowedCar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedCar.swift; sourceTree = "<group>"; };
@@ -2362,6 +2366,7 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8B9D9E862E8D1FE400F383A7 /* CircleIconView */,
 				8B35B6C02E7EEB720081B28A /* SmartYardTextFields */,
 				8BF6BAB62E7991D300965949 /* HeaderView */,
 				FAC8CFF72BA6890D00D377E2 /* CameraButton */,
@@ -3756,6 +3761,23 @@
 				8B9658A12E816A3B00C9F9DA /* NameDefaults.swift */,
 			);
 			path = NameValidator;
+			sourceTree = "<group>";
+		};
+		8B9D9E862E8D1FE400F383A7 /* CircleIconView */ = {
+			isa = PBXGroup;
+			children = (
+				8B9D9E892E8D1FEB00F383A7 /* Entities */,
+				8B9D9E842E8C742F00F383A7 /* CircleIconControl.swift */,
+			);
+			path = CircleIconView;
+			sourceTree = "<group>";
+		};
+		8B9D9E892E8D1FEB00F383A7 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				8B9D9E8A2E8D200B00F383A7 /* CircleIconStyle.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		8B9FCADA2E38FFBF00A23E23 /* DetailGateAccessSkeletonView */ = {
@@ -5476,6 +5498,7 @@
 				3A1BDEC626285DB60075410B /* HistoryHelpers.swift in Sources */,
 				E9A4D47C23EC19110070A591 /* Constants.swift in Sources */,
 				3AFBA73E26383A2F00C7DEB6 /* CamMapCCTVRequest.swift in Sources */,
+				8B9D9E852E8C743D00F383A7 /* CircleIconControl.swift in Sources */,
 				E92EFBBF242A22F2003AF7FE /* GetServicesRequest.swift in Sources */,
 				84F6494B24740E90000C0028 /* YardMapViewModel.swift in Sources */,
 				84F6493C247402DC000C0028 /* CustomDayCell.swift in Sources */,
@@ -5645,6 +5668,7 @@
 				3A2881B12665093200F42097 /* AddFaceViewController.swift in Sources */,
 				847880E024A4BB3B008D9E33 /* ScreenshotHelper.swift in Sources */,
 				3A003C7025DEF2B7002F193B /* YouTubeRequest.swift in Sources */,
+				8B9D9E8B2E8D200B00F383A7 /* CircleIconStyle.swift in Sources */,
 				844AC3AD23E9BBA50066006D /* UIImage+Extensions.swift in Sources */,
 				E98C382123F144E50010BBC1 /* UIColor+Extensions.swift in Sources */,
 				E92EFB4524287F4C003AF7FE /* PassConfirmationPinViewController.swift in Sources */,

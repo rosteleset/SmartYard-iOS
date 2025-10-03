@@ -127,3 +127,13 @@ extension UIView {
         self.layer.borderWidth = width
     }
 }
+
+extension UIView {
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: bounds.size)
+        let image = renderer.image { _ in
+            drawHierarchy(in: bounds, afterScreenUpdates: true)
+        }
+        return image
+    }
+}

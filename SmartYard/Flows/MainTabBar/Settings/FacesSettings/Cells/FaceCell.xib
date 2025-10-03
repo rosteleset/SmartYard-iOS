@@ -50,24 +50,23 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j72-jf-883">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c5b-YU-wrO" customClass="CircleIconControl" customModule="SmartYard" customModuleProvider="target">
                                 <rect key="frame" x="12" y="64" width="28" height="28"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="28" id="qa0-RS-QPV"/>
-                                    <constraint firstAttribute="height" constant="28" id="szl-ax-6pM"/>
+                                    <constraint firstAttribute="width" constant="28" id="Mwz-4K-noa"/>
+                                    <constraint firstAttribute="height" constant="28" id="fic-vs-wPY"/>
                                 </constraints>
-                                <state key="normal" image="closeIconRed"/>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="c5b-YU-wrO" secondAttribute="bottom" id="3Gn-ka-o5I"/>
+                            <constraint firstItem="c5b-YU-wrO" firstAttribute="centerX" secondItem="Jbr-Rl-Dyz" secondAttribute="centerX" id="5Ha-lm-S5g"/>
                             <constraint firstAttribute="trailing" secondItem="Emi-Ce-ieg" secondAttribute="trailing" id="Fvh-ta-DL0"/>
                             <constraint firstItem="Emi-Ce-ieg" firstAttribute="top" secondItem="Jbr-Rl-Dyz" secondAttribute="top" id="UGS-Er-8Wo"/>
                             <constraint firstAttribute="width" constant="52" id="h3d-3p-g0K"/>
                             <constraint firstAttribute="height" constant="92" id="pT2-6N-ghB"/>
-                            <constraint firstItem="j72-jf-883" firstAttribute="centerX" secondItem="Jbr-Rl-Dyz" secondAttribute="centerX" id="qT7-bu-hWd"/>
                             <constraint firstItem="Emi-Ce-ieg" firstAttribute="leading" secondItem="Jbr-Rl-Dyz" secondAttribute="leading" id="xkR-tY-Lgo"/>
-                            <constraint firstAttribute="bottom" secondItem="j72-jf-883" secondAttribute="bottom" id="xyV-ts-q90"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -79,14 +78,13 @@
                 <constraint firstAttribute="trailing" secondItem="Jbr-Rl-Dyz" secondAttribute="trailing" id="tDa-Sd-hVz"/>
             </constraints>
             <connections>
-                <outlet property="deleteButton" destination="j72-jf-883" id="0Kv-fi-acO"/>
+                <outlet property="deleteButton" destination="c5b-YU-wrO" id="apq-Cu-EjH"/>
                 <outlet property="imageButton" destination="c65-ev-GzG" id="WkK-f6-CNL"/>
             </connections>
             <point key="canvasLocation" x="33" y="90"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="closeIconRed" width="28" height="27"/>
         <namedColor name="backgroundColor">
             <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

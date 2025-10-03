@@ -37,7 +37,7 @@ final class HistoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var callStatusIcon: UIImageView!
     @IBOutlet private weak var callStatusLabel: UILabel!
     @IBOutlet private weak var actionsDescriptionLabel: UILabel!
-    @IBOutlet private weak var questionMark: UIButton!
+    @IBOutlet private weak var questionMark: CircleIconControl!
     @IBOutlet private weak var descriptionContainer: UIView!
     
     /*private var videoURL: String? {
@@ -214,7 +214,8 @@ final class HistoryCollectionViewCell: UICollectionViewCell {
         } else {
             self.camera = nil
         }
-        
+
+        questionMark.style = .Others.question
         callStatusView.isHidden = true
         descriptionLabel.isHidden = false
         descriptionLabel.text = ""

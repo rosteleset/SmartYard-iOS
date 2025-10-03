@@ -33,8 +33,8 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
     
     @IBOutlet private weak var whiteRabbitContainerView: UIView!
     @IBOutlet private weak var whiteRabbitSwitch: UISwitch!
-    @IBOutlet private weak var whiteRabbitQuestionMark: UIButton!
-    
+    @IBOutlet private weak var whiteRabbitQuestionMark: CircleIconControl!
+
     @IBOutlet private weak var paperContainerView: UIView!
     @IBOutlet private weak var paperSwitch: UISwitch!
     

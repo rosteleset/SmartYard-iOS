@@ -24,7 +24,7 @@
             <connections>
                 <outlet property="backgroundView" destination="phs-lV-773" id="kKf-b0-lnn"/>
                 <outlet property="changePlanButton" destination="GbW-UQ-G33" id="vjB-Cr-KWt"/>
-                <outlet property="closeButton" destination="nJN-fQ-roe" id="b8O-80-c5o"/>
+                <outlet property="closeButton" destination="DfF-gC-Fg9" id="eM7-P5-Ile"/>
                 <outlet property="titleLabel" destination="YeC-Yi-BOi" id="7BZ-9h-81I"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -38,30 +38,30 @@
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJN-fQ-roe">
-                    <rect key="frame" x="345" y="294" width="28" height="28"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DfF-gC-Fg9" customClass="CircleIconControl" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="345" y="308.66666666666669" width="28" height="28"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="28" id="JTA-MQ-uf1"/>
-                        <constraint firstAttribute="width" constant="28" id="SgZ-qH-k8H"/>
+                        <constraint firstAttribute="height" constant="28" id="Eov-5j-fJw"/>
+                        <constraint firstAttribute="width" constant="28" id="hR2-Kg-4Qk"/>
                     </constraints>
-                </button>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LYf-Xo-EbZ">
-                    <rect key="frame" x="16" y="330" width="361" height="217"/>
+                    <rect key="frame" x="16" y="344.66666666666669" width="361" height="213.00000000000006"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Услуга подключена" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YeC-Yi-BOi">
-                            <rect key="frame" x="24" y="28.000000000000004" width="313" height="35.333333333333343"/>
+                            <rect key="frame" x="24" y="27.999999999999996" width="313" height="32.666666666666657"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="28"/>
                             <color key="textColor" name="semiBlack"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Если хотите сменить тариф, оставьте заявку" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pmt-1V-kNk">
-                            <rect key="frame" x="24" y="75.333333333333314" width="313" height="17.666666666666671"/>
+                            <rect key="frame" x="24" y="72.666666666666629" width="313" height="16.333333333333329"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                             <color key="textColor" name="semiBlack"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GbW-UQ-G33" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="24" y="129" width="313" height="60"/>
+                            <rect key="frame" x="24" y="125" width="313" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="igb-t2-ofp"/>
                             </constraints>
@@ -95,10 +95,10 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="LYf-Xo-EbZ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="50C-2v-b9a"/>
-                <constraint firstItem="LYf-Xo-EbZ" firstAttribute="trailing" secondItem="nJN-fQ-roe" secondAttribute="trailing" constant="4" id="6cO-gE-6ZM"/>
+                <constraint firstItem="LYf-Xo-EbZ" firstAttribute="trailing" secondItem="DfF-gC-Fg9" secondAttribute="trailing" constant="4" id="6cO-gE-6ZM"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LYf-Xo-EbZ" secondAttribute="trailing" constant="16" id="9uX-q9-Huz"/>
                 <constraint firstItem="phs-lV-773" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Nae-im-Wqy"/>
-                <constraint firstItem="nJN-fQ-roe" firstAttribute="bottom" secondItem="LYf-Xo-EbZ" secondAttribute="top" constant="-8" id="NeP-Tg-nBy"/>
+                <constraint firstItem="DfF-gC-Fg9" firstAttribute="bottom" secondItem="LYf-Xo-EbZ" secondAttribute="top" constant="-8" id="NeP-Tg-nBy"/>
                 <constraint firstItem="phs-lV-773" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="cRZ-at-yAG"/>
                 <constraint firstAttribute="bottom" secondItem="phs-lV-773" secondAttribute="bottom" id="m6u-xQ-wQB"/>
                 <constraint firstItem="LYf-Xo-EbZ" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="mAI-3D-r5B"/>

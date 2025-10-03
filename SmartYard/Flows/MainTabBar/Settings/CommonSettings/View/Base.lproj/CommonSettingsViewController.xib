@@ -19,7 +19,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommonSettingsViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
-                <outlet property="addressOrderQuestionMark" destination="CEe-m5-d26" id="y3J-2T-4wd"/>
+                <outlet property="addressOrderQuestionMark" destination="EKl-8t-6Nb" id="Ndo-Bm-Z9E"/>
                 <outlet property="addressOrderResetButton" destination="Ks4-be-kpH" id="IgI-uI-Ztf"/>
                 <outlet property="appearanceContainerView" destination="TbQ-bG-VXo" id="ECm-1w-TET"/>
                 <outlet property="appearanceHighSeparator" destination="Wtu-6h-Aj8" id="7rP-MK-HOC"/>
@@ -27,7 +27,7 @@
                 <outlet property="balanceWarningSkeleton" destination="YJs-4R-Kis" id="nkd-lo-mgM"/>
                 <outlet property="balanceWarningSwitch" destination="ehC-mw-0P1" id="fVU-3X-roA"/>
                 <outlet property="callkitContainerView" destination="XCs-kk-ZWD" id="rxd-9s-t6R"/>
-                <outlet property="callkitQuestionMark" destination="RNt-Bo-aTz" id="4Qm-mP-Fbe"/>
+                <outlet property="callkitQuestionMark" destination="h7g-9m-b6R" id="9Gs-nd-6v1"/>
                 <outlet property="callkitSwitch" destination="ccK-Dt-wlB" id="1Tb-mk-jeB"/>
                 <outlet property="callsContainerView" destination="3WQ-4A-fRg" id="qJ9-M1-q8j"/>
                 <outlet property="callsHeader" destination="Oud-4l-96E" id="cvR-Jj-7U3"/>
@@ -464,15 +464,13 @@
                                                                                 <constraint firstAttribute="height" constant="1" id="t8W-Cj-jGb"/>
                                                                             </constraints>
                                                                         </view>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RNt-Bo-aTz">
-                                                                            <rect key="frame" x="169.5" y="15" width="25" height="25"/>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7g-9m-b6R" customClass="CircleIconControl" customModule="SmartYard" customModuleProvider="target">
+                                                                            <rect key="frame" x="167.5" y="15.5" width="24" height="24"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="height" constant="25" id="Tl9-nT-jlp"/>
-                                                                                <constraint firstAttribute="width" constant="25" id="p6u-Ml-dFs"/>
+                                                                                <constraint firstAttribute="height" constant="24" id="QFf-MD-peO"/>
+                                                                                <constraint firstAttribute="width" constant="24" id="swo-bl-pEA"/>
                                                                             </constraints>
-                                                                            <color key="tintColor" name="blue"/>
-                                                                            <state key="normal" title="Button" image="QuestionMark"/>
-                                                                        </button>
+                                                                        </view>
                                                                     </subviews>
                                                                     <color key="backgroundColor" name="secondBackgroundColor"/>
                                                                     <constraints>
@@ -483,11 +481,11 @@
                                                                         <constraint firstAttribute="bottom" secondItem="cHI-rH-aqS" secondAttribute="bottom" id="LQD-Bs-CZU"/>
                                                                         <constraint firstAttribute="trailing" secondItem="ccK-Dt-wlB" secondAttribute="trailing" constant="24" id="NDD-wn-qkf"/>
                                                                         <constraint firstItem="ccK-Dt-wlB" firstAttribute="leading" secondItem="VyV-ny-Hom" secondAttribute="leading" id="ZPF-N0-EdL"/>
+                                                                        <constraint firstItem="h7g-9m-b6R" firstAttribute="centerY" secondItem="XUA-3w-YEb" secondAttribute="centerY" id="hhG-Qr-flc"/>
                                                                         <constraint firstItem="ccK-Dt-wlB" firstAttribute="top" secondItem="VyV-ny-Hom" secondAttribute="top" id="mHQ-Kd-KDn"/>
-                                                                        <constraint firstItem="RNt-Bo-aTz" firstAttribute="leading" secondItem="XUA-3w-YEb" secondAttribute="trailing" constant="18" id="man-hF-gaQ"/>
+                                                                        <constraint firstItem="h7g-9m-b6R" firstAttribute="leading" secondItem="XUA-3w-YEb" secondAttribute="trailing" constant="16" id="man-hF-gaQ"/>
                                                                         <constraint firstAttribute="height" constant="55" id="qSv-JN-8d4"/>
                                                                         <constraint firstItem="ccK-Dt-wlB" firstAttribute="centerY" secondItem="XCs-kk-ZWD" secondAttribute="centerY" id="rGj-Ul-tWC"/>
-                                                                        <constraint firstItem="RNt-Bo-aTz" firstAttribute="centerY" secondItem="XUA-3w-YEb" secondAttribute="centerY" id="t9i-OA-wno"/>
                                                                         <constraint firstItem="XUA-3w-YEb" firstAttribute="centerY" secondItem="XCs-kk-ZWD" secondAttribute="centerY" id="wXk-Rz-apv"/>
                                                                         <constraint firstItem="cHI-rH-aqS" firstAttribute="leading" secondItem="XCs-kk-ZWD" secondAttribute="leading" id="xEu-YN-ExC"/>
                                                                     </constraints>
@@ -634,15 +632,13 @@
                                                                                 <constraint firstAttribute="height" constant="1" id="Dqr-v9-S5s"/>
                                                                             </constraints>
                                                                         </view>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CEe-m5-d26">
-                                                                            <rect key="frame" x="151.5" y="15" width="25" height="25"/>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EKl-8t-6Nb" customClass="CircleIconControl" customModule="SmartYard" customModuleProvider="target">
+                                                                            <rect key="frame" x="149.5" y="15.5" width="24" height="24"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="height" constant="25" id="I4y-B6-9Ya"/>
-                                                                                <constraint firstAttribute="width" constant="25" id="gga-26-6Ch"/>
+                                                                                <constraint firstAttribute="height" constant="24" id="DGd-dp-aFQ"/>
+                                                                                <constraint firstAttribute="width" constant="24" id="oAQ-D5-B1z"/>
                                                                             </constraints>
-                                                                            <color key="tintColor" name="blue"/>
-                                                                            <state key="normal" title="Button" image="QuestionMark"/>
-                                                                        </button>
+                                                                        </view>
                                                                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ks4-be-kpH" customClass="SmartYardActionModeButton" customModule="SmartYard" customModuleProvider="target">
                                                                             <rect key="frame" x="274" y="9.5" width="84" height="36"/>
                                                                             <constraints>
@@ -656,10 +652,10 @@
                                                                     <constraints>
                                                                         <constraint firstItem="Ks4-be-kpH" firstAttribute="centerY" secondItem="QxC-k5-gdu" secondAttribute="centerY" id="5lV-Xg-wGF"/>
                                                                         <constraint firstItem="7BY-d6-amV" firstAttribute="leading" secondItem="QxC-k5-gdu" secondAttribute="leading" id="8YK-08-rJS"/>
-                                                                        <constraint firstItem="CEe-m5-d26" firstAttribute="centerY" secondItem="1qg-rb-8HA" secondAttribute="centerY" id="IZH-eW-fjZ"/>
-                                                                        <constraint firstItem="CEe-m5-d26" firstAttribute="leading" secondItem="1qg-rb-8HA" secondAttribute="trailing" constant="18" id="VAc-Ix-hju"/>
+                                                                        <constraint firstItem="EKl-8t-6Nb" firstAttribute="leading" secondItem="1qg-rb-8HA" secondAttribute="trailing" constant="16" id="VAc-Ix-hju"/>
+                                                                        <constraint firstItem="EKl-8t-6Nb" firstAttribute="centerY" secondItem="1qg-rb-8HA" secondAttribute="centerY" id="VPq-y7-h8P"/>
                                                                         <constraint firstAttribute="trailing" secondItem="7BY-d6-amV" secondAttribute="trailing" id="WSx-VI-MXT"/>
-                                                                        <constraint firstItem="Ks4-be-kpH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CEe-m5-d26" secondAttribute="trailing" constant="16" id="XI5-4A-azm"/>
+                                                                        <constraint firstItem="Ks4-be-kpH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="EKl-8t-6Nb" secondAttribute="trailing" constant="16" id="XI5-4A-azm"/>
                                                                         <constraint firstAttribute="top" secondItem="7BY-d6-amV" secondAttribute="bottom" id="YFg-aa-VaQ"/>
                                                                         <constraint firstItem="1qg-rb-8HA" firstAttribute="leading" secondItem="QxC-k5-gdu" secondAttribute="leading" constant="24" id="ZeR-Ql-yRp"/>
                                                                         <constraint firstAttribute="height" constant="55" id="coM-Jo-cua"/>
@@ -876,15 +872,11 @@
     </objects>
     <resources>
         <image name="MainBackground" width="371" height="812"/>
-        <image name="QuestionMark" width="25" height="25"/>
         <image name="RightArrowIcon" width="8" height="13"/>
         <image name="UpArrowIcon" width="13" height="8"/>
         <image name="pencil" width="12" height="12"/>
         <namedColor name="backgroundColor">
             <color red="0.95294117647058818" green="0.95686274509803926" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-        <namedColor name="blue">
-            <color red="0.16078431372549021" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="darkGreen">
             <color red="0.12156862745098039" green="0.73725490196078436" blue="0.3843137254901961" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

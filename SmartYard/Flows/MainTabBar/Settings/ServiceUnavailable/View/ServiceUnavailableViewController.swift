@@ -14,7 +14,7 @@ import JGProgressHUD
 final class ServiceUnavailableViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var closeButton: CircleIconControl!
     @IBOutlet private weak var sendRequestButton: BlueButton!
     @IBOutlet private weak var backgroundView: UIView!
     
@@ -39,10 +39,9 @@ final class ServiceUnavailableViewController: BaseViewController, LoaderPresenta
     }
     
     private func configureView() {
-        closeButton.setImage(UIImage(named: "CloseIconBlue"), for: .normal)
-        closeButton.setImage(UIImage(named: "CloseIconBlue")?.darkened(), for: .highlighted)
+        closeButton.style = .Close.blue
     }
-    
+
     private func bind() {
         let dismissGesture = UITapGestureRecognizer()
         dismissGesture.cancelsTouchesInView = false

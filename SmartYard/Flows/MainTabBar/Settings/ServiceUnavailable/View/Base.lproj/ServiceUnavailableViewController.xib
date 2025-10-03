@@ -23,7 +23,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServiceUnavailableViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundView" destination="ccQ-yj-A4K" id="Dgr-mq-Etq"/>
-                <outlet property="closeButton" destination="Ca8-eQ-vwl" id="ohy-sg-jTw"/>
                 <outlet property="sendRequestButton" destination="FA4-db-bwd" id="RU1-pg-UuA"/>
                 <outlet property="titleLabel" destination="4dc-Ik-xbo" id="SwY-fZ-QN3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -39,7 +38,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sFc-wx-dKG">
-                    <rect key="frame" x="16" y="303.66666666666669" width="361" height="270.00000000000006"/>
+                    <rect key="frame" x="16" y="316" width="361" height="270"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Услуга пока недоступна" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4dc-Ik-xbo">
                             <rect key="frame" x="24" y="28.000000000000004" width="313" height="35.333333333333343"/>
@@ -84,20 +83,20 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ca8-eQ-vwl">
-                    <rect key="frame" x="345" y="267.66666666666669" width="28" height="28"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blL-RT-SlD" customClass="CircleIconControl" customModule="SmartYard" customModuleProvider="target">
+                    <rect key="frame" x="345" y="280" width="28" height="28"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="28" id="KnQ-cM-iOB"/>
-                        <constraint firstAttribute="width" constant="28" id="tHX-2i-Lhz"/>
+                        <constraint firstAttribute="height" constant="28" id="EUG-ML-N0N"/>
+                        <constraint firstAttribute="width" constant="28" id="JCg-wK-pgZ"/>
                     </constraints>
-                </button>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="Ca8-eQ-vwl" firstAttribute="bottom" secondItem="sFc-wx-dKG" secondAttribute="top" constant="-8" id="1pu-gF-n7P"/>
+                <constraint firstItem="blL-RT-SlD" firstAttribute="bottom" secondItem="sFc-wx-dKG" secondAttribute="top" constant="-8" id="1pu-gF-n7P"/>
                 <constraint firstAttribute="bottom" secondItem="ccQ-yj-A4K" secondAttribute="bottom" id="Gss-T7-yoZ"/>
-                <constraint firstItem="sFc-wx-dKG" firstAttribute="trailing" secondItem="Ca8-eQ-vwl" secondAttribute="trailing" constant="4" id="K3Y-pE-wXY"/>
+                <constraint firstItem="sFc-wx-dKG" firstAttribute="trailing" secondItem="blL-RT-SlD" secondAttribute="trailing" constant="4" id="K3Y-pE-wXY"/>
                 <constraint firstItem="sFc-wx-dKG" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="akO-5A-aWm"/>
                 <constraint firstItem="sFc-wx-dKG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="dVI-cv-dDl"/>
                 <constraint firstItem="ccQ-yj-A4K" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="m3H-fU-TTT"/>

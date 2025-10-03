@@ -20,11 +20,11 @@ enum SettingsServiceType: String {
     
     var unselectedIcon: UIImage? {
         switch self {
-        case .internet: return UIImage(named: "SettingsWiFiUnselectedIcon")
-        case .iptv: return UIImage(named: "SettingsMonitorUnselectedIcon")
-        case .phone: return UIImage(named: "SettingsCallUnselectedIcon")
-        case .domophone: return UIImage(named: "SettingsKeyUnselectedIcon")
-        case .cctv: return UIImage(named: "SettingsEyeUnselectedIcon")
+        case .internet: return getImage(with: .Settings.Unselected.wifi)
+        case .iptv: return getImage(with: .Settings.Unselected.monitor)
+        case .phone: return getImage(with: .Settings.Unselected.call)
+        case .domophone: return getImage(with: .Settings.Unselected.key)
+        case .cctv: return getImage(with: .Settings.Unselected.eye)
         case .ctv: return nil
         case .gsm: return nil
         }
@@ -32,11 +32,11 @@ enum SettingsServiceType: String {
     
     var selectedIcon: UIImage? {
         switch self {
-        case .internet: return UIImage(named: "SettingsWiFiSelectedIcon")
-        case .iptv: return UIImage(named: "SettingsMonitorSelectedIcon")
-        case .phone: return UIImage(named: "SettingsCallSelectedIcon")
-        case .domophone: return UIImage(named: "SettingsKeySelectedIcon")
-        case .cctv: return UIImage(named: "SettingsEyeSelectedIcon")
+        case .internet: return getImage(with: .Settings.Selected.wifi)
+        case .iptv: return getImage(with: .Settings.Selected.monitor)
+        case .phone: return getImage(with: .Settings.Selected.call)
+        case .domophone: return getImage(with: .Settings.Selected.key)
+        case .cctv: return getImage(with: .Settings.Selected.eye)
         case .ctv: return nil
         case .gsm: return nil
         }
@@ -53,5 +53,11 @@ enum SettingsServiceType: String {
         case .gsm: return NSLocalizedString("Mobile Phone", comment: "")
         }
     }
-    
+
+    private func getImage(with style: CircleIconStyle) -> UIImage {
+        let camView = CircleIconControl(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        camView.style = style
+        return camView.asImage()
+    }
+
 }

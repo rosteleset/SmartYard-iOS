@@ -86,16 +86,13 @@
                                     <color key="textColor" name="semiBlack"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F3N-qO-4bf">
-                                    <rect key="frame" x="183.5" y="19.5" width="25" height="25"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ij-0C-KKs" customClass="CircleIconControl" customModule="SmartYard" customModuleProvider="target">
+                                    <rect key="frame" x="181.5" y="20" width="24" height="24"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="25" id="6nH-ef-Sf0"/>
-                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="KW1-gX-Uzq"/>
-                                        <constraint firstAttribute="height" constant="25" id="hCd-Cy-ZFk"/>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="iNg-7y-d44"/>
+                                        <constraint firstAttribute="width" constant="24" id="BrA-fY-LSW"/>
+                                        <constraint firstAttribute="height" constant="24" id="DaX-oB-KGC"/>
                                     </constraints>
-                                    <state key="normal" title="Button" image="QuestionMark"/>
-                                </button>
+                                </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enN-rb-QVd" customClass="SmartYardActionModeButton" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="338" y="14" width="84" height="36"/>
                                     <constraints>
@@ -107,10 +104,10 @@
                             </subviews>
                             <color key="backgroundColor" name="secondBackgroundColor"/>
                             <constraints>
-                                <constraint firstItem="F3N-qO-4bf" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="enN-rb-QVd" secondAttribute="leading" constant="8" id="3vG-fu-FlR"/>
+                                <constraint firstItem="0Ij-0C-KKs" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="enN-rb-QVd" secondAttribute="leading" constant="8" id="3vG-fu-FlR"/>
                                 <constraint firstItem="enN-rb-QVd" firstAttribute="centerY" secondItem="VG3-rh-PSA" secondAttribute="centerY" id="DcU-qJ-HVL"/>
-                                <constraint firstItem="F3N-qO-4bf" firstAttribute="centerY" secondItem="VG3-rh-PSA" secondAttribute="centerY" id="HD1-fz-mcr"/>
-                                <constraint firstItem="F3N-qO-4bf" firstAttribute="leading" secondItem="7lW-Yj-xxP" secondAttribute="trailing" constant="18" id="sLY-Zz-Kcu"/>
+                                <constraint firstItem="0Ij-0C-KKs" firstAttribute="centerY" secondItem="VG3-rh-PSA" secondAttribute="centerY" id="pA2-Bv-Wbi"/>
+                                <constraint firstItem="0Ij-0C-KKs" firstAttribute="leading" secondItem="7lW-Yj-xxP" secondAttribute="trailing" constant="16" id="sLY-Zz-Kcu"/>
                                 <constraint firstAttribute="height" constant="64" id="uVD-gl-ta1"/>
                                 <constraint firstItem="7lW-Yj-xxP" firstAttribute="leading" secondItem="VG3-rh-PSA" secondAttribute="leading" constant="24" id="xUN-fq-LEL"/>
                                 <constraint firstItem="7lW-Yj-xxP" firstAttribute="centerY" secondItem="VG3-rh-PSA" secondAttribute="centerY" id="xgt-lU-wZU"/>
@@ -148,13 +145,12 @@
                 <outlet property="guestAccessToSuperviewTopConstraint" destination="CRb-Om-cQt" id="ZCa-Z2-vbd"/>
                 <outlet property="openButton" destination="enN-rb-QVd" id="Y2k-HD-7mO"/>
                 <outlet property="refreshButton" destination="1Ew-Yt-rLv" id="ZOT-Zv-Eoj"/>
-                <outlet property="waitingGuestsQuestionMark" destination="F3N-qO-4bf" id="y6W-6E-BW0"/>
+                <outlet property="waitingGuestsQuestionMark" destination="0Ij-0C-KKs" id="epR-MY-Q0q"/>
             </connections>
             <point key="canvasLocation" x="42.028985507246382" y="-88.727678571428569"/>
         </view>
     </objects>
     <resources>
-        <image name="QuestionMark" width="25" height="25"/>
         <image name="RefreshIcon" width="28" height="28"/>
         <namedColor name="gray">
             <color red="0.42745098039215684" green="0.47843137254901963" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

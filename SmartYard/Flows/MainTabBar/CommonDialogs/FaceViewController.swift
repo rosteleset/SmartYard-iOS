@@ -14,7 +14,7 @@ import XCoordinator
 final class FaceViewController: BaseViewController {
 
     @IBOutlet private weak var imageView: ScaledHeightImageView!
-    @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var closeButton: CircleIconControl!
     
     private let image: UIImage?
     
@@ -31,7 +31,9 @@ final class FaceViewController: BaseViewController {
         let dismissGesture = UITapGestureRecognizer()
         dismissGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(dismissGesture)
-        
+
+        closeButton.style = .Close.blue
+
         Driver.merge(
             dismissGesture.rx.event.asDriver().mapToVoid(),
             closeButton.rx.tap.asDriver()

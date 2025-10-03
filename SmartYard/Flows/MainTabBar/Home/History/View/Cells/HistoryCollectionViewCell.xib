@@ -164,14 +164,13 @@
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <gestureRecognizers/>
                                                     </view>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktx-Qn-MTp">
-                                                        <rect key="frame" x="270" y="20" width="25" height="25"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6OW-HS-3Lf" customClass="CircleIconControl" customModule="SmartYard" customModuleProvider="target">
+                                                        <rect key="frame" x="271" y="20" width="24" height="24"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="25" id="fJH-ca-ioW"/>
-                                                            <constraint firstAttribute="width" constant="25" id="heU-A4-DVG"/>
+                                                            <constraint firstAttribute="width" constant="24" id="OzK-f5-y8X"/>
+                                                            <constraint firstAttribute="height" constant="24" id="dyt-Ox-dw1"/>
                                                         </constraints>
-                                                        <state key="normal" image="QuestionMark"/>
-                                                    </button>
+                                                    </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -179,13 +178,13 @@
                                                     <constraint firstAttribute="bottom" secondItem="QlS-pw-rkX" secondAttribute="bottom" id="5oI-IP-72Z"/>
                                                     <constraint firstItem="RNZ-gk-Xes" firstAttribute="centerY" secondItem="bsQ-eJ-6Bp" secondAttribute="centerY" id="Eja-jO-754"/>
                                                     <constraint firstItem="RNZ-gk-Xes" firstAttribute="centerX" secondItem="bsQ-eJ-6Bp" secondAttribute="centerX" id="H70-1B-J4j"/>
+                                                    <constraint firstItem="6OW-HS-3Lf" firstAttribute="top" secondItem="bsQ-eJ-6Bp" secondAttribute="top" constant="20" id="HBR-OL-mFT"/>
                                                     <constraint firstItem="QlS-pw-rkX" firstAttribute="top" secondItem="bsQ-eJ-6Bp" secondAttribute="top" id="L7j-Kd-c1M"/>
                                                     <constraint firstAttribute="trailing" secondItem="0z6-lI-UZP" secondAttribute="trailing" id="NVO-ge-Jgf"/>
-                                                    <constraint firstAttribute="trailing" secondItem="ktx-Qn-MTp" secondAttribute="trailing" constant="20" id="aN3-Hu-dbB"/>
                                                     <constraint firstItem="QlS-pw-rkX" firstAttribute="leading" secondItem="bsQ-eJ-6Bp" secondAttribute="leading" id="ejU-pw-4Yf"/>
                                                     <constraint firstAttribute="width" secondItem="bsQ-eJ-6Bp" secondAttribute="height" multiplier="16:9" id="ftP-H3-vRl"/>
                                                     <constraint firstItem="0z6-lI-UZP" firstAttribute="leading" secondItem="bsQ-eJ-6Bp" secondAttribute="leading" id="jph-6B-eBS"/>
-                                                    <constraint firstItem="ktx-Qn-MTp" firstAttribute="top" secondItem="bsQ-eJ-6Bp" secondAttribute="top" constant="20" id="o2K-4z-zJ8"/>
+                                                    <constraint firstAttribute="trailing" secondItem="6OW-HS-3Lf" secondAttribute="trailing" constant="20" id="kCN-cT-qcO"/>
                                                     <constraint firstAttribute="trailing" secondItem="QlS-pw-rkX" secondAttribute="trailing" id="veL-2g-ydi"/>
                                                     <constraint firstAttribute="bottom" secondItem="0z6-lI-UZP" secondAttribute="bottom" id="wpC-zk-xgU"/>
                                                 </constraints>
@@ -314,7 +313,7 @@
                 <outlet property="descriptionLabel" destination="JPV-1h-Qtf" id="46a-Zi-TN4"/>
                 <outlet property="image" destination="0z6-lI-UZP" id="IeU-zQ-7NR"/>
                 <outlet property="openAccessButton" destination="vBO-uS-mK9" id="lCQ-UK-Q3v"/>
-                <outlet property="questionMark" destination="ktx-Qn-MTp" id="1UV-Fk-4kx"/>
+                <outlet property="questionMark" destination="6OW-HS-3Lf" id="JMd-XH-DPw"/>
                 <outlet property="scrollView" destination="rdg-vf-upe" id="tu4-bi-RUt"/>
                 <outlet property="titleLabel" destination="UTx-sj-H9R" id="Re0-6f-IEq"/>
                 <outlet property="underImageLabel" destination="RNZ-gk-Xes" id="Adu-nq-B1l"/>
@@ -324,21 +323,20 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="MissedCall" width="15" height="15"/>
-        <image name="QuestionMark" width="25" height="25"/>
+        <image name="MissedCall" width="16" height="16"/>
         <image name="confirm" width="14" height="14"/>
         <image name="deny" width="20" height="20"/>
         <namedColor name="darkGreen">
-            <color red="0.34901960784313724" green="0.72549019607843135" blue="0.41960784313725491" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.12156862745098039" green="0.73725490196078436" blue="0.3843137254901961" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="gray">
-            <color red="0.43529411764705883" green="0.47450980392156861" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.42745098039215684" green="0.47843137254901963" blue="0.54117647058823526" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="incorrectDataRed">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="secondBackgroundColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="semiBlack">
             <color red="0.15686274509803921" green="0.19607843137254902" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
