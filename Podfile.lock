@@ -126,7 +126,7 @@ PODS:
     - MapboxCommon (= 24.9.1)
     - MapboxCoreMaps (= 11.9.4)
     - Turf (= 4.0.0)
-  - MarqueeLabel (4.3.2)
+  - MarqueeLabel (4.5.3)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (15.0.0):
@@ -137,9 +137,9 @@ PODS:
     - nanopb/encode (= 2.30910.0)
   - nanopb/decode (2.30910.0)
   - nanopb/encode (2.30910.0)
-  - NotificationBannerSwift (3.2.1):
-    - MarqueeLabel (~> 4.3.0)
-    - SnapKit (~> 5.6.0)
+  - NotificationBannerSwift (4.0.0):
+    - MarqueeLabel (~> 4.5.0)
+    - SnapKit (~> 5.7.1)
   - OnlineChatSdk (0.0.2)
   - Parchment (4.1.0)
   - PinLayout (1.10.6)
@@ -164,7 +164,7 @@ PODS:
   - SearchTextField (1.2.4)
   - SHSPhoneComponent (2.32)
   - SkeletonView (1.30.4)
-  - SnapKit (5.6.0)
+  - SnapKit (5.7.1)
   - SSCustomTabbar (2.0.2)
   - SwifterSwift (8.0.0):
     - SwifterSwift/AppKit (= 8.0.0)
@@ -230,7 +230,7 @@ DEPENDENCIES:
   - lottie-ios
   - MapboxMaps
   - Moya/RxSwift
-  - NotificationBannerSwift
+  - NotificationBannerSwift (from `https://github.com/chekmari/NotificationBanner.git`, branch `master`)
   - OnlineChatSdk (from `https://github.com/rosteleset/OnlineChatSdk-Swift.git`, branch `feature/build-fix`)
   - Parchment
   - PinLayout
@@ -282,7 +282,6 @@ SPEC REPOS:
     - MarqueeLabel
     - Moya
     - nanopb
-    - NotificationBannerSwift
     - Parchment
     - PinLayout
     - PMNibLinkableView
@@ -306,6 +305,9 @@ SPEC REPOS:
     - XCoordinator
 
 EXTERNAL SOURCES:
+  NotificationBannerSwift:
+    :branch: master
+    :git: https://github.com/chekmari/NotificationBanner.git
   OnlineChatSdk:
     :branch: feature/build-fix
     :git: https://github.com/rosteleset/OnlineChatSdk-Swift.git
@@ -320,6 +322,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/SwifterSwift/SwifterSwift.git
 
 CHECKOUT OPTIONS:
+  NotificationBannerSwift:
+    :commit: f415605fa5135ed75780286c025be5a4cfe3b521
+    :git: https://github.com/chekmari/NotificationBanner.git
   OnlineChatSdk:
     :commit: 6751393fd1884b09581755efb735aa301c09a390
     :git: https://github.com/rosteleset/OnlineChatSdk-Swift.git

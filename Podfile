@@ -14,7 +14,6 @@ target 'SmartYard' do
   pod 'linphone-sdk'
   pod 'WKCookieWebView', '~> 2.0'
   pod 'WebRTC-lib'
-  pod 'NotificationBannerSwift'
   
   # Reactive
   pod 'RxSwift'
@@ -39,6 +38,7 @@ target 'SmartYard' do
   pod 'SHSPhoneComponent'
   pod 'Parchment'#, '2.2.0'
   pod 'lottie-ios'
+  pod 'NotificationBannerSwift', :git => 'https://github.com/chekmari/NotificationBanner.git', :branch => 'master'
   
   # Calendar
   pod 'JTAppleCalendar'
