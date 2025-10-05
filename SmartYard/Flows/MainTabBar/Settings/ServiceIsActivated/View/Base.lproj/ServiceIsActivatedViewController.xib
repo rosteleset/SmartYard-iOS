@@ -66,9 +66,7 @@
                                 <constraint firstAttribute="height" constant="60" id="igb-t2-ofp"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
-                            <state key="normal" title="Сменить тариф">
-                                <color key="titleColor" name="semiBlack"/>
-                            </state>
+                            <state key="normal" title="Сменить тариф"/>
                         </button>
                     </subviews>
                     <color key="backgroundColor" name="grayBorder"/>
