@@ -251,42 +251,42 @@ final class HistoryCollectionViewCell: UICollectionViewCell {
         switch value.event {
         case .answered:
             titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
             callStatusView.isHidden = false
             descriptionLabel.isHidden = true
             callStatusLabel.text = NSLocalizedString("Answered call", comment: "")
-            callStatusLabel.textColor = UIColor(named: "darkGreen")
+            callStatusLabel.textColor = UIColor.SmartYard.darkGreen
             callStatusIcon.image = UIImage(named: "AnsweredCall")
         case .unanswered:
             titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
             callStatusView.isHidden = false
             descriptionLabel.isHidden = true
             callStatusLabel.text = NSLocalizedString("Missed call", comment: "")
-            callStatusLabel.textColor = UIColor(named: "incorrectDataRed")
+            callStatusLabel.textColor = UIColor.SmartYard.incorrectDataRed
             callStatusIcon.image = UIImage(named: "MissedCall")
         case .rfid:
             titleLabel.text = NSLocalizedString("Opening with a key", comment: "")
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
         case .app:
             titleLabel.text = NSLocalizedString("Opening from the app", comment: "")
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
         case .face:
             titleLabel.text = NSLocalizedString("Opening with Face-ID", comment: "")
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
             faceFrameColor = .green
         case .passcode:
             titleLabel.text = NSLocalizedString("Opening with code", comment: "")
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
         case .call:
             titleLabel.text = NSLocalizedString("Gate opening on call", comment: "")
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
         case .plate:
             titleLabel.text = NSLocalizedString("Gate opening by numberplate", comment: "")
-            titleLabel.textColor = UIColor(named: "semiBlack")
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
         case .unknown:
             titleLabel.text = NSLocalizedString("Unknown event", comment: "")
-            titleLabel.textColor = UIColor(named: "incorrectDataRed")
+            titleLabel.textColor = UIColor.SmartYard.incorrectDataRed
         }
         image.image = nil
     

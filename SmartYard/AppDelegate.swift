@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appCoordinator.markAllMessagesAsDelivered()
 
-        mainWindow.tintColor = UIColor(named: "blue")
+        mainWindow.tintColor = UIColor.SmartYard.blue
         mainWindow.tintAdjustmentMode = .dimmed
         
         // MARK: - Настройка темы приложения

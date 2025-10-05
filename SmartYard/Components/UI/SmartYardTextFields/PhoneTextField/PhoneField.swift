@@ -72,7 +72,7 @@ final class PhoneField: UIView {
     func setupView() {
         prefixLabel.text = "+" + AccessService.shared.phonePrefix
         prefixLabel.textAlignment = .center
-        prefixLabel.textColor = UIColor(named: "gray")
+        prefixLabel.textColor = UIColor.SmartYard.gray
         prefixLabel.font = UIFont.SourceSansPro.bold(size: 36)
         prefixLabel.sizeToFit()
         prefixLabel.height = 34
