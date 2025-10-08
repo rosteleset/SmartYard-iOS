@@ -23,6 +23,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServiceUnavailableViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundView" destination="ccQ-yj-A4K" id="Dgr-mq-Etq"/>
+                <outlet property="closeButton" destination="blL-RT-SlD" id="gda-Ab-ZzQ"/>
                 <outlet property="sendRequestButton" destination="FA4-db-bwd" id="RU1-pg-UuA"/>
                 <outlet property="titleLabel" destination="4dc-Ik-xbo" id="SwY-fZ-QN3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
