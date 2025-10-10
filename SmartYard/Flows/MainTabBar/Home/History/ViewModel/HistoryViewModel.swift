@@ -78,7 +78,6 @@ final class HistoryViewModel: BaseViewModel {
     /// таблица лиц по квартирам
     private var listFaces: [FlatId: GetPersonFacesResponseData] = [:]
 
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     init(
         apiWrapper: APIWrapper,
         houseId: String? = nil,
@@ -99,6 +98,7 @@ final class HistoryViewModel: BaseViewModel {
         bind()
     }
 
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     private func bind() {
         errorTracker.asDriver()
             .drive(
