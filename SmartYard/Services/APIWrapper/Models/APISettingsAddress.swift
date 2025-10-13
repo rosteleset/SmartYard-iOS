@@ -18,6 +18,7 @@ struct APISettingsAddress: Decodable {
     let houseId: String?
     let flatId: String?
     let flatNumber: String?
+    let doorCode: String?
     let address: String
     let services: [String]
     let lcab: String?
@@ -41,7 +42,7 @@ struct APISettingsAddress: Decodable {
     
     private enum CodingKeys: String, CodingKey {
         case clientId, clientName, contractName, flatOwner, contractOwner, hasGates, houseId, flatId, flatNumber, address
-        case services, lcab, roommates, hasPlog
+        case services, lcab, roommates, hasPlog, doorCode
     }
     
     init(from decoder: Decoder) throws {
@@ -88,7 +89,7 @@ struct APISettingsAddress: Decodable {
         address = try container.decode(String.self, forKey: .address)
         services = try container.decode([String].self, forKey: .services)
         lcab = try? container.decode(String.self, forKey: .lcab)
-        
+        doorCode = (try? container.decode(String.self, forKey: .doorCode)) ?? nil
         roommates = (try? container.decode([APIRoommate].self, forKey: .roommates)) ?? []
     }
     
