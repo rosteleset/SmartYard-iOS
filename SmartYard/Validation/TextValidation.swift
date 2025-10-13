@@ -7,6 +7,7 @@
 //
 
 protocol TextValidation {
-    func validate(_ text: String) -> Bool
     var errorMessage: String? { get }
+
+    func validate(_ text: String) -> Bool
 }
