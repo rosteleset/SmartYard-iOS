@@ -1,3 +1,5 @@
+[Русская версия 🇷🇺](./README.md)
+
 # TeleDom iOS  
 A version with a neutral brand and an operator selection screen.  
 Ideal for those who don’t want to bother with publishing their own app.
