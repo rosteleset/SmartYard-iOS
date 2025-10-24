@@ -853,6 +853,7 @@ final class IncomingCallViewModel: BaseViewModel {
 
         providerProxy.endCall(uuid: callPayload.uuid)
 
+        webRTCService = nil
         completionHandler?()
         completionHandler = nil
 
