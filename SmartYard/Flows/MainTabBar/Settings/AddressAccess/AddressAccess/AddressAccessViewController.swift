@@ -191,9 +191,9 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
         
         output.hasGates
             .distinctUntilChanged()
-            .drive { [weak self] hasGates in
-                self?.gateAccessContainer.isHidden = !hasGates
                 
+            .drive { [weak self] state in
+                self?.gateAccessContainer.isHidden = !state
                 UIView.animate(withDuration: 0.25) {
                     self?.view.layoutIfNeeded()
                 }
@@ -202,24 +202,15 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
         
         output.isFRSEnabled
             .drive { [weak self] state in
-                guard let state = state else {
-                    self?.faceIdAccessView.isHidden = true
-                    return
-                }
                 self?.faceIdAccessView.isAvailable = state
                 self?.faceIdAccessView.isHidden = !state
             }
             .disposed(by: disposeBag)
         
         output.isLPRSEnabled
-            .drive { [weak self] isEnabled in
-                guard let isEnabled else {
-                    self?.gateAccessView.segmentControl(isHidden: true)
-                    return
-                }
-                
-                self?.gateAccessView.segmentControl(isHidden: !isEnabled)
-                
+            .drive { [weak self] state in
+                self?.gateAccessView.segmentControl(isHidden: !state)
+
                 UIView.animate(withDuration: 0.25) {
                     self?.view.layoutIfNeeded()
                 }

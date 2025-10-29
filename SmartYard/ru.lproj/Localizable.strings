@@ -224,7 +224,7 @@
 "Add car" = "Добавить авто";
 "Add person" = "Добавить контакт";
 "TimeLeftFormat" = "осталось %@";
-"еxpired" = "истекло";
+"expired" = "истекло";
 "Add" = "Добавить";
 "unlimited" = "бессрочно";
 "Address confirmation" = "Подтверждение адреса";

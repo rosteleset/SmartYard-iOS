@@ -24,7 +24,7 @@ final class DetailGateAccessViewModel: BaseViewModel {
     private let contactsRelay = BehaviorRelay<[AllowedPerson]>(value: [])
     private let licensePlatesRelay = BehaviorRelay<[AllowedCar]>(value: [])
     private let selectedSegmentTypeRelay = BehaviorRelay<GateAccessSegmentType?>(value: nil)
-    private let isLprsAvailableRelay = BehaviorRelay<Bool?>(value: nil)
+    private let isLprsAvailableRelay = BehaviorRelay<Bool>(value: false)
     private let sectionModelsRelay = BehaviorRelay<[GateAccessSectionModel]>(value: [])
     private let collectionHeightRelay = BehaviorRelay<CGFloat>(value: 57)
     
@@ -296,27 +296,35 @@ final class DetailGateAccessViewModel: BaseViewModel {
         contactsDriver
             .drive(contactsRelay)
             .disposed(by: disposeBag)
-        
-        let flatIdInt = Int(flatId) ?? -1
-        
-        apiWrapper.getLicensePlates(forFlatId: flatIdInt)
-            .trackError(errorTracker)
-            .asDriver(onErrorJustReturn: nil)
-            .do { _ in
-                isGateStateLoadingFinishedSubject.onNext(true)
-            }
-            .map { data -> [AllowedCar] in
-                guard let data, !data.isEmpty else {
-                    return []
+
+        isLprsAvailableRelay
+            .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
+            .flatMapLatest { [weak self] available -> Driver<[AllowedCar]> in
+                guard let self = self else { return .empty() }
+
+                if available {
+                    let id = Int(self.flatId) ?? -1 // тут значение 100% будет
+                    return self.apiWrapper.getLicensePlates(forFlatId: id)
+                        .trackError(errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+                        .do(
+                            onNext: { _ in
+                                isGateStateLoadingFinishedSubject.onNext(true)
+                            }
+                        )
+                        .map { data -> [AllowedCar] in
+                            guard let data, !data.isEmpty else { return [] }
+                            return data.map { AllowedCar(rawNumber: $0) }
+                        }
+                } else {
+                    isGateStateLoadingFinishedSubject.onNext(true)
+                    return .just([])
                 }
-                
-                let licensePlates: [AllowedCar] = data.map {
-                    AllowedCar(rawNumber: $0)
-                }
-                
-                return licensePlates
             }
-            .drive(licensePlatesRelay)
+            .drive(onNext: { [weak self] licensePlates in
+                self?.licensePlatesRelay.accept(licensePlates)
+            })
             .disposed(by: disposeBag)
         
         if preselectedGateAccessSegmentType != nil {
@@ -325,27 +333,34 @@ final class DetailGateAccessViewModel: BaseViewModel {
         
         Observable
             .combineLatest(
-                isInitialLoadingFinished.asObservable(),
-                contactsRelay,
-                licensePlatesRelay,
-                selectedSegmentTypeRelay.compactMap { $0 }
+                isInitialLoadingFinished.asObservable(),         // ждём флаг окончания первой загрузки
+                contactsRelay.asObservable(),                    // текущие контакты (могут быть [])
+                licensePlatesRelay.asObservable(),               // текущие номера (могут быть [])
+                selectedSegmentTypeRelay.asObservable(),         // может быть nil
+                isLprsAvailableRelay.asObservable()              // нужен для выбора дефолтного сегмента
             )
-            .filter { _, contacts, plates, _ in
-                /// Ждём хотя бы какие-то данные
-                !contacts.isEmpty || !plates.isEmpty
-            }
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _, contacts, plates, selectedSegment in
-                guard let self else { return }
-                
+            .subscribe(onNext: { [weak self] isFinished, contacts, plates, selectedSegmentOpt, isLprsAvailable in
+                guard let self, isFinished else { return }
+
+                // если сегмент ещё не выбран — выбираем умно
+                let selectedSegment: GateAccessSegmentType = {
+                    if let segment = selectedSegmentOpt { return segment }
+                    return isLprsAvailable ? .cars : .persons
+                }()
+
+                if selectedSegmentOpt == nil {
+                    self.selectedSegmentTypeRelay.accept(selectedSegment)
+                }
+
                 switch selectedSegment {
                 case .cars:
-                    update(carData: plates)
-                    collectionHeightRelay.accept(calculateCollectionViewHeight(countItems: plates.count))
-                    
+                    self.update(carData: plates)
+                    self.collectionHeightRelay.accept(self.calculateCollectionViewHeight(countItems: plates.count))
+
                 case .persons:
-                    update(personData: contacts)
-                    collectionHeightRelay.accept(calculateCollectionViewHeight(countItems: contacts.count))
+                    self.update(personData: contacts)
+                    self.collectionHeightRelay.accept(self.calculateCollectionViewHeight(countItems: contacts.count))
                 }
             })
             .disposed(by: disposeBag)
@@ -500,7 +515,7 @@ final class DetailGateAccessViewModel: BaseViewModel {
         return Output(
             objectAddress: addressRelay.asDriver(onErrorJustReturn: nil),
             selectedSegmentControlType: selectedSegmentTypeRelay.asDriver(onErrorJustReturn: nil),
-            isLPRSEnabled: isLprsAvailableRelay.asDriver(onErrorJustReturn: nil),
+            isLPRSEnabled: isLprsAvailableRelay.asDriver(onErrorJustReturn: false),
             sectionModels: sectionModelsRelay.asDriver(),
             collectionHeight: collectionHeightRelay.asDriver(),
             isInitialLoadingFinished: isInitialLoadingFinished
@@ -522,7 +537,7 @@ extension DetailGateAccessViewModel {
     struct Output {
         let objectAddress: Driver<String?>
         let selectedSegmentControlType: Driver<GateAccessSegmentType?>
-        let isLPRSEnabled: Driver<Bool?>
+        let isLPRSEnabled: Driver<Bool>
         let sectionModels: Driver<[GateAccessSectionModel]>
         let collectionHeight: Driver<CGFloat>
         let isInitialLoadingFinished: Driver<Bool>

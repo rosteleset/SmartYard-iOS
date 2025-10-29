@@ -26,9 +26,9 @@ final class AddressAccessViewModel: BaseViewModel {
     private let gateAccessSelectedSegmentTypeSubject = BehaviorRelay<GateAccessSegmentType?>(value: nil)
     private let intercomAccessCode = BehaviorSubject<String?>(value: nil)
     private let isGrantedIntercomGuestAccess = BehaviorSubject<Bool>(value: false)
-    private let isFrsAvailable = BehaviorSubject<Bool?>(value: nil)
-    private let isLprsAvailable = BehaviorSubject<Bool?>(value: nil)
-    
+    private let isFrsAvailable = BehaviorSubject<Bool>(value: false)
+    private let isLprsAvailable = BehaviorSubject<Bool>(value: false)
+
     private let address: String
     private let flatId: String
     private let clientId: String?
@@ -246,8 +246,7 @@ final class AddressAccessViewModel: BaseViewModel {
             .disposed(by: disposeBag)
 
         isLprsAvailable
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
+            .asDriver(onErrorJustReturn: false)
             .distinctUntilChanged()
             .flatMapLatest { [weak self] available -> Driver<[AllowedCar]> in
                 guard let self = self else { return .empty() }
@@ -589,8 +588,8 @@ final class AddressAccessViewModel: BaseViewModel {
             temporaryIntercomCode: intercomAccessCode.asDriver(onErrorJustReturn: nil),
             isGrantedIntercomAccess: isGrantedIntercomGuestAccess.asDriver(onErrorJustReturn: false),
             isLoading: activityTracker.asDriver(),
-            isFRSEnabled: isFrsAvailable.asDriver(onErrorJustReturn: nil),
-            isLPRSEnabled: isLprsAvailable.asDriver(onErrorJustReturn: nil),
+            isFRSEnabled: isFrsAvailable.asDriver(onErrorJustReturn: false),
+            isLPRSEnabled: isLprsAvailable.asDriver(onErrorJustReturn: false),
             hasGates: hasGatesSubject.asDriver(onErrorJustReturn: false),
             isOwner: isOwnerSubject.asDriver(onErrorJustReturn: false),
             isInitialLoadingFinished: isInitialLoadingFinished
@@ -835,8 +834,8 @@ extension AddressAccessViewModel {
         let temporaryIntercomCode: Driver<String?>
         let isGrantedIntercomAccess: Driver<Bool>
         let isLoading: Driver<Bool>
-        let isFRSEnabled: Driver<Bool?>
-        let isLPRSEnabled: Driver<Bool?>
+        let isFRSEnabled: Driver<Bool>
+        let isLPRSEnabled: Driver<Bool>
         let hasGates: Driver<Bool>
         let isOwner: Driver<Bool>
         let isInitialLoadingFinished: Driver<Bool>

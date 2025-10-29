@@ -109,14 +109,9 @@ final class DetailGateAccessViewController: BaseViewController, UIScrollViewDele
             .disposed(by: disposeBag)
         
         output.isLPRSEnabled
-            .drive { [weak self] isEnabled in
-                guard let isEnabled else {
-                    self?.segmentControl.isHidden = true
-                    return
-                }
-                
-                self?.segmentControl.isHidden = !isEnabled
-                                
+            .drive { [weak self] state in
+                self?.segmentControl.isHidden = !state
+
                 UIView.animate(withDuration: 0.25) {
                     self?.view.layoutIfNeeded()
                 }
