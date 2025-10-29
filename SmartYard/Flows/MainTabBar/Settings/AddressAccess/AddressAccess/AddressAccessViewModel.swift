@@ -118,8 +118,8 @@ final class AddressAccessViewModel: BaseViewModel {
                     let isAccessGranted = response.autoOpen > Date()
                     
                     self?.isGrantedIntercomGuestAccess.onNext(isAccessGranted)
-                    self?.isLprsAvailable.onNext(response.lprsDisabled.map { !$0 })
-                    self?.isFrsAvailable.onNext(response.frsDisabled.map { !$0 })
+                    self?.isLprsAvailable.onNext(!response.lprsDisabled)
+                    self?.isFrsAvailable.onNext(!response.frsDisabled)
                     
                     let segmentType: GateAccessSegmentType = response.lprsDisabled == false ? .cars : .persons
                     self?.gateAccessSelectedSegmentTypeSubject.accept(segmentType)
@@ -244,41 +244,44 @@ final class AddressAccessViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-        
-        let flatIdInt = Int(flatId) ?? -1
-        
-        apiWrapper.getLicensePlates(forFlatId: flatIdInt)
-            .trackError(errorTracker)
+
+        isLprsAvailable
             .asDriver(onErrorJustReturn: nil)
-            .do(
-                onNext: { _ in
+            .ignoreNil()
+            .distinctUntilChanged()
+            .flatMapLatest { [weak self] available -> Driver<[AllowedCar]> in
+                guard let self = self else { return .empty() }
+
+                if available {
+                    let id = Int(self.flatId) ?? -1 // тут значение 100% будет
+                    return self.apiWrapper.getLicensePlates(forFlatId: id)
+                        .trackError(errorTracker)
+                        .asDriver(onErrorJustReturn: nil)
+                        .do(
+                            onNext: { _ in
+                                isGateStateLoadingFinishedSubject.onNext(true)
+                            }
+                        )
+                        .map { data -> [AllowedCar] in
+                            guard let data, !data.isEmpty else { return [] }
+                            return data.map { AllowedCar(rawNumber: $0) }
+                        }
+                } else {
                     isGateStateLoadingFinishedSubject.onNext(true)
+                    return .just([])
                 }
-            )
-            .map { data -> [AllowedCar] in
-                guard let data, !data.isEmpty else {
-                    return []
-                }
-                
-                let licensePlates: [AllowedCar] = data.map {
-                    AllowedCar(rawNumber: $0)
-                }
-                
-                return licensePlates
             }
-            .drive { [weak self] licensePlates in
+            .drive(onNext: { [weak self] licensePlates in
                 self?.gateAccessLicensePlatesSubject.onNext(licensePlates)
-            }
+            })
             .disposed(by: disposeBag)
-        
+
         input.refreshIntercomTempCodeTrigger
             .asDriver()
             .debounce(.milliseconds(25))
             .flatMapLatest { [weak self] _ -> Driver<ResetCodeResponseData?> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
+                guard let self = self else { return .empty() }
+
                 return self.apiWrapper.resetCode(flatId: self.flatId)
                     .trackError(self.errorTracker)
                     .trackActivity(self.activityTracker)

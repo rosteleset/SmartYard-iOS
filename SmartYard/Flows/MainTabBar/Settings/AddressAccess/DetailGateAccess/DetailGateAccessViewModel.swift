@@ -243,7 +243,7 @@ final class DetailGateAccessViewModel: BaseViewModel {
             }
             .ignoreNil()
             .drive { [weak self] response in
-                self?.isLprsAvailableRelay.accept(response.lprsDisabled.map { !$0 })
+                self?.isLprsAvailableRelay.accept(!response.lprsDisabled)
             }
             .disposed(by: disposeBag)
         

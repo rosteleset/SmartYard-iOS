@@ -26,6 +26,9 @@
 /* Class = "UILabel"; text = "Распознавать лица"; ObjectID = "hUw-Nq-3Y7"; */
 "hUw-Nq-3Y7.text" = "Беталарды анықтау";
 
+/* Class = "UILabel"; text = "Распознавать номера"; ObjectID = "PtT-Pj-osP"; */
+"PtT-Pj-osP.text" = "Нөмірлерді тану";
+
 /* Class = "UIButton"; normalTitle = "Удалить адрес"; ObjectID = "kq1-WA-VLg"; */
 "kq1-WA-VLg.normalTitle" = "Мекенжайды жою";
 

@@ -28,6 +28,9 @@
 /* Class = "UIButton"; normalTitle = "Удалить адрес"; ObjectID = "kq1-WA-VLg"; */
 "kq1-WA-VLg.normalTitle" = "Изтрийте адреса";
 
+/* Class = "UILabel"; text = "Распознавать номера"; ObjectID = "PtT-Pj-osP"; */
+"PtT-Pj-osP.text" = "Разпознаване на номера";
+
 /* Class = "UILabel"; text = "Скрыть журнал событий\nот других пользователей квартиры"; ObjectID = "oYC-ZJ-cYh"; */
 "oYC-ZJ-cYh.text" = "Скрийте дневника на събитията\nот други потребители на апартамента";
 

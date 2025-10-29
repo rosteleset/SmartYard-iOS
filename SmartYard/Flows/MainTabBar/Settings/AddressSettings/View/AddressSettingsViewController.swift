@@ -46,7 +46,10 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
     
     @IBOutlet private weak var frsContainerView: UIView!
     @IBOutlet private weak var frsSwitch: UISwitch!
-    
+
+    @IBOutlet private weak var lprsContainerView: UIView!
+    @IBOutlet private weak var lprsSwitch: UISwitch!
+
     @IBOutlet private var collapsedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var deleteButtonTopToNotificationsConstraint: NSLayoutConstraint!
@@ -63,7 +66,8 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
     private let logsTapGesture = UITapGestureRecognizer()
     private let hiddenTapGesture = UITapGestureRecognizer()
     private let frsTapGesture = UITapGestureRecognizer()
-    
+    private let lprsTapGesture = UITapGestureRecognizer()
+
     var loader: JGProgressHUD?
     
     init(viewModel: AddressSettingsViewModel) {
@@ -139,7 +143,10 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
         
         frsContainerView.addGestureRecognizer(frsTapGesture)
         frsSwitch.isUserInteractionEnabled = false
-        
+
+        frsContainerView.addGestureRecognizer(lprsTapGesture)
+        lprsSwitch.isUserInteractionEnabled = false
+
         skeletonView.isHidden = true
     }
     
@@ -174,6 +181,7 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
             logsTrigger: logsTapGesture.rx.event.asDriver().mapToVoid(),
             hiddenTrigger: hiddenTapGesture.rx.event.asDriver().mapToVoid(),
             frsTrigger: frsTapGesture.rx.event.asDriver().mapToVoid(),
+            lprsTrigger: lprsTapGesture.rx.event.asDriver().mapToVoid(),
             whiteRabbitHintTrigger: whiteRabbitQuestionMark.rx.tap.asDriver()
         )
         
@@ -214,12 +222,7 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
         output.arePaperBillsEnabled
             .drive(
                 onNext: { [weak self] state in
-                    
-                    guard let state = state else {
-                        self?.paperContainerView.isHidden = true
-                        return
-                    }
-                    self?.paperContainerView.isHidden = false
+                    self?.paperContainerView.isHidden = !state
                     self?.paperSwitch.setOn(state, animated: true)
                 }
             )
@@ -258,11 +261,7 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
                 onNext: { [weak self] state in
                     // MARK: - We remove the logic because the switch doesn't work on the server
                     /*
-                     guard let state = state else {
-                         self?.frsContainerView.isHidden = true
-                         return
-                     }
-                     self?.frsContainerView.isHidden = false
+                     self?.frsContainerView.isHidden = !state
                      self?.frsSwitch.setOn(state, animated: true)
                      */
                     
@@ -271,7 +270,22 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
                 }
             )
             .disposed(by: disposeBag)
-        
+
+        output.isLPRSEnabled
+            .drive(
+                onNext: { [weak self] state in
+                    // MARK: - We remove the logic because the switch doesn't work on the server
+                    /*
+                     self?.lprsContainerView.isHidden = !state
+                     self?.lprsSwitch.setOn(state, animated: true)
+                     */
+
+                    // Hiding the button at all times
+                    self?.lprsContainerView.isHidden = true
+                }
+            )
+            .disposed(by: disposeBag)
+
         output.isLoading
             .debounce(.milliseconds(25))
             .drive(

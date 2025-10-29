@@ -16,11 +16,11 @@ struct IntercomResponseData: Decodable {
     let voip: Bool
     let autoOpen: Date
     let whiteRabbit: Bool
-    let paperBill: Bool?
+    let paperBill: Bool
     let disablePlog: Bool?
     let hiddenPlog: Bool?
-    let frsDisabled: Bool?
-    let lprsDisabled: Bool?
+    let frsDisabled: Bool
+    let lprsDisabled: Bool
     
     private enum CodingKeys: String, CodingKey {
         case allowDoorCode
@@ -81,7 +81,7 @@ struct IntercomResponseData: Decodable {
         switch paperBillRawValue {
         case "t": paperBill = true
         case "f": paperBill = false
-        default: paperBill = nil
+        default: paperBill = false
         }
         
         let disablePlogRawValue = try? container.decode(String.self, forKey: .disablePlog)
@@ -105,7 +105,7 @@ struct IntercomResponseData: Decodable {
         switch frsDisabledRawValue {
         case "t": frsDisabled = true
         case "f": frsDisabled = false
-        default: frsDisabled = nil
+        default: frsDisabled = true
         }
         
         let lprsDisabledRawValue = try? container.decode(String.self, forKey: .lprsDisabled)
@@ -113,7 +113,7 @@ struct IntercomResponseData: Decodable {
         switch lprsDisabledRawValue {
         case "t": lprsDisabled = true
         case "f": lprsDisabled = false
-        default: lprsDisabled = nil
+        default: lprsDisabled = true
         }
     }
     

@@ -39,6 +39,8 @@
                 <outlet property="hiddenSwitch" destination="LhM-4V-XE7" id="2ag-ZR-wYd"/>
                 <outlet property="logsContainerView" destination="eQW-UW-RgX" id="NLl-ON-1KL"/>
                 <outlet property="logsSwitch" destination="stq-ia-q4O" id="i1j-bJ-NXJ"/>
+                <outlet property="lprsContainerView" destination="9QD-vA-jy1" id="d6y-IN-YbR"/>
+                <outlet property="lprsSwitch" destination="Lcm-Bc-fm4" id="AXR-wN-KNv"/>
                 <outlet property="mainContainerView" destination="SOC-N6-riE" id="adO-He-vgI"/>
                 <outlet property="notificationsContainerView" destination="isu-7K-afz" id="lNm-XQ-64c"/>
                 <outlet property="notificationsHeader" destination="oou-k0-7st" id="2l2-a5-aJM"/>
@@ -379,6 +381,40 @@
                                                                                 <constraint firstAttribute="trailing" secondItem="hh6-BM-eU2" secondAttribute="trailing" id="Ubw-mP-Evn"/>
                                                                                 <constraint firstAttribute="height" constant="55" id="rem-8a-dez"/>
                                                                                 <constraint firstItem="9cQ-Xu-Ljn" firstAttribute="leading" secondItem="hUw-Nq-3Y7" secondAttribute="trailing" constant="24" id="ssp-Cv-YC3"/>
+                                                                            </constraints>
+                                                                        </view>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9QD-vA-jy1" userLabel="View8">
+                                                                            <rect key="frame" x="0.0" y="385.00000000000006" width="361" height="55"/>
+                                                                            <subviews>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Распознавать номера" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PtT-Pj-osP" userLabel="Распознавать номера">
+                                                                                    <rect key="frame" x="24" y="18.666666666666629" width="228" height="17.666666666666671"/>
+                                                                                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                                                                                    <color key="textColor" name="semiBlack"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Lcm-Bc-fm4">
+                                                                                    <rect key="frame" x="276" y="13.666666666666629" width="63" height="28"/>
+                                                                                    <color key="onTintColor" name="darkGreen"/>
+                                                                                </switch>
+                                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0x2-nH-Hzx" userLabel="Separator ">
+                                                                                    <rect key="frame" x="0.0" y="54" width="361" height="1"/>
+                                                                                    <color key="backgroundColor" name="grayBorder"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="1" id="jHH-Me-VLH"/>
+                                                                                    </constraints>
+                                                                                </view>
+                                                                            </subviews>
+                                                                            <color key="backgroundColor" name="secondBackgroundColor"/>
+                                                                            <constraints>
+                                                                                <constraint firstItem="PtT-Pj-osP" firstAttribute="centerY" secondItem="9QD-vA-jy1" secondAttribute="centerY" id="Fh1-ep-Dvm"/>
+                                                                                <constraint firstItem="Lcm-Bc-fm4" firstAttribute="leading" secondItem="PtT-Pj-osP" secondAttribute="trailing" constant="24" id="Heh-YE-VsZ"/>
+                                                                                <constraint firstAttribute="trailing" secondItem="Lcm-Bc-fm4" secondAttribute="trailing" constant="24" id="RjR-ca-uq8"/>
+                                                                                <constraint firstItem="PtT-Pj-osP" firstAttribute="leading" secondItem="9QD-vA-jy1" secondAttribute="leading" constant="24" id="SrZ-6h-90i"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="0x2-nH-Hzx" secondAttribute="bottom" id="YDO-fz-B6B"/>
+                                                                                <constraint firstItem="Lcm-Bc-fm4" firstAttribute="centerY" secondItem="9QD-vA-jy1" secondAttribute="centerY" id="nQ6-d4-7Ai"/>
+                                                                                <constraint firstItem="0x2-nH-Hzx" firstAttribute="leading" secondItem="9QD-vA-jy1" secondAttribute="leading" id="u04-e8-l8o"/>
+                                                                                <constraint firstAttribute="trailing" secondItem="0x2-nH-Hzx" secondAttribute="trailing" id="u90-V4-sAs"/>
+                                                                                <constraint firstAttribute="height" constant="55" id="vHD-xS-3en"/>
                                                                             </constraints>
                                                                         </view>
                                                                     </subviews>

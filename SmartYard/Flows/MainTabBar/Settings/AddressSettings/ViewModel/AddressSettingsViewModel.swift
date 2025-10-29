@@ -81,11 +81,12 @@ final class AddressSettingsViewModel: BaseViewModel {
         let isCmsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let areCallsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let isWhiteRabbitEnabledSubject = BehaviorSubject<Bool>(value: false)
-        let arePaperBillsEnabledSubject = BehaviorSubject<Bool?>(value: nil)
+        let arePaperBillsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let areLogsEnabledSubject = BehaviorSubject<Bool?>(value: nil)
         let areLogsVisibleOnlyForOwnerSubject = BehaviorSubject<Bool?>(value: nil)
-        let isFRSEnabledSubject = BehaviorSubject<Bool?>(value: nil)
-        
+        let isFRSEnabledSubject = BehaviorSubject<Bool>(value: false)
+        let isLPRSEnabledSubject = BehaviorSubject<Bool>(value: false)
+
         let interactionBlockingRequestTracker = ActivityTracker()
         
         if hasDomophone {
@@ -109,12 +110,9 @@ final class AddressSettingsViewModel: BaseViewModel {
                         }
                         
                         areLogsVisibleOnlyForOwnerSubject.onNext(state.hiddenPlog)
-                        
-                        switch state.frsDisabled {
-                        case true: isFRSEnabledSubject.onNext(false)
-                        case false: isFRSEnabledSubject.onNext(true)
-                        default: isFRSEnabledSubject.onNext(nil)
-                        }
+
+                        isFRSEnabledSubject.onNext(!state.frsDisabled)
+                        isLPRSEnabledSubject.onNext(!state.lprsDisabled)
                     }
                 )
                 .disposed(by: disposeBag)
@@ -190,8 +188,6 @@ final class AddressSettingsViewModel: BaseViewModel {
                     return .empty()
                 }
                 
-                let isEnabled = isEnabled ?? true
-                
                 return self.apiWrapper
                     .setIntercomPaperBillState(flatId: self.flatId, isEnabled: !isEnabled)
                     .trackActivity(self.activityTracker)
@@ -263,14 +259,12 @@ final class AddressSettingsViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.frsTrigger
-            .withLatestFrom(isFRSEnabledSubject.asDriver(onErrorJustReturn: nil))
+            .withLatestFrom(isFRSEnabledSubject.asDriverOnErrorJustComplete())
             .flatMapLatest { [weak self] isEnabled -> Driver<IntercomResponseData?> in
                 guard let self = self, self.hasDomophone else {
                     return .empty()
                 }
-                
-                let isEnabled = isEnabled ?? true
-                
+
                 return self.apiWrapper
                     .setIntercomFRSDisabledState(flatId: self.flatId, isDisabled: isEnabled)
                     .trackActivity(self.activityTracker)
@@ -280,15 +274,32 @@ final class AddressSettingsViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { state in
-                    switch state.frsDisabled {
-                    case true: isFRSEnabledSubject.onNext(false)
-                    case false: isFRSEnabledSubject.onNext(true)
-                    default: isFRSEnabledSubject.onNext(nil)
-                    }
+                    isFRSEnabledSubject.onNext(!state.frsDisabled)
                 }
             )
             .disposed(by: disposeBag)
-        
+
+        input.lprsTrigger
+            .withLatestFrom(isLPRSEnabledSubject.asDriverOnErrorJustComplete())
+            .flatMapLatest { [weak self] isEnabled -> Driver<IntercomResponseData?> in
+                guard let self = self, self.hasDomophone else {
+                    return .empty()
+                }
+
+                return apiWrapper
+                    .setIntercomLPRSDisabledState(flatId: flatId, isDisabled: isEnabled)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { state in
+                    isLPRSEnabledSubject.onNext(!state.lprsDisabled)
+                }
+            )
+            .disposed(by: disposeBag)
+
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
@@ -318,10 +329,11 @@ final class AddressSettingsViewModel: BaseViewModel {
             isCmsEnabled: isCmsEnabledSubject.asDriver(onErrorJustReturn: false),
             areCallsEnabled: areCallsEnabledSubject.asDriver(onErrorJustReturn: false),
             isWhiteRabbitEnabled: isWhiteRabbitEnabledSubject.asDriver(onErrorJustReturn: false),
-            arePaperBillsEnabled: arePaperBillsEnabledSubject.asDriver(onErrorJustReturn: nil),
+            arePaperBillsEnabled: arePaperBillsEnabledSubject.asDriver(onErrorJustReturn: false),
             areLogsEnabled: areLogsEnabledSubject.asDriver(onErrorJustReturn: nil),
             areLogsVisibleOnlyForOwner: areLogsVisibleOnlyForOwnerSubject.asDriver(onErrorJustReturn: nil),
-            isFRSEnabled: isFRSEnabledSubject.asDriver(onErrorJustReturn: nil),
+            isFRSEnabled: isFRSEnabledSubject.asDriver(onErrorJustReturn: false),
+            isLPRSEnabled: isLPRSEnabledSubject.asDriver(onErrorJustReturn: false),
             ringtone: .just(NSLocalizedString("Note", comment: "")),
             hasDomophone: .just(hasDomophone),
             isLoading: activityTracker.asDriver(),
@@ -386,6 +398,7 @@ extension AddressSettingsViewModel {
         let logsTrigger: Driver<Void>
         let hiddenTrigger: Driver<Void>
         let frsTrigger: Driver<Void>
+        let lprsTrigger: Driver<Void>
         let whiteRabbitHintTrigger: Driver<Void>
     }
     
@@ -394,10 +407,11 @@ extension AddressSettingsViewModel {
         let isCmsEnabled: Driver<Bool>
         let areCallsEnabled: Driver<Bool>
         let isWhiteRabbitEnabled: Driver<Bool>
-        let arePaperBillsEnabled: Driver<Bool?>
+        let arePaperBillsEnabled: Driver<Bool>
         let areLogsEnabled: Driver<Bool?>
         let areLogsVisibleOnlyForOwner: Driver<Bool?>
-        let isFRSEnabled: Driver<Bool?>
+        let isFRSEnabled: Driver<Bool>
+        let isLPRSEnabled: Driver<Bool>
         let ringtone: Driver<String>
         let hasDomophone: Driver<Bool>
         let isLoading: Driver<Bool>
