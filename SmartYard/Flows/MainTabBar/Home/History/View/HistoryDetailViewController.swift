@@ -133,42 +133,37 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
             flowLayout.scrollDirection = .horizontal
         }
         
-        self.dataSource = RxCollectionViewSectionedAnimatedDataSource<HistorySectionModel>(
-            configureCell: { _, collectionView, indexPath, item in
+        dataSource = RxCollectionViewSectionedAnimatedDataSource<HistorySectionModel>(
+            configureCell: { [weak self] _, collectionView, indexPath, item in
+                guard let self else { return UICollectionViewCell() }
+
                 let cell: HistoryCollectionViewCell = collectionView.dequeueReusableCell(withClass: HistoryCollectionViewCell.self, for: indexPath)
-                
-                // если у домофона есть камера, то конфигурируем ячейку с параметрами для отображения видео
-                if let camera = self.camMap.first(where: { $0.entranceId == item.value.entranceId }) {
-                    cell.configure(
-                        value: item.value,
-                        using: imagesCache,
-                        camera: camera
-                    )
-                } else if let camera = self.camMap.first(where: { $0.id == item.value.objectId }){
-                    cell.configure(
-                        value: item.value,
-                        using: imagesCache,
-                        camera: camera
-                    )
+
+                let camera: APICamMap?
+                if let eId = item.value.entranceId {
+                    camera = self.camMap.first { $0.entranceId == eId }
                 } else {
-                    cell.configure(
-                        value: item.value,
-                        using: imagesCache
-                    )
+                    camera = self.camMap.first { $0.id == item.value.objectId }
                 }
-                
+
+                cell.configure(
+                    value: item.value,
+                    using: imagesCache,
+                    camera: camera
+                )
+
                 cell.itsMeTrigger
-                    .drive(self.addFaceTrigger)
+                    .drive(addFaceTrigger)
                     .disposed(by: cell.disposeBag)
-                
+
                 cell.itsNotMeTrigger
-                    .drive(self.deleteFaceTrigger)
+                    .drive(deleteFaceTrigger)
                     .disposed(by: cell.disposeBag)
-                
+
                 cell.displayHintTrigger
-                    .drive(self.displayHintTrigger)
+                    .drive(displayHintTrigger)
                     .disposed(by: cell.disposeBag)
-                
+
                 return cell
             }
         )
@@ -203,16 +198,20 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
-                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
-                    if isLoading { self?.emptyStateView.isHidden = true }
+                    guard let self else { return }
+
+                    updateLoader(isEnabled: isLoading, detailText: nil)
+                    if isLoading { emptyStateView.isHidden = true }
                 }
             )
             .disposed(by: disposeBag)
         
         output.sections // отсюда притетает свежий [HistorySectionModels] для DataSource таблицы
             .do(
-                onNext: { sectionModels in
-                    self.days = sectionModels.map { $0.day }
+                onNext: { [weak self] sectionModels in
+                    guard let self else { return }
+
+                    days = sectionModels.map { $0.day }
                 }
             )
             .drive(collectionView.rx.items(dataSource: dataSource!))
@@ -221,40 +220,42 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         output.availableDays
             .drive(
                 onNext: { [weak self] arg in
-                    self?.availableDays.accept(arg)
-                    self?.emptyStateView.isHidden = !arg.isEmpty
+                    guard let self else { return }
+
+                    availableDays.accept(arg)
+                    emptyStateView.isHidden = !arg.isEmpty
                 }
             )
             .disposed(by: disposeBag)
         
         output.camMap
             .drive { [weak self] data in
-                guard let self = self else {
-                    return
-                }
-                
+                guard let self = self else { return }
+
                 self.camMap = data
             }
             .disposed(by: disposeBag)
         
         availableDays.asDriverOnErrorJustComplete()
-            .drive {
+            .drive { [weak self] in
+                guard let self else { return }
+
                 // со всех квартир собираем все дни, убираем дубли, сортируем от поздних к ранним
-                self.daysQueue = $0.flatMap { $0.value }
+                daysQueue = $0.flatMap { $0.value }
                     .map { $0.day }
                     .withoutDuplicates()
                     .sorted(by: >)
                 
                 // сохраняем список всех имеющихся дат на будущее - пригодятся.
-                self.allAvailableDates = self.daysQueue
-                
+                allAvailableDates = self.daysQueue
+
                 // загружаем самый первый день
-                guard let firstDay = self.daysQueue.first else {
+                guard let firstDay = daysQueue.first else {
                     return
                 }
-                self.daysQueue.remove(at: 0)
-                self.loadDayTriger.onNext(firstDay)
-                
+                daysQueue.remove(at: 0)
+                loadDayTriger.onNext(firstDay)
+
             }
             .disposed(by: disposeBag)
         

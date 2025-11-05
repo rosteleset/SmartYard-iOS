@@ -180,7 +180,7 @@ final class DetailGateAccessViewModel: BaseViewModel {
       
     // MARK: - Public Methods
     
-    // swiftlint:disable:next function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(input: Input) -> Output {
         
         // MARK: - Bindings

@@ -124,9 +124,7 @@ final class HistoryViewModel: BaseViewModel {
         // отсюда прилетает свежая порция событий журнала за день для квартиры от API
         logs.asDriverOnErrorJustComplete()
             .drive { [weak self] data in
-                guard let self = self else {
-                    return
-                }
+                guard let self else {return }
 
                 // дополняем кэш полученной порцией данных
                 if let index = self.dataCache.firstIndex(
@@ -150,9 +148,7 @@ final class HistoryViewModel: BaseViewModel {
         availableDaysForFlat
             .asDriver(onErrorJustReturn: [:]) // отсюда прилетает список доступных в журнале дней для каждой квартиры
             .drive { [weak self] data in
-                guard let self = self else {
-                    return
-                }
+                guard let self else { return }
 
                 // добавляем новую порцию данных, объединяя массивы данных для одинаковых flatId
                 self.availableDays.merge(data, uniquingKeysWith: +)
@@ -165,9 +161,7 @@ final class HistoryViewModel: BaseViewModel {
         availableDaysSubject
             .asDriver(onErrorJustReturn: [:])
             .drive { [weak self] data in
-                guard let self = self else {
-                    return
-                }
+                guard let self else { return }
 
                 // Если мы обладаем данными для всех квартир из фильтра, то обновляем данные для таблицы
                 if data.count == self.apptsFilter.value.count {
@@ -190,9 +184,7 @@ final class HistoryViewModel: BaseViewModel {
             .drive(
                 // swiftlint:disable:next closure_body_length
                 onNext: { [weak self] _ in
-                    guard let self = self else {
-                        return
-                    }
+                    guard let self else { return }
 
                     let result = self.uniqueDays
                     // делаем заготовку будущей секции из массива дат, вообще доступных на сервере
@@ -226,20 +218,13 @@ final class HistoryViewModel: BaseViewModel {
                                 var eventType: EventsFilter
                                 // иначе: мапим тип события с фильтром
                                 switch  $0.event {
-                                case .unanswered, .answered:
-                                    eventType = .domophones
-                                case .rfid:
-                                    eventType = .keys
-                                case .app:
-                                    eventType = .application
-                                case .face:
-                                    eventType = .faces
-                                case .passcode:
-                                    eventType = .code
-                                case .call, .plate:
-                                    eventType = .phoneCall
-                                case .unknown:
-                                    eventType = .all
+                                case .unanswered, .answered: eventType = .domophones
+                                case .rfid:                  eventType = .keys
+                                case .app:                   eventType = .application
+                                case .face:                  eventType = .faces
+                                case .passcode:              eventType = .code
+                                case .call, .plate:          eventType = .phoneCall
+                                case .unknown:               eventType = .all
                                 }
                                 // и фильтруем, только те типы, которые совпадают с фильтром
                                 return eventType == self.eventsFilter.value
@@ -278,9 +263,7 @@ final class HistoryViewModel: BaseViewModel {
         updateAvailableDays // аргумент - forceRefresh
             .asDriverOnErrorJustComplete()
             .flatMap { [weak self] forceRefresh -> Driver<AvailableDays?> in
-                guard let self = self else {
-                    return .just(nil)
-                }
+                guard let self else { return .just(nil) }
 
                 // сбрасываем данные от предыдущих запросов, но кэш не трогаем.
                 self.uniqueDays = []
@@ -300,7 +283,7 @@ final class HistoryViewModel: BaseViewModel {
                     .trackError(self.errorTracker)
                     .trackActivity(self.activityTracker)
                     // поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
-                    .map { $0 == nil ?  nil : [flatId: $0!] }
+                    .map { $0 == nil ? nil : [flatId: $0!] }
                     .asDriver(onErrorJustReturn: [flatId: []])
                     .drive { result in
                         results.onNext(result)
@@ -319,9 +302,8 @@ final class HistoryViewModel: BaseViewModel {
         updateAvailableDays // аргумент - forceRefresh
             .asDriverOnErrorJustComplete()
             .flatMap { [weak self] forceRefresh -> Driver<[FlatId: GetPersonFacesResponseData]?> in
-                guard let self = self else {
-                    return .just(nil)
-                }
+                guard let self else { return .just(nil) }
+
                 self.listFaces = [:]
                 let results = PublishSubject<[FlatId: GetPersonFacesResponseData]?>()
 
@@ -331,7 +313,7 @@ final class HistoryViewModel: BaseViewModel {
                     self.apiWrapper.getPersonFaces(flatId: flatId, forceRefresh: forceRefresh)
                         .trackError(self.errorTracker)
                     // поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
-                        .map { $0 == nil ?  nil : [flatId: $0!] }
+                        .map { $0 == nil ? nil : [flatId: $0!] }
                         .asDriver(onErrorJustReturn: [flatId: []])
                         .drive { result in
                             results.onNext(result)
@@ -346,9 +328,7 @@ final class HistoryViewModel: BaseViewModel {
             .asDriver(onErrorJustReturn: [:])
             .drive(
                 onNext: { [weak self] result in
-                    guard let self = self else {
-                        return
-                    }
+                    guard let self else { return }
 
                     self.listFaces.merge(result) { _, new in new }
                 }
@@ -374,9 +354,7 @@ final class HistoryViewModel: BaseViewModel {
            let flatId = self.flatId {
             getCamMap
                 .drive { [weak self] camMap in
-                    guard let self = self else {
-                        return
-                    }
+                    guard let self else { return }
 
                     self.camMap.accept(camMap)
 
@@ -389,9 +367,7 @@ final class HistoryViewModel: BaseViewModel {
         } else {
             Driver.zip(getSettingsAddresses, getCamMap)
                 .drive { [weak self] args, camMap in
-                    guard let self = self else {
-                        return
-                    }
+                    guard let self else { return }
 
                     self.camMap.accept(camMap)
 
@@ -461,11 +437,8 @@ final class HistoryViewModel: BaseViewModel {
         
         input.loadDay
             .flatMap { [weak self] day -> Driver<DayFlatItemsData?> in
-                    
-                guard let self = self else {
-                    return .just(nil)
-                }
-                
+                guard let self else { return .just(nil) }
+
                 let lock = NSLock()
                 
                 let results = PublishSubject<DayFlatItemsData?>()
@@ -476,11 +449,9 @@ final class HistoryViewModel: BaseViewModel {
                     // проверяем, что для этой квартиры есть записи в этот день
                     guard let days = self.availableDays[flatId],
                           days.contains( where: { $0.day == day })
-                    // иначе переходим к следующей квартире.
-                    else {
-                        return
-                    }
-                    
+                            // иначе переходим к следующей квартире.
+                    else { return }
+
                     lock.lock()
                     let isInQueue = self.loadingQueue.first { $0.flatId == flatId && $0.day == day }
                     let isInCache = self.dataCache.first { $0.flatId == flatId && $0.day == day }
@@ -496,7 +467,7 @@ final class HistoryViewModel: BaseViewModel {
                     
                     self.apiWrapper.plog(flatId: flatId, fromDate: day, forceRefresh: self.forceRefresh)
                         .trackError(self.errorTracker)
-                        .map { $0 == nil ?  nil : (day: day, items: $0!, flatId: Int(flatId) ) }
+                        .map { $0 == nil ? nil : (day: day, items: $0!, flatId: Int(flatId) ) }
                         .asDriver(onErrorJustReturn: nil)
                         .ignoreNil()
                         .drive { result in
@@ -515,10 +486,8 @@ final class HistoryViewModel: BaseViewModel {
         input.itemSelected
             .drive(
                 onNext: { [weak self] item in
-                    guard let viewModel = self else {
-                        return
-                    }
-                    
+                    guard let viewModel = self else { return }
+
                     viewModel.router.trigger(
                         .detail(
                             viewModel: viewModel,
@@ -571,13 +540,10 @@ final class HistoryViewModel: BaseViewModel {
         
         input.loadDay
             .distinctUntilChanged()
-            // swiftlint:disable:next closure_body_length
+        // swiftlint:disable:next closure_body_length
             .flatMap { [weak self] day -> Driver<DayFlatItemsData?> in
-                    
-                guard let self = self else {
-                    return .just(nil)
-                }
-                
+                guard let self else { return .just(nil) }
+
                 let lock = NSLock()
                 
                 let results = PublishSubject<DayFlatItemsData?>()
@@ -588,11 +554,9 @@ final class HistoryViewModel: BaseViewModel {
                     // проверяем, что для этой квартиры есть записи в этот день
                     guard let days = self.availableDays[flatId],
                           days.contains(where: { $0.day == day })
-                    // иначе переходим к следующей квартире.
-                    else {
-                        return
-                    }
-                    
+                            // иначе переходим к следующей квартире.
+                    else { return }
+
                     lock.lock()
                     let isInQueue = self.loadingQueue.first { $0.flatId == flatId && $0.day == day }
                     let isInCache = self.dataCache.first { $0.flatId == flatId && $0.day == day }
@@ -611,9 +575,7 @@ final class HistoryViewModel: BaseViewModel {
                         .map { $0 == nil ?  nil : (day: day, items: $0!, flatId: Int(flatId) ) }
                         .asDriver(onErrorJustReturn: nil)
                         .ignoreNil()
-                        .drive { result in
-                            results.onNext(result)
-                        }
+                        .drive { results.onNext($0) }
                         .disposed(by: self.disposeBag)
                 }
                 
@@ -626,19 +588,16 @@ final class HistoryViewModel: BaseViewModel {
         
         input.addFaceTrigger
             .drive { [weak self] event in
-                guard let self = self else {
-                    return
-                }
+                guard let self else { return }
+
                 self.router.trigger(.addFaceFromEvent(event: event))
             }
             .disposed(by: disposeBag)
         
         input.deleteFaceTrigger
             .drive { [weak self] event in
-                guard let self = self else {
-                    return
-                }
-                
+                guard let self else { return }
+
                 var face: APIFace?
                 for faces in self.listFaces.values {
                     face = faces.first(where: { $0.faceId == Int(event.detailX?.faceId ?? "") })
@@ -650,9 +609,9 @@ final class HistoryViewModel: BaseViewModel {
                 // то потом у нас нет faceId в событиях по какому мы можем связать лица.
                 // а пользователю надо показать лицо, какое мы будем удалять,
                 // поэтому берём картинку из события за неимением ничего лучшего.
-                
+
                 let imageURL = face != nil ? face?.image : event.previewURL
-                
+
                 self.router.trigger(
                     .deleteFaceFromEvent(
                         event: event,
@@ -661,7 +620,7 @@ final class HistoryViewModel: BaseViewModel {
                 )
             }
             .disposed(by: disposeBag)
-       
+
         input.displayHintTrigger
             .drive(
                 onNext: { [weak self] in
@@ -669,7 +628,7 @@ final class HistoryViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-        
+
         return OutputDetail(
             availableDays: availableDaysSubject.asDriver(onErrorJustReturn: [:]),
             isLoading: activityTracker.asDriver(),
@@ -688,7 +647,6 @@ extension HistoryViewModel {
         let refreshDataTrigger: Driver<Void>
         let eventsFilter: Driver<EventsFilter>
         let apptsFilter: Driver<[Int]>
-        
     }
     
     struct Output {
