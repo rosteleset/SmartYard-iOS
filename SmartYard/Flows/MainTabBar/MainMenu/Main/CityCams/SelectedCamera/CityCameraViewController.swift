@@ -622,6 +622,7 @@ extension CityCameraViewController: UICollectionViewDataSource {
         
         cell.configureCell(
             label: self.videos?[indexPath.item].title ?? "",
+            thumbnailUrl: self.videos?[indexPath.item].thumbnailsDefault,
             isFirst: indexPath.item == 0
         )
         return cell
@@ -635,7 +636,7 @@ extension CityCameraViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: collectionView.view.width - 10, height: 53)
+        return CGSize(width: collectionView.view.width - 16, height: 100)
     }
     
     func  collectionView(
