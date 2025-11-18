@@ -31,7 +31,7 @@ final class CircleIconControl: UIControl {
         layer.borderColor = style.borderColor?.cgColor
         layer.borderWidth = style.borderWidth
 
-        imageView.image = style.image?.withRenderingMode(.alwaysTemplate)
+        imageView.image = style.image?.withRenderingMode(.alwaysOriginal)
         imageView.tintColor = style.iconColor
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false

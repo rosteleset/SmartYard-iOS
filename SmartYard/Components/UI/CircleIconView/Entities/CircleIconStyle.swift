@@ -31,11 +31,11 @@ extension CircleIconStyle {
         case cam = "Cam"
         case question = "Question"
 
-        var image: UIImage { UIImage(named: rawValue)! }
+        var image: UIImage? { UIImage(named: rawValue) }
     }
 
     enum Settings {
-        private static func style(for icon: UIImage, selected: Bool) -> CircleIconStyle {
+        private static func style(for icon: UIImage?, selected: Bool) -> CircleIconStyle {
             CircleIconStyle(
                 image: icon,
                 circleColor: selected ? .SmartYard.blue : .SmartYard.gray.withAlphaComponent(0.4),
@@ -62,7 +62,7 @@ extension CircleIconStyle {
     }
 
     enum Close {
-        private static func style(for icon: UIImage, isRed: Bool) -> CircleIconStyle {
+        private static func style(for icon: UIImage?, isRed: Bool) -> CircleIconStyle {
             CircleIconStyle(
                 image: icon,
                 circleColor: .SmartYard.grayBorder,
