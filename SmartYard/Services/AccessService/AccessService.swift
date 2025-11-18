@@ -176,7 +176,7 @@ final class AccessService {
     
     var showPayments: Bool {
         get {
-            UserDefaults.standard.value(forKey: showPaymentsKey)  as? Bool ?? true
+            UserDefaults.standard.value(forKey: showPaymentsKey)  as? Bool ?? false
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: showPaymentsKey)
