@@ -176,7 +176,7 @@ final class AccessService {
     
     var showPayments: Bool {
         get {
-            UserDefaults.standard.value(forKey: showPaymentsKey)  as? Bool ?? false
+            UserDefaults.standard.value(forKey: showPaymentsKey) as? Bool ?? false
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: showPaymentsKey)
@@ -212,7 +212,7 @@ final class AccessService {
     
     var showChat: Bool {
         get {
-            UserDefaults.standard.value(forKey: showChatKey)  as? Bool ?? false
+            UserDefaults.standard.value(forKey: showChatKey) as? Bool ?? false
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: showChatKey)
@@ -221,7 +221,7 @@ final class AccessService {
     
     var chatId: String {
         get {
-            UserDefaults.standard.value(forKey: chatIdKey)  as? String ?? ""
+            UserDefaults.standard.value(forKey: chatIdKey) as? String ?? ""
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: chatIdKey)
@@ -230,7 +230,7 @@ final class AccessService {
     
     var chatDomain: String {
         get {
-            UserDefaults.standard.value(forKey: chatDomainKey)  as? String ?? ""
+            UserDefaults.standard.value(forKey: chatDomainKey) as? String ?? ""
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: chatDomainKey)
@@ -239,7 +239,7 @@ final class AccessService {
     
     var chatToken: String {
         get {
-            UserDefaults.standard.value(forKey: chatTokenKey)  as? String ?? ""
+            UserDefaults.standard.value(forKey: chatTokenKey) as? String ?? ""
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: chatTokenKey)
@@ -248,7 +248,7 @@ final class AccessService {
     
     var showCityCams: Bool {
         get {
-            UserDefaults.standard.value(forKey: showCityCamsKey)  as? Bool ?? false
+            UserDefaults.standard.value(forKey: showCityCamsKey) as? Bool ?? false
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: showCityCamsKey)
@@ -266,7 +266,7 @@ final class AccessService {
     
     var phonePrefix: String {
         get {
-            UserDefaults.standard.value(forKey: phonePrefixKey)  as? String ?? Constants.defaultPhonePrefix
+            UserDefaults.standard.value(forKey: phonePrefixKey) as? String ?? Constants.defaultPhonePrefix
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: phonePrefixKey)
@@ -275,7 +275,7 @@ final class AccessService {
     
     var phonePattern: String {
         get {
-            UserDefaults.standard.value(forKey: phonePatternKey)  as? String ?? Constants.defaultPhonePattern
+            UserDefaults.standard.value(forKey: phonePatternKey) as? String ?? Constants.defaultPhonePattern
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: phonePatternKey)
@@ -284,7 +284,7 @@ final class AccessService {
     
     var guestAccessModeOnOnly: Bool {
         get {
-            UserDefaults.standard.value(forKey: guestAccessModeKey)  as? Bool ?? true
+            UserDefaults.standard.value(forKey: guestAccessModeKey) as? Bool ?? true
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: guestAccessModeKey)
@@ -293,7 +293,7 @@ final class AccessService {
     
     var cctvView: String {
         get {
-            UserDefaults.standard.value(forKey: cctvViewKey)  as? String ?? "list"
+            UserDefaults.standard.value(forKey: cctvViewKey) as? String ?? "list"
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: cctvViewKey)
@@ -302,7 +302,7 @@ final class AccessService {
     
     var activeTab: String {
         get {
-            UserDefaults.standard.value(forKey: activeTabKey)  as? String ?? APIOptions.TabNames.addresses.rawValue
+            UserDefaults.standard.value(forKey: activeTabKey) as? String ?? APIOptions.TabNames.addresses.rawValue
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: activeTabKey)
@@ -311,7 +311,7 @@ final class AccessService {
     
     var timeZone: String {
         get {
-            UserDefaults.standard.value(forKey: timeZoneKey)  as? String ?? Constants.defaultTimeZone
+            UserDefaults.standard.value(forKey: timeZoneKey) as? String ?? Constants.defaultTimeZone
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: timeZoneKey)
@@ -337,7 +337,7 @@ final class AccessService {
     }
     
     var phoneLengthWithoutPrefix: Int {
-            phonePattern.count(of: "#")
+        phonePattern.count(of: "#")
     }
     
     var phoneLengthWithPrefix: Int {
