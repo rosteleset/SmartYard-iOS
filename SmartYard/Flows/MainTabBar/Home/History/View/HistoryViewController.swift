@@ -201,6 +201,10 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
                     self.appartmentFilterButton.isHidden = false
                 } else {
                     self.appartmentFilterButton.isHidden = true
+
+                    if #available(iOS 26.0, *) {
+                        self.toolbar.items?[2].isHidden = true
+                    }
                 }
                 
                 // со всех квартир собираем все дни, убираем дубли, сортируем от поздних к ранним
