@@ -1,0 +1,75 @@
+//
+//  APIWrapper+Payment.swift
+//  SmartYard
+//
+//  Created by Mad Brains on 14.05.2020.
+//  Copyright © 2021 LanTa. All rights reserved.
+//
+
+import Foundation
+import RxSwift
+import RxCocoa
+
+extension APIWrapper {
+    
+    func payPrepare(clientId: String, amount: String) -> Single<PayPrepareResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = PayPrepareRequest(accessToken: accessToken, clientId: clientId, amount: amount)
+        
+        return provider.rx
+            .request(.payPrepare(request: request))
+            .convertNoConnectionError()
+            .trackBackend(backend, internet)
+            .mapAsDefaultResponse()
+    }
+    
+    func payProcess(paymentId: String, sbId: String) -> Single<PayProcessResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+        
+        let request = PayProcessRequest(accessToken: accessToken, paymentId: paymentId, sbId: sbId)
+        
+        return provider.rx
+            .request(.payProcess(request: request))
+            .convertNoConnectionError()
+            .trackBackend(backend, internet)
+            .mapAsDefaultResponse()
+    }
+    
+    func sberbankPayProcess(merchant: String, orderNumber: String, paymentToken: String) -> Single<SberbankPayProcessResponseData?> {
+        let request = SberbankPayProcessRequest(
+            merchant: merchant,
+            orderNumber: orderNumber,
+            paymentToken: paymentToken
+        )
+
+        Logger.logDebug("Request data: \(String(describing: request))")
+
+        return provider.rx
+            .request(.sberbankPayProcess(request: request))
+            .convertNoConnectionError()
+            .trackBackend(backend, internet)
+            .mapAsSberbankResponse()
+    }
+    
+    func payRegisterProcess(orderNumber: String, amount: String) -> Single<PayRegisterResponseData?> {
+        let request = PayRegisterRequest(
+            orderNumber: orderNumber,
+            amount: amount
+        )
+
+        Logger.logDebug("Request data: \(String(describing: request))")
+
+        return provider.rx
+            .request(.payRegister(request: request))
+            .convertNoConnectionError()
+            .trackBackend(backend, internet)
+            .mapAsDefaultResponse()
+
+    }
+    
+}

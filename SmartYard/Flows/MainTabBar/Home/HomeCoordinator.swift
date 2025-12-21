@@ -46,7 +46,9 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute> {
     private let permissionService: PermissionService
     private let alertService: AlertService
     private let logoutHelper: LogoutHelper
-    
+    private let offlineAddressListDataSource: OfflineAddressListDataSource
+    private let networkStateProvider: NetworkStateProviding
+
     init(
         apiWrapper: APIWrapper,
         pushNotificationService: PushNotificationService,
@@ -54,7 +56,9 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         issueService: IssueService,
         permissionService: PermissionService,
         alertService: AlertService,
-        logoutHelper: LogoutHelper
+        logoutHelper: LogoutHelper,
+        offlineAddressListDataSource: OfflineAddressListDataSource,
+        networkStateProvider: NetworkStateProviding
     ) {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
@@ -63,7 +67,9 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute> {
         self.permissionService = permissionService
         self.alertService = alertService
         self.logoutHelper = logoutHelper
-        
+        self.offlineAddressListDataSource = offlineAddressListDataSource
+        self.networkStateProvider = networkStateProvider
+
         super.init(initialRoute: .main)
         
         rootViewController.setNavigationBarHidden(true, animated: false)
@@ -82,7 +88,9 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute> {
                 accessService: accessService,
                 alertService: alertService,
                 logoutHelper: logoutHelper,
-                router: weakRouter
+                router: weakRouter,
+                offlineAddressListDataSource: offlineAddressListDataSource,
+                networkStateProvider: networkStateProvider
             )
             
             let vc = AddressesListViewController(viewModel: vm)
@@ -250,7 +258,8 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute> {
                 houseId: houseId,
                 address: address,
                 tree: tree,
-                path: path
+                path: path,
+                networkStateProvider: networkStateProvider
             )
             let vc = CamerasListViewController(viewModel: vm)
             

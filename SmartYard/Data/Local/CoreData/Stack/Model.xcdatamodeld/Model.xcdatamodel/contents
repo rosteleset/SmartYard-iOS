@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24512" systemVersion="25B78" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CachedAddress" representedClassName=".CachedAddress" syncable="YES">
+        <attribute name="houseId" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="doors" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CachedDoor" inverseName="address" inverseEntity="CachedDoor"/>
+    </entity>
+    <entity name="CachedDoor" representedClassName=".CachedDoor" syncable="YES">
+        <attribute name="domophoneId" attributeType="String"/>
+        <attribute name="doorCode" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CachedAddress" inverseName="doors" inverseEntity="CachedAddress"/>
+    </entity>
+</model>

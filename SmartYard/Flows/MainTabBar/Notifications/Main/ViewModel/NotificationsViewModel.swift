@@ -17,19 +17,22 @@ final class NotificationsViewModel: BaseViewModel {
     private let logoutHelper: LogoutHelper
     private let alertService: AlertService
     private let router: WeakRouter<NotificationsRoute>
-    
+    private let networkStateProvider: NetworkStateProviding
+
     init(
         apiWrapper: APIWrapper,
         pushNotificationService: PushNotificationService,
         logoutHelper: LogoutHelper,
         alertService: AlertService,
-        router: WeakRouter<NotificationsRoute>
+        router: WeakRouter<NotificationsRoute>,
+        networkStateProvider: NetworkStateProviding
     ) {
         self.apiWrapper = apiWrapper
         self.pushNotificationService = pushNotificationService
         self.logoutHelper = logoutHelper
         self.alertService = alertService
         self.router = router
+        self.networkStateProvider = networkStateProvider
     }
     
     func transform(_ input: Input) -> Output {
@@ -77,15 +80,15 @@ final class NotificationsViewModel: BaseViewModel {
             .isTrue()
             .mapToVoid()
         
-        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
-            .asDriver(onErrorJustReturn: false)
+        let hasNetworkBecomeReachable = networkStateProvider.state
+            .asDriver(onErrorDriveWith: .empty())
             .distinctUntilChanged()
+            .filter { $0 == .online }
             .skip(1)
-            .isTrue()
             .withLatestFrom(input.isViewVisible)
-            .isTrue()
+            .filter { $0 }
             .mapToVoid()
-            
+
         Driver
             .merge(input.viewWillAppearTrigger.mapToVoid(), newMessageRefresh, hasNetworkBecomeReachable)
             .debounce(.milliseconds(500))

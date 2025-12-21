@@ -35,7 +35,8 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
     private let permissionService: PermissionService
     private let alertService: AlertService
     private let logoutHelper: LogoutHelper
-    
+    private let networkStateProvider: NetworkStateProviding
+
     private var settingsRouter: StrongRouter<SettingsRoute>!
     private var cityCamsRouter: StrongRouter<CityCamsRoute>!
     
@@ -46,7 +47,8 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         issueService: IssueService,
         permissionService: PermissionService,
         logoutHelper: LogoutHelper,
-        alertService: AlertService
+        alertService: AlertService,
+        networkStateProvider: NetworkStateProviding
     ) {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
@@ -55,7 +57,8 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         self.permissionService = permissionService
         self.alertService = alertService
         self.logoutHelper = logoutHelper
-        
+        self.networkStateProvider = networkStateProvider
+
         super.init(initialRoute: .main)
         
         let settingsCoordinator = SettingsCoordinator(
@@ -66,7 +69,8 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             issueService: issueService,
             permissionService: permissionService,
             logoutHelper: logoutHelper,
-            alertService: alertService
+            alertService: alertService,
+            networkStateProvider: networkStateProvider
         )
         
         let cityCamsCoordinator = CityCamsCoordinator(
@@ -90,7 +94,12 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
     override func prepareTransition(for route: MainMenuRoute) -> NavigationTransition {
         switch route {
         case .main:
-            let vm = MainMenuViewModel(apiWrapper: apiWrapper, accessService: accessService, router: weakRouter)
+            let vm = MainMenuViewModel(
+                apiWrapper: apiWrapper,
+                accessService: accessService,
+                router: weakRouter,
+                networkStateProvider: networkStateProvider
+            )
             let vc = MainMenuViewController(viewModel: vm)
             return .set([vc])
         
@@ -179,6 +188,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             let coordinator = WebViewCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
+                networkStateProvider: networkStateProvider,
                 url: url,
                 backButtonLabel: NSLocalizedString("Menu", comment: ""),
                 push: true,
@@ -192,6 +202,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             let coordinator = WebViewCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
+                networkStateProvider: networkStateProvider,
                 content: content,
                 baseURL: baseURL,
                 backButtonLabel: NSLocalizedString("Menu", comment: ""),

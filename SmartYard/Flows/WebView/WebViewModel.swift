@@ -17,19 +17,22 @@ final class WebViewModel: BaseViewModel {
     private let url: URL?
     private let content: String?
     private let baseURL: String?
-    
+    private let networkStateProvider: NetworkStateProviding
+
     init(
         apiWrapper: APIWrapper,
         router: WeakRouter<WebViewRoute>,
         url: URL? = nil,
         content: String? = nil,
-        baseURL: String? = nil
+        baseURL: String? = nil,
+        networkStateProvider: NetworkStateProviding
     ) {
         self.apiWrapper = apiWrapper
         self.router = router
         self.url = url
         self.content = content
         self.baseURL = baseURL
+        self.networkStateProvider = networkStateProvider
     }
     
     func transform(_ input: Input) -> Output {
@@ -79,15 +82,15 @@ final class WebViewModel: BaseViewModel {
         /// content, baseURL
         let contentToLoadSubject = PublishSubject<(String, String)>()
         
-        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
-            .asDriver(onErrorJustReturn: false)
+        let hasNetworkBecomeReachable = networkStateProvider.state
+            .asDriver(onErrorDriveWith: .empty())
             .distinctUntilChanged()
+            .filter { $0 == .online }
             .skip(1)
-            .isTrue()
             .withLatestFrom(input.isViewVisible)
-            .isTrue()
+            .filter { $0 }
             .mapToVoid()
-            
+
         Driver
             .merge(input.viewWillAppearTrigger.distinctUntilChanged().mapToVoid(), hasNetworkBecomeReachable)
             .drive(

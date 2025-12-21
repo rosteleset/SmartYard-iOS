@@ -25,7 +25,6 @@ final class AddressesListObjectCell: CustomBorderCollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         disposeBag = DisposeBag()
     }
     

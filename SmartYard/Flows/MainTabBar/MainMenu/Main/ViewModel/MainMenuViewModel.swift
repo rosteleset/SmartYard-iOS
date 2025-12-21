@@ -13,6 +13,7 @@ import UIKit
 
 final class MainMenuViewModel: BaseViewModel {
     private let apiWrapper: APIWrapper
+    private let networkStateProvider: NetworkStateProviding
     private let router: WeakRouter<MainMenuRoute>
     private var defaultItems: [MenuListItem] = []
     private let items: BehaviorSubject<[MenuListItem]>
@@ -21,10 +22,12 @@ final class MainMenuViewModel: BaseViewModel {
     init(
         apiWrapper: APIWrapper,
         accessService: AccessService,
-        router: WeakRouter<MainMenuRoute>
+        router: WeakRouter<MainMenuRoute>,
+        networkStateProvider: NetworkStateProviding
     ) {
         self.apiWrapper = apiWrapper
         self.router = router
+        self.networkStateProvider = networkStateProvider
         defaultItems = (
             accessService.showCityCams ?
             [
@@ -69,13 +72,13 @@ final class MainMenuViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
-            .asDriver(onErrorJustReturn: false)
+        let hasNetworkBecomeReachable = networkStateProvider.state
+            .asDriver(onErrorDriveWith: .empty())
             .distinctUntilChanged()
-            .skip(1)
-            .isTrue()
+            .filter { $0 == .online }
             .mapToVoid()
-        
+            .skip(1)
+
         // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
         let interactionBlockingRequestTracker = ActivityTracker()
         

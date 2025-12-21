@@ -24,6 +24,7 @@ final class ChatCoordinator: NavigationCoordinator<ChatRoute> {
     private let pushNotificationService: PushNotificationService
     private let logoutHelper: LogoutHelper
     private let alertService: AlertService
+    private let networkStateProvider: NetworkStateProviding
     var childCoordinator: WebViewCoordinator?
     
     
@@ -32,14 +33,16 @@ final class ChatCoordinator: NavigationCoordinator<ChatRoute> {
         accessService: AccessService,
         pushNotificationService: PushNotificationService,
         logoutHelper: LogoutHelper,
-        alertService: AlertService
+        alertService: AlertService,
+        networkStateProvider: NetworkStateProviding
     ) {
         self.apiWrapper = apiWrapper
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
         self.logoutHelper = logoutHelper
         self.alertService = alertService
-        
+        self.networkStateProvider = networkStateProvider
+
         if self.apiWrapper.accessService.chatUrl.isEmpty {
             super.init(initialRoute: .main)
         } else {
@@ -64,7 +67,8 @@ final class ChatCoordinator: NavigationCoordinator<ChatRoute> {
                 accessService: accessService,
                 pushNotificationService: pushNotificationService,
                 logoutHelper: logoutHelper,
-                alertService: alertService
+                alertService: alertService,
+                networkStateProvider: networkStateProvider
             )
             
             let vc = ChatViewController(viewModel: vm)
@@ -83,6 +87,7 @@ final class ChatCoordinator: NavigationCoordinator<ChatRoute> {
             childCoordinator = WebViewCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
+                networkStateProvider: networkStateProvider,
                 url: url,
                 backButtonLabel: "",
                 push: false,

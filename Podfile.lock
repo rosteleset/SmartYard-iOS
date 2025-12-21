@@ -362,10 +362,10 @@ SPEC CHECKSUMS:
   MapboxCommon: 8c1649b92e3e58640ee7bcf27a13a8da4fe1171e
   MapboxCoreMaps: dc02dfd56f28684bc89e089289194ad4519832f6
   MapboxMaps: 2f1e953f9de63c3e582763de09cc9e1fc59c5c75
-  MarqueeLabel: 15e524a6762552bb279cb17438b8a94990269fb9
+  MarqueeLabel: 0c57d4c6634e04a6d015af79f7c9a175b2309525
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
-  NotificationBannerSwift: dce54ded532b26e30cd8e7f4d80e124a0f2ba7d1
+  NotificationBannerSwift: 2b1ead2d62887dd3be02188e03cc82cf6fc7edf5
   OnlineChatSdk: 421b17a804f22c193f81f02a891e7d91128c525b
   Parchment: fdea264f5de6d73b0b69a31c686fab762c78ed2f
   PinLayout: e2fceb4cbfdf49f3569fc242a7dfa0da4fb9aa06
@@ -381,7 +381,7 @@ SPEC CHECKSUMS:
   SearchTextField: 40dc3cc57def5a211f263cac263622c163bbc25a
   SHSPhoneComponent: c491cf87a0d5c3fb11b8f54100d05fd2706cb401
   SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
-  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   SSCustomTabbar: e18f8aa256bce5c8a4742e53e638f64b33fb0e10
   SwifterSwift: ac4936934bcf86b4e0f717cc022eef64b335a826
   SwiftLint: 5f096c0752cfe436d39cef2b7483c90d649ddc91
@@ -392,6 +392,6 @@ SPEC CHECKSUMS:
   WKCookieWebView: 528260c9cf7d89d312d61639cfca75c5618326a2
   XCoordinator: 2cf9f72e10998b7a4a4bbeac3d07e071ea82fca3
 
-PODFILE CHECKSUM: f73c6b03461888cbe84f10f46ce62636b3717509
+PODFILE CHECKSUM: 63bc08197082b2c1ebaefa58017b21e9992a59b7
 
 COCOAPODS: 1.16.2

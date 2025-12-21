@@ -240,3 +240,12 @@
 "Public cams" = "Shahar kameralari";
 "Search" = "Qidiruv";
 "VPN detected. The application may work unstable." = "VPN aniqlangan. Ilova beqaror ishlashi mumkin.";
+"List Empty Address List" = "Manzil qo'shish uchun ekranning yuqori qismidagi \"+\" tugmasini bosing.  Qo'shilgan manzil ko'rsatilmasa, iltimos, bir necha daqiqa kuting. Ro'yxat avtomatik yangilanadi.";
+"List Empty Offline List" = "Maʼlumotlar hali yoʻq yoki saqlanmagan.";
+"offline.alert.switch_mode" = "Onlayn rejimga qaytish uchun \"OK\" tugmasini bosing.\nOflayn rejimda qolish uchun \"Bekor qilish\" tugmasini bosing.";
+"offline.alert.no_connection_title" = "Ulanish yo‘q!";
+"offline.message.connection_lost" = "Aloqa uzilganga o‘xshaydi yoki serverda muammolar mavjud.";
+"offline.message.server_unavailable" = "Hozircha oflayn rejimdan chiqib bo‘lmaydi — server mavjud emas. Keyinroq qayta urinib ko‘ring.";
+"offline.hint.swipe_to_exit" = "Siz hozir oflayn rejimdasiz. Undan chiqish uchun ekranning yuqori qismidan pastga suring.";
+"offline.message.connection_restored" = "Ura! Aloqa qayta tiklandi!";
+"My addresses" = "Mening manzillarim";

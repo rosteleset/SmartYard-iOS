@@ -25,7 +25,8 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
     private let disposeBag = DisposeBag()
     
     private let apiWrapper: APIWrapper
-    
+    private let networkStateProvider: NetworkStateProviding
+
     private let version: Int
     
     private let backButtonLabel: String
@@ -33,6 +34,7 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
     init(
         rootVC: UINavigationController,
         apiWrapper: APIWrapper,
+        networkStateProvider: NetworkStateProviding,
         url: URL,
         backButtonLabel: String,
         push: Bool,
@@ -40,6 +42,7 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
         refreshControl: Bool = true
     ) {
         self.apiWrapper = apiWrapper
+        self.networkStateProvider = networkStateProvider
         self.version = version
         self.backButtonLabel = backButtonLabel
         super.init(rootViewController: rootVC, initialRoute: nil)
@@ -50,6 +53,7 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
     init(
         rootVC: UINavigationController,
         apiWrapper: APIWrapper,
+        networkStateProvider: NetworkStateProviding,
         content: String,
         baseURL: String,
         backButtonLabel: String,
@@ -58,6 +62,7 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
         refreshControl: Bool = true
     ) {
         self.apiWrapper = apiWrapper
+        self.networkStateProvider = networkStateProvider
         self.version = version
         self.backButtonLabel = backButtonLabel
         super.init(rootViewController: rootVC, initialRoute: nil)
@@ -89,7 +94,8 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
             let vm = WebViewModel(
                 apiWrapper: apiWrapper,
                 router: weakRouter,
-                url: url
+                url: url,
+                networkStateProvider: networkStateProvider
             )
             
             let nc = rootViewController
@@ -112,7 +118,8 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
                 apiWrapper: apiWrapper,
                 router: weakRouter,
                 content: content,
-                baseURL: baseURL
+                baseURL: baseURL,
+                networkStateProvider: networkStateProvider
             )
             
             let nc = rootViewController
@@ -134,7 +141,8 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute> {
             let vm = WebViewModel(
                 apiWrapper: apiWrapper,
                 router: weakRouter,
-                url: url
+                url: url,
+                networkStateProvider: networkStateProvider
             )
             
             let vc = WebPopupController(

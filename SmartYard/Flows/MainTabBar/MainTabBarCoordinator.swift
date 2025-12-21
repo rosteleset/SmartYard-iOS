@@ -32,7 +32,10 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let permissionService: PermissionService
     private let alertService: AlertService
     private let logoutHelper: LogoutHelper
-    
+    private let offlineAddressListDataSource: OfflineAddressListDataSource
+    private let networkStateProvider: NetworkStateProviding
+    private let optionsService: OptionsServicing
+
     private let homeRouter: StrongRouter<HomeRoute>
     private let notificationsRouter: StrongRouter<NotificationsRoute>
     private let chatRouter: StrongRouter<ChatRoute>
@@ -57,7 +60,10 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         issueService: IssueService,
         permissionService: PermissionService,
         alertService: AlertService,
-        logoutHelper: LogoutHelper
+        logoutHelper: LogoutHelper,
+        offlineAddressListDataSource: OfflineAddressListDataSource,
+        networkStateProvider: NetworkStateProviding,
+        optionsService: OptionsServicing
     ) {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
@@ -66,10 +72,10 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.permissionService = permissionService
         self.alertService = alertService
         self.logoutHelper = logoutHelper
-        
-        // блокируем основной поток до получения опций отображения экранов меню приложения (запрос /ext/options)
-        getOptionsSync(apiWrapper: apiWrapper, accessService: accessService)
-        
+        self.offlineAddressListDataSource = offlineAddressListDataSource
+        self.networkStateProvider = networkStateProvider
+        self.optionsService = optionsService
+
         // MARK: Home Tab
         let homeCoordinator = HomeCoordinator(
             apiWrapper: apiWrapper,
@@ -78,7 +84,9 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             issueService: issueService,
             permissionService: permissionService,
             alertService: alertService,
-            logoutHelper: logoutHelper
+            logoutHelper: logoutHelper,
+            offlineAddressListDataSource: offlineAddressListDataSource,
+            networkStateProvider: networkStateProvider
         )
         
         let homeTabBarItem = UITabBarItem(
@@ -96,7 +104,8 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             apiWrapper: apiWrapper,
             pushNotificationService: pushNotificationService,
             logoutHelper: logoutHelper,
-            alertService: alertService
+            alertService: alertService,
+            networkStateProvider: networkStateProvider
         )
         
         let notificationsTabBarItem = UITabBarItem(
@@ -114,7 +123,8 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             accessService: accessService,
             pushNotificationService: pushNotificationService,
             logoutHelper: logoutHelper,
-            alertService: alertService
+            alertService: alertService,
+            networkStateProvider: networkStateProvider
         )
         
         let chatTabBarItem = UITabBarItem(
@@ -128,7 +138,8 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         // MARK: Payments Tab
         let paymentsCoordinator = PaymentsCoordinator(
-            apiWrapper: apiWrapper
+            apiWrapper: apiWrapper,
+            networkStateProvider: networkStateProvider
         )
         
         let paymentsTabBarItem = UITabBarItem(
@@ -148,7 +159,8 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             issueService: issueService,
             permissionService: permissionService,
             logoutHelper: logoutHelper,
-            alertService: alertService
+            alertService: alertService,
+            networkStateProvider: networkStateProvider
         )
         
         let menuTabBarItem = UITabBarItem(
@@ -191,27 +203,21 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             customTabBarController.delegate = customTabBarController
             rootTabBarController = customTabBarController
         }
-        
-        let tabs = [homeRouter, notificationsRouter] +
-            (accessService.showChat ? [chatRouter] : []) +
-            (accessService.showPayments ? [paymentsRouter] : []) +
-            [menuRouter] as [Presentable]
-            
-        var selectedTab: Presentable
-        
-        switch accessService.activeTab {
-        case "addresses": selectedTab = homeRouter
-        case "notifications": selectedTab = notificationsRouter
-        case "chat": selectedTab = chatRouter
-        case "pay": selectedTab = paymentsRouter
-        case "menu": selectedTab = menuRouter
-        default: selectedTab = homeRouter
-        }
+
+        let tabs: [Presentable] = {
+            var tabs: [Presentable] = [homeCoordinator.strongRouter, notificationsCoordinator.strongRouter]
+
+            if accessService.showChat { tabs.append(chatCoordinator.strongRouter) }
+            if accessService.showPayments { tabs.append(paymentsCoordinator.strongRouter) }
+
+            tabs.append(menuCoordinator.strongRouter)
+            return tabs
+        }()
 
         super.init(
             rootViewController: rootTabBarController,
             tabs: tabs,
-            select: selectedTab
+            select: homeRouter
         )
 
         if #available(iOS 26.0, *), isNewTabBarActive {
@@ -231,6 +237,7 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         subscribeToBadgeUpdates()
         subscribeToAddAddressNotifications()
         subscribeToChatNotifications()
+        subsribeToOptionsUpdates()
     }
     
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
@@ -258,6 +265,51 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         }
     }
     
+
+    private func selectTabIfNeeded() {
+        let desiredRouter = desiredRouter()
+
+        let viewControllers = rootViewController.viewControllers ?? []
+
+        if let index = viewControllers.firstIndex(where: {
+            $0 === desiredRouter.viewController
+        }) {
+            rootViewController.selectedIndex = index
+        } else {
+            rootViewController.selectedIndex = 0
+        }
+    }
+
+    private func makeTabs() -> [Presentable] {
+        var tabs: [Presentable] = [homeRouter, notificationsRouter]
+
+        if accessService.showChat { tabs.append(chatRouter) }
+        if accessService.showPayments { tabs.append(paymentsRouter) }
+
+        tabs.append(menuRouter)
+
+        return tabs
+    }
+
+    private func reloadTabs() {
+        let tabs = makeTabs()
+        rootViewController.setViewControllers(
+            tabs.map { $0.viewController },
+            animated: false
+        )
+    }
+
+    private func desiredRouter() -> Presentable {
+        switch accessService.activeTab {
+        case "addresses": return homeRouter
+        case "notifications": return notificationsRouter
+        case "chat": return chatRouter
+        case "pay": return paymentsRouter
+        case "menu": return menuRouter
+        default: return homeRouter
+        }
+    }
+
     private func updateNotificationsTab(shouldShowBadge: Bool) {
         notificationsTabBarItem.image = UIImage(
             named: shouldShowBadge ? "NotificationsTabBadgeUnselected" : "NotificationsTabUnselected"
@@ -354,6 +406,16 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             )
             .disposed(by: disposeBag)
     }
+
+    private func subsribeToOptionsUpdates() {
+        optionsService.optionsUpdated
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                self?.reloadTabs()
+                self?.selectTabIfNeeded()
+            })
+            .disposed(by: disposeBag)
+    }
 }
 
 extension SSCustomTabBarViewController: UITabBarControllerDelegate {
@@ -365,85 +427,4 @@ extension SSCustomTabBarViewController: UITabBarControllerDelegate {
         }
         
     }
-}
-
-private func getOptionsSync(apiWrapper: APIWrapper, accessService: AccessService) {
-    let sem = DispatchSemaphore(value: 0)
-    let disposeBag = DisposeBag()
-    
-    apiWrapper.getOptions()
-        .catchAndReturn(nil)
-        .asObservable()
-        .subscribe(
-            onNext: { response in
-                guard let response = response else {
-                    sem.signal()
-                    return
-                }
-                
-                if let payments = response.payments {
-                    accessService.showPayments = payments
-                    accessService.paymentsUrl = ""
-                }
-                
-                if let paymentsUrl = response.paymentsUrl {
-                    accessService.paymentsUrl = paymentsUrl
-                }
-                
-                if let chatUrl = response.chatUrl {
-                    accessService.chatUrl = chatUrl
-                }
-                
-                if let supportPhone = response.supportPhone {
-                    accessService.supportPhone = supportPhone
-                }
-                
-                if let chat = response.chat {
-                    accessService.showChat = chat
-                }
-                
-                if let chatOptions = response.chatOptions {
-                    accessService.chatId = chatOptions.id
-                    accessService.chatDomain = chatOptions.domain
-                    accessService.chatToken = chatOptions.token
-                }
-                
-                if let cityCams = response.cityCams {
-                    accessService.showCityCams = cityCams
-                }
-
-                if let timeZone = response.timeZone {
-                    accessService.timeZone = timeZone
-                }
-
-                if let deliveryTabsConfig = response.deliveryTabsConfig {
-                    accessService.deliveryTabsConfig = deliveryTabsConfig
-                }
-
-                accessService.guestAccessModeOnOnly = response.guestAccessOnOnly
-                accessService.issuesVersion = response.issuesVersion ?? "1"
-                accessService.cctvView = response.cctvView.rawValue
-                
-                switch accessService.cctvView {
-                case "list":
-                    accessService.showList = true
-                case "tree":
-                    accessService.showList = false
-                default:
-                    // В этом случае 'showList' будет брать у себя значение по умолчанию 'true',
-                    // если значение не было установлено пользователем ранее в 'UserDefaults'.
-                    break
-                }
-
-                if let validationPattern = response.validationPattern {
-                    accessService.nameValidationPattern = validationPattern
-                }
-
-                accessService.activeTab = response.activeTab.rawValue
-                
-                sem.signal()
-            }
-        )
-        .disposed(by: disposeBag)
-    sem.wait()
 }

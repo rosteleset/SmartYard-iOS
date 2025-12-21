@@ -101,8 +101,8 @@ final class AddressSettingsViewModel: BaseViewModel {
                         isCmsEnabledSubject.onNext(state.cms)
                         areCallsEnabledSubject.onNext(state.voip)
                         isWhiteRabbitEnabledSubject.onNext(state.whiteRabbit)
-                        arePaperBillsEnabledSubject.onNext(state.paperBill)
-                        
+                        arePaperBillsEnabledSubject.onNext(state.paperBill ?? false)
+
                         switch state.disablePlog {
                         case true: areLogsEnabledSubject.onNext(false)
                         case false: areLogsEnabledSubject.onNext(true)
@@ -111,8 +111,9 @@ final class AddressSettingsViewModel: BaseViewModel {
                         
                         areLogsVisibleOnlyForOwnerSubject.onNext(state.hiddenPlog)
 
-                        isFRSEnabledSubject.onNext(!state.frsDisabled)
-                        isLPRSEnabledSubject.onNext(!state.lprsDisabled)
+                        // TODO: - сделать нормальную домен модель
+                        isFRSEnabledSubject.onNext(!(state.frsDisabled ?? true))
+                        isLPRSEnabledSubject.onNext(!(state.lprsDisabled ?? true))
                     }
                 )
                 .disposed(by: disposeBag)
@@ -197,7 +198,7 @@ final class AddressSettingsViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { state in
-                    arePaperBillsEnabledSubject.onNext(state.paperBill)
+                    arePaperBillsEnabledSubject.onNext(state.paperBill ?? false)
                 }
             )
             .disposed(by: disposeBag)
@@ -274,7 +275,7 @@ final class AddressSettingsViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { state in
-                    isFRSEnabledSubject.onNext(!state.frsDisabled)
+                    isFRSEnabledSubject.onNext(!(state.frsDisabled ?? true))
                 }
             )
             .disposed(by: disposeBag)
@@ -295,7 +296,7 @@ final class AddressSettingsViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { state in
-                    isLPRSEnabledSubject.onNext(!state.lprsDisabled)
+                    isLPRSEnabledSubject.onNext(!(state.lprsDisabled ?? true))
                 }
             )
             .disposed(by: disposeBag)

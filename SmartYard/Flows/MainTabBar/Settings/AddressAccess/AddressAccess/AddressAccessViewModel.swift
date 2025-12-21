@@ -118,9 +118,13 @@ final class AddressAccessViewModel: BaseViewModel {
                     let isAccessGranted = response.autoOpen > Date()
                     
                     self?.isGrantedIntercomGuestAccess.onNext(isAccessGranted)
-                    self?.isLprsAvailable.onNext(!response.lprsDisabled)
-                    self?.isFrsAvailable.onNext(!response.frsDisabled)
+
+                    let lpsrAvailable = (!(response.lprsDisabled ?? true))
+                    let frsAvailable = (!(response.frsDisabled ?? true))
                     
+                    self?.isLprsAvailable.onNext(lpsrAvailable)
+                    self?.isFrsAvailable.onNext(frsAvailable)
+
                     let segmentType: GateAccessSegmentType = response.lprsDisabled == false ? .cars : .persons
                     self?.gateAccessSelectedSegmentTypeSubject.accept(segmentType)
                 }

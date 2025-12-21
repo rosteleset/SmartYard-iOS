@@ -18,7 +18,8 @@ final class ChatViewModel: BaseViewModel {
     private let pushNotificationService: PushNotificationService
     private let logoutHelper: LogoutHelper
     private let alertService: AlertService
-    
+    private let networkStateProvider: NetworkStateProviding
+
     private let automaticMessage = PublishSubject<String>()
     
     init(
@@ -26,14 +27,16 @@ final class ChatViewModel: BaseViewModel {
         accessService: AccessService,
         pushNotificationService: PushNotificationService,
         logoutHelper: LogoutHelper,
-        alertService: AlertService
+        alertService: AlertService,
+        networkStateProvider: NetworkStateProviding
     ) {
         self.apiWrapper = apiWrapper
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
         self.logoutHelper = logoutHelper
         self.alertService = alertService
-        
+        self.networkStateProvider = networkStateProvider
+
         super.init()
         
         cleanCache()
@@ -96,13 +99,13 @@ final class ChatViewModel: BaseViewModel {
                     .joined(separator: " ")
             }
         
-        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
-            .asDriver(onErrorJustReturn: false)
+        let hasNetworkBecomeReachable = networkStateProvider.state
+            .asDriver(onErrorDriveWith: .empty())
             .distinctUntilChanged()
-            .skip(1)
-            .isTrue()
+            .filter { $0 == .online }
             .mapToVoid()
-        
+            .skip(1)
+
         let chatConfiguration = Driver
             .merge(hasNetworkBecomeReachable, .just(()))
             .map { _ -> ChatConfiguration in

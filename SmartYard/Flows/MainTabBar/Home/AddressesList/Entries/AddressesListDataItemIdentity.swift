@@ -7,12 +7,12 @@
 //
 
 enum AddressesListDataItemIdentity: Hashable {
-    
     case header(addressId: String)
     case object(addressId: String, domophoneId: String, doorId: Int, entrance: String?)
     case cameras(addressId: String)
     case history(addressId: String)
     case unapprovedObject(issueId: String, address: String)
     case emptyState
-    
+
+    case offlineDoor(addressId: String, domophoneId: String)
 }

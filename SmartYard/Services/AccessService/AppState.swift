@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AppState: Codable {
+enum AppState: Codable, Equatable {
     
     case onboarding
     case selectProvider
@@ -18,7 +18,8 @@ enum AppState: Codable {
     case authByOutgoingCall(phoneNumber: String, confirmPhoneNumber: String)
     case userName
     case main
-    
+    case offline
+
     private enum CodingKeys: String, CodingKey {
         case onboarding
         case selectProvider
@@ -29,6 +30,7 @@ enum AppState: Codable {
         case confirmPhoneNumber
         case userName
         case main
+        case offline
     }
     
     init(from decoder: Decoder) throws {
@@ -74,7 +76,12 @@ enum AppState: Codable {
             self = .main
             return
         }
-        
+
+        if (try? values.decode(Bool.self, forKey: .offline)) != nil {
+            self = .offline
+            return
+        }
+
         throw NSError.AccessServiceError.stateExtractionError
     }
     
@@ -99,6 +106,8 @@ enum AppState: Codable {
             try container.encode(true, forKey: .userName)
         case .main:
             try container.encode(true, forKey: .main)
+        case .offline:
+            try container.encode(true, forKey: .offline)
         }
     }
     

@@ -15,6 +15,7 @@ import SkeletonView
 
 final class AddressesListViewController: BaseViewController, LoaderPresentable {
     
+    @IBOutlet private weak var headerView: UILabel!
     @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var addButton: UIButton!
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -33,7 +34,7 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
     private let itemsCountProxy = BehaviorSubject<[Int: Int]>(value: [:])
     
     private let viewModel: AddressesListViewModel
-    
+
     private let requestGuestAccess = PublishSubject<AddressesListDataItemIdentity>()
     private let qrCodeTapped = PublishSubject<Void>()
     
@@ -148,10 +149,8 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
                     model.items.contains { $0.identity == updateKind.associatedIdentity }
                 }?.offset
                 
-                guard let section = neededSectionOffset else {
-                    return nil
-                }
-                
+                guard let section = neededSectionOffset else { return nil }
+
                 guard !(self?.collectionView.refreshControl?.isRefreshing ?? false) else {
                     return nil
                 }
@@ -194,10 +193,15 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
     
-    private func performScrollUpdate(updateKind: AddressesListSectionUpdateKind, to indexPath: IndexPath) {
+    private func performScrollUpdate(
+        updateKind: AddressesListSectionUpdateKind,
+        to indexPath: IndexPath
+    ) {
         switch updateKind {
         case .expand:
-            guard let attributes = collectionView.collectionViewLayout.layoutAttributesForItem(at: indexPath) else {
+            guard
+                let attributes = collectionView.collectionViewLayout.layoutAttributesForItem(at: indexPath)
+            else {
                 return
             }
             
@@ -225,11 +229,13 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
     }
     
     private func configureView() {
+        headerView.text = NSLocalizedString("My addresses", comment: "")
+        
         mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
-        
-        addButton.setImage(UIImage(named: "AddButtonIcon"), for: .normal)
-        addButton.setImage(UIImage(named: "AddButtonIcon")?.darkened(), for: .highlighted)
+
+        addButton.imageForNormal = UIImage(named: "AddButtonIcon")
+        addButton.imageForHighlighted = UIImage(named: "AddButtonIcon")?.darkened()
     }
     
     private func configureCollectionView() {
@@ -260,10 +266,17 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
                     // Типа нельзя использовать ячейки без ReuseIdentifier в таком датасорсе
                     // Поэтому возвращаю рандомную ячейку. Все равно контроллер уже мертв, нам пофиг
                     
-                    return collectionView.dequeueReusableCell(withClass: AddressesHeaderCell.self, for: indexPath)
+                    return collectionView.dequeueReusableCell(
+                        withClass: AddressesHeaderCell.self,
+                        for: indexPath
+                    )
                 }
                 
-                return self.configureCell(collectionView: collectionView, indexPath: indexPath, item: item)
+                return self.configureCell(
+                    collectionView: collectionView,
+                    indexPath: indexPath,
+                    item: item
+                )
             }
         )
         
@@ -281,21 +294,32 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
         item: AddressesListDataItem
     ) -> UICollectionViewCell {
         if case .emptyState = item {
-            let cell = collectionView.dequeueReusableCell(withClass: AddressesListEmptyStateCell.self, for: indexPath)
+            let cell = collectionView.dequeueReusableCell(
+                withClass: AddressesListEmptyStateCell.self,
+                for: indexPath
+            )
+            cell.configure(with: .online)
             return cell
         }
         
         let customizableCell: CustomBorderCollectionViewCell = {
             switch item {
             case let .header(_, address, isExpanded):
-                let cell = collectionView.dequeueReusableCell(withClass: AddressesHeaderCell.self, for: indexPath)
+                let cell = collectionView.dequeueReusableCell(
+                    withClass: AddressesHeaderCell.self,
+                    for: indexPath
+                )
                 cell.configure(address: address, isExpanded: isExpanded)
                 return cell
                 
             case let .object(_, type, name, isOpened):
-                let cell = collectionView.dequeueReusableCell(withClass: AddressesListObjectCell.self, for: indexPath)
+                let cell = collectionView.dequeueReusableCell(
+                    withClass: AddressesListObjectCell.self,
+                    for: indexPath
+                )
+
                 cell.configure(objectType: type, name: name, isOpened: isOpened)
-                
+
                 let subject = PublishSubject<Void>()
                 
                 subject
@@ -304,33 +328,43 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
                     .disposed(by: cell.disposeBag)
                 
                 cell.bind(with: subject)
-                
+
                 return cell
                 
             case let .cameras(_, numberOfCameras):
-                let cell = collectionView.dequeueReusableCell(withClass: AddressesListCameraCell.self, for: indexPath)
+                let cell = collectionView.dequeueReusableCell(
+                    withClass: AddressesListCameraCell.self,
+                    for: indexPath
+                )
                 cell.configure(availableCameras: numberOfCameras)
                 return cell
             
             case let .history(_, eventsCount):
-                let cell = collectionView.dequeueReusableCell(withClass: AddressesListHistoryCell.self, for: indexPath)
+                let cell = collectionView.dequeueReusableCell(
+                    withClass: AddressesListHistoryCell.self,
+                    for: indexPath
+                )
                 cell.configure(itemsCount: eventsCount)
                 return cell
                 
             case let .unapprovedAddresses(_, address):
-                let cell = collectionView.dequeueReusableCell(withClass: UnapprovedObjectCell.self, for: indexPath)
+                let cell = collectionView.dequeueReusableCell(
+                    withClass: UnapprovedObjectCell.self,
+                    for: indexPath
+                )
                 cell.configure(address: address)
                 cell.bind(with: qrCodeTapped)
-                
                 return cell
                 
-            case .emptyState:
-                fatalError("Should be handled separately")
+            case .emptyState: fatalError("Should be handled separately")
+            case .offlineDoor(_, _): fatalError("Should be handled on the offline screen")
             }
         }()
         
-        guard let itemsCountDict = try? itemsCountProxy.value(),
-            let totalItemsInSection = itemsCountDict[indexPath.section] else {
+        guard
+            let itemsCountDict = try? itemsCountProxy.value(),
+            let totalItemsInSection = itemsCountDict[indexPath.section]
+        else {
             return customizableCell
         }
         
@@ -357,24 +391,33 @@ extension AddressesListViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        guard let item = dataSource?[indexPath] else {
-            return .zero
-        }
-        
+        guard let item = dataSource?[indexPath] else { return .zero }
+
         switch item {
         case .emptyState:
-            return CGSize(width: collectionView.width - 32, height: collectionView.bounds.height - 36)
-            
+            return CGSize(
+                width: collectionView.width - 32,
+                height: collectionView.bounds.height - 36
+            )
+
         case let .header(_, address, _):
-            let height = AddressesHeaderCell.preferredHeight(
-                for: UIScreen.main.bounds.width - 32,
-                title: address
-            ).totalHeight
-            
-            return CGSize(width: UIScreen.main.bounds.width - 32, height: height)
-            
+            let height = AddressesHeaderCell
+                .preferredHeight(
+                    for: UIScreen.main.bounds.width - 32,
+                    title: address
+                )
+                .totalHeight
+
+            return CGSize(
+                width: UIScreen.main.bounds.width - 32,
+                height: height
+            )
+
         default:
-            return CGSize(width: collectionView.width - 32, height: 72)
+            return CGSize(
+                width: collectionView.width - 32,
+                height: 72
+            )
         }
     }
     
@@ -425,7 +468,10 @@ extension AddressesListViewController: UICollectionViewDragDelegate {
         itemsForBeginning session: UIDragSession,
         at indexPath: IndexPath
     ) -> [UIDragItem] {
-        guard indexPath.row == 0, let header = dataSource?[indexPath] else {
+        guard
+            indexPath.row == 0,
+            let header = dataSource?[indexPath]
+        else {
             return []
         }
 
@@ -434,9 +480,7 @@ extension AddressesListViewController: UICollectionViewDragDelegate {
         }
 
         let renderer = UIGraphicsImageRenderer(bounds: cell.bounds)
-        let image = renderer.image { ctx in
-            cell.layer.render(in: ctx.cgContext)
-        }
+        let image = renderer.image { cell.layer.render(in: $0.cgContext) }
 
         let snapshotView = UIImageView(image: image)
         snapshotView.frame = cell.frame

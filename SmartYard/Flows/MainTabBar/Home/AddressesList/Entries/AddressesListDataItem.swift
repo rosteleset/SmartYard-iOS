@@ -16,7 +16,9 @@ enum AddressesListDataItem: IdentifiableType, Equatable {
     case history(identity: AddressesListDataItemIdentity, numberOfEvents: Int)
     case unapprovedAddresses(identity: AddressesListDataItemIdentity, address: String)
     case emptyState
-    
+
+    case offlineDoor(identity: AddressesListDataItemIdentity, viewModel: OfflineDoorCodeCellViewModel)
+
 }
 
 extension AddressesListDataItem {
@@ -35,6 +37,8 @@ extension AddressesListDataItem {
             return identity
         case .emptyState:
             return .emptyState
+        case .offlineDoor(let identity, _):
+            return identity
         }
     }
     

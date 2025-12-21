@@ -47,7 +47,8 @@ final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
     private let permissionService: PermissionService
     private let logoutHelper: LogoutHelper
     private let alertService: AlertService
-    
+    private let networkStateProvider: NetworkStateProviding
+
     init(
         rootViewController: RootViewController,
         accessService: AccessService,
@@ -56,7 +57,8 @@ final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
         issueService: IssueService,
         permissionService: PermissionService,
         logoutHelper: LogoutHelper,
-        alertService: AlertService
+        alertService: AlertService,
+        networkStateProvider: NetworkStateProviding
     ) {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
@@ -64,6 +66,7 @@ final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
         self.issueService = issueService
         self.permissionService = permissionService
         self.logoutHelper = logoutHelper
+        self.networkStateProvider = networkStateProvider
         self.alertService = alertService
         
         super.init(rootViewController: rootViewController, initialRoute: nil)
@@ -80,7 +83,8 @@ final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
                 apiWrapper: apiWrapper,
                 accessService: accessService,
                 logoutHelper: logoutHelper,
-                alertService: alertService
+                alertService: alertService,
+                networkStateProvider: networkStateProvider
             )
             
             let vc = SettingsViewController(viewModel: vm)

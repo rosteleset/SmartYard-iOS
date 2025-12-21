@@ -26,10 +26,12 @@ enum AppRoute: Route {
     case pinCode(phoneNumber: String, isInitial: Bool, useFlashCall: Bool)
     case authByOutgoingCall(phoneNumber: String, confirmPhoneNumber: String)
     case alert(title: String, message: String?)
+    case dialog(title: String, message: String?, actions: [UIAlertAction])
     case onboarding
+    case offline
+    case dismissOffline
     case appSettings(title: String, message: String?)
     case registerQRCode(code: String)
-        
     case incomingCall(
         callPayload: CallPayload,
         isCallKitUsed: Bool,
@@ -55,7 +57,25 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let pushNotificationService: PushNotificationService
     private let alertService = AlertService()
     private let logoutHelper: LogoutHelper
-    
+    private let debugNetwork = DebugNetworkController()
+    private let networkEnv: NetworkEnvironment
+    private lazy var networkStateProvider = NetworkStateProvider(
+        internet: networkEnv.internet,
+        backend: networkEnv.backend
+    )
+    private let offlineAddressListDataSource = OfflineAddressListDataSource(
+        container: PersistenceController.shared.container
+    )
+    private lazy var optionsService: OptionsServicing = OptionsService(
+        apiWrapper: apiWrapper,
+        accessService: accessService,
+        networkStateProvider: networkStateProvider
+    )
+
+#if DEBUG
+    private lazy var debugOverlay = DebugNetworkOverlay(controller: debugNetwork)
+#endif
+
     private var mainTabBarCoordinator: MainTabBarCoordinator?
     
     private var currentCallPreviewData: Data?
@@ -71,42 +91,56 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
     var selectedTabPresentable: Presentable? {
         mainTabBarCoordinator?.selectedPresentable
     }
-    
+
+    private var isOfflinePresented = false
+    private var didLoadOptionsOnce = false
+    private var isLoadingOptions = false
+
     init(mainWindow: UIWindow) {
-        apiWrapper = APIWrapper(accessService: accessService)
-        issueService = IssueService(apiWrapper: apiWrapper, accessService: accessService)
-        pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
-        
-        logoutHelper = LogoutHelper(
+        let env = NetworkEnvironment.make(debug: debugNetwork)
+        self.networkEnv = env
+        self.apiWrapper = APIWrapper(
+            accessService: accessService,
+            session: networkEnv.session,
+            internet: networkEnv.internet,
+            backend: networkEnv.backend
+        )
+        self.issueService = IssueService(
+            apiWrapper: apiWrapper,
+            accessService: accessService
+        )
+        self.pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
+
+        self.logoutHelper = LogoutHelper(
             pushNotificationService: pushNotificationService,
             accessService: accessService,
             alertService: alertService
         )
-        
+
         self.mainWindow = mainWindow
-        
-        if Constants.defaultBackendURL.isNilOrEmpty {
-            // блокируем основной поток до обновления baseUrl из списка провайдеров если провайдер был выбран.
-            switch accessService.appState {
-            case .onboarding, .selectProvider:
-                break
-            default:
-                updateBaseUrlSync(apiWrapper: apiWrapper, accessService: accessService)
-            }
-        }
-        
+
         super.init(initialRoute: accessService.routeForCurrentState)
-        
+
+        resolveBaseURLIfNeeded()
+        syncOfflinePresentationOnLaunch()
+        optionsService.loadIfNeeded(reason: .coldStart)
+
+#if DEBUG
+        setupDebugGesture()
+#endif
+
         rootViewController.setNavigationBarHidden(true, animated: false)
         
         observeLogout()
         observeOrientationChanges()
+        observeNetworkEvents()
     }
     
     // swiftlint:disable cyclomatic_complexity function_body_length
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
         case .main:
+            configureBackendMonitoring()
             let coordinator = MainTabBarCoordinator(
                 accessService: accessService,
                 pushNotificationService: pushNotificationService,
@@ -114,7 +148,10 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
                 issueService: issueService,
                 permissionService: permissionService,
                 alertService: alertService,
-                logoutHelper: logoutHelper
+                logoutHelper: logoutHelper,
+                offlineAddressListDataSource: offlineAddressListDataSource,
+                networkStateProvider: networkStateProvider,
+                optionsService: optionsService
             )
         
             mainTabBarCoordinator = coordinator
@@ -173,7 +210,10 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
             
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
-            
+
+        case let .dialog(title, message, actions):
+            return .dialogTransition(title: title, message: message, actions: actions)
+
         case .onboarding:
             let vm = OnboardingViewModel(router: weakRouter, accessService: accessService)
             let vc = OnboardingViewController(viewModel: vm)
@@ -323,6 +363,22 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
             )
             let vc = SelectProviderViewController(viewModel: vm)
             return .set([vc], animation: .fade)
+
+        case .offline:
+            let vm = HomeOfflineViewModel(
+                accessService: accessService,
+                offlineAddressListDataSource: offlineAddressListDataSource,
+                networkStateProvider: networkStateProvider,
+                router: weakRouter
+            )
+            let vc = HomeOfflineViewController(viewModel: vm)
+
+            return .present(vc, animation: .default)
+
+        case .dismissOffline:
+            isOfflinePresented = false
+            accessService.appState = .main
+            return .dismiss()
         }
     }
     
@@ -433,7 +489,9 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
         
         // иначе меняем URL на новый в приложении
         accessService.backendURL = newBackendURL
-        
+
+        configureBackendMonitoring()
+
         // и меняем URL на новый в общем файле - чтобы и виджет работал с новым URL
         guard var sharedData = SmartYardSharedDataUtilities.loadSharedData() else {
             return
@@ -443,21 +501,21 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
     }
     
     func openNotificationsTab() {
-        // MARK: DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
-        
+        // DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             self?.mainTabBarCoordinator?.trigger(.notifications)
         }
     }
     
     func openChatTab() {
-        // MARK: DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
-        
+        // DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             self?.mainTabBarCoordinator?.trigger(.chat)
         }
     }
-    
+
+    // MARK: - Private methods
+
     private func observeLogout() {
         NotificationCenter.default.rx.notification(.init("UserLoggedOut"))
             .subscribe(
@@ -466,7 +524,11 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
                         self?.removeChild(mainTabBarCoordinator)
                         self?.mainTabBarCoordinator = nil
                     }
-                    
+
+                    self?.networkEnv.backend.setEnabled(false)
+                    self?.networkEnv.backend.updateHealthURL(nil)
+                    try? self?.offlineAddressListDataSource.wipeCache()
+
                     self?.trigger(Constants.defaultBackendURL.isNilOrEmpty ? .selectProvider : .phoneNumber)
                 }
             )
@@ -543,28 +605,179 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
             )
             .disposed(by: disposeBag)
     }
-    
+
+    private enum AlertNetworkState: Equatable { case online, offline }
+
+    private func observeNetworkEvents() {
+        Logger.logDebug("<<< observeNetworkEvents: subscribed")
+
+        networkStateProvider.state
+            .do(onNext: { state in
+                Logger.logDebug("<<< networkStateProvider.state emitted: \(state)")
+            })
+            .map { $0 == .online ? AlertNetworkState.online : .offline }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] state in
+                Logger.logDebug("<<< AlertNetworkState: \(state)")
+                DispatchQueue.main.async { [weak self] in
+                    self?.handleNetworkAlert(state)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func handleNetworkAlert(_ state: AlertNetworkState) {
+        Logger.logDebug("<<< Network alert: \(state) appState=\(accessService.appState) route=\(accessService.routeForCurrentState)")
+
+        switch state {
+        case .online: showOnlineAlert()
+        case .offline: showOfflineAlert()
+        }
+    }
+
+    private func showOfflineAlert() {
+        guard accessService.appState == .main else { return }
+
+        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            self?.showOffline()
+        }
+
+        alertService.showDialog(
+            title: NSLocalizedString("offline.alert.no_connection_title", comment: ""),
+            message: NSLocalizedString("offline.message.connection_lost", comment: ""),
+            preferredStyle: .alert,
+            actions: [okAction],
+            priority: 1000
+        )
+    }
+
+    private func showOnlineAlert() {
+        guard accessService.appState == .offline else { return }
+
+        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            guard let self else { return }
+            isOfflinePresented = false
+            accessService.appState = .main
+            trigger(.dismissOffline)
+        }
+        let cancelAction = UIAlertAction(
+            title: NSLocalizedString("Cancel", comment: ""),
+            style: .destructive
+        )
+
+        alertService.showDialog(
+            title: NSLocalizedString("offline.message.connection_restored", comment: ""),
+            message: NSLocalizedString("offline.alert.switch_mode", comment: ""),
+            preferredStyle: .alert,
+            actions: [okAction, cancelAction],
+            priority: 1000
+        )
+    }
+
+    private func showOffline() {
+        guard accessService.appState == .main else { return }
+        guard !isOfflinePresented else { return }
+
+        isOfflinePresented = true
+        accessService.appState = .offline
+        trigger(.offline)
+    }
+
+    private func syncOfflinePresentationOnLaunch() {
+        guard accessService.hasValidToken else { return }
+
+        networkStateProvider.state
+            .debounce(.milliseconds(250), scheduler: MainScheduler.instance)
+            .take(1)
+            .subscribe(onNext: { [weak self] state in
+                guard let self else { return }
+
+                if state != .online {
+                    accessService.appState = .offline
+                    presentOfflineIfNeeded()
+                } else {
+                    if accessService.appState == .offline { accessService.appState = .main }
+                    isOfflinePresented = false
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func presentOfflineIfNeeded() {
+        guard !isOfflinePresented else { return }
+        isOfflinePresented = true
+        trigger(.offline)
+    }
+
+    private func configureBackendMonitoring() {
+        guard accessService.hasValidToken else {
+            networkEnv.backend.setEnabled(false)
+            networkEnv.backend.updateHealthURL(nil)
+            return
+        }
+
+        guard let url = makeHealthURL() else {
+            networkEnv.backend.setEnabled(false)
+            networkEnv.backend.updateHealthURL(nil)
+            return
+        }
+
+        networkEnv.backend.updateHealthURL(url)
+        networkEnv.backend.setEnabled(true)
+        networkEnv.backend.reportMaybeAvailable()
+    }
+
+    private func makeHealthURL() -> URL? {
+        guard let base = URL(string: accessService.backendURL) else { return nil }
+        return base.appendingPathComponent("ext/options")
+    }
+
+    private func resolveBaseURLIfNeeded() {
+        guard Constants.defaultBackendURL.isNilOrEmpty else { return }
+
+        switch accessService.appState {
+        case .onboarding, .selectProvider:
+            return
+        default:
+            break
+        }
+
+        apiWrapper.getProvidersList()
+            .timeout(.seconds(3), scheduler: MainScheduler.instance)
+            .observe(on: MainScheduler.instance)
+            .subscribe(
+                onSuccess: { [weak self] response in
+                    guard
+                        let self,
+                        let provList = response,
+                        let prov = provList.first(where: { $0.id == self.accessService.providerId })
+                    else {
+                        Logger.logWarning("BaseURL not resolved")
+                        return
+                    }
+
+                    self.updateBackendURL(prov.baseUrl)
+                    Logger.logDebug("BaseURL resolved -> \(prov.baseUrl)")
+                },
+                onFailure: { error in
+                    Logger.logWarning("BaseURL fetch failed: \(error)")
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+
+#if DEBUG
+    private func setupDebugGesture() {
+        let gesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(toggleDebug)
+        )
+        gesture.numberOfTapsRequired = 3
+        gesture.numberOfTouchesRequired = 2
+        rootViewController.view.addGestureRecognizer(gesture)
+    }
+
+    @objc private func toggleDebug() { debugOverlay.toggle() }
+#endif
 }
 
-private func updateBaseUrlSync(apiWrapper: APIWrapper, accessService: AccessService) {
-    let sem = DispatchSemaphore(value: 0)
-    let disposeBag = DisposeBag()
-    
-    apiWrapper.getProvidersList()
-        .catchAndReturn(nil)
-        .asObservable()
-        .subscribe(
-            onNext: { response in
-                guard let provList = response,
-                let prov = provList.first(where: { $0.id == accessService.providerId }) else {
-                    sem.signal()
-                    return
-                }
-                
-                accessService.backendURL = prov.baseUrl
-                sem.signal()
-            }
-        )
-        .disposed(by: disposeBag)
-    sem.wait()
-}

@@ -38,13 +38,16 @@ final class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
     private let disposeBag = DisposeBag()
     
     let apiWrapper: APIWrapper
+    private let networkStateProvider: NetworkStateProviding
     var childCoordinator: WebViewCoordinator?
     
     init(
-        apiWrapper: APIWrapper
+        apiWrapper: APIWrapper,
+        networkStateProvider: NetworkStateProviding
     ) {
         self.apiWrapper = apiWrapper
-        
+        self.networkStateProvider = networkStateProvider
+
         if self.apiWrapper.accessService.paymentsUrl.isEmpty {
             super.init(initialRoute: .main)
         } else {
@@ -122,6 +125,7 @@ final class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             childCoordinator = WebViewCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
+                networkStateProvider: networkStateProvider,
                 url: url,
                 backButtonLabel: "",
                 push: false,
@@ -138,6 +142,7 @@ final class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
             childCoordinator = WebViewCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
+                networkStateProvider: networkStateProvider,
                 content: content,
                 baseURL: baseURL,
                 backButtonLabel: "",

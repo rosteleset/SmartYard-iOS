@@ -24,7 +24,9 @@ final class AddressesListViewModel: BaseViewModel {
     private let accessService: AccessService
     private let alertService: AlertService
     private let logoutHelper: LogoutHelper
-    
+    private let offlineAddressListDataSource: OfflineAddressListDataSource
+    private let networkStateProvider: NetworkStateProviding
+
     private let router: WeakRouter<HomeRoute>
     
     let activityTracker = ActivityTracker()
@@ -37,7 +39,9 @@ final class AddressesListViewModel: BaseViewModel {
         accessService: AccessService,
         alertService: AlertService,
         logoutHelper: LogoutHelper,
-        router: WeakRouter<HomeRoute>
+        router: WeakRouter<HomeRoute>,
+        offlineAddressListDataSource: OfflineAddressListDataSource,
+        networkStateProvider: NetworkStateProviding
     ) {
         self.apiWrapper = apiWrapper
         self.permissionService = permissionService
@@ -45,8 +49,9 @@ final class AddressesListViewModel: BaseViewModel {
         self.accessService = accessService
         self.alertService = alertService
         self.logoutHelper = logoutHelper
-        
         self.router = router
+        self.offlineAddressListDataSource = offlineAddressListDataSource
+        self.networkStateProvider = networkStateProvider
     }
     
     private let loadedApprovedAddressesData = BehaviorSubject<GetAddressListResponseData?>(value: nil)
@@ -61,13 +66,12 @@ final class AddressesListViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func transform(_ input: Input) -> Output {
-        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
-            .asDriver(onErrorJustReturn: false)
+        let hasNetworkBecomeReachable = networkStateProvider.state
+            .asDriverOnErrorJustComplete()
             .distinctUntilChanged()
-            .skip(1)
-            .isTrue()
+            .filter { $0 == .online }
             .mapToVoid()
-        
+
         errorTracker.asDriver()
             .catchAuthorizationError { [weak self] in
                 guard let self = self else {
@@ -107,7 +111,7 @@ final class AddressesListViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-        
+
         // MARK: Заказчик попросил запрашивать все разрешения сразу после авторизации. Хозяин - барин
         
         permissionService.requestAccessToMic()
@@ -178,7 +182,7 @@ final class AddressesListViewModel: BaseViewModel {
                 NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToTrue(),
                 NotificationCenter.default.rx.notification(.addressNeedUpdate).asDriverOnErrorJustComplete().mapToTrue(),
                 NotificationCenter.default.rx.notification(.addressOrderReset).asDriverOnErrorJustComplete().mapToTrue(),
-                hasNetworkBecomeReachable.mapToFalse(),
+                hasNetworkBecomeReachable.mapToTrue(),
                 .just(false)
             )
             .flatMapLatest { [weak self] forceRefresh -> Driver<(GetAddressListResponseData, GetListConnectResponseData)?> in
@@ -296,38 +300,18 @@ final class AddressesListViewModel: BaseViewModel {
                         }
                     }
 
+                    self?.cacheOfflineAccess(uniqueApprovedAddresses)
+
                     let sortedAddresses = self?.applySavedOrder(to: uniqueApprovedAddresses)
-                    
+
                     self?.loadedApprovedAddressesData.onNext(sortedAddresses)
                     self?.loadedUnapprovedAddressesData.onNext(unapprovedAddresses)
-                    
-                    guard let accessToken = self?.accessService.accessToken,
-                          let backendURL = self?.accessService.backendURL else {
-                        return
-                    }
-                    
-                    let sharedObjects = approvedAddresses.flatMap { addressObject -> [SmartYardSharedObject] in
-                        let address = addressObject.address
-                        
-                        return addressObject.doors.map {
-                            SmartYardSharedObject(
-                                objectName: $0.name,
-                                objectAddress: address,
-                                domophoneId: $0.domophoneId,
-                                doorId: $0.doorId,
-                                blockReason: $0.blocked,
-                                logoImageName: $0.type.iconImageName
-                            )
+
+                    if let sharedData = self?.buildSharedData(from: uniqueApprovedAddresses) {
+                        DispatchQueue.global(qos: .utility).async {
+                            SmartYardSharedDataUtilities.saveSharedData(data: sharedData)
                         }
                     }
-                    
-                    let sharedData = SmartYardSharedData(
-                        accessToken: accessToken,
-                        backendURL: backendURL,
-                        sharedObjects: sharedObjects
-                    )
-                    
-                    SmartYardSharedDataUtilities.saveSharedData(data: sharedData)
                 }
             )
             .disposed(by: disposeBag)
@@ -877,7 +861,6 @@ extension AddressesListViewModel: QRCodeScanViewModelDelegate {
 }
 
 extension AddressesListViewModel {
-    
     private func defaultSorted(_ addresses: GetAddressListResponseData) -> GetAddressListResponseData {
         let alphabetic = addresses.sorted {
             $0.address.localizedCaseInsensitiveCompare($1.address) == .orderedAscending
@@ -932,5 +915,37 @@ extension AddressesListViewModel {
         )
         areSectionsExpanded.onNext(newDict)
     }
-    
+
+}
+
+extension AddressesListViewModel {
+
+    private func buildSharedData(from approved: GetAddressListResponseData) -> SmartYardSharedData? {
+        guard let accessToken = accessService.accessToken else { return nil }
+
+        let sharedObjects: [SmartYardSharedObject] = approved.flatMap { approvedItem in
+            let address = approvedItem.address
+            return approvedItem.doors.map {
+                SmartYardSharedObject(
+                    objectName: $0.name,
+                    objectAddress: address,
+                    domophoneId: $0.domophoneId,
+                    doorId: $0.doorId,
+                    blockReason: $0.blocked,
+                    logoImageName: $0.type.iconImageName
+                )
+            }
+        }
+
+        return SmartYardSharedData(
+            accessToken: accessToken,
+            backendURL: accessService.backendURL,
+            sharedObjects: sharedObjects
+        )
+    }
+
+    private func cacheOfflineAccess(_ approved: GetAddressListResponseData) {
+        let sanitized = approved.filter { !$0.houseId.isEmpty }
+        offlineAddressListDataSource.importAddresses(sanitized)
+    }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxRelay
 
 private let appStateKey = "appState"
 private let accessTokenKey = "accessToken"
@@ -42,7 +43,8 @@ private let deliveryTabsConfigKey = "deliveryTabsConfigKey"
 // swiftlint:disable:next type_body_length
 final class AccessService {
     static let shared = AccessService()
-    
+    let optionsUpdated = PublishRelay<Void>()
+
     var appState: AppState {
         get {
             UserDefaults.standard.object(AppState.self, with: appStateKey) ?? .onboarding
@@ -144,6 +146,7 @@ final class AccessService {
                 confirmPhoneNumber: confirmPhoneNumber
             )
         case .flashCall(let phoneNumber): return .pinCode(phoneNumber: phoneNumber, isInitial: false, useFlashCall: true)
+        case .offline: return .offline
         }
     }
     
@@ -176,7 +179,7 @@ final class AccessService {
     
     var showPayments: Bool {
         get {
-            UserDefaults.standard.value(forKey: showPaymentsKey) as? Bool ?? false
+            UserDefaults.standard.value(forKey: showPaymentsKey) as? Bool ?? true
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: showPaymentsKey)
@@ -434,4 +437,8 @@ extension AccessService {
         return try? JSONDecoder().decode(T.self, from: data)
     }
 
+}
+
+extension AccessService {
+    var hasValidToken: Bool { !(accessToken ?? "").isEmpty }
 }

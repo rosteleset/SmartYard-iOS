@@ -20,7 +20,8 @@ final class SettingsViewModel: BaseViewModel {
     private let accessService: AccessService
     private let logoutHelper: LogoutHelper
     private let alertService: AlertService
-    
+    private let networkStateProvider: NetworkStateProviding
+
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
     private let loadedData = BehaviorSubject<[APISettingsAddress]>(value: [])
@@ -30,13 +31,15 @@ final class SettingsViewModel: BaseViewModel {
         apiWrapper: APIWrapper,
         accessService: AccessService,
         logoutHelper: LogoutHelper,
-        alertService: AlertService
+        alertService: AlertService,
+        networkStateProvider: NetworkStateProviding
     ) {
         self.router = router
         self.apiWrapper = apiWrapper
         self.accessService = accessService
         self.logoutHelper = logoutHelper
         self.alertService = alertService
+        self.networkStateProvider = networkStateProvider
     }
     
     // swiftlint:disable:next function_body_length cyclomatic_complexity
@@ -69,13 +72,13 @@ final class SettingsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
-            .asDriver(onErrorJustReturn: false)
+        let hasNetworkBecomeReachable = networkStateProvider.state
+            .asDriver(onErrorDriveWith: .empty())
             .distinctUntilChanged()
-            .skip(1)
-            .isTrue()
+            .filter { $0 == .online }
             .mapToVoid()
-        
+            .skip(1)
+
         // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
         
         let interactionBlockingRequestTracker = ActivityTracker()

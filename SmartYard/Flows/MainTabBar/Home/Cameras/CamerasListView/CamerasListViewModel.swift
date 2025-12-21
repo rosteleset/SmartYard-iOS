@@ -19,7 +19,8 @@ final class CamerasListViewModel: BaseViewModel {
     private let address: String
     private let path: [Int]
     private var tree: CamerasTree
-    
+    private let networkStateProvider: NetworkStateProviding
+
     init(
         apiWrapper: APIWrapper,
         accessService: AccessService,
@@ -27,7 +28,8 @@ final class CamerasListViewModel: BaseViewModel {
         houseId: String,
         address: String,
         tree: CamerasTree,
-        path: [Int] = []
+        path: [Int] = [],
+        networkStateProvider: NetworkStateProviding
     ) {
         self.apiWrapper = apiWrapper
         self.router = router
@@ -38,6 +40,7 @@ final class CamerasListViewModel: BaseViewModel {
             value: CamerasListViewModel.convertList(from: tree, using: path)
         )
         self.path = path
+        self.networkStateProvider = networkStateProvider
     }
     
     fileprivate static func convertAPIToCameraObject (source: [APICCTV]?) -> [CameraObject] {
@@ -113,13 +116,13 @@ final class CamerasListViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        let hasNetworkBecomeReachable = apiWrapper.isReachableObservable
-            .asDriver(onErrorJustReturn: false)
+        let hasNetworkBecomeReachable = networkStateProvider.state
+            .asDriver(onErrorDriveWith: .empty())
             .distinctUntilChanged()
-            .skip(1)
-            .isTrue()
+            .filter { $0 == .online }
             .mapToVoid()
-        
+            .skip(1)
+
         // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
         let interactionBlockingRequestTracker = ActivityTracker()
         
