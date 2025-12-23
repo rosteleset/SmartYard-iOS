@@ -14,6 +14,7 @@ import SwifterSwift
 import AVKit
 import SmartYardSharedDataFramework
 import FirebaseCrashlytics
+import FirebaseAnalytics
 
 enum AppRoute: Route {
     
@@ -389,6 +390,11 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     func setCrashlyticsUserID() {
         Crashlytics.crashlytics().setUserID(accessService.clientPhoneNumber ?? "unknown")
+    }
+    
+    static func  setAnalyticsOperatorID() {
+        Analytics.setUserProperty(AccessService.shared.providerId, forName: "provider_id")
+        Analytics.setUserProperty(AccessService.shared.providerName, forName: "provider_name")
     }
     
     func markAllMessagesAsDelivered() {
