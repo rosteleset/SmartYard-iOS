@@ -1,62 +1,61 @@
-"0cUuHX" = "Вы хотите открыть ‘${door}’?";
+"0cUuHX" = "Сіз ‘${door}’ ашқыңыз келе ме?";
 
-"75DQQs" = "Тип";
+"75DQQs" = "Түрі";
 
-"7OB1Ww" = "There are ${count} options matching ‘${door}’.";
+"7OB1Ww" = "‘${door}’ сәйкес келетін ${count} нұсқа бар.";
 
-"7lOt11" = "Открыть ${door} @ ${address}";
+"7lOt11" = "${door} ашу @ ${address}";
 
-"7pPNLK" = "Door";
+"7pPNLK" = "Есік";
 
-"Brixr9" = "Вы хотите открыть ‘${address}’?";
+"Brixr9" = "Сіз ‘${address}’ ашқыңыз келе ме?";
 
-"EVkcmA" = "Открыть ...";
+"EVkcmA" = "Ашу ...";
 
-"GooWrv" = "Открывает любые двери";
+"GooWrv" = "Кез келген есікті ашады";
 
-"H8fR3T" = "Открыть ...";
+"H8fR3T" = "Ашу ...";
 
-"Lab1IV" = "Что открыть";
+"Lab1IV" = "Нені ашу керек";
 
-"MWf04e-fVQgAq" = "Just to confirm, you wanted ‘Все’?";
+"MWf04e-fVQgAq" = "Растау үшін, сіз ‘Барлығы’ таңдадыңыз ба?";
 
-"MWf04e-pEOc1e" = "Just to confirm, you wanted ‘Ворота’?";
+"MWf04e-pEOc1e" = "Растау үшін, сіз ‘Қақпа’ таңдадыңыз ба?";
 
-"MWf04e-rR3Lh0" = "Just to confirm, you wanted ‘Калитка’?";
+"MWf04e-rR3Lh0" = "Растау үшін, сіз ‘Кіші қақпа’ таңдадыңыз ба?";
 
-"MWf04e-tyxO3i" = "Just to confirm, you wanted ‘Подъезд’?";
+"MWf04e-tyxO3i" = "Растау үшін, сіз ‘Подъезд’ таңдадыңыз ба?";
 
-"OE741o-fVQgAq" = "There are ${count} options matching ‘Все’.";
+"OE741o-fVQgAq" = "‘Барлығы’ сәйкес келетін ${count} нұсқа бар.";
 
-"OE741o-pEOc1e" = "There are ${count} options matching ‘Ворота’.";
+"OE741o-pEOc1e" = "‘Қақпа’ сәйкес келетін ${count} нұсқа бар.";
 
-"OE741o-rR3Lh0" = "There are ${count} options matching ‘Калитка’.";
+"OE741o-rR3Lh0" = "‘Кіші қақпа’ сәйкес келетін ${count} нұсқа бар.";
 
-"OE741o-tyxO3i" = "There are ${count} options matching ‘Подъезд’.";
+"OE741o-tyxO3i" = "‘Подъезд’ сәйкес келетін ${count} нұсқа бар.";
 
-"RB0yYo" = "Что открыть?";
+"RB0yYo" = "Нені ашу керек?";
 
-"fVQgAq" = "Все";
+"fVQgAq" = "Барлығы";
 
-"fy6B1Z" = "Где открыть?";
+"fy6B1Z" = "Қай жерде ашу керек?";
 
-"g6Beaz" = "Открыть ${door} @ ${address}";
+"g6Beaz" = "${door} ашу @ ${address}";
 
-"mNEDvp" = "House Address";
+"mNEDvp" = "Үй мекенжайы";
 
-"mav2aR" = "Domophone Id";
+"mav2aR" = "Домофон ID";
 
-"oi81HC" = "Door Id";
+"oi81HC" = "Есік ID";
 
-"pEOc1e" = "Ворота";
+"pEOc1e" = "Қақпа";
 
-"rR3Lh0" = "Калитка";
+"rR3Lh0" = "Кіші қақпа";
 
-"ryTv95" = "Где открыть";
+"ryTv95" = "Қай жерде ашу керек";
 
-"sf9Ajl" = "There are ${count} options matching ‘${address}’.";
+"sf9Ajl" = "‘${address}’ сәйкес келетін ${count} нұсқа бар.";
 
 "tyxO3i" = "Подъезд";
 
-"zDKNd0" = "Тип входа";
-
+"zDKNd0" = "Кіру түрі";

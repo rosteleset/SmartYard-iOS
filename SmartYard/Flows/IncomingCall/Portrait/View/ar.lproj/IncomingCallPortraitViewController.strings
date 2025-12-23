@@ -1,0 +1,24 @@
+
+/* Class = "UILabel"; text = "Глазок"; ObjectID = "6nl-Pt-61e"; */
+"6nl-Pt-61e.text" = "العين السحرية";
+
+/* Class = "UILabel"; text = "Звонок в домофон"; ObjectID = "EaG-bR-VV0"; */
+"EaG-bR-VV0.text" = "اتصال بالإنتركم";
+
+/* Class = "UILabel"; text = "Динамик"; ObjectID = "I5j-fH-LRs"; */
+"I5j-fH-LRs.text" = "مكبر الصوت";
+
+/* Class = "UILabel"; text = "Ответить"; ObjectID = "OFY-ve-MGk"; */
+"OFY-ve-MGk.text" = "الرد";
+
+/* Class = "UILabel"; text = "Тамбов, ул. Советская 20, кв. 52"; ObjectID = "Rh6-Xt-7AB"; */
+"Rh6-Xt-7AB.text" = "تامبوف، شارع سوفيتسكايا 20، شقة 52";
+
+/* Class = "UILabel"; text = "Открыть"; ObjectID = "T2d-Xs-GlG"; */
+"T2d-Xs-GlG.text" = "فتح";
+
+/* Class = "UILabel"; text = "Игнорировать"; ObjectID = "jj8-ob-kSL"; */
+"jj8-ob-kSL.text" = "تجاهل";
+
+/* Class = "UILabel"; text = "Открыто"; ObjectID = "qoh-Fa-xYP"; */
+"qoh-Fa-xYP.text" = "تم الفتح";

@@ -1,62 +1,61 @@
-"0cUuHX" = "Вы хотите открыть ‘${door}’?";
+"0cUuHX" = "Искате ли да отворите ‘${door}’?";
 
 "75DQQs" = "Тип";
 
-"7OB1Ww" = "There are ${count} options matching ‘${door}’.";
+"7OB1Ww" = "Има ${count} опции, съвпадащи с ‘${door}’.";
 
-"7lOt11" = "Открыть ${door} @ ${address}";
+"7lOt11" = "Отвори ${door} @ ${address}";
 
-"7pPNLK" = "Door";
+"7pPNLK" = "Врата";
 
-"Brixr9" = "Вы хотите открыть ‘${address}’?";
+"Brixr9" = "Искате ли да отворите ‘${address}’?";
 
-"EVkcmA" = "Открыть ...";
+"EVkcmA" = "Отвори ...";
 
-"GooWrv" = "Открывает любые двери";
+"GooWrv" = "Отваря всякакви врати";
 
-"H8fR3T" = "Открыть ...";
+"H8fR3T" = "Отвори ...";
 
-"Lab1IV" = "Что открыть";
+"Lab1IV" = "Какво да се отвори";
 
-"MWf04e-fVQgAq" = "Just to confirm, you wanted ‘Все’?";
+"MWf04e-fVQgAq" = "Само да потвърдим — искахте ‘Всички’?";
 
-"MWf04e-pEOc1e" = "Just to confirm, you wanted ‘Ворота’?";
+"MWf04e-pEOc1e" = "Само да потвърдим — искахте ‘Порта’?";
 
-"MWf04e-rR3Lh0" = "Just to confirm, you wanted ‘Калитка’?";
+"MWf04e-rR3Lh0" = "Само да потвърдим — искахте ‘Вратичка’?";
 
-"MWf04e-tyxO3i" = "Just to confirm, you wanted ‘Подъезд’?";
+"MWf04e-tyxO3i" = "Само да потвърдим — искахте ‘Вход’?";
 
-"OE741o-fVQgAq" = "There are ${count} options matching ‘Все’.";
+"OE741o-fVQgAq" = "Има ${count} опции, съвпадащи с ‘Всички’.";
 
-"OE741o-pEOc1e" = "There are ${count} options matching ‘Ворота’.";
+"OE741o-pEOc1e" = "Има ${count} опции, съвпадащи с ‘Порта’.";
 
-"OE741o-rR3Lh0" = "There are ${count} options matching ‘Калитка’.";
+"OE741o-rR3Lh0" = "Има ${count} опции, съвпадащи с ‘Вратичка’.";
 
-"OE741o-tyxO3i" = "There are ${count} options matching ‘Подъезд’.";
+"OE741o-tyxO3i" = "Има ${count} опции, съвпадащи с ‘Вход’.";
 
-"RB0yYo" = "Что открыть?";
+"RB0yYo" = "Какво да се отвори?";
 
-"fVQgAq" = "Все";
+"fVQgAq" = "Всички";
 
-"fy6B1Z" = "Где открыть?";
+"fy6B1Z" = "Къде да се отвори?";
 
-"g6Beaz" = "Открыть ${door} @ ${address}";
+"g6Beaz" = "Отвори ${door} @ ${address}";
 
-"mNEDvp" = "House Address";
+"mNEDvp" = "Адрес на къщата";
 
-"mav2aR" = "Domophone Id";
+"mav2aR" = "ID на домофон";
 
-"oi81HC" = "Door Id";
+"oi81HC" = "ID на врата";
 
-"pEOc1e" = "Ворота";
+"pEOc1e" = "Порта";
 
-"rR3Lh0" = "Калитка";
+"rR3Lh0" = "Вратичка";
 
-"ryTv95" = "Где открыть";
+"ryTv95" = "Къде да се отвори";
 
-"sf9Ajl" = "There are ${count} options matching ‘${address}’.";
+"sf9Ajl" = "Има ${count} опции, съвпадащи с ‘${address}’.";
 
-"tyxO3i" = "Подъезд";
+"tyxO3i" = "Вход";
 
-"zDKNd0" = "Тип входа";
-
+"zDKNd0" = "Тип вход";

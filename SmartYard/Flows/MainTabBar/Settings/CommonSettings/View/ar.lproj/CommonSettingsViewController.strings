@@ -1,0 +1,51 @@
+
+/* Class = "UILabel"; text = "Порядок адресов "; ObjectID = "1qg-rb-8HA"; */
+"1qg-rb-8HA.text" = "ترتيب العناوين ";
+
+/* Class = "UILabel"; text = "Отображение"; ObjectID = "AmF-1g-Ii8"; */
+"AmF-1g-Ii8.text" = "العرض";
+
+/* Class = "UILabel"; text = "Тема"; ObjectID = "BAH-ga-Qff"; */
+"BAH-ga-Qff.text" = "السمة";
+
+/* Class = "UIButton"; normalTitle = "Сбросить"; ObjectID = "Ks4-be-kpH"; */
+"Ks4-be-kpH.normalTitle" = "إعادة تعيين";
+
+/* Class = "UIButton"; normalTitle = "Системная"; ObjectID = "PR3-iD-a7o"; */
+"PR3-iD-a7o.normalTitle" = "حسب النظام";
+
+/* Class = "UILabel"; text = "Прислать уведомление, когда баланс приблизится к нулю"; ObjectID = "Se0-Td-bhj"; */
+"Se0-Td-bhj.text" = "إرسال إشعار عندما يقترب\nالرصيد من الصفر";
+
+/* Class = "UILabel"; text = "Уведомления"; ObjectID = "Udn-vA-xLw"; */
+"Udn-vA-xLw.text" = "الإشعارات";
+
+/* Class = "UILabel"; text = "Оповещать о недостатке средств"; ObjectID = "VJ4-nm-C6t"; */
+"VJ4-nm-C6t.text" = "تنبيه عند نقص الرصيد";
+
+/* Class = "UILabel"; text = "Использовать CallKit"; ObjectID = "XUA-3w-YEb"; */
+"XUA-3w-YEb.text" = "استخدام CallKit";
+
+/* Class = "UILabel"; text = "+7 (964) 134 00 00"; ObjectID = "Zey-yG-NRX"; */
+"Zey-yG-NRX.text" = "+7 (964) 134 00 00";
+
+/* Class = "UILabel"; text = "Громкая связь по умолчанию"; ObjectID = "dKt-Xe-i1X"; */
+"dKt-Xe-i1X.text" = "مكبر الصوت افتراضياً";
+
+/* Class = "UIButton"; normalTitle = "Удалить аккаунт"; ObjectID = "duv-cH-I0h"; */
+"duv-cH-I0h.normalTitle" = "حذف الحساب";
+
+/* Class = "UIButton"; normalTitle = "Выйти"; ObjectID = "lGe-ZA-fd6"; */
+"lGe-ZA-fd6.normalTitle" = "تسجيل الخروج";
+
+/* Class = "UILabel"; text = "Показывать камеры на карте"; ObjectID = "mLP-oQ-Prc"; */
+"mLP-oQ-Prc.text" = "عرض الكاميرات على الخريطة";
+
+/* Class = "UILabel"; text = "Звонки"; ObjectID = "mSK-dn-aYH"; */
+"mSK-dn-aYH.text" = "المكالمات";
+
+/* Class = "UILabel"; text = "Показывать уведомления"; ObjectID = "tfa-8o-Ay8"; */
+"tfa-8o-Ay8.text" = "عرض الإشعارات";
+
+/* Class = "UILabel"; text = "Александр Сергеевич"; ObjectID = "xe0-3V-fgv"; */
+"xe0-3V-fgv.text" = "Александр Сергеевич";

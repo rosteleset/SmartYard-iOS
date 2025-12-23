@@ -1,0 +1,9 @@
+
+/* Class = "UIButton"; normalTitle = "Сменить тариф"; ObjectID = "GbW-UQ-G33"; */
+"GbW-UQ-G33.normalTitle" = "تغيير التعرفة";
+
+/* Class = "UILabel"; text = "Услуга подключена"; ObjectID = "YeC-Yi-BOi"; */
+"YeC-Yi-BOi.text" = "الخدمة مفعلة";
+
+/* Class = "UILabel"; text = "Если хотите сменить тариф, оставьте заявку"; ObjectID = "pmt-1V-kNk"; */
+"pmt-1V-kNk.text" = "إذا كنت تريد تغيير التعرفة، قدّم طلباً";

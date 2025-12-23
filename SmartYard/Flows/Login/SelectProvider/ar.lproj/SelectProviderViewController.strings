@@ -1,0 +1,12 @@
+
+/* Class = "UIButton"; normalTitle = "Далее"; ObjectID = "DzP-PA-sgU"; */
+"DzP-PA-sgU.normalTitle" = "التالي";
+
+/* Class = "UILabel"; text = "Пожалуйста, выберите вашего поставщика услуг из списка или воспользуйтесь поиском. "; ObjectID = "rDV-lc-Q28"; */
+"rDV-lc-Q28.text" = "يرجى اختيار مزود الخدمة من القائمة أو استخدام البحث.";
+
+/* Class = "UILabel"; text = "Выберите провайдера"; ObjectID = "rPl-Hf-egw"; */
+"rPl-Hf-egw.text" = "اختر المزود";
+
+/* Class = "UITextField"; placeholder = " Введите название компании"; ObjectID = "yC8-pg-hVn"; */
+"yC8-pg-hVn.placeholder" = " أدخل اسم الشركة";
