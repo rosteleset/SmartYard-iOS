@@ -112,8 +112,8 @@ final class SelectProviderViewModel: BaseViewModel {
                     Logger.logInfo("Selected provider baseUrl: \(provider.baseUrl)")
                     self.accessService.backendURL = provider.baseUrl
                     self.accessService.providerId = provider.id
-                    AppCoordinator.setAnalyticsOperatorID()
                     self.accessService.providerName = provider.name
+                    AppCoordinator.setAnalyticsOperatorID()
                     self.accessService.appState = .phoneNumber
                     self.apiWrapper.getPhonePattern()
                         .trackActivity(activityTracker)
