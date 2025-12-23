@@ -153,6 +153,7 @@ extension AppDelegate: MessagingDelegate {
     private func configureFirebase(for application: UIApplication) {
         FirebaseApp.configure()
         appCoordinator.setCrashlyticsUserID()
+        AppCoordinator.setAnalyticsOperatorID()
         
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self
