@@ -134,8 +134,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
         observeLogout()
         observeOrientationChanges()
         observeNetworkEvents()
-        observeProviderChanged()
-        observeSessionAuthorized()
+        observeAccessService()
     }
     
     // swiftlint:disable cyclomatic_complexity function_body_length
@@ -451,8 +450,8 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
     }
     
     func setAnalyticsOperatorID() {
-        Analytics.setUserProperty(AccessService.shared.providerId, forName: "provider_id")
-        Analytics.setUserProperty(AccessService.shared.providerName, forName: "provider_name")
+        Analytics.setUserProperty(AccessService.shared.provider.id, forName: "provider_id")
+        Analytics.setUserProperty(AccessService.shared.provider.name, forName: "provider_name")
     }
 
     func markAllMessagesAsDelivered() {
@@ -608,16 +607,19 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
             .disposed(by: disposeBag)
     }
 
-    private func observeProviderChanged() {
+    private func observeAccessService() {
         accessService.providerChanged
             .subscribe { [weak self] _ in
                 self?.setAnalyticsOperatorID()
-                self?.optionsService.forceReload(reason: .providerChanged)
             }
             .disposed(by: disposeBag)
-    }
-
-    private func observeSessionAuthorized() {
+    
+        accessService.backendURLChanged
+            .subscribe { [weak self] _ in
+                self?.optionsService.forceReload(reason: .backendChanged)
+            }
+            .disposed(by: disposeBag)
+    
         accessService.sessionAuthorized
             .subscribe { [weak self] _ in
                 self?.setCrashlyticsUserID()
@@ -770,7 +772,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
                     guard
                         let self,
                         let provList = response,
-                        let prov = provList.first(where: { $0.id == self.accessService.providerId })
+                        let prov = provList.first(where: { $0.id == self.accessService.provider.id })
                     else {
                         Logger.logWarning("BaseURL not resolved")
                         return

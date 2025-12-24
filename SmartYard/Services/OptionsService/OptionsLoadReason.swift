@@ -10,7 +10,6 @@ enum OptionsLoadReason: String {
     case coldStart
     case becameOnline
     case backendChanged
-    case providerChanged
     case userPullToRefresh
     case didAuthorize
 }

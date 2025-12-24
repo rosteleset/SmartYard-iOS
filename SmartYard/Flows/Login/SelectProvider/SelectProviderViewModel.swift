@@ -110,8 +110,8 @@ final class SelectProviderViewModel: BaseViewModel {
                     let provider = providerCell.provider
                     Logger.logInfo("Selected provider baseUrl: \(provider.baseUrl)")
 
-                    accessService.setProvider(provider)
-
+                    accessService.provider = AccessService.Provider(id: provider.id, name: provider.name)
+                    accessService.backendURL = provider.baseUrl
                     accessService.appState = .phoneNumber
 
                     apiWrapper.getPhonePattern()

@@ -165,7 +165,7 @@ final class InputPhoneNumberViewModel: BaseViewModel {
         return Output(
             isLoading: activityTracker.asDriver(),
             prepareTransitionTrigger: prepareTransitionTrigger.asDriverOnErrorJustComplete(),
-            selectedProviderName: .just(accessService.providerName)
+            selectedProviderName: .just(accessService.provider.name)
         )
     }
     

@@ -46,7 +46,13 @@ final class AccessService {
 
     let optionsUpdated = PublishRelay<Void>()
     let providerChanged = PublishRelay<APIProvider>()
+    let backendURLChanged = PublishRelay<String>()
     let sessionAuthorized = PublishRelay<Void>()
+    
+    struct Provider: Equatable {
+        let id: String
+        let name: String
+    }
 
     var appState: AppState {
         get {
@@ -158,25 +164,32 @@ final class AccessService {
             UserDefaults.standard.string(forKey: backendURLKey) ?? Constants.defaultBackendURL ?? "https://127.0.0.1/mobile"
         }
         set {
+            if newValue == backendURL { return }
             UserDefaults.standard.setValue(newValue, forKey: backendURLKey)
+            backendURLChanged.accept(newValue)
         }
     }
     
-    var providerId: String {
+    var provider: Provider {
         get {
-            UserDefaults.standard.string(forKey: providerIdKey) ?? "default"
+            Provider(
+                id: UserDefaults.standard.string(forKey: providerIdKey) ?? "default",
+                name: UserDefaults.standard.string(forKey: providerNameKey) ?? "default"
+            )
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: providerIdKey)
-        }
-    }
-    
-    var providerName: String {
-        get {
-            UserDefaults.standard.string(forKey: providerNameKey) ?? "default"
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: providerNameKey)
+            if newValue == provider { return }
+                
+            UserDefaults.standard.setValue(newValue.id, forKey: providerIdKey)
+            UserDefaults.standard.setValue(newValue.name, forKey: providerNameKey)
+            providerChanged.accept(
+                APIProvider(
+                    id: newValue.id,
+                    name: newValue.name,
+                    baseUrl: backendURL,
+                    order: nil
+                )
+            )
         }
     }
     
@@ -402,22 +415,13 @@ final class AccessService {
         sessionAuthorized.accept(())
     }
 
-    func setProvider(_ provider: APIProvider) {
-        backendURL = provider.baseUrl
-        providerId = provider.id
-        providerName = provider.name
-
-        providerChanged.accept(provider)
-    }
-
     func logout() {
         accessToken = nil
         clientName = nil
         clientPhoneNumber = nil
         backendURL = Constants.defaultBackendURL ?? "https://127.0.0.1/mobile"
         appState = Constants.defaultBackendURL.isNilOrEmpty ? .selectProvider : .phoneNumber
-        providerId = "default"
-        providerName = "default"
+        provider = Provider(id: "default", name:"default")
         showPayments = true
         paymentsUrl = ""
         supportPhone = ""
