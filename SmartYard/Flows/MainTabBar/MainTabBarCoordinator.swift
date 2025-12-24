@@ -223,11 +223,13 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         if #available(iOS 26.0, *), isNewTabBarActive {
             let appearance = UITabBarAppearance()
             appearance.configureWithTransparentBackground()
-            // appearance.backgroundColor = .clear
+
             rootTabBarController.tabBar.standardAppearance = appearance
             rootTabBarController.tabBar.scrollEdgeAppearance = appearance
             rootTabBarController.tabBar.isTranslucent = true
 
+            rootTabBarController.view.layoutIfNeeded()
+            rootTabBarController.tabBar.layoutIfNeeded()
         } else {
             // Fallback on earlier versions
         }
