@@ -323,7 +323,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   NotificationBannerSwift:
-    :commit: f415605fa5135ed75780286c025be5a4cfe3b521
+    :commit: 4735fbf80a38aae3214f6087b5808e4b1a283cd8
     :git: https://github.com/chekmari/NotificationBanner.git
   OnlineChatSdk:
     :commit: 6751393fd1884b09581755efb735aa301c09a390
