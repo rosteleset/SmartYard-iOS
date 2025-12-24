@@ -167,22 +167,20 @@ extension OutgoingCallViewModel {
             .do(
                 onNext: { [weak self] data in
                     pollingInProgress.onNext(false)
-                    guard let data = data, let self = self  else {
-                        return
-                    }
-                    self.activityTracker.onNext(true)
+                    guard let self, let data else { return }
+                    activityTracker.onNext(true)
                     // Есть ответ.
                     timer.dispose()
-                    
-                    self.accessService.accessToken = data.accessToken
-                    self.accessService.clientName = data.name
-                    self.accessService.clientPhoneNumber = self.phoneNumber
-                    self.accessService.appState = .userName
-                    
-                    // когда пользователь авторизовался уже после инициализации Crashlytics, то надо обновить  UserId
-                    Crashlytics.crashlytics().setUserID(self.accessService.clientPhoneNumber ?? "unknown")
+
+                    accessService.authorizeSession(
+                        token: data.accessToken,
+                        name: data.name,
+                        phone: phoneNumber
+                    )
+                    accessService.appState = .userName
+
+                    // TODO: - подумать куда заснуутуь messaging
                     Messaging.messaging().isAutoInitEnabled = true
-                    
                 }
             )
             .ignoreNil()

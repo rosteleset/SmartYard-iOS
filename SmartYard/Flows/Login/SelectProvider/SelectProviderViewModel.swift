@@ -105,17 +105,16 @@ final class SelectProviderViewModel: BaseViewModel {
             .ignoreNil()
             .drive(
                 onNext: { [weak self] providerCell in
-                    guard let self = self else {
-                        return
-                    }
+                    guard let self else { return }
+
                     let provider = providerCell.provider
                     Logger.logInfo("Selected provider baseUrl: \(provider.baseUrl)")
-                    self.accessService.backendURL = provider.baseUrl
-                    self.accessService.providerId = provider.id
-                    self.accessService.providerName = provider.name
-                    AppCoordinator.setAnalyticsOperatorID()
-                    self.accessService.appState = .phoneNumber
-                    self.apiWrapper.getPhonePattern()
+
+                    accessService.setProvider(provider)
+
+                    accessService.appState = .phoneNumber
+
+                    apiWrapper.getPhonePattern()
                         .trackActivity(activityTracker)
                         .asDriver(onErrorJustReturn: nil)
                         .drive(

@@ -48,6 +48,13 @@ final class OptionsService: OptionsServicing {
             needsRefresh = true
             return
         }
+
+        guard accessService.hasValidToken else {
+            Logger.logDebug("skip load – no valid token")
+            needsRefresh = true
+            return
+        }
+
         guard !isLoadingRelay.value else { return }
 
         if shouldReload(reason: reason) {

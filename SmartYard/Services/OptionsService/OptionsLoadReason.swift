@@ -12,4 +12,5 @@ enum OptionsLoadReason: String {
     case backendChanged
     case providerChanged
     case userPullToRefresh
+    case didAuthorize
 }

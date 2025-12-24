@@ -43,7 +43,10 @@ private let deliveryTabsConfigKey = "deliveryTabsConfigKey"
 // swiftlint:disable:next type_body_length
 final class AccessService {
     static let shared = AccessService()
+
     let optionsUpdated = PublishRelay<Void>()
+    let providerChanged = PublishRelay<APIProvider>()
+    let sessionAuthorized = PublishRelay<Void>()
 
     var appState: AppState {
         get {
@@ -390,7 +393,23 @@ final class AccessService {
             return
         }
     }
-    
+
+    func authorizeSession(token: String, name: APIClientName?, phone: String) {
+        accessToken = token
+        clientName = name
+        clientPhoneNumber = phone
+
+        sessionAuthorized.accept(())
+    }
+
+    func setProvider(_ provider: APIProvider) {
+        backendURL = provider.baseUrl
+        providerId = provider.id
+        providerName = provider.name
+
+        providerChanged.accept(provider)
+    }
+
     func logout() {
         accessToken = nil
         clientName = nil

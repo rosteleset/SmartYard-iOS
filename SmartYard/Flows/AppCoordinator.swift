@@ -134,6 +134,8 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
         observeLogout()
         observeOrientationChanges()
         observeNetworkEvents()
+        observeProviderChanged()
+        observeSessionAuthorized()
     }
     
     // swiftlint:disable cyclomatic_complexity function_body_length
@@ -448,11 +450,11 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
         Crashlytics.crashlytics().setUserID(accessService.clientPhoneNumber ?? "unknown")
     }
     
-    static func  setAnalyticsOperatorID() {
+    func setAnalyticsOperatorID() {
         Analytics.setUserProperty(AccessService.shared.providerId, forName: "provider_id")
         Analytics.setUserProperty(AccessService.shared.providerName, forName: "provider_name")
     }
-    
+
     func markAllMessagesAsDelivered() {
         pushNotificationService.markAllMessagesAsDelivered()
     }
@@ -603,6 +605,24 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
                     incomingCallWindow.switchRootViewController(to: portraitVC, animated: false)
                 }
             )
+            .disposed(by: disposeBag)
+    }
+
+    private func observeProviderChanged() {
+        accessService.providerChanged
+            .subscribe { [weak self] _ in
+                self?.setAnalyticsOperatorID()
+                self?.optionsService.forceReload(reason: .providerChanged)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func observeSessionAuthorized() {
+        accessService.sessionAuthorized
+            .subscribe { [weak self] _ in
+                self?.setCrashlyticsUserID()
+                self?.optionsService.forceReload(reason: .didAuthorize)
+            }
             .disposed(by: disposeBag)
     }
 

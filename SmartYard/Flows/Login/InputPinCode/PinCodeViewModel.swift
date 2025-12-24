@@ -121,15 +121,18 @@ final class PinCodeViewModel: BaseViewModel {
             .ignoreNil()
             .do(
                 onNext: { [weak self] data in
-                    self?.accessService.accessToken = data.accessToken
-                    self?.accessService.clientName = data.name
-                    self?.accessService.clientPhoneNumber = self?.phoneNumber
-                    self?.accessService.appState = .userName
-                    
-                    // когда пользователь авторизовался уже после инициализации Crashlytics, то надо обновить  UserId
-                    Crashlytics.crashlytics().setUserID(self?.accessService.clientPhoneNumber ?? "unknown")
+                    guard let self else { return }
+
+                    accessService.authorizeSession(
+                        token: data.accessToken,
+                        name: data.name,
+                        phone: phoneNumber
+                    )
+                    accessService.appState = .userName
+
+                    // TODO: - подумать куда засунуть messaging
                     Messaging.messaging().isAutoInitEnabled = true
-                    
+
                     prepareTransitionTrigger.onNext(())
                 }
             )
