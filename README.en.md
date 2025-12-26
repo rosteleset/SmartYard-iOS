@@ -12,7 +12,7 @@ Later, we began to develop the project independently and add new features.
 We introduced panoramic cameras, an event log, facial recognition settings, Siri and Shortcuts integration, and continuously fixed bugs that appeared over time.  
 
 In October 2021, we decided to open-source our project and invited everyone interested in building similar services not to “reinvent the wheel,” but to join us in improving the project, sharing ideas and technical solutions.  
-At that time, about 15,000 users living in houses equipped with our company’s intercom and surveillance systems were already using the app.  
+At that time, about 65,000 users living in houses equipped with our company’s intercom and surveillance systems were already using the app.  
 
 In September 2022, we released an OEM version of the *TeleDom* app for operators who want to try the product in action before publishing their own version on app stores.
 
