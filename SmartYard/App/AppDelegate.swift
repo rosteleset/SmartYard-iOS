@@ -33,7 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = SharedWebKit.warmWebView
 
         configureFirebase(for: application)
-        
+
+        configureImageCache()
+
         configureVoIPNotifications()
         
         // MARK: подключаем MapBox
@@ -61,6 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if Constants.isDarkModeEnabled { ThemeManager.shared.applySavedTheme() } else {
             ThemeManager.shared.setTheme(.light)
         }
+
+        PlayerThemeManager.shared.applyToSharedPlayerConfig()
 
         return true
     }
@@ -123,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return .portrait
         }
         
-        if topVc is FullscreenPlayerViewController,
+        if topVc is FullscreenPlayerViewController || topVc is OnlineFullscreenViewController,
             !topVc.isBeingDismissed {
             return .allButUpsideDown
         } else if topVc is IncomingCallLandscapeViewController,

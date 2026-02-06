@@ -487,8 +487,8 @@ final class CityCameraViewController: BaseViewController {
     }
     
     private func configureFullscreenButton() {
-        fullscreenButton.setImage(UIImage(named: "FullScreen20"), for: .normal)
-        fullscreenButton.setImage(UIImage(named: "FullScreen20")?.darkened(), for: [.normal, .highlighted])
+        fullscreenButton.setImage(UIImage(named: "Fullscreen"), for: .normal)
+        fullscreenButton.setImage(UIImage(named: "Fullscreen")?.darkened(), for: [.normal, .highlighted])
         
         fullscreenButton.touchAreaInsets = UIEdgeInsets(inset: 12)
         

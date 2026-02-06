@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct APIArchiveRange: Decodable {
+struct APIArchiveRange: Decodable, Equatable {
     
     let duration: Int
     let from: Int

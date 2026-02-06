@@ -97,7 +97,7 @@ final class CamerasListViewController: BaseViewController, LoaderPresentable {
                     
                     shouldBlockInteraction ?
                     self?.skeletonContainer.showSkeletonAsynchronously(with: UIColor.SmartYard.secondBackgroundColor) :
-                        self?.skeletonContainer.hideSkeleton()
+                    self?.skeletonContainer.hideSkeleton()
                 }
             )
             .disposed(by: disposeBag)
@@ -128,7 +128,6 @@ extension CamerasListViewController: UICollectionViewDelegateFlowLayout {
         }
         
         switch item {
-            
         case .caption:
             let height = CamerasListItemCell.preferredHeightForHeader(
                 for: UIScreen.main.bounds.width - 32,
@@ -136,6 +135,7 @@ extension CamerasListViewController: UICollectionViewDelegateFlowLayout {
             ).totalHeight
             
             return CGSize(width: UIScreen.main.bounds.width - 32, height: height)
+
         default:
             let height = CamerasListItemCell.preferredHeight(
                 for: UIScreen.main.bounds.width - 32,
@@ -170,14 +170,15 @@ extension CamerasListViewController: UICollectionViewDelegateFlowLayout {
 extension CamerasListViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        guard (try? itemsProxy.value()) != nil else {
-            return 0
-        }
-        
+        guard (try? itemsProxy.value()) != nil else { return 0 }
+
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return (try? itemsProxy.value().count) ?? 0
     }
     
@@ -188,14 +189,18 @@ extension CamerasListViewController: UICollectionViewDataSource {
         guard let data = try? itemsProxy.value() else {
             return UICollectionViewCell()
         }
-        
+
         switch indexPath.section {
         default:
-            let cell = collectionView.dequeueReusableCell(withClass: CamerasListItemCell.self, for: indexPath)
-            guard let item = data[safe: indexPath.row] else {
-                return cell
-            }
+            let cell = collectionView.dequeueReusableCell(
+                withClass: CamerasListItemCell.self,
+                for: indexPath
+            )
+
+            guard let item = data[safe: indexPath.row] else { return cell }
+
             cell.configure(item: item)
+
             return cell
         }
     }

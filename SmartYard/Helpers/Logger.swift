@@ -93,7 +93,7 @@ enum Logger {
     private static func shouldLog(_ level: LogLevel) -> Bool {
         switch currentLogMode {
         case .none: return false
-        case .errorsOnly: return [.error, .critical, .warning, .info, .success, .debug].contains(level) // пока что отправлять в firebase все)
+        case .errorsOnly: return [.error, .critical].contains(level)
         case .verbose: return true
         }
     }

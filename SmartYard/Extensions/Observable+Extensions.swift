@@ -87,7 +87,11 @@ extension ObservableType {
     func asDriverOnErrorJustComplete() -> Driver<Element> {
         return asDriver { _ in .empty() }
     }
-    
+
+    func asSignalOnErrorJustComplete() -> Signal<Element> {
+        return asSignal(onErrorSignalWith: .empty())
+    }
+
     func mapToVoid() -> Observable<Void> {
         return map { _ in }
     }

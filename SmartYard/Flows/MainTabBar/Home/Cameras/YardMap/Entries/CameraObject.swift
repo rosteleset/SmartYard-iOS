@@ -13,7 +13,7 @@ import RxCocoa
 
 struct CameraObject: Equatable {
     
-    let id: Int
+    let id: CameraID
     let position: CLLocationCoordinate2D
     let cameraNumber: Int
     let name: String
@@ -121,7 +121,9 @@ struct CameraObject: Equatable {
         case .forpost:
             ForpostService.generateURL(self, task)
         default:
-            Logger.logDebug("Generated default live URL: \(liveURL)")
+            Logger.logDebug(
+                "Generated default live URL: \(liveURL)"
+            )
             task(liveURL)
         }
     }
@@ -220,7 +222,7 @@ struct CameraObject: Equatable {
     }
     
     init(
-        id: Int,
+        id: CameraID,
         position: CLLocationCoordinate2D,
         cameraNumber: Int,
         name: String,
@@ -241,7 +243,7 @@ struct CameraObject: Equatable {
     }
     
     init(
-        id: Int,
+        id: CameraID,
         url: String,
         token: String,
         serverType: DVRServerType? = nil,

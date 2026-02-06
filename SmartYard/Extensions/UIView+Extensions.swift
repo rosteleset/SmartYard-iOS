@@ -72,40 +72,62 @@ extension UIView {
 }
 
 extension UIView {
-    
     func showSkeletonAsynchronously(with color: UIColor) {
-        let lightColor = color.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light))
-        let darkColor = color.resolvedColor(with: UITraitCollection(userInterfaceStyle: .dark))
-        
-        let themeColor: UIColor
-        switch ThemeManager.shared.currentTheme.value {
-        case .unspecified:
-            switch traitCollection.userInterfaceStyle {
-            case .dark:
-                themeColor = darkColor
-            case .light:
-                themeColor = lightColor
-            default:
-                themeColor = color
+        let themeStyle = ThemeManager.shared.currentTheme.value
+
+        let lightColor = color.resolvedColor(
+            with: UITraitCollection(userInterfaceStyle: .light)
+        )
+        let darkColor = color.resolvedColor(
+            with: UITraitCollection(userInterfaceStyle: .dark)
+        )
+
+        let themeColor: UIColor = {
+            switch themeStyle {
+            case .light: return lightColor
+            case .dark: return darkColor
+
+            case .unspecified:
+                switch traitCollection.userInterfaceStyle {
+                case .light: return lightColor
+                case .dark: return darkColor
+                default: return color
+                }
+
+            @unknown default:
+                Logger.logWarning(
+                    "Unknown ThemeManager style encountered: \(themeStyle)"
+                )
+                return color
             }
-        case .light:
-            themeColor = lightColor
-        case .dark:
-            themeColor = darkColor
-        @unknown default:
-            Logger.logWarning("Unknown ThemeManager style encountered: \(ThemeManager.shared.currentTheme.value)")
-            themeColor = color
-        }
-        
+        }()
+
         DispatchQueue.main.async { [weak self] in
-            guard let self = self, self.isSkeletonable else { return }
-            self.hideSkeleton()
-            
-            let gradient = SkeletonGradient(baseColor: themeColor, secondaryColor: themeColor.withAlphaComponent(0.2))
+            guard let self, isSkeletonable else { return }
+
+            hideSkeleton(reloadDataAfter: false)
+
+            let gradient = SkeletonGradient(
+                baseColor: themeColor,
+                secondaryColor: themeColor.withAlphaComponent(0.2)
+            )
+
             showAnimatedGradientSkeleton(usingGradient: gradient)
+            startSkeletonAnimation()
         }
     }
-    
+}
+
+// MARK: - Main thread helper
+
+private extension UIView {
+    func runOnMain(_ block: @escaping () -> Void) {
+        if Thread.isMainThread {
+            block()
+        } else {
+            DispatchQueue.main.async(execute: block)
+        }
+    }
 }
 
 extension UIView {

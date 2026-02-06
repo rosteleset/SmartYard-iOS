@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (5.10.2)
   - Cartography (4.0.0)
+  - CocoaAsyncSocket (7.6.5)
   - Differentiator (5.0.0)
   - FirebaseAnalytics (10.29.0):
     - FirebaseAnalytics/AdIdSupport (= 10.29.0)
@@ -116,6 +117,8 @@ PODS:
   - JGProgressHUD (2.2)
   - JTAppleCalendar (8.0.5)
   - Kingfisher (7.12.0)
+  - KTVHTTPCache (3.1.0):
+    - CocoaAsyncSocket
   - linphone-sdk (5.3.110)
   - lottie-ios (4.4.1)
   - MapboxCommon (24.9.1):
@@ -164,6 +167,15 @@ PODS:
   - SearchTextField (1.2.4)
   - SHSPhoneComponent (2.32)
   - SkeletonView (1.30.4)
+  - SmartYardVideoPlayer (0.1.3):
+    - Kingfisher
+    - KTVHTTPCache
+    - lottie-ios
+    - RxCocoa
+    - RxSwift
+    - SnapKit
+    - SwifterSwift
+    - TouchAreaInsets
   - SnapKit (5.7.1)
   - SSCustomTabbar (2.0.2)
   - SwifterSwift (8.0.0):
@@ -243,6 +255,7 @@ DEPENDENCIES:
   - SearchTextField
   - SHSPhoneComponent
   - SkeletonView
+  - SmartYardVideoPlayer (from `/Users/aleksandrpopov/Code/My Projects /SmartYardVideoPlayer`)
   - SSCustomTabbar (from `https://github.com/rosteleset/SSCustomTabbar.git`, branch `feature/add-animation-options`)
   - SwifterSwift (from `https://github.com/SwifterSwift/SwifterSwift.git`, branch `master`)
   - SwiftLint
@@ -259,6 +272,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - Cartography
+    - CocoaAsyncSocket
     - Differentiator
     - FirebaseAnalytics
     - FirebaseCore
@@ -275,6 +289,7 @@ SPEC REPOS:
     - JGProgressHUD
     - JTAppleCalendar
     - Kingfisher
+    - KTVHTTPCache
     - lottie-ios
     - MapboxCommon
     - MapboxCoreMaps
@@ -314,6 +329,8 @@ EXTERNAL SOURCES:
   PopOverDatePicker:
     :branch: timezoneSupport
     :git: https://github.com/rosteleset/PopOverDatePicker.git
+  SmartYardVideoPlayer:
+    :path: "/Users/aleksandrpopov/Code/My Projects /SmartYardVideoPlayer"
   SSCustomTabbar:
     :branch: feature/add-animation-options
     :git: https://github.com/rosteleset/SSCustomTabbar.git
@@ -341,6 +358,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
   Cartography: c5626d29056b20f1e95c017326ee4df57cc39ad8
+  CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   FirebaseAnalytics: 23717de130b779aa506e757edb9713d24b6ffeda
   FirebaseCore: 30e9c1cbe3d38f5f5e75f48bfcea87d7c358ec16
@@ -357,6 +375,7 @@ SPEC CHECKSUMS:
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   JTAppleCalendar: 16c6501b22cb27520372c28b0a2e0b12c8d0cd73
   Kingfisher: 53a10ea35051a436b5fb626ca2dd8f3144d755e9
+  KTVHTTPCache: a1f3c9c217be5af6985b240d660db262a0cbc18a
   linphone-sdk: 7f3e9ea1bbb012247d33bc296ed0c3a7a65faaf4
   lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
   MapboxCommon: 8c1649b92e3e58640ee7bcf27a13a8da4fe1171e
@@ -381,6 +400,7 @@ SPEC CHECKSUMS:
   SearchTextField: 40dc3cc57def5a211f263cac263622c163bbc25a
   SHSPhoneComponent: c491cf87a0d5c3fb11b8f54100d05fd2706cb401
   SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
+  SmartYardVideoPlayer: 761a9a10a20d7f882b613c59fbaa20ea55678fd4
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   SSCustomTabbar: e18f8aa256bce5c8a4742e53e638f64b33fb0e10
   SwifterSwift: ac4936934bcf86b4e0f717cc022eef64b335a826
@@ -392,6 +412,6 @@ SPEC CHECKSUMS:
   WKCookieWebView: 528260c9cf7d89d312d61639cfca75c5618326a2
   XCoordinator: 2cf9f72e10998b7a4a4bbeac3d07e071ea82fca3
 
-PODFILE CHECKSUM: 63bc08197082b2c1ebaefa58017b21e9992a59b7
+PODFILE CHECKSUM: 9d2f19033145fe7c6925a986b03475c4144b4800
 
 COCOAPODS: 1.16.2

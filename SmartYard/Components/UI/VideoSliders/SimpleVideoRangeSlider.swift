@@ -17,8 +17,8 @@ protocol SimpleVideoRangeSliderDelegate: AnyObject {
     
 }
 
-class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
-    
+final class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
+
     enum ScreenshotPolicy {
         case start
         case end

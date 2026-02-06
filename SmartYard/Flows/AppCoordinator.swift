@@ -15,6 +15,7 @@ import AVKit
 import SmartYardSharedDataFramework
 import FirebaseCrashlytics
 import FirebaseAnalytics
+import Kingfisher
 
 enum AppRoute: Route {
     
@@ -530,6 +531,9 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
                     self?.networkEnv.backend.updateHealthURL(nil)
                     try? self?.offlineAddressListDataSource.wipeCache()
 
+                    ImageCache.default.clearMemoryCache()
+                    ImageCache.default.clearDiskCache()
+                    
                     self?.trigger(Constants.defaultBackendURL.isNilOrEmpty ? .selectProvider : .phoneNumber)
                 }
             )
@@ -758,10 +762,8 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
         guard Constants.defaultBackendURL.isNilOrEmpty else { return }
 
         switch accessService.appState {
-        case .onboarding, .selectProvider:
-            return
-        default:
-            break
+        case .onboarding, .selectProvider: return
+        default: break
         }
 
         apiWrapper.getProvidersList()

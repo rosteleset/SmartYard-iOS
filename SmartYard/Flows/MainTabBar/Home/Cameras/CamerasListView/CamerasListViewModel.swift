@@ -43,12 +43,21 @@ final class CamerasListViewModel: BaseViewModel {
         self.networkStateProvider = networkStateProvider
     }
     
-    fileprivate static func convertAPIToCameraObject (source: [APICCTV]?) -> [CameraObject] {
-        let cameras = (source ?? []).enumerated().map { offset, element -> CameraObject in
+    fileprivate static func convertAPIToCameraObject(
+        source: [APICCTV]?
+    ) -> [CameraObject] {
+
+        var seenIds = Set<Int>()
+
+        let uniqueCameras = (source ?? []).filter { element in
+            seenIds.insert(element.id).inserted
+        }
+
+        let cameras = uniqueCameras.enumerated().map { index, element in
             CameraObject(
                 id: element.id,
                 position: element.coordinate,
-                cameraNumber: offset + 1,
+                cameraNumber: index + 1,
                 name: element.name,
                 video: element.video,
                 token: element.token,
@@ -57,9 +66,10 @@ final class CamerasListViewModel: BaseViewModel {
                 hasSound: element.hasSound
             )
         }
+
         return cameras
     }
-    
+
     static func convertList(from source: CamerasTree, using path: [Int] = []) -> [CamerasListItem] {
         
         guard let source = loadTree(by: path, from: source) else { return [] }
@@ -182,7 +192,7 @@ final class CamerasListViewModel: BaseViewModel {
                     case .camera(camera: let camera):
                         let currentTree = CamerasListViewModel.loadTree(by: self.path, from: self.tree)
                         let cameras = CamerasListViewModel.convertAPIToCameraObject(source: currentTree?.cameras ?? [])
-                        
+
                         self.router.trigger(
                             .cameraContainer(
                                 address: self.address,

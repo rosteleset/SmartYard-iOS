@@ -487,7 +487,7 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
     private func configureFullscreenButton() {
         fullscreenButton.setImage(UIImage(named: "Fullscreen"), for: .normal)
         fullscreenButton.setImage(UIImage(named: "Fullscreen")?.darkened(), for: [.normal, .highlighted])
-        
+
         fullscreenButton.touchAreaInsets = UIEdgeInsets(inset: 12)
         
         // MARK: При нажатии на кнопку фуллскрина показываем новый VC с видео на весь экран
