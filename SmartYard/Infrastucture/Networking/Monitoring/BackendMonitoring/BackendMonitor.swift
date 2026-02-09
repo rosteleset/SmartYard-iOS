@@ -21,7 +21,7 @@ final class BackendMonitor: BackendMonitoring {
 
         /// Сколько подряд сетевых фейлов нужно, чтобы объявить backend unavailable,
         /// если backend уже был available в этой сессии.
-        var failuresToDeclareUnavailableAfterEverAvailable: Int = 1
+        var failuresToDeclareUnavailableAfterEverAvailable: Int = 2
 
         /// Сколько подряд успешных ответов нужно, чтобы вернуть available из unavailable.
         /// Обычно достаточно 1.

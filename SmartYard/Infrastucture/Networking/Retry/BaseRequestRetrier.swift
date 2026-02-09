@@ -50,9 +50,10 @@ final class BaseRequestRetrier: RequestInterceptor, @unchecked Sendable {
             return completion(.doNotRetry)
         }
 
-        // 3) Достигли лимита ретраев — считаем, что backend недоступен
+        // 3) Достигли лимита ретраев — просто прекращаем ретраи.
+        // Backend-статус определяется в trackBackend на уровне ответа/ошибки
+        // с проверкой хоста, чтобы не падать в offline из-за CCTV/сторонних URL.
         guard request.retryCount < config.maxRetries else {
-            backend.reportUnavailable()
             return completion(.doNotRetry)
         }
 

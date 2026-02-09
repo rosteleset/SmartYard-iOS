@@ -6,6 +6,7 @@
 //  Copyright © 2025 LanTa. All rights reserved.
 //
 
+import Foundation
 import RxSwift
 import Alamofire
 import Moya
@@ -33,41 +34,80 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     func trackBackend(_ backend: BackendMonitoring, _ internet: InternetMonitoring) -> Single<Response> {
         self
             .do(onSuccess: { response in
-                // Любой успешный сетевой ответ означает: "сеть+бэк живы"
-                if 200...399 ~= response.statusCode {
-                    backend.reportMaybeAvailable()
-                }
+                // Учитываем только успешные ответы именно backend-хоста.
+                guard 200...399 ~= response.statusCode,
+                      Self.isBackendRequestURL(response.request?.url) else { return }
+                backend.reportMaybeAvailable()
             }, onError: { error in
                 // Если интернета реально нет — этим должен заниматься InternetMonitor,
                 // backend не трогаем.
                 guard internet.currentStatus == .online else { return }
 
-                // Вот тут важно: помечаем backend "упал" только на сетевых ошибках
-                // (timeout / cannotConnect / connectionLost / DNS и т.д.)
-                if Self.isBackendNetworkError(error) {
+                // Помечаем backend "упал" только если это сетевой фейл
+                // и запрос был к backend-хосту.
+                if Self.isBackendRequestError(error) {
                     backend.reportUnavailable()
                 }
             })
     }
 
+    private static func isBackendRequestError(_ error: Error) -> Bool {
+        guard let requestURL = extractRequestURL(from: error),
+              isBackendRequestURL(requestURL) else {
+            return false
+        }
+
+        return isBackendNetworkError(error)
+    }
+
+    private static func extractRequestURL(from error: Error) -> URL? {
+        if let moyaError = error as? MoyaError {
+            if let responseURL = moyaError.response?.request?.url {
+                return responseURL
+            }
+
+            if case .underlying(let underlying, let response) = moyaError {
+                if let responseURL = response?.request?.url {
+                    return responseURL
+                }
+                return extractRequestURL(from: underlying)
+            }
+        }
+
+        if let afError = error as? AFError,
+           let underlying = afError.underlyingError {
+            return extractRequestURL(from: underlying)
+        }
+
+        let ns = error as NSError
+        if let failedURL = ns.userInfo[NSURLErrorFailingURLErrorKey] as? URL {
+            return failedURL
+        }
+
+        if let failedURLString = ns.userInfo[NSURLErrorFailingURLStringErrorKey] as? String {
+            return URL(string: failedURLString)
+        }
+
+        return nil
+    }
+
+    private static func isBackendRequestURL(_ url: URL?) -> Bool {
+        guard let requestURL = url,
+              let backendURL = URL(string: AccessService.shared.backendURL),
+              let requestHost = requestURL.host?.lowercased(),
+              let backendHost = backendURL.host?.lowercased(),
+              requestHost == backendHost else {
+            return false
+        }
+
+        guard let backendPort = backendURL.port else { return true }
+        return requestURL.port == backendPort
+    }
+
     private static func isBackendNetworkError(_ error: Error) -> Bool {
         // URLError
         if let urlError = error as? URLError {
-            switch urlError.code {
-            case .timedOut,
-                    .cannotFindHost,
-                    .cannotConnectToHost,
-                    .networkConnectionLost,
-                    .dnsLookupFailed,
-                    .notConnectedToInternet,   
-                    .internationalRoamingOff,
-                    .dataNotAllowed,
-                    .secureConnectionFailed,
-                    .cannotLoadFromNetwork:
-                return true
-            default:
-                return false
-            }
+            return isTrackedNetworkErrorCode(urlError.code.rawValue)
         }
 
         // AFError -> underlying URLError
@@ -89,10 +129,28 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         // NSError fallback
         let ns = error as NSError
         if ns.domain == NSURLErrorDomain {
-            return true
+            return isTrackedNetworkErrorCode(ns.code)
         }
 
         return false
+    }
+
+    private static func isTrackedNetworkErrorCode(_ code: Int) -> Bool {
+        switch code {
+        case URLError.timedOut.rawValue,
+                URLError.cannotFindHost.rawValue,
+                URLError.cannotConnectToHost.rawValue,
+                URLError.networkConnectionLost.rawValue,
+                URLError.dnsLookupFailed.rawValue,
+                URLError.notConnectedToInternet.rawValue,
+                URLError.internationalRoamingOff.rawValue,
+                URLError.dataNotAllowed.rawValue,
+                URLError.secureConnectionFailed.rawValue,
+                URLError.cannotLoadFromNetwork.rawValue:
+            return true
+        default:
+            return false
+        }
     }
 
     private func printDebugInfo() -> PrimitiveSequence<Trait, Element> {
