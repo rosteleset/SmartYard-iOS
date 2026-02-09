@@ -64,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ThemeManager.shared.setTheme(.light)
         }
 
+        PlayerThemeManager.shared.logs = false
         PlayerThemeManager.shared.applyToSharedPlayerConfig()
 
         return true

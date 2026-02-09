@@ -59,8 +59,6 @@ final class OnlinePageViewController: BaseViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         title = NSLocalizedString("Online", comment: "")
-
-        SYPlayerConfig.shared.allowLogs = true 
     }
 
     @available(*, unavailable)

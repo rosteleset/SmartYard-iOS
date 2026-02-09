@@ -14,14 +14,22 @@ struct PlayerTheme {
     var fonts: Fonts
     var icons: Icons
 
+    var logs: Bool = false {
+        willSet {
+            SYPlayerConfig.shared.allowLogs = newValue
+        }
+    }
+
     init(
         colors: Colors = .default,
         fonts: Fonts = .default,
-        icons: Icons = .default
+        icons: Icons = .default,
+        logs: Bool = false
     ) {
         self.colors = colors
         self.fonts = fonts
         self.icons = icons
+        self.logs = logs
     }
 }
 
@@ -105,6 +113,8 @@ extension PlayerTheme {
 extension PlayerTheme {
 
     func applyToSharedPlayerConfig() {
+        SYPlayerConfig.shared.allowLogs = logs
+
         // Colors
         var syColors = SYPlayerColors()
         syColors.borderColor = colors.borderColor

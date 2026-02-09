@@ -7,5 +7,5 @@
 //
 
 enum PlayerThemeManager {
-    static let shared = PlayerTheme()
+    static var shared = PlayerTheme()
 }
