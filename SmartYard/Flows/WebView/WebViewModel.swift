@@ -92,7 +92,10 @@ final class WebViewModel: BaseViewModel {
             .mapToVoid()
 
         Driver
-            .merge(input.viewWillAppearTrigger.distinctUntilChanged().mapToVoid(), hasNetworkBecomeReachable)
+            .merge(
+                input.viewWillAppearTrigger.distinctUntilChanged().mapToVoid(),
+                hasNetworkBecomeReachable
+            )
             .drive(
                 onNext: { [weak self] _ in
                     guard let self = self else {

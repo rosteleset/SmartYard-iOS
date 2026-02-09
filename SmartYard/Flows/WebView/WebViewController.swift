@@ -18,6 +18,10 @@ final class WebViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var webView: WKCookieWebView!
     @IBOutlet private weak var skeletonView: UIView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
+    @IBOutlet private weak var webViewTopToFakeNavBarConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var webViewTopToSafeAreaConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var skeletonTopToFakeNavBarConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var skeletonTopToSafeAreaConstraint: NSLayoutConstraint?
     
     var loader: JGProgressHUD?
     private var refreshControl = UIRefreshControl()
@@ -146,12 +150,19 @@ isAppInstalled = function(url, callbackFunc ) {
     }
     
     private func configureView() {
+        let shouldShowFakeNavBar = !backButtonLabel.isEmpty
+
         fakeNavBar.configueDarkNavBar()
         fakeNavBar.setText(backButtonLabel)
-        if backButtonLabel.isEmpty {
-            fakeNavBar.isHidden = true
-        }
+        fakeNavBar.isHidden = !shouldShowFakeNavBar
+
+        webViewTopToFakeNavBarConstraint?.isActive = shouldShowFakeNavBar
+        skeletonTopToFakeNavBarConstraint?.isActive = shouldShowFakeNavBar
+        webViewTopToSafeAreaConstraint?.isActive = !shouldShowFakeNavBar
+        skeletonTopToSafeAreaConstraint?.isActive = !shouldShowFakeNavBar
+
         webView.scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 17, left: 0, bottom: 5, right: 0)
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webView.scrollView.refreshControl = self.enableRefreshControl ? refreshControl : nil
