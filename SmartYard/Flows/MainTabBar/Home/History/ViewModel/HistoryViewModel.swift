@@ -371,19 +371,19 @@ final class HistoryViewModel: BaseViewModel {
 
                     self.camMap.accept(camMap)
 
+                    let filtered = args.filter { $0.houseId == self.houseId && $0.hasPlog }
+
                     // получаем список идентификаторов квартир по выбранному адресу и преобразуем тип к Int
-                    self.flatIds = args.filtered(
-                        { address in // swiftlint:disable:this opening_brace
-                            return address.houseId == self.houseId && address.hasPlog
-                        },
-                        map: { address in
-                            return Int(address.flatId!) ?? -1
-                        }
-                    )
-                    .withoutDuplicates()
+                    self.flatIds = filtered
+                        .compactMap { $0.flatId }
+                        .compactMap { Int($0) }
+                        .withoutDuplicates()
 
                     // получаем список номеров квартир по выбранному адресу и преобразуем тип к Int
-                    self.flatNumbers = args.filtered({ $0.houseId == self.houseId  && $0.hasPlog }, map: { (Int($0.flatNumber!) ?? -1) }).withoutDuplicates()
+                    self.flatNumbers = filtered
+                        .compactMap { $0.flatNumber }
+                        .compactMap { Int($0.trimmingCharacters(in: .whitespacesAndNewlines)) }
+                        .withoutDuplicates()
 
                     // по умолчанию фильтр содержит все доступные квартиры
                     self.apptsFilter.accept(self.flatIds)
