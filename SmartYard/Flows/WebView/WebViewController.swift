@@ -161,8 +161,8 @@ isAppInstalled = function(url, callbackFunc ) {
         webViewTopToSafeAreaConstraint?.isActive = !shouldShowFakeNavBar
         skeletonTopToSafeAreaConstraint?.isActive = !shouldShowFakeNavBar
 
-        webView.scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 17, left: 0, bottom: 5, right: 0)
-        webView.scrollView.contentInsetAdjustmentBehavior = .never
+        webView.scrollView.contentInsetAdjustmentBehavior = .automatic
+        webView.scrollView.scrollIndicatorInsets = .zero
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webView.scrollView.refreshControl = self.enableRefreshControl ? refreshControl : nil

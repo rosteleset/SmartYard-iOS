@@ -43,8 +43,8 @@ final class NotificationsViewController: BaseViewController, LoaderPresentable {
         webView.layerCornerRadius = 24
         webView.layer.maskedCorners = .topCorners
         webView.navigationDelegate = self
-        webView.scrollView.contentInsetAdjustmentBehavior = .never
-        webView.scrollView.isScrollEnabled = false
+        webView.scrollView.isScrollEnabled = true
+        webView.scrollView.contentInsetAdjustmentBehavior = .automatic
     }
     
     private func bind() {
