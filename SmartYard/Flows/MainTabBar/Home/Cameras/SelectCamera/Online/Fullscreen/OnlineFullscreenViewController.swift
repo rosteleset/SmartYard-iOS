@@ -123,10 +123,12 @@ extension OnlineFullscreenViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
 
-        collectionView.dequeueReusableCell(
+        let cell = collectionView.dequeueReusableCell(
             withClass: OnlineFullscreenCameraCell.self,
             for: indexPath
         )
+        cell.setPagingPanGesture(collectionView.panGestureRecognizer)
+        return cell
     }
 }
 
@@ -151,6 +153,9 @@ extension OnlineFullscreenViewController: UICollectionViewDelegate {
     ) {
         guard let cell = cell as? OnlineFullscreenCameraCell else { return }
         guard cameras.indices.contains(indexPath.item) else { return }
+
+        cell.resetZoom()
+
         let camera = cameras[indexPath.item]
         playback.didEndDisplay(cameraId: camera.id, cell: cell)
     }
