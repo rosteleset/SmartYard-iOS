@@ -239,7 +239,7 @@
 "Public cams" = "Public cams";
 "Search" = "Search";
 "VPN detected. The application may work unstable." = "VPN detected. The application may work unstable.";
-"List Empty Address List" = "To add an address, click on \"+\" at the top of the screen.
+"List Empty Online List" = "To add an address, click on \"+\" at the top of the screen.
 If the added address does not appear, please wait a few minutes. The list will update automatically.";
 "List Empty Offline List" = "Looks like there's no data yet or it hasn't been saved.";
 "offline.alert.switch_mode" = "Tap \"OK\" to return to online mode.\nTap \"Cancel\" to stay in offline mode.";
