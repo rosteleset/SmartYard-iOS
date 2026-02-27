@@ -503,20 +503,65 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
     }
     
     func openNotificationsTab() {
-        // DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            self?.mainTabBarCoordinator?.trigger(.notifications)
-        }
+        openMainTab(.notifications)
     }
     
     func openChatTab() {
-        // DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            self?.mainTabBarCoordinator?.trigger(.chat)
+        openMainTab(.chat)
+    }
+
+    func openHomeTab() {
+        openMainTab(.home)
+    }
+
+    func openPaymentsTab() {
+        openMainTab(.payments)
+    }
+
+    func openMenuTab() {
+        openMainTab(.menu)
+    }
+
+    func openSettingsTab() {
+        openMainTab(.settings)
+    }
+
+    func openFirstAddressCameras() {
+        openViaMainTabBarCoordinator { coordinator in
+            coordinator.openFirstAddressCameras()
+        }
+    }
+
+    func openFirstAddressEvents() {
+        openViaMainTabBarCoordinator { coordinator in
+            coordinator.openFirstAddressEvents()
+        }
+    }
+
+    func openFirstAddressAccess() {
+        openViaMainTabBarCoordinator { coordinator in
+            coordinator.openFirstAddressAccess()
         }
     }
 
     // MARK: - Private methods
+
+    private func openMainTab(_ route: MainTabBarRoute) {
+        // DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            self?.mainTabBarCoordinator?.trigger(route)
+        }
+    }
+
+    private func openViaMainTabBarCoordinator(_ action: @escaping (MainTabBarCoordinator) -> Void) {
+        // DispatchAsync - потому что если вызывать эту штуку сразу при запуске, таббара еще не будет
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            guard let coordinator = self?.mainTabBarCoordinator else {
+                return
+            }
+            action(coordinator)
+        }
+    }
 
     private func observeLogout() {
         NotificationCenter.default.rx.notification(.init("UserLoggedOut"))
@@ -804,4 +849,3 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
     @objc private func toggleDebug() { debugOverlay.toggle() }
 #endif
 }
-

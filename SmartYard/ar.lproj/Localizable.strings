@@ -246,3 +246,6 @@
 "offline.hint.swipe_to_exit" = "أنت في وضع عدم الاتصال. للخروج منه، اسحب من أعلى الشاشة إلى الأسفل.";
 "offline.message.connection_restored" = "رائع! تم استعادة الاتصال.";
 "My addresses" = "عناويني";
+"First address cameras" = "كاميرات العنوان الأول";
+"First address events" = "أحداث العنوان الأول";
+"First address access" = "الوصول إلى العنوان الأول";

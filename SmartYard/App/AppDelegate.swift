@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private let mainWindow: UIWindow
     private let appCoordinator: AppCoordinator
+    private lazy var quickActionsService = QuickActionsService()
 
     override init() {
         mainWindow = UIWindow()
@@ -67,16 +68,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PlayerThemeManager.shared.logs = false
         PlayerThemeManager.shared.applyToSharedPlayerConfig()
 
+        subscribeToQuickActionUpdates()
+        quickActionsService.updateShortcutItems(for: application)
+
+        if let shortcutItem = launchOptions?[.shortcutItem] as? UIApplicationShortcutItem {
+            quickActionsService.storePendingShortcutItem(shortcutItem)
+            return false
+        }
+
         return true
     }
-    
-    // MARK: - При разворачивании приложения запрашиваем количество непрочитанных сообщений
-    // И помечаем их как прочитанные 
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         appCoordinator.syncBadgeNumber()
         appCoordinator.markAllMessagesAsDelivered()
+
         VPNBannerHelper.showIfNeeded()
+
+        quickActionsService.updateShortcutItems(for: application)
+        quickActionsService.processPendingShortcutIfNeeded { [weak self] shortcutType in
+            self?.openTab(for: shortcutType)
+        }
+    }
+
+    func applicationWillResignActive(_ application: UIApplication) {
+        quickActionsService.updateShortcutItems(for: application)
+    }
+
+    func application(
+        _ application: UIApplication,
+        performActionFor shortcutItem: UIApplicationShortcutItem,
+        completionHandler: @escaping (Bool) -> Void
+    ) {
+        completionHandler(
+            quickActionsService.handle(shortcutItem) { [weak self] shortcutType in
+                self?.openTab(for: shortcutType)
+            }
+        )
     }
     
     func application(
@@ -141,6 +169,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         UserDefaults.standard.synchronize()
+    }
+
+    private func openTab(for shortcutType: AppShortcutType) {
+        switch shortcutType {
+        case .firstAddressCameras:
+            appCoordinator.openFirstAddressCameras()
+        case .firstAddressEvents:
+            appCoordinator.openFirstAddressEvents()
+        case .firstAddressAccess:
+            appCoordinator.openFirstAddressAccess()
+        case .payments:
+            appCoordinator.openPaymentsTab()
+        case .settings:
+            appCoordinator.openSettingsTab()
+        }
+    }
+
+    private func subscribeToQuickActionUpdates() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleUserLoggedOut),
+            name: .init("UserLoggedOut"),
+            object: nil
+        )
+    }
+
+    @objc private func handleUserLoggedOut() {
+        quickActionsService.updateShortcutItems(for: UIApplication.shared)
     }
 }
 

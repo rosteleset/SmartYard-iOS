@@ -21,6 +21,7 @@ enum MainTabBarRoute: Route {
     case menu
 }
 
+// swiftlint: disable type_body_length
 final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     
     private let disposeBag = DisposeBag()
@@ -35,6 +36,7 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let offlineAddressListDataSource: OfflineAddressListDataSource
     private let networkStateProvider: NetworkStateProviding
     private let optionsService: OptionsServicing
+    private let quickActionResolverService: QuickActionResolverService
 
     private let homeRouter: StrongRouter<HomeRoute>
     private let notificationsRouter: StrongRouter<NotificationsRoute>
@@ -75,6 +77,10 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.offlineAddressListDataSource = offlineAddressListDataSource
         self.networkStateProvider = networkStateProvider
         self.optionsService = optionsService
+        self.quickActionResolverService = QuickActionResolverService(
+            apiWrapper: apiWrapper,
+            accessService: accessService
+        )
 
         // MARK: Home Tab
         let homeCoordinator = HomeCoordinator(
@@ -417,6 +423,120 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
                 self?.selectTabIfNeeded()
             })
             .disposed(by: disposeBag)
+    }
+
+    func openFirstAddressCameras() {
+        resolveAndOpenQuickAction(.firstAddressCameras)
+    }
+
+    func openFirstAddressEvents() {
+        resolveAndOpenQuickAction(.firstAddressEvents)
+    }
+
+    func openFirstAddressAccess() {
+        resolveAndOpenQuickAction(.firstAddressAccess)
+    }
+
+    private func resolveAndOpenQuickAction(_ shortcutType: AppShortcutType) {
+        quickActionResolverService.resolve(shortcutType)
+            .observe(on: MainScheduler.instance)
+            .subscribe(
+                onSuccess: { [weak self] resolution in
+                    guard let self else { return }
+
+                    switch resolution {
+                    case let .target(target):
+                        openQuickActionTarget(target)
+                    case let .unavailable(message):
+                        showQuickActionUnavailableAlert(message: message)
+                    }
+                },
+                onFailure: { [weak self] error in
+                    self?.handleQuickActionFailure(error)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+
+    private func openQuickActionTarget(_ target: QuickActionResolvedTarget) {
+        switch target {
+        case let .homeCamerasMap(houseId, address, cameras):
+            performOnHomeTab { [weak self] in
+                self?.homeRouter.trigger(
+                    .yardCamerasMap(
+                        houseId: houseId,
+                        address: address,
+                        cameras: cameras
+                    )
+                )
+            }
+        case let .homeCamerasList(houseId, address, tree):
+            performOnHomeTab { [weak self] in
+                self?.homeRouter.trigger(
+                    .yardCamerasList(
+                        houseId: houseId,
+                        address: address,
+                        tree: tree,
+                        path: []
+                    )
+                )
+            }
+        case let .homeEvents(houseId, address):
+            performOnHomeTab { [weak self] in
+                self?.homeRouter.trigger(
+                    .history(
+                        houseId: houseId,
+                        address: address
+                    )
+                )
+            }
+        case let .menuAddressAccess(address, flatId, clientId):
+            performOnMenuTab { [weak self] in
+                self?.menuRouter.trigger(
+                    .addressAccess(
+                        address: address,
+                        flatId: flatId,
+                        clientId: clientId
+                    )
+                )
+            }
+        }
+    }
+
+    private func performOnHomeTab(_ action: @escaping () -> Void) {
+        trigger(.home)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            action()
+        }
+    }
+
+    private func performOnMenuTab(_ action: @escaping () -> Void) {
+        trigger(.menu)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            action()
+        }
+    }
+
+    private func showQuickActionUnavailableAlert(message: String) {
+        alertService.showAlert(
+            title: NSLocalizedString("Error", comment: ""),
+            message: message,
+            priority: 250
+        )
+    }
+
+    private func showQuickActionErrorAlert(error: Error) {
+        alertService.showAlert(
+            title: NSLocalizedString("Error", comment: ""),
+            message: error.localizedDescription,
+            priority: 250
+        )
+    }
+
+    private func handleQuickActionFailure(_ error: Error) {
+        // Fallback to Home so quick action never leaves user on a blank state.
+        trigger(.home)
+        showQuickActionErrorAlert(error: error)
     }
 }
 

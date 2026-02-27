@@ -234,3 +234,6 @@
 "offline.hint.swipe_to_exit" = "В момента сте в офлайн режим. За да излезете от него, плъзнете надолу от горната част на екрана.";
 "offline.message.connection_restored" = "Ура! Връзката е възстановена!";
 "My addresses" = "Моите адреси";
+"First address cameras" = "Камери на първия адрес";
+"First address events" = "Събития на първия адрес";
+"First address access" = "Достъп за първия адрес";

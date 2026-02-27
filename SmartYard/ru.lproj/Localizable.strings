@@ -250,4 +250,6 @@
 "offline.hint.swipe_to_exit" = "Вы находитесь в офлайн режиме. Чтобы выйти из него, смахните пальцем сверху вниз.";
 "offline.message.connection_restored" = "Ура! Соединение появилось!";
 "My addresses" = "Мои адреса";
-
+"First address cameras" = "Камеры первого адреса";
+"First address events" = "События первого адреса";
+"First address access" = "Доступ первого адреса";

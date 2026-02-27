@@ -257,3 +257,6 @@
 "offline.hint.swipe_to_exit" = "Сіз оффлайн режимдесіз. Одан шығу үшін экранның жоғарғы жағынан төмен қарай сырғытыңыз.";
 "offline.message.connection_restored" = "Ура! Байланыс қайта қалпына келді!";
 "My addresses" = "Менің мекенжайларым";
+"First address cameras" = "Бірінші мекенжай камералары";
+"First address events" = "Бірінші мекенжай оқиғалары";
+"First address access" = "Бірінші мекенжайға қолжеткізу";

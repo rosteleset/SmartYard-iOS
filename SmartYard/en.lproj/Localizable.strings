@@ -250,3 +250,6 @@ If the added address does not appear, please wait a few minutes. The list will u
 "offline.message.connection_restored" = "Hooray! The connection is back!";
 "My addresses" = "My addresses";
 "guestAccessAlertText" = "For the next 60 minutes, the door will open automatically for anyone dialing your apartment number on the intercom. After this time, the intercom will automatically return to its standard mode.";
+"First address cameras" = "First address cameras";
+"First address events" = "First address events";
+"First address access" = "First address access";

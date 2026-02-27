@@ -16,6 +16,7 @@ enum MainMenuRoute: Route {
     case main
     case cityCams
     case settings
+    case addressAccess(address: String, flatId: String, clientId: String?)
     case profile
     case callSupport
     case alert(title: String, message: String)
@@ -108,6 +109,16 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             
         case .settings:
             return .trigger(SettingsRoute.main, on: settingsRouter)
+
+        case let .addressAccess(address, flatId, clientId):
+            return .trigger(
+                SettingsRoute.addressAccess(
+                    address: address,
+                    flatId: flatId,
+                    clientId: clientId
+                ),
+                on: settingsRouter
+            )
         
         case .profile:
             return .trigger(SettingsRoute.advancedSettings, on: settingsRouter)

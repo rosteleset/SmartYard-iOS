@@ -249,3 +249,6 @@
 "offline.hint.swipe_to_exit" = "Siz hozir oflayn rejimdasiz. Undan chiqish uchun ekranning yuqori qismidan pastga suring.";
 "offline.message.connection_restored" = "Ura! Aloqa qayta tiklandi!";
 "My addresses" = "Mening manzillarim";
+"First address cameras" = "Birinchi manzil kameralari";
+"First address events" = "Birinchi manzil hodisalari";
+"First address access" = "Birinchi manzilga kirish";
