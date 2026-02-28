@@ -320,7 +320,7 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
             startDate: startDate,
             endDate: endDate,
             numberOfRows: 6,
-            calendar: Calendar.current,
+            calendar: Calendar.serverCalendar,
             generateInDates: .forAllMonths,
             generateOutDates: .tillEndOfGrid,
             firstDayOfWeek: .monday,
