@@ -28,6 +28,8 @@ final class OutgoingCallViewController: BaseViewController, LoaderPresentable {
     @IBOutlet weak var makeCallButton: BlueButton!
     // swiftlint:enable all
 
+    private let copyPhoneNumberTapGesture = UITapGestureRecognizer()
+
     private let viewModel: OutgoingCallViewModel
     
     var loader: JGProgressHUD?
@@ -51,7 +53,9 @@ final class OutgoingCallViewController: BaseViewController, LoaderPresentable {
     
     private func configureView() {
         makeCallButton.isHidden = false
-        
+        numberPhoneLabel.isUserInteractionEnabled = true
+
+        numberPhoneLabel.addGestureRecognizer(copyPhoneNumberTapGesture)
     }
     
     private func bind() {
@@ -64,36 +68,45 @@ final class OutgoingCallViewController: BaseViewController, LoaderPresentable {
         let output = viewModel.transform(input: input)
         
         output.phoneNumber
-            .drive(
-                onNext: { phoneNumber in
-                    let text = String.localizedStringWithFormat(
-                        NSLocalizedString("We need to make sure\nthat the number +%@ is really yours.", comment: ""),
-                        "\(AccessService.shared.phonePrefix)\(phoneNumber)"
-                    )
-                    self.hintInputPhoneLabel.text = text
-                }
-            )
+            .drive(with: self) { owner, phoneNumber in
+                let text = String.localizedStringWithFormat(
+                    NSLocalizedString("We need to make sure\nthat the number +%@ is really yours.", comment: ""),
+                    "\(AccessService.shared.phonePrefix)\(phoneNumber)"
+                )
+                owner.hintInputPhoneLabel.text = text
+            }
             .disposed(by: disposeBag)
         
         output.confirmPhoneNumber
-            .drive(
-                onNext: { confirmPhoneNumber in
-                    self.messageLabel.text = confirmPhoneNumber
-                }
-            )
+            .drive(with: self) { owner, confirmPhoneNumber in
+                owner.messageLabel.text = confirmPhoneNumber
+                owner.numberPhoneLabel.text = confirmPhoneNumber
+            }
             .disposed(by: disposeBag)
         
         output.isLoading
             .debounce(.milliseconds(25))
-            .drive(
-                onNext: { [weak self] isLoading in
-                    
-                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
-                }
-            )
+            .drive(with: self) { owner, isLoading in
+                owner.updateLoader(isEnabled: isLoading, detailText: nil)
+            }
             .disposed(by: disposeBag)
-        
+
+        copyPhoneNumberTapGesture.rx.event
+            .bind(with: self, onNext: { owner, _ in
+                owner.copyConfirmPhoneNumberToClipboard()
+            })
+            .disposed(by: disposeBag)
     }
     
-}
+    private func copyConfirmPhoneNumberToClipboard() {
+        guard
+            let confirmPhoneNumber = numberPhoneLabel.text,
+            !confirmPhoneNumber.isEmpty
+        else {
+            return
+        }
 
+        UIPasteboard.general.string = confirmPhoneNumber
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
+    }
+}
