@@ -14,6 +14,21 @@
         <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" placeholderIntrinsicWidth="462" placeholderIntrinsicHeight="195" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gAO-VT-7qK" customClass="LicencePlateKeyboardView" customModule="SmartYard" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="393" height="320"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whV-hg-7v1">
+                    <rect key="frame" x="341" y="6" width="46" height="30"/>
+                    <color key="backgroundColor" name="keyColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <inset key="contentEdgeInsets" minX="8" minY="4" maxX="8" maxY="4"/>
+                    <state key="normal" title="🇷🇺">
+                        <color key="titleColor" name="textKeyColor"/>
+                    </state>
+                    <state key="disabled" title="🇷🇺"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                            <integer key="value" value="6"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Cjl-jm-K0t" userLabel="Digit Buttons">
                     <rect key="frame" x="6" y="124" width="381" height="40"/>
                     <subviews>
@@ -429,11 +444,15 @@
                 <constraint firstItem="CU4-12-poN" firstAttribute="leading" secondItem="Cjl-jm-K0t" secondAttribute="leading" constant="12" id="9SV-vE-RSZ"/>
                 <constraint firstItem="6y7-8w-Nqc" firstAttribute="trailing" secondItem="Cjl-jm-K0t" secondAttribute="trailing" constant="6" id="Ctm-hO-pAx"/>
                 <constraint firstItem="HN0-ax-Gsf" firstAttribute="leading" secondItem="Cjl-jm-K0t" secondAttribute="leading" id="UZE-tn-k66"/>
-                <constraint firstItem="Cjl-jm-K0t" firstAttribute="top" secondItem="6y7-8w-Nqc" secondAttribute="top" constant="6" id="Yut-T5-oGh"/>
+                <constraint firstItem="Cjl-jm-K0t" firstAttribute="top" secondItem="6y7-8w-Nqc" secondAttribute="top" constant="42" id="Yut-T5-oGh"/>
                 <constraint firstItem="CU4-12-poN" firstAttribute="top" secondItem="HN0-ax-Gsf" secondAttribute="bottom" constant="6" id="lQb-Bn-K0u"/>
                 <constraint firstItem="Cjl-jm-K0t" firstAttribute="leading" secondItem="6y7-8w-Nqc" secondAttribute="leading" constant="6" id="nOu-6b-IyG"/>
                 <constraint firstItem="Cjl-jm-K0t" firstAttribute="trailing" secondItem="CU4-12-poN" secondAttribute="trailing" constant="12" id="oo5-62-mOH"/>
+                <constraint firstItem="6y7-8w-Nqc" firstAttribute="trailing" secondItem="whV-hg-7v1" secondAttribute="trailing" constant="6" id="s8N-KX-DL2"/>
                 <constraint firstItem="Cjl-jm-K0t" firstAttribute="trailing" secondItem="HN0-ax-Gsf" secondAttribute="trailing" id="sAc-IA-aEh"/>
+                <constraint firstItem="whV-hg-7v1" firstAttribute="top" secondItem="6y7-8w-Nqc" secondAttribute="top" constant="6" id="teN-T6-lT7"/>
+                <constraint firstItem="whV-hg-7v1" firstAttribute="height" secondItem="nil" secondAttribute="notAnAttribute" constant="30" id="uz1-Pf-FAw"/>
+                <constraint firstItem="whV-hg-7v1" firstAttribute="width" secondItem="nil" secondAttribute="notAnAttribute" constant="46" id="xJG-2y-Wti"/>
                 <constraint firstItem="6y7-8w-Nqc" firstAttribute="bottom" secondItem="CU4-12-poN" secondAttribute="bottom" constant="6" id="seW-Gv-U8E"/>
                 <constraint firstItem="HN0-ax-Gsf" firstAttribute="top" secondItem="Cjl-jm-K0t" secondAttribute="bottom" constant="6" id="zBa-lW-vO1"/>
             </constraints>
@@ -442,6 +461,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="actionButton" destination="UPb-sA-rMc" id="rhR-6a-zaO"/>
+                <outlet property="countryButton" destination="whV-hg-7v1" id="nHF-rV-KRt"/>
                 <outlet property="deleteButton" destination="lHp-9y-hVA" id="g3K-M5-7lr"/>
                 <outletCollection property="letterButtons" destination="LCe-ht-nw6" collectionClass="NSMutableArray" id="ANB-hp-DOj"/>
                 <outletCollection property="digitButtons" destination="skS-i1-0TT" collectionClass="NSMutableArray" id="z4F-E2-FCY"/>

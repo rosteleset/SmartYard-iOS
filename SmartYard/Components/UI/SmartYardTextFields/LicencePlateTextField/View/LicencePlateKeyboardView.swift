@@ -20,6 +20,7 @@ final class LicencePlateKeyboardView: PMNibLinkableView {
     @IBOutlet private(set) var letterButtons: [UIButton]!
     @IBOutlet private(set) weak var actionButton: UIButton!
     @IBOutlet private(set) weak var deleteButton: UIButton!
+    @IBOutlet private(set) weak var countryButton: UIButton!
     // swiftlint:enable private_outlet
     
     // MARK: - Properties
@@ -32,11 +33,21 @@ final class LicencePlateKeyboardView: PMNibLinkableView {
     var onKeyPressed: ((String) -> Void)?
     
     private(set) var currentCountryMode: LicensePlateFormat = .russia
+    private let topMenuAreaHeight: CGFloat = 42
+    private let letterExtraHeight: CGFloat = 4
+    private let baseKeyboardHeightRatio: CGFloat = 0.22
+    private let maxDigitButtonHeight: CGFloat = 44
     
     override var intrinsicContentSize: CGSize {
+        let screenHeight = UIScreen.main.bounds.height
+        let baseHeight = screenHeight * baseKeyboardHeightRatio
+        let baseDigitHeight = (baseHeight - (4 * 6)) / 3
+        let preferredDigitHeight = min(baseDigitHeight, maxDigitButtonHeight)
+        let requiredHeight = (4 * 6) + topMenuAreaHeight + (3 * preferredDigitHeight) + (2 * letterExtraHeight)
+        
         return CGSize(
             width: UIScreen.main.bounds.width,
-            height: UIScreen.main.bounds.height * 0.22
+            height: max(baseHeight, requiredHeight)
         )
     }
     
@@ -109,6 +120,8 @@ extension LicencePlateKeyboardView {
         
         actionButton.setTitleColor(.SYKeyboard.textKeyColor, for: .disabled)
         actionButton.setTitleColor(.white, for: .normal)
+
+        configureCountryButton()
         
         setShadow()
         setConstraints()
@@ -121,23 +134,31 @@ extension LicencePlateKeyboardView {
             $0.layer.shadowOpacity = 1
             $0.layer.shadowOffset = CGSize(width: 0, height: 2)
         }
+        
+        countryButton.layer.shadowColor = UIColor.SYKeyboard.shadowKeyColor.cgColor
+        countryButton.layer.shadowRadius = 6
+        countryButton.layer.shadowOpacity = 1
+        countryButton.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
     
     private func setConstraints() {
         let inset: CGFloat = 6
         let buttons: CGFloat = 8
         let rows: CGFloat = 3
-        let height = (intrinsicContentSize.height - (4 * inset)) / rows
+        let availableHeight = intrinsicContentSize.height - (4 * inset) - topMenuAreaHeight
+        let digitHeight = (availableHeight - (2 * letterExtraHeight)) / rows
+        let letterHeight = digitHeight + letterExtraHeight
         let width = (intrinsicContentSize.width - (9 * inset)) / buttons
-        let widthShareButton = intrinsicContentSize.width - (3 * inset) - (width * 5) - (4 * inset)
         
-        allButtons.forEach {
-            $0.heightAnchor.constraint(equalToConstant: height).isActive = true
+        digitButtons.forEach {
+            $0.heightAnchor.constraint(equalToConstant: digitHeight).isActive = true
+        }
+        (letterButtons + [deleteButton, actionButton]).forEach {
+            $0.heightAnchor.constraint(equalToConstant: letterHeight).isActive = true
         }
         letterButtons.forEach {
             $0.widthAnchor.constraint(equalToConstant: width).isActive = true
         }
-        actionButton.heightAnchor.constraint(equalToConstant: widthShareButton).isActive = true
     }
     
     private func updateAppearance() {
@@ -166,11 +187,30 @@ extension LicencePlateKeyboardView {
         actionButton.setTitleColorForAllStates(actionButton.isEnabled
             ? UIColor.white
             : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4))
+        countryButton.backgroundColor = UIColor.SYKeyboard.keyColor
+        countryButton.setTitleColorForAllStates(UIColor.SYKeyboard.textKeyColor)
         
         allButtons.forEach {
             $0.layer.shadowColor = UIColor.SYKeyboard.shadowKeyColor.cgColor
         }
+        
+        countryButton.layer.shadowColor = UIColor.SYKeyboard.shadowKeyColor.cgColor
 
+    }
+
+    private func configureCountryButton() {
+        countryButton.backgroundColor = UIColor.SYKeyboard.keyColor
+        countryButton.setTitle("🇷🇺", for: .normal)
+        countryButton.titleLabel?.font = .systemFont(ofSize: 20)
+        countryButton.setTitleColorForAllStates(UIColor.SYKeyboard.textKeyColor)
+
+        if #available(iOS 14.0, *) {
+            let russianAction = UIAction(title: "Русский", state: .on) { [weak self] _ in
+                self?.currentCountryMode = .russia
+            }
+            countryButton.menu = UIMenu(title: "", children: [russianAction])
+            countryButton.showsMenuAsPrimaryAction = true
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -204,4 +244,3 @@ extension Reactive where Base: LicencePlateKeyboardView {
     }
     
 }
-
