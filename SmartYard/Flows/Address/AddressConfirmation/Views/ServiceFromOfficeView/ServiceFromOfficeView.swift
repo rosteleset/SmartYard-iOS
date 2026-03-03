@@ -16,6 +16,12 @@ import UIKit
 
 final class ServiceFromOfficeView: PMNibLinkableView {
     
+    private enum MapPointConstants {
+        static let mapPointImageName = "MapPoint"
+        static let mapPointSpriteName = "MapPointExtendedTapArea"
+        static let mapPointMinimumTapSide: CGFloat = 44
+    }
+
     @IBOutlet fileprivate weak var doSoButton: BlueButton!
     @IBOutlet private weak var containerView: UIView!
     private var shownAnnotation: ViewAnnotation?
@@ -78,10 +84,32 @@ final class ServiceFromOfficeView: PMNibLinkableView {
         
         self.shownAnnotation = annotation
     }
+
+    private func makeMapPointImageWithExpandedTapArea() -> UIImage {
+        guard let mapPointImage = UIImage(named: MapPointConstants.mapPointImageName) else {
+            assertionFailure("Missing \(MapPointConstants.mapPointImageName) asset")
+            return UIImage()
+        }
+
+        let expandedSize = CGSize(
+            width: max(mapPointImage.size.width, MapPointConstants.mapPointMinimumTapSide),
+            height: max(mapPointImage.size.height, MapPointConstants.mapPointMinimumTapSide)
+        )
+        let renderer = UIGraphicsImageRenderer(size: expandedSize)
+
+        return renderer.image { _ in
+            let origin = CGPoint(
+                x: (expandedSize.width - mapPointImage.size.width) / 2,
+                y: (expandedSize.height - mapPointImage.size.height) / 2
+            )
+            mapPointImage.draw(at: origin)
+        }
+    }
     
     func setOffices(offices: [APIOffice]) {
         let annotationManager = self.mapView.annotations.makePointAnnotationManager()
         annotationManager.annotations = []
+        let mapPointImage = makeMapPointImageWithExpandedTapArea()
         
         let officesPoints = offices.map { value -> PointAnnotation in
             var point = PointAnnotation(coordinate: CLLocationCoordinate2D(latitude: value.lat, longitude: value.lon))
@@ -92,7 +120,7 @@ final class ServiceFromOfficeView: PMNibLinkableView {
                 )
                 return true
             }
-            point.image = .init(image: UIImage(named: "MapPoint")!, name: "MapPoint")
+            point.image = .init(image: mapPointImage, name: MapPointConstants.mapPointSpriteName)
             point.iconAnchor = .center
             return point
         }
@@ -150,4 +178,3 @@ extension ServiceFromOfficeView {
     }
 
 }
-
