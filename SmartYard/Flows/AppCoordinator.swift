@@ -46,31 +46,22 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     private let disposeBag = DisposeBag()
     
-    private let linphoneService = LinphoneService()
-    private let providerProxy = CXProviderProxy()
+    private let linphoneService: LinphoneService
+    private let providerProxy: CXProviderProxy
     
-    private let accessService = AccessService.shared
-    private let permissionService = PermissionService()
+    private let accessService: AccessService
+    private let permissionService: PermissionService
     private let apiWrapper: APIWrapper
     private let issueService: IssueService
     private let pushNotificationService: PushNotificationService
-    private let alertService = AlertService()
+    private let alertService: AlertService
     private let telemetryService: AppTelemetryServicing
     private let logoutHelper: LogoutHelper
-    private let debugNetwork = DebugNetworkController()
+    private let debugNetwork: DebugNetworkController
     private let networkEnv: NetworkEnvironment
-    private lazy var networkStateProvider = NetworkStateProvider(
-        internet: networkEnv.internet,
-        backend: networkEnv.backend
-    )
-    private let offlineAddressListDataSource = OfflineAddressListDataSource(
-        container: PersistenceController.shared.container
-    )
-    private lazy var optionsService: OptionsServicing = OptionsService(
-        apiWrapper: apiWrapper,
-        accessService: accessService,
-        networkStateProvider: networkStateProvider
-    )
+    private let networkStateProvider: NetworkStateProviding
+    private let offlineAddressListDataSource: OfflineAddressListDataSource
+    private let optionsService: OptionsServicing
 
 #if DEBUG
     private lazy var debugOverlay = DebugNetworkOverlay(controller: debugNetwork)
@@ -96,28 +87,22 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
     private var didLoadOptionsOnce = false
     private var isLoadingOptions = false
 
-    init(mainWindow: UIWindow) {
-        let env = NetworkEnvironment.make(debug: debugNetwork)
-        self.networkEnv = env
-        self.apiWrapper = APIWrapper(
-            accessService: accessService,
-            session: networkEnv.session,
-            internet: networkEnv.internet,
-            backend: networkEnv.backend
-        )
-        self.issueService = IssueService(
-            apiWrapper: apiWrapper,
-            accessService: accessService
-        )
-        self.pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
-        self.telemetryService = AppTelemetryService.shared
-
-        self.logoutHelper = LogoutHelper(
-            pushNotificationService: pushNotificationService,
-            accessService: accessService,
-            alertService: alertService
-        )
-
+    init(mainWindow: UIWindow, dependencies: AppDependencies) {
+        self.linphoneService = dependencies.linphoneService
+        self.providerProxy = dependencies.providerProxy
+        self.accessService = dependencies.accessService
+        self.permissionService = dependencies.permissionService
+        self.apiWrapper = dependencies.apiWrapper
+        self.issueService = dependencies.issueService
+        self.pushNotificationService = dependencies.pushNotificationService
+        self.alertService = dependencies.alertService
+        self.telemetryService = dependencies.telemetryService
+        self.logoutHelper = dependencies.logoutHelper
+        self.debugNetwork = dependencies.debugNetwork
+        self.networkEnv = dependencies.networkEnv
+        self.networkStateProvider = dependencies.networkStateProvider
+        self.offlineAddressListDataSource = dependencies.offlineAddressListDataSource
+        self.optionsService = dependencies.optionsService
         self.mainWindow = mainWindow
 
         super.init(initialRoute: accessService.routeForCurrentState)

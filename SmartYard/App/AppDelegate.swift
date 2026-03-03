@@ -23,8 +23,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     override init() {
         mainWindow = UIWindow()
-        appCoordinator = AppCoordinator(mainWindow: mainWindow)
         telemetryService = AppTelemetryService.shared
+        let dependencies = DefaultAppDependencies(
+            telemetryService: telemetryService
+        )
+        appCoordinator = AppCoordinator(
+            mainWindow: mainWindow,
+            dependencies: dependencies
+        )
         super.init()
     }
 
