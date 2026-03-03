@@ -34,7 +34,7 @@ final class DetailGateAccessViewController: BaseViewController, UIScrollViewDele
     private let sendSMSToPersonTappedRelay = PublishRelay<AllowedPerson>()
     private let deletePersonTappedRelay = PublishRelay<AllowedPerson>()
     
-    private var dataSource: RxCollectionViewSectionedAnimatedDataSource<GateAccessSectionModel>?
+    private var dataSource: RxCollectionViewSectionedAnimatedDataSource<DetailGateAccessViewModel.SectionModel>?
     
     private let viewModel: DetailGateAccessViewModel
     
@@ -176,7 +176,7 @@ extension DetailGateAccessViewController {
         
         collectionView.collectionViewLayout = configureFlowLayout()
         
-        let dataSource = RxCollectionViewSectionedAnimatedDataSource<GateAccessSectionModel>(
+        let dataSource = RxCollectionViewSectionedAnimatedDataSource<DetailGateAccessViewModel.SectionModel>(
             configureCell: { [weak self] _, collectionView, indexPath, item in
                 guard let self else {
                     return DetailGateAccessCell()
@@ -198,22 +198,22 @@ extension DetailGateAccessViewController {
                     
                     return cell
                     
-                case .person(let number):
+                case .person(let personViewState):
                     let cell = collectionView.dequeueReusableCell(
                         withClass: DetailGateAccessCell.self,
                         for: indexPath
                     )
-                    cell.configure(with: number)
+                    cell.configure(with: personViewState)
                     
                     cell.deleteButtonTappedRelay
                         .bind { [weak self] in
-                            self?.deletePersonTappedRelay.accept(number)
+                            self?.deletePersonTappedRelay.accept(personViewState.person)
                         }
                         .disposed(by: cell.disposeBag)
                     
                     cell.smsButtonTappedRelay
                         .bind { [weak self] in
-                            self?.sendSMSToPersonTappedRelay.accept(number)
+                            self?.sendSMSToPersonTappedRelay.accept(personViewState.person)
                         }
                         .disposed(by: cell.disposeBag)
                     

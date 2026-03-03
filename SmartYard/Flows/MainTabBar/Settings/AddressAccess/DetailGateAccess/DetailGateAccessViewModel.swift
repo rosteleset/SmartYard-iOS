@@ -11,6 +11,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import Contacts
+import RxDataSources
 
 // swiftlint:disable:next type_body_length
 final class DetailGateAccessViewModel: BaseViewModel {
@@ -22,10 +23,11 @@ final class DetailGateAccessViewModel: BaseViewModel {
     private let loadedUserContactsSubject = BehaviorSubject<[CNContact]>(value: [])
     private let addressRelay: BehaviorRelay<String?>
     private let contactsRelay = BehaviorRelay<[AllowedPerson]>(value: [])
+    private let personViewStatesRelay = BehaviorRelay<[PersonViewState]>(value: [])
     private let licensePlatesRelay = BehaviorRelay<[AllowedCar]>(value: [])
     private let selectedSegmentTypeRelay = BehaviorRelay<GateAccessSegmentType?>(value: nil)
     private let isLprsAvailableRelay = BehaviorRelay<Bool>(value: false)
-    private let sectionModelsRelay = BehaviorRelay<[GateAccessSectionModel]>(value: [])
+    private let sectionModelsRelay = BehaviorRelay<[SectionModel]>(value: [])
     private let collectionHeightRelay = BehaviorRelay<CGFloat>(value: 57)
     
     private let address: String
@@ -72,10 +74,10 @@ final class DetailGateAccessViewModel: BaseViewModel {
     // MARK: - Private Methods
     
     private func update(carData: [AllowedCar]) {
-        let footerItem = GateAccessDataItem.shortcut(.addCar)
-        let licensePlaces = carData.map { GateAccessDataItem.car($0) }
+        let footerItem = DataItem.shortcut(.addCar)
+        let licensePlaces = carData.map { DataItem.car($0) }
         
-        let sectionModel = GateAccessSectionModel(
+        let sectionModel = SectionModel(
             identity: "DetailCarSection",
             items: licensePlaces + [footerItem]
         )
@@ -83,16 +85,56 @@ final class DetailGateAccessViewModel: BaseViewModel {
         sectionModelsRelay.accept([sectionModel])
     }
     
-    private func update(personData: [AllowedPerson]) {
-        let footerItem = GateAccessDataItem.shortcut(.addPerson)
-        let contacts = personData.map { GateAccessDataItem.person($0) }
+    private func update(personData: [PersonViewState]) {
+        let footerItem = DataItem.shortcut(.addPerson)
+        let contacts = personData.map { DataItem.person($0) }
         
-        let sectionModel = GateAccessSectionModel(
+        let sectionModel = SectionModel(
             identity: "DetailPersonSection",
             items: contacts + [footerItem]
         )
         
         sectionModelsRelay.accept([sectionModel])
+    }
+
+    private func mapPersonToViewState(_ person: AllowedPerson, now: Date = Date()) -> PersonViewState {
+        let presentation = makeRemainingTimePresentation(until: person.expire, now: now)
+        return PersonViewState(
+            person: person,
+            remainingTimeText: presentation.text,
+            isExpired: presentation.isExpired
+        )
+    }
+
+    private func makeRemainingTimePresentation(until expireDate: Date?, now: Date = Date()) -> RemainingTimePresentation {
+        guard let expireDate else {
+            return RemainingTimePresentation(
+                text: NSLocalizedString("unlimited", comment: ""),
+                isExpired: false
+            )
+        }
+
+        guard expireDate > now else {
+            return RemainingTimePresentation(
+                text: NSLocalizedString("expired", comment: ""),
+                isExpired: true
+            )
+        }
+
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute]
+        formatter.unitsStyle = .short
+        formatter.maximumUnitCount = 1
+        formatter.zeroFormattingBehavior = .dropAll
+        formatter.calendar = Calendar.current
+        formatter.calendar?.locale = Locale.current
+
+        let timeString = formatter.string(from: now, to: expireDate) ?? ""
+        let format = NSLocalizedString("TimeLeftFormat", comment: "")
+        return RemainingTimePresentation(
+            text: String(format: format, timeString),
+            isExpired: false
+        )
     }
     
     private func calculateCollectionViewHeight(countItems: Int) -> CGFloat {
@@ -297,6 +339,24 @@ final class DetailGateAccessViewModel: BaseViewModel {
             .drive(contactsRelay)
             .disposed(by: disposeBag)
 
+        let minuteTicker = Observable<Int>
+            .interval(.seconds(60), scheduler: MainScheduler.instance)
+            .startWith(0)
+            .asDriver(onErrorJustReturn: 0)
+
+        Driver
+            .combineLatest(
+                contactsRelay.asDriver(onErrorJustReturn: []),
+                minuteTicker
+            )
+            .map { [weak self] persons, _ -> [PersonViewState] in
+                guard let self else { return [] }
+                let now = Date()
+                return persons.map { self.mapPersonToViewState($0, now: now) }
+            }
+            .drive(personViewStatesRelay)
+            .disposed(by: disposeBag)
+
         isLprsAvailableRelay
             .asDriver(onErrorJustReturn: false)
             .distinctUntilChanged()
@@ -334,13 +394,13 @@ final class DetailGateAccessViewModel: BaseViewModel {
         Observable
             .combineLatest(
                 isInitialLoadingFinished.asObservable(),         // ждём флаг окончания первой загрузки
-                contactsRelay.asObservable(),                    // текущие контакты (могут быть [])
+                personViewStatesRelay.asObservable(),            // текущие контакты (могут быть [])
                 licensePlatesRelay.asObservable(),               // текущие номера (могут быть [])
                 selectedSegmentTypeRelay.asObservable(),         // может быть nil
                 isLprsAvailableRelay.asObservable()              // нужен для выбора дефолтного сегмента
             )
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] isFinished, contacts, plates, selectedSegmentOpt, isLprsAvailable in
+            .subscribe(onNext: { [weak self] isFinished, personViewStates, plates, selectedSegmentOpt, isLprsAvailable in
                 guard let self, isFinished else { return }
 
                 // если сегмент ещё не выбран — выбираем умно
@@ -359,8 +419,8 @@ final class DetailGateAccessViewModel: BaseViewModel {
                     self.collectionHeightRelay.accept(self.calculateCollectionViewHeight(countItems: plates.count))
 
                 case .persons:
-                    self.update(personData: contacts)
-                    self.collectionHeightRelay.accept(self.calculateCollectionViewHeight(countItems: contacts.count))
+                    self.update(personData: personViewStates)
+                    self.collectionHeightRelay.accept(self.calculateCollectionViewHeight(countItems: personViewStates.count))
                 }
             })
             .disposed(by: disposeBag)
@@ -393,13 +453,13 @@ final class DetailGateAccessViewModel: BaseViewModel {
             .distinctUntilChanged()
             .withLatestFrom(
                 Driver.combineLatest(
-                    contactsRelay.asDriverOnErrorJustComplete(),
+                    personViewStatesRelay.asDriverOnErrorJustComplete(),
                     licensePlatesRelay.asDriverOnErrorJustComplete()
                 )
             ) { selectedType, data in
                 (selectedType, data.0, data.1)
             }
-            .drive { [weak self] type, contacts, plates in
+            .drive { [weak self] type, personViewStates, plates in
                 guard let self else { return }
                 
                 switch type {
@@ -410,8 +470,8 @@ final class DetailGateAccessViewModel: BaseViewModel {
                     
                 case .persons:
                     selectedSegmentTypeRelay.accept(.persons)
-                    update(personData: contacts)
-                    collectionHeightRelay.accept(calculateCollectionViewHeight(countItems: contacts.count))
+                    update(personData: personViewStates)
+                    collectionHeightRelay.accept(calculateCollectionViewHeight(countItems: personViewStates.count))
                     
                 case .none:
                     break
@@ -538,11 +598,77 @@ extension DetailGateAccessViewModel {
         let objectAddress: Driver<String?>
         let selectedSegmentControlType: Driver<GateAccessSegmentType?>
         let isLPRSEnabled: Driver<Bool>
-        let sectionModels: Driver<[GateAccessSectionModel]>
+        let sectionModels: Driver<[SectionModel]>
         let collectionHeight: Driver<CGFloat>
         let isInitialLoadingFinished: Driver<Bool>
     }
     
+}
+
+extension DetailGateAccessViewModel {
+
+    struct PersonViewState: Equatable {
+        let person: AllowedPerson
+        let remainingTimeText: String
+        let isExpired: Bool
+    }
+
+    enum DataItemIdentity: Hashable {
+        case phoneNumber(String)
+        case plateNumber(String)
+        case shortcut
+    }
+
+    enum DataItem: IdentifiableType, Equatable {
+        case car(AllowedCar)
+        case person(PersonViewState)
+        case shortcut(GateAccessShortcutType)
+
+        var identity: DataItemIdentity {
+            switch self {
+            case .car(let car): return .plateNumber(car.apiNumber)
+            case .person(let person): return .phoneNumber(person.person.apiNumber)
+            case .shortcut: return .shortcut
+            }
+        }
+
+        static func == (lhs: DataItem, rhs: DataItem) -> Bool {
+            switch (lhs, rhs) {
+            case let (.car(lhsCar), .car(rhsCar)):
+                return lhsCar == rhsCar
+            case let (.person(lhsPerson), .person(rhsPerson)):
+                return lhsPerson == rhsPerson
+            case let (.shortcut(lhsType), .shortcut(rhsType)):
+                return lhsType == rhsType
+            default:
+                return false
+            }
+        }
+    }
+
+    struct SectionModel: AnimatableSectionModelType {
+        let identity: String
+        var items: [DataItem]
+    }
+
+}
+
+extension DetailGateAccessViewModel.SectionModel: SectionModelType {
+
+    init(original: DetailGateAccessViewModel.SectionModel, items: [DetailGateAccessViewModel.DataItem]) {
+        self = original
+        self.items = items
+    }
+
+}
+
+private extension DetailGateAccessViewModel {
+
+    struct RemainingTimePresentation {
+        let text: String
+        let isExpired: Bool
+    }
+
 }
 
 extension DetailGateAccessViewModel: NewAllowedPersonViewModelDelegate {
