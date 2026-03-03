@@ -9,13 +9,13 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import FirebaseCrashlytics
 
 final class ErrorTracker: SharedSequenceConvertibleType {
     
     typealias SharingStrategy = DriverSharingStrategy
     
     private let _subject = PublishSubject<Error>()
+    private let telemetryService: AppTelemetryServicing = AppTelemetryService.shared
     
     deinit {
         _subject.onCompleted()
@@ -34,7 +34,7 @@ final class ErrorTracker: SharedSequenceConvertibleType {
     }
     
     func onError(_ error: Error) {
-        Crashlytics.crashlytics().record(error: error)
+        telemetryService.record(error: error)
         _subject.onNext(error)
     }
     

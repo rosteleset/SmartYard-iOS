@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import FirebaseCrashlytics
 
 ///  Переопределённый метод, который в режиме отладки направляет вывод в консоль,
 ///  а в режиме релиза перенаправляет вывод в Crashlytics.log
@@ -21,20 +20,15 @@ import FirebaseCrashlytics
 public func print(_ items: Any..., separator: String = " ", terminator: String = "\n") {
     #if DEBUG
     Swift.print(
-        items.map {
-            String(describing: $0)
-            .truncated(toLength: 1000)
-        }
+        items
+            .map { String(describing: $0).truncated(toLength: 1000) }
             .joined(separator: separator) + terminator,
         terminator: ""
     )
     #endif
-    Crashlytics.crashlytics().log(
-        items.map {
-            String(describing: $0)
-            .truncated(toLength: 1000)
-            
-        }
+    AppTelemetryService.shared.log(
+        items
+            .map { String(describing: $0).truncated(toLength: 1000) }
             .joined(separator: separator) + terminator
     )
 }

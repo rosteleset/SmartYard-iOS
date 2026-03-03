@@ -10,7 +10,6 @@ import Moya
 import Alamofire
 import RxSwift
 import RxCocoa
-import FirebaseCrashlytics
 
 final class APIWrapper {
     let internet: InternetMonitoring

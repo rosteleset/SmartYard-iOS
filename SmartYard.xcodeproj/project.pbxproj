@@ -438,6 +438,7 @@
 		8B714E242EFACCAD0099703B /* RecDownloadResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714D0F2EFACCAD0099703B /* RecDownloadResponseData.swift */; };
 		8B714E252EFACCAD0099703B /* GetExtensionResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714D192EFACCAD0099703B /* GetExtensionResponseData.swift */; };
 		8B714E262EFACCAD0099703B /* OptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714DD22EFACCAD0099703B /* OptionService.swift */; };
+		9A0F5A0D2F751A5E00C0D001 /* AppTelemetryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A0C2F751A5E00C0D001 /* AppTelemetryService.swift */; };
 		8B714E272EFACCAD0099703B /* LogoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714DE72EFACCAD0099703B /* LogoutHelper.swift */; };
 		8B714E282EFACCAD0099703B /* RecDownloadRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714D0E2EFACCAD0099703B /* RecDownloadRequest.swift */; };
 		8B714E292EFACCAD0099703B /* InboxRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714D4C2EFACCAD0099703B /* InboxRequest.swift */; };
@@ -1641,6 +1642,7 @@
 		8B714DD22EFACCAD0099703B /* OptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionService.swift; sourceTree = "<group>"; };
 		8B714DD32EFACCAD0099703B /* OptionsLoadReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsLoadReason.swift; sourceTree = "<group>"; };
 		8B714DD42EFACCAD0099703B /* OptionsServicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsServicing.swift; sourceTree = "<group>"; };
+		9A0F5A0C2F751A5E00C0D001 /* AppTelemetryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTelemetryService.swift; sourceTree = "<group>"; };
 		8B714DD62EFACCAD0099703B /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
 		8B714DD82EFACCAD0099703B /* MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		8B714DD92EFACCAD0099703B /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
@@ -4890,6 +4892,7 @@
 				8B714DD72EFACCAD0099703B /* PermissionService */,
 				8B714DDA2EFACCAD0099703B /* PushNotificationService */,
 				8B714DE62EFACCAD0099703B /* WebRTCService */,
+				9A0F5A0C2F751A5E00C0D001 /* AppTelemetryService.swift */,
 				8B714DE72EFACCAD0099703B /* LogoutHelper.swift */,
 			);
 			path = Services;
@@ -6612,6 +6615,7 @@
 				8B714E242EFACCAD0099703B /* RecDownloadResponseData.swift in Sources */,
 				8B714E252EFACCAD0099703B /* GetExtensionResponseData.swift in Sources */,
 				8B714E262EFACCAD0099703B /* OptionService.swift in Sources */,
+				9A0F5A0D2F751A5E00C0D001 /* AppTelemetryService.swift in Sources */,
 				8B714E272EFACCAD0099703B /* LogoutHelper.swift in Sources */,
 				8B714E282EFACCAD0099703B /* RecDownloadRequest.swift in Sources */,
 				8B714E292EFACCAD0099703B /* InboxRequest.swift in Sources */,

@@ -9,7 +9,6 @@
 import UIKit
 import FirebaseCore
 import FirebaseMessaging
-import FirebaseCrashlytics
 import PushKit
 import MapboxMaps
 import NotificationBannerSwift
@@ -19,11 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private let mainWindow: UIWindow
     private let appCoordinator: AppCoordinator
+    private let telemetryService: AppTelemetryServicing
     private lazy var quickActionsService = QuickActionsService()
 
     override init() {
         mainWindow = UIWindow()
         appCoordinator = AppCoordinator(mainWindow: mainWindow)
+        telemetryService = AppTelemetryService.shared
         super.init()
     }
 
@@ -421,10 +422,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     fileprivate func reportDebugInfo(_ userInfo: [AnyHashable: Any]) {
-        Crashlytics.crashlytics().log("UserInfo isn't mapped into CallPayload and hasn't action.")
+        telemetryService.log("UserInfo isn't mapped into CallPayload and hasn't action.")
         let userInfoAsString = String(describing: userInfo) // на случай, если не получится представить в виде JSON
-        Crashlytics.crashlytics().log("UserInfo=\(userInfo.jsonString() ?? userInfoAsString)")
-        Crashlytics.crashlytics().record(error: NSError.APIWrapperError.baseResponseMappingError)
+        telemetryService.log("UserInfo=\(userInfo.jsonString() ?? userInfoAsString)")
+        telemetryService.record(error: NSError.APIWrapperError.baseResponseMappingError)
     }
     
 }

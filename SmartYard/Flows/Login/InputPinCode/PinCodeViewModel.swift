@@ -10,7 +10,6 @@ import Foundation
 import RxCocoa
 import RxSwift
 import XCoordinator
-import FirebaseCrashlytics
 import FirebaseMessaging
 
 final class PinCodeViewModel: BaseViewModel {
@@ -206,4 +205,3 @@ extension PinCodeViewModel {
     }
     
 }
-

@@ -13,8 +13,6 @@ import RxCocoa
 import SwifterSwift
 import AVKit
 import SmartYardSharedDataFramework
-import FirebaseCrashlytics
-import FirebaseAnalytics
 import Kingfisher
 
 enum AppRoute: Route {
@@ -57,6 +55,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let issueService: IssueService
     private let pushNotificationService: PushNotificationService
     private let alertService = AlertService()
+    private let telemetryService: AppTelemetryServicing
     private let logoutHelper: LogoutHelper
     private let debugNetwork = DebugNetworkController()
     private let networkEnv: NetworkEnvironment
@@ -111,6 +110,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
             accessService: accessService
         )
         self.pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
+        self.telemetryService = AppTelemetryService.shared
 
         self.logoutHelper = LogoutHelper(
             pushNotificationService: pushNotificationService,
@@ -447,12 +447,14 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
     }
     
     func setCrashlyticsUserID() {
-        Crashlytics.crashlytics().setUserID(accessService.clientPhoneNumber ?? "unknown")
+        telemetryService.setCrashlyticsUserID(accessService.clientPhoneNumber)
     }
     
     func setAnalyticsOperatorID() {
-        Analytics.setUserProperty(AccessService.shared.provider.id, forName: "provider_id")
-        Analytics.setUserProperty(AccessService.shared.provider.name, forName: "provider_name")
+        telemetryService.setAnalyticsOperator(
+            id: accessService.provider.id,
+            name: accessService.provider.name
+        )
     }
 
     func markAllMessagesAsDelivered() {
