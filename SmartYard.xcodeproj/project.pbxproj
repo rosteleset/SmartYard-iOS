@@ -1413,11 +1413,11 @@
 		8B40093D2E2AC92D00A96598 /* DetailGateAccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGateAccessViewModel.swift; sourceTree = "<group>"; };
 		8B4C56BC2E1E71A300D5496B /* NewAllowedCarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAllowedCarViewModel.swift; sourceTree = "<group>"; };
 		8B4C56BE2E1E71B300D5496B /* NewAllowedCarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAllowedCarViewController.swift; sourceTree = "<group>"; };
-		8B4C56BF2E1E71B300D5496B /* NewAllowedPersonViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NewAllowedPersonViewController.xib; path = Base.lproj/NewAllowedCarViewController.xib; sourceTree = "<group>"; };
-		8B4C56C02E1E71B300D5496B /* NewAllowedPersonViewController.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = NewAllowedPersonViewController.strings; path = en.lproj/NewAllowedCarViewController.xib; sourceTree = "<group>"; };
-		8B4C56C12E1E71B300D5496B /* NewAllowedPersonViewController.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = NewAllowedPersonViewController.strings; path = kk.lproj/NewAllowedCarViewController.xib; sourceTree = "<group>"; };
-		8B4C56C22E1E71B300D5496B /* NewAllowedPersonViewController.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = NewAllowedPersonViewController.strings; path = uz.lproj/NewAllowedCarViewController.xib; sourceTree = "<group>"; };
-		8B4C56C32E1E71B300D5496B /* NewAllowedPersonViewController.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = NewAllowedPersonViewController.strings; path = bg.lproj/NewAllowedCarViewController.xib; sourceTree = "<group>"; };
+		8B4C56BF2E1E71B300D5496B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NewAllowedCarViewController.xib; sourceTree = "<group>"; };
+		8B4C56C02E1E71B300D5496B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewAllowedCarViewController.strings; sourceTree = "<group>"; };
+		8B4C56C12E1E71B300D5496B /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/NewAllowedCarViewController.strings; sourceTree = "<group>"; };
+		8B4C56C22E1E71B300D5496B /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/NewAllowedCarViewController.strings; sourceTree = "<group>"; };
+		8B4C56C32E1E71B300D5496B /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/NewAllowedCarViewController.strings; sourceTree = "<group>"; };
 		8B4D95FB2F35E8E400A37232 /* PlayerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTheme.swift; sourceTree = "<group>"; };
 		8B4D95FD2F35EF8C00A37232 /* PlayerThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerThemeManager.swift; sourceTree = "<group>"; };
 		8B5A08012EE9AC5B00E7EAAB /* OfflineDoor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineDoor.swift; sourceTree = "<group>"; };
@@ -7834,11 +7834,11 @@
 		8B4C56C42E1E71B300D5496B /* NewAllowedCarViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8B4C56BF2E1E71B300D5496B /* NewAllowedPersonViewController.xib */,
-				8B4C56C02E1E71B300D5496B /* NewAllowedPersonViewController.strings */,
-				8B4C56C12E1E71B300D5496B /* NewAllowedPersonViewController.strings */,
-				8B4C56C22E1E71B300D5496B /* NewAllowedPersonViewController.strings */,
-				8B4C56C32E1E71B300D5496B /* NewAllowedPersonViewController.strings */,
+				8B4C56BF2E1E71B300D5496B /* Base */,
+				8B4C56C02E1E71B300D5496B /* en */,
+				8B4C56C12E1E71B300D5496B /* kk */,
+				8B4C56C22E1E71B300D5496B /* uz */,
+				8B4C56C32E1E71B300D5496B /* bg */,
 				8BA57FCE2EFAF23E00B63297 /* ar */,
 			);
 			name = NewAllowedCarViewController.xib;

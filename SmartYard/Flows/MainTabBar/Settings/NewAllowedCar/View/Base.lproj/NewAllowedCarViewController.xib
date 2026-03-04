@@ -37,39 +37,30 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Ls-xU-ype" customClass="FullRoundedView" customModule="SmartYard" customModuleProvider="target">
-                    <rect key="frame" x="16" y="342.5" width="382" height="239"/>
+                    <rect key="frame" x="16" y="351" width="382" height="222"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Поделиться доступом" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gda-I1-7lg">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Поделиться доступом" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dfi-LL-a4L">
                             <rect key="frame" x="24" y="28" width="334" height="35.5"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="35.5" id="l31-MM-huS"/>
+                                <constraint firstAttribute="height" constant="35.5" id="yXR-Fa-iAQ"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="28"/>
                             <color key="textColor" name="semiBlack"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Введите номер автомобиля, которому  хотите предоставить доступ." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xKP-zL-fU1">
-                            <rect key="frame" x="24" y="75.5" width="334" height="53"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="53" id="3z2-2m-k00"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
-                            <color key="textColor" name="semiBlack"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FIv-dO-hQZ">
-                            <rect key="frame" x="24" y="213" width="334" height="1"/>
+                            <rect key="frame" x="24" y="196" width="334" height="1"/>
                             <color key="backgroundColor" name="grayBorder"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="q9H-yi-3ZO"/>
                             </constraints>
                         </view>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultCarIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Pnj-Sd-8a8" customClass="RoundedImageView" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="326" y="171.5" width="32" height="32"/>
+                            <rect key="frame" x="326" y="154.5" width="32" height="32"/>
                             <color key="tintColor" name="gray"/>
                         </imageView>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="М 565 ХВ 68" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NgQ-I8-VyB" customClass="SmartYardLicensePlateTextField" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="24" y="170" width="278" height="35"/>
+                            <rect key="frame" x="24" y="153" width="278" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="sdi-TZ-R9i"/>
                             </constraints>
@@ -77,33 +68,39 @@
                             <textInputTraits key="textInputTraits" keyboardType="phonePad" smartDashesType="yes" textContentType="tel"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUW-vr-H7B">
-                            <rect key="frame" x="326" y="171.5" width="32" height="32"/>
+                            <rect key="frame" x="326" y="154.5" width="32" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="LNW-Ke-NqD"/>
                                 <constraint firstAttribute="width" constant="32" id="YSt-L7-sCy"/>
                             </constraints>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Введите номер автомобиля, которому  хотите предоставить доступ." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78M-RE-ZaJ">
+                            <rect key="frame" x="24" y="75.5" width="334" height="35.5"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                            <color key="textColor" name="semiBlack"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" name="secondBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="Pnj-Sd-8a8" firstAttribute="height" secondItem="cUW-vr-H7B" secondAttribute="height" id="3JW-4J-2FW"/>
+                        <constraint firstItem="Dfi-LL-a4L" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="3jz-zV-Aj0"/>
+                        <constraint firstItem="Dfi-LL-a4L" firstAttribute="top" secondItem="8Ls-xU-ype" secondAttribute="top" constant="28" id="6eW-EN-Te6"/>
                         <constraint firstItem="NgQ-I8-VyB" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="9Ok-R1-gMI"/>
-                        <constraint firstAttribute="trailing" secondItem="xKP-zL-fU1" secondAttribute="trailing" constant="24" id="EA6-EW-0gA"/>
                         <constraint firstAttribute="trailing" secondItem="Pnj-Sd-8a8" secondAttribute="trailing" constant="24" id="Goc-BH-9uo"/>
                         <constraint firstItem="cUW-vr-H7B" firstAttribute="centerY" secondItem="NgQ-I8-VyB" secondAttribute="centerY" id="Jvx-Tj-JBZ"/>
                         <constraint firstAttribute="trailing" secondItem="cUW-vr-H7B" secondAttribute="trailing" constant="24" id="L0C-Fz-vF2"/>
                         <constraint firstAttribute="trailing" secondItem="FIv-dO-hQZ" secondAttribute="trailing" constant="24" id="LGP-OP-FtL"/>
-                        <constraint firstAttribute="trailing" secondItem="gda-I1-7lg" secondAttribute="trailing" constant="24" id="Mm5-hc-JTz"/>
                         <constraint firstAttribute="bottom" secondItem="FIv-dO-hQZ" secondAttribute="bottom" constant="25" id="OVQ-ky-kmf"/>
-                        <constraint firstItem="NgQ-I8-VyB" firstAttribute="top" secondItem="xKP-zL-fU1" secondAttribute="bottom" constant="41.5" id="Phn-gF-0ff"/>
                         <constraint firstItem="FIv-dO-hQZ" firstAttribute="top" secondItem="NgQ-I8-VyB" secondAttribute="bottom" constant="8" symbolic="YES" id="RJa-5Y-e2n"/>
-                        <constraint firstItem="gda-I1-7lg" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="UAd-cw-4RD"/>
-                        <constraint firstItem="gda-I1-7lg" firstAttribute="top" secondItem="8Ls-xU-ype" secondAttribute="top" constant="28" id="XbB-No-1Vo"/>
                         <constraint firstItem="Pnj-Sd-8a8" firstAttribute="width" secondItem="cUW-vr-H7B" secondAttribute="width" id="a24-nK-1j1"/>
-                        <constraint firstItem="xKP-zL-fU1" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="gtH-zi-CyW"/>
+                        <constraint firstAttribute="trailing" secondItem="Dfi-LL-a4L" secondAttribute="trailing" constant="24" id="nbB-Hd-0ac"/>
                         <constraint firstItem="FIv-dO-hQZ" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="oHJ-2Y-2x5"/>
+                        <constraint firstItem="78M-RE-ZaJ" firstAttribute="top" secondItem="Dfi-LL-a4L" secondAttribute="bottom" constant="12" id="oed-Zy-6h6"/>
                         <constraint firstItem="Pnj-Sd-8a8" firstAttribute="centerY" secondItem="NgQ-I8-VyB" secondAttribute="centerY" id="phf-dW-gST"/>
-                        <constraint firstItem="xKP-zL-fU1" firstAttribute="top" secondItem="gda-I1-7lg" secondAttribute="bottom" constant="12" id="tpm-da-s9w"/>
+                        <constraint firstItem="NgQ-I8-VyB" firstAttribute="top" secondItem="78M-RE-ZaJ" secondAttribute="bottom" constant="42" id="piW-Mz-bIZ"/>
+                        <constraint firstItem="78M-RE-ZaJ" firstAttribute="leading" secondItem="8Ls-xU-ype" secondAttribute="leading" constant="24" id="rFz-zM-c81"/>
+                        <constraint firstAttribute="trailing" secondItem="78M-RE-ZaJ" secondAttribute="trailing" constant="24" id="vRi-oU-kRR"/>
                         <constraint firstItem="Pnj-Sd-8a8" firstAttribute="leading" secondItem="NgQ-I8-VyB" secondAttribute="trailing" constant="24" id="ynM-9x-1rr"/>
                     </constraints>
                 </view>
